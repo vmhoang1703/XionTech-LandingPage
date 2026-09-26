@@ -66,6 +66,28 @@ Before opening a PR: `npm run lint && npm run typecheck && npm run build` must p
 - Commit messages: Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`).
 - When an AI agent writes a commit, keep its `Co-Authored-By` trailer so AI work is visible.
 
+## BMad workflow (XTek BMad)
+
+We plan and build with the XionTechs fork of BMad Method (`@xiontechs/bmad-method` v6.12.1).
+Installed modules: Core, BMad Method (bmm), Builder (bmb), CIS, Test Architect (tea), BMAD Loop.
+
+- `_bmad/` — BMad config and scripts. Committed so everyone shares the same setup.
+- `.claude/skills/` — BMad skills for Claude Code (57). Committed.
+- `_bmad-output/planning-artifacts/` — brief, PRD, architecture, UX, epics. Committed.
+- `_bmad-output/implementation-artifacts/` — stories and sprint status. Committed.
+- `docs/` — project knowledge (BMad `project_knowledge`).
+- Personal config (`_bmad/config.user.toml`, `_bmad/custom/config.user.toml`) is gitignored.
+  Put your own name in `_bmad/custom/config.user.toml` under a `[core]` table:
+  `user_name = "Your Name"`.
+- Team-wide overrides go in `_bmad/custom/config.toml`.
+- BMad skills need Python 3.10+ and `uv` installed.
+
+Start with the `bmad-help` skill when unsure what to do next. Planning docs flow
+brief → PRD → UX → architecture → epics/stories → `bmad-build` per story.
+Do not edit files under `_bmad/` or `.claude/skills/` by hand; re-run the installer
+(`npx @xiontechs/bmad-method@next install`, needs an Azure PAT in `~/.npmrc`) or use
+`bmad-customize`.
+
 ## AI log
 
 Log every prompt or decision that mattered in `docs/ai-log.md`, **especially when the AI

@@ -36,3 +36,7 @@ Thumbs.db
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# BMad personal config (team config in _bmad/config.toml and _bmad/custom/config.toml is committed)
+_bmad/config.user.toml
+_bmad/custom/config.user.toml
