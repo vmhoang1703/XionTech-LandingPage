@@ -15,6 +15,19 @@ npm run dev
 
 Open http://localhost:3000.
 
+## One-time setup per clone
+
+Needs Docker Desktop, Python 3.10+ and [uv](https://docs.astral.sh/uv/).
+
+```bash
+npm install
+cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env
+./scripts/sonar/local_sonar.sh up             # Docker must be running; first run pulls ~700MB
+git config core.hooksPath scripts/git-hooks   # last: from now on every git push runs the Sonar gate
+```
+
+SonarQube runs **only on your machine**. Never point it at the shared XT SonarQube server.
+
 ## Docs
 
 - [`AGENTS.md`](AGENTS.md) — shared context for the team and AI agents: rules, stack, git workflow.

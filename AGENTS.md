@@ -11,7 +11,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # XionTech Landing Page — shared agent context
 
 This file is the single source of context for every AI agent and every team member
-(Claude Code reads it via `CLAUDE.md`; Cursor, Codex and Copilot read `AGENTS.md`).
+(Claude Code reads it via `CLAUDE.md`, which also holds the coding rules and Definition of Done;
+Cursor, Codex and Copilot read `AGENTS.md`).
 Update it in the same PR whenever a decision changes.
 
 ## Project
@@ -31,19 +32,25 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 2. **Start clean.** Do not copy the current site's WordPress theme, CSS, images or layout.
    Facts (services, offices, contact details) may be reused after a human verifies them.
 3. **All three members must commit.** Work in small PRs, one owner per feature.
+4. **SonarQube runs LOCAL ONLY. NEVER publish to, scan against, or create a project on the
+   shared XT SonarQube server** — this is not a XionTech company project. Never add
+   `SONAR_HOST_URL`, `SONAR_TOKEN` or `sonar.host.url`. The `pre-push` hook runs the local gate
+   (`npm run sonar:gate`); details in `CLAUDE.md` → "SonarQube — LOCAL ONLY".
 
 ## Tech stack
 
-| Area       | Choice                                                                  |
-| ---------- | ----------------------------------------------------------------------- |
-| Framework  | Next.js 16 (App Router, `src/` dir), React 19                           |
-| Language   | TypeScript (strict)                                                     |
-| Styling    | Tailwind CSS v4 (config lives in `src/app/globals.css` via `@theme`)    |
-| UI parts   | shadcn/ui (to be added)                                                 |
-| Animation  | Motion (to be added)                                                    |
-| CMS        | For Careers/Jobs and Blog — **not decided yet**                         |
-| Hosting    | Vercel                                                                  |
-| Formatting | Prettier + `prettier-plugin-tailwindcss`, ESLint (`eslint-config-next`) |
+| Area         | Choice                                                                             |
+| ------------ | ---------------------------------------------------------------------------------- |
+| Framework    | Next.js 16 (App Router, `src/` dir), React 19                                      |
+| Language     | TypeScript (strict)                                                                |
+| Styling      | Tailwind CSS v4 (config lives in `src/app/globals.css` via `@theme`)               |
+| UI parts     | shadcn/ui (to be added)                                                            |
+| Animation    | Motion (to be added)                                                               |
+| CMS          | For Careers/Jobs and Blog — **not decided yet**                                    |
+| Hosting      | Vercel                                                                             |
+| Formatting   | Prettier + `prettier-plugin-tailwindcss`, ESLint (`eslint-config-next`)            |
+| Tests        | Vitest 5 + Testing Library (unit), Playwright (`@smoke`), `diff-cover` (via `uvx`) |
+| Quality gate | SonarQube Community in local Docker — LOCAL ONLY, `pre-push` hook                  |
 
 ## Commands
 
@@ -53,10 +60,15 @@ npm run dev          # http://localhost:3000
 npm run lint
 npm run typecheck
 npm run format       # write; use format:check in CI
+npm test             # unit tests (Vitest)
+npm run test:coverage && npm run coverage:diff   # 100% line coverage on changed lines
+npm run test:smoke   # Playwright @smoke: build, boot, GET / = 200
+npm run sonar:gate   # local SonarQube gate (also runs on git push)
 npm run build
 ```
 
-Before opening a PR: `npm run lint && npm run typecheck && npm run build` must pass.
+Before opening a PR: lint, typecheck, tests, diff coverage, smoke and build must pass, and the
+local Sonar gate must be green.
 
 ## Git workflow
 

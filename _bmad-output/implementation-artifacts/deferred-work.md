@@ -1,0 +1,32 @@
+# Deferred work
+
+## Deferred from: code review (2026-09-28)
+
+Change reviewed: team CLAUDE.md rules, test tooling, local-only SonarQube gate (branch `feature/setup-project`).
+
+### Agent-context files (fix edits CLAUDE.md / AGENTS.md / SKILL.md — needs owner OK)
+- [medium] CLAUDE.md "SonarQube — LOCAL ONLY" one-time setup omits `cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env`; the gate dies with "Missing sonar.env" on a fresh clone that follows CLAUDE.md (README has the step).
+- [low] CLAUDE.md "Language / toolchain" omits Docker Desktop, Python 3.10+, uv and curl, which `coverage:diff` and the Sonar gate need.
+- [low] CLAUDE.md says the gate "refuses" when `SONAR_HOST_URL`/`SONAR_TOKEN` are set; the code silently unsets them. Only `SONAR_LOCAL_HOST_URL` and `sonar.host.url` are refused.
+- [low] AGENTS.md says the pre-push hook runs `npm run sonar:gate`; it execs `scripts/sonar/check_quality_gate.sh` directly.
+- [low] sonar-prepush-gate SKILL.md examples use `dev`/`main` and a Python probe; this repo uses `develop` and TypeScript (the real probe used `value === value` in a `.ts` file).
+
+### Filed as defer by the verification-gap layer
+- [medium] Unit tests, smoke and diff coverage do not block a push or merge: the gate only warns on test failures, and there is no CI.
+- [low] The baseline "create missing source/test folders" fix has no automated test.
+
+### Pre-existing in the upstream sonar-prepush-gate skill (not caused by this change)
+- [medium] Gate scans HEAD + working tree, not the pushed commits (`git push origin other-branch`, dirty tree, delete-only pushes).
+- [medium] Baseline API writes (`projects/delete`, `projects/create`, `new_code_periods/set`) use `curl -s` without status checks; a failed period set still writes `sonar.baseline` and may judge zero lines.
+- [medium] A test command that crashes before writing coverage leaves an older report that passes the existence check (stale coverage scanned).
+- [medium] Container port is published on all interfaces (`-p 9000:9000`); bind to `127.0.0.1`.
+- [medium] `sonar.env` saved with CRLF (Windows editors) leaves `\r` in values; reference branch lookup fails.
+- [low] `local_sonar.sh` run by hand ignores `sonar.env` overrides (port, image, container).
+- [low] `wait_for_analysis` writes diagnostics to stdout, which is captured into ANALYSIS_ID and lost.
+- [low] `sonar_property` + `pipefail` exits silently for Python projects without `sonar.sources`.
+- [low] Docker images unpinned (`sonar-scanner-cli:latest`, `sonarqube:community`).
+- [low] Scripts call `python`, not `python3`; fails on Linux/macOS machines without `python`.
+- [low] `project_status` error JSON raises a Python KeyError with no readable cause.
+- [low] Coverage path rewrite stops at spaces in the repo path.
+- [low] Container states paused/restarting/dead fall through to `docker run` and a name conflict.
+- [low] Empty `serverUrl` in report-task.txt gives a misleading "published to ''" tripwire message.
