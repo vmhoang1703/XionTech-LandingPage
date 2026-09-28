@@ -34,8 +34,10 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 3. **All three members must commit.** Work in small PRs, one owner per feature.
 4. **SonarQube runs LOCAL ONLY. NEVER publish to, scan against, or create a project on the
    shared XT SonarQube server** — this is not a XionTech company project. Never add
-   `SONAR_HOST_URL`, `SONAR_TOKEN` or `sonar.host.url`. The `pre-push` hook runs the local gate
-   (`npm run sonar:gate`); details in `CLAUDE.md` → "SonarQube — LOCAL ONLY".
+   `SONAR_HOST_URL`, `SONAR_TOKEN` or `sonar.host.url`. The `pre-push` hook
+   (`scripts/git-hooks/pre-push`) runs `scripts/sonar/check_quality_gate.sh` directly; run
+   the same check by hand with `npm run sonar:gate`. Details in `CLAUDE.md` → "SonarQube —
+   LOCAL ONLY".
 
 ## Tech stack
 

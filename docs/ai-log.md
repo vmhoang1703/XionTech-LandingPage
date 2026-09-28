@@ -94,3 +94,16 @@ Template:
      runs `cmd.exe`, which reads that as `fetch || (echo && ...)`, so the check silently did
      nothing and exited 0. Caught because the output had no coverage table; fixed by moving the
      fetch into its own script.
+
+## 2026-09-28 — Fix the 5 deferred doc items
+
+- **Who / tool:** Hoang Vu / Claude Code (Claude Opus 5.5), `bmad-code-review` (4 reviewers).
+- **Prompt (short):** "fix the 5 docs items".
+- **What the AI did:** Fixed the 5 items in `CLAUDE.md`, `AGENTS.md` and the sonar `SKILL.md`,
+  then ran the review; applied 11 follow-up fixes (0 decisions, 1 deferred, 4 rejected).
+- **Decision / result:** New guard test case proves `SONAR_HOST_URL`/`SONAR_TOKEN` never reach
+  `curl` (a mutant without the `unset` fails it).
+- **AI got it wrong?** Yes. The AI labelled the TypeScript probe `value === value` as rule S1764.
+  Three reviewers said S1764 ignores self-comparison (a NaN test). Checking the local
+  container showed the probe did block, but through `typescript:S6679` (use `Number.isNaN()`).
+  Doc corrected to the rule that really fired.

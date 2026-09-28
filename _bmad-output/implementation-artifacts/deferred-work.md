@@ -5,15 +5,19 @@
 Change reviewed: team CLAUDE.md rules, test tooling, local-only SonarQube gate (branch `feature/setup-project`).
 
 ### Agent-context files (fix edits CLAUDE.md / AGENTS.md / SKILL.md — needs owner OK)
-- [medium] CLAUDE.md "SonarQube — LOCAL ONLY" one-time setup omits `cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env`; the gate dies with "Missing sonar.env" on a fresh clone that follows CLAUDE.md (README has the step).
-- [low] CLAUDE.md "Language / toolchain" omits Docker Desktop, Python 3.10+, uv and curl, which `coverage:diff` and the Sonar gate need.
-- [low] CLAUDE.md says the gate "refuses" when `SONAR_HOST_URL`/`SONAR_TOKEN` are set; the code silently unsets them. Only `SONAR_LOCAL_HOST_URL` and `sonar.host.url` are refused.
-- [low] AGENTS.md says the pre-push hook runs `npm run sonar:gate`; it execs `scripts/sonar/check_quality_gate.sh` directly.
-- [low] sonar-prepush-gate SKILL.md examples use `dev`/`main` and a Python probe; this repo uses `develop` and TypeScript (the real probe used `value === value` in a `.ts` file).
+
+**Resolved 2026-09-28** (lead asked "fix the 5 docs items"; reviewed with bmad-code-review, 11 follow-up fixes applied):
+
+- [x] RESOLVED [medium] CLAUDE.md "SonarQube — LOCAL ONLY" one-time setup omits `cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env`; the gate dies with "Missing sonar.env" on a fresh clone that follows CLAUDE.md (README has the step).
+- [x] RESOLVED [low] CLAUDE.md "Language / toolchain" omits Docker Desktop, Python 3.10+, uv and curl, which `coverage:diff` and the Sonar gate need.
+- [x] RESOLVED [low] CLAUDE.md says the gate "refuses" when `SONAR_HOST_URL`/`SONAR_TOKEN` are set; the code silently unsets them. Only `SONAR_LOCAL_HOST_URL` and `sonar.host.url` are refused.
+- [x] RESOLVED [low] AGENTS.md says the pre-push hook runs `npm run sonar:gate`; it execs `scripts/sonar/check_quality_gate.sh` directly.
+- [x] RESOLVED [low] sonar-prepush-gate SKILL.md examples use `dev`/`main` and a Python probe; this repo uses `develop` and TypeScript (the real probe used `value === value` in a `.ts` file).
 
 ### Filed as defer by the verification-gap layer
 - [medium] Unit tests, smoke and diff coverage do not block a push or merge: the gate only warns on test failures, and there is no CI.
 - [low] The baseline "create missing source/test folders" fix has no automated test.
+- [low] `test_local_only_guards.sh` runs only by hand (no hook or CI). Same decision as the CI item above.
 
 ### Pre-existing in the upstream sonar-prepush-gate skill (not caused by this change)
 - [medium] Gate scans HEAD + working tree, not the pushed commits (`git push origin other-branch`, dirty tree, delete-only pushes).

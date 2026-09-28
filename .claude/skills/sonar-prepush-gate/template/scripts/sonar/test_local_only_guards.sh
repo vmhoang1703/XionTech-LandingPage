@@ -75,4 +75,24 @@ else
   echo "ok    no curl call was made"
 fi
 
+# Shared-server settings must be dropped before any call. Let the gate pass
+# every guard and reach local_sonar.sh (docker "running", curl failing), then
+# check that no curl call saw the remote URL or token — in args or environment.
+LEAK_STUBS="$WORK/leak-stubs"
+LEAK_LOG="$WORK/leak-log"
+mkdir -p "$LEAK_STUBS" "$WORK/home"
+printf '#!/bin/sh\nexit 0\n' > "$LEAK_STUBS/docker"
+printf '#!/bin/sh\necho "$* HOST=${SONAR_HOST_URL:-} TOKEN=${SONAR_TOKEN:-}" >> "%s"\nexit 1\n' "$LEAK_LOG" > "$LEAK_STUBS/curl"
+chmod +x "$LEAK_STUBS/docker" "$LEAK_STUBS/curl"
+(cd "$REPO" && HOME="$WORK/home" PATH="$LEAK_STUBS:$PATH" \
+  SONAR_HOST_URL=https://remote.example SONAR_TOKEN=leak-secret \
+  "$GATE" --branch feature/x >/dev/null 2>&1 </dev/null) || true
+if [ ! -s "$LEAK_LOG" ]; then
+  echo "FAIL  SONAR_HOST_URL/SONAR_TOKEN dropped: gate never reached curl, nothing proven"; FAILED=1
+elif grep -qE 'remote\.example|leak-secret' "$LEAK_LOG"; then
+  echo "FAIL  SONAR_HOST_URL/SONAR_TOKEN reached curl:"; cat "$LEAK_LOG"; FAILED=1
+else
+  echo "ok    SONAR_HOST_URL/SONAR_TOKEN never reach curl"
+fi
+
 [ "$FAILED" -eq 0 ] && echo "All local-only guards hold." || { echo "Local-only guard test FAILED."; exit 1; }

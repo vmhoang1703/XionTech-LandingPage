@@ -202,7 +202,7 @@ resolve_reference_base() {
   # if you consciously want to proceed without a branch diff.
   local ref="${SONAR_LOCAL_REFERENCE_BRANCH:-}"
   if [ -z "$ref" ]; then
-    die "SONAR_LOCAL_NEW_CODE_MODE=reference_branch needs SONAR_LOCAL_REFERENCE_BRANCH set in scripts/sonar/sonar.env (the branch your work is diffed against, e.g. dev)."
+    die "SONAR_LOCAL_NEW_CODE_MODE=reference_branch needs SONAR_LOCAL_REFERENCE_BRANCH set in scripts/sonar/sonar.env (the branch your work is diffed against, e.g. develop)."
   fi
 
   # The remote-tracking ref can be days old, and the merge base is computed from

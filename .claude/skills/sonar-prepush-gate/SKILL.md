@@ -82,15 +82,17 @@ Details that are easy to get wrong and are already handled:
 
 1. **Ask the user which branch this repo's work is diffed against.** Do not guess — it decides what
    the gate treats as new code. Use `AskUserQuestion`, offering the repo's likely PR target
-   (`dev`, `main`) read from its branches. The installer refuses to run without it.
+   read from its branches (this repo: `develop`, the target of every PR). The installer refuses
+   to run without it.
 
 2. Run the installer, pointing at the directory that should own `scripts/` — the repo root normally,
    or the project subdirectory in a monorepo:
 
    ```bash
-   bash "<skill-dir>/template/scripts/sonar/install.sh" --target /path/to/repo --reference-branch dev
+   # this repo (run from the repo root)
+   bash .claude/skills/sonar-prepush-gate/template/scripts/sonar/install.sh --target . --reference-branch develop
    # monorepo: the subdirectory holding sonar-project.properties
-   bash "<skill-dir>/template/scripts/sonar/install.sh" --target /path/to/monorepo/SubProject --reference-branch main
+   bash "<skill-dir>/template/scripts/sonar/install.sh" --target /path/to/monorepo/SubProject --reference-branch <reference-branch>
    ```
 
    It copies the scripts, templates `sonar.env.example` with the repo's project key, its path
@@ -136,23 +138,28 @@ Details that are easy to get wrong and are already handled:
 # 2. THE IMPORTANT ONE — prove the gate is not vacuous. Drop a file with a known
 #    violation under the project's sonar.sources, then re-run: it must BLOCK and
 #    report new_lines > 0. A gate that passes here is measuring nothing.
-cat > <sonar.sources>/_sonar_gate_probe.py <<'EOF'
-def probe(value):
-    if value == value:   # python:S1764
-        return 1
-    return 2
+#    This repo is TypeScript with sonar.sources=src, so the probe is a .ts file.
+#    It is flagged by typescript:S6679 ("Use 'Number.isNaN()'") — checked on the
+#    local container on 2026-09-28. Never commit the probe file.
+cat > src/_sonar_gate_probe.ts <<'EOF'
+export function probe(value: number): number {
+  if (value === value) {   // typescript:S6679
+    return 1;
+  }
+  return 2;
+}
 EOF
-./scripts/sonar/check_quality_gate.sh --skip-tests   # expect: BLOCK new_violations, exit 1
-rm <sonar.sources>/_sonar_gate_probe.py
+./scripts/sonar/check_quality_gate.sh --skip-tests; rm -f src/_sonar_gate_probe.ts   # expect: BLOCK new_violations
 
 # 3. Coverage imported — CE warnings must be [] and coverage non-zero.
 source ~/.sonar-prepush-gate.env
 curl -s -u "$SONAR_LOCAL_TOKEN:" "http://localhost:9000/api/ce/activity?component=<KEY>&ps=1"
 curl -s -u "$SONAR_LOCAL_TOKEN:" "http://localhost:9000/api/measures/component?component=<KEY>&metricKeys=new_lines,coverage"
 
-# 4. Remote mode is gone — both must exit non-zero with an error, no network call.
-./scripts/sonar/check_quality_gate.sh --remote
-SONAR_LOCAL_HOST_URL=https://example.com ./scripts/sonar/check_quality_gate.sh --branch feature/x
+# 4. Remote mode is gone — offline test: 8 refusal cases, a no-curl check, and a check that
+#    SONAR_HOST_URL/SONAR_TOKEN never reach curl. Stubs docker/curl; no network.
+#    Covers --remote, non-localhost / userinfo URLs, sonar.host.url, and Docker down.
+bash .claude/skills/sonar-prepush-gate/template/scripts/sonar/test_local_only_guards.sh
 
 # 5. develop/main pushes also stay local — expect the LOCAL container in the log.
 printf 'refs/heads/mywork <sha> refs/heads/develop <sha>

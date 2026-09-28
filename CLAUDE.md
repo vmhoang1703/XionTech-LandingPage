@@ -107,8 +107,13 @@ A task is done only when ALL are true:
 > runs only as a local code-quality check on each developer's machine.
 
 - Never add `SONAR_HOST_URL`, `SONAR_TOKEN`, a `sonar.host.url` property, or a CI Sonar step.
-  Never `curl` the XT server from this repo. The gate refuses to run if any of these point
-  anywhere other than `localhost`.
+  Never `curl` the XT server from this repo. What the gate does with each:
+  - `SONAR_LOCAL_HOST_URL` that is not `http://localhost:<port>` / `http://127.0.0.1:<port>`:
+    refuses to run.
+  - `sonar.host.url` in `sonar-project.properties`: refuses to run.
+  - `SONAR_HOST_URL` / `SONAR_TOKEN`: ignored (unset before any call), so they cannot leak.
+  - The offline test `.claude/skills/sonar-prepush-gate/template/scripts/sonar/test_local_only_guards.sh`
+    proves these guards; run it after any change to the gate template.
 - Every push — feature branches, `develop` and `main` — is scanned by a local
   `sonarqube:community` Docker container. There is no remote mode (`--remote` exits with an error).
 - "New code" is what the branch adds on top of `develop` (`SONAR_LOCAL_REFERENCE_BRANCH`).
@@ -116,10 +121,17 @@ A task is done only when ALL are true:
 - Findings block the push (bugs, vulnerabilities, code smells, hotspots, duplication).
   Coverage-only failures warn. Fix findings; do not bypass. `SONAR_GATE_SKIP=1 git push` /
   `--no-verify` only with the user's explicit OK, and say so in the PR.
-- One-time setup per clone: Docker Desktop running, then
-  `git config core.hooksPath scripts/git-hooks` and `./scripts/sonar/local_sonar.sh up`
-  (first boot pulls ~700MB). Dashboard: <http://localhost:9000> (admin password in
-  `~/.sonar-prepush-gate.env`).
+- One-time setup per clone (same as `README.md`), with Docker Desktop running:
+  1. `npm install`
+  2. `cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env` — without it the gate stops
+     with `Missing …/scripts/sonar/sonar.env`. It already sets
+     `SONAR_LOCAL_REFERENCE_BRANCH=develop`; do not change it. `sonar.env` is gitignored —
+     never commit it.
+  3. `./scripts/sonar/local_sonar.sh up` (first boot pulls ~700MB)
+  4. `git config core.hooksPath scripts/git-hooks` — last, so no push is blocked mid-setup
+
+  Dashboard: <http://localhost:9000> (admin password in `~/.sonar-prepush-gate.env`).
+
 - To change the gate, edit the `sonar-prepush-gate` skill template and re-run its installer —
   never hand-edit `scripts/sonar/`.
 
@@ -128,6 +140,7 @@ A task is done only when ALL are true:
 The only place stack specifics go.
 
 - **Language / toolchain:** TypeScript (strict) on Node.js 22 (`.nvmrc`) + npm. Next.js 16 App Router, React 19, Tailwind CSS v4.
+  Also needed for the checks: Docker Desktop (Sonar gate), Python 3.10+ available as the command `python` (the gate calls `python`, not `python3`), [uv](https://docs.astral.sh/uv/) (`uvx diff-cover`), `curl`, `tar`, `git` and bash (Git Bash on Windows). npm scripts run in `cmd.exe` on Windows: never chain `a || b && c` in `package.json` — when `a` succeeded, `cmd.exe` skipped `c` too, so a check silently did nothing and exited 0 (seen 2026-09-28). Put the `||` part in its own script.
 - **Test command:** `npm test` (Vitest 5, jsdom + Testing Library; tests live next to the code as `*.test.ts(x)`).
 - **Coverage source + diff-coverage command:** source `src/`; `npm run test:coverage && npm run coverage:diff` (C0: `diff-cover --fail-under=100` vs `origin/develop`). C1: Vitest enforces branches >= 80% project-wide (`vitest.config.mts`); diff-cover measures lines only, so check branch coverage of changed files in the `text` report.
 - **Lint command:** `npm run lint && npm run typecheck && npm run format:check`
