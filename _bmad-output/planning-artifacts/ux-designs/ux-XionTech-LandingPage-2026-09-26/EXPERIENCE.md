@@ -1,6 +1,6 @@
 ---
 name: XionTechs Website
-status: review
+status: final
 updated: 2026-09-28
 sources:
   - .memlog.md
@@ -28,11 +28,11 @@ Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html), [
 
 | Page | URL | Purpose | Sections in order |
 |---|---|---|---|
-| Home | `/` | Show what the products do in the first 5 seconds; open both front doors | Hero (headline, 2 CTAs, tablet + phone devices), two front doors (Products for schools, Outsourcing services), stats, four-app bento, eight services, 4-D process, latest news (3), demo capture |
+| Home | `/` | Show what the products do in the first 5 seconds; open both front doors | Dark hero (silk background with a motion toggle, headline, one primary CTA "Explore our products", tablet + phone devices, and the stats "Experience you can count on"), then light sections: two front doors (Products for schools, Outsourcing services), four-app bento, eight services, 4-D process, latest news (3), demo capture |
 | Products | `/products` | Let school buyers explore every app and book a demo | Hero (devices, Book a demo, Product updates), sticky sub-nav, `#pxp` (story phone with 5 tabs, features, store links), `#lxp`, `#sxp`, `#iot`, `#updates` (3 product stories), demo capture |
 | Services | `/services` | Let companies judge the delivery team and start a project | Hero (Start a project, See our 4-D process, office clocks), stats, 8 services (each with an anchor), three ways to work with us, `#process` (4-D), industries + time zones, project capture |
 | News | `/news` | Dated short stories about products, schools, team and company | Hero, category filters + story grid, subscribe capture |
-| About | `/about` | Who XionTechs is | Hero, stats, story, `#values` (6 core values), leadership, offices, capture |
+| About | `/about` | Who XionTechs is | Hero, stats, story, `#values` (6 core values), leadership, `#faq` (9 questions), offices, capture |
 | Careers | `/careers` | Attract engineers, testers and designers | Hero (Join our talent network, Life at XionTechs), culture, benefits, open roles, `#talent` capture, `#life` photos |
 | Book a demo (Contact) | `/demo` | One contact form for both intents | Hero with reassurance list and offices; form card with `#form` (Product demo tab) and `#project` (Outsourcing project tab) |
 | News story | `/news/[slug]` | One dated story | Breadcrumbs (Home / News / story), H1, date + category tag, photo, body, related product link, back to News. Own title, meta and Open Graph image. Depends on the CMS. |
@@ -48,10 +48,12 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 - **Products** mega menu, organised by app, not by audience: PXP (Parents), LXP (Students), SXP (Staff, Teachers, Leaders), IoT Device Management (School staff and facilities). Footer row: "More products are on the way." + "All products". New products are added as new rows with no restructuring.
 - **Services** mega menu with all 8 services: Product Engineering, AI-Driven Analytics, Product Co-Creation, Staffing Service, Custom App Development, Low-code Solutions, AI-Powered Solutions, Cloud Computing. Footer row: the 4-D process line + "See the process" (`/services#process`).
 - **News**, **About**, **Careers** as plain links.
-- **Tools:** EN/VI switch and **Book a demo** button. Both are reachable at every width (see Responsive & Platform).
+- **Text only:** the header and both mega menus show text only (no product badges, service icons, arrows or caret icons). The mobile menu button reads "Menu".
+- **Tools:** the EN/VI switch with the **Book a demo** button right next to it (above 640px). On phones (640px and below) Book a demo is the first item of the mobile menu.
+- Products and Services triggers are text only, with no caret icon, aligned with the plain links.
 - Logo links home. A skip link ("Skip to content") comes first in tab order.
 
-**Footer** (every page): logo + one-line blurb; **Products** (PXP, LXP, SXP, IoT Device Management, Product updates); **Services** (Product Engineering, AI-Driven Analytics, Staffing Service, Low-code Solutions, Cloud Computing, All services); **Company** (About, Core values, News, Careers, Contact); **Offices** (Ho Chi Minh City: Viettel Tower, Floor 12, 285 CMT8, HCMC 70064, +84 908 107 552; Dallas, USA: Texas, United States, +1 469 322 9899). Bottom bar: copyright, Privacy policy link, GET IT DONE tag.
+**Footer** (every page): logo + one-line blurb; **Products** (PXP, LXP, SXP, IoT Device Management, Product updates); **Services** (Product Engineering, AI-Driven Analytics, Staffing Service, Low-code Solutions, Cloud Computing, All services); **Company** (About, Core values, FAQ, News, Careers, Contact); **Offices** (Ho Chi Minh City: Viettel Tower, Floor 12, 285 CMT8, HCMC 70064, +84 908 107 552; Dallas, USA: Texas, United States, +1 469 322 9899). Bottom bar: copyright, Privacy policy link, GET IT DONE tag.
 
 **Needs to surfaces:**
 
@@ -88,12 +90,12 @@ Microcopy rules. Brand voice lives in `DESIGN.md` Brand & Style.
 | Intent | Label (EN) | Label (VI) | Goes to |
 |---|---|---|---|
 | Product demo | Book a demo | Đặt lịch demo | `/demo#form` (Product demo tab) |
-| Outsourcing project | Start a project | (VI to confirm) | `/demo#project` (Outsourcing project tab) |
-| News by email | Subscribe | (VI to confirm) | Inline success |
-| Talent network | Join | (VI to confirm) | Inline success |
-| Send the contact form | Send request | (VI to confirm) | Form success state |
+| Outsourcing project | Start a project | Bắt đầu dự án | `/demo#project` (Outsourcing project tab) |
+| News by email | Subscribe | Đăng ký | Inline success |
+| Talent network | Join | Tham gia | Inline success |
+| Send the contact form | Send request | Gửi yêu cầu | Form success state |
 
-Secondary links keep their own labels ("Explore our services", "See our 4-D process", "Product updates", "Join our talent network", "Life at XionTechs", "Read story", "See all news", "All products", "See the process"). Never reuse "Book a demo" for a project intent or "Start a project" for a demo.
+Secondary links keep their own labels ("Explore our products", "Explore our services", "See our 4-D process", "Product updates", "Join our talent network", "Life at XionTechs", "Read story", "See all news", "All products", "See the process"). Never reuse "Book a demo" for a project intent or "Start a project" for a demo.
 
 **Wording to reuse:**
 
@@ -120,7 +122,7 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 |---|---|
 | Site header | Sticky at the top of every page. Marks the current page (`aria-current="page"`, or the current mega trigger). Below 1080px the menu collapses behind the menu button. |
 | Mega menu | Desktop with hover: hover opens; moving away closes after a 150ms delay so the pointer can cross the gap to the panel. Click toggles predictably and never closes a menu that hover just opened (AC-NAV-3). Escape closes and returns focus to the trigger. Opening one closes the other. A click outside closes. Trigger has `aria-expanded`. Mobile: the mega content expands inline inside the mobile menu. |
-| Mobile menu | Menu button has `aria-controls` and `aria-expanded` (AC-NAV-4). Escape closes it and returns focus to the button. Contains all nav items and, at 1080px and below, Book a demo as its first item in button style (AC-NAV-2). The EN/VI switch never moves into the menu; it stays in the header (AC-NAV-1). |
+| Mobile menu | Menu button has `aria-controls` and `aria-expanded` (AC-NAV-4). Escape closes it and returns focus to the button. Contains all nav items and, at 640px and below, Book a demo as its first item in button style (AC-NAV-2). The EN/VI switch never moves into the menu; it stays in the header (AC-NAV-1). |
 | Language switch | Two toggle buttons with `aria-pressed`. Switching routes to the matching `/en/` or `/vi/` URL of the same page and keeps the scroll position and any values typed in forms. The page `lang` attribute, title and meta change with it. The choice is saved for the next visit (see Locale routing). |
 | Button | Links that look like buttons navigate; buttons submit or toggle. One primary button per group. |
 | Product sub-nav | Sticky under the header on `/products`. Highlights the section in view; at the end of the page the last item (Updates) is highlighted. Links scroll to anchors that land with the heading fully visible (AC-NAV-5). Scrolls horizontally on narrow screens. |
@@ -128,14 +130,14 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Product tile | One link per tile to the matching Products anchor. Media inside (the mini phone) is not interactive; use a stretched-link pattern so there is no interactive element inside a link (AC-A11Y-4). |
 | Service card | On Home, links to the service anchor on `/services`. On `/services`, it is the anchor target and is not a link. |
 | Spotlight card | Pointer-following glow and 4px lift on hover only. Hover starts immediately once scroll reveal has finished (AC-UI-1). |
-| Stats band | Numbers count up once when 60% visible (1.4s, ease out). "24/7" does not count. Screen readers get the final value only. Built as one shared component (the prototype copies it across pages). |
+| Stats band | Numbers count up once when 60% visible (1.4s, ease out). "24/7" does not count. Screen readers get the final value only. Built as one shared component (the prototype copies it across pages). On Home it sits at the bottom of the dark hero. |
 | Process flow (4-D) | When 30% visible, the track fills with amber (2.4s) and steps 01 to 04 fade in one after another; then an amber dot travels the track once and rests at Launch. Below 1080px the track and end nodes hide and steps stack. "You receive" rows align across cards (AC-UI-2). One shared component. |
 | Product badge | Decorative label for an app; never the only way to tell apps apart (the app name is always next to it). |
 | Industry chip | Static. |
 | Value grid | Hover tints the cell. Static otherwise. |
-| News card | "Read story" opens the story detail page. Category tag shows the app for product stories. |
+| News card | "Read story" opens the story detail page (`/news/[slug]`; the prototype has one sample, `news-story.html`). Category tag shows the app for product stories. |
 | Category tag | Static text. Product stories append the app name. |
-| Filter chips | Toggle buttons with `aria-pressed`; exactly one active at a time; pressing the active chip does nothing; "All" resets. Filtering is instant, with no page reload. [ASSUMPTION] The result count is announced. |
+| Filter chips | Toggle buttons with `aria-pressed`; exactly one active at a time; pressing the active chip does nothing; "All" resets. Filtering is instant, with no page reload. The result count is announced ("Showing 3 stories"). |
 | Email capture | Validates on submit. Invalid: inline error, `aria-invalid="true"`, error linked with `aria-describedby`, focus returns to the field; the error clears as the user types. Valid demo capture: goes to `/demo#form` with the email prefilled. The email travels through session storage or a server-side session, never in the URL (no query string, no hash). Valid project capture: goes to `/demo#project`, Outsourcing project tab selected, scrolled to the form (AC-FORM-2). Valid subscribe or join: the row is replaced by the success message in a `role="status"` region. |
 | Contact form | Two tabs: Product demo and Outsourcing project. The URL hash picks the tab on load (`#project` opens Outsourcing; any other hash opens Product demo). Fields in the hidden tab are not validated, cannot take focus and are not submitted; values typed there are kept if the user switches back. Fields and rules are in the Contact form fields table below. Submit validates all visible required fields, marks each invalid one and moves focus to the first. Success replaces the form with the thank-you panel. A hidden honeypot field and a server-side rate limit stop spam. |
 | Device frame | Holds real product screens or short product clips. Tilts slightly with the pointer on hover-capable devices only. Frames float gently. |
@@ -151,6 +153,8 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Open roles panel | Shown when there are no open roles; routes to `#talent`. When roles exist, each role is listed instead. |
 | Site footer | Same on every page. The privacy policy link must point at a real policy before launch. |
 | Toast | Short status message, bottom centre, `role="status"`, gone after about 2.6s. |
+| Motion toggle | Discreet icon button at the top right of the Home hero; the label is always in its accessible name and slides out on hover or keyboard focus. Label and icon switch between "Pause motion" and "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"); the changing name carries the state, so there is no `aria-pressed`. Hidden without JavaScript or WebGL. |
+| FAQ | Native disclosure (`<details>` / `<summary>`): several answers can be open at once; Enter and Space toggle; the question is the accessible name. FAQPage structured data on `/about`. Reached from the footer "FAQ" link at `/about#faq`. |
 | Skip link | First focusable element; jumps to `main`. |
 | Focus ring | Shown on keyboard focus (`:focus-visible`) on every focusable element. Colour follows the section: `{colors.focus-on-navy}` on navy, `{colors.focus}` elsewhere. |
 
@@ -167,7 +171,7 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Preferred date | Product demo | No | Today or later in the visitor's time zone (AC-FORM-1). "Please choose today or a later date." |
 | Service | Outsourcing project | No | The 8 services + "Not sure yet". |
 | Start timing | Outsourcing project | No | As soon as possible; In 1 to 3 months; Just exploring. |
-| Message | Both | No | [ASSUMPTION] Up to 2,000 characters. "Please keep your message under 2,000 characters." |
+| Message | Both | No | Up to 2,000 characters. "Please keep your message under 2,000 characters." |
 
 Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}` on navy. Where submissions go (inbox or CRM) is an open question.
 
@@ -183,12 +187,12 @@ Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}`
 | Home, Products | Media missing | Empty media frame, no broken image. |
 | Products `#pxp` | Tab switch | Only the active screen is visible and focusable. |
 | Products `#updates`, Home news | No product stories | Hide the grid and keep the "See all news" link. |
-| News | Filter with no matches | [ASSUMPTION] Empty message in the grid ("No stories in this category yet.") with an "All" reset. Depends on the CMS. |
+| News | Filter with no matches | Empty message in the grid ("No stories in this category yet.") with a "Show all" button that resets to All. |
 | News | Story detail | Detail page per story. Depends on the CMS choice. |
 | Careers | No open roles | Open roles panel + talent network route. |
 | Careers | Roles open | List of roles replaces the panel. |
 | Email capture | Idle / error / success / redirect | Error inline and announced; subscribe and join show success in place; demo and project redirect to `/demo` with the email prefilled. |
-| Contact form | Idle, error, sending, success, send failure | [ASSUMPTION for sending and send failure; the prototype sends nothing] Error per field with focus on the first. While sending, the submit button is disabled and says it is sending. Success shows the thank-you panel. If sending fails, keep every entered value and show an error above the button with a way to retry. |
+| Contact form | Idle, error, sending, success, send failure | Error per field with focus on the first. While sending, the submit button is disabled and reads "Sending..." ("Đang gửi..."). Success shows the thank-you panel. If sending fails, keep every entered value and show an error above the button with a way to retry. |
 | Contact form | Arrived from a capture | Email prefilled; tab set by the hash. |
 | Contact form | Date in the past | Blocked; the date picker starts at today. |
 
@@ -207,7 +211,8 @@ Built with Motion. Easing everywhere is `cubic-bezier(.16, 1, .3, 1)`.
 | Effect | Behaviour |
 |---|---|
 | Scroll reveal | Elements rise 26px and fade in over 0.9s when 12% visible, staggered 70ms in groups of four, once only. |
-| Hero background | Aurora blobs drift and the strand ribbon moves slowly, then both stop after 5s and hold the frame (WCAG 2.2.2). The ribbon also pauses when off screen. |
+| Home hero background | The silk cloth ripples slowly and continuously (time scale 0.35 in the prototype `site.js`). A visible "Pause motion" / "Play motion" button in the hero stops and restarts it (WCAG 2.2.2). The choice is remembered and wins on the next visit; with no saved choice and reduced motion it starts paused; it also pauses when off screen. |
+| Inner page hero background | Aurora blobs drift and the strand ribbon moves slowly, then both stop after 5s and hold the frame (WCAG 2.2.2). The ribbon also pauses when off screen. |
 | Devices | Tablet and phone float up and down for one cycle (under 5s), then rest; pointer tilt up to 8 degrees. Product clips never autoplay with sound, show a poster frame and have visible play and pause controls; a muted autoplay clip stops after 5s unless the user plays it. |
 | Highlight mark | Scales in from the left over 1.2s after a 0.5s delay. |
 | Stats | Count up over 1.4s. |
@@ -228,7 +233,7 @@ Behavioural. Visual contrast lives in `DESIGN.md` Colors. Every item below is an
 - **AC-A11Y-4:** No interactive element is nested inside a link. Tiles with media use a separate link or a stretched link.
 - **AC-A11Y-5:** Invalid fields get `aria-invalid="true"` and are linked to their error text with `aria-describedby`. Validation errors are announced.
 - **AC-NAV-1:** The EN/VI switch is available at every screen width.
-- **AC-NAV-2:** "Book a demo" is reachable at every width.
+- **AC-NAV-2:** "Book a demo" is reachable at every width: next to the EN/VI switch in the header above 640px, and as the first mobile menu item at 640px and below.
 - **AC-NAV-3:** On desktop, a click on Products or Services never closes a menu that hover just opened. Hover opens, click toggles predictably, Escape closes.
 - **AC-NAV-4:** The mobile menu closes with Escape. The menu button has `aria-controls` and `aria-expanded`.
 - **AC-NAV-5:** In-page links (`#process`, `#pxp`, `#values` and the rest) land with the section heading fully visible below the sticky header and the product sub-nav, using `scroll-margin-top`.
@@ -264,7 +269,7 @@ Breakpoints from the prototype (max-width):
 | 900px and below | Home hero, splits, capture bands, front doors and offices stack to one column; devices max 560px wide. Bento, values, news and leadership in 2 columns; the News feature card spans full width. Footer in 2 columns. |
 | 640px and below | Gutters 16px. Section padding shrinks. Bento, values, news, services, 4-D steps, form grid and feature lists in 1 column. Stats in 2 columns. Footer in 1 column. Capture row stacks the field above the button. The highlight mark may wrap. |
 
-**Header at every width** (fixes the prototype, which hid both on phones): the EN/VI switch stays in the header at every width (AC-NAV-1). Book a demo stays in the header above 1080px and becomes the first item of the mobile menu at 1080px and below (AC-NAV-2).
+**Header at every width** (fixes the prototype, which hid both on phones): the EN/VI switch stays in the header at every width (AC-NAV-1). Book a demo sits next to the EN/VI switch above 640px; at 640px and below it is the first item of the mobile menu (AC-NAV-2).
 
 Browsers: current evergreen browsers on desktop and mobile. Content is readable without JavaScript.
 
@@ -350,7 +355,6 @@ Failure: an invalid email shows the inline error and keeps him in the band.
 - **Analytics and cookies:** if analytics or non-essential cookies are added, a consent banner with decline as the default is required (PDPD). Also decide how long captured emails are kept.
 - **Form destination:** which inbox or CRM receives demo, project, subscribe and join submissions.
 - **Behaviour without JavaScript** for the capture redirect and the two-tab contact form: depends on how the Next.js build handles form submission (deferred from review).
-- **VI labels** for Start a project, Subscribe, Join and Send request.
 - **About page capture:** its heading reads "Let's work together." but the button is "Book a demo" and routes to the Product demo tab. Confirm the intent.
 - **Logo:** an SVG master is needed for retina and navy surfaces.
 - **Dark mode:** dropped in favour of the colour rhythm; the user may reverse this.

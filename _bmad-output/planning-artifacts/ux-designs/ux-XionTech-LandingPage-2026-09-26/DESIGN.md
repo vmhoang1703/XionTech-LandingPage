@@ -1,7 +1,7 @@
 ---
 name: XionTechs Website
 description: Bilingual (EN/VI) multi-page company website for XionTechs, selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
-status: review
+status: final
 updated: 2026-09-28
 colors:
   # Brand core, sampled from the logo
@@ -386,6 +386,7 @@ Section surfaces are scoped token sets, so components adapt to the section they 
 | `surface-mist` | gradient `{colors.mist}` to `{colors.mist-end}` | navy / text / muted | navy | `{colors.focus}` |
 | `surface-navy` | gradient `{colors.ink}` to `{colors.navy}` to `{colors.navy-glow}`, with an amber glow at 16% in the top right | on-navy set | `{colors.on-navy-link}` | `{colors.focus-on-navy}` |
 | `surface-amber` | gradient `{colors.amber-light}` to `{colors.amber}` to `{colors.amber-deep}` | on-amber set | navy | `{colors.focus}` |
+| `hero-silk` | `{colors.ink}` with an animated WebGL silk cloth (deep navy folds lit to `{colors.navy-glow}`, `{colors.amber-tint}` sheen, thin `{colors.amber}` threads along the folds), masked so the text side stays ink; static navy-glow and amber radial glows as the fallback. Dark: the Home hero is dark and the sections after it are light, apart from the navy 4-D band and the amber capture band | on-navy set | `{colors.on-navy-link}` | `{colors.focus-on-navy}` |
 | `hero-light` | `{colors.page}` with aurora (amber 42%, navy 28%, pale blue) | as paper | navy | `{colors.focus}` |
 | `hero-navy` | gradient `{colors.ink}` to `{colors.navy}` to `{colors.navy-glow}` with aurora | on-navy set | `{colors.on-navy-link}` | `{colors.focus-on-navy}` |
 | `hero-amber` | gradient `{colors.amber-pale}` to `{colors.amber}` to `{colors.amber-deep}` with a white glow | on-amber set | navy | `{colors.focus}` |
@@ -434,11 +435,11 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 
 | Page | Hero | Sections in order |
 |---|---|---|
-| Home | `hero-light` | front doors, stats (paper), products (mist, linen), services (paper), 4-D process (navy), news (mist), capture (amber) |
+| Home | `hero-silk` (dark, with the stats inside) | front doors, products (mist, linen), services (paper), 4-D process (navy), news (mist), capture (amber) |
 | Products | `hero-amber` | sub-nav, PXP (paper), LXP (mist, linen), SXP (navy), IoT (paper), product updates (mist), capture (navy) |
 | Services | `hero-navy` | stats (paper), 8 services (mist, linen), ways to work (paper), 4-D process (navy), industries (mist), capture (amber) |
 | News | `hero-light` | filters + story grid (paper), subscribe capture (navy) |
-| About | `hero-navy` | stats (paper), story (mist, linen), values (paper), leadership (mist), offices (navy), capture (amber) |
+| About | `hero-navy` | stats (paper), story (mist, linen), values (paper), leadership (mist), FAQ (paper), offices (navy), capture (amber) |
 | Careers | `hero-amber` | culture (paper), benefits (mist, linen), open roles (paper), talent network capture (navy), life at XionTechs (mist) |
 | Book a demo | `hero-navy` | contact form card inside the hero |
 
@@ -477,13 +478,13 @@ Depth is soft and navy-tinted, never grey.
 Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the same names. shadcn/ui primitives to build on are named in brackets.
 
 - **Button** [Button]. Three variants, all pills, `{spacing.button-height}` (small `{spacing.button-height-sm}`): `button-primary` amber gradient with navy text, used for the main action on light, navy and paper surfaces; `button-navy` navy with white text, used as the main action on amber surfaces; `button-glass` translucent with a border, for secondary actions. Press state: 1px down, scale 0.98. Hover: lift 2px.
-- **Site header** [NavigationMenu]. Sticky glass bar, `{spacing.header-height}` tall. Logo 32px high on the left, menu in the middle, tools on the right (language switch, Book a demo, menu button below 1080px). Active page: navy bold text with a 2px amber underline.
-- **Mobile menu** [Sheet or inline panel]. Below 1080px, a paper panel under the header, full width, scrolls within the viewport; mega content becomes a single column without shadow. Menu button is a 40px round icon button with a navy border at 14%.
-- **Mega menu** [NavigationMenu content]. Paper panel, 24px radius, up to 660px wide, 2 columns. Products mega: badge + app name + one-line value + "for" line in `{typography.label-sm}`, footer row "More products are on the way." + "All products". Services mega: icon tile + service name for all 8 services, footer row with the 4-D process line and "See the process".
+- **Site header** [NavigationMenu]. Sticky glass bar, `{spacing.header-height}` tall. Logo 32px high on the left, menu in the middle, tools on the right (language switch with the Book a demo button next to it above 640px; menu button below 1080px). Menu items are text only: the Products and Services triggers have no caret icon and share the plain links' 40px height so they align. Active page: navy bold text with a 2px amber underline.
+- **Mobile menu** [Sheet or inline panel]. Below 1080px, a paper panel under the header, full width, scrolls within the viewport; mega content becomes a single column without shadow. Menu button is a 40px-high pill with the text "Menu" (no icon) and a navy border at 14%.
+- **Mega menu** [NavigationMenu content]. Paper panel, 24px radius, up to 660px wide, 2 columns. Text only, with no badges, icons or arrows. Products mega: app name + one-line value + "for" line in `{typography.label-sm}`, footer row "More products are on the way." + "All products". Services mega: the 8 service names, footer row with the 4-D process line and "See the process".
 - **Language switch** [ToggleGroup]. Pill segment with EN and VI. Active: navy fill, white text.
 - **Product badge.** 44px rounded square, app initials in Unbounded 700. PXP amber, LXP navy-soft to navy, SXP navy to ink with amber-tint text, IoT mist with a chip icon. On product tiles whose fill matches the badge, the badge swaps for contrast: the amber PXP tile shows the SXP badge style and the navy SXP tile shows the PXP badge style (`product-tile.badge-on-*`). The app name always sits next to the badge.
 - **Front door.** Two large linked panels under the Home hero. Products door: white to pale blue gradient, four badges, four audience chips. Services door: navy surface, amber label, service chips ("+3 more").
-- **Stats band.** Five columns separated by 1px borders. Number in `{typography.stat}`; the suffix (+, /7) uses `{colors.amber-text}` on light and `{colors.amber}` on navy. Muted caption under each, max 22ch. The figures are confirmed by the business (2026-09-28); an italic `[Placeholder]` note is added under the band only if a figure is ever unverified.
+- **Stats band.** Five columns separated by 1px borders. On Home it sits at the bottom of the dark hero under the label "Experience you can count on". Number in `{typography.stat}`; the suffix (+, /7) uses `{colors.amber-text}` on light and `{colors.amber}` on navy. Muted caption under each, max 22ch. The figures are confirmed by the business (2026-09-28); an italic `[Placeholder]` note is added under the band only if a figure is ever unverified.
 - **Spotlight card.** Base for tiles, service cards, news cards and office cards: glass fill, border, 24px radius, pointer-following amber glow.
 - **Product tile.** Home bento. PXP spans 7 columns and 2 rows in an amber gradient with a tilted mini phone breaking the bottom edge. SXP spans 5 in navy. LXP spans 3 and IoT spans 2 on glass. Each has a circular "go" arrow top right.
 - **Service card.** 48px icon tile, title in `{typography.title-sm}`, one line of copy, optional mono tags row. Variants: `feature` (amber wash at 22%), `navy` (navy fill, amber icon).
@@ -509,6 +510,8 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 - **Open roles panel.** Dashed panel stating there are no open roles, with a route to the talent network.
 - **Site footer.** Ink background, white logo plate, blurb, four link columns with amber-tint Lexend Exa headings, office addresses, a bottom bar with copyright, privacy policy link and the GET IT **DONE** tag (DONE in amber).
 - **Toast** [Sonner]. Small ink pill at the bottom centre.
+- **Motion toggle.** Discreet round icon button (36px high, ink at 50%, white border at 30%, 70% opacity at rest) with a pause or play icon at the top right of the Home hero. Its text label slides out on hover or keyboard focus.
+- **FAQ.** Stacked question cards (paper, 18px radius, hairline border) with the question in `{typography.title-sm}` and a round plus / minus marker; the open card gains a soft shadow. Max width 880px.
 - **Skip link.** Hidden until focused; then an amber pill with navy text at the top left.
 - **Focus ring.** 2.5px outline, 3px offset, 8px radius. Navy on light and amber surfaces, amber (`{colors.focus-on-navy}`) on navy surfaces. The email capture row shows a 3px ring in the same scoped colour.
 

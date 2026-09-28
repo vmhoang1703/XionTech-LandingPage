@@ -267,7 +267,6 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(247,249,253,.78);bac
 .step4 p{color:var(--muted);font-size:.92rem}
 .step4 .get{margin-top:auto;padding-top:16px;border-top:1px dashed var(--border);font-size:.86rem;color:var(--text)}
 .step4 .get b{display:block;font-family:var(--f-brand);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:500}
-.step4 .get{margin-top:16px}
 
 /* industries */
 .industries{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px}
@@ -471,3 +470,100 @@ footer.site p.about{margin-top:18px;max-width:32ch;font-size:.92rem}
   .reveal{opacity:1;transform:none}
   .step4{opacity:1;transform:none}.flow .track i{transform:scaleX(1)}
 }
+
+/* ---------- v3.1: decisions from the spec review (see EXPERIENCE.md) ---------- */
+:root{--amber-text:#8A6700;--field-border:#75869F}
+/* AC-A11Y-1: amber text and icons on light surfaces */
+.s-paper .stat .n em,.s-mist .stat .n em,.step4 .num,.list-check i{color:var(--amber-text)}
+/* WCAG 1.4.11: field and control boundaries 3:1 */
+.field input,.field select,.field textarea,.checks label,.filters button,.ptabs button{border-color:var(--field-border)}
+.field.bad select,.field.bad textarea{border-color:#B3261E}
+.s-amber .cap-row{border:1.5px solid #163663}
+/* AC-A11Y-2: amber focus ring on navy capture bands */
+.s-navy .cap-row:focus-within{box-shadow:0 0 0 3px #FFC000,0 20px 40px -20px rgba(0,0,0,.4)}
+/* consent lines with privacy link */
+.cap-form small a,.consent a{color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+/* AC-NAV-5: anchors land below the sticky header and sub-nav */
+[id]{scroll-margin-top:88px}
+body[data-page="products"] [id]{scroll-margin-top:144px}
+/* WCAG 2.2.2: decorative motion stops within 5 seconds */
+.hero-light .aurora,.hero-navy .aurora,.hero-amber .aurora{animation:drift 5s var(--ease) 1 forwards}
+.tablet{animation:floatA 4.5s ease-in-out 1}
+.phone{animation:floatB 4.5s ease-in-out 1}
+.step4 .art .orb{animation:bob 2.5s ease-in-out 1}
+.flow.lit .track b{animation:travel 2.5s 2.4s var(--ease) 1 forwards}
+/* AC-A11Y-4: stretched link instead of a control inside a link */
+.stretch{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.stretch:focus-visible{outline-offset:-4px}
+.t-pxp .go{z-index:2;pointer-events:none}
+.t-pxp .mini-phone{position:relative;z-index:2}
+/* AC-NAV-2: Book a demo inside the mobile menu */
+.menu-cta{display:none}
+/* news filter result count and empty state */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.news-empty{margin-top:18px;padding:26px;border:1.5px dashed var(--field-border);border-radius:24px;color:var(--muted);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+/* story, privacy and 404 pages */
+.story-body{max-width:720px;margin:0 auto}
+.story-body p,.story-body li{color:var(--text);font-size:1.075rem;margin-top:16px}
+.story-body h2{font-size:clamp(1.4rem,2.4vw,1.8rem);margin-top:40px}
+.story-body ul{padding-left:22px}
+.story-media{aspect-ratio:16/9;margin:8px 0 12px;border-radius:24px;overflow:hidden}
+.story-media .slot{border-radius:24px}
+@media (max-width:1080px){
+  .menu.mobile-open .menu-cta{display:inline-flex;justify-content:center;margin-bottom:10px}
+}
+@media (max-width:640px){
+  /* AC-NAV-1: EN/VI stays in the header on phones */
+  .tools .seg{display:inline-flex}
+  .logo img{height:26px}
+  .nav-in{gap:12px}
+}
+
+/* ---------- v3.2: Home silk hero, text-only nav ---------- */
+.hero-silk{background:var(--bg)}
+.hero-silk .silk{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero-silk .silk-fallback{position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(60% 80% at 85% 40%,rgba(22,54,99,.35),transparent 70%),
+  radial-gradient(40% 50% at 70% 85%,rgba(255,192,0,.35),transparent 70%),var(--bg)}
+.menu>a,.dd>button{height:40px;line-height:1;align-items:center}
+
+/* ---------- v3.3: dark Home hero with stats, motion toggle, Book a demo beside EN/VI ---------- */
+.hero-silk{background:#0B1730}
+.hero-silk .silk-fallback{background:
+  radial-gradient(60% 80% at 85% 40%,rgba(36,76,133,.75),transparent 70%),
+  radial-gradient(40% 50% at 70% 85%,rgba(255,192,0,.22),transparent 70%),#0B1730}
+.home-hero{flex-direction:column;justify-content:center}
+.home-grid{padding-bottom:36px}
+.hero-stats{width:100%;padding-bottom:150px}
+.hero-stats .stats{margin-top:18px;padding-top:26px;border-top:1px solid var(--border)}
+.motion-toggle{position:absolute;top:16px;right:24px;z-index:3;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.3);background:rgba(11,23,48,.5);backdrop-filter:blur(8px);color:#fff;font-size:.82rem;font-weight:600}
+.motion-toggle:hover{border-color:#fff}
+@media (min-width:641px){.menu.mobile-open .menu-cta{display:none}}
+@media (max-width:640px){.head-cta{display:none}.home-grid{padding-bottom:24px}.hero-stats{padding-bottom:120px}.motion-toggle{right:16px}}
+
+/* ---------- v3.4: hide the mobile-menu Book a demo outside the open phone menu (it leaked next to the logo) ---------- */
+.menu .menu-cta{display:none}
+@media (max-width:640px){.menu.mobile-open .menu-cta{display:inline-flex}}
+
+/* ---------- v3.5: discreet pause control (option B): icon only, label slides out on hover or keyboard focus ---------- */
+.motion-toggle{width:auto;height:36px;padding:0 10px;gap:0;opacity:.7;transition:opacity .3s var(--ease),border-color .3s}
+.motion-toggle span{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .35s var(--ease),margin .35s var(--ease)}
+.motion-toggle:hover,.motion-toggle:focus-visible{opacity:1}
+.motion-toggle:hover span,.motion-toggle:focus-visible span{max-width:200px;margin-left:8px}
+@media (prefers-reduced-motion:reduce){.motion-toggle span{max-width:200px;margin-left:8px}}
+
+/* ---------- v3.6: text-only navigation, About FAQ ---------- */
+.menu-btn{height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(22,54,99,.14);font-weight:600;font-size:.9rem;color:#163663;align-items:center}
+.faq{display:grid;gap:12px;max-width:880px}
+.faq details{border:1px solid var(--border);border-radius:18px;background:var(--surface);transition:box-shadow .3s var(--ease)}
+.faq details[open]{box-shadow:0 20px 40px -30px var(--shadow)}
+.faq summary{list-style:none;cursor:pointer;position:relative;padding:20px 60px 20px 22px;font-family:var(--f-display);font-weight:600;font-size:1rem;line-height:1.4;color:var(--heading)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-family:var(--f-body);font-size:1.1rem}
+.faq details[open] summary::after{content:"\2212"}
+.faq summary:focus-visible{outline-offset:-3px;border-radius:18px}
+.faq p{padding:0 22px 22px;color:var(--muted);max-width:70ch}
+
+/* ---------- v3.7: no motion toggle without JavaScript ---------- */
+.no-js .motion-toggle{display:none}

@@ -7,7 +7,7 @@
 <meta name="description" content="Stories from XionTechs: product updates for PXP, LXP, SXP and IoT, partner schools, our team and client work.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Lexend+Exa:wght@400;500;600&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body data-page="news">
@@ -27,7 +27,7 @@
 <section class="sec s-paper" aria-label="All stories" style="padding-top:56px">
   <div class="wrap">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:32px">
-      <div class="filters" data-filter-for="newsGrid" role="group" aria-label="Filter stories">
+      <div class="filters" data-filter-for="newsGrid" data-count="newsCount" data-empty="newsEmpty" role="group" aria-label="Filter stories">
         <button aria-pressed="true" data-f="all" data-vi="Tất cả">All</button>
         <button aria-pressed="false" data-f="product" data-vi="Sản phẩm">Product</button>
         <button aria-pressed="false" data-f="company" data-vi="Công ty">Company</button>
@@ -37,6 +37,8 @@
       <p class="sample" data-vi="[Placeholder] Tin mẫu. Thay bằng tin thật trước khi ra mắt.">[Placeholder] Sample stories. Replace with real news before launch.</p>
     </div>
     <div class="news-grid" id="newsGrid" data-news="all"></div>
+    <p class="sr-only" id="newsCount" aria-live="polite"></p>
+    <div class="news-empty" id="newsEmpty" hidden><span data-vi="Chưa có tin trong mục này.">No stories in this category yet.</span><button class="btn btn-glass btn-sm" type="button" data-vi="Xem tất cả">Show all</button></div>
   </div>
 </section>
 
@@ -48,7 +50,7 @@
       <label for="cap-email" data-vi="Địa chỉ email">Email address</label>
       <div class="cap-row"><input type="email" id="cap-email" autocomplete="email" placeholder="name@example.com" required><button class="btn btn-primary" type="submit" data-vi="Đăng ký">Subscribe</button></div>
       <small class="err" hidden data-vi="Vui lòng nhập địa chỉ email hợp lệ.">Please enter a valid email address.</small>
-      <small data-vi="Bạn có thể hủy đăng ký bất cứ lúc nào.">You can unsubscribe at any time.</small>
+      <small><span data-vi="Chúng tôi chỉ dùng email của bạn để gửi tin tức XionTechs. Bạn có thể hủy đăng ký bất cứ lúc nào.">We only use your email to send XionTechs news. You can unsubscribe at any time.</span> <a href="privacy.html" data-vi="Chính sách bảo mật">Privacy policy</a></small>
       <div class="cap-ok" role="status"><i class="ph-fill ph-check-circle"></i><span data-vi="Cảm ơn bạn! Bạn đã đăng ký nhận tin (bản mẫu, chưa gửi dữ liệu).">Thanks, you're subscribed. (Prototype: nothing was sent.)</span></div>
     </form>
   </div>

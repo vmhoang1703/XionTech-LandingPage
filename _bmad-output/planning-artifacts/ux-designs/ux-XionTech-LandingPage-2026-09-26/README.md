@@ -1,16 +1,17 @@
 # UX: XionTechs company website
 
 Owner: Amber Do. Made with the BMad UX workflow (`bmad-agent-ux-designer` + `bmad-ux`) in Claude Code.
-Status: **UX specs in review.** Four `[ASSUMPTION]` items and four Vietnamese button labels are
-waiting for team confirmation. `DESIGN.md` (how it looks) and `EXPERIENCE.md` (how it works) are the
-source of truth. They win over the prototype on any conflict.
+Status: **UX specs final** (2026-09-28), except the items listed under Open Questions in `EXPERIENCE.md`. `DESIGN.md` (how it looks) and `EXPERIENCE.md` (how it works)
+are the source of truth and win over the prototype on any conflict. The prototype shows every UI
+decision in the specs; UI changes are checked in the prototype before a PR.
 
 The AI log for this work is in `docs/ai-log.md` (entry "Website UX first draft").
 
 ## Open the prototype
 
 Open `mockups/site-v3/index.html` in a browser (double-click works, no build step).
-It has 7 linked pages: Home, Products, Services, News, About, Careers, Book a demo.
+It has 7 linked pages (Home, Products, Services, News, About, Careers, Book a demo) plus a sample
+news story, the privacy policy page and a 404 page.
 
 - **EN/VI:** the switch in the header.
 - **Screenshots:** click, drag or paste (Ctrl+V) an image onto any device or photo frame.

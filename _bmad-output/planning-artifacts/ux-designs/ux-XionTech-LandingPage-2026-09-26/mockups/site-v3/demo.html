@@ -7,7 +7,7 @@
 <meta name="description" content="Book a demo of PXP, LXP and SXP for your school, or tell us about your software project. XionTechs, Ho Chi Minh City and Dallas.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Lexend+Exa:wght@400;500;600&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body data-page="demo">
@@ -49,17 +49,17 @@
             <div class="checks"><label><input type="checkbox" checked> PXP</label><label><input type="checkbox"> LXP</label><label><input type="checkbox"> SXP</label><label><input type="checkbox"> IoT</label></div></fieldset>
           <div class="field" data-for="demo"><label for="f-size" data-vi="Quy mô trường">School size</label>
             <select id="f-size"><option data-vi="Dưới 500 học sinh">Under 500 students</option><option data-vi="500 đến 1.500 học sinh">500 to 1,500 students</option><option data-vi="Trên 1.500 học sinh">Over 1,500 students</option><option data-vi="Nhiều cơ sở">Multiple campuses</option></select></div>
-          <div class="field" data-for="demo"><label for="f-date" data-vi="Ngày mong muốn">Preferred date</label><input id="f-date" type="date"></div>
+          <div class="field" data-for="demo"><label for="f-date" data-vi="Ngày mong muốn">Preferred date</label><input id="f-date" type="date"><span class="err" data-vi="Vui lòng chọn hôm nay hoặc một ngày sau đó.">Please choose today or a later date.</span></div>
 
           <div class="field" data-for="project" hidden><label for="f-svc" data-vi="Dịch vụ">Service</label>
             <select id="f-svc"><option>Product Engineering</option><option>AI-Driven Analytics</option><option>Product Co-Creation</option><option>Staffing Service</option><option>Custom App Development</option><option>Low-code Solutions</option><option>AI-Powered Solutions</option><option>Cloud Computing</option><option data-vi="Chưa chắc chắn">Not sure yet</option></select></div>
           <div class="field" data-for="project" hidden><label for="f-when" data-vi="Thời gian bắt đầu">When do you want to start?</label>
             <select id="f-when"><option data-vi="Càng sớm càng tốt">As soon as possible</option><option data-vi="Trong 1 đến 3 tháng">In 1 to 3 months</option><option data-vi="Đang tìm hiểu">Just exploring</option></select></div>
 
-          <div class="field full"><label for="f-msg" data-vi="Tin nhắn (không bắt buộc)">Message (optional)</label><textarea id="f-msg"></textarea></div>
+          <div class="field full"><label for="f-msg" data-vi="Tin nhắn (không bắt buộc)">Message (optional)</label><textarea id="f-msg"></textarea><span class="err" data-vi="Vui lòng giữ tin nhắn dưới 2.000 ký tự.">Please keep your message under 2,000 characters.</span></div>
         </div>
         <button class="btn btn-primary" type="submit" style="margin-top:22px"><span data-vi="Gửi yêu cầu">Send request</span><i class="ph ph-paper-plane-tilt"></i></button>
-        <p style="margin-top:12px;font-size:.84rem;color:#4A5B78" data-vi="Chúng tôi chỉ dùng thông tin của bạn để phản hồi yêu cầu này.">We only use your details to respond to this request.</p>
+        <p class="consent" style="margin-top:12px;font-size:.84rem;color:#4A5B78"><span data-vi="Chúng tôi chỉ dùng thông tin của bạn để phản hồi yêu cầu này.">We only use your details to respond to this request.</span> <a href="privacy.html" data-vi="Chính sách bảo mật">Privacy policy</a></p>
       </form>
       <div class="form-ok" role="status"><i class="ph-fill ph-check-circle"></i><h3 data-vi="Cảm ơn bạn!">Thank you!</h3><p style="color:#4A5B78" data-vi="Chúng tôi sẽ sớm liên hệ với bạn. (Bản mẫu, chưa gửi dữ liệu.)">We will be in touch soon. (Prototype: nothing was sent.)</p></div>
     </div>
