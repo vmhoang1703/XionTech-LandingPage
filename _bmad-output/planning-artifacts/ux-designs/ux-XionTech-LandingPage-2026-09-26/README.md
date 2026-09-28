@@ -23,7 +23,8 @@ It has 7 linked pages: Home, Products, Services, News, About, Careers, Book a de
 | `.working/brand-type-kit.html` | Type kit from the logo: Unbounded, Lexend Exa, Be Vietnam Pro, JetBrains Mono (all support Vietnamese). |
 | `.working/*.html` (others) | Earlier rounds, superseded: colour themes, 3 concepts, landing v1 and v2. Kept to show how the design evolved. They contain unmarked sample data (made-up names and numbers) and must not be reused as content. |
 | `imports/` | Company logos and the hero reference screenshot supplied by the team. |
-| `ai-log-entry.md` | AI log entry for this work (see below). |
+| `ai-log-entry.md` | AI log entry for this work, to append to `docs/ai-log.md`. |
+| `code-review-2026-09-28.md` | `bmad-code-review` results: 4 fixes applied, **14 acceptance criteria for the Next.js build**, deferred and rejected items. |
 
 ## Key design decisions
 
@@ -33,6 +34,13 @@ It has 7 linked pages: Home, Products, Services, News, About, Careers, Book a de
 - Core values use the wording from the office banner.
 - Only two offices: Ho Chi Minh City and Dallas.
 
+## For developers
+
+Treat this folder as a **design reference**. Rebuild in Next.js; do not copy the HTML.
+Before a story is ready for development it needs acceptance criteria, a link to the prototype
+section (for example `services.html#process`), design tokens from `DESIGN.md` and verified content.
+Add the acceptance criteria in `code-review-2026-09-28.md` to the matching stories.
+
 ## Before this becomes real pages
 
 The prototype follows the challenge rule: everything not verified is marked `[Placeholder]`.
@@ -41,6 +49,7 @@ The prototype follows the challenge rule: everything not verified is marked `[Pl
 - Stats (25+ years, 24/7, 20+ stacks), service descriptions and careers benefits come from the
   current xiontechs.com and need a human check. "24/7 global coverage" especially.
 - Still missing: Dallas street address, contact email, real leadership team, partner-school
-  logos (with permission), real news stories, product screenshots or clips.
+  logos (with permission), real news stories, product screenshots or clips, app store links,
+  and a **privacy policy** (the forms collect personal data; Vietnam PDPD, Decree 13/2023, applies).
 - The prototype is not the production code. The real site is built in Next.js 16 + Tailwind v4
   (see `AGENTS.md`); reuse the decisions, not the HTML.

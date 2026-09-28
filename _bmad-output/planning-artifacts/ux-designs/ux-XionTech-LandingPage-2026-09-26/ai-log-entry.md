@@ -25,3 +25,7 @@
     "Rayan Athels"). They were not reused.
   - A scripted edit while adding `[Placeholder]` markers broke the news data in `site.js`; caught by
     `node --check`, restored and redone.
+  - All checks were static. Accessibility, contrast and responsive layout were never checked in a browser.
+    `bmad-code-review` then found 18 fixable issues, including a screenshot frame that could not be
+    clicked, text contrast below AA and a language switch hidden on phones. 4 were fixed in the prototype;
+    the other 14 became acceptance criteria for the Next.js build (`code-review-2026-09-28.md`).

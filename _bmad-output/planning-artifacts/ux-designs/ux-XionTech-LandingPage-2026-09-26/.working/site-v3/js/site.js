@@ -56,7 +56,7 @@
       <address class="office"><b>Ho Chi Minh City, Vietnam</b>Viettel Tower, Floor 12<br>285 CMT8, HCMC 70064<br><a href="tel:+84908107552">+84 908 107 552</a></address>
       <address class="office"><b>Dallas, USA</b>Texas, United States<br><a href="tel:+14693229899">+1 469 322 9899</a></address></div>
   </div>
-  <div class="fbot"><span>© 2026 XionTechs</span><span class="tag">GET IT <b>DONE</b></span></div>
+  <div class="fbot"><span>© 2026 XionTechs · <a href="#" data-vi="[Placeholder] Chính sách bảo mật">[Placeholder] Privacy policy</a></span><span class="tag">GET IT <b>DONE</b></span></div>
 </div></footer><div class="toast" id="toast" role="status"></div>`;
   const hs=document.getElementById('site-header'),fs=document.getElementById('site-footer');
   if(hs)hs.outerHTML=header;
@@ -127,8 +127,8 @@
     slot.innerHTML='<div class="hint"><i class="ph ph-image-square"></i><b>'+slot.dataset.hint+'</b><small>Click, drop or paste · '+slot.dataset.size+'</small></div><button class="rm" aria-label="Remove image"><i class="ph ph-x"></i></button>';
     const inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.hidden=true;slot.appendChild(inp);
     const saved=store.get('xt3-slot-'+slot.dataset.slot);if(saved)paint(slot,saved);
-    slot.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(e.target.closest('.rm'))return;inp.click()});
-    slot.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.click()}});
+    slot.addEventListener('click',e=>{if(e.target===inp)return;e.preventDefault();e.stopPropagation();if(e.target.closest('.rm'))return;inp.click()});
+    slot.addEventListener('keydown',e=>{if(e.target!==slot)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.click()}});
     inp.addEventListener('change',()=>{put(slot,inp.files[0]);inp.value=''});
     slot.querySelector('.rm').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();paint(slot,null);store.del('xt3-slot-'+slot.dataset.slot);toast('Image removed.')});
     slot.addEventListener('mouseenter',()=>lastSlot=slot);slot.addEventListener('focus',()=>lastSlot=slot);
