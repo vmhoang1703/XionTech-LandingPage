@@ -74,8 +74,11 @@ local Sonar gate must be green.
 
 ## Git workflow
 
-- `main` = production (deployed to the public URL). Only updated by PR from `develop`.
-- `develop` = integration branch. Everyone branches from it and opens PRs back into it.
+- `main` = production, deployed by Vercel to https://xion-tech-landing-page.vercel.app. Only updated by a
+  release PR from `develop` (merge commit).
+- `develop` = integration branch, deployed to https://xiontech-dev.vercel.app. Everyone branches from it
+  and opens PRs back into it. Every PR gets a Vercel preview URL.
+- Merge PRs with **Create a merge commit** (squash is off) so each person's commits stay in history.
 - Branch names: `feature/<short-name>`, `fix/<short-name>`, `docs/<short-name>`.
 - Commit messages: Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`).
 - When an AI agent writes a commit, keep its `Co-Authored-By` trailer so AI work is visible.

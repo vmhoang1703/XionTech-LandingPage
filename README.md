@@ -4,6 +4,14 @@ New landing page / website for [XionTech](https://xiontechs.com/).
 
 Built for the XionTech internal AI build challenge (demo day: 2026-10-09).
 
+## Live URLs (Vercel)
+
+| Environment | Branch      | URL                                       |
+| ----------- | ----------- | ----------------------------------------- |
+| Production  | `main`      | https://xion-tech-landing-page.vercel.app |
+| Development | `develop`   | https://xiontech-dev.vercel.app           |
+| PR preview  | `feature/*` | posted by Vercel as a comment on each PR  |
+
 ## Getting started
 
 Requires Node.js 20.9+ (see `.nvmrc`).
