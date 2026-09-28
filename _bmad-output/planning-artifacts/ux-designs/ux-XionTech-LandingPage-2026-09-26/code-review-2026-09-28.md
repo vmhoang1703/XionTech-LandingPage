@@ -31,7 +31,7 @@ Add these to the relevant stories when the epics are created.
 - **AC-NAV-5:** In-page links (`#process`, `#pxp`, `#values`, and so on) land with the section heading fully visible below the sticky header and the product sub-nav (`scroll-margin-top`).
 
 ### Accessibility
-- **AC-A11Y-1:** All text meets WCAG 2.2 AA (4.5:1, or 3:1 for large text) and icons meet 3:1. Do **not** use `#C99700` for text or icons on white or mist; use `#8F6B00` or darker.
+- **AC-A11Y-1:** All text meets WCAG 2.2 AA (4.5:1, or 3:1 for large text) and icons meet 3:1. Do **not** use `#C99700` for text or icons on white or mist; use `#8A6700` (5.14:1 on paper, 4.65:1 on mist). `#8F6B00` fails on mist (4.38:1).
 - **AC-A11Y-2:** Every focusable element has a visible focus indicator on every section colour. On navy sections, the email field's focus ring uses amber, not navy.
 - **AC-A11Y-3:** Hidden content (inactive phone screens, closed tabs) cannot receive keyboard focus.
 - **AC-A11Y-4:** There are no interactive elements nested inside links. Product tiles that contain media use a separate link or a stretched-link pattern.

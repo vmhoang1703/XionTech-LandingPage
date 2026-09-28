@@ -4,6 +4,8 @@ Owner: Amber Do. Made with the BMad UX workflow (`bmad-agent-ux-designer` + `bma
 Status: **first draft for team review.** `DESIGN.md` and `EXPERIENCE.md` are still empty stubs;
 they get written when the design is agreed.
 
+The AI log for this work is in `docs/ai-log.md` (entry "Website UX first draft").
+
 ## Open the prototype
 
 Open `.working/site-v3/index.html` in a browser (double-click works, no build step).
@@ -23,7 +25,6 @@ It has 7 linked pages: Home, Products, Services, News, About, Careers, Book a de
 | `.working/brand-type-kit.html` | Type kit from the logo: Unbounded, Lexend Exa, Be Vietnam Pro, JetBrains Mono (all support Vietnamese). |
 | `.working/*.html` (others) | Earlier rounds, superseded: colour themes, 3 concepts, landing v1 and v2. Kept to show how the design evolved. They contain unmarked sample data (made-up names and numbers) and must not be reused as content. |
 | `imports/` | Company logos and the hero reference screenshot supplied by the team. |
-| `ai-log-entry.md` | AI log entry for this work, to append to `docs/ai-log.md`. |
 | `code-review-2026-09-28.md` | `bmad-code-review` results: 4 fixes applied, **14 acceptance criteria for the Next.js build**, deferred and rejected items. |
 
 ## Key design decisions

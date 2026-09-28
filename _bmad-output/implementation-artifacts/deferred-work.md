@@ -34,3 +34,13 @@ Change reviewed: team CLAUDE.md rules, test tooling, local-only SonarQube gate (
 - [low] Coverage path rewrite stops at spaces in the repo path.
 - [low] Container states paused/restarting/dead fall through to `docker run` and a name conflict.
 - [low] Empty `serverUrl` in report-task.txt gives a misleading "published to ''" tripwire message.
+
+## Deferred from: code review (2026-09-28), UX first draft
+
+Change reviewed: UX prototype and README (branch `docs/ux-first-draft`). The 14 findings turned into acceptance criteria for the Next.js build are in `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md`.
+
+- [medium] No automated tests for the prototype script (forms, EN/VI, news filters, navigation). Test these behaviours in the Next.js build.
+- [medium] Translation beyond visible text: page titles, meta descriptions, aria labels and toasts need VI versions; serve `/en/` and `/vi/` URLs with hreflang.
+- [low] Per-page metadata (favicon, canonical, Open Graph) is missing in the prototype; use the Next.js Metadata API.
+- [low] "Read story" has no detail page and the news filters have no empty state; depends on the CMS choice.
+- [low] Stats band and 4-D flow are copied across prototype pages; build each as one component.
