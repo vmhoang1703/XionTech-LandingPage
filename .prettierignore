@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+package-lock.json
+_bmad
+.claude
+_bmad-output
+coverage
+test-results
+playwright-report
+scripts/sonar
