@@ -3,7 +3,7 @@
 Review of commit `5de6f01` on `docs/ux-first-draft` with `bmad-code-review`.
 
 - **Layers:** Blind Hunter, Edge Case Hunter, Verification Gap. Acceptance Auditor was skipped because there is no spec.
-- **Scope:** `.working/site-v3/`, `README.md`, `ai-log-entry.md`. The earlier exploration rounds were out of scope.
+- **Scope:** `.working/site-v3/` (since moved to `mockups/site-v3/`), `README.md`, `ai-log-entry.md`. The earlier exploration rounds were out of scope.
 - **Result:** 18 patch, 5 defer, 12 rejected.
 
 The prototype is a design reference, not production code (see `README.md`). So only the findings
