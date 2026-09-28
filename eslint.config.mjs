@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "coverage/**",
+    "test-results/**",
+    "playwright-report/**",
     // BMad method files (installed by @xiontechs/bmad-method, not our code):
     ".claude/**",
     "_bmad/**",
