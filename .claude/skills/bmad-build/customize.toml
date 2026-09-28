@@ -1,0 +1,244 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Default customization values for bmad-build.
+# Override in _bmad/custom/bmad-build.toml or
+# _bmad/custom/bmad-build.user.toml.
+#
+# Merge rules:
+# - Strings replace the default.
+# - Lists append to the default list.
+# - Tables merge key by key.
+# - Arrays of tables merge by `id`: matching `id` replaces, new `id`s append.
+
+[workflow]
+
+# Extra instructions to run before config is loaded and before the user is greeted.
+
+activation_steps_prepend = []
+
+# Extra instructions to run after the greeting and before step 01.
+
+activation_steps_append = []
+
+# Facts kept in context for the whole run.
+# Entries are literal text or file references prefixed with "file:".
+# File entries may use globs and are loaded during activation.
+
+persistent_facts = []
+
+# Instruction run after Build completes.
+# Empty means no extra completion behavior.
+
+on_complete = ""
+
+# Optional instructions for opening a completed spec. The empty default leaves
+# the spec closed. Override this with the application and behavior you prefer.
+# Example requests for bmad-customize: "Open completed specs in Cursor and
+# reuse the project window" or "Do not open completed specs automatically."
+#
+# Example `open_spec` override instructions for bmad-build.user.toml:
+# {project-root} and {spec_file} are substituted at run time.
+#
+# VS Code and compatible GUI editors — a custom override can use `code`; Cursor,
+# Windsurf, Antigravity, Zed, and similar editors can use their own launcher.
+# Preserve reuse-window behavior when the launcher supports it, and always pass
+# the repository root first and the spec second:
+#   Run `code -r "{project-root}" "{spec_file}"`, root first.
+#   Run `cursor -r "{project-root}" "{spec_file}"`, root first.
+#   Run `windsurf -r "{project-root}" "{spec_file}"`, root first.
+#   Run `zed "{project-root}" "{spec_file}"`, root first.
+#
+# IntelliJ IDEA — its CLI accepts one path per invocation:
+#   Run `idea "{project-root}"` to open the project, then
+#   `idea "{spec_file}"` to open the spec in that project.
+#
+# Vim — keep repository context as the working directory:
+#   Run `cd "{project-root}" && vim "{spec_file}"`.
+#
+# Emacs — reuse an Emacs server without waiting for the buffer to close:
+#   Run `cd "{project-root}" && emacsclient -n "{spec_file}"`.
+#
+open_spec = ""
+
+# Handoff for the implementation subagent in step 03. The whole execution
+# recipe — a subagent by default, but an override may run it any other way
+# (a different model, an external coding tool via bash). Step 03 runs this
+# once per task in the spec's `## Tasks & Acceptance` section, not once per
+# spec. {spec_file}, {task_line}, and {report_file} are substituted at run time.
+
+implementation_handoff = """
+Launch a subagent with no prior conversation context, on an explicitly named model, with this prompt:
+
+> Read {spec_file} fully — it is the sole source of truth. Load every file listed in its frontmatter `context:` before you start.
+>
+> Implement ONLY this one task. Leave every other task in the spec alone, even if you notice something wrong with it.
+>
+> Task: {task_line}
+>
+> If the task carries a `red:` line, that test comes first: write it, run it, and confirm it fails for the stated reason before you write any implementation. A test that passes the first time it runs proves nothing about what it tests. Then write the minimum code that makes it pass, and clean up while it stays green.
+>
+> Do all of this task's work yourself. Never spawn a subagent — not a helper, and never a reviewer: the controller reviews your diff after you report, and a reviewer you spawn duplicates that review at full cost.
+>
+> Before you report, read your own diff once: everything the task asked for is there, nothing it did not ask for, the test verifies real behavior, and the test output is clean. Fix what you find.
+>
+> Write your full report to {report_file}: what you changed and the files you touched; the commits you made; the RED command with its failing output; the GREEN command with its passing output; and anything left incomplete or risky. If the task had no `red:` line, say why no test applied. If you are resumed with findings, append a fix report to the same file: what you changed, the covering tests, the command, and its output.
+>
+> Then reply in under 15 lines: a status, your commits, a one-line test summary, your concerns, and the report path. Status is `DONE`; `NEEDS_CONTEXT` when the spec and repository do not tell you something you need — say exactly what; or `BLOCKED` when you cannot complete the task — say what you tried. Never report partial work as done: the controller verifies your report against the diff.
+"""
+
+# Per-task review in step 03. Runs after each task passes the evidence gate,
+# and again in re-review mode after each fix round and after step 04's patch
+# dispatch. Empty disables it; step 04's review panel still runs. {spec_file},
+# {task_line}, {report_file}, {task_diff_file}, and {open_findings} are
+# substituted at run time.
+
+task_review = """
+Launch a context-free subagent, on an explicitly named model no lower than mid tier, with this prompt:
+
+> Read `{skill-root}/review-prompts/task-reviewer.md` completely and follow it as your review instructions.
+>
+> The spec is at {spec_file}. The task under review: {task_line}
+>
+> The implementer's report is at {report_file}.
+>
+> Findings under verification: {open_findings}
+>
+> Review content: the unified diff at `{task_diff_file}`. Read that file — it is the content under review.
+>
+> Do not invoke any skill, and do not spawn subagents of your own — you are the reviewer. If the instruction file is unreadable, report that exact failure and stop. Return your findings as text in your final message; do not route them through any findings-reporting tool the host may offer.
+"""
+
+# How Build observes a finished feature and captures proof that it works.
+# Runs once at the end of step 03, after every task is complete, and again
+# after step 04 applies patch findings. The evidence contract in this skill
+# owns the scope gate, the obligations, the ledger row formats, and the
+# anti-fabrication gate; this value only supplies the observation recipe and
+# cannot waive any of them. Empty means no project capture tool is wired up —
+# the contract then observes directly, which needs no extra dependencies.
+# {spec_file}, {ledger_file}, {evidence_dir}, and {baseline_commit} are
+# substituted at run time.
+#
+# Use bold labels, never markdown headings — this value is injected raw into
+# the contract file and a heading would splice into its section tree.
+#
+# Example requests for bmad-customize: "Capture browser screenshots as
+# acceptance evidence" or "Run our snapshot harness after every build."
+
+acceptance_evidence = ""
+
+# --- Scalar customizations must appear above this line. In TOML a bare key
+# --- written after an array-of-tables header belongs to that table, so a
+# --- scalar appended below would silently become a review-layer field and
+# --- the render would HALT with a missing-customization-default error.
+
+# Review layers for the review step. `instruction` is the layer's whole
+# execution recipe — subagents by default, but an override may run anything
+# (e.g. an external reviewer via bash). {diff_file}, {claims_file},
+# {spec_file}, and {ledger_file} are substituted at run time; all are paths,
+# and {diff_file} is the unified diff file the layer reads. `when` (optional) gates a layer; empty `instruction`
+# disables it.
+
+[[workflow.review_layers]]
+id = "blind-hunter"
+name = "Blind Hunter"
+instruction = """
+Launch a context-free subagent with this prompt:
+
+Conduct a review of CONTENT.
+Look for what's missing, not only what's wrong.
+Compute your finding floor N from the diff file's size: N = min(floor(sqrt(kB) + 1), 10), where kB is the file's size in kilobytes. State the arithmetic in one line, then find at least N issues to fix or improve.
+Output a Markdown list of findings only — no severity, priority, or ranking.
+If the content is empty, stop and say so.
+If you have zero findings, re-check and keep thinking; do not stop with an empty list.
+
+CONTENT: the unified diff at `{diff_file}`. Read that file — it is the content under review.
+
+Do not invoke any skill, and do not spawn subagents of your own — you are the reviewer. Return your findings as text in your final message; do not route them through any findings-reporting tool the host may offer.
+
+"""
+
+[[workflow.review_layers]]
+id = "edge-case-hunter"
+name = "Edge Case Hunter"
+instruction = """
+Launch a context-free subagent with this prompt:
+
+Read `{skill-root}/review-prompts/edge-case-hunter.md` completely and follow it as your review instructions.
+
+claims_file (leave unread until your instructions call for it): {claims_file}
+
+Review content: the unified diff at `{diff_file}`. Read that file — it is the content under review.
+
+Do not invoke any skill, and do not spawn subagents of your own — you are the reviewer. If the instruction file is unreadable, report that exact failure and stop. Return your findings as text in your final message; do not route them through any findings-reporting tool the host may offer.
+
+"""
+
+[[workflow.review_layers]]
+id = "verification-gap"
+name = "Verification Gap Reviewer"
+instruction = """
+Launch a context-free subagent with this prompt:
+
+Read `{skill-root}/review-prompts/verification-gap.md` completely and follow it as your review instructions.
+
+Review content: the unified diff at `{diff_file}`. Read that file — it is the content under review.
+
+Do not invoke any skill, and do not spawn subagents of your own — you are the reviewer. If the instruction file is unreadable, report that exact failure and stop. Return your findings as text in your final message; do not route them through any findings-reporting tool the host may offer.
+
+"""
+
+[[workflow.review_layers]]
+id = "acceptance-auditor"
+name = "Acceptance Auditor"
+instruction = """
+Launch a context-free subagent with this prompt:
+
+Read `{skill-root}/review-prompts/acceptance-auditor.md` completely and follow it as your review instructions.
+
+The spec under audit is at {spec_file}. Read it fully — it is what the change is measured against. The build ledger is at {ledger_file}; read it too unless that path reads `no ledger`.
+
+Review content: the unified diff at `{diff_file}`. Read that file — it is the content under review.
+
+Do not invoke any skill, and do not spawn subagents of your own — you are the reviewer. If the instruction file is unreadable, report that exact failure and stop. Return your findings as text in your final message; do not route them through any findings-reporting tool the host may offer.
+
+"""
+
+[[workflow.review_layers]]
+id = "security-auditor"
+name = "Security Auditor"
+when = 'Only when the diff changes something a running system executes or reads — code, dependency manifests, lockfiles, CI or infrastructure definitions. Skip it only when every changed file is prose; when unsure, run it.'
+instruction = """
+Launch a context-free subagent with this prompt:
+
+Read `{skill-root}/review-prompts/security-auditor.md` completely and follow it as your review instructions.
+
+Review content: the unified diff at `{diff_file}`. Read that file — it is the content under review.
+
+Do not invoke any skill, and do not spawn subagents of your own — you are the reviewer. If the instruction file is unreadable, report that exact failure and stop. Return your findings as text in your final message; do not route them through any findings-reporting tool the host may offer.
+
+"""
+
+# Review layers for the oneshot route.
+# The acceptance auditor is deliberately absent here: the oneshot route is
+# gated on zero blast radius and no architectural decisions, and it has no
+# spec to audit against.
+
+[[workflow.oneshot_review_layers]]
+id = "blind-hunter"
+name = "Blind Hunter"
+instruction = """
+Launch a context-free subagent with this prompt:
+
+Conduct a review of CONTENT.
+Look for what's missing, not only what's wrong.
+Compute your finding floor N from the size of the changes: N = min(floor(sqrt(kB) + 1), 10), where kB is the changed content's size in kilobytes. State the arithmetic in one line, then find at least N issues to fix or improve.
+Output a Markdown list of findings only — no severity, priority, or ranking.
+If the content is empty, stop and say so.
+If you have zero findings, re-check and keep thinking; do not stop with an empty list.
+
+CONTENT:
+The changed files in the current worktree. Inspect them directly before reviewing.
+
+Do not invoke any skill, and do not spawn subagents of your own — you are the reviewer. Return your findings as text in your final message; do not route them through any findings-reporting tool the host may offer.
+
+"""

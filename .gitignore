@@ -1,27 +1,52 @@
 # Dependencies
-node_modules/
+/node_modules
+/.pnp
+.pnp.*
 
-# Build output
-dist/
-build/
-.next/
-out/
-.astro/
+# Testing
+/coverage
 
-# Env files
-.env
-.env*.local
+# Next.js / build output
+/.next/
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+
+# Env files (commit .env.example only)
+.env*
+!.env.example
+
+# Vercel
+.vercel
 
 # Logs
-*.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # OS / editor
 .DS_Store
 Thumbs.db
+*.pem
 .vscode/*
 !.vscode/extensions.json
 .idea/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# BMad personal config (team config in _bmad/config.toml and _bmad/custom/config.toml is committed)
+_bmad/config.user.toml
+_bmad/custom/config.user.toml
+
+# Test output
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+scripts/sonar/sonar.env
+scripts/sonar/sonar.local.env
+scripts/sonar/sonar.baseline
+.scannerwork/

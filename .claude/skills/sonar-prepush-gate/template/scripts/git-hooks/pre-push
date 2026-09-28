@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Git pre-push hook: blocks the push if the SonarQube Quality Gate would fail.
+# Wired up via: git config core.hooksPath scripts/git-hooks
+#
+# LOCAL ONLY: every push, on every branch (including develop and main), is
+# checked against a local SonarQube container. Nothing is ever published to the
+# shared XT SonarQube server. The gate reads the ref list git writes to this
+# hook's stdin, so stdin is passed straight through by exec — don't consume it.
+#
+# This directory is meant to hold ALL shared git hooks for the repo, not just
+# this one — add more (pre-commit, commit-msg, etc.) as files here named after
+# the standard git hook they implement.
+set -euo pipefail
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec "$HOOK_DIR/../sonar/check_quality_gate.sh"
