@@ -107,3 +107,19 @@ Template:
   Three reviewers said S1764 ignores self-comparison (a NaN test). Checking the local
   container showed the probe did block, but through `typescript:S6679` (use `Number.isNaN()`).
   Doc corrected to the rule that really fired.
+
+## 2026-09-28 — Deployment on Vercel
+
+- **Who / tool:** Hoang Vu / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "Can we move to deployment?", then "deployment also on develop branch for
+  development env".
+- **What the AI did:** Compared Vercel Hobby, Netlify and Vercel Pro; opened release PR #2
+  (`develop` -> `main`) so `main` could build; guided the Vercel setup; checked every URL with curl
+  and the GitHub deployments API; documented the URLs (PR #3).
+- **Decision / result:** Vercel Hobby. Production = `main`
+  (https://xion-tech-landing-page.vercel.app). `develop` = https://xiontech-dev.vercel.app
+  (Vercel Preview env). Squash merge turned off so every member's commits stay visible.
+- **AI got it wrong?** Partly. The AI said to find "Production Branch" under Settings > Git; Vercel
+  moved it to Settings > Environments > Production > Branch Tracking. The PR #3 preview was blocked
+  because the commit email was not verified on GitHub; on a private Hobby repo only the owner's
+  verified commits deploy, so teammates' previews will be blocked too.

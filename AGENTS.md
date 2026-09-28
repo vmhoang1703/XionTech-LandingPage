@@ -21,7 +21,8 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 
 - **Demo day:** 2026-10-09 (10 min presentation + 5 min Q&A)
 - **Team:** 3 people. Leader: Hoang Vu.
-- **Hand-in:** public URL, full git history, this context file, `docs/ai-log.md`.
+- **Hand-in:** public URL (https://xion-tech-landing-page.vercel.app), full git history, this context
+  file, `docs/ai-log.md`.
 - **Scoring:** build quality 30%, AI usage 25%, teamwork & context sharing 25%, presentation 20%.
 
 ## Hard rules (from the challenge)
@@ -41,18 +42,18 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 
 ## Tech stack
 
-| Area         | Choice                                                                             |
-| ------------ | ---------------------------------------------------------------------------------- |
-| Framework    | Next.js 16 (App Router, `src/` dir), React 19                                      |
-| Language     | TypeScript (strict)                                                                |
-| Styling      | Tailwind CSS v4 (config lives in `src/app/globals.css` via `@theme`)               |
-| UI parts     | shadcn/ui (to be added)                                                            |
-| Animation    | Motion (to be added)                                                               |
-| CMS          | For Careers/Jobs and Blog — **not decided yet**                                    |
-| Hosting      | Vercel                                                                             |
-| Formatting   | Prettier + `prettier-plugin-tailwindcss`, ESLint (`eslint-config-next`)            |
-| Tests        | Vitest 5 + Testing Library (unit), Playwright (`@smoke`), `diff-cover` (via `uvx`) |
-| Quality gate | SonarQube Community in local Docker — LOCAL ONLY, `pre-push` hook                  |
+| Area         | Choice                                                                                       |
+| ------------ | -------------------------------------------------------------------------------------------- |
+| Framework    | Next.js 16 (App Router, `src/` dir), React 19                                                |
+| Language     | TypeScript (strict)                                                                          |
+| Styling      | Tailwind CSS v4 (config lives in `src/app/globals.css` via `@theme`)                         |
+| UI parts     | shadcn/ui (to be added)                                                                      |
+| Animation    | Motion (to be added)                                                                         |
+| CMS          | For Careers/Jobs and Blog — **not decided yet**                                              |
+| Hosting      | Vercel Hobby (owner: Hoang Vu; only the owner can change project settings). See Git workflow |
+| Formatting   | Prettier + `prettier-plugin-tailwindcss`, ESLint (`eslint-config-next`)                      |
+| Tests        | Vitest 5 + Testing Library (unit), Playwright (`@smoke`), `diff-cover` (via `uvx`)           |
+| Quality gate | SonarQube Community in local Docker — LOCAL ONLY, `pre-push` hook                            |
 
 ## Commands
 
@@ -74,10 +75,17 @@ local Sonar gate must be green.
 
 ## Git workflow
 
-- `main` = production (deployed to the public URL). Only updated by PR from `develop`.
-- `develop` = integration branch. Everyone branches from it and opens PRs back into it.
+- `main` = production, deployed by Vercel to https://xion-tech-landing-page.vercel.app. Only updated by a
+  release PR from `develop` (merge commit).
+- `develop` = integration branch, deployed to https://xiontech-dev.vercel.app. Everyone branches from it
+  and opens PRs back into it. Every PR gets a Vercel preview URL, unless the Hobby commit-email
+  limit blocks it (see "Live URLs" in `README.md`).
+- Merge PRs with **Create a merge commit** (squash is off) so each person's commits stay in history.
+  Rebase merge is also allowed and keeps them too. `main` and `develop` have no branch protection
+  (not available for a private repo on the free plan), so these rules rely on the team.
 - Branch names: `feature/<short-name>`, `fix/<short-name>`, `docs/<short-name>`.
-- Commit messages: Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`).
+- Commit messages: Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`). GitHub's
+  own `Merge pull request #…` commits are exempt.
 - When an AI agent writes a commit, keep its `Co-Authored-By` trailer so AI work is visible.
 
 ## BMad workflow (XTek BMad)
