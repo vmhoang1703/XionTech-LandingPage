@@ -123,3 +123,19 @@ Template:
   moved it to Settings > Environments > Production > Branch Tracking. The PR #3 preview was blocked
   because the commit email was not verified on GitHub; on a private Hobby repo only the owner's
   verified commits deploy, so teammates' previews will be blocked too.
+
+## 2026-09-28 — CMS spike: Sanity vs Payload
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), two spike agents in parallel.
+- **Prompt (short):** "CMS spike", then "free is priority".
+- **What the AI did:** Checked peer ranges, then built both CMSs into throwaway clones of `develop`
+  (Jobs + Blog, `/careers`, `/blog`), ran typecheck, lint, build, tests and the production server,
+  and read the free-tier limits on the Sanity, Neon and Vercel Blob pricing pages.
+- **Decision / result:** Sanity. It built and ran with no fixes and needs 1 extra free service;
+  Payload needed `"type": "module"` and migrations, moves every page, and needs Neon + Vercel Blob.
+  Real Sanity content reads are still to be proven (first open-work item). Details:
+  `docs/spikes/cms-spike.md`.
+- **AI got it wrong?** Yes. The first draft of the spike doc said Sanity "works, no fixes", but the
+  spike used a fake project ID, so no real content was read; it also mixed up the service count
+  (1 vs 3) and called Neon's CU-hours "compute-hours". `bmad-code-review` (4 reviewers) caught all
+  three before the PR.
