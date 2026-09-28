@@ -6,11 +6,19 @@ Built for the XionTech internal AI build challenge (demo day: 2026-10-09).
 
 ## Live URLs (Vercel)
 
-| Environment | Branch      | URL                                       |
-| ----------- | ----------- | ----------------------------------------- |
-| Production  | `main`      | https://xion-tech-landing-page.vercel.app |
-| Development | `develop`   | https://xiontech-dev.vercel.app           |
-| PR preview  | `feature/*` | posted by Vercel as a comment on each PR  |
+| Environment | Branch        | URL                                       | Vercel environment |
+| ----------- | ------------- | ----------------------------------------- | ------------------ |
+| Production  | `main`        | https://xion-tech-landing-page.vercel.app | Production         |
+| Development | `develop`     | https://xiontech-dev.vercel.app           | Preview            |
+| PR preview  | any PR branch | posted by the Vercel bot on the PR        | Preview            |
+
+- Production is public. Preview URLs (including the `develop` URL) show a Vercel login page
+  unless Deployment Protection is set to "Only Production Deployments" or "Disabled".
+- Vercel's own "Development" environment is local `vercel dev`, not a hosted site.
+- **Hobby plan limit:** the repo is private, so Vercel only deploys a commit whose author email
+  is a verified email on the owner's GitHub account (`vmhoang1703`). Other commits get a
+  "GitHub couldn't verify an account" comment and no preview. Merges done with GitHub's merge
+  button by the owner always deploy.
 
 ## Getting started
 
