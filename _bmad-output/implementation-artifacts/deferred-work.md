@@ -44,3 +44,11 @@ Change reviewed: UX prototype and README (branch `docs/ux-first-draft`). The 14 
 - [low] Per-page metadata (favicon, canonical, Open Graph) is missing in the prototype; use the Next.js Metadata API.
 - [low] "Read story" has no detail page and the news filters have no empty state; depends on the CMS choice.
 - [low] Stats band and 4-D flow are copied across prototype pages; build each as one component.
+
+## Deferred from: code review (2026-09-28), UX round 3
+
+Change reviewed: approved prototype changes, final UX specs, PRD and epics (branch `docs/ux-first-draft`).
+
+- [low] Prototype `site.css` has stacked patch layers (v3.1 to v3.7) that redefine the same rules. Consolidate when the prototype is next touched; the specs, not the CSS, are the build reference.
+- [medium] FAQ "How do you keep our data secure?" reuses the current site answer, which does not name hosting, access control or certifications. Replace with real facts before launch.
+- [medium] Story 6.3: decide whether a story or role can be published with only one language filled, or must wait for both EN and VI.

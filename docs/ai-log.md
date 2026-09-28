@@ -166,3 +166,26 @@ Template:
     `bmad-code-review` then found 18 fixable issues, including a screenshot frame that could not be
     clicked, text contrast below AA and a language switch hidden on phones. 4 were fixed in the prototype;
     the other 14 became acceptance criteria for the Next.js build (`code-review-2026-09-28.md`).
+
+## 2026-09-28 — PRD, epics and stories from the approved HTML prototype
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5) with BMad `bmad-prd`,
+  `bmad-create-epics-and-stories`, `bmad-code-review`
+- **Prompt (short):** Home hero changes (dark silk background, one CTA, stats in the hero), text-only nav,
+  an About FAQ, then "my developer mentions to have prds created and also have epic user stories created".
+- **What the AI did:** Updated the HTML prototype after each request and waited for Amber's approval, then
+  wrote the PRD (46 FRs, 8 NFRs) and `epics.md` (7 epics, 38 stories, every story linked to its prototype
+  section), ran a 3-layer code review and fixed what it found.
+- **Decision / result:** New default workflow: every UI change is checked by Amber in the HTML prototype;
+  after approval the specs, PRD and stories are updated, reviewed, committed and a PR is opened into
+  `develop`. The silk animation keeps moving with a discreet pause button (WCAG 2.2.2) instead of the
+  Stripe-style "no control" approach.
+- **AI got it wrong?** Yes:
+  - A CSS rule for menu links made the mobile-only "Book a demo" show next to the logo on desktop. When
+    Amber asked to remove "the button next to the logo", the AI removed the right-side header button
+    instead; it found the real cause one round later and restored the right one.
+  - The first pause control stopped the silk after 5 seconds; Amber wanted continuous motion, so it became
+    a pause button.
+  - The review found prototype behaviour that did not match the approved specs (a hover-opened menu
+    closing on click, Escape not returning focus, no focus trap in the mobile menu, a pause button left
+    with nothing to control when WebGL is missing). All fixed before the PR.
