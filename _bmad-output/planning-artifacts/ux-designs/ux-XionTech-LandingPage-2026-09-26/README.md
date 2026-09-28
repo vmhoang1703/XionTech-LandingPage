@@ -1,8 +1,9 @@
-# UX: XionTech company website
+# UX: XionTechs company website
 
 Owner: Amber Do. Made with the BMad UX workflow (`bmad-agent-ux-designer` + `bmad-ux`) in Claude Code.
-Status: **UX specs final, content still being verified.** `DESIGN.md` (how it looks) and
-`EXPERIENCE.md` (how it works) are the source of truth. They win over the prototype on any conflict.
+Status: **UX specs in review.** Four `[ASSUMPTION]` items and four Vietnamese button labels are
+waiting for team confirmation. `DESIGN.md` (how it looks) and `EXPERIENCE.md` (how it works) are the
+source of truth. They win over the prototype on any conflict.
 
 The AI log for this work is in `docs/ai-log.md` (entry "Website UX first draft").
 
@@ -27,7 +28,7 @@ It has 7 linked pages: Home, Products, Services, News, About, Careers, Book a de
 | `.working/brand-type-kit.html` | Type kit from the logo: Unbounded, Lexend Exa, Be Vietnam Pro, JetBrains Mono (all support Vietnamese). |
 | `.working/*.html` (others) | Earlier rounds, superseded: colour themes, 3 concepts, landing v1 and v2. Kept to show how the design evolved. They contain unmarked sample data (made-up names and numbers) and must not be reused as content. |
 | `imports/` | Company logos and the hero reference screenshot supplied by the team. |
-| `code-review-2026-09-28.md` | `bmad-code-review` results: 4 fixes applied, **14 acceptance criteria for the Next.js build**, deferred and rejected items. |
+| `code-review-2026-09-28.md` | `bmad-code-review` results: 4 fixes applied, **16 acceptance criteria (from 14 findings) for the Next.js build**, plus the spec review, deferred and rejected items. |
 
 ## Key design decisions
 
@@ -49,8 +50,8 @@ Add the acceptance criteria in `code-review-2026-09-28.md` to the matching stori
 The prototype follows the challenge rule: everything not verified is marked `[Placeholder]`.
 
 - `grep -rn "\[Placeholder\]" mockups/site-v3` lists every item still to replace or verify.
-- Stats (25+ years, 24/7, 20+ stacks), service descriptions and careers benefits come from the
-  current xiontechs.com and need a human check. "24/7 global coverage" especially.
+- Stats (25+ years, 24/7, 20+ stacks), service and product descriptions and careers text are
+  confirmed by the business (2026-09-28). The `[Placeholder]` markers left are sample content.
 - Still missing: Dallas street address, contact email, real leadership team, partner-school
   logos (with permission), real news stories, product screenshots or clips, app store links,
   and a **privacy policy** (the forms collect personal data; Vietnam PDPD, Decree 13/2023, applies).

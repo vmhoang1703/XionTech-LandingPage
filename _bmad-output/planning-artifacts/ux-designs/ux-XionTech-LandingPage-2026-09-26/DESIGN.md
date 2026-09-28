@@ -1,7 +1,7 @@
 ---
-name: XionTech Website
+name: XionTechs Website
 description: Bilingual (EN/VI) multi-page company website for XionTechs, selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
-status: final
+status: review
 updated: 2026-09-28
 colors:
   # Brand core, sampled from the logo
@@ -35,7 +35,7 @@ colors:
   muted: '#4A5B78'
   placeholder: '#5B6B86'
   border: '#1636631F'
-  border-strong: '#16366333'
+  field-border: '#75869F'
   # Text on navy surfaces
   on-navy-heading: '#FFFFFF'
   on-navy-text: '#EEF2F9'
@@ -77,8 +77,6 @@ typography:
     fontWeight: '600'
     lineHeight: '1.12'
     letterSpacing: -0.025em
-  headline-vi:
-    lineHeight: '1.2'
   stat:
     fontFamily: Unbounded
     fontSize: 3rem
@@ -238,7 +236,7 @@ components:
     foreground: '{colors.navy}'
     radius: '{rounded.xl}'
   front-door-services:
-    background: 'surface-navy'
+    background: 'linear-gradient({colors.ink}, {colors.navy}, {colors.navy-glow})'
     foreground: '{colors.on-navy-text}'
     radius: '{rounded.xl}'
   stats-band:
@@ -254,6 +252,8 @@ components:
     radius: '{rounded.lg}'
     padding: '{spacing.card-padding}'
     title: '{typography.title-lg}'
+    badge-on-pxp-tile: '{components.product-badge-sxp}'
+    badge-on-sxp-tile: '{components.product-badge-pxp}'
   service-card:
     radius: '{rounded.lg}'
     padding: '{spacing.card-padding-sm}'
@@ -269,6 +269,8 @@ components:
     radius: '{rounded.full}'
     primary-on-light: '{colors.navy}'
     primary-on-navy: '{colors.amber}'
+    default-on-light: '{colors.navy} text, {colors.border} border, glass fill'
+    default-on-navy: '{colors.on-navy-text} text, {colors.on-navy-border} border'
   value-grid:
     border: '{colors.border}'
     featured-background: 'linear-gradient({colors.amber-light}, {colors.amber}, {colors.amber-deep})'
@@ -282,12 +284,16 @@ components:
     radius: '{rounded.full}'
     product-background: '{colors.amber}'
     product-foreground: '{colors.navy}'
+    default-background: '{colors.mist}'
+    default-foreground: '{colors.navy}'
   filter-chips:
     radius: '{rounded.full}'
     active-background: '{colors.navy}'
     active-foreground: '{colors.white}'
   email-capture:
     field-background: '{colors.paper}'
+    row-border-on-amber: '1.5px {colors.navy}'
+    error-on-amber: '{colors.error}'
     field-radius: '{rounded.full}'
     focus-on-light: '{colors.focus}'
     focus-on-navy: '{colors.focus-on-navy}'
@@ -296,7 +302,7 @@ components:
     radius: '{rounded.xl}'
     field-radius: '{rounded.sm}'
     field-height: '{spacing.field-height}'
-    field-border: '{colors.border-strong}'
+    field-border: '{colors.field-border}'
     tab-active-background: '{colors.navy}'
   device-frame:
     tablet-radius: '{rounded.device-tablet}'
@@ -331,6 +337,7 @@ components:
   highlight-mark:
     fill-on-light: 'linear-gradient({colors.amber-tint}, {colors.amber})'
     fill-on-amber: '{colors.white}'
+    fill-on-navy: 'linear-gradient({colors.amber-tint}, {colors.amber})'
   focus-ring:
     width: 2.5px
     offset: 3px
@@ -347,11 +354,11 @@ The identity comes straight from the logo: a navy X mark, an amber swoosh and th
 
 Products lead. The first five seconds of Home show what the products do (device mockups with real product screens) and put both business lines, Products for schools and Outsourcing services, directly under the hero.
 
-There is no dark mode. Instead each page follows a colour rhythm of paper, mist, one navy band and at most one amber surface, and each page hero uses a different mix (light, navy or amber).
+There is no dark mode. Instead each page follows a colour rhythm of paper and mist with at least one navy band (a navy hero counts) and at most one full-width amber band (an amber hero counts). Amber tiles, cards and the featured value cell are accents and do not count. Each page hero uses a different mix (light, navy or amber).
 
 Brand inputs: `imports/xiontechs-logo.png`, `imports/xiontechs-logo-square.png` (PNG only; an SVG master is still needed) and `imports/ref-hero-device-mockup.png` (the reference for the tablet + phone hero).
 
-**Build mapping.** The build is Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion. Every token here maps 1:1 into Tailwind `@theme`: `colors.*` to `--color-*`, font families to `--font-display`, `--font-brand`, `--font-body`, `--font-mono`, `typography.*` to `--text-*`, `rounded.*` to `--radius-*`, `spacing.*` to `--spacing-*`. shadcn variables map as `--primary` = `{colors.amber}`, `--primary-foreground` = `{colors.navy}`, `--background` = `{colors.page}`, `--foreground` = `{colors.text}`, `--muted-foreground` = `{colors.muted}`, `--border` = `{colors.border}`, `--ring` = `{colors.focus}` (overridden to `{colors.focus-on-navy}` inside navy sections), `--destructive` = `{colors.error}`.
+**Build mapping.** The build is Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion. Every token here maps 1:1 into Tailwind `@theme`: `colors.*` to `--color-*`, font families to `--font-display`, `--font-brand`, `--font-body`, `--font-mono`, `typography.*` to `--text-*`, `rounded.*` to `--radius-*`, `spacing.*` to `--spacing-*` except `spacing.container`, which maps to `--container-page`. Breakpoints, layers, motion and shadows are in the Build tokens table under Layout & Spacing. shadcn variables map as `--primary` = `{colors.amber}`, `--primary-foreground` = `{colors.navy}`, `--background` = `{colors.page}`, `--foreground` = `{colors.text}`, `--muted-foreground` = `{colors.muted}`, `--border` = `{colors.border}`, `--ring` = `{colors.focus}` (overridden to `{colors.focus-on-navy}` inside navy sections), `--destructive` = `{colors.error}`.
 
 Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html) and its sibling pages show every token in use. These spines win on any conflict with the mockups.
 
@@ -369,7 +376,7 @@ Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html) an
 - **On-navy text set** (`#FFFFFF` headings, `#EEF2F9` text, `#C5D0E3` muted, `#FFCF06` links and labels) is used inside every navy surface. Muted on navy is 7.75:1.
 - **On-amber text set** (`#163663` text and headings, `#23406B` muted at 6.34:1 on amber).
 - **Error (`#8A1C14`, 9.15:1 on paper)** for error text, `#B3261E` for the invalid field border, `#FFB4AB` for error text on navy (7.10:1).
-- **Borders** are navy at 12% (`#1636631F`) on light and white at 14% (`#FFFFFF24`) on navy. Field borders use navy at 20%.
+- **Borders** are navy at 12% (`#1636631F`) on light and white at 14% (`#FFFFFF24`) on navy. Field and control borders use `#75869F` (3.65:1 on paper, 3.30:1 on mist) to meet WCAG 1.4.11. The white email row on an amber band gets a 1.5px navy border (7.34:1; white on amber alone is 1.64:1). Error text on amber uses `{colors.error}` (5.67:1).
 
 Section surfaces are scoped token sets, so components adapt to the section they sit in:
 
@@ -383,7 +390,7 @@ Section surfaces are scoped token sets, so components adapt to the section they 
 | `hero-navy` | gradient `{colors.ink}` to `{colors.navy}` to `{colors.navy-glow}` with aurora | on-navy set | `{colors.on-navy-link}` | `{colors.focus-on-navy}` |
 | `hero-amber` | gradient `{colors.amber-pale}` to `{colors.amber}` to `{colors.amber-deep}` with a white glow | on-amber set | navy | `{colors.focus}` |
 
-Contrast target: WCAG 2.2 AA everywhere. 4.5:1 for text, 3:1 for large text, icons and focus indicators. Every pair above is measured.
+Contrast target: WCAG 2.2 AA everywhere. 4.5:1 for text, 3:1 for large text, icons, focus indicators and the boundaries of form fields and controls. Every pair above is measured. On navy gradients the figures hold at the lightest stop `#1E4178` (muted 6.49:1, amber 6.14:1).
 
 ## Typography
 
@@ -412,7 +419,7 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 | Data | `{typography.data}` | Dates, crumbs, step numbers |
 | Clock | `{typography.data-lg}` | Office cards |
 
-**Vietnamese.** When the page language is `vi`, H1 and H2 use `{typography.headline-vi}` line-height (1.2; the floor is 1.18) so stacked diacritics do not collide. Never tighten tracking on Vietnamese uppercase. The brand name is always the logo file, never typeset.
+**Vietnamese.** When the page language is `vi`, H1 and H2 get line-height 1.2 through a language rule (`:lang(vi) h1, :lang(vi) h2 { line-height: 1.2 }`; the floor is 1.18) so stacked diacritics do not collide. Never tighten tracking on Vietnamese uppercase. The brand name is always the logo file, never typeset.
 
 ## Layout & Spacing
 
@@ -423,7 +430,7 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 - **Forms:** the contact form card sits in the right half of the split hero on desktop and stacks full width below 900px. Email capture rows sit in a 2-column band (copy left, form right).
 - **Anchors:** every in-page target sets `scroll-margin-top` to `{spacing.anchor-offset}` (sticky header plus breathing room) or `{spacing.anchor-offset-subnav}` on the Products page, where the sticky product sub-nav sits under the header. Confirm both values against the built header heights.
 
-**Page colour rhythm** (one amber surface per page, one or more navy bands):
+**Page colour rhythm:** at least one navy band (a navy hero counts) and at most one full-width amber band (an amber hero counts). Amber tiles, cards and the featured value cell are accents and do not count.
 
 | Page | Hero | Sections in order |
 |---|---|---|
@@ -435,7 +442,15 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 | Careers | `hero-amber` | culture (paper), benefits (mist, linen), open roles (paper), talent network capture (navy), life at XionTechs (mist) |
 | Book a demo | `hero-navy` | contact form card inside the hero |
 
-Breakpoints: 1080px, 900px, 640px. What changes at each is in `EXPERIENCE.md` Responsive & Platform.
+**Build tokens** (outside the frontmatter schema; add them to `@theme` as listed):
+
+| Group | Tokens |
+|---|---|
+| Breakpoints | `--breakpoint-sm: 640px`, `--breakpoint-md: 900px`, `--breakpoint-lg: 1080px` (what changes at each is in `EXPERIENCE.md` Responsive & Platform) |
+| Layers (z-index) | background art -1, content 0, sticky sub-nav 40, header 50, mega menu 55, mobile menu 60, toast 100, skip link 200 |
+| Motion | `--ease-brand: cubic-bezier(.16, 1, .3, 1)`; durations 300ms (menus), 550ms (screen crossfade), 900ms (reveal), 1200ms (highlight), 1400ms (count-up), 2400ms (4-D track) |
+| Shadows | `--shadow-card: 0 40px 80px -40px rgb(11 23 48 / .45)`, `--shadow-device: 0 60px 100px -40px rgb(11 23 48 / .55)`, `--shadow-primary: 0 12px 30px -12px rgb(255 192 0 / .7)` |
+| Fluid sizes | Home H1 `clamp(2.2rem, 4vw, 3.5rem)`, page H1 `clamp(2.2rem, 4.4vw, 3.6rem)`, H2 `clamp(1.9rem, 3.5vw, 2.8rem)`, stat `clamp(2rem, 3.6vw, 3rem)`, news card title 1.08rem |
 
 ## Elevation & Depth
 
@@ -466,9 +481,9 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 - **Mobile menu** [Sheet or inline panel]. Below 1080px, a paper panel under the header, full width, scrolls within the viewport; mega content becomes a single column without shadow. Menu button is a 40px round icon button with a navy border at 14%.
 - **Mega menu** [NavigationMenu content]. Paper panel, 24px radius, up to 660px wide, 2 columns. Products mega: badge + app name + one-line value + "for" line in `{typography.label-sm}`, footer row "More products are on the way." + "All products". Services mega: icon tile + service name for all 8 services, footer row with the 4-D process line and "See the process".
 - **Language switch** [ToggleGroup]. Pill segment with EN and VI. Active: navy fill, white text.
-- **Product badge.** 44px rounded square, app initials in Unbounded 700. PXP amber, LXP navy-soft to navy, SXP navy to ink with amber-tint text, IoT mist with a chip icon. On product tiles the badge colour is swapped for contrast against the tile.
+- **Product badge.** 44px rounded square, app initials in Unbounded 700. PXP amber, LXP navy-soft to navy, SXP navy to ink with amber-tint text, IoT mist with a chip icon. On product tiles whose fill matches the badge, the badge swaps for contrast: the amber PXP tile shows the SXP badge style and the navy SXP tile shows the PXP badge style (`product-tile.badge-on-*`). The app name always sits next to the badge.
 - **Front door.** Two large linked panels under the Home hero. Products door: white to pale blue gradient, four badges, four audience chips. Services door: navy surface, amber label, service chips ("+3 more").
-- **Stats band.** Five columns separated by 1px borders. Number in `{typography.stat}`; the suffix (+, /7) uses `{colors.amber-text}` on light and `{colors.amber}` on navy. Muted caption under each, max 22ch. A small italic note under the band carries the `[Placeholder]` marker.
+- **Stats band.** Five columns separated by 1px borders. Number in `{typography.stat}`; the suffix (+, /7) uses `{colors.amber-text}` on light and `{colors.amber}` on navy. Muted caption under each, max 22ch. The figures are confirmed by the business (2026-09-28); an italic `[Placeholder]` note is added under the band only if a figure is ever unverified.
 - **Spotlight card.** Base for tiles, service cards, news cards and office cards: glass fill, border, 24px radius, pointer-following amber glow.
 - **Product tile.** Home bento. PXP spans 7 columns and 2 rows in an amber gradient with a tilted mini phone breaking the bottom edge. SXP spans 5 in navy. LXP spans 3 and IoT spans 2 on glass. Each has a circular "go" arrow top right.
 - **Service card.** 48px icon tile, title in `{typography.title-sm}`, one line of copy, optional mono tags row. Variants: `feature` (amber wash at 22%), `navy` (navy fill, amber icon).
@@ -476,9 +491,9 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 - **Industry chip.** Pill with icon. EdTech is the primary chip: navy fill on light, amber fill on navy.
 - **Value grid.** 3 x 2 grid with hairline borders; "Get IT Done" Attitude is the featured amber cell.
 - **News card.** 16:10 photo frame on top, then mono date + category tag, title, one-line excerpt, "Read story" link. The first card on the News page is a wide 2-column feature.
-- **Category tag.** Tiny Lexend Exa pill; product stories use amber with navy text and append the app name (for example "Product · PXP").
+- **Category tag.** Tiny Lexend Exa pill; product stories use amber with navy text and append the app name (for example "Product · PXP"); other categories (Schools, Team, Company) use mist with navy text.
 - **Filter chips** [ToggleGroup]. Pills; active is navy with white text.
-- **Email capture.** Band with H2 + lede on the left and the form on the right: label, a white pill row holding the email field and the band's button, error line, reassurance line. Success replaces the row with a status panel.
+- **Email capture.** Band with H2 + lede on the left and the form on the right: label, a white pill row holding the email field and the band's button (1.5px navy border on amber bands), error line, consent line with a privacy policy link. Success replaces the row with a status panel.
 - **Contact form.** Paper card, 28px radius, large shadow. Two pill tabs (Product demo / Outsourcing project) [Tabs], 2-column field grid [Input, Select, Checkbox], checkbox pills for products, full-width message, primary submit. Invalid field: `{colors.error-border}` border and error text below.
 - **Device frame.** Tablet (4:3) and phone (1170:2532) frames with a light metallic gradient bezel, gradient edge and a notch on phones. Used in heroes and the PXP story.
 - **Media frame.** The screen or photo area inside a device, browser or card. Empty state is a faint navy grid on paper. In production it holds real screenshots, short clips or photos.
@@ -488,7 +503,7 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 - **Office card.** Spotlight card with a large mono local-time clock, city title, address and phone link.
 - **Clock strip.** Pills showing each office city with its local time in mono.
 - **Breadcrumbs.** Mono, muted, above inner page H1s.
-- **Highlight mark.** An amber bar behind the lower third of one key phrase per hero headline; white on amber surfaces.
+- **Highlight mark.** An amber bar behind the lower third of one key phrase per hero headline: amber on light and navy heroes, white on amber surfaces.
 - **Placeholder frame.** Dashed border panel with a Lexend Exa caption, standing in for real photos and illustrations until they exist.
 - **Person card.** 4:5 photo frame, name and role. Leadership grid of four.
 - **Open roles panel.** Dashed panel stating there are no open roles, with a route to the talent network.
@@ -505,8 +520,8 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 | Put navy text on amber | Put white text on amber (1.64:1) |
 | Use `{colors.amber-text}` or darker for amber text and icons on light surfaces | Use `#C99700` for text or icons; it is decorative only |
 | Scope the focus ring to the section: amber on navy, navy elsewhere | Show a navy ring on a navy section |
-| Use one amber surface per page and at least one navy band | Stack two amber bands, or add a dark mode toggle |
-| Use Unbounded for headlines, Lexend Exa for caps, Be Vietnam Pro for text, JetBrains Mono for data | Use Michroma, Orbitron or Sora (no Vietnamese), or more than two fonts in one component |
+| Use at least one navy band and at most one full-width amber band per page | Stack two amber bands, or add a dark mode toggle |
+| Use Unbounded for headlines, Lexend Exa for caps, Be Vietnam Pro for text, JetBrains Mono for data | Use Michroma, Orbitron or Sora (no Vietnamese), or two display faces in one component (Lexend Exa and JetBrains Mono are small accents and may sit beside the body and display faces) |
 | Give Vietnamese H1 and H2 line-height 1.18 or more | Tighten tracking on Vietnamese uppercase |
 | Use real product screens, clips and team photos | Use AI-generated art or stock that looks generated; use a hand-crafted illustrator brief |
 | Mark unverified content `[Placeholder]` until verified | Ship sample names, numbers or stories as if real |

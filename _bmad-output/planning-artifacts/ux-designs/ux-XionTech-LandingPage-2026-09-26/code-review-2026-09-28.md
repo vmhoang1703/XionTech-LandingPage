@@ -55,6 +55,15 @@ Add these to the relevant stories when the epics are created.
 - **News story pages.** "Read story" needs a detail page, and the filters need an empty state. This depends on the CMS decision.
 - **Duplicated blocks.** The stats band and the 4-D flow are copied across pages in the prototype. Build them as single components.
 
+## Second review: the specs (commit 7728b4c)
+
+Same three layers on `DESIGN.md`, `EXPERIENCE.md`, `README.md` and this file: 14 patch, 1 defer, 6 rejected. All 14 were applied to the specs:
+field and control border contrast (WCAG 1.4.11), decorative loops stop after 5s (WCAG 2.2.2), PDPD consent and
+prefill rules, a full contact-form field table, story / privacy / 404 pages and locale routing, one colour-rhythm rule,
+EN/VI fixed in the header on phones, an Acceptance Criteria Index (16 criteria), build tokens for Tailwind, status set
+to review, the brand name, the font rule, component token gaps and small behaviour rules. Deferred: behaviour without
+JavaScript for the capture redirect and the two-tab form (depends on the Next.js form handling).
+
 ## Rejected (12)
 
 - The page goes blank if IntersectionObserver is missing. Low: every supported browser has it.
