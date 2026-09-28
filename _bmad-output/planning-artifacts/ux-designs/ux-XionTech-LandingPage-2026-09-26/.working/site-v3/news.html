@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News | XionTechs</title>
+<meta name="description" content="Stories from XionTechs: product updates for PXP, LXP, SXP and IoT, partner schools, our team and client work.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Lexend+Exa:wght@400;500;600&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body data-page="news">
+<div id="site-header"></div>
+<main id="main">
+
+<section class="hero hero-light page-hero" aria-labelledby="h1" style="padding-bottom:64px">
+  <div class="aurora" aria-hidden="true"></div>
+  <canvas class="strands" data-tone="light" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="index.html" data-vi="Trang chủ">Home</a><span>/</span><span data-vi="Tin tức">News</span></nav>
+    <h1 id="h1" class="reveal" data-vi-html="Chúng tôi đã <span class='hl'>làm gì</span> gần đây.">What we've been <span class="hl">up to</span>.</h1>
+    <p class="lede reveal" data-vi="Những câu chuyện ngắn về sản phẩm, trường học đối tác, đội ngũ và công việc với khách hàng.">Short stories about our products, partner schools, team and client work.</p>
+  </div>
+</section>
+
+<section class="sec s-paper" aria-label="All stories" style="padding-top:56px">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:32px">
+      <div class="filters" data-filter-for="newsGrid" role="group" aria-label="Filter stories">
+        <button aria-pressed="true" data-f="all" data-vi="Tất cả">All</button>
+        <button aria-pressed="false" data-f="product" data-vi="Sản phẩm">Product</button>
+        <button aria-pressed="false" data-f="company" data-vi="Công ty">Company</button>
+        <button aria-pressed="false" data-f="schools" data-vi="Trường học">Schools</button>
+        <button aria-pressed="false" data-f="team" data-vi="Đội ngũ">Team</button>
+      </div>
+      <p class="sample" data-vi="[Placeholder] Tin mẫu. Thay bằng tin thật trước khi ra mắt.">[Placeholder] Sample stories. Replace with real news before launch.</p>
+    </div>
+    <div class="news-grid" id="newsGrid" data-news="all"></div>
+  </div>
+</section>
+
+<section class="capture s-navy" aria-labelledby="cap-h">
+  <div class="wrap cap-grid">
+    <div><h2 id="cap-h" data-vi="Nhận tin mới qua email.">Get our news by email.</h2>
+      <p class="lede" data-vi="Cập nhật sản phẩm và câu chuyện mới, khoảng hai lần mỗi tháng.">Product updates and new stories, about twice a month.</p></div>
+    <form class="cap-form" data-mode="inline" novalidate>
+      <label for="cap-email" data-vi="Địa chỉ email">Email address</label>
+      <div class="cap-row"><input type="email" id="cap-email" autocomplete="email" placeholder="name@example.com" required><button class="btn btn-primary" type="submit" data-vi="Đăng ký">Subscribe</button></div>
+      <small class="err" hidden data-vi="Vui lòng nhập địa chỉ email hợp lệ.">Please enter a valid email address.</small>
+      <small data-vi="Bạn có thể hủy đăng ký bất cứ lúc nào.">You can unsubscribe at any time.</small>
+      <div class="cap-ok" role="status"><i class="ph-fill ph-check-circle"></i><span data-vi="Cảm ơn bạn! Bạn đã đăng ký nhận tin (bản mẫu, chưa gửi dữ liệu).">Thanks, you're subscribed. (Prototype: nothing was sent.)</span></div>
+    </form>
+  </div>
+</section>
+</main>
+<div id="site-footer"></div>
+<script src="js/site.js"></script>
+</body>
+</html>

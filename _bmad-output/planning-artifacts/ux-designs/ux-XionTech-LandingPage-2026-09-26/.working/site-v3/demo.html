@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Demo or Start a Project | XionTechs</title>
+<meta name="description" content="Book a demo of PXP, LXP and SXP for your school, or tell us about your software project. XionTechs, Ho Chi Minh City and Dallas.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Lexend+Exa:wght@400;500;600&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body data-page="demo">
+<div id="site-header"></div>
+<main id="main">
+
+<section class="hero hero-navy s-navy page-hero" aria-labelledby="h1" style="padding:72px 0 96px">
+  <div class="aurora" aria-hidden="true"></div>
+  <canvas class="strands" data-tone="navy" aria-hidden="true"></canvas>
+  <div class="wrap split" style="align-items:start">
+    <div>
+      <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="index.html" data-vi="Trang chủ">Home</a><span>/</span><span data-vi="Liên hệ">Contact</span></nav>
+      <h1 id="h1" class="reveal" data-vi-html="Hãy trao đổi về <span class='hl'>trường học</span> hoặc dự án của bạn.">Let's talk about your <span class="hl">school</span> or your project.</h1>
+      <ul class="list-check reveal" style="margin-top:30px">
+        <li><i class="ph-fill ph-check-circle"></i><span data-vi="Demo PXP, LXP và SXP với chính tình huống của trường bạn.">A walkthrough of PXP, LXP and SXP using your school's scenarios.</span></li>
+        <li><i class="ph-fill ph-check-circle"></i><span data-vi="Giải đáp về triển khai, dữ liệu và hỗ trợ.">Answers on setup, data and support.</span></li>
+        <li><i class="ph-fill ph-check-circle"></i><span data-vi="Với dự án: bước Khám phá đầu tiên trong quy trình 4-D.">For projects: a first Discovery conversation in our 4-D process.</span></li>
+      </ul>
+      <div class="offices reveal" style="margin-top:36px">
+        <address class="office"><b>Ho Chi Minh City</b>Viettel Tower, Floor 12, 285 CMT8<br><a href="tel:+84908107552">+84 908 107 552</a></address>
+        <address class="office" style="margin-top:0"><b>Dallas, USA</b>Texas, United States<br><a href="tel:+14693229899">+1 469 322 9899</a></address>
+      </div>
+    </div>
+
+    <div id="form" class="form-card reveal">
+      <h2 style="font-size:1.6rem" data-vi="Bạn cần gì?">What can we help with?</h2>
+      <div class="ftabs" role="tablist" aria-label="Request type">
+        <button type="button" role="tab" data-type="demo" aria-selected="true" data-vi="Demo sản phẩm">Product demo</button>
+        <button type="button" role="tab" data-type="project" aria-selected="false" data-vi="Dự án outsourcing">Outsourcing project</button>
+      </div>
+      <form id="demoForm" novalidate>
+        <div class="fgrid2">
+          <div class="field"><label for="f-name" data-vi="Họ và tên">Full name</label><input id="f-name" autocomplete="name" required><span class="err" data-vi="Vui lòng nhập họ tên.">Please enter your name.</span></div>
+          <div class="field"><label for="f-email" data-vi="Email công việc">Work email</label><input id="f-email" type="email" autocomplete="email" required><span class="err" data-vi="Vui lòng nhập email hợp lệ.">Please enter a valid email address.</span></div>
+          <div class="field"><label for="f-org" data-vi="Trường học hoặc công ty">School or company</label><input id="f-org" autocomplete="organization" required><span class="err" data-vi="Vui lòng nhập tên tổ chức.">Please enter your organisation.</span></div>
+          <div class="field"><label for="f-role" data-vi="Vai trò">Your role</label><input id="f-role" autocomplete="organization-title"><span class="help" data-vi="Ví dụ: Hiệu trưởng, Trưởng phòng IT">For example: Principal, Head of IT</span></div>
+
+          <fieldset class="field full" data-for="demo"><legend data-vi="Sản phẩm quan tâm">Products of interest</legend>
+            <div class="checks"><label><input type="checkbox" checked> PXP</label><label><input type="checkbox"> LXP</label><label><input type="checkbox"> SXP</label><label><input type="checkbox"> IoT</label></div></fieldset>
+          <div class="field" data-for="demo"><label for="f-size" data-vi="Quy mô trường">School size</label>
+            <select id="f-size"><option data-vi="Dưới 500 học sinh">Under 500 students</option><option data-vi="500 đến 1.500 học sinh">500 to 1,500 students</option><option data-vi="Trên 1.500 học sinh">Over 1,500 students</option><option data-vi="Nhiều cơ sở">Multiple campuses</option></select></div>
+          <div class="field" data-for="demo"><label for="f-date" data-vi="Ngày mong muốn">Preferred date</label><input id="f-date" type="date"></div>
+
+          <div class="field" data-for="project" hidden><label for="f-svc" data-vi="Dịch vụ">Service</label>
+            <select id="f-svc"><option>Product Engineering</option><option>AI-Driven Analytics</option><option>Product Co-Creation</option><option>Staffing Service</option><option>Custom App Development</option><option>Low-code Solutions</option><option>AI-Powered Solutions</option><option>Cloud Computing</option><option data-vi="Chưa chắc chắn">Not sure yet</option></select></div>
+          <div class="field" data-for="project" hidden><label for="f-when" data-vi="Thời gian bắt đầu">When do you want to start?</label>
+            <select id="f-when"><option data-vi="Càng sớm càng tốt">As soon as possible</option><option data-vi="Trong 1 đến 3 tháng">In 1 to 3 months</option><option data-vi="Đang tìm hiểu">Just exploring</option></select></div>
+
+          <div class="field full"><label for="f-msg" data-vi="Tin nhắn (không bắt buộc)">Message (optional)</label><textarea id="f-msg"></textarea></div>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-top:22px"><span data-vi="Gửi yêu cầu">Send request</span><i class="ph ph-paper-plane-tilt"></i></button>
+        <p style="margin-top:12px;font-size:.84rem;color:#4A5B78" data-vi="Chúng tôi chỉ dùng thông tin của bạn để phản hồi yêu cầu này.">We only use your details to respond to this request.</p>
+      </form>
+      <div class="form-ok" role="status"><i class="ph-fill ph-check-circle"></i><h3 data-vi="Cảm ơn bạn!">Thank you!</h3><p style="color:#4A5B78" data-vi="Chúng tôi sẽ sớm liên hệ với bạn. (Bản mẫu, chưa gửi dữ liệu.)">We will be in touch soon. (Prototype: nothing was sent.)</p></div>
+    </div>
+  </div>
+</section>
+</main>
+<div id="site-footer"></div>
+<script src="js/site.js"></script>
+</body>
+</html>

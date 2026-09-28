@@ -1,0 +1,797 @@
+<!doctype html>
+<!--
+  XionTechs landing page v1 (design exploration, not production code)
+  Design read: product-led B2B edtech landing for school decision-makers; trustworthy, premium, warm energy.
+  Dials: VARIANCE 7 / MOTION 7 / DENSITY 4
+  Tokens (brand hues from logo only):
+    navy #163663 | amber #FFC000 | amber tint #FFCF06 | off-white #FAFBFD
+    light: bg #FAFBFD, surface #FDFDFE, surface-2 #F1F4F9, text #10223F, muted #4A5B78
+    dark:  bg #081225, surface #0F1D38, surface-2 #13254A, text #EEF2F9, muted #A9B6CC
+  Radius system: buttons + chips = pill; cards/frames = 22px; inputs = 12px.
+  Rule: amber always carries navy text (white on amber = 1.64:1, fails).
+  Font: Be Vietnam Pro (full Vietnamese diacritics). Icons: Phosphor.
+  Background: WebGL silk shader (folds + amber woven threads) + fixed linen weave overlay.
+-->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XionTechs Landing v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{
+  --navy:#163663; --amber:#FFC000; --amber-2:#FFCF06;
+  --bg:#FAFBFD; --surface:#FDFDFE; --surface-2:#F1F4F9; --text:#10223F; --muted:#4A5B78;
+  --heading:#163663; --border:rgba(22,54,99,.12); --shadow:rgba(22,54,99,.14);
+  --focus:#163663; --link:#163663;
+  --r-card:22px; --r-input:12px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#081225; --surface:#0F1D38; --surface-2:#13254A; --text:#EEF2F9; --muted:#A9B6CC;
+  --heading:#EEF2F9; --border:rgba(238,242,249,.10); --shadow:rgba(0,0,0,.45); --focus:#FFC000; --link:#FFCF06; } }
+:root[data-theme="dark"]{
+  --bg:#081225; --surface:#0F1D38; --surface-2:#13254A; --text:#EEF2F9; --muted:#A9B6CC;
+  --heading:#EEF2F9; --border:rgba(238,242,249,.10); --shadow:rgba(0,0,0,.45); --focus:#FFC000; --link:#FFCF06;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .5s var(--ease),color .5s var(--ease)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2.5px solid var(--focus);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+h1,h2,h3{color:var(--heading);letter-spacing:-.025em;line-height:1.1}
+h2{font-size:clamp(2rem,4vw,3rem);font-weight:700}
+.lede{color:var(--muted);max-width:60ch;font-size:1.075rem}
+.eyebrow{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+
+/* linen weave overlay: fixed + pointer-events none (perf-safe) */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.35;mix-blend-mode:multiply;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .086 0 0 0 0 .21 0 0 0 0 .39 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(0deg,rgba(22,54,99,.025) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(90deg,rgba(22,54,99,.025) 0 1px,transparent 1px 3px)}
+:root[data-theme="dark"] body::after{mix-blend-mode:screen;opacity:.18}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border-radius:999px;font-weight:600;white-space:nowrap;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .3s}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn-primary{background:linear-gradient(180deg,var(--amber-2),var(--amber));color:#163663;box-shadow:0 10px 30px -10px rgba(255,192,0,.6),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 36px -12px rgba(255,192,0,.7),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-ghost{border:1.5px solid var(--border);color:var(--heading);background:color-mix(in srgb,var(--surface) 70%,transparent);backdrop-filter:blur(8px)}
+.btn-ghost:hover{border-color:var(--heading)}
+.btn-sm{height:42px;padding:0 18px;font-size:.93rem}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--border)}
+.nav-in{height:72px;display:flex;align-items:center;gap:28px}
+.logo{display:flex;align-items:center;flex-shrink:0}
+.logo img{height:32px;width:auto}
+:root[data-theme="dark"] .logo img{background:#FDFDFE;padding:5px 9px;border-radius:10px;height:38px}
+.menu{display:flex;align-items:center;gap:4px;margin-right:auto}
+.menu > a,.menu > .dd > button{padding:9px 14px;border-radius:999px;font-weight:500;font-size:.96rem;color:var(--text);display:inline-flex;align-items:center;gap:6px;transition:background .25s}
+.menu > a:hover,.menu > .dd > button:hover,.dd.open > button{background:var(--surface-2)}
+.tools{display:flex;align-items:center;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:999px;padding:3px}
+.seg button{padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+:root[data-theme="dark"] .seg button[aria-pressed="true"]{background:var(--amber);color:#163663}
+.icon-btn{width:40px;height:40px;border-radius:999px;display:grid;place-items:center;border:1px solid var(--border);font-size:1.1rem}
+.burger{display:none}
+
+/* mega menu (organised by app) */
+.dd{position:relative}
+.dd .caret{transition:transform .3s var(--ease)}
+.dd.open .caret{transform:rotate(180deg)}
+.mega{position:absolute;top:calc(100% + 14px);left:-20px;width:min(640px,92vw);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-card);
+  box-shadow:0 30px 60px -20px var(--shadow);padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  opacity:0;visibility:hidden;transform:translateY(-6px);transition:all .3s var(--ease)}
+.dd.open .mega{opacity:1;visibility:visible;transform:none}
+.mega a{display:flex;gap:14px;padding:14px;border-radius:16px;transition:background .25s}
+.mega a:hover{background:var(--surface-2)}
+.app-badge{width:44px;height:44px;border-radius:14px;flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:.78rem;letter-spacing:.02em}
+.ab-pxp{background:linear-gradient(135deg,#FFCF06,#FFC000);color:#163663}
+.ab-lxp{background:linear-gradient(135deg,#2A5591,#163663);color:#fff}
+.ab-sxp{background:linear-gradient(135deg,#163663,#0B1E3C);color:#FFCF06}
+.ab-iot{background:var(--surface-2);color:var(--heading);border:1px solid var(--border);font-size:1.2rem}
+.mega strong{display:block;color:var(--heading);font-size:.98rem}
+.mega small{display:block;color:var(--muted);font-size:.84rem;line-height:1.45}
+.mega .for{color:var(--link);font-weight:600;font-size:.78rem;margin-top:4px}
+.mega .soon{grid-column:1/-1;border:1.5px dashed var(--border);border-radius:16px;padding:12px 14px;color:var(--muted);font-size:.88rem;display:flex;align-items:center;gap:10px}
+
+/* hero */
+.hero{position:relative;min-height:calc(100dvh - 72px);display:flex;align-items:center;overflow:hidden;isolation:isolate}
+#silk{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero-fallback{position:absolute;inset:0;z-index:-2;background:
+  radial-gradient(60% 80% at 85% 40%,rgba(22,54,99,.35),transparent 70%),
+  radial-gradient(40% 50% at 70% 85%,rgba(255,192,0,.35),transparent 70%),var(--bg)}
+.hero-grid{display:grid;grid-template-columns:1.4fr .85fr;gap:40px;align-items:center;padding:56px 24px 72px}
+.hero h1{font-size:clamp(2.2rem,4vw,3.4rem);font-weight:800;letter-spacing:-.035em;line-height:1.04}
+.hero h1 em{font-style:italic;font-weight:600;background:linear-gradient(transparent 62%,rgba(255,192,0,.55) 62% 92%,transparent 92%);padding:0 .08em .04em}
+.hero p.sub{margin:22px 0 32px;font-size:1.15rem;color:var(--muted);max-width:44ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+
+/* hero product stage */
+.stage{position:relative;height:520px}
+.browser{position:absolute;right:0;top:40px;width:88%;aspect-ratio:16/10.5;background:var(--surface);border-radius:18px;border:1px solid var(--border);
+  box-shadow:0 40px 80px -30px rgba(8,18,37,.45);overflow:hidden;animation:floatA 9s ease-in-out infinite}
+.bar{height:34px;display:flex;align-items:center;gap:6px;padding:0 14px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.bar i{width:9px;height:9px;border-radius:50%;background:var(--border);display:block}
+.bar span{margin-left:12px;font-size:.72rem;color:var(--muted);background:var(--surface);padding:3px 12px;border-radius:999px}
+.phone{position:absolute;width:236px;aspect-ratio:9/19;border-radius:40px;background:#0B1730;padding:10px;
+  box-shadow:0 50px 90px -30px rgba(8,18,37,.6),inset 0 0 0 1.5px rgba(255,255,255,.12)}
+.phone::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:76px;height:22px;background:#0B1730;border-radius:999px;z-index:3}
+.screen{position:relative;width:100%;height:100%;border-radius:31px;overflow:hidden;background:var(--surface)}
+.stage .phone{left:0;bottom:0;animation:floatB 8s ease-in-out infinite}
+@keyframes floatA{50%{transform:translateY(-12px)}}
+@keyframes floatB{50%{transform:translateY(10px) rotate(-1deg)}}
+
+/* SXP mini dashboard (real component preview, replaced by product clip later) */
+.dash{display:grid;grid-template-columns:120px 1fr;height:calc(100% - 34px)}
+.dash aside{border-right:1px solid var(--border);padding:14px 10px;display:flex;flex-direction:column;gap:6px}
+.dash aside b{font-size:.72rem;color:var(--heading);padding:6px 8px;border-radius:8px}
+.dash aside b.on{background:var(--navy);color:#fff}
+:root[data-theme="dark"] .dash aside b.on{background:var(--amber);color:#163663}
+.dash main{padding:16px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto 1fr;gap:10px}
+.kpi{background:var(--surface-2);border-radius:12px;padding:10px}
+.kpi small{font-size:.62rem;color:var(--muted);display:block}
+.kpi strong{font-size:1.05rem;color:var(--heading)}
+.chart{grid-column:1/-1;background:var(--surface-2);border-radius:12px;padding:12px;display:flex;align-items:flex-end;gap:7px}
+.chart i{flex:1;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,var(--navy),#2A5591);transform-origin:bottom;animation:grow 1.4s var(--ease) both}
+:root[data-theme="dark"] .chart i{background:linear-gradient(180deg,#3B67A8,#1E4178)}
+.chart i:nth-child(5){background:linear-gradient(180deg,var(--amber-2),var(--amber))}
+@keyframes grow{from{transform:scaleY(0)}}
+
+/* PXP mini screens */
+.pscreen{position:absolute;inset:0;padding:48px 14px 14px;display:flex;flex-direction:column;gap:10px;opacity:0;transform:translateY(14px) scale(.98);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.pscreen.on{opacity:1;transform:none}
+.ptop{display:flex;justify-content:space-between;align-items:center}
+.ptop b{font-size:.95rem;color:var(--heading)}
+.ptop span{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber-2),var(--amber));display:grid;place-items:center;font-size:.65rem;font-weight:800;color:#163663}
+.pcard{background:var(--surface-2);border-radius:16px;padding:12px}
+.pcard small{color:var(--muted);font-size:.66rem;display:block}
+.pcard strong{color:var(--heading);font-size:.86rem;display:block}
+.pcard.hl{background:linear-gradient(135deg,#163663,#244C85);color:#fff}
+.pcard.hl strong,.pcard.hl small{color:#fff}
+.pcard.am{background:linear-gradient(135deg,var(--amber-2),var(--amber))}
+.pcard.am strong,.pcard.am small{color:#163663}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:.74rem;padding:8px 0;border-bottom:1px solid var(--border);color:var(--text)}
+.row:last-child{border:0}
+.row b{color:var(--heading)}
+.bubble{max-width:82%;padding:9px 12px;border-radius:14px;font-size:.72rem;line-height:1.4}
+.bubble.in{background:var(--surface-2);color:var(--text);border-bottom-left-radius:4px}
+.bubble.out{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px}
+.pbtn{margin-top:auto;height:40px;border-radius:999px;background:var(--amber);color:#163663;font-weight:700;font-size:.8rem;display:grid;place-items:center}
+
+/* trust strip */
+.trust{padding:34px 0 10px}
+.trust p{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:18px}
+.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.logos div{height:56px;border:1.5px dashed var(--border);border-radius:14px;display:grid;place-items:center;color:var(--muted);font-size:.72rem}
+
+/* sections */
+section.blk{padding:110px 0}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* product bento: 4 items, 4 cells */
+.bento{margin-top:48px;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(250px,auto);gap:18px}
+.tile{position:relative;border-radius:var(--r-card);padding:30px;overflow:hidden;border:1px solid var(--border);background:var(--surface);
+  display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.tile:hover{transform:translateY(-4px);box-shadow:0 30px 60px -30px var(--shadow)}
+.tile h3{font-size:1.6rem;font-weight:800;margin:14px 0 4px}
+.tile .full{font-size:.85rem;font-weight:600;color:var(--muted)}
+.tile p{margin-top:10px;color:var(--muted);max-width:40ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:18px}
+.chip{font-size:.76rem;font-weight:600;padding:5px 12px;border-radius:999px;border:1px solid var(--border);color:var(--heading);background:color-mix(in srgb,var(--surface) 80%,transparent)}
+.t-pxp{grid-column:span 3;grid-row:span 2;background:linear-gradient(160deg,#FFD84A 0%,#FFC000 55%,#F2B400 100%);border:0}
+.t-pxp h3,.t-pxp .full,.t-pxp p{color:#163663}
+.t-pxp .chip{border-color:rgba(22,54,99,.25);color:#163663;background:rgba(255,255,255,.35)}
+.t-pxp .phone{position:relative;width:200px;margin:28px auto -120px;transform:rotate(-6deg)}
+.t-sxp{grid-column:span 3;background:linear-gradient(145deg,#163663,#0B1E3C);border:0}
+.t-sxp h3,.t-sxp .full,.t-sxp p{color:#EEF2F9}
+.t-sxp .full{color:#FFCF06}
+.t-sxp .chip{color:#fff;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
+.t-lxp{grid-column:span 2}
+.t-iot{grid-column:span 1;padding:24px}
+.t-iot h3{font-size:1.25rem}
+.tile .go{position:absolute;top:24px;right:24px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid currentColor;opacity:.5;transition:all .35s var(--ease)}
+.tile:hover .go{opacity:1;transform:rotate(-45deg)}
+.t-lxp::after{content:"";position:absolute;right:-60px;bottom:-60px;width:200px;height:200px;border-radius:50%;
+  background:repeating-radial-gradient(circle,rgba(22,54,99,.10) 0 2px,transparent 2px 12px)}
+:root[data-theme="dark"] .t-lxp::after{background:repeating-radial-gradient(circle,rgba(255,192,0,.14) 0 2px,transparent 2px 12px)}
+
+/* PXP scroll story */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:40px}
+.story .pin{position:sticky;top:110px;height:calc(100dvh - 150px);min-height:560px;display:grid;place-items:center}
+.story .pin::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,192,0,.35),transparent 65%);filter:blur(10px)}
+.story .phone{position:relative;width:280px}
+.steps{padding:12vh 0 20vh}
+.step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.28;transition:opacity .5s var(--ease)}
+.step.on{opacity:1}
+.step .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:1.5rem;background:var(--surface-2);color:var(--heading);margin-bottom:18px;transition:all .5s var(--ease)}
+.step.on .ic{background:var(--amber);color:#163663}
+.step h3{font-size:clamp(1.6rem,2.6vw,2.2rem);font-weight:700}
+.step p{color:var(--muted);margin-top:10px;max-width:40ch;font-size:1.05rem}
+.stores{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.store{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 18px;border-radius:14px;border:1.5px solid var(--heading);color:var(--heading);font-weight:600;font-size:.9rem}
+.store i{font-size:1.4rem}
+.m-tabs{display:none}
+
+/* why schools: stacked outcomes around illustration */
+.why{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;margin-top:48px}
+.illo{position:relative;border:1.5px dashed color-mix(in srgb,var(--heading) 35%,transparent);border-radius:var(--r-card);display:flex;flex-direction:column;justify-content:flex-end;padding:22px;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--amber) 14%,transparent),transparent 60%),var(--surface-2);min-height:220px}
+.illo b{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.illo span{font-size:.86rem;color:var(--text);margin-top:6px;max-width:42ch}
+.why .illo{min-height:460px}
+.outs{display:grid;grid-template-columns:1fr 1fr;gap:34px 40px}
+.out i{font-size:1.9rem;color:var(--heading)}
+.out i.am{color:#C99700}
+:root[data-theme="dark"] .out i.am{color:var(--amber)}
+.out h3{font-size:1.2rem;font-weight:700;margin:12px 0 6px}
+.out p{color:var(--muted);font-size:.97rem}
+
+/* web apps tabs */
+.tabs{display:flex;gap:8px;margin:36px 0 26px;flex-wrap:wrap}
+.tab{padding:11px 20px;border-radius:999px;border:1.5px solid var(--border);font-weight:600;color:var(--muted);transition:all .3s var(--ease)}
+.tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+:root[data-theme="dark"] .tab[aria-selected="true"]{background:var(--amber);border-color:var(--amber);color:#163663}
+.panel{display:none;grid-template-columns:.8fr 1.4fr;gap:44px;align-items:center}
+.panel.on{display:grid;animation:fadeUp .6s var(--ease)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}}
+.panel h3{font-size:1.9rem;font-weight:800}
+.panel p{color:var(--muted);margin:12px 0 18px}
+.panel .more{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--link);margin-top:22px}
+.panel .more:hover i{transform:translateX(4px)}
+.panel .more i{transition:transform .3s var(--ease)}
+.clipframe{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 40px 80px -40px var(--shadow)}
+.clip{position:relative;aspect-ratio:16/9.4;padding:22px;display:grid;grid-template-columns:1fr 2fr;gap:14px;background:var(--surface)}
+.sk{border-radius:10px;background:linear-gradient(90deg,var(--surface-2) 0%,color-mix(in srgb,var(--surface-2) 60%,var(--surface)) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:shimmer 2.2s linear infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+.clip .col{display:grid;gap:12px;grid-auto-rows:1fr}
+.play{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:10px;background:radial-gradient(circle,color-mix(in srgb,var(--bg) 70%,transparent),transparent 70%)}
+.play span{width:74px;height:74px;border-radius:50%;background:var(--amber);color:#163663;display:grid;place-items:center;font-size:1.7rem;box-shadow:0 0 0 12px rgba(255,192,0,.2);animation:pulse 2.4s var(--ease) infinite}
+.play small{font-weight:600;color:var(--heading);font-size:.88rem}
+@keyframes pulse{50%{box-shadow:0 0 0 20px rgba(255,192,0,.05)}}
+
+/* outsourcing panel */
+.out-panel{position:relative;border-radius:32px;overflow:hidden;padding:72px 64px;isolation:isolate;
+  background:linear-gradient(135deg,#0B1E3C 0%,#163663 55%,#1E4178 100%);color:#EEF2F9}
+.out-panel::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.55;
+  background:
+   repeating-linear-gradient(115deg,transparent 0 22px,rgba(255,192,0,.10) 22px 23px),
+   radial-gradient(50% 70% at 90% 10%,rgba(255,192,0,.28),transparent 70%)}
+.out-panel .eyebrow{color:#FFCF06}
+.out-panel h2{color:#fff}
+.out-panel .lede{color:#C5D0E3}
+.out-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end}
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.svc div{border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:20px;background:rgba(255,255,255,.04);backdrop-filter:blur(6px);transition:all .4s var(--ease)}
+.svc div:hover{background:rgba(255,192,0,.10);border-color:rgba(255,192,0,.5)}
+.svc i{font-size:1.6rem;color:#FFCF06}
+.svc strong{display:block;margin-top:10px;font-size:1rem}
+.svc small{color:#C5D0E3;font-size:.86rem}
+.out-panel .btn-ghost{color:#fff;border-color:rgba(255,255,255,.35);background:transparent}
+.out-panel .btn-ghost:hover{border-color:#fff}
+
+/* insights: scroll-snap rail */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,1fr);gap:20px;margin-top:40px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
+.post{scroll-snap-align:start}
+.post .illo{min-height:220px;aspect-ratio:4/3}
+.post .meta{font-size:.82rem;color:var(--muted);margin:16px 0 6px}
+.post h3{font-size:1.2rem;font-weight:700;line-height:1.35}
+.post:hover h3{text-decoration:underline;text-decoration-color:var(--amber);text-decoration-thickness:3px;text-underline-offset:5px}
+
+/* final CTA */
+.cta{position:relative;overflow:hidden;border-radius:32px;padding:64px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;
+  background:linear-gradient(120deg,#FFD84A,#FFC000 60%,#F2B400)}
+.cta h2{color:#163663}
+.cta p{color:#23406B;margin:14px 0 28px;max-width:46ch;font-size:1.08rem}
+.cta .btn-primary{background:#163663;color:#fff;box-shadow:0 14px 30px -12px rgba(22,54,99,.6)}
+.cta .illo{min-height:260px;background:rgba(255,255,255,.3);border-color:rgba(22,54,99,.35)}
+.cta .illo b,.cta .illo span{color:#163663}
+
+/* footer */
+footer{margin-top:110px;border-top:1px solid var(--border);padding:64px 0 36px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px}
+footer h4{font-size:.9rem;color:var(--heading);margin-bottom:14px}
+footer ul{list-style:none;display:grid;gap:9px}
+footer li a{color:var(--muted);font-size:.93rem}
+footer li a:hover{color:var(--heading)}
+.fbot{margin-top:52px;display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;flex-wrap:wrap;gap:12px}
+.tag{font-weight:800;color:var(--heading);letter-spacing:.06em}
+.tag b{color:#C99700}
+:root[data-theme="dark"] .tag b{color:var(--amber)}
+
+/* responsive */
+@media (max-width:1080px){
+  .menu{display:none}
+  .burger{display:grid}
+  .menu.mobile-open{display:flex;flex-direction:column;align-items:stretch;position:absolute;top:72px;left:0;right:0;background:var(--surface);padding:16px 24px 24px;border-bottom:1px solid var(--border);box-shadow:0 30px 40px -30px var(--shadow)}
+  .menu.mobile-open .mega{position:static;width:100%;grid-template-columns:1fr;box-shadow:none;margin-top:6px;display:none}
+  .menu.mobile-open .dd.open .mega{display:grid}
+  .tools .btn-sm.hide-sm{display:none}
+}
+@media (max-width:900px){
+  .hero-grid,.why,.out-grid,.cta,.panel.on{grid-template-columns:1fr}
+  .stage{height:430px}
+  .bento{grid-template-columns:1fr 1fr}
+  .t-pxp,.t-sxp{grid-column:1/-1}
+  .t-lxp,.t-iot{grid-column:span 1}
+  .story{grid-template-columns:1fr}
+  .story .pin{position:relative;top:0;height:auto;min-height:0;padding:20px 0}
+  .steps{padding:0}
+  .step{min-height:0;display:none;opacity:1}
+  .step.on{display:flex}
+  .m-tabs{display:flex;gap:8px;overflow-x:auto;justify-content:center;flex-wrap:wrap}
+  .logos{grid-template-columns:repeat(3,1fr)}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .out-panel,.cta{padding:44px 28px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .hero-grid{padding:36px 16px 48px}
+  .stage{height:380px}
+  .stage .phone{width:170px}
+  .browser{width:92%;top:10px}
+  .bento,.outs,.svc{grid-template-columns:1fr}
+  .t-lxp,.t-iot{grid-column:1/-1}
+  section.blk{padding:76px 0}
+  .tools .seg{display:none}
+  .fgrid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top" aria-label="XionTechs home"><img src="data:image/png;base64,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" alt="XionTechs, Get it done"></a>
+    <nav class="menu" id="menu" aria-label="Main">
+      <div class="dd" id="dd">
+        <button aria-expanded="false" aria-controls="mega" id="ddBtn"><span data-i18n="nav.products">Products</span><i class="ph ph-caret-down caret"></i></button>
+        <div class="mega" id="mega" role="menu">
+          <a href="#pxp" role="menuitem"><span class="app-badge ab-pxp">PXP</span><span><strong>PXP</strong><small data-i18n="p.pxp.full">Parent eXperience Place. The school day in every parent's pocket.</small><small class="for" data-i18n="for.parents">For parents</small></span></a>
+          <a href="#apps" data-tab="lxp" role="menuitem"><span class="app-badge ab-lxp">LXP</span><span><strong>LXP</strong><small data-i18n="p.lxp.full">Learner eXperience Place. Lessons, tasks and progress for students.</small><small class="for" data-i18n="for.students">For students</small></span></a>
+          <a href="#apps" data-tab="sxp" role="menuitem"><span class="app-badge ab-sxp">SXP</span><span><strong>SXP</strong><small data-i18n="p.sxp.full">Staff eXperience Place. One workspace, role-based views.</small><small class="for" data-i18n="for.staff">For staff, teachers and leaders</small></span></a>
+          <a href="#apps" data-tab="iot" role="menuitem"><span class="app-badge ab-iot"><i class="ph ph-cpu"></i></span><span><strong data-i18n="p.iot.name">IoT Device Management</strong><small data-i18n="p.iot.full">Control campus devices from one screen.</small><small class="for" data-i18n="for.facilities">For school staff and facilities</small></span></a>
+          <div class="soon"><i class="ph ph-sparkle"></i><span data-i18n="nav.soon">More products are on the way.</span></div>
+        </div>
+      </div>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#insights" data-i18n="nav.insights">Insights</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#careers" data-i18n="nav.careers">Careers</a>
+    </nav>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Language">
+        <button data-lang="en" aria-pressed="true">EN</button><button data-lang="vi" aria-pressed="false">VI</button>
+      </div>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode"><i class="ph ph-moon"></i></button>
+      <a class="btn btn-primary btn-sm hide-sm" href="#demo" data-i18n="cta.demo">Book a demo</a>
+      <button class="icon-btn burger" id="burger" aria-label="Open menu" aria-expanded="false"><i class="ph ph-list"></i></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" aria-labelledby="h1">
+  <div class="hero-fallback"></div>
+  <canvas id="silk" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <h1 id="h1" data-i18n-html="hero.h1">Every school community, <em>connected</em>.</h1>
+      <p class="sub" data-i18n="hero.sub">PXP for parents, LXP for learners, SXP for staff. One platform that keeps every school day running.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#demo"><span data-i18n="cta.demo">Book a demo</span><i class="ph ph-arrow-right"></i></a>
+        <a class="btn btn-ghost" href="#products" data-i18n="cta.explore">Explore products</a>
+      </div>
+    </div>
+    <div class="stage reveal" aria-hidden="true">
+      <div class="browser">
+        <div class="bar"><i></i><i></i><i></i><span>sxp.xiontechs.com</span></div>
+        <div class="dash">
+          <aside><b class="on">Overview</b><b>Attendance</b><b>Classes</b><b>Finance</b><b>Messages</b></aside>
+          <main>
+            <div class="kpi"><small>Present today</small><strong>1,284</strong></div>
+            <div class="kpi"><small>Open requests</small><strong>17</strong></div>
+            <div class="kpi"><small>Fees collected</small><strong>86%</strong></div>
+            <div class="chart"><i style="height:45%"></i><i style="height:62%;animation-delay:.1s"></i><i style="height:54%;animation-delay:.2s"></i><i style="height:78%;animation-delay:.3s"></i><i style="height:92%;animation-delay:.4s"></i><i style="height:70%;animation-delay:.5s"></i><i style="height:84%;animation-delay:.6s"></i></div>
+          </main>
+        </div>
+      </div>
+      <div class="phone"><div class="screen">
+        <div class="pscreen on">
+          <div class="ptop"><b>Hi, Chị Lan</b><span>MA</span></div>
+          <div class="pcard hl"><small>Minh An, Grade 5A</small><strong>Checked in at 7:42</strong></div>
+          <div class="pcard"><small>New grade</small><strong>Mathematics 9.0</strong></div>
+          <div class="pcard am"><small>Due Friday</small><strong>Term 2 tuition</strong></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap trust">
+  <p data-i18n="trust">Trusted by schools across Vietnam</p>
+  <div class="logos" aria-label="Partner school logos placeholder">
+    <div>School logo</div><div>School logo</div><div>School logo</div><div>School logo</div><div>School logo</div><div>School logo</div>
+  </div>
+</div>
+
+<section class="blk" id="products">
+  <div class="wrap">
+    <span class="eyebrow reveal" data-i18n="prod.eyebrow">The XionTechs platform</span>
+    <h2 class="reveal" data-i18n="prod.h2">Four apps. One school day.</h2>
+    <div class="bento">
+      <a class="tile t-pxp reveal" href="#pxp">
+        <span class="go"><i class="ph ph-arrow-right"></i></span>
+        <span class="app-badge ab-sxp" style="width:52px;height:52px">PXP</span>
+        <h3>PXP</h3><span class="full">Parent eXperience Place</span>
+        <p data-i18n="p.pxp.desc">Attendance, grades, messages and fees in every parent's pocket.</p>
+        <div class="chips"><span class="chip" data-i18n="chip.parents">Parents</span><span class="chip" data-i18n="chip.mobile">iOS and Android</span></div>
+        <div class="phone"><div class="screen"><div class="pscreen on">
+          <div class="ptop"><b>Messages</b><span>MA</span></div>
+          <div class="bubble in">Minh An did great in the science fair today!</div>
+          <div class="bubble out">Thank you, cô Thu Hà!</div>
+          <div class="bubble in">Photos are in the Events tab.</div>
+        </div></div></div>
+      </a>
+      <a class="tile t-sxp reveal" href="#apps" data-tab="sxp">
+        <span class="go"><i class="ph ph-arrow-right"></i></span>
+        <span class="app-badge ab-pxp" style="width:52px;height:52px">SXP</span>
+        <h3>SXP</h3><span class="full">Staff eXperience Place</span>
+        <p data-i18n="p.sxp.desc">One workspace with role-based views for staff, teachers and leaders.</p>
+        <div class="chips"><span class="chip" data-i18n="chip.staff">Staff</span><span class="chip" data-i18n="chip.teachers">Teachers</span><span class="chip" data-i18n="chip.leaders">Leaders</span></div>
+      </a>
+      <a class="tile t-lxp reveal" href="#apps" data-tab="lxp">
+        <span class="go"><i class="ph ph-arrow-right"></i></span>
+        <span class="app-badge ab-lxp" style="width:52px;height:52px">LXP</span>
+        <h3>LXP</h3><span class="full">Learner eXperience Place</span>
+        <p data-i18n="p.lxp.desc">Lessons, assignments and progress in one calm space for students.</p>
+        <div class="chips"><span class="chip" data-i18n="chip.students">Students</span></div>
+      </a>
+      <a class="tile t-iot reveal" href="#apps" data-tab="iot">
+        <span class="app-badge ab-iot" style="width:52px;height:52px"><i class="ph ph-cpu"></i></span>
+        <h3>IoT</h3><span class="full" data-i18n="p.iot.name">IoT Device Management</span>
+        <p data-i18n="p.iot.desc">Classroom AV, lighting, climate and access, campus-wide.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="pxp" style="padding-top:40px">
+  <div class="wrap">
+    <h2 class="reveal" data-i18n="pxp.h2">The school day, in a parent's pocket.</h2>
+    <div class="story">
+      <div class="steps" id="steps">
+        <div class="step on" data-s="0"><span class="ic"><i class="ph ph-check-circle"></i></span><h3 data-i18n="s0.h">Know they arrived</h3><p data-i18n="s0.p">A check-in alert the moment your child reaches the school gate.</p></div>
+        <div class="step" data-s="1"><span class="ic"><i class="ph ph-chart-line-up"></i></span><h3 data-i18n="s1.h">See progress early</h3><p data-i18n="s1.p">Scores and teacher comments as soon as they are published.</p></div>
+        <div class="step" data-s="2"><span class="ic"><i class="ph ph-chats-circle"></i></span><h3 data-i18n="s2.h">Talk to teachers directly</h3><p data-i18n="s2.p">Two-way messages with homeroom and subject teachers.</p></div>
+        <div class="step" data-s="3"><span class="ic"><i class="ph ph-wallet"></i></span><h3 data-i18n="s3.h">Pay fees in a tap</h3><p data-i18n="s3.p">Tuition and service fees with clear due dates and receipts.</p></div>
+        <div class="step" data-s="4"><span class="ic"><i class="ph ph-calendar-star"></i></span><h3 data-i18n="s4.h">Never miss a school event</h3><p data-i18n="s4.p">Sports days, parent meetings and trips, synced to your calendar.</p>
+          <div class="stores"><a class="store" href="#"><i class="ph-fill ph-apple-logo"></i>App Store</a><a class="store" href="#"><i class="ph-fill ph-google-play-logo"></i>Google Play</a></div></div>
+      </div>
+      <div class="pin">
+        <div class="phone" aria-hidden="true"><div class="screen" id="pxpScreen">
+          <div class="pscreen on">
+            <div class="ptop"><b>Attendance</b><span>MA</span></div>
+            <div class="pcard hl"><small>Today, 7:42</small><strong>Minh An checked in at Gate 2</strong></div>
+            <div class="pcard"><div class="row"><span>Mon</span><b>7:39</b></div><div class="row"><span>Tue</span><b>7:45</b></div><div class="row"><span>Wed</span><b>7:41</b></div><div class="row"><span>Thu</span><b>7:42</b></div></div>
+          </div>
+          <div class="pscreen">
+            <div class="ptop"><b>Grades</b><span>MA</span></div>
+            <div class="pcard"><div class="row"><span>Mathematics</span><b>9.0</b></div><div class="row"><span>Vietnamese</span><b>8.5</b></div><div class="row"><span>English</span><b>9.2</b></div><div class="row"><span>Science</span><b>8.8</b></div></div>
+            <div class="pcard am"><small>Teacher comment</small><strong>Confident with fractions now.</strong></div>
+          </div>
+          <div class="pscreen">
+            <div class="ptop"><b>Messages</b><span>MA</span></div>
+            <div class="bubble in">Reminder: bring the science project tomorrow.</div>
+            <div class="bubble out">Noted, thank you cô Thu Hà.</div>
+            <div class="bubble in">Minh An presented really well today.</div>
+          </div>
+          <div class="pscreen">
+            <div class="ptop"><b>Payments</b><span>MA</span></div>
+            <div class="pcard hl"><small>Term 2 tuition</small><strong>Due 15 Nov</strong></div>
+            <div class="pcard"><div class="row"><span>Tuition</span><b>Pending</b></div><div class="row"><span>Bus service</span><b>Paid</b></div><div class="row"><span>Lunch plan</span><b>Paid</b></div></div>
+            <div class="pbtn">Pay now</div>
+          </div>
+          <div class="pscreen">
+            <div class="ptop"><b>Events</b><span>MA</span></div>
+            <div class="pcard am"><small>Sat, 23 Nov</small><strong>Sports Day</strong></div>
+            <div class="pcard"><small>Tue, 26 Nov</small><strong>Parent meeting, 5A</strong></div>
+            <div class="pcard"><small>Fri, 6 Dec</small><strong>Field trip: Science Museum</strong></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+    <div class="m-tabs" id="mTabs" aria-label="PXP features">
+      <button class="tab" aria-selected="true" data-s="0">Attendance</button><button class="tab" aria-selected="false" data-s="1">Grades</button><button class="tab" aria-selected="false" data-s="2">Messages</button><button class="tab" aria-selected="false" data-s="3">Payments</button><button class="tab" aria-selected="false" data-s="4">Events</button>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <h2 class="reveal" data-i18n="why.h2">Built for how schools actually run.</h2>
+    <div class="why">
+      <div class="illo reveal"><b>Illustration</b><span>Brief: a principal, a teacher and a parent standing around one glowing tablet in a school courtyard. Flat-editorial, navy and amber, warm and human.</span></div>
+      <div class="outs">
+        <div class="out reveal"><i class="ph ph-phone-slash"></i><h3 data-i18n="w0.h">Fewer calls to the front office</h3><p data-i18n="w0.p">Parents find answers in PXP before they pick up the phone.</p></div>
+        <div class="out reveal"><i class="ph ph-database am"></i><h3 data-i18n="w1.h">One source of truth</h3><p data-i18n="w1.p">Attendance, grades and fees live in one system, not five spreadsheets.</p></div>
+        <div class="out reveal"><i class="ph ph-compass am"></i><h3 data-i18n="w2.h">Leaders see the whole school</h3><p data-i18n="w2.p">Dashboards in SXP show what needs attention today.</p></div>
+        <div class="out reveal"><i class="ph ph-lightbulb"></i><h3 data-i18n="w3.h">A campus that runs itself</h3><p data-i18n="w3.p">Schedule lights, AC and classroom devices from one screen.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="apps" style="padding-top:20px">
+  <div class="wrap">
+    <h2 class="reveal" data-i18n="apps.h2">See the web apps in motion.</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-panel="lxp">LXP</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="sxp">SXP</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="iot">IoT</button>
+    </div>
+    <div class="panel on" id="panel-lxp" role="tabpanel">
+      <div><h3>LXP</h3><p data-i18n="p.lxp.desc">Lessons, assignments and progress in one calm space for students.</p>
+        <div class="chips" style="padding:0"><span class="chip" data-i18n="chip.students">Students</span></div>
+        <a class="more" href="#"><span data-i18n="more.lxp">Explore LXP</span><i class="ph ph-arrow-right"></i></a></div>
+      <div class="clipframe"><div class="bar"><i></i><i></i><i></i><span>lxp.xiontechs.com</span></div>
+        <div class="clip"><div class="col"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div><div class="col"><div class="sk"></div><div class="sk"></div></div>
+          <div class="play"><span><i class="ph-fill ph-play"></i></span><small data-i18n="clip">Product clip coming soon</small></div></div></div>
+    </div>
+    <div class="panel" id="panel-sxp" role="tabpanel">
+      <div><h3>SXP</h3><p data-i18n="p.sxp.desc">One workspace with role-based views for staff, teachers and leaders.</p>
+        <div class="chips" style="padding:0"><span class="chip" data-i18n="chip.staff">Staff</span><span class="chip" data-i18n="chip.teachers">Teachers</span><span class="chip" data-i18n="chip.leaders">Leaders</span></div>
+        <a class="more" href="#"><span data-i18n="more.sxp">Explore SXP</span><i class="ph ph-arrow-right"></i></a></div>
+      <div class="clipframe"><div class="bar"><i></i><i></i><i></i><span>sxp.xiontechs.com</span></div>
+        <div class="clip"><div class="col"><div class="sk"></div><div class="sk"></div><div class="sk"></div><div class="sk"></div></div><div class="col"><div class="sk"></div><div class="sk"></div><div class="sk"></div></div>
+          <div class="play"><span><i class="ph-fill ph-play"></i></span><small data-i18n="clip">Product clip coming soon</small></div></div></div>
+    </div>
+    <div class="panel" id="panel-iot" role="tabpanel">
+      <div><h3 data-i18n="p.iot.name">IoT Device Management</h3><p data-i18n="p.iot.desc2">Control classroom AV, lighting, climate and access across campus.</p>
+        <div class="chips" style="padding:0"><span class="chip" data-i18n="chip.staff">Staff</span><span class="chip" data-i18n="chip.facilities">Facilities</span></div>
+        <a class="more" href="#"><span data-i18n="more.iot">Explore IoT</span><i class="ph ph-arrow-right"></i></a></div>
+      <div class="clipframe"><div class="bar"><i></i><i></i><i></i><span>iot.xiontechs.com</span></div>
+        <div class="clip" style="grid-template-columns:repeat(3,1fr)"><div class="col"><div class="sk"></div><div class="sk"></div></div><div class="col"><div class="sk"></div><div class="sk"></div></div><div class="col"><div class="sk"></div><div class="sk"></div></div>
+          <div class="play"><span><i class="ph-fill ph-play"></i></span><small data-i18n="clip">Product clip coming soon</small></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="services" style="padding-top:40px">
+  <div class="wrap">
+    <div class="out-panel reveal">
+      <div class="out-grid">
+        <div>
+          <span class="eyebrow" data-i18n="svc.eyebrow">Outsourcing services</span>
+          <h2 data-i18n="svc.h2">Your edtech delivery team.</h2>
+          <p class="lede" style="margin:16px 0 30px" data-i18n="svc.sub">The engineers who build PXP, LXP and SXP can build your product too.</p>
+          <a class="btn btn-ghost" href="#services"><span data-i18n="cta.services">Explore services</span><i class="ph ph-arrow-right"></i></a>
+        </div>
+        <div class="svc">
+          <div><i class="ph ph-users-three"></i><strong data-i18n="v0.h">Dedicated teams</strong><small data-i18n="v0.p">Engineers who work as part of your team.</small></div>
+          <div><i class="ph ph-code"></i><strong data-i18n="v1.h">Product engineering</strong><small data-i18n="v1.p">Web and mobile, from idea to release.</small></div>
+          <div><i class="ph ph-shield-check"></i><strong data-i18n="v2.h">QA and testing</strong><small data-i18n="v2.p">Manual and automated, before every release.</small></div>
+          <div><i class="ph ph-pen-nib"></i><strong data-i18n="v3.h">UX and design</strong><small data-i18n="v3.p">Research, flows and interfaces people enjoy.</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="insights" style="padding-top:20px">
+  <div class="wrap">
+    <h2 class="reveal" data-i18n="ins.h2">Latest insights</h2>
+    <div class="rail">
+      <a class="post reveal" href="#"><div class="illo"><b>Illustration</b><span>Brief: parent on a sofa reading a school notice on a phone, child drawing nearby.</span></div><p class="meta" data-i18n="ins.m0">Product thinking</p><h3 data-i18n="ins.t0">What parents actually want from a school app</h3></a>
+      <a class="post reveal" href="#"><div class="illo"><b>Illustration</b><span>Brief: a classroom where lights, AC and projector are linked by a thin amber thread.</span></div><p class="meta" data-i18n="ins.m1">Smart campus</p><h3 data-i18n="ins.t1">Running a smart campus without a big IT team</h3></a>
+      <a class="post reveal" href="#"><div class="illo"><b>Illustration</b><span>Brief: QA engineer ticking a checklist beside a calendar showing the first day of school.</span></div><p class="meta" data-i18n="ins.m2">Engineering</p><h3 data-i18n="ins.t2">How we test edtech releases before the school year starts</h3></a>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="demo" style="padding-top:20px">
+  <div class="wrap">
+    <div class="cta reveal">
+      <div>
+        <h2 data-i18n="cta.h2">See it at your school.</h2>
+        <p data-i18n="cta.sub">A guided walkthrough of PXP, LXP and SXP using scenarios from your own school.</p>
+        <a class="btn btn-primary" href="#demo"><span data-i18n="cta.demo">Book a demo</span><i class="ph ph-calendar-check"></i></a>
+      </div>
+      <div class="illo"><b>Illustration</b><span>Brief: teacher and parent giving a high five across a large phone screen.</span></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo" href="#top"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAAuCAYAAAABQwQEAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxMAAAsTAQCanBgAABfxSURBVHhe7Z17fFTVtYC/tWcSHioIZCZBUdCrxVJRNMkEKRrQatVbtNriAy+FzIT4aLX2WmvtVRG1tdWqba2PYmaA66NeqVVarS0iD61gZkB8FS1Xe7UikBlA3pBkzln3j8kkM2dmkgkEgnW+32/9sdfaa5I556yz9177MUKBveKwiqlHWCInqphjRbFskc0i9mZFN9mWxChm7caloW1OvwIF9ifiVBRIx34VL7sYAnzyu00TN3zn3kNHYOsZqJ6EYCu8i+HVvr3iKz5aMme3079AgQOBQqA70FcYoC2cjqECYeOWHb1Wfum2SRK3zQWoViHSgPBsybatS1atmtvs9C9Q4ECkEOiAvYTBwIXYXIhwMMLMM3/xtbfe+sR7sahcArwhym8aj9r6J+bOtZz+BQoc6HxuA10X0VuV8zHUAGcAC3Y0ue7+t5snH4Kaa0HGquhTbpf79nXLZr7n9C9Q4LPE5y7Q7fkchpsrES5HKEFZ8OmO3rced9ukfxPkv4DhAIpeHwuHfu70L1Dgs8jnJtDtxRwLXA9MEShWeAeL68p+5O+tttwpwgiHyxXRcPA3Dl2BAp9J/uUDXRcxTIVbgMkCboXt2Nx6wh2XvNi4re99InK606eVLgV66eiAz1JKXBauNIORHY3h+kWApulTKDl52mCXsSucegs7Xizx8NrIoxsHl08+0pbiE9tsLju+oWHWC6n1B/ou6+fW4jNUzHFAiUBv0Jz3WFWaBHsTmA/E3bSgcdlj0VS7p6pmrLHMgDaFi22NDcHFqXVyUl3tLt157Nlo+9+3JR6JReas91YFSsXCl+7QdWyjTbFwaD5AaVVgHBaHOOvkiwvrjbXLZ3+cLJf6/ONt5CKBEUAp0Df1uzhRkWaBjcA/gVebmuKztrw5Z3PSXuqrPV2xv9nuIVuj4eAP28s5mDjR5f2w3y8RNUmVLSa4oaF+RXrFjsn5j3/WsRsYxE5uBq4UoRhAlYV/jw666rR7zp8sKpWK7hKR852+rXQp0Esqa78goi8IHO20AQ9Gh269Jlsir8xXM8JWMx/hcKdN0Xti4eD1IFrq8/sVCaYYt0UjwX7JYmlFYIIafRSkf1udLqCqTaLcEF0e+mVS5/EFlgqc4qj5ULTPEdewZEY8XZ/OoDH+Q1xxNoO0PaCInh9tCP2hxOf/d4M8l+awB6hqNBYJlQJ4fP53BPmSs06+qOCPNQRnAXgqA7eKMN1Zpyuo8iHET4lF5qwH8PoC3wPubbdrYywSKktzysaIicXeg/rtRNobEBG9tLEh9GR6xY5pvwn/IuhTFNuL+B67eF+E74pQrLBbba49/Map1592z/l3Y8vr0Ujwq4KudvrvKRsi9auNq+gURSNOG3CV56N+vx9cXtc3Ven11Y62MC9nCXJVuCEWDn0fJGdPIEnZqBqPCo/vaZADiEgvDPeWjJ52stOWjlzp2bXmz0NGBwY6Lf8KlPpqjxK4yakHtUHXAe8pvK2qb6mySlX/D9XtztoiDAP3DU59T7FfAt1+mWp7MdNzyC32y3zB6bMn2Is4W728JcK9AoeSiJi/tzRxyuAf+rdZlntc3z7WRbHlwd87fbuDxmUPR92We5xCRmslcF7cWAvLRtV4AEoqas5RdIHAoLSKqnEbrY2Fg3el6TvALjLnI+ndVkXfBpmk2KMEOTpu3EMstx4uEj9KbB0J8nVVXZjqA2LEsien6zIROKPZ1mWDyqcc57Tlg7awUkQvzSbAg87azjrtwuXpddN4OrN+bjEqiwFsODe19QRQeNwUa1k0HDosGg5+MRYOnhCLhE6MRYJfikVCR0cjR/RH9HxVdqX6iVCdWu5J9kvX3V7EzSLc5tQnUWgEzjHjWOm05YP9EkMx3CfCBQ7T3F++evzVd87zVVhx1+sbXn9kXarRW1lzF2KuT9Wl0KWuexoTJ7o8Hx7ygIhkPoiq74M8jOidIEXpJnaJyKXRcP28VD2JMWPOrrvXF3gAuKrdpE0adx3l/L5Ojjnm6l5bB+x4H5Eh7VpdEg2HxpGz657GZkUvTo6TU+mo655W0YHH558syH8ny6raFIuEeqfXysTZdVfV22KRUJe7395K//2IfCdZVthhdjeVNr712I70mpl4KwNBBH+Kan00HBzM56XrLuO5Q+FOpz6JQKkoi+zFnOq0dYQup8hexPdx8bfUIFewEG5kHBffN798S2M49HxnD323MneuFYuErkC5KfHvpCByDMLPnUHeGjRnZwvyzlB0cLpC3sjn+77//v1NIM4gTf+sjjlUlOc9vkBbYHzWUcGTrtC38wnyVlalF7XTYdf+Yr+06Ensxfwnys9Fsv9dVXYhfMOMIy2bnA17CT6UmQJtmWgSUbUduMyMo8OWg33ZoqfQ2kLVQyIhmB1dp+g5sfCsN52WJB216J5K/3wROTOl+txoOHhRSjknXp9/OsitKaq10XDwcLK06ArPoRydZSoS4MGo5bqWFTNbOCBadJ402I+n18qOIruikdBLJBJx80Q4r82mOi8WCX09zSEHJZW1XzBo2+yJGm2KNYSeJluLju4UZHaynAsFI3B5aqymtugKoq9TghR5BdoaD3Wj7JLdNDevNWPZtl9a9CRmHPcK+BWyZmxF6APMs5dwsdOWRBdxsL2Q+7BZlhHkylrgtHyCfH8RC4ceVZXzEsmcTBTdoHHXqR0FeeeIO62o5L9bLrNuzmdCVD+M264xoH922oCrPC7rhQMlSSfCJSrmj/mJhNodnVNosjO9nJsNkfrV0UjwiaQkgzwbgvRtHW51KAJX5GqQ9R2KWVm8CIobBXkHZGVSJC5vSBHv0bd4g/1G0SU5b+q+QsYzG5tvKmTd6SVQhPKEvTAz0aKL+IoKb4vhWpH0B1KVd7EZs6fj/H3F0OopvUXsurSWLQVBSsRl1XU0370H5N9llOwvoFx8umLmlmifIyag+munTeCMZovXBpXX7VGS7kBEUuavux+185PsaLP7RKAaeENRvybi6kKFC9Xmm5qYIixCmbwPv0RuzOnMw+ZszWxNIPHAGISH7MXcQCLAD7UXU68wX2CYs75CA3FONWfwkdPWkwwor+u/c6f7TyAXOm1piPzA4ws8NmLExA669x0gpD0MKtontdwxrrQpv7zGlUtmxKOR0NVq67dRR+9MONblspaZ5rShRA+gvwd7Uj4iole3u0n6WgfNfxFOaVVNlcfnv61NKv05p9dUiVpuDu1M3NriRclYfwGAi+SQZp45qWWWKW9+2pzU/Iw5qfkZU978tIxqvh3hSWBVjwQ6iWBfglCtkLYaK4kIIvBTexFzVHhHIJBtbK+wQJSvmDPZ6LT1JKWnXOEtMtZCEcY7bYpucOoEmRQ7qN+f+5845VCnrXM0vXup0oWEmqZlfhVJmyLqiNjy0IMYzgXaVoC1cqiIzs3Vi9kfqPJONDzrt3lJat5A0ufEFcloWHJh2zJOkJvbRPius047qhuXhrZ1Jmt37M7aGCYwidgRbrJXFv3NXln8qr2yeIn9etFCe0XRi7qyaB6wGeGJHrsRJMbsKzGcqpq7JRbhW0LGghJI3MznRZkg48lYsNCTlFZdPkzjLX9FyFx8ooTM7uZhqvpbp0mE8cW93K8cVjH1CKetI0QlllYWPXlo9ZROE1gAKKc5NI2OcodEG4IvGmEM6AdpBum5IN8bBPkkvazHlVRNPTZVlwsRqXRoOu8d7QXmxOa/g9aAPotKIuiV3iLSD5EylCqBK7Hl0R6/GeY0VgNjVZ1TEx2jylMCX5fx2cf6PYV39LSRasdfRcj2cPwsGgnWNr712I5YJHQZqhmLYgSOj4tZ6q0KnOC05UJV303XSP9du9wPdZQYG1xe19frC9yCpCc0RXF8Vuesbwi+69Y+VcASp62nMIj7mGOu7pWvUD3dTeIl+UbaB4kYo64/en01lw6q8A/3VgVKB5fXlQwuryspG1XjGTj6W4d7fDUneioDt4KmreNQpW3t/L7AXlF0AshUQZ4yJzePNyc1f9mc3FwlJzVXmJObR8q8lsEKbwJlPR7oAGY8awSqFRqctmyo8oTEmCTjs2fvewpPVc1YLGsJwmHpFrVRva51E0PyLa/RSOgGFf12xhhMZAiqL3srar6Sps+ByyXPZxlbT222iHp8gQ+8lf4VHp+/wePzN3h9gYjX5/+75bI+BWY4fBDlWacuH9ZGHthYsn3rWSjtGeweRIUfbR24c1e+4t25JgQQd/F8lqHVcDBPuIy8h7Leclkxy2XF7GITddtFawTzRmJtfHovRkQ7nSbuBqoVrdN3eh+pKznUXk0/ezX97AYGcV7RSaBliLYcEIEOcNj36/pu2slZqrzotKWi8KiMY7JclCNB0UOUVgQmYMt8RNp3ewGgLYrWRCOhtjnUVGINoQcR+YaqOsbG0l+Ned7j83e6JHV9Q/BdhZ849QgugaMROVkQnyA+oALkC1nn9VV/17i8PmP5br6sWjW3ORoJBhT9QcbLq2eQLggAG5eGthm4SDV77ihfVFkou5v36XkG0qvlPVX9hyBfocX+SLV4E9uLN7O9eLMUF2/AyHJBSlFZkJHc6glKqmrLjdovqfJksPaF/5wwfN1sYKKznipPyGImy4z0LPOe0l0LZspO8Q+1LO5AJX2LKqCGxzY0BP/k1Dspraqpsm35bsozl0BUQe9Slf4GqU2qVdgdCwfrUqt6K/1nqHAJKiPbtlbmnB4SFdiNElPR94wtf2hcHnwqpceB1xe4BeWYZFnFXhALz2pbzNIRpRWBCSrp99B2Wb/Y8Nrs11N1TjyjA18WK21qtSUaCQZSylnx+vx3opI1l5MXwqup93tweV1fyxU/C+SE1oRlXzR33kGhGXSrIJ+oWstiy2cvS72Wg8qnHOdyFZ2U4rA7Gql/pq2ck+mmtOrji1RN24NhXPbS9ctCHwHocvqrq+irqAxG6JXiqCA7UVbL+00LezzQvVWBE1RZmLK5Y+7XRzVOfXjSc/e2rgiCxH/9O1Eu7c7uencFeoECBzo531D7A+/oaSNV9SXHDq6Jz64sfeaLP/Jfn1wfr8oz3R3kBQp8nuixQC/z1YxQy1ogSInThnDWphbmD7l+8j2qTBQPlxSCvECBPadHAr20svZLlsoiEfE6bUlEZHSLFC3x/Jd/qRxP4fz0AgX2gv0+RvdU1o4CnS/O7YA5UOVDXJwZey34vtO2t3T3GH1weV1fW6wJtoujsNuWJyKCjep2RVbFIkPmw4ysycRBY/yHqB1vOx7KSZHYLc5z3doYMbG4f1Ffx3LWdIy7l366YuYWp76rDBrjP8TYcoJly0ebwvVrnHZar0V816cdNiQeaN7bH8Hwnjx1pLpc33Dqab3uCptEeDnaEHzLaU/FUzmlTHDVghyLaGpSC0W2GuyGxqHbZ2c7DiyJ11c7WkSHWi3m5VzbhD1V/m+IpVuiy2ctcNoAyir9FRbyNac+iYFNjZHgr5z6zujwRnQ3peUBn2AvzDfISdysYVgsLanwt2csD0imm7ixFqrhSVHuFGF6UoAZiNwjwgueio9Tt4SmYeLyHbddtCaXaLw4Z/bec3D/S3r1cn/akRS5rCjTp+/1PXdbOkJs/upWneK0JbFc8Xfl4H7bOpINBx9yo9Ovy7jdx6dea+d1F7gf1ZUlPv+/O13bmW4Q93xEbkf0P1DOUuR0RU5H5RyBaYqp93zY72anZyqKfkeVJ8VtN3h8NWkLkZKITQhjMtYvJLExFc7vkSoqXOP0yYe9vun5UlIxrVqNvpg5z5ygdWWcc9EHJILdY0QWl1TUHDBH8zgpq1ozXIQq0NUgpyCUubW5xK29S+LGPURUEltvRcY6fTPRX6F6XYbAfc6a7VhvAtPbRPUVgNZdZq06bmPGjKzXuNtR+ZUitytyO+hPSQTC35I6RW4XeNnptseo1iWud0JclssjEj8KtW8BMQb5ltMlibfin8MERiq87dY+3mgkNDAWDnpj4aA3Ggn2V8NYFEtEcx0kmobAEaLmlZKqwLlOW/7oBS7LdZBT+vSJH++smQ/7peteWhGYYAv/07rfPB1lm4rcGAvXP+it8tdiy0POM7uSqLJbVC+OLu/48IJ86c6uu6dy6ldFXH9GuSkaCf7YaSdxQMSziHwQCwevc9pIHPRwo8BPUB0TjYSWOe1dwevz3wnyQyOMWN8Q7PKy1o4oraqpUjWvdfRdU0nMSVs7FP2fWDh0idO+N3h9tZeCPgH2pGh4Vsb+gREjJhbHDuq3BWFlLBwc47QDeCqmjRFjv6roj2PhUJaDIcFT6V8lIgOSR0Nlw+MLPCZwmcIjAtNQLBX5bixc/0CyjrfSvwWRd6Lh4JfTvRN4K2uvQPQhVP9D6f2S026Ja+em8P1bnfrO2OctuqcqUKPC77MGOfoX49aRrRdCow2hR1S4NLH4IBMReiM87akM5Owy9hRiTGJcZ7RtDO2pCFzorQz8d1IE2Sqaz2Ifucvj8/8hU2pytkoFsrNq1dxmhB2pp684UbGSB3c4d+G1IcKnqlqcT+Nou/U6hasBFfTXXp//l0ycmLXxyonIYyJN65ziYufPnFXzYV8Gungr/TeJEkRIOwFFYaMqU6Ph0DnJFT5JYuHgXFTOU+fWyyQibhENtR7Nc+CRunrKcIwKZycFmAR03v0ThgoMzxDNP7dRIMl0I6g717AwDXGc1JOGFLfu++/8cxLP8a8FuSBxFLRc4/mo37ODxvjz3tsOzFb4kVNQ2aO9CPsk0EeMmFjsrfQHEbnd8QZUVf2tq9j+YiwSnJProsUi9X/Bdp0JmiNDLAa4t7Qy8ON83rD7BSvxYhLlyKQqFg7elRzrxcJBL0LMeUhEVlQvjoZDwzMkMuseZ9UCHVNatf5IkH4KOZ6lxPCRxL0b7jQBUF5XpHBUlmO3OqQxUv+c7bKrUdYKfM0VlyWaeShoVmzbfioWDt6ZIZH6vzjr5kO3B0nZqBqPXWzmth5x04bCP1C+HYsEs503lhWPr+ZE1MwXIed8u6r+JnbuEVcxI/uUVUd05xi9tGrKMFX3PxTdCHodxnxg1I4DWBa9jZFxiUMYdXE0HMo4jILUMTp6gXFlHonlsoz1SY7pLCefuzG68ryKpv/qrXIIIl8VGAr8LNdPIA30XdbPRe+YAIrcL8JqUcsCsHH1FrXPReRc4LloODjB6Z8kOUa33Npv49JQ20thQMXUI9xinhOR5NbjpZ2N0VV5EnHs8QdQiceGbb29o2m+bHRri15SVVtuFZtIapAr2iTKT3qZLcd3JcgBYuFZb6qxxir6T6ctiYhc7vnTmsf3xUurKzQ2zPlQVZ8UpEQwc8Tmr6rmNVXzmjFmMcitKHGx5WGnbybyjG3Jh05pUfutnv6eBxoitoLaiJ4j8L00EWoFBqkyz63Ndzt9k2wKP75VkBtUsQW9DtXfKKZeMfWC/ro1yD+2Je203Lz5dPnsjy1pOjXHoZoObEBtEb1I4EanAD/gHwO6HLfd9tB4fYHLVfmFSPtCEdC/2Gqu2RCp36ufPhroqx3iQh9ANcdiElkfiwQn5RoK5KKkoqZaRG5xvvAEaTaGa/egJRRvVWCkKsNBUpKPtgpsc1nu19etmJnzpVVW6a9QJGtmGECFpnx7GaU+/3jFnOKyzMx1K2Y691fvFf3HXjmgV0vTqbZt3svr3pbXFXld1o0q+reOTkbdI6qr3YO3D8/ccgu4ig7SNa/dtzvf52JweV1fdVtDsfUg1CUAcTeWS82mxrPL/tlZr9FbUXO0wT1o/VGbX8/a4pbXFZWJjsJlb8/5bFVPdw/evi7r90mybsXM7PmrDtjrQO8/9soBvZqbHwbazxFX/hej3+/sDO8CBQrsH/Yq0D2VgbMFfST5kz6KbhT0jpLt2x/c26WNBQoU6D72KNATCTe5GyQxn61sU9FfxS333d2xlrpAgQLdS9cCvXq627NzzTTQO0RkIOgWlAfdtNyzNvLoAXXccoECBdrJM9CnG6/vkwmq+hMRRiSy4PKAxe6HN4Uf7/JyvAIFCuxfOg70iRNd3g/7nwf2TcAJwHyER6JDt/0xa1axQIECByRZA31AeV1/t8uaLKrfRmQT8DvV+G9jkTnrnXULFChw4JMS6NNNSeXHY41wDipeRV8RIy9EG4Jd+uWOAgUKHHjIQN/V/YppHmJp/EiX4aP1DfXv7eufkilQoMD+5f8BevBIIeAvrkIAAAAASUVORK5CYII=" alt="XionTechs"></a>
+        <p style="color:var(--muted);margin-top:16px;max-width:32ch;font-size:.93rem" data-i18n="f.about">Education technology products and delivery teams for schools and the companies that serve them.</p></div>
+      <div><h4 data-i18n="nav.products">Products</h4><ul><li><a href="#pxp">PXP</a></li><li><a href="#apps">LXP</a></li><li><a href="#apps">SXP</a></li><li><a href="#apps" data-i18n="p.iot.name">IoT Device Management</a></li></ul></div>
+      <div><h4 data-i18n="nav.services">Services</h4><ul><li><a href="#services" data-i18n="v0.h">Dedicated teams</a></li><li><a href="#services" data-i18n="v1.h">Product engineering</a></li><li><a href="#services" data-i18n="v2.h">QA and testing</a></li><li><a href="#services" data-i18n="v3.h">UX and design</a></li></ul></div>
+      <div><h4 data-i18n="f.company">Company</h4><ul><li><a href="#about" data-i18n="nav.about">About</a></li><li><a href="#careers" data-i18n="nav.careers">Careers</a></li><li><a href="#insights" data-i18n="nav.insights">Insights</a></li><li><a href="#demo" data-i18n="f.contact">Contact</a></li></ul></div>
+    </div>
+    <div class="fbot"><span>© 2026 XionTechs</span><span class="tag">GET IT <b>DONE</b></span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const root=document.documentElement;
+  const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* theme */
+  const themeBtn=document.getElementById('themeBtn');
+  function setTheme(t){root.dataset.theme=t;themeBtn.innerHTML=t==='dark'?'<i class="ph ph-sun"></i>':'<i class="ph ph-moon"></i>';store.set('xt-theme',t);silk&&silk.recolor()}
+  let silk=null;
+  const initialTheme=store.get('xt-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+  themeBtn.onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
+
+  /* i18n */
+  const VI={
+    "nav.products":"Sản phẩm","nav.services":"Dịch vụ","nav.insights":"Góc nhìn","nav.about":"Về chúng tôi","nav.careers":"Tuyển dụng",
+    "nav.soon":"Nhiều sản phẩm mới sắp ra mắt.",
+    "p.pxp.full":"Parent eXperience Place. Cả ngày học của con trong tay phụ huynh.",
+    "p.lxp.full":"Learner eXperience Place. Bài học, bài tập và tiến độ cho học sinh.",
+    "p.sxp.full":"Staff eXperience Place. Một không gian làm việc, giao diện theo vai trò.",
+    "p.iot.name":"Quản lý thiết bị IoT","p.iot.full":"Điều khiển thiết bị trong trường từ một màn hình.",
+    "for.parents":"Dành cho phụ huynh","for.students":"Dành cho học sinh","for.staff":"Dành cho nhân viên, giáo viên và lãnh đạo","for.facilities":"Dành cho nhân viên và bộ phận cơ sở vật chất",
+    "cta.demo":"Đặt lịch demo","cta.explore":"Khám phá sản phẩm","cta.services":"Xem dịch vụ",
+    "hero.h1":"Cả cộng đồng trường học, <em>kết nối</em>.",
+    "hero.sub":"PXP cho phụ huynh, LXP cho học sinh, SXP cho nhà trường. Một nền tảng giúp mỗi ngày học vận hành trơn tru.",
+    "trust":"Được các trường học trên khắp Việt Nam tin dùng",
+    "prod.eyebrow":"Nền tảng XionTechs","prod.h2":"Bốn ứng dụng. Một ngày học liền mạch.",
+    "p.pxp.desc":"Điểm danh, điểm số, tin nhắn và học phí ngay trong túi phụ huynh.",
+    "p.sxp.desc":"Một không gian làm việc với giao diện riêng cho nhân viên, giáo viên và lãnh đạo.",
+    "p.lxp.desc":"Bài học, bài tập và tiến độ trong một không gian học tập gọn gàng.",
+    "p.iot.desc":"Thiết bị lớp học, ánh sáng, điều hòa và ra vào, trên toàn trường.",
+    "p.iot.desc2":"Điều khiển thiết bị lớp học, ánh sáng, điều hòa và ra vào trên toàn khuôn viên.",
+    "chip.parents":"Phụ huynh","chip.mobile":"iOS và Android","chip.staff":"Nhân viên","chip.teachers":"Giáo viên","chip.leaders":"Lãnh đạo","chip.students":"Học sinh","chip.facilities":"Cơ sở vật chất",
+    "pxp.h2":"Cả ngày học của con, trong tay phụ huynh.",
+    "s0.h":"Biết con đã đến trường","s0.p":"Nhận thông báo ngay khi con qua cổng trường.",
+    "s1.h":"Theo dõi tiến bộ sớm","s1.p":"Xem điểm và nhận xét của giáo viên ngay khi được công bố.",
+    "s2.h":"Trao đổi trực tiếp với giáo viên","s2.p":"Nhắn tin hai chiều với giáo viên chủ nhiệm và bộ môn.",
+    "s3.h":"Đóng học phí chỉ một chạm","s3.p":"Học phí và phí dịch vụ với hạn nộp và biên lai rõ ràng.",
+    "s4.h":"Không bỏ lỡ sự kiện nào","s4.p":"Hội thao, họp phụ huynh và dã ngoại, đồng bộ vào lịch của bạn.",
+    "why.h2":"Thiết kế cho cách nhà trường thực sự vận hành.",
+    "w0.h":"Giảm cuộc gọi đến văn phòng","w0.p":"Phụ huynh tìm thấy câu trả lời trên PXP trước khi gọi điện.",
+    "w1.h":"Một nguồn dữ liệu duy nhất","w1.p":"Điểm danh, điểm số và học phí nằm trong một hệ thống, không phải năm bảng tính.",
+    "w2.h":"Lãnh đạo nắm toàn cảnh","w2.p":"Bảng điều khiển trong SXP cho thấy việc cần xử lý hôm nay.",
+    "w3.h":"Khuôn viên vận hành thông minh","w3.p":"Lên lịch đèn, điều hòa và thiết bị lớp học từ một màn hình.",
+    "apps.h2":"Xem các ứng dụng web hoạt động.","clip":"Video sản phẩm sắp ra mắt",
+    "more.lxp":"Khám phá LXP","more.sxp":"Khám phá SXP","more.iot":"Khám phá IoT",
+    "svc.eyebrow":"Dịch vụ outsourcing","svc.h2":"Đội ngũ phát triển edtech của bạn.","svc.sub":"Đội ngũ xây dựng PXP, LXP và SXP cũng có thể xây dựng sản phẩm của bạn.",
+    "v0.h":"Đội ngũ chuyên trách","v0.p":"Kỹ sư làm việc như một phần đội của bạn.",
+    "v1.h":"Phát triển sản phẩm","v1.p":"Web và di động, từ ý tưởng đến phát hành.",
+    "v2.h":"Kiểm thử và chất lượng","v2.p":"Thủ công và tự động, trước mỗi lần phát hành.",
+    "v3.h":"Thiết kế UX","v3.p":"Nghiên cứu, luồng và giao diện người dùng yêu thích.",
+    "ins.h2":"Góc nhìn mới nhất","ins.m0":"Tư duy sản phẩm","ins.m1":"Khuôn viên thông minh","ins.m2":"Kỹ thuật",
+    "ins.t0":"Phụ huynh thực sự cần gì ở một ứng dụng trường học","ins.t1":"Vận hành khuôn viên thông minh không cần đội IT lớn","ins.t2":"Cách chúng tôi kiểm thử phần mềm giáo dục trước năm học mới",
+    "cta.h2":"Trải nghiệm ngay tại trường của bạn.","cta.sub":"Buổi hướng dẫn PXP, LXP và SXP với chính các tình huống của trường bạn.",
+    "f.about":"Sản phẩm công nghệ giáo dục và đội ngũ phát triển cho trường học và các doanh nghiệp phục vụ giáo dục.",
+    "f.company":"Công ty","f.contact":"Liên hệ"
+  };
+  const EN={};
+  document.querySelectorAll('[data-i18n]').forEach(el=>{EN[el.dataset.i18n]=el.textContent});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{EN[el.dataset.i18nHtml]=el.innerHTML});
+  function setLang(l){
+    const d=l==='vi'?VI:EN; root.lang=l;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{const v=d[el.dataset.i18n];if(v!=null)el.textContent=v});
+    document.querySelectorAll('[data-i18n-html]').forEach(el=>{const v=d[el.dataset.i18nHtml];if(v!=null)el.innerHTML=v});
+    document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));
+    store.set('xt-lang',l);
+  }
+  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+
+  /* mega menu */
+  const dd=document.getElementById('dd'),ddBtn=document.getElementById('ddBtn');
+  function openDD(o){dd.classList.toggle('open',o);ddBtn.setAttribute('aria-expanded',o)}
+  ddBtn.onclick=e=>{e.stopPropagation();openDD(!dd.classList.contains('open'))};
+  if(matchMedia('(hover:hover) and (min-width:1081px)').matches){dd.onmouseenter=()=>openDD(true);dd.onmouseleave=()=>openDD(false)}
+  document.addEventListener('click',e=>{if(!dd.contains(e.target))openDD(false)});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){openDD(false);ddBtn.focus()}});
+  const menu=document.getElementById('menu'),burger=document.getElementById('burger');
+  burger.onclick=()=>{const o=!menu.classList.contains('mobile-open');menu.classList.toggle('mobile-open',o);burger.setAttribute('aria-expanded',o)};
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('mobile-open');openDD(false)}));
+
+  /* reveal */
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*70+'ms';io.observe(el)});
+
+  /* PXP scroll story */
+  const screens=[...document.querySelectorAll('#pxpScreen .pscreen')];
+  const steps=[...document.querySelectorAll('.step')];
+  const mtabs=[...document.querySelectorAll('#mTabs .tab')];
+  function showStep(n){
+    screens.forEach((s,i)=>s.classList.toggle('on',i===n));
+    steps.forEach((s,i)=>s.classList.toggle('on',i===n));
+    mtabs.forEach((t,i)=>t.setAttribute('aria-selected',i===n));
+  }
+  const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&innerWidth>900)showStep(+e.target.dataset.s)}),{rootMargin:'-45% 0px -45% 0px'});
+  steps.forEach(s=>sio.observe(s));
+  mtabs.forEach(t=>t.onclick=()=>showStep(+t.dataset.s));
+
+  /* web app tabs */
+  const tabs=[...document.querySelectorAll('[data-panel]')];
+  function showPanel(id){tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.panel===id));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='panel-'+id))}
+  tabs.forEach(t=>t.onclick=()=>showPanel(t.dataset.panel));
+  document.querySelectorAll('a[data-tab]').forEach(a=>a.addEventListener('click',()=>showPanel(a.dataset.tab)));
+
+  /* WebGL silk: height field of layered waves -> normals -> light; amber threads follow contour lines */
+  const cv=document.getElementById('silk');
+  const gl=cv.getContext('webgl',{premultipliedAlpha:false,antialias:true});
+  if(gl){
+    const vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+    const fs=`precision highp float;
+uniform vec2 r;uniform float t;uniform vec3 bg,base,fold,sheen,thread;uniform float isDark;
+float h(vec2 p){float v=0.;
+ v+=sin(p.x*1.4+t*.30+sin(p.y*1.2+t*.18)*1.6)*.55;
+ v+=sin(p.y*2.1-t*.24+sin(p.x*.9-t*.12)*1.3)*.33;
+ v+=sin((p.x*.7+p.y)*3.0+t*.40)*.10;
+ v+=sin((p.x-p.y*.6)*5.2-t*.35)*.035;return v;}
+void main(){
+ vec2 uv=gl_FragCoord.xy/r;vec2 p=vec2(uv.x*r.x/r.y,uv.y)*2.4;
+ p+=vec2(-t*.02,0.);
+ float e=.004;float hc=h(p);
+ float dx=(h(p+vec2(e,0.))-h(p-vec2(e,0.)))/(2.*e);
+ float dy=(h(p+vec2(0.,e))-h(p-vec2(0.,e)))/(2.*e);
+ vec3 n=normalize(vec3(-dx,-dy,1.35));
+ vec3 L=normalize(vec3(-.45,.55,.7));
+ float diff=clamp(dot(n,L),0.,1.);
+ float spec=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),28.);
+ vec3 col=mix(fold,base,smoothstep(.25,.95,diff));
+ col+=sheen*spec*.55;
+ float th=abs(sin(hc*7.5+p.x*.35));th=1.-smoothstep(0.,.045,th);
+ col=mix(col,thread,th*(.35+.4*diff));
+ float m=smoothstep(.30,.95,uv.x+uv.y*.10+hc*.07);
+ m=max(m,smoothstep(.55,0.,uv.y)*smoothstep(.15,.7,uv.x)*.9);
+ m*=mix(.92,1.,isDark);
+ gl_FragColor=vec4(mix(bg,col,m),1.);}`;
+    function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(s));return s}
+    const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);gl.useProgram(pr);
+    const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    const loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+    const U=n=>gl.getUniformLocation(pr,n);
+    const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);
+    const PAL={
+      light:{bg:'#FAFBFD',base:'#E6ECF6',fold:'#163663',sheen:'#FFFFFF',thread:'#FFC000',dark:0},
+      dark:{bg:'#081225',base:'#1E4178',fold:'#050C1A',sheen:'#FFCF06',thread:'#FFC000',dark:1}
+    };
+    silk={recolor(){const P=PAL[root.dataset.theme==='dark'?'dark':'light'];
+      gl.uniform3fv(U('bg'),hex(P.bg));gl.uniform3fv(U('base'),hex(P.base));gl.uniform3fv(U('fold'),hex(P.fold));
+      gl.uniform3fv(U('sheen'),hex(P.sheen));gl.uniform3fv(U('thread'),hex(P.thread));gl.uniform1f(U('isDark'),P.dark);draw(last)}};
+    function size(){const d=Math.min(devicePixelRatio||1,1.5);cv.width=cv.clientWidth*d;cv.height=cv.clientHeight*d;gl.viewport(0,0,cv.width,cv.height);gl.uniform2f(U('r'),cv.width,cv.height)}
+    let last=8,visible=true,start=performance.now();
+    function draw(tt){gl.uniform1f(U('t'),tt);gl.drawArrays(gl.TRIANGLE_STRIP,0,4)}
+    function loop(now){if(visible&&!reduce){last=8+(now-start)/1000;draw(last)}requestAnimationFrame(loop)}
+    new ResizeObserver(()=>{size();draw(last)}).observe(cv);
+    new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe(cv);
+    size();
+    requestAnimationFrame(loop);
+  } else { cv.remove(); }
+
+  setTheme(initialTheme);
+  setLang(store.get('xt-lang')||'en');
+})();
+</script>
+</body>
+</html>
