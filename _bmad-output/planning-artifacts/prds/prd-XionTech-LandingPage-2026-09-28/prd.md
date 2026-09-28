@@ -37,7 +37,7 @@ The thesis: showing real products first makes XionTechs more credible as an outs
 
 ### 1.1 Why now
 
-The site is built for the XionTech internal AI build challenge. Demo day is **2026-10-09** (10 minute presentation plus 5 minute Q&A). The hand-in is a public URL, full git history, the shared context file and `docs/ai-log.md`. Scoring: build quality 30%, AI usage 25%, teamwork and context sharing 25%, presentation 20%. The UX specs were finalised on 2026-09-28, leaving about 11 days to build.
+The site is built for the XionTech internal AI build challenge. Demo day is **2026-10-09** (10 minute presentation plus 5 minute Q&A). The hand-in is a public URL, full git history, the shared context file and `docs/ai-log.md`. Scoring: build quality 30%, AI usage 25%, teamwork and context sharing 25%, presentation 20%. The UX specs were finalised on 2026-09-28, leaving 7 to 8 build days for 2 developers (Andy and Sammy) before Demo day 2026-10-09, about 15 developer-days. The epics' Demo-day plan splits the stories into Demo-day must-haves and after-demo work.
 
 ## 2. Target User
 
@@ -130,7 +130,8 @@ A visitor below 1080px can open all navigation from a menu button.
 
 **Consequences (testable):**
 - The menu button has `aria-controls` and `aria-expanded`; Escape closes the menu and returns focus to the button (AC-NAV-4).
-- Mega content expands inline inside the menu; background does not scroll and focus stays inside while open.
+- Mega content expands inline inside the menu; background does not scroll while open.
+- While open, focus is trapped in the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button), so the language switch stays reachable.
 
 Traces: EXP > Component Patterns (Mobile menu), Accessibility Floor; AC-NAV-4.
 
@@ -150,6 +151,7 @@ A visitor can switch between English and Vietnamese on any page.
 - The switch is two toggle buttons with `aria-pressed`, in a group labelled "Language", visible in the header at every width and never moved into the menu (AC-NAV-1).
 - Switching routes to the same page under the other locale, keeps scroll position and typed form values, and updates `lang`, title and meta description.
 - Every visible string, page title, meta description, alt text, screen-reader label and toast exists in EN and VI. Product and service names stay in English.
+- Who writes and checks the Vietnamese copy is open question 17.
 
 Traces: EXP > Component Patterns (Language switch), Bilingual (EN / VI), Voice and Tone; AC-NAV-1.
 
@@ -159,7 +161,7 @@ The system serves every page under `/en/` and `/vi/`.
 **Consequences (testable):**
 - A bare `/` redirects to the saved locale, else to `/vi/` when the browser prefers Vietnamese, else to `/en/`.
 - A locale in the URL always wins over the saved choice.
-- The chosen locale is remembered for the next visit.
+- The chosen locale is saved in an essential first-party locale cookie, so the server can redirect a bare `/` on the next visit. It is not kept in local storage, which the server cannot read.
 
 Traces: EXP > Information Architecture (Locale routing).
 
@@ -176,6 +178,7 @@ Traces: EXP > Interaction Primitives, Component Patterns (Product sub-nav); AC-N
 A visitor can reach Products, Services, Company links, both offices and the Privacy policy from a footer on every page.
 
 **Consequences (testable):**
+- Company column: About, Core values, FAQ (to `/about#faq`), News, Careers, Contact.
 - Offices: Ho Chi Minh City (Viettel Tower, Floor 12, 285 CMT8, HCMC 70064, +84 908 107 552) and Dallas, USA (Texas, United States, +1 469 322 9899), phone numbers as `tel:` links.
 - The bottom bar shows copyright, the Privacy policy link and the GET IT DONE tag.
 - No Da Nang office and no second HCMC address appear anywhere.
@@ -204,8 +207,8 @@ Traces: EXP > Information Architecture (Not found).
 A visitor sees a dark `hero-silk` hero with the headline, a tablet and phone device frame, and a silk cloth background that ripples slowly and continuously.
 
 **Consequences (testable):**
-- A discreet round icon button at the top right of the hero pauses and plays the silk; its accessible name is always "Pause motion" or "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"), the text label slides out on hover or keyboard focus; the changing name carries the state (no `aria-pressed`), and the button is hidden without JavaScript or WebGL.
-- The choice is remembered; under `prefers-reduced-motion: reduce` the silk starts paused; it also pauses when off screen.
+- A discreet round icon button at the top right of the hero pauses and plays the silk; its accessible name is always "Pause motion" or "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"), the text label slides out on hover or keyboard focus; the changing name carries the state (no `aria-pressed`), and the button is hidden without JavaScript or WebGL, or when the WebGL context is lost.
+- A saved explicit choice (Play or Pause) wins over `prefers-reduced-motion`; with no saved choice, reduced motion starts the silk paused. It also pauses when off screen or when the tab is hidden (`visibilitychange`).
 - The canvas is `aria-hidden`; without WebGL or JavaScript the static navy and amber glow fallback shows.
 
 Traces: EXP > Motion (Home hero background), Component Patterns (Motion toggle); DES > Colors (`hero-silk`), Components (Motion toggle); WCAG 2.2.2.
@@ -330,7 +333,7 @@ Traces: EXP > Information Architecture (Services), Component Patterns (Industry 
 
 ### 4.5 News
 
-**Description:** Dated short stories about products, schools, team and company, filtered by category, with a detail page per story. Depends on the CMS choice. Realizes UJ-1, UJ-4.
+**Description:** Dated short stories about products, schools, team and company, filtered by category, with a detail page per story. Content comes from Sanity (see FR-27). Realizes UJ-1, UJ-4.
 
 #### FR-25: Category filters
 A visitor can filter stories by All, Product, Company, Schools and Team.
@@ -352,9 +355,12 @@ A visitor can open a story at `/news/[slug]` with breadcrumbs, H1, date and cate
 Traces: EXP > Information Architecture (News story), Bilingual (EN / VI).
 
 #### FR-27: Editors publish stories without a developer
-A XionTechs editor can create, edit and publish a story in both languages without a code change. `[ASSUMPTION]` Implied by the lead's decision to keep a CMS for Blog and Careers; the CMS product is not chosen.
+A XionTechs editor can create, edit and publish a story in both languages in Sanity Studio without a code change. `[ASSUMPTION]` Implied by the lead's decision to keep a CMS for Blog and Careers. The CMS is Sanity (chosen 2026-09-28, `docs/spikes/cms-spike.md`).
 
-Traces: `AGENTS.md` (Tech stack, CMS); `docs/ai-log.md` (2026-09-26 Tech stack).
+**Consequences (testable):**
+- A published story appears on the site through webhook revalidation, with no deploy.
+
+Traces: `AGENTS.md` (Tech stack, CMS); `docs/ai-log.md` (2026-09-26 Tech stack); `docs/spikes/cms-spike.md`.
 
 ### 4.6 About
 
@@ -381,6 +387,7 @@ A visitor finds answers to nine common questions (what XionTechs does, industrie
 **Consequences (testable):**
 - Each question expands and collapses with mouse, Enter or Space; several can be open at once.
 - The page carries FAQPage structured data with the same questions and answers, in the page's language (Vietnamese on `/vi/about`).
+- The answer to "How do you keep our data secure?" starts with `[Placeholder]` in both languages until the business supplies real facts (hosting, access control, certifications).
 
 Traces: EXP > Information Architecture (About), Component Patterns (FAQ); DES > Components (FAQ).
 
@@ -400,7 +407,7 @@ Traces: EXP > Information Architecture (Careers), Component Patterns (Placeholde
 A visitor sees open roles when there are any, or "No open roles right now." with a route to `#talent` when there are none.
 
 **Consequences (testable):**
-- An editor can add or close a role without a code change. `[ASSUMPTION]` Same CMS dependency as FR-27.
+- An editor can add or close a role in Sanity Studio without a code change. `[ASSUMPTION]` Same CMS dependency as FR-27.
 - No invented job openings are shown.
 
 Traces: EXP > Component Patterns (Open roles panel), State Patterns (Careers); `AGENTS.md` (Hard rules).
@@ -410,11 +417,12 @@ Traces: EXP > Component Patterns (Open roles panel), State Patterns (Careers); `
 **Description:** One contact page serves both intents; every other page has an inline email capture band. Realizes UJ-1, UJ-2, UJ-4.
 
 #### FR-33: Email capture on every page
-A visitor can leave an email in a capture band on every page except Book a demo.
+A visitor can leave an email in a capture band on every page except these, which have no capture band: Book a demo (`/demo`, which is the form), Not found, Privacy policy and News story (`/news/[slug]`).
 
 **Consequences (testable):**
 - Validates on submit; an invalid email shows "Please enter a valid email address.", sets `aria-invalid="true"`, links the error with `aria-describedby`, returns focus to the field, and clears as the user types (AC-A11Y-5).
 - On navy bands the field focus ring uses `{colors.focus-on-navy}` (AC-A11Y-2).
+- While sending, the button is disabled and reads "Sending..." ("Đang gửi..."); a send failure keeps the email and shows an inline error with a retry.
 - No modal pop-ups; captures are inline bands.
 
 Traces: EXP > Component Patterns (Email capture), Interaction Primitives; AC-A11Y-2, AC-A11Y-5.
@@ -424,6 +432,7 @@ A visitor who submits a valid demo capture lands on `/demo#form` (Product demo t
 
 **Consequences (testable):**
 - The email travels through session storage or a server session, never in the URL (no query string, no hash).
+- If session storage is unavailable, there is no prefill and the visitor types the email on `/demo`.
 - The Outsourcing tab opens and is scrolled into view for a project capture (AC-FORM-2).
 
 Traces: EXP > Component Patterns (Email capture); AC-FORM-2.
@@ -438,7 +447,7 @@ A visitor can send a Product demo or an Outsourcing project request from one for
 
 **Consequences (testable):**
 - The URL hash picks the tab on load (`#project` opens Outsourcing; any other opens Product demo).
-- Fields follow the Contact form fields table in EXPERIENCE.md: Full name, Work email, School or company are required; Message is at most 2,000 characters; PXP is checked by default.
+- Fields follow the Contact form fields table in EXPERIENCE.md: Full name, Work email, School or company are required; Message is at most 2,000 characters ("Please keep your message under 2,000 characters."); PXP is checked by default.
 - Hidden-tab fields are not validated, not focusable (AC-A11Y-3) and not submitted, but keep their values.
 - Submit marks every invalid visible field and moves focus to the first.
 - While sending, the button is disabled and reads "Sending..." ("Đang gửi..."); success shows "Thank you!" and "We will be in touch soon."; a send failure keeps all values and shows an error above the button with a retry.
@@ -454,8 +463,10 @@ Traces: EXP > Contact form fields; AC-FORM-1.
 The system delivers every Submission (demo, project, subscribe, join) to a XionTechs destination and stops spam.
 
 **Consequences (testable):**
-- A hidden honeypot field and a server-side rate limit reject automated submissions.
-- Each Submission reaches the chosen destination. `[ASSUMPTION]` Destination (inbox or CRM) is an open question (section 12).
+- Server-side validation mirrors the client rules: required fields, email format, message up to 2,000 characters, preferred date today or later. An invalid Submission is rejected with the same wording as the client.
+- A hidden honeypot field (`tabindex="-1"`, `aria-hidden="true"`, `autocomplete="off"`) rejects automated submissions.
+- A server-side rate limit keyed on IP plus email allows 5 Submissions per 10 minutes per key, so a shared office IP is not blocked outright. `[ASSUMPTION]`
+- Each Submission reaches the chosen destination. `[ASSUMPTION]` Destination (inbox or CRM) is an open question (section 12), as are the mail sender service and the shared rate-limit store (open questions 18 and 19).
 
 Traces: EXP > Component Patterns (Contact form), Open Questions (Form destination).
 
@@ -477,6 +488,7 @@ Traces: EXP > Voice and Tone (Wording to reuse).
 A visitor can read the privacy policy at `/privacy`, linked from every consent line and the footer, covering what is collected, how it is used, how long it is kept and the visitor's rights.
 
 **Consequences (testable):**
+- The cookies section lists the essential first-party locale cookie (FR-5) and says no non-essential cookies are set without consent.
 - No form goes live at public launch before the policy text is real (not `[Placeholder]`).
 
 Traces: EXP > Information Architecture (Privacy policy), Open Questions; code review finding 11.
@@ -519,9 +531,9 @@ Traces: EXP > Foundation (Rendering), State Patterns (No JavaScript).
 Traces: EXP > Accessibility Floor; DES > Colors.
 
 #### NFR-2: Motion is controllable (WCAG 2.2.2)
-- The Home silk runs continuously and always has the visible motion toggle (FR-10).
+- The Home silk runs continuously and always has the visible motion toggle (FR-10); it pauses when off screen or when the tab is hidden.
 - Every other decorative loop (inner hero aurora and strand ribbon, device float, muted clips) stops within 5s.
-- Under `prefers-reduced-motion: reduce` there is no animation or transition anywhere, and the Home silk starts paused.
+- Under `prefers-reduced-motion: reduce` there is no animation or transition anywhere, clips never autoplay, and the Home silk starts paused unless the visitor has saved an explicit choice: a saved Play or Pause wins over `prefers-reduced-motion`.
 
 Traces: EXP > Motion; WCAG 2.2.2.
 
@@ -529,7 +541,7 @@ Traces: EXP > Motion; WCAG 2.2.2.
 - Data is collected only through the forms, only for the purpose in each consent line.
 - Personal data never appears in URLs.
 - A retention period is defined before public launch. `[ASSUMPTION]` Owner and period are not yet decided.
-- No non-essential cookies without opt-in consent (FR-42).
+- No non-essential cookies without opt-in consent (FR-42). The locale cookie (FR-5) is essential and listed on the privacy page.
 
 Traces: EXP > Foundation (Stakes), Open Questions.
 
@@ -555,7 +567,7 @@ Traces: EXP > Responsive & Platform, Bilingual (EN / VI).
 
 #### NFR-7: Content integrity
 - No Lorem Ipsum; no invented testimonials, client logos, stats, team members or job openings.
-- Unverified content starts with `[Placeholder]` in both languages; `grep -rn "\[Placeholder\]"` returns nothing before public launch.
+- Unverified content starts with `[Placeholder]` in both languages; `grep -rn "\[Placeholder\]"` over `src/` and the build output (excluding planning artifacts, tests and the check script) returns nothing before public launch.
 
 Traces: `AGENTS.md` (Hard rules); EXP > Voice and Tone.
 
@@ -595,7 +607,7 @@ Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `
 - Ten page types in EN and VI: Home, Products, Services, News, News story, About, Careers, Book a demo (Contact), Privacy policy, Not found.
 - Header, mobile menu, footer, locale routing, EN/VI switch.
 - Four email capture kinds and the two-tab contact form, with delivery, honeypot and rate limit.
-- CMS-backed News and Careers roles. `[ASSUMPTION]` If the CMS is not chosen in time for Demo day, stories and roles ship as files in the repo and move to the CMS after.
+- News stories and Careers roles from Sanity, edited in Sanity Studio (chosen 2026-09-28, `docs/spikes/cms-spike.md`). The Demo-day plan in the epics says which parts land before Demo day.
 - SEO metadata, hreflang, JSON-LD, all 16 acceptance criteria.
 
 ### 8.2 Out of Scope for v1
@@ -608,7 +620,8 @@ Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `
 
 ### 8.3 Dependencies
 
-- **CMS choice:** blocks FR-26, FR-27, FR-32 and media uploads (AC-FORM-3).
+- **Sanity setup:** a free Sanity project with proven reads, env vars, CORS origins, `useCdn` with webhook revalidation, the EN/VI content model and the Studio location (`docs/spikes/cms-spike.md`, Open work). Blocks FR-26, FR-27, FR-32 and media uploads (AC-FORM-3).
+- **Services to pick in architecture (free tier):** a mail sender and a shared store for rate limits on serverless (open questions 18 and 19). Block delivery and rate limiting in FR-38.
 - **Real content from the business:** privacy policy text, store links, app web addresses, product screens or clips, real news stories, leadership, team photos, Dallas street address, contact email, logo SVG.
 - **Form destination:** inbox or CRM for FR-38.
 - **Hosting:** Vercel, with a public URL by Demo day.
@@ -617,18 +630,18 @@ Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `
 
 ## 9. Success Metrics
 
-Measurement: Submissions are counted at the form destination on the server, so no analytics cookie is needed. Lighthouse and axe run in CI on every page in both locales. All targets are proposals, since the business has set none.
+Measurement: Submissions are counted at the form destination on the server, so no analytics cookie is needed. Lighthouse and axe-core run locally before release on every page in both locales (there is no CI yet; see open question 20). All targets are proposals, since the business has set none.
 
 **Primary**
-- **SM-1: Demo-day readiness.** Public URL live on Vercel with all ten page types in EN and VI and all 16 acceptance criteria passing by 2026-10-09. Validates FR-1 to FR-45.
-- **SM-2: Public launch readiness.** `grep -rn "\[Placeholder\]"` returns 0 and the privacy policy is real before public launch. `[ASSUMPTION]` Target date to be set by the business. Validates FR-41, NFR-7.
+- **SM-1: Demo-day readiness.** Public URL live on Vercel by 2026-10-09 with every Demo-day must-have story in the epics' Demo-day plan done in EN and VI; the after-demo stories, the remaining page types and all 16 acceptance criteria follow before public launch. Validates FR-1 to FR-46.
+- **SM-2: Public launch readiness.** `grep -rn "\[Placeholder\]"` over `src/` and the build output (excluding planning artifacts, tests and the check script) returns 0 and the privacy policy is real before public launch. `[ASSUMPTION]` Target date to be set by the business. Validates FR-41, NFR-7.
 - **SM-3: Demo requests.** At least 8 Product demo Submissions per month by the third month after public launch. `[ASSUMPTION]` Validates FR-34, FR-36.
 - **SM-4: Project inquiries.** At least 5 Outsourcing project Submissions per month by the third month after public launch. `[ASSUMPTION]` Validates FR-34, FR-36.
 
 **Secondary**
 - **SM-5: Talent network sign-ups.** At least 20 per month after public launch. `[ASSUMPTION]` Validates FR-35.
 - **SM-6: Lighthouse scores.** Performance at least 90 on mobile, Accessibility 100, SEO 100, Best Practices at least 95, on every page in both locales. `[ASSUMPTION]` Validates NFR-1, NFR-4, NFR-5.
-- **SM-7: Accessibility defects.** Zero serious or critical axe-core violations and zero failing AC-A11Y criteria in CI. `[ASSUMPTION]` Validates NFR-1.
+- **SM-7: Accessibility defects.** Zero serious or critical axe-core violations and zero failing AC-A11Y criteria in the local pre-release run. `[ASSUMPTION]` Validates NFR-1.
 - **SM-8: Core Web Vitals.** Mobile p75 LCP at most 2.5s, INP at most 200ms, CLS at most 0.1. `[ASSUMPTION]` Validates NFR-4.
 
 **Counter-metrics (do not optimise)**
@@ -648,7 +661,7 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 
 ## 11. Risks
 
-- **Short timeline** (about 11 days to Demo day, team of 3): the CMS decision and real content can slip. Mitigation: the file-based fallback in section 8.1; placeholders stay grep-able.
+- **Short timeline** (7 to 8 build days to Demo day 2026-10-09, 2 developers, about 15 developer-days): the Sanity setup and real content can slip. Mitigation: the Demo-day plan in the epics (must-have versus after demo, two parallel tracks); news and roles show their empty states until Sanity content lands; placeholders stay grep-able.
 - **WebGL silk cost** on low-end phones can hurt LCP and INP. Mitigation: pause off screen, static fallback, SM-C3.
 - **Unverified scraped facts:** the AI has misread facts before (the contact email came back as an obfuscated string). Mitigation: a human verifies every fact before it loses its `[Placeholder]` tag.
 - **Personal data without a policy:** forms could go live before the privacy policy. Mitigation: FR-41 gate.
@@ -660,7 +673,7 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 3. **Leadership:** real names, roles and photos.
 4. **Privacy policy:** text needed before any form goes live (PDPD); also who owns it.
 5. **Store links:** real App Store and Google Play links for PXP (blocks UJ-3).
-6. **CMS choice:** drives story pages, filter empty states, product updates, roles and media uploads.
+6. **CMS choice:** resolved 2026-09-28: Sanity (`docs/spikes/cms-spike.md`). Its setup (reads, env vars, CORS, revalidation, EN/VI model, Studio location) is epics Story 1.8.
 7. **Real app URLs:** LXP, SXP and IoT web addresses.
 8. **Still `[Placeholder]`:** news stories, leadership, team photos, partner-school logos (with permission), product screenshots or clips, store links, app web addresses, the privacy policy and the news email frequency. (Stats including 24/7, product and service descriptions, feature lists, careers benefits and open-roles text were confirmed by the business on 2026-09-28.)
 9. **Analytics and cookies:** whether to add analytics; if so, a consent banner with decline as default. How long captured emails are kept.
@@ -671,6 +684,10 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 14. **Dark mode:** dropped in favour of the colour rhythm; the business may reverse this.
 15. **Mobile Book a demo breakpoint:** resolved 2026-09-28. Book a demo sits next to the EN/VI switch above 640px and is the first mobile menu item at 640px and below (the older 1080px log entry is superseded).
 16. **Demo day versus public launch:** may the Demo-day build show `[Placeholder]` markers (see the note in section 8.3)?
+17. **Vietnamese copy:** written and checked by Amber Do (to confirm), before launch. Needed for FR-4.
+18. **Mail sender service** (free tier, chosen in architecture): sends contact form and capture Submissions to the destination (FR-38). No vendor is decided.
+19. **Shared store for rate limits on serverless** (free tier, chosen in architecture): holds the FR-38 rate-limit counters across serverless instances. No vendor is decided.
+20. **CI pipeline:** there is no CI yet, so axe-core, Lighthouse and the launch content check run locally before release. Setting up CI is after-demo work.
 
 ## 13. Assumptions Index
 
@@ -685,7 +702,7 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 - NFR-4: Core Web Vitals "good" thresholds as targets.
 - NFR-5: a sitemap covers both locales.
 - NFR-6: "current evergreen browsers" means the latest two versions of the main browsers.
-- Section 8.1: file-based fallback for stories and roles if the CMS is late.
+- FR-38: the rate limit allows 5 Submissions per 10 minutes per IP plus email.
 - Section 8.2: talent capture collects email only; no CV upload.
 - Section 8.2: v1 collects subscribers but does not send newsletters.
 - SM-2: public launch date to be set by the business.

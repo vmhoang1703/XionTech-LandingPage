@@ -68,7 +68,7 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 | News with category filters | `/news` | Flow 4 |
 | Company facts, values, offices | `/about`, footer | Flow 2 |
 | Job seeker finds roles | `/careers`, `#talent` | Flow 4 |
-| Email capture on every page | Capture band on every page except `/demo`, which is the form | Flows 1 to 4 |
+| Email capture on every page | Capture band on every page except `/demo` (which is the form), Not found, Privacy policy and News story, which have no capture band | Flows 1 to 4 |
 | Read in Vietnamese | EN/VI switch in the header | Flows 1, 3 |
 
 ## Voice and Tone
@@ -83,7 +83,7 @@ Microcopy rules. Brand voice lives in `DESIGN.md` Brand & Style.
 - No exclamation marks except the contact form's "Thank you!". No emoji.
 - Every visible string, page title, meta description, screen-reader label and toast has an EN and a VI version.
 
-**`[Placeholder]` convention.** Any content not verified by the business (figures, product and service descriptions, feature lists, store links, app URLs, stories, people, photos, legal links) starts with `[Placeholder]` in both languages. It is a launch blocker: `grep -rn "\[Placeholder\]"` must return nothing before launch. Sample content is never presented as real.
+**`[Placeholder]` convention.** Any content not verified by the business (figures, product and service descriptions, feature lists, store links, app URLs, stories, people, photos, legal links) starts with `[Placeholder]` in both languages. It is a launch blocker: `grep -rn "\[Placeholder\]"` over `src/` and the build output (excluding planning artifacts, tests and the check script) must return nothing before launch. Sample content is never presented as real.
 
 **CTA labels: one label per intent.**
 
@@ -122,8 +122,8 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 |---|---|
 | Site header | Sticky at the top of every page. Marks the current page (`aria-current="page"`, or the current mega trigger). Below 1080px the menu collapses behind the menu button. |
 | Mega menu | Desktop with hover: hover opens; moving away closes after a 150ms delay so the pointer can cross the gap to the panel. Click toggles predictably and never closes a menu that hover just opened (AC-NAV-3). Escape closes and returns focus to the trigger. Opening one closes the other. A click outside closes. Trigger has `aria-expanded`. Mobile: the mega content expands inline inside the mobile menu. |
-| Mobile menu | Menu button has `aria-controls` and `aria-expanded` (AC-NAV-4). Escape closes it and returns focus to the button. Contains all nav items and, at 640px and below, Book a demo as its first item in button style (AC-NAV-2). The EN/VI switch never moves into the menu; it stays in the header (AC-NAV-1). |
-| Language switch | Two toggle buttons with `aria-pressed`. Switching routes to the matching `/en/` or `/vi/` URL of the same page and keeps the scroll position and any values typed in forms. The page `lang` attribute, title and meta change with it. The choice is saved for the next visit (see Locale routing). |
+| Mobile menu | Menu button has `aria-controls` and `aria-expanded` (AC-NAV-4). Escape closes it and returns focus to the button. Contains all nav items and, at 640px and below, Book a demo as its first item in button style (AC-NAV-2). The EN/VI switch never moves into the menu; it stays in the header (AC-NAV-1). While open, the focus trap covers the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button), so the language switch stays reachable. |
+| Language switch | Two toggle buttons with `aria-pressed`. Switching routes to the matching `/en/` or `/vi/` URL of the same page and keeps the scroll position and any values typed in forms. The page `lang` attribute, title and meta change with it. The choice is saved for the next visit in an essential first-party locale cookie, so the server can redirect a bare `/` (see Locale routing). |
 | Button | Links that look like buttons navigate; buttons submit or toggle. One primary button per group. |
 | Product sub-nav | Sticky under the header on `/products`. Highlights the section in view; at the end of the page the last item (Updates) is highlighted. Links scroll to anchors that land with the heading fully visible (AC-NAV-5). Scrolls horizontally on narrow screens. |
 | Front door | Whole panel is one link (Products door to `/products`, Services door to `/services`). Chips inside are text, not links. |
@@ -153,7 +153,7 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Open roles panel | Shown when there are no open roles; routes to `#talent`. When roles exist, each role is listed instead. |
 | Site footer | Same on every page. The privacy policy link must point at a real policy before launch. |
 | Toast | Short status message, bottom centre, `role="status"`, gone after about 2.6s. |
-| Motion toggle | Discreet icon button at the top right of the Home hero; the label is always in its accessible name and slides out on hover or keyboard focus. Label and icon switch between "Pause motion" and "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"); the changing name carries the state, so there is no `aria-pressed`. Hidden without JavaScript or WebGL. |
+| Motion toggle | Discreet icon button at the top right of the Home hero; the label is always in its accessible name and slides out on hover or keyboard focus. Label and icon switch between "Pause motion" and "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"); the changing name carries the state, so there is no `aria-pressed`. Hidden without JavaScript or WebGL, or when the WebGL context is lost. |
 | FAQ | Native disclosure (`<details>` / `<summary>`): several answers can be open at once; Enter and Space toggle; the question is the accessible name. FAQPage structured data on `/about`. Reached from the footer "FAQ" link at `/about#faq`. |
 | Skip link | First focusable element; jumps to `main`. |
 | Focus ring | Shown on keyboard focus (`:focus-visible`) on every focusable element. Colour follows the section: `{colors.focus-on-navy}` on navy, `{colors.focus}` elsewhere. |
@@ -191,7 +191,7 @@ Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}`
 | News | Story detail | Detail page per story. Depends on the CMS choice. |
 | Careers | No open roles | Open roles panel + talent network route. |
 | Careers | Roles open | List of roles replaces the panel. |
-| Email capture | Idle / error / success / redirect | Error inline and announced; subscribe and join show success in place; demo and project redirect to `/demo` with the email prefilled. |
+| Email capture | Idle / error / sending / send failure / success / redirect | Error inline and announced; while sending the button is disabled and reads "Sending..." ("Đang gửi..."); a send failure keeps the email and shows an inline error with a retry; subscribe and join show success in place; demo and project redirect to `/demo` with the email prefilled (no prefill if session storage is unavailable). |
 | Contact form | Idle, error, sending, success, send failure | Error per field with focus on the first. While sending, the submit button is disabled and reads "Sending..." ("Đang gửi..."). Success shows the thank-you panel. If sending fails, keep every entered value and show an error above the button with a way to retry. |
 | Contact form | Arrived from a capture | Email prefilled; tab set by the hash. |
 | Contact form | Date in the past | Blocked; the date picker starts at today. |
@@ -211,7 +211,7 @@ Built with Motion. Easing everywhere is `cubic-bezier(.16, 1, .3, 1)`.
 | Effect | Behaviour |
 |---|---|
 | Scroll reveal | Elements rise 26px and fade in over 0.9s when 12% visible, staggered 70ms in groups of four, once only. |
-| Home hero background | The silk cloth ripples slowly and continuously (time scale 0.35 in the prototype `site.js`). A visible "Pause motion" / "Play motion" button in the hero stops and restarts it (WCAG 2.2.2). The choice is remembered and wins on the next visit; with no saved choice and reduced motion it starts paused; it also pauses when off screen. |
+| Home hero background | The silk cloth ripples slowly and continuously (time scale 0.35 in the prototype `site.js`). A visible "Pause motion" / "Play motion" button in the hero stops and restarts it (WCAG 2.2.2). The choice is remembered, and a saved explicit choice (Play or Pause) wins over `prefers-reduced-motion` on the next visit; with no saved choice and reduced motion it starts paused; it also pauses when off screen or when the tab is hidden (`visibilitychange`). |
 | Inner page hero background | Aurora blobs drift and the strand ribbon moves slowly, then both stop after 5s and hold the frame (WCAG 2.2.2). The ribbon also pauses when off screen. |
 | Devices | Tablet and phone float up and down for one cycle (under 5s), then rest; pointer tilt up to 8 degrees. Product clips never autoplay with sound, show a poster frame and have visible play and pause controls; a muted autoplay clip stops after 5s unless the user plays it. |
 | Highlight mark | Scales in from the left over 1.2s after a 0.5s delay. |
@@ -241,7 +241,7 @@ Behavioural. Visual contrast lives in `DESIGN.md` Colors. Every item below is an
 - Screen readers: one H1 per page; sections labelled by their headings; decorative canvases, aurora and orbs are `aria-hidden`; tabs use the ARIA tab pattern; toasts and form success panels use `role="status"`; the language switch group is labelled "Language".
 - Images: product screens and photos have meaningful alt text in both languages; decorative images have empty alt.
 - Touch targets meet WCAG 2.2 target size (at least 24 x 24px); buttons are 42 to 52px tall.
-- Mobile menu: while open, background content does not scroll and focus stays inside the menu.
+- Mobile menu: while open, background content does not scroll and focus stays inside the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button).
 
 ## Acceptance Criteria Index
 
@@ -349,7 +349,7 @@ Failure: an invalid email shows the inline error and keeps him in the band.
 - **Leadership:** real names, roles and photos for the leadership grid.
 - **Privacy policy:** needed before any form goes live (Vietnam PDPD, Decree 13/2023).
 - **Store links:** real App Store and Google Play links for PXP.
-- **CMS choice:** drives news story pages, filter empty states, product updates and media uploads.
+- **CMS choice:** resolved 2026-09-28: Sanity (`docs/spikes/cms-spike.md`). It drives news story pages, filter empty states, product updates, roles and media uploads.
 - **Real app URLs:** the LXP, SXP and IoT web addresses shown in browser frames.
 - **Content confirmed by the business (2026-09-28):** stats (including 24/7 global coverage), product and service descriptions, feature lists, careers benefits and open-roles text. **Still `[Placeholder]`:** news stories, leadership, team photos, partner-school logos (with permission), product screenshots or clips, store links, app web addresses, the privacy policy and the news email frequency.
 - **Analytics and cookies:** if analytics or non-essential cookies are added, a consent banner with decline as the default is required (PDPD). Also decide how long captured emails are kept.

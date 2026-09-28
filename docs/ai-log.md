@@ -165,7 +165,7 @@ Template:
   - All checks were static. Accessibility, contrast and responsive layout were never checked in a browser.
     `bmad-code-review` then found 18 fixable issues, including a screenshot frame that could not be
     clicked, text contrast below AA and a language switch hidden on phones. 4 were fixed in the prototype;
-    the other 14 became acceptance criteria for the Next.js build (`code-review-2026-09-28.md`).
+    the other 14 findings became 16 acceptance criteria for the Next.js build (`code-review-2026-09-28.md`).
 
 ## 2026-09-28 — PRD, epics and stories from the approved HTML prototype
 
@@ -174,8 +174,8 @@ Template:
 - **Prompt (short):** Home hero changes (dark silk background, one CTA, stats in the hero), text-only nav,
   an About FAQ, then "my developer mentions to have prds created and also have epic user stories created".
 - **What the AI did:** Updated the HTML prototype after each request and waited for Amber's approval, then
-  wrote the PRD (46 FRs, 8 NFRs) and `epics.md` (7 epics, 38 stories, every story linked to its prototype
-  section), ran a 3-layer code review and fixed what it found.
+  wrote the PRD (46 FRs, 8 NFRs) and `epics.md` (7 epics, 38 stories, every visual story linked to its
+  prototype section), ran a 3-layer code review and fixed what it found.
 - **Decision / result:** New default workflow: every UI change is checked by Amber in the HTML prototype;
   after approval the specs, PRD and stories are updated, reviewed, committed and a PR is opened into
   `develop`. The silk animation keeps moving with a discreet pause button (WCAG 2.2.2) instead of the
@@ -189,3 +189,20 @@ Template:
   - The review found prototype behaviour that did not match the approved specs (a hover-opened menu
     closing on click, Escape not returning focus, no focus trap in the mobile menu, a pause button left
     with nothing to control when WebGL is missing). All fixed before the PR.
+
+## 2026-09-28 — Fixing Hoang's review of the PRD and epics (PR #4)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "there's review from Hoang on the pull request i made, review that and have my pr
+  updated fix".
+- **What the AI did:** Rebased onto `develop` (Sanity CMS spike, #5), then applied all 24 review items to
+  the PRD, `epics.md`, `EXPERIENCE.md`, `deferred-work.md` and this log: Sanity instead of "CMS not
+  chosen" plus a new Story 1.8 (Sanity setup), owners and "Depends on" on every story, a proposed Demo-day
+  plan (22 must-have stories, about 15 developer-days, two parallel tracks), an essential locale cookie,
+  launch check scoped to `src/` and the build output, and the smaller clarity fixes.
+- **Decision / result:** The Demo-day plan is marked PROPOSED and needs the team's sign-off. It moves the
+  animated silk, the 4-D process and the News pages to after Demo day.
+- **AI got it wrong?** Yes. The first PRD assumed a team of 3 and about 11 build days (the real window is
+  2 developers and 7 to 8 days), kept the saved language in local storage (a server cannot read it, so a
+  cookie is needed), left the CMS as undecided after Sanity was chosen, and counted 45 FRs after FR-46 was
+  added. All caught by the lead's review, not by the AI's own review.

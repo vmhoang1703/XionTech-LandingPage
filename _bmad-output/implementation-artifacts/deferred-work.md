@@ -37,7 +37,7 @@ Change reviewed: team CLAUDE.md rules, test tooling, local-only SonarQube gate (
 
 ## Deferred from: code review (2026-09-28), UX first draft
 
-Change reviewed: UX prototype and README (branch `docs/ux-first-draft`). The 14 findings turned into acceptance criteria for the Next.js build are in `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md`.
+Change reviewed: UX prototype and README (branch `docs/ux-first-draft`). The 14 findings became 16 acceptance criteria for the Next.js build; they are in `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md`.
 
 - [medium] No automated tests for the prototype script (forms, EN/VI, news filters, navigation). Test these behaviours in the Next.js build.
 - [medium] Translation beyond visible text: page titles, meta descriptions, aria labels and toasts need VI versions; serve `/en/` and `/vi/` URLs with hreflang.
