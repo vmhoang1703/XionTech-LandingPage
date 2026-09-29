@@ -1,7 +1,7 @@
 ---
 title: XionTechs Website Epics and Stories
 status: draft
-updated: 2026-09-28
+updated: 2026-09-29
 stepsCompleted: [1, 2, 3, 4]
 inputDocuments:
   - _bmad-output/planning-artifacts/prds/prd-XionTech-LandingPage-2026-09-28/prd.md
@@ -23,14 +23,14 @@ sources:
 
 ## Overview
 
-This document breaks the XionTechs Website PRD (46 FRs, 8 NFRs), the UX spines (`DESIGN.md`, `EXPERIENCE.md`) and the 16 review acceptance criteria into epics and stories for `bmad-build`. No architecture document exists; technical enablers are inferred from `AGENTS.md` and tagged `[ASSUMPTION]`.
+This document breaks the XionTechs Website PRD (47 FRs, 8 NFRs), the UX spines (`DESIGN.md`, `EXPERIENCE.md`) and the 16 review acceptance criteria into epics and stories for `bmad-build`. No architecture document exists; technical enablers are inferred from `AGENTS.md` and tagged `[ASSUMPTION]`.
 
 **Conventions**
 
 - `EXP >` means `EXPERIENCE.md` section, `DES >` means `DESIGN.md` section.
 - Prototype paths are relative to `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/` and written `mockups/site-v3/...`. The prototype is the visual acceptance reference; the spines win on any conflict.
 - Header and footer are rendered by the prototype script into `#site-header` and `#site-footer`, so their design reference is `mockups/site-v3/js/site.js` (header and footer templates) with `css/site.css`.
-- All routes exist under `/en/` and `/vi/`; paths below omit the prefix.
+- All routes exist under `/en/` and `/vi/`; paths below omit the prefix. **Demo day is English only** (decided 2026-09-29): Story 1.2 (locale routing and the EN/VI switch) and every Vietnamese string follow after demo, so VI parts of acceptance criteria are checked after demo.
 - Book a demo sits next to the EN/VI switch above 640px and is the first mobile menu item at 640px and below. 640px is current; the 1080px mention in the UX decision log is superseded.
 - Every story's Definition of Done includes NFR-8 (lint, typecheck, unit tests, 100% changed-line coverage, branch coverage at least 80% per changed file, Playwright smoke, build, local SonarQube gate) and NFR-7 (no invented content; unverified text starts with `[Placeholder]` in EN and VI). These are not repeated per story.
 - **Owner** on every story is proposed (Andy or Sammy, following the two tracks in the Demo-day plan) and is confirmed by the lead (Hoang Vu). Size: S (up to 1 day), M (1 to 2 days), L (2 to 3 days). `[ASSUMPTION]` day ranges.
@@ -41,37 +41,45 @@ This document breaks the XionTechs Website PRD (46 FRs, 8 NFRs), the UX spines (
 
 ## Demo-day plan (PROPOSED, to confirm with Hoang, Andy and Sammy)
 
-Budget: 2 developers (Andy and Sammy), 7 to 8 build days before Demo day 2026-10-09, about 15 developer-days. Sizes use the midpoints of the epics' scale: S = 0.5, M = 1.5, L = 2.5 days. A split story is counted at the size of its Demo-day slice (full size in brackets); the rest of it is after demo. The 39 stories at full size come to about 56 developer-days, so 22 stories are must-haves (15.0 days) and 17 move to after demo.
+Budget: 2 developers (Andy and Sammy), 7 to 8 build days before Demo day 2026-10-09, about 15 developer-days. Sizes use the midpoints of the epics' scale: S = 0.5, M = 1.5, L = 2.5 days. A split story is counted at the size of its Demo-day slice (full size in brackets); the rest of it is after demo.
 
-**Must-have stories in build order**
+**Scope decided by Amber Do on 2026-09-29.** The site will be used as the real company site after Demo day, so Demo day includes the moving silk, the 4-D process on Home and Services (a simple animation update), News with `[Placeholder]` titles from Sanity, Careers with job pages and CV upload, live demo and project forms, and the accessibility and performance audits. The site is English only on Demo day. There is no newsletter, no talent network, no leadership section and no dark mode. **No cuts:** the must-haves come to **23.5 developer-days against about 15**, so the lead decides how to cover the gap (more days, another developer, or cuts); see PRD open question 22.
+
+**Must-have stories in build order (31 of 40)**
 
 | Step | Andy (proposed) | Size | Andy total | Sammy (proposed) | Size | Sammy total |
 |---|---|---|---|---|---|---|
 | 1 | 1.1 Brand tokens, fonts, surfaces (slice) | M (L) | 1.5 | 1.5 Site footer | S | 0.5 |
-| 2 | 1.2 Locale routing and EN/VI switch (slice) | M (L) | 3.0 | 1.7 Not found page | S | 1.0 |
-| 3 | 1.3 Desktop header, mega menus, skip link (slice) | M (L) | 4.5 | 2.1 Privacy policy page | S | 1.5 |
+| 2 | 1.3 Desktop header, mega menus, skip link (slice) | M (L) | 3.0 | 1.7 Not found page | S | 1.0 |
+| 3 | 1.8 Sanity setup | M | 4.5 | 2.1 Privacy policy page | S | 1.5 |
 | 4 | 2.2 Two-tab contact form (slice) | M (L) | 6.0 | 3.1 Dark Home hero with one CTA (slice) | S (M) | 2.0 |
-| 5 | 2.4 Email capture band (slice) | S (L) | 6.5 | 3.3 Stats band (slice) | S (M) | 2.5 |
-| 6 | 1.4 Mobile menu (slice) | S (M) | 7.0 | 3.4 Two front doors | S | 3.0 |
-| 7 | 2.3 Submission handling (slice) | S (M) | 7.5 | 3.5 Bento and service cards (slice) | S (M) | 3.5 |
-| 8 | | | | 4.1 Products hero and sub-nav (slice) | S (M) | 4.0 |
-| 9 | | | | 4.2 PXP story phone (slice) | S (M) | 4.5 |
-| 10 | | | | 4.3 LXP, SXP and IoT sections (slice) | S (M) | 5.0 |
-| 11 | | | | 5.1 Services hero and clocks (slice) | S (M) | 5.5 |
-| 12 | | | | 5.2 Stats and eight services (slice) | S (M) | 6.0 |
-| 13 | | | | 3.7 Home news and demo capture (slice) | S (M) | 6.5 |
-| 14 | | | | 6.4 About page (slice) | S (M) | 7.0 |
-| 15 | | | | 6.5 Careers page (slice) | S (M) | 7.5 |
+| 5 | 2.3 Submission delivery and spam protection | M | 7.5 | 3.2 Continuous silk and motion toggle (slice) | M (L) | 3.5 |
+| 6 | 2.4 Email capture band (slice) | S (M) | 8.0 | 3.3 Stats band (slice) | S (M) | 4.0 |
+| 7 | 1.4 Mobile menu (slice) | S (M) | 8.5 | 3.4 Two front doors | S | 4.5 |
+| 8 | 6.6 Job page and application with CV upload | M | 10.0 | 6.5 Careers page and open roles (slice) | S (M) | 5.0 |
+| 9 | 6.3 Editors publish in Sanity Studio (slice) | S (L) | 10.5 | 3.5 Bento and service cards (slice) | S (M) | 5.5 |
+| 10 | 7.4 Performance budget (slice) | S (M) | 11.0 | 3.6 4-D process component (slice) | S (M) | 6.0 |
+| 11 | 7.3 Accessibility checks (slice) | S (M) | 11.5 | 4.1 Products hero and sub-nav (slice) | S (M) | 6.5 |
+| 12 | | | | 4.2 PXP story phone (slice) | S (M) | 7.0 |
+| 13 | | | | 4.3 LXP, SXP and IoT sections (slice) | S (M) | 7.5 |
+| 14 | | | | 5.1 Services hero and clocks (slice) | S (M) | 8.0 |
+| 15 | | | | 5.2 Stats and eight services (slice) | S (M) | 8.5 |
+| 16 | | | | 5.4 4-D process at `#process` and project capture | S | 9.0 |
+| 17 | | | | 3.7 Home news and demo capture (slice) | S (M) | 9.5 |
+| 18 | | | | 6.1 News page with category filters | M | 11.0 |
+| 19 | | | | 6.2 Story detail page (slice) | S (M) | 11.5 |
+| 20 | | | | 6.4 About page (slice) | S (M) | 12.0 |
 
-Total: Andy 7.5, Sammy 7.5, together 15.0 developer-days.
+Total: Andy 11.5, Sammy 12.0, together 23.5 developer-days (about 8.5 over the 15 available).
 
-- Story 1.1 blocks everyone. Andy merges its token and font part first (target end of day 1); until then Sammy prepares the EN/VI strings and content for 1.5, 1.7 and 2.1.
-- Story 3.7 starts after 2.4 is merged (Andy step 5).
-- Until Stories 3.6 and 5.4 land, links to `/services#process` open Services at the top of the page.
-- Until Story 1.8 lands, Home news shows its empty state (grid hidden, "See all news" kept) and Careers shows "No open roles right now.".
-- Pull-in order if a track finishes early: 1.8, 3.6, 5.4, 3.2, 1.6.
+- Story 1.1 blocks everyone. Andy merges its token and font part first (target end of day 1); until then Sammy prepares the content for 1.5, 1.7 and 2.1.
+- Story 1.8 (Andy step 3, done by day 4.5) unblocks 3.7, 6.1, 6.2, 6.5 and 6.6; news stories and roles are entered in Sanity with `[Placeholder]` titles. Sammy builds 6.5 right after it, so Andy can start 6.6 at day 8.5.
+- Stories 3.7 and 5.4 start after 2.4 is merged (Andy step 6, day 8.0); 6.3 starts after 3.7 is merged (day 9.5).
+- Stories 7.3 and 7.4 check each page as it is merged; a final run follows Sammy's last page (day 12.0).
+- Breadcrumbs: until Story 1.6 lands after demo, each page story builds its breadcrumbs with the simple markup from the prototype; 1.6 turns them into the shared component.
+- If the gap is closed by cuts, the lowest-risk order to drop is: 6.3 (enter content through the Studio defaults), 3.5 spotlight, 4.1 in-view highlight, 5.1 clocks.
 
-**After demo (17 stories, plus the deferred parts of the sliced must-haves):** 1.6 Inner page hero and breadcrumbs, 1.8 Sanity setup, 2.5 No non-essential cookies without consent, 3.2 Continuous silk and motion toggle, 3.6 4-D process component, 4.4 Product media in device frames, 4.5 Product updates and demo capture, 5.3 Three ways to work and industries, 5.4 4-D process at `#process` and project capture, 6.1 News page, 6.2 Story detail page, 6.3 Editors publish in Sanity Studio, 7.1 Metadata, hreflang and sitemap, 7.2 Server rendering and structured data, 7.3 Accessibility checks, 7.4 Performance budget, 7.5 Launch content gate. The CI pipeline is an open item, not a story.
+**After demo (9 stories, plus the deferred parts of the sliced must-haves):** 1.2 Locale routing and EN/VI switch, 1.6 Inner page hero and breadcrumbs, 2.5 No non-essential cookies without consent, 4.4 Product media in device frames (clips uploaded in Sanity), 4.5 Product updates and demo capture, 5.3 Three ways to work and industries, 7.1 Metadata, hreflang and sitemap, 7.2 Server rendering and structured data, 7.5 Launch content gate. The CI pipeline is an open item, not a story.
 
 ## Requirements Inventory
 
@@ -92,8 +100,8 @@ FR-12: Stats band "Experience you can count on" at the bottom of the hero: 25+, 
 FR-13: Products door and Services door directly under the hero, overlapping its bottom edge; each door one link; chips are text.
 FR-14: After the doors: four-app bento, eight services, 4-D process, latest three stories, demo capture; tiles are stretched links with nothing interactive inside; service cards link to Services anchors; no stories hides the grid and keeps "See all news".
 FR-15: Sticky Products sub-nav (PXP, LXP, SXP, IoT, Updates) highlights the section in view, Updates at page end; scrolls horizontally on narrow screens.
-FR-16: PXP story phone with five tabs (Attendance, Grades, Messages, Payments, Events) crossfading screens, ARIA tab pattern, inactive screens unfocusable and hidden; four features; store buttons `[Placeholder]` until confirmed.
-FR-17: LXP, SXP, IoT in browser frames with audience, four features and web address (`[Placeholder]` until confirmed); missing media shows an empty frame.
+FR-16: PXP story phone with five tabs (Attendance, Grades, Messages, Payments, Events) crossfading screens, ARIA tab pattern, inactive screens unfocusable and hidden; four features; store buttons always shown, opening a new tab, with `[Placeholder]` links until real ones exist.
+FR-17: LXP, SXP, IoT in browser frames with audience, four features and web address as a link that opens a new tab (`[Placeholder]` until confirmed); missing media shows an empty frame.
 FR-18: Three Product stories under `#updates` plus "See all news"; none hides the grid.
 FR-19: Real product screens or clips in device frames; clips never autoplay with sound, poster frame, visible play and pause, muted autoplay stops after 5s; devices float one cycle under 5s; tilt up to 8 degrees on hover-capable devices.
 FR-20: Services hero with "Start a project", "See our 4-D process" and live HCMC and Dallas clocks (IANA zones, 30s refresh, server-rendered zone label).
@@ -105,16 +113,16 @@ FR-25: News filters All, Product, Company, Schools, Team as `aria-pressed` toggl
 FR-26: Story page `/news/[slug]` with breadcrumbs, H1, date and category tag, photo, body, related product link, "Back to News"; dates `18 SEP 2026` EN and `18/09/2026` VI in mono; own title, meta, OG image.
 FR-27: Editors create, edit and publish stories in both languages in Sanity Studio without a code change (CMS is Sanity, `docs/spikes/cms-spike.md`). `[ASSUMPTION]` editors are non-developers.
 FR-28: About shows story, stats band and six core values at `#values` in office-banner wording.
-FR-29: Leadership grid shown only once real people are confirmed; no names from the old site.
+FR-29: Removed 2026-09-29: no leadership section on About; no names from the old site.
 FR-30: Office cards with live local time, address and `tel:` link.
 FR-31: Careers culture, four benefits ("Why you'll grow here") and Life at XionTechs photos at `#life`; placeholder frames never ship at public launch.
-FR-32: Open roles when there are any, else "No open roles right now." with a route to `#talent`; editors add or close roles without code `[ASSUMPTION]`; no invented roles.
-FR-33: Email capture band on every page except Book a demo, Not found, Privacy policy and News story; sending and retry states; validation on submit with "Please enter a valid email address.", `aria-invalid`, `aria-describedby`, focus back, clears on typing; amber focus ring on navy bands; no modal pop-ups.
+FR-32: Open roles as role cards (title, team, location, work type) opening their job pages, else "No open roles right now."; hero "See open roles" to `#roles`; editors add or close roles without code `[ASSUMPTION]`; no invented roles at public launch (`[Placeholder]` sample roles allowed on Demo day).
+FR-33: Email capture band (demo or project) on every page except Book a demo, Not found, Privacy policy, News story, Careers and job pages; sending and retry states; validation on submit with "Please enter a valid email address.", `aria-invalid`, `aria-describedby`, focus back, clears on typing; amber focus ring on navy bands; no modal pop-ups.
 FR-34: Valid demo capture goes to `/demo#form` and project capture to `/demo#project` (Outsourcing tab, scrolled to form), email prefilled through session storage or server session, never in the URL; no prefill if session storage is unavailable.
-FR-35: Valid subscribe or talent capture replaces the row with "Thanks, you're subscribed." or "Thanks, you're on the list." in a `role="status"` region.
+FR-35: Removed 2026-09-29: no subscribe or talent-network capture.
 FR-36: Two-tab contact form: hash picks the tab; fields per the EXPERIENCE.md field table; hidden-tab fields not validated, focusable or submitted but kept; submit marks invalid fields and focuses the first; sending, success and failure states.
 FR-37: Preferred date cannot be before today in the visitor's time zone; picker starts at today; "Please choose today or a later date."
-FR-38: Every Submission (demo, project, subscribe, join) reaches a XionTechs destination; server-side validation mirrors the client rules; honeypot and a rate limit keyed on IP plus email (5 per 10 minutes `[ASSUMPTION]`) stop spam. `[ASSUMPTION]` destination open.
+FR-38: Every Submission (demo, project, job application) reaches a XionTechs destination (contact inbox; Sanity for job applications); server-side validation mirrors the client rules; honeypot and a rate limit keyed on IP plus email (5 per 10 minutes `[ASSUMPTION]`) stop spam. Contact inbox address to be supplied.
 FR-39: "Book a demo" only for the demo intent and "Start a project" only for the project intent, with EN and VI labels from the CTA table.
 FR-40: Consent line under every form with the exact EXPERIENCE.md wording, ending with a "Privacy policy" link.
 FR-41: Privacy policy at `/privacy` linked from every consent line and the footer, covering what is collected, use, retention, rights, and listing the essential locale cookie; no form goes live at public launch before the text is real.
@@ -123,6 +131,7 @@ FR-43: Per page and locale: title, meta description, canonical URL, Open Graph t
 FR-44: `hreflang` pairs for `/en/` and `/vi/`, plus `x-default` to `/en/`.
 FR-45: Header, footer and News server-rendered; Organization and app JSON-LD on Home; content readable without JavaScript.
 FR-46: FAQ on `/about#faq` with nine questions, disclosure pattern and FAQPage structured data; the data security answer is `[Placeholder]` until real facts are supplied.
+FR-47: Job page `/careers/[slug]` with breadcrumbs, title, team, location, work type, role sections and an application form: Full name, Email, Phone (optional), CV (PDF or Word, up to 5 MB), Cover note (optional, up to 2,000 characters); "Please upload your CV as a PDF or Word file, up to 5 MB."; sending, success ("We've received your application and will be in touch if it's a match.") and failure states; stored in Sanity with the FR-38 server checks; unknown or closed role shows Not found; no capture band.
 
 ### NonFunctional Requirements
 
@@ -179,7 +188,7 @@ UX-DR19: Office card and Clock strip (IANA zones, 30s refresh, server-rendered z
 UX-DR20: Email capture band (H2 and lede left, form right; white pill row; 1.5px navy border on amber; error line; consent line; success status panel; stacks at 640px).
 UX-DR21: Contact form card (paper, 28px radius, pill tabs, 2-column grid, checkbox pills, full-width message, primary submit, invalid border `{colors.error-border}`; error colour per surface).
 UX-DR22: News card (16:10 photo, mono date, category tag, title, excerpt, "Read story"; first card on News is a wide feature), Category tag (product stories amber with app name), Filter chips (active navy).
-UX-DR23: Value grid (3 x 2, hairlines, featured amber cell "Get IT Done" Attitude), Person card (4:5), Placeholder frame (dashed, Lexend Exa caption), Open roles panel (dashed).
+UX-DR23: Value grid (3 x 2, hairlines, featured amber cell "Get IT Done" Attitude), Role card (stretched link, title then team, location and work type), Placeholder frame (dashed, Lexend Exa caption), Open roles panel (dashed), File field.
 UX-DR24: Industry chip (EdTech primary), Product badge (never the only way to tell apps apart).
 UX-DR25: Site footer (ink, white logo plate, four columns with amber-tint Lexend Exa headings, GET IT **DONE** with DONE in amber) and Toast (ink pill, bottom centre, `role="status"`, about 2.6s).
 UX-DR26: Responsive rules from EXP > Responsive & Platform at 1080px, 900px and 640px, including 16px gutters and stacked capture rows at 640px and below.
@@ -217,13 +226,13 @@ UX-DR27: FAQ component per DES > Components (FAQ) and EXP > Component Patterns (
 | FR-26 | Epic 6 | 6.2 |
 | FR-27 | Epic 1, 6 | 1.8 (Sanity setup), 6.3 |
 | FR-28 | Epic 6 | 6.4 |
-| FR-29 | Epic 6 | 6.4 |
+| FR-29 | Epic 6 | 6.4 (removed section) |
 | FR-30 | Epic 5, 6 | 5.1 (clock), 6.4 (office cards) |
 | FR-31 | Epic 6 | 6.5 |
 | FR-32 | Epic 1, 6 | 1.8 (Sanity setup), 6.5, 6.3 |
 | FR-33 | Epic 2 | 2.4 |
 | FR-34 | Epic 2 | 2.4 |
-| FR-35 | Epic 2, 6 | 2.4 (built), 6.1, 6.5 (placed) |
+| FR-35 | Epic 2 | 2.4 (removed kinds) |
 | FR-36 | Epic 2 | 2.2, 2.3 |
 | FR-37 | Epic 2 | 2.2 |
 | FR-38 | Epic 2 | 2.3 |
@@ -235,8 +244,9 @@ UX-DR27: FAQ component per DES > Components (FAQ) and EXP > Component Patterns (
 | FR-44 | Epic 7 | 7.1 |
 | FR-45 | Epic 7 | 7.2 |
 | FR-46 | Epic 6 | 6.4 |
+| FR-47 | Epic 6 | 6.6, 1.8, 2.3 (server checks) |
 
-Result: 46 of 46 FRs covered. NFR-1 (1.1, 7.3), NFR-2 (1.1, 1.6, 3.2, 4.4), NFR-3 (1.2, 2.1, 2.3, 2.4, 2.5), NFR-4 (1.1, 3.2, 7.4), NFR-5 (7.1), NFR-6 (1.1, 1.4, 7.3), NFR-7 (all stories, 7.5), NFR-8 (all stories).
+Result: 47 of 47 FRs covered. NFR-1 (1.1, 7.3), NFR-2 (1.1, 1.6, 3.2, 4.4), NFR-3 (1.2, 2.1, 2.3, 2.4, 2.5), NFR-4 (1.1, 3.2, 7.4), NFR-5 (7.1), NFR-6 (1.1, 1.4, 7.3), NFR-7 (all stories, 7.5), NFR-8 (all stories).
 
 ### AC-ID Coverage
 
@@ -282,15 +292,16 @@ Result: 16 of 16 AC IDs covered.
 | `services.html` | key facts stats, `#all-h` with 8 service anchors | 5.2 |
 | `services.html` | `#ways-h`, `#ind-h` | 5.3 |
 | `services.html` | `#process`, capture (amber, `data-mode="project"`) | 5.4 |
-| `news.html` | hero, `.filters`, `#newsGrid`, `#newsCount`, `#newsEmpty`, subscribe capture | 6.1 |
+| `news.html` | hero, `.filters`, `#newsGrid`, `#newsCount`, `#newsEmpty`, demo capture | 6.1 |
 | `news-story.html` | breadcrumbs, H1, date and tag, photo, body, related product, Back to News | 6.2 |
-| `about.html` | hero, key facts stats, `#story-h`, `#values`, `#lead-h`, `#faq`, `#off-h`, capture | 6.4 |
-| `careers.html` | hero, `#cul-h`, `#ben-h`, `#roles-h`, `#talent`, `#life` | 6.5 |
+| `about.html` | hero, key facts stats, `#story-h`, `#values`, `#faq`, `#off-h`, capture | 6.4 |
+| `careers.html` | hero, `#cul-h`, `#ben-h`, `#roles` (`.roles`, `.role`), `#life` | 6.5 |
+| `job.html` | hero with breadcrumbs and chips, `.job-body`, `#apply` (`#applyForm`, `#a-cv`, `.form-ok`) | 6.6 |
 | `demo.html` | hero reassurance list and offices, `#form`, `.ftabs`, `#demoForm`, `.form-ok` | 2.2, 2.3 |
 | `privacy.html` | hero, eight policy sections | 2.1 |
 | `404.html` | navy hero with four recovery links | 1.7 |
 
-Result: 10 of 10 pages covered. Stories 1.8, 2.5 and 6.3 are non-visual and have no prototype section.
+Result: 11 of 11 pages covered. Stories 1.8, 2.5 and 6.3 are non-visual and have no prototype section.
 
 ## Epic List
 
@@ -302,7 +313,7 @@ Any visitor can move through a branded, bilingual site from any width: header, m
 
 ### Epic 2: Contact, email capture and privacy (PDPD)
 Lan and Quân can request a demo or start a project through one contact form or a capture band, every Submission reaches XionTechs, and every form is covered by a privacy policy.
-**FRs covered:** FR-33, FR-34, FR-35, FR-36, FR-37, FR-38, FR-39, FR-40, FR-41, FR-42
+**FRs covered:** FR-33, FR-34, FR-35 (removed), FR-36, FR-37, FR-38, FR-39, FR-40, FR-41, FR-42
 
 ### Epic 3: Home
 Visitors see what the products do in five seconds and pick a front door: dark silk hero, one CTA, stats, doors, bento, services, 4-D process, latest news and demo capture.
@@ -317,8 +328,8 @@ Companies can judge the delivery team, see office hours overlap and the 4-D proc
 **FRs covered:** FR-6, FR-12 (reuse), FR-20, FR-21, FR-22, FR-23, FR-24, FR-30 (clock)
 
 ### Epic 6: News, About and Careers
-Visitors read dated stories, learn who XionTechs is, and job seekers join the talent network; editors publish without a developer.
-**FRs covered:** FR-6, FR-12 (reuse), FR-25, FR-26, FR-27, FR-28, FR-29, FR-30, FR-31, FR-32, FR-35 (placement), FR-46
+Visitors read dated stories, learn who XionTechs is, and job seekers apply for a role with a CV; editors publish without a developer.
+**FRs covered:** FR-6, FR-12 (reuse), FR-25, FR-26, FR-27, FR-28, FR-29 (removed), FR-30, FR-31, FR-32, FR-46, FR-47
 
 ### Epic 7: SEO, performance and accessibility hardening
 Visitors find the site in search in their language, and every page in both locales passes the accessibility, performance and launch-content gates.
@@ -389,8 +400,7 @@ So that I can read everything in my language without losing my place.
 - **AC IDs:** AC-NAV-1
 - **Owner:** Andy (proposed)
 - **Size:** L
-- **Demo day:** must-have
-- **Demo-day slice:** M. Routing, the locale cookie, redirect exclusions, the switch and the string key test; keeping scroll position and typed form values on a switch follows after demo.
+- **Demo day:** after demo (English only on Demo day, decided 2026-09-29)
 - **Depends on:** 1.1
 
 **Acceptance Criteria:**
@@ -441,7 +451,7 @@ So that I can reach any service or Book a demo in one move.
 - **Size:** L
 - **Demo day:** must-have
 - **Demo-day slice:** M. Header, click-toggled mega menus (Escape, click outside, one open at a time, tap on large touch screens), skip link and Book a demo; hover opening with the 150ms close delay and the reduced-motion fade follow after demo.
-- **Depends on:** 1.1, 1.2
+- **Depends on:** 1.1 (the EN/VI switch slot is filled by Story 1.2 after demo)
 
 **Acceptance Criteria:**
 
@@ -577,7 +587,7 @@ So that I never read a page with its title hidden under the header.
 - **AC IDs:** AC-NAV-5
 - **Owner:** Sammy (proposed)
 - **Size:** M
-- **Demo day:** after demo
+- **Demo day:** after demo (until then each must-have page story builds its own breadcrumbs from the prototype markup)
 - **Depends on:** 1.1
 
 **Acceptance Criteria:**
@@ -639,7 +649,7 @@ So that stories and roles I publish can appear on the site.
 - **AC IDs:** none
 - **Owner:** Andy (proposed)
 - **Size:** M
-- **Demo day:** after demo
+- **Demo day:** must-have
 - **Depends on:** 1.1
 
 **Acceptance Criteria:**
@@ -780,8 +790,7 @@ So that I never retype a request or wonder if it arrived.
 - **AC IDs:** none
 - **Owner:** Andy (proposed)
 - **Size:** M
-- **Demo day:** must-have
-- **Demo-day slice:** S. Server-side validation, honeypot and the sending, success and failure states. Delivery through the mail sender and the rate limit on the shared store follow after demo, once both free services are picked in architecture; until then the success panel adds a `[Placeholder]` note that nothing was sent.
+- **Demo day:** must-have (forms are live on Demo day)
 - **Depends on:** 2.2
 
 **Acceptance Criteria:**
@@ -810,43 +819,43 @@ So that I never retype a request or wonder if it arrived.
 **And** a real visitor who hits the rate limit sees a retryable error and keeps what they typed
 **And** the counters live in a shared store that works across serverless instances (free tier, chosen in architecture).
 
-**Given** a valid demo, project, subscribe or join Submission
+**Given** a valid demo or project Submission
 **When** it is accepted
-**Then** it is sent through the mail sender service (free tier, chosen in architecture) to the destination set in server configuration `[ASSUMPTION]` (inbox or CRM is an open question)
+**Then** it is sent through the mail sender service (free tier, chosen in architecture) to the company contact inbox set in server configuration (address to be supplied)
 **And** no personal data appears in any URL, query string or hash.
 
-### Story 2.4: Email capture band (demo, project, subscribe, join)
+### Story 2.4: Email capture band (demo, project)
 
 As Lan, reading the Products page,
 I want to leave only my work email and land on a form already started,
 So that booking a demo takes a few clicks.
 
-- **Design reference:** `mockups/site-v3/index.html` capture (`#cap-h`, `#cap-email`, amber, `data-mode="demo"`); `services.html` capture (amber, `data-mode="project"`); `news.html` capture (navy, subscribe); `careers.html#talent` (navy, join)
+- **Design reference:** `mockups/site-v3/index.html` capture (`#cap-h`, `#cap-email`, amber, `data-mode="demo"`); `services.html` capture (amber, `data-mode="project"`); `news.html` and `about.html` captures (amber, demo)
 - **Spec references:** EXP > Component Patterns (Email capture), State Patterns (Email capture), Voice and Tone (CTA labels, Wording to reuse), Interaction Primitives; DES > Components (Email capture, Focus ring), Colors (error on navy)
-- **Requirements:** FR-33, FR-34, FR-35, FR-39, FR-40; NFR-3; UX-DR20
+- **Requirements:** FR-33, FR-34, FR-39, FR-40; NFR-3; UX-DR20 (FR-35 removed: no subscribe or join kinds)
 - **AC IDs:** AC-A11Y-2, AC-A11Y-5, AC-FORM-2
 - **Owner:** Andy (proposed)
-- **Size:** L
+- **Size:** M
 - **Demo day:** must-have
-- **Demo-day slice:** S. The demo, project and join kinds with validation, sending and retry states, redirect and prefill; the subscribe kind (News) follows after demo.
+- **Demo-day slice:** S. Both kinds with validation, sending and retry states, redirect and prefill; the navy-band focus and error colours are checked in Story 7.3.
 - **Depends on:** 2.2
 
 **Acceptance Criteria:**
 
-**Given** one shared capture component with a kind of demo, project, subscribe or join
+**Given** one shared capture component with a kind of demo or project (there is no subscribe or join kind)
 **When** it renders
-**Then** the button reads "Book a demo", "Start a project", "Subscribe" or "Join" (VI "Đặt lịch demo", "Bắt đầu dự án", "Đăng ký", "Tham gia")
+**Then** the button reads "Book a demo" or "Start a project" (VI "Đặt lịch demo", "Bắt đầu dự án")
 **And** it is an inline band with H2 and lede left and the form right, never a modal.
 
 **Given** each kind
 **When** it renders
-**Then** the consent line reads, respectively, "We only use your email to arrange your demo.", "We only use your details to respond to this request.", "We only use your email to send XionTechs news. You can unsubscribe at any time." and "We only use your email to contact you about matching roles.", each ending with a "Privacy policy" link.
+**Then** the consent line reads, respectively, "We only use your email to arrange your demo." and "We only use your details to respond to this request.", each ending with a "Privacy policy" link.
 
 **Given** an invalid email
 **When** the visitor submits
 **Then** "Please enter a valid email address." shows inline and is announced, the field gets `aria-invalid="true"` and `aria-describedby`, focus returns to the field, and the error clears as the visitor types (AC-A11Y-5).
 
-**Given** a valid subscribe or join email
+**Given** a valid demo or project email
 **When** it is sending
 **Then** the button is disabled and reads "Sending..." ("Đang gửi...")
 **And** if the send fails, the email is kept and an inline error with a retry shows in the band.
@@ -870,15 +879,11 @@ So that booking a demo takes a few clicks.
 **When** a valid demo or project capture is submitted
 **Then** the visitor still lands on the right `/demo` tab with no prefill and types the email there, and no error is shown.
 
-**Given** a valid subscribe or join capture
-**When** submitted
-**Then** the row is replaced by "Thanks, you're subscribed." or "Thanks, you're on the list." in a `role="status"` region.
-
 **Given** 640px and below
 **When** the band renders
 **Then** the field stacks above the button.
 
-**Given** `/demo`, the Not found page, `/privacy` or a `/news/[slug]` story page at any width
+**Given** `/demo`, the Not found page, `/privacy`, a `/news/[slug]` story page, `/careers` or a `/careers/[slug]` job page at any width
 **When** the page renders
 **Then** no capture band is shown (FR-33 exceptions; `/demo` is the form).
 
@@ -962,7 +967,8 @@ So that I can read in peace on every visit.
 - **AC IDs:** none
 - **Owner:** Sammy (proposed)
 - **Size:** L
-- **Demo day:** after demo
+- **Demo day:** must-have
+- **Demo-day slice:** M. The continuous silk ported from the prototype shader, the pause button, pausing off screen and in a hidden tab, reduced-motion start and the static fallback; remembering the Play or Pause choice follows after demo.
 - **Depends on:** 3.1
 
 **Acceptance Criteria:**
@@ -1111,7 +1117,8 @@ So that I know what working together looks like.
 - **AC IDs:** AC-UI-2
 - **Owner:** Sammy (proposed)
 - **Size:** M
-- **Demo day:** after demo
+- **Demo day:** must-have
+- **Demo-day slice:** S. A simple update of the prototype animation: steps enter in turn and the amber track fills once; reduced motion shows the final state; aligned "You receive" rows and the 2- and 1-column layouts. The travelling dot follows after demo.
 - **Depends on:** 1.1
 
 **Acceptance Criteria:**
@@ -1146,8 +1153,8 @@ So that I see the company is active and can act at once.
 - **Owner:** Sammy (proposed)
 - **Size:** M
 - **Demo day:** must-have
-- **Demo-day slice:** S. The demo capture at the end of Home, the section rhythm and the no-stories state; the content access module and news cards from Sanity follow after demo, once Story 1.8 lands.
-- **Depends on:** 2.4 (capture band); 1.8 for the news content (not needed for the Demo-day slice)
+- **Demo-day slice:** S. The demo capture at the end of Home, the section rhythm, the no-stories state and the latest three stories from Sanity (sample titles start with `[Placeholder]`) through the content access module.
+- **Depends on:** 2.4 (capture band), 1.8 (Sanity setup)
 
 **Acceptance Criteria:**
 
@@ -1223,7 +1230,7 @@ So that I know what my child's school app does before I install it.
 - **Owner:** Sammy (proposed)
 - **Size:** M
 - **Demo day:** must-have
-- **Demo-day slice:** S. Tabs with the ARIA tab pattern, hidden inactive screens (AC-A11Y-3), features and store buttons; screens switch instantly and the 0.55s crossfade follows after demo.
+- **Demo-day slice:** S. Tabs with the ARIA tab pattern, hidden inactive screens (AC-A11Y-3), features and store buttons opening a new tab; screens switch instantly and the 0.55s crossfade follows after demo.
 - **Depends on:** 4.1
 
 **Acceptance Criteria:**
@@ -1242,7 +1249,8 @@ So that I know what my child's school app does before I install it.
 
 **Given** the four PXP features and store buttons
 **When** they render
-**Then** App Store and Google Play read `[Placeholder]` until real links are confirmed.
+**Then** App Store and Google Play are always shown and read `[Placeholder]` until real links exist
+**And** each opens its link in a new tab (`target="_blank"`, `rel="noopener noreferrer"`) and its accessible name ends "(opens in a new tab)".
 
 ### Story 4.3: LXP, SXP and IoT sections
 
@@ -1268,7 +1276,8 @@ So that I can compare them.
 
 **Given** an app address that is not confirmed
 **When** the URL pill renders
-**Then** it reads `[Placeholder] lxp.xiontechs.com`, `[Placeholder] sxp.xiontechs.com` or `[Placeholder] iot.xiontechs.com`.
+**Then** it reads `[Placeholder] lxp.xiontechs.com`, `[Placeholder] sxp.xiontechs.com` or `[Placeholder] iot.xiontechs.com`
+**And** the pill is a link that opens the app in a new tab, with an accessible name ending "(opens in a new tab)".
 
 **Given** a missing media asset
 **When** the frame renders
@@ -1440,7 +1449,7 @@ So that I move from reading to acting without searching.
 - **AC IDs:** AC-NAV-5, AC-UI-2, AC-FORM-2
 - **Owner:** Sammy (proposed)
 - **Size:** S
-- **Demo day:** after demo
+- **Demo day:** must-have
 - **Depends on:** 3.6 (4-D component), 2.4, 5.1
 
 **Acceptance Criteria:**
@@ -1459,21 +1468,21 @@ So that I move from reading to acting without searching.
 
 ## Epic 6: News, About and Careers
 
-Visitors read stories and learn who XionTechs is; Nam joins the talent network; editors publish without a developer.
+Visitors read stories and learn who XionTechs is; Nam applies for a role; editors publish without a developer.
 
-### Story 6.1: News page with category filters and subscribe capture
+### Story 6.1: News page with category filters
 
 As Nam, looking for team stories,
 I want to filter news by category instantly,
 So that I only read what interests me.
 
-- **Design reference:** `mockups/site-v3/news.html` hero, `.filters`, `#newsGrid`, `#newsCount`, `#newsEmpty`, subscribe capture (navy)
+- **Design reference:** `mockups/site-v3/news.html` hero, `.filters`, `#newsGrid`, `#newsCount`, `#newsEmpty`, demo capture (amber)
 - **Spec references:** EXP > Component Patterns (Filter chips, News card, Category tag), State Patterns (News); DES > Components (Filter chips, News card)
-- **Requirements:** FR-25, FR-35 (placement), FR-45 (server-rendered list); UX-DR22
+- **Requirements:** FR-25, FR-33 (placement), FR-45 (server-rendered list); UX-DR22
 - **AC IDs:** none
 - **Owner:** Sammy (proposed)
 - **Size:** M
-- **Demo day:** after demo
+- **Demo day:** must-have
 - **Depends on:** 3.7 (content module), 1.8, 2.4
 
 **Acceptance Criteria:**
@@ -1495,10 +1504,10 @@ So that I only read what interests me.
 **When** it is selected
 **Then** "No stories in this category yet." shows with a "Show all" button that resets to All.
 
-**Given** the navy subscribe capture "Get our news by email."
-**When** a valid email is submitted
-**Then** "Thanks, you're subscribed." replaces the row (Story 2.4)
-**And** the unverified frequency note starts with `[Placeholder]`.
+**Given** the end of `/news`
+**When** it renders
+**Then** the amber demo capture "See it working at your school." from Story 2.4 is shown, and there is no newsletter sign-up
+**And** on Demo day the stories come from Sanity with titles that start with `[Placeholder]`.
 
 ### Story 6.2: Story detail page
 
@@ -1512,7 +1521,8 @@ So that I can finish the story and keep browsing.
 - **AC IDs:** none
 - **Owner:** Sammy (proposed)
 - **Size:** M
-- **Demo day:** after demo
+- **Demo day:** must-have
+- **Demo-day slice:** S. Every AC except the per-story Open Graph image, which follows after demo.
 - **Depends on:** 3.7 (content module), 1.8, 1.7
 
 **Acceptance Criteria:**
@@ -1537,7 +1547,7 @@ So that I can finish the story and keep browsing.
 ### Story 6.3: Editors publish stories and roles without a developer
 
 As a XionTechs editor,
-I want to create, edit and publish stories and open roles in both languages,
+I want to create, edit and publish stories, open roles, team and office photos and product clips,
 So that news and hiring stay current without a code change.
 
 - **Design reference:** none (non-visual editor workflow in Sanity Studio); media shown in `mockups/site-v3/news-story.html` photo frame
@@ -1546,7 +1556,8 @@ So that news and hiring stay current without a code change.
 - **AC IDs:** AC-FORM-3
 - **Owner:** Andy (proposed)
 - **Size:** L
-- **Demo day:** after demo
+- **Demo day:** must-have
+- **Demo-day slice:** S. Stories, roles, team and office photos and product clips editable in Sanity Studio with English fields, appearing after revalidation; Vietnamese fields follow after demo.
 - **Depends on:** 1.8 (Sanity setup), 3.7 (content module)
 
 **Acceptance Criteria:**
@@ -1569,9 +1580,9 @@ As Quân, checking who is behind the services,
 I want the company story, values and offices on one page,
 So that I trust the team before I start a project.
 
-- **Design reference:** `mockups/site-v3/about.html` hero, key facts stats, `#story-h`, `#values`, `#lead-h`, `#faq`, `#off-h`, capture (amber)
-- **Spec references:** EXP > Information Architecture (About), Component Patterns (Value grid, Person card, Office card, Placeholder frame); DES > Components (Value grid, Person card, Office card)
-- **Requirements:** FR-28, FR-29, FR-30, FR-46, FR-12 (reuse), FR-6; UX-DR19, UX-DR23, UX-DR27
+- **Design reference:** `mockups/site-v3/about.html` hero, key facts stats, `#story-h`, `#values`, `#faq`, `#off-h`, capture (amber)
+- **Spec references:** EXP > Information Architecture (About), Component Patterns (Value grid, Office card, Placeholder frame); DES > Components (Value grid, Office card)
+- **Requirements:** FR-28, FR-29 (no leadership), FR-30, FR-46, FR-12 (reuse), FR-6; UX-DR19, UX-DR23, UX-DR27
 - **AC IDs:** AC-NAV-5
 - **Owner:** Sammy (proposed)
 - **Size:** M
@@ -1583,7 +1594,7 @@ So that I trust the team before I start a project.
 
 **Given** `/about`
 **When** it renders
-**Then** a navy hero with "Tech made simple. Solutions made powerful." is followed by stats, the story "Two strengths, one team.", values, leadership (only when confirmed), FAQ, offices and a capture band.
+**Then** a navy hero with "Tech made simple. Solutions made powerful." is followed by stats, the story "Two strengths, one team.", values, FAQ, offices and a capture band.
 
 **Given** `#faq`
 **When** a visitor opens it from the footer "FAQ" link
@@ -1598,10 +1609,9 @@ So that I trust the team before I start a project.
 **When** reached from the footer "Core values" link
 **Then** the heading lands fully visible (AC-NAV-5) and the 3 x 2 grid shows Startup Spirit, Client Centricity, Integrity First, Innovation Driven, "Get IT Done" Attitude (featured amber cell) and People-Centered Culture in office-banner wording.
 
-**Given** leadership is not confirmed by the business
-**When** the page renders in production
-**Then** the leadership section is hidden entirely (FR-29) and no names from the old site appear
-**And** once real people are confirmed, the grid shows their photo, name and role; the prototype's placeholder cards (`#lead-h`) show the layout only and are never shipped.
+**Given** `/about`
+**When** it renders
+**Then** there is no leadership section (no photos, names or titles; FR-29, decided 2026-09-29) and no names from the old site appear.
 
 **Given** the navy offices section
 **When** it renders
@@ -1609,45 +1619,88 @@ So that I trust the team before I start a project.
 
 **Given** the About stats band and capture
 **When** built
-**Then** they follow the prototype (fourth figure "4 School products ready to demo", capture "Let's work together." with "Book a demo") pending PRD open question 12.
+**Then** they follow the prototype: fourth figure "4 School products ready to demo", and the amber demo capture "See our apps in action." with "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP." and "Book a demo" (decided 2026-09-29).
 
-### Story 6.5: Careers page and talent network
+### Story 6.5: Careers page and open roles
 
 As Nam, a QA engineer,
-I want to see the culture, what roles are open and a way to hear about new ones,
-So that I can join the talent network in one step.
+I want to see the culture and the roles that are open,
+So that I can pick a role and read it in full.
 
-- **Design reference:** `mockups/site-v3/careers.html` hero, `#cul-h`, `#ben-h`, `#roles-h` (`.roles-empty`), `#talent` capture (navy), `#life`
-- **Spec references:** EXP > Information Architecture (Careers), Component Patterns (Open roles panel, Placeholder frame), State Patterns (Careers), Key Flows (Flow 4)
-- **Requirements:** FR-31, FR-32, FR-35 (placement); UX-DR23
-- **AC IDs:** none
+- **Design reference:** `mockups/site-v3/careers.html` hero, `#cul-h`, `#ben-h`, `#roles` (`.roles`, `.role`), `#life`
+- **Spec references:** EXP > Information Architecture (Careers), Component Patterns (Role card, Open roles panel, Placeholder frame), State Patterns (Careers), Key Flows (Flow 4); DES > Components (Role card)
+- **Requirements:** FR-31, FR-32; UX-DR23
+- **AC IDs:** AC-A11Y-4
 - **Owner:** Sammy (proposed)
 - **Size:** M
 - **Demo day:** must-have
-- **Demo-day slice:** S. Hero, culture, benefits, the "No open roles right now." panel, the talent capture (join) and `#life` placeholder frames; listing roles from Sanity follows after demo.
-- **Depends on:** 2.4 (capture band); 1.8 for roles (not needed for the Demo-day slice)
+- **Demo-day slice:** S. Every AC, with roles, team and office photos read from Sanity (sample roles start with `[Placeholder]`).
+- **Depends on:** 1.8 (Sanity setup)
 
 **Acceptance Criteria:**
 
 **Given** `/careers`
 **When** it renders
-**Then** an amber hero "Build what schools use every day." with "Join our talent network" (to `#talent`) and "Life at XionTechs" (to `#life`) is followed by culture, four benefits (Innovative workspace, Growth opportunities, Engaging work, Meaningful impact), open roles, the talent capture and Life at XionTechs.
+**Then** an amber hero "Build what schools use every day." with "See open roles" (to `#roles`) and "Life at XionTechs" (to `#life`) is followed by culture, four benefits (Innovative workspace, Growth opportunities, Engaging work, Meaningful impact), open roles and Life at XionTechs
+**And** there is no email capture band and no talent-network sign-up.
+
+**Given** open roles exist in Sanity
+**When** Open roles renders
+**Then** each role is a card showing the job title, then team, location and work type, and "View and apply", and the whole card is one link to its job page `/careers/[slug]` with nothing interactive inside (AC-A11Y-4).
 
 **Given** no open roles
 **When** Open roles renders
-**Then** it shows "No open roles right now." with a route to `#talent`, and no invented role appears.
+**Then** it shows "No open roles right now." and no invented role appears.
 
-**Given** open roles exist in the content source
-**When** Open roles renders
-**Then** each role is listed in place of the panel.
-
-**Given** Nam submits a valid email in the navy `#talent` band
-**When** it succeeds
-**Then** "Thanks, you're on the list." replaces the row; an invalid email keeps him in the band with the inline error.
-
-**Given** team photos are not supplied
+**Given** team and office photos in Sanity
 **When** `#life` renders
-**Then** placeholder frames with a `[Placeholder]` caption show.
+**Then** they show in the three frames; missing photos show placeholder frames with a `[Placeholder]` caption.
+
+### Story 6.6: Job page and application with CV upload
+
+As Nam, a QA engineer,
+I want to read a role in full and apply with my CV on the same page,
+So that applying takes one short form.
+
+- **Design reference:** `mockups/site-v3/job.html` hero (breadcrumbs, H1, chips), `.job-body`, `#apply` (`#applyForm`, `#a-cv`, `.form-ok`)
+- **Spec references:** EXP > Information Architecture (Job page), Component Patterns (Job application form), Job application fields, State Patterns (Job page, Job application), Key Flows (Flow 4); DES > Components (File field)
+- **Requirements:** FR-47, FR-38 (server checks), FR-40; NFR-1, NFR-3
+- **AC IDs:** AC-A11Y-5
+- **Owner:** Andy (proposed)
+- **Size:** M
+- **Demo day:** must-have
+- **Depends on:** 1.8 (Sanity setup), 2.3 (server checks), 6.5 (role links); 1.7 for unknown roles
+
+**Acceptance Criteria:**
+
+**Given** `/careers/[slug]` for an open role
+**When** it renders
+**Then** it shows breadcrumbs Home / Careers / job title, the H1 job title, team, location and work type, "About the role", "What you'll do", "What you bring" and "All open roles" back to `/careers#roles`, with the "Apply for this role" form beside the details (below them at 900px and below)
+**And** there is no email capture band.
+
+**Given** the application form
+**When** Nam submits it with a missing name, an invalid email, no CV, a CV that is not PDF or Word, a CV over 5 MB, or a cover note over 2,000 characters
+**Then** each invalid field is marked with its wording ("Please enter your name.", "Please enter a valid email address.", "Please upload your CV as a PDF or Word file, up to 5 MB.", "Please keep your note under 2,000 characters."), errors are announced and linked with `aria-describedby`, and focus moves to the first invalid field (AC-A11Y-5)
+**And** a CV that is too large or the wrong type is flagged as soon as it is chosen.
+
+**Given** a valid application
+**When** it is sending
+**Then** the button is disabled and reads "Sending..."
+**And** on success the form is replaced by "Thank you!" and "We've received your application and will be in touch if it's a match."
+**And** on failure every value, including the chosen CV, is kept and an error with a retry shows above the button.
+
+**Given** a valid application
+**When** the server receives it
+**Then** it repeats the same checks (including file type and size), rejects a filled honeypot and applies the FR-38 rate limit, and stores the application with its CV in Sanity linked to the role
+**And** no personal data appears in any URL.
+
+**Given** the consent line
+**When** the form renders
+**Then** it reads "We only use your details and CV to consider your application." and ends with a "Privacy policy" link.
+
+**Given** an unknown or closed role
+**When** `/careers/[slug]` is requested
+**Then** the Not found page from Story 1.7 renders.
 
 ## Epic 7: SEO, performance and accessibility hardening
 
@@ -1670,7 +1723,7 @@ So that I land where I need to be.
 
 **Acceptance Criteria:**
 
-**Given** each of the 10 page types in each locale
+**Given** each of the 11 page types in each locale
 **When** its HTML is fetched
 **Then** it has a unique title, meta description, canonical URL (except the Not found page), Open Graph tags and favicon, all translated.
 
@@ -1726,14 +1779,15 @@ So that I can use the whole site.
 - **Spec references:** EXP > Accessibility Floor, Acceptance Criteria Index; DES > Colors
 - **Requirements:** NFR-1, NFR-6
 - **AC IDs:** AC-A11Y-1, AC-A11Y-2, AC-A11Y-3, AC-A11Y-4, AC-A11Y-5
-- **Owner:** Sammy (proposed)
+- **Owner:** Andy (proposed)
 - **Size:** M
-- **Demo day:** after demo
+- **Demo day:** must-have
+- **Demo-day slice:** S. axe-core and the keyboard checks on every English page, fixing every serious or critical issue; the Vietnamese run and the 320px VI check follow after demo.
 - **Depends on:** the page stories it checks (Epics 1 to 6)
 
 **Acceptance Criteria:**
 
-**Given** axe-core run locally before release on all 10 page types in EN and VI (there is no CI yet)
+**Given** axe-core run locally before release on all 11 page types in EN and VI (there is no CI yet)
 **When** the run finishes
 **Then** there are zero serious or critical violations, including colour contrast (AC-A11Y-1).
 
@@ -1765,7 +1819,8 @@ So that I do not give up waiting.
 - **AC IDs:** AC-PERF-1
 - **Owner:** Andy (proposed)
 - **Size:** M
-- **Demo day:** after demo
+- **Demo day:** must-have
+- **Demo-day slice:** S. A mobile Lighthouse run on every English page, fixing render-blocking assets (AC-PERF-1) and anything that breaks the LCP, INP or CLS budget.
 - **Depends on:** 3.2 and the page stories it measures (Epics 1 to 6)
 
 **Acceptance Criteria:**
@@ -1822,13 +1877,14 @@ This document was produced in non-interactive mode. At each halt point the defau
 - Step 2, epic approval: kept the seven suggested themes but moved Contact, email capture and privacy to Epic 2 so pages that embed capture bands do not depend on a later epic; built the stats band and 4-D process in Home (first use) and reused them in Services and About.
 - Step 3, story approval and menus: no Advanced Elicitation or Party Mode; continued.
 - Step 4, final validation: FR, AC-ID and page coverage complete; no forward story dependencies; no starter-template story because the project is already scaffolded.
+- Scope update (2026-09-29, Amber Do): English only on Demo day; silk, 4-D process, News, Careers with the new Story 6.6 (job page and CV upload), live forms and the accessibility and performance audits are Demo-day must-haves; newsletter, talent network and leadership removed; no cuts, so the plan is 23.5 developer-days for the lead to resolve.
 - Lead review (2026-09-28): added the Demo-day plan, owners, Demo-day tags and "Depends on" lines; Sanity replaced the file-based fallback and Story 1.8 (Sanity setup) was added; UX-DR27 (FAQ) was added; the other review fixes are applied in the stories above.
 
 ## Open Items Carried From the PRD
 
-- Sanity setup (Story 1.8; CMS chosen, `docs/spikes/cms-spike.md`), form destination (Story 2.3), no-JS form behaviour (Story 7.2), About stats and capture intent (Story 6.4), Demo-day placeholders (Story 7.5).
-- Vietnamese copy: written and checked by Amber Do (to confirm), before launch (FR-4; PRD open question 17).
+- Sanity setup (Story 1.8; CMS chosen, `docs/spikes/cms-spike.md`), contact inbox address (Story 2.3), CV storage privacy in Sanity (Story 6.6; PRD open question 21), Demo-day capacity (PRD open question 22), no-JS form behaviour (Story 7.2), About stats (Story 6.4), Demo-day placeholders (Story 7.5).
+- Vietnamese copy: written and checked by Amber Do (to confirm), after Demo day (FR-4; PRD open question 17).
 - Mail sender service (free tier, chosen in architecture) for Story 2.3; no vendor is decided (PRD open question 18).
 - Shared store for rate limits on serverless (free tier, chosen in architecture) for Story 2.3; no vendor is decided (PRD open question 19).
 - CI pipeline (after demo): until it exists, axe-core, Lighthouse and the launch content check run locally before release (Stories 7.3, 7.4, 7.5; PRD open question 20).
-- Real content still `[Placeholder]`: store links, app URLs, product media, news stories, leadership, team photos, privacy policy text, Dallas street address, contact email, logo SVG.
+- Real content still `[Placeholder]`: store links, app URLs, product clips, news stories, roles, team and office photos, privacy policy text, both street addresses, contact email address, logo SVG.

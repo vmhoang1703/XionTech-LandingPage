@@ -11,7 +11,7 @@ The AI log for this work is in `docs/ai-log.md` (entry "Website UX first draft")
 
 Open `mockups/site-v3/index.html` in a browser (double-click works, no build step).
 It has 7 linked pages (Home, Products, Services, News, About, Careers, Book a demo) plus a sample
-news story, the privacy policy page and a 404 page.
+news story, a sample job page with the application form, the privacy policy page and a 404 page.
 
 - **EN/VI:** the switch in the header.
 - **Screenshots:** click, drag or paste (Ctrl+V) an image onto any device or photo frame.
@@ -53,8 +53,8 @@ The prototype follows the challenge rule: everything not verified is marked `[Pl
 - `grep -rn "\[Placeholder\]" mockups/site-v3` lists every item still to replace or verify.
 - Stats (25+ years, 24/7, 20+ stacks), service and product descriptions and careers text are
   confirmed by the business (2026-09-28). The `[Placeholder]` markers left are sample content.
-- Still missing: Dallas street address, contact email, real leadership team, partner-school
-  logos (with permission), real news stories, product screenshots or clips, app store links,
+- Still missing: both office street addresses, the contact email address, team and office photos,
+  real news stories and roles, product clips, app store links and web addresses,
   and a **privacy policy** (the forms collect personal data; Vietnam PDPD, Decree 13/2023, applies).
 - The prototype is not the production code. The real site is built in Next.js 16 + Tailwind v4
   (see `AGENTS.md`); reuse the decisions, not the HTML.

@@ -70,7 +70,7 @@
   const NEWS=[
     {id:'n1',date:'18 SEP 2026',cat:'product',app:'PXP',t:'[Placeholder] Parents can now pay school fees in PXP',tv:'[Placeholder] Phụ huynh giờ có thể đóng học phí ngay trên PXP',x:'Tuition and service fees, with receipts sent straight to the app.',xv:'Học phí và phí dịch vụ, kèm biên lai gửi ngay trong ứng dụng.'},
     {id:'n2',date:'09 SEP 2026',cat:'team',t:'[Placeholder] A day at our Ho Chi Minh City office',tv:'[Placeholder] Một ngày tại văn phòng TP. Hồ Chí Minh',x:'Meet the engineers, testers and designers behind our products and client projects.',xv:'Gặp gỡ các kỹ sư, kiểm thử viên và nhà thiết kế đứng sau sản phẩm và dự án khách hàng.'},
-    {id:'n3',date:'05 SEP 2026',cat:'schools',t:'[Placeholder] Back-to-school week with our partner schools',tv:'[Placeholder] Tuần đầu năm học cùng các trường đối tác',x:'Our team was on campus helping teachers and parents get started with SXP and PXP.',xv:'Đội ngũ có mặt tại trường để hỗ trợ giáo viên và phụ huynh bắt đầu với SXP và PXP.'},
+    {id:'n3',date:'05 SEP 2026',cat:'schools',t:'[Placeholder] Back-to-school week with PXP',tv:'[Placeholder] Tuần đầu năm học cùng PXP',x:'Our team was on campus helping teachers and parents get started with SXP and PXP.',xv:'Đội ngũ có mặt tại trường để hỗ trợ giáo viên và phụ huynh bắt đầu với SXP và PXP.'},
     {id:'n4',date:'28 AUG 2026',cat:'product',app:'SXP',t:'[Placeholder] SXP adds dashboards for school leaders',tv:'[Placeholder] SXP bổ sung bảng điều khiển cho lãnh đạo nhà trường',x:'A role-based view that shows what needs attention today.',xv:'Giao diện theo vai trò cho thấy việc cần xử lý hôm nay.'},
     {id:'n5',date:'22 AUG 2026',cat:'team',t:'[Placeholder] Inside our pre-term release testing week',tv:'[Placeholder] Bên trong tuần kiểm thử trước năm học',x:'How our QA team checked every critical flow before students came back.',xv:'Cách đội QA kiểm tra mọi luồng quan trọng trước khi học sinh trở lại trường.'},
     {id:'n6',date:'12 AUG 2026',cat:'product',app:'LXP',t:'[Placeholder] LXP shows assignment progress at a glance',tv:'[Placeholder] LXP hiển thị tiến độ bài tập trong nháy mắt',x:'Students see what is due, what is done and what needs another look.',xv:'Học sinh thấy bài nào sắp đến hạn, bài nào đã xong và bài nào cần xem lại.'},
@@ -283,6 +283,24 @@ void main(){
     new IntersectionObserver(es=>{vis=es[0].isIntersecting;kick()}).observe(cv);
     function loop(now){const dt=Math.min((now-prev)/1000,.1);prev=now;last+=dt*.35;draw(last);raf=(!paused&&vis)?requestAnimationFrame(loop):0}
     label();draw(last);kick()});
+
+  /* ---------- job application form (prototype: nothing is sent) ---------- */
+  const af=document.getElementById('applyForm');
+  if(af){const card=af.closest('.form-card'),cv=af.querySelector('#a-cv'),msg=af.querySelector('#a-msg');
+    af.querySelectorAll('.field').forEach((fl,i)=>{const er=fl.querySelector('.err');if(er)er.id='aerr-'+i});
+    const desc=(c,bad)=>{const h=c.closest('.field').querySelector('.help'),er=c.closest('.field').querySelector('.err'),ids=[h&&h.id,bad&&er&&er.id].filter(Boolean).join(' ');if(ids)c.setAttribute('aria-describedby',ids);else c.removeAttribute('aria-describedby')};
+    af.querySelectorAll('input,textarea').forEach(c=>desc(c,false));
+    const mark=(c,bad)=>{c.closest('.field').classList.toggle('bad',bad);desc(c,bad);if(bad)c.setAttribute('aria-invalid','true');else c.removeAttribute('aria-invalid')};
+    const cvOk=()=>{const f=cv.files&&cv.files[0];return !!f&&f.size>0&&/\.(pdf|docx?)$/i.test(f.name)&&f.size<=5*1024*1024};
+    af.addEventListener('input',e=>{const c=e.target;if(c.closest&&c.closest('.field.bad'))mark(c,false)});
+    cv.addEventListener('change',()=>mark(cv,!cvOk()));
+    af.addEventListener('submit',e=>{e.preventDefault();let ok=true;
+      af.querySelectorAll('input[required]:not([type=file])').forEach(i=>{const bad=i.type==='email'?!EMAIL.test(i.value.trim()):!i.value.trim();mark(i,bad);if(bad)ok=false});
+      if(!cvOk()){mark(cv,true);ok=false}
+      if(msg.value.length>2000){mark(msg,true);ok=false}
+      if(!ok){const first=af.querySelector('.field.bad input,.field.bad textarea');first&&first.focus();return}
+      const btn=af.querySelector('button[type=submit]'),lab=btn.querySelector('span');btn.disabled=true;lab.textContent=root.lang==='vi'?'Đang gửi...':'Sending...';
+      setTimeout(()=>{card.classList.add('sent');card.scrollIntoView({block:'center'});const ok=card.querySelector('.form-ok');ok&&ok.focus({preventScroll:true})},900)})}
 
   /* ---------- flowing strand ribbon (canvas 2D) ---------- */
   document.querySelectorAll('canvas.strands').forEach(cv=>{

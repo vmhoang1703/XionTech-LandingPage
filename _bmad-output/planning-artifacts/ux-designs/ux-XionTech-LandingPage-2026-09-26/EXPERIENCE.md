@@ -1,7 +1,7 @@
 ---
 name: XionTechs Website
 status: final
-updated: 2026-09-28
+updated: 2026-09-29
 sources:
   - .memlog.md
   - README.md
@@ -22,22 +22,25 @@ sources:
 - **Rendering:** header, footer and news are rendered on the server for SEO. Each page has its own title, meta description, canonical, Open Graph tags and favicon (Next.js Metadata API). Organization and app JSON-LD on Home.
 - **Performance:** icon sets and third-party scripts never block rendering (use a React icon package or defer the script) (AC-PERF-1).
 
-Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html), [`products.html`](mockups/site-v3/products.html), [`services.html`](mockups/site-v3/services.html), [`news.html`](mockups/site-v3/news.html), [`about.html`](mockups/site-v3/about.html), [`careers.html`](mockups/site-v3/careers.html), [`demo.html`](mockups/site-v3/demo.html). They are a design reference, not production code: rebuild in Next.js, do not copy the HTML. **These spines win on any conflict with the mockups.** Prototype-only tooling (screenshot slots that accept click, drop or paste and save in the browser) is not part of the product.
+Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html), [`products.html`](mockups/site-v3/products.html), [`services.html`](mockups/site-v3/services.html), [`news.html`](mockups/site-v3/news.html), [`about.html`](mockups/site-v3/about.html), [`careers.html`](mockups/site-v3/careers.html), [`job.html`](mockups/site-v3/job.html), [`demo.html`](mockups/site-v3/demo.html). They are a design reference, not production code: rebuild in Next.js, do not copy the HTML. **These spines win on any conflict with the mockups.** Prototype-only tooling (screenshot slots that accept click, drop or paste and save in the browser) is not part of the product.
 
 ## Information Architecture
 
 | Page | URL | Purpose | Sections in order |
 |---|---|---|---|
 | Home | `/` | Show what the products do in the first 5 seconds; open both front doors | Dark hero (silk background with a motion toggle, headline, one primary CTA "Explore our products", tablet + phone devices, and the stats "Experience you can count on"), then light sections: two front doors (Products for schools, Outsourcing services), four-app bento, eight services, 4-D process, latest news (3), demo capture |
-| Products | `/products` | Let school buyers explore every app and book a demo | Hero (devices, Book a demo, Product updates), sticky sub-nav, `#pxp` (story phone with 5 tabs, features, store links), `#lxp`, `#sxp`, `#iot`, `#updates` (3 product stories), demo capture |
+| Products | `/products` | Let school buyers explore every app and book a demo | Hero (devices, Book a demo, Product updates), sticky sub-nav, `#pxp` (story phone with 5 tabs, features, store links that open a new tab), `#lxp`, `#sxp`, `#iot`, `#updates` (3 product stories), demo capture |
 | Services | `/services` | Let companies judge the delivery team and start a project | Hero (Start a project, See our 4-D process, office clocks), stats, 8 services (each with an anchor), three ways to work with us, `#process` (4-D), industries + time zones, project capture |
-| News | `/news` | Dated short stories about products, schools, team and company | Hero, category filters + story grid, subscribe capture |
-| About | `/about` | Who XionTechs is | Hero, stats, story, `#values` (6 core values), leadership, `#faq` (9 questions), offices, capture |
-| Careers | `/careers` | Attract engineers, testers and designers | Hero (Join our talent network, Life at XionTechs), culture, benefits, open roles, `#talent` capture, `#life` photos |
+| News | `/news` | Dated short stories about products, schools, team and company | Hero, category filters + story grid, demo capture |
+| About | `/about` | Who XionTechs is | Hero, stats, story, `#values` (6 core values), `#faq` (9 questions), offices, demo capture "See our apps in action." (no leadership section) |
+| Careers | `/careers` | Attract engineers, testers and designers | Hero (See open roles, Life at XionTechs), culture, benefits, `#roles` (open roles list), `#life` photos |
+| Job page | `/careers/[slug]` | Read one role and apply | Breadcrumbs (Home / Careers / job title), H1 job title, team, location and work type; "About the role", "What you'll do", "What you bring"; "Apply for this role" form with CV upload; "All open roles" link back. From Sanity. |
 | Book a demo (Contact) | `/demo` | One contact form for both intents | Hero with reassurance list and offices; form card with `#form` (Product demo tab) and `#project` (Outsourcing project tab) |
 | News story | `/news/[slug]` | One dated story | Breadcrumbs (Home / News / story), H1, date + category tag, photo, body, related product link, back to News. Own title, meta and Open Graph image. Depends on the CMS. |
 | Privacy policy | `/privacy` | How personal data from the forms is used (PDPD) | Linked from every consent line and the footer. Content is an open question. |
 | Not found | any unknown path | Recover from a broken link | Short message, links to Home, Products, Services and News, in the current language. |
+
+**Demo day is English only** (decided 2026-09-29): no EN/VI switch and no `/vi/` routes until after Demo day. The rules below apply from then on.
 
 **Locale routing.** Paths above are shown without the locale prefix; every page exists under `/en/` and `/vi/`. A bare `/` redirects to the saved language, else to `/vi/` if the browser prefers Vietnamese, else to `/en/`. A locale in the URL always wins over the saved choice, so a shared link opens in the sender's language. `hreflang` links pair each page, with `x-default` pointing to `/en/`.
 
@@ -67,8 +70,8 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 | Product updates | `/products#updates`, News "Product" filter | Flow 1 |
 | News with category filters | `/news` | Flow 4 |
 | Company facts, values, offices | `/about`, footer | Flow 2 |
-| Job seeker finds roles | `/careers`, `#talent` | Flow 4 |
-| Email capture on every page | Capture band on every page except `/demo` (which is the form), Not found, Privacy policy and News story, which have no capture band | Flows 1 to 4 |
+| Job seeker finds and applies for a role | `/careers#roles`, `/careers/[slug]` | Flow 4 |
+| Email capture on every page | Capture band on every page except `/demo` (which is the form), Not found, Privacy policy, News story, Careers and job pages (`/careers/[slug]`), which have no capture band | Flows 1 to 4 |
 | Read in Vietnamese | EN/VI switch in the header | Flows 1, 3 |
 
 ## Voice and Tone
@@ -91,11 +94,10 @@ Microcopy rules. Brand voice lives in `DESIGN.md` Brand & Style.
 |---|---|---|---|
 | Product demo | Book a demo | Đặt lịch demo | `/demo#form` (Product demo tab) |
 | Outsourcing project | Start a project | Bắt đầu dự án | `/demo#project` (Outsourcing project tab) |
-| News by email | Subscribe | Đăng ký | Inline success |
-| Talent network | Join | Tham gia | Inline success |
 | Send the contact form | Send request | Gửi yêu cầu | Form success state |
+| Apply for a role | Send application | Gửi hồ sơ | Form success state |
 
-Secondary links keep their own labels ("Explore our products", "Explore our services", "See our 4-D process", "Product updates", "Join our talent network", "Life at XionTechs", "Read story", "See all news", "All products", "See the process"). Never reuse "Book a demo" for a project intent or "Start a project" for a demo.
+Secondary links keep their own labels ("Explore our products", "Explore our services", "See our 4-D process", "Product updates", "See open roles", "View and apply", "All open roles", "Life at XionTechs", "Read story", "See all news", "All products", "See the process"). Never reuse "Book a demo" for a project intent or "Start a project" for a demo.
 
 **Wording to reuse:**
 
@@ -105,13 +107,12 @@ Secondary links keep their own labels ("Explore our products", "Explore our serv
 | Missing name / organisation | "Please enter your name." / "Please enter your organisation." |
 | Consent line under demo capture | "We only use your email to arrange your demo." |
 | Consent line under project and contact forms | "We only use your details to respond to this request." |
-| Consent line under subscribe | "We only use your email to send XionTechs news. You can unsubscribe at any time." |
-| Consent line under join | "We only use your email to contact you about matching roles." |
+| Consent line under the job application | "We only use your details and CV to consider your application." |
 | Privacy link | Every consent line ends with a "Privacy policy" link. |
-| Subscribe success | "Thanks, you're subscribed." |
-| Talent network success | "Thanks, you're on the list." |
 | Contact form success | "Thank you!" + "We will be in touch soon." |
-| No open roles | "No open roles right now." + route to the talent network |
+| Job application success | "Thank you!" + "We've received your application and will be in touch if it's a match." |
+| Wrong or missing CV | "Please upload your CV as a PDF or Word file, up to 5 MB." |
+| No open roles | "No open roles right now." |
 | Role field help | "For example: Principal, Head of IT" |
 
 ## Component Patterns
@@ -138,19 +139,21 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | News card | "Read story" opens the story detail page (`/news/[slug]`; the prototype has one sample, `news-story.html`). Category tag shows the app for product stories. |
 | Category tag | Static text. Product stories append the app name. |
 | Filter chips | Toggle buttons with `aria-pressed`; exactly one active at a time; pressing the active chip does nothing; "All" resets. Filtering is instant, with no page reload. The result count is announced ("Showing 3 stories"). |
-| Email capture | Validates on submit. Invalid: inline error, `aria-invalid="true"`, error linked with `aria-describedby`, focus returns to the field; the error clears as the user types. Valid demo capture: goes to `/demo#form` with the email prefilled. The email travels through session storage or a server-side session, never in the URL (no query string, no hash). Valid project capture: goes to `/demo#project`, Outsourcing project tab selected, scrolled to the form (AC-FORM-2). Valid subscribe or join: the row is replaced by the success message in a `role="status"` region. |
+| Email capture | Validates on submit. Invalid: inline error, `aria-invalid="true"`, error linked with `aria-describedby`, focus returns to the field; the error clears as the user types. Valid demo capture: goes to `/demo#form` with the email prefilled. The email travels through session storage or a server-side session, never in the URL (no query string, no hash). Valid project capture: goes to `/demo#project`, Outsourcing project tab selected, scrolled to the form (AC-FORM-2). There are only these two kinds; no subscribe or talent-network capture (decided 2026-09-29). |
 | Contact form | Two tabs: Product demo and Outsourcing project. The URL hash picks the tab on load (`#project` opens Outsourcing; any other hash opens Product demo). Fields in the hidden tab are not validated, cannot take focus and are not submitted; values typed there are kept if the user switches back. Fields and rules are in the Contact form fields table below. Submit validates all visible required fields, marks each invalid one and moves focus to the first. Success replaces the form with the thank-you panel. A hidden honeypot field and a server-side rate limit stop spam. |
 | Device frame | Holds real product screens or short product clips. Tilts slightly with the pointer on hover-capable devices only. Frames float gently. |
 | Media frame | Shows the real asset. If an asset is missing in production, the frame shows its empty grid, never a broken image. Where a CMS allows uploads, an upload or paste only changes the item the user selected, never a previously hovered one (AC-FORM-3). |
-| Browser frame | Static chrome around a web app media frame. The URL pill shows the app's real address once confirmed. |
+| Browser frame | Static chrome around a web app media frame. The URL pill is a link that opens the app in a new tab (accessible name ends "(opens in a new tab)"); it shows the real address once confirmed and a `[Placeholder]` link until then. |
+| Store buttons | App Store and Google Play buttons under PXP, always shown. They open a new tab (accessible name ends "(opens in a new tab)"); `[Placeholder]` links until real ones exist. |
 | PXP story phone + phone tabs | Five tabs (Attendance, Grades, Messages, Payments, Events). Selecting a tab crossfades the matching screen in. Inactive screens are hidden from focus and assistive tech (AC-A11Y-3). |
 | Office card | Shows the office's live local time, updated every 30 seconds, plus address and a `tel:` link. Times use IANA zones (`Asia/Ho_Chi_Minh`, `America/Chicago`) so daylight saving is right. |
 | Clock strip | Live local time for Ho Chi Minh City and Dallas. |
 | Breadcrumbs | Home link + current page name. Inner pages only. |
 | Highlight mark | Draws in once when the headline appears. Decorative. |
 | Placeholder frame | Stands in for real photos or illustrations until supplied. Never shipped at launch. |
-| Person card | Photo, name and role. Leadership grid shows only once real people are confirmed. |
-| Open roles panel | Shown when there are no open roles; routes to `#talent`. When roles exist, each role is listed instead. |
+| Role card | One stretched link per open role: job title, then team, location and work type, and "View and apply". Opens the job page. Roles come from Sanity. |
+| Open roles panel | Shown only when there are no open roles: "No open roles right now." |
+| Job application form | On the job page, beside the role details (stacks below them at 900px and below). Fields and rules are in the Job application fields table below. Submit marks every invalid field and focuses the first; errors are announced and linked (AC-A11Y-5). Stored in Sanity; honeypot and rate limit as for the contact form. |
 | Site footer | Same on every page. The privacy policy link must point at a real policy before launch. |
 | Toast | Short status message, bottom centre, `role="status"`, gone after about 2.6s. |
 | Motion toggle | Discreet icon button at the top right of the Home hero; the label is always in its accessible name and slides out on hover or keyboard focus. Label and icon switch between "Pause motion" and "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"); the changing name carries the state, so there is no `aria-pressed`. Hidden without JavaScript or WebGL, or when the WebGL context is lost. |
@@ -173,7 +176,17 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Start timing | Outsourcing project | No | As soon as possible; In 1 to 3 months; Just exploring. |
 | Message | Both | No | Up to 2,000 characters. "Please keep your message under 2,000 characters." |
 
-Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}` on navy. Where submissions go (inbox or CRM) is an open question.
+**Job application fields**
+
+| Field | Required | Rules and error wording |
+|---|---|---|
+| Full name | Yes | "Please enter your name." |
+| Email | Yes | Valid format. "Please enter a valid email address." |
+| Phone | No | Telephone keypad on phones. |
+| CV | Yes | PDF or Word (.pdf, .doc, .docx), up to 5 MB, checked on selection and on submit. "Please upload your CV as a PDF or Word file, up to 5 MB." |
+| Cover note | No | Up to 2,000 characters. "Please keep your note under 2,000 characters." |
+
+Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}` on navy. Demo and project Submissions go to the company contact inbox (address to be supplied); job applications are stored in Sanity.
 
 ## State Patterns
 
@@ -189,9 +202,11 @@ Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}`
 | Products `#updates`, Home news | No product stories | Hide the grid and keep the "See all news" link. |
 | News | Filter with no matches | Empty message in the grid ("No stories in this category yet.") with a "Show all" button that resets to All. |
 | News | Story detail | Detail page per story. Depends on the CMS choice. |
-| Careers | No open roles | Open roles panel + talent network route. |
-| Careers | Roles open | List of roles replaces the panel. |
-| Email capture | Idle / error / sending / send failure / success / redirect | Error inline and announced; while sending the button is disabled and reads "Sending..." ("Đang gửi..."); a send failure keeps the email and shows an inline error with a retry; subscribe and join show success in place; demo and project redirect to `/demo` with the email prefilled (no prefill if session storage is unavailable). |
+| Careers | No open roles | Open roles panel. |
+| Careers | Roles open | Role cards replace the panel. |
+| Job page | Unknown or closed role | The Not found page. |
+| Job application | Idle, error, sending, success, send failure | Same as the contact form: errors per field with focus on the first; "Sending..." while sending; success replaces the form with the thank-you panel; a failure keeps every value, including the chosen CV, and offers a retry. |
+| Email capture | Idle / error / sending / send failure / success / redirect | Error inline and announced; while sending the button is disabled and reads "Sending..." ("Đang gửi..."); a send failure keeps the email and shows an inline error with a retry; demo and project redirect to `/demo` with the email prefilled (no prefill if session storage is unavailable). |
 | Contact form | Idle, error, sending, success, send failure | Error per field with focus on the first. While sending, the submit button is disabled and reads "Sending..." ("Đang gửi..."). Success shows the thank-you panel. If sending fails, keep every entered value and show an error above the button with a way to retry. |
 | Contact form | Arrived from a capture | Email prefilled; tab set by the hash. |
 | Contact form | Date in the past | Blocked; the date picker starts at today. |
@@ -266,7 +281,7 @@ Breakpoints from the prototype (max-width):
 |---|---|
 | Above 1080px | Full header menu with hover mega menus. 4-D flow in one row with track and end nodes. Stats in 5 columns. Services in 4 columns. |
 | 1080px and below | Menu moves behind the menu button; mega content expands inline in the mobile menu. 4-D steps in 2 columns without track or end nodes. Stats in 3 columns. Services in 2 columns. |
-| 900px and below | Home hero, splits, capture bands, front doors and offices stack to one column; devices max 560px wide. Bento, values, news and leadership in 2 columns; the News feature card spans full width. Footer in 2 columns. |
+| 900px and below | Home hero, splits, capture bands, front doors and offices stack to one column; devices max 560px wide. Bento, values and news in 2 columns; the job page form stacks below the role details; the News feature card spans full width. Footer in 2 columns. |
 | 640px and below | Gutters 16px. Section padding shrinks. Bento, values, news, services, 4-D steps, form grid and feature lists in 1 column. Stats in 2 columns. Footer in 1 column. Capture row stacks the field above the button. The highlight mark may wrap. |
 
 **Header at every width** (fixes the prototype, which hid both on phones): the EN/VI switch stays in the header at every width (AC-NAV-1). Book a demo sits next to the EN/VI switch above 640px; at 640px and below it is the first item of the mobile menu (AC-NAV-2).
@@ -329,32 +344,33 @@ Failure: he submits without his company name; the field is marked, the error "Pl
 6. She reads the four features: know they arrived, see progress early, talk to teachers, pay fees in a tap.
 7. **Climax:** she taps the App Store or Google Play button and lands on the PXP store page, ready to install.
 
-Failure: until the real store links are confirmed, the buttons are `[Placeholder]` and this flow cannot launch (see Open Questions).
+Failure: until the real store links exist, the buttons open a `[Placeholder]` link in a new tab and this flow cannot reach a store (see Open Questions).
 
-### Flow 4: Job seeker joins the talent network (Lê Hoàng Nam, QA engineer, weekend browsing)
+### Flow 4: Job seeker applies for a role (Lê Hoàng Nam, QA engineer, weekend browsing)
 
 1. Nam reads a News story from the team category about release testing and follows Careers from the header.
-2. On Careers he reads the culture section, the core values and why people grow here.
-3. Open roles shows "No open roles right now." with a route to the talent network.
-4. He looks at the Life at XionTechs photos.
-5. He enters his email in the talent network band and presses "Join".
-6. **Climax:** the band shows "Thanks, you're on the list." in place, and he knows he will hear first when a matching role opens.
+2. On Careers he reads the culture section and why people grow here, and looks at the Life at XionTechs photos.
+3. In Open roles he picks a QA role and presses "View and apply".
+4. The job page shows the role: about the role, what he'll do, what he brings.
+5. He fills in his name and email, uploads his CV (PDF) and adds a short cover note.
+6. **Climax:** he presses "Send application" and the form is replaced by "Thank you!" and "We've received your application and will be in touch if it's a match."
 
-Failure: an invalid email shows the inline error and keeps him in the band.
+Failure: a CV over 5 MB or in another format shows "Please upload your CV as a PDF or Word file, up to 5 MB." and keeps everything he typed.
 
 ## Open Questions
 
-- **Dallas address:** only "Texas, United States" is known; a street address is needed.
-- **Contact email:** no public contact email is defined yet.
-- **Leadership:** real names, roles and photos for the leadership grid.
-- **Privacy policy:** needed before any form goes live (Vietnam PDPD, Decree 13/2023).
-- **Store links:** real App Store and Google Play links for PXP.
-- **CMS choice:** resolved 2026-09-28: Sanity (`docs/spikes/cms-spike.md`). It drives news story pages, filter empty states, product updates, roles and media uploads.
+- **Office addresses:** full street addresses for Dallas and Ho Chi Minh City, to be supplied by Amber Do.
+- **Contact email:** the company email (exact address to be supplied); demo and project Submissions go to it.
+- **Leadership:** resolved 2026-09-29. No leadership section.
+- **Privacy policy:** a placeholder document on Demo day; real text needed before public launch (Vietnam PDPD, Decree 13/2023).
+- **Store links:** none yet; the buttons open `[Placeholder]` links in a new tab.
+- **CV storage:** whether Sanity is acceptable for CVs, since uploaded files may be reachable by anyone with the link (owner: Hoang Vu).
+- **CMS choice:** resolved 2026-09-28: Sanity (`docs/spikes/cms-spike.md`). It drives news stories, product updates, roles and job pages, job applications, team and office photos and product clips.
 - **Real app URLs:** the LXP, SXP and IoT web addresses shown in browser frames.
-- **Content confirmed by the business (2026-09-28):** stats (including 24/7 global coverage), product and service descriptions, feature lists, careers benefits and open-roles text. **Still `[Placeholder]`:** news stories, leadership, team photos, partner-school logos (with permission), product screenshots or clips, store links, app web addresses, the privacy policy and the news email frequency.
-- **Analytics and cookies:** if analytics or non-essential cookies are added, a consent banner with decline as the default is required (PDPD). Also decide how long captured emails are kept.
-- **Form destination:** which inbox or CRM receives demo, project, subscribe and join submissions.
+- **Content confirmed by the business (2026-09-28):** stats (including 24/7 global coverage), product and service descriptions, feature lists, careers benefits and open-roles text. **Still `[Placeholder]`:** news story titles and bodies, roles, team and office photos, product clips, store links, app web addresses and the privacy policy. No partner-school logos exist yet.
+- **Analytics and cookies:** if analytics or non-essential cookies are added, a consent banner with decline as the default is required (PDPD). Also decide how long demo and project Submissions and job applications (CVs) are kept.
+- **Form destination:** resolved 2026-09-29. Demo and project to the contact inbox; job applications to Sanity. No newsletter or talent network.
 - **Behaviour without JavaScript** for the capture redirect and the two-tab contact form: depends on how the Next.js build handles form submission (deferred from review).
-- **About page capture:** its heading reads "Let's work together." but the button is "Book a demo" and routes to the Product demo tab. Confirm the intent.
-- **Logo:** an SVG master is needed for retina and navy surfaces.
-- **Dark mode:** dropped in favour of the colour rhythm; the user may reverse this.
+- **About page capture:** resolved 2026-09-29. "See our apps in action." with "Book a demo".
+- **Logo:** an SVG master will be supplied later.
+- **Dark mode:** resolved 2026-09-29. No dark mode and no theme switch.

@@ -2,7 +2,7 @@
 title: XionTechs Website PRD
 status: draft
 created: 2026-09-28
-updated: 2026-09-28
+updated: 2026-09-29
 owner: Amber Do
 sources:
   - AGENTS.md
@@ -24,7 +24,7 @@ This PRD is for the XionTechs website team (lead Hoang Vu, UX/BA owner Amber Do,
 
 - **UX source of truth:** `EXPERIENCE.md` (behaviour) and `DESIGN.md` (look), both in `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/`. They win over the prototype on any conflict. Each FR names the section it comes from as `EXP > Section` or `DES > Section`.
 - **Acceptance criteria:** the 16 criteria from `code-review-2026-09-28.md` (AC-NAV-1 to AC-NAV-5, AC-A11Y-1 to AC-A11Y-5, AC-FORM-1 to AC-FORM-3, AC-UI-1, AC-UI-2, AC-PERF-1) are cited by ID and are not restated in full.
-- **Prototype:** `mockups/site-v3/` (10 pages) shows every current UI decision. It is a design reference, not production code.
+- **Prototype:** `mockups/site-v3/` (11 pages) shows every current UI decision. It is a design reference, not production code.
 - **Conventions:** paths in this document are relative to the repo root. Terms in the Glossary (section 3) are used exactly. Inferences are tagged `[ASSUMPTION]` inline and listed in section 13. Content that the business has not verified appears on the site as `[Placeholder]`.
 
 ## 1. Vision
@@ -46,8 +46,8 @@ The site is built for the XionTech internal AI build challenge. Demo day is **20
 - **School buyer (principal, head of IT):** understand what each app does for my school, check it reads well in Vietnamese for my staff, and book a demo that uses my school's scenarios.
 - **Company buyer (CTO, product lead):** judge whether this team can deliver, see how they work and whether our time zones overlap, then start a conversation without a long form.
 - **Parent:** confirm my child's school app is real and install it from the right store.
-- **Job seeker (engineer, tester, designer):** understand the culture and benefits, see open roles, and be told when a matching role opens.
-- **XionTechs team (internal):** publish news and roles without a developer, and receive every form submission. `[ASSUMPTION]` Editors are non-developers, per the decision to keep a CMS in scope (`docs/ai-log.md`, 2026-09-26 Tech stack).
+- **Job seeker (engineer, tester, designer):** understand the culture and benefits, see open roles, read a role in full and apply with a CV.
+- **XionTechs team (internal):** publish news, roles, team photos and product clips in Sanity without a developer, and receive every form submission. `[ASSUMPTION]` Editors are non-developers, per the decision to keep a CMS in scope (`docs/ai-log.md`, 2026-09-26 Tech stack).
 
 ### 2.2 Non-Users (v1)
 
@@ -77,15 +77,15 @@ These mirror the four Key Flows in `EXPERIENCE.md` with the same protagonists.
   - **Persona + context:** Phạm Thu Hà, mother of a primary pupil, on her phone in the evening; her child's school will use PXP.
   - **Entry state:** lands on Home from search on a phone.
   - **Path:** switches to VI in the header (visible on her phone); opens the menu, expands Products, taps PXP; lands at the PXP section with the heading visible; taps the phone tabs; reads the four features.
-  - **Climax:** taps App Store or Google Play and lands on the PXP store page.
-  - **Edge case:** until real store links are confirmed the buttons are `[Placeholder]` and this journey cannot launch.
+  - **Climax:** taps App Store or Google Play and the store page opens in a new tab.
+  - **Edge case:** until real store links exist the buttons stay visible with `[Placeholder]` links that open a new tab; this journey cannot reach a store before then.
 
-- **UJ-4. Nam, a QA engineer, joins the talent network.**
+- **UJ-4. Nam, a QA engineer, applies for a role.**
   - **Persona + context:** Lê Hoàng Nam, QA engineer, browsing at the weekend.
   - **Entry state:** reads a Team news story, then follows Careers from the header.
-  - **Path:** reads culture, values and why people grow here; sees "No open roles right now." with a route to the talent network; views Life at XionTechs photos; enters his email and presses "Join".
-  - **Climax:** the band shows "Thanks, you're on the list." in place.
-  - **Edge case:** an invalid email shows the inline error and keeps him in the band.
+  - **Path:** reads culture and why people grow here; views Life at XionTechs photos; opens a role from Open roles; reads the job page (about the role, what you'll do, what you bring); fills in his name and email, uploads his CV and presses "Send application".
+  - **Climax:** the form is replaced by "Thank you!" and "We've received your application and will be in touch if it's a match."
+  - **Edge case:** a CV that is not PDF or Word, or is over 5 MB, shows "Please upload your CV as a PDF or Word file, up to 5 MB." and keeps everything he typed.
 
 ## 3. Glossary
 
@@ -94,12 +94,12 @@ These mirror the four Key Flows in `EXPERIENCE.md` with the same protagonists.
 - **Service:** one of the eight outsourcing services: Product Engineering, AI-Driven Analytics, Product Co-Creation, Staffing Service, Custom App Development, Low-code Solutions, AI-Powered Solutions, Cloud Computing. Each has an anchor on Services.
 - **4-D process:** the delivery process Discovery, Design, Development, Deployment, shown from "Your request" to "Launch", with what the client receives at each step.
 - **Stats band:** the five figures "Experience you can count on": 25+ years of leadership experience, 24/7 global coverage, 20+ technology stacks, 8 service offerings, 2 offices. Confirmed by the business on 2026-09-28.
-- **Email capture:** an inline band with one email field and one button. Four kinds: **demo capture** ("Book a demo"), **project capture** ("Start a project"), **subscribe capture** ("Subscribe", News), **talent capture** ("Join", Careers).
+- **Email capture:** an inline band with one email field and one button. Two kinds: **demo capture** ("Book a demo") and **project capture** ("Start a project"). There is no newsletter or talent-network capture (decided 2026-09-29).
 - **Contact form:** the form on the Book a demo page with two tabs: **Product demo** (`#form`) and **Outsourcing project** (`#project`).
-- **Submission:** one successful send of a contact form or email capture.
+- **Submission:** one successful send of the contact form (demo or project) or a job application.
+- **Job application:** name, email, optional phone, a CV file and an optional cover note sent from a job page.
 - **Consent line:** the short text under every form that says how the data is used and ends with a Privacy policy link.
 - **Story:** one dated News item with a category (Product, Company, Schools, Team). Product stories name the app. **Product update** is a Story in the Product category.
-- **Talent network:** the list of job seekers who joined through the talent capture.
 - **Placeholder:** content not verified by the business, prefixed `[Placeholder]` in both languages. A launch blocker.
 - **Locale:** `en` or `vi`, carried in the URL prefix `/en/` or `/vi/`.
 - **Motion toggle:** the discreet pause and play icon button in the Home hero that stops and restarts the silk animation.
@@ -145,6 +145,9 @@ A visitor can reach "Book a demo" at every width.
 Traces: EXP > Responsive & Platform (Header at every width); AC-NAV-2.
 
 #### FR-4: Language switch
+
+**Demo day:** the Demo-day build is English only, with no switch; FR-4 and FR-5 land after Demo day (decided 2026-09-29).
+
 A visitor can switch between English and Vietnamese on any page.
 
 **Consequences (testable):**
@@ -263,7 +266,7 @@ A visitor can tap five tabs (Attendance, Grades, Messages, Payments, Events) and
 
 **Consequences (testable):**
 - Tabs follow the ARIA tab pattern; inactive screens cannot take focus and are hidden from assistive tech (AC-A11Y-3).
-- The four PXP features and App Store and Google Play buttons are shown; store buttons stay `[Placeholder]` until real links are confirmed.
+- The four PXP features and App Store and Google Play buttons are shown. Until real links exist, the buttons stay visible with `[Placeholder]` links; store links open in a new tab and say so to screen readers ("opens in a new tab").
 
 Traces: EXP > Component Patterns (PXP story phone), Key Flows (Flow 3); AC-A11Y-3.
 
@@ -271,7 +274,7 @@ Traces: EXP > Component Patterns (PXP story phone), Key Flows (Flow 3); AC-A11Y-
 A visitor sees each web app in a browser frame with its audience, four features and its web address.
 
 **Consequences (testable):**
-- The URL pill shows the real app address once confirmed and `[Placeholder]` until then.
+- The URL pill is a link that opens the app in a new tab (announced "opens in a new tab"); it shows the real address once confirmed and a `[Placeholder]` address and link until then.
 - A missing media asset shows an empty media frame, never a broken image.
 
 Traces: EXP > Component Patterns (Browser frame, Media frame), State Patterns (Media missing).
@@ -364,17 +367,17 @@ Traces: `AGENTS.md` (Tech stack, CMS); `docs/ai-log.md` (2026-09-26 Tech stack);
 
 ### 4.6 About
 
-**Description:** Who XionTechs is: story, stats, six core values, leadership and two offices. Realizes UJ-2.
+**Description:** Who XionTechs is: story, stats, six core values, FAQ, two offices and a Book a demo band. Realizes UJ-2.
 
 #### FR-28: Story, stats and core values
 A visitor sees the company story, the stats band and the six core values at `#values` (Startup Spirit, Client Centricity, Integrity First, Innovation Driven, "Get IT Done" Attitude, People-Centered Culture) in the office-banner wording.
 
 Traces: EXP > Information Architecture (About); `.memlog.md` (offices and core values decision).
 
-#### FR-29: Leadership grid only with real people
-A visitor sees the leadership grid (photo, name, role) only once real people are confirmed by the business. No names from the old site are reused.
+#### FR-29: No leadership section (removed 2026-09-29)
+The About page has no leadership section: no photos, names or titles. No names from the old site appear anywhere. The ID is kept so references stay stable.
 
-Traces: EXP > Component Patterns (Person card), Inspiration & Anti-patterns.
+Traces: `.memlog.md` (2026-09-29 scope decisions).
 
 #### FR-30: Office cards
 A visitor sees both offices with live local time, address and a `tel:` link.
@@ -393,31 +396,45 @@ Traces: EXP > Information Architecture (About), Component Patterns (FAQ); DES > 
 
 ### 4.7 Careers
 
-**Description:** Attract engineers, testers and designers and grow the talent network. Realizes UJ-4.
+**Description:** Attract engineers, testers and designers and take applications for open roles. Realizes UJ-4.
 
 #### FR-31: Culture, benefits and Life at XionTechs
 A visitor sees the culture section, four benefits ("Why you'll grow here") and Life at XionTechs photos at `#life`.
 
 **Consequences (testable):**
-- Photos are real team photos; until supplied, placeholder frames are shown and never shipped at public launch.
+- Photos are real team and office photos uploaded in Sanity; until supplied, placeholder frames are shown and never shipped at public launch.
 
 Traces: EXP > Information Architecture (Careers), Component Patterns (Placeholder frame).
 
 #### FR-32: Open roles
-A visitor sees open roles when there are any, or "No open roles right now." with a route to `#talent` when there are none.
+A visitor sees open roles as a list (job title, team, location, work type), each opening its job page (FR-47). With no open roles, "No open roles right now." shows instead.
 
 **Consequences (testable):**
 - An editor can add or close a role in Sanity Studio without a code change. `[ASSUMPTION]` Same CMS dependency as FR-27.
-- No invented job openings are shown.
+- No invented job openings are shown at public launch; the Demo-day build may show sample roles whose titles start with `[Placeholder]`.
+- The hero button "See open roles" goes to `#roles`.
+
+#### FR-47: Job page and application with CV upload
+A visitor opens a role and sees its job page (`/careers/[slug]`): breadcrumbs Home / Careers / job title, H1 job title, team, location and work type, "About the role", "What you'll do", "What you bring", and an "Apply for this role" form beside it.
+
+**Consequences (testable):**
+- Fields: Full name (required), Email (required, valid format), Phone (optional), CV (required; PDF or Word, up to 5 MB), Cover note (optional, at most 2,000 characters).
+- A missing or wrong CV shows "Please upload your CV as a PDF or Word file, up to 5 MB."; submit marks every invalid field and focuses the first; errors are announced and linked (AC-A11Y-5).
+- While sending, the button is disabled and reads "Sending..."; success replaces the form with "Thank you!" and "We've received your application and will be in touch if it's a match."; a send failure keeps every value and offers a retry.
+- The consent line reads "We only use your details and CV to consider your application." and ends with a "Privacy policy" link.
+- The application and CV are stored in Sanity (decided 2026-09-29), checked on the server with the same rules, honeypot and rate limit as FR-38. Whether uploaded CVs can be kept private is open question 21.
+- An unknown or closed role renders the Not found page. The job page has no email capture band.
+
+Traces: prototype `mockups/site-v3/job.html`; `.memlog.md` (2026-09-29 scope decisions).
 
 Traces: EXP > Component Patterns (Open roles panel), State Patterns (Careers); `AGENTS.md` (Hard rules).
 
 ### 4.8 Contact form and email capture
 
-**Description:** One contact page serves both intents; every other page has an inline email capture band. Realizes UJ-1, UJ-2, UJ-4.
+**Description:** One contact page serves both intents; most other pages end with an inline email capture band (demo or project). Realizes UJ-1, UJ-2.
 
 #### FR-33: Email capture on every page
-A visitor can leave an email in a capture band on every page except these, which have no capture band: Book a demo (`/demo`, which is the form), Not found, Privacy policy and News story (`/news/[slug]`).
+A visitor can leave an email in a capture band on every page except these, which have no capture band: Book a demo (`/demo`, which is the form), Not found, Privacy policy, News story (`/news/[slug]`) and job pages (`/careers/[slug]`), plus Careers itself, which ends on its photos. News ends with a demo capture.
 
 **Consequences (testable):**
 - Validates on submit; an invalid email shows "Please enter a valid email address.", sets `aria-invalid="true"`, links the error with `aria-describedby`, returns focus to the field, and clears as the user types (AC-A11Y-5).
@@ -437,10 +454,10 @@ A visitor who submits a valid demo capture lands on `/demo#form` (Product demo t
 
 Traces: EXP > Component Patterns (Email capture); AC-FORM-2.
 
-#### FR-35: Subscribe and join in place
-A visitor who submits a valid subscribe or talent capture sees "Thanks, you're subscribed." or "Thanks, you're on the list." replace the row in a `role="status"` region.
+#### FR-35: No subscribe or talent-network capture (removed 2026-09-29)
+There is no newsletter sign-up and no talent-network email capture. Job seekers apply from a job page (FR-47). The ID is kept so references stay stable.
 
-Traces: EXP > Component Patterns (Email capture), Voice and Tone.
+Traces: `.memlog.md` (2026-09-29 scope decisions).
 
 #### FR-36: Two-tab contact form
 A visitor can send a Product demo or an Outsourcing project request from one form.
@@ -460,13 +477,13 @@ A visitor cannot choose a demo date before today in their own time zone; the pic
 Traces: EXP > Contact form fields; AC-FORM-1.
 
 #### FR-38: Submissions delivered and protected
-The system delivers every Submission (demo, project, subscribe, join) to a XionTechs destination and stops spam.
+The system delivers every Submission (demo, project, job application) to a XionTechs destination and stops spam.
 
 **Consequences (testable):**
 - Server-side validation mirrors the client rules: required fields, email format, message up to 2,000 characters, preferred date today or later. An invalid Submission is rejected with the same wording as the client.
 - A hidden honeypot field (`tabindex="-1"`, `aria-hidden="true"`, `autocomplete="off"`) rejects automated submissions.
 - A server-side rate limit keyed on IP plus email allows 5 Submissions per 10 minutes per key, so a shared office IP is not blocked outright. `[ASSUMPTION]`
-- Each Submission reaches the chosen destination. `[ASSUMPTION]` Destination (inbox or CRM) is an open question (section 12), as are the mail sender service and the shared rate-limit store (open questions 18 and 19).
+- Demo and project Submissions reach the company contact inbox (address to be supplied, open question 2); job applications are stored in Sanity (FR-47). The mail sender service and the shared rate-limit store are open questions 18 and 19.
 
 Traces: EXP > Component Patterns (Contact form), Open Questions (Form destination).
 
@@ -477,7 +494,7 @@ Traces: EXP > Voice and Tone (CTA labels).
 
 ### 4.9 Privacy and legal
 
-**Description:** Forms collect personal data, so Vietnam PDPD (Decree 13/2023) applies. Realizes UJ-1, UJ-2, UJ-4.
+**Description:** Forms collect personal data, including CVs, so Vietnam PDPD (Decree 13/2023) applies. Realizes UJ-1, UJ-2, UJ-4.
 
 #### FR-40: Consent line under every form
 A visitor sees a consent line under every form that states the single use of the data and ends with a "Privacy policy" link, using the exact wording in EXPERIENCE.md Voice and Tone.
@@ -576,7 +593,7 @@ Traces: `AGENTS.md` (Hard rules); EXP > Voice and Tone.
 
 Traces: `AGENTS.md` (Commands, Hard rules); `docs/ai-log.md` (2026-09-28 entries).
 
-## 6. Current UI Decisions (prototype v3.4, 2026-09-28)
+## 6. Current UI Decisions (prototype v3.8, 2026-09-29)
 
 Captured from the latest prototype so stories do not regress them.
 
@@ -586,6 +603,7 @@ Captured from the latest prototype so stories do not regress them.
 - **Light after the hero:** every section after the Home hero is light, apart from the navy 4-D band and the amber capture band allowed by the colour rhythm.
 - **Header:** text-only nav (no carets); the EN/VI switch with Book a demo right next to it; Book a demo moves into the mobile menu at 640px and below; EN/VI never moves.
 - **Colour rhythm instead of dark mode:** each page has at least one navy band and at most one full-width amber band; each page hero uses a different mix (light, navy, amber).
+- **2026-09-29 decisions:** English only on Demo day (no language switch); no newsletter sign-up; no leadership section; About ends with "See our apps in action." and Book a demo; Careers lists roles that open a job page with a CV upload form; store buttons and app web addresses are links that open a new tab.
 - **Type:** Unbounded (display), Lexend Exa (brand caps), Be Vietnam Pro (body), JetBrains Mono (dates and data), all with the Vietnamese subset.
 
 Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `mockups/site-v3/index.html`, `css/site.css`, `js/site.js`.
@@ -604,17 +622,18 @@ Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `
 
 ### 8.1 In Scope (v1)
 
-- Ten page types in EN and VI: Home, Products, Services, News, News story, About, Careers, Book a demo (Contact), Privacy policy, Not found.
+- Eleven page types: Home, Products, Services, News, News story, About, Careers, Job page, Book a demo (Contact), Privacy policy, Not found. English only on Demo day; Vietnamese follows.
 - Header, mobile menu, footer, locale routing, EN/VI switch.
-- Four email capture kinds and the two-tab contact form, with delivery, honeypot and rate limit.
-- News stories and Careers roles from Sanity, edited in Sanity Studio (chosen 2026-09-28, `docs/spikes/cms-spike.md`). The Demo-day plan in the epics says which parts land before Demo day.
+- Two email capture kinds (demo, project), the two-tab contact form and the job application with CV upload, with delivery, honeypot and rate limit.
+- News stories, Careers roles, team and office photos and product clips from Sanity, edited in Sanity Studio (chosen 2026-09-28, `docs/spikes/cms-spike.md`). The Demo-day plan in the epics says which parts land before Demo day.
 - SEO metadata, hreflang, JSON-LD, all 16 acceptance criteria.
 
 ### 8.2 Out of Scope for v1
 
 - Login, e-commerce, dark mode toggle, audience-based navigation (see section 7).
-- Job application forms or CV upload; the talent capture collects email only. `[ASSUMPTION]`
-- Newsletter sending itself; v1 only collects subscribers. `[ASSUMPTION]`
+- Newsletter sign-up and sending, and a talent-network email list (decided 2026-09-29).
+- A leadership section on About (decided 2026-09-29).
+- Partner-school logos (none yet).
 - Analytics and non-essential cookies, unless FR-42 consent is built with them.
 - Prototype-only tooling (screenshot slots that accept click, drop or paste).
 
@@ -622,24 +641,24 @@ Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `
 
 - **Sanity setup:** a free Sanity project with proven reads, env vars, CORS origins, `useCdn` with webhook revalidation, the EN/VI content model and the Studio location (`docs/spikes/cms-spike.md`, Open work). Blocks FR-26, FR-27, FR-32 and media uploads (AC-FORM-3).
 - **Services to pick in architecture (free tier):** a mail sender and a shared store for rate limits on serverless (open questions 18 and 19). Block delivery and rate limiting in FR-38.
-- **Real content from the business:** privacy policy text, store links, app web addresses, product screens or clips, real news stories, leadership, team photos, Dallas street address, contact email, logo SVG.
-- **Form destination:** inbox or CRM for FR-38.
+- **Real content from the business:** privacy policy text, store links, app web addresses, product clips, real news stories and roles, team and office photos, both office street addresses, contact email, logo SVG.
+- **Form destination:** the company contact inbox for demo and project Submissions (address to be supplied); Sanity for job applications.
 - **Hosting:** Vercel, with a public URL by Demo day.
 
-**[NOTE FOR PM]** Demo day and public launch pull in different directions. Demo day needs a public URL on 2026-10-09; public launch needs zero `[Placeholder]` markers and a real privacy policy, which depend on content the team does not control. This PRD treats them as two gates (see SM-1 and SM-2). Confirm that a Demo-day build may still show `[Placeholder]` markers.
+**[NOTE FOR PM]** Demo day and public launch pull in different directions. Demo day needs a public URL on 2026-10-09; public launch needs zero `[Placeholder]` markers and a real privacy policy, which depend on content the team does not control. This PRD treats them as two gates (see SM-1 and SM-2). Decided 2026-09-29: the Demo-day build may show `[Placeholder]` markers (news titles, roles, store and app links, privacy text) so the team can see the layout; the site is used as the real company site after that, so SM-2 still gates public launch.
 
 ## 9. Success Metrics
 
 Measurement: Submissions are counted at the form destination on the server, so no analytics cookie is needed. Lighthouse and axe-core run locally before release on every page in both locales (there is no CI yet; see open question 20). All targets are proposals, since the business has set none.
 
 **Primary**
-- **SM-1: Demo-day readiness.** Public URL live on Vercel by 2026-10-09 with every Demo-day must-have story in the epics' Demo-day plan done in EN and VI; the after-demo stories, the remaining page types and all 16 acceptance criteria follow before public launch. Validates FR-1 to FR-46.
+- **SM-1: Demo-day readiness.** Public URL live on Vercel by 2026-10-09 with every Demo-day must-have story in the epics' Demo-day plan done in English; the after-demo stories, the remaining page types and all 16 acceptance criteria follow before public launch. Validates FR-1 to FR-47.
 - **SM-2: Public launch readiness.** `grep -rn "\[Placeholder\]"` over `src/` and the build output (excluding planning artifacts, tests and the check script) returns 0 and the privacy policy is real before public launch. `[ASSUMPTION]` Target date to be set by the business. Validates FR-41, NFR-7.
 - **SM-3: Demo requests.** At least 8 Product demo Submissions per month by the third month after public launch. `[ASSUMPTION]` Validates FR-34, FR-36.
 - **SM-4: Project inquiries.** At least 5 Outsourcing project Submissions per month by the third month after public launch. `[ASSUMPTION]` Validates FR-34, FR-36.
 
 **Secondary**
-- **SM-5: Talent network sign-ups.** At least 20 per month after public launch. `[ASSUMPTION]` Validates FR-35.
+- **SM-5: Job applications.** At least 5 applications per open role within 30 days of posting. `[ASSUMPTION]` Validates FR-47.
 - **SM-6: Lighthouse scores.** Performance at least 90 on mobile, Accessibility 100, SEO 100, Best Practices at least 95, on every page in both locales. `[ASSUMPTION]` Validates NFR-1, NFR-4, NFR-5.
 - **SM-7: Accessibility defects.** Zero serious or critical axe-core violations and zero failing AC-A11Y criteria in the local pre-release run. `[ASSUMPTION]` Validates NFR-1.
 - **SM-8: Core Web Vitals.** Mobile p75 LCP at most 2.5s, INP at most 200ms, CLS at most 0.1. `[ASSUMPTION]` Validates NFR-4.
@@ -661,33 +680,36 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 
 ## 11. Risks
 
-- **Short timeline** (7 to 8 build days to Demo day 2026-10-09, 2 developers, about 15 developer-days): the Sanity setup and real content can slip. Mitigation: the Demo-day plan in the epics (must-have versus after demo, two parallel tracks); news and roles show their empty states until Sanity content lands; placeholders stay grep-able.
+- **Short timeline** (7 to 8 build days to Demo day 2026-10-09, 2 developers, about 15 developer-days): the Demo-day scope agreed on 2026-09-29 is about 23.5 developer-days with no cuts. Mitigation: the lead decides between more days, another developer or cuts (epics Demo-day plan); placeholders stay grep-able.
+- **CVs in Sanity:** uploaded files may be reachable by anyone with the link. Mitigation: open question 21 is settled before job applications go live.
 - **WebGL silk cost** on low-end phones can hurt LCP and INP. Mitigation: pause off screen, static fallback, SM-C3.
 - **Unverified scraped facts:** the AI has misread facts before (the contact email came back as an obfuscated string). Mitigation: a human verifies every fact before it loses its `[Placeholder]` tag.
-- **Personal data without a policy:** forms could go live before the privacy policy. Mitigation: FR-41 gate.
+- **Personal data without a policy:** on Demo day the forms collect real data while the privacy page is still a placeholder document. Mitigation: FR-41 gate before public launch.
 
 ## 12. Open Questions
 
 1. **Dallas address:** only "Texas, United States" is known; a street address is needed.
-2. **Contact email:** no public contact email is defined yet.
-3. **Leadership:** real names, roles and photos.
-4. **Privacy policy:** text needed before any form goes live (PDPD); also who owns it.
-5. **Store links:** real App Store and Google Play links for PXP (blocks UJ-3).
+2. **Contact email:** use the company email (exact address to be supplied by Amber Do); demo and project Submissions go to it.
+3. **Leadership:** resolved 2026-09-29. No leadership section (FR-29).
+4. **Privacy policy:** a placeholder document on Demo day (no legal text written yet); real text and its owner needed before public launch (PDPD).
+5. **Store links:** none yet. Buttons stay with `[Placeholder]` links that open a new tab (blocks the climax of UJ-3).
 6. **CMS choice:** resolved 2026-09-28: Sanity (`docs/spikes/cms-spike.md`). Its setup (reads, env vars, CORS, revalidation, EN/VI model, Studio location) is epics Story 1.8.
-7. **Real app URLs:** LXP, SXP and IoT web addresses.
-8. **Still `[Placeholder]`:** news stories, leadership, team photos, partner-school logos (with permission), product screenshots or clips, store links, app web addresses, the privacy policy and the news email frequency. (Stats including 24/7, product and service descriptions, feature lists, careers benefits and open-roles text were confirmed by the business on 2026-09-28.)
-9. **Analytics and cookies:** whether to add analytics; if so, a consent banner with decline as default. How long captured emails are kept.
-10. **Form destination:** which inbox or CRM receives demo, project, subscribe and join Submissions.
+7. **Real app URLs:** LXP, SXP and IoT web addresses; `[Placeholder]` links that open a new tab until supplied.
+8. **Still `[Placeholder]`:** news story titles and bodies, roles, team and office photos, product clips, store links, app web addresses, the privacy policy and both street addresses (supplied later by Amber Do). No partner-school logos exist yet. (Stats including 24/7, product and service descriptions, feature lists, careers benefits and open-roles text were confirmed by the business on 2026-09-28.)
+9. **Analytics and cookies:** whether to add analytics; if so, a consent banner with decline as default. **Retention:** how long demo and project Submissions and job applications (CVs) are kept; needed for the privacy policy.
+10. **Form destination:** resolved 2026-09-29. Demo and project to the contact inbox (question 2); job applications to Sanity. No subscribe or join.
 11. **No-JavaScript behaviour** for the capture redirect and the two-tab contact form.
-12. **About page capture:** heading "Let's work together." but the button is "Book a demo" to the Product demo tab. Confirm the intent. The About stats band also shows "4 School products ready to demo" instead of "8 Service offerings"; confirm it is intended.
-13. **Logo:** an SVG master is needed for retina and navy surfaces.
-14. **Dark mode:** dropped in favour of the colour rhythm; the business may reverse this.
+12. **About page capture:** resolved 2026-09-29. Heading "See our apps in action." with "Book a demo". The About stats band also shows "4 School products ready to demo" instead of "8 Service offerings"; confirm it is intended.
+13. **Logo:** an SVG master will be supplied later.
+14. **Dark mode:** resolved 2026-09-29. No dark mode and no theme switch; the colour rhythm stays.
 15. **Mobile Book a demo breakpoint:** resolved 2026-09-28. Book a demo sits next to the EN/VI switch above 640px and is the first mobile menu item at 640px and below (the older 1080px log entry is superseded).
-16. **Demo day versus public launch:** may the Demo-day build show `[Placeholder]` markers (see the note in section 8.3)?
-17. **Vietnamese copy:** written and checked by Amber Do (to confirm), before launch. Needed for FR-4.
+16. **Demo day versus public launch:** resolved 2026-09-29. Yes, the Demo-day build may show `[Placeholder]` markers (section 8.3).
+17. **Vietnamese copy:** written and checked by Amber Do (to confirm), after Demo day. Needed for FR-4.
 18. **Mail sender service** (free tier, chosen in architecture): sends contact form and capture Submissions to the destination (FR-38). No vendor is decided.
 19. **Shared store for rate limits on serverless** (free tier, chosen in architecture): holds the FR-38 rate-limit counters across serverless instances. No vendor is decided.
 20. **CI pipeline:** there is no CI yet, so axe-core, Lighthouse and the launch content check run locally before release. Setting up CI is after-demo work.
+21. **CV storage:** is Sanity acceptable for CVs? Uploaded Sanity files may be reachable by anyone with the link; a private store or the recruiting inbox may be needed. Owner: Hoang Vu.
+22. **Demo-day capacity:** the agreed Demo-day scope is about 23.5 developer-days against about 15. More days, another developer or cuts? Owner: Hoang Vu.
 
 ## 13. Assumptions Index
 
@@ -703,12 +725,11 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 - NFR-5: a sitemap covers both locales.
 - NFR-6: "current evergreen browsers" means the latest two versions of the main browsers.
 - FR-38: the rate limit allows 5 Submissions per 10 minutes per IP plus email.
-- Section 8.2: talent capture collects email only; no CV upload.
-- Section 8.2: v1 collects subscribers but does not send newsletters.
+- FR-47: CVs are PDF or Word, up to 5 MB.
 - SM-2: public launch date to be set by the business.
 - SM-3: at least 8 demo requests per month.
 - SM-4: at least 5 project inquiries per month.
-- SM-5: at least 20 talent network sign-ups per month.
+- SM-5: at least 5 applications per open role within 30 days.
 - SM-6: Lighthouse targets.
 - SM-7: zero serious or critical axe violations.
 - SM-8: Core Web Vitals targets.

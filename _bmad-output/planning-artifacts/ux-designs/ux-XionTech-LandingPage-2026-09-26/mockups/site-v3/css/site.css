@@ -567,3 +567,19 @@ body[data-page="products"] [id]{scroll-margin-top:144px}
 
 /* ---------- v3.7: no motion toggle without JavaScript ---------- */
 .no-js .motion-toggle{display:none}
+
+/* ---------- v3.8: open roles list, job page with CV upload, new-tab app links ---------- */
+.roles{display:grid;gap:14px}
+.role{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px;color:inherit;text-decoration:none}
+.role:hover{transform:translateY(-2px)}
+.role-main{display:grid;gap:6px}
+.role-main b{font-family:var(--f-display);font-weight:600;font-size:1.15rem;color:var(--heading)}
+.role-main small{color:var(--muted);font-size:.92rem}
+.job-body h2{font-size:1.35rem;margin:32px 0 12px}
+.job-body h2:first-of-type{margin-top:8px}
+.job-body .list-check{margin-top:4px}
+.field input[type=file]{height:auto;padding:12px 14px;cursor:pointer}
+.field.bad input[type=file]{border-color:#B3261E}
+.browser .bar a.bar-url{margin-left:12px;font-family:var(--f-mono);font-size:.7rem;color:#4A5B78;background:#FDFDFE;padding:3px 12px;border-radius:999px;text-decoration:none}
+.browser .bar a.bar-url:hover,.browser .bar a.bar-url:focus-visible{text-decoration:underline}
+@media (max-width:640px){.role{flex-direction:column;align-items:flex-start}}

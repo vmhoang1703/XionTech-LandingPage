@@ -206,3 +206,24 @@ Template:
   2 developers and 7 to 8 days), kept the saved language in local storage (a server cannot read it, so a
   cookie is needed), left the CMS as undecided after Sanity was chosen, and counted 45 FRs after FR-46 was
   added. All caught by the lead's review, not by the AI's own review.
+
+## 2026-09-29 — Demo-day scope re-cut, job page with CV upload, PR #4
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "language switcher can be after demo days, but animated silk, 4d process flow and news to be
+  done for demo", then "my manager will be using this site as a real company site", then answers on forms, CVs,
+  leadership, store links and effort ("there's no cutoff for this").
+- **What the AI did:** Updated the HTML prototype (v3.8): Careers lists sample roles that open a new job page with an
+  application form and CV upload; newsletter, talent network and leadership removed; About ends on "See our apps in
+  action." with Book a demo; store and app links open a new tab. After Amber approved it, updated `DESIGN.md`,
+  `EXPERIENCE.md`, the PRD (new FR-47, FR-29 and FR-35 marked removed, open questions 21 and 22) and `epics.md` (new
+  Story 6.6, rewritten Stories 6.5 and 2.4, Demo-day plan rebuilt: 31 must-haves, 23.5 developer-days).
+- **Decision / result:** English only on Demo day; silk, 4-D process (Home and Services), News from Sanity with
+  `[Placeholder]` titles, Careers with CV upload, live forms and the accessibility and performance audits are
+  must-haves. The plan is about 8.5 developer-days over budget with no cuts; the lead decides how to cover it.
+- **AI got it wrong?** Partly. The first re-cut kept the Services 4-D flow as the last cut and assumed news could live
+  in code; Amber and the lead's Sanity decision overruled both. The AI also flagged that uploaded Sanity files may
+  be reachable by link, so CV storage is an open question for the lead rather than a settled design.
+  The AI's own review then caught three build-order errors in its first plan (Story 6.6 scheduled before the
+  6.5 it depends on, 6.3 in parallel with 3.7, audits before the last pages) and breadcrumbs required by must-have
+  stories while Story 1.6 was after demo; all fixed before commit.

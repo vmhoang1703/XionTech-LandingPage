@@ -2,7 +2,7 @@
 name: XionTechs Website
 description: Bilingual (EN/VI) multi-page company website for XionTechs, selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
 status: final
-updated: 2026-09-28
+updated: 2026-09-29
 colors:
   # Brand core, sampled from the logo
   navy: '#163663'
@@ -438,9 +438,10 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 | Home | `hero-silk` (dark, with the stats inside) | front doors, products (mist, linen), services (paper), 4-D process (navy), news (mist), capture (amber) |
 | Products | `hero-amber` | sub-nav, PXP (paper), LXP (mist, linen), SXP (navy), IoT (paper), product updates (mist), capture (navy) |
 | Services | `hero-navy` | stats (paper), 8 services (mist, linen), ways to work (paper), 4-D process (navy), industries (mist), capture (amber) |
-| News | `hero-light` | filters + story grid (paper), subscribe capture (navy) |
-| About | `hero-navy` | stats (paper), story (mist, linen), values (paper), leadership (mist), FAQ (paper), offices (navy), capture (amber) |
-| Careers | `hero-amber` | culture (paper), benefits (mist, linen), open roles (paper), talent network capture (navy), life at XionTechs (mist) |
+| News | `hero-light` | filters + story grid (paper), demo capture (amber) |
+| About | `hero-navy` | stats (paper), story (mist, linen), values (paper), FAQ (paper), offices (navy), capture (amber) |
+| Careers | `hero-amber` | culture (paper), benefits (mist, linen), open roles (paper), life at XionTechs (mist) |
+| Job page | `hero-amber` | role details and application form card (paper) |
 | Book a demo | `hero-navy` | contact form card inside the hero |
 
 **Build tokens** (outside the frontmatter schema; add them to `@theme` as listed):
@@ -506,8 +507,9 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 - **Breadcrumbs.** Mono, muted, above inner page H1s.
 - **Highlight mark.** An amber bar behind the lower third of one key phrase per hero headline: amber on light and navy heroes, white on amber surfaces.
 - **Placeholder frame.** Dashed border panel with a Lexend Exa caption, standing in for real photos and illustrations until they exist.
-- **Person card.** 4:5 photo frame, name and role. Leadership grid of four.
-- **Open roles panel.** Dashed panel stating there are no open roles, with a route to the talent network.
+- **Role card.** Glass card, full-width stretched link: job title in the display face, then team, location and work type in muted text; "View and apply" link-arrow on the right (stacks under the title at 640px and below). Lifts 2px on hover.
+- **Open roles panel.** Dashed panel stating there are no open roles.
+- **File field.** Same field chrome as other inputs, auto height; error border `{colors.error}`.
 - **Site footer.** Ink background, white logo plate, blurb, four link columns with amber-tint Lexend Exa headings, office addresses, a bottom bar with copyright, privacy policy link and the GET IT **DONE** tag (DONE in amber).
 - **Toast** [Sonner]. Small ink pill at the bottom centre.
 - **Motion toggle.** Discreet round icon button (36px high, ink at 50%, white border at 30%, 70% opacity at rest) with a pause or play icon at the top right of the Home hero. Its text label slides out on hover or keyboard focus.
