@@ -69,7 +69,7 @@ These mirror the four Key Flows in `EXPERIENCE.md` with the same protagonists.
 - **UJ-2. Quân, a CTO, looks for an outsourcing team and starts a project.**
   - **Persona + context:** Trần Minh Quân, CTO of a logistics company, between meetings.
   - **Entry state:** arrives on Home from a referral.
-  - **Path:** opens the Outsourcing services door; checks live Ho Chi Minh City and Dallas times; scans eight services and "Three ways to work with us"; follows "See our 4-D process"; sees Logistics under Industries; checks About; enters his work email and presses "Start a project".
+  - **Path:** opens the Outsourcing services door; checks live Ho Chi Minh City and Plano times; scans eight services and "Three ways to work with us"; follows "See our 4-D process"; sees Logistics under Industries; checks About; enters his work email and presses "Start a project".
   - **Climax:** the contact form opens on the Outsourcing project tab, scrolled to the form, email prefilled; he picks Product Engineering and "In 1 to 3 months" and sends. Discovery is the next step he already read about.
   - **Edge case:** submitting without a company name marks the field, announces "Please enter your organisation." and moves focus to it.
 
@@ -182,7 +182,7 @@ A visitor can reach Products, Services, Company links, both offices and the Priv
 
 **Consequences (testable):**
 - Company column: About, Core values, FAQ (to `/about#faq`), News, Careers, Contact.
-- Offices: Ho Chi Minh City (Viettel Tower, Floor 12, 285 CMT8, HCMC 70064, +84 908 107 552) and Dallas, USA (Texas, United States, +1 469 322 9899), phone numbers as `tel:` links.
+- Offices: Plano, Texas, USA (7950 Legacy Drive, Suite 400, Plano, Texas 75024, USA; +1 469 322 9899; WhatsApp +1 469 439 9345; vinni.tran@newxion.com) first, then Ho Chi Minh City, Vietnam, labelled "Vietnam Delivery Center" (Floor 15, B1 Building, 279 Nguyen Tri Phuong Street, Dien Hong Ward, Ho Chi Minh City, Vietnam; +84 908 107 552). Phone numbers are `tel:` links, WhatsApp opens `https://wa.me/14694399345` in a new tab, and the email is a `mailto:` link. Supplied by the business on 2026-09-29.
 - The bottom bar shows copyright, the Privacy policy link and the GET IT DONE tag.
 - No Da Nang office and no second HCMC address appear anywhere.
 
@@ -222,7 +222,7 @@ A visitor sees exactly one primary button in the hero, "Explore our products", w
 Traces: EXP > Information Architecture (Home), Component Patterns (Button: one primary button per group).
 
 #### FR-12: Stats band inside the hero
-A visitor sees "Experience you can count on" at the bottom of the hero with five figures: 25+ years of leadership experience, 24/7 global coverage, 20+ technology stacks, 8 service offerings, 2 offices (Ho Chi Minh City and Dallas).
+A visitor sees "Experience you can count on" at the bottom of the hero with five figures: 25+ years of leadership experience, 24/7 global coverage, 20+ technology stacks, 8 service offerings, 2 offices (Ho Chi Minh City and Plano).
 
 **Consequences (testable):**
 - Numbers count up once over 1.4s when 60% visible; "24/7" does not count; screen readers get only the final value; reduced motion shows final values.
@@ -301,7 +301,7 @@ Traces: EXP > Motion (Devices), Component Patterns (Device frame).
 **Description:** Services lets a company judge the delivery team and start a project. Navy hero, stats, eight services, three ways to work, the 4-D process and industries. Realizes UJ-2.
 
 #### FR-20: Services hero with live office clocks
-A visitor sees "Start a project" and "See our 4-D process" plus the live local time in Ho Chi Minh City and Dallas.
+A visitor sees "Start a project" and "See our 4-D process" plus the live local time in Ho Chi Minh City and Plano.
 
 **Consequences (testable):**
 - Times use IANA zones `Asia/Ho_Chi_Minh` and `America/Chicago`, refresh every 30 seconds, and show the zone label (GMT+7, US Central) rendered on the server before JavaScript runs.
@@ -483,7 +483,7 @@ The system delivers every Submission (demo, project, job application) to a XionT
 - Server-side validation mirrors the client rules: required fields, email format, message up to 2,000 characters, preferred date today or later. An invalid Submission is rejected with the same wording as the client.
 - A hidden honeypot field (`tabindex="-1"`, `aria-hidden="true"`, `autocomplete="off"`) rejects automated submissions.
 - A server-side rate limit keyed on IP plus email allows 5 Submissions per 10 minutes per key, so a shared office IP is not blocked outright. `[ASSUMPTION]`
-- Demo and project Submissions reach the company contact inbox (address to be supplied, open question 2); job applications are stored in Sanity (FR-47). The mail sender service and the shared rate-limit store are open questions 18 and 19.
+- Demo and project Submissions reach the contact inbox vinni.tran@newxion.com (open question 2); job applications are stored in Sanity (FR-47). The mail sender service and the shared rate-limit store are open questions 18 and 19.
 
 Traces: EXP > Component Patterns (Contact form), Open Questions (Form destination).
 
@@ -599,7 +599,7 @@ Captured from the latest prototype so stories do not regress them.
 
 - **Home hero:** dark `hero-silk`; the silk cloth moves slowly and continuously (time scale 0.35 in the prototype `site.js`); a discreet round icon pause button at the top right, label shown on hover or focus.
 - **One primary CTA** in the hero: "Explore our products".
-- **Stats inside the hero:** "Experience you can count on": 25+ years, 24/7, 20+ stacks, 8 services, 2 offices (Ho Chi Minh City and Dallas).
+- **Stats inside the hero:** "Experience you can count on": 25+ years, 24/7, 20+ stacks, 8 services, 2 offices (Ho Chi Minh City and Plano).
 - **Light after the hero:** every section after the Home hero is light, apart from the navy 4-D band and the amber capture band allowed by the colour rhythm.
 - **Header:** text-only nav (no carets); the EN/VI switch with Book a demo right next to it; Book a demo moves into the mobile menu at 640px and below; EN/VI never moves.
 - **Colour rhythm instead of dark mode:** each page has at least one navy band and at most one full-width amber band; each page hero uses a different mix (light, navy, amber).
@@ -641,8 +641,8 @@ Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `
 
 - **Sanity setup:** a free Sanity project with proven reads, env vars, CORS origins, `useCdn` with webhook revalidation, the EN/VI content model and the Studio location (`docs/spikes/cms-spike.md`, Open work). Blocks FR-26, FR-27, FR-32 and media uploads (AC-FORM-3).
 - **Services to pick in architecture (free tier):** a mail sender and a shared store for rate limits on serverless (open questions 18 and 19). Block delivery and rate limiting in FR-38.
-- **Real content from the business:** privacy policy text, store links, app web addresses, product clips, real news stories and roles, team and office photos, both office street addresses, contact email, logo SVG.
-- **Form destination:** the company contact inbox for demo and project Submissions (address to be supplied); Sanity for job applications.
+- **Real content from the business:** privacy policy text, store links, app web addresses, product clips, real news stories and roles, team and office photos, logo SVG.
+- **Form destination:** vinni.tran@newxion.com for demo and project Submissions; Sanity for job applications (open question 21).
 - **Hosting:** Vercel, with a public URL by Demo day.
 
 **[NOTE FOR PM]** Demo day and public launch pull in different directions. Demo day needs a public URL on 2026-10-09; public launch needs zero `[Placeholder]` markers and a real privacy policy, which depend on content the team does not control. This PRD treats them as two gates (see SM-1 and SM-2). Decided 2026-09-29: the Demo-day build may show `[Placeholder]` markers (news titles, roles, store and app links, privacy text) so the team can see the layout; the site is used as the real company site after that, so SM-2 still gates public launch.
@@ -688,16 +688,16 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 
 ## 12. Open Questions
 
-1. **Dallas address:** only "Texas, United States" is known; a street address is needed.
-2. **Contact email:** use the company email (exact address to be supplied by Amber Do); demo and project Submissions go to it.
+1. **Office addresses:** resolved 2026-09-29. Plano, Texas, USA and the Vietnam Delivery Center in Ho Chi Minh City (FR-7).
+2. **Contact email:** resolved 2026-09-29. vinni.tran@newxion.com, shown with the Plano office; demo and project Submissions go to it.
 3. **Leadership:** resolved 2026-09-29. No leadership section (FR-29).
 4. **Privacy policy:** a placeholder document on Demo day (no legal text written yet); real text and its owner needed before public launch (PDPD).
 5. **Store links:** none yet. Buttons stay with `[Placeholder]` links that open a new tab (blocks the climax of UJ-3).
 6. **CMS choice:** resolved 2026-09-28: Sanity (`docs/spikes/cms-spike.md`). Its setup (reads, env vars, CORS, revalidation, EN/VI model, Studio location) is epics Story 1.8.
 7. **Real app URLs:** LXP, SXP and IoT web addresses; `[Placeholder]` links that open a new tab until supplied.
-8. **Still `[Placeholder]`:** news story titles and bodies, roles, team and office photos, product clips, store links, app web addresses, the privacy policy and both street addresses (supplied later by Amber Do). No partner-school logos exist yet. (Stats including 24/7, product and service descriptions, feature lists, careers benefits and open-roles text were confirmed by the business on 2026-09-28.)
+8. **Still `[Placeholder]`:** news story titles and bodies, roles, team and office photos, product clips, store links, app web addresses, and the privacy policy. No partner-school logos exist yet. (Stats including 24/7, product and service descriptions, feature lists, careers benefits and open-roles text were confirmed by the business on 2026-09-28.)
 9. **Analytics and cookies:** whether to add analytics; if so, a consent banner with decline as default. **Retention:** how long demo and project Submissions and job applications (CVs) are kept; needed for the privacy policy.
-10. **Form destination:** resolved 2026-09-29. Demo and project to the contact inbox (question 2); job applications to Sanity. No subscribe or join.
+10. **Form destination:** resolved 2026-09-29 for demo and project Submissions (contact inbox, question 2). Where job applications and CVs go is open question 21. No subscribe or join.
 11. **No-JavaScript behaviour** for the capture redirect and the two-tab contact form.
 12. **About page capture:** resolved 2026-09-29. Heading "See our apps in action." with "Book a demo". The About stats band also shows "4 School products ready to demo" instead of "8 Service offerings"; confirm it is intended.
 13. **Logo:** an SVG master will be supplied later.
@@ -719,7 +719,6 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 - FR-9: unknown paths return an HTTP 404 status.
 - FR-27: editors publish stories without a developer (CMS).
 - FR-32: editors add and close roles without a code change (CMS).
-- FR-38: the Submission destination is to be decided.
 - NFR-3: a retention period and owner will be set before public launch.
 - NFR-4: Core Web Vitals "good" thresholds as targets.
 - NFR-5: a sitemap covers both locales.

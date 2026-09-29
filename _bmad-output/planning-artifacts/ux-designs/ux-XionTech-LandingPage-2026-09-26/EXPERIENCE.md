@@ -56,7 +56,7 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 - Products and Services triggers are text only, with no caret icon, aligned with the plain links.
 - Logo links home. A skip link ("Skip to content") comes first in tab order.
 
-**Footer** (every page): logo + one-line blurb; **Products** (PXP, LXP, SXP, IoT Device Management, Product updates); **Services** (Product Engineering, AI-Driven Analytics, Staffing Service, Low-code Solutions, Cloud Computing, All services); **Company** (About, Core values, FAQ, News, Careers, Contact); **Offices** (Ho Chi Minh City: Viettel Tower, Floor 12, 285 CMT8, HCMC 70064, +84 908 107 552; Dallas, USA: Texas, United States, +1 469 322 9899). Bottom bar: copyright, Privacy policy link, GET IT DONE tag.
+**Footer** (every page): logo + one-line blurb; **Products** (PXP, LXP, SXP, IoT Device Management, Product updates); **Services** (Product Engineering, AI-Driven Analytics, Staffing Service, Low-code Solutions, Cloud Computing, All services); **Company** (About, Core values, FAQ, News, Careers, Contact); **Offices**: Plano, Texas, USA (7950 Legacy Drive, Suite 400, Plano, Texas 75024, USA; +1 469 322 9899; WhatsApp +1 469 439 9345; vinni.tran@newxion.com) first, then Ho Chi Minh City, Vietnam, labelled "Vietnam Delivery Center" (Floor 15, B1 Building, 279 Nguyen Tri Phuong Street, Dien Hong Ward, Ho Chi Minh City, Vietnam; +84 908 107 552). Bottom bar: copyright, Privacy policy link, GET IT DONE tag.
 
 **Needs to surfaces:**
 
@@ -147,7 +147,7 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Store buttons | App Store and Google Play buttons under PXP, always shown. They open a new tab (accessible name ends "(opens in a new tab)"); `[Placeholder]` links until real ones exist. |
 | PXP story phone + phone tabs | Five tabs (Attendance, Grades, Messages, Payments, Events). Selecting a tab crossfades the matching screen in. Inactive screens are hidden from focus and assistive tech (AC-A11Y-3). |
 | Office card | Shows the office's live local time, updated every 30 seconds, plus address and a `tel:` link. Times use IANA zones (`Asia/Ho_Chi_Minh`, `America/Chicago`) so daylight saving is right. |
-| Clock strip | Live local time for Ho Chi Minh City and Dallas. |
+| Clock strip | Live local time for Ho Chi Minh City and Plano. |
 | Breadcrumbs | Home link + current page name. Inner pages only. |
 | Highlight mark | Draws in once when the headline appears. Decorative. |
 | Placeholder frame | Stands in for real photos or illustrations until supplied. Never shipped at launch. |
@@ -186,7 +186,7 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | CV | Yes | PDF or Word (.pdf, .doc, .docx), up to 5 MB, checked on selection and on submit. "Please upload your CV as a PDF or Word file, up to 5 MB." |
 | Cover note | No | Up to 2,000 characters. "Please keep your note under 2,000 characters." |
 
-Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}` on navy. Demo and project Submissions go to the company contact inbox (address to be supplied); job applications are stored in Sanity.
+Error text uses `{colors.error}` on paper and amber and `{colors.error-on-navy}` on navy. Demo and project Submissions go to vinni.tran@newxion.com; job applications are stored in Sanity (whether CVs belong there is for Hoang Vu to confirm).
 
 ## State Patterns
 
@@ -324,7 +324,7 @@ Failure: she mistypes her email in the capture band; the error "Please enter a v
 ### Flow 2: CTO looks for an outsourcing team and starts a project (Trần Minh Quân, CTO of a logistics company, between meetings)
 
 1. Quân arrives on Home from a referral and goes straight to the Outsourcing services door.
-2. On Services, the hero shows live local times for Ho Chi Minh City and Dallas; he checks the overlap with his own day.
+2. On Services, the hero shows live local times for Ho Chi Minh City and Plano; he checks the overlap with his own day.
 3. He scans the eight services and reads "Three ways to work with us": dedicated team, end-to-end delivery or co-creation.
 4. He follows "See our 4-D process". The flow lights up step by step, and he reads what he receives at each step.
 5. Under Industries he sees Logistics listed next to EdTech, Healthcare and Private Equity.
@@ -359,8 +359,8 @@ Failure: a CV over 5 MB or in another format shows "Please upload your CV as a P
 
 ## Open Questions
 
-- **Office addresses:** full street addresses for Dallas and Ho Chi Minh City, to be supplied by Amber Do.
-- **Contact email:** the company email (exact address to be supplied); demo and project Submissions go to it.
+- **Office addresses:** resolved 2026-09-29. Plano, Texas, USA and the Vietnam Delivery Center in Ho Chi Minh City (see Footer).
+- **Contact email:** resolved 2026-09-29. vinni.tran@newxion.com; demo and project Submissions go to it.
 - **Leadership:** resolved 2026-09-29. No leadership section.
 - **Privacy policy:** a placeholder document on Demo day; real text needed before public launch (Vietnam PDPD, Decree 13/2023).
 - **Store links:** none yet; the buttons open `[Placeholder]` links in a new tab.

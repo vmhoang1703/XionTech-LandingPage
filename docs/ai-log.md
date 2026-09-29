@@ -227,3 +227,17 @@ Template:
   The AI's own review then caught three build-order errors in its first plan (Story 6.6 scheduled before the
   6.5 it depends on, 6.3 in parallel with 3.7, audits before the last pages) and breadcrumbs required by must-have
   stories while Story 1.6 was after demo; all fixed before commit.
+
+## 2026-09-29 — Real office addresses and contact email (PR #4)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** pasted the Plano and Ho Chi Minh City addresses, phones and email; "there's no head office,
+  remove that, use address from plano ... keep the vietnam phone there and email as i provided".
+- **What the AI did:** Updated the office blocks in the prototype footer, About and Book a demo (Plano first, Vietnam
+  Delivery Center second, WhatsApp link, `mailto:`), then the PRD (FR-7, open questions 1, 2, 8 and 10, dependencies,
+  assumptions), `EXPERIENCE.md`, `epics.md` (Story 1.5, Story 2.3 destination, FR-38 inbox, content list), both READMEs
+  and `.memlog.md`. After the bmad-code-review run, renamed Dallas to Plano everywhere (stats, clocks, FAQ, meta
+  descriptions, privacy text, specs) at Amber's request, and applied 8 review fixes.
+- **Decision / result:** Offices and the contact inbox are real; CV storage in Sanity stays open for Hoang Vu.
+- **AI got it wrong?** Yes. The first version labelled Plano "Head office" (copied from the pasted text) and kept
+  "Dallas, USA" as the heading; Amber corrected both.

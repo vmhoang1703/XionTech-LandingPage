@@ -37,7 +37,7 @@ news story, a sample job page with the application form, the privacy policy page
 - Brand colour rhythm per section (paper, mist, navy band, one amber band) instead of a dark-mode toggle.
 - 4-D process shown as an illustrated flow: request, 01 Discovery, 02 Design, 03 Development, 04 Deployment, launch.
 - Core values use the wording from the office banner.
-- Only two offices: Ho Chi Minh City and Dallas.
+- Only two offices: Ho Chi Minh City and Plano.
 
 ## For developers
 
@@ -53,7 +53,7 @@ The prototype follows the challenge rule: everything not verified is marked `[Pl
 - `grep -rn "\[Placeholder\]" mockups/site-v3` lists every item still to replace or verify.
 - Stats (25+ years, 24/7, 20+ stacks), service and product descriptions and careers text are
   confirmed by the business (2026-09-28). The `[Placeholder]` markers left are sample content.
-- Still missing: both office street addresses, the contact email address, team and office photos,
+- Still missing: team and office photos,
   real news stories and roles, product clips, app store links and web addresses,
   and a **privacy policy** (the forms collect personal data; Vietnam PDPD, Decree 13/2023, applies).
 - The prototype is not the production code. The real site is built in Next.js 16 + Tailwind v4

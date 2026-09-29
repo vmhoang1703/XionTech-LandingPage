@@ -104,7 +104,7 @@ FR-16: PXP story phone with five tabs (Attendance, Grades, Messages, Payments, E
 FR-17: LXP, SXP, IoT in browser frames with audience, four features and web address as a link that opens a new tab (`[Placeholder]` until confirmed); missing media shows an empty frame.
 FR-18: Three Product stories under `#updates` plus "See all news"; none hides the grid.
 FR-19: Real product screens or clips in device frames; clips never autoplay with sound, poster frame, visible play and pause, muted autoplay stops after 5s; devices float one cycle under 5s; tilt up to 8 degrees on hover-capable devices.
-FR-20: Services hero with "Start a project", "See our 4-D process" and live HCMC and Dallas clocks (IANA zones, 30s refresh, server-rendered zone label).
+FR-20: Services hero with "Start a project", "See our 4-D process" and live HCMC and Plano clocks (IANA zones, 30s refresh, server-rendered zone label).
 FR-21: Eight services at `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staffing`, `#custom-apps`, `#low-code`, `#ai-solutions`, `#cloud`.
 FR-22: Three ways to work with us: Dedicated team, End-to-end delivery, Co-creation, each naming its service.
 FR-23: 4-D process at `#process` from "Your request" to "Launch" with "You receive" per step; track fills over 2.4s at 30% visible, steps enter in turn, dot rests at Launch; reduced motion final state; rows aligned; below 1080px track and end nodes hide; one shared component for Home and Services.
@@ -122,7 +122,7 @@ FR-34: Valid demo capture goes to `/demo#form` and project capture to `/demo#pro
 FR-35: Removed 2026-09-29: no subscribe or talent-network capture.
 FR-36: Two-tab contact form: hash picks the tab; fields per the EXPERIENCE.md field table; hidden-tab fields not validated, focusable or submitted but kept; submit marks invalid fields and focuses the first; sending, success and failure states.
 FR-37: Preferred date cannot be before today in the visitor's time zone; picker starts at today; "Please choose today or a later date."
-FR-38: Every Submission (demo, project, job application) reaches a XionTechs destination (contact inbox; Sanity for job applications); server-side validation mirrors the client rules; honeypot and a rate limit keyed on IP plus email (5 per 10 minutes `[ASSUMPTION]`) stop spam. Contact inbox address to be supplied.
+FR-38: Every Submission (demo, project, job application) reaches a XionTechs destination (contact inbox; Sanity for job applications); server-side validation mirrors the client rules; honeypot and a rate limit keyed on IP plus email (5 per 10 minutes `[ASSUMPTION]`) stop spam. Contact inbox: vinni.tran@newxion.com.
 FR-39: "Book a demo" only for the demo intent and "Start a project" only for the project intent, with EN and VI labels from the CTA table.
 FR-40: Consent line under every form with the exact EXPERIENCE.md wording, ending with a "Privacy policy" link.
 FR-41: Privacy policy at `/privacy` linked from every consent line and the footer, covering what is collected, use, retention, rights, and listing the essential locale cookie; no form goes live at public launch before the text is real.
@@ -564,8 +564,9 @@ So that I can call or navigate from wherever I am.
 
 **Given** the Offices column
 **When** it renders
-**Then** Ho Chi Minh City reads "Viettel Tower, Floor 12, 285 CMT8, HCMC 70064" with `tel:+84908107552` and Dallas, USA reads "Texas, United States" with `tel:+14693229899`
-**And** no Da Nang office and no second HCMC address appear.
+**Then** Plano, Texas, USA comes first and reads "7950 Legacy Drive, Suite 400, Plano, Texas 75024, USA" with `tel:+14693229899`, "WhatsApp +1 469 439 9345" (`https://wa.me/14694399345`, new tab, accessible name ending "(opens in a new tab)") and `mailto:vinni.tran@newxion.com`
+**And** Ho Chi Minh City, Vietnam follows with the label "Vietnam Delivery Center", "Floor 15, B1 Building, 279 Nguyen Tri Phuong Street, Dien Hong Ward, Ho Chi Minh City, Vietnam" and `tel:+84908107552`
+**And** there is no "Head office" label, no Da Nang office and no second HCMC address; the same blocks appear on About and Book a demo.
 
 **Given** the bottom bar
 **When** it renders
@@ -821,7 +822,7 @@ So that I never retype a request or wonder if it arrived.
 
 **Given** a valid demo or project Submission
 **When** it is accepted
-**Then** it is sent through the mail sender service (free tier, chosen in architecture) to the company contact inbox set in server configuration (address to be supplied)
+**Then** it is sent through the mail sender service (free tier, chosen in architecture) to the contact inbox vinni.tran@newxion.com, set in server configuration
 **And** no personal data appears in any URL, query string or hash.
 
 ### Story 2.4: Email capture band (demo, project)
@@ -1030,7 +1031,7 @@ So that I can see experience and coverage without scrolling.
 
 **Given** the Home hero
 **When** it renders
-**Then** the label "Experience you can count on" ("Kinh nghiệm bạn có thể tin cậy") sits at the bottom of the hero above five figures: 25+ years of leadership experience in software, 24/7 global coverage across time zones, 20+ technology stacks, 8 service offerings, 2 offices (Ho Chi Minh City and Dallas).
+**Then** the label "Experience you can count on" ("Kinh nghiệm bạn có thể tin cậy") sits at the bottom of the hero above five figures: 25+ years of leadership experience in software, 24/7 global coverage across time zones, 20+ technology stacks, 8 service offerings, 2 offices (Ho Chi Minh City and Plano).
 
 **Given** the band becomes 60% visible
 **When** it animates
@@ -1354,7 +1355,7 @@ Companies judge the delivery team and start a project.
 ### Story 5.1: Services hero with live office clocks
 
 As Quân, checking time-zone overlap,
-I want live local times for Ho Chi Minh City and Dallas,
+I want live local times for Ho Chi Minh City and Plano,
 So that I know when the team is working.
 
 - **Design reference:** `mockups/site-v3/services.html` hero (`section.hero-navy`, `.cta-row`, `.clock-strip`)
@@ -1375,7 +1376,7 @@ So that I know when the team is working.
 
 **Given** the clock strip before JavaScript runs
 **When** the server responds
-**Then** it shows "Ho Chi Minh City GMT+7" and "Dallas US Central".
+**Then** it shows "Ho Chi Minh City GMT+7" and "Plano US Central".
 
 **Given** JavaScript runs
 **When** the page is open
@@ -1887,4 +1888,4 @@ This document was produced in non-interactive mode. At each halt point the defau
 - Mail sender service (free tier, chosen in architecture) for Story 2.3; no vendor is decided (PRD open question 18).
 - Shared store for rate limits on serverless (free tier, chosen in architecture) for Story 2.3; no vendor is decided (PRD open question 19).
 - CI pipeline (after demo): until it exists, axe-core, Lighthouse and the launch content check run locally before release (Stories 7.3, 7.4, 7.5; PRD open question 20).
-- Real content still `[Placeholder]`: store links, app URLs, product clips, news stories, roles, team and office photos, privacy policy text, both street addresses, contact email address, logo SVG.
+- Real content still `[Placeholder]`: store links, app URLs, product clips, news stories, roles, team and office photos, privacy policy text, logo SVG.
