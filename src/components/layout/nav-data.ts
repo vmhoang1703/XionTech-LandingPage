@@ -23,6 +23,9 @@ export interface NavLabels {
   careers: string;
   bookDemo: string;
   skipLink: string;
+  mainNav: string;
+  homeLink: string;
+  logoAlt: string;
 }
 
 export interface MegaFooter {
@@ -40,6 +43,9 @@ export const LABELS: NavLabels = {
   careers: "Careers",
   bookDemo: "Book a demo",
   skipLink: "Skip to content",
+  mainNav: "Main",
+  homeLink: "XionTechs home",
+  logoAlt: "XionTechs, Get IT Done",
 };
 
 // Products (4 total, in order)
@@ -122,42 +128,27 @@ export const SERVICES_FOOTER: MegaFooter = {
   linkText: "See the process",
 };
 
+export type Section = "products" | "services" | "news" | "about" | "careers";
+
+const SECTIONS: readonly Section[] = [
+  "news",
+  "careers",
+  "about",
+  "products",
+  "services",
+];
+
 /**
  * Determine the current section from a pathname.
- * Returns the section name for styling the nav item as current.
- *
- * Maps (per spec I/O & Edge-Case Matrix):
- * - /news/* → 'news'
- * - /careers/* → 'careers'
- * - /about* → 'about'
- * - /products* → 'products'
- * - /services* → 'services'
- * - Everything else (/, /demo, unknown paths) → '' (no section)
+ * A section matches its own path or a child path ("/news", "/news/x"),
+ * not a path that only shares a prefix ("/newsletter"). Matching is case-sensitive.
+ * Root, /demo and unknown paths return null.
  */
-export function currentSection(pathname: string): string {
-  // Normalize: remove trailing slash for consistent matching
-  const normalized = pathname.toLowerCase();
-
-  if (normalized.startsWith("/news")) {
-    return "news";
-  }
-
-  if (normalized.startsWith("/careers")) {
-    return "careers";
-  }
-
-  if (normalized.startsWith("/about")) {
-    return "about";
-  }
-
-  if (normalized.startsWith("/products")) {
-    return "products";
-  }
-
-  if (normalized.startsWith("/services")) {
-    return "services";
-  }
-
-  // Root, /demo, unknown paths → no current section
-  return "";
+export function currentSection(pathname: string): Section | null {
+  return (
+    SECTIONS.find(
+      (section) =>
+        pathname === `/${section}` || pathname.startsWith(`/${section}/`),
+    ) ?? null
+  );
 }

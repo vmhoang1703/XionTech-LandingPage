@@ -33,6 +33,6 @@ describe("SiteHeader", () => {
   it("renders the primary nav inside a header", () => {
     render(<SiteHeader />);
     expect(screen.getByRole("banner")).toBeTruthy();
-    expect(screen.getByRole("navigation", { name: "Primary" })).toBeTruthy();
+    expect(screen.getByRole("navigation", { name: "Main" })).toBeTruthy();
   });
 });

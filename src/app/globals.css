@@ -280,6 +280,10 @@
     border-radius: var(--radius-xs);
   }
 
+  #main:focus {
+    outline: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

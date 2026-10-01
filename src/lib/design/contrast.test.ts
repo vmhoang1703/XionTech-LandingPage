@@ -681,4 +681,14 @@ describe("T9: focus ring and skip link pill", () => {
     const rule = readRuleDeclarations(source, ".skip:focus");
     expect(rule.get("border-radius")).toBe("var(--radius-full)");
   });
+
+  it("#main drops the outline when focused by the skip link", () => {
+    const rule = readRuleDeclarations(source, "#main:focus");
+    expect(rule.get("outline")).toBe("none");
+  });
+
+  it("html reserves scroll-padding-top for the sticky header", () => {
+    const rule = readRuleDeclarations(source, "html");
+    expect(rule.get("scroll-padding-top")).toBe("var(--spacing-header-height)");
+  });
 });

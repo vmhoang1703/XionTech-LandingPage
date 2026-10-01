@@ -83,6 +83,37 @@ describe("SiteNav", () => {
     expect(document.activeElement).toBe(servicesTrigger());
   });
 
+  it("closes when focus tabs out of the menu", () => {
+    render(
+      <>
+        <SiteNav />
+        <button>outside</button>
+      </>,
+    );
+    fireEvent.click(productsTrigger());
+    fireEvent.blur(productsTrigger(), {
+      relatedTarget: screen.getByRole("button", { name: "outside" }),
+    });
+    expect(expanded(productsTrigger())).toBe("false");
+  });
+
+  it("stays open when focus moves inside the same menu", () => {
+    render(<SiteNav />);
+    fireEvent.click(productsTrigger());
+    fireEvent.blur(productsTrigger(), {
+      relatedTarget: screen.getByRole("link", { name: /PXP/ }),
+    });
+    expect(expanded(productsTrigger())).toBe("true");
+  });
+
+  it("does not move focus on Escape when focus is outside the nav", () => {
+    render(<SiteNav />);
+    fireEvent.click(productsTrigger());
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(expanded(productsTrigger())).toBe("false");
+    expect(document.activeElement).toBe(document.body);
+  });
+
   it("does nothing on Escape when no menu is open", () => {
     render(<SiteNav />);
     const news = screen.getByRole("link", { name: "News" });

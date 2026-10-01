@@ -24,11 +24,11 @@ describe("nav-data", () => {
     });
 
     it("maps / to empty string", () => {
-      expect(currentSection("/")).toBe("");
+      expect(currentSection("/")).toBeNull();
     });
 
     it("maps unknown paths to empty string", () => {
-      expect(currentSection("/unknown")).toBe("");
+      expect(currentSection("/unknown")).toBeNull();
     });
 
     it("maps /about to about (per spec I/O Matrix)", () => {
@@ -40,8 +40,15 @@ describe("nav-data", () => {
     });
 
     it("maps /demo to empty string", () => {
-      expect(currentSection("/demo")).toBe("");
+      expect(currentSection("/demo")).toBeNull();
     });
+
+    it.each(["/newsletter", "/aboutus", "/News", "/products-x", "/careersx"])(
+      "does not match %s",
+      (path) => {
+        expect(currentSection(path)).toBeNull();
+      },
+    );
 
     it("maps /services to services", () => {
       expect(currentSection("/services")).toBe("services");

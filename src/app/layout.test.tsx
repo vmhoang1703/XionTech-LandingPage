@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { isValidElement, type ReactElement } from "react";
+import type { ReactElement } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 // next/font/google only works inside the Next.js compiler; stub the loaders.
@@ -28,19 +28,6 @@ describe("RootLayout", () => {
     expect(html.props.className).toContain("font-lexend-exa");
     expect(html.props.className).toContain("font-be-vietnam-pro");
     expect(html.props.className).toContain("font-jetbrains-mono");
-  });
-
-  it("places children inside the body", () => {
-    const child = <p>child</p>;
-    const html = RootLayout({
-      children: child,
-    } as LayoutProps<"/">) as ReactElement<{
-      children: ReactElement<{ children: unknown }>;
-    }>;
-    const body = html.props.children;
-
-    expect(isValidElement(body)).toBe(true);
-    expect(body.props.children).toBeDefined();
   });
 
   it("renders the header before a focusable main#main that wraps the page", () => {

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FocusEvent } from "react";
 import {
   currentSection,
   LABELS,
@@ -11,12 +11,13 @@ import {
   SERVICES,
   SERVICES_FOOTER,
   type MegaFooter,
+  type Section,
 } from "./nav-data";
 
 type MenuId = "products" | "services";
 
 const itemClass =
-  "inline-flex h-10 items-center border-b-2 border-transparent px-3 text-ui text-text hover:text-navy aria-[current=page]:border-amber aria-[current=page]:font-bold aria-[current=page]:text-navy";
+  "inline-flex h-10 items-center rounded-full px-3.5 py-[9px] text-ui text-text hover:bg-mist aria-expanded:bg-mist aria-[current=page]:rounded-none aria-[current=page]:font-bold aria-[current=page]:text-navy aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]";
 
 // Prototype values with no design token.
 const panelClass =
@@ -64,6 +65,12 @@ export function SiteNav() {
   const open: MenuId | null = opened ? opened.menu : null;
   const section = currentSection(pathname);
   const close = () => setOpened(null);
+  const closeOnFocusOut = (event: FocusEvent<HTMLDivElement>) => {
+    const next = event.relatedTarget;
+    if (next && !event.currentTarget.contains(next as Node)) {
+      setOpened(null);
+    }
+  };
 
   useEffect(() => {
     if (!open) {
@@ -72,7 +79,9 @@ export function SiteNav() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpened(null);
-        triggerRefs.current[open]?.focus();
+        if (navRef.current?.contains(document.activeElement)) {
+          triggerRefs.current[open]?.focus();
+        }
       }
     };
     const onPointerDown = (event: PointerEvent) => {
@@ -107,7 +116,7 @@ export function SiteNav() {
     </button>
   );
 
-  const link = (key: string, href: string, label: string) => (
+  const link = (key: Section, href: string, label: string) => (
     <Link
       href={href}
       className={itemClass}
@@ -120,10 +129,10 @@ export function SiteNav() {
   return (
     <nav
       ref={navRef}
-      aria-label="Primary"
+      aria-label={LABELS.mainNav}
       className="hidden items-center gap-1 min-[1081px]:flex"
     >
-      <div className="relative">
+      <div className="relative" onBlur={closeOnFocusOut}>
         {trigger("products", LABELS.products)}
         <div
           id="mega-products"
@@ -138,13 +147,13 @@ export function SiteNav() {
               className={rowClass}
             >
               <span>
-                <span className="text-title-sm text-heading block">
+                <span className="font-display text-title-sm text-heading block font-semibold">
                   {product.name}
                 </span>
                 <span className="text-ui text-muted block">
                   {product.valueLine}
                 </span>
-                <span className="text-label-sm text-navy mt-1.5 block">
+                <span className="font-brand text-label-sm text-navy mt-1.5 block font-medium tracking-[0.14em] uppercase">
                   {product.forLine}
                 </span>
               </span>
@@ -153,7 +162,7 @@ export function SiteNav() {
           <MegaFooterRow footer={PRODUCTS_FOOTER} onNavigate={close} />
         </div>
       </div>
-      <div className="relative">
+      <div className="relative" onBlur={closeOnFocusOut}>
         {trigger("services", LABELS.services)}
         <div
           id="mega-services"
@@ -167,7 +176,7 @@ export function SiteNav() {
               onClick={close}
               className={`${rowClass} items-center py-3`}
             >
-              <span className="text-title-sm text-heading block">
+              <span className="font-display text-title-sm text-heading block font-semibold">
                 {service.name}
               </span>
             </Link>
