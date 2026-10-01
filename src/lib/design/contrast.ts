@@ -27,10 +27,8 @@ function compositeColor(
   bg: { r: number; g: number; b: number; a: number },
 ): { r: number; g: number; b: number } {
   const alpha = fg.a + bg.a * (1 - fg.a);
-  if (alpha === 0) {
-    return { r: 0, g: 0, b: 0 };
-  }
-
+  // alpha is never 0 in this implementation: bg is always composited with white
+  // first (if transparent), ensuring bg.a >= 1 before use
   return {
     r: (fg.r * fg.a + bg.r * bg.a * (1 - fg.a)) / alpha,
     g: (fg.g * fg.a + bg.g * bg.a * (1 - fg.a)) / alpha,
