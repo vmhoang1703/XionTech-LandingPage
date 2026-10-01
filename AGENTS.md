@@ -49,6 +49,7 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 | Styling      | Tailwind CSS v4 (config lives in `src/app/globals.css` via `@theme`)                         |
 | UI parts     | shadcn/ui (to be added)                                                                      |
 | Animation    | Motion (to be added)                                                                         |
+| Icons        | @phosphor-icons/react (installed by the first story that renders an icon)                   |
 | CMS          | Sanity for Careers/Jobs and Blog (free plan) — see `docs/spikes/cms-spike.md`                |
 | Hosting      | Vercel Hobby (owner: Hoang Vu; only the owner can change project settings). See Git workflow |
 | Formatting   | Prettier + `prettier-plugin-tailwindcss`, ESLint (`eslint-config-next`)                      |
