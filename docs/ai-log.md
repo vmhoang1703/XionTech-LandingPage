@@ -296,3 +296,7 @@ Template:
      files to the spec, and nobody had seen the focus ring's 2.5px width or 8px radius. A new check
      at 2× pixel density showed that Chrome draws the 2.5px ring as 2px. The lead decides whether
      to keep 2.5px.
+  7. The AI opened PR #7 with `gh pr create` and its own body, instead of `/create-pr` as the
+     lead had asked for earlier PRs. The lead caught it. `/create-pr` targets Azure DevOps (`az`),
+     so it cannot open a GitHub PR here, but PRs #1–#6 used its template; the PR #7 body was
+     rewritten to that template with `gh pr edit`.
