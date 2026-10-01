@@ -61,3 +61,7 @@ Change reviewed: prototype v3.8 (job page, roles list, removals) and the PRD, UX
 - [low] "(opens in a new tab)" accessible names on store and app links are English only; add VI with Story 1.2.
 - [low] Epic 1 title and Story 7.3 still say "bilingual" and "both locales"; Vietnamese is after Demo day.
 - [low] `.people` and `.person` CSS in the prototype is unused since the leadership section was removed.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-5-site-footer.md`
+  summary: Wrap the footer link columns (Products, Services, Company) in a `<nav aria-label="Footer">` landmark.
+  evidence: Blind Hunter review 2026-10-01; the prototype has no landmark and FR-7 does not ask for one, so it is an a11y improvement beyond this story.
