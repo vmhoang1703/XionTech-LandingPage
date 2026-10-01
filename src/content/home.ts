@@ -8,6 +8,7 @@ export const homeHero = {
     tail: ".",
   },
   sub: "PXP for parents, LXP for learners, SXP for staff. And the engineering team behind them, ready to build yours.",
+  motion: { pause: "Pause motion", play: "Play motion" },
   cta: { href: "/products", label: "Explore our products" },
   // Real product screens arrive with Story 4.4 (after demo); until then the
   // device frames stay empty.

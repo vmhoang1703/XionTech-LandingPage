@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { homeHero } from "@/content/home";
+import { HeroSilk } from "./hero-silk";
 
 // Server Component: text and CTA render without JavaScript. The hero-silk
-// surface (Story 1.1) paints the static navy and amber glow; Story 3.2 adds
+// surface (Story 1.1) paints the static navy and amber glow; HeroSilk adds
 // the silk canvas and the motion toggle as a client island.
 export function HomeHero() {
   const { label, title, sub, cta, devices } = homeHero;
@@ -10,8 +11,9 @@ export function HomeHero() {
   return (
     <section
       aria-labelledby="home-hero-title"
-      className="hero-silk flex min-h-[calc(100dvh-var(--spacing-header-height))] items-center"
+      className="hero-silk relative isolate flex min-h-[calc(100dvh-var(--spacing-header-height))] items-center"
     >
+      <HeroSilk />
       <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto grid w-full grid-cols-1 items-center gap-8 py-10 md:grid-cols-[0.92fr_1.08fr]">
         <div>
           <span className="font-brand text-label uppercase">{label}</span>
