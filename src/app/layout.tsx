@@ -7,25 +7,23 @@ import {
 } from "next/font/google";
 import "./globals.css";
 
-const fontSubsets = ["latin", "vietnamese"] as const;
-
 const unbounded = Unbounded({
   variable: "--font-unbounded",
-  subsets: [...fontSubsets],
+  subsets: ["latin", "vietnamese"],
   weight: ["500", "600", "700"],
   display: "swap",
 });
 
 const lexendExa = Lexend_Exa({
   variable: "--font-lexend-exa",
-  subsets: [...fontSubsets],
+  subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600"],
   display: "swap",
 });
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
-  subsets: [...fontSubsets],
+  subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
@@ -33,7 +31,7 @@ const beVietnamPro = Be_Vietnam_Pro({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
-  subsets: [...fontSubsets],
+  subsets: ["latin", "vietnamese"],
   weight: ["400", "500"],
   display: "swap",
 });
