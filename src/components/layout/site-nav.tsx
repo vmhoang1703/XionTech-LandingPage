@@ -20,8 +20,9 @@ const itemClass =
 
 // Prototype values with no design token.
 const panelClass =
-  "absolute inset-x-0 top-full z-[var(--z-index-mega-menu)] border-b border-border bg-paper shadow-[0_30px_70px_-24px_rgb(22_54_99/0.3)]";
-const rowClass = "block rounded-[16px] p-4 hover:bg-mist focus-visible:bg-mist";
+  "absolute top-[calc(100%+14px)] -left-5 z-[var(--z-index-mega-menu)] w-[min(660px,92vw)] [&:not([hidden])]:grid grid-cols-2 gap-1.5 rounded-lg border border-border bg-paper p-3.5 shadow-[0_30px_70px_-24px_rgb(22_54_99/0.3)]";
+const rowClass =
+  "flex gap-3.5 rounded-[16px] p-3.5 hover:bg-mist focus-visible:bg-mist";
 
 function MegaFooterRow({
   footer,
@@ -57,8 +58,10 @@ export function SiteNav() {
     services: null,
   });
 
-  const open: MenuId | null =
-    opened && opened.path === pathname ? opened.menu : null;
+  if (opened && opened.path !== pathname) {
+    setOpened(null);
+  }
+  const open: MenuId | null = opened ? opened.menu : null;
   const section = currentSection(pathname);
   const close = () => setOpened(null);
 
@@ -120,67 +123,61 @@ export function SiteNav() {
       aria-label="Primary"
       className="hidden items-center gap-1 min-[1081px]:flex"
     >
-      {trigger("products", LABELS.products)}
-      {trigger("services", LABELS.services)}
-      {link("news", "/news", LABELS.news)}
-      {link("about", "/about", LABELS.about)}
-      {link("careers", "/careers", LABELS.careers)}
-
-      <div
-        id="mega-products"
-        className={panelClass}
-        hidden={open !== "products"}
-      >
-        <div className="wrap py-6">
-          <ul className="grid grid-cols-4 gap-2">
-            {PRODUCTS.map((product) => (
-              <li key={product.anchor}>
-                <Link
-                  href={`/products#${product.anchor}`}
-                  onClick={close}
-                  className={rowClass}
-                >
-                  <span className="text-title-sm text-heading block">
-                    {product.name}
-                  </span>
-                  <span className="text-ui text-muted mt-1 block">
-                    {product.valueLine}
-                  </span>
-                  <span className="text-label-sm text-navy mt-2 block">
-                    For <span>{product.forLine}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <div className="relative">
+        {trigger("products", LABELS.products)}
+        <div
+          id="mega-products"
+          className={panelClass}
+          hidden={open !== "products"}
+        >
+          {PRODUCTS.map((product) => (
+            <Link
+              key={product.anchor}
+              href={`/products#${product.anchor}`}
+              onClick={close}
+              className={rowClass}
+            >
+              <span>
+                <span className="text-title-sm text-heading block">
+                  {product.name}
+                </span>
+                <span className="text-ui text-muted block">
+                  {product.valueLine}
+                </span>
+                <span className="text-label-sm text-navy mt-1.5 block">
+                  {product.forLine}
+                </span>
+              </span>
+            </Link>
+          ))}
           <MegaFooterRow footer={PRODUCTS_FOOTER} onNavigate={close} />
         </div>
       </div>
-
-      <div
-        id="mega-services"
-        className={panelClass}
-        hidden={open !== "services"}
-      >
-        <div className="wrap py-6">
-          <ul className="grid grid-cols-4 gap-2">
-            {SERVICES.map((service) => (
-              <li key={service.anchor}>
-                <Link
-                  href={`/services#${service.anchor}`}
-                  onClick={close}
-                  className={rowClass}
-                >
-                  <span className="text-title-sm text-heading block">
-                    {service.name}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <div className="relative">
+        {trigger("services", LABELS.services)}
+        <div
+          id="mega-services"
+          className={panelClass}
+          hidden={open !== "services"}
+        >
+          {SERVICES.map((service) => (
+            <Link
+              key={service.anchor}
+              href={`/services#${service.anchor}`}
+              onClick={close}
+              className={`${rowClass} items-center py-3`}
+            >
+              <span className="text-title-sm text-heading block">
+                {service.name}
+              </span>
+            </Link>
+          ))}
           <MegaFooterRow footer={SERVICES_FOOTER} onNavigate={close} />
         </div>
       </div>
+      {link("news", "/news", LABELS.news)}
+      {link("about", "/about", LABELS.about)}
+      {link("careers", "/careers", LABELS.careers)}
     </nav>
   );
 }

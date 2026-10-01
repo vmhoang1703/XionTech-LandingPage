@@ -41,7 +41,10 @@ describe("SiteNav", () => {
     expect(expanded(productsTrigger())).toBe("true");
     expect(href(/PXP/)).toBe("/products#pxp");
     expect(href(/IoT Device Management/)).toBe("/products#iot");
-    expect(screen.getByText("Staff, Teachers, Leaders")).toBeTruthy();
+    expect(screen.getByText("Staff, Teachers, Leaders").textContent).toBe(
+      "Staff, Teachers, Leaders",
+    );
+    expect(screen.getByText("Parents").textContent).toBe("Parents");
     expect(screen.getByText("More products are on the way.")).toBeTruthy();
     expect(href("All products")).toBe("/products");
   });
@@ -126,6 +129,18 @@ describe("SiteNav", () => {
     mockPathname = "/products";
     rerender(<SiteNav />);
     expect(expanded(productsTrigger())).toBe("false");
+  });
+
+  it("does not reopen when the user returns to the path it was opened on", () => {
+    mockPathname = "/";
+    const { rerender } = render(<SiteNav />);
+    fireEvent.click(productsTrigger());
+    mockPathname = "/news";
+    rerender(<SiteNav />);
+    mockPathname = "/";
+    rerender(<SiteNav />);
+    expect(expanded(productsTrigger())).toBe("false");
+    expect(screen.queryByRole("link", { name: /PXP/ })).toBeNull();
   });
 
   it.each([
