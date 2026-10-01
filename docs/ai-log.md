@@ -601,7 +601,8 @@ Template:
   (WCAG 2.5.3), the dropdown and Menu button were not right-aligned below 1080px, duplicate YAML keys in DESIGN.md, a
   caret rotation under reduced motion, dead bento CSS, and stale header wording in the stories. Follow-up for the
   developers: `globals.css` still switches every transition off under reduced motion, while the spec now keeps short
-  fades.
+  fades. After the PR opened, Amber confirmed the Why XionTechs claim ("designed, built and supported by our own
+  team"), so its [Placeholder] marker was removed and PRD open question 23 closed.
 - **AI got it wrong?** Flagged, not wrong yet: removing the header Book a demo button changes AC-NAV-2. Book a demo
   stays reachable through heroes, capture bands and the footer "Contact" link, but pages without a capture band
   (Careers, Job, News story, Privacy, Not found) now rely on the footer only.
