@@ -22,4 +22,12 @@ describe("Home page", () => {
 
     expect(screen.getByRole("main").id).toBe("main");
   });
+  it("puts the two front doors directly after the hero", () => {
+    render(<Home />);
+
+    const main = screen.getByRole("main");
+    const [hero, doors] = Array.from(main.children);
+    expect(hero.getAttribute("aria-labelledby")).toBe("home-hero-title");
+    expect(doors.getAttribute("aria-label")).toBe("What we do");
+  });
 });

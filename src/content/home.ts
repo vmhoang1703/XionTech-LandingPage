@@ -35,3 +35,28 @@ export const homeStats: { label: string; stats: Stat[] } = {
     { value: "2", caption: "Offices: Ho Chi Minh City and Plano" },
   ],
 };
+
+export const homeDoors = {
+  label: "What we do",
+  products: {
+    href: "/products",
+    badges: ["PXP", "LXP", "SXP", "IoT"] as const,
+    title: "Products for schools",
+    line: "Connected apps for parents, students, teachers, leaders and school staff.",
+    chips: ["PXP · Parents", "LXP · Students", "SXP · Staff", "IoT · Campus"],
+  },
+  services: {
+    href: "/services",
+    label: "Outsourcing services",
+    title: "Your software delivery team",
+    line: "Dedicated teams and end-to-end delivery for companies building digital products.",
+    chips: [
+      "Product Engineering",
+      "AI-Driven Analytics",
+      "Staffing",
+      "Low-code",
+      "Cloud",
+      "+3 more",
+    ],
+  },
+};
