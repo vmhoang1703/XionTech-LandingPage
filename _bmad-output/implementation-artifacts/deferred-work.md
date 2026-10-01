@@ -88,13 +88,19 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - [low] No probe yet for the EN/VI switch (Story 1.2) or the mobile Menu button (Story 1.4); add them to `scripts/ux/surfaces/header.json` with those stories.
 - [low] `parity.mjs` and `shots.mjs` have no top-level `catch`: a failure such as "Cannot open … start npm run dev" prints a clear message, but Node adds its stack trace under it.
 - [low] A probe `error: …` row shows Playwright's first line (e.g. `locator.hover: Timeout 5000ms exceeded.`) but not which selector failed — trigger, hover area or panel. Add the probe key to the message, as `runActions` does for state actions.
-- [low] `widths: []` and repeated widths pass `validateSurface`. With `[]` the report lists every element as never found and every state, probe and entry as never used; a repeated width runs twice and counts each difference twice.
+- [low] `widths: []` and repeated widths pass `validateSurface`. With `[]` the report lists every element as never found and every state and probe as never ran (their entries are left out, since that cause is listed); a repeated width runs twice and counts each difference twice.
 - [low] An intended `width` written as a string gives a confusing "1280 is not a parity width (1280, …)"; check `Number.isInteger` first.
 - [low] An element `prop` typo (e.g. `colour`) is caught only after the run, as an entry that matched nothing; `validateSurface` could check it against the box keys, `missing` and `STYLE_PROPS`.
-- [low] Very long names can pass the 255-character file-name limit, and `con`, `nul`, `aux`, `prn`, `com1`… are Windows device names on Windows 10; the plain-name rule allows both.
+- [low] Very long names can pass the 255-character file-name limit; the plain-name rule has no length cap.
+- [low] `con`, `nul`, `aux`, `prn`, `com1`… are Windows device names on Windows 10; the plain-name rule allows them.
 - [low] `prototype` and `route` go into the report head unescaped (a line break or backtick breaks it).
 - [low] Two surface files with the same `name` share `ux-reports/<name>/` and overwrite each other's reports; the scripts could check `basename(options.surface, ".json") === surface.name`.
 - [low] The default `ux-reports/<name>/parity` folder keeps images from older runs (e.g. the old `-`-joined names); a run could clear its own default folder first.
-- [low] Default widths and the reserved state names are written in more than one file (`lib.mjs`, `parity.mjs`, `shots.mjs`); `shots.mjs` names files `<state>-<width>.png`, safe only because the width comes last and is all digits.
+- [low] Default widths and the reserved state names are written in more than one file (`lib.mjs`, `parity.mjs`, `shots.mjs`).
+- [low] `shots.mjs` names files `<state>-<width>.png`, safe only because the width comes last and is all digits; `parityImageName` uses `.`.
+- [low] The built-in `default` state is not checked for "ran but compared no element", and a state with `elements: []` is always listed as "compared no element" (`validateSurface` could refuse an empty list).
+- [low] A state whose listed elements are all never found is counted twice: under "Never found" and as "compared no element".
+- [low] An entry whose `state` does not compare its element (not in that state's `elements`) is caught only after the run, as "matched nothing"; `validateSurface` could check it.
+- [low] The diff-coverage gate measures `src/` only (`coverage.include` in `vitest.config.mts`), so `scripts/ux/lib.mjs` is outside it. Measured by hand on 2026-10-02: 100% lines, 98% branches. Add `scripts/` to the gate after Demo day.
 - [low] `ux:shots` has the same gap the parity report now closes: a state whose `minWidth` is above every `shotWidths` value gets no screenshot and no axe scan, and `--strict` still passes (Similar check).
 - [low] The report head and the console say "unexplained difference(s)", but the count also includes "Never found" and "Never ran or never used" lines, and the head line's advice ("listed in `intended`") does not fit those; the Tools table in `docs/ux-quality.md` says the same.

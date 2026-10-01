@@ -166,7 +166,7 @@ export function validateSurface(surface) {
         (typeof entry.prop !== "string" || entry.prop === "")
       )
         problems.push(
-          `intended[${i}].prop must be a non-empty string (leave it out to cover every property)`,
+          `intended[${i}].prop must be a property name such as "x", "color" or "missing"`,
         );
       if (
         entry?.state !== undefined &&
@@ -323,6 +323,17 @@ function intendedLabel(entry) {
   return `${entry.pending ? "pending" : "intended"}: ${entry.note}`;
 }
 
+/** Where an `intended` entry applies, e.g. "x, state open, 1280px" or "any prop". */
+function entryScope(entry) {
+  return [
+    entry.prop ?? "any prop",
+    entry.state && `state ${entry.state}`,
+    entry.width && `${entry.width}px`,
+  ]
+    .filter(Boolean)
+    .join(", ");
+}
+
 /** Copies a PNG onto a white canvas of the given size (top-left aligned). */
 export function padImage(png, width, height) {
   const out = new PNG({ width, height });
@@ -428,7 +439,7 @@ export function compareProbeOutcomes(proto, dev) {
 
 /** Behaviour section of the report: one row per probe, event and width. Adds matched entries to `used`. */
 function renderProbes(surface, probes, used) {
-  const counts = { unexplained: 0, pending: new Set() };
+  const counts = { unexplained: 0 };
   const lines = [];
   if (probes.length === 0) return { lines, ...counts };
   lines.push(
@@ -445,13 +456,10 @@ function renderProbes(surface, probes, used) {
       let mark = "same";
       if (differing.has(event)) {
         // A probe that could not run is never explained away: the run cannot tell whether the
-        // difference is still there. Its entry is shown, not applied, and a pending one stays pending.
+        // difference is still there. Its entry is shown, not applied.
         const failed = isError(p.proto[event]) || isError(p.dev[event]);
         const entry = findIntended(surface, p.name, event, { width: p.width });
-        if (entry) {
-          used.add(entry);
-          if (entry.pending) counts.pending.add(entry);
-        }
+        if (entry) used.add(entry);
         if (entry && !failed) {
           mark = intendedLabel(entry);
         } else {
@@ -477,48 +485,48 @@ export function neverFound(surface, results) {
 }
 
 /**
- * Parts of the surface file that did nothing in this run: states that ran at no width or compared
- * no element, probes that ran at no width (a `minWidth` above every width), and `intended` entries
- * that matched no difference (a typo, a state and width that never run together, an entry
- * shadowed by an earlier one, or a difference that is gone). An entry whose element was never
- * found, or whose state or probe never ran, is left out: that cause is listed already.
+ * Parts of the surface file that did nothing in this run: surface states that ran at no width or
+ * compared no element, probes that ran at no width (a `minWidth` above every width), and
+ * `intended` entries that matched no difference (a typo, a state and width that never run
+ * together, an entry shadowed by an earlier one, or a difference that is gone). An entry whose
+ * cause is listed already is left out: its state or probe did not run, or its element was never
+ * found (for a property entry: never found on both sides, so nothing was measured).
  */
 export function neverUsed(surface, results, probes, used) {
-  const compared = results.filter((r) => r.elements.length > 0);
-  const idleStates = new Set(
-    (surface.states ?? [])
-      .map((s) => s.name)
-      .filter((name) => !compared.some((r) => r.state === name)),
+  const ranStates = new Set(results.map((r) => r.state));
+  const comparedStates = new Set(
+    results.filter((r) => r.elements.length > 0).map((r) => r.state),
   );
-  const idleProbes = new Set(
-    (surface.probes ?? [])
-      .map((p) => p.name)
-      .filter((name) => !probes.some((p) => p.name === name)),
+  const idleStates = (surface.states ?? [])
+    .map((s) => s.name)
+    .filter((name) => !comparedStates.has(name));
+  const probeNames = (surface.probes ?? []).map((p) => p.name);
+  const idleProbes = probeNames.filter(
+    (name) => !probes.some((p) => p.name === name),
   );
-  const probeNames = new Set((surface.probes ?? []).map((p) => p.name));
-  const lost = new Set(neverFound(surface, results));
+  const seen = (keep) =>
+    new Set(results.flatMap((r) => r.elements.filter(keep).map((e) => e.name)));
+  const found = seen(() => true);
+  const measured = seen((e) => !e.missing);
   const blocked = (entry) =>
-    idleStates.has(entry.state) ||
-    idleProbes.has(entry.element) ||
-    (!probeNames.has(entry.element) && lost.has(entry.element));
-  const scope = (entry) =>
-    [
-      entry.prop ?? "any prop",
-      entry.state && `state ${entry.state}`,
-      entry.width && `${entry.width}px`,
-    ]
-      .filter(Boolean)
-      .join(", ");
+    idleStates.includes(entry.state) ||
+    (probeNames.includes(entry.element)
+      ? idleProbes.includes(entry.element)
+      : !(entry.prop === "missing" ? found : measured).has(entry.element));
   return [
-    ...[...idleStates].map(
-      (name) => `state ${name}: ran at no width or compared nothing`,
+    ...idleStates.map((name) =>
+      ranStates.has(name)
+        ? `state ${name}: ran but compared no element (check its actions and elements)`
+        : `state ${name}: ran at no width (check its minWidth)`,
     ),
-    ...[...idleProbes].map((name) => `probe ${name}: ran at no width`),
+    ...idleProbes.map(
+      (name) => `probe ${name}: ran at no width (check its minWidth)`,
+    ),
     ...(surface.intended ?? [])
       .filter((entry) => !used.has(entry) && !blocked(entry))
       .map(
         (entry) =>
-          `${entry.pending ? "pending" : "intended"} ${entry.element} (${cell(scope(entry))}): matched nothing — ${cell(entry.note)}`,
+          `${entry.pending ? "pending" : "intended"} ${entry.element} (${cell(entryScope(entry))}): matched nothing — ${cell(entry.note)}`,
       ),
   ];
 }
@@ -526,7 +534,6 @@ export function neverUsed(surface, results, probes, used) {
 /** Markdown report for parity results: one section per state and width, then behaviour. */
 export function renderParityReport(surface, results, probes = []) {
   let unexplained = 0;
-  const pending = new Set();
   const used = new Set();
   const lines = [
     `# UX parity: ${surface.name}`,
@@ -549,7 +556,6 @@ export function renderParityReport(surface, results, probes = []) {
         if (entry) {
           used.add(entry);
           notes.push(`missing on ${e.missing} (${intendedLabel(entry)})`);
-          if (entry.pending) pending.add(entry);
         } else {
           unexplained += 1;
           notes.push(`**missing on ${e.missing}**`);
@@ -562,7 +568,6 @@ export function renderParityReport(surface, results, probes = []) {
           notes.push(
             `${d.prop}: ${d.proto} → ${d.dev} (${intendedLabel(entry)})`,
           );
-          if (entry.pending) pending.add(entry);
         } else {
           unexplained += 1;
           notes.push(`**${d.prop}: ${d.proto} → ${d.dev}**`);
@@ -579,7 +584,6 @@ export function renderParityReport(surface, results, probes = []) {
   const behaviour = renderProbes(surface, probes, used);
   lines.push(...behaviour.lines);
   unexplained += behaviour.unexplained;
-  for (const entry of behaviour.pending) pending.add(entry);
   const missing = neverFound(surface, results);
   if (missing.length > 0) {
     unexplained += missing.length;
@@ -602,18 +606,20 @@ export function renderParityReport(surface, results, probes = []) {
       "",
     );
   }
-  // An open decision stays open even when its entry matched nothing in this run.
-  for (const entry of surface.intended ?? [])
-    if (entry.pending && !used.has(entry)) pending.add(entry);
+  // Every open decision in the file is listed, matched in this run or not.
+  const pending = (surface.intended ?? []).filter((entry) => entry.pending);
   lines.splice(
-    3,
+    4,
     0,
     `**Unexplained differences: ${unexplained}** (bold below). Each must be fixed, or listed in the surface file's \`intended\` with a reason or decision ID.`,
     "",
-    `**Pending design decisions: ${pending.size}** (rows marked "pending"). Built one way, waiting for Amber or the lead:`,
+    `**Pending design decisions: ${pending.length}** (rows marked "pending"). Built one way, waiting for Amber or the lead:`,
     "",
-    ...[...pending].map((entry) => `- ${entry.element}: ${cell(entry.note)}`),
-    ...(pending.size > 0 ? [""] : []),
+    ...pending.map(
+      (entry) =>
+        `- ${entry.element} (${cell(entryScope(entry))}): ${cell(entry.note)}${used.has(entry) ? "" : " — not seen in this run"}`,
+    ),
+    ...(pending.length > 0 ? [""] : []),
   );
-  return { markdown: lines.join("\n"), unexplained, pending: pending.size };
+  return { markdown: lines.join("\n"), unexplained, pending: pending.length };
 }

@@ -277,6 +277,7 @@ describe("validateSurface cross-references", () => {
         { element: "menu", prop: "hovr", note: "n" },
         { element: "menu", prop: "hover", state: "open", note: "n" },
         { element: "logo", prop: null, note: "n" },
+        { element: "logo", prop: "", note: "n" },
       ],
       widths: [0],
       shotWidths: "1280",
@@ -305,7 +306,8 @@ describe("validateSurface cross-references", () => {
     expect(message).toContain("intended[1].pending must be true or false");
     expect(message).toContain("intended[2].prop must be a probe event");
     expect(message).toContain("intended[3].state does not apply to a probe");
-    expect(message).toContain("intended[4].prop must be a non-empty string");
+    expect(message).toContain("intended[4].prop must be a property name");
+    expect(message).toContain("intended[5].prop must be a property name");
     expect(message).toContain('"widths" must hold positive whole numbers');
     expect(message).toContain('"shotWidths" must be a list');
   });
@@ -400,6 +402,7 @@ describe("validateSurface cross-references", () => {
             note: "n",
           },
           { element: "logo", prop: "x", state: "open", note: "n" },
+          { element: "logo", note: "catch-all" },
         ],
       });
     } catch (error) {
@@ -413,6 +416,7 @@ describe("validateSurface cross-references", () => {
     );
     expect(message).not.toContain("intended[2]");
     expect(message).not.toContain("intended[3]");
+    expect(message).not.toContain("intended[4]");
     expect(() =>
       validateSurface({
         ...base,
@@ -530,7 +534,10 @@ describe("renderParityReport", () => {
       },
     ]);
     expect(unexplained).toBe(2);
-    expect(markdown).toContain("**Unexplained differences: 2**");
+    // A blank line keeps the counts a paragraph of their own under the route line.
+    expect(markdown).toContain(
+      "(red = different).\n\n**Unexplained differences: 2**",
+    );
     expect(markdown).toContain("x: 1 → 2 (intended: T9)");
     expect(markdown).toContain("**color: a → b**");
     expect(markdown).toContain("| nav | n/a | **missing on dev** |");
@@ -567,7 +574,9 @@ describe("renderParityReport", () => {
     expect(pendingMissing.markdown).toContain(
       "| logo | n/a | missing on dev (pending: UX-Q9<br><br># Amber) |",
     );
-    expect(pendingMissing.markdown).toContain("- logo: UX-Q9<br><br># Amber");
+    expect(pendingMissing.markdown).toContain(
+      "- logo (missing): UX-Q9<br><br># Amber",
+    );
     expect(pendingMissing.markdown).not.toContain("\n# Amber");
     const decided = renderParityReport(
       {
@@ -704,6 +713,7 @@ describe("interaction probes", () => {
       elements: [
         ...surface.elements,
         { name: "ghost", proto: ".g", dev: ".g" },
+        { name: "half", proto: ".h", dev: ".h" },
       ],
       states: [
         { name: "open", proto: [], dev: [], minWidth: 9999 },
@@ -716,23 +726,31 @@ describe("interaction probes", () => {
         { element: "logo", prop: "x", width: 1280, note: "shadowed" },
         {
           element: "logo",
-          prop: "colour",
+          prop: "col|our",
           note: "typo\n# not a heading",
           pending: true,
         },
         { element: "logo", prop: "x", width: 600, note: "no 600 run" },
         { element: "logo", state: "open", note: "state never ran" },
-        { element: "ghost", prop: "x", note: "selector broken" },
+        {
+          element: "ghost",
+          prop: "x",
+          note: "selector broken",
+          pending: true,
+        },
         { element: "menu", prop: "hover", note: "probe never ran" },
         { element: "tabs", prop: "escape", note: "same on both sides" },
+        { element: "logo", state: "shown", note: "catch-all in shown" },
+        { element: "half", prop: "x", note: "half open", pending: true },
       ],
     };
     const logo = (boxDiffs) => ({ name: "logo", boxDiffs, styleDiffs: [] });
+    const half = { name: "half", boxDiffs: [], styleDiffs: [], missing: "dev" };
     const results = [
       {
         state: "default",
         width: 1280,
-        elements: [logo([{ prop: "x", proto: 1, dev: 2 }])],
+        elements: [logo([{ prop: "x", proto: 1, dev: 2 }]), half],
       },
       { state: "empty", width: 1280, elements: [] },
       { state: "shown", width: 1280, elements: [logo([])] },
@@ -743,29 +761,38 @@ describe("interaction probes", () => {
       results,
       probes,
     );
-    // ghost never found (1) + open, empty, menu idle (3) + four entries that matched nothing (4)
-    expect(unexplained).toBe(8);
-    expect(pending).toBe(1);
-    expect(markdown).toContain("- logo: typo<br># not a heading");
+    // half missing on dev (1) + ghost never found (1) + open, empty, menu idle (3)
+    // + five entries that matched nothing (5); the ghost, half, open and menu entries are left
+    // out because their cause is listed already.
+    expect(unexplained).toBe(10);
+    expect(pending).toBe(3);
+    for (const line of [
+      String.raw`- logo (col\|our): typo<br># not a heading — not seen in this run`,
+      "- ghost (x): selector broken — not seen in this run",
+      "- half (x): half open — not seen in this run",
+    ])
+      expect(markdown).toContain(line);
     expect(markdown).not.toContain("\n# not a heading");
     expect(markdown).toContain("## Never ran or never used");
     for (const line of [
-      "- state open: ran at no width or compared nothing",
-      "- state empty: ran at no width or compared nothing",
-      "- probe menu: ran at no width",
+      "- state open: ran at no width (check its minWidth)",
+      "- state empty: ran but compared no element (check its actions and elements)",
+      "- probe menu: ran at no width (check its minWidth)",
       "- intended logo (x, 1280px): matched nothing — shadowed",
-      "- pending logo (colour): matched nothing — typo<br># not a heading",
+      String.raw`- pending logo (col\|our): matched nothing — typo<br># not a heading`,
       "- intended logo (x, 600px): matched nothing — no 600 run",
       "- intended tabs (escape): matched nothing — same on both sides",
+      "- intended logo (any prop, state shown): matched nothing — catch-all in shown",
     ])
       expect(markdown).toContain(line);
     for (const text of [
-      "state shown",
+      "- state shown",
       "probe tabs",
       "intended logo (x):",
       "state never ran",
-      "selector broken",
+      "matched nothing — selector broken",
       "probe never ran",
+      "matched nothing — half open",
     ])
       expect(markdown).not.toContain(text);
     expect(neverUsed(surface, results, [], new Set())).toEqual([]);
@@ -783,7 +810,7 @@ describe("interaction probes", () => {
   });
 
   it("escapes a pipe in an outcome or a note so the table row stays whole", () => {
-    const { markdown } = renderParityReport(
+    const { markdown, pending } = renderParityReport(
       {
         ...surface,
         intended: [
@@ -818,6 +845,7 @@ describe("interaction probes", () => {
       String.raw`| closed | open | intended: T \| U<br>V<br>W<br>X |`,
     );
     expect(markdown).toContain(String.raw`x: 1 → 2 (intended: 10% \| 12%) |`);
+    expect(pending).toBe(0); // decided entries, matched, are not open decisions
   });
 
   it("counts mapped elements that were never found", () => {
