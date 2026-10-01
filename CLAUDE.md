@@ -95,8 +95,10 @@ A task is done only when ALL are true:
 - **Checks run:** MUST run the project's test + lint commands. Never claim a command passed unless it actually ran.
 - **Lint scope:** exclude vendored / generated / third-party tooling directories from lint (they are not the project's own code).
 - **Code review (always):** must run a code review with `bmad-code-review` in Claude Code, and address findings before marking done. Required for every change — including non-production (docs/config/scripts) — no exception. Summarize the result + actions in the report.
+  - **Light review for small follow-ups (until Demo day, 2026-10-09):** run the full `bmad-code-review` (all layers) once per story or PR. After that, follow-up changes on the same branch (fixing review or Sonar findings, a typo) need one layer only while they total fewer than 50 changed lines since the last full review — count with `git diff --shortstat <last-reviewed-commit>..HEAD` (insertions + deletions, lock files excluded). Write that diff to a file, launch one subagent with `.claude/skills/bmad-code-review/review-prompts/edge-case-hunter.md` on it, triage its findings as `bmad-code-review` step 3 does, and report the result. At 50 lines or more, run the full review again.
 - **Smoke (gate):** at least one smoke test (tagged `smoke` — register the tag/marker in your test runner config) that boots the app/service and runs one happy-path (e.g. a health endpoint returns 200). The smoke command must pass before done.
 - **SonarQube gate (LOCAL ONLY):** the local SonarQube Quality Gate must pass before every push (`npm run sonar:gate`; the `pre-push` hook runs it automatically). See "SonarQube — LOCAL ONLY" below.
+  - **Daily, not per push (until Demo day, 2026-10-09):** every clone points its hooks at `scripts/git-hooks-demo` (`git config core.hooksPath scripts/git-hooks-demo`), whose `pre-push` runs only `npm run lint` — that includes SonarQube's JS/TS rules, but not CSS, duplication, coverage or hotspots. Hoang Vu runs the full gate once a day and before the release PR: `git switch develop && git pull && npm run sonar:gate:full` (new code = everything since `main`; the script refuses any other branch, a `develop` that differs from `origin/develop`, or local changes). Each finding becomes a fix PR the next morning, owned by whoever wrote that code. After Demo day: `git config core.hooksPath scripts/git-hooks` (setup step 4 below).
 - **Impact analysis:** before a non-trivial change, identify its blast radius — find all callers/dependents/consumers (grep the symbol; check the project's registration & integration points; note cross-repo consumers). Summarize what's affected + what was verified. Flag risk if blast radius is high and not fully test-covered.
 - **Similar check:** after a fix/pattern change, grep the same idiom/duplicate across the repo and any sibling / shared-scaffolding repos. Apply the same change where applicable, or list remaining instances as a follow-up. Don't fix one of N copies silently.
 
@@ -116,9 +118,12 @@ A task is done only when ALL are true:
     proves these guards; run it after any change to the gate template.
 - Every push — feature branches, `develop` and `main` — is scanned by a local
   `sonarqube:community` Docker container. There is no remote mode (`--remote` exits with an error).
+  Until Demo day the `pre-push` hook runs lint only and the scan runs daily instead (see
+  Definition of Done).
 - "New code" is what the branch adds on top of `develop` (`SONAR_LOCAL_REFERENCE_BRANCH`).
   Coverage comes from `npm run test:coverage` (`coverage/lcov.info`).
-- Findings block the push (bugs, vulnerabilities, code smells, hotspots, duplication).
+- Findings block the push (bugs, vulnerabilities, code smells, hotspots, duplication). Until
+  Demo day, findings from the daily run become fix PRs instead.
   Coverage-only failures warn. Fix findings; do not bypass. `SONAR_GATE_SKIP=1 git push` /
   `--no-verify` only with the user's explicit OK, and say so in the PR.
 - One-time setup per clone (same as `README.md`), with Docker Desktop running:
@@ -128,7 +133,9 @@ A task is done only when ALL are true:
      `SONAR_LOCAL_REFERENCE_BRANCH=develop`; do not change it. `sonar.env` is gitignored —
      never commit it.
   3. `./scripts/sonar/local_sonar.sh up` (first boot pulls ~700MB)
-  4. `git config core.hooksPath scripts/git-hooks` — last, so no push is blocked mid-setup
+  4. `git config core.hooksPath scripts/git-hooks` — last, so no push is blocked mid-setup.
+     Until Demo day (2026-10-09) use `git config core.hooksPath scripts/git-hooks-demo` instead
+     (lint only; the gate runs daily).
 
   Dashboard: <http://localhost:9000> (admin password in `~/.sonar-prepush-gate.env`).
 
@@ -148,7 +155,7 @@ The only place stack specifics go.
 - **Smoke command:** `npm run test:smoke` (Playwright project `smoke` runs tests tagged `@smoke`; builds, boots `next start` on port 3100, checks `/` returns 200).
 - **Build command:** `npm run build` (must pass before a PR).
 - **Code-review tool:** `/bmad-code-review`
-- **Static analysis:** `npm run sonar:gate` — SonarQube **LOCAL ONLY** (see section above). Runs automatically on `git push`.
+- **Static analysis:** `npm run sonar:gate` — SonarQube **LOCAL ONLY** (see section above). Runs automatically on `git push` (until Demo day: the hook runs lint only; `npm run sonar:gate:full` daily on `develop` instead). `npm run lint` also runs SonarQube's JS/TS rules (`eslint-plugin-sonarjs`, typed) on the TS/TSX files in `src/` without tests — the gate's TS scope; CSS, duplication, coverage and hotspots are only checked by the gate. `scripts/eslint-config.test.mjs` proves the rules fire.
 - **Language-specific extras:**
   - Next.js 16 differs from training data: read `node_modules/next/dist/docs/` before using a Next.js API (see `AGENTS.md`).
   - No `any`, no `@ts-ignore`; fix the type instead.

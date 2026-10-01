@@ -300,3 +300,52 @@ Template:
      lead had asked for earlier PRs. The lead caught it. `/create-pr` targets Azure DevOps (`az`),
      so it cannot open a GitHub PR here, but PRs #1–#6 used its template; the PR #7 body was
      rewritten to that template with `gh pr edit`.
+
+## 2026-10-01 — `create-pr` skill moved from Azure DevOps to GitHub
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "why you do not use /create-pr?", then "update skill to use gh instead of az
+  and add rule for using skill when creating PR".
+- **What the AI did:** Ported the `create-pr` skill (copied from another XionTech project) from
+  `az repos pr create` to `gh pr create`: the scripts parse `origin` into `--repo owner/name`, target
+  `develop`, read the story key from the branch name, and keep the old guards (not pushed, behind,
+  default branch). Added a guard for a branch that tracks `origin/develop` instead of itself, and an
+  offline test script (28 checks; a mutation check showed it catches broken guards). Added the rule to
+  `AGENTS.md` → Git workflow, and narrowed the "do not edit `.claude/skills/` by hand" rule to the
+  `bmad-*` skills, which the BMad installer owns.
+- **Decision / result:** Every PR is opened with `/create-pr`; no hand-run `gh pr create`.
+- **AI got it wrong?** Yes. The AI opened PR #7 with a hand-run `gh pr create` and a body outside the
+  team's PR template, although the lead had asked for `/create-pr` on earlier PRs. Its Python-based
+  edits to the shell scripts also failed twice: the shell turned each double backslash into a single
+  one, so the match strings never matched; the AI switched to whole-file rewrites and the Edit tool.
+
+## 2026-10-01 — Faster checks until Demo day
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "temporary bypass Sonar check and will run check at overall after all done to
+  optimize the time … any suggestions to optimize time but keep the quality?"
+- **What the AI did:** Pointed out that skipping the gate on every branch and checking only at the
+  end would measure almost nothing: "new code" is what a branch adds on top of `develop`, so after
+  the merges there is no new code left. Proposed four changes; the lead chose all four:
+  1. `eslint-plugin-sonarjs` (typed, `src/` without tests — the gate's own scope) plus a
+     `no-restricted-globals` rule for `parseInt`, so `npm run lint` catches in about 15 seconds
+     all three kinds of finding that blocked the Story 1.1 push.
+  2. Until Demo day the `pre-push` hook runs `npm run lint` only (`scripts/git-hooks-demo`);
+     `npm run sonar:gate:full` (new code = everything since `main`) runs once a day on a clean,
+     up-to-date `develop` and before the release PR.
+  3. Full `bmad-code-review` once per story or PR; follow-up commits under about 50 lines get one
+     review layer.
+  4. Simple page-section stories use the one-shot `bmad-build` route.
+- **Decision / result:** Rules written into `CLAUDE.md`, `AGENTS.md` and `README.md`, all marked
+  "until Demo day (2026-10-09)", with an undo item in `deferred-work.md`. Also added
+  `npm run test:skills` for the `create-pr` script tests.
+- **AI got it wrong?** Yes, several times:
+  1. With only the recommended config, the plugin caught one of the three Story 1.1 findings;
+     `prefer-regexp-exec` needs type information and the plugin has no `Number.parseInt` rule. A
+     probe file showed the gap before the change was committed.
+  2. The 3-layer code review then found 13 real problems. The worst: spreading the sonarjs preset
+     also replaced Next's React version setting ("detect" → "999.999.999") for all of `src/`;
+     turning the hook off would have left no check at all on push (Next.js 16 `next build` no
+     longer lints); and `sonar:gate:full` would scan whatever branch or local edits were checked
+     out. All fixed, with tests: `scripts/eslint-config.test.mjs` and
+     `scripts/sonar-gate-full.test.mjs`.
