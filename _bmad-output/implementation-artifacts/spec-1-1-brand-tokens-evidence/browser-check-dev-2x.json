@@ -1,0 +1,48 @@
+{
+  "url": "http://localhost:3210/",
+  "devOverlayPresent": true,
+  "devicePixelRatio": 2,
+  "body": "\"Be Vietnam Pro\", \"Be Vietnam Pro Fallback\", system-ui, sans-serif",
+  "h1": "Unbounded, \"Unbounded Fallback\", system-ui, sans-serif",
+  "authoredFocusRule": ":focus-visible { outline: 2.5px solid var(--color-focus); outline-offset: 3px; border-radius: var(--radius-xs); }",
+  "loaded": [
+    "Unbounded",
+    "Be Vietnam Pro"
+  ],
+  "focus": {
+    "plain-light": {
+      "focused": "plain-light",
+      "outlineWidth": "2px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(22, 54, 99)",
+      "offset": "3px",
+      "radius": "8px"
+    },
+    "btn-light": {
+      "focused": "btn-light",
+      "outlineWidth": "2px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(22, 54, 99)",
+      "offset": "3px",
+      "radius": "9999px"
+    },
+    "plain-navy": {
+      "focused": "plain-navy",
+      "outlineWidth": "2px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(255, 192, 0)",
+      "offset": "3px",
+      "radius": "8px"
+    },
+    "btn-navy": {
+      "focused": "btn-navy",
+      "outlineWidth": "2px",
+      "outlineStyle": "solid",
+      "outlineColor": "rgb(255, 192, 0)",
+      "offset": "3px",
+      "radius": "9999px"
+    }
+  },
+  "woff2Requests": 22,
+  "externalRequests": []
+}

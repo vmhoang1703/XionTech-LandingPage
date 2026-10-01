@@ -1,0 +1,43 @@
+### (rerun after matrix-audit tests) npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  5 passed (5)
+      Tests  108 passed (108)
+   Start at  16:00:40
+   Duration  3.97s (environment 65%, setup 15%, transform 10%, tests 5%, import 3%, worker 2%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+No files with missing coverage.
+3 files fully covered.
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 46/46 )
+Branches     : 100% ( 16/16 )
+Functions    : 100% ( 8/8 )
+Lines        : 100% ( 46/46 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/app/layout.tsx (100%)
+src/lib/design/contrast.ts (100%)
+-------------
+Total:   43 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 3 changed file(s) with branch coverage >= 80% vs origin/develop.
+EXIT=0
