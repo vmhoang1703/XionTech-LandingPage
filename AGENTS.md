@@ -38,9 +38,7 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
    `SONAR_HOST_URL`, `SONAR_TOKEN` or `sonar.host.url`. The `pre-push` hook
    (`scripts/git-hooks/pre-push`) runs `scripts/sonar/check_quality_gate.sh` directly; run
    the same check by hand with `npm run sonar:gate`. Details in `CLAUDE.md` → "SonarQube —
-   LOCAL ONLY". **Until Demo day the hook is off** (`git config --unset core.hooksPath`):
-   `npm run lint` runs SonarQube's JS/TS rules before every push, and Hoang Vu runs
-   `npm run sonar:gate:full` once a day on `develop` and before the release PR.
+   LOCAL ONLY".
 
 ## Tech stack
 
@@ -56,7 +54,7 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 | Hosting      | Vercel Hobby (owner: Hoang Vu; only the owner can change project settings). See Git workflow     |
 | Formatting   | Prettier + `prettier-plugin-tailwindcss`, ESLint (`eslint-config-next`, `eslint-plugin-sonarjs`) |
 | Tests        | Vitest 5 + Testing Library (unit), Playwright (`@smoke`), `diff-cover` (via `uvx`)               |
-| Quality gate | SonarQube Community in local Docker — LOCAL ONLY, `pre-push` hook                                |
+| Quality gate | SonarQube Community in local Docker — LOCAL ONLY, `pre-push` hook (until Demo day: daily run)    |
 
 ## Commands
 
@@ -69,14 +67,20 @@ npm run format       # write; use format:check in CI
 npm test             # unit tests (Vitest)
 npm run test:coverage && npm run coverage:diff   # 100% line coverage on changed lines
 npm run test:smoke   # Playwright @smoke: build, boot, GET / = 200
-npm run sonar:gate   # local SonarQube gate (also runs on git push; off until Demo day)
-npm run sonar:gate:full   # same gate, new code = everything since main (daily, on develop)
+npm run sonar:gate   # local SonarQube gate (runs on git push; lint only until Demo day)
+npm run sonar:gate:full   # same gate on a clean, up-to-date develop; new code = since main
 npm run test:skills  # create-pr skill scripts (after changing them)
 npm run build
 ```
 
 Before opening a PR: lint, typecheck, tests, diff coverage, smoke and build must pass, and the
-local Sonar gate must be green. Until Demo day the gate runs daily on `develop` instead of per PR.
+local Sonar gate must be green.
+
+**Until Demo day (2026-10-09) the Sonar gate runs daily, not per push.** Every clone uses the
+lint-only hook: `git config core.hooksPath scripts/git-hooks-demo` (`npm run lint` includes
+SonarQube's JS/TS rules). Hoang Vu runs `npm run sonar:gate:full` on `develop` once a day and
+before the release PR; findings become fix PRs. After Demo day:
+`git config core.hooksPath scripts/git-hooks`. Details in `CLAUDE.md` → Definition of Done.
 
 ## Git workflow
 
@@ -117,12 +121,16 @@ Installed modules: Core, BMad Method (bmm), Builder (bmb), CIS, Test Architect (
 Start with the `bmad-help` skill when unsure what to do next. Planning docs flow
 brief → PRD → UX → architecture → epics/stories → `bmad-build` per story.
 
-**One-shot builds for simple stories (until Demo day).** When a story only adds or changes page
-sections or static content — no new API route, no Sanity schema, no form submission, no shared
-component that other stories depend on — ask `bmad-build` for the one-shot route ("build Story N.M
-one-shot"). It writes a short spec, implements, runs one review layer and presents, without the
-per-task reviews and the evidence audits of the full route. Run the full `bmad-code-review` once
-before the PR (`CLAUDE.md` → Definition of Done). Every other story uses the full route.
+**One-shot builds for simple stories (until Demo day).** `bmad-build` picks its route itself in
+step 2: one-shot when there are no open questions, nothing irreversible and a small footprint.
+A story that only adds or changes page sections or static content — no new API route, no Sanity
+schema, no form submission, no shared component that other stories depend on — usually fits, so
+say so in the request ("Story N.M is a simple page-section story; one-shot if your step 2
+agrees"). The request is a hint, not an override. The one-shot route writes a short spec,
+implements, runs one review layer and presents, without the per-task reviews and the evidence
+audits of the full route. Run the full `bmad-code-review` once before the PR (`CLAUDE.md` →
+Definition of Done). Every other story uses the full route.
+
 Do not edit files under `_bmad/` or the `bmad-*` skills in `.claude/skills/` by hand; re-run the installer
 (`npx @xiontechs/bmad-method@next install`, needs an Azure PAT in `~/.npmrc`) or use
 `bmad-customize`.

@@ -69,3 +69,13 @@ Change reviewed: `create-pr` skill ported from `az` to `gh`, the "open every PR 
 - [low] There is no `.github/pull_request_template.md`, so PRs opened in the GitHub web UI get no template; the template checklist also does not list the pre-PR gates from `AGENTS.md` (lint, coverage, smoke, build, Sonar, code review, AI log). Decide whether to move the template to `.github/` and extend the checklist.
 - [low] `storyKey` is read only from branches named `<type>/<epic>-<story>-<slug>`, but `AGENTS.md` still says `feature/<short-name>`. Write the story branch format into `AGENTS.md` → Git workflow.
 - [low] `AGENTS.md` describes `.claude/skills/` as the 57 BMad skills only; the team-owned skills (`create-pr`, `sonar-prepush-gate`, `maestro-flows`, `code-review-and-quality`, …) and their owners are not listed. `maestro-flows` was copied from the same PXP workspace and still targets `pxp_mobile`.
+- [x] RESOLVED [low] `test_pr_scripts.sh` runs only by hand — `npm run test:skills` now runs it (still by hand: there is no CI).
+- [low] `.claude/skills/sonar-prepush-gate/template/scripts/sonar/test_local_only_guards.sh` runs only by hand: no npm script and no CI.
+
+## Deferred from: code review (2026-10-01), faster checks until Demo day
+
+Change reviewed: `eslint-plugin-sonarjs` in lint, `sonar:gate:full`, and the until-Demo-day rules in `CLAUDE.md`, `AGENTS.md` and `README.md` (branch `fix/create-pr-github`).
+
+- [medium] The planning docs still require the local Sonar gate before every PR: NFR-8 in `_bmad-output/planning-artifacts/epics.md`, `prd.md`, and the Definition of Done line in every `_bmad-output/specs/*/SPEC.md`. Amber Do owns these files; tell her about the daily-gate rule so story reviews do not flag "no Sonar gate" as a DoD failure.
+- [low] No test proves that `sonar:gate:full` really uses `main` as the reference branch (a caller's `SONAR_LOCAL_REFERENCE_BRANCH` must win over `sonar.env`). The case belongs in the `sonar-prepush-gate` template's `test_local_only_guards.sh` (no hand edits under `scripts/sonar/`).
+- [medium] After Demo day (2026-10-09), undo the temporary rules: every clone runs `git config core.hooksPath scripts/git-hooks`; remove the "until Demo day" text from `CLAUDE.md`, `AGENTS.md`, `README.md` and `.claude/skills/create-pr/SKILL.md`; delete `scripts/git-hooks-demo/` and decide whether `sonar:gate:full` stays. Keep `eslint-plugin-sonarjs` in lint (it is not temporary).

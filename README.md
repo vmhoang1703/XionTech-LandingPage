@@ -39,12 +39,13 @@ Needs Docker Desktop, Python 3.10+ and [uv](https://docs.astral.sh/uv/).
 npm install
 cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env
 ./scripts/sonar/local_sonar.sh up             # Docker must be running; first run pulls ~700MB
-git config core.hooksPath scripts/git-hooks   # last: from now on every git push runs the Sonar gate
+git config core.hooksPath scripts/git-hooks   # last: every git push runs the Sonar gate (after Demo day)
 ```
 
-Until Demo day (2026-10-09) skip the last line, or undo it with `git config --unset core.hooksPath`:
-the gate runs once a day on `develop` (`npm run sonar:gate:full`) instead of on every push, and
-`npm run lint` runs SonarQube's JS/TS rules. See `CLAUDE.md` → Definition of Done.
+Until Demo day (2026-10-09) use `git config core.hooksPath scripts/git-hooks-demo` for the last
+line instead: every push runs `npm run lint` (which includes SonarQube's JS/TS rules), and the
+full gate runs once a day on `develop` (`npm run sonar:gate:full`). See `CLAUDE.md` → Definition
+of Done.
 
 SonarQube runs **only on your machine**. Never point it at the shared XT SonarQube server.
 

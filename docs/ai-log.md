@@ -330,13 +330,22 @@ Template:
   1. `eslint-plugin-sonarjs` (typed, `src/` without tests — the gate's own scope) plus a
      `no-restricted-globals` rule for `parseInt`, so `npm run lint` catches in about 15 seconds
      all three kinds of finding that blocked the Story 1.1 push.
-  2. The `pre-push` gate is off until Demo day; `npm run sonar:gate:full` (new code = everything
-     since `main`) runs once a day on `develop` and before the release PR.
+  2. Until Demo day the `pre-push` hook runs `npm run lint` only (`scripts/git-hooks-demo`);
+     `npm run sonar:gate:full` (new code = everything since `main`) runs once a day on a clean,
+     up-to-date `develop` and before the release PR.
   3. Full `bmad-code-review` once per story or PR; follow-up commits under about 50 lines get one
      review layer.
   4. Simple page-section stories use the one-shot `bmad-build` route.
 - **Decision / result:** Rules written into `CLAUDE.md`, `AGENTS.md` and `README.md`, all marked
-  "until Demo day (2026-10-09)".
-- **AI got it wrong?** Partly. With only the recommended config, the plugin caught one of the three
-  Story 1.1 findings; `prefer-regexp-exec` needs type information and the plugin has no
-  `Number.parseInt` rule. A probe file showed the gap before the change was committed.
+  "until Demo day (2026-10-09)", with an undo item in `deferred-work.md`. Also added
+  `npm run test:skills` for the `create-pr` script tests.
+- **AI got it wrong?** Yes, several times:
+  1. With only the recommended config, the plugin caught one of the three Story 1.1 findings;
+     `prefer-regexp-exec` needs type information and the plugin has no `Number.parseInt` rule. A
+     probe file showed the gap before the change was committed.
+  2. The 3-layer code review then found 13 real problems. The worst: spreading the sonarjs preset
+     also replaced Next's React version setting ("detect" → "999.999.999") for all of `src/`;
+     turning the hook off would have left no check at all on push (Next.js 16 `next build` no
+     longer lints); and `sonar:gate:full` would scan whatever branch or local edits were checked
+     out. All fixed, with tests: `scripts/eslint-config.test.mjs` and
+     `scripts/sonar-gate-full.test.mjs`.
