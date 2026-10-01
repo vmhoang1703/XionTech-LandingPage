@@ -1,0 +1,30 @@
+# Verification at e24928296ac00c39f3464f4449fd86e0ff480290 on 2026-10-01T16:47:25+07:00
+$ npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+EXIT=0
+$ npm run test:coverage && npm run coverage:diff
+ Test Files  5 passed (5)
+      Tests  126 passed (126)
+Missing: 0 lines
+Coverage: 100%
+C1 ok: 3 changed file(s) with branch coverage >= 80% vs origin/develop.
+EXIT=0
+$ npm run build && npm run test:smoke
+✓ Compiled successfully in 1831ms
+  1 passed (15.5s)
+EXIT=0
