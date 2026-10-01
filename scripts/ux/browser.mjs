@@ -53,6 +53,8 @@ export async function openPage(context, url, readySelector) {
         'For the app, start it first (npm run dev) or pass --dev <url>; for the prototype, check the surface file\'s "prototype".',
     );
   }
+  // Set after loading: a slow page load keeps Playwright's 30s, a hidden trigger fails in 5s.
+  page.setDefaultTimeout(ACTION_TIMEOUT_MS);
   return page;
 }
 

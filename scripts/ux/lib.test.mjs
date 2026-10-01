@@ -385,6 +385,38 @@ describe("renderParityReport", () => {
     expect(markdown).toContain("| same | 0% ![](same.png) | none |");
     expect(markdown).toContain("| gone | n/a | none |");
   });
+
+  it("counts a missing element explained by a pending entry as pending", () => {
+    const missingLogo = [
+      {
+        state: "default",
+        width: 1280,
+        elements: [
+          { name: "logo", boxDiffs: [], styleDiffs: [], missing: "dev" },
+        ],
+      },
+    ];
+    const pendingMissing = renderParityReport(
+      {
+        ...surface,
+        intended: [
+          { element: "logo", prop: "missing", note: "UX-Q9", pending: true },
+        ],
+      },
+      missingLogo,
+    );
+    expect(pendingMissing.unexplained).toBe(0);
+    expect(pendingMissing.pending).toBe(1);
+    const decided = renderParityReport(
+      {
+        ...surface,
+        intended: [{ element: "logo", prop: "missing", note: "T9" }],
+      },
+      missingLogo,
+    );
+    expect(decided.unexplained).toBe(0);
+    expect(decided.pending).toBe(0);
+  });
 });
 
 describe("interaction probes", () => {

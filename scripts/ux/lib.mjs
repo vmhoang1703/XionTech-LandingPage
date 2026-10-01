@@ -417,8 +417,11 @@ export function renderParityReport(surface, results, probes = []) {
           notes.push(`**${d.prop}: ${d.proto} → ${d.dev}**`);
         }
       }
-      if (e.missing && !isIntended(surface, e.name, "missing", where))
-        unexplained += 1;
+      if (e.missing) {
+        const entry = findIntended(surface, e.name, "missing", where);
+        if (!entry) unexplained += 1;
+        else if (entry.pending) pending.add(entry);
+      }
       const pixels =
         e.percent === undefined ? "n/a" : `${e.percent}% ![](${e.image})`;
       lines.push(

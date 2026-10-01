@@ -67,7 +67,8 @@ demo; floor and measure for every other page.
   Escape on a fresh page on both sides and compares open / closed and focus. A selector that
   matches nothing reports an error instead of passing.
 - `intended` — `{ element, prop, note }` for differences that stay, with the reason or decision
-  ID (for a probe: `{ element: <probe name>, prop: <event> }`). Optional `state` and `width`
+  ID (for a probe: `{ element: <probe name>, prop: <event> }`; for an element found on one side
+  only: `prop: "missing"`). Optional `state` and `width`
   narrow an entry so it cannot hide the same property drifting elsewhere. Add `pending: true`
   for a design question that is built one way but still open: the report counts and lists those
   separately, so "0 unexplained" never hides an open decision.

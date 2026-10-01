@@ -109,7 +109,13 @@ try {
             viewport: { width, height: 900 },
           });
           const page = await openPage(context, url, ready);
-          outcome[side][event] = await runProbeEvent(page, probe, side, event);
+          // A probe that cannot run (e.g. a trigger hidden at this width) is a counted error.
+          outcome[side][event] = await runProbeEvent(
+            page,
+            probe,
+            side,
+            event,
+          ).catch((error) => `error: ${String(error.message).split("\n")[0]}`);
           await context.close();
         }
       }
