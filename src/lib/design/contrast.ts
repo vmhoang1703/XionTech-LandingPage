@@ -4,7 +4,7 @@
  */
 function getRelativeLuminance(hex: string): number {
   // Parse hex color to RGB
-  const hex2 = hex.replace('#', '');
+  const hex2 = hex.replace("#", "");
   const r = parseInt(hex2.substring(0, 2), 16) / 255;
   const g = parseInt(hex2.substring(2, 4), 16) / 255;
   const b = parseInt(hex2.substring(4, 6), 16) / 255;
@@ -49,22 +49,18 @@ export function contrastRatio(hexA: string, hexB: string): number {
  */
 export function readThemeColors(css: string): Record<string, string> {
   const colors: Record<string, string> = {};
+  const themeBlockRegex = /@theme\s*\{([^}]+)\}/g;
+  const colorLineRegex = /--color-([a-z0-9-]+):\s*(#[0-9a-fA-F]+)/;
 
-  // Match @theme blocks
-  const themeRegex = /@theme\s*\{([^}]+)\}/g;
-  let match;
-
-  while ((match = themeRegex.exec(css)) !== null) {
-    const themeBlock = match[1];
-
-    // Match --color-* declarations
-    const colorRegex = /--color-([a-z0-9-]+):\s*(#[0-9a-fA-F]+)/g;
-    let colorMatch;
-
-    while ((colorMatch = colorRegex.exec(themeBlock)) !== null) {
-      const name = colorMatch[1];
-      const value = colorMatch[2];
-      colors[name] = value;
+  const themeMatches = css.matchAll(themeBlockRegex);
+  for (const themeMatch of themeMatches) {
+    const themeBlock = themeMatch[1];
+    const lines = themeBlock.split(";");
+    for (const line of lines) {
+      const colorMatch = line.match(colorLineRegex);
+      if (colorMatch) {
+        colors[colorMatch[1]] = colorMatch[2];
+      }
     }
   }
 
