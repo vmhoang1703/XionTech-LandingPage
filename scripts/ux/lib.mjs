@@ -64,6 +64,15 @@ export function validateSurface(surface) {
   const elements = Array.isArray(surface?.elements) ? surface.elements : [];
   if (elements.length === 0)
     problems.push('"elements" must list at least one element');
+  // Names become file names and report table cells, so they stay plain. Only real names enter
+  // the sets: a null or nameless entry is listed as a problem, never matched or crashed on.
+  const named = (value) => typeof value === "string" && value !== "";
+  const plainName = (value, where) => {
+    if (named(value) && !/^[\w-]+$/.test(value))
+      problems.push(
+        `${where} "${value}" may only use letters, digits, "-" and "_" (it names files)`,
+      );
+  };
   const names = new Set();
   for (const [i, element] of elements.entries()) {
     for (const key of ["name", "proto", "dev"]) {
@@ -72,7 +81,8 @@ export function validateSurface(surface) {
     }
     if (names.has(element?.name))
       problems.push(`elements[${i}].name "${element.name}" is used twice`);
-    names.add(element?.name);
+    plainName(element?.name, `elements[${i}].name`);
+    if (named(element?.name)) names.add(element.name);
   }
   for (const key of ["states", "probes", "intended", "widths", "shotWidths"]) {
     if (surface?.[key] !== undefined && !Array.isArray(surface[key]))
@@ -89,7 +99,8 @@ export function validateSurface(surface) {
       problems.push(
         `probes[${i}].name "${probe.name}" is also an element name; intended entries need one meaning`,
       );
-    probeNames.add(probe?.name);
+    plainName(probe?.name, `probes[${i}].name`);
+    if (named(probe?.name)) probeNames.add(probe.name);
     for (const key of [
       "trigger",
       "observe",
@@ -104,6 +115,7 @@ export function validateSurface(surface) {
   for (const [i, state] of list("states").entries()) {
     if (typeof state?.name !== "string" || state.name === "")
       problems.push(`states[${i}].name must be a non-empty string`);
+    plainName(state?.name, `states[${i}].name`);
     for (const side of ["proto", "dev"]) {
       if (!Array.isArray(state?.[side]))
         problems.push(`states[${i}].${side} must be a list of actions`);
@@ -351,8 +363,11 @@ export const probeError = (error) => `error: ${firstLine(error)}`;
 
 const isError = (outcome) => String(outcome).startsWith("error");
 
-/** A Markdown table cell: a "|" inside a value must not split the row. */
-const cell = (value) => String(value).replaceAll("|", String.raw`\|`);
+/** A Markdown table cell: a "|" or a line break inside a value must not split the row. */
+const cell = (value) =>
+  String(value)
+    .replaceAll("|", String.raw`\|`)
+    .replaceAll(/\r?\n/g, "<br>");
 
 /**
  * Events whose outcome ("open" / "closed", plus focus after Escape) differs between the sides,

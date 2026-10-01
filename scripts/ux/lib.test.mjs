@@ -316,6 +316,39 @@ describe("validateSurface cross-references", () => {
     ).toThrow('probes[0].name "logo" is also an element name');
   });
 
+  it("lists nameless or null entries instead of crashing", () => {
+    let message = "";
+    try {
+      validateSurface({
+        ...base,
+        elements: [...base.elements, { proto: "a", dev: "b" }],
+        probes: [null, null],
+        intended: [],
+      });
+    } catch (error) {
+      message = error.message;
+    }
+    expect(message).toContain("Invalid surface file");
+    expect(message).toContain("elements[1].name must be a non-empty string");
+    expect(message).toContain("probes[1].name must be a non-empty string");
+    expect(message).not.toContain("used twice");
+    expect(message).not.toContain("also an element name");
+  });
+
+  it("keeps names plain because they name files", () => {
+    expect(() =>
+      validateSurface({
+        ...base,
+        elements: [{ name: "a|b", proto: "x", dev: "y" }],
+        states: [{ name: "open state", proto: [], dev: [] }],
+        probes: [{ ...base.probes[0], name: "menu/1" }],
+        intended: [],
+      }),
+    ).toThrow(
+      /elements\[0\]\.name "a\|b" may only use[\s\S]*probes\[0\]\.name "menu\/1" may only use[\s\S]*states\[0\]\.name "open state" may only use/,
+    );
+  });
+
   it("accepts the committed header surface file", () => {
     const file = JSON.parse(
       readFileSync(new URL("./surfaces/header.json", import.meta.url), "utf8"),
@@ -574,7 +607,7 @@ describe("interaction probes", () => {
         ...surface,
         intended: [
           { element: "logo", prop: "x", note: "10% | 12%" },
-          { element: "menu", prop: "click", note: "T | U" },
+          { element: "menu", prop: "click", note: "T | U\nV" },
         ],
       },
       [
@@ -601,7 +634,7 @@ describe("interaction probes", () => {
     );
     expect(markdown).toContain(String.raw`| error: a\|b | **differs** |`);
     expect(markdown).toContain(
-      String.raw`| closed | open | intended: T \| U |`,
+      String.raw`| closed | open | intended: T \| U<br>V |`,
     );
     expect(markdown).toContain(String.raw`x: 1 → 2 (intended: 10% \| 12%) |`);
   });

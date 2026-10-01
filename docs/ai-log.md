@@ -387,3 +387,8 @@ Template:
   fix first broke hover-then-click in real Chrome (a mouse press focuses the button before the
   click), which the jsdom tests could not see; the new `click-then-leave` and `hover-into-panel`
   probes ran in Chrome and confirmed the final behaviour.
+
+  The reviews of the tool's own fixes found more holes, each now fixed with a test: a probe that
+  could not run was shown as "pending", and so hidden, when a pending entry named the same event;
+  a 5s timeout meant for probes also cut the time allowed for screenshots; and a bad surface file
+  could crash the checker instead of listing the problem. An error row now always counts.
