@@ -372,4 +372,9 @@ Template:
   implementer agents guessed missing values (`gap-8`, `text-ui`) and nothing compared the result
   with the mockup; five review layers passed it. The first parity run also reported 101
   differences, many of them notation noise (`0px none` vs `0px solid`, empty shadow layers,
-  999px vs 9999px), which the tool now normalizes.
+  999px vs 9999px), which the tool now normalizes. 3. The lead then spotted that the menus opened on click only, while `EXPERIENCE.md` and the
+  prototype open them on hover. The tool had compared only how things look, the Demo-day plan had
+  cut hover, and the critic was told to file scope cuts under "Later". Fixed by interaction probes
+  in `ux:parity` (they reported the four hover differences before the fix and none after), a
+  critic rule that raises scope cuts which hurt the experience, and hover-open on PR #9
+  (decision T11).

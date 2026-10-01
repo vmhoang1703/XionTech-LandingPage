@@ -9,9 +9,12 @@ Matching Amber's mockup is the **floor**. The goal is the best experience the sp
    feel or do), the mockup page and parts, and the UX acceptance list: states (hover, focus, open,
    error, empty, loading), widths, motion and reduced motion, accessibility, speed budget. Where
    the prototype and `DESIGN.md` disagree, ask Amber now; agents never pick silently.
-2. **Floor — match the mockup.** Build to the prototype, then run `npm run ux:parity` for the
-   surface. Every difference is either fixed or listed in the surface file's `intended` with a
-   reason or a decision ID. The report goes in the PR.
+2. **Floor — match the mockup, in looks and in behaviour.** Build to the prototype, then run
+   `npm run ux:parity` for the surface. It compares how parts look (states) and how they behave
+   (interaction probes: hover, moving away, click, keyboard, Escape). Every interactive part named
+   in `EXPERIENCE.md` (Component Patterns, Interaction, acceptance criteria) needs a probe in the
+   surface file. Every difference is either fixed or listed in the surface file's `intended` with
+   a reason or a decision ID. The report goes in the PR.
 3. **Ceiling — critic pass** (timebox about 30 minutes). Run `npm run ux:shots`, then the
    `ux-critic` skill as a separate subagent. It scores the scorecard below from real screenshots and
    ranks proposals. The developer applies the **fix** items; Amber chooses which **enhance** items
@@ -40,11 +43,11 @@ demo; floor and measure for every other page.
 
 ## Tools
 
-| Command                                                | What it does                                                                                                                                                                                                                                                                                                                              |
-| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm run ux:parity -- scripts/ux/surfaces/<name>.json` | Floor. Opens the prototype page and the running app (default `http://localhost:3000`, change with `--dev`) at each width and state, and compares every mapped element: box, computed styles and pixels. Writes `ux-reports/<name>/parity/report.md` with prototype / dev / diff images. `--strict` exits 1 on any unexplained difference. |
-| `npm run ux:shots -- scripts/ux/surfaces/<name>.json`  | Critic input. Screenshots the app at 360, 390, 768, 1024, 1280, 1440 and 1920 px in every state, plus reduced motion and JavaScript off; runs axe (WCAG 2.2 AA tags) and reads layout shift. Writes `ux-reports/<name>/shots/shots.md`.                                                                                                   |
-| `ux-critic` skill                                      | Ceiling. Scores the scorecard from those screenshots and ranks proposals (`.claude/skills/ux-critic/SKILL.md`).                                                                                                                                                                                                                           |
+| Command                                                | What it does                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run ux:parity -- scripts/ux/surfaces/<name>.json` | Floor. Opens the prototype page and the running app (default `http://localhost:3000`, change with `--dev`) at each width and state, and compares every mapped element: box, computed styles and pixels; then runs the interaction probes (behaviour). Writes `ux-reports/<name>/parity/report.md` with prototype / dev / diff images. `--strict` exits 1 on any unexplained difference. |
+| `npm run ux:shots -- scripts/ux/surfaces/<name>.json`  | Critic input. Screenshots the app at 360, 390, 768, 1024, 1280, 1440 and 1920 px in every state, plus reduced motion and JavaScript off; runs axe (WCAG 2.2 AA tags) and reads layout shift. Writes `ux-reports/<name>/shots/shots.md`.                                                                                                                                                 |
+| `ux-critic` skill                                      | Ceiling. Scores the scorecard from those screenshots and ranks proposals (`.claude/skills/ux-critic/SKILL.md`).                                                                                                                                                                                                                                                                         |
 
 `ux-reports/` is not committed; attach the report (or its key images) to the PR.
 
@@ -56,8 +59,18 @@ demo; floor and measure for every other page.
 - `elements` — `{ name, proto, dev }` CSS selectors for the same part on both sides.
 - `states` — named actions on both sides (`click`, `hover`, `focus`, `press`, `wait`), the
   `elements` to compare in that state, and an optional `minWidth` for desktop-only states.
+- `probes` — `{ name, trigger, hover?, observe, minWidth? }` with `proto` / `dev` selectors: the
+  part a visitor acts on, the area that reacts to the pointer (default: the trigger) and what
+  should open. Each probe runs hover, hover-then-leave, hover-then-click, click, click-twice,
+  keyboard (Enter) and Escape on a fresh page on both sides and compares open / closed and focus.
 - `intended` — `{ element, prop, note }` for differences that stay, with the reason or decision
-  ID. Pending design questions are listed here too, marked with their question ID.
+  ID (for a probe: `{ element: <probe name>, prop: <event> }`). Pending design questions are listed
+  here too, marked with their question ID.
+
+**Why probes exist:** the first header run compared only looks. The menus opened on click only,
+while `EXPERIENCE.md` and the prototype open them on hover; the Demo-day plan had cut hover, and
+no check looked at behaviour. A scope cut that makes the experience worse than the spec is raised
+to the lead, not filed under "later".
 
 `scripts/ux/surfaces/header.json` is the worked example.
 

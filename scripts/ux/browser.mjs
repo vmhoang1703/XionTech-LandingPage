@@ -107,3 +107,64 @@ export async function captureBox(page, box) {
   const height = Math.max(1, Math.min(box.y + box.height, vh) - y);
   return page.screenshot({ clip: { x, y, width, height } });
 }
+
+/** True when the first match is rendered, on screen and not faded out. */
+export async function isOpen(page, selector) {
+  return page.evaluate((sel) => {
+    const el = document.querySelector(sel);
+    if (!el) return false;
+    const r = el.getBoundingClientRect();
+    const s = getComputedStyle(el);
+    return (
+      r.width > 0 &&
+      r.height > 0 &&
+      s.visibility !== "hidden" &&
+      Number(s.opacity) > 0.01
+    );
+  }, selector);
+}
+
+/**
+ * One interaction probe on one side: what happens to `observe` after a visitor's action on
+ * `trigger` (hovering `hover`, default the trigger). Returns "open" or "closed"; after Escape
+ * also where focus went.
+ */
+export async function runProbeEvent(page, probe, side, event) {
+  const trigger = page.locator(probe.trigger[side]).first();
+  const hoverTarget = page
+    .locator((probe.hover ?? probe.trigger)[side])
+    .first();
+  const { width, height } = page.viewportSize();
+  const settle = () => page.waitForTimeout(400); // longer than the prototype's 0.3s fade
+  if (event === "hover") {
+    await hoverTarget.hover();
+  } else if (event === "hover-then-leave") {
+    await hoverTarget.hover();
+    await settle();
+    await page.mouse.move(Math.round(width / 2), height - 10);
+  } else if (event === "hover-then-click") {
+    await hoverTarget.hover();
+    await settle();
+    await trigger.click();
+  } else if (event === "click") {
+    await trigger.click();
+  } else if (event === "click-twice") {
+    await trigger.click();
+    await settle();
+    await trigger.click();
+  } else if (event === "keyboard") {
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+  } else if (event === "escape") {
+    await trigger.click();
+    await settle();
+    await page.keyboard.press("Escape");
+  }
+  await settle();
+  const state = (await isOpen(page, probe.observe[side])) ? "open" : "closed";
+  if (event !== "escape") return state;
+  const onTrigger = await trigger.evaluate(
+    (el) => el === document.activeElement,
+  );
+  return `${state}, focus ${onTrigger ? "on trigger" : "elsewhere"}`;
+}

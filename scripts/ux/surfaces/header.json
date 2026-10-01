@@ -350,5 +350,39 @@
       "note": "enhance: a keyboard-focused row shows the hover fill (the prototype shows only the ring); Amber to approve with critic P3"
     }
   ],
-  "shotWidths": [360, 390, 768, 1024, 1081, 1280, 1440, 1920]
+  "shotWidths": [360, 390, 768, 1024, 1081, 1280, 1440, 1920],
+  "probes": [
+    {
+      "name": "products-menu",
+      "minWidth": 1081,
+      "trigger": {
+        "proto": "nav.menu .dd:nth-of-type(1) > button",
+        "dev": "header nav > div:nth-of-type(1) > button"
+      },
+      "hover": {
+        "proto": "nav.menu .dd:nth-of-type(1)",
+        "dev": "header nav > div:nth-of-type(1)"
+      },
+      "observe": {
+        "proto": "nav.menu .dd:nth-of-type(1) .mega",
+        "dev": "#mega-products"
+      }
+    },
+    {
+      "name": "services-menu",
+      "minWidth": 1081,
+      "trigger": {
+        "proto": "nav.menu .dd:nth-of-type(2) > button",
+        "dev": "header nav > div:nth-of-type(2) > button"
+      },
+      "hover": {
+        "proto": "nav.menu .dd:nth-of-type(2)",
+        "dev": "header nav > div:nth-of-type(2)"
+      },
+      "observe": {
+        "proto": "nav.menu .dd:nth-of-type(2) .mega",
+        "dev": "#mega-services"
+      }
+    }
+  ]
 }

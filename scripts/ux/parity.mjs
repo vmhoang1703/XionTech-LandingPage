@@ -11,6 +11,7 @@ import {
   prototypeUrl,
   readElement,
   runActions,
+  runProbeEvent,
   captureBox,
 } from "./browser.mjs";
 import {
@@ -18,6 +19,7 @@ import {
   compareStyles,
   diffImages,
   parseArgs,
+  PROBE_EVENTS,
   relevantProps,
   renderParityReport,
   sideBySide,
@@ -38,6 +40,7 @@ const states = [
 ];
 const browser = await launchBrowser();
 const results = [];
+const probes = [];
 try {
   for (const width of surface.widths ?? [1280, 1000, 600]) {
     for (const state of states.filter((s) => stateApplies(s, width))) {
@@ -91,13 +94,38 @@ try {
       await context.close();
     }
   }
+  for (const probe of surface.probes ?? []) {
+    for (const width of (surface.widths ?? [1280, 1000, 600]).filter((w) =>
+      stateApplies(probe, w),
+    )) {
+      const outcome = { name: probe.name, width, proto: {}, dev: {} };
+      for (const event of PROBE_EVENTS) {
+        for (const [side, url, ready] of [
+          ["proto", prototypeUrl(surface), surface.ready?.proto],
+          ["dev", devUrl(surface, options.dev), surface.ready?.dev],
+        ]) {
+          // A fresh page per event and side: no state leaks from one probe to the next.
+          const context = await browser.newContext({
+            viewport: { width, height: 900 },
+          });
+          const page = await openPage(context, url, ready);
+          outcome[side][event] = await runProbeEvent(page, probe, side, event);
+          await context.close();
+        }
+      }
+      probes.push(outcome);
+    }
+  }
 } finally {
   await browser.close();
 }
 
-const { markdown, unexplained } = renderParityReport(surface, results);
+const { markdown, unexplained } = renderParityReport(surface, results, probes);
 await writeFile(join(out, "report.md"), markdown);
-await writeFile(join(out, "results.json"), JSON.stringify(results, null, 2));
+await writeFile(
+  join(out, "results.json"),
+  JSON.stringify({ results, probes }, null, 2),
+);
 console.log(
   `UX parity ${surface.name}: ${unexplained} unexplained difference(s). Report: ${join(out, "report.md")}`,
 );

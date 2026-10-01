@@ -3,6 +3,8 @@ import { PNG } from "pngjs";
 import { describe, expect, it } from "vitest";
 import {
   compareBoxes,
+  compareProbeOutcomes,
+  PROBE_EVENTS,
   compareStyles,
   diffImages,
   intendedNote,
@@ -290,5 +292,61 @@ describe("renderParityReport", () => {
     expect(markdown).toContain("missing on dev");
     expect(markdown).toContain("| same | 0% ![](same.png) | none |");
     expect(markdown).toContain("| gone | n/a | none |");
+  });
+});
+
+describe("interaction probes", () => {
+  const same = Object.fromEntries(PROBE_EVENTS.map((e) => [e, "closed"]));
+
+  it("lists the events whose outcome differs", () => {
+    expect(compareProbeOutcomes(same, same)).toEqual([]);
+    expect(compareProbeOutcomes({ ...same, hover: "open" }, same)).toEqual([
+      { event: "hover", proto: "open", dev: "closed" },
+    ]);
+  });
+
+  it("validates probe selectors", () => {
+    expect(() =>
+      validateSurface({
+        ...surface,
+        probes: [
+          {
+            name: "",
+            trigger: { proto: "a" },
+            observe: { proto: "b", dev: "c" },
+          },
+        ],
+      }),
+    ).toThrow(/probes\[0\]\.name[\s\S]*probes\[0\]\.trigger\.dev/);
+  });
+
+  it("reports behaviour differences, counts them and honours intended ones", () => {
+    const probes = [
+      {
+        name: "menu",
+        width: 1280,
+        proto: { ...same, hover: "open", click: "open" },
+        dev: { ...same, click: "open" },
+      },
+    ];
+    const plain = renderParityReport(surface, [], probes);
+    expect(plain.unexplained).toBe(1);
+    expect(plain.markdown).toContain("## Behaviour (interaction probes)");
+    expect(plain.markdown).toContain(
+      "| menu | 1280 | hover | open | closed | **differs** |",
+    );
+    expect(plain.markdown).toContain(
+      "| menu | 1280 | click | open | open | same |",
+    );
+    const noted = renderParityReport(
+      {
+        ...surface,
+        intended: [{ element: "menu", prop: "hover", note: "T11" }],
+      },
+      [],
+      probes,
+    );
+    expect(noted.unexplained).toBe(0);
+    expect(noted.markdown).toContain("intended: T11");
   });
 });

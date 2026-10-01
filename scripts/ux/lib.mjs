@@ -74,6 +74,16 @@ export function validateSurface(surface) {
       problems.push(`elements[${i}].name "${element.name}" is used twice`);
     names.add(element?.name);
   }
+  for (const [i, probe] of (surface?.probes ?? []).entries()) {
+    if (typeof probe?.name !== "string" || probe.name === "")
+      problems.push(`probes[${i}].name must be a non-empty string`);
+    for (const key of ["trigger", "observe"]) {
+      for (const side of ["proto", "dev"]) {
+        if (typeof probe?.[key]?.[side] !== "string" || probe[key][side] === "")
+          problems.push(`probes[${i}].${key}.${side} must be a CSS selector`);
+      }
+    }
+  }
   for (const [i, state] of (surface?.states ?? []).entries()) {
     if (typeof state?.name !== "string" || state.name === "")
       problems.push(`states[${i}].name must be a non-empty string`);
@@ -263,8 +273,62 @@ export function sideBySide(a, b, diff) {
   return out;
 }
 
-/** Markdown report for parity results: one section per state and width. */
-export function renderParityReport(surface, results) {
+/**
+ * Interaction probes: what a visitor does to a trigger, on a fresh page each time. Static states
+ * only show how things look; these compare how they behave (hover-open, click toggles, Escape).
+ */
+export const PROBE_EVENTS = [
+  "hover",
+  "hover-then-leave",
+  "hover-then-click",
+  "click",
+  "click-twice",
+  "keyboard",
+  "escape",
+];
+
+/** Events whose outcome ("open" / "closed", plus focus after Escape) differs between the sides. */
+export function compareProbeOutcomes(proto, dev) {
+  return PROBE_EVENTS.filter((event) => proto[event] !== dev[event]).map(
+    (event) => ({ event, proto: proto[event], dev: dev[event] }),
+  );
+}
+
+/** Behaviour section of the report: one row per probe, event and width. */
+function renderProbes(surface, probes) {
+  let unexplained = 0;
+  const lines = [];
+  if (probes.length === 0) return { lines, unexplained };
+  lines.push(
+    "## Behaviour (interaction probes)",
+    "",
+    "| Probe | Width | Event | Prototype | Dev | |",
+    "| --- | --- | --- | --- | --- | --- |",
+  );
+  for (const p of probes) {
+    for (const event of PROBE_EVENTS) {
+      const proto = p.proto[event];
+      const dev = p.dev[event];
+      let mark = "same";
+      if (proto !== dev) {
+        const note = intendedNote(surface, p.name, event);
+        if (note) mark = `intended: ${note}`;
+        else {
+          unexplained += 1;
+          mark = "**differs**";
+        }
+      }
+      lines.push(
+        `| ${p.name} | ${p.width} | ${event} | ${proto} | ${dev} | ${mark} |`,
+      );
+    }
+  }
+  lines.push("");
+  return { lines, unexplained };
+}
+
+/** Markdown report for parity results: one section per state and width, then behaviour. */
+export function renderParityReport(surface, results, probes = []) {
   let unexplained = 0;
   const lines = [
     `# UX parity: ${surface.name}`,
@@ -300,6 +364,9 @@ export function renderParityReport(surface, results) {
     }
     lines.push("");
   }
+  const behaviour = renderProbes(surface, probes);
+  lines.push(...behaviour.lines);
+  unexplained += behaviour.unexplained;
   lines.splice(
     3,
     0,

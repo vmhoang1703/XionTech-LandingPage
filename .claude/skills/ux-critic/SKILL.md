@@ -42,7 +42,15 @@ Rules:
 
 - Evidence or it does not count. No proposal without a screenshot, a measurement or a quoted rule.
 - Stay inside the brand: tokens and type from `DESIGN.md`; no new colours, fonts or icons.
-- Respect the story's scope and non-goals; out-of-scope ideas go under a "Later" heading.
+- Judge behaviour, not only looks. Read the parity report's "Behaviour (interaction probes)"
+  section, and check every behaviour `EXPERIENCE.md` gives this surface (its Component Patterns
+  row, Interaction rules and acceptance criteria) against the build. A behaviour with no probe is a
+  finding: say which probe the surface file is missing.
+- Scope cuts are not a reason to stay quiet. If a non-goal or a "later" item leaves the visitor
+  with a worse experience than `EXPERIENCE.md` or the prototype describes (for example menus that
+  open only on click when the spec says hover opens them), raise it as a **proposal** with its cost
+  and mark it "scope decision for the lead". Only ideas that do not touch the specified
+  experience go under "Later".
 - Do not edit code or docs. The developer applies the chosen fixes; Amber approves every
   **enhance** before it is built and then records it in `DESIGN.md`, so mockup and code stay in step.
 - Plain, short English (the team reads English as a second language).
