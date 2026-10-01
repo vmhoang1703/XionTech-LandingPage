@@ -3,17 +3,17 @@ import { describe, expect, it } from "vitest";
 import Home from "./page";
 
 describe("Home page", () => {
-  it("renders the site name as the main heading", () => {
+  it("opens with the Home hero as the only H1", () => {
     render(<Home />);
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: "XionTech" }),
-    ).toBeDefined();
+    const headings = screen.getAllByRole("heading", { level: 1 });
+    expect(headings).toHaveLength(1);
+    expect(headings[0].textContent).toBe("Every school community, connected.");
   });
 
-  it("marks unfinished content as placeholder", () => {
+  it("renders inside the main landmark", () => {
     render(<Home />);
 
-    expect(screen.getByText(/^\[Placeholder\]/)).toBeDefined();
+    expect(screen.getByRole("main").id).toBe("main");
   });
 });
