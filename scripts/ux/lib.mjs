@@ -104,7 +104,9 @@ export function validateSurface(surface) {
       if (!Array.isArray(state?.[side]))
         problems.push(`states[${i}].${side} must be a list of actions`);
     }
-    for (const name of state?.elements ?? []) {
+    if (state?.elements !== undefined && !Array.isArray(state.elements))
+      problems.push(`states[${i}].elements must be a list of element names`);
+    for (const name of Array.isArray(state?.elements) ? state.elements : []) {
       if (!names.has(name))
         problems.push(`states[${i}].elements names unknown element "${name}"`);
     }
@@ -116,6 +118,18 @@ export function validateSurface(surface) {
       );
     if (typeof entry?.note !== "string" || entry.note === "")
       problems.push(`intended[${i}].note must give the reason or decision ID`);
+    if (entry?.pending !== undefined && typeof entry.pending !== "boolean")
+      problems.push(`intended[${i}].pending must be true or false`);
+    if (probeNames.has(entry?.element)) {
+      if (!PROBE_EVENTS.includes(entry.prop))
+        problems.push(
+          `intended[${i}].prop must be a probe event (${PROBE_EVENTS.join(", ")})`,
+        );
+      if (entry.state !== undefined)
+        problems.push(
+          `intended[${i}].state does not apply to a probe (probes run from a fresh page)`,
+        );
+    }
   }
   for (const key of ["widths", "shotWidths"]) {
     for (const width of list(key)) {
@@ -251,11 +265,6 @@ export function findIntended(surface, element, prop, where = {}) {
   );
 }
 
-/** True when the surface's `intended` list explains this difference. */
-export function isIntended(surface, element, prop, where) {
-  return findIntended(surface, element, prop, where) !== undefined;
-}
-
 /** "intended: …" or, for a design question still open, "pending: …". */
 function intendedLabel(entry) {
   return `${entry.pending ? "pending" : "intended"}: ${entry.note}`;
@@ -329,6 +338,18 @@ export const PROBE_EVENTS = [
 /** Default screenshot widths for ux:shots (a surface may set its own `shotWidths`). */
 export const SHOT_WIDTHS = [360, 390, 768, 1024, 1280, 1440, 1920];
 
+/** First line of an error's message (Playwright messages run to many lines); any value works. */
+export const firstLine = (error) =>
+  String(error?.message ?? error).split("\n")[0];
+
+/** Outcome of a probe event that could not run. The "error" prefix never counts as the same. */
+export const probeError = (error) => `error: ${firstLine(error)}`;
+
+const isError = (outcome) => String(outcome).startsWith("error");
+
+/** A Markdown table cell: a "|" inside a value must not split the row. */
+const cell = (value) => String(value).replaceAll("|", String.raw`\|`);
+
 /**
  * Events whose outcome ("open" / "closed", plus focus after Escape) differs between the sides,
  * or could not be measured ("error: …" on either side, which never counts as the same).
@@ -337,8 +358,8 @@ export function compareProbeOutcomes(proto, dev) {
   return PROBE_EVENTS.filter(
     (event) =>
       proto[event] !== dev[event] ||
-      String(proto[event]).startsWith("error") ||
-      String(dev[event]).startsWith("error"),
+      isError(proto[event]) ||
+      isError(dev[event]),
   ).map((event) => ({ event, proto: proto[event], dev: dev[event] }));
 }
 
@@ -360,7 +381,11 @@ function renderProbes(surface, probes) {
     for (const event of PROBE_EVENTS) {
       let mark = "same";
       if (differing.has(event)) {
-        const entry = findIntended(surface, p.name, event, { width: p.width });
+        // A probe that could not run is never explained away by an intended or pending entry.
+        const failed = isError(p.proto[event]) || isError(p.dev[event]);
+        const entry = failed
+          ? undefined
+          : findIntended(surface, p.name, event, { width: p.width });
         if (entry) {
           mark = intendedLabel(entry);
           if (entry.pending) counts.pending.add(entry);
@@ -370,7 +395,7 @@ function renderProbes(surface, probes) {
         }
       }
       lines.push(
-        `| ${p.name} | ${p.width} | ${event} | ${p.proto[event]} | ${p.dev[event]} | ${mark} |`,
+        `| ${p.name} | ${p.width} | ${event} | ${cell(p.proto[event])} | ${cell(p.dev[event])} | ${mark} |`,
       );
     }
   }
@@ -403,8 +428,17 @@ export function renderParityReport(surface, results, probes = []) {
     );
     for (const e of r.elements) {
       const notes = [];
-      if (e.missing) notes.push(`missing on ${e.missing}`);
       const where = { state: r.state, width: r.width };
+      if (e.missing) {
+        const entry = findIntended(surface, e.name, "missing", where);
+        if (entry) {
+          notes.push(`missing on ${e.missing} (${intendedLabel(entry)})`);
+          if (entry.pending) pending.add(entry);
+        } else {
+          unexplained += 1;
+          notes.push(`**missing on ${e.missing}**`);
+        }
+      }
       for (const d of [...e.boxDiffs, ...e.styleDiffs]) {
         const entry = findIntended(surface, e.name, d.prop, where);
         if (entry) {
@@ -416,11 +450,6 @@ export function renderParityReport(surface, results, probes = []) {
           unexplained += 1;
           notes.push(`**${d.prop}: ${d.proto} → ${d.dev}**`);
         }
-      }
-      if (e.missing) {
-        const entry = findIntended(surface, e.name, "missing", where);
-        if (!entry) unexplained += 1;
-        else if (entry.pending) pending.add(entry);
       }
       const pixels =
         e.percent === undefined ? "n/a" : `${e.percent}% ![](${e.image})`;

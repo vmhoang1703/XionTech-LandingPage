@@ -65,11 +65,14 @@ demo; floor and measure for every other page.
   should open. Each probe runs hover, hover-then-leave, hover-into-panel (the pointer travels across the gap
   into the panel), hover-then-click, click, click-then-leave, click-twice, keyboard (Enter) and
   Escape on a fresh page on both sides and compares open / closed and focus. A selector that
-  matches nothing reports an error instead of passing.
+  matches nothing, or a step that cannot run within 5s (for example a trigger hidden at that
+  width), gives an `error: …` row. An error row always counts as unexplained, even when both
+  sides fail the same way, and no `intended` entry can explain it: fix the selector, or set the
+  probe's `minWidth` so it skips widths where the trigger is hidden.
 - `intended` — `{ element, prop, note }` for differences that stay, with the reason or decision
   ID (for a probe: `{ element: <probe name>, prop: <event> }`; for an element found on one side
-  only: `prop: "missing"`). Optional `state` and `width`
-  narrow an entry so it cannot hide the same property drifting elsewhere. Add `pending: true`
+  only: `prop: "missing"`). Optional `state` and `width` narrow an entry so it cannot hide the
+  same property drifting elsewhere; probe entries take `width` only. Add `pending: true`
   for a design question that is built one way but still open: the report counts and lists those
   separately, so "0 unexplained" never hides an open decision.
 - `widths` (parity) and `shotWidths` (shots) — optional; shots default to 360, 390, 768, 1024,

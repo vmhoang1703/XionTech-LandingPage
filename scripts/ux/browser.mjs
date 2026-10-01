@@ -2,7 +2,7 @@
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium } from "@playwright/test";
-import { STYLE_PROPS } from "./lib.mjs";
+import { STYLE_PROPS, firstLine } from "./lib.mjs";
 
 /** The approved HTML prototype (UX reference) inside the repo. */
 export const DEFAULT_PROTOTYPE_ROOT =
@@ -35,10 +35,11 @@ export function devUrl(surface, base) {
   return new URL(surface.route, base).href;
 }
 
-/** How long an action may wait for its element before the run stops with a clear message. */
+/**
+ * How long a state action or a probe step may wait for its element. A state action that times
+ * out stops the run with a clear message; a probe step that times out becomes an error row.
+ */
 const ACTION_TIMEOUT_MS = 5000;
-
-const firstLine = (error) => String(error?.message ?? error).split("\n")[0];
 
 /** Opens a page and waits until it is ready (and the optional ready selector exists). */
 export async function openPage(context, url, readySelector) {
@@ -53,8 +54,6 @@ export async function openPage(context, url, readySelector) {
         'For the app, start it first (npm run dev) or pass --dev <url>; for the prototype, check the surface file\'s "prototype".',
     );
   }
-  // Set after loading: a slow page load keeps Playwright's 30s, a hidden trigger fails in 5s.
-  page.setDefaultTimeout(ACTION_TIMEOUT_MS);
   return page;
 }
 
@@ -154,6 +153,8 @@ export async function isOpen(page, selector) {
  * also where focus went.
  */
 export async function runProbeEvent(page, probe, side, event) {
+  // Probe pages only: a hidden trigger fails in 5s, not Playwright's 30s. Screenshots keep 30s.
+  page.setDefaultTimeout(ACTION_TIMEOUT_MS);
   // A selector that matches nothing must not read as "closed" on both sides and pass as "same".
   for (const key of ["trigger", "observe", ...(probe.hover ? ["hover"] : [])]) {
     if ((await page.locator(probe[key][side]).count()) === 0)

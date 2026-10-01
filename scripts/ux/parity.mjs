@@ -20,6 +20,7 @@ import {
   diffImages,
   parseArgs,
   PROBE_EVENTS,
+  probeError,
   relevantProps,
   renderParityReport,
   sideBySide,
@@ -115,7 +116,7 @@ try {
             probe,
             side,
             event,
-          ).catch((error) => `error: ${String(error.message).split("\n")[0]}`);
+          ).catch(probeError);
           await context.close();
         }
       }

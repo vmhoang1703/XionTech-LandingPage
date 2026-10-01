@@ -84,7 +84,7 @@ Change reviewed: `eslint-plugin-sonarjs` in lint, `sonar:gate:full`, and the unt
 
 Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-quality.md` (branch `feature/ux-quality-loop`).
 
-- [low] `scripts/ux/browser.mjs`, `parity.mjs` and `shots.mjs` have no automated test of their own (only `lib.mjs` does). A small local HTML fixture driven by Playwright would catch a flipped probe step; today the real check is running `ux:parity` against the prototype.
+- [low] `scripts/ux/browser.mjs`, `parity.mjs` and `shots.mjs` have no automated test of their own (only `lib.mjs` does). A small local HTML fixture driven by Playwright would catch a flipped probe step, and a fixture with a hidden trigger would prove that a probe step that throws becomes a counted `error: …` row (today only `probeError` and the report side are unit-tested); the real check is running `ux:parity` against the prototype.
 - [low] No probe yet for the EN/VI switch (Story 1.2) or the mobile Menu button (Story 1.4); add them to `scripts/ux/surfaces/header.json` with those stories.
 - [low] `parity.mjs` and `shots.mjs` have no top-level `catch`: a failure such as "Cannot open … start npm run dev" prints a clear message, but Node adds its stack trace under it.
-- [low] `validateSurface` still accepts three wrong shapes: `states[].elements` given as a string (read per character), an `intended` probe `prop` that is not in `PROBE_EVENTS`, and a non-boolean `pending`. Each fails safe: the difference stays counted as unexplained.
+- [low] A probe `error: …` row shows Playwright's first line (e.g. `locator.hover: Timeout 5000ms exceeded.`) but not which selector failed — trigger, hover area or panel. Add the probe key to the message, as `runActions` does for state actions.

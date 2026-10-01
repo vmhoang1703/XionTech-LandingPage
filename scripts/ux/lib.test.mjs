@@ -6,10 +6,11 @@ import {
   compareBoxes,
   compareProbeOutcomes,
   PROBE_EVENTS,
+  probeError,
   compareStyles,
   diffImages,
   findIntended,
-  isIntended,
+  firstLine,
   neverFound,
   normalizeColor,
   normalizeStyle,
@@ -215,10 +216,10 @@ describe("intended differences", () => {
   };
 
   it("matches by element and optional prop", () => {
-    expect(isIntended(withIntended, "logo", "x")).toBe(true);
-    expect(isIntended(withIntended, "logo", "y")).toBe(false);
-    expect(isIntended(withIntended, "nav", "anything")).toBe(true);
-    expect(isIntended(surface, "logo", "x")).toBe(false);
+    expect(findIntended(withIntended, "logo", "x")?.note).toBe("T9");
+    expect(findIntended(withIntended, "logo", "y")).toBeUndefined();
+    expect(findIntended(withIntended, "nav", "anything")).toBeDefined();
+    expect(findIntended(surface, "logo", "x")).toBeUndefined();
     expect(findIntended(withIntended, "nav", "y")?.note).toBe("Story 1.4");
   });
 
@@ -230,14 +231,14 @@ describe("intended differences", () => {
       ],
     };
     expect(
-      isIntended(narrow, "logo", "x", { state: "open", width: 1280 }),
-    ).toBe(true);
-    expect(isIntended(narrow, "logo", "x", { state: "open", width: 600 })).toBe(
-      false,
-    );
+      findIntended(narrow, "logo", "x", { state: "open", width: 1280 }),
+    ).toBeDefined();
     expect(
-      isIntended(narrow, "logo", "x", { state: "default", width: 1280 }),
-    ).toBe(false);
+      findIntended(narrow, "logo", "x", { state: "open", width: 600 }),
+    ).toBeUndefined();
+    expect(
+      findIntended(narrow, "logo", "x", { state: "default", width: 1280 }),
+    ).toBeUndefined();
   });
 });
 
@@ -263,9 +264,17 @@ describe("validateSurface cross-references", () => {
   it("catches typos and missing notes that would otherwise pass silently", () => {
     const bad = {
       ...base,
-      states: [{ name: "open", proto: [], dev: [], elements: ["logoo"] }],
+      states: [
+        { name: "open", proto: [], dev: [], elements: ["logoo"] },
+        { name: "typed", proto: [], dev: [], elements: "logo" },
+      ],
       probes: [...base.probes, { ...base.probes[0], hover: { proto: "x" } }],
-      intended: [{ element: "nope", prop: "x" }],
+      intended: [
+        { element: "nope", prop: "x" },
+        { element: "logo", prop: "x", note: "n", pending: "false" },
+        { element: "menu", prop: "hovr", note: "n" },
+        { element: "menu", prop: "hover", state: "open", note: "n" },
+      ],
       widths: [0],
       shotWidths: "1280",
     };
@@ -286,6 +295,13 @@ describe("validateSurface cross-references", () => {
     expect(message).toContain(
       "intended[0].note must give the reason or decision ID",
     );
+    expect(message).toContain(
+      "states[1].elements must be a list of element names",
+    );
+    expect(message).not.toContain('unknown element "l"');
+    expect(message).toContain("intended[1].pending must be true or false");
+    expect(message).toContain("intended[2].prop must be a probe event");
+    expect(message).toContain("intended[3].state does not apply to a probe");
     expect(message).toContain('"widths" must hold positive whole numbers');
     expect(message).toContain('"shotWidths" must be a list');
   });
@@ -381,7 +397,7 @@ describe("renderParityReport", () => {
     expect(markdown).toContain("**Unexplained differences: 2**");
     expect(markdown).toContain("x: 1 → 2 (intended: T9)");
     expect(markdown).toContain("**color: a → b**");
-    expect(markdown).toContain("missing on dev");
+    expect(markdown).toContain("| nav | n/a | **missing on dev** |");
     expect(markdown).toContain("| same | 0% ![](same.png) | none |");
     expect(markdown).toContain("| gone | n/a | none |");
   });
@@ -407,6 +423,10 @@ describe("renderParityReport", () => {
     );
     expect(pendingMissing.unexplained).toBe(0);
     expect(pendingMissing.pending).toBe(1);
+    expect(pendingMissing.markdown).toContain(
+      "| logo | n/a | missing on dev (pending: UX-Q9) |",
+    );
+    expect(pendingMissing.markdown).toContain("- logo: UX-Q9");
     const decided = renderParityReport(
       {
         ...surface,
@@ -416,6 +436,9 @@ describe("renderParityReport", () => {
     );
     expect(decided.unexplained).toBe(0);
     expect(decided.pending).toBe(0);
+    expect(decided.markdown).toContain(
+      "| logo | n/a | missing on dev (intended: T9) |",
+    );
   });
 });
 
@@ -494,6 +517,67 @@ describe("interaction probes", () => {
         dev: "error: observe not found",
       },
     ]);
+  });
+
+  it("never lets an intended or pending entry hide a probe that could not run", () => {
+    const failing = {
+      name: "menu",
+      width: 1280,
+      proto: { ...same, hover: "open" },
+      dev: { ...same, hover: probeError(new Error("Timeout 5000ms\nmore")) },
+    };
+    const report = renderParityReport(
+      {
+        ...surface,
+        intended: [
+          { element: "menu", prop: "hover", note: "T11", pending: true },
+        ],
+      },
+      [
+        {
+          state: "default",
+          width: 1280,
+          elements: [{ name: "logo", boxDiffs: [], styleDiffs: [] }],
+        },
+      ],
+      [failing],
+    );
+    expect(report.unexplained).toBe(1);
+    expect(report.pending).toBe(0);
+    expect(report.markdown).toContain(
+      "| menu | 1280 | hover | open | error: Timeout 5000ms | **differs** |",
+    );
+  });
+
+  it("turns any thrown value into a one-line error outcome", () => {
+    expect(probeError(new Error("a\nb"))).toBe("error: a");
+    expect(probeError("plain")).toBe("error: plain");
+    expect(probeError(undefined)).toBe("error: undefined");
+    expect(firstLine(null)).toBe("null");
+    const failed = { ...same, click: probeError(new Error("x")) };
+    expect(compareProbeOutcomes(failed, failed)).toHaveLength(1);
+  });
+
+  it("escapes a pipe in an outcome so the table row stays whole", () => {
+    const { markdown } = renderParityReport(
+      surface,
+      [
+        {
+          state: "default",
+          width: 1280,
+          elements: [{ name: "logo", boxDiffs: [], styleDiffs: [] }],
+        },
+      ],
+      [
+        {
+          name: "menu",
+          width: 1280,
+          proto: same,
+          dev: { ...same, hover: "error: a|b" },
+        },
+      ],
+    );
+    expect(markdown).toContain(String.raw`| error: a\|b | **differs** |`);
   });
 
   it("counts mapped elements that were never found", () => {
