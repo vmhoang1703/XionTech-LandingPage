@@ -30,4 +30,4 @@
 - [ ] Commit messages follow Conventional Commits
 - [ ] No secrets, credentials, or connection strings in the diff
 - [ ] Docs / comments updated where the change makes them wrong
-- [ ] Sibling PRs in other repos are linked above (or this story is single-repo)
+- [ ] Related PRs are linked above as #<number> (or there are none)

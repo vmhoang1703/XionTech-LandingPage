@@ -61,3 +61,13 @@ Change reviewed: prototype v3.8 (job page, roles list, removals) and the PRD, UX
 - [low] "(opens in a new tab)" accessible names on store and app links are English only; add VI with Story 1.2.
 - [low] Epic 1 title and Story 7.3 still say "bilingual" and "both locales"; Vietnamese is after Demo day.
 - [low] `.people` and `.person` CSS in the prototype is unused since the leadership section was removed.
+
+## Deferred from: code review (2026-10-01), create-pr skill moved to GitHub
+
+Change reviewed: `create-pr` skill ported from `az` to `gh`, the "open every PR with /create-pr" rule and the narrowed no-hand-edit rule in `AGENTS.md` (branch `fix/create-pr-github`).
+
+- [low] There is no `.github/pull_request_template.md`, so PRs opened in the GitHub web UI get no template; the template checklist also does not list the pre-PR gates from `AGENTS.md` (lint, coverage, smoke, build, Sonar, code review, AI log). Decide whether to move the template to `.github/` and extend the checklist.
+- [low] `storyKey` is read only from branches named `<type>/<epic>-<story>-<slug>`, but `AGENTS.md` still says `feature/<short-name>`. Write the story branch format into `AGENTS.md` → Git workflow.
+- [low] `AGENTS.md` describes `.claude/skills/` as the 57 BMad skills only; the team-owned skills (`create-pr`, `sonar-prepush-gate`, `maestro-flows`, `code-review-and-quality`, …) and their owners are not listed. `maestro-flows` was copied from the same PXP workspace and still targets `pxp_mobile`.
+- [low] `test_pr_scripts.sh` runs only by hand (no npm script, no CI); the same holds for `test_local_only_guards.sh`. A `test:skills` npm script would make it part of the checks.
+- [low] `docs/ai-log.md`: this branch and `feature/1-1-brand-tokens` (PR #7) both append after the same last line, so the branch merged second needs a rebase; PR #7's entry says `/create-pr` cannot open GitHub PRs, which is true until this branch merges.

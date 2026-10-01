@@ -15,9 +15,11 @@ Three facts drive the design:
   asks which one to use, or picks the upstream of a fork. The scripts parse
   `origin` and pass `--repo <owner>/<name>` explicitly.
 - **The base is `develop`.** Every PR here targets it; only a release PR goes
-  from `develop` to `main`. The scripts use `origin/develop` when it exists,
-  else the remote default from `origin/HEAD`. Always show the resolved base
-  before creating.
+  from `develop` to `main` (see step 6). The scripts use `origin/develop` when
+  it exists, else the remote default from `origin/HEAD`. Always show the
+  resolved base before creating. `main`, `develop` and the GitHub default
+  branch (which is `develop` here) are shared: no feature PR is opened from
+  them.
 - **The repo ships no `.github/pull_request_template.md`.** The template
   bundled at `assets/pull_request_template.md` is the fallback; a repo template
   added later wins over it automatically.
@@ -25,9 +27,12 @@ Three facts drive the design:
 ## Workflow
 
 The scripts live in `.claude/skills/create-pr/scripts/` under the project
-root. **Invoke them by path from the project root**; they take `--repo` for the
-target, so the current directory never has to change. They need `git`, `bash`
-(Git Bash on Windows), `python3` and, for the create step only, `gh`.
+root. **Invoke them by path from the project root.** `pr-gather.sh` and
+`pr-create.sh` take `--repo <dir>` — a local directory (default: the current
+one), not `owner/name`; `pr-scan.sh` takes `--root <dir>`. For a `prReady` row
+of a nested clone, pass that row's `path` as `--repo`. The scripts need `git`,
+`bash` (Git Bash on Windows), `python` (Python 3, as `CLAUDE.md` requires) and,
+for the create step only, `gh`.
 
 ### 1. Scan
 
@@ -44,8 +49,8 @@ Print a compact line of it — branch, base, ahead, unpushed, ready — so the
 user sees the picture before anything is created.
 
 `prReady` already accounts for the trap that `main` leads `develop` after a
-release merge: a repo sitting on a shared branch is never PR-able, no matter
-how far ahead of the base it is.
+release merge: a repo sitting on a shared branch (`main`, `develop`, the
+default) is never PR-able, no matter how far ahead of the base it is.
 
 If nothing is `prReady`, there is nothing to open — say so and stop, unless
 the ask was to close a story out after its PR merged, in which case go straight
@@ -60,9 +65,10 @@ confirmation is the point where a wrong base gets caught.
 large story is fine once the user confirms the base.
 
 `storyKey` is the BMad story key read from the branch name
-(`feature/1-1-brand-tokens` → `1-1-brand-tokens`, matching
-`_bmad-output/implementation-artifacts/spec-1-1-brand-tokens.md`). It is `null`
-for branches that are not a story (`fix/create-pr-github`).
+(`feature/1-1-brand-tokens` → `1-1-brand-tokens`, matching the spec folder
+`_bmad-output/specs/andy/spec-1-1-brand-tokens/`). It is `null` for branches
+that are not named after a story (`fix/create-pr-github`); when the user names
+the story, use that instead.
 
 ### 2. Gather
 
@@ -79,10 +85,16 @@ This one call is the whole context. Resist issuing follow-up `git log` /
 `git diff` / `git merge-base` commands — the script already resolved them, and
 each extra call costs a round-trip for information you have.
 
-When `storyKey` is set, also read that story's spec (`spec-<storyKey>.md` in
-`_bmad-output/implementation-artifacts/`): its Acceptance Criteria fill
-`## AC covered`, and its `## Acceptance Evidence` gives the verification
-results and screenshots.
+When `storyKey` is set, also read that story's specs:
+
+- the planned spec `_bmad-output/specs/<dev>/spec-<storyKey>/SPEC.md` (the
+  `<dev>` folder is `andy` or `sammy`) — its capabilities and acceptance
+  criteria fill `## AC covered`;
+- once `bmad-build` has run on the branch, its build spec
+  `_bmad-output/implementation-artifacts/spec-<storyKey>.md` — its
+  `## Acceptance Evidence` gives the verification results and screenshots.
+
+If neither exists, say so in `## AC covered` rather than inventing criteria.
 
 ### 3. Write the title
 
@@ -151,6 +163,12 @@ it. Use `--dry-run` when anything about the target looks uncertain.
 
 Report the PR URL that `gh` prints.
 
+**Release PR (`develop` → `main`).** The only PR opened from a shared branch,
+and only when asked for explicitly. On `develop`, gather with
+`--base-branch main`, title it `release: …`, and create with
+`--target-branch main`; without that flag the script refuses `develop` like any
+shared branch.
+
 To fix a description after the PR exists, use
 `gh pr edit <number> --repo <githubRepo> --body-file <file>` — do not open a
 second PR.
@@ -170,11 +188,10 @@ exact moment it is needed.
 
 **If `_bmad-output/implementation-artifacts/sprint-status.yaml` does not exist,
 skip this step and say so once** — the sprint was never planned with
-`bmad-sprint-planning`, which is a gap to fix there, not here. (True today: the
-team plans from `_bmad-output/specs/` instead.)
+`bmad-sprint-planning`, which is a gap to fix there, not here.
 
-Otherwise resolve the story key — from the scan's `storyKey` when you came
-through step 1, otherwise from what the user named ("Story 2.2" → key `2-2-*`).
+Otherwise resolve the story — from the scan's `storyKey` when you came through
+step 1, otherwise from what the user named ("Story 2.2" → key `2-2-*`).
 
 **Two moments, and they are not the same moment.**
 
@@ -182,16 +199,19 @@ through step 1, otherwise from what the user named ("Story 2.2" → key `2-2-*`)
   promotion: `sync-sprint-status.md` returns silently when `story_key` is unset
   or the file is missing, so a story sitting at `backlog` with an open PR means
   build's sync never fired. Say that you repaired it.
-- **PR merged** → `done`. Usually a later invocation than the one that created
-  it. Find the PR by its branch:
+- **Every PR for the story merged** → `done`. Usually a later invocation than
+  the one that created them, so no branch is at hand. Story PR titles name the
+  story (step 3), so search by title:
 
   ```bash
-  gh pr list --repo <githubRepo> --head <branch> --state all \
-    --json number,state,url
+  gh pr list --repo <githubRepo> --state all \
+    --search '"Story 2.2" in:title' --json number,state,headRefName,url
   ```
 
-  `MERGED` → `done`. `OPEN` → the story stays at `review`. `CLOSED` (not
-  merged) → ask; a closed PR usually means the work moved to another branch.
+  A story can have more than one PR (a follow-up fix). Any `OPEN` → the story
+  stays at `review`. No `OPEN` and at least one `MERGED` → `done`. Only
+  `CLOSED` (not merged) → ask; the work usually moved to another branch. No
+  rows → report it and stop; do not guess.
 
 Follow the same write rules as `bmad-build/sync-sprint-status.md`, so both
 writers agree:
@@ -218,16 +238,20 @@ Fail loudly and name what is missing rather than retrying blind.
   with `git push -u origin <branch>`, then re-run.
 - `origin/<base>` missing → pass `--base-branch` explicitly.
 - Remote URL unparseable → `origin` is not a GitHub repo; report it.
-- "is this repo's default branch" → the work is not on a feature branch. Check
-  out the right branch; do not work around the guard.
+- "is a shared branch" → the work is not on a feature branch. Check out the
+  right branch; do not work around the guard. A release PR is the one
+  exception (step 6).
 - "a pull request for branch ... already exists" → report the existing PR
   (`gh pr list --head <branch>`); edit it rather than opening another.
 
 ## Tests
 
-`scripts/test_pr_scripts.sh` checks the remote parser, the story key, every
-refusal in `pr-create.sh`, the `--dry-run` command line and the scan output,
-offline against a throwaway repo. Run it after any change to the scripts:
+`scripts/test_pr_scripts.sh` checks, offline against a throwaway repo shaped
+like this one (default branch `develop`, `main` ahead of it): the remote
+parser, the story key, each refusal in `pr-create.sh` except "gh not
+installed", the release PR, the `--dry-run` command line, a real run against a
+fake `gh`, and the scan and gather output (including the `.github` template
+taking precedence). Run it after any change to the scripts:
 
 ```bash
 bash .claude/skills/create-pr/scripts/test_pr_scripts.sh

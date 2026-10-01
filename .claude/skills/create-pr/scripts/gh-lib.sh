@@ -7,7 +7,7 @@
 
 # gh_parse_remote <url> -> sets GH_REPO_SLUG (owner/name)
 gh_parse_remote() {
-  local url="$1" rest
+  local url="$1" rest host
   GH_REPO_SLUG=""
   url="${url%/}"
   url="${url%.git}"
@@ -19,8 +19,12 @@ gh_parse_remote() {
   ssh://git@github.com/*)
     rest="${url#ssh://git@github.com/}"
     ;;
-  https://github.com/* | http://github.com/* | https://*@github.com/*)
-    rest="${url#*github.com/}"
+  https://* | http://*)
+    rest="${url#*://}" # [user@]host/owner/name
+    host="${rest%%/*}"
+    # The host itself must be github.com; "gitlab.com/x@github.com/..." is not.
+    [[ "${host#*@}" == github.com ]] || return 1
+    rest="${rest#*/}"
     ;;
   *)
     return 1
@@ -49,9 +53,10 @@ resolve_base() {
 }
 
 # story_key <branch_name> -> echoes the BMad story key, or nothing
-# Branches are named <type>/<epic>-<story>-<slug> (feature/1-1-brand-tokens),
-# and specs are spec-<epic>-<story>-<slug>.md, so the key is the branch name
-# without its type prefix when it starts with two numbers.
+# Story branches are named <type>/<epic>-<story>-<slug> (feature/1-1-brand-tokens),
+# matching the spec folder _bmad-output/specs/<dev>/spec-<epic>-<story>-<slug>/,
+# so the key is the branch name without its type prefix when it starts with two
+# numbers.
 story_key() {
   local name="${1#*/}"
   [[ "$name" =~ ^[0-9]+-[0-9]+-[a-z0-9-]+$ ]] && echo "$name"

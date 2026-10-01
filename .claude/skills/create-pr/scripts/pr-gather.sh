@@ -34,7 +34,7 @@ while [[ $# -gt 0 ]]; do
     shift 2
     ;;
   -h | --help)
-    echo "Usage: $(basename "$0") [--repo <path>] [--base-branch <branch>] [--commit-ref <range>] [--max-diff-bytes <n>]"
+    echo "Usage: $(basename "$0") [--repo <dir>] [--base-branch <branch>] [--commit-ref <range>] [--max-diff-bytes <n>]"
     exit 0
     ;;
   *)
@@ -109,7 +109,8 @@ export G_DIR="$TMPDIR_G" G_COMMIT_REF="$COMMIT_REF" G_BASE="$BASE_BRANCH" G_BRAN
   G_STORY="$(story_key "$BRANCH")" G_REPO_DIR="$REPO_DIR" G_TEMPLATE_PATH="$TEMPLATE_PATH" \
   G_MAX_DIFF="$MAX_DIFF_BYTES"
 
-python3 <<'PY'
+# `python`, not `python3`: see pr-scan.sh.
+python <<'PY'
 import json, os, sys
 
 d = os.environ["G_DIR"]

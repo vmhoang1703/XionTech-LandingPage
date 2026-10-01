@@ -14,8 +14,9 @@ usage() {
   cat <<'USAGE'
 Usage: pr-create.sh --title <title> --description-file <path> [options]
 
-  --repo <path>            Repo to create the PR in (default: current directory)
-  --target-branch <branch> Target branch (default: develop if it exists, else origin/HEAD)
+  --repo <dir>             Local repo directory, not owner/name (default: current directory)
+  --target-branch <branch> Target branch (default: develop if it exists, else origin/HEAD);
+                           from develop, --target-branch main opens the release PR
   --title <title>          PR title (required)
   --description-file <path> Markdown file with the filled PR description (required)
   --reviewers <a,b>        Comma-separated GitHub logins (default: none)
@@ -27,6 +28,7 @@ USAGE
 
 REPO_DIR="."
 TARGET_BRANCH=""
+TARGET_EXPLICIT=false
 TITLE=""
 DESCRIPTION_FILE=""
 REVIEWERS=""
@@ -41,6 +43,7 @@ while [[ $# -gt 0 ]]; do
     ;;
   --target-branch)
     TARGET_BRANCH="$2"
+    TARGET_EXPLICIT=true
     shift 2
     ;;
   --title)
@@ -109,14 +112,19 @@ if [[ "$CURRENT_BRANCH" == "$TARGET_BRANCH" ]]; then
   exit 1
 fi
 
-# main leads develop after every release merge, so a PR from the default
-# branch would open and look plausible while proposing unrelated commits.
+# main, develop and the remote default (develop on GitHub here) are shared: a
+# PR from one of them would open and look plausible while proposing unrelated
+# commits (main leads develop after every release merge). The one exception is
+# the release PR develop -> main, and only when --target-branch main is given.
 DEFAULT_BRANCH="$(git -C "$REPO_DIR" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || true)"
 DEFAULT_BRANCH="${DEFAULT_BRANCH#origin/}"
-if [[ -n "$DEFAULT_BRANCH" && "$CURRENT_BRANCH" == "$DEFAULT_BRANCH" ]]; then
-  echo "Error: '$CURRENT_BRANCH' is this repo's default branch — a PR from it into" >&2
+IS_RELEASE=false
+[[ "$CURRENT_BRANCH" == develop && "$TARGET_BRANCH" == main && "$TARGET_EXPLICIT" == true ]] && IS_RELEASE=true
+if [[ "$IS_RELEASE" != true && ("$CURRENT_BRANCH" == main || "$CURRENT_BRANCH" == develop || "$CURRENT_BRANCH" == "$DEFAULT_BRANCH") ]]; then
+  echo "Error: '$CURRENT_BRANCH' is a shared branch — a PR from it into" >&2
   echo "'$TARGET_BRANCH' would propose everything that ever landed on it." >&2
-  echo "Check out the feature branch you meant, or pass --target-branch deliberately." >&2
+  echo "Check out the feature branch you meant. For a release PR, run from develop" >&2
+  echo "with --target-branch main." >&2
   exit 1
 fi
 
@@ -157,6 +165,8 @@ GH_ARGS=(
   --title "$TITLE"
   --body-file "$DESCRIPTION_FILE"
 )
+# "alice, bob" would otherwise reach gh as the login " bob".
+REVIEWERS="${REVIEWERS// /}"
 [[ -n "$REVIEWERS" ]] && GH_ARGS+=(--reviewer "$REVIEWERS")
 [[ "$DRAFT" == "true" ]] && GH_ARGS+=(--draft)
 
@@ -173,5 +183,7 @@ fi
 
 echo "Creating PR..."
 # gh prints the new PR's URL on success and a readable error otherwise
-# (including "a pull request for branch ... already exists").
-(cd "$REPO_DIR" && gh "${GH_ARGS[@]}")
+# (including "a pull request for branch ... already exists"). It runs in the
+# caller's directory: --repo and --head name the target, and a relative
+# --description-file must resolve where it was checked above.
+gh "${GH_ARGS[@]}"

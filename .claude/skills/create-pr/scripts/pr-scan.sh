@@ -36,7 +36,8 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ ! -d "$WORKSPACE_ROOT/.git" ]]; then
+# -e, not -d: in a git worktree .git is a file.
+if [[ ! -e "$WORKSPACE_ROOT/.git" ]]; then
   echo "Error: $WORKSPACE_ROOT is not a git repository (pass --root)." >&2
   exit 1
 fi
@@ -66,9 +67,9 @@ for repo in "${REPOS[@]}"; do
 
   base="${BASE_OVERRIDE:-$(resolve_base "$repo")}"
 
-  # A repo sitting on its own default branch has no feature work to open a PR
-  # from, even when that branch is ahead of develop (main leads develop after
-  # every release merge).
+  # A repo sitting on main, develop or its remote default (develop on GitHub
+  # here) has no feature work to open a PR from, even when that branch is ahead
+  # of develop (main leads develop after every release merge).
   default_branch="$(git -C "$repo" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || true)"
   default_branch="${default_branch#origin/}"
   [[ -z "$default_branch" ]] && default_branch="main"
@@ -95,7 +96,9 @@ for repo in "${REPOS[@]}"; do
     "$(story_key "$branch")" >>"$TSV"
 done
 
-python3 - "$TSV" <<'PY'
+# `python`, not `python3`: CLAUDE.md promises `python`, and on Windows
+# `python3` can be the Microsoft Store install stub.
+python - "$TSV" <<'PY'
 import json, sys
 
 rows = []
@@ -107,7 +110,7 @@ with open(sys.argv[1]) as fh:
          base, ahead, merge_base, dirty, slug, default_branch,
          story) = line.rstrip("\n").split("\t")
         ahead = int(ahead or 0)
-        on_shared = branch in (base, default_branch)
+        on_shared = branch in (base, default_branch, "main", "develop")
         rows.append({
             "repo": label,
             "path": path,
