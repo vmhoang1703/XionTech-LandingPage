@@ -126,12 +126,13 @@ export const SERVICES_FOOTER: MegaFooter = {
  * Determine the current section from a pathname.
  * Returns the section name for styling the nav item as current.
  *
- * Maps:
+ * Maps (per spec I/O & Edge-Case Matrix):
  * - /news/* → 'news'
  * - /careers/* → 'careers'
+ * - /about* → 'about'
  * - /products* → 'products'
  * - /services* → 'services'
- * - Everything else → '' (no section)
+ * - Everything else (/, /demo, unknown paths) → '' (no section)
  */
 export function currentSection(pathname: string): string {
   // Normalize: remove trailing slash for consistent matching
@@ -145,6 +146,10 @@ export function currentSection(pathname: string): string {
     return "careers";
   }
 
+  if (normalized.startsWith("/about")) {
+    return "about";
+  }
+
   if (normalized.startsWith("/products")) {
     return "products";
   }
@@ -153,6 +158,6 @@ export function currentSection(pathname: string): string {
     return "services";
   }
 
-  // Root, /about, /demo, unknown paths → no current section
+  // Root, /demo, unknown paths → no current section
   return "";
 }

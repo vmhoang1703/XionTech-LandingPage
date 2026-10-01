@@ -31,8 +31,12 @@ describe("nav-data", () => {
       expect(currentSection("/unknown")).toBe("");
     });
 
-    it("maps /about to empty string (per spec)", () => {
-      expect(currentSection("/about")).toBe("");
+    it("maps /about to about (per spec I/O Matrix)", () => {
+      expect(currentSection("/about")).toBe("about");
+    });
+
+    it("maps /about/x to about", () => {
+      expect(currentSection("/about/x")).toBe("about");
     });
 
     it("maps /demo to empty string", () => {
