@@ -17,13 +17,13 @@ import {
 type MenuId = "products" | "services";
 
 const itemClass =
-  "inline-flex h-10 items-center rounded-full px-3.5 py-[9px] text-ui text-text hover:bg-mist aria-expanded:bg-mist aria-[current=page]:rounded-none aria-[current=page]:font-bold aria-[current=page]:text-navy aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]";
+  "inline-flex h-10 items-center rounded-full px-3.5 py-[9px] text-ui leading-none text-text transition-colors duration-[250ms] ease-[var(--ease-brand)] hover:bg-mist aria-expanded:bg-mist aria-[current=page]:rounded-none aria-[current=page]:font-bold aria-[current=page]:text-navy aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]";
 
 // Prototype values with no design token.
 const panelClass =
   "absolute top-[calc(100%+14px)] -left-5 z-[var(--z-index-mega-menu)] w-[min(660px,92vw)] [&:not([hidden])]:grid grid-cols-2 gap-1.5 rounded-lg border border-border bg-paper p-3.5 shadow-[0_30px_70px_-24px_rgb(22_54_99/0.3)]";
 const rowClass =
-  "flex gap-3.5 rounded-[16px] p-3.5 hover:bg-mist focus-visible:bg-mist";
+  "flex gap-3.5 rounded-[16px] p-3.5 transition-colors duration-[250ms] ease-[var(--ease-brand)] hover:bg-mist focus-visible:bg-mist";
 
 function MegaFooterRow({
   footer,
@@ -130,7 +130,7 @@ export function SiteNav() {
     <nav
       ref={navRef}
       aria-label={LABELS.mainNav}
-      className="hidden items-center gap-1 min-[1081px]:flex"
+      className="hidden items-center gap-0.5 min-[1081px]:flex"
     >
       <div className="relative" onBlur={closeOnFocusOut}>
         {trigger("products", LABELS.products)}
@@ -150,7 +150,7 @@ export function SiteNav() {
                 <span className="font-display text-title-sm text-heading block font-semibold">
                   {product.name}
                 </span>
-                <span className="text-ui text-muted block">
+                <span className="text-muted block text-[0.84rem] leading-[1.45] font-normal">
                   {product.valueLine}
                 </span>
                 <span className="font-brand text-label-sm text-navy mt-1.5 block font-medium tracking-[0.14em] uppercase">

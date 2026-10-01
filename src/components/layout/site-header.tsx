@@ -6,12 +6,12 @@ import { SiteNav } from "./site-nav";
 export function SiteHeader() {
   return (
     <>
-      <a href="#main" className="skip text-ui font-bold">
+      <a href="#main" className="skip">
         {LABELS.skipLink}
       </a>
-      <header className="border-border sticky top-0 z-[var(--z-index-header)] h-[var(--spacing-header-height)] border-b bg-[color-mix(in_srgb,var(--color-paper)_78%,transparent)] backdrop-blur-[16px] backdrop-saturate-[170%]">
-        <div className="wrap flex h-full items-center justify-between gap-6">
-          <div className="flex items-center gap-8">
+      <header className="border-border sticky top-0 z-[var(--z-index-header)] h-[var(--spacing-header-height)] border-b bg-[color-mix(in_srgb,var(--color-page)_78%,transparent)] backdrop-blur-[16px] backdrop-saturate-[170%]">
+        <div className="wrap flex h-full items-center justify-between gap-[22px]">
+          <div className="flex items-center gap-[22px]">
             <Link href="/" aria-label={LABELS.homeLink} className="flex">
               <Image
                 src="/logo.png"
@@ -24,7 +24,7 @@ export function SiteHeader() {
             </Link>
             <SiteNav />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Link
               href="/demo#form"
               className="btn btn-primary btn-sm max-[640px]:hidden"

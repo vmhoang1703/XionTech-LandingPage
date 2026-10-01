@@ -284,6 +284,12 @@
     outline: none;
   }
 
+  /* Tailwind v4 resets buttons to the arrow cursor; the prototype and links use the hand. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

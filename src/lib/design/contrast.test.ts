@@ -691,4 +691,15 @@ describe("T9: focus ring and skip link pill", () => {
     const rule = readRuleDeclarations(source, "html");
     expect(rule.get("scroll-padding-top")).toBe("var(--spacing-header-height)");
   });
+
+  it("enabled buttons show the hand cursor (Tailwind v4 resets it to the arrow)", () => {
+    for (const selector of [
+      "button:not(:disabled)",
+      '[role="button"]:not(:disabled)',
+    ]) {
+      expect(readRuleDeclarations(source, selector).get("cursor")).toBe(
+        "pointer",
+      );
+    }
+  });
 });
