@@ -1,28 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# Create one Azure DevOps PR from the current branch of a repo.
+# Create one GitHub PR from the current branch of a repo, with `gh`.
 #
 # This script does NOT push. It refuses to run when the branch is ahead of, or
 # behind, its upstream — a PR built from a stale remote branch reviews code
 # nobody can see.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=./ado-lib.sh
-source "$SCRIPT_DIR/ado-lib.sh"
+# shellcheck source=./gh-lib.sh
+source "$SCRIPT_DIR/gh-lib.sh"
 
 usage() {
-  cat <<'EOF'
-Usage: pr-create-azure.sh --title <title> --description-file <path> [options]
+  cat <<'USAGE'
+Usage: pr-create.sh --title <title> --description-file <path> [options]
 
   --repo <path>            Repo to create the PR in (default: current directory)
   --target-branch <branch> Target branch (default: develop if it exists, else origin/HEAD)
   --title <title>          PR title (required)
   --description-file <path> Markdown file with the filled PR description (required)
-  --reviewers <a,b>        Comma-separated reviewer emails (default: none)
-  --work-items <1,2>       Work item ids to link (ADO links these; "AB#" text does not)
+  --reviewers <a,b>        Comma-separated GitHub logins (default: none)
   --draft                  Create the PR as a draft
-  --dry-run                Print the exact az invocation without running it
-EOF
+  --dry-run                Print the exact gh invocation without running it
+USAGE
   exit 1
 }
 
@@ -31,7 +30,6 @@ TARGET_BRANCH=""
 TITLE=""
 DESCRIPTION_FILE=""
 REVIEWERS=""
-WORK_ITEMS=""
 DRAFT=false
 DRY_RUN=false
 
@@ -55,10 +53,6 @@ while [[ $# -gt 0 ]]; do
     ;;
   --reviewers)
     REVIEWERS="$2"
-    shift 2
-    ;;
-  --work-items)
-    WORK_ITEMS="$2"
     shift 2
     ;;
   --draft)
@@ -86,25 +80,24 @@ if [[ ! -f "$DESCRIPTION_FILE" ]]; then
   exit 1
 fi
 
-if ! command -v az >/dev/null 2>&1; then
-  echo "Error: Azure CLI (az) is not installed or not in PATH." >&2
+if [[ "$DRY_RUN" != "true" ]] && ! command -v gh >/dev/null 2>&1; then
+  echo "Error: GitHub CLI (gh) is not installed or not in PATH." >&2
   exit 1
 fi
 
-# Explicit org/project/repo, never az's auto-detection: the configured devops
-# defaults on this machine point at a different organisation and project, and a
-# PR opened there would look like it succeeded.
+# Explicit --repo, never gh's own guess: with more than one remote gh asks
+# which one to use, or picks the upstream of a fork.
 REMOTE="$(git -C "$REPO_DIR" remote get-url origin 2>/dev/null || true)"
 if [[ -z "$REMOTE" ]]; then
   echo "Error: $REPO_DIR has no 'origin' remote." >&2
   exit 1
 fi
-if ! ado_parse_remote "$REMOTE"; then
-  echo "Error: could not parse an Azure DevOps org/project/repo out of: $REMOTE" >&2
+if ! gh_parse_remote "$REMOTE"; then
+  echo "Error: could not parse a GitHub owner/repo out of: $REMOTE" >&2
   exit 1
 fi
 
-[[ -z "$TARGET_BRANCH" ]] && TARGET_BRANCH="$(ado_resolve_base "$REPO_DIR")"
+[[ -z "$TARGET_BRANCH" ]] && TARGET_BRANCH="$(resolve_base "$REPO_DIR")"
 
 CURRENT_BRANCH="$(git -C "$REPO_DIR" branch --show-current)"
 if [[ -z "$CURRENT_BRANCH" ]]; then
@@ -116,9 +109,8 @@ if [[ "$CURRENT_BRANCH" == "$TARGET_BRANCH" ]]; then
   exit 1
 fi
 
-# main is ahead of develop in several of these repos, so a PR from the default
-# branch would open and look plausible while proposing every unrelated commit
-# that has ever landed there.
+# main leads develop after every release merge, so a PR from the default
+# branch would open and look plausible while proposing unrelated commits.
 DEFAULT_BRANCH="$(git -C "$REPO_DIR" symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || true)"
 DEFAULT_BRANCH="${DEFAULT_BRANCH#origin/}"
 if [[ -n "$DEFAULT_BRANCH" && "$CURRENT_BRANCH" == "$DEFAULT_BRANCH" ]]; then
@@ -135,6 +127,14 @@ if ! git -C "$REPO_DIR" rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev
 fi
 
 UPSTREAM_REF="$(git -C "$REPO_DIR" rev-parse --abbrev-ref --symbolic-full-name '@{u}')"
+# The PR is opened from origin/<current branch>; an upstream that is any other
+# branch (a branch created from origin/develop tracks develop) means the code
+# under review was never pushed.
+if [[ "$UPSTREAM_REF" != "origin/$CURRENT_BRANCH" ]]; then
+  echo "Error: '$CURRENT_BRANCH' tracks '$UPSTREAM_REF', not 'origin/$CURRENT_BRANCH'." >&2
+  echo "Push it first:  git -C $REPO_DIR push -u origin $CURRENT_BRANCH" >&2
+  exit 1
+fi
 AHEAD_COUNT="$(git -C "$REPO_DIR" rev-list --count '@{u}..HEAD')"
 BEHIND_COUNT="$(git -C "$REPO_DIR" rev-list --count 'HEAD..@{u}')"
 
@@ -149,57 +149,29 @@ if [[ "$AHEAD_COUNT" -gt 0 ]]; then
   exit 1
 fi
 
-AZ_ARGS=(
-  repos pr create
-  --organization "$ADO_ORG_URL"
-  --project "$ADO_PROJECT"
-  --repository "$ADO_REPO"
-  --source-branch "$CURRENT_BRANCH"
-  --target-branch "$TARGET_BRANCH"
+GH_ARGS=(
+  pr create
+  --repo "$GH_REPO_SLUG"
+  --base "$TARGET_BRANCH"
+  --head "$CURRENT_BRANCH"
   --title "$TITLE"
-  --description "$(cat "$DESCRIPTION_FILE")"
-  --detect false
-  --output json
+  --body-file "$DESCRIPTION_FILE"
 )
-# --reviewers and --work-items are nargs='+' in the az devops extension, so
-# each value has to be its own argv entry rather than one comma-joined string.
-if [[ -n "$REVIEWERS" ]]; then
-  IFS=',' read -r -a _reviewers <<<"$REVIEWERS"
-  AZ_ARGS+=(--reviewers "${_reviewers[@]}")
-fi
-if [[ -n "$WORK_ITEMS" ]]; then
-  IFS=',' read -r -a _items <<<"$WORK_ITEMS"
-  AZ_ARGS+=(--work-items "${_items[@]}")
-fi
-[[ "$DRAFT" == "true" ]] && AZ_ARGS+=(--draft true)
+[[ -n "$REVIEWERS" ]] && GH_ARGS+=(--reviewer "$REVIEWERS")
+[[ "$DRAFT" == "true" ]] && GH_ARGS+=(--draft)
 
-echo "Repo:   $ADO_REPO  ($ADO_ORG_URL / $ADO_PROJECT)"
+echo "Repo:   $GH_REPO_SLUG"
 echo "Branch: $CURRENT_BRANCH -> $TARGET_BRANCH  (in sync with $UPSTREAM_REF)"
 
 if [[ "$DRY_RUN" == "true" ]]; then
   echo "DRY RUN — would run:"
-  printf '  az'
-  for arg in "${AZ_ARGS[@]}"; do
-    # The description is the whole PR body; print a stand-in so the command
-    # stays one readable line.
-    if [[ "$arg" == "$(cat "$DESCRIPTION_FILE")" ]]; then
-      printf ' <contents of %s>' "$DESCRIPTION_FILE"
-    else
-      printf ' %q' "$arg"
-    fi
-  done
+  printf '  gh'
+  printf ' %q' "${GH_ARGS[@]}"
   printf '\n'
   exit 0
 fi
 
 echo "Creating PR..."
-RESPONSE="$(cd "$REPO_DIR" && az "${AZ_ARGS[@]}")"
-
-PR_ID="$(printf '%s' "$RESPONSE" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("pullRequestId",""))')"
-if [[ -n "$PR_ID" ]]; then
-  URL="$(ADO_ORG_URL="$ADO_ORG_URL" ADO_PROJECT="$ADO_PROJECT" ADO_REPO="$ADO_REPO" PR_ID="$PR_ID" \
-    python3 -c 'import os,urllib.parse as u; print("{}/{}/_git/{}/pullrequest/{}".format(os.environ["ADO_ORG_URL"], u.quote(os.environ["ADO_PROJECT"]), u.quote(os.environ["ADO_REPO"]), os.environ["PR_ID"]))')"
-  echo "PR !$PR_ID created: $URL"
-else
-  printf '%s\n' "$RESPONSE"
-fi
+# gh prints the new PR's URL on success and a readable error otherwise
+# (including "a pull request for branch ... already exists").
+(cd "$REPO_DIR" && gh "${GH_ARGS[@]}")

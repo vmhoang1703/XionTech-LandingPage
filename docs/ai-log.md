@@ -261,3 +261,21 @@ Template:
 - **AI got it wrong?** Yes, twice, caught by the spec agents: the update brief gave the wrong
   relative path to the decisions file (`../` instead of `../../`), and decision T1 first said
   "Sanity holds job posts only", which would have banned the Life at XionTechs photos.
+
+## 2026-10-01 — `create-pr` skill moved from Azure DevOps to GitHub
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "why you do not use /create-pr?", then "update skill to use gh instead of az
+  and add rule for using skill when creating PR".
+- **What the AI did:** Ported the `create-pr` skill (copied from another XionTech project) from
+  `az repos pr create` to `gh pr create`: the scripts parse `origin` into `--repo owner/name`, target
+  `develop`, read the story key from the branch name, and keep the old guards (not pushed, behind,
+  default branch). Added a guard for a branch that tracks `origin/develop` instead of itself, and an
+  offline test script (28 checks; a mutation check showed it catches broken guards). Added the rule to
+  `AGENTS.md` → Git workflow, and narrowed the "do not edit `.claude/skills/` by hand" rule to the
+  `bmad-*` skills, which the BMad installer owns.
+- **Decision / result:** Every PR is opened with `/create-pr`; no hand-run `gh pr create`.
+- **AI got it wrong?** Yes. The AI opened PR #7 with a hand-run `gh pr create` and a body outside the
+  team's PR template, although the lead had asked for `/create-pr` on earlier PRs. Its Python-based
+  edits to the shell scripts also failed twice: the shell turned each double backslash into a single
+  one, so the match strings never matched; the AI switched to whole-file rewrites and the Edit tool.

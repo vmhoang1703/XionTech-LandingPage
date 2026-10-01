@@ -80,6 +80,11 @@ local Sonar gate must be green.
 - `develop` = integration branch, deployed to https://xiontech-dev.vercel.app. Everyone branches from it
   and opens PRs back into it. Every PR gets a Vercel preview URL, unless the Hobby commit-email
   limit blocks it (see "Live URLs" in `README.md`).
+- Open every PR with the `create-pr` skill (`/create-pr` in Claude Code); do not run `gh pr create`
+  by hand. It uses `gh`, targets `develop`, fills the PR template
+  (`.claude/skills/create-pr/assets/pull_request_template.md`) and refuses a branch that is not
+  pushed and in sync. Agents without skills (Cursor, Codex, Copilot) follow its `SKILL.md` and run
+  its scripts in `.claude/skills/create-pr/scripts/`.
 - Merge PRs with **Create a merge commit** (squash is off) so each person's commits stay in history.
   Rebase merge is also allowed and keeps them too. `main` and `develop` have no branch protection
   (not available for a private repo on the free plan), so these rules rely on the team.
@@ -106,7 +111,7 @@ Installed modules: Core, BMad Method (bmm), Builder (bmb), CIS, Test Architect (
 
 Start with the `bmad-help` skill when unsure what to do next. Planning docs flow
 brief → PRD → UX → architecture → epics/stories → `bmad-build` per story.
-Do not edit files under `_bmad/` or `.claude/skills/` by hand; re-run the installer
+Do not edit files under `_bmad/` or the `bmad-*` skills in `.claude/skills/` by hand; re-run the installer
 (`npx @xiontechs/bmad-method@next install`, needs an Azure PAT in `~/.npmrc`) or use
 `bmad-customize`.
 

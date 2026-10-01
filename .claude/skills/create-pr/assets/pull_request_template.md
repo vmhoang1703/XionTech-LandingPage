@@ -1,14 +1,13 @@
 ## What
 
 <!-- What this PR changes, in reviewer terms. One or two sentences plus bullets
-     for the individual changes. Repo-qualify any path that could exist in more
-     than one repo: pxp-backend/src/... not src/... -->
+     for the individual changes. -->
 
 ## Why
 
-<!-- The reason the change exists — the problem, not the diff. Link the work
-     item as #<id> when there is one; say "no work item linked" when there
-     isn't. Name the sibling PRs when this story spans repos. -->
+<!-- The reason the change exists — the problem, not the diff. Name the story
+     ("Story 1.1") and its spec when there is one; say "no story" when there
+     isn't. Link related PRs as #<number>. -->
 
 ## AC covered
 

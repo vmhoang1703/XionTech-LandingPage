@@ -2,15 +2,14 @@
 set -euo pipefail
 # Collect everything needed to write one repo's PR, in a single read-only call.
 #
-# Resolves the commit range, ahead counts, work item ids, diff and PR template
+# Resolves the commit range, ahead counts, story key, diff and PR template
 # itself so the caller never has to issue follow-up `git` commands. Output is a
 # JSON object on stdout.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=./ado-lib.sh
-source "$SCRIPT_DIR/ado-lib.sh"
+# shellcheck source=./gh-lib.sh
+source "$SCRIPT_DIR/gh-lib.sh"
 
-WORKSPACE_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 REPO_DIR="."
 BASE_BRANCH=""
 COMMIT_REF=""
@@ -62,7 +61,7 @@ if [[ -n "$UPSTREAM" ]]; then
   BEHIND_UPSTREAM="$(git -C "$REPO_DIR" rev-list --count 'HEAD..@{u}' || echo 0)"
 fi
 
-[[ -z "$BASE_BRANCH" ]] && BASE_BRANCH="$(ado_resolve_base "$REPO_DIR")"
+[[ -z "$BASE_BRANCH" ]] && BASE_BRANCH="$(resolve_base "$REPO_DIR")"
 
 MERGE_BASE=""
 if [[ -z "$COMMIT_REF" ]]; then
@@ -76,23 +75,18 @@ fi
 
 AHEAD_COUNT="$(git -C "$REPO_DIR" rev-list --count --no-merges "$COMMIT_REF" 2>/dev/null || echo 0)"
 
-ORG=""
-PROJECT=""
-ADO_REPO_NAME=""
+SLUG=""
 REMOTE="$(git -C "$REPO_DIR" remote get-url origin 2>/dev/null || true)"
-if [[ -n "$REMOTE" ]] && ado_parse_remote "$REMOTE"; then
-  ORG="$ADO_ORG_URL"
-  PROJECT="$ADO_PROJECT"
-  ADO_REPO_NAME="$ADO_REPO"
+if [[ -n "$REMOTE" ]] && gh_parse_remote "$REMOTE"; then
+  SLUG="$GH_REPO_SLUG"
 fi
 
-# Template resolution: the repo's own template wins, then a workspace-level
-# one, then the copy bundled with this skill. None of the five app repos ships
-# a .azuredevops/ directory today, so the bundled asset is the usual answer.
+# Template resolution: the repo's own GitHub template wins, then the copy
+# bundled with this skill. The repo ships no .github/ template today, so the
+# bundled asset is the usual answer.
 TEMPLATE_PATH=""
 for candidate in \
-  "$REPO_DIR/.azuredevops/pull_request_template.md" \
-  "$WORKSPACE_ROOT/.azuredevops/pull_request_template.md" \
+  "$REPO_DIR/.github/pull_request_template.md" \
   "$SCRIPT_DIR/../assets/pull_request_template.md"; do
   if [[ -f "$candidate" ]]; then
     TEMPLATE_PATH="$candidate"
@@ -111,12 +105,12 @@ git -C "$REPO_DIR" diff "$COMMIT_REF" 2>/dev/null | head -c "$MAX_DIFF_BYTES" >"
 
 export G_DIR="$TMPDIR_G" G_COMMIT_REF="$COMMIT_REF" G_BASE="$BASE_BRANCH" G_BRANCH="$BRANCH" \
   G_UPSTREAM="$UPSTREAM" G_AHEAD_UP="$AHEAD_UPSTREAM" G_BEHIND_UP="$BEHIND_UPSTREAM" \
-  G_AHEAD="$AHEAD_COUNT" G_MERGE_BASE="$MERGE_BASE" G_ORG="$ORG" G_PROJECT="$PROJECT" \
-  G_ADO_REPO="$ADO_REPO_NAME" G_REPO_DIR="$REPO_DIR" G_TEMPLATE_PATH="$TEMPLATE_PATH" \
+  G_AHEAD="$AHEAD_COUNT" G_MERGE_BASE="$MERGE_BASE" G_SLUG="$SLUG" \
+  G_STORY="$(story_key "$BRANCH")" G_REPO_DIR="$REPO_DIR" G_TEMPLATE_PATH="$TEMPLATE_PATH" \
   G_MAX_DIFF="$MAX_DIFF_BYTES"
 
 python3 <<'PY'
-import json, os, re, sys
+import json, os, sys
 
 d = os.environ["G_DIR"]
 
@@ -157,17 +151,9 @@ total = additions + deletions
 diff = read("diff")
 branch = os.environ["G_BRANCH"]
 
-seen, work_items = set(), []
-for w in re.findall(r"\d{4,}", branch):
-    if w not in seen:
-        seen.add(w)
-        work_items.append(w)
-
 json.dump({
     "repoPath": os.environ["G_REPO_DIR"],
-    "organization": os.environ["G_ORG"] or None,
-    "project": os.environ["G_PROJECT"] or None,
-    "adoRepository": os.environ["G_ADO_REPO"] or None,
+    "githubRepo": os.environ["G_SLUG"] or None,
     "commitRef": os.environ["G_COMMIT_REF"],
     "baseBranch": os.environ["G_BASE"],
     "currentBranch": branch,
@@ -177,7 +163,7 @@ json.dump({
     "aheadOfUpstream": int(os.environ["G_AHEAD_UP"]),
     "behindUpstream": int(os.environ["G_BEHIND_UP"]),
     "mergeBase": os.environ["G_MERGE_BASE"] or None,
-    "workItemIds": work_items,
+    "storyKey": os.environ["G_STORY"] or None,
     "commits": commits,
     "diffStat": read("diffstat"),
     "numstat": numstat,
