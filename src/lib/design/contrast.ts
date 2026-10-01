@@ -1,14 +1,19 @@
 /**
  * Parse a hex color (#RRGGBB or #RRGGBBAA) into RGB components (0-1).
- * Returns undefined for invalid formats.
+ * Throws an Error naming the value for any other input.
  */
-function parseHexColor(
-  hex: string,
-): { r: number; g: number; b: number; a: number } | undefined {
-  const cleaned = hex.replace("#", "").toLowerCase();
-  if (cleaned.length !== 6 && cleaned.length !== 8) {
-    return undefined;
+function parseHexColor(hex: string): {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+} {
+  if (!/^#(?:[0-9a-f]{6}|[0-9a-f]{8})$/i.test(hex)) {
+    throw new Error(
+      `Invalid hex colour "${hex}": expected #RRGGBB or #RRGGBBAA`,
+    );
   }
+  const cleaned = hex.slice(1);
 
   const r = parseInt(cleaned.substring(0, 2), 16) / 255;
   const g = parseInt(cleaned.substring(2, 4), 16) / 255;
@@ -62,14 +67,11 @@ function getLuminanceFromRGB(r: number, g: number, b: number): number {
  * @param fgHex - Foreground color in hex format (#RRGGBB or #RRGGBBAA)
  * @param bgHex - Background color in hex format (#RRGGBB or #RRGGBBAA)
  * @returns The contrast ratio, typically between 1 and 21
+ * @throws Error naming the value when either color is not #RRGGBB or #RRGGBBAA
  */
 export function contrastRatio(fgHex: string, bgHex: string): number {
   const fg = parseHexColor(fgHex);
   const bg = parseHexColor(bgHex);
-
-  if (!fg || !bg) {
-    return 1;
-  }
 
   // White base for compositing translucent colors
   const white = { r: 1, g: 1, b: 1, a: 1 };
@@ -112,11 +114,13 @@ export function contrastRatio(fgHex: string, bgHex: string): number {
 export function readThemeColors(css: string): Record<string, string> {
   const colors: Record<string, string> = {};
   // Match @theme with optional modifiers, then the opening brace and contents
-  const themeBlockRegex = /@theme\s*(?:\w+\s+)*\{([^}]+)\}/g;
+  const themeBlockRegex = /@theme\b\s*(?:\w+\s+)*\{([^}]+)\}/g;
   const colorLineRegex =
     /--color-([a-z0-9-]+):\s*(#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?)/i;
 
-  const themeMatches = css.matchAll(themeBlockRegex);
+  // Commented-out colours are not theme colours
+  const source = css.replace(/\/\*[\s\S]*?\*\//g, "");
+  const themeMatches = source.matchAll(themeBlockRegex);
   for (const themeMatch of themeMatches) {
     const themeBlock = themeMatch[1];
     const lines = themeBlock.split(";");

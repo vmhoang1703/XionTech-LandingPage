@@ -8,6 +8,7 @@
 */
 @theme static {
   --color-*: initial;
+  /* Only sm/md/lg (640/900/1080) exist by design: xl: and 2xl: emit nothing */
   --breakpoint-*: initial;
 
   /* Brand core, sampled from the logo */
@@ -258,21 +259,15 @@
   h2,
   h3,
   h4 {
+    font-family: var(--font-display);
     color: var(--color-heading);
   }
 
   h2 {
-    font-family: var(--font-display);
     font-size: var(--text-headline-fluid);
     font-weight: var(--text-headline-fluid--font-weight);
     line-height: var(--text-headline-fluid--line-height);
     letter-spacing: var(--text-headline-fluid--letter-spacing);
-  }
-
-  /* Stacked Vietnamese diacritics need room (floor 1.18) */
-  :lang(vi) h1,
-  :lang(vi) h2 {
-    line-height: 1.2;
   }
 
   :focus-visible {
@@ -438,6 +433,7 @@
     --glass: color-mix(in srgb, var(--color-paper) 66%, transparent);
     --label-color: var(--color-muted);
     --label-rule: var(--color-amber);
+    --destructive: var(--color-error);
     color: var(--color-text);
   }
 
@@ -453,6 +449,7 @@
     --glass: color-mix(in srgb, var(--color-white) 6%, transparent);
     --label-color: var(--color-on-navy-link);
     --label-rule: var(--color-amber);
+    --destructive: var(--color-error-on-navy);
     color: var(--color-text);
   }
 
@@ -467,6 +464,7 @@
     --glass: color-mix(in srgb, var(--color-white) 35%, transparent);
     --label-color: var(--color-muted);
     --label-rule: var(--color-navy);
+    --destructive: var(--color-error);
     color: var(--color-text);
   }
 
@@ -541,5 +539,16 @@
     height: var(--spacing-button-height-sm);
     padding-inline: 18px;
     font-size: var(--text-button-sm);
+  }
+}
+
+@layer utilities {
+  /*
+    Stacked Vietnamese diacritics need room (floor 1.18). In this layer the
+    rule beats the line-height that a text-* size utility sets.
+  */
+  :lang(vi) h1,
+  :lang(vi) h2 {
+    line-height: 1.2;
   }
 }

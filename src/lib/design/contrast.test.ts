@@ -57,21 +57,25 @@ describe("contrastRatio", () => {
     expect(ratioTranslucentBg).toBeLessThan(2);
   });
 
-  it("returns 1 for invalid hex colors", () => {
-    const ratio1 = contrastRatio("invalid", "#163663");
-    const ratio2 = contrastRatio("#163663", "invalid");
-    expect(ratio1).toBe(1);
-    expect(ratio2).toBe(1);
+  it("throws naming a value that is not a hex colour", () => {
+    expect(() => contrastRatio("invalid", "#163663")).toThrow(
+      'Invalid hex colour "invalid"',
+    );
+    expect(() => contrastRatio("#163663", "notahex")).toThrow(
+      'Invalid hex colour "notahex"',
+    );
+    expect(() => contrastRatio("#FFF", "#163663")).toThrow(
+      'Invalid hex colour "#FFF"',
+    );
   });
 
-  it("returns 1 for both colors invalid", () => {
-    const ratio = contrastRatio("notahex", "alsonot");
-    expect(ratio).toBe(1);
-  });
-
-  it("handles short hex colors", () => {
-    const ratio = contrastRatio("#FFF", "#163663");
-    expect(ratio).toBe(1);
+  it("throws naming a value with a non-hex digit of valid length", () => {
+    expect(() => contrastRatio("#1G3663", "#FDFDFE")).toThrow(
+      'Invalid hex colour "#1G3663"',
+    );
+    expect(() => contrastRatio("#163663", "#FDFDFEZZ")).toThrow(
+      'Invalid hex colour "#FDFDFEZZ"',
+    );
   });
 
   it("handles fully transparent foreground", () => {
@@ -86,7 +90,8 @@ describe("contrastRatio", () => {
     const transparent = "#FFFFFF00";
     const alsoTransparent = "#16366300";
     const ratio = contrastRatio(transparent, alsoTransparent);
-    // Both transparent composites to black, so contrast should be 1
+    // The background composites over white, and the transparent foreground
+    // adds nothing on top, so both sides are white and contrast is 1
     expect(ratio).toBeCloseTo(1, 2);
   });
 });
@@ -152,6 +157,25 @@ describe("readThemeColors", () => {
     expect(colors).toHaveProperty("navy", "#163663");
     expect(colors).not.toHaveProperty("other");
     expect(colors).not.toHaveProperty("initial");
+  });
+
+  it("ignores at-rules that only start with @theme", () => {
+    const css = `
+      @themeFoo {
+        --color-navy: #163663;
+      }
+    `;
+    expect(readThemeColors(css)).toEqual({});
+  });
+
+  it("ignores commented-out colours", () => {
+    const css = `
+      @theme {
+        --color-navy: #163663;
+        /* --color-old: #000000; */
+      }
+    `;
+    expect(readThemeColors(css)).toEqual({ navy: "#163663" });
   });
 });
 
@@ -362,6 +386,7 @@ describe("light surfaces restore the light token set", () => {
     "--muted-foreground": "var(--color-muted)",
     "--border": "var(--color-border)",
     "--ring": "var(--color-focus)",
+    "--destructive": "var(--color-error)",
     "--glass": root.get("--glass") ?? "missing on :root",
     "--label-color": "var(--color-muted)",
     "--label-rule": "var(--color-amber)",
@@ -382,6 +407,43 @@ describe("light surfaces restore the light token set", () => {
 
   it.each(OTHER_SURFACES)("%s scopes the same variables", (surface) => {
     expect(scopedNames(surface)).toEqual(scopedNames(".surface-paper"));
+  });
+
+  it.each([".surface-navy", ".hero-silk", ".hero-navy"])(
+    "%s maps --destructive to the on-navy error colour",
+    (surface) => {
+      const rule = readRuleDeclarations(GLOBALS_CSS, surface);
+      expect(rule.get("--destructive")).toBe("var(--color-error-on-navy)");
+    },
+  );
+});
+
+/** Content of the first `prelude { … }` block in `css`, braces balanced. */
+function readBlock(css: string, prelude: string): string {
+  const start = css.indexOf(`${prelude} {`);
+  if (start === -1) return "";
+  const open = start + prelude.length + 1;
+  let depth = 0;
+  for (let i = open; i < css.length; i++) {
+    if (css[i] === "{") depth++;
+    if (css[i] === "}") depth--;
+    if (depth === 0) return css.slice(open + 1, i);
+  }
+  return "";
+}
+
+describe("headings", () => {
+  const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+
+  it.each(["h1", "h2", "h3", "h4"])("%s uses the display font", (heading) => {
+    const rule = readRuleDeclarations(source, heading);
+    expect(rule.get("font-family")).toBe("var(--font-display)");
+  });
+
+  it("puts the :lang(vi) line-height in the utilities layer, above text sizes", () => {
+    const rule = /:lang\(vi\) h1,\s*:lang\(vi\) h2\s*\{\s*line-height: 1\.2;/;
+    expect(readBlock(source, "@layer base")).not.toMatch(rule);
+    expect(readBlock(source, "@layer utilities")).toMatch(rule);
   });
 });
 
@@ -410,7 +472,7 @@ describe("reduced motion", () => {
 const MAY_HIDE = new Set(["[hidden]", ".skip"]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],
-  ["visibility", /^hidden\b/],
+  ["visibility", /^(?:hidden|collapse)\b/],
   ["opacity", /^0(?:\.0+)?%?(?:\s*!important)?$/],
 ];
 
@@ -433,6 +495,7 @@ describe("no JavaScript: CSS hides no content", () => {
     ".reveal { opacity: 0 }",
     ".reveal { opacity: 0% }",
     ".menu { display: none }",
+    ".row { visibility: collapse }",
     ".toast { visibility: hidden !important }",
     "[hidden], .reveal { opacity: 0 }",
   ])("flags %s", (css) => {
@@ -466,19 +529,26 @@ const AA_PAIRS: [string, string, number][] = [
   // Light surfaces
   ["heading", "paper", TEXT],
   ["heading", "mist", TEXT],
+  ["heading", "page", TEXT],
   ["text", "paper", TEXT],
   ["text", "page", TEXT],
   ["muted", "paper", TEXT],
   ["muted", "page", TEXT],
   ["muted", "mist", TEXT],
   ["placeholder", "paper", TEXT],
+  ["placeholder", "page", TEXT],
+  ["placeholder", "mist", TEXT],
   ["amber-text", "paper", TEXT],
   ["amber-text", "page", TEXT],
   ["amber-text", "mist", TEXT],
   ["error", "paper", TEXT],
+  ["error", "page", TEXT],
+  ["error", "mist", TEXT],
   ["field-border", "paper", NON_TEXT],
+  ["field-border", "page", NON_TEXT],
   ["field-border", "mist", NON_TEXT],
   ["focus", "paper", NON_TEXT],
+  ["focus", "page", NON_TEXT],
   ["focus", "mist", NON_TEXT],
   // Navy surfaces, at the base colour and at the lightest gradient stop
   ["on-navy-heading", "navy", TEXT],
