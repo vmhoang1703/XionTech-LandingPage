@@ -1,4 +1,4 @@
-import { processFlow } from "@/content/process";
+import type { ProcessFlowContent } from "@/content/process";
 import { FlowReveal } from "./flow-reveal";
 
 // Step entry delays from the prototype; the amber track fills over 2.4s.
@@ -22,12 +22,13 @@ function EndNode({ title, line }: { title: string; line: string }) {
   );
 }
 
-// Shared 4-D process flow: Home navy band (3.6) and Services #process (5.4).
+// Shared 4-D process flow: Home navy band (3.6) and Services #process (5.4)
+// pass their step content in as data.
 // Above 1080px the "You receive" rows align across the four cards (subgrid);
 // at 1080px and below the track and end nodes hide and steps use 2 columns,
 // then 1 column at 640px and below.
-export function ProcessFlow() {
-  const { label, receiveLabel, start, end, steps } = processFlow;
+export function ProcessFlow({ flow }: { flow: ProcessFlowContent }) {
+  const { label, receiveLabel, start, end, steps } = flow;
 
   return (
     <FlowReveal

@@ -1,5 +1,6 @@
 import { act, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { processFlow } from "@/content/process";
 import { ProcessFlow } from "./process-flow";
 
 let intersect: (visible: boolean) => void = () => undefined;
@@ -44,7 +45,7 @@ function flow() {
 
 describe("ProcessFlow", () => {
   it("renders the request, four steps and launch as one ordered list", () => {
-    render(<ProcessFlow />);
+    render(<ProcessFlow flow={processFlow} />);
 
     expect(flow().tagName).toBe("OL");
     const items = within(flow())
@@ -61,7 +62,7 @@ describe("ProcessFlow", () => {
   });
 
   it("staggers the steps at 0.3s, 0.85s, 1.4s and 1.95s", () => {
-    render(<ProcessFlow />);
+    render(<ProcessFlow flow={processFlow} />);
 
     const delays = within(flow())
       .getAllByRole("heading", { level: 3 })
@@ -70,7 +71,7 @@ describe("ProcessFlow", () => {
   });
 
   it("arms the animation and plays it once when 30% visible", () => {
-    render(<ProcessFlow />);
+    render(<ProcessFlow flow={processFlow} />);
 
     expect(flow().dataset.phase).toBe("armed");
     expect(observedThreshold).toBe(0.3);
@@ -85,8 +86,38 @@ describe("ProcessFlow", () => {
 
   it("shows everything at once under reduced motion", () => {
     reducedMotion = true;
-    render(<ProcessFlow />);
+    render(<ProcessFlow flow={processFlow} />);
 
     expect(flow().dataset.phase).toBe("static");
+  });
+  it("renders the step content it is given", () => {
+    render(
+      <ProcessFlow
+        flow={{
+          ...processFlow,
+          steps: [
+            {
+              num: "01",
+              title: "Scope",
+              line: "Agree scope.",
+              receive: "A plan.",
+            },
+          ],
+        }}
+      />,
+    );
+
+    expect(
+      within(flow())
+        .getAllByRole("heading", { level: 3 })
+        .map((heading) => heading.textContent),
+    ).toEqual(["Scope"]);
+  });
+
+  it("disconnects when unmounted before it is seen", () => {
+    const { unmount } = render(<ProcessFlow flow={processFlow} />);
+
+    unmount();
+    expect(disconnect).toHaveBeenCalled();
   });
 });

@@ -1,5 +1,6 @@
 import { ProcessFlow } from "@/components/sections/process-flow";
 import { homeProcess } from "@/content/home";
+import { processFlow } from "@/content/process";
 
 // Home navy band with the shared 4-D process flow (Story 3.6).
 export function HomeProcess() {
@@ -17,7 +18,7 @@ export function HomeProcess() {
             {title}
           </h2>
         </div>
-        <ProcessFlow />
+        <ProcessFlow flow={processFlow} />
       </div>
     </section>
   );

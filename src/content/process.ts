@@ -1,7 +1,15 @@
 // 4-D process copy, shared by Home (3.6) and Services #process (5.4).
 // Kept out of the components so it can be translated later.
 
-export const processFlow = {
+export type ProcessFlowContent = {
+  label: string;
+  receiveLabel: string;
+  start: { title: string; line: string };
+  end: { title: string; line: string };
+  steps: { num: string; title: string; line: string; receive: string }[];
+};
+
+export const processFlow: ProcessFlowContent = {
   label: "4-D process",
   receiveLabel: "You receive",
   start: { title: "Your request", line: "An idea, a brief or a requirement." },
