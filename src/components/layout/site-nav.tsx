@@ -59,7 +59,8 @@ function MegaFooterRow({
 export function SiteNav() {
   const pathname = usePathname();
   // The menu is open only on the pathname it was opened on, so a navigation closes it.
-  // byHover: opened by mouse hover, so a click keeps it open (AC-NAV-3).
+  // byHover: opened by mouse hover and not yet chosen. A click (AC-NAV-3), the keyboard or
+  // focus moving into the menu pins it (byHover false); only an unpinned menu closes on leave.
   const [opened, setOpened] = useState<{
     menu: MenuId;
     path: string;
@@ -141,8 +142,21 @@ export function SiteNav() {
     if (event.pointerType !== "mouse") return;
     clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => {
-      setOpened((current) => (current?.menu === menu ? null : current));
+      setOpened((current) =>
+        current?.menu === menu && current.byHover ? null : current,
+      );
     }, HOVER_CLOSE_DELAY_MS);
+  };
+  // Focus moving into the panel pins the menu. Focus on the trigger itself does not: a mouse
+  // press focuses the button just before its click, and that click must keep a hover-opened
+  // menu open (AC-NAV-3), not see it as already pinned and close it.
+  const pinOnFocus = (menu: MenuId, event: FocusEvent<HTMLDivElement>) => {
+    if (event.target === triggerRefs.current[menu]) return;
+    setOpened((current) =>
+      current?.menu === menu && current.byHover
+        ? { ...current, byHover: false }
+        : current,
+    );
   };
 
   const trigger = (menu: MenuId, label: string) => (
@@ -180,6 +194,7 @@ export function SiteNav() {
       <div
         className="relative"
         onBlur={closeOnFocusOut}
+        onFocus={(event) => pinOnFocus("products", event)}
         onPointerEnter={(event) => openOnHover("products", event)}
         onPointerLeave={(event) => closeOnLeave("products", event)}
       >
@@ -215,6 +230,7 @@ export function SiteNav() {
       <div
         className="relative"
         onBlur={closeOnFocusOut}
+        onFocus={(event) => pinOnFocus("services", event)}
         onPointerEnter={(event) => openOnHover("services", event)}
         onPointerLeave={(event) => closeOnLeave("services", event)}
       >

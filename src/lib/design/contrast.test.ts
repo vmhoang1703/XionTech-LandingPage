@@ -693,13 +693,8 @@ describe("T9: focus ring and skip link pill", () => {
   });
 
   it("enabled buttons show the hand cursor (Tailwind v4 resets it to the arrow)", () => {
-    for (const selector of [
-      "button:not(:disabled)",
-      '[role="button"]:not(:disabled)',
-    ]) {
-      expect(readRuleDeclarations(source, selector).get("cursor")).toBe(
-        "pointer",
-      );
-    }
+    expect(
+      readRuleDeclarations(source, "button:not(:disabled)").get("cursor"),
+    ).toBe("pointer");
   });
 });

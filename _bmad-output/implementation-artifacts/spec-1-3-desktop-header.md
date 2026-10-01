@@ -56,7 +56,7 @@ context:
 
 - `src/components/layout/nav-data.ts` (new) -- labels, products, services, mega footers, `currentSection(pathname)`; plain data + one pure function.
 - `src/components/layout/site-nav.tsx` (new, `"use client"`) -- nav items, triggers, both panels, open state, Escape / outside pointer / navigation close; `usePathname` from `next/navigation`.
-- `src/components/layout/site-header.tsx` (new, Server Component) -- skip link, `<header>`, logo (`next/image`), `<SiteNav/>`, tools slot.
+- `src/components/layout/site-header.tsx` (new, Server Component) -- skip link, `<header>` (glass over `--color-page` at 78%, as the prototype), logo (`next/image`), `<SiteNav/>`, tools slot.
 - `src/app/layout.tsx` -- render `<SiteHeader/>` then `<main id="main" tabIndex={-1} className="flex flex-1 flex-col">{children}</main>` inside `<body>`; fonts and metadata unchanged.
 - `src/app/page.tsx` -- outer `<main>` becomes `<div>` (classes kept).
 - `src/app/globals.css` -- `:focus-visible` outline 2px (line ~274); `.skip:focus` radius → `--radius-full`; `html { scroll-padding-top: var(--spacing-header-height) }`; reuse `--z-index-header` (50), `--z-index-skip-link`, `.wrap`, `.btn*`, `--color-border`, `--radius-lg`, type tokens `text-ui`, `text-title-sm`, `text-label-sm`.
@@ -81,6 +81,7 @@ context:
 **Acceptance Criteria:**
 - Given a viewport wider than 1080px, when any page loads, then the sticky glass header shows logo, the five nav items and Book a demo; at 1080px and below the nav items are hidden (Story 1.4 adds the menu), and at 640px and below Book a demo is hidden.
 - Given a keyboard user on any page, when they press Tab once, then "Skip to content" shows as an amber pill, and activating it moves focus to `main`.
+- Given a desktop visitor with a mouse, when they hover Products or Services, then the menu opens; moving away closes it after 150ms; a click keeps a hover-opened menu open (AC-NAV-3); a menu opened by click or keyboard, or with focus inside it, stays open until Escape, an outside click, focus leaving or navigation (decision T11).
 - Given JavaScript is off, when a page is server-rendered, then the header and page content render with both panels closed and no client script in the markup.
 
 ## Design Notes
@@ -105,6 +106,8 @@ context:
 ## Implementation Notes
 
 ## Spec Change Log
+
+- 2026-10-01 — Code review of the hover change: a click- or keyboard-opened menu closed when the mouse passed over and left, dropping keyboard focus into a hidden panel. Amended: only a hover-opened, not-yet-chosen menu closes on leave; a click, the keyboard or focus moving into the panel pins it (focus on the trigger itself does not, because a mouse press focuses the button before its click). Avoids: lost keyboard focus; a click closing a hover-opened menu. KEEP: AC-NAV-3. This differs from the prototype (which closes on leave) and is marked pending for the lead and Amber in `scripts/ux/surfaces/header.json`.
 
 - 2026-10-01 — Hoang Vu renegotiated the frozen intent after review: hover opening moved from Never into Always (decision T11), with a new I/O Matrix row. Trigger: the lead saw click-only menus as unfriendly, and `EXPERIENCE.md` "Mega menu" asks for hover on desktop. Avoids: a desktop header that ignores the pointer. KEEP: click, keyboard, Escape, outside-click, focus-out and navigation close rules unchanged.
 
@@ -146,6 +149,9 @@ context:
 - Follow-up after done (2026-10-01, commit cdc7c8d): the UX quality loop (`docs/ux-quality.md`, branch `feature/ux-quality-loop`) measured the header against the prototype with `npm run ux:parity` and fixed background colour, gaps, nav item line-height, the mega value line and the skip-link text; the UX critic added the hand cursor on buttons and hover fades. Light review (edge-case layer, 35 lines): 12 findings — 8 false (`--ease-brand` and `--color-page` exist; reduced motion computes `transition-duration: 0s`; Chrome computes `cursor: pointer`; the prototype fades the same way; current-page style changes on navigation, not hover; the skip link now matches the prototype; 278px free at 1081px), 4 low rejected (roles and `aria-disabled` buttons the site does not use, focus-ring colour fade between two dark navies, a prototype value with no token).
 
 ## Acceptance Evidence
+
+**Follow-up (2026-10-01, after the UX quality loop; commits cdc7c8d..HEAD):** the header was re-checked in real Chrome with `npm run ux:parity -- scripts/ux/surfaces/header.json --strict` (branch `feature/ux-quality-loop`): 0 unexplained differences in looks at 1280 / 1081 / 1000 / 600 px across 8 states, and in behaviour for both menus (hover, hover-then-leave, hover-into-panel, hover-then-click, click, click-twice, keyboard, Escape); `click-then-leave` differs from the prototype by design (pinning, pending). `npm run ux:shots -- … --strict`: 0 axe violations, layout shift 0. The step-03/04 evidence below predates these changes.
+
 
 Re-captured in step-04 after the review patches (commit 6011653) on 2026-10-01. The step-03 set stays in the ledger as history.
 

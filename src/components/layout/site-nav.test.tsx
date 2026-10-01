@@ -277,3 +277,59 @@ describe("SiteNav hover (mouse only)", () => {
     expect(expanded(servicesTrigger())).toBe("true");
   });
 });
+
+// A menu the visitor chose (click, keyboard, or focus moved into it) is pinned: the mouse
+// leaving no longer closes it, so keyboard focus is never dropped into a hidden panel.
+describe("SiteNav pinned menus", () => {
+  const wrapper = (trigger: HTMLElement) => trigger.parentElement as HTMLElement;
+  const mouse = { pointerType: "mouse" };
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("keeps a click-opened menu open when the mouse leaves", () => {
+    render(<SiteNav />);
+    fireEvent.click(productsTrigger());
+    fireEvent.pointerLeave(wrapper(productsTrigger()), mouse);
+    act(() => vi.advanceTimersByTime(200));
+    expect(expanded(productsTrigger())).toBe("true");
+  });
+
+  it("pins a hover-opened menu once focus moves into it", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.focus(screen.getByRole("link", { name: /PXP/ }));
+    fireEvent.pointerLeave(wrapper(productsTrigger()), mouse);
+    act(() => vi.advanceTimersByTime(200));
+    expect(expanded(productsTrigger())).toBe("true");
+  });
+
+  it("keeps a hover-opened menu open on a real mouse click (hover, focus, then click)", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.focus(productsTrigger()); // a mouse press focuses the button before the click
+    fireEvent.click(productsTrigger());
+    expect(expanded(productsTrigger())).toBe("true");
+  });
+
+  it("ignores a touch pointer leaving", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.pointerLeave(wrapper(productsTrigger()), { pointerType: "touch" });
+    act(() => vi.advanceTimersByTime(200));
+    expect(expanded(productsTrigger())).toBe("true");
+  });
+
+  it("clears a pending close when it unmounts", () => {
+    const { unmount } = render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.pointerLeave(wrapper(productsTrigger()), mouse);
+    unmount();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+});
