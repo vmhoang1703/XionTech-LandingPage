@@ -349,3 +349,35 @@ Template:
      longer lints); and `sonar:gate:full` would scan whatever branch or local edits were checked
      out. All fixed, with tests: `scripts/eslint-config.test.mjs` and
      `scripts/sonar-gate-full.test.mjs`.
+
+## 2026-10-01 — Batch 1 into site-v3: readability, accessibility and the new header
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "start batch 1", then "remove book a demo button, change language to be drop down, not toggle
+  switch, move those nav header on the right, make the language drop down to be final item in the navigation; in the
+  middle, add the GET IT DONE text to highlight our slogan".
+- **What the AI did:** On branch `docs/ux-readability` (from `develop`), brought the readability and accessibility
+  fixes from the site-v6 proposal into the official prototype `site-v3`, without its visual changes (aurora, grid,
+  linen, rings and cursor glow kept for batch 2): functional text at least 11.5px, 44px tap targets, reduced motion
+  with short fades, the pause label fading in, no labels above section headings ("Our 4-D process: from your request
+  to launch.", "Our core values."), one tokenised stylesheet and no inline styles. New header, after a second
+  round of Amber's feedback: logo left, menu on the right, Services as a plain link (its mega menu removed), the
+  language as outlined pills (an EN or VI trigger with a caret, options stacked below), no Book a demo button and no
+  slogan in the middle (tried in round one, then removed). The language dropdown was then restyled to match the nav links
+  (same text, mist on hover, options on the header glass). From the site-v6 proposal, "Why XionTechs" and "Four apps
+  for every role in school" moved into site-v3 Home; the four-app row replaces the Home bento (Story 3.5 rewritten).
+  The eight-services grid was removed from Home (it stays on Services). No Contact link in the menu: Book a demo stays
+  reachable through heroes, capture bands and the footer "Contact" link (Amber's decision). Updated
+  `DESIGN.md`, `EXPERIENCE.md`, the PRD (FR-3, FR-4, NFR-1, NFR-2, section 6, open question 15) and `epics.md`
+  (FR inventory, UX-DR6 to UX-DR8 and UX-DR12, AC table, Stories 1.2, 1.3, 1.4, 1.5, 3.1, 3.5, 3.7, 5.4, 7.3), and synced
+  five changed tokens into `src/app/globals.css` so the team's DESIGN.md parity test passes.
+- **Decision / result:** Approved by Amber. bmad-code-review (four layers) found real issues that were fixed before
+  commit: the mobile-menu focus trap skipped the logo and language dropdown, the Products mega menu could overflow the
+  right edge once the menu moved right, the language buttons' accessible names did not contain the visible EN/VI
+  (WCAG 2.5.3), the dropdown and Menu button were not right-aligned below 1080px, duplicate YAML keys in DESIGN.md, a
+  caret rotation under reduced motion, dead bento CSS, and stale header wording in the stories. Follow-up for the
+  developers: `globals.css` still switches every transition off under reduced motion, while the spec now keeps short
+  fades.
+- **AI got it wrong?** Flagged, not wrong yet: removing the header Book a demo button changes AC-NAV-2. Book a demo
+  stays reachable through heroes, capture bands and the footer "Contact" link, but pages without a capture band
+  (Careers, Job, News story, Privacy, Not found) now rely on the footer only.

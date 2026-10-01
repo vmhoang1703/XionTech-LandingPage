@@ -14,7 +14,6 @@
 <header class="nav"><div class="wrap nav-in">
   <a class="logo" href="index.html" aria-label="XionTechs home"><img src="assets/logo.png" alt="XionTechs, Get IT Done"></a>
   <nav class="menu" id="menu" aria-label="Main">
-    <a class="btn btn-primary menu-cta" href="demo.html" data-vi="Đặt lịch demo">Book a demo</a>
     <div class="dd"><button class="${page==='products'?'current':''}" aria-expanded="false"><span data-vi="Sản phẩm">Products</span></button>
       <div class="mega">
         <a href="products.html#pxp"><span><strong>PXP</strong><small data-vi="Parent eXperience Place. Cả ngày học của con trong tay phụ huynh.">Parent eXperience Place. The school day in every parent's pocket.</small><small class="for" data-vi="Phụ huynh">Parents</small></span></a>
@@ -23,25 +22,14 @@
         <a href="products.html#iot"><span><strong data-vi="Quản lý thiết bị IoT">IoT Device Management</strong><small data-vi="Điều khiển thiết bị trong trường từ một màn hình.">Control campus devices from one screen.</small><small class="for" data-vi="Nhân viên và cơ sở vật chất">School staff and facilities</small></span></a>
         <div class="foot"><span data-vi="Nhiều sản phẩm mới sắp ra mắt.">More products are on the way.</span><a href="products.html"><span data-vi="Tất cả sản phẩm">All products</span></a></div>
       </div></div>
-    <div class="dd"><button class="${page==='services'?'current':''}" aria-expanded="false"><span data-vi="Dịch vụ">Services</span></button>
-      <div class="mega svc-mega">
-        <a href="services.html#product-engineering"><strong>Product Engineering</strong></a>
-        <a href="services.html#ai-analytics"><strong>AI-Driven Analytics</strong></a>
-        <a href="services.html#co-creation"><strong>Product Co-Creation</strong></a>
-        <a href="services.html#staffing"><strong>Staffing Service</strong></a>
-        <a href="services.html#custom-apps"><strong>Custom App Development</strong></a>
-        <a href="services.html#low-code"><strong>Low-code Solutions</strong></a>
-        <a href="services.html#ai-solutions"><strong>AI-Powered Solutions</strong></a>
-        <a href="services.html#cloud"><strong>Cloud Computing</strong></a>
-        <div class="foot"><span data-vi="Quy trình 4-D: Khám phá, Thiết kế, Phát triển, Triển khai.">Our 4-D process: Discovery, Design, Development, Deployment.</span><a href="services.html#process"><span data-vi="Xem quy trình">See the process</span></a></div>
-      </div></div>
+    <a href="services.html"${cur('services')} data-vi="Dịch vụ">Services</a>
     <a href="news.html"${cur('news')} data-vi="Tin tức">News</a>
     <a href="about.html"${cur('about')} data-vi="Về chúng tôi">About</a>
     <a href="careers.html"${cur('careers')} data-vi="Tuyển dụng">Careers</a>
   </nav>
   <div class="tools">
-    <div class="seg" role="group" aria-label="Language"><button data-lang="en" aria-pressed="true">EN</button><button data-lang="vi" aria-pressed="false">VI</button></div>
-    <a class="btn btn-primary btn-sm head-cta" href="demo.html" data-vi="Đặt lịch demo">Book a demo</a>
+    <div class="lang"><button class="lang-btn" id="langBtn" aria-expanded="false" aria-controls="langList"><span class="sr-only" data-vi="Ngôn ngữ: ">Language: </span><span id="langCode">EN</span><i class="ph ph-caret-down" aria-hidden="true"></i></button>
+      <ul class="lang-list" id="langList" hidden><li><button type="button" data-lang="en" lang="en">EN<span class="sr-only"> English</span></button></li><li><button type="button" data-lang="vi" lang="vi">VI<span class="sr-only"> Tiếng Việt</span></button></li></ul></div>
     <button class="menu-btn burger" id="burger" aria-controls="menu" aria-expanded="false"><span data-vi="Menu">Menu</span></button>
   </div>
 </div></header>`;
@@ -98,15 +86,24 @@
   const arias=[...document.querySelectorAll('[data-vi-aria]')].map(el=>[el,el.getAttribute('aria-label'),el.dataset.viAria]);
   function setLang(l){root.lang=l;
     txt.forEach(([el,en,vi])=>el.textContent=l==='vi'?vi:en);htm.forEach(([el,en,vi])=>el.innerHTML=l==='vi'?vi:en);phs.forEach(([el,en,vi])=>el.placeholder=l==='vi'?vi:en);arias.forEach(([el,en,vi])=>el.setAttribute('aria-label',l==='vi'?vi:en));
-    document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));store.set('xt3-lang',l);document.dispatchEvent(new Event('xt-lang'))}
-  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+    document.querySelectorAll('[data-lang]').forEach(b=>{if(b.dataset.lang===l)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
+    const code=document.getElementById('langCode');if(code)code.textContent=l==='vi'?'VI':'EN';
+    store.set('xt3-lang',l);document.dispatchEvent(new Event('xt-lang'))}
+  /* language dropdown: opens on click, closes on choice, Escape or a click outside */
+  const langBtn=document.getElementById('langBtn'),langList=document.getElementById('langList');
+  const setLangOpen=o=>{if(!langBtn)return;langList.hidden=!o;langBtn.setAttribute('aria-expanded',o)};
+  if(langBtn){langBtn.onclick=e=>{e.stopPropagation();document.querySelectorAll('.dd.open').forEach(d=>{d.classList.remove('open');d.firstElementChild.setAttribute('aria-expanded','false')});setLangOpen(langList.hidden)};
+    langBtn.parentElement.addEventListener('focusout',e=>{if(!e.currentTarget.contains(e.relatedTarget))setLangOpen(false)});
+    document.addEventListener('click',e=>{if(!e.target.closest('.lang'))setLangOpen(false)});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!langList.hidden){setLangOpen(false);langBtn.focus();e.stopImmediatePropagation()}})}
+  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{setLang(b.dataset.lang);setLangOpen(false);langBtn&&langBtn.focus()});
   setLang(store.get('xt3-lang')||'en');
 
   /* ---------- menus ---------- */
   const dds=[...document.querySelectorAll('.dd')];
   const closeAll=except=>dds.forEach(d=>{if(d!==except){d.classList.remove('open');d.firstElementChild.setAttribute('aria-expanded','false')}});
   dds.forEach(d=>{const b=d.firstElementChild;let byHover=false,closeT;
-    b.addEventListener('click',e=>{e.stopPropagation();const isOpen=d.classList.contains('open');const o=isOpen&&byHover?true:!isOpen;byHover=false;closeAll(d);d.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
+    b.addEventListener('click',e=>{e.stopPropagation();setLangOpen(false);const isOpen=d.classList.contains('open');const o=isOpen&&byHover?true:!isOpen;byHover=false;closeAll(d);d.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
     if(matchMedia('(hover:hover) and (min-width:1081px)').matches){
       d.addEventListener('mouseenter',()=>{clearTimeout(closeT);if(!d.classList.contains('open'))byHover=true;closeAll(d);d.classList.add('open');b.setAttribute('aria-expanded','true')});
       d.addEventListener('mouseleave',()=>{closeT=setTimeout(()=>{byHover=false;d.classList.remove('open');b.setAttribute('aria-expanded','false')},150)})}
@@ -119,7 +116,7 @@
   function setMenuOpen(o){menu.classList.toggle('mobile-open',o);burger.setAttribute('aria-expanded',o);root.style.overflow=o?'hidden':''}
   burger.onclick=()=>setMenuOpen(!menu.classList.contains('mobile-open'));
   document.addEventListener('keydown',e=>{if(e.key!=='Tab'||!menu.classList.contains('mobile-open'))return;
-    const f=[burger,...menu.querySelectorAll('a,button')].filter(el=>el.offsetParent!==null);if(!f.length)return;
+    const f=[document.querySelector('.logo'),langBtn,...(langList&&!langList.hidden?langList.querySelectorAll('button'):[]),burger,...menu.querySelectorAll('a,button')].filter(el=>el&&el.offsetParent!==null);if(!f.length)return;
     const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});
 
   /* ---------- screenshot slots: click / drop / paste, saved in this browser ---------- */
