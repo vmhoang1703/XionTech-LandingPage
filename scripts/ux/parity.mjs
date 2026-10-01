@@ -18,6 +18,7 @@ import {
   compareBoxes,
   compareStyles,
   diffImages,
+  PARITY_WIDTHS,
   parseArgs,
   PROBE_EVENTS,
   probeError,
@@ -43,7 +44,7 @@ const browser = await launchBrowser();
 const results = [];
 const probes = [];
 try {
-  for (const width of surface.widths ?? [1280, 1000, 600]) {
+  for (const width of surface.widths ?? PARITY_WIDTHS) {
     for (const state of states.filter((s) => stateApplies(s, width))) {
       const context = await browser.newContext({
         viewport: { width, height: 900 },
@@ -83,7 +84,8 @@ try {
             PNG.sync.read(await captureBox(dev, b.box)),
           );
           entry.percent = shot.percent;
-          entry.image = `${element.name}-${state.name}-${width}.png`;
+          // "." cannot appear in a name, so no two element/state pairs share a file.
+          entry.image = `${element.name}.${state.name}.${width}.png`;
           await writeFile(
             join(out, entry.image),
             PNG.sync.write(sideBySide(shot.a, shot.b, shot.diff)),
@@ -96,7 +98,7 @@ try {
     }
   }
   for (const probe of surface.probes ?? []) {
-    for (const width of (surface.widths ?? [1280, 1000, 600]).filter((w) =>
+    for (const width of (surface.widths ?? PARITY_WIDTHS).filter((w) =>
       stateApplies(probe, w),
     )) {
       const outcome = { name: probe.name, width, proto: {}, dev: {} };

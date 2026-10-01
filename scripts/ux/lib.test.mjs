@@ -335,18 +335,87 @@ describe("validateSurface cross-references", () => {
     expect(message).not.toContain("also an element name");
   });
 
-  it("keeps names plain because they name files", () => {
-    expect(() =>
+  it("keeps names plain and lower case because they name folders and files", () => {
+    let message = "";
+    try {
       validateSurface({
         ...base,
-        elements: [{ name: "a|b", proto: "x", dev: "y" }],
+        name: "../header",
+        elements: [
+          { name: "a|b", proto: "x", dev: "y" },
+          { name: "Logo", proto: "x", dev: "y" },
+        ],
         states: [{ name: "open state", proto: [], dev: [] }],
         probes: [{ ...base.probes[0], name: "menu/1" }],
         intended: [],
-      }),
-    ).toThrow(
-      /elements\[0\]\.name "a\|b" may only use[\s\S]*probes\[0\]\.name "menu\/1" may only use[\s\S]*states\[0\]\.name "open state" may only use/,
+      });
+    } catch (error) {
+      message = error.message;
+    }
+    const plain = 'may only use a-z, 0-9, "-" and "_"';
+    expect(message).toContain(`name "../header" ${plain}`);
+    expect(message).toContain(`elements[0].name "a|b" ${plain}`);
+    expect(message).toContain(`elements[1].name "Logo" ${plain}`);
+    expect(message).toContain(`probes[0].name "menu/1" ${plain}`);
+    expect(message).toContain(`states[0].name "open state" ${plain}`);
+  });
+
+  it("refuses repeated and reserved state names", () => {
+    let message = "";
+    try {
+      validateSurface({
+        ...base,
+        states: ["open", "open", "default", "no-js", "reduced-motion"].map(
+          (name) => ({ name, proto: [], dev: [] }),
+        ),
+        intended: [],
+      });
+    } catch (error) {
+      message = error.message;
+    }
+    expect(message).toContain('states[1].name "open" is used twice');
+    expect(message).toContain('states[2].name "default" is reserved');
+    expect(message).toContain('states[3].name "no-js" is reserved');
+    expect(message).toContain('states[4].name "reduced-motion" is reserved');
+    expect(message).not.toContain("states[0]");
+  });
+
+  it("refuses intended states and widths that never run", () => {
+    let message = "";
+    try {
+      validateSurface({
+        ...base,
+        intended: [
+          { element: "logo", prop: "x", state: "opne", note: "n" },
+          { element: "logo", prop: "x", width: 999, note: "n" },
+          {
+            element: "logo",
+            prop: "x",
+            state: "default",
+            width: 1280,
+            note: "n",
+          },
+          { element: "logo", prop: "x", state: "open", note: "n" },
+        ],
+      });
+    } catch (error) {
+      message = error.message;
+    }
+    expect(message).toContain(
+      'intended[0].state "opne" is not "default" or a state name',
     );
+    expect(message).toContain(
+      "intended[1].width 999 is not a parity width (1280)",
+    );
+    expect(message).not.toContain("intended[2]");
+    expect(message).not.toContain("intended[3]");
+    expect(() =>
+      validateSurface({
+        ...base,
+        widths: undefined,
+        intended: [{ element: "logo", prop: "x", width: 1081, note: "n" }],
+      }),
+    ).toThrow("is not a parity width (1280, 1000, 600)");
   });
 
   it("accepts the committed header surface file", () => {
@@ -459,7 +528,12 @@ describe("renderParityReport", () => {
       {
         ...surface,
         intended: [
-          { element: "logo", prop: "missing", note: "UX-Q9", pending: true },
+          {
+            element: "logo",
+            prop: "missing",
+            note: "UX-Q9\n\n# Amber",
+            pending: true,
+          },
         ],
       },
       missingLogo,
@@ -467,9 +541,10 @@ describe("renderParityReport", () => {
     expect(pendingMissing.unexplained).toBe(0);
     expect(pendingMissing.pending).toBe(1);
     expect(pendingMissing.markdown).toContain(
-      "| logo | n/a | missing on dev (pending: UX-Q9) |",
+      "| logo | n/a | missing on dev (pending: UX-Q9<br><br># Amber) |",
     );
-    expect(pendingMissing.markdown).toContain("- logo: UX-Q9");
+    expect(pendingMissing.markdown).toContain("- logo: UX-Q9<br><br># Amber");
+    expect(pendingMissing.markdown).not.toContain("\n# Amber");
     const decided = renderParityReport(
       {
         ...surface,
@@ -594,6 +669,8 @@ describe("interaction probes", () => {
 
   it("turns any thrown value into a one-line error outcome", () => {
     expect(probeError(new Error("a\nb"))).toBe("error: a");
+    expect(probeError(new Error("a\r\nb"))).toBe("error: a");
+    expect(probeError(new Error("a\rb"))).toBe("error: a");
     expect(probeError("plain")).toBe("error: plain");
     expect(probeError(undefined)).toBe("error: undefined");
     expect(firstLine(null)).toBe("null");
@@ -607,7 +684,7 @@ describe("interaction probes", () => {
         ...surface,
         intended: [
           { element: "logo", prop: "x", note: "10% | 12%" },
-          { element: "menu", prop: "click", note: "T | U\nV" },
+          { element: "menu", prop: "click", note: "T | U\nV\rW\r\nX" },
         ],
       },
       [
@@ -634,7 +711,7 @@ describe("interaction probes", () => {
     );
     expect(markdown).toContain(String.raw`| error: a\|b | **differs** |`);
     expect(markdown).toContain(
-      String.raw`| closed | open | intended: T \| U<br>V |`,
+      String.raw`| closed | open | intended: T \| U<br>V<br>W<br>X |`,
     );
     expect(markdown).toContain(String.raw`x: 1 → 2 (intended: 10% \| 12%) |`);
   });

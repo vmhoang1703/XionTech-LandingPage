@@ -388,7 +388,10 @@ Template:
   click), which the jsdom tests could not see; the new `click-then-leave` and `hover-into-panel`
   probes ran in Chrome and confirmed the final behaviour.
 
-  The reviews of the tool's own fixes found more holes, each now fixed with a test: a probe that
-  could not run was shown as "pending", and so hidden, when a pending entry named the same event;
-  a 5s timeout meant for probes also cut the time allowed for screenshots; and a bad surface file
-  could crash the checker instead of listing the problem. An error row now always counts.
+  The reviews of the tool's own fixes found more holes. A probe that could not run was shown as
+  "intended" or "pending", and so hidden, when an entry named the same event. A 5s timeout meant
+  for probes also cut the time allowed for screenshots. A bad surface file could crash the checker
+  instead of listing the problem. A first fix escaped "|" only in probe results, not in notes and
+  names (a missed similar check), and names were not yet safe as folder and file names (`../x`,
+  `Logo` vs `logo` on Windows). All are fixed and unit-tested, except the timeout move: it lives in
+  the browser code, which has no automated test yet (listed in `deferred-work.md`).

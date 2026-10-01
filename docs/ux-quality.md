@@ -72,11 +72,17 @@ demo; floor and measure for every other page.
 - `intended` — `{ element, prop, note }` for differences that stay, with the reason or decision
   ID (for a probe: `{ element: <probe name>, prop: <event> }`; for an element found on one side
   only: `prop: "missing"`). Optional `state` and `width` narrow an entry so it cannot hide the
-  same property drifting elsewhere; probe entries take `width` only. Add `pending: true`
+  same property drifting elsewhere; probe entries take `width` only. The `state` must be
+  `default` or a state name, and the `width` one of the parity widths. Add `pending: true`
   for a design question that is built one way but still open: the report counts and lists those
   separately, so "0 unexplained" never hides an open decision.
-- `widths` (parity) and `shotWidths` (shots) — optional; shots default to 360, 390, 768, 1024,
-  1280, 1440 and 1920 px. Mapped elements never found at any width or state are reported.
+- `widths` (parity) and `shotWidths` (shots) — optional; parity defaults to 1280, 1000 and 600 px,
+  shots to 360, 390, 768, 1024, 1280, 1440 and 1920 px. Mapped elements never found at any width
+  or state are reported.
+- **Names** — the surface `name` and every element, state and probe name use only a-z, 0-9, `-`
+  and `_`, because they become folder names, file names and report text. Names are unique, a
+  probe may not share an element's name, and `default`, `reduced-motion` and `no-js` are reserved
+  state names (the scripts make those themselves). The checker lists every broken rule at once.
 
 **Why probes exist:** the first header run compared only looks. The menus opened on click only,
 while `EXPERIENCE.md` and the prototype open them on hover; the Demo-day plan had cut hover, and

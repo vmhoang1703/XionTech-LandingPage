@@ -64,15 +64,17 @@ export function validateSurface(surface) {
   const elements = Array.isArray(surface?.elements) ? surface.elements : [];
   if (elements.length === 0)
     problems.push('"elements" must list at least one element');
-  // Names become file names and report table cells, so they stay plain. Only real names enter
-  // the sets: a null or nameless entry is listed as a problem, never matched or crashed on.
+  // Names become folder names, file names and report text, so they stay plain and lower case (a
+  // file system that ignores case would merge "Logo" and "logo"). Only real names enter the
+  // sets: a null or nameless entry is listed as a problem, never matched or crashed on.
   const named = (value) => typeof value === "string" && value !== "";
   const plainName = (value, where) => {
-    if (named(value) && !/^[\w-]+$/.test(value))
+    if (named(value) && !/^[a-z0-9_-]+$/.test(value))
       problems.push(
-        `${where} "${value}" may only use letters, digits, "-" and "_" (it names files)`,
+        `${where} "${value}" may only use a-z, 0-9, "-" and "_" (names become file names and report text)`,
       );
   };
+  plainName(surface?.name, "name");
   const names = new Set();
   for (const [i, element] of elements.entries()) {
     for (const key of ["name", "proto", "dev"]) {
@@ -89,6 +91,9 @@ export function validateSurface(surface) {
       problems.push(`"${key}" must be a list`);
   }
   const list = (key) => (Array.isArray(surface?.[key]) ? surface[key] : []);
+  const parityWidths = Array.isArray(surface?.widths)
+    ? surface.widths
+    : PARITY_WIDTHS;
   const probeNames = new Set();
   for (const [i, probe] of list("probes").entries()) {
     if (typeof probe?.name !== "string" || probe.name === "")
@@ -97,7 +102,7 @@ export function validateSurface(surface) {
       problems.push(`probes[${i}].name "${probe.name}" is used twice`);
     if (names.has(probe?.name))
       problems.push(
-        `probes[${i}].name "${probe.name}" is also an element name; intended entries need one meaning`,
+        `probes[${i}].name "${probe.name}" is also an element name (an intended entry for it would match both)`,
       );
     plainName(probe?.name, `probes[${i}].name`);
     if (named(probe?.name)) probeNames.add(probe.name);
@@ -112,10 +117,20 @@ export function validateSurface(surface) {
       }
     }
   }
+  // The scripts make their own "default" state and "reduced-motion" / "no-js" shots.
+  const reservedStates = ["default", "reduced-motion", "no-js"];
+  const stateNames = new Set();
   for (const [i, state] of list("states").entries()) {
     if (typeof state?.name !== "string" || state.name === "")
       problems.push(`states[${i}].name must be a non-empty string`);
+    if (reservedStates.includes(state?.name))
+      problems.push(
+        `states[${i}].name "${state.name}" is reserved (${reservedStates.join(", ")})`,
+      );
+    else if (stateNames.has(state?.name))
+      problems.push(`states[${i}].name "${state.name}" is used twice`);
     plainName(state?.name, `states[${i}].name`);
+    if (named(state?.name)) stateNames.add(state.name);
     for (const side of ["proto", "dev"]) {
       if (!Array.isArray(state?.[side]))
         problems.push(`states[${i}].${side} must be a list of actions`);
@@ -145,7 +160,20 @@ export function validateSurface(surface) {
         problems.push(
           `intended[${i}].state does not apply to a probe (probes run from a fresh page)`,
         );
-    }
+    } else if (
+      entry?.state !== undefined &&
+      entry.state !== "default" &&
+      !stateNames.has(entry.state)
+    )
+      problems.push(
+        `intended[${i}].state "${entry.state}" is not "default" or a state name`,
+      );
+    // An entry for a state or width that never runs would never match, and a pending one would
+    // silently drop out of the "Pending design decisions" list.
+    if (entry?.width !== undefined && !parityWidths.includes(entry.width))
+      problems.push(
+        `intended[${i}].width ${entry.width} is not a parity width (${parityWidths.join(", ")})`,
+      );
   }
   for (const key of ["widths", "shotWidths"]) {
     for (const width of list(key)) {
@@ -351,23 +379,26 @@ export const PROBE_EVENTS = [
   "escape",
 ];
 
+/** Default parity widths for ux:parity (a surface may set its own `widths`). */
+export const PARITY_WIDTHS = [1280, 1000, 600];
+
 /** Default screenshot widths for ux:shots (a surface may set its own `shotWidths`). */
 export const SHOT_WIDTHS = [360, 390, 768, 1024, 1280, 1440, 1920];
 
 /** First line of an error's message (Playwright messages run to many lines); any value works. */
 export const firstLine = (error) =>
-  String(error?.message ?? error).split("\n")[0];
+  String(error?.message ?? error).split(/\r\n?|\n/)[0];
 
 /** Outcome of a probe event that could not run. The "error" prefix never counts as the same. */
 export const probeError = (error) => `error: ${firstLine(error)}`;
 
 const isError = (outcome) => String(outcome).startsWith("error");
 
-/** A Markdown table cell: a "|" or a line break inside a value must not split the row. */
+/** Report text kept on one line: a "|" or any line break must not split a table row or list item. */
 const cell = (value) =>
   String(value)
     .replaceAll("|", String.raw`\|`)
-    .replaceAll(/\r?\n/g, "<br>");
+    .replaceAll(/\r\n?|\n/g, "<br>");
 
 /**
  * Events whose outcome ("open" / "closed", plus focus after Escape) differs between the sides,
@@ -499,7 +530,7 @@ export function renderParityReport(surface, results, probes = []) {
     "",
     `**Pending design decisions: ${pending.size}** (rows marked "pending"). Built one way, waiting for Amber or the lead:`,
     "",
-    ...[...pending].map((entry) => `- ${entry.element}: ${entry.note}`),
+    ...[...pending].map((entry) => `- ${entry.element}: ${cell(entry.note)}`),
     ...(pending.size > 0 ? [""] : []),
   );
   return { markdown: lines.join("\n"), unexplained, pending: pending.size };
