@@ -241,3 +241,23 @@ Template:
 - **Decision / result:** Offices and the contact inbox are real; CV storage in Sanity stays open for Hoang Vu.
 - **AI got it wrong?** Yes. The first version labelled Plano "Head office" (copied from the pasted text) and kept
   "Dallas, USA" as the heading; Amber corrected both.
+
+## 2026-10-01 — Demo-day plan and 31 story specs
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-spec` format, 4 + 2 agents
+  in parallel.
+- **Prompt (short):** "plan for next 3 days", then "we must complete all before 7/10", "keep all,
+  push hard", "create spec and group by per developer" (one spec per story, in folders).
+- **What the AI did:** Showed the gap (31 must-have stories ≈ 23.5 developer-days vs 10–14
+  available); after the lead kept all of them, made a day-by-day plan 01–07/10 for Andy (11
+  stories) and Sammy (20). Wrote 31 specs under `_bmad-output/specs/{andy,sammy}/` from the
+  epics, PRD, UX and prototype, each with the Demo-day slice as capabilities and the after-demo
+  parts as non-goals. Collected 13 decisions from the lead into
+  `_bmad-output/specs/decisions-2026-10-01.md` and applied them to 20 specs.
+- **Decision / result:** CVs in a private Vercel Blob store (free Sanity datasets are public; a
+  5 MB file is over Vercel's 4.5 MB request limit); 1.8 builds the Sanity client and fetch helper;
+  `#updates` links hidden on Demo day; store links and product URLs are `[Placeholder]`; data
+  kept with no time limit; Hoang Vu is the Sanity editor.
+- **AI got it wrong?** Yes, twice, caught by the spec agents: the update brief gave the wrong
+  relative path to the decisions file (`../` instead of `../../`), and decision T1 first said
+  "Sanity holds job posts only", which would have banned the Life at XionTechs photos.
