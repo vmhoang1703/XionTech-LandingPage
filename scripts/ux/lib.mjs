@@ -160,14 +160,23 @@ export function validateSurface(surface) {
         problems.push(
           `intended[${i}].state does not apply to a probe (probes run from a fresh page)`,
         );
-    } else if (
-      entry?.state !== undefined &&
-      entry.state !== "default" &&
-      !stateNames.has(entry.state)
-    )
-      problems.push(
-        `intended[${i}].state "${entry.state}" is not "default" or a state name`,
-      );
+    } else {
+      if (
+        entry?.prop !== undefined &&
+        (typeof entry.prop !== "string" || entry.prop === "")
+      )
+        problems.push(
+          `intended[${i}].prop must be a non-empty string (leave it out to cover every property)`,
+        );
+      if (
+        entry?.state !== undefined &&
+        entry.state !== "default" &&
+        !stateNames.has(entry.state)
+      )
+        problems.push(
+          `intended[${i}].state "${entry.state}" is not "default" or a state name`,
+        );
+    }
     // An entry for a state or width that never runs would never match, and a pending one would
     // silently drop out of the "Pending design decisions" list.
     if (entry?.width !== undefined && !parityWidths.includes(entry.width))
@@ -435,17 +444,21 @@ function renderProbes(surface, probes, used) {
     for (const event of PROBE_EVENTS) {
       let mark = "same";
       if (differing.has(event)) {
-        // A probe that could not run is never explained away by an intended or pending entry
-        // (the entry still counts as used: it names a real event).
+        // A probe that could not run is never explained away: the run cannot tell whether the
+        // difference is still there. Its entry is shown, not applied, and a pending one stays pending.
         const failed = isError(p.proto[event]) || isError(p.dev[event]);
         const entry = findIntended(surface, p.name, event, { width: p.width });
-        if (entry) used.add(entry);
+        if (entry) {
+          used.add(entry);
+          if (entry.pending) counts.pending.add(entry);
+        }
         if (entry && !failed) {
           mark = intendedLabel(entry);
-          if (entry.pending) counts.pending.add(entry);
         } else {
           counts.unexplained += 1;
-          mark = "**differs**";
+          mark = entry
+            ? `**differs** (${intendedLabel(entry)}, not applied: the probe could not run)`
+            : "**differs**";
         }
       }
       lines.push(
@@ -464,14 +477,30 @@ export function neverFound(surface, results) {
 }
 
 /**
- * Parts of the surface file that did nothing in this run: states and probes that ran at no width
- * (a `minWidth` above every width), and `intended` entries that matched no difference (a typo, a
- * state and width that never run together, an entry shadowed by an earlier one, or a difference
- * that is gone). Listing them stops a stale entry hiding drift and an open decision vanishing.
+ * Parts of the surface file that did nothing in this run: states that ran at no width or compared
+ * no element, probes that ran at no width (a `minWidth` above every width), and `intended` entries
+ * that matched no difference (a typo, a state and width that never run together, an entry
+ * shadowed by an earlier one, or a difference that is gone). An entry whose element was never
+ * found, or whose state or probe never ran, is left out: that cause is listed already.
  */
 export function neverUsed(surface, results, probes, used) {
-  const statesRan = new Set(results.map((r) => r.state));
-  const probesRan = new Set(probes.map((p) => p.name));
+  const compared = results.filter((r) => r.elements.length > 0);
+  const idleStates = new Set(
+    (surface.states ?? [])
+      .map((s) => s.name)
+      .filter((name) => !compared.some((r) => r.state === name)),
+  );
+  const idleProbes = new Set(
+    (surface.probes ?? [])
+      .map((p) => p.name)
+      .filter((name) => !probes.some((p) => p.name === name)),
+  );
+  const probeNames = new Set((surface.probes ?? []).map((p) => p.name));
+  const lost = new Set(neverFound(surface, results));
+  const blocked = (entry) =>
+    idleStates.has(entry.state) ||
+    idleProbes.has(entry.element) ||
+    (!probeNames.has(entry.element) && lost.has(entry.element));
   const scope = (entry) =>
     [
       entry.prop ?? "any prop",
@@ -481,17 +510,15 @@ export function neverUsed(surface, results, probes, used) {
       .filter(Boolean)
       .join(", ");
   return [
-    ...(surface.states ?? [])
-      .filter((s) => !statesRan.has(s.name))
-      .map((s) => `state ${s.name}: ran at no width`),
-    ...(surface.probes ?? [])
-      .filter((p) => !probesRan.has(p.name))
-      .map((p) => `probe ${p.name}: ran at no width`),
+    ...[...idleStates].map(
+      (name) => `state ${name}: ran at no width or compared nothing`,
+    ),
+    ...[...idleProbes].map((name) => `probe ${name}: ran at no width`),
     ...(surface.intended ?? [])
-      .filter((entry) => !used.has(entry))
+      .filter((entry) => !used.has(entry) && !blocked(entry))
       .map(
         (entry) =>
-          `intended ${entry.element} (${scope(entry)}): matched nothing — ${cell(entry.note)}`,
+          `${entry.pending ? "pending" : "intended"} ${entry.element} (${cell(scope(entry))}): matched nothing — ${cell(entry.note)}`,
       ),
   ];
 }
@@ -569,12 +596,15 @@ export function renderParityReport(surface, results, probes = []) {
     lines.push(
       "## Never ran or never used",
       "",
-      "**These did nothing in this run — fix them (name, prop, state, width, minWidth) or remove them:**",
+      "**These did nothing in this run.** Check each for a typo, a `minWidth` or width that never runs, or an entry shadowed by an earlier one; if its difference is fixed, remove the entry:",
       "",
       ...idle.map((line) => `- ${line}`),
       "",
     );
   }
+  // An open decision stays open even when its entry matched nothing in this run.
+  for (const entry of surface.intended ?? [])
+    if (entry.pending && !used.has(entry)) pending.add(entry);
   lines.splice(
     3,
     0,

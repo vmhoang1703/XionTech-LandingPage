@@ -71,20 +71,24 @@ demo; floor and measure for every other page.
   probe's `minWidth` so it skips widths where the trigger is hidden.
 - `intended` — `{ element, prop, note }` for differences that stay, with the reason or decision
   ID (for a probe: `{ element: <probe name>, prop: <event> }`; for an element found on one side
-  only: `prop: "missing"`). An entry without `prop` covers every property of its element. Optional
-  `state` and `width` narrow an entry so it cannot hide the same property drifting elsewhere;
-  probe entries take `width` only. The `state` must be `default` or a state name, and the `width`
-  one of the parity widths. The first matching entry wins. Add `pending: true`
+  only: `prop: "missing"`). An entry without `prop` covers every property of its element,
+  `missing` included, so it hides any new drift there: prefer a `prop`. An entry explains any
+  change of its property; it does not pin the value. Optional `state` and `width` narrow an entry
+  so it cannot hide the same property drifting elsewhere; probe entries take `width` only. The
+  `state` must be `default` or a state name, and the `width` one of the parity widths. The first
+  matching entry wins. Add `pending: true`
   for a design question that is built one way but still open: the report counts and lists those
   separately, so "0 unexplained" never hides an open decision.
 - `widths` (parity) and `shotWidths` (shots) — optional; parity defaults to 1280, 1000 and 600 px,
   shots to 360, 390, 768, 1024, 1280, 1440 and 1920 px. Mapped elements never found at any width
   or state are reported.
-- **Never ran or never used** — after the run the report lists states and probes that ran at no
-  width (a `minWidth` above every width) and `intended` entries that matched nothing (a typo, a
-  state and width that never run together, an entry shadowed by an earlier one, or a difference
-  that is gone). Each counts as unexplained, so a stale entry cannot hide drift and an open
-  decision cannot drop out of the pending list unseen. Remove an entry once its difference is fixed.
+- **Never ran or never used** — after the run the report lists states that ran at no width or
+  compared no element, probes that ran at no width (a `minWidth` above every width), and
+  `intended` entries that matched nothing (a typo, a state and width that never run together, an
+  entry shadowed by an earlier one, or a difference that is gone). Entries whose element was never
+  found, or whose state or probe never ran, are left out, because that cause is listed already.
+  Each line counts as unexplained. Every `pending: true` entry stays in the pending list, matched
+  or not. Remove an entry once its difference is fixed.
 - **Names** — the surface `name` and every element, state and probe name use only a-z, 0-9, `-`
   and `_`, because they become folder names, file names and report text. Names are unique, a
   probe may not share an element's name, and `default`, `reduced-motion` and `no-js` are reserved

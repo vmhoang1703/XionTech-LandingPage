@@ -276,6 +276,7 @@ describe("validateSurface cross-references", () => {
         { element: "logo", prop: "x", note: "n", pending: "false" },
         { element: "menu", prop: "hovr", note: "n" },
         { element: "menu", prop: "hover", state: "open", note: "n" },
+        { element: "logo", prop: null, note: "n" },
       ],
       widths: [0],
       shotWidths: "1280",
@@ -304,6 +305,7 @@ describe("validateSurface cross-references", () => {
     expect(message).toContain("intended[1].pending must be true or false");
     expect(message).toContain("intended[2].prop must be a probe event");
     expect(message).toContain("intended[3].state does not apply to a probe");
+    expect(message).toContain("intended[4].prop must be a non-empty string");
     expect(message).toContain('"widths" must hold positive whole numbers');
     expect(message).toContain('"shotWidths" must be a list');
   });
@@ -683,61 +685,89 @@ describe("interaction probes", () => {
       [failing],
     );
     expect(report.unexplained).toBe(1);
-    expect(report.pending).toBe(0);
+    expect(report.pending).toBe(1);
     expect(report.markdown).toContain(
-      "| menu | 1280 | hover | open | error: Timeout 5000ms | **differs** |",
+      "| menu | 1280 | hover | open | error: Timeout 5000ms | **differs** (pending: T11, not applied: the probe could not run) |",
     );
     expect(report.markdown).not.toContain("matched nothing");
   });
 
   it("lists states, probes and intended entries that did nothing in this run", () => {
+    const probe = (name, extra = {}) => ({
+      name,
+      trigger: { proto: "a", dev: "b" },
+      observe: { proto: "c", dev: "d" },
+      ...extra,
+    });
     const s = {
       ...surface,
-      states: [{ name: "open", proto: [], dev: [], minWidth: 9999 }],
-      probes: [
-        {
-          name: "menu",
-          trigger: { proto: "a", dev: "b" },
-          observe: { proto: "c", dev: "d" },
-          minWidth: 9999,
-        },
+      elements: [
+        ...surface.elements,
+        { name: "ghost", proto: ".g", dev: ".g" },
       ],
+      states: [
+        { name: "open", proto: [], dev: [], minWidth: 9999 },
+        { name: "empty", proto: [], dev: [] },
+        { name: "shown", proto: [], dev: [] },
+      ],
+      probes: [probe("menu", { minWidth: 9999 }), probe("tabs")],
       intended: [
         { element: "logo", prop: "x", note: "T9" },
-        { element: "logo", prop: "colour", note: "typo", pending: true },
-        { element: "logo", prop: "x", width: 600, note: "shadowed" },
-        { element: "logo", state: "open", note: "never ran" },
+        { element: "logo", prop: "x", width: 1280, note: "shadowed" },
+        {
+          element: "logo",
+          prop: "colour",
+          note: "typo\n# not a heading",
+          pending: true,
+        },
+        { element: "logo", prop: "x", width: 600, note: "no 600 run" },
+        { element: "logo", state: "open", note: "state never ran" },
+        { element: "ghost", prop: "x", note: "selector broken" },
+        { element: "menu", prop: "hover", note: "probe never ran" },
+        { element: "tabs", prop: "escape", note: "same on both sides" },
       ],
     };
+    const logo = (boxDiffs) => ({ name: "logo", boxDiffs, styleDiffs: [] });
     const results = [
       {
         state: "default",
         width: 1280,
-        elements: [
-          {
-            name: "logo",
-            boxDiffs: [{ prop: "x", proto: 1, dev: 2 }],
-            styleDiffs: [],
-          },
-        ],
+        elements: [logo([{ prop: "x", proto: 1, dev: 2 }])],
       },
+      { state: "empty", width: 1280, elements: [] },
+      { state: "shown", width: 1280, elements: [logo([])] },
     ];
-    const { markdown, unexplained, pending } = renderParityReport(s, results);
-    expect(unexplained).toBe(5);
-    expect(pending).toBe(0);
+    const probes = [{ name: "tabs", width: 1280, proto: same, dev: same }];
+    const { markdown, unexplained, pending } = renderParityReport(
+      s,
+      results,
+      probes,
+    );
+    // ghost never found (1) + open, empty, menu idle (3) + four entries that matched nothing (4)
+    expect(unexplained).toBe(8);
+    expect(pending).toBe(1);
+    expect(markdown).toContain("- logo: typo<br># not a heading");
+    expect(markdown).not.toContain("\n# not a heading");
     expect(markdown).toContain("## Never ran or never used");
-    expect(markdown).toContain("- state open: ran at no width");
-    expect(markdown).toContain("- probe menu: ran at no width");
-    expect(markdown).toContain(
-      "- intended logo (colour): matched nothing — typo",
-    );
-    expect(markdown).toContain(
-      "- intended logo (x, 600px): matched nothing — shadowed",
-    );
-    expect(markdown).toContain(
-      "- intended logo (any prop, state open): matched nothing — never ran",
-    );
-    expect(markdown).not.toContain("intended logo (x): matched");
+    for (const line of [
+      "- state open: ran at no width or compared nothing",
+      "- state empty: ran at no width or compared nothing",
+      "- probe menu: ran at no width",
+      "- intended logo (x, 1280px): matched nothing — shadowed",
+      "- pending logo (colour): matched nothing — typo<br># not a heading",
+      "- intended logo (x, 600px): matched nothing — no 600 run",
+      "- intended tabs (escape): matched nothing — same on both sides",
+    ])
+      expect(markdown).toContain(line);
+    for (const text of [
+      "state shown",
+      "probe tabs",
+      "intended logo (x):",
+      "state never ran",
+      "selector broken",
+      "probe never ran",
+    ])
+      expect(markdown).not.toContain(text);
     expect(neverUsed(surface, results, [], new Set())).toEqual([]);
   });
 

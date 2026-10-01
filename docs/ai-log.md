@@ -397,6 +397,9 @@ Template:
   repeat or reuse the scripts' own `default`, `reduced-motion` and `no-js`. Last, three reviewers
   showed that checking each `intended` field alone still let an entry match nothing (a typo, a
   state and width that never run together), so an open decision could vanish from the pending
-  list; instead of more field rules, the report now lists every state, probe and entry that did
-  nothing in the run. All are fixed and unit-tested, except the timeout move: it lives in the
-  browser code, which has no automated test yet (listed in `deferred-work.md`).
+  list; instead of more field rules, the report now lists states and probes that did not run (or
+  compared nothing) and entries that matched nothing, and keeps every pending entry in the pending
+  list. All are fixed and unit-tested, except the timeout move: it lives in the browser code,
+  which has no automated test yet (listed in `deferred-work.md`). The full review was run again
+  after each large follow-up, as `CLAUDE.md` asks; the last rounds found only small surface-file
+  gaps, which are listed in `deferred-work.md` instead of fixed.
