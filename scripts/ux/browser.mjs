@@ -1,0 +1,109 @@
+// Playwright side of the UX quality scripts. Pure logic lives in lib.mjs.
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+import { chromium } from "@playwright/test";
+import { STYLE_PROPS } from "./lib.mjs";
+
+/** The approved HTML prototype (UX reference) inside the repo. */
+export const DEFAULT_PROTOTYPE_ROOT =
+  "_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3";
+
+/** Playwright's bundled Chromium, or the installed Chrome when it is missing. */
+export async function launchBrowser() {
+  try {
+    return await chromium.launch();
+  } catch (bundledError) {
+    try {
+      return await chromium.launch({ channel: "chrome" });
+    } catch {
+      throw new Error(
+        `No browser available: run "npx playwright install chromium". (${bundledError.message})`,
+      );
+    }
+  }
+}
+
+export function prototypeUrl(surface) {
+  const root = resolve(
+    process.cwd(),
+    surface.prototypeRoot ?? DEFAULT_PROTOTYPE_ROOT,
+  );
+  return pathToFileURL(resolve(root, surface.prototype)).href;
+}
+
+export function devUrl(surface, base) {
+  return new URL(surface.route, base).href;
+}
+
+/** Opens a page and waits until it is ready (and the optional ready selector exists). */
+export async function openPage(context, url, readySelector) {
+  const page = await context.newPage();
+  await page.goto(url, { waitUntil: "networkidle" });
+  if (readySelector) await page.waitForSelector(readySelector);
+  return page;
+}
+
+/** Runs a state's actions: click, hover, focus, press (keyboard key) or wait (ms). */
+export async function runActions(page, actions) {
+  for (const action of actions) {
+    if (action.click) await page.locator(action.click).first().click();
+    else if (action.hover) await page.locator(action.hover).first().hover();
+    else if (action.focus) await page.locator(action.focus).first().focus();
+    else if (action.press) await page.keyboard.press(action.press);
+    else if (action.wait) await page.waitForTimeout(action.wait);
+    else throw new Error(`Unknown action: ${JSON.stringify(action)}`);
+  }
+}
+
+/** Box and computed styles of the first visible match, or null when hidden or absent. */
+export async function readElement(page, selector) {
+  return page.evaluate(
+    ([sel, props]) => {
+      // Visible means: has a size, is not visibility:hidden and is at least partly on screen
+      // (the unfocused skip link sits at left:-999px and must count as hidden).
+      const el = [...document.querySelectorAll(sel)].find((e) => {
+        const r = e.getBoundingClientRect();
+        const onScreen =
+          r.right > 0 &&
+          r.bottom > 0 &&
+          r.left < innerWidth &&
+          r.top < innerHeight;
+        return (
+          r.width > 0 &&
+          r.height > 0 &&
+          onScreen &&
+          getComputedStyle(e).visibility !== "hidden"
+        );
+      });
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      const s = getComputedStyle(el);
+      const styles = {};
+      for (const prop of props) styles[prop] = s[prop];
+      styles.fontFamily = s.fontFamily.split(",")[0].replaceAll('"', "").trim();
+      styles.borderBottom = `${s.borderBottomWidth} ${s.borderBottomStyle} ${s.borderBottomColor}`;
+      return {
+        box: {
+          x: Math.round(r.x),
+          y: Math.round(r.y),
+          width: Math.round(r.width),
+          height: Math.round(r.height),
+        },
+        styles,
+        hasText: el.innerText.trim().length > 0,
+        children: el.children.length,
+      };
+    },
+    [selector, STYLE_PROPS],
+  );
+}
+
+/** PNG buffer of a box on the page (CSS pixels), clamped to the viewport. */
+export async function captureBox(page, box) {
+  const { width: vw, height: vh } = page.viewportSize();
+  const x = Math.max(0, box.x);
+  const y = Math.max(0, box.y);
+  const width = Math.max(1, Math.min(box.x + box.width, vw) - x);
+  const height = Math.max(1, Math.min(box.y + box.height, vh) - y);
+  return page.screenshot({ clip: { x, y, width, height } });
+}

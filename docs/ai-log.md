@@ -349,3 +349,27 @@ Template:
      longer lints); and `sonar:gate:full` would scan whatever branch or local edits were checked
      out. All fixed, with tests: `scripts/eslint-config.test.mjs` and
      `scripts/sonar-gate-full.test.mjs`.
+
+## 2026-10-01 — UX quality loop: match the mockup, then improve on it
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), Playwright, pixelmatch, axe-core,
+  a UX critic subagent.
+- **Prompt (short):** "Seems the UX has not been followed with mockup … propose the rule/skill/tool",
+  then "matching with the mockup is not enough … propose the technique to enhance/improve the UI/UX
+  per spec", then "set it up, start with the 1.3 header".
+- **What the AI did:** Measured the merged-to-PR header against the prototype in Chrome and found real
+  gaps (background colour, spacing, the mega value line, skip-link text) plus four places where the
+  prototype and `DESIGN.md` disagree. Built `npm run ux:parity` (prototype vs app, element by element:
+  box, computed styles, pixels) and `npm run ux:shots` (8 widths, every state, reduced motion,
+  JavaScript off, axe, layout shift), a `ux-critic` skill with an eight-area scorecard, and
+  `docs/ux-quality.md` (floor, ceiling, measure, feed back). First run on the header: 62 differences
+  became 0 unexplained after fixes on PR #9; the critic scored interaction feedback 3/5 and two of
+  its fixes were applied (hand cursor on buttons, hover fades).
+- **Decision / result:** UI stories follow the loop (CLAUDE.md Definition of Done); the full critic
+  pass is for the header, Home hero, Products and Book a demo until Demo day. Amber decides UX-Q1 to
+  UX-Q4 and every "enhance" proposal, and records accepted ones in `DESIGN.md`.
+- **AI got it wrong?** Yes. The Story 1.3 spec summarized the prototype into tokens, so the
+  implementer agents guessed missing values (`gap-8`, `text-ui`) and nothing compared the result
+  with the mockup; five review layers passed it. The first parity run also reported 101
+  differences, many of them notation noise (`0px none` vs `0px solid`, empty shadow layers,
+  999px vs 9999px), which the tool now normalizes.
