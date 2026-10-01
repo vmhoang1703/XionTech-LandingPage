@@ -36,8 +36,9 @@ export function devUrl(surface, base) {
 }
 
 /**
- * How long a state action or a probe step may wait for its element. A state action that times
- * out stops the run with a clear message; a probe step that times out becomes an error row.
+ * How long a page's ready selector, a state action or a probe step may wait for its element. A
+ * ready selector or state action that times out stops the run with a clear message; a probe step
+ * that times out becomes an error row.
  */
 const ACTION_TIMEOUT_MS = 5000;
 

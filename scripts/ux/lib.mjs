@@ -85,6 +85,10 @@ export function validateSurface(surface) {
       problems.push(`probes[${i}].name must be a non-empty string`);
     if (probeNames.has(probe?.name))
       problems.push(`probes[${i}].name "${probe.name}" is used twice`);
+    if (names.has(probe?.name))
+      problems.push(
+        `probes[${i}].name "${probe.name}" is also an element name; intended entries need one meaning`,
+      );
     probeNames.add(probe?.name);
     for (const key of [
       "trigger",
@@ -395,7 +399,7 @@ function renderProbes(surface, probes) {
         }
       }
       lines.push(
-        `| ${p.name} | ${p.width} | ${event} | ${cell(p.proto[event])} | ${cell(p.dev[event])} | ${mark} |`,
+        `| ${cell(p.name)} | ${p.width} | ${event} | ${cell(p.proto[event])} | ${cell(p.dev[event])} | ${cell(mark)} |`,
       );
     }
   }
@@ -454,7 +458,7 @@ export function renderParityReport(surface, results, probes = []) {
       const pixels =
         e.percent === undefined ? "n/a" : `${e.percent}% ![](${e.image})`;
       lines.push(
-        `| ${e.name} | ${pixels} | ${notes.length ? notes.join("<br>") : "none"} |`,
+        `| ${cell(e.name)} | ${pixels} | ${cell(notes.length ? notes.join("<br>") : "none")} |`,
       );
     }
     lines.push("");

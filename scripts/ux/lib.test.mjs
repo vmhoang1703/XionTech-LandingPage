@@ -306,6 +306,16 @@ describe("validateSurface cross-references", () => {
     expect(message).toContain('"shotWidths" must be a list');
   });
 
+  it("refuses a probe that has an element's name", () => {
+    expect(() =>
+      validateSurface({
+        ...base,
+        probes: [{ ...base.probes[0], name: "logo" }],
+        intended: [],
+      }),
+    ).toThrow('probes[0].name "logo" is also an element name');
+  });
+
   it("accepts the committed header surface file", () => {
     const file = JSON.parse(
       readFileSync(new URL("./surfaces/header.json", import.meta.url), "utf8"),
@@ -558,14 +568,26 @@ describe("interaction probes", () => {
     expect(compareProbeOutcomes(failed, failed)).toHaveLength(1);
   });
 
-  it("escapes a pipe in an outcome so the table row stays whole", () => {
+  it("escapes a pipe in an outcome or a note so the table row stays whole", () => {
     const { markdown } = renderParityReport(
-      surface,
+      {
+        ...surface,
+        intended: [
+          { element: "logo", prop: "x", note: "10% | 12%" },
+          { element: "menu", prop: "click", note: "T | U" },
+        ],
+      },
       [
         {
           state: "default",
           width: 1280,
-          elements: [{ name: "logo", boxDiffs: [], styleDiffs: [] }],
+          elements: [
+            {
+              name: "logo",
+              boxDiffs: [{ prop: "x", proto: 1, dev: 2 }],
+              styleDiffs: [],
+            },
+          ],
         },
       ],
       [
@@ -573,11 +595,15 @@ describe("interaction probes", () => {
           name: "menu",
           width: 1280,
           proto: same,
-          dev: { ...same, hover: "error: a|b" },
+          dev: { ...same, hover: "error: a|b", click: "open" },
         },
       ],
     );
     expect(markdown).toContain(String.raw`| error: a\|b | **differs** |`);
+    expect(markdown).toContain(
+      String.raw`| closed | open | intended: T \| U |`,
+    );
+    expect(markdown).toContain(String.raw`x: 1 → 2 (intended: 10% \| 12%) |`);
   });
 
   it("counts mapped elements that were never found", () => {
