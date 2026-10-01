@@ -177,6 +177,19 @@ describe("readThemeColors", () => {
     `;
     expect(readThemeColors(css)).toEqual({ navy: "#163663" });
   });
+
+  it("keeps the alpha pair of #RRGGBBAA colours", () => {
+    const css = `
+      @theme {
+        --color-border: #1636631f;
+        --color-on-navy-border: #FFFFFF24;
+      }
+    `;
+    expect(readThemeColors(css)).toEqual({
+      border: "#1636631f",
+      "on-navy-border": "#FFFFFF24",
+    });
+  });
 });
 
 const ROOT = join(import.meta.dirname, "..", "..", "..");
