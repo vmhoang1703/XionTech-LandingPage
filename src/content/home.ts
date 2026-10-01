@@ -60,3 +60,87 @@ export const homeDoors = {
     ],
   },
 };
+
+export const homeApps = {
+  title: "Four apps. One school day.",
+  lede: "Every role in the school gets its own app, all sharing one source of truth.",
+  // Mini phone stays an empty media frame until Story 4.4 supplies media.
+  phoneHint: "[Placeholder] PXP screen",
+  tiles: [
+    {
+      id: "pxp",
+      name: "PXP",
+      full: "Parent eXperience Place",
+      line: "Attendance, grades, messages and fees in every parent's pocket.",
+      chips: ["Parents", "iOS and Android"],
+    },
+    {
+      id: "sxp",
+      name: "SXP",
+      full: "Staff eXperience Place",
+      line: "One workspace with role-based views for staff, teachers and leaders.",
+      chips: ["Staff", "Teachers", "Leaders"],
+    },
+    {
+      id: "lxp",
+      name: "LXP",
+      full: "Learner eXperience Place",
+      line: "Lessons, assignments and progress in one calm space.",
+      chips: ["Students"],
+    },
+    {
+      id: "iot",
+      name: "IoT",
+      full: "Device management",
+      line: "Devices, lighting and climate, campus-wide.",
+      chips: [],
+    },
+  ],
+} as const;
+
+export const homeServices = {
+  title: "Eight ways we get IT done for you.",
+  lede: "The same team that builds PXP, LXP and SXP, working on your product.",
+  cards: [
+    {
+      id: "product-engineering",
+      name: "Product Engineering",
+      line: "Turn ideas into market-ready digital products.",
+    },
+    {
+      id: "ai-analytics",
+      name: "AI-Driven Analytics",
+      line: "Turn raw data into actionable intelligence.",
+    },
+    {
+      id: "co-creation",
+      name: "Product Co-Creation",
+      line: "Your domain knowledge, our technical expertise.",
+    },
+    {
+      id: "staffing",
+      name: "Staffing Service",
+      line: "Specialised technology talent, when you need it.",
+    },
+    {
+      id: "custom-apps",
+      name: "Custom App Development",
+      line: "Solutions built around your requirements.",
+    },
+    {
+      id: "low-code",
+      name: "Low-code Solutions",
+      line: "Power Platform, Make, n8n, Retool, Bubble.",
+    },
+    {
+      id: "ai-solutions",
+      name: "AI-Powered Solutions",
+      line: "Put artificial intelligence to work in your operations.",
+    },
+    {
+      id: "cloud",
+      name: "Cloud Computing",
+      line: "Azure, AWS and GCP expertise.",
+    },
+  ],
+};
