@@ -15,11 +15,13 @@ function parseHexColor(hex: string): {
   }
   const cleaned = hex.slice(1);
 
-  const r = parseInt(cleaned.substring(0, 2), 16) / 255;
-  const g = parseInt(cleaned.substring(2, 4), 16) / 255;
-  const b = parseInt(cleaned.substring(4, 6), 16) / 255;
+  const r = Number.parseInt(cleaned.substring(0, 2), 16) / 255;
+  const g = Number.parseInt(cleaned.substring(2, 4), 16) / 255;
+  const b = Number.parseInt(cleaned.substring(4, 6), 16) / 255;
   const a =
-    cleaned.length === 8 ? parseInt(cleaned.substring(6, 8), 16) / 255 : 1;
+    cleaned.length === 8
+      ? Number.parseInt(cleaned.substring(6, 8), 16) / 255
+      : 1;
 
   return { r, g, b, a };
 }
@@ -116,7 +118,7 @@ export function readThemeColors(css: string): Record<string, string> {
   // Match @theme with optional modifiers, then the opening brace and contents
   const themeBlockRegex = /@theme\b\s*(?:\w+\s+)*\{([^}]+)\}/g;
   const colorLineRegex =
-    /--color-([a-z0-9-]+):\s*(#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?)/i;
+    /--color-([a-z0-9-]+):\s*(#[0-9a-f]{6}(?:[0-9a-f]{2})?)/i;
 
   // Commented-out colours are not theme colours
   const source = css.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -125,7 +127,7 @@ export function readThemeColors(css: string): Record<string, string> {
     const themeBlock = themeMatch[1];
     const lines = themeBlock.split(";");
     for (const line of lines) {
-      const colorMatch = line.match(colorLineRegex);
+      const colorMatch = colorLineRegex.exec(line);
       if (colorMatch) {
         colors[colorMatch[1]] = colorMatch[2];
       }
