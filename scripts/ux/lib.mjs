@@ -489,8 +489,8 @@ export function neverFound(surface, results) {
  * compared no element, probes that ran at no width (a `minWidth` above every width), and
  * `intended` entries that matched no difference (a typo, a state and width that never run
  * together, an entry shadowed by an earlier one, or a difference that is gone). An entry whose
- * cause is listed already is left out: its state or probe did not run, or its element was never
- * found (for a property entry: never found on both sides, so nothing was measured).
+ * cause is listed already is left out: its state is idle, its probe did not run, or its element was
+ * never found (with a prop other than "missing": never found on both sides, so nothing measured).
  */
 export function neverUsed(surface, results, probes, used) {
   const ranStates = new Set(results.map((r) => r.state));
@@ -512,7 +512,11 @@ export function neverUsed(surface, results, probes, used) {
     idleStates.includes(entry.state) ||
     (probeNames.includes(entry.element)
       ? idleProbes.includes(entry.element)
-      : !(entry.prop === "missing" ? found : measured).has(entry.element));
+      : !(
+          entry.prop === "missing" || entry.prop === undefined
+            ? found
+            : measured
+        ).has(entry.element));
   return [
     ...idleStates.map((name) =>
       ranStates.has(name)

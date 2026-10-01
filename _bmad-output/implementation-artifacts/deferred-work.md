@@ -90,7 +90,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - [low] A probe `error: …` row shows Playwright's first line (e.g. `locator.hover: Timeout 5000ms exceeded.`) but not which selector failed — trigger, hover area or panel. Add the probe key to the message, as `runActions` does for state actions.
 - [low] `widths: []` and repeated widths pass `validateSurface`. With `[]` the report lists every element as never found and every state and probe as never ran (their entries are left out, since that cause is listed); a repeated width runs twice and counts each difference twice.
 - [low] An intended `width` written as a string gives a confusing "1280 is not a parity width (1280, …)"; check `Number.isInteger` first.
-- [low] An element `prop` typo (e.g. `colour`) is caught only after the run, as an entry that matched nothing; `validateSurface` could check it against the box keys, `missing` and `STYLE_PROPS`.
+- [low] An element `prop` typo (e.g. `colour`) is caught only after the run, as an entry that matched nothing; `validateSurface` only checks for a non-empty string, though its message names examples ("x", "color", "missing"). It could check the box keys, `missing` and `STYLE_PROPS`.
 - [low] Very long names can pass the 255-character file-name limit; the plain-name rule has no length cap.
 - [low] `con`, `nul`, `aux`, `prn`, `com1`… are Windows device names on Windows 10; the plain-name rule allows them.
 - [low] `prototype` and `route` go into the report head unescaped (a line break or backtick breaks it).
@@ -98,9 +98,13 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - [low] The default `ux-reports/<name>/parity` folder keeps images from older runs (e.g. the old `-`-joined names); a run could clear its own default folder first.
 - [low] Default widths and the reserved state names are written in more than one file (`lib.mjs`, `parity.mjs`, `shots.mjs`).
 - [low] `shots.mjs` names files `<state>-<width>.png`, safe only because the width comes last and is all digits; `parityImageName` uses `.`.
-- [low] The built-in `default` state is not checked for "ran but compared no element", and a state with `elements: []` is always listed as "compared no element" (`validateSurface` could refuse an empty list).
+- [low] The built-in `default` state is not checked for "ran but compared no element", and a state with `elements: []` is always listed as "compared no element". A shots-only state (e.g. an app-only error state for the critic) needs a way to skip parity, such as `parity: false`.
 - [low] A state whose listed elements are all never found is counted twice: under "Never found" and as "compared no element".
 - [low] An entry whose `state` does not compare its element (not in that state's `elements`) is caught only after the run, as "matched nothing"; `validateSurface` could check it.
-- [low] The diff-coverage gate measures `src/` only (`coverage.include` in `vitest.config.mts`), so `scripts/ux/lib.mjs` is outside it. Measured by hand on 2026-10-02: 100% lines, 98% branches. Add `scripts/` to the gate after Demo day.
+- [low] The diff-coverage gate measures `src/` only (`coverage.include` in `vitest.config.mts`), so `scripts/ux/lib.mjs` is outside it. Measured by hand on 2026-10-02 with `npx vitest run scripts/ux/lib.test.mjs --coverage --coverage.include=scripts/ux/lib.mjs`: 100% lines, 98% branches. After Demo day add `scripts/ux/lib.mjs` and `scripts/coverage-branches.mjs` (not all of `scripts/`: `browser.mjs`, `parity.mjs` and `shots.mjs` have no unit tests).
+- [low] The "cause listed already" rule uses the whole run, not the entry's `state`/`width`: an entry narrowed to a width where its element is missing on one side is listed as "matched nothing" next to the `missing` row; and a property entry for an element only ever found on one side, whose `missing` row an entry explains, is never listed.
+- [low] A pending probe entry whose probe could not run shows in the pending list without "not seen in this run", though nothing was measured (its row says "not applied").
+- [low] "Pending design decisions: N" counts entries, not decisions (the header's 16 entries cover about 6 decisions), and "(rows marked "pending")" does not fit entries marked "not seen in this run"; the console line says the same.
+- [low] No test pins the pending list's file order.
 - [low] `ux:shots` has the same gap the parity report now closes: a state whose `minWidth` is above every `shotWidths` value gets no screenshot and no axe scan, and `--strict` still passes (Similar check).
 - [low] The report head and the console say "unexplained difference(s)", but the count also includes "Never found" and "Never ran or never used" lines, and the head line's advice ("listed in `intended`") does not fit those; the Tools table in `docs/ux-quality.md` says the same.

@@ -575,7 +575,7 @@ describe("renderParityReport", () => {
       "| logo | n/a | missing on dev (pending: UX-Q9<br><br># Amber) |",
     );
     expect(pendingMissing.markdown).toContain(
-      "- logo (missing): UX-Q9<br><br># Amber",
+      "- logo (missing): UX-Q9<br><br># Amber\n", // matched: no "not seen" mark
     );
     expect(pendingMissing.markdown).not.toContain("\n# Amber");
     const decided = renderParityReport(
@@ -595,6 +595,8 @@ describe("renderParityReport", () => {
 
 describe("interaction probes", () => {
   const same = Object.fromEntries(PROBE_EVENTS.map((e) => [e, "closed"]));
+  const menu = { name: "menu", trigger: { proto: "a", dev: "b" } };
+  const withMenu = { ...surface, probes: [{ ...menu, observe: menu.trigger }] };
 
   it("lists the events whose outcome differs", () => {
     expect(compareProbeOutcomes(same, same)).toEqual([]);
@@ -645,7 +647,7 @@ describe("interaction probes", () => {
     );
     const noted = renderParityReport(
       {
-        ...surface,
+        ...withMenu,
         intended: [
           { element: "menu", prop: "hover", note: "T11", pending: true },
         ],
@@ -656,6 +658,7 @@ describe("interaction probes", () => {
     expect(noted.unexplained).toBe(0);
     expect(noted.pending).toBe(1);
     expect(noted.markdown).toContain("pending: T11");
+    expect(noted.markdown).toContain("- menu (hover): T11\n");
     expect(noted.markdown).toContain("**Pending design decisions: 1**");
   });
 
@@ -679,7 +682,7 @@ describe("interaction probes", () => {
     };
     const report = renderParityReport(
       {
-        ...surface,
+        ...withMenu,
         intended: [
           { element: "menu", prop: "hover", note: "T11", pending: true },
         ],
@@ -698,6 +701,7 @@ describe("interaction probes", () => {
     expect(report.markdown).toContain(
       "| menu | 1280 | hover | open | error: Timeout 5000ms | **differs** (pending: T11, not applied: the probe could not run) |",
     );
+    expect(report.markdown).toContain("- menu (hover): T11\n");
     expect(report.markdown).not.toContain("matched nothing");
   });
 
@@ -742,6 +746,8 @@ describe("interaction probes", () => {
         { element: "tabs", prop: "escape", note: "same on both sides" },
         { element: "logo", state: "shown", note: "catch-all in shown" },
         { element: "half", prop: "x", note: "half open", pending: true },
+        { element: "half", prop: "missing", state: "shown", note: "h-missing" },
+        { element: "half", state: "shown", note: "h-catch-all" },
       ],
     };
     const logo = (boxDiffs) => ({ name: "logo", boxDiffs, styleDiffs: [] });
@@ -762,9 +768,9 @@ describe("interaction probes", () => {
       probes,
     );
     // half missing on dev (1) + ghost never found (1) + open, empty, menu idle (3)
-    // + five entries that matched nothing (5); the ghost, half, open and menu entries are left
+    // + seven entries that matched nothing (7); the ghost, half x, open and menu entries are left
     // out because their cause is listed already.
-    expect(unexplained).toBe(10);
+    expect(unexplained).toBe(12);
     expect(pending).toBe(3);
     for (const line of [
       String.raw`- logo (col\|our): typo<br># not a heading — not seen in this run`,
@@ -783,6 +789,8 @@ describe("interaction probes", () => {
       "- intended logo (x, 600px): matched nothing — no 600 run",
       "- intended tabs (escape): matched nothing — same on both sides",
       "- intended logo (any prop, state shown): matched nothing — catch-all in shown",
+      "- intended half (missing, state shown): matched nothing — h-missing",
+      "- intended half (any prop, state shown): matched nothing — h-catch-all",
     ])
       expect(markdown).toContain(line);
     for (const text of [

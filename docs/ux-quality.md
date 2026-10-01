@@ -87,9 +87,9 @@ demo; floor and measure for every other page.
   width or ran but compared no element (the built-in `default` state is not checked), probes that
   ran at no width (a `minWidth` above every width), and `intended` entries that matched nothing (a
   typo, a state and width that never run together, an entry shadowed by an earlier one, or a
-  difference that is gone). An entry is left out when its cause is listed already: its state or
-  probe did not run, or its element was never found (for a property entry: never found on both
-  sides, so nothing was measured). Each line counts as unexplained. Remove an entry once its
+  difference that is gone). An entry is left out when its cause is listed already: its state is
+  listed, its probe did not run, or its element was never found (with a prop other than `missing`:
+  never found on both sides, so nothing measured). Each line counts as unexplained. Remove an entry once its
   difference is fixed.
 - **Names** — the surface `name` and every element, state and probe name use only a-z, 0-9, `-`
   and `_`, because they become folder names, file names and report text. Names are unique, a
