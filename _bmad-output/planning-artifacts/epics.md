@@ -1,7 +1,7 @@
 ---
 title: XionTechs Website Epics and Stories
 status: draft
-updated: 2026-09-29
+updated: 2026-10-01
 stepsCompleted: [1, 2, 3, 4]
 inputDocuments:
   - _bmad-output/planning-artifacts/prds/prd-XionTech-LandingPage-2026-09-28/prd.md
@@ -30,8 +30,8 @@ This document breaks the XionTechs Website PRD (47 FRs, 8 NFRs), the UX spines (
 - `EXP >` means `EXPERIENCE.md` section, `DES >` means `DESIGN.md` section.
 - Prototype paths are relative to `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/` and written `mockups/site-v3/...`. The prototype is the visual acceptance reference; the spines win on any conflict.
 - Header and footer are rendered by the prototype script into `#site-header` and `#site-footer`, so their design reference is `mockups/site-v3/js/site.js` (header and footer templates) with `css/site.css`.
-- All routes exist under `/en/` and `/vi/`; paths below omit the prefix. **Demo day is English only** (decided 2026-09-29): Story 1.2 (locale routing and the EN/VI switch) and every Vietnamese string follow after demo, so VI parts of acceptance criteria are checked after demo.
-- Book a demo sits next to the EN/VI switch above 640px and is the first mobile menu item at 640px and below. 640px is current; the 1080px mention in the UX decision log is superseded.
+- All routes exist under `/en/` and `/vi/`; paths below omit the prefix. **Demo day is English only** (decided 2026-09-29): Story 1.2 (locale routing and the language dropdown) and every Vietnamese string follow after demo, so VI parts of acceptance criteria are checked after demo.
+- Header (2026-10-01): logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. No Book a demo button in the header; it is reached from heroes, capture bands and the footer "Contact" link.
 - Every story's Definition of Done includes NFR-8 (lint, typecheck, unit tests, 100% changed-line coverage, branch coverage at least 80% per changed file, Playwright smoke, build, local SonarQube gate) and NFR-7 (no invented content; unverified text starts with `[Placeholder]` in EN and VI). These are not repeated per story.
 - **Owner** on every story is proposed (Andy or Sammy, following the two tracks in the Demo-day plan) and is confirmed by the lead (Hoang Vu). Size: S (up to 1 day), M (1 to 2 days), L (2 to 3 days). `[ASSUMPTION]` day ranges.
 - **Demo day** on every story is `must-have` or `after demo`. A must-have story may carry a **Demo-day slice** line: only that part is built before Demo day, and the rest follows after demo.
@@ -57,7 +57,7 @@ Budget: 2 developers (Andy and Sammy), 7 to 8 build days before Demo day 2026-10
 | 6 | 2.4 Email capture band (slice) | S (M) | 8.0 | 3.3 Stats band (slice) | S (M) | 4.0 |
 | 7 | 1.4 Mobile menu (slice) | S (M) | 8.5 | 3.4 Two front doors | S | 4.5 |
 | 8 | 6.6 Job page and application with CV upload | M | 10.0 | 6.5 Careers page and open roles (slice) | S (M) | 5.0 |
-| 9 | 6.3 Editors publish in Sanity Studio (slice) | S (L) | 10.5 | 3.5 Bento and service cards (slice) | S (M) | 5.5 |
+| 9 | 6.3 Editors publish in Sanity Studio (slice) | S (L) | 10.5 | 3.5 Why XionTechs and app row (slice) | S (M) | 5.5 |
 | 10 | 7.4 Performance budget (slice) | S (M) | 11.0 | 3.6 4-D process component (slice) | S (M) | 6.0 |
 | 11 | 7.3 Accessibility checks (slice) | S (M) | 11.5 | 4.1 Products hero and sub-nav (slice) | S (M) | 6.5 |
 | 12 | | | | 4.2 PXP story phone (slice) | S (M) | 7.0 |
@@ -77,18 +77,18 @@ Total: Andy 11.5, Sammy 12.0, together 23.5 developer-days (about 8.5 over the 1
 - Stories 3.7 and 5.4 start after 2.4 is merged (Andy step 6, day 8.0); 6.3 starts after 3.7 is merged (day 9.5).
 - Stories 7.3 and 7.4 check each page as it is merged; a final run follows Sammy's last page (day 12.0).
 - Breadcrumbs: until Story 1.6 lands after demo, each page story builds its breadcrumbs with the simple markup from the prototype; 1.6 turns them into the shared component.
-- If the gap is closed by cuts, the lowest-risk order to drop is: 6.3 (enter content through the Studio defaults), 3.5 spotlight, 4.1 in-view highlight, 5.1 clocks.
+- If the gap is closed by cuts, the lowest-risk order to drop is: 6.3 (enter content through the Studio defaults), 3.7 spotlight, 4.1 in-view highlight, 5.1 clocks.
 
-**After demo (9 stories, plus the deferred parts of the sliced must-haves):** 1.2 Locale routing and EN/VI switch, 1.6 Inner page hero and breadcrumbs, 2.5 No non-essential cookies without consent, 4.4 Product media in device frames (clips uploaded in Sanity), 4.5 Product updates and demo capture, 5.3 Three ways to work and industries, 7.1 Metadata, hreflang and sitemap, 7.2 Server rendering and structured data, 7.5 Launch content gate. The CI pipeline is an open item, not a story.
+**After demo (9 stories, plus the deferred parts of the sliced must-haves):** 1.2 Locale routing and language dropdown, 1.6 Inner page hero and breadcrumbs, 2.5 No non-essential cookies without consent, 4.4 Product media in device frames (clips uploaded in Sanity), 4.5 Product updates and demo capture, 5.3 Three ways to work and industries, 7.1 Metadata, hreflang and sitemap, 7.2 Server rendering and structured data, 7.5 Launch content gate. The CI pipeline is an open item, not a story.
 
 ## Requirements Inventory
 
 ### Functional Requirements
 
-FR-1: Sticky header on every page reaches Products (mega: PXP, LXP, SXP, IoT Device Management, All products), Services (mega: 8 services, See the process), News, About, Careers. Text-only triggers, no caret; `aria-current="page"`; hover opens, 150ms close delay, click never closes a hover-opened menu, Escape returns focus, one menu at a time, click outside closes.
-FR-2: Below 1080px a menu button opens all navigation; `aria-controls`, `aria-expanded`; Escape closes and returns focus; mega content inline; scroll lock; focus trapped in the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button).
-FR-3: Book a demo reachable at every width: next to EN/VI above 640px; first mobile menu item in button style at 640px and below, not in the header bar.
-FR-4: EN/VI switch: two toggle buttons with `aria-pressed` in a group labelled "Language", in the header at every width; switching keeps page, scroll and typed values and updates `lang`, title, meta; every string exists in EN and VI; product and service names stay English; Vietnamese copy owner is an open item.
+FR-1: Sticky header on every page reaches Products (mega: PXP, LXP, SXP, IoT Device Management, All products), Services (plain link), News, About, Careers. Text-only triggers, no caret (the language dropdown caret is the only exception); `aria-current="page"`; hover opens, 150ms close delay, click never closes a hover-opened menu, Escape returns focus, click outside closes.
+FR-2: Below 1080px a menu button opens all navigation; `aria-controls`, `aria-expanded`; Escape closes and returns focus; mega content inline; scroll lock; focus trapped in the open menu panel plus the header bar controls (logo link, language dropdown, Menu button).
+FR-3: Book a demo reachable at every width without a header button: hero or capture band on Home, Products, Services, About and News; footer "Contact" on every page.
+FR-4: Language dropdown, the last header item: code button (EN or VI) opening EN and VI (named "EN English" and "VI Tiếng Việt"), current marked with `aria-current`, Escape and outside click close; in the header bar at every width; switching keeps page, scroll and typed values and updates `lang`, title, meta; every string exists in EN and VI; product and service names stay English; Vietnamese copy owner is an open item.
 FR-5: Every page under `/en/` and `/vi/`; bare `/` redirects to saved locale, else `/vi/` for Vietnamese browsers, else `/en/`; URL locale wins; choice saved in an essential first-party locale cookie.
 FR-6: In-page anchors land with the heading fully visible below the sticky header (and Products sub-nav) via `scroll-margin-top`; smooth scroll off under reduced motion.
 FR-7: Footer on every page: Products, Services, Company (About, Core values, FAQ to `/about#faq`, News, Careers, Contact), both offices with `tel:` links, bottom bar with copyright, Privacy policy link, GET IT DONE tag; no Da Nang or second HCMC office.
@@ -98,7 +98,7 @@ FR-10: Dark `hero-silk` Home hero with headline, tablet and phone frames, slow c
 FR-11: Exactly one primary hero button, "Explore our products", to Products.
 FR-12: Stats band "Experience you can count on" at the bottom of the hero: 25+, 24/7, 20+, 8, 2; counts up once over 1.4s at 60% visible; 24/7 static; screen readers get final values; one shared component reused on Services and About.
 FR-13: Products door and Services door directly under the hero, overlapping its bottom edge; each door one link; chips are text.
-FR-14: After the doors: four-app bento, eight services, 4-D process, latest three stories, demo capture; tiles are stretched links with nothing interactive inside; service cards link to Services anchors; no stories hides the grid and keeps "See all news".
+FR-14: After the doors: Why XionTechs, four-app row, 4-D process, latest three stories, demo capture; each app item is one link with nothing interactive inside; no stories hides the grid and keeps "See all news".
 FR-15: Sticky Products sub-nav (PXP, LXP, SXP, IoT, Updates) highlights the section in view, Updates at page end; scrolls horizontally on narrow screens.
 FR-16: PXP story phone with five tabs (Attendance, Grades, Messages, Payments, Events) crossfading screens, ARIA tab pattern, inactive screens unfocusable and hidden; four features; store buttons always shown, opening a new tab, with `[Placeholder]` links until real ones exist.
 FR-17: LXP, SXP, IoT in browser frames with audience, four features and web address as a link that opens a new tab (`[Placeholder]` until confirmed); missing media shows an empty frame.
@@ -135,8 +135,8 @@ FR-47: Job page `/careers/[slug]` with breadcrumbs, title, team, location, work 
 
 ### NonFunctional Requirements
 
-NFR-1: WCAG 2.2 AA on every page in both locales: contrast 4.5:1 text, 3:1 large text, icons and field borders; amber text uses `#8A6700`, `#C99700` never text (AC-A11Y-1); visible focus on every surface (AC-A11Y-2); hidden content unfocusable (AC-A11Y-3); no interactive element inside a link (AC-A11Y-4); errors announced and linked (AC-A11Y-5); one H1; reading-order tab order; targets at least 24 x 24px; meaningful alt text in EN and VI.
-NFR-2: Motion is controllable (WCAG 2.2.2): Home silk always has the toggle and pauses off screen or in a hidden tab; every other decorative loop stops within 5s; reduced motion means no animation or transition anywhere, no clip autoplay, and the silk starts paused unless a saved Play or Pause choice exists (the saved choice wins).
+NFR-1: WCAG 2.2 AA on every page in both locales: contrast 4.5:1 text, 3:1 large text, icons and field borders; amber text uses `#8A6700`, `#C99700` never text (AC-A11Y-1); visible focus on every surface (AC-A11Y-2); hidden content unfocusable (AC-A11Y-3); no interactive element inside a link (AC-A11Y-4); errors announced and linked (AC-A11Y-5); one H1; reading-order tab order; targets at least 44 x 44px for controls and 24 x 24px for inline text links; functional text at least 11.5px; no label above a section heading (door names and the stats heading excepted); meaningful alt text in EN and VI.
+NFR-2: Motion is controllable (WCAG 2.2.2): Home silk always has the toggle and pauses off screen or in a hidden tab; every other decorative loop stops within 5s; reduced motion means no movement (short opacity fades for state changes), no clip autoplay, and the silk starts paused unless a saved Play or Pause choice exists (the saved choice wins).
 NFR-3: Personal data under Vietnam PDPD (Decree 13/2023): collected only through forms for the stated purpose; never in URLs; retention period defined before public launch `[ASSUMPTION]`; no non-essential cookies without opt-in; the locale cookie is essential.
 NFR-4: Performance: icon sets and third-party scripts never block rendering (AC-PERF-1); mobile p75 LCP at most 2.5s, INP at most 200ms, CLS at most 0.1 `[ASSUMPTION]`; fonts `display: swap` with `vietnamese` subset; silk pauses off screen.
 NFR-5: SEO: locale URLs with `hreflang` and `x-default`; per-page metadata; server rendering; sitemap for both locales `[ASSUMPTION]`.
@@ -171,16 +171,16 @@ UX-DR2: Four fonts with Vietnamese subset; `:lang(vi) h1, :lang(vi) h2 { line-he
 UX-DR3: Scoped section surfaces `surface-paper`, `surface-mist`, `surface-navy`, `surface-amber`, `hero-silk`, `hero-light`, `hero-navy`, `hero-amber` with their text, link and focus tokens; colour rhythm per page (at least one navy band, at most one full-width amber band).
 UX-DR4: Focus ring 2.5px, 3px offset, 8px radius; navy on light and amber, `{colors.focus-on-navy}` on navy; email capture row 3px ring in the scoped colour.
 UX-DR5: Button variants `button-primary`, `button-navy`, `button-glass`, small size, press and hover states; one primary button per group.
-UX-DR6: Site header (sticky glass, logo 32px, text-only 40px items, active navy bold with 2px amber underline) and mega menus, text only with no badges, icons or arrows (Products: name, value, "for" line, footer row; Services: the 8 service names, footer row).
-UX-DR7: Mobile menu panel below 1080px, 40px-high "Menu" pill button (text, no icon), single-column mega content, Book a demo first at 640px and below.
-UX-DR8: Language switch pill segment (ToggleGroup), active navy fill with white text.
+UX-DR6: Site header (sticky glass, logo 32px, text-only 44px items, active navy bold with 2px amber underline): logo left, menu right, language dropdown last; one mega menu (Products: name, value, "for" line, footer row), text only with no badges, icons or arrows; Services is a plain link.
+UX-DR7: Mobile menu panel below 1080px, 44px-high "Menu" pill button (text, no icon) on the right next to the language dropdown, single-column mega content.
+UX-DR8: Language dropdown (DropdownMenu): styled like the nav links (ink text, mist on hover), code with a caret, options EN and VI in a small list on the header glass, current bold navy.
 UX-DR9: Skip link (amber pill on focus), breadcrumbs (mono, muted), highlight mark (one phrase per hero, 1.2s after 0.5s).
 UX-DR10: Scroll reveal (26px rise, 0.9s, at 12% visible, 70ms stagger in fours, once) and global reduced-motion rule.
 UX-DR11: Inner hero background: aurora and strand ribbon stop after 5s, ribbon pauses off screen, all `aria-hidden`.
-UX-DR12: Home silk canvas with static fallback and Motion toggle (36px, ink 50%, white border 30%, 70% opacity at rest, label slides out on hover or focus).
+UX-DR12: Home silk canvas with static fallback and Motion toggle (44px, ink 50%, white border 30%, 70% opacity at rest, label fades in on hover or focus, always visible under reduced motion).
 UX-DR13: Stats band shared component (5/3/2 columns by breakpoint, suffix colour per surface, count-up).
 UX-DR14: Process flow (4-D) shared component: six items, dashed track, step card anatomy, aligned "You receive" rows, stacked below 1080px.
-UX-DR15: Spotlight card base (glass, pointer glow, 4px lift) with hover live immediately after reveal; Product tile (bento spans, badge swap, go arrow, stretched link); Service card (`feature`, `navy` variants).
+UX-DR15: Spotlight card base (glass, pointer glow, 4px lift) with hover live immediately after reveal; Why XionTechs grid (four tiles, navy tile with live times, amber strip); four-app row (one link per app); Service card (`feature`, `navy` variants).
 UX-DR16: Front door panels (Products light gradient with four badges and chips; Services navy with service chips "+3 more").
 UX-DR17: Device frame (tablet 4:3, phone 1170:2532), Media frame (empty grid state), Browser frame (mist bar, mono URL pill, 16:10).
 UX-DR18: PXP story phone (260px, five stacked screens, pill tabs, 0.55s crossfade) and Product sub-nav (sticky glass pills, current navy, horizontal scroll).
@@ -252,8 +252,8 @@ Result: 47 of 47 FRs covered. NFR-1 (1.1, 7.3), NFR-2 (1.1, 1.6, 3.2, 4.4), NFR-
 
 | AC ID | Rule (short) | Stories |
 |---|---|---|
-| AC-NAV-1 | EN/VI switch at every width, never in the menu | 1.2, 1.4 |
-| AC-NAV-2 | Book a demo reachable at every width (header above 640px, first menu item at 640px and below) | 1.3, 1.4 |
+| AC-NAV-1 | Language dropdown in the header bar at every width, never in the menu | 1.2, 1.4 |
+| AC-NAV-2 | Book a demo reachable at every width without a header button (heroes, capture bands, footer Contact) | 1.3, 1.4, 1.5 |
 | AC-NAV-3 | Click never closes a hover-opened mega menu; Escape closes | 1.3 |
 | AC-NAV-4 | Mobile menu Escape; `aria-controls`, `aria-expanded` | 1.4 |
 | AC-NAV-5 | Anchors land with heading visible (`scroll-margin-top`) | 1.6, 4.1, 5.2, 5.4, 6.4 |
@@ -265,7 +265,7 @@ Result: 47 of 47 FRs covered. NFR-1 (1.1, 7.3), NFR-2 (1.1, 1.6, 3.2, 4.4), NFR-
 | AC-FORM-1 | Preferred date not in the past | 2.2 |
 | AC-FORM-2 | Project capture opens Outsourcing tab, scrolled to form | 2.4, 5.4 |
 | AC-FORM-3 | Uploads and pastes change only the selected item | 6.3 |
-| AC-UI-1 | Card hover starts without delay after reveal | 3.5 |
+| AC-UI-1 | Card hover starts without delay after reveal | 3.7 |
 | AC-UI-2 | "You receive" rows align across 4-D cards | 3.6, 5.4 |
 | AC-PERF-1 | Icons and third-party scripts never block rendering | 1.1, 7.4 |
 
@@ -275,13 +275,13 @@ Result: 16 of 16 AC IDs covered.
 
 | Prototype page | Section or anchor | Story |
 |---|---|---|
-| `js/site.js` header template, all pages | `#site-header`: logo, text-only nav, mega menus, EN/VI, `.head-cta` Book a demo, `#burger` | 1.2, 1.3, 1.4 |
+| `js/site.js` header template, all pages | `#site-header`: logo, text-only nav, Products mega menu, `.lang` dropdown, `#burger` | 1.2, 1.3, 1.4 |
 | `js/site.js` footer template, all pages | `#site-footer`: columns, offices, `.fbot` bottom bar | 1.5 |
-| `css/site.css` | `@theme`-equivalent variables, `@media` 1080/900/640, reduced motion, `.menu-cta` 640px rules | 1.1, 1.4 |
+| `css/site.css` | `@theme`-equivalent variables, `@media` 1080/900/640, reduced motion fades, type scale and tap-target tokens | 1.1, 1.4 |
 | `index.html` | hero `section.hero-silk`, `.motion-toggle`, `canvas.silk`, `.silk-fallback` | 3.1, 3.2 |
 | `index.html` | `.hero-stats` (`#stats-h`) | 3.3 |
 | `index.html` | `section.doors` | 3.4 |
-| `index.html` | bento (`#prod-h`), services (`#svc-h`) | 3.5 |
+| `index.html` | Why XionTechs (`#why-h`, `.why`), four-app row (`#prod-h`, `.app-strip`) | 3.5 |
 | `index.html` | 4-D process `ol.flow` (`#flow-h`) | 3.6 |
 | `index.html` | news (`#news-h`), capture (`#cap-h`, `#cap-email`, `data-mode="demo"`) | 3.7, 2.4 |
 | `products.html` | hero `section.hero-amber`, `nav.subnav` | 4.1 |
@@ -316,7 +316,7 @@ Lan and Quân can request a demo or start a project through one contact form or 
 **FRs covered:** FR-33, FR-34, FR-35 (removed), FR-36, FR-37, FR-38, FR-39, FR-40, FR-41, FR-42
 
 ### Epic 3: Home
-Visitors see what the products do in five seconds and pick a front door: dark silk hero, one CTA, stats, doors, bento, services, 4-D process, latest news and demo capture.
+Visitors see what the products do in five seconds and pick a front door: dark silk hero, one CTA, stats, doors, Why XionTechs, four-app row, 4-D process, latest news and demo capture.
 **FRs covered:** FR-10, FR-11, FR-12, FR-13, FR-14, FR-23 (component)
 
 ### Epic 4: Products
@@ -388,14 +388,14 @@ So that the site feels like one trustworthy company in either language.
 **When** rendered on light, navy and amber surfaces
 **Then** `button-primary` has navy text on amber, `button-navy` is used as the main action on amber, and no button puts white text on amber.
 
-### Story 1.2: Locale routing and EN/VI switch
+### Story 1.2: Locale routing and language dropdown
 
 As Hà, a parent on her phone,
 I want to switch the site to Vietnamese from the header on any page,
 So that I can read everything in my language without losing my place.
 
-- **Design reference:** `mockups/site-v3/js/site.js` header template (language switch next to `.head-cta`)
-- **Spec references:** EXP > Information Architecture (Locale routing), Component Patterns (Language switch), Bilingual (EN / VI), Voice and Tone; DES > Components (Language switch)
+- **Design reference:** `mockups/site-v3/js/site.js` header template (`.lang`, `#langBtn`, `#langList`)
+- **Spec references:** EXP > Information Architecture (Locale routing), Component Patterns (Language dropdown), Bilingual (EN / VI), Voice and Tone; DES > Components (Language dropdown)
 - **Requirements:** FR-4, FR-5; NFR-3; UX-DR8
 - **AC IDs:** AC-NAV-1
 - **Owner:** Andy (proposed)
@@ -425,7 +425,7 @@ So that I can read everything in my language without losing my place.
 
 **Given** any page at 320px, 640px, 900px, 1080px and wide desktop
 **When** it renders
-**Then** the EN/VI switch is visible in the header bar, is never inside the mobile menu, and is a group labelled "Language" with two toggle buttons using `aria-pressed` (AC-NAV-1).
+**Then** the language dropdown is the last item in the header bar, is never inside the mobile menu, and is a button styled like the nav links showing the current code (EN or VI) with a caret that flips up when open, opening a small list of "EN" and "VI" (named English and Tiếng Việt) in the same text style on the header glass; the chosen language is marked with `aria-current`; choosing closes the list and returns focus to the button; Escape or a click outside closes it (AC-NAV-1).
 
 **Given** a visitor mid-page with text typed in a form
 **When** they press VI
@@ -440,18 +440,18 @@ So that I can read everything in my language without losing my place.
 ### Story 1.3: Desktop header, mega menus and skip link
 
 As Quân, a CTO between meetings,
-I want a clear header whose Services menu opens predictably,
-So that I can reach any service or Book a demo in one move.
+I want a clear header whose Products menu opens predictably,
+So that I can reach any app or the Services page in one move.
 
-- **Design reference:** `mockups/site-v3/js/site.js` header template (`#site-header`, `.skip`, mega panels with "More products are on the way." and "See the process", `.head-cta`)
+- **Design reference:** `mockups/site-v3/js/site.js` header template (`#site-header`, `.skip`, the Products mega panel with "More products are on the way.")
 - **Spec references:** EXP > Information Architecture (Header navigation), Component Patterns (Site header, Mega menu, Skip link, Button), Interaction Primitives, Motion (Mega menu); DES > Components (Site header, Mega menu, Product badge, Skip link)
 - **Requirements:** FR-1, FR-3, FR-8; UX-DR6, UX-DR9, UX-DR24
 - **AC IDs:** AC-NAV-2, AC-NAV-3
 - **Owner:** Andy (proposed)
 - **Size:** L
 - **Demo day:** must-have
-- **Demo-day slice:** M. Header, click-toggled mega menus (Escape, click outside, one open at a time, tap on large touch screens), skip link and Book a demo; hover opening with the 150ms close delay and the reduced-motion fade follow after demo.
-- **Depends on:** 1.1 (the EN/VI switch slot is filled by Story 1.2 after demo)
+- **Demo-day slice:** M. Header, the click-toggled Products mega menu (Escape, click outside, one popup open at a time, tap on large touch screens), the Services link and the skip link; hover opening with the 150ms close delay and the reduced-motion fade follow after demo.
+- **Depends on:** 1.1 (the language dropdown slot is filled by Story 1.2 after demo)
 
 **Acceptance Criteria:**
 
@@ -476,18 +476,19 @@ So that I can reach any service or Book a demo in one move.
 **Then** it lists PXP (Parents), LXP (Students), SXP (Staff, Teachers, Leaders), IoT Device Management (School staff and facilities) with name, value and "for" line (text only: no badges, icons or arrows), then "More products are on the way." and "All products"
 **And** products come from one data list so a new product is one new row.
 
-**Given** the Services mega menu
-**When** it opens
-**Then** all 8 services link to their `/services#...` anchors and the footer row links "See the process" to `/services#process`.
+**Given** the Services item
+**When** a visitor follows it
+**Then** it is a plain link to `/services` with no mega menu, marked `aria-current="page"` on the Services page.
 
 **Given** a keyboard user on any page
 **When** they press Tab once
 **Then** "Skip to content" appears as an amber pill and activating it moves focus to `main`
 **And** every mega menu item is reachable by keyboard.
 
-**Given** a viewport wider than 640px
+**Given** a viewport wider than 1080px
 **When** the header renders
-**Then** the Book a demo button sits right next to the EN/VI switch and links to `/demo#form` (AC-NAV-2).
+**Then** it shows the logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item
+**And** there is no Book a demo button in the header (AC-NAV-2).
 
 **Given** reduced motion
 **When** a mega menu opens
@@ -497,16 +498,16 @@ So that I can reach any service or Book a demo in one move.
 
 As Hà, a parent on her phone,
 I want a menu I can open, expand Products in, and close with the keyboard or a tap,
-So that I can reach PXP and Book a demo on a small screen.
+So that I can reach PXP or any page on a small screen.
 
-- **Design reference:** `mockups/site-v3/js/site.js` header template (`#burger`, `#menu`, `.menu-cta`); `mockups/site-v3/css/site.css` rules at 1080px and 640px (`.head-cta`, `.menu-cta`)
+- **Design reference:** `mockups/site-v3/js/site.js` header template (`#burger`, `#menu`, `.lang`); `mockups/site-v3/css/site.css` rules at 1080px and 640px
 - **Spec references:** EXP > Component Patterns (Mobile menu), Responsive & Platform (Header at every width), Accessibility Floor; DES > Components (Mobile menu)
 - **Requirements:** FR-2, FR-3; NFR-6; UX-DR7, UX-DR26
 - **AC IDs:** AC-NAV-1, AC-NAV-2, AC-NAV-4, AC-A11Y-3
 - **Owner:** Andy (proposed)
 - **Size:** M
 - **Demo day:** must-have
-- **Demo-day slice:** S. Menu button, Escape, ARIA, scroll lock, focus trap and Book a demo first at 640px and below, with Products and Services as plain links to their pages; inline single-column mega content follows after demo.
+- **Demo-day slice:** S. Menu button, Escape, ARIA, scroll lock and the focus trap (logo, language dropdown, Menu button and the menu), with Products and Services as plain links to their pages; inline single-column mega content follows after demo.
 - **Depends on:** 1.3
 
 **Acceptance Criteria:**
@@ -519,7 +520,7 @@ So that I can reach PXP and Book a demo on a small screen.
 **When** the visitor presses Escape
 **Then** it closes and focus returns to the menu button (AC-NAV-4)
 **And** while open the background does not scroll
-**And** Tab and Shift+Tab cycle only through the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button), so the language switch stays reachable.
+**And** Tab and Shift+Tab cycle only through the open menu panel plus the header bar controls (logo link, language dropdown, Menu button), so the language dropdown stays reachable.
 
 **Given** the mobile menu is closed
 **When** a keyboard user tabs through the page
@@ -530,16 +531,16 @@ So that I can reach PXP and Book a demo on a small screen.
 **Then** the mega content expands inline as a single column and PXP links to `/products#pxp`.
 
 **Given** a viewport of 640px or below
-**When** the menu opens
-**Then** Book a demo is its first item in button style and is not shown in the header bar (AC-NAV-2).
+**When** the header renders
+**Then** the bar shows the logo, the language dropdown and the Menu button.
 
 **Given** a viewport between 641px and 1080px
 **When** the header renders
-**Then** Book a demo stays next to the EN/VI switch in the header and is not duplicated in the menu (AC-NAV-2).
+**Then** the bar shows the logo, the language dropdown and the Menu button, and there is no Book a demo button (AC-NAV-2).
 
 **Given** any width
 **When** the menu opens or closes
-**Then** the EN/VI switch stays in the header bar (AC-NAV-1).
+**Then** the language dropdown stays in the header bar (AC-NAV-1).
 
 ### Story 1.5: Site footer
 
@@ -550,7 +551,7 @@ So that I can call or navigate from wherever I am.
 - **Design reference:** `mockups/site-v3/js/site.js` footer template (`#site-footer`, `.fbot`)
 - **Spec references:** EXP > Information Architecture (Footer), Component Patterns (Site footer); DES > Components (Site footer)
 - **Requirements:** FR-7; UX-DR25
-- **AC IDs:** none
+- **AC IDs:** AC-NAV-2
 - **Owner:** Sammy (proposed)
 - **Size:** S
 - **Demo day:** must-have
@@ -575,6 +576,10 @@ So that I can call or navigate from wherever I am.
 **Given** 900px and 640px
 **When** the footer renders
 **Then** it uses 2 columns and 1 column respectively.
+
+**Given** any page, including Careers, Job, News story, Privacy and Not found
+**When** the footer renders
+**Then** "Contact" in the Company column links to `/demo` (`/demo#form` opens the Product demo tab), so Book a demo is reachable without a header button (AC-NAV-2).
 
 ### Story 1.6: Inner page hero, breadcrumbs and anchor landing
 
@@ -938,7 +943,7 @@ So that I know in seconds what XionTechs makes for schools.
 
 **Given** Home in either locale
 **When** it renders
-**Then** the hero is dark `hero-silk` filling `100dvh` minus the header, with the label "EdTech products · Software services", the H1 "Every school community, connected." (highlight on "connected") and the sub line from the prototype.
+**Then** the hero is dark `hero-silk` filling `100dvh` minus the header, with no label above it, the H1 "Every school community, connected." (highlight on "connected") and the sub line from the prototype.
 
 **Given** the hero
 **When** a tester counts buttons and button-styled links
@@ -1071,40 +1076,38 @@ So that I can go straight to services.
 **When** inspected
 **Then** the whole panel is one link (Products door to `/products`, Services door to `/services`) and its badges and chips are text with no interactive element inside the link (AC-A11Y-4).
 
-### Story 3.5: Four-app bento and eight service cards
+### Story 3.5: Why XionTechs and the four-app row
 
 As Lan, scanning what exists,
-I want one tile per app and one card per service that take me to the details,
-So that I can go deeper on the one I care about.
+I want to see why XionTechs, then one item per app that takes me to the details,
+So that I trust the team and can go deeper on the one I care about.
 
-- **Design reference:** `mockups/site-v3/index.html` bento (`#prod-h`, `.tile.t-pxp` stretched link) and services (`#svc-h`, `.svc-grid`)
-- **Spec references:** EXP > Component Patterns (Product tile, Service card, Spotlight card, Product badge); DES > Components (Product tile, Service card, Spotlight card, Product badge)
+- **Design reference:** `mockups/site-v3/index.html` Why XionTechs (`#why-h`, `.why`) and the four-app row (`#prod-h`, `.app-strip`)
+- **Spec references:** EXP > Component Patterns (Why XionTechs, Four-app row, Spotlight card, Product badge); DES > Components (Why XionTechs grid, Four-app row, Spotlight card, Product badge)
 - **Requirements:** FR-14; UX-DR15, UX-DR24
-- **AC IDs:** AC-A11Y-4, AC-UI-1
+- **AC IDs:** AC-A11Y-4
 - **Owner:** Sammy (proposed)
 - **Size:** M
 - **Demo day:** must-have
-- **Demo-day slice:** S. Bento layout and tiles and cards as links (AC-A11Y-4); the spotlight glow and lift (AC-UI-1) follow after demo.
+- **Demo-day slice:** S. Every AC.
 - **Depends on:** 1.1
 
 **Acceptance Criteria:**
 
-**Given** the bento "Four apps. One school day."
+**Given** "Why XionTechs." after the doors
 **When** it renders above 900px
-**Then** PXP spans 7 columns and 2 rows in amber, SXP spans 5 in navy, LXP spans 3 and IoT spans 2, with badges swapped for contrast on PXP and SXP and the app name next to every badge.
+**Then** the large tile "We build and run our own school platforms." spans 7 columns and 2 rows with a team photo slot, "Two offices, one working day." (navy, live local times for Plano and Ho Chi Minh City) and "Education is our core." span 5 columns each, and a full-width amber "Get IT Done" strip links to `/about#values`
+**And** below 900px the tiles stack in one column.
 
-**Given** each tile
-**When** inspected
-**Then** it is one link to `/products#pxp`, `#lxp`, `#sxp` or `#iot` using a stretched link, and the mini phone inside is not interactive (AC-A11Y-4).
-
-**Given** "Eight ways we get IT done for you."
+**Given** "Four apps for every role in school."
 **When** it renders
-**Then** 8 service cards link to their `/services` anchors in 4, 2 and 1 columns by breakpoint.
+**Then** PXP, LXP, SXP and IoT each show a badge, name, audience and one line, in 4, 2 and 1 columns by breakpoint
+**And** each item is one link to `/products#pxp`, `#lxp`, `#sxp` or `#iot` with nothing interactive inside (AC-A11Y-4), followed by "Explore our products".
 
-**Given** a hover-capable device after scroll reveal has finished
-**When** the pointer enters a tile or card
-**Then** the pointer glow and 4px lift start immediately with no delay (AC-UI-1)
-**And** no pointer effect runs on touch devices.
+**Given** Home
+**When** it renders
+**Then** there is no services grid; the Home services door and the header Services link lead to `/services`.
+
 
 ### Story 3.6: 4-D process flow component
 
@@ -1150,7 +1153,7 @@ So that I see the company is active and can act at once.
 - **Design reference:** `mockups/site-v3/index.html` news (`#news-h`, `.news-grid`, "See all news") and capture (`#cap-h`)
 - **Spec references:** EXP > Information Architecture (Home), Component Patterns (News card, Category tag), State Patterns (Home news); DES > Components (News card, Category tag), Layout & Spacing (Page colour rhythm)
 - **Requirements:** FR-14, FR-33 (placement); UX-DR3, UX-DR22
-- **AC IDs:** none
+- **AC IDs:** AC-UI-1
 - **Owner:** Sammy (proposed)
 - **Size:** M
 - **Demo day:** must-have
@@ -1179,6 +1182,11 @@ So that I see the company is active and can act at once.
 **Given** Home top to bottom
 **When** a tester checks surfaces
 **Then** after the dark hero every section is light (doors, products mist with linen, services paper, news mist) apart from the navy 4-D band and the one amber capture band.
+
+**Given** a hover-capable device after scroll reveal has finished
+**When** the pointer enters a news card (the shared spotlight card)
+**Then** the pointer glow and 4px lift start immediately with no delay (AC-UI-1)
+**And** no pointer effect runs on touch devices.
 
 ## Epic 4: Products
 
@@ -1456,7 +1464,7 @@ So that I move from reading to acting without searching.
 **Acceptance Criteria:**
 
 **Given** the Story 3.6 component placed on a navy band with `id="process"`
-**When** Quân follows "See our 4-D process" or "See the process" in the Services mega menu
+**When** Quân follows "See our 4-D process" from the Services hero
 **Then** the heading lands fully visible (AC-NAV-5) and the "You receive" rows align across the four cards (AC-UI-2).
 
 **Given** the amber project capture "Tell us what you're building."
@@ -1802,7 +1810,7 @@ So that I can use the whole site.
 
 **Given** each page
 **When** checked
-**Then** it has one H1, tab order follows reading order, touch targets are at least 24 x 24px, and images have EN and VI alt text or empty alt when decorative.
+**Then** it has one H1, tab order follows reading order, touch targets are at least 44 x 44px, functional text is at least 11.5px, and images have EN and VI alt text or empty alt when decorative.
 
 **Given** 320px width in VI
 **When** each page renders
