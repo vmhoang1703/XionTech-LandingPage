@@ -74,3 +74,5 @@ Acceptance: evidence — spec-1-1-brand-tokens-evidence/dev2x-btn-light.png — 
 Acceptance: evidence — spec-1-1-brand-tokens-evidence/dev2x-btn-navy.png — 32777 bytes — sha256 925b2a1083c9 — glass pill on navy, amber ring
 Acceptance: evidence — spec-1-1-brand-tokens-evidence/observed.md — 4861 bytes — sha256 5737b15b394e — observations incl. both dev-server captures
 Acceptance: self-check — all 13 files in the spec Artifacts list re-counted and re-hashed: all match. Self-checked, not independently audited (the two-audit budget was used; the human chose to fix the evidence and continue).
+Acceptance: evidence — spec-1-1-brand-tokens-evidence/verification.txt — 2649 bytes — sha256 ad6323950a5d — supersedes the 2652-byte row: same text, CRLF line endings normalized to LF by .gitattributes (eol=lf) on commit; the working copy now matches the committed bytes
+Acceptance: evidence — spec-1-1-brand-tokens-evidence/verification-2.txt — 2651 bytes — sha256 988f4fb36c00 — supersedes the 2654-byte row: same text, CRLF line endings normalized to LF by .gitattributes (eol=lf) on commit; the working copy now matches the committed bytes

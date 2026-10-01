@@ -128,7 +128,7 @@ Re-captured in step-04 after the review patches (commit aa3380a) on 2026-10-01. 
 
 **Artifacts**
 
-- [verification-2.txt](spec-1-1-brand-tokens-evidence/verification-2.txt) -- 2654 bytes -- sha256 6bfc33e08900 -- real output of the 3 Verification commands after the patches
+- [verification-2.txt](spec-1-1-brand-tokens-evidence/verification-2.txt) -- 2651 bytes -- sha256 988f4fb36c00 -- real output of the 3 Verification commands after the patches (LF line endings, as committed)
 - [browser-check-dev-2x.json](spec-1-1-brand-tokens-evidence/browser-check-dev-2x.json) -- 1327 bytes -- sha256 87de5bdb26c0 -- npm run dev at 2× density: URL, dev overlay, served :focus-visible rule, fonts, four focus rings, requests
 - [dev2x-plain-light.png](spec-1-1-brand-tokens-evidence/dev2x-plain-light.png) -- 5330 bytes -- sha256 28b373208f5d -- plain link on light, navy ring, 8px radius
 - [dev2x-plain-navy.png](spec-1-1-brand-tokens-evidence/dev2x-plain-navy.png) -- 16384 bytes -- sha256 9baae09538df -- plain link on navy, amber ring, 8px radius
