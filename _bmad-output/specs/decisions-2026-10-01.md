@@ -25,3 +25,15 @@ records the decision in its `.memlog.md` and its `SPEC.md`.
 | A3 | The privacy page's cookie section uses **temporary text marked `[Placeholder]`**, filled in later. | 2.1 |
 | A4 | Contact and capture submissions, job applications and CVs are **kept with no time limit**. The privacy policy must say so. Open (Amber): how a person asks for their data to be deleted. | 2.1, 2.3, 2.4, 6.6 |
 | A5 | The Demo-day Sanity editor is **Hoang Vu**. He needs a Sanity account invited to the project (free plan allows 20 users). | 1.8, 6.3, 3.7, 6.1, 6.5 |
+
+## Added 2026-10-01 (evening)
+
+Decided by Hoang Vu (Andy) before Story 1.3.
+
+| ID | Decision | Specs |
+| --- | --- | --- |
+| T9 | The focus ring is **2px** wide (DESIGN.md said 2.5px). Chrome draws a 2.5px outline as 2px, even at 2× pixel density (measured in Story 1.1), so 2px is what users saw anyway and now every browser shows the same ring. 2px still meets WCAG 2.2 AA (3:1 contrast) and the AAA 2px minimum. Offset 3px and radius 8px are unchanged. Andy changes `globals.css` in Story 1.3; Amber updates DESIGN.md (focus-ring width). | 1.1, 1.3, every story with focusable elements |
+| T10 | Story 1.3 is built **without CAP-7** (mounting the footer), because Story 1.5 is not merged yet. Andy mounts Sammy's footer in `src/app/layout.tsx` in a small follow-up PR as soon as 1.5 merges. | 1.3, 1.5 |
+| D1 | Form emails from **dev and preview go to Andy's own inbox**; production goes to vinni.tran@newxion.com. The address is a server-only environment variable set per Vercel environment, never in the repo. | 2.3, 2.2, 2.4, 6.6 |
+| D2 | **XionTech IT / Vinni controls DNS** for newxion.com. Andy asks them to add the mail service's SPF and DKIM records before Story 2.3 (Sun 05/10). | 2.3 |
+| D3 | For demo, project and capture requests **the inbox is the record**: the site stores no copy. If sending fails, the form shows a retryable error and keeps every value. (CVs still go to the private Blob store, T1.) | 2.3, 2.2, 2.4 |

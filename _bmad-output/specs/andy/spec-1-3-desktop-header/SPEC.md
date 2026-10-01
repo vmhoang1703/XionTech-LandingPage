@@ -45,6 +45,7 @@ Quân, a CTO between meetings, must reach any product, any service or Book a dem
 - **CAP-7**
   - **intent:** Every page shows the site footer.
   - **success:** The root layout renders the Story 1.5 footer (`src/components/layout/site-footer.tsx`) below the main content on every page (T3).
+  - **deferred (T10):** not built in this story's PR, because Story 1.5 is not merged yet; Andy mounts the footer in a follow-up PR once 1.5 merges.
 
 ## Constraints
 
@@ -65,7 +66,7 @@ Quân, a CTO between meetings, must reach any product, any service or Book a dem
 
 ## Success signal
 
-- On https://xiontech-dev.vercel.app at desktop width, a reviewer presses Tab once to see the skip link, opens Products by click, presses Escape and sees focus back on Products, opens Services and follows "See the process" to `/services#process`, and Book a demo opens `/demo#form`; the footer shows below the main content.
+- On https://xiontech-dev.vercel.app at desktop width, a reviewer presses Tab once to see the skip link, opens Products by click, presses Escape and sees focus back on Products, opens Services and follows "See the process" to `/services#process`, and Book a demo opens `/demo#form`; the footer shows below the main content (after the T10 follow-up PR).
 
 ## Assumptions
 
