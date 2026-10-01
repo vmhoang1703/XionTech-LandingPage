@@ -139,6 +139,7 @@ context:
 - 30 (patch re-review) `closeOnFocusOut` ignores a null `relatedTarget` — low, rejected: that happens only when focus leaves the page (browser chrome); closing a menu because the window lost focus is not wanted, and clicks are covered by the pointer handler
 - 31 (patch re-review) `hover:text-navy` was removed from nav items — false: the prototype `.menu>a:hover` changes only the background (mist), not the text colour
 - Re-audit of the re-captured evidence: compliant, all 9 artifacts match their recorded bytes and hashes.
+- Follow-up after done (2026-10-01, commit cdc7c8d): the UX quality loop (`docs/ux-quality.md`, branch `feature/ux-quality-loop`) measured the header against the prototype with `npm run ux:parity` and fixed background colour, gaps, nav item line-height, the mega value line and the skip-link text; the UX critic added the hand cursor on buttons and hover fades. Light review (edge-case layer, 35 lines): 12 findings — 8 false (`--ease-brand` and `--color-page` exist; reduced motion computes `transition-duration: 0s`; Chrome computes `cursor: pointer`; the prototype fades the same way; current-page style changes on navigation, not hover; the skip link now matches the prototype; 278px free at 1081px), 4 low rejected (roles and `aria-disabled` buttons the site does not use, focus-ring colour fade between two dark navies, a prototype value with no token).
 
 ## Acceptance Evidence
 
