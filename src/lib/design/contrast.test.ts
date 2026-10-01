@@ -54,6 +54,39 @@ describe("contrastRatio", () => {
     // Translucent navy composited over white is nearly white, so contrast is very low
     expect(ratioTranslucentBg).toBeLessThan(2);
   });
+
+  it("returns 1 for invalid hex colors", () => {
+    const ratio1 = contrastRatio("invalid", "#163663");
+    const ratio2 = contrastRatio("#163663", "invalid");
+    expect(ratio1).toBe(1);
+    expect(ratio2).toBe(1);
+  });
+
+  it("returns 1 for both colors invalid", () => {
+    const ratio = contrastRatio("notahex", "alsonot");
+    expect(ratio).toBe(1);
+  });
+
+  it("handles short hex colors", () => {
+    const ratio = contrastRatio("#FFF", "#163663");
+    expect(ratio).toBe(1);
+  });
+
+  it("handles fully transparent foreground", () => {
+    const transparent = "#FFFFFF00";
+    const navy = "#163663";
+    const ratio = contrastRatio(transparent, navy);
+    // Transparent white over navy should be same as navy on navy
+    expect(ratio).toBeCloseTo(1, 2);
+  });
+
+  it("handles both colors fully transparent", () => {
+    const transparent = "#FFFFFF00";
+    const alsoTransparent = "#16366300";
+    const ratio = contrastRatio(transparent, alsoTransparent);
+    // Both transparent composites to black, so contrast should be 1
+    expect(ratio).toBeCloseTo(1, 2);
+  });
 });
 
 describe("readThemeColors", () => {
