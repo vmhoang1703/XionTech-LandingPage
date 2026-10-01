@@ -370,11 +370,20 @@ Template:
   UX-Q4 and every "enhance" proposal, and records accepted ones in `DESIGN.md`.
 - **AI got it wrong?** Yes. The Story 1.3 spec summarized the prototype into tokens, so the
   implementer agents guessed missing values (`gap-8`, `text-ui`) and nothing compared the result
-  with the mockup; five review layers passed it. The first parity run also reported 101
-  differences, many of them notation noise (`0px none` vs `0px solid`, empty shadow layers,
-  999px vs 9999px), which the tool now normalizes. 3. The lead then spotted that the menus opened on click only, while `EXPERIENCE.md` and the
+  with the mockup; five review layers passed it. The first parity run reported 101 differences,
+  many of them notation noise (`0px none` vs `0px solid`, empty shadow layers, 999px vs 9999px);
+  after the tool normalized them, 62 real differences were left, and those became 0 unexplained
+  after the header fixes.
+
+  The lead then spotted that the menus opened on click only, while `EXPERIENCE.md` and the
   prototype open them on hover. The tool had compared only how things look, the Demo-day plan had
   cut hover, and the critic was told to file scope cuts under "Later". Fixed by interaction probes
   in `ux:parity` (they reported the four hover differences before the fix and none after), a
   critic rule that raises scope cuts which hurt the experience, and hover-open on PR #9
   (decision T11).
+
+  The code review of this work then found that a menu opened by click or keyboard closed when the
+  mouse passed over and left, dropping keyboard focus; the fix pins a menu the visitor chose. That
+  fix first broke hover-then-click in real Chrome (a mouse press focuses the button before the
+  click), which the jsdom tests could not see; the new `click-then-leave` and `hover-into-panel`
+  probes ran in Chrome and confirmed the final behaviour.

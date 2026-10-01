@@ -74,22 +74,53 @@ export function validateSurface(surface) {
       problems.push(`elements[${i}].name "${element.name}" is used twice`);
     names.add(element?.name);
   }
-  for (const [i, probe] of (surface?.probes ?? []).entries()) {
+  for (const key of ["states", "probes", "intended", "widths", "shotWidths"]) {
+    if (surface?.[key] !== undefined && !Array.isArray(surface[key]))
+      problems.push(`"${key}" must be a list`);
+  }
+  const list = (key) => (Array.isArray(surface?.[key]) ? surface[key] : []);
+  const probeNames = new Set();
+  for (const [i, probe] of list("probes").entries()) {
     if (typeof probe?.name !== "string" || probe.name === "")
       problems.push(`probes[${i}].name must be a non-empty string`);
-    for (const key of ["trigger", "observe"]) {
+    if (probeNames.has(probe?.name))
+      problems.push(`probes[${i}].name "${probe.name}" is used twice`);
+    probeNames.add(probe?.name);
+    for (const key of [
+      "trigger",
+      "observe",
+      ...(probe?.hover ? ["hover"] : []),
+    ]) {
       for (const side of ["proto", "dev"]) {
         if (typeof probe?.[key]?.[side] !== "string" || probe[key][side] === "")
           problems.push(`probes[${i}].${key}.${side} must be a CSS selector`);
       }
     }
   }
-  for (const [i, state] of (surface?.states ?? []).entries()) {
+  for (const [i, state] of list("states").entries()) {
     if (typeof state?.name !== "string" || state.name === "")
       problems.push(`states[${i}].name must be a non-empty string`);
     for (const side of ["proto", "dev"]) {
       if (!Array.isArray(state?.[side]))
         problems.push(`states[${i}].${side} must be a list of actions`);
+    }
+    for (const name of state?.elements ?? []) {
+      if (!names.has(name))
+        problems.push(`states[${i}].elements names unknown element "${name}"`);
+    }
+  }
+  for (const [i, entry] of list("intended").entries()) {
+    if (!names.has(entry?.element) && !probeNames.has(entry?.element))
+      problems.push(
+        `intended[${i}].element "${entry?.element}" is not an element or probe name`,
+      );
+    if (typeof entry?.note !== "string" || entry.note === "")
+      problems.push(`intended[${i}].note must give the reason or decision ID`);
+  }
+  for (const key of ["widths", "shotWidths"]) {
+    for (const width of list(key)) {
+      if (!Number.isInteger(width) || width <= 0)
+        problems.push(`"${key}" must hold positive whole numbers`);
     }
   }
   if (problems.length > 0)
@@ -206,22 +237,28 @@ export function compareBoxes(proto, dev, tolerance = BOX_TOLERANCE) {
   return diffs;
 }
 
-/** True when the surface's `intended` list explains this difference. */
-export function isIntended(surface, element, prop) {
-  return (surface.intended ?? []).some(
-    (entry) =>
-      entry.element === element &&
-      (entry.prop === undefined || entry.prop === prop),
-  );
-}
-
-/** The intended entry's note, for the report. */
-export function intendedNote(surface, element, prop) {
+/**
+ * The `intended` entry that explains this difference, or undefined. An entry may narrow itself
+ * to one state and/or width, so it cannot hide the same property drifting somewhere else.
+ */
+export function findIntended(surface, element, prop, where = {}) {
   return (surface.intended ?? []).find(
     (entry) =>
       entry.element === element &&
-      (entry.prop === undefined || entry.prop === prop),
-  )?.note;
+      (entry.prop === undefined || entry.prop === prop) &&
+      (entry.state === undefined || entry.state === where.state) &&
+      (entry.width === undefined || entry.width === where.width),
+  );
+}
+
+/** True when the surface's `intended` list explains this difference. */
+export function isIntended(surface, element, prop, where) {
+  return findIntended(surface, element, prop, where) !== undefined;
+}
+
+/** "intended: …" or, for a design question still open, "pending: …". */
+function intendedLabel(entry) {
+  return `${entry.pending ? "pending" : "intended"}: ${entry.note}`;
 }
 
 /** Copies a PNG onto a white canvas of the given size (top-left aligned). */
@@ -280,25 +317,36 @@ export function sideBySide(a, b, diff) {
 export const PROBE_EVENTS = [
   "hover",
   "hover-then-leave",
+  "hover-into-panel",
   "hover-then-click",
   "click",
+  "click-then-leave",
   "click-twice",
   "keyboard",
   "escape",
 ];
 
-/** Events whose outcome ("open" / "closed", plus focus after Escape) differs between the sides. */
+/** Default screenshot widths for ux:shots (a surface may set its own `shotWidths`). */
+export const SHOT_WIDTHS = [360, 390, 768, 1024, 1280, 1440, 1920];
+
+/**
+ * Events whose outcome ("open" / "closed", plus focus after Escape) differs between the sides,
+ * or could not be measured ("error: …" on either side, which never counts as the same).
+ */
 export function compareProbeOutcomes(proto, dev) {
-  return PROBE_EVENTS.filter((event) => proto[event] !== dev[event]).map(
-    (event) => ({ event, proto: proto[event], dev: dev[event] }),
-  );
+  return PROBE_EVENTS.filter(
+    (event) =>
+      proto[event] !== dev[event] ||
+      String(proto[event]).startsWith("error") ||
+      String(dev[event]).startsWith("error"),
+  ).map((event) => ({ event, proto: proto[event], dev: dev[event] }));
 }
 
 /** Behaviour section of the report: one row per probe, event and width. */
 function renderProbes(surface, probes) {
-  let unexplained = 0;
+  const counts = { unexplained: 0, pending: new Set() };
   const lines = [];
-  if (probes.length === 0) return { lines, unexplained };
+  if (probes.length === 0) return { lines, ...counts };
   lines.push(
     "## Behaviour (interaction probes)",
     "",
@@ -306,30 +354,40 @@ function renderProbes(surface, probes) {
     "| --- | --- | --- | --- | --- | --- |",
   );
   for (const p of probes) {
+    const differing = new Set(
+      compareProbeOutcomes(p.proto, p.dev).map((d) => d.event),
+    );
     for (const event of PROBE_EVENTS) {
-      const proto = p.proto[event];
-      const dev = p.dev[event];
       let mark = "same";
-      if (proto !== dev) {
-        const note = intendedNote(surface, p.name, event);
-        if (note) mark = `intended: ${note}`;
-        else {
-          unexplained += 1;
+      if (differing.has(event)) {
+        const entry = findIntended(surface, p.name, event, { width: p.width });
+        if (entry) {
+          mark = intendedLabel(entry);
+          if (entry.pending) counts.pending.add(entry);
+        } else {
+          counts.unexplained += 1;
           mark = "**differs**";
         }
       }
       lines.push(
-        `| ${p.name} | ${p.width} | ${event} | ${proto} | ${dev} | ${mark} |`,
+        `| ${p.name} | ${p.width} | ${event} | ${p.proto[event]} | ${p.dev[event]} | ${mark} |`,
       );
     }
   }
   lines.push("");
-  return { lines, unexplained };
+  return { lines, ...counts };
+}
+
+/** Mapped elements that were never found on either side in any state or width: a broken map. */
+export function neverFound(surface, results) {
+  const seen = new Set(results.flatMap((r) => r.elements.map((e) => e.name)));
+  return surface.elements.map((e) => e.name).filter((name) => !seen.has(name));
 }
 
 /** Markdown report for parity results: one section per state and width, then behaviour. */
 export function renderParityReport(surface, results, probes = []) {
   let unexplained = 0;
+  const pending = new Set();
   const lines = [
     `# UX parity: ${surface.name}`,
     "",
@@ -346,16 +404,21 @@ export function renderParityReport(surface, results, probes = []) {
     for (const e of r.elements) {
       const notes = [];
       if (e.missing) notes.push(`missing on ${e.missing}`);
+      const where = { state: r.state, width: r.width };
       for (const d of [...e.boxDiffs, ...e.styleDiffs]) {
-        const note = intendedNote(surface, e.name, d.prop);
-        if (note)
-          notes.push(`${d.prop}: ${d.proto} → ${d.dev} (intended: ${note})`);
-        else {
+        const entry = findIntended(surface, e.name, d.prop, where);
+        if (entry) {
+          notes.push(
+            `${d.prop}: ${d.proto} → ${d.dev} (${intendedLabel(entry)})`,
+          );
+          if (entry.pending) pending.add(entry);
+        } else {
           unexplained += 1;
           notes.push(`**${d.prop}: ${d.proto} → ${d.dev}**`);
         }
       }
-      if (e.missing && !isIntended(surface, e.name)) unexplained += 1;
+      if (e.missing && !isIntended(surface, e.name, "missing", where))
+        unexplained += 1;
       const pixels =
         e.percent === undefined ? "n/a" : `${e.percent}% ![](${e.image})`;
       lines.push(
@@ -367,11 +430,26 @@ export function renderParityReport(surface, results, probes = []) {
   const behaviour = renderProbes(surface, probes);
   lines.push(...behaviour.lines);
   unexplained += behaviour.unexplained;
+  for (const entry of behaviour.pending) pending.add(entry);
+  const missing = neverFound(surface, results);
+  if (missing.length > 0) {
+    unexplained += missing.length;
+    lines.push(
+      "## Never found",
+      "",
+      `**Not found on either side at any width or state — fix the selector:** ${missing.join(", ")}`,
+      "",
+    );
+  }
   lines.splice(
     3,
     0,
     `**Unexplained differences: ${unexplained}** (bold below). Each must be fixed, or listed in the surface file's \`intended\` with a reason or decision ID.`,
     "",
+    `**Pending design decisions: ${pending.size}** (rows marked "pending"). Built one way, waiting for Amber or the lead:`,
+    "",
+    ...[...pending].map((entry) => `- ${entry.element}: ${entry.note}`),
+    ...(pending.size > 0 ? [""] : []),
   );
-  return { markdown: lines.join("\n"), unexplained };
+  return { markdown: lines.join("\n"), unexplained, pending: pending.size };
 }

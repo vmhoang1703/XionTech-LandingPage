@@ -79,3 +79,10 @@ Change reviewed: `eslint-plugin-sonarjs` in lint, `sonar:gate:full`, and the unt
 - [medium] The planning docs still require the local Sonar gate before every PR: NFR-8 in `_bmad-output/planning-artifacts/epics.md`, `prd.md`, and the Definition of Done line in every `_bmad-output/specs/*/SPEC.md`. Amber Do owns these files; tell her about the daily-gate rule so story reviews do not flag "no Sonar gate" as a DoD failure.
 - [low] No test proves that `sonar:gate:full` really uses `main` as the reference branch (a caller's `SONAR_LOCAL_REFERENCE_BRANCH` must win over `sonar.env`). The case belongs in the `sonar-prepush-gate` template's `test_local_only_guards.sh` (no hand edits under `scripts/sonar/`).
 - [medium] After Demo day (2026-10-09), undo the temporary rules: every clone runs `git config core.hooksPath scripts/git-hooks`; remove the "until Demo day" text from `CLAUDE.md`, `AGENTS.md`, `README.md` and `.claude/skills/create-pr/SKILL.md`; delete `scripts/git-hooks-demo/` and decide whether `sonar:gate:full` stays. Keep `eslint-plugin-sonarjs` in lint (it is not temporary).
+
+## Deferred from: code review (2026-10-01), UX quality loop tooling
+
+Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-quality.md` (branch `feature/ux-quality-loop`).
+
+- [low] `scripts/ux/browser.mjs`, `parity.mjs` and `shots.mjs` have no automated test of their own (only `lib.mjs` does). A small local HTML fixture driven by Playwright would catch a flipped probe step; today the real check is running `ux:parity` against the prototype.
+- [low] No probe yet for the EN/VI switch (Story 1.2) or the mobile Menu button (Story 1.4); add them to `scripts/ux/surfaces/header.json` with those stories.

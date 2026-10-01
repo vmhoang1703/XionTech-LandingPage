@@ -35,23 +35,45 @@ export function devUrl(surface, base) {
   return new URL(surface.route, base).href;
 }
 
+/** How long an action may wait for its element before the run stops with a clear message. */
+const ACTION_TIMEOUT_MS = 5000;
+
+const firstLine = (error) => String(error?.message ?? error).split("\n")[0];
+
 /** Opens a page and waits until it is ready (and the optional ready selector exists). */
 export async function openPage(context, url, readySelector) {
   const page = await context.newPage();
-  await page.goto(url, { waitUntil: "networkidle" });
-  if (readySelector) await page.waitForSelector(readySelector);
+  try {
+    await page.goto(url, { waitUntil: "networkidle" });
+    if (readySelector)
+      await page.waitForSelector(readySelector, { timeout: ACTION_TIMEOUT_MS });
+  } catch (error) {
+    throw new Error(
+      `Cannot open ${url}${readySelector ? ` (waiting for "${readySelector}")` : ""}: ${firstLine(error)}. ` +
+        'For the app, start it first (npm run dev) or pass --dev <url>; for the prototype, check the surface file\'s "prototype".',
+    );
+  }
   return page;
 }
 
 /** Runs a state's actions: click, hover, focus, press (keyboard key) or wait (ms). */
-export async function runActions(page, actions) {
+export async function runActions(page, actions, label = "actions") {
   for (const action of actions) {
-    if (action.click) await page.locator(action.click).first().click();
-    else if (action.hover) await page.locator(action.hover).first().hover();
-    else if (action.focus) await page.locator(action.focus).first().focus();
-    else if (action.press) await page.keyboard.press(action.press);
-    else if (action.wait) await page.waitForTimeout(action.wait);
-    else throw new Error(`Unknown action: ${JSON.stringify(action)}`);
+    const timeout = { timeout: ACTION_TIMEOUT_MS };
+    try {
+      if (action.click) await page.locator(action.click).first().click(timeout);
+      else if (action.hover)
+        await page.locator(action.hover).first().hover(timeout);
+      else if (action.focus)
+        await page.locator(action.focus).first().focus(timeout);
+      else if (action.press) await page.keyboard.press(action.press);
+      else if ("wait" in action) await page.waitForTimeout(action.wait);
+      else throw new Error("unknown action");
+    } catch (error) {
+      throw new Error(
+        `${label}: ${JSON.stringify(action)} failed: ${firstLine(error)}`,
+      );
+    }
   }
 }
 
@@ -90,7 +112,7 @@ export async function readElement(page, selector) {
           height: Math.round(r.height),
         },
         styles,
-        hasText: el.innerText.trim().length > 0,
+        hasText: (el.innerText ?? el.textContent ?? "").trim().length > 0,
         children: el.children.length,
       };
     },
@@ -130,24 +152,44 @@ export async function isOpen(page, selector) {
  * also where focus went.
  */
 export async function runProbeEvent(page, probe, side, event) {
+  // A selector that matches nothing must not read as "closed" on both sides and pass as "same".
+  for (const key of ["trigger", "observe", ...(probe.hover ? ["hover"] : [])]) {
+    if ((await page.locator(probe[key][side]).count()) === 0)
+      return `error: ${key} not found`;
+  }
   const trigger = page.locator(probe.trigger[side]).first();
   const hoverTarget = page
     .locator((probe.hover ?? probe.trigger)[side])
     .first();
+  const panel = page.locator(probe.observe[side]).first();
   const { width, height } = page.viewportSize();
   const settle = () => page.waitForTimeout(400); // longer than the prototype's 0.3s fade
+  const leave = () => page.mouse.move(Math.round(width / 2), height - 10);
   if (event === "hover") {
     await hoverTarget.hover();
   } else if (event === "hover-then-leave") {
     await hoverTarget.hover();
     await settle();
-    await page.mouse.move(Math.round(width / 2), height - 10);
+    await leave();
+  } else if (event === "hover-into-panel") {
+    // The classic hover-menu test: travel from the trigger across the gap into the panel.
+    await trigger.hover();
+    await settle();
+    const box = await panel.boundingBox();
+    if (box)
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, {
+        steps: 12,
+      });
   } else if (event === "hover-then-click") {
     await hoverTarget.hover();
     await settle();
     await trigger.click();
   } else if (event === "click") {
     await trigger.click();
+  } else if (event === "click-then-leave") {
+    await trigger.click();
+    await settle();
+    await leave();
   } else if (event === "click-twice") {
     await trigger.click();
     await settle();

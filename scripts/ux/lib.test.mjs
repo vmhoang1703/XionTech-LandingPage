@@ -1,4 +1,5 @@
 // @vitest-environment node
+import { readFileSync } from "node:fs";
 import { PNG } from "pngjs";
 import { describe, expect, it } from "vitest";
 import {
@@ -7,8 +8,9 @@ import {
   PROBE_EVENTS,
   compareStyles,
   diffImages,
-  intendedNote,
+  findIntended,
   isIntended,
+  neverFound,
   normalizeColor,
   normalizeStyle,
   padImage,
@@ -217,7 +219,97 @@ describe("intended differences", () => {
     expect(isIntended(withIntended, "logo", "y")).toBe(false);
     expect(isIntended(withIntended, "nav", "anything")).toBe(true);
     expect(isIntended(surface, "logo", "x")).toBe(false);
-    expect(intendedNote(withIntended, "nav", "y")).toBe("Story 1.4");
+    expect(findIntended(withIntended, "nav", "y")?.note).toBe("Story 1.4");
+  });
+
+  it("can narrow an entry to one state and width", () => {
+    const narrow = {
+      ...surface,
+      intended: [
+        { element: "logo", prop: "x", state: "open", width: 1280, note: "n" },
+      ],
+    };
+    expect(
+      isIntended(narrow, "logo", "x", { state: "open", width: 1280 }),
+    ).toBe(true);
+    expect(isIntended(narrow, "logo", "x", { state: "open", width: 600 })).toBe(
+      false,
+    );
+    expect(
+      isIntended(narrow, "logo", "x", { state: "default", width: 1280 }),
+    ).toBe(false);
+  });
+});
+
+describe("validateSurface cross-references", () => {
+  const base = {
+    ...surface,
+    states: [{ name: "open", proto: [], dev: [], elements: ["logo"] }],
+    probes: [
+      {
+        name: "menu",
+        trigger: { proto: "a", dev: "b" },
+        observe: { proto: "c", dev: "d" },
+      },
+    ],
+    intended: [{ element: "menu", prop: "hover", note: "T11" }],
+    widths: [1280],
+  };
+
+  it("accepts names that exist", () => {
+    expect(validateSurface(base)).toBe(base);
+  });
+
+  it("catches typos and missing notes that would otherwise pass silently", () => {
+    const bad = {
+      ...base,
+      states: [{ name: "open", proto: [], dev: [], elements: ["logoo"] }],
+      probes: [...base.probes, { ...base.probes[0], hover: { proto: "x" } }],
+      intended: [{ element: "nope", prop: "x" }],
+      widths: [0],
+      shotWidths: "1280",
+    };
+    let message = "";
+    try {
+      validateSurface(bad);
+    } catch (error) {
+      message = error.message;
+    }
+    expect(message).toContain(
+      'states[0].elements names unknown element "logoo"',
+    );
+    expect(message).toContain('probes[1].name "menu" is used twice');
+    expect(message).toContain("probes[1].hover.dev must be a CSS selector");
+    expect(message).toContain(
+      'intended[0].element "nope" is not an element or probe name',
+    );
+    expect(message).toContain(
+      "intended[0].note must give the reason or decision ID",
+    );
+    expect(message).toContain('"widths" must hold positive whole numbers');
+    expect(message).toContain('"shotWidths" must be a list');
+  });
+
+  it("accepts the committed header surface file", () => {
+    const file = JSON.parse(
+      readFileSync(new URL("./surfaces/header.json", import.meta.url), "utf8"),
+    );
+    expect(validateSurface(file).name).toBe("header");
+  });
+});
+
+describe("neverFound", () => {
+  it("lists mapped elements that no state or width ever found", () => {
+    const s = {
+      ...surface,
+      elements: [
+        ...surface.elements,
+        { name: "ghost", proto: ".x", dev: ".y" },
+      ],
+    };
+    expect(neverFound(s, [{ elements: [{ name: "logo" }] }])).toEqual([
+      "ghost",
+    ]);
   });
 });
 
@@ -329,7 +421,14 @@ describe("interaction probes", () => {
         dev: { ...same, click: "open" },
       },
     ];
-    const plain = renderParityReport(surface, [], probes);
+    const found = [
+      {
+        state: "default",
+        width: 1280,
+        elements: [{ name: "logo", boxDiffs: [], styleDiffs: [] }],
+      },
+    ];
+    const plain = renderParityReport(surface, found, probes);
     expect(plain.unexplained).toBe(1);
     expect(plain.markdown).toContain("## Behaviour (interaction probes)");
     expect(plain.markdown).toContain(
@@ -341,12 +440,33 @@ describe("interaction probes", () => {
     const noted = renderParityReport(
       {
         ...surface,
-        intended: [{ element: "menu", prop: "hover", note: "T11" }],
+        intended: [
+          { element: "menu", prop: "hover", note: "T11", pending: true },
+        ],
       },
-      [],
+      found,
       probes,
     );
     expect(noted.unexplained).toBe(0);
-    expect(noted.markdown).toContain("intended: T11");
+    expect(noted.pending).toBe(1);
+    expect(noted.markdown).toContain("pending: T11");
+    expect(noted.markdown).toContain("**Pending design decisions: 1**");
+  });
+
+  it("never treats a probe it could not measure as the same", () => {
+    const broken = { ...same, hover: "error: observe not found" };
+    expect(compareProbeOutcomes(broken, broken)).toEqual([
+      {
+        event: "hover",
+        proto: "error: observe not found",
+        dev: "error: observe not found",
+      },
+    ]);
+  });
+
+  it("counts mapped elements that were never found", () => {
+    const { markdown, unexplained } = renderParityReport(surface, [], []);
+    expect(unexplained).toBe(1);
+    expect(markdown).toContain("fix the selector:** logo");
   });
 });

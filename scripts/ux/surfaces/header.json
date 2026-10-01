@@ -272,52 +272,62 @@
     {
       "element": "book-demo",
       "prop": "x",
-      "note": "DESIGN.md: tools sit on the right; below 1080px the prototype puts them after the logo (UX-Q4, Amber to confirm)"
+      "note": "DESIGN.md: tools sit on the right; below 1080px the prototype puts them after the logo (UX-Q4, Amber to confirm)",
+      "pending": true
     },
     {
       "element": "header",
       "prop": "borderBottom",
-      "note": "DESIGN.md border token is 12% navy, prototype 10% (UX-Q3, Amber to confirm)"
+      "note": "DESIGN.md border token is 12% navy, prototype 10% (UX-Q3, Amber to confirm)",
+      "pending": true
     },
     {
       "element": "mega-name",
       "prop": "fontSize",
-      "note": "DESIGN.md title-sm is 1rem, prototype 0.92rem, DESIGN also says 1.08rem (UX-Q1, Amber decides)"
+      "note": "DESIGN.md title-sm is 1rem, prototype 0.92rem, DESIGN also says 1.08rem (UX-Q1, Amber decides)",
+      "pending": true
     },
     {
       "element": "mega-name",
       "prop": "lineHeight",
-      "note": "follows title-sm (UX-Q1)"
+      "note": "follows title-sm (UX-Q1)",
+      "pending": true
     },
     {
       "element": "mega-name",
       "prop": "height",
-      "note": "follows title-sm (UX-Q1)"
+      "note": "follows title-sm (UX-Q1)",
+      "pending": true
     },
     {
       "element": "mega-value",
       "prop": "y",
-      "note": "moves with the mega-name height (UX-Q1)"
+      "note": "moves with the mega-name height (UX-Q1)",
+      "pending": true
     },
     {
       "element": "mega-for",
       "prop": "fontWeight",
-      "note": "DESIGN.md label-sm is 500 / 0.14em, prototype 400 / 0.12em (UX-Q2, Amber decides)"
+      "note": "DESIGN.md label-sm is 500 / 0.14em, prototype 400 / 0.12em (UX-Q2, Amber decides)",
+      "pending": true
     },
     {
       "element": "mega-for",
       "prop": "letterSpacing",
-      "note": "follows label-sm (UX-Q2)"
+      "note": "follows label-sm (UX-Q2)",
+      "pending": true
     },
     {
       "element": "mega-for",
       "prop": "lineHeight",
-      "note": "follows label-sm (UX-Q2)"
+      "note": "follows label-sm (UX-Q2)",
+      "pending": true
     },
     {
       "element": "mega-for",
       "prop": "y",
-      "note": "moves with the mega-name and mega-value heights (UX-Q1)"
+      "note": "moves with the mega-name and mega-value heights (UX-Q1)",
+      "pending": true
     },
     {
       "element": "mega-footer",
@@ -332,22 +342,38 @@
     {
       "element": "mega-products",
       "prop": "height",
-      "note": "follows the mega-name and mega-for sizes (UX-Q1, UX-Q2)"
+      "note": "follows the mega-name and mega-for sizes (UX-Q1, UX-Q2)",
+      "pending": true
     },
     {
       "element": "mega-item",
       "prop": "height",
-      "note": "follows the mega-name and mega-for sizes (UX-Q1, UX-Q2)"
+      "note": "follows the mega-name and mega-for sizes (UX-Q1, UX-Q2)",
+      "pending": true
     },
     {
       "element": "mega-footer",
       "prop": "y",
-      "note": "moves with the row heights (UX-Q1, UX-Q2)"
+      "note": "moves with the row heights (UX-Q1, UX-Q2)",
+      "pending": true
     },
     {
       "element": "mega-item",
       "prop": "backgroundColor",
-      "note": "enhance: a keyboard-focused row shows the hover fill (the prototype shows only the ring); Amber to approve with critic P3"
+      "note": "enhance: a keyboard-focused row shows the hover fill (the prototype shows only the ring); Amber to approve with critic P3",
+      "pending": true
+    },
+    {
+      "element": "products-menu",
+      "prop": "click-then-leave",
+      "pending": true,
+      "note": "enhance: a menu the visitor chose (click, keyboard, focus inside) stays open when the mouse leaves; the prototype closes it, which can drop keyboard focus into a hidden panel. Lead/Amber to confirm"
+    },
+    {
+      "element": "services-menu",
+      "prop": "click-then-leave",
+      "pending": true,
+      "note": "enhance: a menu the visitor chose (click, keyboard, focus inside) stays open when the mouse leaves; the prototype closes it, which can drop keyboard focus into a hidden panel. Lead/Amber to confirm"
     }
   ],
   "shotWidths": [360, 390, 768, 1024, 1081, 1280, 1440, 1920],

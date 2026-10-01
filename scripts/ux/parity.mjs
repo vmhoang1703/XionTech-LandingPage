@@ -58,8 +58,8 @@ try {
         devUrl(surface, options.dev),
         surface.ready?.dev,
       );
-      await runActions(proto, state.proto);
-      await runActions(dev, state.dev);
+      await runActions(proto, state.proto, `${state.name} (prototype)`);
+      await runActions(dev, state.dev, `${state.name} (dev)`);
       const elements = [];
       for (const element of surface.elements.filter(
         (e) => !state.elements || state.elements.includes(e.name),
@@ -120,13 +120,17 @@ try {
   await browser.close();
 }
 
-const { markdown, unexplained } = renderParityReport(surface, results, probes);
+const { markdown, unexplained, pending } = renderParityReport(
+  surface,
+  results,
+  probes,
+);
 await writeFile(join(out, "report.md"), markdown);
 await writeFile(
   join(out, "results.json"),
   JSON.stringify({ results, probes }, null, 2),
 );
 console.log(
-  `UX parity ${surface.name}: ${unexplained} unexplained difference(s). Report: ${join(out, "report.md")}`,
+  `UX parity ${surface.name}: ${unexplained} unexplained difference(s), ${pending} pending design decision(s). Report: ${join(out, "report.md")}`,
 );
 if (options.strict && unexplained > 0) process.exitCode = 1;

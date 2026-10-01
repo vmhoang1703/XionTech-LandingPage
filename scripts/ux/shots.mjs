@@ -1,13 +1,21 @@
 // UX shots (input for the critic pass): the running app at many widths and states,
-// plus an axe accessibility scan, reduced motion, JavaScript off and layout-shift numbers.
-//   npm run ux:shots -- scripts/ux/surfaces/header.json [--dev http://localhost:3000] [--out dir]
+// plus an axe accessibility scan of every state, reduced motion, JavaScript off and layout shift.
+//   npm run ux:shots -- scripts/ux/surfaces/header.json [--dev http://localhost:3000] [--out dir] [--strict]
+// --strict exits 1 on any axe violation or a layout shift above LAYOUT_SHIFT_BUDGET.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import AxeBuilder from "@axe-core/playwright";
 import { devUrl, launchBrowser, openPage, runActions } from "./browser.mjs";
-import { parseArgs, stateApplies, validateSurface } from "./lib.mjs";
+import {
+  parseArgs,
+  SHOT_WIDTHS,
+  stateApplies,
+  validateSurface,
+} from "./lib.mjs";
 
-export const SHOT_WIDTHS = [360, 390, 768, 1024, 1280, 1440, 1920];
+/** docs/ux-quality.md "Measure": cumulative layout shift must stay under this. */
+const LAYOUT_SHIFT_BUDGET = 0.05;
+const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"];
 
 const options = parseArgs(process.argv.slice(2));
 const surface = validateSurface(
@@ -33,17 +41,36 @@ const summary = {
   axe: [],
   layoutShift: null,
 };
+
+async function scanAxe(page, label) {
+  const scan = await new AxeBuilder({ page })
+    .include(surface.axeScope ?? "body")
+    .withTags(AXE_TAGS)
+    .analyze();
+  summary.axe.push({
+    label,
+    violations: scan.violations.map((v) => ({
+      id: v.id,
+      impact: v.impact,
+      help: v.help,
+      nodes: v.nodes.length,
+    })),
+  });
+}
+
 try {
   for (const state of states) {
     index.push(`## ${state.name}`, "");
-    for (const width of (surface.shotWidths ?? SHOT_WIDTHS).filter((w) =>
+    const widths = (surface.shotWidths ?? SHOT_WIDTHS).filter((w) =>
       stateApplies(state, w),
-    )) {
+    );
+    for (const width of widths) {
       const context = await browser.newContext({
         viewport: { width, height: 900 },
       });
       const page = await openPage(context, url, surface.ready?.dev);
-      await runActions(page, state.dev);
+      await runActions(page, state.dev, `${state.name} at ${width}px`);
+      await page.waitForTimeout(400); // let hover and colour transitions finish
       const file = `${state.name}-${width}.png`;
       await page.screenshot({
         path: join(out, file),
@@ -51,44 +78,40 @@ try {
       });
       index.push(`- ${width}px: ![](${file})`);
       summary.shots.push(file);
+      // Every state is scanned once (open menus are where contrast and ARIA problems hide);
+      // the default state also at a phone width.
+      if (width === Math.max(...widths)) await scanAxe(page, `${state.name}`);
       await context.close();
     }
     index.push("");
   }
 
-  for (const width of [1280, 390]) {
-    const context = await browser.newContext({
-      viewport: { width, height: 900 },
-    });
-    const page = await openPage(context, url, surface.ready?.dev);
-    const scan = await new AxeBuilder({ page })
-      .include(surface.axeScope ?? "body")
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
-      .analyze();
-    summary.axe.push({
-      width,
-      violations: scan.violations.map((v) => ({
-        id: v.id,
-        impact: v.impact,
-        help: v.help,
-        nodes: v.nodes.length,
-      })),
-    });
-    if (width === 1280) {
-      summary.layoutShift = await page.evaluate(
-        () =>
-          new Promise((done) => {
-            let total = 0;
-            new PerformanceObserver((list) => {
-              for (const entry of list.getEntries())
-                if (!entry.hadRecentInput) total += entry.value;
-            }).observe({ type: "layout-shift", buffered: true });
-            setTimeout(() => done(Math.round(total * 1000) / 1000), 1000);
-          }),
-      );
-    }
-    await context.close();
-  }
+  const phone = await browser.newContext({
+    viewport: { width: 390, height: 900 },
+  });
+  await scanAxe(
+    await openPage(phone, url, surface.ready?.dev),
+    "default at 390px",
+  );
+  await phone.close();
+
+  const load = await browser.newContext({
+    viewport: { width: 1280, height: 900 },
+  });
+  summary.layoutShift = await (
+    await openPage(load, url, surface.ready?.dev)
+  ).evaluate(
+    () =>
+      new Promise((done) => {
+        let total = 0;
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries())
+            if (!entry.hadRecentInput) total += entry.value;
+        }).observe({ type: "layout-shift", buffered: true });
+        setTimeout(() => done(Math.round(total * 1000) / 1000), 1000);
+      }),
+  );
+  await load.close();
 
   const reduced = await browser.newContext({
     viewport: { width: 1280, height: 900 },
@@ -116,29 +139,29 @@ try {
   await browser.close();
 }
 
+const violations = summary.axe.reduce((n, s) => n + s.violations.length, 0);
+const shiftOverBudget = summary.layoutShift > LAYOUT_SHIFT_BUDGET;
 index.push(
   "## Reduced motion and JavaScript off",
   "",
   "- ![](reduced-motion-1280.png)",
   "- ![](no-js-1280.png)",
   "",
-);
-index.push("## Accessibility (axe, WCAG 2.2 AA tags)", "");
-for (const scan of summary.axe) {
-  index.push(
-    `- ${scan.width}px: ${scan.violations.length === 0 ? "no violations" : scan.violations.map((v) => `${v.id} (${v.impact}, ${v.nodes} node(s)): ${v.help}`).join("; ")}`,
-  );
-}
-index.push(
+  "## Accessibility (axe, WCAG 2.2 AA tags)",
   "",
-  `## Layout shift`,
+  ...summary.axe.map(
+    (scan) =>
+      `- ${scan.label}: ${scan.violations.length === 0 ? "no violations" : scan.violations.map((v) => `**${v.id}** (${v.impact}, ${v.nodes} node(s)): ${v.help}`).join("; ")}`,
+  ),
   "",
-  `- Cumulative layout shift after load at 1280px: ${summary.layoutShift} (dev server; measure budgets on \`next start\`).`,
+  "## Layout shift",
+  "",
+  `- Cumulative layout shift after load at 1280px: ${summary.layoutShift} (budget ${LAYOUT_SHIFT_BUDGET}${shiftOverBudget ? ", **over budget**" : ""}; dev server — measure page budgets on \`next start\`).`,
   "",
 );
 await writeFile(join(out, "shots.md"), index.join("\n"));
 await writeFile(join(out, "summary.json"), JSON.stringify(summary, null, 2));
-const violations = summary.axe.reduce((n, s) => n + s.violations.length, 0);
 console.log(
   `UX shots ${surface.name}: ${summary.shots.length} screenshots, ${violations} axe violation(s), CLS ${summary.layoutShift}. Index: ${join(out, "shots.md")}`,
 );
+if (options.strict && (violations > 0 || shiftOverBudget)) process.exitCode = 1;

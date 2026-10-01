@@ -10,7 +10,7 @@ Matching Amber's mockup is the **floor**. The goal is the best experience the sp
    error, empty, loading), widths, motion and reduced motion, accessibility, speed budget. Where
    the prototype and `DESIGN.md` disagree, ask Amber now; agents never pick silently.
 2. **Floor — match the mockup, in looks and in behaviour.** Build to the prototype, then run
-   `npm run ux:parity` for the surface. It compares how parts look (states) and how they behave
+   `npm run ux:parity -- <surface> --strict` for the surface. It compares how parts look (states) and how they behave
    (interaction probes: hover, moving away, click, keyboard, Escape). Every interactive part named
    in `EXPERIENCE.md` (Component Patterns, Interaction, acceptance criteria) needs a probe in the
    surface file. Every difference is either fixed or listed in the surface file's `intended` with
@@ -19,7 +19,8 @@ Matching Amber's mockup is the **floor**. The goal is the best experience the sp
    `ux-critic` skill as a separate subagent. It scores the scorecard below from real screenshots and
    ranks proposals. The developer applies the **fix** items; Amber chooses which **enhance** items
    to build.
-4. **Measure.** No axe violations (`ux:shots`), cumulative layout shift under 0.05; for whole pages,
+4. **Measure.** `npm run ux:shots -- <surface> --strict` fails on any axe violation (every
+   state is scanned) or a cumulative layout shift above 0.05; for whole pages,
    Lighthouse on `next start` (Chrome DevTools MCP `lighthouse_audit` or `npx lighthouse`):
    performance ≥ 90, accessibility 100, LCP under 2.5 s on mobile.
 5. **Feed back.** Amber records every accepted enhancement in `DESIGN.md` / `EXPERIENCE.md`, so
@@ -61,11 +62,17 @@ demo; floor and measure for every other page.
   `elements` to compare in that state, and an optional `minWidth` for desktop-only states.
 - `probes` — `{ name, trigger, hover?, observe, minWidth? }` with `proto` / `dev` selectors: the
   part a visitor acts on, the area that reacts to the pointer (default: the trigger) and what
-  should open. Each probe runs hover, hover-then-leave, hover-then-click, click, click-twice,
-  keyboard (Enter) and Escape on a fresh page on both sides and compares open / closed and focus.
+  should open. Each probe runs hover, hover-then-leave, hover-into-panel (the pointer travels across the gap
+  into the panel), hover-then-click, click, click-then-leave, click-twice, keyboard (Enter) and
+  Escape on a fresh page on both sides and compares open / closed and focus. A selector that
+  matches nothing reports an error instead of passing.
 - `intended` — `{ element, prop, note }` for differences that stay, with the reason or decision
-  ID (for a probe: `{ element: <probe name>, prop: <event> }`). Pending design questions are listed
-  here too, marked with their question ID.
+  ID (for a probe: `{ element: <probe name>, prop: <event> }`). Optional `state` and `width`
+  narrow an entry so it cannot hide the same property drifting elsewhere. Add `pending: true`
+  for a design question that is built one way but still open: the report counts and lists those
+  separately, so "0 unexplained" never hides an open decision.
+- `widths` (parity) and `shotWidths` (shots) — optional; shots default to 360, 390, 768, 1024,
+  1280, 1440 and 1920 px. Mapped elements never found at any width or state are reported.
 
 **Why probes exist:** the first header run compared only looks. The menus opened on click only,
 while `EXPERIENCE.md` and the prototype open them on hover; the Demo-day plan had cut hover, and
