@@ -298,6 +298,72 @@ describe("globals.css @theme tokens", () => {
   });
 });
 
+/** Declarations of every flat rule whose selector list includes `selector`. */
+function readRuleDeclarations(
+  css: string,
+  selector: string,
+): Map<string, string> {
+  const declarations = new Map<string, string>();
+  const source = css.replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const [, selectors, body] of source.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!selectors.split(",").some((s) => s.trim() === selector)) continue;
+    for (const declaration of body.split(";")) {
+      const match = /^\s*([\w-]+)\s*:\s*([\s\S]+?)\s*$/.exec(declaration);
+      if (match) declarations.set(match[1], match[2].replace(/\s+/g, " "));
+    }
+  }
+  return declarations;
+}
+
+/** Variables a surface scopes for its children, plus the `color` it resets. */
+function scopedNames(surface: string): string[] {
+  return [...readRuleDeclarations(GLOBALS_CSS, surface).keys()]
+    .filter((name) => name.startsWith("--") || name === "color")
+    .sort();
+}
+
+const LIGHT_SURFACES = [".surface-paper", ".surface-mist", ".hero-light"];
+const OTHER_SURFACES = [
+  ".surface-navy",
+  ".surface-amber",
+  ".hero-silk",
+  ".hero-navy",
+  ".hero-amber",
+];
+
+// A light surface nested in a navy one (the paper contact form card in a navy
+// hero) must get back its own row of the DESIGN.md surface table.
+describe("light surfaces restore the light token set", () => {
+  const theme = readThemeVars(GLOBALS_CSS);
+  const root = readRuleDeclarations(GLOBALS_CSS, ":root");
+  const light: Record<string, string> = {
+    "--foreground": "var(--color-text)",
+    "--muted-foreground": "var(--color-muted)",
+    "--border": "var(--color-border)",
+    "--ring": "var(--color-focus)",
+    "--glass": root.get("--glass") ?? "missing on :root",
+    "--label-color": "var(--color-muted)",
+    "--label-rule": "var(--color-amber)",
+    color: "var(--color-text)",
+  };
+  for (const name of ["heading", "text", "muted", "border", "link", "focus"]) {
+    const token = `--color-${name}`;
+    light[token] = theme.get(token) ?? "missing from @theme";
+  }
+
+  it.each(LIGHT_SURFACES)("%s sets the light values", (surface) => {
+    const rule = readRuleDeclarations(GLOBALS_CSS, surface);
+    const actual = Object.fromEntries(
+      Object.keys(light).map((name) => [name, rule.get(name)]),
+    );
+    expect(actual).toEqual(light);
+  });
+
+  it.each(OTHER_SURFACES)("%s scopes the same variables", (surface) => {
+    expect(scopedNames(surface)).toEqual(scopedNames(".surface-paper"));
+  });
+});
+
 const TEXT = 4.5;
 const NON_TEXT = 3;
 
