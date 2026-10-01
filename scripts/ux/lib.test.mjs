@@ -12,9 +12,11 @@ import {
   findIntended,
   firstLine,
   neverFound,
+  neverUsed,
   normalizeColor,
   normalizeStyle,
   padImage,
+  parityImageName,
   parseArgs,
   relevantProps,
   renderParityReport,
@@ -416,6 +418,26 @@ describe("validateSurface cross-references", () => {
         intended: [{ element: "logo", prop: "x", width: 1081, note: "n" }],
       }),
     ).toThrow("is not a parity width (1280, 1000, 600)");
+    expect(() =>
+      validateSurface({
+        ...base,
+        intended: [{ element: "menu", prop: "hover", width: 999, note: "n" }],
+      }),
+    ).toThrow("intended[0].width 999 is not a parity width (1280)");
+  });
+
+  it("keeps parity image names apart because a name never holds a dot", () => {
+    expect(parityImageName("mega", "products-open", 1280)).not.toBe(
+      parityImageName("mega-products", "open", 1280),
+    );
+    expect(() =>
+      validateSurface({
+        ...base,
+        elements: [{ name: "mega.item", proto: "x", dev: "y" }],
+        states: [],
+        intended: [],
+      }),
+    ).toThrow('elements[0].name "mega.item" may only use a-z, 0-9');
   });
 
   it("accepts the committed header surface file", () => {
@@ -665,6 +687,58 @@ describe("interaction probes", () => {
     expect(report.markdown).toContain(
       "| menu | 1280 | hover | open | error: Timeout 5000ms | **differs** |",
     );
+    expect(report.markdown).not.toContain("matched nothing");
+  });
+
+  it("lists states, probes and intended entries that did nothing in this run", () => {
+    const s = {
+      ...surface,
+      states: [{ name: "open", proto: [], dev: [], minWidth: 9999 }],
+      probes: [
+        {
+          name: "menu",
+          trigger: { proto: "a", dev: "b" },
+          observe: { proto: "c", dev: "d" },
+          minWidth: 9999,
+        },
+      ],
+      intended: [
+        { element: "logo", prop: "x", note: "T9" },
+        { element: "logo", prop: "colour", note: "typo", pending: true },
+        { element: "logo", prop: "x", width: 600, note: "shadowed" },
+        { element: "logo", state: "open", note: "never ran" },
+      ],
+    };
+    const results = [
+      {
+        state: "default",
+        width: 1280,
+        elements: [
+          {
+            name: "logo",
+            boxDiffs: [{ prop: "x", proto: 1, dev: 2 }],
+            styleDiffs: [],
+          },
+        ],
+      },
+    ];
+    const { markdown, unexplained, pending } = renderParityReport(s, results);
+    expect(unexplained).toBe(5);
+    expect(pending).toBe(0);
+    expect(markdown).toContain("## Never ran or never used");
+    expect(markdown).toContain("- state open: ran at no width");
+    expect(markdown).toContain("- probe menu: ran at no width");
+    expect(markdown).toContain(
+      "- intended logo (colour): matched nothing — typo",
+    );
+    expect(markdown).toContain(
+      "- intended logo (x, 600px): matched nothing — shadowed",
+    );
+    expect(markdown).toContain(
+      "- intended logo (any prop, state open): matched nothing — never ran",
+    );
+    expect(markdown).not.toContain("intended logo (x): matched");
+    expect(neverUsed(surface, results, [], new Set())).toEqual([]);
   });
 
   it("turns any thrown value into a one-line error outcome", () => {

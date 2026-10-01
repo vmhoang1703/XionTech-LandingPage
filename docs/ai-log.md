@@ -393,5 +393,10 @@ Template:
   for probes also cut the time allowed for screenshots. A bad surface file could crash the checker
   instead of listing the problem. A first fix escaped "|" only in probe results, not in notes and
   names (a missed similar check), and names were not yet safe as folder and file names (`../x`,
-  `Logo` vs `logo` on Windows). All are fixed and unit-tested, except the timeout move: it lives in
-  the browser code, which has no automated test yet (listed in `deferred-work.md`).
+  `Logo` vs `logo` on Windows, two element and state pairs writing one image). State names could
+  repeat or reuse the scripts' own `default`, `reduced-motion` and `no-js`. Last, three reviewers
+  showed that checking each `intended` field alone still let an entry match nothing (a typo, a
+  state and width that never run together), so an open decision could vanish from the pending
+  list; instead of more field rules, the report now lists every state, probe and entry that did
+  nothing in the run. All are fixed and unit-tested, except the timeout move: it lives in the
+  browser code, which has no automated test yet (listed in `deferred-work.md`).

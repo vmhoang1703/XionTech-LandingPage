@@ -382,6 +382,10 @@ export const PROBE_EVENTS = [
 /** Default parity widths for ux:parity (a surface may set its own `widths`). */
 export const PARITY_WIDTHS = [1280, 1000, 600];
 
+/** Parity image file for one element, state and width. A name never holds ".", so no two pairs share a file. */
+export const parityImageName = (element, state, width) =>
+  `${element}.${state}.${width}.png`;
+
 /** Default screenshot widths for ux:shots (a surface may set its own `shotWidths`). */
 export const SHOT_WIDTHS = [360, 390, 768, 1024, 1280, 1440, 1920];
 
@@ -413,8 +417,8 @@ export function compareProbeOutcomes(proto, dev) {
   ).map((event) => ({ event, proto: proto[event], dev: dev[event] }));
 }
 
-/** Behaviour section of the report: one row per probe, event and width. */
-function renderProbes(surface, probes) {
+/** Behaviour section of the report: one row per probe, event and width. Adds matched entries to `used`. */
+function renderProbes(surface, probes, used) {
   const counts = { unexplained: 0, pending: new Set() };
   const lines = [];
   if (probes.length === 0) return { lines, ...counts };
@@ -431,12 +435,12 @@ function renderProbes(surface, probes) {
     for (const event of PROBE_EVENTS) {
       let mark = "same";
       if (differing.has(event)) {
-        // A probe that could not run is never explained away by an intended or pending entry.
+        // A probe that could not run is never explained away by an intended or pending entry
+        // (the entry still counts as used: it names a real event).
         const failed = isError(p.proto[event]) || isError(p.dev[event]);
-        const entry = failed
-          ? undefined
-          : findIntended(surface, p.name, event, { width: p.width });
-        if (entry) {
+        const entry = findIntended(surface, p.name, event, { width: p.width });
+        if (entry) used.add(entry);
+        if (entry && !failed) {
           mark = intendedLabel(entry);
           if (entry.pending) counts.pending.add(entry);
         } else {
@@ -459,10 +463,44 @@ export function neverFound(surface, results) {
   return surface.elements.map((e) => e.name).filter((name) => !seen.has(name));
 }
 
+/**
+ * Parts of the surface file that did nothing in this run: states and probes that ran at no width
+ * (a `minWidth` above every width), and `intended` entries that matched no difference (a typo, a
+ * state and width that never run together, an entry shadowed by an earlier one, or a difference
+ * that is gone). Listing them stops a stale entry hiding drift and an open decision vanishing.
+ */
+export function neverUsed(surface, results, probes, used) {
+  const statesRan = new Set(results.map((r) => r.state));
+  const probesRan = new Set(probes.map((p) => p.name));
+  const scope = (entry) =>
+    [
+      entry.prop ?? "any prop",
+      entry.state && `state ${entry.state}`,
+      entry.width && `${entry.width}px`,
+    ]
+      .filter(Boolean)
+      .join(", ");
+  return [
+    ...(surface.states ?? [])
+      .filter((s) => !statesRan.has(s.name))
+      .map((s) => `state ${s.name}: ran at no width`),
+    ...(surface.probes ?? [])
+      .filter((p) => !probesRan.has(p.name))
+      .map((p) => `probe ${p.name}: ran at no width`),
+    ...(surface.intended ?? [])
+      .filter((entry) => !used.has(entry))
+      .map(
+        (entry) =>
+          `intended ${entry.element} (${scope(entry)}): matched nothing — ${cell(entry.note)}`,
+      ),
+  ];
+}
+
 /** Markdown report for parity results: one section per state and width, then behaviour. */
 export function renderParityReport(surface, results, probes = []) {
   let unexplained = 0;
   const pending = new Set();
+  const used = new Set();
   const lines = [
     `# UX parity: ${surface.name}`,
     "",
@@ -482,6 +520,7 @@ export function renderParityReport(surface, results, probes = []) {
       if (e.missing) {
         const entry = findIntended(surface, e.name, "missing", where);
         if (entry) {
+          used.add(entry);
           notes.push(`missing on ${e.missing} (${intendedLabel(entry)})`);
           if (entry.pending) pending.add(entry);
         } else {
@@ -492,6 +531,7 @@ export function renderParityReport(surface, results, probes = []) {
       for (const d of [...e.boxDiffs, ...e.styleDiffs]) {
         const entry = findIntended(surface, e.name, d.prop, where);
         if (entry) {
+          used.add(entry);
           notes.push(
             `${d.prop}: ${d.proto} → ${d.dev} (${intendedLabel(entry)})`,
           );
@@ -509,7 +549,7 @@ export function renderParityReport(surface, results, probes = []) {
     }
     lines.push("");
   }
-  const behaviour = renderProbes(surface, probes);
+  const behaviour = renderProbes(surface, probes, used);
   lines.push(...behaviour.lines);
   unexplained += behaviour.unexplained;
   for (const entry of behaviour.pending) pending.add(entry);
@@ -520,6 +560,18 @@ export function renderParityReport(surface, results, probes = []) {
       "## Never found",
       "",
       `**Not found on either side at any width or state — fix the selector:** ${missing.join(", ")}`,
+      "",
+    );
+  }
+  const idle = neverUsed(surface, results, probes, used);
+  if (idle.length > 0) {
+    unexplained += idle.length;
+    lines.push(
+      "## Never ran or never used",
+      "",
+      "**These did nothing in this run — fix them (name, prop, state, width, minWidth) or remove them:**",
+      "",
+      ...idle.map((line) => `- ${line}`),
       "",
     );
   }

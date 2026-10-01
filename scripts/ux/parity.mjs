@@ -19,6 +19,7 @@ import {
   compareStyles,
   diffImages,
   PARITY_WIDTHS,
+  parityImageName,
   parseArgs,
   PROBE_EVENTS,
   probeError,
@@ -84,8 +85,7 @@ try {
             PNG.sync.read(await captureBox(dev, b.box)),
           );
           entry.percent = shot.percent;
-          // "." cannot appear in a name, so no two element/state pairs share a file.
-          entry.image = `${element.name}.${state.name}.${width}.png`;
+          entry.image = parityImageName(element.name, state.name, width);
           await writeFile(
             join(out, entry.image),
             PNG.sync.write(sideBySide(shot.a, shot.b, shot.diff)),
