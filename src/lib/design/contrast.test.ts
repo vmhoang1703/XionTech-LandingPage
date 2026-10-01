@@ -298,18 +298,39 @@ describe("globals.css @theme tokens", () => {
   });
 });
 
+interface CssRule {
+  selectors: string[];
+  declarations: Map<string, string>;
+}
+
+/** Every flat rule (one with no block inside it) in `css`, comments removed. */
+function readRules(css: string): CssRule[] {
+  const source = css.replace(/\/\*[\s\S]*?\*\//g, "");
+  return [...source.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(
+    ([, selectors, body]) => {
+      const declarations = new Map<string, string>();
+      for (const declaration of body.split(";")) {
+        const match = /^\s*([\w-]+)\s*:\s*([\s\S]+?)\s*$/.exec(declaration);
+        if (match) declarations.set(match[1], match[2].replace(/\s+/g, " "));
+      }
+      return {
+        selectors: selectors.split(",").map((s) => s.trim()),
+        declarations,
+      };
+    },
+  );
+}
+
 /** Declarations of every flat rule whose selector list includes `selector`. */
 function readRuleDeclarations(
   css: string,
   selector: string,
 ): Map<string, string> {
   const declarations = new Map<string, string>();
-  const source = css.replace(/\/\*[\s\S]*?\*\//g, "");
-  for (const [, selectors, body] of source.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-    if (!selectors.split(",").some((s) => s.trim() === selector)) continue;
-    for (const declaration of body.split(";")) {
-      const match = /^\s*([\w-]+)\s*:\s*([\s\S]+?)\s*$/.exec(declaration);
-      if (match) declarations.set(match[1], match[2].replace(/\s+/g, " "));
+  for (const rule of readRules(css)) {
+    if (!rule.selectors.includes(selector)) continue;
+    for (const [name, value] of rule.declarations) {
+      declarations.set(name, value);
     }
   }
   return declarations;
@@ -361,6 +382,79 @@ describe("light surfaces restore the light token set", () => {
 
   it.each(OTHER_SURFACES)("%s scopes the same variables", (surface) => {
     expect(scopedNames(surface)).toEqual(scopedNames(".surface-paper"));
+  });
+});
+
+const REDUCED_MOTION_BLOCK =
+  /@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)\s*\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/;
+
+describe("reduced motion", () => {
+  const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+  const block = REDUCED_MOTION_BLOCK.exec(source)?.[1] ?? "";
+
+  it.each(["*", "*::before", "*::after"])(
+    "stops every animation and transition on %s",
+    (selector) => {
+      const rule = readRuleDeclarations(block, selector);
+      expect(Object.fromEntries(rule)).toMatchObject({
+        animation: "none !important",
+        transition: "none !important",
+        "scroll-behavior": "auto !important",
+      });
+    },
+  );
+});
+
+// Rules allowed to hide content: the HTML `hidden` attribute, and the skip
+// link, which shows on keyboard focus with no JavaScript.
+const MAY_HIDE = new Set(["[hidden]", ".skip"]);
+const HIDING: [string, RegExp][] = [
+  ["display", /^none\b/],
+  ["visibility", /^hidden\b/],
+  ["opacity", /^0(?:\.0+)?%?(?:\s*!important)?$/],
+];
+
+/** `selector { property: value }` for each rule that hides its content. */
+function findHidingRules(css: string): string[] {
+  return readRules(css)
+    .filter((rule) => !rule.selectors.every((s) => MAY_HIDE.has(s)))
+    .flatMap((rule) => {
+      return HIDING.filter(([property, value]) => {
+        return value.test(rule.declarations.get(property) ?? "");
+      }).map(([property]) => {
+        const value = rule.declarations.get(property);
+        return `${rule.selectors.join(", ")} { ${property}: ${value} }`;
+      });
+    });
+}
+
+describe("no JavaScript: CSS hides no content", () => {
+  it.each([
+    ".reveal { opacity: 0 }",
+    ".reveal { opacity: 0% }",
+    ".menu { display: none }",
+    ".toast { visibility: hidden !important }",
+    "[hidden], .reveal { opacity: 0 }",
+  ])("flags %s", (css) => {
+    expect(findHidingRules(css)).toHaveLength(1);
+  });
+
+  it.each([
+    "[hidden] { display: none !important }",
+    ".skip { display: none }",
+    ".card { opacity: 0.5 }",
+    ".row { display: flex }",
+  ])("allows %s", (css) => {
+    expect(findHidingRules(css)).toEqual([]);
+  });
+
+  it("finds no rule in src/ CSS that hides content until JavaScript runs", () => {
+    const files = sourceFiles(SRC).filter((file) => file.endsWith(".css"));
+    expect(files).toContain(join("app", "globals.css"));
+    const hiding = files.flatMap((file) => {
+      return findHidingRules(readFileSync(join(SRC, file), "utf8"));
+    });
+    expect(hiding).toEqual([]);
   });
 });
 
