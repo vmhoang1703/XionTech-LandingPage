@@ -214,7 +214,8 @@ describe("SiteNav", () => {
 // EXPERIENCE.md "Mega menu" and AC-NAV-3: on desktop with a mouse, hover opens; moving away
 // closes after 150ms; a click never closes a menu that hover just opened; touch does not hover.
 describe("SiteNav hover (mouse only)", () => {
-  const wrapper = (trigger: HTMLElement) => trigger.parentElement as HTMLElement;
+  const wrapper = (trigger: HTMLElement) =>
+    trigger.parentElement as HTMLElement;
   const mouse = { pointerType: "mouse" };
 
   beforeEach(() => {
@@ -233,7 +234,9 @@ describe("SiteNav hover (mouse only)", () => {
 
   it("ignores touch and pen hover", () => {
     render(<SiteNav />);
-    fireEvent.pointerEnter(wrapper(productsTrigger()), { pointerType: "touch" });
+    fireEvent.pointerEnter(wrapper(productsTrigger()), {
+      pointerType: "touch",
+    });
     expect(expanded(productsTrigger())).toBe("false");
   });
 
@@ -281,7 +284,8 @@ describe("SiteNav hover (mouse only)", () => {
 // A menu the visitor chose (click, keyboard, or focus moved into it) is pinned: the mouse
 // leaving no longer closes it, so keyboard focus is never dropped into a hidden panel.
 describe("SiteNav pinned menus", () => {
-  const wrapper = (trigger: HTMLElement) => trigger.parentElement as HTMLElement;
+  const wrapper = (trigger: HTMLElement) =>
+    trigger.parentElement as HTMLElement;
   const mouse = { pointerType: "mouse" };
 
   beforeEach(() => {
@@ -300,14 +304,20 @@ describe("SiteNav pinned menus", () => {
     expect(expanded(productsTrigger())).toBe("true");
   });
 
-  it("pins a hover-opened menu once focus moves into it", () => {
-    render(<SiteNav />);
-    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
-    fireEvent.focus(screen.getByRole("link", { name: /PXP/ }));
-    fireEvent.pointerLeave(wrapper(productsTrigger()), mouse);
-    act(() => vi.advanceTimersByTime(200));
-    expect(expanded(productsTrigger())).toBe("true");
-  });
+  it.each([
+    ["Products", productsTrigger, /PXP/],
+    ["Services", servicesTrigger, /See the process/],
+  ])(
+    "pins a hover-opened %s menu once focus moves into it",
+    (_name, menuTrigger, linkName) => {
+      render(<SiteNav />);
+      fireEvent.pointerEnter(wrapper(menuTrigger()), mouse);
+      fireEvent.focus(screen.getByRole("link", { name: linkName }));
+      fireEvent.pointerLeave(wrapper(menuTrigger()), mouse);
+      act(() => vi.advanceTimersByTime(200));
+      expect(expanded(menuTrigger())).toBe("true");
+    },
+  );
 
   it("keeps a hover-opened menu open on a real mouse click (hover, focus, then click)", () => {
     render(<SiteNav />);
@@ -320,7 +330,9 @@ describe("SiteNav pinned menus", () => {
   it("ignores a touch pointer leaving", () => {
     render(<SiteNav />);
     fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
-    fireEvent.pointerLeave(wrapper(productsTrigger()), { pointerType: "touch" });
+    fireEvent.pointerLeave(wrapper(productsTrigger()), {
+      pointerType: "touch",
+    });
     act(() => vi.advanceTimersByTime(200));
     expect(expanded(productsTrigger())).toBe("true");
   });

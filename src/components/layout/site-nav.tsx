@@ -151,7 +151,7 @@ export function SiteNav() {
   // press focuses the button just before its click, and that click must keep a hover-opened
   // menu open (AC-NAV-3), not see it as already pinned and close it.
   const pinOnFocus = (menu: MenuId, event: FocusEvent<HTMLDivElement>) => {
-    if (event.target === triggerRefs.current[menu]) return;
+    if (triggerRefs.current[menu]?.contains(event.target)) return;
     setOpened((current) =>
       current?.menu === menu && current.byHover
         ? { ...current, byHover: false }
