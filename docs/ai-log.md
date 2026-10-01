@@ -318,3 +318,25 @@ Template:
   team's PR template, although the lead had asked for `/create-pr` on earlier PRs. Its Python-based
   edits to the shell scripts also failed twice: the shell turned each double backslash into a single
   one, so the match strings never matched; the AI switched to whole-file rewrites and the Edit tool.
+
+## 2026-10-01 — Faster checks until Demo day
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "temporary bypass Sonar check and will run check at overall after all done to
+  optimize the time … any suggestions to optimize time but keep the quality?"
+- **What the AI did:** Pointed out that skipping the gate on every branch and checking only at the
+  end would measure almost nothing: "new code" is what a branch adds on top of `develop`, so after
+  the merges there is no new code left. Proposed four changes; the lead chose all four:
+  1. `eslint-plugin-sonarjs` (typed, `src/` without tests — the gate's own scope) plus a
+     `no-restricted-globals` rule for `parseInt`, so `npm run lint` catches in about 15 seconds
+     all three kinds of finding that blocked the Story 1.1 push.
+  2. The `pre-push` gate is off until Demo day; `npm run sonar:gate:full` (new code = everything
+     since `main`) runs once a day on `develop` and before the release PR.
+  3. Full `bmad-code-review` once per story or PR; follow-up commits under about 50 lines get one
+     review layer.
+  4. Simple page-section stories use the one-shot `bmad-build` route.
+- **Decision / result:** Rules written into `CLAUDE.md`, `AGENTS.md` and `README.md`, all marked
+  "until Demo day (2026-10-09)".
+- **AI got it wrong?** Partly. With only the recommended config, the plugin caught one of the three
+  Story 1.1 findings; `prefer-regexp-exec` needs type information and the plugin has no
+  `Number.parseInt` rule. A probe file showed the gap before the change was committed.

@@ -42,6 +42,10 @@ cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env
 git config core.hooksPath scripts/git-hooks   # last: from now on every git push runs the Sonar gate
 ```
 
+Until Demo day (2026-10-09) skip the last line, or undo it with `git config --unset core.hooksPath`:
+the gate runs once a day on `develop` (`npm run sonar:gate:full`) instead of on every push, and
+`npm run lint` runs SonarQube's JS/TS rules. See `CLAUDE.md` → Definition of Done.
+
 SonarQube runs **only on your machine**. Never point it at the shared XT SonarQube server.
 
 ## Docs
