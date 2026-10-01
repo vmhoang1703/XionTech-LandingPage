@@ -261,3 +261,38 @@ Template:
 - **AI got it wrong?** Yes, twice, caught by the spec agents: the update brief gave the wrong
   relative path to the decisions file (`../` instead of `../../`), and decision T1 first said
   "Sanity holds job posts only", which would have banned the Life at XionTechs photos.
+
+## 2026-10-01 — Story 1.1 brand tokens, fonts and surfaces (`bmad-build`)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` with task
+  reviews, `bmad-code-review` layers and an independent acceptance auditor (subagents).
+- **Prompt (short):** "start 1.1", then "Keep full spec" and "Approve and continue" at the plan
+  checkpoint.
+- **What the AI did:** Put every `DESIGN.md` token into `@theme static` in `globals.css` (39
+  colours, 18 type styles, radii, spacing, breakpoints 640/900/1080, z layers, motion, shadows),
+  added the eight surface classes, the button variants, the 2.5px focus ring and the
+  reduced-motion rule; loaded the four fonts with `next/font/google` (Latin + Vietnamese,
+  `display: swap`); wrote a WCAG contrast helper that checks every text/background pair in tests.
+  126 tests, 100% changed-line coverage. Checked fonts, focus rings and network requests in real
+  Chrome on both `next start` and `npm run dev`: no request leaves localhost.
+- **Decision / result:** Light surfaces re-declare the full light token set, so a paper card
+  inside a navy band stays readable. `@phosphor-icons/react` is the icon package (recorded in
+  `AGENTS.md`), installed by the first story that renders an icon.
+- **AI got it wrong?** Yes, several times, all caught by the workflow's own reviews or checks:
+  1. The first contrast helper ignored the alpha channel, so `#RRGGBBAA` colours passed with the
+     wrong ratio.
+  2. Light surfaces did not re-scope the text tokens: a paper card inside navy would have had
+     white text on white.
+  3. The font loader used a spread for shared options; `next build` failed with "Unexpected
+     spread" because `next/font` needs literal options in every call.
+  4. The story review found 10 more issues (h1 not in the display font, the `:lang(vi)` rule in
+     the wrong CSS layer, `--destructive` unreadable on navy, missing AA pairs, a fragile CSS
+     parser); all fixed and re-reviewed.
+  5. The first real-browser check showed Times New Roman and the default focus outline. Cause: an
+     old `next start` process from an earlier run still held the port and served a deleted build.
+     `pkill` does not exist on Windows; stopping it with PowerShell `Stop-Process` fixed the check.
+  6. The independent evidence audit failed twice. First, the manual check had run on
+     `next start`, not `npm run dev`. Second, the AI's own script had skipped adding the dev-server
+     files to the spec, and nobody had seen the focus ring's 2.5px width or 8px radius. A new check
+     at 2× pixel density showed that Chrome draws the 2.5px ring as 2px. The lead decides whether
+     to keep 2.5px.
