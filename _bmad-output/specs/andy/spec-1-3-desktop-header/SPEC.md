@@ -58,8 +58,7 @@ Quân, a CTO between meetings, must reach any product, any service or Book a dem
 
 ## Non-goals
 
-- Hover opening with the 150ms close delay, and the AC-NAV-3 case "hover opens, then click keeps it open": after demo.
-- Mega menu 0.3s fade and drop, and its reduced-motion variant: after demo.
+- Mega menu 0.3s fade and drop, and its reduced-motion variant: after demo. (Hover opening was moved into scope by decision T11.)
 - Mobile menu, menu button and Book a demo as first menu item at 640px and below: Story 1.4.
 - EN/VI switch: Story 1.2 (after demo).
 - Breadcrumbs: Story 1.6 (page stories use prototype markup until then). Footer component and content: Story 1.5 (Sammy); this story only mounts it.

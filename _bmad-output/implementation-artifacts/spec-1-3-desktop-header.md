@@ -31,8 +31,9 @@ context:
 - Logo: `public/logo.png` (copy of the UX brand input `imports/xiontechs-logo.png`, 250×46), 32px high (26px at ≤640px), link `/` with `aria-label="XionTechs home"`, image alt "XionTechs, Get IT Done".
 - `globals.css`: focus ring `outline` 2px (T9); `scroll-padding-top` = header height so hash targets are not hidden under the sticky header.
 - Brand tokens only; UX docs win over the prototype where they differ.
+- On desktop with a mouse, hover opens a mega menu and moving away closes it after 150ms; a click never closes a menu that hover just opened (AC-NAV-3); touch and pen use click (decision T11, renegotiated by Hoang Vu on 2026-10-01).
 
-**Never:** hover opening, the 150ms close delay, mega fade/drop animation (after demo); mobile menu, menu button, Book a demo as menu item (Story 1.4); EN/VI switch (1.2); breadcrumbs (1.6); mounting the footer (T10); new npm dependencies; icons or carets in the nav.
+**Never:** mega fade/drop animation (after demo); mobile menu, menu button, Book a demo as menu item (Story 1.4); EN/VI switch (1.2); breadcrumbs (1.6); mounting the footer (T10); new npm dependencies; icons or carets in the nav.
 
 ## I/O & Edge-Case Matrix
 
@@ -47,6 +48,7 @@ context:
 | Current | pathname `/news/x`, `/careers/x`, `/about` | parent item has `aria-current="page"`, navy bold, 2px amber underline | `/`, `/demo`, unknown paths mark nothing |
 | Current mega | pathname `/products` or `/services` | that trigger has `aria-current="page"` and the current style | N/A |
 | Closed panel | menu closed | panel not rendered visible and not in the tab order | N/A |
+| Hover (T11) | mouse enters a trigger's area; leaves; comes back within 150ms; clicks | opens; closes 150ms after leaving; stays open if it comes back; a click keeps a hover-opened menu open | touch and pen pointers do not open on hover |
 
 </frozen-after-approval>
 
@@ -103,6 +105,8 @@ context:
 ## Implementation Notes
 
 ## Spec Change Log
+
+- 2026-10-01 — Hoang Vu renegotiated the frozen intent after review: hover opening moved from Never into Always (decision T11), with a new I/O Matrix row. Trigger: the lead saw click-only menus as unfriendly, and `EXPERIENCE.md` "Mega menu" asks for hover on desktop. Avoids: a desktop header that ignores the pointer. KEEP: click, keyboard, Escape, outside-click, focus-out and navigation close rules unchanged.
 
 ## Review Triage Log
 

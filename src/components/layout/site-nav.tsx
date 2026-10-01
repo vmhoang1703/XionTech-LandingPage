@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type FocusEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FocusEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import {
   currentSection,
   LABELS,
@@ -15,6 +21,10 @@ import {
 } from "./nav-data";
 
 type MenuId = "products" | "services";
+
+// EXPERIENCE.md "Mega menu": moving away closes after this delay, so the pointer can cross
+// the gap between the trigger and its panel.
+const HOVER_CLOSE_DELAY_MS = 150;
 
 const itemClass =
   "inline-flex h-10 items-center rounded-full px-3.5 py-[9px] text-ui leading-none text-text transition-colors duration-[250ms] ease-[var(--ease-brand)] hover:bg-mist aria-expanded:bg-mist aria-[current=page]:rounded-none aria-[current=page]:font-bold aria-[current=page]:text-navy aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]";
@@ -49,10 +59,13 @@ function MegaFooterRow({
 export function SiteNav() {
   const pathname = usePathname();
   // The menu is open only on the pathname it was opened on, so a navigation closes it.
+  // byHover: opened by mouse hover, so a click keeps it open (AC-NAV-3).
   const [opened, setOpened] = useState<{
     menu: MenuId;
     path: string;
+    byHover: boolean;
   } | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const navRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef<Record<MenuId, HTMLButtonElement | null>>({
     products: null,
@@ -97,8 +110,40 @@ export function SiteNav() {
     };
   }, [open]);
 
-  const toggle = (menu: MenuId) =>
-    setOpened(open === menu ? null : { menu, path: pathname });
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
+
+  const toggle = (menu: MenuId) => {
+    clearTimeout(closeTimer.current);
+    setOpened(
+      open === menu && !opened?.byHover
+        ? null
+        : { menu, path: pathname, byHover: false },
+    );
+  };
+
+  // Hover opens and closes menus for a mouse only; touch and pen use click (EXPERIENCE.md).
+  const openOnHover = (
+    menu: MenuId,
+    event: ReactPointerEvent<HTMLDivElement>,
+  ) => {
+    if (event.pointerType !== "mouse") return;
+    clearTimeout(closeTimer.current);
+    setOpened((current) =>
+      current?.menu === menu
+        ? current
+        : { menu, path: pathname, byHover: true },
+    );
+  };
+  const closeOnLeave = (
+    menu: MenuId,
+    event: ReactPointerEvent<HTMLDivElement>,
+  ) => {
+    if (event.pointerType !== "mouse") return;
+    clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      setOpened((current) => (current?.menu === menu ? null : current));
+    }, HOVER_CLOSE_DELAY_MS);
+  };
 
   const trigger = (menu: MenuId, label: string) => (
     <button
@@ -132,7 +177,12 @@ export function SiteNav() {
       aria-label={LABELS.mainNav}
       className="hidden items-center gap-0.5 min-[1081px]:flex"
     >
-      <div className="relative" onBlur={closeOnFocusOut}>
+      <div
+        className="relative"
+        onBlur={closeOnFocusOut}
+        onPointerEnter={(event) => openOnHover("products", event)}
+        onPointerLeave={(event) => closeOnLeave("products", event)}
+      >
         {trigger("products", LABELS.products)}
         <div
           id="mega-products"
@@ -162,7 +212,12 @@ export function SiteNav() {
           <MegaFooterRow footer={PRODUCTS_FOOTER} onNavigate={close} />
         </div>
       </div>
-      <div className="relative" onBlur={closeOnFocusOut}>
+      <div
+        className="relative"
+        onBlur={closeOnFocusOut}
+        onPointerEnter={(event) => openOnHover("services", event)}
+        onPointerLeave={(event) => closeOnLeave("services", event)}
+      >
         {trigger("services", LABELS.services)}
         <div
           id="mega-services"

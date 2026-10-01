@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SiteNav } from "./site-nav";
 
 let mockPathname = "/";
@@ -208,5 +208,72 @@ describe("SiteNav", () => {
     mockPathname = path;
     render(<SiteNav />);
     expect(document.querySelector("[aria-current]")).toBeNull();
+  });
+});
+
+// EXPERIENCE.md "Mega menu" and AC-NAV-3: on desktop with a mouse, hover opens; moving away
+// closes after 150ms; a click never closes a menu that hover just opened; touch does not hover.
+describe("SiteNav hover (mouse only)", () => {
+  const wrapper = (trigger: HTMLElement) => trigger.parentElement as HTMLElement;
+  const mouse = { pointerType: "mouse" };
+
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("opens on mouse hover", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    expect(expanded(productsTrigger())).toBe("true");
+  });
+
+  it("ignores touch and pen hover", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), { pointerType: "touch" });
+    expect(expanded(productsTrigger())).toBe("false");
+  });
+
+  it("closes 150ms after the pointer leaves, not before", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.pointerLeave(wrapper(productsTrigger()), mouse);
+    act(() => vi.advanceTimersByTime(140));
+    expect(expanded(productsTrigger())).toBe("true");
+    act(() => vi.advanceTimersByTime(20));
+    expect(expanded(productsTrigger())).toBe("false");
+  });
+
+  it("stays open when the pointer comes back within 150ms", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.pointerLeave(wrapper(productsTrigger()), mouse);
+    act(() => vi.advanceTimersByTime(100));
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    act(() => vi.advanceTimersByTime(200));
+    expect(expanded(productsTrigger())).toBe("true");
+  });
+
+  it("keeps a hover-opened menu open on click, then a second click closes it", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.click(productsTrigger());
+    expect(expanded(productsTrigger())).toBe("true");
+    fireEvent.click(productsTrigger());
+    expect(expanded(productsTrigger())).toBe("false");
+  });
+
+  it("switches menus when the pointer moves to the other trigger", () => {
+    render(<SiteNav />);
+    fireEvent.pointerEnter(wrapper(productsTrigger()), mouse);
+    fireEvent.pointerLeave(wrapper(productsTrigger()), mouse);
+    fireEvent.pointerEnter(wrapper(servicesTrigger()), mouse);
+    expect(expanded(productsTrigger())).toBe("false");
+    expect(expanded(servicesTrigger())).toBe("true");
+    act(() => vi.advanceTimersByTime(200));
+    expect(expanded(servicesTrigger())).toBe("true");
   });
 });
