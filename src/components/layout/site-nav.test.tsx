@@ -49,6 +49,13 @@ describe("SiteNav", () => {
     expect(href("All products")).toBe("/products");
   });
 
+  it("makes the footer row span both panel columns", () => {
+    render(<SiteNav />);
+    fireEvent.click(productsTrigger());
+    const row = screen.getByText("More products are on the way.").parentElement;
+    expect(row?.classList.contains("col-span-full")).toBe(true);
+  });
+
   it("toggles the panel closed on a second click", () => {
     render(<SiteNav />);
     fireEvent.click(productsTrigger());

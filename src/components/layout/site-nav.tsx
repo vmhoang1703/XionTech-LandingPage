@@ -32,7 +32,7 @@ function MegaFooterRow({
   onNavigate: () => void;
 }>) {
   return (
-    <div className="border-border text-ui text-muted mt-4 flex items-center justify-between gap-4 border-t pt-4">
+    <div className="border-border text-muted col-span-full mt-1 flex items-center justify-between gap-4 border-t px-3.5 pt-3 pb-1 text-[0.88rem]">
       <p>{footer.text}</p>
       <Link
         href={footer.link}
