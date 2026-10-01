@@ -65,6 +65,26 @@ context:
 - Given a focusable element inside `.surface-navy` or a navy hero, when focused, then the ring is amber; elsewhere navy, 2.5px, 3px offset, 8px radius.
 - Given the three button classes on light, navy and amber surfaces, when rendered, then no button has white text on amber and hover lifts 2px, press moves 1px down at 0.98.
 
+### Review Findings
+
+Code review of commit e249282 (local Sonar fixes in `src/lib/design/contrast.ts`), 2026-10-01. Layers: Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor.
+
+- [x] [Review][Patch] No `readThemeColors` test reads an 8-digit `#RRGGBBAA` value, so the optional alpha group this commit edited is untested; if it broke, `--color-border: #1636631f` would be read as opaque `#163663` and no test would fail [src/lib/design/contrast.test.ts:99]
+
+Rejected:
+
+- `false` — `colorLineRegex` has no end boundary, so `#1234567` is read as `#123456` (blind-hunter+edge-case-hunter): every `@theme` colour (39 DESIGN.md tokens + `--color-link`) is also compared by full value in the parity tests, which read `globals.css` with `readThemeVars`; a 7- or 9-digit typo fails those tests, so it cannot pass silently.
+- `false` — shorthand `#RGB` is skipped silently (edge-case-hunter): same parity tests; `#fff` ≠ the DESIGN.md value and fails.
+- `false` — uppercase token names keep their case (edge-case-hunter): CSS custom properties are case-sensitive, so `--color-Brand` and `--color-brand` are different properties; keeping the case matches the browser.
+- `false` — no proof the Sonar gate passes (blind-hunter): the `pre-push` hook runs the gate and blocks the push until it is green.
+- `low` — commit message leaves out the Sonar rule keys (blind-hunter): cosmetic; fixing it means rewriting a commit.
+- `low` — the hex pattern is written twice (blind-hunter): the two have different jobs (anchored validator vs extractor); a shared constant is new abstraction for a drift the parity tests already catch.
+- `false` — the `i` flag now does two jobs (blind-hunter): tests use `#FDFDFE` and `#FFC000`, so removing `i` fails them.
+- `false` — `exec` on a reused regex (blind-hunter): `colorLineRegex` has no `g` or `y` flag, so `exec` keeps no state between lines.
+- `false` — no ledger row for this change (blind-hunter): rows for e249282 and `verification-3.txt` were added.
+- `false` — Acceptance Evidence older than HEAD (acceptance-auditor): the 3 Verification commands were re-run at e249282 (`verification-3.txt`).
+- Verification Gap: no gaps found.
+
 ## Design Notes
 
 Semantic colours must be real `@theme` variables (not `@theme inline`) so `.surface-navy { --color-heading: var(--color-on-navy-heading) }` re-themes `text-heading` utilities inside the section. Font families point at the `next/font` variables set on `<html>`, e.g. `--font-display: var(--font-unbounded), system-ui, sans-serif`. Remove the default palette with `--color-*: initial;` before defining brand colours, so off-brand colours fail at build time instead of in review. Buttons and surfaces are CSS classes (work on `<a>` and `<button>`, zero JS), not React components.
@@ -111,7 +131,7 @@ Semantic colours must be real `@theme` variables (not `@theme inline`) so `.surf
 
 ## Acceptance Evidence
 
-Re-captured in step-04 after the review patches (commit aa3380a) on 2026-10-01. The step-03 set is kept in the ledger as history.
+Re-captured in step-04 after the review patches (commit aa3380a) on 2026-10-01; the 3 Verification commands were run again at e249282 (local Sonar fixes, same behaviour). The step-03 set is kept in the ledger as history.
 
 **Commands**
 
@@ -128,6 +148,7 @@ Re-captured in step-04 after the review patches (commit aa3380a) on 2026-10-01. 
 
 **Artifacts**
 
+- [verification-3.txt](spec-1-1-brand-tokens-evidence/verification-3.txt) -- 781 bytes -- sha256 c55678320738 -- real output of the 3 Verification commands at e249282
 - [verification-2.txt](spec-1-1-brand-tokens-evidence/verification-2.txt) -- 2651 bytes -- sha256 988f4fb36c00 -- real output of the 3 Verification commands after the patches (LF line endings, as committed)
 - [browser-check-dev-2x.json](spec-1-1-brand-tokens-evidence/browser-check-dev-2x.json) -- 1327 bytes -- sha256 87de5bdb26c0 -- npm run dev at 2× density: URL, dev overlay, served :focus-visible rule, fonts, four focus rings, requests
 - [dev2x-plain-light.png](spec-1-1-brand-tokens-evidence/dev2x-plain-light.png) -- 5330 bytes -- sha256 28b373208f5d -- plain link on light, navy ring, 8px radius

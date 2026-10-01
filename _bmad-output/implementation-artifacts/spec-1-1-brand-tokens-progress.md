@@ -76,3 +76,8 @@ Acceptance: evidence — spec-1-1-brand-tokens-evidence/observed.md — 4861 byt
 Acceptance: self-check — all 13 files in the spec Artifacts list re-counted and re-hashed: all match. Self-checked, not independently audited (the two-audit budget was used; the human chose to fix the evidence and continue).
 Acceptance: evidence — spec-1-1-brand-tokens-evidence/verification.txt — 2649 bytes — sha256 ad6323950a5d — supersedes the 2652-byte row: same text, CRLF line endings normalized to LF by .gitattributes (eol=lf) on commit; the working copy now matches the committed bytes
 Acceptance: evidence — spec-1-1-brand-tokens-evidence/verification-2.txt — 2651 bytes — sha256 988f4fb36c00 — supersedes the 2654-byte row: same text, CRLF line endings normalized to LF by .gitattributes (eol=lf) on commit; the working copy now matches the committed bytes
+Acceptance: command — npm run lint && npm run typecheck && npm run format:check — exit 0 — at e249282 (Sonar fix commit)
+Acceptance: command — npm run test:coverage && npm run coverage:diff — exit 0 — Tests 126 passed (126); Coverage: 100%; C1 ok — at e249282
+Acceptance: command — npm run build && npm run test:smoke — exit 0 — Compiled successfully; 1 passed — at e249282
+Acceptance: evidence — spec-1-1-brand-tokens-evidence/verification-3.txt — 781 bytes — sha256 c55678320738 — real output of the 3 Verification commands at e249282
+Review: code review of e249282 — 1 patch applied (8-digit readThemeColors test), 11 rejected; 127 tests pass. Human approved pushing with SONAR_GATE_SKIP=1.
