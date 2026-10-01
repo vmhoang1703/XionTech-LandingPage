@@ -50,6 +50,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
   vi.mocked(createSilk).mockReset();
 });
 
@@ -142,5 +143,31 @@ describe("HeroSilk", () => {
     });
     expect(screen.queryByRole("button")).toBeNull();
     expect(canvas.hidden).toBe(true);
+  });
+  it("removes its listeners when unmounted", () => {
+    const removeDocument = vi.spyOn(document, "removeEventListener");
+    const { canvas, unmount } = renderSilk();
+    const removeCanvas = vi.spyOn(canvas, "removeEventListener");
+
+    unmount();
+    expect(removeDocument).toHaveBeenCalledWith(
+      "visibilitychange",
+      expect.any(Function),
+    );
+    expect(removeCanvas).toHaveBeenCalledWith(
+      "webglcontextlost",
+      expect.any(Function),
+    );
+  });
+
+  it("keeps the label visually hidden until hover or focus, even with reduced motion", () => {
+    reducedMotion = true;
+    renderSilk();
+
+    const label = screen.getByText("Play motion");
+    expect(label.className).toContain("max-w-0");
+    expect(label.className).toContain("group-hover:max-w-50");
+    expect(label.className).toContain("group-focus-visible:max-w-50");
+    expect(label.className).not.toContain("motion-reduce:max-w");
   });
 });

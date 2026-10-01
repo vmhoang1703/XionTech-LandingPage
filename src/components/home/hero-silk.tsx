@@ -97,7 +97,7 @@ export function HeroSilk() {
               <path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" />
             )}
           </svg>
-          <span className="max-w-0 overflow-hidden whitespace-nowrap transition-[max-width,margin] group-hover:ml-2 group-hover:max-w-50 group-focus-visible:ml-2 group-focus-visible:max-w-50 motion-reduce:ml-2 motion-reduce:max-w-50">
+          <span className="max-w-0 overflow-hidden whitespace-nowrap transition-[max-width,margin] group-hover:ml-2 group-hover:max-w-50 group-focus-visible:ml-2 group-focus-visible:max-w-50 motion-reduce:transition-none">
             {label}
           </span>
         </button>
