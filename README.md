@@ -58,5 +58,5 @@ Content to carry over from https://xiontechs.com/ (scraped by AI, **verify befor
 - **Process (4-D Framework):** Discovery, Design, Development, Deployment.
 - **Differentiators:** Metric-driven delivery, client-centric focus, integrated engineering platform, "Get IT Done" methodology.
 - **Navigation:** Services, About Us, Why Choose Us, FAQs, Support, Careers, Contact Us.
-- **Offices:** Dallas (USA); Ho Chi Minh City & Da Nang (Vietnam).
+- **Offices:** Plano, Texas (USA); Ho Chi Minh City (Vietnam).
 - **Phone:** +1 469 322 9899 / +84 908 107552

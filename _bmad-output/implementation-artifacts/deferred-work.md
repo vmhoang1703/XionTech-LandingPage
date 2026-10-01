@@ -34,3 +34,30 @@ Change reviewed: team CLAUDE.md rules, test tooling, local-only SonarQube gate (
 - [low] Coverage path rewrite stops at spaces in the repo path.
 - [low] Container states paused/restarting/dead fall through to `docker run` and a name conflict.
 - [low] Empty `serverUrl` in report-task.txt gives a misleading "published to ''" tripwire message.
+
+## Deferred from: code review (2026-09-28), UX first draft
+
+Change reviewed: UX prototype and README (branch `docs/ux-first-draft`). The 14 findings became 16 acceptance criteria for the Next.js build; they are in `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md`.
+
+- [medium] No automated tests for the prototype script (forms, EN/VI, news filters, navigation). Test these behaviours in the Next.js build.
+- [medium] Translation beyond visible text: page titles, meta descriptions, aria labels and toasts need VI versions; serve `/en/` and `/vi/` URLs with hreflang.
+- [low] Per-page metadata (favicon, canonical, Open Graph) is missing in the prototype; use the Next.js Metadata API.
+- [low] "Read story" has no detail page and the news filters have no empty state; depends on the CMS choice.
+- [low] Stats band and 4-D flow are copied across prototype pages; build each as one component.
+
+## Deferred from: code review (2026-09-28), UX round 3
+
+Change reviewed: approved prototype changes, final UX specs, PRD and epics (branch `docs/ux-first-draft`).
+
+- [low] Prototype `site.css` has stacked patch layers (v3.1 to v3.7) that redefine the same rules. Consolidate when the prototype is next touched; the specs, not the CSS, are the build reference.
+- [medium] FAQ "How do you keep our data secure?" reuses the current site answer, which does not name hosting, access control or certifications. Replace with real facts before launch.
+- [medium] Story 6.3: decide whether a story or role can be published with only one language filled, or must wait for both EN and VI.
+
+## Deferred from: code review (2026-09-29), Demo-day scope change
+
+Change reviewed: prototype v3.8 (job page, roles list, removals) and the PRD, UX spec and epics updates (branch `docs/ux-first-draft`). Fixed before commit: build order in the Demo-day plan, breadcrumbs note, stale Flow 4 route and capture exceptions in `EXPERIENCE.md`, privacy text, CV field description and empty-file check, success focus.
+
+- [low] Message and cover note limits say "under 2,000 characters" while the check allows exactly 2,000 (same in the contact form); align the wording or the check in the Next.js build.
+- [low] "(opens in a new tab)" accessible names on store and app links are English only; add VI with Story 1.2.
+- [low] Epic 1 title and Story 7.3 still say "bilingual" and "both locales"; Vietnamese is after Demo day.
+- [low] `.people` and `.person` CSS in the prototype is unused since the leadership section was removed.

@@ -139,3 +139,105 @@ Template:
   spike used a fake project ID, so no real content was read; it also mixed up the service count
   (1 vs 3) and called Neon's CU-hours "compute-hours". `bmad-code-review` (4 reviewers) caught all
   three before the PR.
+
+## 2026-09-28 — Website UX first draft (products + outsourcing, multi-page)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5) with BMad `bmad-agent-ux-designer`, `bmad-ux`, `design-taste-frontend`
+- **Prompt (short):** "Build my company website (xiontechs) using white, navy and amber … showcase our web
+  app and phone app in a creative way … structure similar to nashtechglobal.com", then many review rounds.
+- **What the AI did:** Ran UX discovery, sampled the brand colours from the logo (navy `#163663`, amber `#FFC000`),
+  built colour themes, three concept mini-sites, landing pages v1 and v2, a type kit, and finally a 7-page static
+  prototype. Read the current xiontechs.com pages to reuse facts (services, 4-D process, industries, stats).
+- **Decision / result:** Multi-page site with Products and Outsourcing both near the top of Home; brand colour
+  rhythm per section instead of dark mode; core values in the office-banner wording; offices limited to
+  Ho Chi Minh City and Dallas; email capture on every page; unverified content marked `[Placeholder]`.
+- **AI got it wrong?** Yes, several times:
+  - The first colour themes and concepts were rejected as "too AI, too simple". Solid swatches did not show
+    what the site would feel like.
+  - The AI verified pages by driving a browser preview, which looked like glitching on the user's screen. The user
+    asked it to stop, so later checks were static only (syntax, links, anchors).
+  - The first landing headline wrapped to 4 lines at desktop width; caught by measuring, then shortened.
+  - The current site lists Da Nang and a second HCMC address; the team confirmed only HCMC and Dallas.
+  - The current About page shows leadership names that look like theme placeholders ("Mary Crispy",
+    "Rayan Athels"). They were not reused.
+  - A scripted edit while adding `[Placeholder]` markers broke the news data in `site.js`; caught by
+    `node --check`, restored and redone.
+  - All checks were static. Accessibility, contrast and responsive layout were never checked in a browser.
+    `bmad-code-review` then found 18 fixable issues, including a screenshot frame that could not be
+    clicked, text contrast below AA and a language switch hidden on phones. 4 were fixed in the prototype;
+    the other 14 findings became 16 acceptance criteria for the Next.js build (`code-review-2026-09-28.md`).
+
+## 2026-09-28 — PRD, epics and stories from the approved HTML prototype
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5) with BMad `bmad-prd`,
+  `bmad-create-epics-and-stories`, `bmad-code-review`
+- **Prompt (short):** Home hero changes (dark silk background, one CTA, stats in the hero), text-only nav,
+  an About FAQ, then "my developer mentions to have prds created and also have epic user stories created".
+- **What the AI did:** Updated the HTML prototype after each request and waited for Amber's approval, then
+  wrote the PRD (46 FRs, 8 NFRs) and `epics.md` (7 epics, 38 stories, every visual story linked to its
+  prototype section), ran a 3-layer code review and fixed what it found.
+- **Decision / result:** New default workflow: every UI change is checked by Amber in the HTML prototype;
+  after approval the specs, PRD and stories are updated, reviewed, committed and a PR is opened into
+  `develop`. The silk animation keeps moving with a discreet pause button (WCAG 2.2.2) instead of the
+  Stripe-style "no control" approach.
+- **AI got it wrong?** Yes:
+  - A CSS rule for menu links made the mobile-only "Book a demo" show next to the logo on desktop. When
+    Amber asked to remove "the button next to the logo", the AI removed the right-side header button
+    instead; it found the real cause one round later and restored the right one.
+  - The first pause control stopped the silk after 5 seconds; Amber wanted continuous motion, so it became
+    a pause button.
+  - The review found prototype behaviour that did not match the approved specs (a hover-opened menu
+    closing on click, Escape not returning focus, no focus trap in the mobile menu, a pause button left
+    with nothing to control when WebGL is missing). All fixed before the PR.
+
+## 2026-09-28 — Fixing Hoang's review of the PRD and epics (PR #4)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "there's review from Hoang on the pull request i made, review that and have my pr
+  updated fix".
+- **What the AI did:** Rebased onto `develop` (Sanity CMS spike, #5), then applied all 24 review items to
+  the PRD, `epics.md`, `EXPERIENCE.md`, `deferred-work.md` and this log: Sanity instead of "CMS not
+  chosen" plus a new Story 1.8 (Sanity setup), owners and "Depends on" on every story, a proposed Demo-day
+  plan (22 must-have stories, about 15 developer-days, two parallel tracks), an essential locale cookie,
+  launch check scoped to `src/` and the build output, and the smaller clarity fixes.
+- **Decision / result:** The Demo-day plan is marked PROPOSED and needs the team's sign-off. It moves the
+  animated silk, the 4-D process and the News pages to after Demo day.
+- **AI got it wrong?** Yes. The first PRD assumed a team of 3 and about 11 build days (the real window is
+  2 developers and 7 to 8 days), kept the saved language in local storage (a server cannot read it, so a
+  cookie is needed), left the CMS as undecided after Sanity was chosen, and counted 45 FRs after FR-46 was
+  added. All caught by the lead's review, not by the AI's own review.
+
+## 2026-09-29 — Demo-day scope re-cut, job page with CV upload, PR #4
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "language switcher can be after demo days, but animated silk, 4d process flow and news to be
+  done for demo", then "my manager will be using this site as a real company site", then answers on forms, CVs,
+  leadership, store links and effort ("there's no cutoff for this").
+- **What the AI did:** Updated the HTML prototype (v3.8): Careers lists sample roles that open a new job page with an
+  application form and CV upload; newsletter, talent network and leadership removed; About ends on "See our apps in
+  action." with Book a demo; store and app links open a new tab. After Amber approved it, updated `DESIGN.md`,
+  `EXPERIENCE.md`, the PRD (new FR-47, FR-29 and FR-35 marked removed, open questions 21 and 22) and `epics.md` (new
+  Story 6.6, rewritten Stories 6.5 and 2.4, Demo-day plan rebuilt: 31 must-haves, 23.5 developer-days).
+- **Decision / result:** English only on Demo day; silk, 4-D process (Home and Services), News from Sanity with
+  `[Placeholder]` titles, Careers with CV upload, live forms and the accessibility and performance audits are
+  must-haves. The plan is about 8.5 developer-days over budget with no cuts; the lead decides how to cover it.
+- **AI got it wrong?** Partly. The first re-cut kept the Services 4-D flow as the last cut and assumed news could live
+  in code; Amber and the lead's Sanity decision overruled both. The AI also flagged that uploaded Sanity files may
+  be reachable by link, so CV storage is an open question for the lead rather than a settled design.
+  The AI's own review then caught three build-order errors in its first plan (Story 6.6 scheduled before the
+  6.5 it depends on, 6.3 in parallel with 3.7, audits before the last pages) and breadcrumbs required by must-have
+  stories while Story 1.6 was after demo; all fixed before commit.
+
+## 2026-09-29 — Real office addresses and contact email (PR #4)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** pasted the Plano and Ho Chi Minh City addresses, phones and email; "there's no head office,
+  remove that, use address from plano ... keep the vietnam phone there and email as i provided".
+- **What the AI did:** Updated the office blocks in the prototype footer, About and Book a demo (Plano first, Vietnam
+  Delivery Center second, WhatsApp link, `mailto:`), then the PRD (FR-7, open questions 1, 2, 8 and 10, dependencies,
+  assumptions), `EXPERIENCE.md`, `epics.md` (Story 1.5, Story 2.3 destination, FR-38 inbox, content list), both READMEs
+  and `.memlog.md`. After the bmad-code-review run, renamed Dallas to Plano everywhere (stats, clocks, FAQ, meta
+  descriptions, privacy text, specs) at Amber's request, and applied 8 review fixes.
+- **Decision / result:** Offices and the contact inbox are real; CV storage in Sanity stays open for Hoang Vu.
+- **AI got it wrong?** Yes. The first version labelled Plano "Head office" (copied from the pasted text) and kept
+  "Dallas, USA" as the heading; Amber corrected both.
