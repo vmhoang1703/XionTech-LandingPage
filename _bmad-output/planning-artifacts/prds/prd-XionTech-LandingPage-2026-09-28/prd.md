@@ -242,7 +242,7 @@ A visitor sees, in order after the doors: Why XionTechs, the four-app row ("Four
 
 **Consequences (testable):**
 - Each app in the four-app row is one link to its Products anchor, with no interactive element inside the link (AC-A11Y-4).
-- Why XionTechs shows four tiles: our own school platforms (team photo slot until a real photo is supplied), two offices with live local times, education as our core, and the "Get IT Done" strip linking to `/about#values`. Wording to confirm: "designed, built and supported by our own team" and "Education is our core."
+- Why XionTechs shows four tiles: our own school platforms (team photo slot until a real photo is supplied), two offices with live local times, education as our core, and the "Get IT Done" strip linking to `/about#values`. The wording "designed, built and supported by our own team" was confirmed by the business on 2026-10-01.
 - With no stories, the news grid hides and "See all news" stays.
 
 Traces: EXP > Information Architecture (Home), Component Patterns (Why XionTechs, Four-app row, News card), State Patterns; AC-A11Y-4.
@@ -710,7 +710,7 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 20. **CI pipeline:** there is no CI yet, so axe-core, Lighthouse and the launch content check run locally before release. Setting up CI is after-demo work.
 21. **CV storage:** is Sanity acceptable for CVs? Uploaded Sanity files may be reachable by anyone with the link; a private store or the recruiting inbox may be needed. Owner: Hoang Vu.
 22. **Demo-day capacity:** the agreed Demo-day scope is about 23.5 developer-days against about 15. More days, another developer or cuts? Owner: Hoang Vu.
-23. **Why XionTechs wording:** "designed, built and supported by our own team" ships as `[Placeholder]` until the business confirms it; "Education is our core." adapts the confirmed FAQ line "EdTech is our core". Owner: Amber Do.
+23. **Why XionTechs wording:** resolved 2026-10-01. Amber Do confirmed that PXP, LXP, SXP and IoT are designed, built and supported by our own team; "Education is our core." adapts the confirmed FAQ line "EdTech is our core".
 
 ## 13. Assumptions Index
 
