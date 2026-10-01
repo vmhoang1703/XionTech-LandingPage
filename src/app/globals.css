@@ -124,13 +124,13 @@
   --text-button-sm--font-weight: 600;
   --text-label: 0.72rem;
   --text-label--line-height: 1.4;
-  --text-label--letter-spacing: 0.18em;
+  --text-label--letter-spacing: 0.16em;
   --text-label--font-weight: 500;
-  --text-label-sm: 0.62rem;
+  --text-label-sm: 0.72rem;
   --text-label-sm--line-height: 1.4;
   --text-label-sm--letter-spacing: 0.14em;
   --text-label-sm--font-weight: 500;
-  --text-data: 0.76rem;
+  --text-data: 0.8rem;
   --text-data--line-height: 1.5;
   --text-data--font-weight: 400;
   --text-data-lg: 2rem;
@@ -186,7 +186,8 @@
   --spacing-card-padding: 32px;
   --spacing-card-padding-sm: 26px;
   --spacing-button-height: 52px;
-  --spacing-button-height-sm: 42px;
+  --spacing-button-height-sm: 44px;
+  --spacing-tap-target: 44px;
   --spacing-field-height: 50px;
   --spacing-anchor-offset: 88px;
   --spacing-anchor-offset-subnav: 144px;
