@@ -222,6 +222,10 @@
 }
 
 @layer base {
+  html {
+    scroll-padding-top: var(--spacing-header-height);
+  }
+
   :root {
     /* shadcn/ui variables (DESIGN.md Build mapping) */
     --primary: var(--color-amber);
@@ -271,7 +275,7 @@
   }
 
   :focus-visible {
-    outline: 2.5px solid var(--color-focus);
+    outline: 2px solid var(--color-focus);
     outline-offset: 3px;
     border-radius: var(--radius-xs);
   }
@@ -348,7 +352,7 @@
     left: 16px;
     z-index: var(--z-index-skip-link);
     padding: 10px 16px;
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-full);
     background: var(--color-amber);
     color: var(--color-navy);
   }

@@ -667,3 +667,18 @@ describe("amber-decor guard", () => {
     expect(hits).toEqual([]);
   });
 });
+
+describe("T9: focus ring and skip link pill", () => {
+  const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+
+  it(":focus-visible outline width is 2px", () => {
+    const rule = readRuleDeclarations(source, ":focus-visible");
+    const outline = rule.get("outline");
+    expect(outline).toMatch(/^2px\s/);
+  });
+
+  it(".skip:focus uses --radius-full", () => {
+    const rule = readRuleDeclarations(source, ".skip:focus");
+    expect(rule.get("border-radius")).toBe("var(--radius-full)");
+  });
+});
