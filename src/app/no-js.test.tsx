@@ -21,8 +21,10 @@ describe("no JavaScript", () => {
     );
 
     expect(html).toMatch(/^<html lang="en"/);
-    expect(html).toMatch(/<h1[^>]*>XionTech<\/h1>/);
-    expect(html).toContain("[Placeholder] New website under construction.");
+    expect(html).toMatch(
+      /<h1[^>]*>Every school community, <mark[^>]*>connected<\/mark>\.<\/h1>/,
+    );
+    expect(html).toContain("Explore our products");
     expect(html).toContain("<header");
     expect(html).toContain('<main id="main" tabindex="-1"');
     expect(html).not.toContain("<script");
