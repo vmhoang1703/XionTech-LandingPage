@@ -1,0 +1,143 @@
+===== $ npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+===== exit 0
+===== $ npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+
+
+ Test Files  21 passed (21)
+      Tests  318 passed (318)
+   Start at  16:47:45
+   Duration  22.30s (environment 50%, tests 24%, import 14%, setup 10%, transform 2%)
+
+===== exit 0
+===== $ npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  21 passed (21)
+      Tests  318 passed (318)
+   Start at  16:48:10
+   Duration  30.69s (environment 42%, tests 29%, import 14%, setup 13%, worker 1%, transform 1%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.29 |    95.91 |    97.8 |     100 |                   
+ ...onents/contact |      98 |    88.67 |   94.87 |     100 |                   
+  contact-form.tsx |   97.95 |    88.67 |   94.73 |     100 | ...44,161,198,340 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.29% ( 283/285 )
+Branches     : 95.91% ( 141/147 )
+Functions    : 97.8% ( 89/91 )
+Lines        : 100% ( 259/259 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/app/api/revalidate/route.ts (100%)
+src/lib/sanity/client.ts (100%)
+src/lib/sanity/config.ts (100%)
+-------------
+Total:   28 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 3 changed file(s) with branch coverage >= 80% vs origin/develop.
+===== exit 0
+===== $ npm run build && npm run test:smoke
+
+> xiontech-landing-page@0.1.0 build
+> next build
+
+▲ Next.js 16.3.6 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 35ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 5.2s
+  Running TypeScript ...
+  Finished TypeScript in 5.9s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/6) ...
+  Generating static pages using 7 workers (1/6) 
+  Generating static pages using 7 workers (2/6) 
+  Generating static pages using 7 workers (4/6) 
+✓ Generating static pages using 7 workers (6/6) in 1096ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/revalidate
+└ ○ /demo
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> xiontech-landing-page@0.1.0 test:smoke
+> playwright test --project=smoke
+
+
+Running 2 tests using 1 worker
+
+  ✓  1 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (60ms)
+  ✓  2 [smoke] › e2e\smoke.spec.ts:14:5 › demo page responds 200 with send request button @smoke (49ms)
+
+  2 passed (15.1s)
+===== exit 0
+===== $ npm run sanity:check
+
+> xiontech-landing-page@0.1.0 sanity:check
+> node --env-file-if-exists=.env.local scripts/sanity-check.mjs
+
+project: 1khn3hf4, dataset: production
+FAIL: no post found — publish a [Placeholder] post in the Studio
+FAIL: no job found — publish a [Placeholder] job in the Studio
+draft privacy: not proven — save an unpublished post in the Studio and run with SANITY_DRAFT_PROBE_ID=drafts.<id>
+===== exit 1
+===== $ npm audit --omit=dev
+found 0 vulnerabilities
+===== exit 0
+===== $ grep -rlE 'styled-components|@sanity/ui|sanity/structure|sanity/desk' .next --exclude-dir=cache --exclude-dir=dev; echo files: $(grep -rlE 'styled-components|@sanity/ui|sanity/structure|sanity/desk' .next --exclude-dir=cache --exclude-dir=dev | wc -l)
+files: 0
+===== exit 0
+===== $ grep -rl '@sanity/client' .next/server --exclude-dir=cache | head -3
+===== exit 0
