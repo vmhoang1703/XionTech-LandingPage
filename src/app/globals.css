@@ -1,25 +1,889 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Brand tokens: DESIGN.md frontmatter plus its Build tokens table.
+  `static` keeps every token in the built CSS, used by a utility or not.
+  Semantic colours (heading, text, muted, border, link, focus) are real theme
+  variables, so the surface classes below can re-scope them per section.
+*/
+@theme static {
+  --color-*: initial;
+  /* Only sm/md/lg (640/900/1080) exist by design: xl: and 2xl: emit nothing */
+  --breakpoint-*: initial;
+
+  /* Brand core, sampled from the logo */
+  --color-navy: #163663;
+  --color-amber: #ffc000;
+  --color-amber-tint: #ffcf06;
+
+  /* Navy family */
+  --color-navy-2: #244c85;
+  --color-navy-hover: #0f2748;
+  --color-navy-glow: #1e4178;
+  --color-navy-soft: #3f66a0;
+  --color-ink: #0b1730;
+
+  /* Amber family: gradients and fills only, never text on light surfaces */
+  --color-amber-light: #ffd84a;
+  --color-amber-pale: #ffe27a;
+  --color-amber-deep: #f0b300;
+  --color-amber-decor: #c99700;
+  --color-amber-text: #8a6700;
+
+  /* Light surfaces */
+  --color-paper: #fdfdfe;
+  --color-page: #f7f9fd;
+  --color-mist: #eef2f9;
+  --color-mist-end: #f4f7fc;
+  --color-ice: #dce6f5;
+  --color-door-tint: #eaf0fa;
+  --color-edge-blue: #6f8fc1;
+  --color-white: #ffffff;
+
+  /* Semantic text on light surfaces; the surface classes re-scope these */
+  --color-heading: #163663;
+  --color-text: #10223f;
+  --color-muted: #4a5b78;
+  --color-placeholder: #5b6b86;
+  --color-border: #1636631f;
+  --color-field-border: #75869f;
+  --color-link: #163663;
+  --color-focus: #163663;
+
+  /* Text on navy surfaces */
+  --color-on-navy-heading: #ffffff;
+  --color-on-navy-text: #eef2f9;
+  --color-on-navy-muted: #c5d0e3;
+  --color-on-navy-link: #ffcf06;
+  --color-on-navy-border: #ffffff24;
+  --color-focus-on-navy: #ffc000;
+
+  /* Text on amber surfaces */
+  --color-on-amber-text: #163663;
+  --color-on-amber-muted: #23406b;
+
+  /* Feedback */
+  --color-error: #8a1c14;
+  --color-error-border: #b3261e;
+  --color-error-on-navy: #ffb4ab;
+
+  /* Families: next/font sets these variables on <html> */
+  --font-display: var(--font-unbounded), system-ui, sans-serif;
+  --font-brand: var(--font-lexend-exa), system-ui, sans-serif;
+  --font-body: var(--font-be-vietnam-pro), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Type scale */
+  --text-display-hero: 3.5rem;
+  --text-display-hero--line-height: 1.08;
+  --text-display-hero--letter-spacing: -0.03em;
+  --text-display-hero--font-weight: 700;
+  --text-display-hero-mobile: 2.2rem;
+  --text-display-hero-mobile--line-height: 1.08;
+  --text-display-hero-mobile--letter-spacing: -0.03em;
+  --text-display-hero-mobile--font-weight: 700;
+  --text-headline: 2.8rem;
+  --text-headline--line-height: 1.12;
+  --text-headline--letter-spacing: -0.025em;
+  --text-headline--font-weight: 600;
+  --text-headline-mobile: 1.9rem;
+  --text-headline-mobile--line-height: 1.12;
+  --text-headline-mobile--letter-spacing: -0.025em;
+  --text-headline-mobile--font-weight: 600;
+  --text-stat: 3rem;
+  --text-stat--line-height: 1.1;
+  --text-stat--letter-spacing: -0.03em;
+  --text-stat--font-weight: 700;
+  --text-title-lg: 1.7rem;
+  --text-title-lg--line-height: 1.2;
+  --text-title-lg--letter-spacing: -0.02em;
+  --text-title-lg--font-weight: 700;
+  --text-title-md: 1.2rem;
+  --text-title-md--line-height: 1.3;
+  --text-title-md--font-weight: 600;
+  --text-title-sm: 1rem;
+  --text-title-sm--line-height: 1.3;
+  --text-title-sm--font-weight: 600;
+  --text-body-lg: 1.12rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body-lg--font-weight: 400;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+  --text-body-sm: 0.92rem;
+  --text-body-sm--line-height: 1.5;
+  --text-body-sm--font-weight: 400;
+  --text-ui: 0.95rem;
+  --text-ui--line-height: 1.4;
+  --text-ui--font-weight: 500;
+  --text-button: 1rem;
+  --text-button--line-height: 1;
+  --text-button--font-weight: 600;
+  --text-button-sm: 0.92rem;
+  --text-button-sm--line-height: 1;
+  --text-button-sm--font-weight: 600;
+  --text-label: 0.72rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.18em;
+  --text-label--font-weight: 500;
+  --text-label-sm: 0.62rem;
+  --text-label-sm--line-height: 1.4;
+  --text-label-sm--letter-spacing: 0.14em;
+  --text-label-sm--font-weight: 500;
+  --text-data: 0.76rem;
+  --text-data--line-height: 1.5;
+  --text-data--font-weight: 400;
+  --text-data-lg: 2rem;
+  --text-data-lg--line-height: 1.1;
+  --text-data-lg--letter-spacing: -0.02em;
+  --text-data-lg--font-weight: 400;
+
+  /* Fluid sizes (Build tokens) */
+  --text-display-hero-fluid: clamp(2.2rem, 4vw, 3.5rem);
+  --text-display-hero-fluid--line-height: 1.08;
+  --text-display-hero-fluid--letter-spacing: -0.03em;
+  --text-display-hero-fluid--font-weight: 700;
+  --text-display-page: clamp(2.2rem, 4.4vw, 3.6rem);
+  --text-display-page--line-height: 1.08;
+  --text-display-page--letter-spacing: -0.03em;
+  --text-display-page--font-weight: 700;
+  --text-headline-fluid: clamp(1.9rem, 3.5vw, 2.8rem);
+  --text-headline-fluid--line-height: 1.12;
+  --text-headline-fluid--letter-spacing: -0.025em;
+  --text-headline-fluid--font-weight: 600;
+  --text-stat-fluid: clamp(2rem, 3.6vw, 3rem);
+  --text-stat-fluid--line-height: 1.1;
+  --text-stat-fluid--letter-spacing: -0.03em;
+  --text-stat-fluid--font-weight: 700;
+  --text-news-title: 1.08rem;
+  --text-news-title--line-height: 1.3;
+  --text-news-title--font-weight: 600;
+
+  /* Rounded */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
+  --radius-browser: 20px;
+  --radius-device-tablet: 26px;
+  --radius-device-phone: 38px;
+  --radius-full: 9999px;
+
+  /* Spacing (spacing.container maps to --container-page) */
+  --container-page: 1240px;
+  --spacing-gutter: 24px;
+  --spacing-gutter-mobile: 16px;
+  --spacing-header-height: 72px;
+  --spacing-section: 112px;
+  --spacing-section-mobile: 80px;
+  --spacing-page-hero-top: 96px;
+  --spacing-page-hero-bottom: 104px;
+  --spacing-page-hero-mobile: 64px;
+  --spacing-capture: 88px;
+  --spacing-section-head-gap: 48px;
+  --spacing-grid-gap: 18px;
+  --spacing-card-padding: 32px;
+  --spacing-card-padding-sm: 26px;
+  --spacing-button-height: 52px;
+  --spacing-button-height-sm: 42px;
+  --spacing-field-height: 50px;
+  --spacing-anchor-offset: 88px;
+  --spacing-anchor-offset-subnav: 144px;
+
+  /* Breakpoints (the defaults are reset above, so units never mix) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 900px;
+  --breakpoint-lg: 1080px;
+
+  /* Layers */
+  --z-index-background: -1;
+  --z-index-content: 0;
+  --z-index-subnav: 40;
+  --z-index-header: 50;
+  --z-index-mega-menu: 55;
+  --z-index-mobile-menu: 60;
+  --z-index-toast: 100;
+  --z-index-skip-link: 200;
+
+  /* Motion */
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-duration-menu: 300ms;
+  --transition-duration-crossfade: 550ms;
+  --transition-duration-reveal: 900ms;
+  --transition-duration-highlight: 1200ms;
+  --transition-duration-count-up: 1400ms;
+  --transition-duration-track: 2400ms;
+
+  /* Shadows */
+  --shadow-card: 0 40px 80px -40px rgb(11 23 48 / 0.45);
+  --shadow-device: 0 60px 100px -40px rgb(11 23 48 / 0.55);
+  --shadow-primary: 0 12px 30px -12px rgb(255 192 0 / 0.7);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-padding-top: var(--spacing-header-height);
+  }
 
-@media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* shadcn/ui variables (DESIGN.md Build mapping) */
+    --primary: var(--color-amber);
+    --primary-foreground: var(--color-navy);
+    --background: var(--color-page);
+    --destructive: var(--color-error);
+    /* Translucent fill for glass controls; navy and amber surfaces override it */
+    --glass: color-mix(in srgb, var(--color-paper) 66%, transparent);
+    /* Light tokens resolved once at the root, for paper cards on dark surfaces */
+    --paper-text: var(--color-text);
+    --paper-muted: var(--color-muted);
+    --paper-border: var(--color-border);
+  }
+
+  /* Re-declared on each scoped surface so they follow its tokens there */
+  :root,
+  .surface-paper,
+  .surface-mist,
+  .hero-light,
+  .surface-navy,
+  .surface-amber,
+  .hero-silk,
+  .hero-navy,
+  .hero-amber {
+    --foreground: var(--color-text);
+    --muted-foreground: var(--color-muted);
+    --border: var(--color-border);
+    --ring: var(--color-focus);
+  }
+
+  body {
+    font-family: var(--font-body);
+    line-height: var(--text-body--line-height);
+    background: var(--color-page);
+    color: var(--color-text);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--color-heading);
+  }
+
+  h2 {
+    font-size: var(--text-headline-fluid);
+    font-weight: var(--text-headline-fluid--font-weight);
+    line-height: var(--text-headline-fluid--line-height);
+    letter-spacing: var(--text-headline-fluid--letter-spacing);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  #main:focus {
+    outline: none;
+  }
+
+  /* Tailwind v4 resets buttons to the arrow cursor; the prototype and links use the hand. */
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+@layer components {
+  /* Layout */
+  .wrap {
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  .sec {
+    position: relative;
+    padding-block: var(--spacing-section);
+  }
+
+  @media (width <= --theme(--breakpoint-sm)) {
+    .wrap {
+      padding-inline: var(--spacing-gutter-mobile);
+    }
+
+    .sec {
+      padding-block: var(--spacing-section-mobile);
+    }
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-brand);
+    font-size: var(--text-label);
+    font-weight: var(--text-label--font-weight);
+    line-height: var(--text-label--line-height);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--label-color, var(--color-muted));
+  }
+
+  .label::before {
+    content: "";
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--label-rule, var(--color-amber));
+  }
+
+  .lede {
+    max-width: 60ch;
+    font-size: var(--text-body-lg);
+    line-height: var(--text-body-lg--line-height);
+    color: var(--color-muted);
+  }
+
+  .skip {
+    position: absolute;
+    left: -999px;
+  }
+
+  .skip:focus {
+    top: 12px;
+    left: 16px;
+    z-index: var(--z-index-skip-link);
+    padding: 10px 16px;
+    border-radius: var(--radius-full);
+    background: var(--color-amber);
+    color: var(--color-navy);
+  }
+
+  /* Section surfaces (DESIGN.md Colors surface table) */
+  .surface-paper {
+    background: var(--color-paper);
+  }
+
+  .surface-mist {
+    background: linear-gradient(
+      180deg,
+      var(--color-mist),
+      var(--color-mist-end)
+    );
+  }
+
+  .surface-navy {
+    background:
+      radial-gradient(
+        50% 70% at 100% 0%,
+        color-mix(in srgb, var(--color-amber) 16%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(
+        160deg,
+        var(--color-ink),
+        var(--color-navy) 70%,
+        var(--color-navy-glow)
+      );
+  }
+
+  .surface-amber {
+    background: linear-gradient(
+      120deg,
+      var(--color-amber-light),
+      var(--color-amber) 55%,
+      var(--color-amber-deep)
+    );
+  }
+
+  .hero-silk {
+    background: var(--color-ink);
+  }
+
+  .hero-light {
+    background: var(--color-page);
+  }
+
+  .hero-navy {
+    background: linear-gradient(
+      160deg,
+      var(--color-ink),
+      var(--color-navy) 65%,
+      var(--color-navy-glow)
+    );
+  }
+
+  .hero-amber {
+    background: linear-gradient(
+      135deg,
+      var(--color-amber-pale),
+      var(--color-amber) 55%,
+      var(--color-amber-deep)
+    );
+  }
+
+  /*
+    Scoped token sets. Every surface sets the same variables, so a surface
+    nested in another (a paper card in a navy hero) gets its own row of the
+    DESIGN.md surface table. The light colours repeat the @theme values.
+  */
+  .surface-paper,
+  .surface-mist,
+  .hero-light {
+    --color-heading: #163663;
+    --color-text: #10223f;
+    --color-muted: #4a5b78;
+    --color-border: #1636631f;
+    --color-link: #163663;
+    --color-focus: #163663;
+    --glass: color-mix(in srgb, var(--color-paper) 66%, transparent);
+    --label-color: var(--color-muted);
+    --label-rule: var(--color-amber);
+    --destructive: var(--color-error);
+    color: var(--color-text);
+  }
+
+  .surface-navy,
+  .hero-silk,
+  .hero-navy {
+    --color-heading: var(--color-on-navy-heading);
+    --color-text: var(--color-on-navy-text);
+    --color-muted: var(--color-on-navy-muted);
+    --color-border: var(--color-on-navy-border);
+    --color-link: var(--color-on-navy-link);
+    --color-focus: var(--color-focus-on-navy);
+    --glass: color-mix(in srgb, var(--color-white) 6%, transparent);
+    --label-color: var(--color-on-navy-link);
+    --label-rule: var(--color-amber);
+    --destructive: var(--color-error-on-navy);
+    color: var(--color-text);
+  }
+
+  .surface-amber,
+  .hero-amber {
+    --color-heading: var(--color-on-amber-text);
+    --color-text: var(--color-on-amber-text);
+    --color-muted: var(--color-on-amber-muted);
+    --color-border: color-mix(in srgb, var(--color-navy) 20%, transparent);
+    --color-link: var(--color-navy);
+    --color-focus: var(--color-navy);
+    --glass: color-mix(in srgb, var(--color-white) 35%, transparent);
+    --label-color: var(--color-muted);
+    --label-rule: var(--color-navy);
+    --destructive: var(--color-error);
+    color: var(--color-text);
+  }
+
+  /* Buttons: classes, so they work on <a> and <button> with no JS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: var(--spacing-button-height);
+    padding-inline: 26px;
+    border-radius: var(--radius-full);
+    font-size: var(--text-button);
+    font-weight: var(--text-button--font-weight);
+    line-height: var(--text-button--line-height);
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      transform 0.35s var(--ease-brand),
+      box-shadow 0.35s var(--ease-brand),
+      border-color 0.3s,
+      background 0.3s;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  .btn-primary {
+    background: linear-gradient(
+      180deg,
+      var(--color-amber-tint),
+      var(--color-amber)
+    );
+    color: var(--color-navy);
+    box-shadow:
+      var(--shadow-primary),
+      inset 0 1px 0 rgb(255 255 255 / 0.55);
+  }
+
+  .btn-primary:hover {
+    box-shadow:
+      0 18px 38px -14px rgb(255 192 0 / 0.8),
+      inset 0 1px 0 rgb(255 255 255 / 0.55);
+  }
+
+  .btn-navy {
+    background: var(--color-navy);
+    color: var(--color-white);
+    box-shadow: 0 14px 30px -12px rgb(22 54 99 / 0.55);
+  }
+
+  .btn-navy:hover {
+    background: var(--color-navy-hover);
+  }
+
+  .btn-glass {
+    border: 1px solid var(--color-border);
+    background: var(--glass);
+    color: var(--color-heading);
+    backdrop-filter: blur(12px);
+  }
+
+  .btn-glass:hover {
+    border-color: var(--color-heading);
+  }
+
+  .btn-sm {
+    height: var(--spacing-button-height-sm);
+    padding-inline: 18px;
+    font-size: var(--text-button-sm);
+  }
+
+  /* Page hero and breadcrumbs */
+  .page-hero {
+    padding-block: var(--spacing-page-hero-top) var(--spacing-page-hero-bottom);
+  }
+
+  .page-hero h1 {
+    max-width: 18ch;
+    margin-top: 18px;
+    color: var(--color-heading);
+    font-size: var(--text-display-page);
+    line-height: var(--text-display-page--line-height);
+    letter-spacing: var(--text-display-page--letter-spacing);
+    font-weight: var(--text-display-page--font-weight);
+  }
+
+  .crumbs {
+    display: flex;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--text-data);
+    color: var(--color-muted);
+  }
+
+  .crumbs a:hover {
+    color: var(--color-heading);
+  }
+
+  .hl {
+    position: relative;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  .hl::after {
+    content: "";
+    position: absolute;
+    inset-inline: -2%;
+    bottom: 0.04em;
+    z-index: -1;
+    height: 0.3em;
+    border-radius: var(--radius-xs);
+    background: linear-gradient(
+      90deg,
+      var(--color-amber-pale),
+      var(--color-amber)
+    );
+  }
+
+  /* Hero content: two columns from md, one below */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  @media (width >= --theme(--breakpoint-md)) {
+    .split {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .offices {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width < --theme(--breakpoint-sm)) {
+    .hl {
+      white-space: normal;
+    }
+  }
+
+  .list-check {
+    display: grid;
+    gap: 14px;
+    margin-top: 28px;
+    list-style: none;
+  }
+
+  .list-check li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--color-text);
+  }
+
+  .list-check svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 1.3rem;
+    color: var(--color-amber);
+  }
+
+  .offices {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-grid-gap);
+    margin-top: 36px;
+  }
+
+  .office {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    font-style: normal;
+    color: var(--color-muted);
+  }
+
+  .office b {
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--text-body-sm);
+    color: var(--color-heading);
+  }
+
+  .office a {
+    overflow-wrap: anywhere;
+  }
+
+  .office a:hover {
+    color: var(--color-heading);
+  }
+
+  .office-tag {
+    display: block;
+    margin-block: 2px 6px;
+    font-family: var(--font-brand);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  /* Contact form: a paper card inside the navy hero, so it restores the light tokens */
+  .form-card {
+    --color-heading: var(--color-navy);
+    --color-text: var(--paper-text);
+    --color-muted: var(--paper-muted);
+    --color-border: var(--paper-border);
+    --color-link: var(--color-navy);
+    --color-focus: var(--color-navy);
+    --destructive: var(--color-error);
+    padding: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-paper);
+    box-shadow: var(--shadow-card);
+    color: var(--color-text);
+  }
+
+  .form-card h2 {
+    color: var(--color-heading);
+  }
+
+  @media (width < --theme(--breakpoint-sm)) {
+    .form-card {
+      padding: 24px;
+    }
+  }
+
+  .ftabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin-block: 18px 26px;
+    padding: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+  }
+
+  .ftabs button {
+    padding: 10px 18px;
+    border-radius: var(--radius-full);
+    font-size: var(--text-body-sm);
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .ftabs button[aria-selected="true"] {
+    background: var(--color-navy);
+    color: var(--color-white);
+  }
+
+  .fgrid2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-grid-gap);
+  }
+
+  @media (width >= --theme(--breakpoint-sm)) {
+    .fgrid2 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* The panel's fields sit in the grid; display: contents would beat [hidden] */
+  .fpanel {
+    display: contents;
+  }
+
+  .fpanel[hidden] {
+    display: none;
+  }
+
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+
+  .field.full {
+    grid-column: 1 / -1;
+  }
+
+  fieldset.field {
+    border: 0;
+  }
+
+  .field label,
+  .field legend {
+    font-size: var(--text-body-sm);
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    height: var(--spacing-field-height);
+    padding-inline: 14px;
+    border: 1.5px solid var(--color-field-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-page);
+    font-size: 0.98rem;
+    color: var(--color-text);
+  }
+
+  .field textarea {
+    height: 110px;
+    padding-block: 12px;
+    resize: vertical;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--color-focus);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-focus) 15%, transparent);
+  }
+
+  .field .help {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .field .err {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-error);
+  }
+
+  .field.bad input,
+  .field.bad select,
+  .field.bad textarea {
+    border-color: var(--color-error-border);
+  }
+
+  /* Product pills */
+  .checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .checks label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border: 1.5px solid var(--color-field-border);
+    border-radius: var(--radius-full);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-heading);
+    cursor: pointer;
+  }
+
+  .checks input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-navy);
+  }
+
+  .checks label:has(input:checked) {
+    border-color: var(--color-navy);
+    background: var(--color-mist);
+  }
+
+  .checks label:has(input:focus-visible) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .consent {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .consent a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: inherit;
+  }
+
+  .form-card .btn {
+    margin-top: 22px;
+  }
+}
+
+@layer utilities {
+  /*
+    Stacked Vietnamese diacritics need room (floor 1.18). In this layer the
+    rule beats the line-height that a text-* size utility sets.
+  */
+  :lang(vi) h1,
+  :lang(vi) h2 {
+    line-height: 1.2;
+  }
 }

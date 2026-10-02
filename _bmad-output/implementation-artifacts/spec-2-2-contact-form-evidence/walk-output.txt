@@ -1,0 +1,37 @@
+L1 1280 card beside hero: true
+L3 breadcrumbs: Home / Contact
+L3 check items: 3
+L3 offices: 2
+L5 /demo tab: Product demo
+L6 ArrowRight: Outsourcing project
+L6 ArrowRight wraps: Product demo
+L6 ArrowLeft wraps: Outsourcing project
+L6 Home: Product demo
+L6 End: Outsourcing project
+L7 demo fields: f-name, f-email, f-org, f-role, checkbox:PXP, checkbox:LXP, checkbox:SXP, checkbox:IoT, f-size, f-date, f-msg
+L7 PXP checked: true
+L10 aria-invalid count: 3
+L10 focused: f-name
+L10 live region: Please fix the following: Please enter your name. Please enter a valid email address. Please enter your organisation.
+L10 invalid border: rgb(179, 38, 30)
+L11 ana@school invalid: true
+L11 ana@gmail.com invalid: null
+L12 date min (today): 2026-10-02
+L12 past date invalid: true
+L13 long message invalid: true
+L14 typing clears: null
+L15 submit text: Send request
+L15 submit icon: true
+L15 consent: We only use your details to respond to this request. Privacy policy
+L15 privacy href: /privacy
+L15 privacy underline: underline
+L4 #project tab: Outsourcing project
+L4 selected pill background: rgb(22, 54, 99)
+L8 project fields: f-name, f-email, f-org, f-role, f-svc, f-when, f-msg
+L8 service options: 9
+L9 tab order (project): f-email > f-org > f-role > f-svc > f-when > f-msg > BUTTON > A
+L9 demo fields reached: false
+L5 #form tab: Product demo
+L2 390 stacked: true
+L2 390 no horizontal scroll: true
+L7 390 demo fields: f-name, f-email, f-org, f-role, checkbox:PXP, checkbox:LXP, checkbox:SXP, checkbox:IoT, f-size, f-date, f-msg
