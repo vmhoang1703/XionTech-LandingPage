@@ -17,7 +17,7 @@ type StatsBandProps = {
 
 // Shared stats band: Home hero (3.3), Services (5.2) and About (6.4) pass
 // their own figures. Final values render on load; the count-up is after demo.
-export function StatsBand({ label, stats, tone }: StatsBandProps) {
+export function StatsBand({ label, stats, tone }: Readonly<StatsBandProps>) {
   const labelId = useId();
   const suffixClass = tone === "navy" ? "text-amber" : "text-amber-text";
 
