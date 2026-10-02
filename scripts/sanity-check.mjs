@@ -4,7 +4,7 @@ import { createClient } from "@sanity/client";
 
 const API_VERSION = "2025-01-01";
 
-export function summarize({ post, job, draftCount }) {
+export function summarize({ post, job, probeId, probeCount }) {
   const lines = [];
   let ok = true;
 
@@ -13,7 +13,7 @@ export function summarize({ post, job, draftCount }) {
     ["job", job],
   ]) {
     if (doc) {
-      lines.push(`${kind}: ${doc._id} ${doc.title}`);
+      lines.push(`${kind}: ${doc._id} ${doc.title ?? "(no English title)"}`);
     } else {
       ok = false;
       lines.push(
@@ -22,13 +22,17 @@ export function summarize({ post, job, draftCount }) {
     }
   }
 
-  if (draftCount === 0) {
-    lines.push("drafts readable without a token: 0");
+  if (!probeId) {
+    lines.push(
+      "draft privacy: not proven — save an unpublished post in the Studio and run with SANITY_DRAFT_PROBE_ID=drafts.<id>",
+    );
+  } else if (probeCount === 0) {
+    lines.push(
+      `draft privacy: proven (draft ${probeId} not readable without a token)`,
+    );
   } else {
     ok = false;
-    lines.push(
-      `FAIL: draft documents are readable without a token (${draftCount})`,
-    );
+    lines.push(`FAIL: draft ${probeId} is readable without a token`);
   }
 
   return { ok, lines };
@@ -52,18 +56,24 @@ async function main() {
     useCdn: true,
     perspective: "published",
   });
-  // The perspective hides drafts, so the draft read uses the raw perspective.
-  // Still no token: a public dataset must return nothing.
+  // The published perspective hides drafts, so the probe uses the raw perspective.
+  // No token and no CDN: a private draft must not come back.
+  const probeId = process.env.SANITY_DRAFT_PROBE_ID;
   const rawClient = client.withConfig({ perspective: "raw", useCdn: false });
 
   console.log(`project: ${projectId}, dataset: ${dataset}`);
-  const [post, job, drafts] = await Promise.all([
+  const [post, job, probe] = await Promise.all([
     client.fetch(`*[_type == "post"][0]{_id, "title": title.en}`),
     client.fetch(`*[_type == "job"][0]{_id, "title": title.en}`),
-    rawClient.fetch(`*[_id in path("drafts.**")][0...1]{_id}`),
+    probeId ? rawClient.fetch(`*[_id == $id]{_id}`, { id: probeId }) : null,
   ]);
 
-  const { ok, lines } = summarize({ post, job, draftCount: drafts.length });
+  const { ok, lines } = summarize({
+    post,
+    job,
+    probeId,
+    probeCount: probe?.length,
+  });
   for (const line of lines) {
     console.log(line);
   }
