@@ -17,16 +17,15 @@ describe("Home page", () => {
     expect(headings[0].textContent).toBe("Every school community, connected.");
   });
 
-  it("renders inside the main landmark", () => {
+  it("leaves the main landmark to the root layout", () => {
     render(<Home />);
 
-    expect(screen.getByRole("main").id).toBe("main");
+    expect(screen.queryByRole("main")).toBeNull();
   });
   it("puts the two front doors directly after the hero", () => {
-    render(<Home />);
+    const { container } = render(<Home />);
 
-    const main = screen.getByRole("main");
-    const [hero, doors] = Array.from(main.children);
+    const [hero, doors] = Array.from(container.children);
     expect(hero.getAttribute("aria-labelledby")).toBe("home-hero-title");
     expect(doors.getAttribute("aria-label")).toBe("What we do");
   });
