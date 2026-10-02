@@ -11,16 +11,9 @@ describe("Home page", () => {
     expect(headings[0].textContent).toBe("Every school community, connected.");
   });
 
-  it("renders inside the main landmark", () => {
+  it("leaves the main landmark to the root layout", () => {
     render(<Home />);
 
-    expect(screen.getByRole("main").id).toBe("main");
-  });
-
-  it("sets the placeholder text in the brand muted colour", () => {
-    render(<Home />);
-
-    const placeholder = screen.getByText(/^\[Placeholder\]/);
-    expect(placeholder.classList.contains("text-muted")).toBe(true);
+    expect(screen.queryByRole("main")).toBeNull();
   });
 });
