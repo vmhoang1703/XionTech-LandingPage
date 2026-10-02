@@ -9,3 +9,6 @@ coverage
 test-results
 playwright-report
 scripts/sonar
+studio/dist
+studio/node_modules
+studio/.sanity

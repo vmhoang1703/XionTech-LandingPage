@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Temporary pre-push hook until Demo day (2026-10-09): runs `npm run lint`,
+# which includes SonarQube's JS/TS rules, instead of the full local SonarQube
+# gate (that one runs once a day on develop: npm run sonar:gate:full).
+#
+#   Use it:            git config core.hooksPath scripts/git-hooks-demo
+#   After Demo day:    git config core.hooksPath scripts/git-hooks
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+echo "[pre-push] npm run lint (the SonarQube gate runs daily until Demo day)"
+npm run -s lint

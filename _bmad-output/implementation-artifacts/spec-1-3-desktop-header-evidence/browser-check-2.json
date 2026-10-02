@@ -1,0 +1,90 @@
+{
+  "url": "http://localhost:3210/",
+  "devOverlayPresent": true,
+  "firstTab": {
+    "text": "Skip to content",
+    "href": "#main",
+    "radius": "9999px",
+    "background": "rgb(255, 192, 0)",
+    "color": "rgb(22, 54, 99)",
+    "left": 16,
+    "top": 12,
+    "outline": "2px solid rgb(22, 54, 99)"
+  },
+  "afterSkip": {
+    "activeTag": "MAIN",
+    "activeId": "main",
+    "mainOutline": "none"
+  },
+  "header": {
+    "height": 72,
+    "position": "sticky",
+    "zIndex": "50",
+    "backdrop": "blur(16px) saturate(1.7)",
+    "currentItems": 0
+  },
+  "productsOpen": {
+    "expanded": "true",
+    "hidden": false,
+    "display": "grid",
+    "width": 660,
+    "columns": "312px 312px",
+    "rows": 5,
+    "footerSpan": "1/-1"
+  },
+  "megaType": {
+    "nameFont": "Unbounded",
+    "nameWeight": "600",
+    "forFont": "\"Lexend Exa\"",
+    "forTransform": "uppercase",
+    "forSpacing": "1.3888px",
+    "openTriggerBg": "rgb(238, 242, 249)"
+  },
+  "afterEscape": {
+    "focused": "Products",
+    "expanded": "false",
+    "hidden": true
+  },
+  "tabOut": {
+    "focused": "Services",
+    "productsHidden": true
+  },
+  "hoverNews": {
+    "bg": "rgb(238, 242, 249)",
+    "radius": "9999px",
+    "height": 40
+  },
+  "switch": {
+    "products": true,
+    "services": false
+  },
+  "afterOutside": true,
+  "seeTheProcess": "http://localhost:3210/services#process",
+  "afterNavigationMenuHidden": true,
+  "bookDemo": "http://localhost:3210/demo#form",
+  "at1000": {
+    "nav": "none",
+    "bookDemo": "flex"
+  },
+  "at600": {
+    "nav": "none",
+    "bookDemo": "none",
+    "logoHeight": 26
+  },
+  "aboutCurrent": {
+    "text": "About",
+    "weight": "700",
+    "color": "rgb(22, 54, 99)",
+    "borderBottom": "0px solid rgb(22, 54, 99)",
+    "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 192, 0) 0px -2px 0px 0px inset"
+  },
+  "noJs": {
+    "header": true,
+    "skip": true,
+    "main": true,
+    "placeholder": true,
+    "productsHidden": true,
+    "servicesHidden": true,
+    "navLinks": 17
+  }
+}
