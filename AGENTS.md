@@ -135,6 +135,10 @@ Do not edit files under `_bmad/` or the `bmad-*` skills in `.claude/skills/` by 
 (`npx @xiontechs/bmad-method@next install`, needs an Azure PAT in `~/.npmrc`) or use
 `bmad-customize`.
 
+**UI stories: UX checks in the spec.** Every UI story's build spec has a "UX checks" table —
+looks and behaviour (hover, click, keyboard, touch), one testable line each, with its source.
+Build to it and tick every line in the PR. Template and example: `docs/ux-checks.md`.
+
 ## AI log
 
 Log every prompt or decision that mattered in `docs/ai-log.md`, **especially when the AI
