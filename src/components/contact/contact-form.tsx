@@ -89,9 +89,9 @@ function text(data: FormData, key: string): string {
 function readValues(form: HTMLFormElement, type: ContactType) {
   const data = new FormData(form);
   const shared: SharedValues = {
-    name: text(data, "name"),
-    email: text(data, "email"),
-    org: text(data, "org"),
+    name: text(data, "name").trim(),
+    email: text(data, "email").trim(),
+    org: text(data, "org").trim(),
     role: text(data, "role"),
     message: text(data, "message"),
   };
@@ -113,6 +113,16 @@ function readValues(form: HTMLFormElement, type: ContactType) {
           startTiming: text(data, "startTiming"),
         };
   return submission;
+}
+
+function withoutError(
+  errors: ContactErrors,
+  field: ContactField,
+): ContactErrors {
+  if (!errors[field]) return errors;
+  const next = { ...errors };
+  delete next[field];
+  return next;
 }
 
 function nextTabIndex(key: string, index: number): number | null {
@@ -148,10 +158,17 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   function selectType(next: ContactType) {
+    if (next === type) return;
     setChoice({ type: next, hash });
+    // The date is the only validated field on a single tab (Product demo).
+    if (type === "demo") setErrors((current) => withoutError(current, "date"));
+    setAnnouncement((current) => ({ ...current, messages: [] }));
   }
 
   function onTabKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return;
+    }
     const next = nextTabIndex(event.key, TYPES.indexOf(type));
     if (next === null) return;
     event.preventDefault();
@@ -162,12 +179,7 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
   function onFieldChange(event: ChangeEvent<HTMLFormElement>) {
     const field = FIELD_ORDER.find((f) => FIELD_IDS[f] === event.target.id);
     if (!field) return;
-    setErrors((current) => {
-      if (!current[field]) return current;
-      const next = { ...current };
-      delete next[field];
-      return next;
-    });
+    setErrors((current) => withoutError(current, field));
   }
 
   function onSubmit(event: SubmitEvent<HTMLFormElement>) {

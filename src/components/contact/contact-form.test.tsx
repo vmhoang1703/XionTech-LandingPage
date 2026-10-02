@@ -84,6 +84,28 @@ describe("ContactForm", () => {
     expect(selected("Outsourcing project")).toBe("true");
   });
 
+  it("lets a later hash change override a clicked tab", () => {
+    render(<ContactForm />);
+    fireEvent.click(tab("Outsourcing project"));
+    act(() => {
+      history.replaceState(null, "", "/demo#form");
+      globalThis.dispatchEvent(new HashChangeEvent("hashchange"));
+    });
+    expect(selected("Product demo")).toBe("true");
+  });
+
+  it("leaves arrow keys with a modifier to the browser", () => {
+    render(<ContactForm />);
+    for (const modifier of ["altKey", "ctrlKey", "metaKey", "shiftKey"]) {
+      const notPrevented = fireEvent.keyDown(tab("Product demo"), {
+        key: "ArrowLeft",
+        [modifier]: true,
+      });
+      expect(notPrevented).toBe(true);
+      expect(selected("Product demo")).toBe("true");
+    }
+  });
+
   it("moves focus and selection with arrow keys, Home and End, and wraps", () => {
     render(<ContactForm />);
     expect(tab("Product demo").tabIndex).toBe(0);
@@ -219,6 +241,20 @@ describe("ContactForm", () => {
     expect(field("f-email").getAttribute("aria-invalid")).toBe("true");
   });
 
+  it("drops the hidden tab's errors and the announcement on a tab switch", () => {
+    render(<ContactForm />);
+    fillRequired();
+    fill("f-date", "2000-01-01");
+    submit();
+    expect(field("f-date").getAttribute("aria-invalid")).toBe("true");
+    fireEvent.click(tab("Outsourcing project"));
+    expect(liveRegion().textContent).toBe("");
+    fireEvent.click(tab("Product demo"));
+    expect(field("f-date").hasAttribute("aria-invalid")).toBe(false);
+    expect(field("f-date").hasAttribute("aria-describedby")).toBe(false);
+    expect(document.getElementById("f-date-err")).toBeNull();
+  });
+
   it("does not validate a past date on the hidden Product demo tab", () => {
     const onValidSubmit = vi.fn();
     render(<ContactForm onValidSubmit={onValidSubmit} />);
@@ -243,7 +279,9 @@ describe("ContactForm", () => {
   it("hands the Product demo values to onValidSubmit on a valid submit", () => {
     const onValidSubmit = vi.fn();
     render(<ContactForm onValidSubmit={onValidSubmit} />);
-    fillRequired();
+    fill("f-name", "  Ana Tran ");
+    fill("f-email", " ana@gmail.com ");
+    fill("f-org", "Saigon School  ");
     fill("f-role", "Principal");
     fireEvent.click(screen.getByRole("checkbox", { name: "LXP" }));
     fill("f-date", localToday());
