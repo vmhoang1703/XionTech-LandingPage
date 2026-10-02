@@ -16,4 +16,11 @@ describe("Home page", () => {
 
     expect(screen.getByRole("main").id).toBe("main");
   });
+
+  it("sets the placeholder text in the brand muted colour", () => {
+    render(<Home />);
+
+    const placeholder = screen.getByText(/^\[Placeholder\]/);
+    expect(placeholder.classList.contains("text-muted")).toBe(true);
+  });
 });

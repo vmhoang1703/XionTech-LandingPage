@@ -16,14 +16,23 @@
     "coverage:fetch-base": "git fetch -q origin develop || exit 0",
     "coverage:diff": "npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop",
     "test:smoke": "playwright test --project=smoke",
-    "sonar:gate": "bash scripts/sonar/check_quality_gate.sh"
+    "sonar:gate": "bash scripts/sonar/check_quality_gate.sh",
+    "sonar:gate:full": "bash scripts/sonar-gate-full.sh",
+    "test:skills": "bash .claude/skills/create-pr/scripts/test_pr_scripts.sh",
+    "ux:parity": "node scripts/ux/parity.mjs",
+    "ux:shots": "node scripts/ux/shots.mjs",
+    "sanity:check": "node --env-file-if-exists=.env.local scripts/sanity-check.mjs"
   },
   "dependencies": {
+    "@phosphor-icons/react": "2.1.10",
+    "@sanity/client": "8.9.0",
+    "@sanity/webhook": "4.0.4",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.2",
@@ -35,7 +44,10 @@
     "@vitest/coverage-v8": "^5.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
+    "eslint-plugin-sonarjs": "^4.2.2",
     "jsdom": "^29.1.1",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
