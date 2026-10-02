@@ -1,0 +1,131 @@
++ git rev-parse HEAD
+601165310e1fefb816502df64f7faa2f2d34923e
++ npm run lint
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
++ npm run typecheck
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
++ npm run format:check
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+[[33mwarn[39m] src/app/globals.css
+[[33mwarn[39m] Code style issues found in the above file. Run Prettier with --write to fix.
++ echo EXIT=1
+EXIT=1
++ npm run test:coverage
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  10 passed (10)
+      Tests  189 passed (189)
+   Start at  20:24:36
+   Duration  14.64s (environment 43%, tests 39%, setup 11%, import 3%, worker 2%, transform 2%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+No files with missing coverage.
+6 files fully covered.
+
+=============================== Coverage summary ===============================
+Statements   : 100% ( 100/100 )
+Branches     : 100% ( 38/38 )
+Functions    : 100% ( 26/26 )
+Lines        : 100% ( 99/99 )
+================================================================================
++ npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/components/layout/nav-data.ts (100%)
+src/components/layout/site-header.tsx (100%)
+src/components/layout/site-nav.tsx (100%)
+-------------
+Total:   54 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 5 changed file(s) with branch coverage >= 80% vs origin/develop.
++ echo EXIT=0
+EXIT=0
++ npm run lint
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
++ npm run typecheck
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
++ npm run format:check
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
++ echo EXIT=0
+EXIT=0
++ npm run build
+
+> xiontech-landing-page@0.1.0 build
+> next build
+
+▲ Next.js 16.3.6 (Turbopack)
+✓ Running next.config.ts took 29ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1272ms
+  Running TypeScript ...
+  Finished TypeScript in 3.4s ...
+  Collecting page data using 5 workers ...
+  Generating static pages using 5 workers (0/4) ...
+  Generating static pages using 5 workers (1/4) 
+  Generating static pages using 5 workers (2/4) 
+  Generating static pages using 5 workers (3/4) 
+✓ Generating static pages using 5 workers (4/4) in 1279ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+└ ○ /_not-found
+
+
+○  (Static)  prerendered as static content
+
++ npm run test:smoke
+
+> xiontech-landing-page@0.1.0 test:smoke
+> playwright test --project=smoke
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (70ms)
+
+  1 passed (11.4s)
++ echo EXIT=0
+EXIT=0
