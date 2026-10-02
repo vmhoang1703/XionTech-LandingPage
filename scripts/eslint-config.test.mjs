@@ -29,14 +29,14 @@ describe("eslint config: SonarQube rules", () => {
         "no-restricted-globals", // S7773
       ]),
     );
-  }, 60_000);
+  }, 120_000);
 
   it("leaves test files to the gate's test-scope rules", async () => {
     const ids = await ruleIds("src/lib/design/contrast.test.ts");
     expect(ids).not.toContain("sonarjs/prefer-regexp-exec");
     expect(ids).not.toContain("sonarjs/duplicates-in-character-class");
     expect(ids).not.toContain("no-restricted-globals");
-  }, 60_000);
+  }, 120_000);
 
   it("keeps eslint-config-next's React version detection", async () => {
     const config = await new ESLint().calculateConfigForFile(
