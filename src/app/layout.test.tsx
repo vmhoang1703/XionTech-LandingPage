@@ -1,16 +1,21 @@
-import { isValidElement, type ReactElement } from "react";
+import { render } from "@testing-library/react";
+import type { ReactElement } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 // next/font/google only works inside the Next.js compiler; stub the loaders.
 vi.mock("next/font/google", () => ({
-  Geist: () => ({ variable: "font-geist-sans" }),
-  Geist_Mono: () => ({ variable: "font-geist-mono" }),
+  Unbounded: () => ({ variable: "font-unbounded" }),
+  Lexend_Exa: () => ({ variable: "font-lexend-exa" }),
+  Be_Vietnam_Pro: () => ({ variable: "font-be-vietnam-pro" }),
+  JetBrains_Mono: () => ({ variable: "font-jetbrains-mono" }),
 }));
+
+vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 
 const { default: RootLayout, metadata } = await import("./layout");
 
 describe("RootLayout", () => {
-  it("renders an English html root with both font variables", () => {
+  it("renders an English html root with all four brand font variables", () => {
     const html = RootLayout({
       children: <p>child</p>,
     } as LayoutProps<"/">) as ReactElement<{
@@ -19,21 +24,30 @@ describe("RootLayout", () => {
     }>;
 
     expect(html.props.lang).toBe("en");
-    expect(html.props.className).toContain("font-geist-sans");
-    expect(html.props.className).toContain("font-geist-mono");
+    expect(html.props.className).toContain("font-unbounded");
+    expect(html.props.className).toContain("font-lexend-exa");
+    expect(html.props.className).toContain("font-be-vietnam-pro");
+    expect(html.props.className).toContain("font-jetbrains-mono");
   });
 
-  it("places children inside the body", () => {
-    const child = <p>child</p>;
+  it("renders the header before a focusable main#main that wraps the page", () => {
     const html = RootLayout({
-      children: child,
+      children: <p>child</p>,
     } as LayoutProps<"/">) as ReactElement<{
-      children: ReactElement<{ children: unknown }>;
+      children: ReactElement<{ children: ReactElement[] }>;
     }>;
-    const body = html.props.children;
+    const { container } = render(html.props.children.props.children);
 
-    expect(isValidElement(body)).toBe(true);
-    expect(body.props.children).toBe(child);
+    const header = container.querySelector("header");
+    const main = container.querySelector("main#main");
+    expect(header).not.toBeNull();
+    expect(main).not.toBeNull();
+    expect(main?.getAttribute("tabindex")).toBe("-1");
+    expect(main?.textContent).toBe("child");
+    expect(
+      header!.compareDocumentPosition(main!) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(container.querySelectorAll("main")).toHaveLength(1);
   });
 
   it("sets the site title and description", () => {

@@ -1,0 +1,28 @@
+{
+  "fonts": {
+    "body": "\"Be Vietnam Pro\", \"Be Vietnam Pro Fallback\", system-ui, sans-serif",
+    "h1": "Unbounded, \"Unbounded Fallback\", system-ui, sans-serif",
+    "loaded": [
+      "Unbounded",
+      "Unbounded",
+      "Be Vietnam Pro",
+      "Be Vietnam Pro",
+      "Be Vietnam Pro",
+      "Be Vietnam Pro"
+    ]
+  },
+  "focusLight": {
+    "focused": "probe-light",
+    "outline": "2px solid rgb(22, 54, 99)",
+    "offset": "3px",
+    "radius": "9999px"
+  },
+  "focusNavy": {
+    "focused": "probe-navy",
+    "outline": "2px solid rgb(255, 192, 0)",
+    "offset": "3px",
+    "radius": "9999px"
+  },
+  "woff2Requests": 22,
+  "externalRequests": []
+}
