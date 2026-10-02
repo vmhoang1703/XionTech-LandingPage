@@ -83,3 +83,7 @@ Acceptance: evidence — spec-1-8-sanity-setup-evidence/verification.txt — 463
 Review: patch re-review — pass — 0 critical, 0 important, 1 minor (next-config.test.ts:23 asserts toEqual({}); breaks when a real option is added) — deferred
 Review: acceptance re-audit — compliant, 0 unverified-acceptance
 Acceptance: evidence rehashed after CRLF→LF (as git stores it); row above updated, content unchanged
+Acceptance: verification — `npm run sanity:check` (after seeding) — exit 0 — "post: f73f46b0-18e1-4565-863d-b06282039d3a [Placeholder] First news post"
+Acceptance: verification — `SANITY_DRAFT_PROBE_ID=drafts.146fcc83-053f-42ff-96e0-406edac7de06 npm run sanity:check` — exit 0 — "draft privacy: proven (draft drafts.146fcc83-053f-42ff-96e0-406edac7de06 not readable without a token)"; draft id copied by the lead from the Studio URL of an unpublished post
+Acceptance: unblocked — real read of post, job and draft probe now observed (supersedes the first BLOCKED row)
+Acceptance: evidence — spec-1-8-sanity-setup-evidence/verification.txt — 5609 bytes — sha256 faeb6bc3a688

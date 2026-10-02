@@ -160,7 +160,8 @@ Re-captured after the step 4 review patches on 2026-10-02.
 - `npm test` -- exit 0 -- "Tests  318 passed (318)"
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%", "C1 ok: 3 changed file(s) with branch coverage >= 80% vs origin/develop."
 - `npm run build && npm run test:smoke` -- exit 0 -- "2 passed (15.1s)"
-- `npm run sanity:check` -- exit 1 -- "FAIL: no post found — publish a [Placeholder] post in the Studio"
+- `npm run sanity:check` -- exit 1 before seeding ("FAIL: no post found"); exit 0 after the lead seeded content -- "post: f73f46b0-… [Placeholder] First news post", "job: ce53ceb1-… [Placeholder] Sample job"
+- `SANITY_DRAFT_PROBE_ID=drafts.146fcc83-053f-42ff-96e0-406edac7de06 npm run sanity:check` -- exit 0 -- "draft privacy: proven (draft … not readable without a token)"
 - `npm audit --omit=dev` -- exit 0 -- "found 0 vulnerabilities"
 
 **Observed**
@@ -169,9 +170,8 @@ Re-captured after the step 4 review patches on 2026-10-02.
 
 **Artifacts**
 
-- spec-1-8-sanity-setup-evidence/verification.txt -- 4632 bytes -- sha256 e501fdf4788f -- transcript of every command above and the build-output search
+- spec-1-8-sanity-setup-evidence/verification.txt -- 5609 bytes -- sha256 faeb6bc3a688 -- transcript of every command above and the build-output search
 
 **Not captured**
 
-- Real read of a published post and job and the draft probe: project `1khn3hf4` has no published content yet (lead's account step 3). Re-run `npm run sanity:check` after seeding.
 - Webhook delivery 200: the webhook is not created and the route is not deployed yet (account steps 4–5).
