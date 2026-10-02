@@ -175,4 +175,4 @@ Re-captured after the step 4 review patches on 2026-10-02.
 
 **Not captured**
 
-Nothing.
+- Production webhook delivery: the production webhook is added after the first release to `main` (lead).
