@@ -17,6 +17,7 @@ describe("OFFICES", () => {
     expect(plano?.phone).toBe("+1 469 322 9899");
     expect(plano?.phoneHref).toBe("tel:+14693229899");
     expect(plano?.whatsapp).toBe("https://wa.me/14694399345");
+    expect(plano?.whatsappLabel).toBe("+1 469 439 9345");
     expect(plano?.email).toBe("vinni.tran@newxion.com");
     expect(plano?.emailHref).toBe("mailto:vinni.tran@newxion.com");
   });
@@ -34,6 +35,7 @@ describe("OFFICES", () => {
     expect(hcmc?.phone).toBe("+84 908 107 552");
     expect(hcmc?.phoneHref).toBe("tel:+84908107552");
     expect(hcmc?.whatsapp).toBeUndefined();
+    expect(hcmc?.whatsappLabel).toBeUndefined();
     expect(hcmc?.email).toBeUndefined();
     expect(hcmc?.emailHref).toBeUndefined();
   });

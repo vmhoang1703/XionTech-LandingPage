@@ -12,6 +12,7 @@ export interface Office {
   email?: string;
   emailHref?: string;
   whatsapp?: string;
+  whatsappLabel?: string;
 }
 
 export const OFFICES: Office[] = [
@@ -23,6 +24,7 @@ export const OFFICES: Office[] = [
     email: "vinni.tran@newxion.com",
     emailHref: "mailto:vinni.tran@newxion.com",
     whatsapp: "https://wa.me/14694399345",
+    whatsappLabel: "+1 469 439 9345",
   },
   {
     city: "Ho Chi Minh City, Vietnam",
