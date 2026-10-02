@@ -69,5 +69,5 @@ Sources: `EXPERIENCE.md` Component Patterns › Mega menu and Skip link, AC-NAV-
 | Book a demo   | width 640px or less                                                    | —          | hidden                                    | —            | CAP-6                                                                 |         |
 | Book a demo   | width 640px or less, open the mobile menu                              | any        | first item of the mobile menu             | —            | EXPERIENCE.md › Mobile menu (AC-NAV-2)                                |         |
 
-The optional UX tools on branch `feature/ux-quality-loop` (PR #11: `ux:parity`, `ux:shots`,
+The optional UX tools in `docs/ux-quality.md` (`ux:parity`, `ux:shots`,
 `ux-critic`) can check a table like this automatically; until Demo day no story has to run them.
