@@ -234,6 +234,10 @@
     --destructive: var(--color-error);
     /* Translucent fill for glass controls; navy and amber surfaces override it */
     --glass: color-mix(in srgb, var(--color-paper) 66%, transparent);
+    /* Light tokens resolved once at the root, for paper cards on dark surfaces */
+    --paper-text: var(--color-text);
+    --paper-muted: var(--color-muted);
+    --paper-border: var(--color-border);
   }
 
   /* Re-declared on each scoped surface so they follow its tokens there */
@@ -689,9 +693,9 @@
   /* Contact form: a paper card inside the navy hero, so it restores the light tokens */
   .form-card {
     --color-heading: var(--color-navy);
-    --color-text: #10223f;
-    --color-muted: #4a5b78;
-    --color-border: #1636631f;
+    --color-text: var(--paper-text);
+    --color-muted: var(--paper-muted);
+    --color-border: var(--paper-border);
     --color-link: var(--color-navy);
     --color-focus: var(--color-navy);
     --destructive: var(--color-error);
@@ -715,6 +719,7 @@
 
   .ftabs {
     display: inline-flex;
+    flex-wrap: wrap;
     margin-block: 18px 26px;
     padding: 4px;
     border: 1px solid var(--color-border);
