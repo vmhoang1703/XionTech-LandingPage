@@ -14,7 +14,7 @@ the surface, so it judges what is on the screen rather than what the code intend
 ## Inputs
 
 1. The surface file, e.g. `scripts/ux/surfaces/header.json` (route, states, story).
-2. Fresh screenshots: `npm run ux:shots -- <surface.json>` with the app running, then read
+2. Fresh screenshots: `npm run ux:shots -- <surface.json>` with the dev server running (`npm run dev`; not `next start`), then read
    `ux-reports/<surface>/shots/shots.md` and **open every image** it lists (all widths and states,
    reduced motion, JavaScript off) plus the axe and layout-shift results.
 3. The parity report `ux-reports/<surface>/parity/report.md` (what still differs from the mockup and why).

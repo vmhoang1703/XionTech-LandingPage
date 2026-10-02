@@ -70,8 +70,8 @@ npm run test:smoke   # Playwright @smoke: build, boot, GET / = 200
 npm run sonar:gate   # local SonarQube gate (runs on git push; lint only until Demo day)
 npm run sonar:gate:full   # same gate on a clean, up-to-date develop; new code = since main
 npm run test:skills  # create-pr skill scripts (after changing them)
-npm run ux:parity -- scripts/ux/surfaces/header.json --strict   # looks and behaviour vs the mockup (app running)
-npm run ux:shots -- scripts/ux/surfaces/header.json --strict    # screenshots, axe, layout shift for the critic
+npm run ux:parity -- scripts/ux/surfaces/header.json --strict   # looks and behaviour vs the mockup (dev server running: npm run dev)
+npm run ux:shots -- scripts/ux/surfaces/header.json --strict    # screenshots, axe, layout shift (dev server; known limits in docs/ux-quality.md)
 npm run build
 ```
 
