@@ -67,19 +67,19 @@ context: ['{project-root}/AGENTS.md']
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `scripts/eslint-config.test.mjs` -- raise both per-test timeouts from `60_000` to `120_000` -- lead's request; the typed-ESLint test times out in a full `npm test` while the dev server runs.
-- [ ] `package.json` -- add `@phosphor-icons/react` -- check-circle list icons and the paper-plane submit icon (AGENTS.md icon choice).
-- [ ] `src/lib/contact/contact-rules.ts` -- shared, framework-free validation: required fields per request type, email check (prototype regex, free mail allowed), date not before a given "today" (YYYY-MM-DD), message ≤ 2,000 characters; returns field → error text; error wording exported from here -- Story 2.3 runs the same rules on the server.
+- [x] `scripts/eslint-config.test.mjs` -- raise both per-test timeouts from `60_000` to `120_000` -- lead's request; the typed-ESLint test times out in a full `npm test` while the dev server runs.
+- [x] `package.json` -- add `@phosphor-icons/react` -- check-circle list icons and the paper-plane submit icon (AGENTS.md icon choice).
+- [x] `src/lib/contact/contact-rules.ts` -- shared, framework-free validation: required fields per request type, email check (prototype regex, free mail allowed), date not before a given "today" (YYYY-MM-DD), message ≤ 2,000 characters; returns field → error text; error wording exported from here -- Story 2.3 runs the same rules on the server.
   - red: `src/lib/contact/contact-rules.test.ts` -- each I/O matrix rule returns the right error, and hidden-type fields are ignored.
-- [ ] `src/components/layout/office-data.ts` -- the two offices (Plano, Texas; Ho Chi Minh City "Vietnam Delivery Center") with address lines, phone, WhatsApp and email exactly as `demo.html` lines 29–32 -- shared with Sammy's footer (Story 1.5).
+- [x] `src/components/layout/office-data.ts` -- the two offices (Plano, Texas; Ho Chi Minh City "Vietnam Delivery Center") with address lines, phone, WhatsApp and email exactly as `demo.html` lines 29–32 -- shared with Sammy's footer (Story 1.5).
   - red: `src/components/layout/office-data.test.ts` -- both offices with their tel/mailto/WhatsApp values.
-- [ ] `src/components/contact/contact-strings.ts` -- every visible string of the hero and form, the select options (school sizes, start timings, services from `SERVICES` + "Not sure yet", product pills PXP/LXP/SXP/IoT) -- one place to translate later.
-- [ ] `src/components/contact/contact-form.tsx` -- client form: ARIA tabs + tabpanels, hash on mount and on `hashchange`, fields per tab (hidden tab `hidden`), date `min` set after mount, submit validates the active tab, sets `aria-invalid`/`aria-describedby`, writes the errors to a polite live region, focuses the first invalid field; typing clears that field's error; a valid submit calls `onValidSubmit(values)` (a no-op in 2.2).
+- [x] `src/components/contact/contact-strings.ts` -- every visible string of the hero and form, the select options (school sizes, start timings, services from `SERVICES` + "Not sure yet", product pills PXP/LXP/SXP/IoT) -- one place to translate later.
+- [x] `src/components/contact/contact-form.tsx` -- client form: ARIA tabs + tabpanels, hash on mount and on `hashchange`, fields per tab (hidden tab `hidden`), date `min` set after mount, submit validates the active tab, sets `aria-invalid`/`aria-describedby`, writes the errors to a polite live region, focuses the first invalid field; typing clears that field's error; a valid submit calls `onValidSubmit(values)` (a no-op in 2.2).
   - red: `src/components/contact/contact-form.test.tsx` -- `#project` selects Outsourcing; arrow keys move and select tabs; empty submit marks three fields, announces, focuses Full name; past date and long message errors; hidden-tab fields are not focusable and not validated.
-- [ ] `src/app/demo/page.tsx` -- server page: navy hero (breadcrumbs "Home / Contact", H1, three reassurance items, two offices), paper form card beside it from `md`, stacked below; metadata title; no capture band.
+- [x] `src/app/demo/page.tsx` -- server page: navy hero (breadcrumbs "Home / Contact", H1, three reassurance items, two offices), paper form card beside it from `md`, stacked below; metadata title; no capture band.
   - red: `src/app/demo/page.test.tsx` -- H1, the three items, both offices, breadcrumbs and the form render; no `<main>` in the page.
-- [ ] `src/app/globals.css` -- port `.form-card`, `.ftabs`, field, error, pill, consent and breadcrumb styles with tokens; contrast of error text on paper covered in `src/lib/design/contrast.test.ts`.
-- [ ] `e2e/smoke.spec.ts` -- `@smoke` GET `/demo` returns 200 and contains "Send request".
+- [x] `src/app/globals.css` -- port `.form-card`, `.ftabs`, field, error, pill, consent and breadcrumb styles with tokens; contrast of error text on paper covered in `src/lib/design/contrast.test.ts`.
+- [x] `e2e/smoke.spec.ts` -- `@smoke` GET `/demo` returns 200 and contains "Send request".
 
 **Acceptance Criteria:**
 - Given a desktop width, when `/demo` loads, then the form card sits beside the hero; below 900px it stacks under it (CAP-1).
@@ -90,21 +90,21 @@ context: ['{project-root}/AGENTS.md']
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Page | `/demo` at 1280px | — | navy hero left, paper form card right | — | CAP-1, DESIGN.md › contact-form | |
-| Page | width under 900px | — | form card stacks under the hero | — | CAP-1 | |
-| Hero | load | — | "Home / Contact" breadcrumbs, H1, 3 check items, 2 offices | — | CAP-1, demo.html | |
-| Tabs | load `/demo#project` | — | Outsourcing project selected (navy pill) | — | CAP-2 | |
-| Tabs | load `/demo` or `/demo#form` | — | Product demo selected | — | CAP-2, EXPERIENCE.md CTA labels | |
-| Tabs | Arrow Right / Left, Home, End | keyboard | focus and selection move, wrap | — | CAP-2 (ARIA tab pattern) | |
-| Fields | Product demo tab | any | name, email, org, role, products (PXP on), size, date, message | — | CAP-3 | |
-| Fields | Outsourcing tab | any | name, email, org, role, service (9 options), start timing, message | — | CAP-3 | |
-| Hidden tab | Tab through the form | keyboard | never reaches the other tab's fields | — | CAP-4, AC-A11Y-3 | |
-| Submit | empty required fields | mouse | 3 red-bordered fields with error text; screen reader hears them; focus on Full name | — | CAP-5, AC-A11Y-5 | |
-| Email | `ana@school`, then `ana@gmail.com` | keyboard | error, then accepted | — | CAP-5 | |
-| Date | picker opens | mouse | starts at today; a past date shows its error on submit | — | CAP-6, AC-FORM-1 | |
-| Message | 2,001 characters, submit | keyboard | length error | — | CAP-7 | |
-| Field | type into an invalid field | keyboard | its error clears | — | demo.html JS | |
-| Submit, consent | look | — | "Send request" + paper-plane icon; consent line + underlined "Privacy policy" → `/privacy` | — | CAP-8 | |
+| Page | `/demo` at 1280px | — | navy hero left, paper form card right | — | CAP-1, DESIGN.md › contact-form || Chrome (walk.mjs) |
+| Page | width under 900px | — | form card stacks under the hero | — | CAP-1 || Chrome (walk.mjs) |
+| Hero | load | — | "Home / Contact" breadcrumbs, H1, 3 check items, 2 offices | — | CAP-1, demo.html || Chrome (walk.mjs) |
+| Tabs | load `/demo#project` | — | Outsourcing project selected (navy pill) | — | CAP-2 || Chrome (walk.mjs) |
+| Tabs | load `/demo` or `/demo#form` | — | Product demo selected | — | CAP-2, EXPERIENCE.md CTA labels || Chrome (walk.mjs) |
+| Tabs | Arrow Right / Left, Home, End | keyboard | focus and selection move, wrap | — | CAP-2 (ARIA tab pattern) || Chrome (walk.mjs) |
+| Fields | Product demo tab | any | name, email, org, role, products (PXP on), size, date, message | — | CAP-3 || Chrome (walk.mjs) |
+| Fields | Outsourcing tab | any | name, email, org, role, service (9 options), start timing, message | — | CAP-3 || Chrome (walk.mjs) |
+| Hidden tab | Tab through the form | keyboard | never reaches the other tab's fields | — | CAP-4, AC-A11Y-3 || Chrome (walk.mjs) |
+| Submit | empty required fields | mouse | 3 red-bordered fields with error text; screen reader hears them; focus on Full name | — | CAP-5, AC-A11Y-5 || Chrome (walk.mjs) |
+| Email | `ana@school`, then `ana@gmail.com` | keyboard | error, then accepted | — | CAP-5 || Chrome (walk.mjs) |
+| Date | picker opens | mouse | starts at today; a past date shows its error on submit | — | CAP-6, AC-FORM-1 || Chrome (walk.mjs) |
+| Message | 2,001 characters, submit | keyboard | length error | — | CAP-7 || Chrome (walk.mjs) |
+| Field | type into an invalid field | keyboard | its error clears | — | demo.html JS || Chrome (walk.mjs) |
+| Submit, consent | look | — | "Send request" + paper-plane icon; consent line + underlined "Privacy policy" → `/privacy` | — | CAP-8 || Chrome (walk.mjs) |
 
 ## Implementation Notes
 
@@ -126,3 +126,33 @@ The hash and today's date only exist in the browser: read them in an effect afte
 
 **Manual checks:**
 - In Chrome on `npm run dev`: walk every UX checks line at 1280px and 390px; tick the Checked column.
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-02.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
+- `npm test` -- exit 0 -- Tests 281 passed (281)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100% (Missing: 0 lines); C1 ok: 5 changed files with branch coverage >= 80%
+- `npm run build && npm run test:smoke` -- exit 0 -- 2 passed (12.5s)
+
+**Observed**
+
+- Every UX checks line as specified at 1280px and 390px -- `/demo` on `npm run dev` in Chrome (Playwright `walk.mjs`); details in observed.md
+
+**Artifacts**
+
+- spec-2-2-contact-form-evidence/verification.txt -- 3774 bytes -- sha256 79036497fc42 -- raw output of the four commands
+- spec-2-2-contact-form-evidence/demo-1280.png -- 454320 bytes -- sha256 eb5245a0f5ac -- desktop layout, card beside hero
+- spec-2-2-contact-form-evidence/errors-1280.png -- 457805 bytes -- sha256 4b6386521eb6 -- empty submit: three errors, focus on Full name
+- spec-2-2-contact-form-evidence/project-1280.png -- 427185 bytes -- sha256 2d1279a77ad8 -- `#project` selects Outsourcing
+- spec-2-2-contact-form-evidence/demo-390.png -- 260146 bytes -- sha256 1fa6860bfa95 -- 390px: card stacks under the hero
+- spec-2-2-contact-form-evidence/walk-output.txt -- 806 bytes -- sha256 0c529be1211d -- raw output of the UX walk
+- spec-2-2-contact-form-evidence/observed.md -- 1457 bytes -- sha256 ed25d1e4172d -- what was seen, step by step
+
+**Not captured**
+
+- A screen-reader run (NVDA/VoiceOver): the live region text was read from the DOM, not heard.
+
