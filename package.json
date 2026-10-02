@@ -20,7 +20,8 @@
     "sonar:gate:full": "bash scripts/sonar-gate-full.sh",
     "test:skills": "bash .claude/skills/create-pr/scripts/test_pr_scripts.sh",
     "ux:parity": "node scripts/ux/parity.mjs",
-    "ux:shots": "node scripts/ux/shots.mjs"
+    "ux:shots": "node scripts/ux/shots.mjs",
+    "sanity:check": "node --env-file-if-exists=.env.local scripts/sanity-check.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "2.1.10",
