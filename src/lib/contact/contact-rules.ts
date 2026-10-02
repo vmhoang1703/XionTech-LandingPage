@@ -42,7 +42,8 @@ export function validateContact(
   if (type === "demo" && values.date && values.date < today) {
     errors.date = CONTACT_ERRORS.date;
   }
-  if (values.message.length > MESSAGE_MAX_LENGTH) {
+  // Form posts send line breaks as CRLF; count each as one character.
+  if (values.message.replaceAll("\r\n", "\n").length > MESSAGE_MAX_LENGTH) {
     errors.message = CONTACT_ERRORS.message;
   }
   return errors;

@@ -36,6 +36,11 @@ describe("validateContact", () => {
     expect(
       validateContact("demo", { ...valid, email: "ana@school" }, TODAY),
     ).toEqual({ email: "Please enter a valid email address." });
+    for (const email of ["a@b.c", "a@.com"]) {
+      expect(validateContact("demo", { ...valid, email }, TODAY)).toEqual({
+        email: CONTACT_ERRORS.email,
+      });
+    }
     expect(
       validateContact("demo", { ...valid, email: "  ana@school.edu " }, TODAY),
     ).toEqual({});
@@ -70,5 +75,11 @@ describe("validateContact", () => {
     expect(validateContact("project", long, TODAY)).toEqual({
       message: CONTACT_ERRORS.message,
     });
+  });
+
+  it("counts a CRLF line break as one character", () => {
+    // 1,000 + line break + 999 = 2,000 characters; CRLF would count 2,001.
+    const message = `${"a".repeat(1000)}\r\n${"b".repeat(999)}`;
+    expect(validateContact("demo", { ...valid, message }, TODAY)).toEqual({});
   });
 });
