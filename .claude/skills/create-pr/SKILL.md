@@ -95,6 +95,8 @@ When `storyKey` is set, also read that story's specs:
   `## Acceptance Evidence` gives the verification results and screenshots.
 
 If neither exists, say so in `## AC covered` rather than inventing criteria.
+For a UI story, copy the build spec's "UX checks" table (`docs/ux-checks.md`) into `## UX checks`
+with its Checked column; if the spec has none, say so there instead of inventing one.
 
 ### 3. Write the title
 
