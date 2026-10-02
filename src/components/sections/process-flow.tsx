@@ -9,7 +9,7 @@ const STEP_DELAYS = ["0.3s", "0.85s", "1.4s", "1.95s"];
 const stepMotion =
   "transition-[opacity,translate] duration-900 ease-brand motion-reduce:transition-none group-data-[phase=armed]/flow:translate-y-4 group-data-[phase=armed]/flow:opacity-0";
 
-function EndNode({ title, line }: { title: string; line: string }) {
+function EndNode({ title, line }: Readonly<{ title: string; line: string }>) {
   return (
     <li className="hidden w-32 flex-col items-center gap-2 text-center lg:row-span-4 lg:flex">
       <span
@@ -27,7 +27,7 @@ function EndNode({ title, line }: { title: string; line: string }) {
 // Above 1080px the "You receive" rows align across the four cards (subgrid);
 // at 1080px and below the track and end nodes hide and steps use 2 columns,
 // then 1 column at 640px and below.
-export function ProcessFlow({ flow }: { flow: ProcessFlowContent }) {
+export function ProcessFlow({ flow }: Readonly<{ flow: ProcessFlowContent }>) {
   const { label, receiveLabel, start, end, steps } = flow;
 
   return (

@@ -10,11 +10,11 @@ export function FlowReveal({
   label,
   className,
   children,
-}: {
+}: Readonly<{
   label: string;
   className: string;
   children: ReactNode;
-}) {
+}>) {
   const ref = useRef<HTMLOListElement>(null);
   const [phase, setPhase] = useState<Phase>("static");
 
