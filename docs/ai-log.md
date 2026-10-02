@@ -412,4 +412,9 @@ Template:
   UX checks (looks and behaviour) in the spec only and to merge the tools as optional. The AI also
   read Anthropic's `webapp-testing` and `frontend-design` skills before installing them and advised
   against both as they stand (Python one-off scripts that wait for `networkidle`; a skill that
-  invents new palettes and fonts against our fixed `DESIGN.md`).
+  invents new palettes and fonts against our fixed `DESIGN.md`); neither was installed. **AI got
+  it wrong?** Partly: its first answer (a lighter scope plus speed fixes) still kept a slow,
+  flaky tool on the path; testing those fixes cost about two hours before the lead's simpler
+  choice. Lesson: when a check is slow and unreliable, first ask whether the team needs it
+  before the deadline at all. The planned 2026-10-07 screenshot sweep was dropped with the
+  tools; the spec's UX checks replace it.

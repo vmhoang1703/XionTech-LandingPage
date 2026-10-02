@@ -1,6 +1,6 @@
 ---
 name: ux-critic
-description: Score a built UI surface (a page or a shared part such as the header) against the team's UX scorecard and propose ranked improvements beyond the mockup. Use after `npm run ux:parity` is clean for that surface — "run the UX critic on the header", "critic pass for Story 3.1", "how can this page feel better", "UX ceiling pass". Works from real screenshots (`npm run ux:shots`), never from code alone. Changes no code; the team picks which proposals to apply.
+description: Score a built UI surface (a page or a shared part such as the header) against the team's UX scorecard and propose ranked improvements beyond the mockup. Optional until Demo day (2026-10-09); no story has to run it. Use after `npm run ux:parity` is clean for that surface — "run the UX critic on the header", "critic pass for Story 3.1", "how can this page feel better", "UX ceiling pass". Works from real screenshots (`npm run ux:shots`), never from code alone. Changes no code; the team picks which proposals to apply.
 ---
 
 # UX critic (the ceiling pass)

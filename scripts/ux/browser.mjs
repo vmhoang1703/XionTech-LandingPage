@@ -46,6 +46,8 @@ const ACTION_TIMEOUT_MS = 5000;
 export async function openPage(context, url, readySelector) {
   const page = await context.newPage();
   try {
+    // Dev server only: a production build prefetches nav links to missing pages and never goes
+    // idle (see deferred-work.md, "make ux:parity --strict stable").
     await page.goto(url, { waitUntil: "networkidle" });
     if (readySelector)
       await page.waitForSelector(readySelector, { timeout: ACTION_TIMEOUT_MS });

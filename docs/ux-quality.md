@@ -8,7 +8,7 @@ to run these tools, to save time before the deadline: UI stories rely on the UX 
 behaviour) written in the spec instead. Use the tools when they help, for example on a demo page.
 After Demo day the team decides whether the loop becomes part of the Definition of Done.
 
-## The loop (per UI story)
+## The loop (when used)
 
 1. **UX brief — before building.** The build spec names the experience goal (who, what they should
    feel or do), the mockup page and parts, and the UX acceptance list: states (hover, focus, open,
@@ -33,7 +33,10 @@ After Demo day the team decides whether the loop becomes part of the Definition 
 
 **Known limits (2026-10-02):** a strict parity run sometimes fails by chance (dev server compiling
 a page on first visit, a public CDN stalling, or a probe acting before React hydrates); rerun once.
-A header run takes 2–5 minutes. Details in `deferred-work.md`.
+Run the tools against the dev server (`npm run dev`, `http://localhost:3000`): a production build
+prefetches nav links to pages that do not exist yet, so its network never goes idle and pages
+time out. On the dev server a header parity run takes 2–5 minutes and a shots run about 2
+minutes. Details in `_bmad-output/implementation-artifacts/deferred-work.md`.
 
 ## Scorecard (1–5 per area, target 4 or more)
 
