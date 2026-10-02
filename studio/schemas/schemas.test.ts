@@ -26,7 +26,13 @@ describe("studio schemas", () => {
   it("has the fields the spec lists", () => {
     const postNames = post.fields.map((f) => f.name);
     expect(postNames).toEqual(
-      expect.arrayContaining(["title", "slug", "publishedAt", "excerpt", "body"]),
+      expect.arrayContaining([
+        "title",
+        "slug",
+        "publishedAt",
+        "excerpt",
+        "body",
+      ]),
     );
     const jobNames = job.fields.map((f) => f.name);
     expect(jobNames).toEqual(
@@ -34,13 +40,16 @@ describe("studio schemas", () => {
     );
   });
 
-  it.each(translated)("keeps EN and VI in one document (%#)", (schema, names) => {
-    for (const name of names) {
-      const field = findField(schema, name);
-      expect(field.type).toBe("object");
-      expect((field.fields ?? []).map((f) => f.name)).toEqual(["en", "vi"]);
-    }
-  });
+  it.each(translated)(
+    "keeps EN and VI in one document (%#)",
+    (schema, names) => {
+      for (const name of names) {
+        const field = findField(schema, name);
+        expect(field.type).toBe("object");
+        expect((field.fields ?? []).map((f) => f.name)).toEqual(["en", "vi"]);
+      }
+    },
+  );
 
   it.each([post, job])("has no application or CV field (%#)", (schema) => {
     const names = JSON.stringify(schema)
