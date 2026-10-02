@@ -58,6 +58,8 @@ const eslintConfig = defineConfig([
     ".claude/**",
     "_bmad/**",
     "_bmad-output/**",
+    // Studio is its own package (own deps, own lockfile); not part of the Next app:
+    "studio/**",
   ]),
 ]);
 

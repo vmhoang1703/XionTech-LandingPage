@@ -118,3 +118,15 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-2-contact-form.md`
   summary: The consent link to `/privacy` returns 404 until Story 2.1 builds the privacy page.
   evidence: `next build` routes list only `/`, `/_not-found`, `/demo`; CAP-8 requires the link now.
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-8-sanity-setup.md`
+  summary: `/api/revalidate` accepts replayed signed deliveries; add a timestamp age check that still allows Sanity's retries.
+  evidence: `@sanity/webhook` only checks the timestamp is after 2021 (`node_modules/@sanity/webhook/dist/index.mjs`); the route adds no window. Impact: cache churn for someone holding one delivery.
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-8-sanity-setup.md`
+  summary: `scripts/sanity-check.mjs` `main()` has no test (probe perspective, no token, exit code).
+  evidence: `scripts/sanity-check.test.mjs` imports only `summarize`.
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-8-sanity-setup.md`
+  summary: `studio/` has no lint or typecheck; the root tools exclude it.
+  evidence: `tsconfig.json` excludes `studio`, `eslint.config.mjs` ignores `studio/**`, and `studio/` has no tsconfig.
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-8-sanity-setup.md`
+  summary: `src/lib/sanity/next-config.test.ts` asserts the loaded config equals `{}`; change it to a non-throw check before adding a real option to `next.config.ts`.
+  evidence: patch re-review minor, 2026-10-02.
