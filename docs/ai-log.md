@@ -442,3 +442,16 @@ Template:
      fonts and hover pill were missing, and `next/image` `priority` is deprecated in Next.js 16.
   3. The AI checked evidence line endings with a `grep` that missed CRLF; Python showed 3 CRLF lines,
      which were converted to LF (as git stores them) before hashing.
+
+## 2026-10-02 — UX checks move into the spec
+
+- **Prompt (Hoang Vu):** the UX tools cost too much time before Demo day; "keep UI/UX checks +
+  behaviour in the spec only to save time".
+- **What the AI did:** wrote `docs/ux-checks.md` (who writes the table and when, rules, template,
+  the Story 1.3 header as an example), the Definition of Done line in `CLAUDE.md`, the `AGENTS.md`
+  rule and a "UX checks" section in the PR template. The UX tools (PR #11) stay optional.
+- **AI got it wrong?** Yes, twice. The header's hover-open gap was found only after the build,
+  because no spec line said "hover opens"; this rule exists to stop that. And the first draft of
+  the example table itself missed six menu behaviours from `EXPERIENCE.md` (pointer coming back
+  within 150ms, one menu at a time, focus leaving the panel, navigation, pen input, the pinned
+  menu); the code review caught them.

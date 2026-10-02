@@ -20,6 +20,11 @@
      and say why — "config-only change", "covered by existing X". Do not claim
      coverage that is not in the diff. -->
 
+## UX checks
+
+<!-- UI stories only: copy the build spec's UX checks table (docs/ux-checks.md) with the
+     Checked column filled, and list any pending lines. Write "n/a" otherwise. -->
+
 ## Screenshots
 
 <!-- UI changes only. Delete the section's body and write "n/a" otherwise. -->
