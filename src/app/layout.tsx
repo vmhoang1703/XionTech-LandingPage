@@ -5,6 +5,7 @@ import {
   Be_Vietnam_Pro,
   JetBrains_Mono,
 } from "next/font/google";
+import { SiteHeader } from "@/components/layout/site-header";
 import "./globals.css";
 
 const unbounded = Unbounded({
@@ -48,7 +49,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${unbounded.variable} ${lexendExa.variable} ${beVietnamPro.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <SiteHeader />
+        <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

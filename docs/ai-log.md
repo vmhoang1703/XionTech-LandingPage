@@ -418,3 +418,27 @@ Template:
   choice. Lesson: when a check is slow and unreliable, first ask whether the team needs it
   before the deadline at all. The planned 2026-10-07 screenshot sweep was dropped with the
   tools; the spec's UX checks replace it.
+
+## 2026-10-01 — Decisions before Story 1.3, and the desktop header (`bmad-build`)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` with task reviews and
+  five `bmad-code-review` layers (subagents).
+- **Prompt (short):** "back to decide before implementing 1.3", then the choices in
+  `_bmad-output/specs/decisions-2026-10-01.md` (T9, T10, D1–D3), then "Keep full spec" and "Approve and
+  continue".
+- **What the AI did:** Recorded five decisions (focus ring 2px; build 1.3 without the footer mount
+  until Story 1.5 merges; dev/preview form mail to Andy's inbox; XionTech IT owns the newxion.com DNS;
+  the inbox is the record). Built the sticky glass header: skip link, logo, Products and Services mega
+  menus from one data module, Book a demo; the root layout now owns the one `<main id="main">`. 189
+  tests, 100% changed-line coverage; checked in real Chrome, including with JavaScript turned off.
+- **Decision / result:** Page files must not render their own `<main>` (Sammy's pages too). Below
+  1081px there is no nav until Story 1.4.
+- **AI got it wrong?** Yes, caught by the workflow's reviews:
+  1. Task reviews failed three times: `/about` was not marked current; an invented "For " prefix on the
+     product lines; a full-width 4-column mega panel instead of the prototype's 660px 2-column one; and
+     a menu that re-opened by itself after Back.
+  2. The five-layer review found 29 items; 7 patch groups were applied: menus now close when keyboard
+     focus leaves them (WCAG 2.2 focus not obscured), path matching got a `/` boundary, the prototype
+     fonts and hover pill were missing, and `next/image` `priority` is deprecated in Next.js 16.
+  3. The AI checked evidence line endings with a `grep` that missed CRLF; Python showed 3 CRLF lines,
+     which were converted to LF (as git stores them) before hashing.

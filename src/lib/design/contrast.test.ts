@@ -667,3 +667,34 @@ describe("amber-decor guard", () => {
     expect(hits).toEqual([]);
   });
 });
+
+describe("T9: focus ring and skip link pill", () => {
+  const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+
+  it(":focus-visible outline width is 2px", () => {
+    const rule = readRuleDeclarations(source, ":focus-visible");
+    const outline = rule.get("outline");
+    expect(outline).toMatch(/^2px\s/);
+  });
+
+  it(".skip:focus uses --radius-full", () => {
+    const rule = readRuleDeclarations(source, ".skip:focus");
+    expect(rule.get("border-radius")).toBe("var(--radius-full)");
+  });
+
+  it("#main drops the outline when focused by the skip link", () => {
+    const rule = readRuleDeclarations(source, "#main:focus");
+    expect(rule.get("outline")).toBe("none");
+  });
+
+  it("html reserves scroll-padding-top for the sticky header", () => {
+    const rule = readRuleDeclarations(source, "html");
+    expect(rule.get("scroll-padding-top")).toBe("var(--spacing-header-height)");
+  });
+
+  it("enabled buttons show the hand cursor (Tailwind v4 resets it to the arrow)", () => {
+    expect(
+      readRuleDeclarations(source, "button:not(:disabled)").get("cursor"),
+    ).toBe("pointer");
+  });
+});

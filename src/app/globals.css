@@ -222,6 +222,10 @@
 }
 
 @layer base {
+  html {
+    scroll-padding-top: var(--spacing-header-height);
+  }
+
   :root {
     /* shadcn/ui variables (DESIGN.md Build mapping) */
     --primary: var(--color-amber);
@@ -271,9 +275,18 @@
   }
 
   :focus-visible {
-    outline: 2.5px solid var(--color-focus);
+    outline: 2px solid var(--color-focus);
     outline-offset: 3px;
     border-radius: var(--radius-xs);
+  }
+
+  #main:focus {
+    outline: none;
+  }
+
+  /* Tailwind v4 resets buttons to the arrow cursor; the prototype and links use the hand. */
+  button:not(:disabled) {
+    cursor: pointer;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -348,7 +361,7 @@
     left: 16px;
     z-index: var(--z-index-skip-link);
     padding: 10px 16px;
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-full);
     background: var(--color-amber);
     color: var(--color-navy);
   }
