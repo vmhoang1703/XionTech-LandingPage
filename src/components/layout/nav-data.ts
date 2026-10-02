@@ -44,8 +44,8 @@ export const LABELS: NavLabels = {
   bookDemo: "Book a demo",
   skipLink: "Skip to content",
   mainNav: "Main",
-  homeLink: "XionTechs home",
-  logoAlt: "XionTechs, Get IT Done",
+  homeLink: "XionTech home",
+  logoAlt: "XionTech, Get IT Done",
 };
 
 // Products (4 total, in order)

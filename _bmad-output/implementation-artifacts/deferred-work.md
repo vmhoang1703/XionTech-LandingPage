@@ -109,3 +109,12 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - [low] `ux:shots` has the same gap the parity report now closes: a state whose `minWidth` is above every `shotWidths` value gets no screenshot and no axe scan, and `--strict` still passes (Similar check).
 - [low] The report head and the console say "unexplained difference(s)", but the count also includes "Never found" and "Never ran or never used" lines, and the head line's advice ("listed in `intended`") does not fit those; the Tools table in `docs/ux-quality.md` says the same.
 - [medium] After Demo day, before the UX tools become a rule again: make `ux:parity --strict` stable. On 2026-10-02 runs failed by chance on the same code: the dev server compiling a page on first visit, a public CDN stall while loading the prototype's fonts and icons, and probably probes acting before React hydrates. Tried and set aside (the lead made the tools optional): a production build (`next start`), waiting for `load` + fonts + an idle main thread instead of `networkidle` (a production build prefetches nav links to missing pages, so the network never goes idle), one load retry, and keeping the failing report. On the dev server a header parity run takes 2–5 minutes and shots about 2 minutes (58–87s for shots on the production build). The load retry and the kept failing report were tried in uncommitted work and dropped; a failing `report.md` is still overwritten by the next run, which makes the flake hard to trace.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-2-contact-form.md`
+  summary: Check with a real screen reader (NVDA/VoiceOver) that the contact form's tabpanels, styled `display: contents`, are still announced as tab panels.
+  evidence: maybe-false (medium if true); older Chrome/Safari dropped `display: contents` elements from the accessibility tree. Settle with one screen-reader pass on /demo.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-2-contact-form.md`
+  summary: Story 2.3 server validation should cap name/org/email length and check the date format (YYYY-MM-DD) before comparing with today.
+  evidence: the shared rules cap only the message and compare dates as strings; the client date input limits the format, a server cannot rely on that.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-2-contact-form.md`
+  summary: The consent link to `/privacy` returns 404 until Story 2.1 builds the privacy page.
+  evidence: `next build` routes list only `/`, `/_not-found`, `/demo`; CAP-8 requires the link now.

@@ -480,9 +480,10 @@ describe("reduced motion", () => {
   );
 });
 
-// Rules allowed to hide content: the HTML `hidden` attribute, and the skip
-// link, which shows on keyboard focus with no JavaScript.
-const MAY_HIDE = new Set(["[hidden]", ".skip"]);
+// Rules allowed to hide content: the HTML `hidden` attribute (also on the
+// contact form tabpanels), and the skip link, which shows on keyboard focus
+// with no JavaScript.
+const MAY_HIDE = new Set(["[hidden]", ".fpanel[hidden]", ".skip"]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],
   ["visibility", /^(?:hidden|collapse)\b/],
@@ -696,5 +697,46 @@ describe("T9: focus ring and skip link pill", () => {
     expect(
       readRuleDeclarations(source, "button:not(:disabled)").get("cursor"),
     ).toBe("pointer");
+  });
+});
+
+describe("contact form styles", () => {
+  const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+  const colors = readThemeColors(GLOBALS_CSS);
+
+  it("shows error text in the error colour, which passes AA on the paper card", () => {
+    const rule = readRuleDeclarations(source, ".field .err");
+    expect(rule.get("color")).toBe("var(--color-error)");
+    expect(contrastRatio(colors.error, colors.paper)).toBeGreaterThanOrEqual(
+      TEXT,
+    );
+  });
+
+  it("paints an invalid field border in the error border colour", () => {
+    const rule = readRuleDeclarations(source, ".field.bad input");
+    expect(rule.get("border-color")).toBe("var(--color-error-border)");
+  });
+
+  it("lays each tabpanel out inside the two-column grid", () => {
+    const rule = readRuleDeclarations(source, ".fpanel");
+    expect(rule.get("display")).toBe("contents");
+  });
+
+  it("keeps the inactive tabpanel hidden despite display: contents", () => {
+    const rule = readRuleDeclarations(source, ".fpanel[hidden]");
+    expect(rule.get("display")).toBe("none");
+  });
+
+  it.each([
+    ".field input:focus",
+    ".field select:focus",
+    ".field textarea:focus",
+  ])("%s keeps the global focus ring (no outline: none)", (selector) => {
+    const rule = readRuleDeclarations(source, selector);
+    expect(rule.get("outline")).toBeUndefined();
+  });
+
+  it("does not redefine sr-only, which Tailwind provides", () => {
+    expect(source).not.toMatch(/\.sr-only\s*\{/);
   });
 });
