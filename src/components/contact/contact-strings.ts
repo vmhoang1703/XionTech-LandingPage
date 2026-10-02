@@ -6,9 +6,9 @@ import { CONTACT_ERRORS } from "@/lib/contact/contact-rules";
  * can be translated later. Service and product names stay in English.
  */
 export const CONTACT_STRINGS = {
-  metaTitle: "Book a Demo or Start a Project | XionTechs",
+  metaTitle: "Book a Demo or Start a Project | XionTech",
   metaDescription:
-    "Book a demo of PXP, LXP and SXP for your school, or tell us about your software project. XionTechs, Ho Chi Minh City and Plano.",
+    "Book a demo of PXP, LXP and SXP for your school, or tell us about your software project. XionTech, Ho Chi Minh City and Plano.",
   hero: {
     breadcrumbLabel: "Breadcrumb",
     breadcrumbHome: "Home",

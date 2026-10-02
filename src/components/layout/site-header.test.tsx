@@ -16,9 +16,9 @@ describe("SiteHeader", () => {
 
   it("links the logo to the home page with its labels", () => {
     render(<SiteHeader />);
-    const home = screen.getByRole("link", { name: "XionTechs home" });
+    const home = screen.getByRole("link", { name: "XionTech home" });
     expect(home.getAttribute("href")).toBe("/");
-    const logo = screen.getByAltText("XionTechs, Get IT Done");
+    const logo = screen.getByAltText("XionTech, Get IT Done");
     expect(home.contains(logo)).toBe(true);
   });
 
