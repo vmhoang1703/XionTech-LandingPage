@@ -404,3 +404,12 @@ Template:
   except the timeout move: it lives in the browser code, which has no automated test yet. The full
   review was run again after each large follow-up, as `CLAUDE.md` asks; each round still found
   slips in the previous fix, and the smallest gaps left are listed in `deferred-work.md`.
+
+  **Decision (2026-10-02): the tools become optional.** The lead saw that the loop would cost too
+  much time before Demo day (a surface file per page, 2–5 minute runs, and runs that sometimes
+  failed by chance). The AI first proposed a lighter scope and speed fixes; while testing them it
+  found new causes of random failures (a CDN stall, React hydration timing). The lead chose to keep
+  UX checks (looks and behaviour) in the spec only and to merge the tools as optional. The AI also
+  read Anthropic's `webapp-testing` and `frontend-design` skills before installing them and advised
+  against both as they stand (Python one-off scripts that wait for `networkidle`; a skill that
+  invents new palettes and fonts against our fixed `DESIGN.md`).

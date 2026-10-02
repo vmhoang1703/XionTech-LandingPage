@@ -72,15 +72,14 @@ npm run sonar:gate:full   # same gate on a clean, up-to-date develop; new code =
 npm run test:skills  # create-pr skill scripts (after changing them)
 npm run ux:parity -- scripts/ux/surfaces/header.json --strict   # looks and behaviour vs the mockup (app running)
 npm run ux:shots -- scripts/ux/surfaces/header.json --strict    # screenshots, axe, layout shift for the critic
-npm run ux:serve     # production build on :3101 for strict UX runs (pass --dev http://localhost:3101)
 npm run build
 ```
 
-**UI stories follow the UX quality loop** in `docs/ux-quality.md`: match the mockup (`ux:parity`,
-the floor), then improve beyond it (`ux:shots` + the `ux-critic` skill, the ceiling) with Amber
-choosing the enhancements. Open design questions (UX-Q1…) are listed there. Until Demo day the
-strict checks apply only to the header, Home hero, Products and Book a demo; other UI stories run
-`ux:shots` once without `--strict`.
+**Optional UX tools until Demo day** (`docs/ux-quality.md`): `ux:parity` compares a page with the
+mockup in looks and behaviour, `ux:shots` takes screenshots with axe and layout shift, and the
+`ux-critic` skill proposes improvements. No story has to run them; the lead decided on 2026-10-02
+to save time and rely on the UX checks written in the spec. Open design questions (UX-Q1…) are
+listed there.
 
 Before opening a PR: lint, typecheck, tests, diff coverage, smoke and build must pass, and the
 local Sonar gate must be green.

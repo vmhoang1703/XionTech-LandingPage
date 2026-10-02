@@ -1,7 +1,12 @@
 # UX quality loop
 
 Matching Amber's mockup is the **floor**. The goal is the best experience the spec allows: the
-**ceiling**. Every UI story goes through this loop; the pages the demo shows first get all of it.
+**ceiling**.
+
+**Status: optional until Demo day (2026-10-09).** On 2026-10-02 the lead decided that no story has
+to run these tools, to save time before the deadline: UI stories rely on the UX checks (looks and
+behaviour) written in the spec instead. Use the tools when they help, for example on a demo page.
+After Demo day the team decides whether the loop becomes part of the Definition of Done.
 
 ## The loop (per UI story)
 
@@ -26,17 +31,9 @@ Matching Amber's mockup is the **floor**. The goal is the best experience the sp
 5. **Feed back.** Amber records every accepted enhancement in `DESIGN.md` / `EXPERIENCE.md`, so
    the mockup and the code stay in step. Before/after screenshots go in the PR.
 
-**Scope until Demo day (2026-10-09):** the full loop (strict parity, strict shots, critic) only
-for the four demo pages: the header, Home hero, Products and Book a demo. Every other UI story:
-one `npm run ux:shots -- <surface>` run without `--strict`, and look at the screenshots and the
-axe list (5–10 minutes); no parity surface map needed. On 2026-10-07, once the stories are
-merged, run `ux:shots` once on every page and fix the top issues together.
-
-**Run strict checks on a production build**, not the dev server (the dev server compiles a page
-on first visit, which made one run fail and run times swing from 2 to 5 minutes): start
-`npm run ux:serve` (builds, then serves on port 3101) and pass `--dev http://localhost:3101`.
-On 2026-10-02 one strict parity run in seven failed by chance on the same code; if a strict run
-fails, run it once more before looking for a real problem.
+**Known limits (2026-10-02):** a strict parity run sometimes fails by chance (dev server compiling
+a page on first visit, a public CDN stalling, or a probe acting before React hydrates); rerun once.
+A header run takes 2–5 minutes. Details in `deferred-work.md`.
 
 ## Scorecard (1–5 per area, target 4 or more)
 
