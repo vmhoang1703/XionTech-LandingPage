@@ -70,8 +70,16 @@ npm run test:smoke   # Playwright @smoke: build, boot, GET / = 200
 npm run sonar:gate   # local SonarQube gate (runs on git push; lint only until Demo day)
 npm run sonar:gate:full   # same gate on a clean, up-to-date develop; new code = since main
 npm run test:skills  # create-pr skill scripts (after changing them)
+npm run ux:parity -- scripts/ux/surfaces/header.json --strict   # looks and behaviour vs the mockup (dev server running: npm run dev)
+npm run ux:shots -- scripts/ux/surfaces/header.json --strict    # screenshots, axe, layout shift (dev server; known limits in docs/ux-quality.md)
 npm run build
 ```
+
+**Optional UX tools until Demo day** (`docs/ux-quality.md`): `ux:parity` compares a page with the
+mockup in looks and behaviour, `ux:shots` takes screenshots with axe and layout shift, and the
+`ux-critic` skill proposes improvements. No story has to run them; the lead decided on 2026-10-02
+to save time and rely on the UX checks written in the spec. Open design questions (UX-Q1…) are
+listed there.
 
 Before opening a PR: lint, typecheck, tests, diff coverage, smoke and build must pass, and the
 local Sonar gate must be green.
