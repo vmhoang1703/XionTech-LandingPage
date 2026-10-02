@@ -169,7 +169,7 @@ Re-captured after the step 4 review patches on 2026-10-02.
 
 **Artifacts**
 
-- spec-1-8-sanity-setup-evidence/verification.txt -- 4635 bytes -- sha256 8640b1bcff48 -- transcript of every command above and the build-output search
+- spec-1-8-sanity-setup-evidence/verification.txt -- 4632 bytes -- sha256 e501fdf4788f -- transcript of every command above and the build-output search
 
 **Not captured**
 

@@ -79,6 +79,7 @@ Acceptance: manual — `grep -rlE 'styled-components|@sanity/ui|sanity/structure
 Acceptance: BLOCKED — real read of one post and one job and the draft probe: project 1khn3hf4 has no published content yet (lead's account step 3)
 Acceptance: BLOCKED — webhook delivery 200: webhook not created and route not deployed yet (lead's account steps 4–5)
 Acceptance: no-surface (server-only Sanity client, webhook API route, separate studio/ package, scripts and docs; no page, component or style renders anything)
-Acceptance: evidence — spec-1-8-sanity-setup-evidence/verification.txt — 4635 bytes — sha256 8640b1bcff48
+Acceptance: evidence — spec-1-8-sanity-setup-evidence/verification.txt — 4632 bytes — sha256 e501fdf4788f
 Review: patch re-review — pass — 0 critical, 0 important, 1 minor (next-config.test.ts:23 asserts toEqual({}); breaks when a real option is added) — deferred
 Review: acceptance re-audit — compliant, 0 unverified-acceptance
+Acceptance: evidence rehashed after CRLF→LF (as git stores it); row above updated, content unchanged
