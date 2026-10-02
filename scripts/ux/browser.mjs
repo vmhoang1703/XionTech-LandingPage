@@ -46,7 +46,10 @@ const ACTION_TIMEOUT_MS = 5000;
 export async function openPage(context, url, readySelector) {
   const page = await context.newPage();
   try {
-    await page.goto(url, { waitUntil: "networkidle" });
+    // Not "networkidle": a production build prefetches linked routes, and those requests can stay
+    // open, so the network never goes idle. Wait for the load event, the fonts and the ready part.
+    await page.goto(url, { waitUntil: "load" });
+    await page.evaluate(() => document.fonts.ready);
     if (readySelector)
       await page.waitForSelector(readySelector, { timeout: ACTION_TIMEOUT_MS });
   } catch (error) {
