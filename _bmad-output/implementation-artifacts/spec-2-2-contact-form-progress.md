@@ -70,3 +70,15 @@ Acceptance: evidence — spec-2-2-contact-form-evidence/walk-output.txt — 806 
 Acceptance: evidence — spec-2-2-contact-form-evidence/observed.md — 1457 bytes — sha256 ed25d1e4172d — observed.md
 Acceptance: evidence — spec-2-2-contact-form-evidence/verification.txt — 3774 bytes — sha256 79036497fc42 — verification.txt
 Acceptance: manual — walk every UX checks line at 1280px and 390px in Chrome — observed: all 15 lines as specified (see observed.md, walk-output.txt)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — after review patches
+Acceptance: verification — npm test — exit 0 — Tests 285 passed (285)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100%; C1 ok: 5 changed files
+Acceptance: verification — npm run build && npm run test:smoke — exit 0 — 2 passed (12.6s)
+Acceptance: manual — walk all 15 UX checks lines at 1280px and 390px — observed: every line as listed in observed.md (L1–L15 in walk-output.txt); screen reader not used
+Acceptance: evidence — spec-2-2-contact-form-evidence/verification.txt — 3774 bytes — sha256 6af988b4d9ad — verification.txt (after review patches)
+Acceptance: evidence — spec-2-2-contact-form-evidence/walk-output.txt — 1520 bytes — sha256 25cafc24c836 — walk-output.txt (after review patches)
+Acceptance: evidence — spec-2-2-contact-form-evidence/observed.md — 1741 bytes — sha256 f58ab08b55f7 — observed.md (after review patches)
+Acceptance: evidence — spec-2-2-contact-form-evidence/demo-1280.png — 454320 bytes — sha256 eb5245a0f5ac — demo-1280.png (after review patches)
+Acceptance: evidence — spec-2-2-contact-form-evidence/errors-1280.png — 457805 bytes — sha256 4b6386521eb6 — errors-1280.png (after review patches)
+Acceptance: evidence — spec-2-2-contact-form-evidence/project-1280.png — 411898 bytes — sha256 c8cfab8cea24 — project-1280.png (after review patches)
+Acceptance: evidence — spec-2-2-contact-form-evidence/demo-390.png — 260114 bytes — sha256 73e54e3d355f — demo-390.png (after review patches)

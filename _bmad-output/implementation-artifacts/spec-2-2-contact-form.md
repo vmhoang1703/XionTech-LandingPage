@@ -2,7 +2,7 @@
 title: 'Story 2.2: Two-tab contact form on /demo'
 type: 'feature'
 created: '2026-10-02'
-status: 'in-progress'
+status: 'done'
 baseline_commit: '6c7c29b58d8330181e7ba36a93b03039be636b88'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -112,6 +112,42 @@ context: ['{project-root}/AGENTS.md']
 
 ## Review Triage Log
 
+| # | Source | Finding | Verdict | Route | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Security, Blind, ledger T2 | `@phosphor-icons/react` caret range vs exact pins | low | patch | next/react pinned exact in package.json; lockfile 2.1.10 |
+| 2 | Security | lockfile/advisory unverifiable | false | reject | checked: lockfile 2.1.10, npm registry, integrity hash, no install script, `npm audit` 0 |
+| 3 | Edge, Blind, VG, ledger T6 | hidden tab keeps stale errors and live-region text | medium | patch | selectType does not touch errors; prototype setType clears them |
+| 4 | Edge | message length counts CRLF twice | medium | patch | form submissions normalise newlines to CRLF; 2.3 server would count differently |
+| 5 | Edge | modified arrows (Alt+Left) prevented on tabs | low | patch | onTabKeyDown has no modifier guard; blocks browser back |
+| 6 | Edge | untrimmed values reach onValidSubmit | low | patch | validation trims, payload does not |
+| 7 | VG | no click-then-hashchange test | medium | patch | mutant `choice?.type ?? hash` passes all tests |
+| 8 | VG, ledger T3 | email edges a@b.c, a@.com untested | medium | patch | mutants of the dot rule pass all tests |
+| 9 | Edge | `.ftabs` overflow near 320px | low | patch | two pills, no wrap |
+| 10 | Auditor, Edge, ledger T8 | `.form-card` re-scope uses hex, spec says tokens only | low | patch | three literals duplicate :root tokens |
+| 11 | Auditor | manual-check row claims all 15 UX lines | high | evidence re-capture | walk.mjs exercised about 8 lines |
+| 12 | Auditor | epic-2-context.md not a task | false | reject | written by bmad-build step 1 (epic context), belongs with the story |
+| 13 | Edge, Blind | `display: contents` tabpanel may drop from a11y tree | maybe-false | defer | needs a screen-reader check in Chrome/Safari |
+| 14 | Edge, Blind | shared fields outside the tabpanels | false | reject | spec: one tabpanel per request type holds its own fields |
+| 15 | Edge, Blind | no length cap on name/org | low | defer | not in spec; Story 2.3 server limits |
+| 16 | Edge | 5-digit year sorts before today | low | defer | browser date inputs cap years; 2.3 server should check the format |
+| 17 | Edge | empty product list allowed | false | reject | products are optional in EXPERIENCE.md |
+| 18 | Edge | whatsapp without whatsappLabel type gap | low | reject | no such office exists; fix is a type refactor |
+| 19 | VG, Blind | `/privacy` 404 until Story 2.1 | low | defer | link required by CAP-8; page is Story 2.1 |
+| 20 | Blind | valid submit shows nothing | false | reject | lead decision 3A (frozen) |
+| 21 | Blind | "organisation" spelling; title vs breadcrumb | false | reject | exact EXPERIENCE.md / prototype strings |
+| 22 | Blind | office numbers and email unverified | false | reject | prototype is human-verified (AGENTS.md rule 2) |
+| 23 | Blind | no required marker, no counter, no maxLength | false | reject | not in prototype or spec |
+| 24 | Blind | onChange clears errors inconsistently | false | reject | React onChange fires per keystroke in every browser |
+| 25 | Blind | eslint timeout doubled without reason | false | reject | lead's request, recorded in the spec task |
+| 26 | Blind | smoke test is shallow | false | reject | spec task asks exactly for 200 + text |
+| 27 | Blind | evidence files hold local paths | false | reject | walk.mjs uses BASE env, default localhost; no secrets |
+| 28 | Blind | ai-log not updated | low | patch (step 5) | AGENTS.md asks for an entry |
+| 29 | VG, ledger T5 | metaTitle "XionTechs" vs "XionTech" | maybe-false | lead | prototype string; asked the lead |
+| 30 | ledger T1 | timeout literal repeated | low | reject | two lines; no harm |
+| 31 | ledger T3 | `today` compared as string | low | defer | merged with #16 |
+| 32 | ledger T4, T7, T9 | small test-coverage notes | low | reject | covered by other assertions |
+| 33 | Blind | `as const` on spread services | low | reject | no type relies on literals |
+
 ## Design Notes
 
 The hash and today's date only exist in the browser: read them in an effect after mount (and on `hashchange`), so the server HTML always shows Product demo and no `min`, and nothing mismatches on hydration. Errors render inline under each field and as one list in a visually hidden `aria-live="polite"` region, so a screen reader hears them once per submit.
@@ -129,30 +165,29 @@ The hash and today's date only exist in the browser: read them in an effect afte
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-02.
+Re-captured in step-04 after the review patches, on 2026-10-02.
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
-- `npm test` -- exit 0 -- Tests 281 passed (281)
+- `npm test` -- exit 0 -- Tests 285 passed (285)
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100% (Missing: 0 lines); C1 ok: 5 changed files with branch coverage >= 80%
-- `npm run build && npm run test:smoke` -- exit 0 -- 2 passed (12.5s)
+- `npm run build && npm run test:smoke` -- exit 0 -- 2 passed (12.6s)
 
 **Observed**
 
-- Every UX checks line as specified at 1280px and 390px -- `/demo` on `npm run dev` in Chrome (Playwright `walk.mjs`); details in observed.md
+- All 15 UX checks lines (L1–L15) at 1280px and 390px -- `/demo` on `npm run dev` in Chrome (Playwright `walk.mjs`); one output line per check in walk-output.txt, summary in observed.md
 
 **Artifacts**
 
-- spec-2-2-contact-form-evidence/verification.txt -- 3774 bytes -- sha256 79036497fc42 -- raw output of the four commands
+- spec-2-2-contact-form-evidence/verification.txt -- 3774 bytes -- sha256 6af988b4d9ad -- raw output of the four commands
+- spec-2-2-contact-form-evidence/walk-output.txt -- 1520 bytes -- sha256 25cafc24c836 -- raw output of the UX walk, L1–L15
+- spec-2-2-contact-form-evidence/observed.md -- 1741 bytes -- sha256 f58ab08b55f7 -- what was seen per UX checks line
 - spec-2-2-contact-form-evidence/demo-1280.png -- 454320 bytes -- sha256 eb5245a0f5ac -- desktop layout, card beside hero
 - spec-2-2-contact-form-evidence/errors-1280.png -- 457805 bytes -- sha256 4b6386521eb6 -- empty submit: three errors, focus on Full name
-- spec-2-2-contact-form-evidence/project-1280.png -- 427185 bytes -- sha256 2d1279a77ad8 -- `#project` selects Outsourcing
-- spec-2-2-contact-form-evidence/demo-390.png -- 260146 bytes -- sha256 1fa6860bfa95 -- 390px: card stacks under the hero
-- spec-2-2-contact-form-evidence/walk-output.txt -- 806 bytes -- sha256 0c529be1211d -- raw output of the UX walk
-- spec-2-2-contact-form-evidence/observed.md -- 1457 bytes -- sha256 ed25d1e4172d -- what was seen, step by step
+- spec-2-2-contact-form-evidence/project-1280.png -- 411898 bytes -- sha256 c8cfab8cea24 -- `#project` selects Outsourcing
+- spec-2-2-contact-form-evidence/demo-390.png -- 260114 bytes -- sha256 73e54e3d355f -- 390px: card stacks under the hero
 
 **Not captured**
 
 - A screen-reader run (NVDA/VoiceOver): the live region text was read from the DOM, not heard.
-

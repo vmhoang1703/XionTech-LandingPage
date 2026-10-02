@@ -455,3 +455,9 @@ Template:
   the example table itself missed six menu behaviours from `EXPERIENCE.md` (pointer coming back
   within 150ms, one menu at a time, focus leaving the panel, navigation, pen input, the pinned
   menu); the code review caught them.
+
+## 2026-10-02 — Story 2.2 two-tab contact form (`bmad-build`)
+
+- **Prompt (Hoang Vu):** build Story 2.2 with the new "UX checks" table in the spec; fold in the 120s timeout for the eslint-config test; lead decisions: shared office data, EXPERIENCE.md labels ("Role", "Start timing"), a valid submit shows nothing until Story 2.3.
+- **What the AI did:** a 15-line UX checks table before coding, 9 tasks with tests first (shared validation rules for 2.3, office data, strings, the client form with ARIA tabs and a live region, the `/demo` page, CSS, a smoke test), one task review each, then a 5-layer code review: 9 patches, 4 deferred, 14 rejected against the spec. 285 tests pass, 100% changed lines.
+- **AI got it wrong?** Yes. The first evidence claimed all 15 UX lines were checked in Chrome when the walk script covered about 8; the acceptance auditor caught it, the script was extended to all 15 and the evidence re-captured. The form fields also first removed the focus outline (decision T9's 2px ring), caught by a task review.
