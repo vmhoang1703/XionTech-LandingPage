@@ -23,6 +23,7 @@
     "ux:shots": "node scripts/ux/shots.mjs"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.5",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"
