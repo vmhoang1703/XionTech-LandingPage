@@ -727,6 +727,15 @@ describe("contact form styles", () => {
     expect(rule.get("display")).toBe("none");
   });
 
+  it.each([
+    ".field input:focus",
+    ".field select:focus",
+    ".field textarea:focus",
+  ])("%s keeps the global focus ring (no outline: none)", (selector) => {
+    const rule = readRuleDeclarations(source, selector);
+    expect(rule.get("outline")).toBeUndefined();
+  });
+
   it("does not redefine sr-only, which Tailwind provides", () => {
     expect(source).not.toMatch(/\.sr-only\s*\{/);
   });

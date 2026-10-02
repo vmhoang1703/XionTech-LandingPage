@@ -688,12 +688,12 @@
 
   /* Contact form: a paper card inside the navy hero, so it restores the light tokens */
   .form-card {
-    --color-heading: #163663;
+    --color-heading: var(--color-navy);
     --color-text: #10223f;
     --color-muted: #4a5b78;
     --color-border: #1636631f;
-    --color-link: #163663;
-    --color-focus: #163663;
+    --color-link: var(--color-navy);
+    --color-focus: var(--color-navy);
     --destructive: var(--color-error);
     padding: 36px;
     border: 1px solid var(--color-border);
@@ -796,7 +796,6 @@
   .field input:focus,
   .field select:focus,
   .field textarea:focus {
-    outline: none;
     border-color: var(--color-focus);
     box-shadow: 0 0 0 3px
       color-mix(in srgb, var(--color-focus) 15%, transparent);
