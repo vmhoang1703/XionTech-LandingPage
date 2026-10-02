@@ -20,7 +20,7 @@ The Next.js build does not contain the Studio. The root app installs only `@sani
 
 1. Copy `.env.example` to `.env.local`.
 2. Ask the lead (Hoang Vu) for the value of `SANITY_REVALIDATE_SECRET`. Put it in `.env.local`. Never put it in chat, in a commit or in a log.
-3. Run `npm run sanity:check`. It must print one post, one job and an empty draft read.
+3. Run `npm run sanity:check`. It must print one post and one job. To prove that drafts stay private, run it again with `SANITY_DRAFT_PROBE_ID=drafts.<id>` (see below); without it, the script says draft privacy is "not proven".
 
 `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET` are checked in `next.config.ts`. If one is missing, `next build`, `next dev` and `next start` stop. The message names the missing variable.
 
@@ -38,7 +38,8 @@ The project ID `1khn3hf4` and the dataset `production` are public values.
 
 1. Go to sanity.io. Create a free project "XionTech Landing Page". Use the dataset `production` and make it public. The project ID is `1khn3hf4`.
 2. In Manage, open API, then CORS origins. Add these:
-   - `http://localhost:3000` (allow credentials)
+   - `http://localhost:3333` (allow credentials). Only the local Studio needs credentials.
+   - `http://localhost:3000` (no credentials). The site reads on the server without a login.
    - `https://xion-tech-landing-page.vercel.app` (no credentials)
    - `https://xiontech-dev.vercel.app` (no credentials)
    - `https://xion-tech-landing-page-*-vmhoang1703s-projects.vercel.app` (no credentials). This is the preview pattern.

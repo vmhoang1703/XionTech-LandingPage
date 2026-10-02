@@ -2,7 +2,7 @@ import { pathToFileURL } from "node:url";
 
 import { createClient } from "@sanity/client";
 
-const API_VERSION = "2025-01-01";
+const API_VERSION = "2025-02-19";
 
 export function summarize({ post, job, probeId, probeCount }) {
   const lines = [];
