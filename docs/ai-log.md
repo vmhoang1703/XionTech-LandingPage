@@ -350,6 +350,75 @@ Template:
      out. All fixed, with tests: `scripts/eslint-config.test.mjs` and
      `scripts/sonar-gate-full.test.mjs`.
 
+## 2026-10-01 — UX quality loop: match the mockup, then improve on it
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), Playwright, pixelmatch, axe-core,
+  a UX critic subagent.
+- **Prompt (short):** "Seems the UX has not been followed with mockup … propose the rule/skill/tool",
+  then "matching with the mockup is not enough … propose the technique to enhance/improve the UI/UX
+  per spec", then "set it up, start with the 1.3 header".
+- **What the AI did:** Measured the merged-to-PR header against the prototype in Chrome and found real
+  gaps (background colour, spacing, the mega value line, skip-link text) plus four places where the
+  prototype and `DESIGN.md` disagree. Built `npm run ux:parity` (prototype vs app, element by element:
+  box, computed styles, pixels) and `npm run ux:shots` (8 widths, every state, reduced motion,
+  JavaScript off, axe, layout shift), a `ux-critic` skill with an eight-area scorecard, and
+  `docs/ux-quality.md` (floor, ceiling, measure, feed back). First run on the header: 62 differences
+  became 0 unexplained after fixes on PR #9; the critic scored interaction feedback 3/5 and two of
+  its fixes were applied (hand cursor on buttons, hover fades).
+- **Decision / result:** UI stories follow the loop (CLAUDE.md Definition of Done); the full critic
+  pass is for the header, Home hero, Products and Book a demo until Demo day. Amber decides UX-Q1 to
+  UX-Q4 and every "enhance" proposal, and records accepted ones in `DESIGN.md`.
+- **AI got it wrong?** Yes. The Story 1.3 spec summarized the prototype into tokens, so the
+  implementer agents guessed missing values (`gap-8`, `text-ui`) and nothing compared the result
+  with the mockup; five review layers passed it. The first parity run reported 101 differences,
+  many of them notation noise (`0px none` vs `0px solid`, empty shadow layers, 999px vs 9999px);
+  after the tool normalized them, 62 real differences were left, and those became 0 unexplained
+  after the header fixes.
+
+  The lead then spotted that the menus opened on click only, while `EXPERIENCE.md` and the
+  prototype open them on hover. The tool had compared only how things look, the Demo-day plan had
+  cut hover, and the critic was told to file scope cuts under "Later". Fixed by interaction probes
+  in `ux:parity` (they reported the four hover differences before the fix and none after), a
+  critic rule that raises scope cuts which hurt the experience, and hover-open on PR #9
+  (decision T11).
+
+  The code review of this work then found that a menu opened by click or keyboard closed when the
+  mouse passed over and left, dropping keyboard focus; the fix pins a menu the visitor chose. That
+  fix first broke hover-then-click in real Chrome (a mouse press focuses the button before the
+  click), which the jsdom tests could not see; the new `click-then-leave` and `hover-into-panel`
+  probes ran in Chrome and confirmed the final behaviour.
+
+  The reviews of the tool's own fixes found more holes. A probe that could not run was shown as
+  "intended" or "pending", and so hidden, when an entry named the same event. A 5s timeout meant
+  for probes also cut the time allowed for screenshots. A bad surface file could crash the checker
+  instead of listing the problem. A first fix escaped "|" only in probe results, not in notes and
+  names (a missed similar check), and names were not yet safe as folder and file names (`../x`,
+  `Logo` vs `logo` on Windows, two element and state pairs writing one image). State names could
+  repeat or reuse the scripts' own `default`, `reduced-motion` and `no-js`. Last, three reviewers
+  showed that checking each `intended` field alone still let an entry match nothing (a typo, a
+  state and width that never run together), so an open decision could vanish from the pending
+  list; instead of more field rules, the report now lists states that did not run or compared
+  nothing, probes that did not run and entries that matched nothing, and the pending list shows
+  every pending entry in the file. Twice the AI's own new tests asserted the very bug: they
+  expected a pending entry to be left out of the pending list. All are fixed and unit-tested,
+  except the timeout move: it lives in the browser code, which has no automated test yet. The full
+  review was run again after each large follow-up, as `CLAUDE.md` asks; each round still found
+  slips in the previous fix, and the smallest gaps left are listed in `deferred-work.md`.
+
+  **Decision (2026-10-02): the tools become optional.** The lead saw that the loop would cost too
+  much time before Demo day (a surface file per page, 2–5 minute runs, and runs that sometimes
+  failed by chance). The AI first proposed a lighter scope and speed fixes; while testing them it
+  found new causes of random failures (a CDN stall, React hydration timing). The lead chose to keep
+  UX checks (looks and behaviour) in the spec only and to merge the tools as optional. The AI also
+  read Anthropic's `webapp-testing` and `frontend-design` skills before installing them and advised
+  against both as they stand (Python one-off scripts that wait for `networkidle`; a skill that
+  invents new palettes and fonts against our fixed `DESIGN.md`); neither was installed. **AI got
+  it wrong?** Partly: its first answer (a lighter scope plus speed fixes) still kept a slow,
+  flaky tool on the path; testing those fixes cost about two hours before the lead's simpler
+  choice. Lesson: when a check is slow and unreliable, first ask whether the team needs it
+  before the deadline at all. The planned 2026-10-07 screenshot sweep was dropped with the
+  tools; the spec's UX checks replace it.
+
 ## 2026-10-01 — Decisions before Story 1.3, and the desktop header (`bmad-build`)
 
 - **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` with task reviews and
