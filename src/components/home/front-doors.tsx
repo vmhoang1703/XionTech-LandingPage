@@ -19,7 +19,7 @@ function Arrow() {
   );
 }
 
-function Chips({ items }: { items: string[] }) {
+function Chips({ items }: Readonly<{ items: string[] }>) {
   return (
     <div className="mt-auto flex flex-wrap gap-2">
       {items.map((item) => (
