@@ -468,3 +468,9 @@ Template:
 - **What the AI did:** 9 tasks with tests first: a server-only client and one tagged, cached fetch helper; a fail-fast config check in `next.config.ts`; a signed webhook route that revalidates `post` / `job`; a separate `studio/` package with EN/VI schemas; `.env.example`; a `sanity:check` proof script; `docs/sanity.md` with the account steps, free-plan limits and the audit result (T7). Then a 5-layer review: 24 findings, 4 patched, 4 deferred (one from the patch re-review), the rest rejected with reasons. 318 tests pass, 100% changed lines, no Studio code in the build.
 - **AI got it wrong?** Yes, three times. The first draft check passed with no drafts at all (it now needs a real draft ID, or says "not proven"). The setup doc told the lead to give `localhost:3000` CORS credentials, which would let any local page act as a logged-in editor; the security review caught it. And the script used a different API version from the app while its comment said "same settings".
 - **Still open:** the real read (`npm run sanity:check` with a published post and job) and the webhook delivery wait on the lead's account steps; the PR waits for that proof.
+
+## 2026-10-02 — Story 1.8 webhook goes live
+
+- **Prompt (Hoang Vu):** after merging #14, the first Sanity webhook delivery failed with 401 "Invalid signature".
+- **What the AI did:** signed a test call with the local secret (without printing it) and sent it to the dev route: 200. That proved the code and the Vercel secret were right, so the webhook's own secret was wrong. It held the variable name `SANITY_REVALIDATE_SECRET`, not its value. After the fix, the delivery got 200. Webhooks on the Free plan are now confirmed.
+- **AI got it wrong?** Partly. The setup guide said "Secret: the value of `SANITY_REVALIDATE_SECRET`", which was easy to read as the name; it now says "only the text after `=`".

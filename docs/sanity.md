@@ -50,10 +50,10 @@ The project ID `1khn3hf4` and the dataset `production` are public values.
    - Projection: `{_type}`
    - Trigger on: create, update, delete
    - Method: POST
-   - Secret: the value of `SANITY_REVALIDATE_SECRET`
+   - Secret: the value of `SANITY_REVALIDATE_SECRET` (only the text after `=`), not the variable name. It must match the value in Vercel.
 5. In Vercel, open Settings, then Environment Variables. Set these for Preview and Production: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET` (`production`) and `SANITY_REVALIDATE_SECRET`. Do this before you merge. The build stops without the first two.
 
-Webhook answers: 200 is OK, 401 is a bad or missing signature, 400 is an unknown document type or bad JSON, 500 means the secret is not set. After you publish a change in the Studio, the webhook delivery in sanity.io/manage must show 200.
+Webhook answers: 200 is OK, 401 is a bad or missing signature, 400 is an unknown document type or bad JSON, 500 means the secret is not set. After you publish a change in the Studio, the webhook delivery in sanity.io/manage must show 200. A 401 "Invalid signature" means the webhook secret differs from the one in Vercel.
 
 ## Draft privacy proof
 
@@ -86,7 +86,7 @@ What would force a paid plan:
 
 The pricing page does not say what happens at the limit. Check this before Demo day. The next plan is Growth, at $15 per user per month.
 
-Webhooks on the Free plan: not yet confirmed. The lead must check this in sanity.io/manage before the team relies on webhooks. If they are not on Free, tell the team first.
+Webhooks on the Free plan: confirmed on 2026-10-02. The dev webhook to `https://xiontech-dev.vercel.app/api/revalidate` delivered a published post change with 200 `{"revalidated":"post"}`. The production webhook is added after the first release to `main`.
 
 ## Security: npm audit (run 2026-10-02)
 
