@@ -1,5 +1,6 @@
 "use client";
 
+import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { homeHero } from "@/content/home";
 import {
@@ -78,25 +79,19 @@ export function HeroSilk() {
         ref={canvasRef}
         aria-hidden="true"
         hidden={!supported}
-        className="absolute inset-0 -z-10 size-full"
+        className="absolute inset-0 -z-1 size-full"
       />
       {supported ? (
         <button
           type="button"
           onClick={() => setPaused((value) => !value)}
-          className="group bg-ink/50 absolute top-4 right-4 z-10 inline-flex h-9 items-center rounded-full border border-white/30 px-2.5 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6"
+          className="group bg-ink/50 absolute top-4 right-4 z-10 inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/30 px-2 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6"
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 16 16"
-            className="size-4 fill-current"
-          >
-            {paused ? (
-              <path d="M4 2.5v11l9-5.5z" />
-            ) : (
-              <path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" />
-            )}
-          </svg>
+          {paused ? (
+            <PlayIcon aria-hidden="true" weight="fill" className="size-4" />
+          ) : (
+            <PauseIcon aria-hidden="true" weight="fill" className="size-4" />
+          )}
           <span className="max-w-0 overflow-hidden whitespace-nowrap transition-[max-width,margin] group-hover:ml-2 group-hover:max-w-50 group-focus-visible:ml-2 group-focus-visible:max-w-50 motion-reduce:transition-none">
             {label}
           </span>
