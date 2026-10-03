@@ -57,18 +57,17 @@ const tab = (p, name) => sec(p).getByRole("tab", { name });
   // Features
   const feat = await sec(p).locator(".feature-list").evaluate((el) => ({ cols: getComputedStyle(el).gridTemplateColumns, items: el.children.length }));
   log(`[1280] features: ${feat.items} items, columns "${feat.cols}"`);
-  // Store button hover + new tab
-  const store = sec(p).locator(".store-row a").first();
+  // Store buttons: disabled labels while the address is the stand-in
+  const store = sec(p).locator(".store-row .btn").first();
+  log(`[1280] store buttons: ${await sec(p).locator(".store-row .btn").evaluateAll((els) => els.map((el) => `${el.tagName.toLowerCase()} aria-disabled=${el.getAttribute("aria-disabled")} href=${el.getAttribute("href")} "${el.textContent.trim()}"`).join(" ; "))}`);
   await store.scrollIntoViewIfNeeded(); await p.mouse.move(0, 0); await p.waitForTimeout(600);
-  const before = await box(store);
-  log(`[1280] store before hover: ${await css(store, ["borderColor", "transform"])}`);
   await store.hover(); await p.waitForTimeout(900);
-  log(`[1280] store after hover (900ms, no scroll): ${await css(store, ["borderColor", "transform", "transitionDuration"])} | y ${before.y} -> ${(await box(store)).y}`);
-  log(`[1280] store link: href ${await store.getAttribute("href")} target ${await store.getAttribute("target")} rel ${await store.getAttribute("rel")}`);
+  log(`[1280] store hover: ${await css(store, ["cursor", "transform", "borderColor"])}`);
+  const y0 = await p.evaluate(() => window.scrollY);
   const pagesBefore = ctx.pages().length;
   await store.click();
-  await p.waitForTimeout(1500);
-  log(`[1280] store click with href "#": new tabs ${ctx.pages().length - pagesBefore} | url ${new URL(p.url()).pathname}${new URL(p.url()).hash}`);
+  await p.waitForTimeout(1000);
+  log(`[1280] store click: new tabs ${ctx.pages().length - pagesBefore} | url ${new URL(p.url()).pathname}${new URL(p.url()).hash} | scrollY ${y0} -> ${await p.evaluate(() => window.scrollY)}`);
   // Sub-nav pill and mega menu
   await p.goto(`${BASE}/products`, { waitUntil: "load" }); await settle(p);
   await p.evaluate(() => window.scrollTo(0, 2000)); await p.waitForTimeout(400);
@@ -114,6 +113,7 @@ for (const w of [899, 640]) {
   await p.goto(`${BASE}/products#pxp`, { waitUntil: "load" }); await settle(p);
   const h390 = await box(sec(p).locator("#pxp-h"));
   log(`[390] after /products#pxp: H2 top ${h390.y} bottom ${h390.y + h390.h} | inside the 844px screen ${h390.y >= 133 && h390.y + h390.h <= 844}`);
+  log(`[390] phone top ${(await box(sec(p).locator(".story-phone"))).y} | text first ${(await box(sec(p).locator(".story-phone"))).y > h390.y}`);
   log(`[390] phone width ${(await box(sec(p).locator(".story-phone"))).w} | no sideways scroll ${await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)}`);
   await p.screenshot({ path: `${OUT}/pxp-390.png` });
   await p.close();

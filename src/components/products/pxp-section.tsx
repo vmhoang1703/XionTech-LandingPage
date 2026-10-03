@@ -7,7 +7,7 @@ import {
   WalletIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
-import { productLinks } from "@/content/product-links";
+import { PLACEHOLDER_HREF, productLinks } from "@/content/product-links";
 import { pxpSection } from "@/content/products";
 import { PxpStoryPhone } from "./pxp-story-phone";
 
@@ -20,15 +20,38 @@ const FEATURE_ICONS: Record<(typeof pxpSection.features)[number]["id"], Icon> =
     fees: WalletIcon,
   };
 
-// "#" is a stand-in address (decision A1): it stays on the page. A real
-// store address opens in a new tab and says so.
-export function storeLinkAttributes(href: string, label: string) {
-  if (href === "#") return { "aria-label": label };
-  return {
-    target: "_blank",
-    rel: "noopener noreferrer",
-    "aria-label": `${label}${pxpSection.stores.newTab}`,
-  };
+// While a store address is the stand-in (decision A1) the button is a
+// disabled label, so a click goes nowhere; a real address becomes a link that
+// opens a new tab and says so (lead, 2026-10-03).
+export function StoreButton({
+  href,
+  label,
+  Icon,
+}: Readonly<{ href: string; label: string; Icon: Icon }>) {
+  const content = (
+    <>
+      <Icon weight="fill" aria-hidden="true" />
+      {label}
+    </>
+  );
+  if (href === PLACEHOLDER_HREF) {
+    return (
+      <span className="btn btn-glass" aria-disabled="true">
+        {content}
+      </span>
+    );
+  }
+  return (
+    <a
+      className="btn btn-glass"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${label}${pxpSection.stores.newTab}`}
+    >
+      {content}
+    </a>
+  );
 }
 
 const STORES = [
@@ -46,7 +69,7 @@ const STORES = [
 
 // Server Component for /products#pxp. Only the story phone is a client island.
 export function PxpSection() {
-  const { badge, heading, lede, features, stores } = pxpSection;
+  const { badge, heading, lede, features } = pxpSection;
 
   return (
     <section
@@ -54,9 +77,12 @@ export function PxpSection() {
       aria-labelledby="pxp-h"
       className="sec surface-paper products-anchor"
     >
-      {/* Text first, so a #pxp jump on a narrow screen shows the heading;
-          from md up, .pxp-phone moves the phone back to the left. */}
+      {/* The phone comes first, as in the mockup; below md, .pxp-phone moves
+          it under the text so a #pxp jump shows the heading. */}
       <div className="wrap split">
+        <div className="pxp-phone">
+          <PxpStoryPhone />
+        </div>
         <div>
           <span className="badge b-pxp size-14">{badge}</span>
           <h2 id="pxp-h" className="mt-4.5">
@@ -78,21 +104,10 @@ export function PxpSection() {
             })}
           </div>
           <div className="store-row">
-            {STORES.map(({ href, label, Icon }) => (
-              <a
-                key={label}
-                className="btn btn-glass"
-                href={href}
-                {...storeLinkAttributes(href, label)}
-              >
-                <Icon weight="fill" aria-hidden="true" />
-                {label}
-              </a>
+            {STORES.map((store) => (
+              <StoreButton key={store.label} {...store} />
             ))}
           </div>
-        </div>
-        <div className="pxp-phone">
-          <PxpStoryPhone />
         </div>
       </div>
     </section>

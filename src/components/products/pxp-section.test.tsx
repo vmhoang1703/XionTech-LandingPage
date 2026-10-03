@@ -1,9 +1,10 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { productLinks } from "@/content/product-links";
+import { PLACEHOLDER_HREF, productLinks } from "@/content/product-links";
 import { pxpSection } from "@/content/products";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import { PxpSection, storeLinkAttributes } from "./pxp-section";
+import { AppleLogoIcon } from "@phosphor-icons/react/ssr";
+import { PxpSection, StoreButton } from "./pxp-section";
 
 describe("PxpSection", () => {
   it("keeps the #pxp anchor with its heading", () => {
@@ -18,12 +19,12 @@ describe("PxpSection", () => {
     expect(screen.getByText("PXP").classList.contains("b-pxp")).toBe(true);
   });
 
-  it("puts the heading before the phone, so a #pxp jump on a narrow screen shows it", () => {
+  it("keeps the phone before the text in the markup, as in the mockup", () => {
     render(<PxpSection />);
     const h2 = screen.getByRole("heading", { level: 2 });
     const tablist = screen.getByRole("tablist");
     expect(
-      h2.compareDocumentPosition(tablist) & Node.DOCUMENT_POSITION_FOLLOWING,
+      tablist.compareDocumentPosition(h2) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
     expect(tablist.closest(".pxp-phone")).not.toBeNull();
   });
@@ -51,33 +52,38 @@ describe("PxpSection", () => {
     }
   });
 
-  it("shows App Store and Google Play placeholders that stay on the page while the address is #", () => {
+  it("shows App Store and Google Play placeholders as disabled labels, not links, while the address is the stand-in", () => {
+    expect(productLinks.pxpAppStore).toBe(PLACEHOLDER_HREF);
+    expect(productLinks.pxpGooglePlay).toBe(PLACEHOLDER_HREF);
     render(<PxpSection />);
-    const cases = [
-      ["[Placeholder] App Store", productLinks.pxpAppStore],
-      ["[Placeholder] Google Play", productLinks.pxpGooglePlay],
-    ];
-    for (const [label, href] of cases) {
-      const link = screen.getByRole("link", { name: label });
-      expect(link.textContent).toBe(label);
-      expect(link.getAttribute("href")).toBe(href);
-      expect(link.getAttribute("target")).toBeNull();
-      expect(link.classList.contains("btn-glass")).toBe(true);
-      expect(within(link).queryByRole("img")).toBeNull();
+    expect(screen.queryAllByRole("link")).toEqual([]);
+    for (const label of [
+      "[Placeholder] App Store",
+      "[Placeholder] Google Play",
+    ]) {
+      const el = screen.getByText(label).closest(".btn") as HTMLElement;
+      expect(el.tagName).toBe("SPAN");
+      expect(el.getAttribute("aria-disabled")).toBe("true");
+      expect(el.classList.contains("btn-glass")).toBe(true);
+      expect(within(el).queryByRole("img")).toBeNull();
     }
   });
 
-  it("opens a real store address in a new tab", () => {
-    expect(storeLinkAttributes("#", "App Store")).toEqual({
-      "aria-label": "App Store",
+  it("turns a real store address into a link that opens a new tab", () => {
+    render(
+      <StoreButton
+        href="https://apps.apple.com/app/id1"
+        label="App Store"
+        Icon={AppleLogoIcon}
+      />,
+    );
+    const link = screen.getByRole("link", {
+      name: "App Store (opens in a new tab)",
     });
-    expect(
-      storeLinkAttributes("https://apps.apple.com/app/id1", "App Store"),
-    ).toEqual({
-      target: "_blank",
-      rel: "noopener noreferrer",
-      "aria-label": "App Store (opens in a new tab)",
-    });
+    expect(link.getAttribute("href")).toBe("https://apps.apple.com/app/id1");
+    expect(link.getAttribute("target")).toBe("_blank");
+    expect(link.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(link.classList.contains("btn-glass")).toBe(true);
   });
 
   it("uses only classes that globals.css defines", () => {

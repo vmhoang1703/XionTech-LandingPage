@@ -2165,17 +2165,29 @@
   }
 
   /*
+    PXP section (Story 4.2): the phone comes first in the markup, as in the
+    mockup. Below md (one column in .split) it moves under the text, so a
+    #pxp jump shows the heading (lead, 2026-10-03).
+  */
+  @media (width < --theme(--breakpoint-md)) {
+    .pxp-phone {
+      order: 1;
+    }
+  }
+
+  .btn[aria-disabled="true"] {
+    cursor: default;
+  }
+
+  .btn[aria-disabled="true"]:hover {
+    transform: none;
+  }
+
+  /*
     Products page: PXP story phone, phone tabs, feature list and store
     buttons (Story 4.2). Screens reuse the empty .home-media frame; inactive
     screens carry `hidden`. The 0.55s crossfade follows after demo.
   */
-  /* The phone follows the text in the markup; from md it sits on the left */
-  @media (width >= --theme(--breakpoint-md)) {
-    .pxp-phone {
-      order: -1;
-    }
-  }
-
   .story-phone {
     position: relative;
     width: 260px;
