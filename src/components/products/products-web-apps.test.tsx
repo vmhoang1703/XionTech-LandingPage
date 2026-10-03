@@ -97,13 +97,13 @@ describe("Section details", () => {
     expect(sxp?.classList.contains("gridbg")).toBe(true);
   });
 
-  it("puts the SXP text before its frame and uses the amber badge", () => {
+  it("puts the SXP frame before its text in the markup, as PXP does, and uses the amber badge", () => {
     const { container } = render(<SxpSection />);
     const split = container.querySelector(".split-media-first");
-    expect(split?.firstElementChild?.classList.contains("web-app-text")).toBe(
+    expect(split?.firstElementChild?.classList.contains("browser")).toBe(true);
+    expect(split?.lastElementChild?.classList.contains("web-app-text")).toBe(
       true,
     );
-    expect(split?.lastElementChild?.classList.contains("browser")).toBe(true);
     expect(container.querySelector(".badge.b-pxp")?.textContent).toBe("SXP");
   });
 

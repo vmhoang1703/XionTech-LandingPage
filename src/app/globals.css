@@ -2188,9 +2188,10 @@
     }
   }
 
-  @media (width >= --theme(--breakpoint-md)) {
+  /* The frame comes first in the markup; below md it moves under the text */
+  @media (width < --theme(--breakpoint-md)) {
     .split-media-first > .browser {
-      order: -1;
+      order: 1;
     }
   }
 

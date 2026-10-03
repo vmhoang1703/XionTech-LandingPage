@@ -18,7 +18,11 @@ import { PLACEHOLDER_HREF, webAppLinks } from "@/content/product-links";
 import { productsIot, productsLxp, productsSxp } from "@/content/products";
 
 type WebAppId = keyof typeof webAppLinks;
-type Feature = { id: string; name: string; line: string };
+type Feature<K extends string = string> = {
+  id: K;
+  name: string;
+  line: string;
+};
 // Keyed by the content's feature ids, so a renamed id fails the type check.
 type FeatureId<T extends { features: readonly Feature[] }> =
   T["features"][number]["id"];
@@ -90,19 +94,21 @@ function Chips({ items }: Readonly<{ items: readonly string[] }>) {
   );
 }
 
-function FeatureList({
+// Generic over the feature type, so an icon map that does not match the
+// section's feature ids is a type error, not a crash at render.
+function FeatureList<K extends string>({
   features,
   icons,
   className,
 }: Readonly<{
-  features: readonly Feature[];
-  icons: Record<string, Icon>;
+  features: readonly Feature<K>[];
+  icons: Record<K, Icon>;
   className?: string;
 }>) {
   return (
     <ul className={["feature-list", className].filter(Boolean).join(" ")}>
       {features.map((feature) => {
-        const FeatureIcon = icons[feature.id];
+        const FeatureIcon: Icon = icons[feature.id];
         return (
           <li key={feature.id}>
             <FeatureIcon aria-hidden="true" />
@@ -167,8 +173,10 @@ export function SxpSection() {
       aria-labelledby="sxp-h"
       className="products-anchor sec surface-navy gridbg"
     >
-      {/* Text first in reading order; from 900px the frame shows on the left */}
+      {/* Frame first, as in the mockup and the PXP section; below md the
+          text moves above it so a #sxp jump shows the heading. */}
       <div className="wrap split split-media-first">
+        <BrowserFrame app="sxp" media={media} />
         <div className="web-app-text">
           {/* Amber badge: the navy SXP badge would vanish on the navy surface */}
           <span className="badge badge-lg b-pxp">{badge}</span>
@@ -177,7 +185,6 @@ export function SxpSection() {
           <Chips items={audience} />
           <FeatureList features={features} icons={SXP_ICONS} />
         </div>
-        <BrowserFrame app="sxp" media={media} />
       </div>
     </section>
   );
