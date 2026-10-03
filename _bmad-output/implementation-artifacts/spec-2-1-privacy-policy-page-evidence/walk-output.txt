@@ -1,0 +1,23 @@
+[1280] status 200 | title "Privacy Policy | XionTech"
+[1280] h1 1 "Privacy policy." | h2 in main 8
+[1280] h2 list: Who we are and how to reach us | What we collect | How we use it | Who we share it with | Transfers outside Vietnam | How long we keep it | Cookies and analytics | Your rights
+[1280] [Placeholder] paragraphs 11 of 12
+[1280] header 1 footer 1 capture band 0
+[1280] no horizontal scroll true
+[1280] first main link "Home" -> /
+[1280] breadcrumb hover: before "rgb(74, 91, 120) none" after "rgb(22, 54, 99) none"
+[1280] Tab x9 reaches breadcrumb true | :focus-visible true | outline solid 2px
+[1280] Enter on breadcrumb lands /
+[390] status 200 | title "Privacy Policy | XionTech"
+[390] h1 1 "Privacy policy." | h2 in main 8
+[390] h2 list: Who we are and how to reach us | What we collect | How we use it | Who we share it with | Transfers outside Vietnam | How long we keep it | Cookies and analytics | Your rights
+[390] [Placeholder] paragraphs 11 of 12
+[390] header 1 footer 1 capture band 0
+[390] no horizontal scroll true
+[390] first main link "Home" -> /
+[390] footer Privacy link tap lands /privacy
+[1280] footer Privacy link click lands /privacy
+[1280] footer Privacy link Enter lands /privacy
+[1280] text column .wrap box 720px, left 280, right 280 | no sideways scroll true
+[720] text column .wrap box 720px, left 0, right 0 | no sideways scroll true
+[375] text column .wrap box 375px, left 0, right 0 | no sideways scroll true
