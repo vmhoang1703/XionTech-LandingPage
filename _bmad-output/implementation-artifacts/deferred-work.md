@@ -154,3 +154,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
   summary: Add `import "server-only"` to `src/lib/contact/delivery.ts` and move `ContactSubmission` out of the client component.
   evidence: `delivery.ts` reads secrets; only the route imports it today; tests would need the server-only mock used in Story 1.8.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-5-site-footer.md`
+  summary: Wrap the footer link columns (Products, Services, Company) in a `<nav aria-label="Footer">` landmark.
+  evidence: Blind Hunter review 2026-10-01; the prototype has no landmark and FR-7 does not ask for one, so it is an a11y improvement beyond this story.
