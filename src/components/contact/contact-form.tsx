@@ -19,6 +19,7 @@ import {
   type ContactField,
   type ContactType,
 } from "@/lib/contact/contact-rules";
+import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { CONTACT_STRINGS } from "./contact-strings";
 import { FIELD_ORDER, postSubmission } from "./post-submission";
 
@@ -160,6 +161,29 @@ export function ContactForm() {
   useEffect(() => {
     if (failure) submitRef.current?.focus();
   }, [failure]);
+
+  // The capture band leaves its email in session storage. Read it once after
+  // mount, never overwrite a typed value, and never fail when storage is blocked.
+  useEffect(() => {
+    try {
+      const email = sessionStorage.getItem(CAPTURE_EMAIL_KEY);
+      if (email === null) return;
+      sessionStorage.removeItem(CAPTURE_EMAIL_KEY);
+      const input = document.getElementById("f-email");
+      if (input instanceof HTMLInputElement && input.value === "") {
+        input.value = email;
+      }
+    } catch {
+      // Storage is blocked: the visitor still gets the form, without a prefill.
+    }
+  }, []);
+
+  // `/demo#project` has no element to scroll to, so bring the form card in view.
+  useEffect(() => {
+    if (hash === "#project") {
+      document.getElementById("form")?.scrollIntoView();
+    }
+  }, [hash]);
 
   function selectType(next: ContactType) {
     if (next === type) return;
