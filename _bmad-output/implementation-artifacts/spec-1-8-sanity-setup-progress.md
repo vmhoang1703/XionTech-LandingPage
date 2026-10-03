@@ -87,3 +87,4 @@ Acceptance: verification — `npm run sanity:check` (after seeding) — exit 0 �
 Acceptance: verification — `SANITY_DRAFT_PROBE_ID=drafts.146fcc83-053f-42ff-96e0-406edac7de06 npm run sanity:check` — exit 0 — "draft privacy: proven (draft drafts.146fcc83-053f-42ff-96e0-406edac7de06 not readable without a token)"; draft id copied by the lead from the Studio URL of an unpublished post
 Acceptance: unblocked — real read of post, job and draft probe now observed (supersedes the first BLOCKED row)
 Acceptance: evidence — spec-1-8-sanity-setup-evidence/verification.txt — 5609 bytes — sha256 faeb6bc3a688
+Acceptance: manual — webhook delivery after merge: attempt atm-3K8SNs6H0mRHsux0zVQmfXus5CZ (2026-10-02T10:41:03Z) resultCode 200 {"revalidated":"post"}; earlier attempt 401 "Invalid signature" (webhook secret held the variable name); supersedes the webhook BLOCKED row

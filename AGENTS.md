@@ -52,6 +52,8 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 | Icons        | `@phosphor-icons/react` (installed by the first story that renders an icon)                      |
 | CMS          | Sanity for Careers/Jobs and Blog (free plan) — see `docs/spikes/cms-spike.md`                    |
 | Hosting      | Vercel Hobby (owner: Hoang Vu; only the owner can change project settings). See Git workflow     |
+| Mail         | Gmail SMTP through `nodemailer`, with an App Password; see `docs/contact-delivery.md`            |
+| Rate limit   | Upstash Redis (free, Vercel Marketplace) with `@upstash/ratelimit`; `docs/contact-delivery.md`   |
 | Formatting   | Prettier + `prettier-plugin-tailwindcss`, ESLint (`eslint-config-next`, `eslint-plugin-sonarjs`) |
 | Tests        | Vitest 5 + Testing Library (unit), Playwright (`@smoke`), `diff-cover` (via `uvx`)               |
 | Quality gate | SonarQube Community in local Docker — LOCAL ONLY, `pre-push` hook (until Demo day: daily run)    |

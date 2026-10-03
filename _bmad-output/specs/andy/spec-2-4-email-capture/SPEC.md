@@ -1,7 +1,7 @@
 ---
 id: SPEC-2-4-email-capture
 owner: Andy
-build_day: 2026-10-05
+build_day: 2026-10-03
 depends_on: ["2.2", "2.3"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
@@ -20,7 +20,7 @@ sources:
 
 ## Why
 
-Lan, reading a page, should leave only her work email and land on a contact form that is already started, so booking a demo or starting a project takes a few clicks. Most pages end with this band, and Sammy's Home (3.7) and Services (5.4) stories wait for it (mandate: Demo day 2026-10-09). The email is personal data under PDPD, so it never goes in a URL (NFR-3).
+Lan, reading a page, should leave only her work email and land on a contact form that is already started, so booking a demo or starting a project takes a few clicks. Most pages end with this band, and Andy's Home (3.7) and News (6.1) stories and Sammy's Services (5.4) and About (6.4) stories wait for it (mandate: Demo day 2026-10-09). The email is personal data under PDPD, so it never goes in a URL (NFR-3).
 
 ## Capabilities
 
@@ -54,8 +54,8 @@ Lan, reading a page, should leave only her work email and land on a contact form
 
 ## Constraints
 
-- Depends on 2.2 (form, tabs, Work email field) and 2.3 (mail sender, T4). Must merge before 3.7 and 5.4.
-- Andy owns the component, `src/app/demo/*` (where the prefill is read) and `src/app/careers/[slug]/*` (T3); Sammy's page stories place it (3.7 Home, 5.4 Services, 6.1 News, 6.4 About). The CAP-9 check runs over the routes that exist when it is built.
+- Depends on 2.2 (form, tabs, Work email field) and 2.3 (mail sender, T4). Must merge before 3.7, 5.4, 6.1 and 6.4.
+- Andy owns the component, `src/app/demo/*` (where the prefill is read) and `src/app/careers/[slug]/*` (T3); the page stories place it: Andy's 3.7 Home and 6.1 News, Sammy's 5.4 Services and 6.4 About. The CAP-9 check runs over the routes that exist when it is built.
 - Only `demo` and `project` kinds exist. No modal pop-ups.
 - Capture Submissions are kept with no time limit; the privacy policy (Story 2.1) says so (A4).
 - Keep the labels translatable ("Đặt lịch demo", "Bắt đầu dự án", "Đang gửi..." after demo).

@@ -875,6 +875,44 @@
   .form-card .btn {
     margin-top: 22px;
   }
+
+  /* Send failure: sits just above the submit button */
+  .form-alert {
+    margin-top: 22px;
+    font-size: var(--text-body-sm);
+    font-weight: 600;
+    line-height: var(--text-body-sm--line-height);
+    color: var(--color-error);
+  }
+
+  .form-alert + .btn {
+    margin-top: 12px;
+  }
+
+  /*
+    Thank-you panel. It takes focus after a send and keeps the global
+    :focus-visible ring (keyboard visitors see it, mouse visitors do not).
+  */
+  .form-ok {
+    padding: 40px 10px;
+    text-align: center;
+  }
+
+  .form-ok svg {
+    margin-inline: auto;
+    font-size: 3rem;
+    color: var(--color-navy);
+  }
+
+  .form-ok h3 {
+    margin-block: 12px 8px;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .form-ok p {
+    color: var(--color-muted);
+  }
 }
 
 @layer utilities {
