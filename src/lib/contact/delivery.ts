@@ -3,6 +3,7 @@ import { Ratelimit, type Duration } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { createTransport } from "nodemailer";
 import type { ContactSubmission } from "@/components/contact/contact-form";
+import type { CaptureSubmission, ValidSubmission } from "./submission";
 
 export interface DeliveryConfig {
   /** Where the requests are delivered (CONTACT_INBOX). */
@@ -14,6 +15,11 @@ export interface DeliveryConfig {
 const SUBJECTS: Record<ContactSubmission["type"], string> = {
   demo: "Product demo request",
   project: "Outsourcing project request",
+};
+
+const CAPTURE_SUBJECTS: Record<CaptureSubmission["kind"], string> = {
+  demo: "Demo capture",
+  project: "Project capture",
 };
 
 const MAIL_TIMEOUT_MS = 5000;
@@ -114,7 +120,10 @@ export async function checkRateLimits(
   return byIp !== "blocked";
 }
 
-function mailText(submission: ContactSubmission): string {
+function mailText(submission: ValidSubmission): string {
+  if (submission.type === "capture") {
+    return `Kind: ${submission.kind}\nEmail: ${submission.email}`;
+  }
   const shared: [string, string][] = [
     ["Name", submission.name],
     ["Email", submission.email],
@@ -138,13 +147,19 @@ function mailText(submission: ContactSubmission): string {
   return [...fields, "", "Message:", submission.message].join("\n");
 }
 
+/** A capture subject names the kind only; the others end with the organisation. */
+function mailSubject(submission: ValidSubmission): string {
+  if (submission.type === "capture") return CAPTURE_SUBJECTS[submission.kind];
+  return `${SUBJECTS[submission.type]}: ${submission.org.replaceAll(/[\r\n]/g, "")}`;
+}
+
 /**
  * Send one plain-text mail to the inbox through Gmail. Reply-To is the
  * visitor. A send failure is thrown for the caller to handle.
  */
 export async function sendContactMail(
   config: DeliveryConfig,
-  submission: ContactSubmission,
+  submission: ValidSubmission,
 ): Promise<void> {
   const transport = createTransport({
     service: "gmail",
@@ -158,7 +173,7 @@ export async function sendContactMail(
     from: config.gmailUser,
     to: config.inbox,
     replyTo: submission.email,
-    subject: `${SUBJECTS[submission.type]}: ${submission.org.replaceAll(/[\r\n]/g, "")}`,
+    subject: mailSubject(submission),
     text: mailText(submission),
   });
 }
