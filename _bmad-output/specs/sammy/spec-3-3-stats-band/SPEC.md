@@ -39,6 +39,7 @@ Opportunity (FR-12): Quân judges the team fast and should see experience and co
 
 ## Constraints
 
+- If Andy's 3.7 lines (news, capture) are already in `src/app/page.tsx`, insert your section above them; keep them and keep the capture band last (FR-14, 3.7 CAP-4).
 - Story 3.1 must be merged first.
 - The shared component lives where Stories 5.2 and 6.4 can import it, not inside a Home-only file.
 - Definition of Done (CLAUDE.md): unit tests with 100% changed-line and 80% branch coverage, an `@smoke` Playwright test, lint, typecheck, format check, build, local Sonar gate (LOCAL ONLY) and bmad-code-review must pass.

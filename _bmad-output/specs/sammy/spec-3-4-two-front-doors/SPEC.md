@@ -35,6 +35,7 @@ Opportunity (FR-13): Quân, arriving from a referral, needs a clear outsourcing 
 
 ## Constraints
 
+- If Andy's 3.7 lines (news, capture) are already in `src/app/page.tsx`, insert your section above them; keep them and keep the capture band last (FR-14, 3.7 CAP-4).
 - Story 3.1 must be merged first (the overlap is measured on the hero bottom).
 - Definition of Done (CLAUDE.md): unit tests with 100% changed-line and 80% branch coverage, an `@smoke` Playwright test, lint, typecheck, format check, build, local Sonar gate (LOCAL ONLY) and bmad-code-review must pass.
 - Next.js 16 App Router; Server Components by default, `"use client"` only for state, effects or browser APIs; read `node_modules/next/dist/docs/` before using a Next.js API.

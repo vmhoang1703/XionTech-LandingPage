@@ -42,6 +42,7 @@ Opportunity (FR-23, FR-14): Quân decides whether this team is organised by seei
 
 ## Constraints
 
+- If Andy's 3.7 lines (news, capture) are already in `src/app/page.tsx`, insert your section above them; keep them and keep the capture band last (FR-14, 3.7 CAP-4).
 - Story 1.1 tokens must be merged first.
 - One shared component, importable by Story 5.4 for `/services#process`; step content passed as data.
 - Definition of Done (CLAUDE.md): unit tests with 100% changed-line and 80% branch coverage, an `@smoke` Playwright test, lint, typecheck, format check, build, local Sonar gate (LOCAL ONLY) and bmad-code-review must pass.

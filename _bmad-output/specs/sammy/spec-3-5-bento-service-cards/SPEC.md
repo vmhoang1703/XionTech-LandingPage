@@ -35,6 +35,7 @@ Opportunity (FR-14): Lan scans what exists and should reach the details of the o
 
 ## Constraints
 
+- If Andy's 3.7 lines (news, capture) are already in `src/app/page.tsx`, insert your section above them; keep them and keep the capture band last (FR-14, 3.7 CAP-4).
 - Story 1.1 tokens must be merged first.
 - Anchor names must match the EXPERIENCE.md service anchor list and the Products section ids (Stories 4.1 to 4.3, 5.2).
 - Definition of Done (CLAUDE.md): unit tests with 100% changed-line and 80% branch coverage, an `@smoke` Playwright test, lint, typecheck, format check, build, local Sonar gate (LOCAL ONLY) and bmad-code-review must pass.

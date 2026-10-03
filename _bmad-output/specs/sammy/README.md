@@ -24,3 +24,5 @@ First: finish PR #15 (1.5 footer) so it merges; Andy then mounts the footer in `
 (decision T10). Simple page-section stories can use the one-shot route of `bmad-build` (see `AGENTS.md`).
 
 Blockers: 5.4 (Tue 06/10) and 6.4 (Wed 07/10) need Andy's 2.4 (Sat 03/10). Andy waits on your 3.1 (Sat 03/10) for 3.7 (and through it 6.1, 6.2 and 6.3) and on PR #15 (footer) for the footer mount. Say in the team chat the same day if one slips.
+
+Home page order: If Andy's 3.7 lines (news, capture) are already in `src/app/page.tsx`, insert your section above them; keep them and keep the capture band last (FR-14, 3.7 CAP-4).
