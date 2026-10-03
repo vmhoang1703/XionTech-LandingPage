@@ -62,3 +62,7 @@ Full `bmad-code-review` of the 2026-10-03 fix (211 lines; Blind Hunter, Edge Cas
 - CSS look checked only by the walk, no automated browser test — maybe-false, deferred (`deferred-work.md`).
 - Duplicate label assertion, class-order-sensitive `btn btn-primary` check, `#000` in the mask, forced-colors outline, CTA icon size at mobile — low, rejected: no user-visible harm found (walk shows the icon aligned at 390px).
 - Missing AI log — patched (`docs/ai-log.md`).
+
+Light review of the `develop` merge (35 lines, Edge Case Hunter, 2026-10-03): the capture band (Story 2.4) is kept last on Home, after the hero (3.3–3.6 CAP rule "keep the capture band last").
+
+- Order test checks first and last child, not the count — low, rejected: Stories 3.3–3.6 add sections between the hero and the band, so a fixed count would fail by design; the last-child check enforces the rule.
