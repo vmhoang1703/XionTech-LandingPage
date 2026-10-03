@@ -3,6 +3,7 @@
 import { CheckCircleIcon, PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import {
+  useEffect,
   useRef,
   useState,
   useSyncExternalStore,
@@ -201,6 +202,17 @@ export function ContactForm() {
     messages: [] as string[],
   });
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const submitRef = useRef<HTMLButtonElement>(null);
+
+  // The button that had focus is gone (success) or was disabled (failure), so
+  // put focus where the visitor can read the result and go on.
+  useEffect(() => {
+    if (status === "sent") panelRef.current?.focus();
+  }, [status]);
+  useEffect(() => {
+    if (failure) submitRef.current?.focus();
+  }, [failure]);
 
   function selectType(next: ContactType) {
     if (next === type) return;
@@ -284,7 +296,7 @@ export function ContactForm() {
     return (
       <>
         <h2>{S.heading}</h2>
-        <div className="form-ok" role="status">
+        <div ref={panelRef} className="form-ok" role="status" tabIndex={-1}>
           <CheckCircleIcon weight="fill" aria-hidden="true" />
           <h3>{S.successHeading}</h3>
           <p>{S.successText}</p>
@@ -468,6 +480,7 @@ export function ContactForm() {
           </p>
         )}
         <button
+          ref={submitRef}
           className="btn btn-primary"
           type="submit"
           disabled={status === "sending"}

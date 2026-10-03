@@ -545,6 +545,29 @@ describe("ContactForm sending", () => {
     expect(signal.aborted).toBe(false);
   });
 
+  it("moves focus to the thank-you panel after a 200", async () => {
+    fetchMock.mockReturnValue(reply(200, { ok: true }));
+    render(<ContactForm />);
+    fillRequired();
+    submitButton().focus();
+    submit();
+    await settle();
+    const panel = screen.getByRole("status");
+    expect(panel.getAttribute("tabindex")).toBe("-1");
+    expect(document.activeElement).toBe(panel);
+  });
+
+  it("returns focus to the submit button after a failed send", async () => {
+    fetchMock.mockReturnValue(reply(502, { error: "send" }));
+    render(<ContactForm />);
+    fillRequired();
+    field("f-org").focus();
+    submit();
+    await settle();
+    expect(failureAlert().textContent).toBe(SEND_ERROR);
+    expect(document.activeElement).toBe(submitButton());
+  });
+
   it("clears the failure message and sends again on retry", async () => {
     fetchMock.mockReturnValueOnce(reply(502, { error: "send" }));
     render(<ContactForm />);
