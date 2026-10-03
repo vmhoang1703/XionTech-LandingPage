@@ -190,6 +190,7 @@ Re-captured after the step-4 review patches on 2026-10-03.
 - One real request through the local route (lead approved; before the step-4 patches) -- `real-send.txt`: 200 `{"ok":true}`. The mail arrived in the lead's company inbox with every field (lead's screenshot, 2026-10-03 11:03); an empty preferred date prints as a bare label.
 - Real Upstash with the IP + email limiter settings and throwaway keys -- `rate-limit-proof.txt`: calls 1-5 allowed, call 6 blocked, another key allowed. The IP-only limit (20 per hour) is proven by unit tests only.
 - Matrix test audit: every frozen matrix row has a covering test among the 464 that ran.
+- After merge of #17, on https://xiontech-dev.vercel.app/demo (lead, 2026-10-03): a real request arrived in the inbox, and repeated sends with one email ended in the rate-limit message with the values kept. A first try right after the merge did nothing because the open tab still ran the Story 2.2 page; a reload fixed it.
 
 **Artifacts**
 
@@ -208,5 +209,5 @@ Re-captured after the step-4 review patches on 2026-10-03.
 
 **Not captured**
 
-- After merge (lead's step 5): a real send on the dev site and the sixth-send check; after the first release (step 6): a real send on production.
+- After the first release (lead's step 6): a real send on production.
 - A screen-reader pass (NVDA/VoiceOver) and touch input.
