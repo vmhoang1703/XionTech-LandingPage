@@ -41,3 +41,11 @@ Sources: story spec CAP-1 to CAP-4, `DESIGN.md` (stats-band, UX-DR13), prototype
 - 2026-10-04: merged `develop` (3.1, 3.2 and the 1.6 motion part); one conflict in `home-hero.test.tsx`, both tests kept.
 - Compared with the prototype `.stats` / `.stat` rules and fixed test-first: the label uses 1.1's `.label` (amber rule), figures use `text-stat-fluid` and `text-heading`, the first figure has no divider or left padding (`sm:first:`), captions are at most 22ch. The hero's stats wrapper uses `.wrap`. Red: 2 failed (after first fixing a typo in the new tests that made them fail for the wrong reason); green: 625 passed.
 
+
+## Review Triage Log
+
+- Full `bmad-code-review` (4 layers) ran on 3.1–3.6 together on 2026-10-01; its 3.3 findings were fixed then (read-only props).
+- Light review of the 2026-10-04 fix (32 lines, Edge Case Hunter):
+  - In 3 columns, the fourth figure starts row two with a divider — low, rejected: the prototype does the same (`.stat:first-child` only), and the spec says port, not redesign; the walk confirms borders 0 1 1 1 1 at 1079px like the prototype.
+  - More than 5 figures would put a divider at the start of row two in 5 columns — low, rejected: no caller passes more than 5 (Home 5; Services and About specs list 4–5).
+  - At exactly 640px `.wrap` uses the mobile gutter while `sm:` padding applies — low, rejected: it comes from Story 1.1's shared `.wrap` rule, not this diff.
