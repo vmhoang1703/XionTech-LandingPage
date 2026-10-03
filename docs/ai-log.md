@@ -519,3 +519,9 @@ Template:
 - **Prompt (Hoang Vu):** build easy stories in parallel; 1.7, 2.1 and 4.1 run at the same time in three git worktrees.
 - **What the AI did:** one-shot build in its own worktree: `not-found.tsx` with the navy hero, "Go to Home" and three section links, no capture band, title "Page not found" with noindex, a unit test and a `@smoke` 404 test. Full checks, then the build, smoke and browser walk in the main checkout. A 5-layer review found no Critical or Important issues.
 - **AI got it wrong?** Yes. The worktrees first lacked BMad's git-ignored personal config, so every build agent stopped at once. Turbopack rejected the shared `node_modules` link in the worktree, so the build had to run in the main checkout. The controller left the spec out of the review diff, so one reviewer reported a missing UX table that exists.
+
+## 2026-10-03 — Story 2.1 Privacy policy page (`bmad-build`, one-shot, built in parallel)
+
+- **Prompt (Hoang Vu):** build easy stories in parallel; 1.7, 2.1 and 4.1 run at the same time in three git worktrees.
+- **What the AI did:** one-shot build of `/privacy`: breadcrumbs, H1, eight outline sections marked `[Placeholder]` except the decided retention sentence (A4), no capture band, a unit test and a `@smoke` test. Browser walk in the main checkout, then a full 5-layer review: Security clean, CAP-1 to CAP-6 met.
+- **AI got it wrong?** Yes. The first walk forced focus from code, so "Tab reaches the breadcrumb" was ticked without proof; two reviewers caught it, and the walk now tabs to it. Some width readings came from a script that was not saved, and a pen row was ticked but never walked. The page text said the capture email stays only in the browser, but Story 2.4 mails it to the inbox. One reviewer said Sanity was missing from the share list; that was false (decision T1).
