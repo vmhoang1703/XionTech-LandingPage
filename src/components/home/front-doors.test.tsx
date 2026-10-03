@@ -68,4 +68,40 @@ describe("FrontDoors", () => {
       ).toBeNull();
     }
   });
+
+  it("uses the ported door, badge and chip classes", () => {
+    render(<FrontDoors />);
+
+    const region = screen.getByRole("region", { name: "What we do" });
+    expect(region.classList.contains("doors")).toBe(true);
+    const [products, services] = within(region).getAllByRole("link");
+    for (const name of ["door", "door-products"]) {
+      expect(products.classList.contains(name)).toBe(true);
+    }
+    for (const name of ["door", "door-services", "surface-navy"]) {
+      expect(services.classList.contains(name)).toBe(true);
+    }
+    expect(
+      Array.from(products.querySelectorAll(".badge")).map((b) =>
+        Array.from(b.classList).find((c) => c.startsWith("b-")),
+      ),
+    ).toEqual(["b-pxp", "b-lxp", "b-sxp", "b-iot"]);
+    for (const link of [products, services]) {
+      expect(link.querySelectorAll(".chip").length).toBeGreaterThan(3);
+      expect(link.querySelector(".go svg")?.getAttribute("aria-hidden")).toBe(
+        "true",
+      );
+    }
+    expect(within(services).getByText("Outsourcing services").className).toBe(
+      "label",
+    );
+  });
+
+  it("shows the IoT badge as a CPU icon and keeps IoT in the door's name", () => {
+    render(<FrontDoors />);
+
+    const iot = document.querySelector(".b-iot");
+    expect(iot?.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
+    expect(iot?.querySelector(".sr-only")?.textContent).toBe("IoT");
+  });
 });
