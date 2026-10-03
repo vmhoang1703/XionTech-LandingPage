@@ -8,6 +8,7 @@ test(
 
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain("XionTech");
+    expect(await response.text()).toContain("See it working at your school.");
   },
 );
 
@@ -19,5 +20,18 @@ test(
 
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain("Send request");
+  },
+);
+
+test(
+  "contact route answers 200 to a filled honeypot without any secrets",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    const response = await request.post("/api/contact", {
+      data: { type: "demo", website: "https://spam.example" },
+    });
+
+    expect(response.status()).toBe(200);
+    expect(await response.json()).toEqual({ ok: true });
   },
 );

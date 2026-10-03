@@ -1,0 +1,47 @@
+L1 1280 H2 left of form: true
+L1 band background: linear-gradient(120deg, rgb(255, 216, 74), rgb(255, 192, 0) 
+L1 row border: 1px rgb(22, 54, 99)
+L1 button background: rgb(22, 54, 99)
+L1 texts: See it working at your school. Leave your work email and we'll arrange a walkthrough built around your school. Work email Book a demo We only use your email to arrange your demo. Privacy policy
+L9 privacy href: /privacy
+L9 privacy underline: underline
+L3 focus on field: cap-email
+L3 row ring: rgb(22, 54, 99) 0px 0px 0px 3px, rgba(22, 54, 99, 0.45) 0px 20px 40px -20px
+L4 error: alert / Please enter a valid email address.
+L4 aria-invalid / describedby: true / cap-err
+L4 focus: cap-email
+L4 no request: true
+L5 error cleared: true
+L6 button while sending: Sending... / disabled true
+L7 request body: {"type":"capture","kind":"demo","email":"lan@school.edu.vn","website":""}
+L7 landed URL: http://localhost:3000/demo#form
+L7 URL holds no email: true
+L7 tab: Product demo
+L7 Work email: lan@school.edu.vn
+L7 storage cleared: null
+CAP-9 /demo has no band: true
+L6 keyboard Enter lands: /demo#form / lan@school.edu.vn
+L7 project tab: Outsourcing project
+L7 project Work email: lan@school.edu.vn
+L7 project form in view: true
+L8 502 message: We could not send your request. Please try again.
+L8 502 after (s): 0.1
+L8 502 email kept / button enabled: lan@school.edu.vn / true
+L8 502 still on Home: true
+L8 429 message: You have sent several requests in a short time. Please try again in a few minutes.
+L8 429 after (s): 0.1
+L8 429 email kept / button enabled: lan@school.edu.vn / true
+L8 429 still on Home: true
+L8 timeout message: We could not send your request. Please try again.
+L8 timeout after (s): 15.3
+L8 timeout email kept / button enabled: lan@school.edu.vn / true
+L8 timeout still on Home: true
+L2 900 one column (form below H2): true
+L2 900 field above button: false
+L2 900 no horizontal scroll: true
+L2 390 one column (form below H2): true
+L2 390 field above button: true
+L2 390 no horizontal scroll: true
+L4 390 touch invalid: Please enter a valid email address.
+L2 390 button full width of the row: true
+L6 390 touch tap lands: /demo#form / lan@school.edu.vn

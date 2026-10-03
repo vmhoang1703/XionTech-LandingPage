@@ -1,11 +1,22 @@
 import { describe, expect, it } from "vitest";
 import {
   CONTACT_ERRORS,
+  isValidEmail,
   validateContact,
   type ContactValues,
 } from "./contact-rules";
 
 const TODAY = "2026-10-02";
+
+describe("isValidEmail", () => {
+  it("accepts a normal address (free mail allowed)", () => {
+    expect(isValidEmail("ana@gmail.com")).toBe(true);
+  });
+
+  it("rejects an address whose domain has no dot", () => {
+    expect(isValidEmail("ana@school")).toBe(false);
+  });
+});
 
 const valid: ContactValues = {
   name: "Ana Tran",
@@ -81,5 +92,44 @@ describe("validateContact", () => {
     // 1,000 + line break + 999 = 2,000 characters; CRLF would count 2,001.
     const message = `${"a".repeat(1000)}\r\n${"b".repeat(999)}`;
     expect(validateContact("demo", { ...valid, message }, TODAY)).toEqual({});
+  });
+});
+
+describe("validateContact caps and date format", () => {
+  it("rejects a 201-character name and organisation, accepts 200", () => {
+    expect(
+      validateContact("demo", { ...valid, name: "a".repeat(200) }, TODAY),
+    ).toEqual({});
+    expect(
+      validateContact("demo", { ...valid, name: "a".repeat(201) }, TODAY),
+    ).toEqual({ name: "Please keep this under 200 characters." });
+    expect(
+      validateContact("project", { ...valid, org: "a".repeat(201) }, TODAY),
+    ).toEqual({ org: "Please keep this under 200 characters." });
+  });
+
+  it("rejects a 255-character email, accepts 254", () => {
+    const email = (length: number) => `${"a".repeat(length - 11)}@school.edu`;
+    expect(
+      validateContact("demo", { ...valid, email: email(254) }, TODAY),
+    ).toEqual({});
+    expect(
+      validateContact("demo", { ...valid, email: email(255) }, TODAY),
+    ).toEqual({ email: "Please enter a valid email address." });
+  });
+
+  it.each(["2026-12-5", "2026-1-5", "2026-13-01", "2026-11-31", "tomorrow"])(
+    "rejects the date %s on the demo tab",
+    (date) => {
+      expect(validateContact("demo", { ...valid, date }, TODAY)).toEqual({
+        date: "Please choose today or a later date.",
+      });
+    },
+  );
+
+  it("ignores a badly formatted date on the project tab", () => {
+    expect(
+      validateContact("project", { ...valid, date: "2026-12-5" }, TODAY),
+    ).toEqual({});
   });
 });

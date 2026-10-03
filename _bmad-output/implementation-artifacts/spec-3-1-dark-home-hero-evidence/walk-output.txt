@@ -1,0 +1,23 @@
+hero height / viewport - header: 828 / 828
+hero background: background-color=rgb(11, 23, 48)
+glow layer: background-image=radial-gradient(60% 80% at 85% 40%, color(srgb 0.141176 0.298039 0.521569 / 0.75), rgba(0, 0, 0, 0) 70%), radial-gradient(40% 50% at 70% 85%, color(srgb 1 0.752941 0 / 0.22), rgba(0, 0, 0, 0) 70%), none; z-index=-2
+label: EdTech products · Software services | font-family="Lexend Exa", "Lexend Exa Fallback", system-ui, sans-serif; text-transform=uppercase; color=rgb(255, 207, 6)
+label rule: rgb(255, 192, 0)
+H1: Every school community, connected. | font-family=Unbounded, "Unbounded Fallback", system-ui, sans-serif; color=rgb(255, 255, 255)
+highlight bar: linear-gradient(90deg, rgb(255, 226, 122), rgb(255, 192, 0))
+sub line: PXP for parents, LXP for learners, SXP for staff. And the engineering team behind them, ready to build yours. | color=rgb(238, 242, 249)
+links / buttons in hero: 1 / 0
+CTA: Explore our products -> /products | icon svg: 1
+CTA style: background-image=linear-gradient(rgb(255, 207, 6), rgb(255, 192, 0)); color=rgb(22, 54, 99); border-radius=9999px; height=52px
+CTA hover lift px: 2
+CTA focus: Explore our products [outline solid 2px rgb(255, 192, 0)]
+.home-device-tablet: background-image=linear-gradient(145deg, color(srgb 1 1 1 / 0.96), color(srgb 0.862745 0.901961 0.960784 / 0.92)); border-radius=26px; box-shadow=rgba(11, 23, 48, 0.55) 0px 60px 100px -40px, color(srgb 1 1 1 / 0.9) 0px 0px 0px 1px inset | caption: [Placeholder] Web app screenshot | caption colour color=rgb(22, 54, 99); background-color=rgb(253, 253, 254)
+.home-device-phone: background-image=linear-gradient(145deg, color(srgb 1 1 1 / 0.96), color(srgb 0.862745 0.901961 0.960784 / 0.92)); border-radius=38px; box-shadow=rgba(11, 23, 48, 0.55) 0px 60px 100px -40px, color(srgb 1 1 1 / 0.9) 0px 0px 0px 1px inset | caption: [Placeholder] Phone screenshot | caption colour color=rgb(22, 54, 99); background-color=rgb(253, 253, 254)
+notch: 1
+img elements in hero: 0
+after CTA click URL: http://localhost:3005/products
+no-JS H1: Every school community, connected.
+no-JS glow present: 1
+layout 900px: 2 columns, devices 443px wide, sideways scroll: false
+layout 899px: 1 columns, devices 560px wide, sideways scroll: false
+layout 390px: 1 columns, devices 358px wide, sideways scroll: false

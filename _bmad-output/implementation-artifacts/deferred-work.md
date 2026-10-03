@@ -130,3 +130,53 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-8-sanity-setup.md`
   summary: `src/lib/sanity/next-config.test.ts` asserts the loaded config equals `{}`; change it to a non-throw check before adding a real option to `next.config.ts`.
   evidence: patch re-review minor, 2026-10-02.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Validate the contact delivery variables at server start (log-only `instrumentation.ts` register), as the CLAUDE.md guardrail asks; today they are checked per request.
+  evidence: `getDeliveryConfig` runs per request (`delivery.ts`); a build-time check would force secrets on every teammate, a start-time log would not.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: The form shows "Thank you!" for any 2xx; check the body is `{ ok: true }`.
+  evidence: `postSubmission` returns sent on `response.ok` (`contact-form.tsx`); only a proxy or portal answering 200 would trigger it.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Check whether browser autofill or password managers fill the `website` honeypot, and count honeypot hits (no personal data).
+  evidence: maybe-false, medium if true: a filled honeypot gets 200 and no mail, silently; settle with Chrome, Edge and one password manager on /demo.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Avoid a duplicate mail when the response is lost after Gmail accepted it (per-submit id checked in Upstash).
+  evidence: the client shows the send error and the visitor retries; nothing de-duplicates.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Keep the worst-case route time under `maxDuration` (3 s store + 5 s per SMTP phase + DNS), e.g. one overall deadline.
+  evidence: a platform stop gives no 502 log line; the visitor still sees the send error with values kept.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Screen-reader pass (NVDA/VoiceOver) of the contact form: nothing announced while sending; the failure alert may be cut by the focus move.
+  evidence: maybe-false; jsdom cannot announce; settle with one pass on /demo.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Mark non-production mails (e.g. a VERCEL_ENV subject prefix), since every environment sends to the same inbox.
+  evidence: lead's 2026-10-03 inbox decision; test and real leads look the same.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Add `import "server-only"` to `src/lib/contact/delivery.ts` and move `ContactSubmission` out of the client component.
+  evidence: `delivery.ts` reads secrets; only the route imports it today; tests would need the server-only mock used in Story 1.8.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-5-site-footer.md`
+  summary: Wrap the footer link columns (Products, Services, Company) in a `<nav aria-label="Footer">` landmark.
+  evidence: Blind Hunter review 2026-10-01; the prototype has no landmark and FR-7 does not ask for one, so it is an a11y improvement beyond this story.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: One exported email helper (trim + `isValidEmail` + 254) used by `contact-rules.ts`, `submission.ts` and `capture-band.tsx`.
+  evidence: The rule is copied in three places today.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Expire or clear the capture email in session storage when `/demo` is never reached.
+  evidence: Only `/demo` removes the key.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: A Playwright browser test: Home band → client push → `/demo` tab and prefill.
+  evidence: Only the manual walk covers the full hand-off; unit tests mock the router.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Check Back after a successful capture does not leave the band on Sending...
+  evidence: maybe-false; settle in a browser.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Stop hover styles on disabled `.btn` (`:not(:disabled)` on hover rules).
+  evidence: Hover glow still shows on a disabled button.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Move the misplaced focus comment in capture-band.tsx and assert `.capture { overflow: hidden }` (the ring relies on it).
+  evidence: patch re-review minors, 2026-10-03.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-3-1-dark-home-hero.md`
+  summary: Add an automated browser check for the Home hero CSS (glow layer painted, 2 columns at 900px / 1 at 899px, no sideways scroll at 390px); today only the walk script checks it.
+  evidence: jsdom tests check class names only and the smoke project is request-only; a deleted `.silk-fallback` rule would pass every test. The team has to choose which Playwright project runs it.
