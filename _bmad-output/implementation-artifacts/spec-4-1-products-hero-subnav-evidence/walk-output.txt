@@ -1,0 +1,23 @@
+[1280] status 200 | title "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
+[1280] html scroll-behavior smooth
+[1280] hero {"textLeft":44,"textRight":612,"textBottom":439,"devLeft":668,"devTop":168}
+[1280] CTA before hover: rgb(22, 54, 99)
+[1280] CTA after hover: rgb(15, 39, 72) | 0.35s, 0.35s, 0.3s, 0.3s
+[1280] CTA after Tab x10: active true | :focus-visible true | outline solid | 2px | rgb(22, 54, 99)
+[1280] pill LXP before hover: rgba(0, 0, 0, 0) | rgb(74, 91, 120)
+[1280] pill LXP after hover: rgb(22, 54, 99) | rgb(255, 255, 255) | 0.3s, 0.3s
+[1280] pill LXP after Tab x2 more: :focus-visible true | outline solid | 2px
+[1280] Enter on LXP: scrollY 0 -> 55,514,710,816 -> 881 | hash #lxp
+[1280] after LXP: {"headerBottom":72,"subnavTop":72,"subnavBottom":133} | #lxp top 144 | heading top 224
+[1280] click pxp: {"headerBottom":72,"subnavTop":82,"subnavBottom":144} | #pxp top 144 | heading top 224 | scrollY 671 of max 1383
+[1280] click sxp: {"headerBottom":72,"subnavTop":72,"subnavBottom":133} | #sxp top 144 | heading top 224 | scrollY 1091 of max 1383
+[1280] click iot: {"headerBottom":72,"subnavTop":72,"subnavBottom":133} | #iot top 144 | heading top 224 | scrollY 1301 of max 1383
+[1280] CTA click lands /demo#form | #form top 72
+[1280] CTA Enter lands /demo#form
+[1280] direct /products#lxp: {"headerBottom":72,"subnavTop":72,"subnavBottom":133} | #lxp top 144 | heading top 224
+[899] hero {"textLeft":24,"textRight":683,"textBottom":291,"devLeft":170,"devTop":506} | one column true | no sideways scroll true
+[390] sub-nav overflow-x auto, scrollWidth 390, clientWidth 390, pill heights PXP:40px LXP:40px SXP:40px IoT:40px | page no sideways scroll true
+[390] tap SXP: hash #sxp | {"headerBottom":72,"subnavTop":72,"subnavBottom":133} | #sxp top 144
+[300] sub-nav scrollWidth 300, clientWidth 300, scrollLeft 0 -> 0, pill heights 40,40,40,40 | page no sideways scroll true
+[1280 reduced] html scroll-behavior auto
+[1280 reduced] click SXP: scrollY 50ms after 1091, after settle 1091

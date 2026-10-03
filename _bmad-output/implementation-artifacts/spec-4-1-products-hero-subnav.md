@@ -29,19 +29,19 @@ Sources: story spec CAP-1 to CAP-4, decision T5, prototype `products.html` / `si
 | H1 | read | — | "Four apps. One connected school."; amber bar under "connected" | static | CAP-1, DESIGN.md highlight-mark | test: H1 with the highlight |
 | Lede | read | — | one sentence on the shared source of truth | static | CAP-1 | test: renders the amber hero |
 | Book a demo | read | — | one navy pill button with an arrow; no "Product updates" button | static | CAP-1, T5 | test: one navy Book a demo |
-| Book a demo | click or Enter | mouse, keyboard | opens `/demo` at the form (`#form`) | instant | CAP-1, FR-15 | test (href); hand for the jump |
-| Book a demo | hover | mouse | darker navy | 0.3s | DESIGN.md button | hand |
-| Book a demo | Tab | keyboard | visible navy focus ring on amber | instant | EXPERIENCE.md Focus ring | hand |
+| Book a demo | click or Enter | mouse, keyboard | opens `/demo` at the form (`#form`) | instant | CAP-1, FR-15 | ✅ Chrome 1280: click and Enter land on `/demo#form`, form top at 72px (below the header); test (href) |
+| Book a demo | hover | mouse | darker navy | 0.3s | DESIGN.md button | ✅ Chrome 1280: rgb(22,54,99) → rgb(15,39,72), background 0.3s |
+| Book a demo | Tab | keyboard | visible navy focus ring on amber | instant | EXPERIENCE.md Focus ring | ✅ Chrome 1280: reached by Tab, `:focus-visible`, solid 2px navy ring |
 | Device frames | page load | — | tablet and phone frames, empty, with a `[Placeholder]` caption; no broken image | static | CAP-1, UX-DR17 | test: empty device frames |
-| Hero | 1280px / 899px | — | text left, frames right / one column | static | 1.1 `.split` | hand |
-| Sub-nav | page scrolls | any | stays below the header, glass background, visible all the time | — | CAP-2, UX-DR18 | hand |
+| Hero | 1280px / 899px | — | text left, frames right / one column | static | 1.1 `.split` | ✅ Chrome: 1280 text x 44–612, frames from x 668; 899 frames below the text, no sideways scroll |
+| Sub-nav | page scrolls | any | stays below the header, glass background, visible all the time | — | CAP-2, UX-DR18 | ✅ Chrome 1280: after each jump the sub-nav sits at 72–133px, right under the header |
 | Sub-nav | read | — | pills PXP, LXP, SXP, IoT in that order; no "Updates" pill | static | CAP-2, T5 | test: sub-nav pills in order |
-| Pill | hover | mouse | navy fill, white text | 0.3s | prototype `.subnav a:hover` | hand |
-| Pill | Tab then Enter | keyboard | focus ring; the page jumps to that section | smooth | CAP-2, CAP-3 | hand |
-| Pill | tap | touch, pen | page scrolls to that section | smooth | CAP-3 | hand |
-| Section heading | after a pill link, the mega menu link or a `/products#lxp` URL | any | heading fully visible below header and sub-nav (144px offset) | smooth | CAP-3, AC-NAV-5 | test: anchor class; hand for the pixels |
-| Scrolling | reduced motion on | any | jump with no smooth scroll | — | CAP-3 | hand (global reduced-motion rule) |
-| Sub-nav | width 640px or less | touch | scrolls sideways; no pill wraps or is cut | — | CAP-4 | hand |
+| Pill | hover | mouse | navy fill, white text | 0.3s | prototype `.subnav a:hover` | ✅ Chrome 1280: navy fill, white text, 0.3s (fixed in review: was instant) |
+| Pill | Tab then Enter | keyboard | focus ring; the page jumps to that section | smooth | CAP-2, CAP-3 | ✅ Chrome 1280: Tab reaches LXP with a 2px ring; Enter scrolls smoothly (scrollY 0 → 104 → 514 → … → 881), hash `#lxp` |
+| Pill | tap | touch, pen | page scrolls to that section | smooth | CAP-3 | ✅ Chrome 390 touch tap on SXP (pen not checked) |
+| Section heading | after a pill link, the mega menu link or a `/products#lxp` URL | any | heading fully visible below header and sub-nav (144px offset) | smooth | CAP-3, AC-NAV-5 | ✅ Chrome 1280: pill, click and direct `/products#lxp` put the section at 144px and its heading at 224px (fixed in review: was 216px, header counted twice); test: anchor class |
+| Scrolling | reduced motion on | any | jump with no smooth scroll | — | CAP-3 | ✅ Chrome 1280 reduced motion: `scroll-behavior: auto`, jump complete at 50ms |
+| Sub-nav | width 640px or less | touch | scrolls sideways; no pill wraps or is cut | — | CAP-4 | ✅ Chrome 390 and 300: `overflow-x: auto`; all four pills fit at 300px, all 40px high (no wrap, none cut); no page sideways scroll |
 | Page | any width | — | no link points at `#updates` | — | T5 | test: no Updates link |
 
 ## Implementation Notes
