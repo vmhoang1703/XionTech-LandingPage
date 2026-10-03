@@ -52,7 +52,7 @@ Hà, a parent on her phone, must reach PXP and Book a demo on a small screen and
 ## Constraints
 
 - Story 1.3 (desktop header) must be merged first; extend its header and nav data list, do not fork them.
-- Andy owns `src/components/layout/*`. Header shell stays a Server Component; only the menu state is a `"use client"` component.
+- Andy owns `src/components/layout/*` (except `site-footer.tsx`, Sammy's, Story 1.5). Header shell stays a Server Component; only the menu state is a `"use client"` component.
 - Tokens from Story 1.1: breakpoints 640px and 1080px (inclusive max-width, as in the prototype CSS), mobile menu z layer 60, Menu button style per DESIGN Mobile menu (paper panel under the header, full width, scrolls inside the viewport).
 - Port the prototype header (`#burger`, `#menu`, `.menu-cta`); do not redesign. Where the prototype differs, the spines win: its focus trap covers only the button and menu items; the build must also include the logo link (and the EN/VI switch later).
 - No `/en` or `/vi` route prefixes (Story 1.2 is after demo); keep every label in a form that can be translated later.

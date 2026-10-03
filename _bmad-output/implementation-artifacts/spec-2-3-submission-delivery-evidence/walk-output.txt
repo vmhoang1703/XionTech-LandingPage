@@ -1,0 +1,76 @@
+[1280] L1 button text while sending: Sending...
+[1280] L1 button disabled while sending: true
+[1280] L1 icon kept: true
+[1280] L2 panel role: status
+[1280] L2 panel text: Thank you! We will be in touch soon.
+[1280] L2 panel icon: true
+[1280] L2 form gone: true
+[1280] L2 tabs gone: true
+[1280] L2 focus: DIV.form-ok
+[1280] L2 request URL: http://localhost:3000/api/contact
+[1280] L2 request URL has no query or hash: true
+[1280] L2 request URL holds no name or email: true
+[1280] L2 request had honeypot empty: true
+[1280] L3 email aria-invalid: true
+[1280] L3 inline error: Please enter a valid email address.
+[1280] L3 focus: INPUT#f-email
+[1280] L3 live region: Please fix the following: Please enter a valid email address.
+[1280] L4 alert: alert / We could not send your request. Please try again.
+[1280] L4 alert colour: rgb(138, 28, 20)
+[1280] L4 values kept: Walk Test | walk@example.com | Walk School | Head of IT | Walk message
+[1280] L4 button enabled: true
+[1280] L4 button text: Send request
+[1280] L4 focus: BUTTON.btn
+[1280] L4 alert above button: true
+[1280] L6 retry clears message: true
+[1280] L6 retry shows Sending: Sending...
+[1280] L5 alert: You have sent several requests in a short time. Please try again in a few minutes.
+[1280] L5 values kept: Walk Test | walk@example.com | Walk School | Head of IT | Walk message
+[1280] L5 button enabled: true
+[1280] L4 timeout after (s): 15.2
+[1280] L4 timeout alert: We could not send your request. Please try again.
+[1280] L4 timeout values kept: Walk Test | walk@example.com | Walk School | Head of IT | Walk message
+[1280] L7 honeypot attrs: -1 / true / off
+[1280] L7 honeypot visible size: 1x1
+[1280] L7 tab order after message: BUTTON.btn > A > NEXTJS-PORTAL > BODY.flex
+[1280] L7 honeypot reached: false
+[390] L1 button text while sending: Sending...
+[390] L1 button disabled while sending: true
+[390] L1 icon kept: true
+[390] L2 panel role: status
+[390] L2 panel text: Thank you! We will be in touch soon.
+[390] L2 panel icon: true
+[390] L2 form gone: true
+[390] L2 tabs gone: true
+[390] L2 focus: DIV.form-ok
+[390] L2 request URL: http://localhost:3000/api/contact
+[390] L2 request URL has no query or hash: true
+[390] L2 request URL holds no name or email: true
+[390] L2 request had honeypot empty: true
+[390] L3 email aria-invalid: true
+[390] L3 inline error: Please enter a valid email address.
+[390] L3 focus: INPUT#f-email
+[390] L3 live region: Please fix the following: Please enter a valid email address.
+[390] L4 alert: alert / We could not send your request. Please try again.
+[390] L4 alert colour: rgb(138, 28, 20)
+[390] L4 values kept: Walk Test | walk@example.com | Walk School | Head of IT | Walk message
+[390] L4 button enabled: true
+[390] L4 button text: Send request
+[390] L4 focus: BUTTON.btn
+[390] L4 alert above button: true
+[390] L6 retry clears message: true
+[390] L6 retry shows Sending: Sending...
+[390] L5 alert: You have sent several requests in a short time. Please try again in a few minutes.
+[390] L5 values kept: Walk Test | walk@example.com | Walk School | Head of IT | Walk message
+[390] L5 button enabled: true
+[390] L4 timeout after (s): 15.2
+[390] L4 timeout alert: We could not send your request. Please try again.
+[390] L4 timeout values kept: Walk Test | walk@example.com | Walk School | Head of IT | Walk message
+[390] L7 honeypot attrs: -1 / true / off
+[390] L7 honeypot visible size: 1x1
+[390] L7 tab order after message: BUTTON.btn > A > NEXTJS-PORTAL > BODY.flex
+[390] L7 honeypot reached: false
+L8 390 panel inside card: true
+L8 390 no horizontal scroll: true
+L8 1280 panel inside card: true
+L8 1280 no horizontal scroll: true

@@ -1,0 +1,12 @@
+[1280] status 404 | title "Page not found"
+[1280] h1 count 1 | h1 "We couldn't find that page."
+[1280] header 1 footer 1 band 0
+[1280] main links Go to Home→/ | Products→/products | Services→/services | News→/news
+[1280] no horizontal scroll true
+[1280] first link focus outline solid 2px
+[390] status 404 | title "Page not found"
+[390] h1 count 1 | h1 "We couldn't find that page."
+[390] header 1 footer 1 band 0
+[390] main links Go to Home→/ | Products→/products | Services→/services | News→/news
+[390] no horizontal scroll true
+[390] first link focus outline solid 2px

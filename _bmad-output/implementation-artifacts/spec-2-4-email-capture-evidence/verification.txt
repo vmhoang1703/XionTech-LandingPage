@@ -1,0 +1,134 @@
+===== $ npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+===== exit 0
+===== $ npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+
+
+ Test Files  26 passed (26)
+      Tests  572 passed (572)
+   Start at  15:39:58
+   Duration  23.68s (environment 40%, tests 29%, import 14%, setup 11%, transform 5%, worker 1%)
+
+===== exit 0
+===== $ npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  26 passed (26)
+      Tests  572 passed (572)
+   Start at  15:40:29
+   Duration  51.70s (tests 40%, environment 36%, import 12%, setup 9%, transform 2%, worker 1%)
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.62 |    98.41 |   99.27 |     100 |                   
+ ...onents/contact |   99.06 |    95.83 |   98.27 |     100 |                   
+  contact-form.tsx |   98.49 |    93.58 |   97.61 |     100 | ...26,189,219,404 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.62% ( 529/531 )
+Branches     : 98.41% ( 310/315 )
+Functions    : 99.27% ( 137/138 )
+Lines        : 100% ( 471/471 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/components/contact/capture-band.tsx (100%)
+src/components/contact/capture-storage.ts (100%)
+src/components/contact/contact-form.tsx (100%)
+src/components/contact/contact-strings.ts (100%)
+src/components/contact/post-submission.ts (100%)
+src/lib/contact/delivery.ts (100%)
+src/lib/contact/submission.ts (100%)
+-------------
+Total:   93 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 9 changed file(s) with branch coverage >= 80% vs origin/develop.
+===== exit 0
+===== $ npm run build && npm run test:smoke
+
+> xiontech-landing-page@0.1.0 build
+> next build
+
+▲ Next.js 16.3.6 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 133ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.8s
+  Running TypeScript ...
+  Finished TypeScript in 13.8s ...
+  Collecting page data using 8 workers ...
+  Generating static pages using 8 workers (0/7) ...
+  Generating static pages using 8 workers (1/7) 
+  Generating static pages using 8 workers (3/7) 
+  Generating static pages using 8 workers (5/7) 
+✓ Generating static pages using 8 workers (7/7) in 1643ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/contact
+├ ƒ /api/revalidate
+└ ○ /demo
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> xiontech-landing-page@0.1.0 test:smoke
+> playwright test --project=smoke
+
+
+Running 3 tests using 1 worker
+
+  ✓  1 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (70ms)
+  ✓  2 [smoke] › e2e\smoke.spec.ts:15:5 › demo page responds 200 with send request button @smoke (37ms)
+  ✓  3 [smoke] › e2e\smoke.spec.ts:26:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (99ms)
+
+  3 passed (25.5s)
+===== exit 0
+===== $ npm audit --omit=dev
+found 0 vulnerabilities
+===== exit 0

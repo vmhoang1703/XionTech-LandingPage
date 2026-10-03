@@ -739,4 +739,119 @@ describe("contact form styles", () => {
   it("does not redefine sr-only, which Tailwind provides", () => {
     expect(source).not.toMatch(/\.sr-only\s*\{/);
   });
+
+  it("shows the send-failure alert in the error colour, which passes AA on the paper card", () => {
+    const rule = readRuleDeclarations(source, ".form-alert");
+    expect(rule.get("color")).toBe("var(--color-error)");
+    expect(contrastRatio(colors.error, colors.paper)).toBeGreaterThanOrEqual(
+      TEXT,
+    );
+  });
+
+  it("centres the thank-you panel", () => {
+    const rule = readRuleDeclarations(source, ".form-ok");
+    expect(rule.get("text-align")).toBe("center");
+  });
+
+  it("draws the thank-you icon in navy, which passes the non-text 3:1 on the paper card", () => {
+    const rule = readRuleDeclarations(source, ".form-ok svg");
+    expect(rule.get("color")).toBe("var(--color-navy)");
+    expect(contrastRatio(colors.navy, colors.paper)).toBeGreaterThanOrEqual(
+      NON_TEXT,
+    );
+  });
+
+  it("keeps the global focus ring on the thank-you panel it receives focus on", () => {
+    const rules = readRules(source).filter((rule) =>
+      rule.selectors.some((selector) => selector.startsWith(".form-ok")),
+    );
+    expect(rules.length).toBeGreaterThan(0);
+    for (const rule of rules) {
+      expect(rule.declarations.get("outline")).toBeUndefined();
+    }
+  });
+});
+
+describe("email capture band styles", () => {
+  const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+  const colors = readThemeColors(GLOBALS_CSS);
+  const rule = (selector: string) => readRuleDeclarations(source, selector);
+  // The first rule for a selector, before any media query overrides it.
+  const baseRule = (selector: string) =>
+    readRules(source).find((r) => r.selectors.includes(selector))
+      ?.declarations ?? new Map<string, string>();
+
+  it("pads the band with the capture spacing token", () => {
+    expect(rule(".capture").get("padding-block")).toBe(
+      "var(--spacing-capture)",
+    );
+  });
+
+  it("splits the band in two columns", () => {
+    expect(baseRule(".cap-grid").get("grid-template-columns")).toBe("1fr 1fr");
+  });
+
+  it("stacks the band in one column up to the md breakpoint", () => {
+    expect(source).toMatch(
+      /@media \(width <= --theme\(--breakpoint-md\)\)\s*\{\s*\.cap-grid\s*\{[^}]*grid-template-columns:\s*1fr;/,
+    );
+  });
+
+  it("draws a decorative ring behind the band text that ignores the pointer", () => {
+    const ring = baseRule(".capture::before");
+    expect(ring.get("position")).toBe("absolute");
+    expect(ring.get("width")).toBe("55%");
+    expect(ring.get("aspect-ratio")).toBe("1");
+    expect(ring.get("border-radius")).toBe("50%");
+    expect(ring.get("border")).toBe("1.5px solid rgb(22 54 99 / 0.16)");
+    expect(ring.get("box-shadow")).toBe(
+      "0 0 0 44px rgb(255 255 255 / 0.08), 0 0 0 88px rgb(255 255 255 / 0.05)",
+    );
+    expect(ring.get("pointer-events")).toBe("none");
+    expect(baseRule(".cap-grid").get("position")).toBe("relative");
+  });
+
+  it("limits the band heading to 15 characters wide", () => {
+    expect(rule(".cap-grid h2").get("max-width")).toBe("15ch");
+  });
+
+  it("spaces the band lede 14px below the heading", () => {
+    expect(rule(".cap-grid .lede").get("margin-top")).toBe("14px");
+  });
+
+  it("draws the field row as a white pill with a 1.5px navy border", () => {
+    const row = baseRule(".cap-row");
+    expect(row.get("background")).toBe("var(--color-paper)");
+    expect(row.get("border-radius")).toBe("var(--radius-full)");
+    expect(row.get("border")).toBe("1.5px solid var(--color-navy)");
+  });
+
+  it("shows a 3px ring in the focus colour around the focused row", () => {
+    expect(rule(".cap-row:focus-within").get("box-shadow")).toMatch(
+      /^0 0 0 3px var\(--color-focus\)/,
+    );
+  });
+
+  it("stacks the field above the button up to the sm breakpoint", () => {
+    expect(source).toMatch(
+      /@media \(width <= --theme\(--breakpoint-sm\)\)\s*\{\s*\.cap-row\s*\{[^}]*flex-direction:\s*column/,
+    );
+  });
+
+  it("shows capture errors in the error colour, which passes AA on amber", () => {
+    expect(rule(".cap-form .err").get("color")).toBe("var(--color-error)");
+    expect(contrastRatio(colors.error, colors.amber)).toBeGreaterThanOrEqual(
+      TEXT,
+    );
+  });
+
+  it("underlines the consent link", () => {
+    expect(rule(".cap-form small a").get("text-decoration")).toBe("underline");
+  });
+
+  it("dims a disabled button and shows the not-allowed cursor", () => {
+    const disabled = rule(".btn:disabled");
+    expect(disabled.get("opacity")).toBe("0.6");
+    expect(disabled.get("cursor")).toBe("not-allowed");
+  });
 });
