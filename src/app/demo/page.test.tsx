@@ -54,6 +54,22 @@ describe("Demo page", () => {
     ).toBe("mailto:vinni.tran@newxion.com");
   });
 
+  it("renders every contact of every office, in order, with its href and name", () => {
+    const { container } = render(<DemoPage />);
+    const blocks = container.querySelectorAll("address.office");
+    expect(blocks).toHaveLength(offices.length);
+    offices.forEach((office, officeIndex) => {
+      const links = blocks[officeIndex].querySelectorAll("a");
+      expect(links).toHaveLength(office.contacts.length);
+      office.contacts.forEach((contact, contactIndex) => {
+        const link = links[contactIndex];
+        expect(link.getAttribute("href")).toBe(contact.href);
+        expect(link.textContent).toBe(contact.label);
+        expect(link.getAttribute("aria-label")).toBe(contact.ariaLabel ?? null);
+      });
+    });
+  });
+
   it("renders the form once inside the form card", () => {
     const { container } = render(<DemoPage />);
     const card = container.querySelector("#form.form-card");
