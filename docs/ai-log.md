@@ -513,3 +513,9 @@ Template:
 - **What the AI did:** rendered `SiteFooter` after `<main>` in the root layout (tests first in `layout.test.tsx` and `no-js.test.tsx`); switched `/demo` to Sammy's `src/content/offices.ts` and deleted `office-data.ts`, keeping the `/demo` output the same; a 4-layer review (Acceptance skipped: no spec) found that the office facts had lost their only test and that the `/demo` loop did not check every contact link — both patched.
 - **AI got it wrong?** Yes: the security review layer was first launched with a prompt path that does not exist (the security prompt lives under the `bmad-build` render, not `bmad-code-review`); it stopped at once and was relaunched.
 - **Open:** footer links point to pages that the page stories build later; `/demo` shows the offices twice (page and footer), as in the prototype.
+
+## 2026-10-03 — Story 1.7 Not found page (`bmad-build`, one-shot, built in parallel)
+
+- **Prompt (Hoang Vu):** build easy stories in parallel; 1.7, 2.1 and 4.1 run at the same time in three git worktrees.
+- **What the AI did:** one-shot build in its own worktree: `not-found.tsx` with the navy hero, "Go to Home" and three section links, no capture band, title "Page not found" with noindex, a unit test and a `@smoke` 404 test. Full checks, then the build, smoke and browser walk in the main checkout. A 5-layer review found no Critical or Important issues.
+- **AI got it wrong?** Yes. The worktrees first lacked BMad's git-ignored personal config, so every build agent stopped at once. Turbopack rejected the shared `node_modules` link in the worktree, so the build had to run in the main checkout. The controller left the spec out of the review diff, so one reviewer reported a missing UX table that exists.

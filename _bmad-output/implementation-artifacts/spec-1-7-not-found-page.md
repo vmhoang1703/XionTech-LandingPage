@@ -55,3 +55,17 @@ Tests: RED `npx vitest run src/app/not-found.test.tsx` failed (module `./not-fou
 - e2e asserts an escaped apostrophe: low, patched (asserts "that page" instead).
 - Unit test proxies for main/band, copy repeated in tests, no axe, nested paths: low, rejected (tests say what they prove; extra checks add more than a simple fix).
 - Contact link on the page: false, not in the spec (CAP-2 says exactly four links).
+
+## Full Review (before PR, 2026-10-03)
+
+Five layers (Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor, Security Auditor). No Critical or Important findings, so nothing was patched.
+
+| # | Finding (source) | Verdict | Route | Evidence |
+|---|---|---|---|---|
+| 1 | Acceptance: header and footer on the 404 page not visible in the diff | maybe-false | evidence | Browser walk on the built branch: 1 header, 1 footer, 0 capture bands, status 404, at 1280px and 390px (`spec-1-7-not-found-page-evidence/walk-output.txt`). |
+| 2 | No UX checks table in the diff (Blind) | false | reject | The table is in this spec; the controller excluded `_bmad-output` from the review diff. |
+| 3 | `/products`, `/services`, `/news` links lead to 404 today (Blind, Edge) | low | reject | Same links as the header; the page stories build those routes (plan C). |
+| 4 | e2e test matches copy, not the page itself; noindex not checked end to end; band absence checked by one string (Blind, Edge) | low | defer | Smoke still proves the 404 status and the copy. |
+| 5 | `min-h-[70dvh]` untested at 320px and short screens (Edge) | low | defer | Walk at 390px shows no sideways scroll. |
+| 6 | Test names, content typing, icon `aria-hidden`, label class (Blind, Edge) | low | defer | Cosmetic test and typing points. |
+| 7 | Verification Gap and Security | — | — | No gaps; clean. |
