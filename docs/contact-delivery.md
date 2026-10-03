@@ -45,31 +45,33 @@ Unit tests mock Gmail and Upstash. They never send mail.
 2. In Vercel, open the project, then Storage, then Create, then Marketplace, then Upstash Redis (free). Connect it to `xion-tech-landing-page` for Production and Preview. Check that the project now has `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
 3. In Vercel, open Environment Variables. Set these for Production and Preview, and mark them Sensitive: `CONTACT_INBOX` (the lead's company email, the same value in Production and Preview), `GMAIL_USER` and `GMAIL_APP_PASSWORD`.
 4. Copy the same five into `.env.local` for local runs.
-5. After merge: send one real Product demo request on https://xiontech-dev.vercel.app/demo. The mail must arrive at the inbox with every field, and Reply-To must be the visitor. Then send quickly six times with one email. The sixth must show the rate-limit message.
+5. After merge: send one real Product demo request on https://xiontech-dev.vercel.app/demo. The mail must arrive at the inbox with every field, and Reply-To must be the visitor. Then send with one email until you have made six sends in total within 10 minutes, counting the first real request. The sixth must show the rate-limit message.
 
 ## What the route does
 
 The route runs these steps in order. It stops at the first one that fails.
 
-| Step | Check                                                                                                                              | Answer                                   |
-| ---- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 1    | Body is not a JSON object, `type` is not `demo` or `project`, or a value no form can send (for example a role over 200 characters) | 400 `{ "error": "send" }`                |
-| 2    | Honeypot field `website` is not empty                                                                                              | 200 `{ "ok": true }`. Nothing else runs. |
-| 3    | One of the five variables is not set                                                                                               | 500 `{ "error": "send" }`                |
-| 4    | A field breaks the shared rules                                                                                                    | 400 `{ "errors": { field: text } }`      |
-| 5    | More than 5 sends in 10 minutes for the same key                                                                                   | 429 `{ "error": "rate" }`                |
-| 6    | The mail fails to send                                                                                                             | 502 `{ "error": "send" }`                |
-| 7    | The mail is sent                                                                                                                   | 200 `{ "ok": true }`                     |
+| Step | Check                                                                                   | Answer                                   |
+| ---- | --------------------------------------------------------------------------------------- | ---------------------------------------- |
+| 1    | Body is not a JSON object, or `type` is not `demo` or `project`                         | 400 `{ "error": "send" }`                |
+| 2    | Honeypot field `website` is not empty                                                   | 200 `{ "ok": true }`. Nothing else runs. |
+| 3    | Role is over 200 characters, or a select or products value is not an option in the form | 400 `{ "error": "send" }`                |
+| 4    | One of the five variables is not set                                                    | 500 `{ "error": "send" }`                |
+| 5    | A field breaks the shared rules                                                         | 400 `{ "errors": { field: text } }`      |
+| 6    | More than 5 sends in 10 minutes for the same key                                        | 429 `{ "error": "rate" }`                |
+| 7    | The mail fails to send                                                                  | 502 `{ "error": "send" }`                |
+| 8    | The mail is sent                                                                        | 200 `{ "ok": true }`                     |
 
 Notes:
 
-- The honeypot answer is 200 on purpose. A bot gets no sign that it was caught. No mail is sent and no rate-limit call is made. The smoke test uses this step, so it needs no secrets.
+- The honeypot answer is 200 on purpose. A bot gets no sign that it was caught. No mail is sent and no rate-limit call is made. The honeypot is checked before the role and option checks (step 3), so a filled honeypot with a long role still gets 200. The smoke test uses this step, so it needs no secrets.
 - The mail is plain text. The subject is "Product demo request: <school or company>" or "Outsourcing project request: <school or company>". CR and LF are removed from the subject. Reply-To is the visitor's email.
 - In the form, 400 with field errors shows inline. Any other failure, and a 15 second timeout, shows the send message above the button. 429 shows the rate-limit message. The visitor keeps every value and presses "Send request" again.
 
 ## Rate limit
 
 - The limit is 5 sends in 10 minutes (sliding window) for one IP plus one email. The same IP with another email still passes.
+- Every allowed send counts toward the 5, also one whose mail then fails with 502. During a Gmail outage, five failed attempts with one email use the whole limit. The next attempt then shows the rate-limit message, for up to 10 minutes.
 - The key is a SHA-256 hash of the IP and the lower-cased email. The raw IP and email never reach Upstash. In Upstash the keys start with `contact`.
 - The IP comes from `ipAddress` in `@vercel/functions`. When there is no IP (for example in a local run), the key uses the word "unknown" with the email.
 - There is no cache or counter in the app process. The state lives only in Upstash.
@@ -80,7 +82,7 @@ Notes:
 - **Upstash is down, slow or returns an error:** the route fails open. It sends the mail anyway and answers 200. It writes one log line, "rate limit unavailable". The store call times out after 3 seconds.
 - **Gmail refuses or is slow:** the SMTP connection, greeting and socket each time out after 5 seconds. The route answers 502. The form shows the send message and keeps the values.
 - **Slow path:** the route's `maxDuration` is 10 seconds. A worst-case slow run can pass it. Then the platform ends the call. The form shows the send error with the values kept, the same as for a 502.
-- **Logs:** a log line names the step and the error class only, for example "Contact delivery: send failed" and the class name. It never holds a name, an email, a message, a key or a secret.
+- **Logs:** a log line names the step and the error class only, for example "Contact delivery: send failed" and the class name. The one exception is the missing-variable line: it names the variable, for example "GMAIL_USER is not set". No line holds a name, an email, a message, a key or a secret value.
 
 ## Free plan limits
 
@@ -98,7 +100,7 @@ Upstash Redis (the rate-limit store, free plan, from the story spec of 2026-10-0
 
 What would force a paid plan:
 
-- Gmail: more than about 500 requests in 24 hours. Gmail then refuses the mail, and the form shows the send error. This needs a different sender, for example a Google Workspace account or a mail service made for sending. That means a change in `src/lib/contact/delivery.ts` and a paid plan.
+- Gmail: more than about 500 requests in 24 hours. We did not verify what Gmail does then. We expect it to refuse the mail, so the route would answer 502 and the form would show the send error. A Google Workspace account still uses `service: "gmail"`, so it needs only new `GMAIL_USER` and `GMAIL_APP_PASSWORD` values and a paid plan, with no code change. A different mail service needs a change in `src/lib/contact/delivery.ts` and usually a paid plan.
 - Upstash: more than 500K commands in a month, more than 256 MB of data, more than 10 GB of bandwidth, or a need for a second database. The form uses one database and a few small keys, and the keys expire. We did not measure how many commands one send uses. Check the Upstash usage page after the first tests.
 - If Upstash refuses the calls, the route fails open. Mail still goes out, but the rate limit stops working until the limit resets or the plan changes.
 
