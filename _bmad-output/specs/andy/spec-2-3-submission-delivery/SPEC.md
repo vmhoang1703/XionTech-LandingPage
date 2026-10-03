@@ -39,7 +39,7 @@ Forms are live on Demo day 2026-10-09, and the site is used as the real company 
   - **success:** Keyed on IP plus email, a key over 5 Submissions per 10 minutes is rejected and not delivered; another email on the same IP is not blocked; a real visitor over the limit sees a retryable error and keeps what they typed; counters live in a shared store that works across serverless instances.
 - **CAP-6**
   - **intent:** Valid requests reach the contact inbox and personal data stays out of URLs.
-  - **success:** An accepted demo or project Submission is sent by the mail sender service to vinni.tran@newxion.com, set in server configuration; no personal data appears in any URL, query string or hash (NFR-3).
+  - **success:** An accepted demo or project Submission is sent by the mail sender service to the contact inbox (the lead's company email, decided 2026-10-03; before: vinni.tran@newxion.com), set in server configuration; no personal data appears in any URL, query string or hash (NFR-3).
 
 ## Constraints
 

@@ -130,3 +130,27 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-8-sanity-setup.md`
   summary: `src/lib/sanity/next-config.test.ts` asserts the loaded config equals `{}`; change it to a non-throw check before adding a real option to `next.config.ts`.
   evidence: patch re-review minor, 2026-10-02.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Validate the contact delivery variables at server start (log-only `instrumentation.ts` register), as the CLAUDE.md guardrail asks; today they are checked per request.
+  evidence: `getDeliveryConfig` runs per request (`delivery.ts`); a build-time check would force secrets on every teammate, a start-time log would not.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: The form shows "Thank you!" for any 2xx; check the body is `{ ok: true }`.
+  evidence: `postSubmission` returns sent on `response.ok` (`contact-form.tsx`); only a proxy or portal answering 200 would trigger it.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Check whether browser autofill or password managers fill the `website` honeypot, and count honeypot hits (no personal data).
+  evidence: maybe-false, medium if true: a filled honeypot gets 200 and no mail, silently; settle with Chrome, Edge and one password manager on /demo.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Avoid a duplicate mail when the response is lost after Gmail accepted it (per-submit id checked in Upstash).
+  evidence: the client shows the send error and the visitor retries; nothing de-duplicates.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Keep the worst-case route time under `maxDuration` (3 s store + 5 s per SMTP phase + DNS), e.g. one overall deadline.
+  evidence: a platform stop gives no 502 log line; the visitor still sees the send error with values kept.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Screen-reader pass (NVDA/VoiceOver) of the contact form: nothing announced while sending; the failure alert may be cut by the focus move.
+  evidence: maybe-false; jsdom cannot announce; settle with one pass on /demo.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Mark non-production mails (e.g. a VERCEL_ENV subject prefix), since every environment sends to the same inbox.
+  evidence: lead's 2026-10-03 inbox decision; test and real leads look the same.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-3-submission-delivery.md`
+  summary: Add `import "server-only"` to `src/lib/contact/delivery.ts` and move `ContactSubmission` out of the client component.
+  evidence: `delivery.ts` reads secrets; only the route imports it today; tests would need the server-only mock used in Story 1.8.

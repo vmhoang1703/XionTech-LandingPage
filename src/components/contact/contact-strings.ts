@@ -42,6 +42,12 @@ export const CONTACT_STRINGS = {
     startTiming: "Start timing",
     message: "Message (optional)",
     submit: "Send request",
+    sending: "Sending...",
+    successHeading: "Thank you!",
+    successText: "We will be in touch soon.",
+    sendError: "We could not send your request. Please try again.",
+    rateError:
+      "You have sent several requests in a short time. Please try again in a few minutes.",
     consent: "We only use your details to respond to this request.",
     privacyLink: "Privacy policy",
     errorsHeading: "Please fix the following:",

@@ -1,0 +1,3 @@
+===== $ curl -X POST http://localhost:3000/api/contact (one real Product demo request; CONTACT_INBOX from .env.local, value not printed)
+{"ok":true}
+HTTP 200 in 4.928200s
