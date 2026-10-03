@@ -2,7 +2,7 @@
 title: 'Story 6.5: Careers page and open roles'
 type: 'feature'
 created: '2026-10-03'
-status: 'in-progress'
+status: 'in-review'
 baseline_commit: '8964d3c710d3da64d3458afe3052538b2ae3f93e'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -64,17 +64,17 @@ context: ['{project-root}/AGENTS.md']
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `studio/schemas/job.ts` + `studio/schemas/schemas.test.ts` -- add `slug` (source `title.en`, required), `team` (localized string), `closed` (boolean, initial false) -- Q1-B.
+- [x] `studio/schemas/job.ts` + `studio/schemas/schemas.test.ts` -- add `slug` (source `title.en`, required), `team` (localized string), `closed` (boolean, initial false) -- Q1-B.
   - red: `studio/schemas/schemas.test.ts` -- job has `slug`, `team` (EN/VI) and `closed` fields.
-- [ ] `src/lib/careers/open-roles.ts` + test -- GROQ `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en)] | order(title.en asc)`, projected to `{ slug, title, team, location, type }`; `getOpenRoles()` calls `sanityFetch` with tags `["job"]`; `roleMeta()` maps type values to labels (`full-time` → "Full-time") and joins present parts with " · " -- CAP-2, CAP-3.
+- [x] `src/lib/careers/open-roles.ts` + test -- GROQ `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en)] | order(title.en asc)`, projected to `{ slug, title, team, location, type }`; `getOpenRoles()` calls `sanityFetch` with tags `["job"]`; `roleMeta()` maps type values to labels (`full-time` → "Full-time") and joins present parts with " · " -- CAP-2, CAP-3.
   - red: `src/lib/careers/open-roles.test.ts` -- fetch gets tag `job` and the closed/slug filter; meta omits missing parts and unknown types; a thrown fetch error propagates.
-- [ ] `src/content/careers.ts` -- metadata, hero, culture (3 bullets + `[Placeholder]` photo frame), 4 benefits, roles heading + empty text + "View and apply", life heading + 3 frame captions ("[Placeholder] Team photo", "[Placeholder] Office photo", "[Placeholder] Event photo") -- CAP-1, CAP-4.
-- [ ] `src/components/careers/careers-hero.tsx`, `culture.tsx`, `benefits.tsx`, `open-roles.tsx`, `life-frames.tsx` + tests -- Server Components; `OpenRoles` takes `roles` as a prop and renders cards or the empty panel -- CAP-1…CAP-4.
+- [x] `src/content/careers.ts` -- metadata, hero, culture (3 bullets + `[Placeholder]` photo frame), 4 benefits, roles heading + empty text + "View and apply", life heading + 3 frame captions ("[Placeholder] Team photo", "[Placeholder] Office photo", "[Placeholder] Event photo") -- CAP-1, CAP-4.
+- [x] `src/components/careers/careers-hero.tsx`, `culture.tsx`, `benefits.tsx`, `open-roles.tsx`, `life-frames.tsx` + tests -- Server Components; `OpenRoles` takes `roles` as a prop and renders cards or the empty panel -- CAP-1…CAP-4.
   - red: component tests -- each card is one link to `/careers/<slug>` with no nested link or button; `[]` shows "No open roles right now."; three `#life` frames with `[Placeholder]` captions; hero buttons point to `#roles` and `#life`.
-- [ ] `src/app/careers/page.tsx` + test -- async page: `metadata`, `await getOpenRoles()`, sections in mockup order, no capture band -- CAP-1.
+- [x] `src/app/careers/page.tsx` + test -- async page: `metadata`, `await getOpenRoles()`, sections in mockup order, no capture band -- CAP-1.
   - red: `src/app/careers/page.test.tsx` -- renders the H1, `#roles`, `#life` and no capture band.
-- [ ] `src/app/globals.css` -- port `.roles`, `.role`, `.role-main`, `.roles-empty`, `.illo`, `.link-arrow`, life grid; hover only in `@media (hover: hover)`; no transition under reduced motion.
-- [ ] `e2e/careers.spec.ts` -- `@smoke`: `GET /careers` is 200 with the H1, `id="roles"` and `id="life"`.
+- [x] `src/app/globals.css` -- port `.roles`, `.role`, `.role-main`, `.roles-empty`, `.illo`, `.link-arrow`, life grid; hover only in `@media (hover: hover)`; no transition under reduced motion.
+- [x] `e2e/careers.spec.ts` -- `@smoke`: `GET /careers` is 200 with the H1, `id="roles"` and `id="life"`.
 
 **Acceptance Criteria:**
 - Given `/careers`, when it loads, then the amber hero reads "Build what schools use every day." with "See open roles" → `#roles` and "Life at XionTech" → `#life`, then culture, four benefits (Innovative workspace, Growth opportunities, Engaging work, Meaningful impact), open roles and Life at XionTech, and no capture band.
@@ -132,3 +132,28 @@ Sources: `EXPERIENCE.md` (Component Patterns › Role card, Spotlight card, Medi
 
 **Manual checks:**
 - Browser walk of `/careers` at 1280px, 900px and 390px; keyboard through the hero buttons and role cards; every UX row above -- pending (controller).
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-03.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- "All matched files use Prettier code style!"
+- `npm test` -- exit 0 -- "Test Files 45 passed (45)", "Tests 707 passed (707)"
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%", "C1 ok: 9 changed file(s) with branch coverage >= 80% vs origin/develop."
+
+**Observed**
+
+- Page and components in jsdom: H1, `#roles`, `#life`, one link per role to `/careers/<slug>`, empty panel, three `[Placeholder]` frames, no capture band -- `src/app/careers/page.test.tsx`, `src/components/careers/careers.test.tsx`
+
+**Artifacts**
+
+- spec-6-5-careers-open-roles-evidence/verification.txt -- 3824 bytes -- sha256 f1ed11f42e7d -- transcript of the three command runs
+- spec-6-5-careers-open-roles-evidence/observed.md -- 921 bytes -- sha256 a19db74e200d -- surface not reached; what the tests observed instead
+
+**Not captured**
+
+- `npm run build && npm run test:smoke` -- pending (controller, main checkout): Turbopack rejects the worktree's `node_modules` junction.
+- Browser walk of `/careers` and every UX checks row -- pending (controller).
+- The GROQ filter (`closed != true`, `defined(slug.current)`, order by title) against the real dataset -- only the query text is asserted; checked after the lead redeploys the Studio and fills the sample role.

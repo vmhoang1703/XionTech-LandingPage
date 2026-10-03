@@ -1,0 +1,101 @@
+$ npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+exit 0
+$ npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage-6-5
+
+
+ Test Files  45 passed (45)
+      Tests  707 passed (707)
+   Start at  20:57:37
+   Duration  85.06s (import 47%, tests 23%, environment 23%, setup 5%, transform 1%)
+
+    Isolate  45 workers spawned · ~4.35s startup each (spawn + environment, per file)
+             at least ~4.97s faster with isolate: false — reuses workers across files instead of one per file
+
+exit 0
+$ npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage-6-5
+      Coverage enabled with v8
+
+
+ Test Files  45 passed (45)
+      Tests  707 passed (707)
+   Start at  20:59:06
+   Duration  55.14s (import 44%, environment 29%, tests 17%, setup 7%, transform 2%, worker 1%)
+
+Environment  jsdom was created 45 times · 178.88s total, 29% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.53 |    97.61 |   99.11 |     100 |                   
+ ...onents/contact |   99.06 |    95.83 |   98.27 |     100 |                   
+  contact-form.tsx |   98.49 |    93.58 |   97.61 |     100 | ...26,189,219,404 
+ components/home   |   99.21 |    95.34 |   96.77 |     100 |                   
+  hero-silk.tsx    |   98.18 |       95 |   91.66 |     100 | 27                
+  silk-shader.ts   |     100 |     92.3 |     100 |     100 | 95                
+ ...nents/sections |     100 |    95.45 |     100 |     100 |                   
+  hero-art.tsx     |     100 |       90 |     100 |     100 | 36,65             
+ test-utils        |      96 |    85.71 |     100 |     100 |                   
+  css-classes.ts   |      96 |    85.71 |     100 |     100 | 50                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.53% ( 860/864 )
+Branches     : 97.61% ( 409/419 )
+Functions    : 99.11% ( 225/227 )
+Lines        : 100% ( 778/778 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/app/careers/page.tsx (100%)
+src/components/careers/benefits.tsx (100%)
+src/components/careers/careers-hero.tsx (100%)
+src/components/careers/culture.tsx (100%)
+src/components/careers/life-frames.tsx (100%)
+src/components/careers/open-roles.tsx (100%)
+src/content/careers.ts (100%)
+src/lib/careers/open-roles.ts (100%)
+-------------
+Total:   31 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 9 changed file(s) with branch coverage >= 80% vs origin/develop.
+exit 0
