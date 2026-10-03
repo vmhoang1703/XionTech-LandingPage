@@ -67,3 +67,9 @@ Added before the PR (docs/ux-checks.md: a story in progress adds the table befor
 - Logo size and source — false: PNG is 250x46, a business brand input from UX imports.
 - `siteFooter` untyped / translation comment — low, rejected; the comment states a spec constraint.
 - `overflow-wrap:anywhere` on the whole address — medium, patched: scoped to contact links as in the prototype.
+
+Light review of the UX fix (31 lines, Edge Case Hunter, 2026-10-03):
+- `--ring` not overridden in the footer — false: no ring-styled (shadcn) control is in the footer; links use the global `:focus-visible` outline from `--color-focus`.
+- Target-size test passes with zero text links — low, patched: asserts more than 20 text links.
+- Focus test checks the class string only — false: the computed amber outline is proven by the walk (`walk-output.txt`, rgb(255,192,0)).
+
