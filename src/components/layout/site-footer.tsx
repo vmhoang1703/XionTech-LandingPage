@@ -6,11 +6,12 @@ import { siteFooter } from "@/content/site-footer";
 // Colour, font and breakpoint classes come from the Story 1.1 @theme tokens
 // (DESIGN.md site-footer: ink background, on-navy-muted text, amber-tint headings).
 const headingClass = "font-brand text-label-sm mb-4 text-amber-tint uppercase";
-const linkClass = "text-body-sm text-on-navy-muted hover:text-white";
+const linkClass =
+  "text-body-sm text-on-navy-muted inline-flex min-h-6 items-center hover:text-white";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-ink text-on-navy-muted pt-18 pb-9">
+    <footer className="bg-ink text-on-navy-muted pt-18 pb-9 [--color-focus:var(--color-focus-on-navy)]">
       <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto">
         <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 md:grid-cols-[1.3fr_repeat(4,1fr)]">
           <div>
@@ -70,7 +71,7 @@ export function SiteFooter() {
                     {...(contact.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="block [overflow-wrap:anywhere] hover:text-white"
+                    className="flex min-h-6 items-center [overflow-wrap:anywhere] hover:text-white"
                   >
                     {contact.label}
                   </a>
@@ -83,7 +84,10 @@ export function SiteFooter() {
         <div className="border-on-navy-border text-body-sm mt-13 flex flex-wrap items-center justify-between gap-3 border-t pt-6">
           <span>
             {siteFooter.copyright} ·{" "}
-            <Link href={siteFooter.privacy.href} className="hover:text-white">
+            <Link
+              href={siteFooter.privacy.href}
+              className="inline-flex min-h-6 items-center hover:text-white"
+            >
               {siteFooter.privacy.label}
             </Link>
           </span>

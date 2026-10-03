@@ -18,6 +18,29 @@ context: ['{project-root}/AGENTS.md']
 
 </frozen-after-approval>
 
+## UX checks
+
+Added before the PR (docs/ux-checks.md: a story in progress adds the table before its PR). Sources: story spec `spec-1-5-site-footer/SPEC.md` (CAP-1 to CAP-4), `EXPERIENCE.md`, `DESIGN.md`, decisions T3/T5. Checked column filled by the walk in `spec-1-5-site-footer-evidence/` (footer mounted locally for the walk only; Andy mounts it, T3).
+
+| Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
+| ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
+| Footer | page load | — | ink background, white logo plate, blurb, Products / Services / Company / Offices headings in amber-tint caps | static | CAP-1, CAP-4, DESIGN.md Site footer | ✅ walk 1280 (ink rgb(11,23,48), plate rgb(253,253,254), headings rgb(255,207,6)) |
+| Products column | read | — | PXP, LXP, SXP, IoT Device Management → `/products#pxp` `#lxp` `#sxp` `#iot`; no "Product updates" | static | CAP-1, T5 | ✅ walk + unit test; 0 `#updates` links |
+| Services column | read | — | 5 services → their `/services#…` anchors, then "All services" → `/services` | static | CAP-1 | ✅ walk + unit test |
+| Company column | read | — | About, Core values, FAQ, News, Careers, Contact → `/about`, `/about#values`, `/about#faq`, `/news`, `/careers`, `/demo` | static | CAP-1 | ✅ walk + unit test |
+| Offices | read | — | Plano first with address, phone, WhatsApp, email; then Ho Chi Minh City with "Vietnam Delivery Center" tag, address, phone; no "Head office", no Da Nang | static | CAP-2 | ✅ walk + unit test |
+| Plano phone | click | mouse | `tel:+14693229899` link | instant | CAP-2 | ✅ walk |
+| WhatsApp | click | mouse | opens `https://wa.me/14694399345` in a new tab; accessible name ends "(opens in a new tab)" | instant | CAP-2, EXPERIENCE.md new-tab rule | ✅ walk (`_blank`, `noopener noreferrer`) |
+| Email | click | mouse | `mailto:vinni.tran@newxion.com` | instant | CAP-2 | ✅ walk |
+| HCMC phone | click | mouse | `tel:+84908107552` | instant | CAP-2 | ✅ walk |
+| Footer link | hover | mouse | text turns white | instant | DESIGN.md Site footer (prototype `li a:hover`) | ✅ walk (rgb(197,208,227) → white) |
+| Footer link | Tab | keyboard | visible amber focus ring (focus-on-navy) on every link, in reading order | instant | EXPERIENCE.md Focus ring | ✅ walk, after fix (was navy rgb(22,54,99); now amber rgb(255,192,0)) |
+| Bottom bar | read | — | "© 2026 XionTechs · Privacy policy" (→ `/privacy`) and GET IT **DONE** with DONE in amber | static | CAP-3 | ✅ walk + unit test (DONE rgb(255,192,0)) |
+| Layout | 1280px | — | 5 columns (logo + 4) | static | CAP-4 | ✅ walk, 5 columns |
+| Layout | 899px | — | 2 columns | static | CAP-4, EXPERIENCE.md Responsive (900px and below) | ✅ walk, 2 columns |
+| Layout | 639px / 390px | — | 1 column, no sideways scroll | static | CAP-4, EXPERIENCE.md Responsive (640px and below) | ✅ walk, 1 column, no sideways scroll |
+| Links | size | touch | every link target at least 24px tall | static | EXPERIENCE.md Accessibility Floor (24 x 24) | ✅ walk, after fix (was 19px; smallest now 24px) |
+
 ## Implementation Notes
 
 - Test first: `npx vitest run src/components/layout` failed (no `./site-footer` module), then passed 7/7 after the component was added.
@@ -26,6 +49,8 @@ context: ['{project-root}/AGENTS.md']
 - Column headings are `h2` (prototype used `h4`) so the outline does not skip levels.
 - Footer is not mounted; Andy mounts it in `src/app/layout.tsx` (T3).
 - Checks: lint, typecheck, format:check, `npm run test:coverage` (100% statements/branches), `npm run test:smoke` (build + `/` 200) all passed.
+
+- UX walk 2026-10-03 (`spec-1-5-site-footer-evidence/walk.mjs`, Chrome, footer mounted locally only): two lines failed and were fixed test-first. The focus ring was navy on the ink footer (now `--color-focus` = focus-on-navy, as `.surface-navy` does), and text links were 19px tall (now `min-h-6`, 24px). Red: `npx vitest run src/components/layout` 2 failed; green: 76 passed.
 
 ## Review Triage Log
 

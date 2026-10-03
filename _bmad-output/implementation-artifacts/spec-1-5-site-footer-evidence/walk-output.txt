@@ -1,0 +1,24 @@
+footer background: rgb(11, 23, 48)
+logo plate background: rgb(253, 253, 254)
+headings: Products | Services | Company | Offices
+heading colour: rgb(255, 207, 6)
+Products: PXP -> /products#pxp, LXP -> /products#lxp, SXP -> /products#sxp, IoT Device Management -> /products#iot
+Services: Product Engineering -> /services#product-engineering, AI-Driven Analytics -> /services#ai-analytics, Staffing Service -> /services#staffing, Low-code Solutions -> /services#low-code, Cloud Computing -> /services#cloud, All services -> /services
+Company: About -> /about, Core values -> /about#values, FAQ -> /about#faq, News -> /news, Careers -> /careers, Contact -> /demo
+#updates links: 0
+offices: Plano, Texas, USA / 7950 Legacy Drive, Suite 400 / Plano, Texas 75024, USA / +1 469 322 9899 / WhatsApp +1 469 439 9345 / vinni.tran@newxion.com  ||  Ho Chi Minh City, Vietnam / VIETNAM DELIVERY CENTER / Floor 15, B1 Building / 279 Nguyen Tri Phuong Street / Dien Hong Ward, Ho Chi Minh City, Vietnam / +84 908 107 552
+Head office / Da Nang present: false
+contact: {"href":"tel:+14693229899","target":null,"rel":null,"name":"+1 469 322 9899"}
+contact: {"href":"https://wa.me/14694399345","target":"_blank","rel":"noopener noreferrer","name":"WhatsApp +1 469 439 9345 (opens in a new tab)"}
+contact: {"href":"mailto:vinni.tran@newxion.com","target":null,"rel":null,"name":"vinni.tran@newxion.com"}
+contact: {"href":"tel:+84908107552","target":null,"rel":null,"name":"+84 908 107 552"}
+hover colour: rgb(197, 208, 227) -> rgb(255, 255, 255)
+Tab order + focus ring: null [outline solid 2px rgb(255, 192, 0)]  >  PXP [outline solid 2px rgb(255, 192, 0)]  >  LXP [outline solid 2px rgb(255, 192, 0)]  >  SXP [outline solid 2px rgb(255, 192, 0)]  >  IoT Device Management [outline solid 2px rgb(255, 192, 0)]  >  Product Engineering [outline solid 2px rgb(255, 192, 0)]
+bottom bar: © 2026 XionTechs · Privacy policy GET IT DONE
+DONE colour: rgb(255, 192, 0)
+privacy href: /privacy
+smallest link height px: 24
+layout 1280px: 5 columns, sideways scroll: false
+layout 899px: 2 columns, sideways scroll: false
+layout 639px: 1 columns, sideways scroll: false
+layout 390px: 1 columns, sideways scroll: false

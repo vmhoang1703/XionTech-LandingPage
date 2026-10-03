@@ -122,4 +122,23 @@ describe("SiteFooter", () => {
     ).toBe("/privacy");
     expect(within(footer).getByText("DONE").tagName).toBe("B");
   });
+
+  it("uses the on-navy focus colour, as the footer is a navy surface", () => {
+    const footer = renderFooter();
+
+    expect(footer.className).toContain(
+      "[--color-focus:var(--color-focus-on-navy)]",
+    );
+  });
+
+  it("gives every text link a 24px minimum target", () => {
+    const footer = renderFooter();
+
+    const textLinks = within(footer)
+      .getAllByRole("link")
+      .filter((link) => !link.querySelector("img"));
+    for (const link of textLinks) {
+      expect(link.className).toContain("min-h-6");
+    }
+  });
 });
