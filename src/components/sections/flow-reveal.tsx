@@ -5,14 +5,14 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 type Phase = "static" | "armed" | "on";
 
 // Plays the 4-D flow once when 30% of it is visible. Server HTML and reduced
-// motion stay "static", so without JavaScript every step is visible.
+// motion stay "static", so without JavaScript every step is visible. A flow
+// already on screen when the page loads goes straight to "on", so it never
+// flashes hidden and replays.
 export function FlowReveal({
   label,
-  className,
   children,
 }: Readonly<{
   label: string;
-  className: string;
   children: ReactNode;
 }>) {
   const ref = useRef<HTMLOListElement>(null);
@@ -21,6 +21,11 @@ export function FlowReveal({
   useEffect(() => {
     const list = ref.current;
     if (!list || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const { top, bottom } = list.getBoundingClientRect();
+    if (top < window.innerHeight && bottom > 0) {
+      setPhase("on");
+      return;
+    }
     setPhase("armed");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -35,12 +40,7 @@ export function FlowReveal({
   }, []);
 
   return (
-    <ol
-      ref={ref}
-      aria-label={label}
-      data-phase={phase}
-      className={`group/flow ${className}`}
-    >
+    <ol ref={ref} aria-label={label} data-phase={phase} className="flow">
       {children}
     </ol>
   );

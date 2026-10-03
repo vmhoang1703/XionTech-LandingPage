@@ -1,6 +1,7 @@
 import { act, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { processFlow } from "@/content/process";
+import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import { ProcessFlow } from "./process-flow";
 
 let intersect: (visible: boolean) => void = () => undefined;
@@ -66,7 +67,13 @@ describe("ProcessFlow", () => {
 
     const delays = within(flow())
       .getAllByRole("heading", { level: 3 })
-      .map((heading) => heading.closest("li")?.style.transitionDelay);
+      .map((heading) => heading.closest("li")?.style.getPropertyValue("--d"));
+    // Only the reveal ("on") uses the delay, so hiding is never delayed.
+    for (const heading of within(flow()).getAllByRole("heading", {
+      level: 3,
+    })) {
+      expect(heading.closest("li")?.style.transitionDelay).toBe("");
+    }
     expect(delays).toEqual(["0.3s", "0.85s", "1.4s", "1.95s"]);
   });
 
@@ -95,14 +102,7 @@ describe("ProcessFlow", () => {
       <ProcessFlow
         flow={{
           ...processFlow,
-          steps: [
-            {
-              num: "01",
-              title: "Scope",
-              line: "Agree scope.",
-              receive: "A plan.",
-            },
-          ],
+          steps: [{ ...processFlow.steps[0], title: "Scope" }],
         }}
       />,
     );
@@ -119,5 +119,53 @@ describe("ProcessFlow", () => {
 
     unmount();
     expect(disconnect).toHaveBeenCalled();
+  });
+
+  it("does not hide steps that are already in view when it loads", () => {
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
+      top: 100,
+      bottom: 600,
+    } as DOMRect);
+    render(<ProcessFlow flow={processFlow} />);
+
+    expect(flow().dataset.phase).toBe("on");
+    vi.restoreAllMocks();
+  });
+
+  it("renders the prototype track, nodes and illustrated step cards", () => {
+    render(<ProcessFlow flow={processFlow} />);
+
+    const list = flow();
+    expect(list.classList.contains("flow")).toBe(true);
+    const track = list.querySelector(".track");
+    expect(track?.getAttribute("aria-hidden")).toBe("true");
+    expect(track?.querySelector("i")).not.toBeNull();
+    const nodes = list.querySelectorAll(".node");
+    expect(nodes).toHaveLength(2);
+    expect(nodes[1].classList.contains("end")).toBe(true);
+    for (const node of nodes) {
+      expect(node.querySelector(".dot svg")?.getAttribute("aria-hidden")).toBe(
+        "true",
+      );
+    }
+    const steps = list.querySelectorAll(".step4");
+    expect(steps).toHaveLength(4);
+    for (const step of steps) {
+      const art = step.querySelector(".art");
+      expect(art?.getAttribute("aria-hidden")).toBe("true");
+      expect(art?.querySelectorAll(".main svg")).toHaveLength(1);
+      expect(art?.querySelectorAll(".orb svg")).toHaveLength(3);
+      expect(step.querySelector(".num")).not.toBeNull();
+      expect(step.querySelector(".get b")?.textContent).toBe("You receive");
+    }
+  });
+
+  it("uses only classes that globals.css defines, with the delay only on reveal", () => {
+    const { container } = render(<ProcessFlow flow={processFlow} />);
+
+    expect(undefinedClasses(container)).toEqual([]);
+    expect(globalsCss()).toMatch(
+      /\.flow\[data-phase="on"\] \.step4\s*\{\s*transition-delay: var\(--d\);/,
+    );
   });
 });

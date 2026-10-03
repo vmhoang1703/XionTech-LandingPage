@@ -9,14 +9,12 @@ export function HomeProcess() {
   return (
     <section
       aria-labelledby="process-title"
-      className="surface-navy py-section"
+      className="sec surface-navy gridbg"
     >
-      <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto">
-        <div className="mb-section-head-gap">
-          <span className="font-brand text-label uppercase">{label}</span>
-          <h2 id="process-title" className="mt-4">
-            {title}
-          </h2>
+      <div className="wrap">
+        <div className="sec-head">
+          <span className="label">{label}</span>
+          <h2 id="process-title">{title}</h2>
         </div>
         <ProcessFlow flow={processFlow} />
       </div>

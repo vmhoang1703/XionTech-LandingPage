@@ -1690,6 +1690,319 @@
     background: color-mix(in srgb, var(--color-white) 10%, transparent);
     color: var(--color-amber-tint);
   }
+
+  /*
+    4-D process (Story 3.6), ported from the prototype site.css, shared with
+    Services #process (5.4). Steps are hidden only while the flow is "armed"
+    (off screen, waiting for 30% visibility); server HTML and reduced motion
+    are "static" and show everything. The travelling dot is after demo.
+  */
+  .gridbg {
+    position: relative;
+  }
+
+  .gridbg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at 70% 30%, #000 20%, transparent 75%);
+    --grid-line: color-mix(in srgb, var(--color-navy) 5%, transparent);
+  }
+
+  .surface-navy.gridbg::before {
+    --grid-line: color-mix(in srgb, var(--color-ice) 7%, transparent);
+  }
+
+  .gridbg > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .flow {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-grid-gap);
+    list-style: none;
+  }
+
+  /* Below 1080px the track and end nodes leave the layout (CAP-5) but stay in
+     the list for screen readers: visually hidden, not display: none. */
+  .flow .track,
+  .flow .node {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .flow .track {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    left: 0;
+    z-index: 0;
+    height: 3px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-border) 0 10px,
+      transparent 10px 18px
+    );
+  }
+
+  .flow .track i {
+    position: absolute;
+    inset: 0;
+    border-radius: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--color-amber-tint),
+      var(--color-amber)
+    );
+    transform-origin: left;
+    transition: transform 2.4s var(--ease-brand);
+  }
+
+  .flow[data-phase="armed"] .track i {
+    transform: scaleX(0);
+  }
+
+  .node {
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .node .dot {
+    display: grid;
+    place-items: center;
+    width: 128px;
+    height: 128px;
+    border: 1.5px dashed var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--glass);
+    color: var(--color-heading);
+    font-size: 2.2rem;
+  }
+
+  .node b {
+    color: var(--color-heading);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .node small {
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .node.end .dot {
+    border: 0;
+    background: linear-gradient(
+      135deg,
+      var(--color-amber-light),
+      var(--color-amber)
+    );
+    color: var(--color-navy);
+  }
+
+  .step4 {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 22px 24px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--glass);
+    transition:
+      opacity 0.7s var(--ease-brand),
+      transform 0.7s var(--ease-brand);
+  }
+
+  .flow[data-phase="armed"] .step4 {
+    opacity: 0.35;
+    transform: translateY(18px);
+  }
+
+  .flow[data-phase="on"] .step4 {
+    transition-delay: var(--d);
+  }
+
+  .step4 .art {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 128px;
+    margin: 0 -22px 18px;
+    overflow: hidden;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background:
+      radial-gradient(
+        60% 80% at 50% 110%,
+        color-mix(in srgb, var(--color-amber) 35%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(160deg, var(--color-mist), var(--color-white));
+  }
+
+  .surface-navy .step4 .art {
+    background:
+      radial-gradient(
+        60% 80% at 50% 110%,
+        color-mix(in srgb, var(--color-amber) 35%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--color-white) 8%, transparent),
+        color-mix(in srgb, var(--color-white) 2%, transparent)
+      );
+  }
+
+  .step4 .art .main {
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    border-radius: 18px;
+    background: var(--color-navy);
+    box-shadow: 0 16px 30px -12px rgb(11 23 48 / 0.6);
+    color: var(--color-amber-tint);
+    font-size: 1.8rem;
+  }
+
+  .step4 .art .orb {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--color-white);
+    box-shadow: 0 8px 20px -8px rgb(11 23 48 / 0.4);
+    color: var(--color-navy);
+    font-size: 1rem;
+    animation: step-bob 2.5s ease-in-out 1;
+  }
+
+  .step4 .art .o1 {
+    top: 22%;
+    left: 18%;
+  }
+
+  .step4 .art .o2 {
+    top: 30%;
+    right: 16%;
+    animation-delay: 1.2s;
+  }
+
+  .step4 .art .o3 {
+    bottom: 14%;
+    left: 28%;
+    background: var(--color-amber);
+    animation-delay: 2.4s;
+  }
+
+  @keyframes step-bob {
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+
+  .step4 .num {
+    color: var(--color-amber-text);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .surface-navy .step4 .num {
+    color: var(--color-amber-tint);
+  }
+
+  .step4 h3 {
+    margin: 4px 0 8px;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .step4 p {
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  .step4 .get {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-text);
+    font-size: 0.86rem;
+  }
+
+  .step4 .get b {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--color-muted);
+    font-family: var(--font-brand);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (width >= --theme(--breakpoint-sm)) {
+    .flow {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* From 1080px: nodes and track show; a subgrid lines up the five rows of
+     every card (art, number, title, line, "You receive") — CAP-4. */
+  @media (width >= --theme(--breakpoint-lg)) {
+    .flow {
+      grid-template-columns: auto repeat(4, minmax(0, 1fr)) auto;
+      grid-template-rows: repeat(3, auto) 1fr auto;
+    }
+
+    .flow .track {
+      width: auto;
+      height: 3px;
+      overflow: visible;
+      clip-path: none;
+    }
+
+    .flow .node {
+      position: relative;
+      display: flex;
+      grid-row: 1 / span 5;
+      width: 120px;
+      height: auto;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+
+    .step4 {
+      display: grid;
+      grid-row: 1 / span 5;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+  }
 }
 
 @layer components {
