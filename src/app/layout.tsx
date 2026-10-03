@@ -5,6 +5,7 @@ import {
   Be_Vietnam_Pro,
   JetBrains_Mono,
 } from "next/font/google";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import "./globals.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
           {children}
         </main>
+        <SiteFooter />
       </body>
     </html>
   );
