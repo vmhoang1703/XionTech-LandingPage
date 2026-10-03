@@ -7,33 +7,30 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("Home page", () => {
-  it("renders the site name as the main heading", () => {
+  it("opens with the Home hero as the only H1", () => {
     render(<Home />);
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: "XionTech" }),
-    ).toBeDefined();
+    const headings = screen.getAllByRole("heading", { level: 1 });
+    expect(headings).toHaveLength(1);
+    expect(headings[0].textContent).toBe("Every school community, connected.");
   });
 
-  it("marks unfinished content as placeholder", () => {
+  it("leaves the main landmark to the root layout", () => {
     render(<Home />);
 
-    expect(screen.getByText(/^\[Placeholder\]/)).toBeDefined();
+    expect(screen.queryByRole("main")).toBeNull();
   });
 
-  it("sets the placeholder text in the brand muted colour", () => {
-    render(<Home />);
+  it("keeps the demo capture band last, after the hero", () => {
+    const { container } = render(<Home />);
 
-    const placeholder = screen.getByText(/^\[Placeholder\]/);
-    expect(placeholder.classList.contains("text-muted")).toBe(true);
-  });
-
-  it("renders the demo capture band after the placeholder", () => {
-    render(<Home />);
-
-    expect(
-      screen.getByRole("heading", { name: "See it working at your school." }),
-    ).toBeDefined();
+    const band = screen
+      .getByRole("heading", { name: "See it working at your school." })
+      .closest("section");
+    expect(container.lastElementChild).toBe(band);
+    expect(container.firstElementChild?.getAttribute("aria-labelledby")).toBe(
+      "home-hero-title",
+    );
     expect(screen.getByRole("button", { name: "Book a demo" })).toBeDefined();
   });
 });

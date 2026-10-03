@@ -176,3 +176,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
   summary: Move the misplaced focus comment in capture-band.tsx and assert `.capture { overflow: hidden }` (the ring relies on it).
   evidence: patch re-review minors, 2026-10-03.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-3-1-dark-home-hero.md`
+  summary: Add an automated browser check for the Home hero CSS (glow layer painted, 2 columns at 900px / 1 at 899px, no sideways scroll at 390px); today only the walk script checks it.
+  evidence: jsdom tests check class names only and the smoke project is request-only; a deleted `.silk-fallback` rule would pass every test. The team has to choose which Playwright project runs it.
