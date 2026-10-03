@@ -606,3 +606,21 @@ body[data-page="products"] [id]{scroll-margin-top:144px}
   .app-strip li a{padding-left:0}
   .why-body,.why-b,.why-c{padding:var(--sp-l)}
 }
+
+/* ---------- Home: contact form (ENH-001) ---------- */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--sp-3xl);align-items:start}
+.contact-intro h2{max-width:14ch}
+.contact-intro .lede{margin-top:var(--sp-m)}
+.contact-direct{list-style:none;display:grid;gap:2px;margin-top:var(--sp-xl)}
+.contact-direct li{display:flex;align-items:center;gap:10px;color:var(--text);font-size:var(--fs-small)}
+.contact-direct i{font-size:1.2rem;color:var(--navy)}
+.contact-direct a{display:inline-flex;align-items:center;min-height:var(--target);font-weight:700;color:var(--navy);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;overflow-wrap:anywhere}
+.contact-card textarea{height:auto;min-height:150px}
+.field .opt{font-weight:400;color:var(--ink-muted)}
+.contact-card .form-submit{margin-top:var(--sp-l)}
+.form-ok .sample{margin-top:var(--sp-s)}
+.field.bad .err-long,.field.bad.long .err{display:none}
+.field.bad.long .err-long{display:block}
+@media (max-width:900px){
+  .contact-grid{grid-template-columns:1fr;gap:var(--sp-xl)}
+}

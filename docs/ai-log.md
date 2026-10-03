@@ -801,3 +801,19 @@ Template:
   closed.
 - **AI got it wrong?** Not yet. Risk flagged: open developer branches that still point to `mockups/site-v3` (for
   example the footer story, PR #15) need the new path after this reaches `develop`.
+
+## 2026-10-03 — ENH-001: contact form on Home (first enhancement-log entry)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers)
+- **Prompt / task:** Keep only the contact form from the manager's homepage brief and leave the rest of Home as
+  it is. The Home demo email band became "Have something you want to build?" with name, work email, optional
+  phone and project message fields, inline errors and a thank-you panel. Logged as ENH-001 in
+  `_bmad-output/prototype-enhancement/enhancement-log.md`; no PRD, story or spec edits.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: the phone
+  check accepted input with no digits (now 7 to 15 digits), the 2,000-character limit had no error message
+  (now checked by the script with its own message), an error cleared on the first keystroke even when the value
+  was still invalid, and the button icon was read by screen readers. The log entry now states every rule and
+  error message, names the form "contact", lists the production needs the prototype does not show (honeypot,
+  server checks, rate limit, send-failure state) and every story it touches (3.7, 2.2, 2.3, 2.4, AC-NAV-2).
+- **AI got it wrong?** Yes: the first version of the form copied the redesign's phone check, which let strings
+  like "(------" through, and wrote the log's rules too vaguely for a developer to build or test from.

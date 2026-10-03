@@ -137,16 +137,31 @@
   </div>
 </section>
 
-<section class="capture s-amber" aria-labelledby="cap-h">
-  <div class="wrap cap-grid">
-    <div><h2 id="cap-h" data-vi="Xem hệ thống hoạt động tại trường của bạn.">See it working at your school.</h2>
-      <p class="lede" data-vi="Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo phù hợp với trường bạn.">Leave your work email and we'll arrange a walkthrough built around your school.</p></div>
-    <form class="cap-form" data-mode="demo" novalidate>
-      <label for="cap-email" data-vi="Email công việc">Work email</label>
-      <div class="cap-row"><input type="email" id="cap-email" autocomplete="email" placeholder="name@school.edu.vn" required><button class="btn btn-navy" type="submit" data-vi="Đặt lịch demo">Book a demo</button></div>
-      <small class="err" hidden data-vi="Vui lòng nhập địa chỉ email hợp lệ.">Please enter a valid email address.</small>
-      <small><span data-vi="Chúng tôi chỉ dùng email của bạn để sắp xếp buổi demo.">We only use your email to arrange your demo.</span> <a href="privacy.html" data-vi="Chính sách bảo mật">Privacy policy</a></small>
-    </form>
+<!-- Start a conversation: contact form (ENH-001) -->
+<section class="sec s-amber contact" id="contact" aria-labelledby="contact-h">
+  <div class="wrap contact-grid">
+    <div class="contact-intro reveal">
+      <h2 id="contact-h" data-vi="Bạn có điều gì muốn xây dựng?">Have something you want to build?</h2>
+      <p class="lede" data-vi="Hãy cho chúng tôi biết đôi chút về bạn và việc bạn đang làm. Đội ngũ của chúng tôi sẽ liên hệ để tìm hiểu thêm.">Tell us a little about yourself and what you're working on. Our team will get in touch to learn more.</p>
+      <ul class="contact-direct">
+        <li><i class="ph ph-envelope-simple" aria-hidden="true"></i><a href="mailto:vinni.tran@newxion.com">vinni.tran@newxion.com</a></li>
+        <li><i class="ph ph-phone" aria-hidden="true"></i><span>Plano <a href="tel:+14693229899">+1 469 322 9899</a></span></li>
+        <li><i class="ph ph-phone" aria-hidden="true"></i><span>Ho Chi Minh City <a href="tel:+84908107552">+84 908 107 552</a></span></li>
+      </ul>
+    </div>
+    <div class="form-card contact-card reveal">
+      <form id="contactForm" novalidate>
+        <div class="fgrid2">
+          <div class="field"><label for="c-name" data-vi="Tên của bạn">Your name</label><input id="c-name" name="name" type="text" autocomplete="name" required><span class="err" data-vi="Vui lòng nhập tên của bạn.">Please enter your name.</span></div>
+          <div class="field"><label for="c-email" data-vi="Email công việc">Work email</label><input id="c-email" name="email" type="email" autocomplete="email" required><span class="err" data-vi="Vui lòng nhập email hợp lệ.">Please enter a valid email address.</span></div>
+          <div class="field full"><label for="c-phone"><span data-vi="Số điện thoại">Phone number</span> <span class="opt" data-vi="(không bắt buộc)">(optional)</span></label><input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"><span class="help" data-vi="Có mã quốc gia, ví dụ +84 908 107 552">Include your country code, for example +1 469 322 9899</span><span class="err" data-vi="Vui lòng nhập số điện thoại hợp lệ, ví dụ +84 908 107 552.">Please enter a valid phone number, for example +1 469 322 9899.</span></div>
+          <div class="field full"><label for="c-msg" data-vi="Hãy kể về dự án của bạn">Tell us about your project</label><textarea id="c-msg" name="message" rows="5" required placeholder="What are you looking to build? Tell us about your idea, existing product, team or challenge." data-vi-ph="Bạn muốn xây dựng gì? Hãy kể về ý tưởng, sản phẩm hiện có, đội ngũ hoặc thách thức của bạn."></textarea><span class="err" data-vi="Vui lòng kể đôi chút về dự án của bạn.">Please tell us a little about your project.</span><span class="err err-long" data-vi="Vui lòng giữ tin nhắn dưới 2.000 ký tự.">Please keep your message under 2,000 characters.</span></div>
+        </div>
+        <button class="btn btn-primary form-submit" type="submit"><span data-vi="Bắt đầu trao đổi">Start the conversation</span><i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        <p class="consent"><span data-vi="Chúng tôi chỉ dùng thông tin của bạn để phản hồi tin nhắn này.">We only use your details to reply to your message.</span> <a href="privacy.html" data-vi="Chính sách bảo mật">Privacy policy</a></p>
+      </form>
+      <div class="form-ok" role="status" tabindex="-1"><i class="ph-fill ph-check-circle" aria-hidden="true"></i><h3 data-vi="Cảm ơn bạn, chúng tôi đã nhận được tin nhắn.">Thanks — we've received your message.</h3><p data-vi="Đội ngũ của chúng tôi sẽ xem nội dung bạn chia sẻ và liên hệ với bạn.">Our team will review what you shared and get in touch with you.</p><p class="sample" data-vi="Bản mẫu: chưa gửi dữ liệu.">Prototype: nothing was sent.</p></div>
+    </div>
   </div>
 </section>
 </main>

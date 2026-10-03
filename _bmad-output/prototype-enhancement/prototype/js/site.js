@@ -236,6 +236,21 @@
       const btn=df.querySelector('button[type=submit]'),lab=btn.querySelector('span');btn.disabled=true;lab.textContent=root.lang==='vi'?'Đang gửi...':'Sending...';
       setTimeout(()=>{card.classList.add('sent');card.scrollIntoView({block:'center'})},900)})}
 
+  /* ---------- Home contact form (prototype: nothing is sent) ---------- */
+  const cf=document.getElementById('contactForm');
+  /* phone: optional; when filled, 7 to 15 digits (E.164) with an optional leading + and spaces, dots, dashes or brackets */
+  if(cf){const card=cf.closest('.form-card'),PHONE=/^\+?[0-9(][0-9\s().-]{6,24}$/,digits=v=>(v.match(/\d/g)||[]).length;
+    cf.querySelectorAll('.field').forEach((fl,i)=>{const c=fl.querySelector('input,textarea'),h=fl.querySelector('.help');if(h)h.id='chelp-'+i;fl.querySelectorAll('.err').forEach((er,j)=>er.id='cerr-'+i+'-'+j);if(c&&h)c.setAttribute('aria-describedby',h.id)});
+    const problem=c=>{const v=c.value.trim();if(c.type==='email')return EMAIL.test(v)?'':'bad';if(c.type==='tel')return !v||(PHONE.test(v)&&digits(v)>=7&&digits(v)<=15)?'':'bad';if(c.tagName==='TEXTAREA'&&c.value.length>2000)return 'long';return v?'':'bad'};
+    const mark=(c,p)=>{const fl=c.closest('.field'),h=fl.querySelector('.help'),er=p&&fl.querySelector(p==='long'?'.err-long':'.err:not(.err-long)'),ids=[h&&h.id,er&&er.id].filter(Boolean).join(' ');fl.classList.toggle('bad',!!p);fl.classList.toggle('long',p==='long');
+      if(ids)c.setAttribute('aria-describedby',ids);else c.removeAttribute('aria-describedby');if(p)c.setAttribute('aria-invalid','true');else c.removeAttribute('aria-invalid')};
+    cf.addEventListener('input',e=>{const c=e.target;if(c.closest&&c.closest('.field.bad')&&!problem(c))mark(c,'')});
+    cf.addEventListener('submit',e=>{e.preventDefault();let first=null;
+      cf.querySelectorAll('input,textarea').forEach(c=>{const p=problem(c);mark(c,p);if(p&&!first)first=c});
+      if(first){first.focus();return}
+      const btn=cf.querySelector('button[type=submit]'),lab=btn.querySelector('span');btn.disabled=true;lab.textContent=root.lang==='vi'?'Đang gửi...':'Sending...';
+      setTimeout(()=>{card.classList.add('sent');card.scrollIntoView({block:'center'});card.querySelector('.form-ok').focus({preventScroll:true})},900)})}
+
   /* ---------- Home hero silk cloth (WebGL, from landing-page-v1) ---------- */
   document.querySelectorAll('canvas.silk').forEach(cv=>{
     const tg=cv.parentElement.querySelector('.motion-toggle');
