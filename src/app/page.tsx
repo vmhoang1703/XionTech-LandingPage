@@ -1,15 +1,12 @@
+import { HomeHero } from "@/components/home/home-hero";
 import { CaptureBand } from "@/components/contact/capture-band";
 
+// Home sections from Sammy's stories above; Andy's demo capture band stays
+// last (FR-14, Story 3.7 CAP-4).
 export default function Home() {
   return (
     <>
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-32 text-center">
-        <h1 className="text-4xl font-semibold tracking-tight">XionTech</h1>
-        <p className="text-muted max-w-md text-lg">
-          [Placeholder] New website under construction. Sections will be added
-          here.
-        </p>
-      </div>
+      <HomeHero />
       <CaptureBand kind="demo" />
     </>
   );

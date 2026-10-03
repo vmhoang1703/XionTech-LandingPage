@@ -501,6 +501,12 @@ Template:
 - **AI got it wrong?** Yes, several times. The controller started triage before the last review layer had reported, then accepted that layer's breakpoint advice (`<` instead of `<=`) without checking the contract; the browser walk showed the band two-column at 900px and the change was reverted (CAP-8 says "640px and below"). A task-7 implementer ran only its own test file and missed a mock that broke `no-js.test.tsx`. Twice the evidence text claimed more than the walk observed (all UX lines, then keyboard/touch sending and a 15.2 s timeout the run measured as 15.3 s); the acceptance auditor caught both, and the lead chose to narrow the claims to what was observed (the ledger keeps an UNVERIFIED row as history). Two background check runs were stopped by Claude Code for low memory; running each command in the foreground worked.
 - **Still open:** a real capture on the dev site after merge; the project band is placed by Story 5.4.
 
+## 2026-10-03 — Story 3.1 Home hero fixed against the merged Story 1.1
+
+- **Prompt (Son Nguyen):** compare the Story 3 specs with our branches, then fix 3.1 after pulling the latest `develop`.
+- **What the AI did:** an acceptance audit of 3.1–3.6 against the current specs and the merged 1.1 `globals.css`, then for 3.1: a build spec with a 14-line UX checks table, tests first, the hero moved onto 1.1's `.label`, `.hl`, `.btn .btn-primary`, `.wrap` and `text-display-hero-fluid`, the prototype's glow layer and device frames ported into a Home section of `globals.css`, a Phosphor arrow, a Chrome walk at 1280/900/899/390px with screenshots, and a full 4-layer review (3 patched, 1 deferred, the rest rejected with reasons).
+- **AI got it wrong?** Yes. The first build (2026-10-01, before 1.1 merged) guessed component class names from DESIGN.md (`highlight-mark`, `button-primary`, `device-frame`), which 1.1 never defined, so the hero rendered unstyled while every test passed; the same applies to 3.4 and 3.5. In the fix, one new test passed by accident (`toContain("hl")` matched "highlight-mark"), the caption first used the heading colour (white on the paper frame), and only the browser walk showed the H1 at about 1.1rem.
+
 ## 2026-10-03 — Footer mount and one office data source
 
 - **Prompt (Hoang Vu):** after Sammy's footer (Story 1.5, #15) merged, mount it (decision T10) and remove the duplicate office data.
