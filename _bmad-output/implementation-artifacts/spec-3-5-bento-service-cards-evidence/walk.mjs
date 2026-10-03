@@ -74,6 +74,7 @@ for (let i = 0; i < 5; i++) {
   }));
 }
 log("Tab stops after the doors", stops.join("  >  "));
+log("tile ring radius / linen layers", `${await tile(page, "pxp").locator("h3 a").evaluate((a) => getComputedStyle(a, "::after").borderRadius)} / texture z ${await bento.evaluate((b) => getComputedStyle(b, "::after").zIndex)}, content z ${await bento.locator(".wrap").evaluate((w) => getComputedStyle(w).zIndex)}`);
 await page.keyboard.press("Shift+Tab");
 await bento.screenshot({ path: `${OUT}/bento-focus-1280.png` });
 
@@ -85,6 +86,14 @@ log("service cards", (await svc.locator("a").evaluateAll((as) => as.map((a) => {
   return `${a.querySelector("h3").textContent}→${a.getAttribute("href").replace("/services", "")} [${a.className.replace("spot svc", "").trim() || "plain"}; icon ${getComputedStyle(ic).width} ${ic.querySelector("svg") ? "svg" : "none"} ${getComputedStyle(ic).color}]`;
 }))).join("  |  "));
 log("navy card", await css(svc.locator("a.navy"), ["background-image", "color"]));
+await svc.locator("a.navy").focus();
+await page.keyboard.press("Shift+Tab");
+await page.keyboard.press("Tab");
+log("navy card keyboard focus ring (drawn on the paper section)", await page.evaluate(() => {
+  const s = getComputedStyle(document.activeElement);
+  return `${document.activeElement.textContent.trim().slice(0, 20)} ${s.outlineStyle} ${s.outlineWidth} ${s.outlineColor} offset ${s.outlineOffset}`;
+}));
+await svc.locator("a.navy").screenshot({ path: `${OUT}/navy-card-focus.png` }).catch(() => undefined);
 log("feature card", await css(svc.locator("a.feature").first(), ["background-image"]));
 await svc.screenshot({ path: `${OUT}/services-1280.png` });
 await svc.locator("a").nth(2).click();

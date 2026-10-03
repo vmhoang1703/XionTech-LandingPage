@@ -41,14 +41,13 @@ export function ProductBento() {
                 {app.id === "iot" ? <CpuIcon /> : app.name}
               </span>
               <h3>
-                <Link
-                  href={`/products#${app.id}`}
-                  aria-label={`${app.name}, ${app.full}`}
-                >
+                <Link href={`/products#${app.id}`} aria-label={app.label}>
                   {app.name}
                 </Link>
               </h3>
-              <span className="full">{app.full}</span>
+              <span className="full" aria-hidden="true">
+                {app.full}
+              </span>
               <p>{app.line}</p>
               {app.chips.length > 0 ? (
                 <div className="chips">

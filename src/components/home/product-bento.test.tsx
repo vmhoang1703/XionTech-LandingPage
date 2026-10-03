@@ -67,7 +67,19 @@ describe("ProductBento", () => {
       expect(el?.getAttribute("aria-hidden")).toBe("true");
     }
     expect(tile("IoT").querySelector(".badge svg")).not.toBeNull();
-    expect(tile("PXP").querySelector(".badge")?.textContent).toBe("PXP");
+    for (const name of ["PXP", "SXP", "LXP"]) {
+      expect(tile(name).querySelector(".badge")?.textContent).toBe(name);
+    }
+  });
+
+  it("hides the visible full name from screen readers, as the link already says it", () => {
+    render(<ProductBento />);
+
+    for (const name of ["PXP", "SXP", "LXP", "IoT"]) {
+      expect(
+        tile(name).querySelector(".full")?.getAttribute("aria-hidden"),
+      ).toBe("true");
+    }
   });
 
   it("sizes the bento with the prototype tile classes", () => {
@@ -113,9 +125,18 @@ describe("ProductBento", () => {
   it("uses only classes that globals.css defines", () => {
     const { container } = render(<ProductBento />);
 
-    expect(undefinedClasses(container, /^$/)).toEqual([]);
-    expect(globalsCss()).toMatch(
-      /@media \(hover: hover\)[^}]*\.tile:hover \.go/,
+    expect(undefinedClasses(container)).toEqual([]);
+    const css = globalsCss();
+    expect(css).toMatch(/@media \(hover: hover\)[^}]*\.tile:hover \.go/);
+    expect(css).toMatch(
+      /prefers-reduced-motion: reduce\)\s*\{\s*\.tile:hover \.go\s*\{\s*transform: none;/,
     );
+    // Bento spans from 900px: PXP 7 x 2, SXP 5, LXP 3, IoT 2.
+    expect(css).toMatch(
+      /\.t-pxp\s*\{\s*grid-column: span 7;\s*grid-row: span 2;/,
+    );
+    expect(css).toMatch(/\.t-sxp\s*\{\s*grid-column: span 5;/);
+    expect(css).toMatch(/\.t-lxp\s*\{\s*grid-column: span 3;/);
+    expect(css).toMatch(/\.t-iot\s*\{\s*grid-column: span 2;/);
   });
 });

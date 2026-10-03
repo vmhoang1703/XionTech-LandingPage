@@ -70,6 +70,6 @@ describe("ServiceCards", () => {
   it("uses only classes that globals.css defines", () => {
     const { container } = render(<ServiceCards />);
 
-    expect(undefinedClasses(container, /^$/)).toEqual([]);
+    expect(undefinedClasses(container)).toEqual([]);
   });
 });

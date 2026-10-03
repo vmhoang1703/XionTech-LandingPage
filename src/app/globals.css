@@ -1379,6 +1379,12 @@
     position: relative;
   }
 
+  /* The texture sits behind the section content, not over it. */
+  .linen > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .linen::after {
     content: "";
     position: absolute;
@@ -1437,12 +1443,13 @@
   }
 
   /* The heading link covers the whole tile: one link, one Tab stop. */
+  /* Covers the phone too, so a click anywhere on the PXP tile opens it. */
   .tile h3 a::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 1;
-    border-radius: inherit;
+    border-radius: var(--radius-lg);
   }
 
   .tile h3 a:focus-visible {
@@ -1555,7 +1562,7 @@
   }
 
   .t-iot {
-    padding: 26px;
+    padding: var(--spacing-card-padding-sm);
   }
 
   .t-iot h3 {
@@ -1675,7 +1682,6 @@
   .svc.navy {
     --color-heading: var(--color-white);
     --color-muted: var(--color-on-navy-muted);
-    --color-focus: var(--color-focus-on-navy);
     border: 0;
     background: linear-gradient(150deg, var(--color-navy), var(--color-ink));
   }
