@@ -73,6 +73,24 @@ describe("HomeHero", () => {
       within(hero).getByText("[Placeholder] Phone screenshot"),
     ).toBeDefined();
   });
+  it("ends with the five confirmed figures", () => {
+    const hero = renderHero();
+
+    const band = within(hero).getByRole("group", {
+      name: "Experience you can count on",
+    });
+    expect(
+      within(band)
+        .getAllByRole("listitem")
+        .map((item) => item.textContent),
+    ).toEqual([
+      "25+Years of leadership experience in software",
+      "24/7Global coverage across time zones",
+      "20+Technology stacks we work in",
+      "8Service offerings, from idea to operation",
+      "2Offices: Ho Chi Minh City and Plano",
+    ]);
+  });
 
   it("paints the static glow layer behind the content", () => {
     const hero = renderHero();

@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
-import { homeHero } from "@/content/home";
+import { StatsBand } from "@/components/sections/stats-band";
+import { homeHero, homeStats } from "@/content/home";
 import { HeroSilk } from "./hero-silk";
 
 // Server Component: text and CTA render without JavaScript. The static navy
@@ -13,7 +14,7 @@ export function HomeHero() {
   return (
     <section
       aria-labelledby="home-hero-title"
-      className="hero-silk relative isolate flex min-h-[calc(100dvh-var(--spacing-header-height))] items-center"
+      className="hero-silk relative isolate flex min-h-[calc(100dvh-var(--spacing-header-height))] flex-col items-center justify-center"
     >
       <div aria-hidden="true" className="silk-fallback" />
       <HeroSilk />
@@ -48,6 +49,13 @@ export function HomeHero() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="wrap w-full pb-30 sm:pb-37.5">
+        <StatsBand
+          label={homeStats.label}
+          stats={homeStats.stats}
+          tone="navy"
+        />
       </div>
     </section>
   );

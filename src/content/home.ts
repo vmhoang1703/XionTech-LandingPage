@@ -1,5 +1,7 @@
 // Home page copy. Kept out of the components so it can be translated later.
 
+import type { Stat } from "@/components/sections/stats-band";
+
 export const homeHero = {
   label: "EdTech products · Software services",
   title: {
@@ -16,4 +18,20 @@ export const homeHero = {
     tablet: "[Placeholder] Web app screenshot",
     phone: "[Placeholder] Phone screenshot",
   },
+};
+
+// Figures confirmed by the business on 2026-09-28 (FR-12).
+export const homeStats: { label: string; stats: Stat[] } = {
+  label: "Experience you can count on",
+  stats: [
+    {
+      value: "25",
+      suffix: "+",
+      caption: "Years of leadership experience in software",
+    },
+    { value: "24", suffix: "/7", caption: "Global coverage across time zones" },
+    { value: "20", suffix: "+", caption: "Technology stacks we work in" },
+    { value: "8", caption: "Service offerings, from idea to operation" },
+    { value: "2", caption: "Offices: Ho Chi Minh City and Plano" },
+  ],
 };
