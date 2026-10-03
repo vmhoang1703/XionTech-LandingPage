@@ -4,20 +4,23 @@
 [1280] Attendance (selected): rgb(22, 54, 99) | rgb(255, 255, 255) | Grades: rgba(0, 0, 0, 0) | rgb(74, 91, 120) | pointer
 [1280] Grades hover: rgba(0, 0, 0, 0) | rgb(74, 91, 120) | pointer
 [1280] click Grades: selected true | shown pxp-panel-grades | Grades rgb(22, 54, 99) | rgb(255, 255, 255)
-[1280] Tab x16 lands on Attendance (selected) | :focus-visible true | outline solid | 2px | rgb(22, 54, 99)
+[1280] Tab x18 lands on Attendance (selected) | :focus-visible true | outline solid | 2px | rgb(22, 54, 99)
 [1280] ArrowRight: focus "Grades" | shown pxp-panel-grades
 [1280] End: focus "Events" | shown pxp-panel-events
-[1280] next Tab stops: a:[Placeholder] App  -> a:[Placeholder] Goog -> a: -> a:PXP
+[1280] next Tab stops: a: -> a:PXP -> a:LXP -> a:SXP
 [1280] features: 4 items, columns "276px 276px"
 [1280] store before hover: rgba(22, 54, 99, 0.12) | none
-[1280] store after hover: rgba(22, 54, 99, 0.282) | matrix(1, 0, 0, 1, 0, -0.0878432) | 0.35s, 0.35s, 0.3s, 0.3s | y 342 -> 460
-[1280] store link: href # target _blank rel noopener noreferrer
-[1280] store click opens a new tab: /products
+[1280] store after hover (900ms, no scroll): rgb(22, 54, 99) | matrix(1, 0, 0, 1, 0, -2) | 0.35s, 0.35s, 0.3s, 0.3s | y 460 -> 458
+[1280] store link: href # target null rel null
+[1280] store click with href "#": new tabs 0 | url /products
 [1280] sub-nav PXP: #pxp top 144 | H2 top 348
 [1280] mega menu PXP from /: #pxp top 144 | H2 top 348
-[899] phone {"x":320,"y":224,"w":260,"h":563} | H2 y 985 | one column true | features columns "417.5px 417.5px" | no sideways scroll true
-[640] phone {"x":190,"y":224,"w":260,"h":563} | H2 y 1037 | one column true | features columns "608px" | no sideways scroll true
+[899] after /products#pxp: #pxp top 144 | H2 top 298 bottom 333 | H2 inside the 900px screen true
+[899] phone {"x":320,"y":708,"w":260,"h":563} | H2 y 298 | one column true | features columns "417.5px 417.5px" | no sideways scroll true
+[640] after /products#pxp: #pxp top 144 | H2 top 298 bottom 366 | H2 inside the 900px screen true
+[640] phone {"x":190,"y":848,"w":260,"h":563} | H2 y 298 | one column true | features columns "608px" | no sideways scroll true
 [390] touch tap Messages: selected true | shown pxp-panel-messages
-[390] pen-type pointer + click on Payments (synthetic events): selected true | shown pxp-panel-payments
+[390] pen-type pointer + click on Payments (synthetic pointer events: proves the click handler, not real pen hardware): selected true | shown pxp-panel-payments
+[390] after /products#pxp: H2 top 298 bottom 366 | inside the 844px screen true
 [390] phone width 260 | no sideways scroll true
 [1280 reduced] tabs and panels with a transition > 0: 0 | 30ms after Grades click shown pxp-panel-grades

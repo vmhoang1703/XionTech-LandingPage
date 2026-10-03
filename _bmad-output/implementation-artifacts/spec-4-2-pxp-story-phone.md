@@ -24,24 +24,24 @@ Sources: SPEC CAP-1 to CAP-4, decisions A1 and T5, `EXPERIENCE.md` Component Pat
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Section | page load | — | paper section: phone and tabs left, PXP badge, H2 "The school day, in a parent's pocket.", lede, features, store buttons right; one column below 900px | static | CAP-1, prototype | test: keeps the #pxp anchor with its heading; layout and widths pending (controller walk) |
-| Phone | page load | — | 260px wide dark phone with a notch; Attendance screen shown | static | CAP-1, DESIGN.md story phone | test: links every tab to its own panel (notch, no img); 260px pending (controller walk) |
+| Section | page load | — | paper section: phone and tabs left, PXP badge, H2 "The school day, in a parent's pocket.", lede, features, store buttons right; one column below 900px | static | CAP-1, prototype | ✅ Chrome: 1280 phone left (x 198), text right (x 668); 899/640/390 one column with the text first (lead, 2026-10-03: heading before the phone below 900px, AC-NAV-5); test: heading before the phone |
+| Phone | page load | — | 260px wide dark phone with a notch; Attendance screen shown | static | CAP-1, DESIGN.md story phone | ✅ Chrome: 260px at 1280, 899, 640, 390; test: notch, no img |
 | Screens | page load | — | each screen is an empty grid frame with a `[Placeholder]` caption naming the screen; no broken image | static | SPEC Assumptions, NFR-7 | test: shows only the Attendance screen at first |
-| Tabs | read | — | five pills in order Attendance, Grades, Messages, Payments, Events, each with an icon; selected pill navy with white text | static | CAP-1, DESIGN.md | test: renders five tabs in order with Attendance selected; colours pending (controller walk) |
+| Tabs | read | — | five pills in order Attendance, Grades, Messages, Payments, Events, each with an icon; selected pill navy with white text | static | CAP-1, DESIGN.md | ✅ Chrome 1280: selected rgb(22,54,99) with white text; others transparent, muted text; test: order |
 | Tabs | read | screen reader | tablist with five tabs; one has `aria-selected="true"`; each `aria-controls` its tabpanel | — | CAP-1, UX-DR18 | test: renders five tabs…, links every tab to its own panel |
-| Grades tab | click or tap | mouse, touch, pen | Grades screen shows, the other four hide; Grades pill turns navy | instant (crossfade after demo) | CAP-2, decision slice | test: shows the Grades screen… when Grades is clicked; touch and pen pending (controller walk) |
-| Tabs | Tab into the tablist | keyboard | focus lands on the selected tab only (one tab stop); 2px navy focus ring | instant | EXPERIENCE.md Accessibility Floor, T9 | test: roving tabindex (0 on the selected tab only); focus ring pending (controller walk) |
-| Tabs | ArrowRight / ArrowLeft / Home / End | keyboard | focus and selection move to next / previous (wraps) / first / last tab; its screen shows | instant | prototype `site.js`, ARIA tab pattern | test: moves focus and selection with the arrow, Home and End keys |
-| Hidden screens | Tab through the section | keyboard | focus never enters an inactive screen | — | CAP-3, AC-A11Y-3 | test: keeps inactive screens out of focus and the accessibility tree; real Tab pending (controller walk) |
+| Grades tab | click or tap | mouse, touch, pen | Grades screen shows, the other four hide; Grades pill turns navy | instant (crossfade after demo) | CAP-2, decision slice | ✅ mouse click and touch tap (Chrome); pen: synthetic pen pointer events only (proves the click handler, not pen hardware); test: click |
+| Tabs | Tab into the tablist | keyboard | focus lands on the selected tab only (one tab stop); 2px navy focus ring | instant | EXPERIENCE.md Accessibility Floor, T9 | ✅ Chrome 1280: Tab lands on the selected tab, `:focus-visible`, solid 2px navy ring with 3px offset (outside the navy pill); test: roving tabindex |
+| Tabs | ArrowRight / ArrowLeft / Home / End | keyboard | focus and selection move to next / previous (wraps) / first / last tab; its screen shows | instant | prototype `site.js`, ARIA tab pattern | ✅ Chrome 1280: ArrowRight → Grades, End → Events; test: keys; modifier keys (Alt+Left) left to the browser (fixed in review) |
+| Hidden screens | Tab through the section | keyboard | focus never enters an inactive screen | — | CAP-3, AC-A11Y-3 | ✅ Chrome 1280: Tab stops after the tablist go on to the footer, none inside a hidden screen; test: inactive screens out of focus |
 | Hidden screens | browse | screen reader | inactive screens are not announced | — | CAP-3, AC-A11Y-3 | test: inactive panels carry `hidden` |
-| Tab pill | hover | mouse | hand cursor; no colour change (the prototype has no hover style) | — | prototype `.ptabs` | pending (controller walk) |
-| Features | read | — | four items with icons: Know they arrived, See progress early, Talk to teachers, Pay fees in a tap; two columns, one at 640px or less | static | CAP-4, Flow 3 | test: lists the four PXP features; columns pending (controller walk) |
+| Tab pill | hover | mouse | hand cursor; no colour change (the prototype has no hover style) | — | prototype `.ptabs` | ✅ Chrome 1280: pointer cursor, no colour change |
+| Features | read | — | four items with icons: Know they arrived, See progress early, Talk to teachers, Pay fees in a tap; two columns, one at 640px or less | static | CAP-4, Flow 3 | ✅ Chrome: two columns at 1280 and 899, one at 640; test: four features |
 | Store buttons | read | — | "[Placeholder] App Store" and "[Placeholder] Google Play" glass buttons with Apple and Google Play icons, always shown | static | CAP-4, A1 | test: shows App Store and Google Play placeholders… |
-| Store buttons | click | mouse, touch, keyboard | opens the link in a new tab; `rel="noopener noreferrer"` | instant | CAP-4, FR-16 | test: target and rel; new tab pending (controller walk) |
-| Store buttons | read | screen reader | name ends "(opens in a new tab)" | — | CAP-4 | test: shows App Store and Google Play placeholders… (name) |
-| Store button | hover | mouse | border darkens, button lifts 2px | 0.3s | DESIGN.md button (`.btn-glass`) | pending (controller walk) |
-| Section heading | `/products#pxp`, sub-nav PXP pill, mega menu PXP | any | heading fully visible below header and sub-nav (144px) | smooth | AC-NAV-5 (4.1) | pending (controller walk) |
-| Page | reduced motion | — | no transition on tabs or screens | — | EXPERIENCE.md Motion | no transition in the PXP block (no crossfade on Demo day); pending (controller walk) |
+| Store buttons | click | mouse, touch, keyboard | while the address is the `#` stand-in (A1): stays on the page, no new tab; a real store address opens in a new tab with `rel="noopener noreferrer"` (lead, 2026-10-03) | instant | CAP-4, FR-16, A1 | ✅ Chrome 1280: click on `#` opens 0 new tabs; test: `storeLinkAttributes` for `#` and a real URL |
+| Store buttons | read | screen reader | name is the label; a real store address adds "(opens in a new tab)" | — | CAP-4 | test: names and `storeLinkAttributes` |
+| Store button | hover | mouse | border darkens, button lifts 2px | 0.3s | DESIGN.md button (`.btn-glass`) | ✅ Chrome 1280: border rgba(22,54,99,0.12) → rgb(22,54,99), lift -2px after 900ms (first reading was taken while the page scrolled) |
+| Section heading | `/products#pxp`, sub-nav PXP pill, mega menu PXP | any | heading fully visible below header and sub-nav (144px) | smooth | AC-NAV-5 (4.1) | ✅ Chrome 1280: direct URL, sub-nav pill and mega menu put #pxp at 144px, H2 at 348px; 899/640/390: H2 at 298px, inside the screen |
+| Page | reduced motion | — | no transition on tabs or screens | — | EXPERIENCE.md Motion | ✅ Chrome reduced motion: 0 tabs or panels with a transition; screen switches within 30ms |
 | Page | any width | — | no link to `#updates` | — | T5 | test (page): no Updates link |
 
 ## Implementation Notes
@@ -56,7 +56,7 @@ Sources: SPEC CAP-1 to CAP-4, decisions A1 and T5, `EXPERIENCE.md` Component Pat
 - After review: icons are keyed by screen and feature id (a missing icon is a type error); the keyboard test fires keys on the focused tab; the focus test checks the tab order after switching; a brand-name test that could never fail was removed.
 - Crossfade (after demo): `hidden` is `display: none` and cannot fade. The crossfade story must switch to the prototype's method: all screens stay laid out, inactive ones get `inert` (or `aria-hidden` plus `tabIndex=-1`) and fade with `opacity` 0.55s.
 - For Story 4.3: the prototype also has `.s-navy .feature-list i { color: #FFCF06 }`; this port has only the paper colour. Add the navy rule with the SXP section.
-- Build, smoke (`npm run test:smoke`) and the browser walk: pending (controller), because Turbopack rejects the worktree's `node_modules` junction. All UX rows marked "test:" are checked by unit tests; the rest need the walk.
+- Build, smoke and the browser walk ran in the main checkout (Turbopack rejects the worktree's `node_modules` junction): `npm run build` passes, `npm run test:smoke` 7 passed; walk script and output in `spec-4-2-pxp-story-phone-evidence/`.
 
 ## Review Triage Log
 
@@ -73,3 +73,12 @@ One layer (Blind Hunter, 26.7 kB, floor 6, 11 findings), 2026-10-03:
 - `.feature-list` navy variant missing — low, noted for Story 4.3.
 - `page.tsx` ternary on `"pxp"` and unused stub heading — low, rejected: the smallest change that keeps the 4.3 merge simple; 4.3 can replace it with a map.
 - AI log not updated — low, patched (`docs/ai-log.md`).
+
+Full `bmad-code-review` on 2026-10-03 after rebasing onto `develop` (7f98006), 5 layers. Security: clean. Acceptance: CAP-1 to CAP-4 met.
+
+- patch (lead decisions, 2026-10-03): the lede and the four feature lines start with `[Placeholder]` until someone checks the real PXP app; text before the phone below 900px so a `#pxp` jump shows the heading (the mockup stacks the phone first); a store link that is still `#` stays on the page (no new tab), a real address opens a new tab.
+- patch: modifier-key shortcuts (Alt+Left = Back) were blocked by the tablist key handler; no page test proved `#pxp` renders the story section.
+- patch (evidence): UX rows filled from the walk; the store hover was first read while the page scrolled; pen marked as synthetic.
+- false: focus ring invisible on the navy pill (the global rule has a 3px offset); empty-named link after the store buttons (the footer logo, named by its alt text).
+- defer (Minor, `deferred-work.md`): inside the phone the active screen (an empty `[Placeholder]` frame, `tabIndex=0`) is a tab stop before the tablist, as in the prototype's markup; arrow keys start from the selected tab, not a focused unselected one; walk script hardening.
+- note for 4.3: the SXP feature icon colour rule must target `.feature-list svg` (Phosphor), not `i`.
