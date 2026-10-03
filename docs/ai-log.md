@@ -550,6 +550,12 @@ Template:
 - **What the AI did:** merged `develop`, wrote the 3.5 build spec with a 15-line UX checks table, ported the prototype bento, tile, mini-phone and service-card rules (reusing 3.4's badges and chips), rebuilt both sections with Phosphor icons, moved the "classes must exist in globals.css" check into a shared test helper, tests first, a Chrome walk at seven widths plus touch, keyboard and reduced motion, and a full 4-layer review: 9 patched, the rest triaged.
 - **AI got it wrong?** Yes. As in 3.1 and 3.4, the first build used class names Story 1.1 never defined, so the bento and cards were unstyled. The review then found that the new navy card made its focus ring amber on a white section (nearly invisible), the tile ring's corners were clipped, and the undefined-class helper itself could pass falsely: it counted a class mentioned in a CSS comment (one the AI had just written) and inside other compound selectors. A script again produced a backspace character in a test; the script's own guard stopped it this time.
 
+## 2026-10-03 — Story 2.1 Privacy policy page (`bmad-build`, one-shot, built in parallel)
+
+- **Prompt (Hoang Vu):** build easy stories in parallel; 1.7, 2.1 and 4.1 run at the same time in three git worktrees.
+- **What the AI did:** one-shot build of `/privacy`: breadcrumbs, H1, eight outline sections marked `[Placeholder]` except the decided retention sentence (A4), no capture band, a unit test and a `@smoke` test. Browser walk in the main checkout, then a full 5-layer review: Security clean, CAP-1 to CAP-6 met.
+- **AI got it wrong?** Yes. The first walk forced focus from code, so "Tab reaches the breadcrumb" was ticked without proof; two reviewers caught it, and the walk now tabs to it. Some width readings came from a script that was not saved, and a pen row was ticked but never walked. The page text said the capture email stays only in the browser, but Story 2.4 mails it to the inbox. One reviewer said Sanity was missing from the share list; that was false (decision T1).
+
 ## 2026-10-05 — Story 3.6 4-D process flow, after 3.5 merged
 
 - **Prompt (Son Nguyen):** PR #27 merged; move to 3.6.

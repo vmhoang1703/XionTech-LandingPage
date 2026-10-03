@@ -183,6 +183,13 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-7-not-found-page.md`
   summary: Tighten the 404 smoke test (page marker and noindex end to end, band absence by marker, not by one string) and check `min-h-[70dvh]` at 320px.
   evidence: full review 2026-10-03, Minor findings 4 and 5.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-1-privacy-policy-page.md`
+  summary: Privacy page follow-ups for the legal owner (7.5): name Vietnam's Personal Data Protection Law 2025 next to Decree 13/2023; add a `[Placeholder]` "Last updated" line and outline rows for legal basis, security and children's data; re-check "private CV storage" if 6.6 drops CV upload; confirm the exact CAP-6 retention wording with Amber.
+  evidence: full review 2026-10-03, Blind Hunter and Acceptance Auditor (Minor).
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-1-privacy-policy-page.md`
+  summary: Find the capture band by one marker in every test (unit, smoke, walk) instead of `<form`; use section id plus index as the paragraph key on `/privacy`.
+  evidence: full review 2026-10-03, Blind Hunter and Edge Case Hunter (Minor).
+
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-3-6-4d-process-flow.md`
   summary: On `/services#process` (Story 5.4), check that the flow opened by the hash link is not dimmed and replayed (the browser's hash scroll may come after the reveal's first measurement).
