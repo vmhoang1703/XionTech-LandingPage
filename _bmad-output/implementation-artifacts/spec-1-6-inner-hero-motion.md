@@ -60,3 +60,8 @@ Full `bmad-code-review` (4 layers: Blind Hunter, Edge Case Hunter, Verification 
 - No spec or UX checks for the scope change — false: this build spec and its UX checks table (outside `src/`, so not in the reviewed diff).
 - `hl-draw` relies on an implicit `to` — low, rejected: the walk shows the mark at full scale after 2s.
 
+
+Light review of the Not found step (21 lines, Edge Case Hunter, 2026-10-04):
+
+- Other tests in the page test files render `HeroArt` without a canvas stub, so jsdom prints "getContext not implemented" — low, patched: `getContext` is stubbed in `beforeEach` in `not-found.test.tsx` and `demo/page.test.tsx`.
+- Destructuring the hero's children throws a TypeError if the art is missing — low, rejected: the `not.toBeNull()` check before it already gives a clear failure for a missing hero.

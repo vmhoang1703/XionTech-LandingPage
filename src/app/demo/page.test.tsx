@@ -1,8 +1,13 @@
 import { render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { offices } from "@/content/offices";
 import DemoPage, { metadata } from "./page";
+
+// jsdom has no canvas: HeroArt skips the ribbon, the aurora is CSS.
+beforeEach(() => {
+  vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+});
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -97,8 +102,6 @@ describe("Demo page", () => {
   });
 
   it("puts the shared aurora and strand ribbon behind the navy hero", () => {
-    // jsdom has no canvas: the ribbon is skipped, the aurora is CSS.
-    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
     const { container } = render(<DemoPage />);
 
     const hero = container.querySelector("section.hero-navy.page-hero");
