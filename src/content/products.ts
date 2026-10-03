@@ -43,3 +43,47 @@ export const productsSections = productsSubnav.items.map(({ id, label }) => ({
   id,
   heading: label,
 }));
+
+// Story 4.2: the PXP section. The phone screens stay empty frames until real
+// screens arrive with Story 4.4 (after demo).
+export const pxpSection = {
+  badge: "PXP",
+  heading: "The school day, in a parent's pocket.",
+  lede: "Parent eXperience Place keeps parents close to every school day, on iOS and Android.",
+  tabsLabel: "PXP screens",
+  screens: [
+    { id: "attendance", label: "Attendance" },
+    { id: "grades", label: "Grades" },
+    { id: "messages", label: "Messages" },
+    { id: "payments", label: "Payments" },
+    { id: "events", label: "Events" },
+  ],
+  screenCaption: (label: string) => `[Placeholder] PXP ${label} screen`,
+  features: [
+    {
+      id: "arrived",
+      title: "Know they arrived",
+      body: "Alerts when your child reaches the gate.",
+    },
+    {
+      id: "progress",
+      title: "See progress early",
+      body: "Scores and comments as soon as published.",
+    },
+    {
+      id: "teachers",
+      title: "Talk to teachers",
+      body: "Two-way messages with teachers.",
+    },
+    {
+      id: "fees",
+      title: "Pay fees in a tap",
+      body: "Clear due dates and receipts.",
+    },
+  ],
+  stores: {
+    appStore: "[Placeholder] App Store",
+    googlePlay: "[Placeholder] Google Play",
+    newTab: " (opens in a new tab)",
+  },
+} as const;
