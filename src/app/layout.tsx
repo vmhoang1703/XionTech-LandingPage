@@ -48,6 +48,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      // globals.css sets smooth scroll for in-page links; this asks Next.js 16
+      // to switch it off during route changes so they stay instant.
+      data-scroll-behavior="smooth"
       className={`${unbounded.variable} ${lexendExa.variable} ${beVietnamPro.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">

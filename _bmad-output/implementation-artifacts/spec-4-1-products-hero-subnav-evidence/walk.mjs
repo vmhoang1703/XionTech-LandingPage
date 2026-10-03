@@ -24,7 +24,7 @@ const settle = (p) => p.waitForTimeout(1200);
 const devicesBox = (p) =>
   p.evaluate(() => {
     const t = document.querySelector("h1").getBoundingClientRect();
-    const d = document.querySelector("[class*=devices]").getBoundingClientRect();
+    const d = document.querySelector(".home-devices").getBoundingClientRect();
     return { textLeft: Math.round(t.left), textRight: Math.round(t.right), textBottom: Math.round(t.bottom), devLeft: Math.round(d.left), devTop: Math.round(d.top) };
   });
 const tabTo = async (p, loc, max) => {
@@ -33,6 +33,7 @@ const tabTo = async (p, loc, max) => {
     await p.keyboard.press("Tab");
     n++;
   }
+  if (!(await loc.evaluate((el) => el === document.activeElement))) throw new Error(`Tab did not reach the target in ${max} presses`);
   return n;
 };
 
@@ -51,7 +52,7 @@ const tabTo = async (p, loc, max) => {
   log(`[1280] CTA before hover: ${await style(cta, ["backgroundColor"])}`);
   await cta.hover();
   await p.waitForTimeout(500);
-  log(`[1280] CTA after hover: ${await style(cta, ["backgroundColor", "transitionDuration"])}`);
+  log(`[1280] CTA after hover: ${await style(cta, ["backgroundColor", "transitionProperty", "transitionDuration"])}`);
   await p.mouse.move(0, 0);
   await p.evaluate(() => document.activeElement instanceof HTMLElement && document.activeElement.blur());
   let n = await tabTo(p, cta, 60);
@@ -131,7 +132,7 @@ const tabTo = async (p, loc, max) => {
   await p.close();
 }
 
-// 300 touch: narrow enough that the four pills overflow
+// 300 touch: the narrowest width checked; do the four pills still fit?
 {
   const p = await b.newPage({ viewport: { width: 300, height: 700 }, hasTouch: true, isMobile: true });
   await p.goto(`${BASE}/products`, { waitUntil: "load" });
@@ -145,6 +146,36 @@ const tabTo = async (p, loc, max) => {
   });
   log(`[300] sub-nav ${s} | page no sideways scroll ${await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)}`);
   await p.screenshot({ path: `${OUT}/products-300.png` });
+  await p.close();
+}
+
+// From another page: mega menu, Home bento card, and an instant route change
+{
+  const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
+  await p.goto(`${BASE}/`, { waitUntil: "load" });
+  await settle(p);
+  await p.locator("header").getByRole("button", { name: "Products" }).click();
+  await p.locator('header a[href="/products#lxp"]').first().click();
+  await p.waitForURL("**/products#lxp", { timeout: 20000 });
+  await settle(p);
+  log(`[1280] mega menu LXP from /: ${JSON.stringify(await bars(p))} | #lxp top ${await sectionTop(p, "lxp")} | heading top ${await headingTop(p, "lxp")}`);
+  await p.goto(`${BASE}/`, { waitUntil: "load" });
+  await settle(p);
+  await p.locator('main a[href="/products#sxp"]').first().click();
+  await p.waitForURL("**/products#sxp", { timeout: 20000 });
+  await settle(p);
+  log(`[1280] Home bento SXP from /: ${JSON.stringify(await bars(p))} | #sxp top ${await sectionTop(p, "sxp")} | heading top ${await headingTop(p, "sxp")}`);
+  await p.goto(`${BASE}/`, { waitUntil: "load" });
+  await settle(p);
+  await p.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await p.waitForTimeout(300);
+  const from = await scrollY(p);
+  await p.locator("footer").getByRole("link", { name: /privacy/i }).first().click();
+  await p.waitForURL("**/privacy", { timeout: 20000 });
+  await p.waitForTimeout(50);
+  const early = await scrollY(p);
+  await settle(p);
+  log(`[1280] route change / -> /privacy from scrollY ${from}: html data-scroll-behavior "${await p.evaluate(() => document.documentElement.dataset.scrollBehavior)}" | scrollY 50ms after ${early}, after settle ${await scrollY(p)}`);
   await p.close();
 }
 

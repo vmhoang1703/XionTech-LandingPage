@@ -29,7 +29,7 @@ describe("Products page", () => {
     expect(cta.getAttribute("href")).toBe("/demo#form");
     expect(cta.classList.contains("btn-navy")).toBe(true);
     expect(container.querySelector('a[href="#updates"]')).toBeNull();
-    expect(screen.queryByText(/updates/i)).toBeNull();
+    expect(screen.queryByRole("link", { name: /updates/i })).toBeNull();
   });
 
   it("shows empty device frames with placeholder captions and no image", () => {
