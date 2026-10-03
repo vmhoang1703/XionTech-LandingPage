@@ -37,13 +37,6 @@ export const productsSubnav = {
   ],
 };
 
-// Anchor targets, one per sub-nav pill. Stories 4.2 and 4.3 replace each stub
-// with the real section.
-export const productsSections = productsSubnav.items.map(({ id, label }) => ({
-  id,
-  heading: label,
-}));
-
 // Story 4.2: the PXP section. The phone screens stay empty frames until real
 // screens arrive with Story 4.4 (after demo).
 export const pxpSection = {
@@ -86,4 +79,72 @@ export const pxpSection = {
     googlePlay: "[Placeholder] Google Play",
     newTab: " (opens in a new tab)",
   },
+} as const;
+
+// LXP, SXP and IoT sections (Story 4.3). Descriptions and feature lists were
+// confirmed by the business on 2026-09-28; the web addresses are in
+// product-links.ts. Real screens arrive with Story 4.4 (after demo); until
+// then each browser frame stays empty.
+export const productsLxp = {
+  badge: "LXP",
+  title: "A calm place to learn.",
+  lede: "Learner eXperience Place brings a student's lessons, assignments and progress into one place.",
+  audience: ["Students", "Web app"],
+  features: [
+    { id: "lessons", name: "Lessons", line: "Every material in one place." },
+    { id: "assignments", name: "Assignments", line: "Clear due dates." },
+    { id: "progress", name: "Progress", line: "Seen at a glance." },
+    { id: "feedback", name: "Feedback", line: "Comments from teachers." },
+  ],
+  media: "[Placeholder] LXP screenshot",
+} as const;
+
+export const productsSxp = {
+  badge: "SXP",
+  title: "One workspace for the whole school.",
+  lede: "Staff eXperience Place gives staff, teachers and leaders their own views of the same data.",
+  audience: ["Staff", "Teachers", "Leaders"],
+  features: [
+    {
+      id: "attendance",
+      name: "Attendance and records",
+      line: "Updated in real time.",
+    },
+    { id: "classes", name: "Classes", line: "Classes, timetables and grades." },
+    {
+      id: "communication",
+      name: "Communication",
+      line: "Reach parents through PXP.",
+    },
+    {
+      id: "dashboards",
+      name: "Leader dashboards",
+      line: "What needs attention today.",
+    },
+  ],
+  media: "[Placeholder] SXP screenshot",
+} as const;
+
+// The prototype's IoT section has no audience chips; the audience comes from
+// the Products mega menu (School staff and facilities), as CAP-1 asks for one.
+export const productsIot = {
+  badgeLabel: "IoT",
+  title: "A campus you run from one screen.",
+  lede: "IoT Device Management lets school staff control classroom AV, lighting, climate and access across campus.",
+  audience: ["School staff", "Facilities"],
+  features: [
+    { id: "av", name: "Classroom AV", line: "Projectors, displays and sound." },
+    {
+      id: "climate",
+      name: "Lighting and climate",
+      line: "Scheduled around the timetable.",
+    },
+    {
+      id: "access",
+      name: "Access",
+      line: "Doors and zones, managed centrally.",
+    },
+    { id: "energy", name: "Energy", line: "See usage across the campus." },
+  ],
+  media: "[Placeholder] IoT screenshot",
 } as const;
