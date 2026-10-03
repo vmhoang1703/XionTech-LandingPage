@@ -1,9 +1,14 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { webAppLinks } from "@/content/product-links";
+import { PLACEHOLDER_HREF, webAppLinks } from "@/content/product-links";
 import { productsIot, productsLxp, productsSxp } from "@/content/products";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import { IotSection, LxpSection, SxpSection } from "./products-web-apps";
+import {
+  IotSection,
+  LxpSection,
+  SxpSection,
+  UrlPill,
+} from "./products-web-apps";
 
 const SECTIONS = [
   {
@@ -57,19 +62,17 @@ describe.each(SECTIONS)("#$id section", ({ id, Section, copy, surface }) => {
     }
   });
 
-  it("has a browser frame whose URL pill opens a new tab", () => {
-    render(<Section />);
+  it("shows the stand-in web address as a disabled label in the browser frame, not a link", () => {
+    const { container } = render(<Section />);
     const link = webAppLinks[id];
     expect(link.label).toBe(`[Placeholder] ${id}.xiontechs.com`);
-    const pill = screen.getByRole("link", {
-      name: `${link.label} (opens in a new tab)`,
-    });
+    expect(link.href).toBe(PLACEHOLDER_HREF);
+    const pill = container.querySelector(".bar-url") as HTMLElement;
+    expect(pill.tagName).toBe("SPAN");
     expect(pill.textContent).toBe(link.label);
-    expect(pill.getAttribute("href")).toBe(link.href);
-    expect(pill.getAttribute("target")).toBe("_blank");
-    expect(pill.getAttribute("rel")).toBe("noopener noreferrer");
-    expect(pill.classList.contains("bar-url")).toBe(true);
+    expect(pill.getAttribute("aria-disabled")).toBe("true");
     expect(pill.closest(".browser")).not.toBeNull();
+    expect(screen.queryAllByRole("link")).toEqual([]);
   });
 
   it("shows the empty media frame with a placeholder caption and no image", () => {
@@ -130,5 +133,18 @@ describe("Product copy", () => {
   it("uses the brand name XionTech, not XionTechs, in visible copy", () => {
     const copy = JSON.stringify([productsLxp, productsSxp, productsIot]);
     expect(copy).not.toMatch(/XionTechs/);
+  });
+});
+
+describe("UrlPill", () => {
+  it("turns a real web address into a link that opens a new tab", () => {
+    render(<UrlPill href="https://lxp.example.com" label="lxp.example.com" />);
+    const pill = screen.getByRole("link", {
+      name: "lxp.example.com (opens in a new tab)",
+    });
+    expect(pill.getAttribute("href")).toBe("https://lxp.example.com");
+    expect(pill.getAttribute("target")).toBe("_blank");
+    expect(pill.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(pill.classList.contains("bar-url")).toBe(true);
   });
 });

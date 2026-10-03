@@ -2283,6 +2283,11 @@
     text-decoration: underline;
   }
 
+  .browser .bar-url[aria-disabled="true"] {
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+
   .browser-media {
     aspect-ratio: 16 / 10;
   }

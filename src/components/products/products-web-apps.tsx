@@ -14,7 +14,7 @@ import {
   ProjectorScreenIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
-import { webAppLinks } from "@/content/product-links";
+import { PLACEHOLDER_HREF, webAppLinks } from "@/content/product-links";
 import { productsIot, productsLxp, productsSxp } from "@/content/products";
 
 type WebAppId = keyof typeof webAppLinks;
@@ -25,6 +25,33 @@ type FeatureId<T extends { features: readonly Feature[] }> =
 
 // LXP, SXP and IoT sections of /products (Story 4.3), ported from the
 // prototype products.html. Server Components: nothing here needs state.
+
+// While a web address is the stand-in (decision A1) the pill is a disabled
+// label, so a click goes nowhere; a real address becomes a link that opens a
+// new tab and says so (lead, 2026-10-03).
+export function UrlPill({
+  href,
+  label,
+}: Readonly<{ href: string; label: string }>) {
+  if (href === PLACEHOLDER_HREF) {
+    return (
+      <span className="bar-url" aria-disabled="true">
+        {label}
+      </span>
+    );
+  }
+  return (
+    <a
+      className="bar-url"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${label} (opens in a new tab)`}
+    >
+      {label}
+    </a>
+  );
+}
 
 // Static browser chrome around an empty media frame. The URL pill opens the
 // app in a new tab; until Story 4.4 the frame shows its empty grid, never an
@@ -40,15 +67,7 @@ function BrowserFrame({
         <i aria-hidden="true" />
         <i aria-hidden="true" />
         <i aria-hidden="true" />
-        <a
-          className="bar-url"
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${label} (opens in a new tab)`}
-        >
-          {label}
-        </a>
+        <UrlPill href={href} label={label} />
       </div>
       <div className="browser-media">
         <div className="home-media">
