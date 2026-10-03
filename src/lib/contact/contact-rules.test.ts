@@ -1,11 +1,22 @@
 import { describe, expect, it } from "vitest";
 import {
   CONTACT_ERRORS,
+  isValidEmail,
   validateContact,
   type ContactValues,
 } from "./contact-rules";
 
 const TODAY = "2026-10-02";
+
+describe("isValidEmail", () => {
+  it("accepts a normal address (free mail allowed)", () => {
+    expect(isValidEmail("ana@gmail.com")).toBe(true);
+  });
+
+  it("rejects an address whose domain has no dot", () => {
+    expect(isValidEmail("ana@school")).toBe(false);
+  });
+});
 
 const valid: ContactValues = {
   name: "Ana Tran",
