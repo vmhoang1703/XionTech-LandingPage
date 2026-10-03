@@ -69,6 +69,22 @@ describe("PxpSection", () => {
     }
   });
 
+  it("renders the stand-in address as a disabled label with no link", () => {
+    const { container } = render(
+      <StoreButton
+        href={PLACEHOLDER_HREF}
+        label="App Store"
+        Icon={AppleLogoIcon}
+      />,
+    );
+    const el = container.querySelector(".btn") as HTMLElement;
+    expect(el.tagName).toBe("SPAN");
+    expect(el.textContent).toBe("App Store");
+    expect(el.getAttribute("aria-disabled")).toBe("true");
+    expect(el.getAttribute("href")).toBeNull();
+    expect(screen.queryByRole("link")).toBeNull();
+  });
+
   it("turns a real store address into a link that opens a new tab", () => {
     render(
       <StoreButton

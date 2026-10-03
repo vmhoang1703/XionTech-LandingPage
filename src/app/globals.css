@@ -514,10 +514,18 @@
     transform: translateY(1px) scale(0.98);
   }
 
-  .btn:disabled {
+  /* A disabled button, or a stand-in label styled as one (aria-disabled) */
+  .btn:disabled,
+  .btn[aria-disabled="true"],
+  .btn[aria-disabled="true"]:hover,
+  .btn[aria-disabled="true"]:active {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
+  }
+
+  .btn-glass[aria-disabled="true"]:hover {
+    border-color: var(--color-border);
   }
 
   .btn-primary {
@@ -2173,14 +2181,6 @@
     .pxp-phone {
       order: 1;
     }
-  }
-
-  .btn[aria-disabled="true"] {
-    cursor: default;
-  }
-
-  .btn[aria-disabled="true"]:hover {
-    transform: none;
   }
 
   /*
