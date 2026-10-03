@@ -430,7 +430,7 @@ describe("POST /api/contact rate limit", () => {
     expect(limitMock).toHaveBeenCalledWith(rateLimitKey(IP, VISITOR.email));
   });
 
-  it("sends the mail anyway and logs once for each limit when the store is down", async () => {
+  it("sends the mail anyway, logs once and asks the store once when the store is down", async () => {
     limitMock.mockRejectedValue(
       new TypeError(`down for ${VISITOR.email} at ${ENV.KV_REST_API_URL}`),
     );
@@ -439,19 +439,21 @@ describe("POST /api/contact rate limit", () => {
 
     expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
     expect(sendMailMock).toHaveBeenCalledTimes(1);
+    expect(limitMock).toHaveBeenCalledTimes(1);
     const lines = loggedLines();
-    expect(lines).toHaveLength(2);
-    for (const line of lines) expect(line).toContain("rate limit unavailable");
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("rate limit unavailable");
   });
 
-  it("sends the mail anyway and logs once for each limit when the store does not answer", async () => {
+  it("sends the mail anyway, logs once and asks the store once when the store does not answer", async () => {
     limitMock.mockResolvedValue({ success: true, reason: "timeout" });
 
     const response = await POST(post(demoBody));
 
     expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
     expect(sendMailMock).toHaveBeenCalledTimes(1);
-    expect(loggedLines()).toHaveLength(2);
+    expect(limitMock).toHaveBeenCalledTimes(1);
+    expect(loggedLines()).toHaveLength(1);
   });
 });
 

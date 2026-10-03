@@ -1,10 +1,7 @@
 import { ipAddress } from "@vercel/functions";
 import {
-  checkIpRateLimit,
-  checkRateLimit,
+  checkRateLimits,
   getDeliveryConfig,
-  ipRateLimitKey,
-  rateLimitKey,
   sendContactMail,
   type DeliveryConfig,
 } from "@/lib/contact/delivery";
@@ -63,13 +60,9 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const { submission } = parsed;
-  const ip = ipAddress(request);
-  // Each limit answers in turn: a send the first one refused does not count
-  // against the second.
-  const allowed =
-    (await checkRateLimit(rateLimitKey(ip, submission.email))) &&
-    (await checkIpRateLimit(ipRateLimitKey(ip)));
-  if (!allowed) return Response.json({ error: "rate" }, { status: 429 });
+  if (!(await checkRateLimits(ipAddress(request), submission.email))) {
+    return Response.json({ error: "rate" }, { status: 429 });
+  }
 
   try {
     await sendContactMail(config, submission);

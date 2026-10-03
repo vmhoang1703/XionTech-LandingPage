@@ -27,8 +27,7 @@ vi.mock("@upstash/ratelimit", () => ({
 }));
 
 import {
-  checkIpRateLimit,
-  checkRateLimit,
+  checkRateLimits,
   getDeliveryConfig,
   ipRateLimitKey,
   rateLimitKey,
@@ -182,36 +181,68 @@ describe("ipRateLimitKey", () => {
   });
 });
 
-describe("checkRateLimit", () => {
-  it("allows a send the store accepts", async () => {
-    limitMock.mockResolvedValue({ success: true });
+const IP = "203.0.113.7";
+const EMAIL = "Ana@Sunrise.edu";
 
-    expect(await checkRateLimit("key-1")).toBe(true);
-    expect(limitMock).toHaveBeenCalledWith("key-1");
+/** The log lines written while a test runs, as text. */
+function spyOnLog(): () => string[] {
+  const error = vi.spyOn(console, "error").mockImplementation(() => {});
+  return () => error.mock.calls.map((call) => call.join(" "));
+}
+
+describe("checkRateLimits", () => {
+  it("allows a send both limits accept, checking the IP and email first, then the IP alone", async () => {
+    expect(await checkRateLimits(IP, EMAIL)).toBe(true);
+
+    expect(limitMock.mock.calls).toEqual([
+      [rateLimitKey(IP, EMAIL)],
+      [ipRateLimitKey(IP)],
+    ]);
   });
 
-  it("denies a send the store refuses", async () => {
-    limitMock.mockResolvedValue({ success: false });
+  it("denies a send the IP and email limit refuses, without using the IP-only limit", async () => {
+    limitMock.mockResolvedValueOnce({ success: false });
 
-    expect(await checkRateLimit("key-1")).toBe(false);
+    expect(await checkRateLimits(IP, EMAIL)).toBe(false);
+    expect(limitMock).toHaveBeenCalledTimes(1);
   });
 
-  it("uses 5 sends per 10 minutes, the contact prefix, no in-process cache and a 3 s store timeout", async () => {
-    await checkRateLimit("key-1");
+  it("denies a send the IP-only limit refuses", async () => {
+    limitMock
+      .mockResolvedValueOnce({ success: true })
+      .mockResolvedValueOnce({ success: false });
 
-    expect(slidingWindowMock).toHaveBeenCalledWith(5, "10 m");
-    expect(ratelimitMock).toHaveBeenCalledWith(
-      expect.objectContaining({
+    expect(await checkRateLimits(IP, EMAIL)).toBe(false);
+  });
+
+  it("uses 5 sends per 10 minutes under the contact prefix, then 20 per hour under contact-ip", async () => {
+    await checkRateLimits(IP, EMAIL);
+
+    expect(slidingWindowMock.mock.calls).toEqual([
+      [5, "10 m"],
+      [20, "1 h"],
+    ]);
+    expect(ratelimitMock.mock.calls.map((call) => call[0].prefix)).toEqual([
+      "contact",
+      "contact-ip",
+    ]);
+  });
+
+  it("keeps no in-process cache and gives each store call 3 s", async () => {
+    await checkRateLimits(IP, EMAIL);
+
+    expect(ratelimitMock).toHaveBeenCalledTimes(2);
+    for (const [config] of ratelimitMock.mock.calls) {
+      expect(config).toMatchObject({
         limiter: "sliding-window-limiter",
-        prefix: "contact",
         ephemeralCache: false,
         timeout: 3000,
-      }),
-    );
+      });
+    }
   });
 
   it("connects to the store with the KV variables", async () => {
-    await checkRateLimit("key-1");
+    await checkRateLimits(IP, EMAIL);
 
     expect(redisMock).toHaveBeenCalledWith({
       url: ENV.KV_REST_API_URL,
@@ -219,104 +250,73 @@ describe("checkRateLimit", () => {
     });
   });
 
-  it("allows the send and logs once when the store times out", async () => {
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+  it("allows the send, logs once and skips the IP-only limit when the first check times out", async () => {
+    const logged = spyOnLog();
     limitMock.mockResolvedValue({ success: true, reason: "timeout" });
 
-    expect(await checkRateLimit("key-1")).toBe(true);
+    expect(await checkRateLimits(IP, EMAIL)).toBe(true);
 
-    expect(error).toHaveBeenCalledTimes(1);
-    const line = error.mock.calls[0].join(" ");
-    expect(line).toContain("rate limit unavailable");
-    expect(line).not.toContain("key-1");
+    expect(limitMock).toHaveBeenCalledTimes(1);
+    expect(ratelimitMock).toHaveBeenCalledTimes(1);
+    expect(logged()).toHaveLength(1);
+    expect(logged()[0]).toContain("rate limit unavailable");
   });
 
-  it("allows the send and logs once, with the error class only, when the store fails", async () => {
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+  it("allows the send, logs once with the error class only and skips the IP-only limit when the first check fails", async () => {
+    const logged = spyOnLog();
     limitMock.mockRejectedValue(
-      new TypeError(`boom for ${ENV.KV_REST_API_URL} and Ana@Sunrise.edu`),
+      new TypeError(`boom for ${ENV.KV_REST_API_URL} and ${EMAIL} at ${IP}`),
     );
 
-    expect(await checkRateLimit("key-1")).toBe(true);
+    expect(await checkRateLimits(IP, EMAIL)).toBe(true);
 
-    expect(error).toHaveBeenCalledTimes(1);
-    const line = error.mock.calls[0].join(" ");
+    expect(limitMock).toHaveBeenCalledTimes(1);
+    expect(ratelimitMock).toHaveBeenCalledTimes(1);
+    expect(logged()).toHaveLength(1);
+    const [line] = logged();
     expect(line).toContain("rate limit unavailable");
     expect(line).toContain("TypeError");
     expect(line).not.toContain("boom");
-    expect(line).not.toContain("key-1");
     expect(line).not.toContain(ENV.KV_REST_API_URL);
     expect(line).not.toContain("Sunrise");
+    expect(line).not.toContain(IP);
+    expect(line).not.toContain(rateLimitKey(IP, EMAIL));
+    expect(line).not.toContain(ipRateLimitKey(IP));
   });
 
   it("logs an unknown class when the store rejects with something that is not an Error", async () => {
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    const logged = spyOnLog();
     limitMock.mockRejectedValue("boom");
 
-    expect(await checkRateLimit("key-1")).toBe(true);
+    expect(await checkRateLimits(IP, EMAIL)).toBe(true);
 
-    const line = error.mock.calls[0].join(" ");
-    expect(line).toContain("rate limit unavailable");
-    expect(line).toContain("unknown");
-    expect(line).not.toContain("boom");
-  });
-});
-
-describe("checkIpRateLimit", () => {
-  it("allows a send the store accepts and denies one it refuses", async () => {
-    limitMock.mockResolvedValueOnce({ success: true });
-    expect(await checkIpRateLimit("ip-key")).toBe(true);
-    expect(limitMock).toHaveBeenCalledWith("ip-key");
-
-    limitMock.mockResolvedValueOnce({ success: false });
-    expect(await checkIpRateLimit("ip-key")).toBe(false);
+    expect(logged()).toHaveLength(1);
+    expect(logged()[0]).toContain("unknown");
+    expect(logged()[0]).not.toContain("boom");
   });
 
-  it("uses 20 sends per hour, its own prefix, no in-process cache and a 3 s store timeout", async () => {
-    await checkIpRateLimit("ip-key");
+  it("allows the send and logs once when the IP-only check fails after the first one passed", async () => {
+    const logged = spyOnLog();
+    limitMock
+      .mockResolvedValueOnce({ success: true })
+      .mockRejectedValueOnce(new TypeError("boom"));
 
-    expect(slidingWindowMock).toHaveBeenCalledWith(20, "1 h");
-    expect(ratelimitMock).toHaveBeenCalledWith(
-      expect.objectContaining({
-        limiter: "sliding-window-limiter",
-        prefix: "contact-ip",
-        ephemeralCache: false,
-        timeout: 3000,
-      }),
-    );
+    expect(await checkRateLimits(IP, EMAIL)).toBe(true);
+
+    expect(logged()).toHaveLength(1);
+    expect(logged()[0]).toContain("TypeError");
   });
 
-  it("connects to the store with the KV variables", async () => {
-    await checkIpRateLimit("ip-key");
+  it("allows the send and logs once when the IP-only check times out after the first one passed", async () => {
+    const logged = spyOnLog();
+    limitMock
+      .mockResolvedValueOnce({ success: true })
+      .mockResolvedValueOnce({ success: true, reason: "timeout" });
 
-    expect(redisMock).toHaveBeenCalledWith({
-      url: ENV.KV_REST_API_URL,
-      token: ENV.KV_REST_API_TOKEN,
-    });
-  });
+    expect(await checkRateLimits(IP, EMAIL)).toBe(true);
 
-  it("allows the send and logs once when the store fails", async () => {
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
-    limitMock.mockRejectedValue(new TypeError("boom for 203.0.113.7"));
-
-    expect(await checkIpRateLimit("ip-key")).toBe(true);
-
-    expect(error).toHaveBeenCalledTimes(1);
-    const line = error.mock.calls[0].join(" ");
-    expect(line).toContain("rate limit unavailable");
-    expect(line).toContain("TypeError");
-    expect(line).not.toContain("203.0.113.7");
-    expect(line).not.toContain("ip-key");
-  });
-
-  it("allows the send and logs once when the store times out", async () => {
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
-    limitMock.mockResolvedValue({ success: true, reason: "timeout" });
-
-    expect(await checkIpRateLimit("ip-key")).toBe(true);
-
-    expect(error).toHaveBeenCalledTimes(1);
-    expect(error.mock.calls[0].join(" ")).toContain("rate limit unavailable");
+    expect(logged()).toHaveLength(1);
+    expect(logged()[0]).toContain("rate limit unavailable");
   });
 });
 

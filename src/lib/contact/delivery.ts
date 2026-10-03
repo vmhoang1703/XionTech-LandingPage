@@ -62,17 +62,18 @@ function logRateLimitUnavailable(cause: string): void {
   console.error("Contact delivery: rate limit unavailable", cause);
 }
 
+type LimitOutcome = "allowed" | "blocked" | "unavailable";
+
 /**
- * True when the send may go ahead: at most `tokens` per key in `window`. When
- * the store fails or does not answer in 3 s the send is allowed (fail open)
- * and one line is logged.
+ * Ask one limit: at most `tokens` per key in `window`. When the store fails or
+ * does not answer in 3 s the outcome is "unavailable" and one line is logged.
  */
-async function withinLimit(
+async function askLimit(
   prefix: string,
   tokens: number,
   window: Duration,
   key: string,
-): Promise<boolean> {
+): Promise<LimitOutcome> {
   try {
     const limiter = new Ratelimit({
       redis: new Redis({
@@ -85,22 +86,32 @@ async function withinLimit(
       timeout: 3000,
     });
     const { success, reason } = await limiter.limit(key);
-    if (reason === "timeout") logRateLimitUnavailable("timeout");
-    return success;
+    if (reason === "timeout") {
+      logRateLimitUnavailable("timeout");
+      return "unavailable";
+    }
+    return success ? "allowed" : "blocked";
   } catch (error) {
     logRateLimitUnavailable(error instanceof Error ? error.name : "unknown");
-    return true;
+    return "unavailable";
   }
 }
 
-/** The IP and email limit: 5 sends per key in 10 minutes. */
-export function checkRateLimit(key: string): Promise<boolean> {
-  return withinLimit("contact", 5, "10 m", key);
-}
-
-/** The IP-only limit: 20 sends per key in 1 hour, whatever the email. */
-export function checkIpRateLimit(key: string): Promise<boolean> {
-  return withinLimit("contact-ip", 20, "1 h", key);
+/**
+ * True when the send may go ahead: about 5 per IP and email in 10 minutes,
+ * and about 20 per IP in 1 hour. The IP-only limit is asked only when the
+ * first one allowed the send, so a refused send does not use its allowance.
+ * When the store is unavailable the send is allowed (fail open) and the
+ * second limit is skipped, so there is one log line and one wait.
+ */
+export async function checkRateLimits(
+  ip: string | undefined,
+  email: string,
+): Promise<boolean> {
+  const byEmail = await askLimit("contact", 5, "10 m", rateLimitKey(ip, email));
+  if (byEmail !== "allowed") return byEmail === "unavailable";
+  const byIp = await askLimit("contact-ip", 20, "1 h", ipRateLimitKey(ip));
+  return byIp !== "blocked";
 }
 
 function mailText(submission: ContactSubmission): string {

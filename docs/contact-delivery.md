@@ -88,11 +88,11 @@ There are two limits. A request must pass both. If either one says no, the route
 - The keys are SHA-256 hashes. The raw IP and email never reach Upstash.
 - The IP comes from `ipAddress` in `@vercel/functions`. When there is no IP (for example in a local run), both keys use the word "unknown", so all such requests share one IP-only limit.
 - There is no cache or counter in the app process. The state lives only in Upstash.
-- Each limit fails open on its own (see the next section). The Gmail daily limit is the last guard.
+- Both limits fail open (see the next section). The Gmail daily limit is the last guard.
 
 ## When something is down or slow
 
-- **Upstash is down, slow or returns an error:** the route fails open. It sends the mail anyway and answers 200. Each limit writes one log line, "rate limit unavailable", with the error class or the word "timeout", so a store that is down gives two lines for one request. Each store call times out after 3 seconds, so the two calls can take up to 6 seconds in a row.
+- **Upstash is down, slow or returns an error:** the route fails open. It sends the mail anyway and answers 200. It writes one log line, "rate limit unavailable", with the error class or the word "timeout". When the IP and email check cannot reach the store, the IP-only check is skipped, so there is one log line and one wait. The store call times out after 3 seconds. If only the IP-only check fails, it also writes one log line and the send is allowed.
 - **Gmail refuses or is slow:** the SMTP connection, greeting and socket each time out after 5 seconds. The route answers 502. The form shows the send message and keeps the values.
 - **Slow path:** the route's `maxDuration` is 10 seconds. A worst-case slow run can pass it. Then the platform ends the call. The form shows the send error with the values kept, the same as for a 502.
 - **Logs:** a log line names the step and the error class. For a failed send it also has the SMTP error code when the error carries one, for example "Contact delivery: send failed Error EAUTH". The class is "Error" for every nodemailer failure, so the code tells the causes apart: `EAUTH` is a wrong App Password or user, `ETIMEDOUT` and `ECONNECTION` are network problems. A line never holds the error message. The one exception is the missing-variable line: it names the variable, for example "GMAIL_USER is not set". No line holds a name, an email, a message, an IP, a key or a secret value.
