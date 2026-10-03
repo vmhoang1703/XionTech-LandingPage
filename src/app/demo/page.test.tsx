@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { offices } from "@/content/offices";
 import DemoPage, { metadata } from "./page";
@@ -90,5 +90,18 @@ describe("Demo page", () => {
   it("sets the metadata title and description", () => {
     expect(metadata.title).toBe(CONTACT_STRINGS.metaTitle);
     expect(metadata.description).toBe(CONTACT_STRINGS.metaDescription);
+  });
+
+  it("puts the shared aurora and strand ribbon behind the navy hero", () => {
+    // jsdom has no canvas: the ribbon is skipped, the aurora is CSS.
+    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+    const { container } = render(<DemoPage />);
+
+    const hero = container.querySelector("section.hero-navy.page-hero");
+    expect(hero?.children[0].classList.contains("aurora")).toBe(true);
+    expect(hero?.children[1].matches("canvas.strands")).toBe(true);
+    expect(hero?.children[0].getAttribute("aria-hidden")).toBe("true");
+    expect(hero?.children[1].getAttribute("aria-hidden")).toBe("true");
+    vi.restoreAllMocks();
   });
 });

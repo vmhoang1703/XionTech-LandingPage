@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
+import { HeroArt } from "@/components/sections/hero-art";
 import { offices } from "@/content/offices";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ const { hero } = CONTACT_STRINGS;
 export default function DemoPage() {
   return (
     <section className="hero-navy page-hero" aria-labelledby="demo-h1">
+      <HeroArt tone="navy" />
       <div className="wrap split">
         <div>
           <nav className="crumbs" aria-label={hero.breadcrumbLabel}>
