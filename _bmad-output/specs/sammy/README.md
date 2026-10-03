@@ -23,4 +23,4 @@ spec folder. Plan source: "Demo-day plan" in `../../planning-artifacts/epics.md`
 First: finish PR #15 (1.5 footer) so it merges; Andy then mounts the footer in `src/app/layout.tsx`
 (decision T10). Simple page-section stories can use the one-shot route of `bmad-build` (see `AGENTS.md`).
 
-Blockers: 5.4 (Tue 06/10) and 6.4 (Wed 07/10) need Andy's 2.4 (Sat 03/10); say in the team chat the same day if one slips.
+Blockers: 5.4 (Tue 06/10) and 6.4 (Wed 07/10) need Andy's 2.4 (Sat 03/10). Andy waits on your 3.1 (Sat 03/10) for 3.7 and on PR #15 (footer) for the footer mount. Say in the team chat the same day if one slips.

@@ -30,6 +30,6 @@ spec folder. Plan source: "Demo-day plan" in `../../planning-artifacts/epics.md`
 | Wed 07/10 | 7.4 Performance budget | [`spec-7-4-performance-budget`](spec-7-4-performance-budget/SPEC.md) | 3.2, all Demo-day page stories (Epics 1 to 6) |
 | Wed 07/10 | 7.3 Accessibility checks | [`spec-7-3-accessibility-checks`](spec-7-3-accessibility-checks/SPEC.md) | all Demo-day page stories (Epics 1 to 6) |
 
-Blockers for Sammy: 2.4 (Sat 03/10; 5.4 and 6.4 need it). Say in the team chat the same day if it slips.
+Blockers for Sammy: 2.4 (Sat 03/10; 5.4 and 6.4 need it). Blockers for Andy: Sammy's 3.1 (Sat 03/10) for 3.7, and PR #15 (1.5 footer) for the footer mount and the footer checks in 1.7 and 2.1; if #15 is still open on Sun 04/10, build 1.7 and 2.1 without those checks and add them in the mount PR. Say in the team chat the same day if one slips.
 
 **Load and cuts.** Sizes from `epics.md` give Andy about 9.5 developer-days and Sammy about 6.5, for about 4.5 days left. Wed 07/10 is overloaded. If behind, cut in this order: 6.3 (the lead edits in the Studio by hand); slim 7.3 and 7.4 to one axe run and one Lighthouse run; 6.6 without CV upload on Demo day; then use Thu 08/10 morning. The lead decides.

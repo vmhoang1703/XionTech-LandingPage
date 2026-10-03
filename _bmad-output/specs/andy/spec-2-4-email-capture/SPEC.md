@@ -54,7 +54,7 @@ Lan, reading a page, should leave only her work email and land on a contact form
 
 ## Constraints
 
-- Depends on 2.2 (form, tabs, Work email field) and 2.3 (mail sender, T4). Must merge before 3.7 and 5.4.
+- Depends on 2.2 (form, tabs, Work email field) and 2.3 (mail sender, T4). Must merge before 3.7, 5.4, 6.1 and 6.4.
 - Andy owns the component, `src/app/demo/*` (where the prefill is read) and `src/app/careers/[slug]/*` (T3); the page stories place it: Andy's 3.7 Home and 6.1 News, Sammy's 5.4 Services and 6.4 About. The CAP-9 check runs over the routes that exist when it is built.
 - Only `demo` and `project` kinds exist. No modal pop-ups.
 - Capture Submissions are kept with no time limit; the privacy policy (Story 2.1) says so (A4).
