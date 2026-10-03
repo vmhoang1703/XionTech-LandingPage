@@ -2129,18 +2129,6 @@
     prototype site.css. Reuses the badges, chips, linen, grid, service cards
     and the empty media frame from Home.
   */
-  /* Full section padding; 4.1's .products-anchor padding is for the PXP stub
-     only, so drop this pair when Story 4.2 removes that stub. */
-  .sec.products-anchor {
-    padding-block: var(--spacing-section);
-  }
-
-  @media (width <= --theme(--breakpoint-sm)) {
-    .sec.products-anchor {
-      padding-block: var(--spacing-section-mobile);
-    }
-  }
-
   .sec-head-center {
     justify-items: center;
     margin-inline: auto;
@@ -2341,7 +2329,6 @@
     scroll-margin-top: calc(
       var(--spacing-anchor-offset-subnav) - var(--spacing-header-height)
     );
-    padding-block: var(--spacing-section-mobile);
   }
 
   /*
