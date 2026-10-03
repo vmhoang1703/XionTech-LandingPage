@@ -793,7 +793,7 @@ describe("email capture band styles", () => {
 
   it("stacks the band in one column up to the md breakpoint", () => {
     expect(source).toMatch(
-      /@media \(width < --theme\(--breakpoint-md\)\)\s*\{\s*\.cap-grid\s*\{[^}]*grid-template-columns:\s*1fr;/,
+      /@media \(width <= --theme\(--breakpoint-md\)\)\s*\{\s*\.cap-grid\s*\{[^}]*grid-template-columns:\s*1fr;/,
     );
   });
 
@@ -834,7 +834,7 @@ describe("email capture band styles", () => {
 
   it("stacks the field above the button up to the sm breakpoint", () => {
     expect(source).toMatch(
-      /@media \(width < --theme\(--breakpoint-sm\)\)\s*\{\s*\.cap-row\s*\{[^}]*flex-direction:\s*column/,
+      /@media \(width <= --theme\(--breakpoint-sm\)\)\s*\{\s*\.cap-row\s*\{[^}]*flex-direction:\s*column/,
     );
   });
 
