@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenRole } from "@/lib/careers/open-roles";
+import { undefinedClasses } from "@/test-utils/css-classes";
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
 
 import { Benefits } from "./benefits";
@@ -145,5 +146,27 @@ describe("LifeFrames", () => {
     expect(container.querySelectorAll(".illo")).toHaveLength(3);
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.queryByRole("button")).toBeNull();
+  });
+});
+
+describe("Careers sections", () => {
+  it("use only classes that globals.css defines", () => {
+    const { container } = render(
+      <>
+        <CareersHero />
+        <Culture />
+        <Benefits />
+        <OpenRoles roles={roles} />
+        <OpenRoles roles={[]} />
+        <LifeFrames />
+      </>,
+    );
+
+    expect(
+      undefinedClasses(
+        container,
+        /^(mt|mb|gap|min-h|h|aspect)-|^flex(-wrap)?$/,
+      ),
+    ).toEqual([]);
   });
 });
