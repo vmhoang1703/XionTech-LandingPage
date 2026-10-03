@@ -31,6 +31,16 @@ describe("RootLayout", () => {
     expect(html.props.className).toContain("font-jetbrains-mono");
   });
 
+  it("asks Next.js to keep route changes instant despite smooth scroll", () => {
+    const html = RootLayout({
+      children: <p>child</p>,
+    } as LayoutProps<"/">) as ReactElement<{
+      "data-scroll-behavior": string;
+    }>;
+
+    expect(html.props["data-scroll-behavior"]).toBe("smooth");
+  });
+
   it("renders the header before a focusable main#main that wraps the page", () => {
     const html = RootLayout({
       children: <p>child</p>,

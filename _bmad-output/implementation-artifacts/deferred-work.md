@@ -194,3 +194,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-3-6-4d-process-flow.md`
   summary: On `/services#process` (Story 5.4), check that the flow opened by the hash link is not dimmed and replayed (the browser's hash scroll may come after the reveal's first measurement).
   evidence: maybe-false; on Home `/#process-title` goes static > on in the walk, but the Services page layout and timing differ. Settle with the 3.6 walk's hash scenario on `/services#process`.
+- source_spec: `_bmad-output/implementation-artifacts/spec-4-1-products-hero-subnav.md`
+  summary: Add a browser Playwright project that asserts the Products anchor offset (section top 144px after a pill, a direct `/products#lxp` and a cross-page link); recheck `#iot` and the `.products-anchor` padding (80px at every width) when Stories 4.2/4.3 replace the stubs; recheck sub-nav sideways scroll when Story 4.5 adds the Updates pill.
+  evidence: full review 2026-10-05, Verification Gap, Blind Hunter and Acceptance Auditor (Minor); the 216px regression was caught only by the hand-run walk.
