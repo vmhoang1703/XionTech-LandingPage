@@ -36,7 +36,7 @@ Give every page one shared, branded shell — tokens, fonts, surfaces, header, m
 - Section surfaces are scoped token sets (`surface-paper|mist|navy|amber`, `hero-silk|light|navy|amber`) that set text, link and focus colours for everything inside.
 - Fonts through `next/font`; no Geist, no dark-mode `prefers-color-scheme` rule.
 - Sanity is the CMS (free plan): the client and one tagged fetch helper live in `src/lib/sanity/*` (Story 1.8); page stories write their own queries. CVs never go to Sanity.
-- File ownership: Andy owns `src/app/layout.tsx`, `globals.css` `@theme`, `src/components/layout/*` (except `site-footer.tsx`, Sammy's), `src/lib/sanity/*`, `src/app/api/*`, `src/app/demo/*`, and since plan C (decision P1, 2026-10-03) also `src/app/careers/*`, `src/app/news/*`, `src/app/products/*`, `src/app/privacy/*` and the Not found page. Sammy owns `src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*` and the footer.
+- File ownership: Andy owns `src/app/layout.tsx`, `globals.css` `@theme`, `src/components/layout/*` (except `site-footer.tsx`, Sammy's), `src/lib/sanity/*`, `src/app/api/*`, `src/app/demo/*`, and since plan C (decision P1, 2026-10-03) also `src/app/careers/*`, `src/app/news/*`, `src/app/products/*`, `src/app/privacy/*`, `src/components/news/*` and the Not found page. Sammy owns `src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*` and the footer.
 
 ## UX & Interaction Patterns
 

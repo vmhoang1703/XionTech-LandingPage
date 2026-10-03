@@ -34,7 +34,7 @@ Pain (FR-9): a visitor on a broken or mistyped link must not reach a dead end. A
 
 ## Constraints
 
-- Story 1.1 tokens must be merged first; the header/footer check passes only once Stories 1.3 and 1.5 are merged.
+- Story 1.1 tokens must be merged first; the header/footer check passes only once Stories 1.3 and 1.5 are merged. If the footer is not yet mounted in `src/app/layout.tsx` on `develop` when this story is built (PR #15 and Andy's mount PR, decision T10), skip the footer check and record it for the mount PR.
 - Use the Next.js 16 not-found convention so the status is a real 404, not a 200 page.
 - Definition of Done (CLAUDE.md): unit tests with 100% changed-line and 80% branch coverage, an `@smoke` Playwright test, lint, typecheck, format check, build, local Sonar gate (LOCAL ONLY) and bmad-code-review must pass.
 - Next.js 16 App Router; Server Components by default, `"use client"` only for state, effects or browser APIs; read `node_modules/next/dist/docs/` before using a Next.js API.

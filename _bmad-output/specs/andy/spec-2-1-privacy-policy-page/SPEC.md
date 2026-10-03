@@ -52,6 +52,7 @@ Mandate (FR-41, NFR-3, Vietnam PDPD Decree 13/2023): the Demo-day forms collect 
 - Port the prototype markup, copy and look; do not redesign. The UX spines win over the prototype on any conflict.
 - Routes have no `/en` or `/vi` prefix (locale routing, Story 1.2, is after demo); Demo day is English only, but every string is kept in a form that can be translated later (no copy baked into logic).
 - Every visible fact is real or starts with `[Placeholder]` (NFR-7).
+- The footer-link check (CAP above) needs the footer. If the footer is not yet mounted in `src/app/layout.tsx` on `develop` when this story is built (PR #15 and Andy's mount PR, decision T10), skip the footer check and record it for the mount PR.
 - Andy owns this story's files. Sammy owns `src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*` and the footer (`src/components/layout/site-footer.tsx`); do not edit those.
 
 ## Non-goals

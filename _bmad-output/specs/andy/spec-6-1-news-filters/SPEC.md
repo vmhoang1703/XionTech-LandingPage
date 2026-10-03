@@ -43,7 +43,7 @@ Opportunity. Nam, looking for team stories (Flow 4), wants to filter news by cat
 
 ## Constraints
 
-- Stories 1.8 (Sanity), 2.4 (capture band) and 3.7 (news card) must be merged first. The build plan lists only 1.8; epics add 3.7 and 2.4; the union is used.
+- Stories 1.8 (Sanity), 2.4 (capture band) and 3.7 (news card) must be merged first. Reuse the news card from `src/components/news/*` (Story 3.7); do not build a second one. The build plan lists only 1.8; epics add 3.7 and 2.4; the union is used.
 - Reads use the Sanity client and the one tagged fetch helper from Story 1.8 (`src/lib/sanity/*`, Andy owns it), with `useCdn: true` and tag-based caching, never `force-dynamic` (`cms-spike.md`). This story writes its own GROQ query for the news list, in its own files; there is no content access module (T2).
 - The `[Placeholder]` sample stories are entered in Sanity by the Demo-day editor, Hoang Vu (Andy), who needs a Sanity account invited to the project (free plan: 20 users) (A5).
 - Andy owns `src/app/news/page.tsx` and its sections. The chip filter is the only client part; the full list is in the server HTML.
