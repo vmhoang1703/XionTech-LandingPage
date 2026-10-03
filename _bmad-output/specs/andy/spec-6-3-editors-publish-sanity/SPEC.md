@@ -6,8 +6,8 @@ depends_on: ["1.8", "3.7"]
 companions:
   - ../../../../docs/spikes/cms-spike.md
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
-  - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/news-story.html
-  - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/careers.html
+  - ../../../prototype-enhancement/prototype/news-story.html
+  - ../../../prototype-enhancement/prototype/careers.html
   - ../../decisions-2026-10-01.md
 sources:
   - ../../../planning-artifacts/epics.md

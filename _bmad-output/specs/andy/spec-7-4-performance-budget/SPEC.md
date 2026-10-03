@@ -5,7 +5,7 @@ build_day: 2026-10-07
 depends_on: ["3.2", "all Demo-day page stories (Epics 1 to 6)"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
-  - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/index.html
+  - ../../../prototype-enhancement/prototype/index.html
   - ../../decisions-2026-10-01.md
 sources:
   - ../../../planning-artifacts/epics.md

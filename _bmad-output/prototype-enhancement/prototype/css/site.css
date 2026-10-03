@@ -1,5 +1,5 @@
 /*
-  XionTechs site v3: shared styles (one consolidated, tokenised file; replaces the stacked v3.1 to v3.9 layers)
+  XionTechs prototype: shared styles (one consolidated, tokenised file; replaces the stacked v3.1 to v3.9 layers)
   Colour rhythm (no dark toggle): sections take a brand surface. Components read scoped tokens, so they adapt per section.
     .s-paper  white paper      .s-mist  mist blue tint      .s-navy  ink-to-navy band
     .s-amber  amber band (max one per page)                   heroes: .hero-light / .hero-navy / .hero-amber / .hero-silk
@@ -559,7 +559,7 @@ body[data-page="products"] [id]{scroll-margin-top:144px}
   .motion-toggle span{opacity:1;transform:translate(0,-50%);transition:none}
 }
 
-/* ---------- Home: Why XionTechs and the four-app row (from the site-v6 proposal) ---------- */
+/* ---------- Home: Why XionTechs and the four-app row (from the 2026-10-01 enhancement proposal) ---------- */
 .why{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(0,auto);gap:18px}
 .why>article{border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface);overflow:hidden}
 .why-a{grid-column:span 7;grid-row:span 2;display:flex;flex-direction:column}

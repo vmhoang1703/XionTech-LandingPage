@@ -6,7 +6,7 @@ import { STYLE_PROPS, firstLine } from "./lib.mjs";
 
 /** The approved HTML prototype (UX reference) inside the repo. */
 export const DEFAULT_PROTOTYPE_ROOT =
-  "_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3";
+  "_bmad-output/prototype-enhancement/prototype";
 
 /** Playwright's bundled Chromium, or the installed Chrome when it is missing. */
 export async function launchBrowser() {

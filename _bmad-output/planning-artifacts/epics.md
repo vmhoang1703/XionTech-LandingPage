@@ -8,14 +8,14 @@ inputDocuments:
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md
-  - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/
+  - _bmad-output/prototype-enhancement/prototype/
   - AGENTS.md
 sources:
   - _bmad-output/planning-artifacts/prds/prd-XionTech-LandingPage-2026-09-28/prd.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md
-  - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/
+  - _bmad-output/prototype-enhancement/prototype/
   - AGENTS.md
 ---
 
@@ -28,8 +28,8 @@ This document breaks the XionTechs Website PRD (47 FRs, 8 NFRs), the UX spines (
 **Conventions**
 
 - `EXP >` means `EXPERIENCE.md` section, `DES >` means `DESIGN.md` section.
-- Prototype paths are relative to `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/` and written `mockups/site-v3/...`. The prototype is the visual acceptance reference; the spines win on any conflict.
-- Header and footer are rendered by the prototype script into `#site-header` and `#site-footer`, so their design reference is `mockups/site-v3/js/site.js` (header and footer templates) with `css/site.css`.
+- Prototype paths are relative to `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/` and written `prototype-enhancement/prototype/...`. The prototype is the visual acceptance reference; the spines win on any conflict.
+- Header and footer are rendered by the prototype script into `#site-header` and `#site-footer`, so their design reference is `prototype-enhancement/prototype/js/site.js` (header and footer templates) with `css/site.css`.
 - All routes exist under `/en/` and `/vi/`; paths below omit the prefix. **Demo day is English only** (decided 2026-09-29): Story 1.2 (locale routing and the language dropdown) and every Vietnamese string follow after demo, so VI parts of acceptance criteria are checked after demo.
 - Header (2026-10-01): logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. No Book a demo button in the header; it is reached from heroes, capture bands and the footer "Contact" link.
 - Every story's Definition of Done includes NFR-8 (lint, typecheck, unit tests, 100% changed-line coverage, branch coverage at least 80% per changed file, Playwright smoke, build, local SonarQube gate) and NFR-7 (no invented content; unverified text starts with `[Placeholder]` in EN and VI). These are not repeated per story.
@@ -345,7 +345,7 @@ As Lan, a principal reading on her office laptop,
 I want every page to share one navy, amber and white look with readable Vietnamese type,
 So that the site feels like one trustworthy company in either language.
 
-- **Design reference:** `mockups/site-v3/css/site.css` (variables, `@media` 1080/900/640, `prefers-reduced-motion`); `mockups/site-v3/index.html` section surfaces
+- **Design reference:** `prototype-enhancement/prototype/css/site.css` (variables, `@media` 1080/900/640, `prefers-reduced-motion`); `prototype-enhancement/prototype/index.html` section surfaces
 - **Spec references:** DES > Brand & Style (build mapping), Colors, Typography, Layout & Spacing (Build tokens), Elevation & Depth, Shapes, Components (Button, Focus ring); EXP > Motion (Scroll reveal, Reduced motion), Accessibility Floor
 - **Requirements:** NFR-1, NFR-2, NFR-4, NFR-6; UX-DR1, UX-DR2, UX-DR3, UX-DR4, UX-DR5, UX-DR10, UX-DR26
 - **AC IDs:** AC-A11Y-1, AC-A11Y-2, AC-PERF-1
@@ -394,7 +394,7 @@ As Hà, a parent on her phone,
 I want to switch the site to Vietnamese from the header on any page,
 So that I can read everything in my language without losing my place.
 
-- **Design reference:** `mockups/site-v3/js/site.js` header template (`.lang`, `#langBtn`, `#langList`)
+- **Design reference:** `prototype-enhancement/prototype/js/site.js` header template (`.lang`, `#langBtn`, `#langList`)
 - **Spec references:** EXP > Information Architecture (Locale routing), Component Patterns (Language dropdown), Bilingual (EN / VI), Voice and Tone; DES > Components (Language dropdown)
 - **Requirements:** FR-4, FR-5; NFR-3; UX-DR8
 - **AC IDs:** AC-NAV-1
@@ -443,7 +443,7 @@ As Quân, a CTO between meetings,
 I want a clear header whose Products menu opens predictably,
 So that I can reach any app or the Services page in one move.
 
-- **Design reference:** `mockups/site-v3/js/site.js` header template (`#site-header`, `.skip`, the Products mega panel with "More products are on the way.")
+- **Design reference:** `prototype-enhancement/prototype/js/site.js` header template (`#site-header`, `.skip`, the Products mega panel with "More products are on the way.")
 - **Spec references:** EXP > Information Architecture (Header navigation), Component Patterns (Site header, Mega menu, Skip link, Button), Interaction Primitives, Motion (Mega menu); DES > Components (Site header, Mega menu, Product badge, Skip link)
 - **Requirements:** FR-1, FR-3, FR-8; UX-DR6, UX-DR9, UX-DR24
 - **AC IDs:** AC-NAV-2, AC-NAV-3
@@ -500,7 +500,7 @@ As Hà, a parent on her phone,
 I want a menu I can open, expand Products in, and close with the keyboard or a tap,
 So that I can reach PXP or any page on a small screen.
 
-- **Design reference:** `mockups/site-v3/js/site.js` header template (`#burger`, `#menu`, `.lang`); `mockups/site-v3/css/site.css` rules at 1080px and 640px
+- **Design reference:** `prototype-enhancement/prototype/js/site.js` header template (`#burger`, `#menu`, `.lang`); `prototype-enhancement/prototype/css/site.css` rules at 1080px and 640px
 - **Spec references:** EXP > Component Patterns (Mobile menu), Responsive & Platform (Header at every width), Accessibility Floor; DES > Components (Mobile menu)
 - **Requirements:** FR-2, FR-3; NFR-6; UX-DR7, UX-DR26
 - **AC IDs:** AC-NAV-1, AC-NAV-2, AC-NAV-4, AC-A11Y-3
@@ -548,7 +548,7 @@ As Quân, a CTO checking time zones,
 I want both offices and key links in the footer of every page,
 So that I can call or navigate from wherever I am.
 
-- **Design reference:** `mockups/site-v3/js/site.js` footer template (`#site-footer`, `.fbot`)
+- **Design reference:** `prototype-enhancement/prototype/js/site.js` footer template (`#site-footer`, `.fbot`)
 - **Spec references:** EXP > Information Architecture (Footer), Component Patterns (Site footer); DES > Components (Site footer)
 - **Requirements:** FR-7; UX-DR25
 - **AC IDs:** AC-NAV-2
@@ -587,7 +587,7 @@ As Lan, following a link to a section,
 I want the section heading to land fully visible and to see where I am,
 So that I never read a page with its title hidden under the header.
 
-- **Design reference:** `mockups/site-v3/news.html` hero (`hero-light`, `nav.crumbs`), `services.html` hero (`hero-navy`, `canvas.strands`), `products.html` hero (`hero-amber`)
+- **Design reference:** `prototype-enhancement/prototype/news.html` hero (`hero-light`, `nav.crumbs`), `services.html` hero (`hero-navy`, `canvas.strands`), `products.html` hero (`hero-amber`)
 - **Spec references:** EXP > Component Patterns (Breadcrumbs, Highlight mark), Interaction Primitives, Motion (Inner page hero background, Highlight mark); DES > Layout & Spacing (Anchors), Colors (hero surfaces)
 - **Requirements:** FR-6, FR-8; NFR-2; UX-DR9, UX-DR11
 - **AC IDs:** AC-NAV-5
@@ -622,7 +622,7 @@ As any visitor on a broken link,
 I want a clear message and a way back in my language,
 So that a dead link does not end my visit.
 
-- **Design reference:** `mockups/site-v3/404.html` navy hero
+- **Design reference:** `prototype-enhancement/prototype/404.html` navy hero
 - **Spec references:** EXP > Information Architecture (Not found)
 - **Requirements:** FR-9
 - **AC IDs:** none
@@ -701,7 +701,7 @@ As Lan, about to leave my work email,
 I want to read how XionTechs uses my data,
 So that I can trust the form.
 
-- **Design reference:** `mockups/site-v3/privacy.html` hero and eight policy sections
+- **Design reference:** `prototype-enhancement/prototype/privacy.html` hero and eight policy sections
 - **Spec references:** EXP > Information Architecture (Privacy policy), Voice and Tone (`[Placeholder]` convention), Open Questions
 - **Requirements:** FR-41; NFR-3, NFR-7
 - **AC IDs:** none
@@ -735,7 +735,7 @@ As Lan, a principal booking a demo,
 I want one clear form that asks only what is needed and blocks mistakes,
 So that my request is complete the first time.
 
-- **Design reference:** `mockups/site-v3/demo.html` hero (reassurance list, offices) and `#form` card (`.ftabs`, `#demoForm`, fields `#f-name` to `#f-msg`)
+- **Design reference:** `prototype-enhancement/prototype/demo.html` hero (reassurance list, offices) and `#form` card (`.ftabs`, `#demoForm`, fields `#f-name` to `#f-msg`)
 - **Spec references:** EXP > Component Patterns (Contact form), Contact form fields, State Patterns (Contact form), Voice and Tone (CTA labels, Wording to reuse), Accessibility Floor; DES > Components (Contact form), Layout & Spacing (Forms)
 - **Requirements:** FR-36, FR-37, FR-39, FR-40; UX-DR21
 - **AC IDs:** AC-A11Y-3, AC-A11Y-5, AC-FORM-1
@@ -790,7 +790,7 @@ As Quân, sending a project request,
 I want clear feedback while it sends and my details kept if it fails,
 So that I never retype a request or wonder if it arrived.
 
-- **Design reference:** `mockups/site-v3/demo.html` `.form-ok` success panel (prototype suffix "Prototype: nothing was sent." is not shipped)
+- **Design reference:** `prototype-enhancement/prototype/demo.html` `.form-ok` success panel (prototype suffix "Prototype: nothing was sent." is not shipped)
 - **Spec references:** EXP > Component Patterns (Contact form), State Patterns (Contact form), Open Questions (Form destination, Behaviour without JavaScript)
 - **Requirements:** FR-36, FR-38; NFR-3
 - **AC IDs:** none
@@ -836,7 +836,7 @@ As Lan, reading the Products page,
 I want to leave only my work email and land on a form already started,
 So that booking a demo takes a few clicks.
 
-- **Design reference:** `mockups/site-v3/index.html` capture (`#cap-h`, `#cap-email`, amber, `data-mode="demo"`); `services.html` capture (amber, `data-mode="project"`); `news.html` and `about.html` captures (amber, demo)
+- **Design reference:** `prototype-enhancement/prototype/index.html` capture (`#cap-h`, `#cap-email`, amber, `data-mode="demo"`); `services.html` capture (amber, `data-mode="project"`); `news.html` and `about.html` captures (amber, demo)
 - **Spec references:** EXP > Component Patterns (Email capture), State Patterns (Email capture), Voice and Tone (CTA labels, Wording to reuse), Interaction Primitives; DES > Components (Email capture, Focus ring), Colors (error on navy)
 - **Requirements:** FR-33, FR-34, FR-39, FR-40; NFR-3; UX-DR20 (FR-35 removed: no subscribe or join kinds)
 - **AC IDs:** AC-A11Y-2, AC-A11Y-5, AC-FORM-2
@@ -929,7 +929,7 @@ As Lan, arriving from search,
 I want a headline, real product screens and one obvious next step,
 So that I know in seconds what XionTechs makes for schools.
 
-- **Design reference:** `mockups/site-v3/index.html` hero (`section.hero-silk`, `.home-grid`, `.devices`, `.cta-row`)
+- **Design reference:** `prototype-enhancement/prototype/index.html` hero (`section.hero-silk`, `.home-grid`, `.devices`, `.cta-row`)
 - **Spec references:** EXP > Information Architecture (Home), Component Patterns (Button, Device frame, Media frame, Highlight mark); DES > Colors (`hero-silk`), Layout & Spacing (Home hero), Components (Device frame)
 - **Requirements:** FR-11, FR-10 (layout and fallback); UX-DR3, UX-DR17
 - **AC IDs:** none
@@ -967,7 +967,7 @@ As Lan, who finds constant motion distracting,
 I want a discreet way to stop the moving background that the site remembers,
 So that I can read in peace on every visit.
 
-- **Design reference:** `mockups/site-v3/index.html` hero (`canvas.silk`, `.motion-toggle`); `js/site.js` silk loop and `xt3-motion` preference
+- **Design reference:** `prototype-enhancement/prototype/index.html` hero (`canvas.silk`, `.motion-toggle`); `js/site.js` silk loop and `xt3-motion` preference
 - **Spec references:** EXP > Motion (Home hero background), Component Patterns (Motion toggle); DES > Colors (`hero-silk`), Components (Motion toggle)
 - **Requirements:** FR-10; NFR-2, NFR-4; UX-DR12
 - **AC IDs:** none
@@ -1022,7 +1022,7 @@ As Quân, judging the team fast,
 I want five confirmed figures at the bottom of the hero,
 So that I can see experience and coverage without scrolling.
 
-- **Design reference:** `mockups/site-v3/index.html` `.hero-stats` (`#stats-h`)
+- **Design reference:** `prototype-enhancement/prototype/index.html` `.hero-stats` (`#stats-h`)
 - **Spec references:** EXP > Component Patterns (Stats band), Motion (Stats); DES > Components (Stats band)
 - **Requirements:** FR-12; UX-DR13
 - **AC IDs:** none
@@ -1057,7 +1057,7 @@ As Quân, arriving from a referral,
 I want a clear outsourcing door right under the hero,
 So that I can go straight to services.
 
-- **Design reference:** `mockups/site-v3/index.html` `section.doors` (`.door-products`, `.door-services`)
+- **Design reference:** `prototype-enhancement/prototype/index.html` `section.doors` (`.door-products`, `.door-services`)
 - **Spec references:** EXP > Component Patterns (Front door); DES > Components (Front door), Layout & Spacing (Home hero)
 - **Requirements:** FR-13; UX-DR16
 - **AC IDs:** AC-A11Y-4
@@ -1082,7 +1082,7 @@ As Lan, scanning what exists,
 I want to see why XionTechs, then one item per app that takes me to the details,
 So that I trust the team and can go deeper on the one I care about.
 
-- **Design reference:** `mockups/site-v3/index.html` Why XionTechs (`#why-h`, `.why`) and the four-app row (`#prod-h`, `.app-strip`)
+- **Design reference:** `prototype-enhancement/prototype/index.html` Why XionTechs (`#why-h`, `.why`) and the four-app row (`#prod-h`, `.app-strip`)
 - **Spec references:** EXP > Component Patterns (Why XionTechs, Four-app row, Spotlight card, Product badge); DES > Components (Why XionTechs grid, Four-app row, Spotlight card, Product badge)
 - **Requirements:** FR-14; UX-DR15, UX-DR24
 - **AC IDs:** AC-A11Y-4
@@ -1115,7 +1115,7 @@ As Quân, deciding if this team is organised,
 I want to see the four delivery steps and what I receive at each,
 So that I know what working together looks like.
 
-- **Design reference:** `mockups/site-v3/index.html` `ol.flow` (`#flow-h`); same block in `services.html#process`
+- **Design reference:** `prototype-enhancement/prototype/index.html` `ol.flow` (`#flow-h`); same block in `services.html#process`
 - **Spec references:** EXP > Component Patterns (Process flow (4-D)), Motion (4-D process); DES > Components (Process flow (4-D))
 - **Requirements:** FR-23, FR-14; UX-DR14
 - **AC IDs:** AC-UI-2
@@ -1150,7 +1150,7 @@ As Lan, finishing the Home page,
 I want recent news and a quick way to ask for a demo,
 So that I see the company is active and can act at once.
 
-- **Design reference:** `mockups/site-v3/index.html` news (`#news-h`, `.news-grid`, "See all news") and capture (`#cap-h`)
+- **Design reference:** `prototype-enhancement/prototype/index.html` news (`#news-h`, `.news-grid`, "See all news") and capture (`#cap-h`)
 - **Spec references:** EXP > Information Architecture (Home), Component Patterns (News card, Category tag), State Patterns (Home news); DES > Components (News card, Category tag), Layout & Spacing (Page colour rhythm)
 - **Requirements:** FR-14, FR-33 (placement); UX-DR3, UX-DR22
 - **AC IDs:** AC-UI-1
@@ -1198,7 +1198,7 @@ As Hà, arriving from the mobile menu at `#pxp`,
 I want the PXP heading visible under the header and a sub-nav to jump between apps,
 So that I land exactly where I meant to.
 
-- **Design reference:** `mockups/site-v3/products.html` hero (`section.hero-amber`, Book a demo, Product updates) and `nav.subnav`
+- **Design reference:** `prototype-enhancement/prototype/products.html` hero (`section.hero-amber`, Book a demo, Product updates) and `nav.subnav`
 - **Spec references:** EXP > Information Architecture (Products), Component Patterns (Product sub-nav); DES > Components (Product sub-nav), Layout & Spacing (Anchors, Page colour rhythm)
 - **Requirements:** FR-15, FR-6; UX-DR18
 - **AC IDs:** AC-NAV-5
@@ -1232,7 +1232,7 @@ As Hà, a parent,
 I want to tap through what PXP shows a parent,
 So that I know what my child's school app does before I install it.
 
-- **Design reference:** `mockups/site-v3/products.html#pxp` (`#pxpPhone`, `.ptabs`, feature list, store buttons)
+- **Design reference:** `prototype-enhancement/prototype/products.html#pxp` (`#pxpPhone`, `.ptabs`, feature list, store buttons)
 - **Spec references:** EXP > Component Patterns (PXP story phone + phone tabs), Motion (Story phone), Key Flows (Flow 3); DES > Components (PXP story phone + phone tabs)
 - **Requirements:** FR-16; UX-DR18
 - **AC IDs:** AC-A11Y-3
@@ -1267,7 +1267,7 @@ As Lan, choosing apps for staff and students,
 I want each web app shown in a browser frame with its audience and features,
 So that I can compare them.
 
-- **Design reference:** `mockups/site-v3/products.html#lxp`, `#sxp` (navy), `#iot`
+- **Design reference:** `prototype-enhancement/prototype/products.html#lxp`, `#sxp` (navy), `#iot`
 - **Spec references:** EXP > Component Patterns (Browser frame, Media frame), State Patterns (Media missing); DES > Components (Browser frame, Media frame)
 - **Requirements:** FR-17; UX-DR17
 - **AC IDs:** none
@@ -1298,7 +1298,7 @@ As Lan, watching how the apps work,
 I want short clips I control, with no sound surprises,
 So that I can see the products without distraction.
 
-- **Design reference:** `mockups/site-v3/products.html` hero devices and `#pxpPhone`; `index.html` `.devices`
+- **Design reference:** `prototype-enhancement/prototype/products.html` hero devices and `#pxpPhone`; `index.html` `.devices`
 - **Spec references:** EXP > Motion (Devices), Component Patterns (Device frame); DES > Components (Device frame)
 - **Requirements:** FR-19; NFR-2; UX-DR17
 - **AC IDs:** none
@@ -1333,7 +1333,7 @@ As Lan, checking the products are alive,
 I want three recent product updates and a demo capture,
 So that I can read what changed and book a demo.
 
-- **Design reference:** `mockups/site-v3/products.html#updates` and capture (navy, `data-mode="demo"`)
+- **Design reference:** `prototype-enhancement/prototype/products.html#updates` and capture (navy, `data-mode="demo"`)
 - **Spec references:** EXP > Information Architecture (Products), State Patterns (Products `#updates`); DES > Layout & Spacing (Page colour rhythm)
 - **Requirements:** FR-18, FR-33 (placement)
 - **AC IDs:** none
@@ -1366,7 +1366,7 @@ As Quân, checking time-zone overlap,
 I want live local times for Ho Chi Minh City and Plano,
 So that I know when the team is working.
 
-- **Design reference:** `mockups/site-v3/services.html` hero (`section.hero-navy`, `.cta-row`, `.clock-strip`)
+- **Design reference:** `prototype-enhancement/prototype/services.html` hero (`section.hero-navy`, `.cta-row`, `.clock-strip`)
 - **Spec references:** EXP > Component Patterns (Clock strip, Office card), State Patterns (Office card, clock strip); DES > Components (Clock strip, Office card)
 - **Requirements:** FR-20, FR-30 (shared clock); UX-DR19
 - **AC IDs:** none
@@ -1397,7 +1397,7 @@ As Quân, following a service link from Home,
 I want to land on that service with its heading visible,
 So that I read the right description straight away.
 
-- **Design reference:** `mockups/site-v3/services.html` key facts stats and `#all-h` with `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staffing`, `#custom-apps`, `#low-code`, `#ai-solutions`, `#cloud`
+- **Design reference:** `prototype-enhancement/prototype/services.html` key facts stats and `#all-h` with `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staffing`, `#custom-apps`, `#low-code`, `#ai-solutions`, `#cloud`
 - **Spec references:** EXP > Information Architecture (Services, Service anchors), Component Patterns (Service card, Stats band)
 - **Requirements:** FR-21, FR-12 (reuse), FR-6
 - **AC IDs:** AC-NAV-5
@@ -1427,7 +1427,7 @@ As Quân, a logistics CTO,
 I want to see engagement models and that logistics is an industry served,
 So that I know the team fits my company.
 
-- **Design reference:** `mockups/site-v3/services.html` `#ways-h` and `#ind-h` (`.industries`)
+- **Design reference:** `prototype-enhancement/prototype/services.html` `#ways-h` and `#ind-h` (`.industries`)
 - **Spec references:** EXP > Information Architecture (Services), Component Patterns (Industry chip), Key Flows (Flow 2); DES > Components (Industry chip)
 - **Requirements:** FR-22, FR-24; UX-DR24
 - **AC IDs:** none
@@ -1452,7 +1452,7 @@ As Quân, ready to start,
 I want to follow "See our 4-D process" and then start a project from the same page,
 So that I move from reading to acting without searching.
 
-- **Design reference:** `mockups/site-v3/services.html#process` and capture (amber, `data-mode="project"`, "Tell us what you're building.")
+- **Design reference:** `prototype-enhancement/prototype/services.html#process` and capture (amber, `data-mode="project"`, "Tell us what you're building.")
 - **Spec references:** EXP > Component Patterns (Process flow (4-D), Email capture), Key Flows (Flow 2)
 - **Requirements:** FR-23, FR-34 (placement), FR-6
 - **AC IDs:** AC-NAV-5, AC-UI-2, AC-FORM-2
@@ -1485,7 +1485,7 @@ As Nam, looking for team stories,
 I want to filter news by category instantly,
 So that I only read what interests me.
 
-- **Design reference:** `mockups/site-v3/news.html` hero, `.filters`, `#newsGrid`, `#newsCount`, `#newsEmpty`, demo capture (amber)
+- **Design reference:** `prototype-enhancement/prototype/news.html` hero, `.filters`, `#newsGrid`, `#newsCount`, `#newsEmpty`, demo capture (amber)
 - **Spec references:** EXP > Component Patterns (Filter chips, News card, Category tag), State Patterns (News); DES > Components (Filter chips, News card)
 - **Requirements:** FR-25, FR-33 (placement), FR-45 (server-rendered list); UX-DR22
 - **AC IDs:** none
@@ -1524,7 +1524,7 @@ As Nam, opening a Team story,
 I want a readable page with the date, category and a way back,
 So that I can finish the story and keep browsing.
 
-- **Design reference:** `mockups/site-v3/news-story.html`
+- **Design reference:** `prototype-enhancement/prototype/news-story.html`
 - **Spec references:** EXP > Information Architecture (News story), Bilingual (EN / VI), Component Patterns (News card, Category tag)
 - **Requirements:** FR-26
 - **AC IDs:** none
@@ -1559,7 +1559,7 @@ As a XionTechs editor,
 I want to create, edit and publish stories, open roles, team and office photos and product clips,
 So that news and hiring stay current without a code change.
 
-- **Design reference:** none (non-visual editor workflow in Sanity Studio); media shown in `mockups/site-v3/news-story.html` photo frame
+- **Design reference:** none (non-visual editor workflow in Sanity Studio); media shown in `prototype-enhancement/prototype/news-story.html` photo frame
 - **Spec references:** EXP > Component Patterns (Media frame), Open Questions (CMS choice); `docs/spikes/cms-spike.md`; PRD 8.1
 - **Requirements:** FR-27, FR-32 (editing)
 - **AC IDs:** AC-FORM-3
@@ -1589,7 +1589,7 @@ As Quân, checking who is behind the services,
 I want the company story, values and offices on one page,
 So that I trust the team before I start a project.
 
-- **Design reference:** `mockups/site-v3/about.html` hero, key facts stats, `#story-h`, `#values`, `#faq`, `#off-h`, capture (amber)
+- **Design reference:** `prototype-enhancement/prototype/about.html` hero, key facts stats, `#story-h`, `#values`, `#faq`, `#off-h`, capture (amber)
 - **Spec references:** EXP > Information Architecture (About), Component Patterns (Value grid, Office card, Placeholder frame); DES > Components (Value grid, Office card)
 - **Requirements:** FR-28, FR-29 (no leadership), FR-30, FR-46, FR-12 (reuse), FR-6; UX-DR19, UX-DR23, UX-DR27
 - **AC IDs:** AC-NAV-5
@@ -1636,7 +1636,7 @@ As Nam, a QA engineer,
 I want to see the culture and the roles that are open,
 So that I can pick a role and read it in full.
 
-- **Design reference:** `mockups/site-v3/careers.html` hero, `#cul-h`, `#ben-h`, `#roles` (`.roles`, `.role`), `#life`
+- **Design reference:** `prototype-enhancement/prototype/careers.html` hero, `#cul-h`, `#ben-h`, `#roles` (`.roles`, `.role`), `#life`
 - **Spec references:** EXP > Information Architecture (Careers), Component Patterns (Role card, Open roles panel, Placeholder frame), State Patterns (Careers), Key Flows (Flow 4); DES > Components (Role card)
 - **Requirements:** FR-31, FR-32; UX-DR23
 - **AC IDs:** AC-A11Y-4
@@ -1671,7 +1671,7 @@ As Nam, a QA engineer,
 I want to read a role in full and apply with my CV on the same page,
 So that applying takes one short form.
 
-- **Design reference:** `mockups/site-v3/job.html` hero (breadcrumbs, H1, chips), `.job-body`, `#apply` (`#applyForm`, `#a-cv`, `.form-ok`)
+- **Design reference:** `prototype-enhancement/prototype/job.html` hero (breadcrumbs, H1, chips), `.job-body`, `#apply` (`#applyForm`, `#a-cv`, `.form-ok`)
 - **Spec references:** EXP > Information Architecture (Job page), Component Patterns (Job application form), Job application fields, State Patterns (Job page, Job application), Key Flows (Flow 4); DES > Components (File field)
 - **Requirements:** FR-47, FR-38 (server checks), FR-40; NFR-1, NFR-3
 - **AC IDs:** AC-A11Y-5
@@ -1721,7 +1721,7 @@ As Lan, searching for school parent apps,
 I want search results in my language that open the right page,
 So that I land where I need to be.
 
-- **Design reference:** `mockups/site-v3/index.html` `<title>` and meta description (wording baseline)
+- **Design reference:** `prototype-enhancement/prototype/index.html` `<title>` and meta description (wording baseline)
 - **Spec references:** EXP > Foundation (Rendering), Information Architecture (Locale routing), Bilingual (EN / VI)
 - **Requirements:** FR-43, FR-44; NFR-5
 - **AC IDs:** none
@@ -1822,7 +1822,7 @@ As Hà, on a mid-range phone,
 I want pages to load fast despite the animation,
 So that I do not give up waiting.
 
-- **Design reference:** `mockups/site-v3/index.html` (silk hero as heaviest page)
+- **Design reference:** `prototype-enhancement/prototype/index.html` (silk hero as heaviest page)
 - **Spec references:** EXP > Foundation (Performance), Motion; PRD 9 (SM-6, SM-8, SM-C3)
 - **Requirements:** NFR-4
 - **AC IDs:** AC-PERF-1
@@ -1850,7 +1850,7 @@ As a XionTechs lead preparing public launch,
 I want a check that no placeholder or missing policy ships to real visitors,
 So that the site never shows invented or unverified content.
 
-- **Design reference:** every `[Placeholder]` in `mockups/site-v3/`
+- **Design reference:** every `[Placeholder]` in `prototype-enhancement/prototype/`
 - **Spec references:** EXP > Voice and Tone (`[Placeholder]` convention), Open Questions
 - **Requirements:** FR-41, NFR-7, NFR-3
 - **AC IDs:** none
@@ -1875,7 +1875,7 @@ So that the site never shows invented or unverified content.
 
 ## Change Control
 
-When the HTML prototype (`mockups/site-v3/`) changes and Amber Do approves the change, update only the affected stories (their acceptance criteria and design references) and the PRD, then open or update a PR into `develop`. Per PRD section 10, `DESIGN.md` and `EXPERIENCE.md` are updated first because they win over the prototype, and a line goes into `docs/ai-log.md` when an AI tool made or proposed the change. Coverage tables in this document are updated in the same PR.
+When the HTML prototype (`prototype-enhancement/prototype/`) changes and Amber Do approves the change, update only the affected stories (their acceptance criteria and design references) and the PRD, then open or update a PR into `develop`. Per PRD section 10, `DESIGN.md` and `EXPERIENCE.md` are updated first because they win over the prototype, and a line goes into `docs/ai-log.md` when an AI tool made or proposed the change. Coverage tables in this document are updated in the same PR.
 
 ## Workflow Checkpoint Decisions
 

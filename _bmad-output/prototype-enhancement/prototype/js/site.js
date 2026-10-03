@@ -1,4 +1,4 @@
-/* XionTechs site v3: shared behaviour (prototype). Production would render header/footer/news server-side for SEO. */
+/* XionTechs prototype: shared behaviour. Production would render header/footer/news server-side for SEO. */
 (function(){
   const root=document.documentElement;
   root.classList.remove('no-js');
