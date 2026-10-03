@@ -24,8 +24,6 @@ export const CONTACT_STRINGS = {
       "For projects: a first Discovery conversation in our 4-D process.",
     ],
     officesLabel: "Our offices",
-    whatsappPrefix: "WhatsApp",
-    whatsappNewTab: "(opens in a new tab)",
   },
   form: {
     heading: "What can we help with?",
