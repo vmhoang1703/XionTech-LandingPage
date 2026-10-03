@@ -4,11 +4,11 @@ Build window 2026-10-01 to 2026-10-07; 2026-10-08 is for bug fixes and demo prac
 Run each story with `bmad-build` on its own branch (`feature/<n-n>-<slug>`), pointing it at the
 spec folder. Plan source: "Demo-day plan" in `../../planning-artifacts/epics.md`.
 
-**Plan C (2026-10-03, decision P1 in `../decisions-2026-10-01.md`):** 9 stories moved from Sammy to Andy (1.7, 2.1, 6.5, 3.7, 6.1, 6.2, 4.1, 4.2, 4.3) so no story waits on another owner. Andy owns everything that uses Sanity or the forms, plus Products; Sammy owns Home, Services and About. Days below are the new plan.
+**Plan C (2026-10-03, decision P1 in `../decisions-2026-10-01.md`):** 9 stories moved from Sammy to Andy (1.7, 2.1, 6.5, 3.7, 6.1, 6.2, 4.1, 4.2, 4.3) so there are fewer waits between owners. The waits left: Sammy's 5.4 and 6.4 on Andy's 2.4, Andy's 3.7 on Sammy's 3.1, and the footer mount on Sammy's PR #15; 7.3 and 7.4 wait on all pages. Andy builds the forms and every page that reads Sanity, plus Products. Sammy owns Home, Services and About, and places the capture band in 5.4 and 6.4. Days below are the new plan.
 
 | Day | Story | Spec | Depends on |
 | --- | --- | --- | --- |
-| Wed 01/10 | 1.5 Site footer (PR #15 open) | [`spec-1-5-site-footer`](spec-1-5-site-footer/SPEC.md) | 1.1 |
+| In review | 1.5 Site footer (PR #15 open) | [`spec-1-5-site-footer`](spec-1-5-site-footer/SPEC.md) | 1.1 |
 | Sat 03/10 | 3.1 Dark Home hero | [`spec-3-1-dark-home-hero`](spec-3-1-dark-home-hero/SPEC.md) | 1.1 |
 | Sun 04/10 | 3.2 Silk animation and motion toggle | [`spec-3-2-silk-motion-toggle`](spec-3-2-silk-motion-toggle/SPEC.md) | 3.1 |
 | Mon 05/10 | 3.3 Stats band | [`spec-3-3-stats-band`](spec-3-3-stats-band/SPEC.md) | 3.1 |
@@ -22,3 +22,5 @@ spec folder. Plan source: "Demo-day plan" in `../../planning-artifacts/epics.md`
 
 First: finish PR #15 (1.5 footer) so it merges; Andy then mounts the footer in `src/app/layout.tsx`
 (decision T10). Simple page-section stories can use the one-shot route of `bmad-build` (see `AGENTS.md`).
+
+Blockers: 5.4 (Tue 06/10) and 6.4 (Wed 07/10) need Andy's 2.4 (Sat 03/10); say in the team chat the same day if one slips.

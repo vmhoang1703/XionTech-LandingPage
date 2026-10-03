@@ -1,7 +1,7 @@
 ---
 id: SPEC-4-2-pxp-story-phone
 owner: Andy
-build_day: 2026-10-04
+build_day: 2026-10-05
 depends_on: ["4.1"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md
@@ -40,7 +40,7 @@ Opportunity. Hà, a parent on a phone (Flow 3), wants to see what PXP shows a pa
 ## Constraints
 
 - Story 4.1 must be merged first: this section sits in `/products` at `#pxp`, under the 4.1 hero and sticky sub-nav.
-- Sammy owns the page sections under `src/app/products/`; Andy owns `src/app/layout.tsx`, `globals.css` `@theme`, `src/components/layout/*`.
+- Andy owns the page sections under `src/app/products/`, `src/app/layout.tsx`, `globals.css` `@theme` and `src/components/layout/*`.
 - Next.js 16 App Router; Server Component by default, the tab switcher is the only client part. Read `node_modules/next/dist/docs/` before using a Next.js API.
 - Tailwind v4 tokens from Story 1.1. Port the prototype, do not redesign.
 - Route `/products` has no `/en` or `/vi` prefix (Story 1.2 is after demo); keep all copy in a form that can be translated later.

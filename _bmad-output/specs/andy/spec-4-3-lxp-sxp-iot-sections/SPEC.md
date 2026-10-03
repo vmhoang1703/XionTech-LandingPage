@@ -1,7 +1,7 @@
 ---
 id: SPEC-4-3-lxp-sxp-iot-sections
 owner: Andy
-build_day: 2026-10-04
+build_day: 2026-10-05
 depends_on: ["4.1"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md
@@ -37,7 +37,7 @@ Opportunity. Lan, a school principal choosing apps for staff and students, needs
 ## Constraints
 
 - Story 4.1 must be merged first: the sections live in `/products` under its hero and sub-nav.
-- Sammy owns the page sections under `src/app/products/`; Andy owns `src/app/layout.tsx`, `globals.css` `@theme`, `src/components/layout/*`.
+- Andy owns the page sections under `src/app/products/`, `src/app/layout.tsx`, `globals.css` `@theme` and `src/components/layout/*`.
 - Next.js 16 App Router, Server Components (no client state needed). Read `node_modules/next/dist/docs/` before using a Next.js API.
 - Tailwind v4 tokens from Story 1.1. Port the prototype, do not redesign.
 - Route has no `/en` or `/vi` prefix (Story 1.2 is after demo); keep copy in a form that can be translated later.

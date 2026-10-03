@@ -1,7 +1,7 @@
 ---
 id: SPEC-6-5-careers-open-roles
 owner: Andy
-build_day: 2026-10-05
+build_day: 2026-10-04
 depends_on: ["1.8"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md
@@ -44,7 +44,7 @@ Opportunity. Nam, a QA engineer (Flow 4), wants to see the culture and the open 
 - Demo day may show sample roles whose titles start with `[Placeholder]` (FR-32). Sanity free plan: 10,000 documents, 250k API and 1M CDN requests per month.
 - Demo-day Sanity content for this page (sample roles, `#life` photos) is entered by the Demo-day editor, Hoang Vu (Andy), who needs a Sanity account invited to the project (free plan: 20 users) (A5).
 - This page reads public content only. Job applications and CVs go to a private Vercel Blob store in Story 6.6, never to Sanity (free datasets are public) (T1).
-- Sammy owns `src/app/careers/page.tsx` and its sections; Andy owns `src/app/careers/[slug]/*`, the Story 6.6 job page, which depends on this story; do not edit those files (T3).
+- Andy owns `src/app/careers/page.tsx`, its sections and `src/app/careers/[slug]/*`, the Story 6.6 job page, which depends on this story (T3).
 - Next.js 16 App Router, Server Components by default. Read `node_modules/next/dist/docs/` before using a Next.js API.
 - Tailwind v4 tokens from Story 1.1. Port the prototype, do not redesign.
 - Route has no `/en` or `/vi` prefix (Story 1.2 is after demo); keep copy in a form that can be translated later.

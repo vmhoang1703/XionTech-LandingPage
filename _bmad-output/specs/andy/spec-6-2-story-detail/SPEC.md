@@ -43,7 +43,7 @@ Opportunity. Nam opens a Team story and wants a readable page with the date, the
 - Stories 1.7 (Not found), 1.8 (Sanity) and 6.1 (News page) must be merged first. Epics also list 3.7, only for its content module, which T2 removes; 3.7 still merges first through 6.1.
 - Reads use the Sanity client and the one tagged fetch helper from Story 1.8 (`src/lib/sanity/*`, Andy owns it), with `useCdn: true` and tag-based caching, never `force-dynamic` (`cms-spike.md`). This story writes its own GROQ query for one story by slug, in its own files; there is no content access module (T2).
 - Breadcrumbs use the simple prototype markup until Story 1.6 (after demo).
-- Sammy owns `src/app/news/[slug]/page.tsx`. Next.js 16 App Router, Server Components; use the Metadata API. Read `node_modules/next/dist/docs/` before using a Next.js API (dynamic params and `notFound()` may differ from older versions).
+- Andy owns `src/app/news/[slug]/page.tsx`. Next.js 16 App Router, Server Components; use the Metadata API. Read `node_modules/next/dist/docs/` before using a Next.js API (dynamic params and `notFound()` may differ from older versions).
 - Tailwind v4 tokens from Story 1.1. Port the prototype, do not redesign.
 - Route has no `/en` or `/vi` prefix (Story 1.2 is after demo); keep copy and date formatting in a form that can be translated later.
 - Demo-day story titles start with `[Placeholder]` (NFR-7).

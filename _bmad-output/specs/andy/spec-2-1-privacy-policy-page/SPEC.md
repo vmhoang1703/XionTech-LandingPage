@@ -1,7 +1,7 @@
 ---
 id: SPEC-2-1-privacy-policy-page
 owner: Andy
-build_day: 2026-10-01
+build_day: 2026-10-04
 depends_on: ["1.1"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
@@ -52,7 +52,7 @@ Mandate (FR-41, NFR-3, Vietnam PDPD Decree 13/2023): the Demo-day forms collect 
 - Port the prototype markup, copy and look; do not redesign. The UX spines win over the prototype on any conflict.
 - Routes have no `/en` or `/vi` prefix (locale routing, Story 1.2, is after demo); Demo day is English only, but every string is kept in a form that can be translated later (no copy baked into logic).
 - Every visible fact is real or starts with `[Placeholder]` (NFR-7).
-- Sammy owns `src/components/home/*`, page-level `src/app/**/page.tsx` and page sections; do not edit Andy's files (`src/app/layout.tsx`, `@theme` in `globals.css`, `src/components/layout/*`, `src/lib/sanity/*`, `src/app/api/*`).
+- Andy owns this story's files. Sammy owns `src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*` and the footer (`src/components/layout/site-footer.tsx`); do not edit those.
 
 ## Non-goals
 
