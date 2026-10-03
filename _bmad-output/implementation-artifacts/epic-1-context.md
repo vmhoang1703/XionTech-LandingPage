@@ -25,7 +25,7 @@ Give every page one shared, branded shell — tokens, fonts, surfaces, header, m
 - Four fonts, one job each (display, brand caps, body/UI, data), all with the Vietnamese subset and `display: swap`. Vietnamese H1/H2 need line-height ≥ 1.18 (built as 1.2); never tighten tracking on Vietnamese uppercase.
 - Reduced motion: no animation or transition, content in its final state. Without JavaScript every section is visible.
 - Icons from a React icon package; nothing render-blocking (no icon CDN script).
-- Content is real or marked `[Placeholder]`. Port the prototype (`mockups/site-v3`); do not redesign. The UX spines win over the prototype on conflict.
+- Content is real or marked `[Placeholder]`. Port the prototype (`prototype-enhancement/prototype`); do not redesign. The UX spines win over the prototype on conflict.
 - Free-first services; SonarQube local only; Definition of Done per `CLAUDE.md`.
 
 ## Technical Decisions

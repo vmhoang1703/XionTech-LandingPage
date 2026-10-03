@@ -13,7 +13,7 @@ sources:
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/.memlog.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/README.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md
-  - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/
+  - _bmad-output/prototype-enhancement/prototype/
 ---
 
 # PRD: XionTechs Website
@@ -24,7 +24,7 @@ This PRD is for the XionTechs website team (lead Hoang Vu, UX/BA owner Amber Do,
 
 - **UX source of truth:** `EXPERIENCE.md` (behaviour) and `DESIGN.md` (look), both in `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/`. They win over the prototype on any conflict. Each FR names the section it comes from as `EXP > Section` or `DES > Section`.
 - **Acceptance criteria:** the 16 criteria from `code-review-2026-09-28.md` (AC-NAV-1 to AC-NAV-5, AC-A11Y-1 to AC-A11Y-5, AC-FORM-1 to AC-FORM-3, AC-UI-1, AC-UI-2, AC-PERF-1) are cited by ID and are not restated in full.
-- **Prototype:** `mockups/site-v3/` (11 pages) shows every current UI decision. It is a design reference, not production code.
+- **Prototype:** `prototype-enhancement/prototype/` (11 pages) shows every current UI decision. It is a design reference, not production code.
 - **Conventions:** paths in this document are relative to the repo root. Terms in the Glossary (section 3) are used exactly. Inferences are tagged `[ASSUMPTION]` inline and listed in section 13. Content that the business has not verified appears on the site as `[Placeholder]`.
 
 ## 1. Vision
@@ -103,7 +103,7 @@ These mirror the four Key Flows in `EXPERIENCE.md` with the same protagonists.
 - **Placeholder:** content not verified by the business, prefixed `[Placeholder]` in both languages. A launch blocker.
 - **Locale:** `en` or `vi`, carried in the URL prefix `/en/` or `/vi/`.
 - **Motion toggle:** the discreet pause and play icon button in the Home hero that stops and restarts the silk animation.
-- **Prototype:** the static HTML reference in `mockups/site-v3/`.
+- **Prototype:** the static HTML reference in `prototype-enhancement/prototype/`.
 - **Demo day:** 2026-10-09, the challenge presentation.
 - **Public launch:** the point where the site replaces xiontechs.com for real visitors. Distinct from Demo day. `[ASSUMPTION]`
 
@@ -424,7 +424,7 @@ A visitor opens a role and sees its job page (`/careers/[slug]`): breadcrumbs Ho
 - The application and CV are stored in Sanity (decided 2026-09-29), checked on the server with the same rules, honeypot and rate limit as FR-38. Whether uploaded CVs can be kept private is open question 21.
 - An unknown or closed role renders the Not found page. The job page has no email capture band.
 
-Traces: prototype `mockups/site-v3/job.html`; `.memlog.md` (2026-09-29 scope decisions).
+Traces: prototype `prototype-enhancement/prototype/job.html`; `.memlog.md` (2026-09-29 scope decisions).
 
 Traces: EXP > Component Patterns (Open roles panel), State Patterns (Careers); `AGENTS.md` (Hard rules).
 
@@ -606,7 +606,7 @@ Captured from the latest prototype so stories do not regress them.
 - **2026-09-29 decisions:** English only on Demo day (no language switch); no newsletter sign-up; no leadership section; About ends with "See our apps in action." and Book a demo; Careers lists roles that open a job page with a CV upload form; store buttons and app web addresses are links that open a new tab.
 - **Type:** Unbounded (display), Lexend Exa (brand caps), Be Vietnam Pro (body), JetBrains Mono (dates and data), all with the Vietnamese subset.
 
-Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `mockups/site-v3/index.html`, `css/site.css`, `js/site.js`.
+Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `prototype-enhancement/prototype/index.html`, `css/site.css`, `js/site.js`.
 
 ## 7. Non-Goals (Explicit)
 
@@ -672,7 +672,7 @@ Measurement: Submissions are counted at the form destination on the server, so n
 
 The prototype, the UX specs, this PRD and the user stories must stay in step.
 
-1. Any change to the HTML prototype (`mockups/site-v3/`) is checked by **Amber Do** (UX/BA owner) before it is accepted.
+1. Any change to the HTML prototype (`prototype-enhancement/prototype/`) is checked by **Amber Do** (UX/BA owner) before it is accepted.
 2. After approval, `DESIGN.md` and `EXPERIENCE.md` are updated first, because they win over the prototype on any conflict.
 3. This PRD is then updated (FRs, NFRs, section 6) and its `updated` date changed.
 4. The affected user stories and their acceptance criteria are updated.

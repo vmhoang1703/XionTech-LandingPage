@@ -4,12 +4,14 @@ Owner: Amber Do. Made with the BMad UX workflow (`bmad-agent-ux-designer` + `bma
 Status: **UX specs final** (2026-09-28), except the items listed under Open Questions in `EXPERIENCE.md`. `DESIGN.md` (how it looks) and `EXPERIENCE.md` (how it works)
 are the source of truth and win over the prototype on any conflict. The prototype shows every UI
 decision in the specs; UI changes are checked in the prototype before a PR.
+From 2026-10-03, prototype changes are recorded in `_bmad-output/prototype-enhancement/enhancement-log.md`
+instead of being written straight into these specs.
 
 The AI log for this work is in `docs/ai-log.md` (entry "Website UX first draft").
 
 ## Open the prototype
 
-Open `mockups/site-v3/index.html` in a browser (double-click works, no build step).
+Open `_bmad-output/prototype-enhancement/prototype/index.html` in a browser (double-click works, no build step).
 It has 7 linked pages (Home, Products, Services, News, About, Careers, Book a demo) plus a sample
 news story, a sample job page with the application form, the privacy policy page and a 404 page.
 
@@ -25,7 +27,7 @@ news story, a sample job page with the application form, the privacy policy page
 | `DESIGN.md` | Visual spec: design tokens (ready for Tailwind `@theme`), colours with contrast, type, layout, components. |
 | `EXPERIENCE.md` | Behaviour spec: pages and navigation, microcopy, component and state patterns, accessibility, responsive, EN/VI, key user journeys, open questions. |
 | `.memlog.md` | Decision log for the design, oldest first. Start here to see why things look the way they do. |
-| `mockups/site-v3/` | **Reference prototype.** Multi-page static HTML, CSS and JS that the specs link to. |
+| `_bmad-output/prototype-enhancement/prototype/` | **Reference prototype.** Multi-page static HTML, CSS and JS that the specs link to. |
 | `.working/brand-type-kit.html` | Type kit from the logo: Unbounded, Lexend Exa, Be Vietnam Pro, JetBrains Mono (all support Vietnamese). |
 | `.working/*.html` (others) | Earlier rounds, superseded: colour themes, 3 concepts, landing v1 and v2. Kept to show how the design evolved. They contain unmarked sample data (made-up names and numbers) and must not be reused as content. |
 | `imports/` | Company logos and the hero reference screenshot supplied by the team. |
@@ -50,7 +52,7 @@ Add the acceptance criteria in `code-review-2026-09-28.md` to the matching stori
 
 The prototype follows the challenge rule: everything not verified is marked `[Placeholder]`.
 
-- `grep -rn "\[Placeholder\]" mockups/site-v3` lists every item still to replace or verify.
+- `grep -rn "\[Placeholder\]" _bmad-output/prototype-enhancement/prototype` lists every item still to replace or verify.
 - Stats (25+ years, 24/7, 20+ stacks), service and product descriptions and careers text are
   confirmed by the business (2026-09-28). The `[Placeholder]` markers left are sample content.
 - Still missing: team and office photos,

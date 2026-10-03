@@ -61,7 +61,7 @@ context:
 - `src/app/page.tsx` -- outer `<main>` becomes `<div>` (classes kept).
 - `src/app/globals.css` -- `:focus-visible` outline 2px (line ~274); `.skip:focus` radius → `--radius-full`; `html { scroll-padding-top: var(--spacing-header-height) }`; reuse `--z-index-header` (50), `--z-index-skip-link`, `.wrap`, `.btn*`, `--color-border`, `--radius-lg`, type tokens `text-ui`, `text-title-sm`, `text-label-sm`.
 - Tests: `src/app/layout.test.tsx`, `src/app/page.test.tsx`, `src/app/no-js.test.tsx` mock `next/navigation` (`usePathname`); `src/lib/design/contrast.test.ts` pins the T9/skip rules.
-- Reference only: prototype `mockups/site-v3/js/site.js` lines 12–47 and 105–117, `css/site.css` 37–98, 428–433, 528–547; DESIGN.md "Site header"; EXPERIENCE.md nav rules.
+- Reference only: prototype `prototype-enhancement/prototype/js/site.js` lines 12–47 and 105–117, `css/site.css` 37–98, 428–433, 528–547; DESIGN.md "Site header"; EXPERIENCE.md nav rules.
 - Do not touch: `scripts/`, `_bmad*`, `e2e/`, config files, `src/components/layout/site-footer.tsx`.
 
 ## Tasks & Acceptance

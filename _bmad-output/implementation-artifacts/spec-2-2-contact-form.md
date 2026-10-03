@@ -55,7 +55,7 @@ context: ['{project-root}/AGENTS.md']
 
 ## Code Map
 
-- `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/demo.html` (lines 17–64), `css/site.css` (328–348, 356, 440–485), `js/site.js` (190–195 tabs keys, 209 EMAIL regex, 218–240 form) -- source to port; the prototype has no `aria-controls`, no tabpanel and no live region (add them).
+- `_bmad-output/prototype-enhancement/prototype/demo.html` (lines 17–64), `css/site.css` (328–348, 356, 440–485), `js/site.js` (190–195 tabs keys, 209 EMAIL regex, 218–240 form) -- source to port; the prototype has no `aria-controls`, no tabpanel and no live region (add them).
 - `src/app/globals.css` -- tokens `--color-error` (66), `--color-error-border` (67), `--color-paper` (34), `--color-navy` (15), `--color-field-border` (49), `--color-focus` (51), radius scale (163–171), `--spacing-field-height` (190), breakpoints sm/md/lg (195–197), `.hero-navy` (414/455), `.btn`/`.btn-primary` (485/512). Add form classes here next to `.btn`.
 - `src/app/layout.tsx` -- renders `<main id="main">` (54); do not add another.
 - `src/components/layout/nav-data.ts` -- `SERVICES` (82): the 8 service names in prototype order for the Service select; `PRODUCTS` (52) names "IoT Device Management" but the pill text is "IoT".

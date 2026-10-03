@@ -6,7 +6,7 @@ depends_on: ["all Demo-day page stories (Epics 1 to 6)"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md
-  - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/index.html
+  - ../../../prototype-enhancement/prototype/index.html
 sources:
   - ../../../planning-artifacts/epics.md
   - ../../../planning-artifacts/prds/prd-XionTech-LandingPage-2026-09-28/prd.md

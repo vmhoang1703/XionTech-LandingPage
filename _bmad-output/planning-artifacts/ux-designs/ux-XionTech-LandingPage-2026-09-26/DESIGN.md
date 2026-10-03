@@ -358,7 +358,7 @@ Brand inputs: `imports/xiontechs-logo.png`, `imports/xiontechs-logo-square.png` 
 
 **Build mapping.** The build is Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion. Every token here maps 1:1 into Tailwind `@theme`: `colors.*` to `--color-*`, font families to `--font-display`, `--font-brand`, `--font-body`, `--font-mono`, `typography.*` to `--text-*`, `rounded.*` to `--radius-*`, `spacing.*` to `--spacing-*` except `spacing.container`, which maps to `--container-page`. Breakpoints, layers, motion and shadows are in the Build tokens table under Layout & Spacing. shadcn variables map as `--primary` = `{colors.amber}`, `--primary-foreground` = `{colors.navy}`, `--background` = `{colors.page}`, `--foreground` = `{colors.text}`, `--muted-foreground` = `{colors.muted}`, `--border` = `{colors.border}`, `--ring` = `{colors.focus}` (overridden to `{colors.focus-on-navy}` inside navy sections), `--destructive` = `{colors.error}`.
 
-Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html) and its sibling pages show every token in use. These spines win on any conflict with the mockups.
+Reference mockups: [`prototype-enhancement/prototype/index.html`](../../../prototype-enhancement/prototype/index.html) and its sibling pages show every token in use. These spines win on any conflict with the mockups.
 
 ## Colors
 
@@ -451,7 +451,7 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 | Motion | `--ease-brand: cubic-bezier(.16, 1, .3, 1)`; durations 300ms (menus), 550ms (screen crossfade), 900ms (reveal), 1200ms (highlight), 1400ms (count-up), 2400ms (4-D track). Reduced motion: no movement; state changes keep short opacity fades (150 to 250ms) |
 | Type scale | `--fs-label` .72rem (the smallest functional size, about 11.5px), `--fs-caption` .8rem, `--fs-small` .92rem, `--fs-ui` .95rem, `--fs-body` 1rem, `--fs-lead` 1.12rem, `--fs-title-sm` 1rem, `--fs-card` 1.08rem, `--fs-title-md` 1.2rem, `--fs-title-lg` 1.7rem |
 | Tap targets | Every control (buttons, tabs, chips that act, filters, the sub-nav, checkboxes, the language dropdown and its options, the menu and pause buttons) is at least `{spacing.tap-target}` (44px); inline text links in paragraphs, breadcrumbs, the footer lists and browser-frame addresses meet the WCAG 2.2 minimum of 24 x 24px |
-| Prototype CSS | `mockups/site-v3/css/site.css` is one consolidated file; every colour, radius, size and space is a token in `:root` that mirrors this file, and pages use shared classes, not inline styles (the only exception is the `--d` stagger delay on each 4-D step) |
+| Prototype CSS | `prototype-enhancement/prototype/css/site.css` is one consolidated file; every colour, radius, size and space is a token in `:root` that mirrors this file, and pages use shared classes, not inline styles (the only exception is the `--d` stagger delay on each 4-D step) |
 | Shadows | `--shadow-card: 0 40px 80px -40px rgb(11 23 48 / .45)`, `--shadow-device: 0 60px 100px -40px rgb(11 23 48 / .55)`, `--shadow-primary: 0 12px 30px -12px rgb(255 192 0 / .7)` |
 | Fluid sizes | Home H1 `clamp(2.2rem, 4vw, 3.5rem)`, page H1 `clamp(2.2rem, 4.4vw, 3.6rem)`, H2 `clamp(1.9rem, 3.5vw, 2.8rem)`, stat `clamp(2rem, 3.6vw, 3rem)`, news card title 1.08rem |
 

@@ -38,7 +38,7 @@ context:
 
 ## Code Map
 
-- `src/app/globals.css` -- replace scaffold: `@theme` tokens, `:root` semantic + shadcn variable mapping, base (body font, headings, `:focus-visible` ring, `:lang(vi)`), reduced-motion rule, components (`.btn`, `.btn-primary|navy|glass|sm`, surfaces `.surface-paper|mist|navy|amber`, `.hero-silk|light|navy|amber` backgrounds + scoped vars, `.wrap`, `.sec`, `.label`, `.lede`, `.skip` base). Reference: prototype `mockups/site-v3/css/site.css` lines 1–60, 94–120, 422–470.
+- `src/app/globals.css` -- replace scaffold: `@theme` tokens, `:root` semantic + shadcn variable mapping, base (body font, headings, `:focus-visible` ring, `:lang(vi)`), reduced-motion rule, components (`.btn`, `.btn-primary|navy|glass|sm`, surfaces `.surface-paper|mist|navy|amber`, `.hero-silk|light|navy|amber` backgrounds + scoped vars, `.wrap`, `.sec`, `.label`, `.lede`, `.skip` base). Reference: prototype `prototype-enhancement/prototype/css/site.css` lines 1–60, 94–120, 422–470.
 - `src/app/layout.tsx` -- swap Geist for `Unbounded`, `Lexend_Exa`, `Be_Vietnam_Pro` (weights 400/500/600/700 + italic 400), `JetBrains_Mono` via `next/font/google`, each with a CSS `variable`; keep `metadata` and `lang="en"`.
 - `src/app/layout.test.tsx` -- update the `next/font/google` mock to the four fonts; keep existing assertions.
 - `src/app/page.tsx` -- replace `text-foreground/70` (no longer exists) with brand tokens; keep the `[Placeholder]` text.

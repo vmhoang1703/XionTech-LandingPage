@@ -45,7 +45,7 @@ Give visitors one reliable way to reach XionTechs: a two-tab contact form at `/d
 - Invalid field border uses `{colors.error-border}`; error text uses `{colors.error}` on paper and amber, `{colors.error-on-navy}` on navy.
 - Capture band: H2 + lede left, form right; never a modal. White pill row holding field and button; 1.5px navy border on amber bands; 3px focus ring in `{colors.focus-on-navy}` on navy bands. At 640px and below the field stacks above the button.
 - Focus ring: 2.5px, 3px offset; navy on light and amber surfaces, amber on navy.
-- Visual reference: prototype `mockups/site-v3/demo.html` (form) and `index.html` / `services.html` captures; the UX spines win on any conflict. The prototype's "Prototype: nothing was sent." suffix is not shipped.
+- Visual reference: prototype `prototype-enhancement/prototype/demo.html` (form) and `index.html` / `services.html` captures; the UX spines win on any conflict. The prototype's "Prototype: nothing was sent." suffix is not shipped.
 
 ## Cross-Story Dependencies
 
