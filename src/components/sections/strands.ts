@@ -1,8 +1,9 @@
 // Flowing strand ribbon behind inner page heroes, ported from the prototype
 // (mockups/site-v3/js/site.js, canvas.strands). Canvas 2D needs colour
-// strings, so the DESIGN.md colours are written out here: navy (22 54 99),
-// amber (255 192 0), amber-decor (230 173 0 here, as in the prototype) and a
-// pale blue for strands on navy.
+// strings, so the colours are written out here: navy (22 54 99) and amber
+// (255 192 0) from DESIGN.md; the light-tone accent (230 173 0) and the pale
+// blue strands on navy (170 195 235) are the prototype's own values (pending
+// Amber: DESIGN.md amber-decor is 201 151 0).
 
 export type StrandTone = "light" | "navy" | "amber";
 

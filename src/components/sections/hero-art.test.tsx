@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { HeroArt } from "./hero-art";
 
 let intersect: (visible: boolean) => void = () => undefined;
+let resize: () => void = () => undefined;
 let frames: FrameRequestCallback[] = [];
 const draw = vi.fn();
 let reducedMotion = false;
@@ -33,6 +34,9 @@ beforeEach(() => {
   vi.stubGlobal(
     "ResizeObserver",
     class {
+      constructor(cb: () => void) {
+        resize = cb;
+      }
       observe() {}
       disconnect() {}
     },
@@ -107,5 +111,28 @@ describe("HeroArt", () => {
 
     unmount();
     expect(cancelAnimationFrame).toHaveBeenCalled();
+  });
+
+  it("draws the held final frame when it comes back after the run ended off screen", () => {
+    render(<HeroArt tone="navy" />);
+
+    intersect(false);
+    runFrame(2);
+    runFrame(6);
+    draw.mockClear();
+    intersect(true);
+    expect(draw).toHaveBeenCalledTimes(1);
+    expect(draw.mock.calls[0][3]).toBe(9);
+  });
+
+  it("repaints after a resize that happened off screen", () => {
+    render(<HeroArt tone="navy" />);
+
+    runFrame(6);
+    intersect(false);
+    resize();
+    draw.mockClear();
+    intersect(true);
+    expect(draw).toHaveBeenCalledTimes(1);
   });
 });

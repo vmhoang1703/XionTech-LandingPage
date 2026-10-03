@@ -57,8 +57,13 @@ export function HeroArt({ tone }: Readonly<{ tone: StrandTone }>) {
 
     const resizer = new ResizeObserver(size);
     resizer.observe(canvas);
+    // Off screen nothing is drawn; coming back repaints the current frame, so a
+    // run that ended or a resize that cleared the canvas off screen still
+    // shows the held frame.
     const viewer = new IntersectionObserver((entries) => {
-      visible = entries[0]?.isIntersecting ?? true;
+      const wasVisible = visible;
+      visible = entries.at(-1)?.isIntersecting ?? true;
+      if (visible && !wasVisible) draw();
     });
     viewer.observe(canvas);
     size();

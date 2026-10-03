@@ -114,6 +114,43 @@ log("JS off: H1", await noJs.page.locator(`${HERO} h1`).textContent());
 await noJs.page.screenshot({ path: `${OUT}/demo-no-js-1280.png` });
 await noJs.context.close();
 
+// Scroll away during the run, resize while away, come back after the run:
+// the ribbon must be repainted (held frame), not left blank.
+const back = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+const backPage = await back.newPage();
+await backPage.addInitScript(() => {
+  window.__draws = 0;
+  const clear = CanvasRenderingContext2D.prototype.clearRect;
+  CanvasRenderingContext2D.prototype.clearRect = function (...args) {
+    window.__draws++;
+    return clear.apply(this, args);
+  };
+});
+await backPage.goto(`${BASE}/demo`, { waitUntil: "domcontentloaded" });
+await backPage.waitForFunction(
+  (sel) => document.querySelector(sel)?.width !== 300,
+  `${HERO} canvas.strands`,
+);
+// /demo is shorter than hero + viewport, so add a spacer (walk only) to let
+// the hero leave the screen completely.
+await backPage.evaluate(() => {
+  const spacer = document.createElement("div");
+  spacer.style.height = "4000px";
+  document.body.append(spacer);
+  window.scrollTo(0, document.body.scrollHeight);
+});
+await sleep(300);
+log("scrolled away: hero bottom above viewport", await backPage.locator(HERO).evaluate((h) => h.getBoundingClientRect().bottom < 0));
+await sleep(6000);
+await backPage.setViewportSize({ width: 1100, height: 900 });
+await sleep(500);
+const drawsAway = await backPage.evaluate(() => window.__draws);
+await backPage.evaluate(() => window.scrollTo(0, 0));
+await sleep(600);
+const drawsBack = await backPage.evaluate(() => window.__draws);
+log("scrolled away, resized, back: repainted on return", drawsBack > drawsAway);
+await back.close();
+
 const mobile = await open(390);
 await sleep(6500);
 log("sideways scroll 390", await mobile.page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth));

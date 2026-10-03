@@ -1185,7 +1185,8 @@
     1.2s after 0.5s. The global reduced-motion rule in @layer base stops all
     of it, so content shows in its final state.
   */
-  .page-hero {
+  /* Only heroes with <HeroArt /> clip and stack their art */
+  .page-hero:has(> .aurora) {
     position: relative;
     overflow: hidden;
     isolation: isolate;

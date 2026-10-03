@@ -1,8 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { offices } from "@/content/offices";
 import DemoPage, { metadata } from "./page";
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("Demo page", () => {
   it("renders the H1 with the highlighted word", () => {
@@ -98,10 +102,11 @@ describe("Demo page", () => {
     const { container } = render(<DemoPage />);
 
     const hero = container.querySelector("section.hero-navy.page-hero");
-    expect(hero?.children[0].classList.contains("aurora")).toBe(true);
-    expect(hero?.children[1].matches("canvas.strands")).toBe(true);
-    expect(hero?.children[0].getAttribute("aria-hidden")).toBe("true");
-    expect(hero?.children[1].getAttribute("aria-hidden")).toBe("true");
-    vi.restoreAllMocks();
+    expect(hero).not.toBeNull();
+    const [aurora, canvas] = Array.from(hero?.children ?? []);
+    expect(aurora.classList.contains("aurora")).toBe(true);
+    expect(canvas.matches("canvas.strands")).toBe(true);
+    expect(aurora.getAttribute("aria-hidden")).toBe("true");
+    expect(canvas.getAttribute("aria-hidden")).toBe("true");
   });
 });
