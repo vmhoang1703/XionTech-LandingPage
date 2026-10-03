@@ -91,7 +91,7 @@ try {
     const pill = await box(p.locator("section#lxp .bar-url"));
     const frame = await box(p.locator("section#lxp .browser"));
     const ellipsis = await p.locator("section#lxp .bar-url").evaluate((el) => el.scrollWidth > el.clientWidth && getComputedStyle(el).textOverflow === "ellipsis");
-    log(`[${w}] lxp features ${await cols(p.locator("section#lxp .feature-list"))} col | iot cards ${await cols(p.locator("section#iot .svc-grid"))} col | sxp text first ${sh.y < sf.y} | lxp pill ${pill.w}x${pill.h} ellipsis ${ellipsis} | frame width ${frame.w} | no sideways scroll ${await noSideways(p)}`);
+    log(`[${w}] lxp features ${await cols(p.locator("section#lxp .feature-list"))} col | iot cards ${await cols(p.locator("section#iot .svc-grid"))} col | sxp ${w >= 900 ? `frame left ${sf.x + sf.w <= sh.x}` : `text above frame ${sh.y + sh.h <= sf.y}`} | lxp pill ${pill.w}x${pill.h} ellipsis ${ellipsis} | frame width ${frame.w} | no sideways scroll ${await noSideways(p)}`);
     if (w === 390) {
       await p.setViewportSize({ width: 390, height: 844 });
       await p.goto(`${BASE}/products#iot`, { waitUntil: "load" });

@@ -200,3 +200,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-4-2-pxp-story-phone.md`
   summary: PXP story phone follow-ups: the active screen (empty frame, `tabIndex=0`) is a tab stop before the tablist; arrow keys step from the selected tab, not from a focused unselected one; the crossfade story must swap `hidden` for `inert` plus an opacity fade; confirm the `[Placeholder]` PXP claims (iOS and Android, gate alerts, scores, payments) with the product owner; when real store URLs land, recheck mobile Tab order (phone tabs come before the store links in the markup below md); apply `PLACEHOLDER_HREF` to the Story 4.3 URL pills.
   evidence: full review 2026-10-03, Blind Hunter, Edge Case Hunter and Acceptance Auditor (Minor).
+- source_spec: `_bmad-output/implementation-artifacts/spec-4-3-lxp-sxp-iot-sections.md`
+  summary: Products follow-ups: only `#` exactly counts as a stand-in address; a real href can ship with a `[Placeholder]` label (derive the label or test the pair); layout (columns, SXP order, ellipsis) is checked only by the hand-run walk; linen, grid, card tints and frame details are class tests plus screenshots; ask Amber about the amber SXP badge.
+  evidence: full review 2026-10-03, Blind Hunter, Edge Case Hunter, Verification Gap and Acceptance Auditor (Minor).

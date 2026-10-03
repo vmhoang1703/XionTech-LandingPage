@@ -14,14 +14,15 @@
 [1280] direct #sxp: section top 144 | H2 top 330
 [1280] direct #iot: section top 144 | H2 top 326
 [1280] mega menu SXP from /: section top 144 | H2 top 330
-[1080] lxp features 4 col | iot cards 4 col | sxp text first false | lxp pill 232x24 ellipsis false | frame width 1000 | no sideways scroll true
-[900] lxp features 2 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 852 | no sideways scroll true
-[899] lxp features 2 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 851 | no sideways scroll true
-[641] lxp features 2 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 593 | no sideways scroll true
-[640] lxp features 1 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 608 | no sideways scroll true
-[390] lxp features 1 col | iot cards 1 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 358 | no sideways scroll true
+[1080] lxp features 4 col | iot cards 4 col | sxp frame left true | lxp pill 232x24 ellipsis false | frame width 1000 | no sideways scroll true
+[900] lxp features 2 col | iot cards 2 col | sxp frame left true | lxp pill 232x24 ellipsis false | frame width 852 | no sideways scroll true
+[899] lxp features 2 col | iot cards 2 col | sxp text above frame true | lxp pill 232x24 ellipsis false | frame width 851 | no sideways scroll true
+[641] lxp features 2 col | iot cards 2 col | sxp text above frame true | lxp pill 232x24 ellipsis false | frame width 593 | no sideways scroll true
+[640] lxp features 1 col | iot cards 2 col | sxp text above frame true | lxp pill 232x24 ellipsis false | frame width 608 | no sideways scroll true
+[390] lxp features 1 col | iot cards 1 col | sxp text above frame true | lxp pill 232x24 ellipsis false | frame width 358 | no sideways scroll true
 [390] direct #iot: section top 144 | H2 top 294
-[320] lxp features 1 col | iot cards 1 col | sxp text first true | lxp pill 202x24 ellipsis true | frame width 288 | no sideways scroll true
+[320] lxp features 1 col | iot cards 1 col | sxp text above frame true | lxp pill 202x24 ellipsis true | frame width 288 | no sideways scroll true
 [390] pill tap: new tabs 0 | url /products#lxp
-[1280] pxp features columns 2 | item display flex
-[640] pxp features columns 1 | item display flex
+[1280] pxp features columns 2 | lede "Parent eXperience Place keeps parents close to every school day, on [Placeholder] iOS and Android."
+[640] pxp features columns 1 | lede "Parent eXperience Place keeps parents close to every school day, on [Placeholder] iOS and Android."
+[390] direct #sxp: H2 top 298 | inside the 844px screen true
