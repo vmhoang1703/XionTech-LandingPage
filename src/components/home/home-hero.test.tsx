@@ -15,11 +15,19 @@ describe("HomeHero", () => {
 
     expect(hero.className).toContain("hero-silk");
     expect(
+      within(hero)
+        .getByText("EdTech products · Software services")
+        .classList.contains("label"),
+    ).toBe(true);
+    expect(
       within(hero).getByText("EdTech products · Software services"),
     ).toBeDefined();
     const h1 = within(hero).getByRole("heading", { level: 1 });
+    expect(h1.classList.contains("text-display-hero-fluid")).toBe(true);
     expect(h1.textContent).toBe("Every school community, connected.");
-    expect(within(h1).getByText("connected").tagName).toBe("MARK");
+    expect(within(h1).getByText("connected").classList.contains("hl")).toBe(
+      true,
+    );
     expect(
       within(hero).getByText(
         "PXP for parents, LXP for learners, SXP for staff. And the engineering team behind them, ready to build yours.",
@@ -34,12 +42,21 @@ describe("HomeHero", () => {
     expect(links).toHaveLength(1);
     expect(links[0].textContent).toBe("Explore our products");
     expect(links[0].getAttribute("href")).toBe("/products");
-    expect(links[0].className).toContain("button-primary");
+    expect(links[0].className).toContain("btn btn-primary");
+    expect(links[0].querySelector("svg")?.getAttribute("aria-hidden")).toBe(
+      "true",
+    );
     expect(within(hero).queryAllByRole("button")).toHaveLength(0);
   });
 
   it("renders empty tablet and phone frames and never an image", () => {
     const hero = renderHero();
+
+    expect(
+      hero.querySelector(".home-device-tablet .home-media"),
+    ).not.toBeNull();
+    expect(hero.querySelector(".home-device-phone .home-media")).not.toBeNull();
+    expect(hero.querySelector(".home-device-phone .home-notch")).not.toBeNull();
 
     expect(within(hero).queryAllByRole("img")).toHaveLength(0);
     expect(hero.querySelector("img")).toBeNull();
@@ -49,5 +66,13 @@ describe("HomeHero", () => {
     expect(
       within(hero).getByText("[Placeholder] Phone screenshot"),
     ).toBeDefined();
+  });
+
+  it("paints the static glow layer behind the content", () => {
+    const hero = renderHero();
+
+    const glow = hero.querySelector(".silk-fallback");
+    expect(glow?.getAttribute("aria-hidden")).toBe("true");
+    expect(hero.firstElementChild).toBe(glow);
   });
 });

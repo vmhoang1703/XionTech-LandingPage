@@ -22,7 +22,7 @@ describe("no JavaScript", () => {
 
     expect(html).toMatch(/^<html lang="en"/);
     expect(html).toMatch(
-      /<h1[^>]*>Every school community, <mark[^>]*>connected<\/mark>\.<\/h1>/,
+      /<h1[^>]*>Every school community, <span class="hl">connected<\/span>\.<\/h1>/,
     );
     expect(html).toContain("Explore our products");
     expect(html).toContain("<header");
