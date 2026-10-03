@@ -107,14 +107,18 @@ describe("validateContact caps and date format", () => {
     ).toEqual({ email: "Please enter a valid email address." });
   });
 
-  it("rejects a date that is not YYYY-MM-DD on the demo tab", () => {
-    for (const date of ["2026-1-5", "2026-13-01", "2026-02-30", "tomorrow"]) {
+  it.each(["2026-12-5", "2026-1-5", "2026-13-01", "2026-11-31", "tomorrow"])(
+    "rejects the date %s on the demo tab",
+    (date) => {
       expect(validateContact("demo", { ...valid, date }, TODAY)).toEqual({
         date: "Please choose today or a later date.",
       });
-    }
+    },
+  );
+
+  it("ignores a badly formatted date on the project tab", () => {
     expect(
-      validateContact("project", { ...valid, date: "2026-1-5" }, TODAY),
+      validateContact("project", { ...valid, date: "2026-12-5" }, TODAY),
     ).toEqual({});
   });
 });
