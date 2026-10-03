@@ -10,7 +10,7 @@
 [1280] next Tab stops: a: -> a:PXP -> a:LXP -> a:SXP
 [1280] features: 4 items, columns "276px 276px"
 [1280] store buttons: span aria-disabled=true href=null "[Placeholder] App Store" ; span aria-disabled=true href=null "[Placeholder] Google Play"
-[1280] store hover: default | none | rgb(22, 54, 99)
+[1280] store hover: not-allowed | none | rgba(22, 54, 99, 0.12) | 0.6
 [1280] store click: new tabs 0 | url /products | scrollY 952 -> 952
 [1280] sub-nav PXP: #pxp top 144 | H2 top 348
 [1280] mega menu PXP from /: #pxp top 144 | H2 top 348

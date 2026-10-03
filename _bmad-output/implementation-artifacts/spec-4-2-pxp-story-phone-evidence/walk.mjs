@@ -62,7 +62,7 @@ const tab = (p, name) => sec(p).getByRole("tab", { name });
   log(`[1280] store buttons: ${await sec(p).locator(".store-row .btn").evaluateAll((els) => els.map((el) => `${el.tagName.toLowerCase()} aria-disabled=${el.getAttribute("aria-disabled")} href=${el.getAttribute("href")} "${el.textContent.trim()}"`).join(" ; "))}`);
   await store.scrollIntoViewIfNeeded(); await p.mouse.move(0, 0); await p.waitForTimeout(600);
   await store.hover(); await p.waitForTimeout(900);
-  log(`[1280] store hover: ${await css(store, ["cursor", "transform", "borderColor"])}`);
+  log(`[1280] store hover: ${await css(store, ["cursor", "transform", "borderColor", "opacity"])}`);
   const y0 = await p.evaluate(() => window.scrollY);
   const pagesBefore = ctx.pages().length;
   await store.click();
