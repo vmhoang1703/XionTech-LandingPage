@@ -16,18 +16,18 @@ const OPEN_ROLES_QUERY = `*[_type == "job" && closed != true && defined(slug.cur
   type
 }`;
 
-const TYPE_LABELS: Record<string, string> = {
-  "full-time": "Full-time",
-  "part-time": "Part-time",
-  contract: "Contract",
-  internship: "Internship",
-};
+const TYPE_LABELS = new Map<string, string>([
+  ["full-time", "Full-time"],
+  ["part-time", "Part-time"],
+  ["contract", "Contract"],
+  ["internship", "Internship"],
+]);
 
 export function getOpenRoles(): Promise<OpenRole[]> {
   return sanityFetch<OpenRole[]>({ query: OPEN_ROLES_QUERY, tags: ["job"] });
 }
 
 export function roleMeta({ team, location, type }: OpenRole): string {
-  const typeLabel = type ? TYPE_LABELS[type] : undefined;
+  const typeLabel = type ? TYPE_LABELS.get(type) : undefined;
   return [team, location, typeLabel].filter(Boolean).join(" · ");
 }

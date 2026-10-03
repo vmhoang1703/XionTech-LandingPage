@@ -85,6 +85,15 @@ describe("roleMeta", () => {
     ).toBe("Hanoi");
   });
 
+  it.each(["constructor", "toString", "__proto__"])(
+    "leaves out a type that names an object built-in (%s)",
+    (type) => {
+      expect(roleMeta({ slug: "a", title: "A", location: "Hanoi", type })).toBe(
+        "Hanoi",
+      );
+    },
+  );
+
   it("returns an empty string when no part is present", () => {
     expect(roleMeta({ slug: "a", title: "A", type: null })).toBe("");
   });
