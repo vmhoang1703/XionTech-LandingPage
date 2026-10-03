@@ -137,6 +137,7 @@ describe("SiteFooter", () => {
     const textLinks = within(footer)
       .getAllByRole("link")
       .filter((link) => !link.querySelector("img"));
+    expect(textLinks.length).toBeGreaterThan(20);
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
     }
