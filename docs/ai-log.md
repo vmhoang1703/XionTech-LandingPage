@@ -567,3 +567,9 @@ Template:
 - **Prompt (Hoang Vu):** build easy stories in parallel (1.7, 2.1, 4.1); later "Remember to rebase with latest develop".
 - **What the AI did:** one-shot build of `/products`: amber hero with breadcrumbs, highlighted H1, Book a demo, empty device frames; a sticky glass sub-nav with PXP, LXP, SXP, IoT pills and four anchor stubs. Browser walk, full 5-layer review, rebase onto `develop`, then a second walk.
 - **AI got it wrong?** Yes. The build counted the header twice in the anchor offset (sections landed at 216px, not 144px) and left the pill hover without its 0.3s fade; the walk caught both. It set smooth scroll site-wide without the Next.js 16 `data-scroll-behavior` attribute, so every page change would animate; two reviewers caught it from the Next 16 upgrade guide. The first evidence measured the header's Book a demo instead of the hero's, ticked "scrolls sideways" when nothing overflowed, and copied scroll numbers from an older run. The one-shot triage had wrongly rejected a `/products` smoke test the spec asks for.
+
+## 2026-10-05 — Brand name "XionTech" in the footer
+
+- **Prompt (Hoang Vu):** "XionTech is right" (the Products title said "XionTechs", `/privacy` said "XionTech"), then "both" (fix the footer and start the next stories).
+- **What the AI did:** changed the footer logo alt text and copyright to "XionTech", tests first. The mockup and the old site say "XionTechs"; the domain stays `xiontechs.com`.
+- **AI got it wrong?** Yes, once: the first test anchored the copyright with `$`, but the line has more text after the name; it now checks "XionTech" not followed by "s".

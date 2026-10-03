@@ -6,7 +6,7 @@ export type FooterLink = { href: string; label: string };
 export type FooterColumn = { heading: string; links: FooterLink[] };
 
 export const siteFooter = {
-  logoAlt: "XionTechs",
+  logoAlt: "XionTech",
   blurb:
     "Education technology products and software delivery services for schools and businesses.",
   columns: [
@@ -46,7 +46,7 @@ export const siteFooter = {
     },
   ] satisfies FooterColumn[],
   officesHeading: "Offices",
-  copyright: "© 2026 XionTechs",
+  copyright: "© 2026 XionTech",
   privacy: { href: "/privacy", label: "Privacy policy" },
   tag: { lead: "GET IT", accent: "DONE" },
 };
