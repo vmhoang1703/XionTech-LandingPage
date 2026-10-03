@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HeroArt } from "@/components/sections/hero-art";
 import { notFound } from "@/content/not-found";
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function NotFound() {
       aria-labelledby="not-found-title"
       className="hero-navy page-hero flex min-h-[70dvh] items-center"
     >
+      <HeroArt tone="navy" />
       <div className="wrap">
         <span className="label">{label}</span>
         <h1 id="not-found-title">

@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import NotFound, { metadata } from "./not-found";
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("NotFound page", () => {
   it("shows the label, the only H1 with a highlight, and the lede", () => {
@@ -46,5 +50,19 @@ describe("NotFound page", () => {
   it("sets a Not found title and keeps the page out of search results", () => {
     expect(metadata.title).toBe("Page not found");
     expect(metadata.robots).toEqual({ index: false });
+  });
+
+  it("puts the shared aurora and strand ribbon behind the navy hero", () => {
+    // jsdom has no canvas: the ribbon is skipped, the aurora is CSS.
+    vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+    const { container } = render(<NotFound />);
+
+    const hero = container.querySelector("section.hero-navy.page-hero");
+    expect(hero).not.toBeNull();
+    const [aurora, canvas] = Array.from(hero?.children ?? []);
+    expect(aurora.classList.contains("aurora")).toBe(true);
+    expect(canvas.matches("canvas.strands")).toBe(true);
+    expect(aurora.getAttribute("aria-hidden")).toBe("true");
+    expect(canvas.getAttribute("aria-hidden")).toBe("true");
   });
 });

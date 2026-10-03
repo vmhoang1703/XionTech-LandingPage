@@ -1,0 +1,10 @@
+1280px status: 404
+1280px art aria-hidden: true / true
+1280px ribbon moving early: true
+1280px ribbon still after 6s: true
+1280px sideways scroll: false
+390px status: 404
+390px art aria-hidden: true / true
+390px ribbon moving early: true
+390px ribbon still after 6s: true
+390px sideways scroll: false
