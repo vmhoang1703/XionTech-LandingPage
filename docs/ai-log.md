@@ -507,6 +507,13 @@ Template:
 - **What the AI did:** an acceptance audit of 3.1–3.6 against the current specs and the merged 1.1 `globals.css`, then for 3.1: a build spec with a 14-line UX checks table, tests first, the hero moved onto 1.1's `.label`, `.hl`, `.btn .btn-primary`, `.wrap` and `text-display-hero-fluid`, the prototype's glow layer and device frames ported into a Home section of `globals.css`, a Phosphor arrow, a Chrome walk at 1280/900/899/390px with screenshots, and a full 4-layer review (3 patched, 1 deferred, the rest rejected with reasons).
 - **AI got it wrong?** Yes. The first build (2026-10-01, before 1.1 merged) guessed component class names from DESIGN.md (`highlight-mark`, `button-primary`, `device-frame`), which 1.1 never defined, so the hero rendered unstyled while every test passed; the same applies to 3.4 and 3.5. In the fix, one new test passed by accident (`toContain("hl")` matched "highlight-mark"), the caption first used the heading colour (white on the paper frame), and only the browser walk showed the H1 at about 1.1rem.
 
+## 2026-10-03 — Footer mount and one office data source
+
+- **Prompt (Hoang Vu):** after Sammy's footer (Story 1.5, #15) merged, mount it (decision T10) and remove the duplicate office data.
+- **What the AI did:** rendered `SiteFooter` after `<main>` in the root layout (tests first in `layout.test.tsx` and `no-js.test.tsx`); switched `/demo` to Sammy's `src/content/offices.ts` and deleted `office-data.ts`, keeping the `/demo` output the same; a 4-layer review (Acceptance skipped: no spec) found that the office facts had lost their only test and that the `/demo` loop did not check every contact link — both patched.
+- **AI got it wrong?** Yes: the security review layer was first launched with a prompt path that does not exist (the security prompt lives under the `bmad-build` render, not `bmad-code-review`); it stopped at once and was relaunched.
+- **Open:** footer links point to pages that the page stories build later; `/demo` shows the offices twice (page and footer), as in the prototype.
+
 ## 2026-10-04 — Story 3.2 silk and motion toggle, after 3.1 merged
 
 - **Prompt (Son Nguyen):** 3.1 merged; move to 3.2 and pull the latest `develop`.
