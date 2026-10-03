@@ -2141,6 +2141,9 @@
     font-size: var(--text-ui);
     font-weight: 600;
     white-space: nowrap;
+    transition:
+      background-color 0.3s var(--ease-brand),
+      color 0.3s var(--ease-brand);
   }
 
   .subnav a:hover,
