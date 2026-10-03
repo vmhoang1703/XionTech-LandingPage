@@ -1361,6 +1361,329 @@
     background: color-mix(in srgb, var(--color-white) 6%, transparent);
     color: var(--color-white);
   }
+
+  /*
+    App bento and service cards (Story 3.5), ported from the prototype
+    site.css. Reuses the door badges, chips and .go arrow (3.4) and the empty
+    media frame (3.1). The spotlight pointer glow and the 4px card lift are
+    after demo, so the glass cards are static.
+  */
+  .sec-head {
+    display: grid;
+    gap: 14px;
+    max-width: 760px;
+    margin-bottom: var(--spacing-section-head-gap);
+  }
+
+  .linen {
+    position: relative;
+  }
+
+  .linen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        color-mix(in srgb, var(--color-navy) 1.8%, transparent) 0 1px,
+        transparent 1px 3px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-navy) 1.8%, transparent) 0 1px,
+        transparent 1px 3px
+      );
+  }
+
+  .spot {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+  }
+
+  .bento {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-grid-gap);
+  }
+
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    padding: var(--spacing-card-padding);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+  }
+
+  .tile .badge {
+    width: 52px;
+    height: 52px;
+  }
+
+  .tile h3 {
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* The heading link covers the whole tile: one link, one Tab stop. */
+  .tile h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  .tile h3 a:focus-visible {
+    outline: none;
+  }
+
+  .tile h3 a:focus-visible::after {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -4px;
+  }
+
+  .tile .full {
+    margin-top: 6px;
+    color: var(--color-muted);
+    font-family: var(--font-brand);
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tile p {
+    max-width: 40ch;
+    margin-top: 12px;
+    color: var(--color-muted);
+  }
+
+  .tile .chips {
+    margin-top: auto;
+    padding-top: 20px;
+  }
+
+  .tile .go {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-full);
+    opacity: 0.45;
+    transition:
+      opacity 0.35s var(--ease-brand),
+      transform 0.35s var(--ease-brand);
+  }
+
+  @media (hover: hover) {
+    .tile:hover .go {
+      opacity: 1;
+      transform: rotate(-45deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile:hover .go {
+      transform: none;
+    }
+  }
+
+  .t-pxp {
+    border: 0;
+    background: linear-gradient(
+      155deg,
+      var(--color-amber-light),
+      var(--color-amber) 60%,
+      var(--color-amber-deep)
+    );
+  }
+
+  .t-pxp h3,
+  .t-pxp p,
+  .t-pxp .full,
+  .t-pxp .go {
+    color: var(--color-navy);
+  }
+
+  .t-pxp .chip {
+    border-color: color-mix(in srgb, var(--color-navy) 25%, transparent);
+    background: color-mix(in srgb, var(--color-white) 35%, transparent);
+    color: var(--color-navy);
+  }
+
+  .t-sxp {
+    border: 0;
+    background: linear-gradient(150deg, var(--color-navy), var(--color-ink));
+  }
+
+  .t-sxp h3,
+  .t-sxp .go {
+    color: var(--color-white);
+  }
+
+  .t-sxp p {
+    color: var(--color-on-navy-muted);
+  }
+
+  .t-sxp .full {
+    color: var(--color-amber-tint);
+  }
+
+  .t-sxp .chip {
+    border-color: color-mix(in srgb, var(--color-white) 20%, transparent);
+    background: color-mix(in srgb, var(--color-white) 6%, transparent);
+    color: var(--color-white);
+  }
+
+  .t-sxp h3 a:focus-visible::after {
+    outline-color: var(--color-focus-on-navy);
+  }
+
+  .t-iot {
+    padding: 26px;
+  }
+
+  .t-iot h3 {
+    font-size: 1.3rem;
+  }
+
+  /* Rotated phone bleeding off the PXP tile; the empty frame is 3.1's. */
+  .mini-phone {
+    width: 210px;
+    aspect-ratio: 1170 / 2532;
+    margin: 30px auto -150px;
+    padding: 8px;
+    border-radius: 34px;
+    background: var(--color-ink);
+    box-shadow: var(--shadow-device);
+    transform: rotate(-7deg);
+  }
+
+  .mini-phone .home-media {
+    border-radius: 27px;
+    font-size: 0.58rem;
+  }
+
+  @media (width >= --theme(--breakpoint-sm)) {
+    .bento {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .t-pxp,
+    .t-sxp {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (width >= --theme(--breakpoint-md)) {
+    .bento {
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    .t-pxp {
+      grid-column: span 7;
+      grid-row: span 2;
+    }
+
+    .t-sxp {
+      grid-column: span 5;
+    }
+
+    .t-lxp {
+      grid-column: span 3;
+    }
+
+    .t-iot {
+      grid-column: span 2;
+    }
+  }
+
+  .svc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  @media (width >= --theme(--breakpoint-sm)) {
+    .svc-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (width >= --theme(--breakpoint-lg)) {
+    .svc-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .svc {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 210px;
+    padding: var(--spacing-card-padding-sm);
+  }
+
+  .svc .ic {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--color-mist);
+    color: var(--color-heading);
+    font-size: 1.4rem;
+  }
+
+  .svc h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .svc p {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .svc.feature {
+    background:
+      linear-gradient(
+        150deg,
+        color-mix(in srgb, var(--color-amber) 22%, transparent),
+        transparent 65%
+      ),
+      var(--glass);
+  }
+
+  .svc.navy {
+    --color-heading: var(--color-white);
+    --color-muted: var(--color-on-navy-muted);
+    --color-focus: var(--color-focus-on-navy);
+    border: 0;
+    background: linear-gradient(150deg, var(--color-navy), var(--color-ink));
+  }
+
+  .svc.navy .ic {
+    background: color-mix(in srgb, var(--color-white) 10%, transparent);
+    color: var(--color-amber-tint);
+  }
 }
 
 @layer components {

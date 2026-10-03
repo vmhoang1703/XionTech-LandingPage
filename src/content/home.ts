@@ -143,4 +143,4 @@ export const homeServices = {
       line: "Azure, AWS and GCP expertise.",
     },
   ],
-};
+} as const;

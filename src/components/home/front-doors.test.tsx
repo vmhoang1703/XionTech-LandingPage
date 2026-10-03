@@ -1,7 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import { FrontDoors } from "./front-doors";
 
 function door(name: RegExp) {
@@ -118,24 +117,11 @@ describe("FrontDoors", () => {
   it("uses only classes that globals.css defines, with a reduced-motion reset", () => {
     // The first build shipped class names no stylesheet defined, and every
     // class-name test still passed. Check the CSS side too.
-    const css = readFileSync(
-      join(process.cwd(), "src/app/globals.css"),
-      "utf8",
-    );
     const { container } = render(<FrontDoors />);
-    const used = new Set(
-      Array.from(container.querySelectorAll("[class]")).flatMap((el) =>
-        Array.from(el.classList).filter((name) => !name.includes(":")),
-      ),
-    );
-    const tailwind = /^(flex|flex-wrap|gap-\d+|sr-only)$/;
-    for (const name of used) {
-      if (tailwind.test(name)) continue;
-      expect(css, `.${name}`).toMatch(
-        new RegExp(String.raw`\.${name}[\s,:{.]`),
-      );
-    }
-    expect(css).toMatch(
+    expect(
+      undefinedClasses(container, /^(flex|flex-wrap|gap-\d+|sr-only)$/),
+    ).toEqual([]);
+    expect(globalsCss()).toMatch(
       /prefers-reduced-motion: reduce\)\s*\{\s*\.door:hover,\s*\.door:hover \.go\s*\{\s*transform: none;/,
     );
   });
