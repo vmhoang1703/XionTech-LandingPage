@@ -2194,7 +2194,9 @@
     }
   }
 
-  .feature-list li {
+  /* Items are li (LXP, SXP, IoT) or div (PXP, Story 4.2) */
+  .feature-list li,
+  .feature-list > div {
     display: flex;
     gap: 12px;
   }
@@ -2403,41 +2405,6 @@
     border-color: var(--color-navy);
     background: var(--color-navy);
     color: var(--color-white);
-  }
-
-  .feature-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 26px;
-  }
-
-  .feature-list > div {
-    display: flex;
-    gap: 12px;
-  }
-
-  .feature-list svg {
-    flex-shrink: 0;
-    color: var(--color-heading);
-    font-size: 1.4rem;
-  }
-
-  .feature-list b {
-    display: block;
-    color: var(--color-heading);
-    font-size: 0.98rem;
-  }
-
-  .feature-list span {
-    color: var(--color-muted);
-    font-size: 0.9rem;
-  }
-
-  @media (width <= --theme(--breakpoint-sm)) {
-    .feature-list {
-      grid-template-columns: 1fr;
-    }
   }
 
   .store-row {

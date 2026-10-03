@@ -1,0 +1,25 @@
+[1280] #lxp: class "products-anchor sec surface-mist linen" | bg linear-gradient(rgb(238, 242, 249), rgb( | H2 "A calm place to learn." color rgb(22, 54, 99)
+[1280] #sxp: class "products-anchor sec surface-navy gridbg" | bg radial-gradient(50% 70% at 100% 0%, colo | H2 "One workspace for the whole school." color rgb(255, 255, 255)
+[1280] #iot: class "products-anchor sec surface-paper" | bg none | H2 "A campus you run from one screen." color rgb(22, 54, 99)
+[1280] #sxp frame x 44 | text x 668 | frame left of text true
+[1280] #lxp feature columns 2 | #iot card columns 4
+[1280] URL pills: span aria-disabled=true href=null "[Placeholder] lxp.xiontechs.com" ; span aria-disabled=true href=null "[Placeholder] sxp.xiontechs.com" ; span aria-disabled=true href=null "[Placeholder] iot.xiontechs.com"
+[1280] pill hover: not-allowed | none | height 24px
+[1280] pill click: new tabs 0 | url /products | scrollY 1655 -> 1655
+[1280] pills in the Tab order: 0
+[1280] sub-nav lxp: section top 144 | H2 top 326 | scrollY 1578 of max 4915
+[1280] sub-nav sxp: section top 144 | H2 top 330 | scrollY 2907 of max 4915
+[1280] sub-nav iot: section top 144 | H2 top 326 | scrollY 3568 of max 4915
+[1280] direct #lxp: section top 144 | H2 top 326
+[1280] direct #sxp: section top 144 | H2 top 330
+[1280] direct #iot: section top 144 | H2 top 326
+[1280] mega menu SXP from /: section top 144 | H2 top 330
+[1080] lxp features 2 col | iot cards 4 col | sxp text first false | lxp pill 232x24 ellipsis false | frame width 1000 | no sideways scroll true
+[900] lxp features 2 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 852 | no sideways scroll true
+[899] lxp features 2 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 851 | no sideways scroll true
+[641] lxp features 2 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 593 | no sideways scroll true
+[640] lxp features 1 col | iot cards 2 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 608 | no sideways scroll true
+[390] lxp features 1 col | iot cards 1 col | sxp text first true | lxp pill 232x24 ellipsis false | frame width 358 | no sideways scroll true
+[390] direct #iot: section top 144 | H2 top 294
+[320] lxp features 1 col | iot cards 1 col | sxp text first true | lxp pill 202x24 ellipsis true | frame width 288 | no sideways scroll true
+[390] pill tap: new tabs 0 | url /products#lxp
