@@ -35,7 +35,7 @@ function isValidDate(value: string): boolean {
 const EMAIL_PARTS = /^[^\s@]+@[^\s@]+$/;
 
 // Prototype rule: text, "@", then a domain with a dot and 2+ characters after it.
-function isValidEmail(value: string): boolean {
+export function isValidEmail(value: string): boolean {
   if (!EMAIL_PARTS.test(value)) return false;
   const domain = value.slice(value.indexOf("@") + 1);
   const dot = domain.indexOf(".", 1);

@@ -227,6 +227,89 @@ describe("POST /api/contact honeypot", () => {
   });
 });
 
+const captureBody = {
+  type: "capture",
+  kind: "demo",
+  email: VISITOR.email,
+  website: "",
+};
+
+describe("POST /api/contact capture", () => {
+  it.each([
+    ["demo", "Demo capture"],
+    ["project", "Project capture"],
+  ])(
+    "answers 200 and sends one %s capture mail with Reply-To the email",
+    async (kind, subject) => {
+      const response = await POST(post({ ...captureBody, kind }));
+
+      expect(await answer(response)).toEqual({
+        status: 200,
+        body: { ok: true },
+      });
+      expect(sendMailMock).toHaveBeenCalledTimes(1);
+      expect(sendMailMock.mock.calls[0][0]).toMatchObject({
+        to: ENV.CONTACT_INBOX,
+        replyTo: VISITOR.email,
+        subject,
+      });
+      expect(loggedLines()).toEqual([]);
+    },
+  );
+
+  it("checks both limits with hashes of the client IP and the email", async () => {
+    await POST(post(captureBody));
+
+    expect(limitMock.mock.calls.map((call) => call[0])).toEqual([
+      rateLimitKey(IP, VISITOR.email),
+      ipRateLimitKey(IP),
+    ]);
+  });
+
+  it("answers 429 rate and sends nothing when the limit is reached", async () => {
+    limitMock.mockResolvedValue({ success: false });
+
+    const response = await POST(post(captureBody));
+
+    expect(await answer(response)).toEqual({
+      status: 429,
+      body: { error: "rate" },
+    });
+    expect(sendMailMock).not.toHaveBeenCalled();
+  });
+
+  it("answers 200 and does nothing else when the website field is filled", async () => {
+    const response = await POST(
+      post({ ...captureBody, website: "https://spam.example" }),
+    );
+
+    expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
+    expectNothingSent();
+    expect(createTransportMock).not.toHaveBeenCalled();
+    expect(ratelimitMock).not.toHaveBeenCalled();
+  });
+
+  it("answers 400 with the client wording for a bad email and sends nothing", async () => {
+    const response = await POST(post({ ...captureBody, email: "lan@school" }));
+
+    expect(await answer(response)).toEqual({
+      status: 400,
+      body: { errors: { email: CONTACT_ERRORS.email } },
+    });
+    expectNothingSent();
+  });
+
+  it("answers 400 send for an unknown kind and sends nothing", async () => {
+    const response = await POST(post({ ...captureBody, kind: "careers" }));
+
+    expect(await answer(response)).toEqual({
+      status: 400,
+      body: { error: "send" },
+    });
+    expectNothingSent();
+  });
+});
+
 describe("POST /api/contact bypassed client", () => {
   it.each([
     ["a missing name", { name: "" }, { name: CONTACT_ERRORS.name }],

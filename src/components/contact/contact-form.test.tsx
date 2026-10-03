@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { ContactForm } from "./contact-form";
 
 const tab = (name: string) => screen.getByRole("tab", { name });
@@ -67,6 +68,13 @@ afterEach(() => {
 });
 
 describe("ContactForm", () => {
+  it("posts the form natively, so a press before hydration never puts details in the URL", () => {
+    render(<ContactForm />);
+    expect(document.getElementById("demoForm")?.getAttribute("method")).toBe(
+      "post",
+    );
+  });
+
   it("selects Product demo by default and links each tab to its panel", () => {
     render(<ContactForm />);
     expect(screen.getByRole("tablist").getAttribute("aria-label")).toBe(
@@ -597,5 +605,75 @@ describe("ContactForm sending", () => {
     expect(screen.queryByRole("alert")).toBeNull();
     expect(document.activeElement).toBe(field("f-email"));
     expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("ContactForm capture prefill", () => {
+  const scrollIntoView = vi.fn();
+  beforeEach(() => {
+    scrollIntoView.mockReset();
+    Element.prototype.scrollIntoView = scrollIntoView;
+    sessionStorage.clear();
+  });
+  afterEach(() => {
+    sessionStorage.clear();
+  });
+
+  it("fills an empty Work email from the stored capture and removes the key", () => {
+    sessionStorage.setItem(CAPTURE_EMAIL_KEY, "lan@school.edu.vn");
+    render(<ContactForm />);
+    expect((field("f-email") as HTMLInputElement).value).toBe(
+      "lan@school.edu.vn",
+    );
+    expect(sessionStorage.getItem(CAPTURE_EMAIL_KEY)).toBeNull();
+  });
+
+  it("keeps a value the visitor typed before the prefill and still removes the key", () => {
+    sessionStorage.setItem(CAPTURE_EMAIL_KEY, "lan@school.edu.vn");
+    const getItem = vi.spyOn(Storage.prototype, "getItem");
+    getItem.mockImplementation(() => {
+      // The visitor typed in the moment before the effect read the key.
+      (document.getElementById("f-email") as HTMLInputElement).value =
+        "typed@x.com";
+      return "lan@school.edu.vn";
+    });
+    render(<ContactForm />);
+    getItem.mockRestore();
+    expect((field("f-email") as HTMLInputElement).value).toBe("typed@x.com");
+    expect(sessionStorage.getItem(CAPTURE_EMAIL_KEY)).toBeNull();
+  });
+
+  it("leaves the field empty when nothing is stored", () => {
+    render(<ContactForm />);
+    expect((field("f-email") as HTMLInputElement).value).toBe("");
+  });
+
+  it("stays silent when storage throws", () => {
+    const blocked = () => {
+      throw new DOMException("blocked", "SecurityError");
+    };
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(blocked);
+    vi.spyOn(Storage.prototype, "removeItem").mockImplementation(blocked);
+    expect(() => render(<ContactForm />)).not.toThrow();
+    expect((field("f-email") as HTMLInputElement).value).toBe("");
+    vi.restoreAllMocks();
+  });
+
+  it("scrolls the form into view for #project only", () => {
+    const { unmount } = render(
+      <div id="form">
+        <ContactForm />
+      </div>,
+    );
+    expect(scrollIntoView).not.toHaveBeenCalled();
+    unmount();
+    history.replaceState(null, "", "/demo#project");
+    render(
+      <div id="form">
+        <ContactForm />
+      </div>,
+    );
+    expect(scrollIntoView).toHaveBeenCalledTimes(1);
+    expect(scrollIntoView.mock.contexts[0]).toBe(field("form"));
   });
 });

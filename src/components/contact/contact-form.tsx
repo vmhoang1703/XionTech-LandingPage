@@ -19,7 +19,9 @@ import {
   type ContactField,
   type ContactType,
 } from "@/lib/contact/contact-rules";
+import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { CONTACT_STRINGS } from "./contact-strings";
+import { FIELD_ORDER, postSubmission } from "./post-submission";
 
 const S = CONTACT_STRINGS.form;
 
@@ -37,17 +39,7 @@ const FIELD_IDS: Record<ContactField, string> = {
   date: "f-date",
   message: "f-msg",
 };
-const FIELD_ORDER: readonly ContactField[] = [
-  "name",
-  "email",
-  "org",
-  "date",
-  "message",
-];
 const errorId = (field: ContactField) => `${FIELD_IDS[field]}-err`;
-
-const CONTACT_ENDPOINT = "/api/contact";
-const SEND_TIMEOUT_MS = 15_000;
 
 interface SharedValues {
   name: string;
@@ -125,50 +117,6 @@ function withoutError(
   return next;
 }
 
-type SendResult =
-  | { kind: "sent" | "rate" | "send" }
-  | { kind: "errors"; errors: ContactErrors };
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === "object" && value !== null;
-
-/** The known fields of a 400 `{ errors }` body; empty when there are none. */
-function readFieldErrors(body: unknown): ContactErrors {
-  const found: ContactErrors = {};
-  const errors = isRecord(body) ? body.errors : undefined;
-  if (!isRecord(errors)) return found;
-  for (const field of FIELD_ORDER) {
-    const message = errors[field];
-    if (typeof message === "string" && message) found[field] = message;
-  }
-  return found;
-}
-
-/** Post the request; every way to fail comes back as a result, never a throw. */
-async function postSubmission(payload: unknown): Promise<SendResult> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), SEND_TIMEOUT_MS);
-  try {
-    const response = await fetch(CONTACT_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      signal: controller.signal,
-    });
-    if (response.ok) return { kind: "sent" };
-    if (response.status === 429) return { kind: "rate" };
-    if (response.status === 400) {
-      const errors = readFieldErrors(await response.json().catch(() => null));
-      if (Object.keys(errors).length > 0) return { kind: "errors", errors };
-    }
-    return { kind: "send" };
-  } catch {
-    return { kind: "send" };
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
 function nextTabIndex(key: string, index: number): number | null {
   const last = TYPES.length - 1;
   switch (key) {
@@ -213,6 +161,29 @@ export function ContactForm() {
   useEffect(() => {
     if (failure) submitRef.current?.focus();
   }, [failure]);
+
+  // The capture band leaves its email in session storage. Read it once after
+  // mount, never overwrite a typed value, and never fail when storage is blocked.
+  useEffect(() => {
+    try {
+      const email = sessionStorage.getItem(CAPTURE_EMAIL_KEY);
+      if (email === null) return;
+      sessionStorage.removeItem(CAPTURE_EMAIL_KEY);
+      const input = document.getElementById("f-email");
+      if (input instanceof HTMLInputElement && input.value === "") {
+        input.value = email;
+      }
+    } catch {
+      // Storage is blocked: the visitor still gets the form, without a prefill.
+    }
+  }, []);
+
+  // `/demo#project` has no element to scroll to, so bring the form card in view.
+  useEffect(() => {
+    if (hash === "#project") {
+      document.getElementById("form")?.scrollIntoView();
+    }
+  }, [hash]);
 
   function selectType(next: ContactType) {
     if (next === type) return;
@@ -334,6 +305,7 @@ export function ContactForm() {
       </div>
       <form
         id="demoForm"
+        method="post"
         noValidate
         onSubmit={onSubmit}
         onChange={onFieldChange}

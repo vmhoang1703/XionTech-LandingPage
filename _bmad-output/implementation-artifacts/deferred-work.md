@@ -158,6 +158,24 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-5-site-footer.md`
   summary: Wrap the footer link columns (Products, Services, Company) in a `<nav aria-label="Footer">` landmark.
   evidence: Blind Hunter review 2026-10-01; the prototype has no landmark and FR-7 does not ask for one, so it is an a11y improvement beyond this story.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: One exported email helper (trim + `isValidEmail` + 254) used by `contact-rules.ts`, `submission.ts` and `capture-band.tsx`.
+  evidence: The rule is copied in three places today.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Expire or clear the capture email in session storage when `/demo` is never reached.
+  evidence: Only `/demo` removes the key.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: A Playwright browser test: Home band → client push → `/demo` tab and prefill.
+  evidence: Only the manual walk covers the full hand-off; unit tests mock the router.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Check Back after a successful capture does not leave the band on Sending...
+  evidence: maybe-false; settle in a browser.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Stop hover styles on disabled `.btn` (`:not(:disabled)` on hover rules).
+  evidence: Hover glow still shows on a disabled button.
+- source_spec: `_bmad-output/implementation-artifacts/spec-2-4-email-capture.md`
+  summary: Move the misplaced focus comment in capture-band.tsx and assert `.capture { overflow: hidden }` (the ring relies on it).
+  evidence: patch re-review minors, 2026-10-03.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-3-1-dark-home-hero.md`
   summary: Add an automated browser check for the Home hero CSS (glow layer painted, 2 columns at 900px / 1 at 899px, no sideways scroll at 390px); today only the walk script checks it.

@@ -304,6 +304,95 @@ describe("parseSubmission honeypot", () => {
   });
 });
 
+const captureBody = {
+  type: "capture",
+  kind: "demo",
+  email: "lan@school.edu.vn",
+  website: "",
+};
+
+describe("parseSubmission capture", () => {
+  it.each(["demo", "project"] as const)(
+    "accepts a %s capture and keeps only the kind and the email",
+    (kind) => {
+      const body = { ...captureBody, kind, name: "Lan", org: "School" };
+      expect(parseSubmission(body, NOW)).toEqual({
+        ok: true,
+        submission: { type: "capture", kind, email: "lan@school.edu.vn" },
+      });
+    },
+  );
+
+  it("trims the email like the client", () => {
+    expect(
+      parseSubmission({ ...captureBody, email: "  lan@school.edu.vn " }, NOW),
+    ).toMatchObject({ ok: true, submission: { email: "lan@school.edu.vn" } });
+  });
+
+  it("accepts an email of exactly 254 characters", () => {
+    const email = `${"a".repeat(254 - "@d.edu".length)}@d.edu`;
+    expect(email).toHaveLength(254);
+    expect(parseSubmission({ ...captureBody, email }, NOW).ok).toBe(true);
+  });
+
+  it.each([
+    ["without a dot in the domain", "lan@school"],
+    ["empty", ""],
+    ["only spaces", "   "],
+    ["with a space inside", "lan @school.edu.vn"],
+    ["over 254 characters", `${"a".repeat(255 - "@d.edu".length)}@d.edu`],
+  ])("returns the client wording for an email %s", (_label, email) => {
+    expect(parseSubmission({ ...captureBody, email }, NOW)).toEqual({
+      ok: false,
+      errors: { email: CONTACT_ERRORS.email },
+    });
+  });
+
+  it("treats a missing or non-text email as empty", () => {
+    expect(parseSubmission(without(captureBody, "email"), NOW)).toEqual({
+      ok: false,
+      errors: { email: CONTACT_ERRORS.email },
+    });
+    expect(parseSubmission({ ...captureBody, email: 42 }, NOW)).toEqual({
+      ok: false,
+      errors: { email: CONTACT_ERRORS.email },
+    });
+  });
+
+  it.each([
+    ["unknown", "careers"],
+    ["wrong case", "Demo"],
+    ["not text", ["demo"]],
+    ["missing", undefined],
+    ["a capture", "capture"],
+  ])("rejects a %s kind as a bad body", (_label, kind) => {
+    expect(parseSubmission({ ...captureBody, kind }, NOW)).toEqual(BAD);
+  });
+
+  it("judges the kind before the email", () => {
+    expect(
+      parseSubmission({ ...captureBody, kind: "x", email: "lan@school" }, NOW),
+    ).toEqual(BAD);
+  });
+
+  it("flags a filled website field before the kind and the email", () => {
+    const honeypot = { ok: false, honeypot: true };
+    expect(
+      parseSubmission({ ...captureBody, website: "https://spam.example" }, NOW),
+    ).toEqual(honeypot);
+    expect(
+      parseSubmission(
+        { ...captureBody, kind: "x", email: "no", website: "x" },
+        NOW,
+      ),
+    ).toEqual(honeypot);
+  });
+
+  it("does not flag an empty or missing website field", () => {
+    expect(parseSubmission(without(captureBody, "website"), NOW).ok).toBe(true);
+  });
+});
+
 describe("parseSubmission time zones", () => {
   // The visitor's own date is never earlier than the UTC date minus one day
   // (UTC-12), so the server cut-off is the UTC date minus one day.
