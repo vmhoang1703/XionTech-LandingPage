@@ -513,6 +513,12 @@
     transform: translateY(1px) scale(0.98);
   }
 
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
   .btn-primary {
     background: linear-gradient(
       180deg,
@@ -887,6 +893,102 @@
 
   .form-alert + .btn {
     margin-top: 12px;
+  }
+
+  /* Email capture band (amber surface) */
+  .capture {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--spacing-capture);
+  }
+
+  .cap-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .cap-form {
+    display: grid;
+    gap: 8px;
+  }
+
+  .cap-form label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  .cap-row {
+    display: flex;
+    gap: 10px;
+    padding: 6px;
+    background: var(--color-paper);
+    border: 1.5px solid var(--color-navy);
+    border-radius: var(--radius-full);
+    box-shadow: 0 20px 40px -20px rgb(22 54 99 / 0.45);
+  }
+
+  .cap-row input {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    padding-inline: 18px;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: transparent;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .cap-row input::placeholder {
+    color: var(--color-placeholder);
+  }
+
+  .cap-row input:focus {
+    outline: none;
+  }
+
+  .cap-row:focus-within {
+    box-shadow:
+      0 0 0 3px var(--color-focus),
+      0 20px 40px -20px rgb(22 54 99 / 0.45);
+  }
+
+  .cap-form small {
+    font-size: 0.84rem;
+    color: var(--color-muted);
+  }
+
+  .cap-form .err {
+    font-weight: 600;
+    color: var(--color-error);
+  }
+
+  .cap-form small a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: inherit;
+  }
+
+  @media (width <= --theme(--breakpoint-md)) {
+    .cap-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (width <= --theme(--breakpoint-sm)) {
+    .cap-row {
+      flex-direction: column;
+      border-radius: 20px;
+    }
+
+    .cap-row .btn {
+      justify-content: center;
+    }
   }
 
   /*

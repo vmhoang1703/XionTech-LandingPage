@@ -771,3 +771,65 @@ describe("contact form styles", () => {
     }
   });
 });
+
+describe("email capture band styles", () => {
+  const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
+  const colors = readThemeColors(GLOBALS_CSS);
+  const rule = (selector: string) => readRuleDeclarations(source, selector);
+  // The first rule for a selector, before any media query overrides it.
+  const baseRule = (selector: string) =>
+    readRules(source).find((r) => r.selectors.includes(selector))
+      ?.declarations ?? new Map<string, string>();
+
+  it("pads the band with the capture spacing token", () => {
+    expect(rule(".capture").get("padding-block")).toBe(
+      "var(--spacing-capture)",
+    );
+  });
+
+  it("splits the band in two columns", () => {
+    expect(baseRule(".cap-grid").get("grid-template-columns")).toBe("1fr 1fr");
+  });
+
+  it("stacks the band in one column up to the md breakpoint", () => {
+    expect(source).toMatch(
+      /@media \(width <= --theme\(--breakpoint-md\)\)\s*\{\s*\.cap-grid\s*\{[^}]*grid-template-columns:\s*1fr;/,
+    );
+  });
+
+  it("draws the field row as a white pill with a 1.5px navy border", () => {
+    const row = baseRule(".cap-row");
+    expect(row.get("background")).toBe("var(--color-paper)");
+    expect(row.get("border-radius")).toBe("var(--radius-full)");
+    expect(row.get("border")).toBe("1.5px solid var(--color-navy)");
+  });
+
+  it("shows a 3px ring in the focus colour around the focused row", () => {
+    expect(rule(".cap-row:focus-within").get("box-shadow")).toMatch(
+      /^0 0 0 3px var\(--color-focus\)/,
+    );
+  });
+
+  it("stacks the field above the button up to the sm breakpoint", () => {
+    expect(source).toMatch(
+      /@media \(width <= --theme\(--breakpoint-sm\)\)\s*\{\s*\.cap-row\s*\{[^}]*flex-direction:\s*column/,
+    );
+  });
+
+  it("shows capture errors in the error colour, which passes AA on amber", () => {
+    expect(rule(".cap-form .err").get("color")).toBe("var(--color-error)");
+    expect(contrastRatio(colors.error, colors.amber)).toBeGreaterThanOrEqual(
+      TEXT,
+    );
+  });
+
+  it("underlines the consent link", () => {
+    expect(rule(".cap-form small a").get("text-decoration")).toBe("underline");
+  });
+
+  it("dims a disabled button and shows the not-allowed cursor", () => {
+    const disabled = rule(".btn:disabled");
+    expect(disabled.get("opacity")).toBe("0.6");
+    expect(disabled.get("cursor")).toBe("not-allowed");
+  });
+});
