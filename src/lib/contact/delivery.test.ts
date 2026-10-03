@@ -27,8 +27,10 @@ vi.mock("@upstash/ratelimit", () => ({
 }));
 
 import {
+  checkIpRateLimit,
   checkRateLimit,
   getDeliveryConfig,
+  ipRateLimitKey,
   rateLimitKey,
   sendContactMail,
 } from "./delivery";
@@ -154,6 +156,32 @@ describe("rateLimitKey", () => {
   });
 });
 
+describe("ipRateLimitKey", () => {
+  it("is a SHA-256 hex digest with no raw IP in it", () => {
+    const key = ipRateLimitKey("203.0.113.7");
+
+    expect(key).toMatch(/^[0-9a-f]{64}$/);
+    expect(key).not.toContain("203.0.113.7");
+  });
+
+  it("is the same for the same IP and differs for another IP", () => {
+    expect(ipRateLimitKey("203.0.113.7")).toBe(ipRateLimitKey("203.0.113.7"));
+    expect(ipRateLimitKey("203.0.113.8")).not.toBe(
+      ipRateLimitKey("203.0.113.7"),
+    );
+  });
+
+  it("is not the key of the IP and email limit", () => {
+    expect(ipRateLimitKey("203.0.113.7")).not.toBe(
+      rateLimitKey("203.0.113.7", "ana@sunrise.edu"),
+    );
+  });
+
+  it("still gives a key when the IP is unknown", () => {
+    expect(ipRateLimitKey(undefined)).toMatch(/^[0-9a-f]{64}$/);
+  });
+});
+
 describe("checkRateLimit", () => {
   it("allows a send the store accepts", async () => {
     limitMock.mockResolvedValue({ success: true });
@@ -231,6 +259,64 @@ describe("checkRateLimit", () => {
     expect(line).toContain("rate limit unavailable");
     expect(line).toContain("unknown");
     expect(line).not.toContain("boom");
+  });
+});
+
+describe("checkIpRateLimit", () => {
+  it("allows a send the store accepts and denies one it refuses", async () => {
+    limitMock.mockResolvedValueOnce({ success: true });
+    expect(await checkIpRateLimit("ip-key")).toBe(true);
+    expect(limitMock).toHaveBeenCalledWith("ip-key");
+
+    limitMock.mockResolvedValueOnce({ success: false });
+    expect(await checkIpRateLimit("ip-key")).toBe(false);
+  });
+
+  it("uses 20 sends per hour, its own prefix, no in-process cache and a 3 s store timeout", async () => {
+    await checkIpRateLimit("ip-key");
+
+    expect(slidingWindowMock).toHaveBeenCalledWith(20, "1 h");
+    expect(ratelimitMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        limiter: "sliding-window-limiter",
+        prefix: "contact-ip",
+        ephemeralCache: false,
+        timeout: 3000,
+      }),
+    );
+  });
+
+  it("connects to the store with the KV variables", async () => {
+    await checkIpRateLimit("ip-key");
+
+    expect(redisMock).toHaveBeenCalledWith({
+      url: ENV.KV_REST_API_URL,
+      token: ENV.KV_REST_API_TOKEN,
+    });
+  });
+
+  it("allows the send and logs once when the store fails", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    limitMock.mockRejectedValue(new TypeError("boom for 203.0.113.7"));
+
+    expect(await checkIpRateLimit("ip-key")).toBe(true);
+
+    expect(error).toHaveBeenCalledTimes(1);
+    const line = error.mock.calls[0].join(" ");
+    expect(line).toContain("rate limit unavailable");
+    expect(line).toContain("TypeError");
+    expect(line).not.toContain("203.0.113.7");
+    expect(line).not.toContain("ip-key");
+  });
+
+  it("allows the send and logs once when the store times out", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    limitMock.mockResolvedValue({ success: true, reason: "timeout" });
+
+    expect(await checkIpRateLimit("ip-key")).toBe(true);
+
+    expect(error).toHaveBeenCalledTimes(1);
+    expect(error.mock.calls[0].join(" ")).toContain("rate limit unavailable");
   });
 });
 

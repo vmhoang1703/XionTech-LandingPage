@@ -2,7 +2,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { CONTACT_ERRORS, LENGTH_ERROR } from "@/lib/contact/contact-rules";
-import { rateLimitKey } from "@/lib/contact/delivery";
+import { ipRateLimitKey, rateLimitKey } from "@/lib/contact/delivery";
 
 const {
   createTransportMock,
@@ -107,8 +107,29 @@ function expectNoPersonalData(): void {
   expect(logged).not.toContain(VISITOR.email);
   expect(logged).not.toContain("Ana");
   expect(logged).not.toContain("Sunrise");
+  expect(logged).not.toContain(IP);
   expect(logged).not.toContain(rateLimitKey(IP, VISITOR.email));
+  expect(logged).not.toContain(ipRateLimitKey(IP));
   for (const value of Object.values(ENV)) expect(logged).not.toContain(value);
+}
+
+/**
+ * A store that counts like Upstash: each prefix has its own limit, and every
+ * key counts on its own.
+ */
+function useCountingStore(): void {
+  const limits: Record<string, number> = { contact: 5, "contact-ip": 20 };
+  const counts = new Map<string, number>();
+  ratelimitMock.mockImplementation(function (config: { prefix: string }) {
+    return {
+      limit: async (key: string) => {
+        const id = `${config.prefix}:${key}`;
+        const count = (counts.get(id) ?? 0) + 1;
+        counts.set(id, count);
+        return { success: count <= limits[config.prefix] };
+      },
+    };
+  });
 }
 
 function expectNothingSent(): void {
@@ -164,13 +185,17 @@ describe("POST /api/contact valid send", () => {
     });
   });
 
-  it("checks the limit with a hash of the client IP and the email, not the raw values", async () => {
+  it("checks the limits with hashes of the client IP and the email, not the raw values", async () => {
     await POST(post(demoBody));
 
-    expect(limitMock).toHaveBeenCalledTimes(1);
-    const key = limitMock.mock.calls[0][0] as string;
-    expect(key).toBe(rateLimitKey(IP, VISITOR.email));
-    expect(key).toMatch(/^[0-9a-f]{64}$/);
+    expect(limitMock).toHaveBeenCalledTimes(2);
+    const [pairKey, ipKey] = limitMock.mock.calls.map(
+      (call) => call[0] as string,
+    );
+    expect(pairKey).toBe(rateLimitKey(IP, VISITOR.email));
+    expect(ipKey).toBe(ipRateLimitKey(IP));
+    expect(pairKey).toMatch(/^[0-9a-f]{64}$/);
+    expect(ipKey).toMatch(/^[0-9a-f]{64}$/);
   });
 
   it("writes no log line", async () => {
@@ -338,6 +363,51 @@ describe("POST /api/contact rate limit", () => {
       body: { error: "rate" },
     });
     expect(sendMailMock).not.toHaveBeenCalled();
+    expect(limitMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("answers 429 rate and sends nothing when the IP alone is over its limit", async () => {
+    const blocked = ipRateLimitKey(IP);
+    limitMock.mockImplementation(async (key: string) => ({
+      success: key !== blocked,
+    }));
+
+    const response = await POST(post(demoBody));
+
+    expect(await answer(response)).toEqual({
+      status: 429,
+      body: { error: "rate" },
+    });
+    expect(sendMailMock).not.toHaveBeenCalled();
+  });
+
+  it("blocks the 21st send in the hour from one IP even with a new email each time", async () => {
+    useCountingStore();
+
+    const statuses: number[] = [];
+    for (let n = 1; n <= 21; n++) {
+      const response = await POST(
+        post({ ...demoBody, email: `visitor${n}@sunrise.edu` }),
+      );
+      statuses.push(response.status);
+    }
+
+    expect(statuses.slice(0, 20).every((status) => status === 200)).toBe(true);
+    expect(statuses[20]).toBe(429);
+    expect(sendMailMock).toHaveBeenCalledTimes(20);
+    const other = await POST(post(demoBody, "198.51.100.9"));
+    expect(other.status).toBe(200);
+  });
+
+  it("blocks the sixth send of one email from one IP", async () => {
+    useCountingStore();
+
+    const statuses: number[] = [];
+    for (let n = 1; n <= 6; n++) {
+      statuses.push((await POST(post(demoBody))).status);
+    }
+
+    expect(statuses).toEqual([200, 200, 200, 200, 200, 429]);
   });
 
   it("lets the same IP through with another email", async () => {
@@ -360,7 +430,7 @@ describe("POST /api/contact rate limit", () => {
     expect(limitMock).toHaveBeenCalledWith(rateLimitKey(IP, VISITOR.email));
   });
 
-  it("sends the mail anyway and logs once when the store is down", async () => {
+  it("sends the mail anyway and logs once for each limit when the store is down", async () => {
     limitMock.mockRejectedValue(
       new TypeError(`down for ${VISITOR.email} at ${ENV.KV_REST_API_URL}`),
     );
@@ -370,25 +440,28 @@ describe("POST /api/contact rate limit", () => {
     expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
     expect(sendMailMock).toHaveBeenCalledTimes(1);
     const lines = loggedLines();
-    expect(lines).toHaveLength(1);
-    expect(lines[0]).toContain("rate limit unavailable");
+    expect(lines).toHaveLength(2);
+    for (const line of lines) expect(line).toContain("rate limit unavailable");
   });
 
-  it("sends the mail anyway and logs once when the store does not answer", async () => {
+  it("sends the mail anyway and logs once for each limit when the store does not answer", async () => {
     limitMock.mockResolvedValue({ success: true, reason: "timeout" });
 
     const response = await POST(post(demoBody));
 
     expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
     expect(sendMailMock).toHaveBeenCalledTimes(1);
-    expect(loggedLines()).toHaveLength(1);
+    expect(loggedLines()).toHaveLength(2);
   });
 });
 
 describe("POST /api/contact mail fails", () => {
-  it("answers 502 send and logs the step and the error class only", async () => {
+  it("answers 502 send and logs the step, the error class and the SMTP code only", async () => {
     sendMailMock.mockRejectedValue(
-      new RangeError(`550 no such user ${VISITOR.email} for ${VISITOR.name}`),
+      Object.assign(
+        new RangeError(`550 no such user ${VISITOR.email} for ${VISITOR.name}`),
+        { code: "EAUTH" },
+      ),
     );
 
     const response = await POST(post(demoBody));
@@ -401,7 +474,25 @@ describe("POST /api/contact mail fails", () => {
     expect(lines).toHaveLength(1);
     expect(lines[0]).toContain("send");
     expect(lines[0]).toContain("RangeError");
+    expect(lines[0]).toContain("EAUTH");
     expect(lines[0]).not.toContain("550");
+    expectNoPersonalData();
+  });
+
+  it("logs no code when the error has none or the code is not a string", async () => {
+    for (const error of [
+      new RangeError("550"),
+      Object.assign(new RangeError("550"), { code: 550 }),
+    ]) {
+      vi.clearAllMocks();
+      sendMailMock.mockRejectedValue(error);
+
+      await POST(post(demoBody));
+
+      expect(loggedLines()).toEqual([
+        "Contact delivery: send failed RangeError",
+      ]);
+    }
   });
 
   it("logs an unknown class when the mail rejects with something that is not an Error", async () => {

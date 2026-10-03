@@ -1,7 +1,9 @@
 import { ipAddress } from "@vercel/functions";
 import {
+  checkIpRateLimit,
   checkRateLimit,
   getDeliveryConfig,
+  ipRateLimitKey,
   rateLimitKey,
   sendContactMail,
   type DeliveryConfig,
@@ -31,11 +33,19 @@ function readConfig(): DeliveryConfig | null {
   }
 }
 
-/** Log lines name the step and the error class only, never a message. */
+/** The SMTP error code (EAUTH, ETIMEDOUT...) when the error has a string one. */
+function errorCode(error: unknown): string | undefined {
+  if (!(error instanceof Error) || !("code" in error)) return undefined;
+  return typeof error.code === "string" ? error.code : undefined;
+}
+
+/** Log lines name the step, the error class and the code, never a message. */
 function logSendFailed(error: unknown): void {
+  const name = error instanceof Error ? error.name : "unknown";
+  const code = errorCode(error);
   console.error(
     "Contact delivery: send failed",
-    error instanceof Error ? error.name : "unknown",
+    code ? `${name} ${code}` : name,
   );
 }
 
@@ -53,10 +63,13 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const { submission } = parsed;
-  const key = rateLimitKey(ipAddress(request), submission.email);
-  if (!(await checkRateLimit(key))) {
-    return Response.json({ error: "rate" }, { status: 429 });
-  }
+  const ip = ipAddress(request);
+  // Each limit answers in turn: a send the first one refused does not count
+  // against the second.
+  const allowed =
+    (await checkRateLimit(rateLimitKey(ip, submission.email))) &&
+    (await checkIpRateLimit(ipRateLimitKey(ip)));
+  if (!allowed) return Response.json({ error: "rate" }, { status: 429 });
 
   try {
     await sendContactMail(config, submission);

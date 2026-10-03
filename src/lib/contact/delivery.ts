@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { Ratelimit } from "@upstash/ratelimit";
+import { Ratelimit, type Duration } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { createTransport } from "nodemailer";
 import type { ContactSubmission } from "@/components/contact/contact-form";
@@ -39,14 +39,22 @@ export function getDeliveryConfig(): DeliveryConfig {
   return config;
 }
 
+function sha256Hex(text: string): string {
+  return createHash("sha256").update(text).digest("hex");
+}
+
 /**
- * The rate-limit key: a SHA-256 hex digest of the IP and the lower-cased
- * email, so the store holds no personal data. An unknown IP still gets a key.
+ * The key of the IP and email limit: a SHA-256 hex digest of the IP and the
+ * lower-cased email, so the store holds no personal data. An unknown IP still
+ * gets a key.
  */
 export function rateLimitKey(ip: string | undefined, email: string): string {
-  return createHash("sha256")
-    .update(`${ip ?? "unknown"}|${email.toLowerCase()}`)
-    .digest("hex");
+  return sha256Hex(`${ip ?? "unknown"}|${email.toLowerCase()}`);
+}
+
+/** The key of the IP-only limit: a SHA-256 hex digest of the IP. */
+export function ipRateLimitKey(ip: string | undefined): string {
+  return sha256Hex(ip ?? "unknown");
 }
 
 /** One log line; `cause` is an error class or "timeout", never a message. */
@@ -55,19 +63,24 @@ function logRateLimitUnavailable(cause: string): void {
 }
 
 /**
- * True when the send may go ahead: at most 5 per key in 10 minutes. When the
- * store fails or does not answer in 3 s the send is allowed (fail open) and
- * one line is logged.
+ * True when the send may go ahead: at most `tokens` per key in `window`. When
+ * the store fails or does not answer in 3 s the send is allowed (fail open)
+ * and one line is logged.
  */
-export async function checkRateLimit(key: string): Promise<boolean> {
+async function withinLimit(
+  prefix: string,
+  tokens: number,
+  window: Duration,
+  key: string,
+): Promise<boolean> {
   try {
     const limiter = new Ratelimit({
       redis: new Redis({
         url: process.env.KV_REST_API_URL,
         token: process.env.KV_REST_API_TOKEN,
       }),
-      limiter: Ratelimit.slidingWindow(5, "10 m"),
-      prefix: "contact",
+      limiter: Ratelimit.slidingWindow(tokens, window),
+      prefix,
       ephemeralCache: false,
       timeout: 3000,
     });
@@ -78,6 +91,16 @@ export async function checkRateLimit(key: string): Promise<boolean> {
     logRateLimitUnavailable(error instanceof Error ? error.name : "unknown");
     return true;
   }
+}
+
+/** The IP and email limit: 5 sends per key in 10 minutes. */
+export function checkRateLimit(key: string): Promise<boolean> {
+  return withinLimit("contact", 5, "10 m", key);
+}
+
+/** The IP-only limit: 20 sends per key in 1 hour, whatever the email. */
+export function checkIpRateLimit(key: string): Promise<boolean> {
+  return withinLimit("contact-ip", 20, "1 h", key);
 }
 
 function mailText(submission: ContactSubmission): string {
