@@ -2,7 +2,7 @@
 title: 'Story 2.4: Email capture band (demo, project)'
 type: 'feature'
 created: '2026-10-03'
-status: 'in-progress'
+status: 'done'
 baseline_commit: 'dc9f34943c87b755ce0ef914630cbdfbc0317bd9'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -66,21 +66,21 @@ context: ['{project-root}/AGENTS.md']
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/lib/contact/contact-rules.ts` -- export the email check (`isValidEmail`) unchanged -- the band and the server share one rule.
+- [x] `src/lib/contact/contact-rules.ts` -- export the email check (`isValidEmail`) unchanged -- the band and the server share one rule.
   - red: `src/lib/contact/contact-rules.test.ts` -- `isValidEmail` is exported and accepts `ana@gmail.com`, rejects `ana@school`.
-- [ ] `src/lib/contact/submission.ts` + `delivery.ts` -- `type: "capture"` with `kind` demo|project and `email` (honeypot first, then email check → `{errors:{email}}`, unknown kind → bad); mail subject "Demo capture" / "Project capture" (no personal data), body with kind and email, Reply-To the email -- CAP-4.
+- [x] `src/lib/contact/submission.ts` + `delivery.ts` -- `type: "capture"` with `kind` demo|project and `email` (honeypot first, then email check → `{errors:{email}}`, unknown kind → bad); mail subject "Demo capture" / "Project capture" (no personal data), body with kind and email, Reply-To the email -- CAP-4.
   - red: `submission.test.ts` + `delivery.test.ts` + `src/app/api/contact/route.test.ts` -- capture parse rows of the matrix; capture mail options; route sends one mail for a valid capture and none for a filled honeypot.
-- [ ] `src/components/contact/post-submission.ts` + `contact-form.tsx` -- move `postSubmission` out of the form unchanged so the band reuses it; the form imports it -- shared send behaviour.
+- [x] `src/components/contact/post-submission.ts` + `contact-form.tsx` -- move `postSubmission` out of the form unchanged so the band reuses it; the form imports it -- shared send behaviour.
   - red: `src/components/contact/post-submission.test.ts` -- 200 → sent, 429 → rate, 400 with errors → errors, other → send, abort at 15 s → send.
-- [ ] `src/components/contact/capture-band.tsx` + `contact-strings.ts` -- client band per the prototype (kinds, texts, consent + Privacy link, hidden honeypot, validation, Sending..., inline failure, session storage write in try/catch, `router.push` to `/demo#form` or `/demo#project`) -- CAP-1…CAP-4, CAP-7.
+- [x] `src/components/contact/capture-band.tsx` + `contact-strings.ts` -- client band per the prototype (kinds, texts, consent + Privacy link, hidden honeypot, validation, Sending..., inline failure, session storage write in try/catch, `router.push` to `/demo#form` or `/demo#project`) -- CAP-1…CAP-4, CAP-7.
   - red: `src/components/contact/capture-band.test.tsx` -- each band matrix row (`next/navigation` and `sessionStorage` mocked).
-- [ ] `src/components/contact/contact-form.tsx` -- on mount read the key once (try/catch), fill `#f-email` only if empty, remove the key; on `#project` scroll the form into view -- CAP-6, CAP-7.
+- [x] `src/components/contact/contact-form.tsx` -- on mount read the key once (try/catch), fill `#f-email` only if empty, remove the key; on `#project` scroll the form into view -- CAP-6, CAP-7.
   - red: `contact-form.test.tsx` -- prefill when empty, keep a typed value, key removed, storage throwing is silent, scroll called for `#project`.
-- [ ] `src/app/globals.css` -- `.capture` band, `.cap-grid` (1 column ≤ 900px), `.cap-form`, `.cap-row` (white pill, 1.5px navy border on amber, 3px focus-within ring in `--color-focus`, column ≤ 640px), `.cap-form .err`, consent link, `.btn:disabled` -- CAP-5, CAP-8.
+- [x] `src/app/globals.css` -- `.capture` band, `.cap-grid` (1 column ≤ 900px), `.cap-form`, `.cap-row` (white pill, 1.5px navy border on amber, 3px focus-within ring in `--color-focus`, column ≤ 640px), `.cap-form .err`, consent link, `.btn:disabled` -- CAP-5, CAP-8.
   - red: `src/lib/design/contrast.test.ts` -- the new rules exist with the token values; error colour on amber meets 4.5:1.
-- [ ] `src/app/page.tsx` + `e2e/smoke.spec.ts` -- render `<CaptureBand kind="demo" />` on an amber surface after the Home placeholder text (lead decision); smoke checks `/` contains "See it working at your school." -- browser walk and success signal.
+- [x] `src/app/page.tsx` + `e2e/smoke.spec.ts` -- render `<CaptureBand kind="demo" />` on an amber surface after the Home placeholder text (lead decision); smoke checks `/` contains "See it working at your school." -- browser walk and success signal.
   - red: `src/app/page.test.tsx` -- Home renders the demo band heading and "Book a demo" button.
-- [ ] `docs/contact-delivery.md` -- capture mails (subject, fields, same guards) -- docs.
+- [x] `docs/contact-delivery.md` -- capture mails (subject, fields, same guards) -- docs.
 
 **Acceptance Criteria:**
 - Given a page with the demo band, when a visitor submits a valid work email, then one capture mail reaches the contact inbox and the visitor lands on `/demo#form` with the email prefilled and no email in the address bar.
@@ -91,22 +91,51 @@ context: ['{project-root}/AGENTS.md']
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Band | 1280px | — | H2 + lede left, form right; amber band; white pill row with 1.5px navy border; navy button | — | `index.html:141-153`, `site.css:307-321,481` | |
-| Band | ≤ 900px / ≤ 640px | — | one column / field above button, button full width | — | `site.css:441,464-465` | |
-| Field | focus | keyboard (Tab) | 3px navy ring around the row | at once | `site.css:318`, UX-DR4 | |
-| Submit | invalid email | mouse, keyboard (Enter), touch | inline "Please enter a valid email address.", announced; focus on the field | at once | EXPERIENCE.md:142 | |
-| Field | typing after an error | keyboard | error disappears | at once | `site.js:216` | |
-| Submit | valid email | mouse, keyboard, touch | button disabled, "Sending..." | until the answer | EXPERIENCE.md:209 | |
-| Submit | 200 (demo / project) | — | `/demo#form` Product demo tab / `/demo#project` Outsourcing tab scrolled to the form; Work email filled; URL has no email | after the answer | CAP-6 | |
-| Submit | 502 / 429 / timeout | — | inline send or rate message in the band; email kept; button enabled | at once / 15 s | CAP-4 | |
-| Consent | look | — | kind's consent line + underlined "Privacy policy" → `/privacy` | — | CAP-2 | |
-| `/demo` | arrive with a typed value | keyboard | the typed value stays | — | CAP-7 | |
+| Band | 1280px | — | H2 + lede left, form right; amber band; white pill row with 1.5px navy border; navy button | — | `index.html:141-153`, `site.css:307-321,481` || ✅ Chrome 1280 (border computes 1px at 1x) |
+| Band | ≤ 900px / ≤ 640px | — | one column / field above button, button full width | — | `site.css:441,464-465` || ✅ Chrome 900 + 390 |
+| Field | focus | keyboard (Tab) | 3px navy ring around the row | at once | `site.css:318`, UX-DR4 || ✅ Chrome |
+| Submit | invalid email | mouse, keyboard (Enter), touch | inline "Please enter a valid email address.", announced; focus on the field | at once | EXPERIENCE.md:142 || ✅ Chrome: Enter at 1280 (message, role=alert, aria-invalid, focus); touch tap at 390 (message only); click not walked |
+| Field | typing after an error | keyboard | error disappears | at once | `site.js:216` || ✅ Chrome |
+| Submit | valid email | mouse, keyboard, touch | button disabled, "Sending..." | until the answer | EXPERIENCE.md:209 || ✅ Chrome: Sending... + disabled observed for click; Enter and touch tap observed landing only |
+| Submit | 200 (demo / project) | — | `/demo#form` Product demo tab / `/demo#project` Outsourcing tab scrolled to the form; Work email filled; URL has no email | after the answer | CAP-6 || ✅ Chrome (project via client push) |
+| Submit | 502 / 429 / timeout | — | inline send or rate message in the band; email kept; button enabled | at once / 15 s | CAP-4 || ✅ Chrome (timeout 15.3 s) |
+| Consent | look | — | kind's consent line + underlined "Privacy policy" → `/privacy` | — | CAP-2 || ✅ Chrome |
+| `/demo` | arrive with a typed value | keyboard | the typed value stays | — | CAP-7 || ✅ unit test only (not observable in a browser) |
 
 ## Implementation Notes
+
+- Task 1: `isValidEmail` is exported unchanged; it does not trim and does not check `EMAIL_MAX_LENGTH` (254). Server (task 2) and band (task 4) must both trim first, then require `isValidEmail` and length ≤ 254, so they always agree.
+- Task 2: `submission.ts` exports `CaptureSubmission` (`{ type: "capture", kind, email }`) and `ValidSubmission` (the union the route mails); order type → honeypot → kind (bad) → trimmed email with `isValidEmail` and ≤ 254 (`{ errors: { email } }`). Mail subject "Demo capture" / "Project capture", body `Kind` + `Email`, Reply-To the email. `route.ts` unchanged. The band (task 4) posts `{ type: "capture", kind, email, website }`.
+- Task 3: `post-submission.ts` exports `postSubmission(payload): Promise<SendResult>` (`sent` | `rate` | `send` | `errors` with `ContactErrors`), `SendResult`, `FIELD_ORDER`, `SEND_TIMEOUT_MS` (15 000).
+- Session storage key for the prefill: `xt-capture-email` (tasks 4 and 5 share it; export it from one module, e.g. `src/components/contact/capture-storage.ts`, or from the band).
+- Task 4: `CaptureBand({ kind })` renders its own `<section class="capture surface-amber" aria-labelledby="cap-h">` (task 7 must not wrap it in another amber section); `capture-storage.ts` exports `CAPTURE_EMAIL_KEY` ("xt-capture-email"); send and rate messages use `small.err` in `.cap-form` (task 6 styles both); focus returns to the submit button after a send or rate failure (as in the contact form).
 
 ## Spec Change Log
 
 ## Review Triage Log
+
+Step 4 full review, 2026-10-03 — rows 16-18 added when the Edge Case Hunter reported after the first triage (Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor, Security Auditor; task-review minors included).
+
+| # | Finding (source) | Verdict | Route | Evidence |
+|---|---|---|---|---|
+| 1 | A press before hydration or with JS off does a native GET and puts `?email=` in the URL (Verification Gap); same idiom in the contact form | medium | patch | `capture-band.tsx` and `contact-form.tsx` forms have no `method`; breaks CAP-7 / NFR-3. Fix: `method="post"` on both (similar check). |
+| 2 | Prototype rules `.capture::before` ring, `.cap-grid h2 { max-width: 15ch }`, `.cap-grid .lede { margin-top: 14px }` not ported (Acceptance) | medium | patch | The spec says port, do not redesign; `site.css:308,310,311`. Screenshot shows the lede touching the heading. |
+| 3 | Ledger says timeout 15.4 s; `walk-output.txt` says 15.2 s; UX Checked column empty (Acceptance) | - | evidence | Controller error from the first walk; ledger corrected; the Checked column is filled at step 5. |
+| 4 | Email rule `!isValidEmail || length > 254` in three places (Blind) | low | defer | `contact-rules.ts:58`, `submission.ts:113`, `capture-band.tsx:65`; one helper later. |
+| 5 | Email stays in session storage if `/demo` is never reached (Blind) | low | defer | Only `/demo` removes the key; same tab session only. |
+| 6 | No automated test runs band → client push → `/demo` prefill together (Verification Gap) | medium | defer | Covered by the browser walk (evidence); needs a Playwright browser project the repo does not have. |
+| 7 | Back after a successful capture may show the band stuck on Sending... (Blind) | maybe-false | defer | Client navigation remounts Home without Activity; settle in a browser. |
+| 8 | `.btn:disabled` does not stop hover glow/background (Blind, task 6 minor) | low | defer | Visual only while sending. |
+| 9 | Second submit before re-render could post twice (Verification Gap) | low | reject | `setStatus("sending")` runs before the await and the button is disabled; a browser blocks Enter on a disabled default button. |
+| 10 | Band copy not marked `[Placeholder]` (Blind) | false | reject | Copy is the approved prototype text (UX spine); it describes a real service. |
+| 11 | Project consent says "your details" (Blind) | false | reject | CAP-2 sets this wording. |
+| 12 | `/privacy` returns 404 (Blind) | low | reject | Known since Story 2.2 (deferred-work); Story 2.1 (Andy, Sun 04/10) builds it. |
+| 13 | Prefill writes the DOM outside React state (Blind) | false | reject | The form is uncontrolled and reads values with FormData at submit; no state to lose. |
+| 14 | Project band unused; capture mail has only kind and email; contrast of muted text on amber unchecked; test cleanup; smoke reads text twice (Blind) | low | reject | Spec scope (page stories place bands; CAP-4 mail); cosmetic test nits. |
+| 15 | Fail-open limiter and IP header trust (Security, unverifiable) | maybe-false | reject | Lead decisions from Story 2.3; production runs on Vercel. |
+| 16 | A late 200 after the visitor left Home still stores the email and pushes to /demo (Edge) | medium | patch | `capture-band.tsx:78-82` has no unmount guard. Fix: ignore results after unmount. |
+| 17 | Band media queries use `<=` while the file's layout uses `<`; at exactly 900px the band stacks on a desktop layout (Edge) | false | reject | First routed as patch (cb665a5) without checking the contract; CAP-8 ("at 640px and below") and EXPERIENCE.md ("≤ 900px") require `<=`, and `globals.css:320` uses `<=`. The walk showed two columns at 900px; reverted. |
+| 18 | Two bands on one page would duplicate ids (Edge) | low | reject | One band per page by design (FR-33); `useId` adds complexity. |
 
 ## Design Notes
 
@@ -124,3 +153,39 @@ The band posts through the same route so the honeypot, both rate limits, the con
 **Manual checks:**
 - Walk the UX checks on `npm run dev` at 1280px, 900px and 390px with `/api/contact` intercepted in the browser (no real mail).
 - After merge: one real capture on the dev site reaches the inbox and lands prefilled.
+
+## Acceptance Evidence
+
+Re-captured after the step-4 patches (cb665a5, ca73c72) and the evidence re-audit on 2026-10-03; each command ran in the foreground (two background runs were stopped by Claude Code for low memory).
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
+- `npm test` -- exit 0 -- "Tests  572 passed (572)"
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%", "C1 ok: 9 changed file(s) with branch coverage >= 80% vs origin/develop."
+- `npm run build && npm run test:smoke` -- exit 0 -- "3 passed (25.5s)"
+- `npm audit --omit=dev` -- exit 0 -- "found 0 vulnerabilities"
+
+**Observed**
+
+- In Chrome on `npm run dev` at 1280px, 900px and 390px with `/api/contact` intercepted (no mail) -- `walk-output.txt`: band look and layout, focus ring; invalid email by Enter at 1280 (message, role=alert, aria-invalid, aria-describedby, focus on the field, no request) and by touch tap at 390 (message only; click not walked); error clears on typing; Sending... with the button disabled (click); valid submit by click lands on `/demo#form` with Work email filled, storage cleared and no email in the URL (URL checked on this path only); valid submit by Enter and by touch tap land on `/demo#form` with Work email filled; the project path (`router.push("/demo#project")`) opens the Outsourcing tab scrolled to the form; 502 / 429 / timeout (15.3 s) show their message with the email kept and the button enabled; consent line with an underlined "Privacy policy" link to `/privacy`; full-width button at 390px; no band on `/demo`.
+- The row border computes to 1px in Chrome at 1x (the rule is 1.5px; Chrome rounds it, as with the focus ring in Story 1.1).
+- Not observable in a browser: a value typed on `/demo` before the prefill runs; `contact-form.test.tsx` covers it.
+- Both forms post with `method="post"` (tests in `capture-band.test.tsx` and `contact-form.test.tsx`).
+
+**Artifacts**
+
+- spec-2-4-email-capture-evidence/verification.txt -- 4196 bytes -- sha256 01ce27ed8a64 -- every Verification command after the step-4 patches, run one at a time in the foreground
+- spec-2-4-email-capture-evidence/walk-output.txt -- 2163 bytes -- sha256 02c433c63358 -- UX walk observations L1-L9 and CAP-9, incl. keyboard and touch submit, link target and underline, full-width button
+- spec-2-4-email-capture-evidence/walk.mjs -- 8483 bytes -- sha256 e85d926af9df -- the walk script
+- spec-2-4-email-capture-evidence/band-1280.png -- 141606 bytes -- sha256 ce2c481d30ce -- demo band on Home at 1280px, with the ported ring
+- spec-2-4-email-capture-evidence/band-900.png -- 132732 bytes -- sha256 b9a8127e2d71 -- band at 900px, one column
+- spec-2-4-email-capture-evidence/band-390.png -- 93520 bytes -- sha256 2c409e05ec96 -- band at 390px, field above a full-width button
+- spec-2-4-email-capture-evidence/band-error-1280.png -- 143090 bytes -- sha256 7b1efe820cde -- invalid email error
+- spec-2-4-email-capture-evidence/band-failure-1280.png -- 145966 bytes -- sha256 72ed16a3a36a -- send failure message, email kept
+- spec-2-4-email-capture-evidence/demo-prefilled-1280.png -- 380911 bytes -- sha256 8bc159a2ae34 -- /demo#form with Work email prefilled
+
+**Not captured**
+
+- A real capture mail on the dev site after merge (lead).
+- A screen-reader pass.
