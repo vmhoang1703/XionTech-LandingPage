@@ -39,7 +39,8 @@ context:
 | "Cookies and analytics" | read | any | text starts with `[Placeholder]` | — | CAP-2, A3 | page.test "placeholder" |
 | Text column | width 1280px and 375px | any | 720px reading column, centred; no sideways scroll at 375px | — | mockup `.story-body`, Responsive & Platform | ✅ Chrome: 720px box (672px text + padding), centred at 1280; no sideways scroll at 720, 390, 375 |
 | Footer "Privacy policy" | click or Enter | mouse, keyboard | opens `/privacy` | — | CAP-5 | site-footer.test "privacy link"; smoke |
-| Footer "Privacy policy" | tap | touch, pen | opens `/privacy` | — | CAP-5 | ✅ Chrome 390 touch tap (pen not walked) |
+| Footer "Privacy policy" | tap | touch | opens `/privacy` | — | CAP-5 | ✅ Chrome 390 touch tap |
+| Footer "Privacy policy" | tap | pen | opens `/privacy` | — | CAP-5 | not checked (no pen device) |
 
 ## Verification
 
