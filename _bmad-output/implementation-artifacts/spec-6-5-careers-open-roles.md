@@ -2,7 +2,8 @@
 title: 'Story 6.5: Careers page and open roles'
 type: 'feature'
 created: '2026-10-03'
-status: 'draft'
+status: 'in-progress'
+baseline_commit: '8964d3c710d3da64d3458afe3052538b2ae3f93e'
 route: 'dispatch'
 review_loop_iteration: 0
 context: ['{project-root}/AGENTS.md']
