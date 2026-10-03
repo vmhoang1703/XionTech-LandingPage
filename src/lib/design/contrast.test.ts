@@ -739,4 +739,35 @@ describe("contact form styles", () => {
   it("does not redefine sr-only, which Tailwind provides", () => {
     expect(source).not.toMatch(/\.sr-only\s*\{/);
   });
+
+  it("shows the send-failure alert in the error colour, which passes AA on the paper card", () => {
+    const rule = readRuleDeclarations(source, ".form-alert");
+    expect(rule.get("color")).toBe("var(--color-error)");
+    expect(contrastRatio(colors.error, colors.paper)).toBeGreaterThanOrEqual(
+      TEXT,
+    );
+  });
+
+  it("centres the thank-you panel", () => {
+    const rule = readRuleDeclarations(source, ".form-ok");
+    expect(rule.get("text-align")).toBe("center");
+  });
+
+  it("draws the thank-you icon in navy, which passes the non-text 3:1 on the paper card", () => {
+    const rule = readRuleDeclarations(source, ".form-ok svg");
+    expect(rule.get("color")).toBe("var(--color-navy)");
+    expect(contrastRatio(colors.navy, colors.paper)).toBeGreaterThanOrEqual(
+      NON_TEXT,
+    );
+  });
+
+  it("keeps the global focus ring on the thank-you panel it receives focus on", () => {
+    const rules = readRules(source).filter((rule) =>
+      rule.selectors.some((selector) => selector.startsWith(".form-ok")),
+    );
+    expect(rules.length).toBeGreaterThan(0);
+    for (const rule of rules) {
+      expect(rule.declarations.get("outline")).toBeUndefined();
+    }
+  });
 });
