@@ -1,6 +1,12 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { HomeHero } from "./home-hero";
+
+// jsdom has no WebGL; the silk falls back to the static glow.
+vi.mock("@/components/home/silk-shader", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/components/home/silk-shader")>()),
+  createSilk: () => null,
+}));
 
 function renderHero() {
   render(<HomeHero />);

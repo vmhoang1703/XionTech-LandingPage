@@ -10,5 +10,7 @@ test(
     expect(response.status()).toBe(200);
     expect(html).toContain("connected");
     expect(html).toContain("Explore our products");
+    // The motion toggle only appears once WebGL is confirmed in the browser.
+    expect(html).not.toContain("Pause motion");
   },
 );

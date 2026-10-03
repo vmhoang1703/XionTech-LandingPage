@@ -1177,6 +1177,105 @@
   }
 }
 
+@layer components {
+  /*
+    Shared hero motion (Story 1.6 motion part, Sammy). Ported from the
+    prototype site.css: a blurred aurora that drifts for 5s and holds, the
+    strand ribbon canvas (<HeroArt />), and the highlight mark drawing in over
+    1.2s after 0.5s. The global reduced-motion rule in @layer base stops all
+    of it, so content shows in its final state.
+  */
+  /* Only heroes with <HeroArt /> clip and stack their art */
+  .page-hero:has(> .aurora) {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .page-hero .strands {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .page-hero .aurora {
+    position: absolute;
+    inset: -20%;
+    z-index: -2;
+    animation: hero-drift 5s var(--ease-brand) 1 forwards;
+  }
+
+  .hero-light .aurora {
+    filter: blur(60px);
+    background:
+      radial-gradient(
+        35% 40% at 78% 18%,
+        color-mix(in srgb, var(--color-amber) 42%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        40% 50% at 92% 70%,
+        color-mix(in srgb, var(--color-navy) 28%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        45% 45% at 55% 40%,
+        color-mix(in srgb, var(--color-ice) 70%, transparent),
+        transparent 70%
+      );
+  }
+
+  .hero-navy .aurora {
+    filter: blur(70px);
+    background:
+      radial-gradient(
+        30% 40% at 85% 15%,
+        color-mix(in srgb, var(--color-amber) 35%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        40% 50% at 20% 90%,
+        color-mix(in srgb, var(--color-navy-soft) 50%, transparent),
+        transparent 70%
+      );
+  }
+
+  .hero-amber .aurora {
+    filter: blur(60px);
+    background:
+      radial-gradient(
+        35% 45% at 85% 30%,
+        color-mix(in srgb, var(--color-white) 55%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        30% 40% at 10% 90%,
+        color-mix(in srgb, var(--color-navy) 18%, transparent),
+        transparent 70%
+      );
+  }
+
+  @keyframes hero-drift {
+    to {
+      transform: translate3d(-3%, 2%, 0) scale(1.06);
+    }
+  }
+
+  .hl::after {
+    transform-origin: left;
+    animation: hl-draw 1.2s 0.5s var(--ease-brand) both;
+  }
+
+  @keyframes hl-draw {
+    from {
+      transform: scaleX(0);
+    }
+  }
+}
+
 @layer utilities {
   /*
     Stacked Vietnamese diacritics need room (floor 1.18). In this layer the

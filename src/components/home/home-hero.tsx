@@ -1,10 +1,12 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { homeHero } from "@/content/home";
+import { HeroSilk } from "./hero-silk";
 
 // Server Component: text and CTA render without JavaScript. The static navy
-// and amber glow (.silk-fallback) is always painted; Story 3.2's silk canvas
-// draws above it, so it is what shows without JavaScript or WebGL.
+// and amber glow (.silk-fallback) is always painted; HeroSilk (Story 3.2)
+// draws the silk canvas above it and adds the motion toggle as a client
+// island, so the glow is what shows without JavaScript or WebGL.
 export function HomeHero() {
   const { label, title, sub, cta, devices } = homeHero;
 
@@ -14,6 +16,7 @@ export function HomeHero() {
       className="hero-silk relative isolate flex min-h-[calc(100dvh-var(--spacing-header-height))] items-center"
     >
       <div aria-hidden="true" className="silk-fallback" />
+      <HeroSilk />
       <div className="wrap grid w-full grid-cols-1 items-center gap-8 py-10 md:grid-cols-[0.92fr_1.08fr]">
         <div>
           <span className="label">{label}</span>

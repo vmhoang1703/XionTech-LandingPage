@@ -519,3 +519,15 @@ Template:
 - **Prompt (Hoang Vu):** build easy stories in parallel; 1.7, 2.1 and 4.1 run at the same time in three git worktrees.
 - **What the AI did:** one-shot build in its own worktree: `not-found.tsx` with the navy hero, "Go to Home" and three section links, no capture band, title "Page not found" with noindex, a unit test and a `@smoke` 404 test. Full checks, then the build, smoke and browser walk in the main checkout. A 5-layer review found no Critical or Important issues.
 - **AI got it wrong?** Yes. The worktrees first lacked BMad's git-ignored personal config, so every build agent stopped at once. Turbopack rejected the shared `node_modules` link in the worktree, so the build had to run in the main checkout. The controller left the spec out of the review diff, so one reviewer reported a missing UX table that exists.
+
+## 2026-10-04 — Story 3.2 silk and motion toggle, after 3.1 merged
+
+- **Prompt (Son Nguyen):** 3.1 merged; move to 3.2 and pull the latest `develop`.
+- **What the AI did:** merged `develop` (resolving the hero and Home test conflicts), wrote the 3.2 build spec with a 14-line UX checks table, fixed three things test-first, walked every line in Chrome (motion proven by comparing screenshots 1.5s apart; reduced motion, JavaScript off and no WebGL each in their own browser context) and ran a light review (no findings).
+- **AI got it wrong?** Yes. The first build put the canvas at `-z-10`; once 3.1 added its opaque glow at −2, the silk was painted underneath and could never show, and every unit test still passed. It was only noticed while resolving the merge. The toggle was 38px wide, not 36px, and the icons were inline SVG, not Phosphor. The first walk also said the silk kept moving after Pause, because it compared an area with the toggle and text drawn over the canvas; a clean strip at the edge showed it stopped.
+
+## 2026-10-04 — Story 1.6 motion part on Andy's `/demo` hero
+
+- **Prompt (Son Nguyen):** apply the same kind of motion as our Home hero to Andy's pages (Andy agreed), capture screenshots of his page, and commit it into PR #23.
+- **What the AI did:** proposed Story 1.6's motion ACs (aurora, strand ribbon, highlight draw-in; an "after demo" story), wrote a build spec with a 9-line UX checks table, built a shared `HeroArt` client component and `strands.ts` ported from the prototype, CSS in a shared section of `globals.css`, one line on `/demo`; tests first, a Chrome walk with screenshots of `/demo`, and a full 4-layer review (4 patched, the rest triaged).
+- **AI got it wrong?** Yes, several times. A first draft added `setTransform?.()` only to suit a test mock (test logic in production code). All four reviewers found that the ribbon was never redrawn after coming back on screen; the unit tests had only checked that drawing stops. The walk misled three times: a screenshot strip covered by the form card, a pixel read taken before the canvas's first paint, and a "scroll away" that never took the 1123px hero off a short page. Each was traced (draw-call and observer logs) before any code changed.
