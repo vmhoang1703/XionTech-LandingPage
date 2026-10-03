@@ -20,7 +20,7 @@ context: ['{project-root}/AGENTS.md']
 ## Boundaries & Constraints
 
 **Always:**
-- Port the prototype (`mockups/site-v3/index.html:141-153`, `services.html:127-139`, `css/site.css:307-321,441,464-465,481,485`, `js/site.js:208-227`); texts per kind exactly as the prototype; do not redesign. Amber band uses `btn-navy`; the white row has a 1.5px navy border; focus shows a 3px ring in the scoped `--color-focus`.
+- Port the prototype (`prototype-enhancement/prototype/index.html:141-153`, `services.html:127-139`, `css/site.css:307-321,441,464-465,481,485`, `js/site.js:208-227`); texts per kind exactly as the prototype; do not redesign. Amber band uses `btn-navy`; the white row has a 1.5px navy border; focus shows a 3px ring in the scoped `--color-focus`.
 - Email rule and wording from `contact-rules.ts` ("Please enter a valid email address."); `aria-invalid`, `aria-describedby`, focus back to the field, error clears on typing.
 - While sending: button disabled, "Sending..."; a failure keeps the email and shows the 2.3 send or rate-limit message inline; retry is the same button.
 - The email never appears in a URL (no query, no hash) or a log line. Session storage key is read once on `/demo`, removed, and never overwrites a typed value; if storage throws, the visitor still lands on the right tab with no prefill and no error.

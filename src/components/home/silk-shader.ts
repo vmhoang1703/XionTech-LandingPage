@@ -1,5 +1,5 @@
-// WebGL silk cloth for the Home hero, ported from the site-v3 prototype
-// (mockups/site-v3/js/site.js). Colours are the DESIGN.md hero-silk palette:
+// WebGL silk cloth for the Home hero, ported from the prototype
+// (prototype-enhancement/prototype/js/site.js). Colours are the DESIGN.md hero-silk palette:
 // ink background, navy-glow base, amber-tint sheen, amber threads.
 
 const VERTEX = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";

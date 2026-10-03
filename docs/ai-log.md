@@ -796,7 +796,8 @@ Template:
   proposal folder is retired; its homepage ideas come back as logged enhancements in the one prototype.
   `AGENTS.md` records the folder and the branch exception.
 - **Decision / result:** Amber chose one prototype folder (not site-v3 kept beside a copy), the branch name
-  `docs/prototype-enhancement`, a PR from the branch to `develop` for each approved set of enhancements, and to merge
-  PR #10 as it is (batch 1 had already updated the specs).
+  `docs/prototype-enhancement`, and a PR from the branch to `develop` for each approved set of enhancements. Hoang
+  and the manager then agreed not to merge PR #10: batch 1 reaches `develop` with this branch's PR, and PR #10 was
+  closed.
 - **AI got it wrong?** Not yet. Risk flagged: open developer branches that still point to `mockups/site-v3` (for
   example the footer story, PR #15) need the new path after this reaches `develop`.

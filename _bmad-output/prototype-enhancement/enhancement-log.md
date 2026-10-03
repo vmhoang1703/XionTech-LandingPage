@@ -7,9 +7,10 @@ not edited for these changes; update a story when you pick up an entry. How the 
 **Status:** Proposed (in the prototype, waiting for Amber) · Approved · In PR · Merged (in `develop`)
 · Built (the code matches).
 
-**Starting point:** the prototype as merged with PR #10 (batch 1: readability and accessibility,
-the new header and language dropdown, Why XionTechs and the four-app row on Home). Batch 1 was
-written into the specs directly, before this log existed.
+**Starting point:** the prototype with batch 1 (readability and accessibility, the new header and
+language dropdown, Why XionTechs and the four-app row on Home). Batch 1 reaches `develop` with this
+branch instead of PR #10, which was closed unmerged on 2026-10-03; it was written into the specs
+directly, before this log existed.
 
 | ID | Date | Page and section | Change | Status | Stories to update |
 | --- | --- | --- | --- | --- | --- |
