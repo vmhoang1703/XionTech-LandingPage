@@ -31,7 +31,7 @@ The route reads them on each request, not at build time. A build check would mak
 
 Decision (lead, 2026-10-03): `CONTACT_INBOX` is the lead's company email, the same value in every environment where it is set. The address is never written in the repo.
 
-Decision (lead, 2026-10-03): `CONTACT_INBOX`, `GMAIL_USER` and `GMAIL_APP_PASSWORD` are set in Vercel only for Production and for Preview on the branch `develop`. Other PR previews do not have them, so a real send there answers 500. Development is not set in Vercel: local runs use `.env.local`, and a Sensitive value cannot be set for Development.
+Decision (lead, 2026-10-03): `CONTACT_INBOX`, `GMAIL_USER` and `GMAIL_APP_PASSWORD` are set in Vercel for Production and Preview (all preview branches). PR previews are for checking a deployment and the UI, and a send there goes to the same inbox. This is safe enough because every deployment shares one Upstash store and the same two limits, so one IP gets about 20 sends an hour in total. Development is not set in Vercel: local runs use `.env.local`, and a Sensitive value cannot be set for Development.
 
 ## Local setup for a teammate
 
@@ -45,7 +45,7 @@ Unit tests mock Gmail and Upstash. They never send mail.
 
 1. The Gmail account used as sender (`GMAIL_USER`): turn on 2-Step Verification. Then create an App Password (myaccount.google.com, then Security, then App passwords). Google shows it once. Put it only in Vercel and `.env.local` as `GMAIL_APP_PASSWORD`.
 2. In Vercel, open the project, then Storage, then Create, then Marketplace, then Upstash Redis (free). Connect it to `xion-tech-landing-page` for Production and Preview. Check that the project now has `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
-3. In Vercel, open Environment Variables. Set these for Production, and for Preview on the branch `develop` only, and mark them Sensitive: `CONTACT_INBOX` (the lead's company email, the same value in both), `GMAIL_USER` and `GMAIL_APP_PASSWORD`. Do not set them for Development, and do not set them for all Preview branches. Other PR previews then answer 500 on send. This is expected.
+3. In Vercel, open Environment Variables. Set these for Production and Preview, and mark them Sensitive: `CONTACT_INBOX` (the lead's company email, the same value in both), `GMAIL_USER` and `GMAIL_APP_PASSWORD`. Do not set them for Development. If they are team Shared variables, link them to `xion-tech-landing-page`.
 4. Copy the same five into `.env.local` for local runs.
 5. After merge to `develop`: send one real Product demo request on https://xiontech-dev.vercel.app/demo. The mail must arrive at the inbox with every field, and Reply-To must be the visitor. Then send six quickly, from one browser, with one email, counting the first real request. The sixth should show the rate-limit message. The window is an estimate (see "Rate limit"), so if the sixth passes, send one more.
 6. After the first release PR to `main`: open https://xion-tech-landing-page.vercel.app/demo and send one real Product demo request. The mail must arrive at the inbox. Then open the Vercel logs of the Production deployment and check that there is no "not configured" line.
