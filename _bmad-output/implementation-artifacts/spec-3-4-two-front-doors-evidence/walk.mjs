@@ -40,7 +40,8 @@ log("products chips", (await products.locator(".chip").evaluateAll((cs) => cs.ma
 log("products chip style", await style(products.locator(".chip").first(), ["background-color", "color", "border-radius"]));
 log("services door", await style(services, ["background-image", "border-radius"]));
 log("services label", `${await services.locator(".label").textContent()} | ${await style(services.locator(".label"), ["font-family", "text-transform"])}`);
-log("services text", await services.locator("h2").textContent());
+log("services text", `${await services.locator("h2").textContent()} / line colour ${await services.locator("p").evaluate((p) => getComputedStyle(p).color)}`);
+log("badge row gap", await products.locator(".badge").first().evaluate((b) => getComputedStyle(b.parentElement).gap));
 log("services chips", (await services.locator(".chip").evaluateAll((cs) => cs.map((c) => c.textContent))).join(", "));
 log("services chip style", await style(services.locator(".chip").first(), ["background-color", "color"]));
 log("arrow colours", `${await products.locator(".go").evaluate((g) => getComputedStyle(g).color)} / ${await services.locator(".go").evaluate((g) => getComputedStyle(g).color)}`);
@@ -91,6 +92,21 @@ await rp.hover();
 await sleep(700);
 log("reduced motion: lift px / arrow transform", `${Math.round((rb - (await rp.boundingBox()).y) * 10) / 10} / ${await rp.locator(".go").evaluate((g) => getComputedStyle(g).transform)}`);
 await reduced.context.close();
+
+// Touch device (no hover): a tap must not leave the door lifted.
+const touch = await browser.newContext({ viewport: { width: 390, height: 900 }, hasTouch: true, isMobile: true });
+const tp = await touch.newPage();
+await tp.goto(`${BASE}/`, { waitUntil: "load" });
+await tp.waitForSelector(DOORS);
+const tDoor = tp.locator(DOORS).locator("a").first();
+await tDoor.scrollIntoViewIfNeeded();
+await tp.evaluate(() => document.querySelector('section[aria-label="What we do"] a').addEventListener("click", (e) => e.preventDefault()));
+await sleep(300);
+const tBefore = (await tDoor.boundingBox()).y;
+await tDoor.tap();
+await sleep(700);
+log("touch: hover media / lift after tap px", `${await tp.evaluate(() => matchMedia("(hover: hover)").matches ? "hover" : "none")} / ${Math.round((tBefore - (await tDoor.boundingBox()).y) * 10) / 10}`);
+await touch.close();
 
 for (const width of [900, 899, 390]) {
   const { page: p, context: c } = await open(width);

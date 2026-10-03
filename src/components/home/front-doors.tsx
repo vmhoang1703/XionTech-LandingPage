@@ -39,7 +39,7 @@ export function FrontDoors() {
       <div className="wrap doors-grid">
         <Link href={products.href} className="door door-products">
           <div className="top">
-            <div className="flex flex-wrap gap-2">
+            <div className="chips">
               {products.badges.map((badge) => (
                 <span key={badge} className={`badge ${BADGE_CLASS[badge]}`}>
                   {badge === "IoT" ? (

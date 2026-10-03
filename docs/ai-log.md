@@ -537,3 +537,9 @@ Template:
 - **Prompt (Son Nguyen):** PR #23 merged; move to 3.3.
 - **What the AI did:** merged `develop` (one test conflict, both tests kept), compared the band with the prototype `.stats` / `.stat` rules, wrote the 3.3 build spec with an 11-line UX checks table, fixed four style gaps test-first, walked every line in Chrome at 1280/1080/1079/640/639/390px with screenshots, and ran a light review (3 low findings, rejected with reasons).
 - **AI got it wrong?** Yes. The first build (before 1.1 merged) drew the label as plain caps without 1.1's `.label` rule, used a fixed 3rem figure size, put a divider before the first figure and left captions unbounded; no test noticed. The first new tests then failed for the wrong reason (a typo, `stats` for `STATS`), which was fixed before the red run counted.
+
+## 2026-10-05 — Story 3.4 front doors, after 3.3 merged
+
+- **Prompt (Son Nguyen):** PR #25 merged; move to 3.4.
+- **What the AI did:** merged `develop` (hero → doors → capture band order), wrote the 3.4 build spec with a 12-line UX checks table, ported the prototype door, badge and chip rules into `globals.css` (shared with 3.5), rewrote the doors on them with Phosphor icons, tests first, a Chrome walk (mouse, keyboard, touch, reduced motion, 900/899/390px) with screenshots, and a full 4-layer review: 6 patched, the rest triaged.
+- **AI got it wrong?** Yes. The first build used class names Story 1.1 never defined, so the doors, badges and chips were unstyled while every test passed; a new test now reads `globals.css` and fails on that. Hover effects also applied on touch devices, against `EXPERIENCE.md`. Writing tests through a script twice mangled escapes: a regex `\b` became a backspace character (also in the spec note) and a template-string regex lost its backslashes; both were caught before the red run counted. The first walk reported a 611px "lift" because the hover scrolled the page.
