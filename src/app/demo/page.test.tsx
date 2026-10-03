@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
-import { OFFICES } from "@/components/layout/office-data";
+import { offices } from "@/content/offices";
 import DemoPage, { metadata } from "./page";
 
 describe("Demo page", () => {
@@ -32,8 +32,8 @@ describe("Demo page", () => {
 
   it("renders both offices with their contact links", () => {
     render(<DemoPage />);
-    for (const office of OFFICES) {
-      expect(screen.getByText(office.city)).toBeDefined();
+    for (const office of offices) {
+      expect(screen.getByText(office.name)).toBeDefined();
     }
     expect(screen.getByText("Vietnam Delivery Center")).toBeDefined();
     const whatsapp = screen.getByRole("link", {
