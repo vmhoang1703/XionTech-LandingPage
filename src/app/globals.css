@@ -2149,9 +2149,15 @@
     color: var(--color-white);
   }
 
-  /* A link to a Products section lands below the header and the sub-nav */
+  /*
+    A link to a Products section lands below the header and the sub-nav.
+    `html` already reserves the header height (scroll-padding-top), so the
+    margin adds only the rest of the 144px offset.
+  */
   .products-anchor {
-    scroll-margin-top: var(--spacing-anchor-offset-subnav);
+    scroll-margin-top: calc(
+      var(--spacing-anchor-offset-subnav) - var(--spacing-header-height)
+    );
     padding-block: var(--spacing-section-mobile);
   }
 }
