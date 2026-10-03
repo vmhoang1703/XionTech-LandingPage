@@ -26,6 +26,10 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
 describe("Home page", () => {
   it("opens with the Home hero as the only H1", () => {
     render(<Home />);
@@ -57,5 +61,18 @@ describe("Home page", () => {
     expect(
       screen.getByRole("list", { name: "4-D process" }).closest("section"),
     ).toBe(band);
+  });
+
+  it("keeps the demo capture band last, after the hero", () => {
+    const { container } = render(<Home />);
+
+    const band = screen
+      .getByRole("heading", { name: "See it working at your school." })
+      .closest("section");
+    expect(container.lastElementChild).toBe(band);
+    expect(container.firstElementChild?.getAttribute("aria-labelledby")).toBe(
+      "home-hero-title",
+    );
+    expect(screen.getByRole("button", { name: "Book a demo" })).toBeDefined();
   });
 });

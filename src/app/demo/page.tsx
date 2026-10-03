@@ -1,9 +1,11 @@
 import { CheckCircleIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
-import { OFFICES } from "@/components/layout/office-data";
+import { HeroArt } from "@/components/sections/hero-art";
+import { offices } from "@/content/offices";
 
 export const metadata: Metadata = {
   title: CONTACT_STRINGS.metaTitle,
@@ -15,6 +17,7 @@ const { hero } = CONTACT_STRINGS;
 export default function DemoPage() {
   return (
     <section className="hero-navy page-hero" aria-labelledby="demo-h1">
+      <HeroArt tone="navy" />
       <div className="wrap split">
         <div>
           <nav className="crumbs" aria-label={hero.breadcrumbLabel}>
@@ -36,9 +39,9 @@ export default function DemoPage() {
             ))}
           </ul>
           <div className="offices" role="group" aria-label={hero.officesLabel}>
-            {OFFICES.map((office) => (
-              <address className="office" key={office.city}>
-                <b>{office.city}</b>
+            {offices.map((office) => (
+              <address className="office" key={office.id}>
+                <b>{office.name}</b>
                 {office.tag ? (
                   <small className="office-tag">{office.tag}</small>
                 ) : null}
@@ -48,26 +51,20 @@ export default function DemoPage() {
                     <br />
                   </span>
                 ))}
-                <a href={office.phoneHref}>{office.phone}</a>
-                {office.whatsapp ? (
-                  <>
-                    <br />
+                {office.contacts.map((contact, index) => (
+                  <Fragment key={contact.href}>
+                    {index > 0 ? <br /> : null}
                     <a
-                      href={office.whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${hero.whatsappPrefix} ${office.whatsappLabel} ${hero.whatsappNewTab}`}
+                      href={contact.href}
+                      aria-label={contact.ariaLabel}
+                      {...(contact.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                     >
-                      {hero.whatsappPrefix} {office.whatsappLabel}
+                      {contact.label}
                     </a>
-                  </>
-                ) : null}
-                {office.email ? (
-                  <>
-                    <br />
-                    <a href={office.emailHref}>{office.email}</a>
-                  </>
-                ) : null}
+                  </Fragment>
+                ))}
               </address>
             ))}
           </div>

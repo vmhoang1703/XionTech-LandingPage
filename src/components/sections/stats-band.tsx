@@ -23,22 +23,22 @@ export function StatsBand({ label, stats, tone }: Readonly<StatsBandProps>) {
 
   return (
     <div role="group" aria-labelledby={labelId}>
-      <h2 id={labelId} className="font-brand text-label uppercase">
+      <h2 id={labelId} className="label">
         {label}
       </h2>
       <ul className="border-border mt-4.5 grid grid-cols-2 gap-y-7 border-t pt-6.5 sm:grid-cols-3 lg:grid-cols-5">
         {stats.map((stat) => (
           <li
             key={stat.caption}
-            className="sm:border-border py-2 sm:border-l sm:px-6.5"
+            className="sm:border-border py-2 sm:border-l sm:px-6.5 sm:first:border-l-0 sm:first:pl-0"
           >
-            <p className="font-display text-stat">
+            <p className="font-display text-stat-fluid text-heading">
               {stat.value}
               {stat.suffix ? (
                 <span className={suffixClass}>{stat.suffix}</span>
               ) : null}
             </p>
-            <p className="text-body-sm text-muted mt-2">
+            <p className="text-body-sm text-muted mt-2 max-w-[22ch]">
               {stat.placeholder
                 ? `[Placeholder] ${stat.caption}`
                 : stat.caption}

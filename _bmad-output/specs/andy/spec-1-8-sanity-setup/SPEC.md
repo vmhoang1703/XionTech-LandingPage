@@ -48,7 +48,7 @@ News stories and open roles must come from a CMS that editors use without a deve
 
 ## Constraints
 
-- Depends on 1.1. Must merge by about day 4.5 so Sammy can start 6.5 and 6.1.
+- Depends on 1.1. Must merge by about day 4.5 so Andy can start 6.5 and 6.1.
 - Free plan only: 10,000 documents per dataset, 250k API and 1M CDN requests per month, public datasets. Name any limit that would force a paid plan.
 - Andy owns `src/lib/sanity/*` and `src/app/api/*`. 1.8 provides the client and one tagged fetch helper; each page story writes its own GROQ query with it. There is no content access module story (T2).
 - Sanity holds content only (posts, job posts). Job applications and CVs are never stored in Sanity, because free datasets are public; CVs go to a private Vercel Blob store in Story 6.6 (T1).

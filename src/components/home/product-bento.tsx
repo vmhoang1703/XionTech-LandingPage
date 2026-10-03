@@ -1,3 +1,4 @@
+import { ArrowRightIcon, CpuIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { homeApps } from "@/content/home";
 
@@ -6,66 +7,61 @@ type AppId = (typeof homeApps.tiles)[number]["id"];
 // Badges are swapped on the PXP and SXP tiles so they contrast with the tile
 // (UX-DR15): the amber PXP tile carries the navy SXP badge and vice versa.
 const TILE: Record<AppId, { tile: string; badge: string }> = {
-  pxp: {
-    tile: "surface-amber sm:col-span-2 md:col-span-7 md:row-span-2",
-    badge: "product-badge-sxp",
-  },
-  sxp: {
-    tile: "surface-navy sm:col-span-2 md:col-span-5",
-    badge: "product-badge-pxp",
-  },
-  lxp: { tile: "spotlight-card md:col-span-3", badge: "product-badge-lxp" },
-  iot: { tile: "spotlight-card md:col-span-2", badge: "product-badge-iot" },
+  pxp: { tile: "t-pxp", badge: "b-sxp" },
+  sxp: { tile: "t-sxp", badge: "b-pxp" },
+  lxp: { tile: "spot t-lxp", badge: "b-lxp" },
+  iot: { tile: "spot t-iot", badge: "b-iot" },
 };
 
 // Each tile is one stretched link (the heading link covers the tile), so the
-// mini phone and chips stay non-interactive (AC-A11Y-4).
+// mini phone and chips stay non-interactive (AC-A11Y-4). Ported from the
+// prototype bento; the spotlight glow and card lift come after demo.
 export function ProductBento() {
   const { title, lede, phoneHint, tiles } = homeApps;
 
   return (
-    <section aria-labelledby="apps-title" className="surface-mist py-section">
-      <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto">
-        <div className="mb-section-head-gap">
+    <section aria-labelledby="apps-title" className="sec surface-mist linen">
+      <div className="wrap">
+        <div className="sec-head">
           <h2 id="apps-title">{title}</h2>
-          <p className="text-body-lg mt-4">{lede}</p>
+          <p className="lede">{lede}</p>
         </div>
-        <div className="gap-grid-gap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12">
+        <div className="bento">
           {tiles.map((app) => (
-            <article
-              key={app.id}
-              className={`relative flex flex-col gap-3 overflow-hidden rounded-lg p-8 ${TILE[app.id].tile}`}
-            >
-              <span aria-hidden="true" className={TILE[app.id].badge}>
-                {app.name}
+            <article key={app.id} className={`tile ${TILE[app.id].tile}`}>
+              {app.id === "iot" ? null : (
+                <span className="go" aria-hidden="true">
+                  <ArrowRightIcon />
+                </span>
+              )}
+              <span
+                aria-hidden="true"
+                className={`badge ${TILE[app.id].badge}`}
+              >
+                {app.id === "iot" ? <CpuIcon /> : app.name}
               </span>
               <h3>
-                <Link
-                  href={`/products#${app.id}`}
-                  className="after:absolute after:inset-0 after:rounded-[inherit]"
-                >
+                <Link href={`/products#${app.id}`} aria-label={app.label}>
                   {app.name}
                 </Link>
               </h3>
-              <span className="font-brand text-label-sm uppercase">
+              <span className="full" aria-hidden="true">
                 {app.full}
               </span>
               <p>{app.line}</p>
               {app.chips.length > 0 ? (
-                <div className="mt-auto flex flex-wrap gap-2">
+                <div className="chips">
                   {app.chips.map((chip) => (
-                    <span key={chip} className="industry-chip">
+                    <span key={chip} className="chip">
                       {chip}
                     </span>
                   ))}
                 </div>
               ) : null}
               {app.id === "pxp" ? (
-                <div className="device-frame device-phone mt-4 w-1/3 self-end">
-                  <div className="media-frame">
-                    <span className="font-brand text-label-sm uppercase">
-                      {phoneHint}
-                    </span>
+                <div className="mini-phone" aria-hidden="true">
+                  <div className="home-media">
+                    <span>{phoneHint}</span>
                   </div>
                 </div>
               ) : null}

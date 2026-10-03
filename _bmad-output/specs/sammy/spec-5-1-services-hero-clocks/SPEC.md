@@ -1,7 +1,7 @@
 ---
 id: SPEC-5-1-services-hero-clocks
 owner: Sammy
-build_day: 2026-10-05
+build_day: 2026-10-06
 depends_on: ["1.1"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md

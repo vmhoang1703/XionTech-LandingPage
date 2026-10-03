@@ -41,4 +41,26 @@ describe("StatsBand", () => {
 
     expect(screen.getByText("[Placeholder] School products")).toBeDefined();
   });
+
+  it("styles the label, figures and captions like the prototype", () => {
+    render(<StatsBand label="Experience" stats={STATS} tone="navy" />);
+
+    const label = screen.getByRole("heading", { level: 2, name: "Experience" });
+    expect(label.classList.contains("label")).toBe(true);
+    const items = screen.getAllByRole("listitem");
+    const figure = items[0].firstElementChild;
+    expect(figure?.classList.contains("text-stat-fluid")).toBe(true);
+    expect(figure?.classList.contains("text-heading")).toBe(true);
+    expect(items[0].lastElementChild?.classList.contains("max-w-[22ch]")).toBe(
+      true,
+    );
+  });
+
+  it("draws no divider before the first figure", () => {
+    render(<StatsBand label="Experience" stats={STATS} tone="navy" />);
+
+    const first = screen.getAllByRole("listitem")[0];
+    expect(first.classList.contains("sm:first:border-l-0")).toBe(true);
+    expect(first.classList.contains("sm:first:pl-0")).toBe(true);
+  });
 });

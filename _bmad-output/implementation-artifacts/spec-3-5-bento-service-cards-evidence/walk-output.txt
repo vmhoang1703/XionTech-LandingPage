@@ -1,0 +1,34 @@
+bento section: background-image linear-gradient(rgb(238, 242, 249), rgb(244, 247, 252))
+linen texture: repeating-linear-gradient(0deg, color(srgb 0.0862745 0.21176
+bento head: Four apps. One school day. | Every role in the school gets its own app, all sharing one source of truth.
+grid columns: 12
+tiles (w x h @ x,y): PXP 688x654@44,1521 | SXP 486x317@750,1521 | LXP 285x319@750,1856 | IoT 184x319@1052,1856
+tile pxp: background-image linear-gradient(155deg, rgb(255, 216, 74), rgb(255, 192, 0) 60%, rgb(2; border-radius 24px | badge badge b-sxp 52px PXP | name PXP, Parent eXperience Place | full "Lexend Exa" rgb(22, 54, 99) | chips Parents, iOS and Android | arrow 1
+tile sxp: background-image linear-gradient(150deg, rgb(22, 54, 99), rgb(11, 23, 48)); border-radius 24px | badge badge b-pxp 52px SXP | name SXP, Staff eXperience Place | full "Lexend Exa" rgb(255, 207, 6) | chips Staff, Teachers, Leaders | arrow 1
+tile lxp: background-image none; border-radius 24px | badge badge b-lxp 52px LXP | name LXP, Learner eXperience Place | full "Lexend Exa" rgb(74, 91, 120) | chips Students | arrow 1
+tile iot: background-image none; border-radius 24px | badge badge b-iot 52px (svg) | name IoT, Device management | full "Lexend Exa" rgb(74, 91, 120) | chips - | arrow 0
+mini phone: transform matrix(0.992546, -0.121869, 0.121869, 0.992546, 0, 0); width 210px | [Placeholder] PXP screen | aria-hidden true | bottom past tile 129px
+hover PXP tile: arrow: 1 matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, 0)
+click on PXP tile body: http://localhost:3005/products#pxp
+click on sxp tile body: http://localhost:3005/products#sxp
+click on lxp tile body: http://localhost:3005/products#lxp
+click on iot tile body: http://localhost:3005/products#iot
+Tab stops after the doors: PXP, Parent eXperience Place [tile ring solid 2px rgb(22, 54, 99)]  >  SXP, Staff eXperience Place [tile ring solid 2px rgb(255, 192, 0)]  >  LXP, Learner eXperience Place [tile ring solid 2px rgb(22, 54, 99)]  >  IoT, Device management [tile ring solid 2px rgb(22, 54, 99)]  >  Product EngineeringT [tile ring none 3px rgb(16, 34, 63)]
+tile ring radius / linen layers: 24px / texture z auto, content z 1
+services section: background-color rgb(253, 253, 254) | Eight ways we get IT done for you. | The same team that builds PXP, LXP and SXP, working on your product.
+service grid columns: 4
+service cards: Product Engineering→#product-engineering [feature; icon 48px svg rgb(22, 54, 99)]  |  AI-Driven Analytics→#ai-analytics [plain; icon 48px svg rgb(22, 54, 99)]  |  Product Co-Creation→#co-creation [plain; icon 48px svg rgb(22, 54, 99)]  |  Staffing Service→#staffing [plain; icon 48px svg rgb(22, 54, 99)]  |  Custom App Development→#custom-apps [plain; icon 48px svg rgb(22, 54, 99)]  |  Low-code Solutions→#low-code [plain; icon 48px svg rgb(22, 54, 99)]  |  AI-Powered Solutions→#ai-solutions [navy; icon 48px svg rgb(255, 207, 6)]  |  Cloud Computing→#cloud [feature; icon 48px svg rgb(22, 54, 99)]
+navy card: background-image linear-gradient(150deg, rgb(22, 54, 99), rgb(11, 23, 48)); color rgb(16, 34, 63)
+navy card keyboard focus ring (drawn on the paper section): AI-Powered Solutions solid 2px rgb(22, 54, 99) offset 3px
+feature card: background-image linear-gradient(150deg, color(srgb 1 0.752941 0 / 0.22), rgba(0, 0, 0,
+click service card 3: http://localhost:3005/services#co-creation
+touch tap LXP: arrow: none
+reduced motion hover LXP: arrow: none
+layout 1080px: bento 12 cols (PXP 595px wide), services 4 cols, sideways scroll false
+layout 1079px: bento 12 cols (PXP 594px wide), services 2 cols, sideways scroll false
+layout 900px: bento 12 cols (PXP 490px wide), services 2 cols, sideways scroll false
+layout 899px: bento 2 cols (PXP 851px wide), services 2 cols, sideways scroll false
+layout 640px: bento 2 cols (PXP 608px wide), services 2 cols, sideways scroll false
+layout 639px: bento 1 cols (PXP 607px wide), services 1 cols, sideways scroll false
+layout 390px: bento 1 cols (PXP 358px wide), services 1 cols, sideways scroll false
+page order: home-hero-title > What we do > apps-title > services-title > cap-h

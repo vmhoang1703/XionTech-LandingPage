@@ -1,8 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
-import { OFFICES } from "@/components/layout/office-data";
+import { offices } from "@/content/offices";
 import DemoPage, { metadata } from "./page";
+
+// jsdom has no canvas: HeroArt skips the ribbon, the aurora is CSS.
+beforeEach(() => {
+  vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("Demo page", () => {
   it("renders the H1 with the highlighted word", () => {
@@ -32,8 +41,8 @@ describe("Demo page", () => {
 
   it("renders both offices with their contact links", () => {
     render(<DemoPage />);
-    for (const office of OFFICES) {
-      expect(screen.getByText(office.city)).toBeDefined();
+    for (const office of offices) {
+      expect(screen.getByText(office.name)).toBeDefined();
     }
     expect(screen.getByText("Vietnam Delivery Center")).toBeDefined();
     const whatsapp = screen.getByRole("link", {
@@ -52,6 +61,22 @@ describe("Demo page", () => {
         .getByRole("link", { name: "vinni.tran@newxion.com" })
         .getAttribute("href"),
     ).toBe("mailto:vinni.tran@newxion.com");
+  });
+
+  it("renders every contact of every office, in order, with its href and name", () => {
+    const { container } = render(<DemoPage />);
+    const blocks = container.querySelectorAll("address.office");
+    expect(blocks).toHaveLength(offices.length);
+    offices.forEach((office, officeIndex) => {
+      const links = blocks[officeIndex].querySelectorAll("a");
+      expect(links).toHaveLength(office.contacts.length);
+      office.contacts.forEach((contact, contactIndex) => {
+        const link = links[contactIndex];
+        expect(link.getAttribute("href")).toBe(contact.href);
+        expect(link.textContent).toBe(contact.label);
+        expect(link.getAttribute("aria-label")).toBe(contact.ariaLabel ?? null);
+      });
+    });
   });
 
   it("renders the form once inside the form card", () => {
@@ -74,5 +99,17 @@ describe("Demo page", () => {
   it("sets the metadata title and description", () => {
     expect(metadata.title).toBe(CONTACT_STRINGS.metaTitle);
     expect(metadata.description).toBe(CONTACT_STRINGS.metaDescription);
+  });
+
+  it("puts the shared aurora and strand ribbon behind the navy hero", () => {
+    const { container } = render(<DemoPage />);
+
+    const hero = container.querySelector("section.hero-navy.page-hero");
+    expect(hero).not.toBeNull();
+    const [aurora, canvas] = Array.from(hero?.children ?? []);
+    expect(aurora.classList.contains("aurora")).toBe(true);
+    expect(canvas.matches("canvas.strands")).toBe(true);
+    expect(aurora.getAttribute("aria-hidden")).toBe("true");
+    expect(canvas.getAttribute("aria-hidden")).toBe("true");
   });
 });
