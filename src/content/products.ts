@@ -20,9 +20,9 @@ export const productsHero = {
 };
 
 export const productsMeta = {
-  title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs",
+  title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTech",
   description:
-    "PXP for parents, LXP for students, SXP for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTechs.",
+    "PXP for parents, LXP for students, SXP for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech.",
 };
 
 export const productsSubnav = {

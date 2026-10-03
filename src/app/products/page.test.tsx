@@ -73,4 +73,11 @@ describe("Products page", () => {
     expect(metadata.title).toBe(productsMeta.title);
     expect(metadata.description).toBe(productsMeta.description);
   });
+
+  it("uses the brand name XionTech, not XionTechs", () => {
+    expect(productsMeta.title).toMatch(/\| XionTech$/);
+    expect(`${productsMeta.title} ${productsMeta.description}`).not.toMatch(
+      /XionTechs/,
+    );
+  });
 });
