@@ -40,7 +40,7 @@ Sources: story spec CAP-1 to CAP-3, `EXPERIENCE.md` Component Patterns › Front
 
 - 2026-10-05: merged `develop` (3.1–3.3, Story 1.6 motion, capture band); resolved `page.tsx` and its test so the order is hero → doors → capture band.
 - Ported the prototype door, badge and chip rules into the Home section of `globals.css` (tokens; `@theme` untouched); the component uses `.doors`, `.door`, `.door-products`, `.door-services surface-navy`, `.go`, `.badge .b-*`, `.chips .chip`, 1.1's `.wrap` and `.label`. Phosphor `ArrowRightIcon` and `CpuIcon` (IoT, with a visually hidden "IoT").
-- Test first: 2 new tests failed on the old component and pass on the new one. The first version of one test held a literal backspace character instead of a regex `` (written through a script), so it failed for the wrong reason; replaced with `classList` checks and re-run red/green.
+- Test first: 2 new tests failed on the old component and pass on the new one. The first version of one test held a literal backspace character instead of a regex word boundary (backslash-b) (written through a script), so it failed for the wrong reason; replaced with `classList` checks and re-run red/green.
 - Under reduced motion the global rule only removes transitions, so the hover lift would still jump; `.door:hover` and `.door:hover .go` have no transform under reduced motion.
 - The first walk reported a 611px "lift" because `hover()` scrolled the door into view; the walk now scrolls first.
 
