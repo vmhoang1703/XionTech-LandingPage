@@ -1,6 +1,12 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { HomeHero } from "./home-hero";
+
+// jsdom has no WebGL; the silk falls back to the static glow.
+vi.mock("@/components/home/silk-shader", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@/components/home/silk-shader")>()),
+  createSilk: () => null,
+}));
 
 function renderHero() {
   render(<HomeHero />);
@@ -66,6 +72,24 @@ describe("HomeHero", () => {
     expect(
       within(hero).getByText("[Placeholder] Phone screenshot"),
     ).toBeDefined();
+  });
+  it("ends with the five confirmed figures", () => {
+    const hero = renderHero();
+
+    const band = within(hero).getByRole("group", {
+      name: "Experience you can count on",
+    });
+    expect(
+      within(band)
+        .getAllByRole("listitem")
+        .map((item) => item.textContent),
+    ).toEqual([
+      "25+Years of leadership experience in software",
+      "24/7Global coverage across time zones",
+      "20+Technology stacks we work in",
+      "8Service offerings, from idea to operation",
+      "2Offices: Ho Chi Minh City and Plano",
+    ]);
   });
 
   it("paints the static glow layer behind the content", () => {
