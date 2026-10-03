@@ -1,6 +1,6 @@
 "use client";
 
-import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
+import { CheckCircleIcon, PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import {
   useRef,
@@ -11,6 +11,8 @@ import {
   type KeyboardEvent,
 } from "react";
 import {
+  EMAIL_MAX_LENGTH,
+  TEXT_MAX_LENGTH,
   validateContact,
   type ContactErrors,
   type ContactField,
@@ -43,6 +45,9 @@ const FIELD_ORDER: readonly ContactField[] = [
 ];
 const errorId = (field: ContactField) => `${FIELD_IDS[field]}-err`;
 
+const CONTACT_ENDPOINT = "/api/contact";
+const SEND_TIMEOUT_MS = 15_000;
+
 interface SharedValues {
   name: string;
   email: string;
@@ -57,11 +62,6 @@ export type ContactSubmission = SharedValues &
     | { type: "demo"; products: string[]; schoolSize: string; date: string }
     | { type: "project"; service: string; startTiming: string }
   );
-
-interface ContactFormProps {
-  /** Called with the values of a valid submit. Story 2.3 adds sending. */
-  readonly onValidSubmit?: (values: ContactSubmission) => void;
-}
 
 function subscribeToHash(onChange: () => void) {
   globalThis.addEventListener("hashchange", onChange);
@@ -86,8 +86,7 @@ function text(data: FormData, key: string): string {
   return typeof value === "string" ? value : "";
 }
 
-function readValues(form: HTMLFormElement, type: ContactType) {
-  const data = new FormData(form);
+function readValues(data: FormData, type: ContactType) {
   const shared: SharedValues = {
     name: text(data, "name").trim(),
     email: text(data, "email").trim(),
@@ -125,6 +124,50 @@ function withoutError(
   return next;
 }
 
+type SendResult =
+  | { kind: "sent" | "rate" | "send" }
+  | { kind: "errors"; errors: ContactErrors };
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null;
+
+/** The known fields of a 400 `{ errors }` body; empty when there are none. */
+function readFieldErrors(body: unknown): ContactErrors {
+  const found: ContactErrors = {};
+  const errors = isRecord(body) ? body.errors : undefined;
+  if (!isRecord(errors)) return found;
+  for (const field of FIELD_ORDER) {
+    const message = errors[field];
+    if (typeof message === "string" && message) found[field] = message;
+  }
+  return found;
+}
+
+/** Post the request; every way to fail comes back as a result, never a throw. */
+async function postSubmission(payload: unknown): Promise<SendResult> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), SEND_TIMEOUT_MS);
+  try {
+    const response = await fetch(CONTACT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    if (response.ok) return { kind: "sent" };
+    if (response.status === 429) return { kind: "rate" };
+    if (response.status === 400) {
+      const errors = readFieldErrors(await response.json().catch(() => null));
+      if (Object.keys(errors).length > 0) return { kind: "errors", errors };
+    }
+    return { kind: "send" };
+  } catch {
+    return { kind: "send" };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function nextTabIndex(key: string, index: number): number | null {
   const last = TYPES.length - 1;
   switch (key) {
@@ -141,7 +184,7 @@ function nextTabIndex(key: string, index: number): number | null {
   }
 }
 
-export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
+export function ContactForm() {
   // The hash and today's date only exist in the browser; the server snapshot
   // ("") keeps the server HTML on Product demo with no `min`.
   const hash = useSyncExternalStore(subscribeToHash, readHash, serverValue);
@@ -151,6 +194,8 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
   const type = choice?.hash === hash ? choice.type : typeFromHash(hash);
 
   const [errors, setErrors] = useState<ContactErrors>({});
+  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [failure, setFailure] = useState<"send" | "rate" | null>(null);
   const [announcement, setAnnouncement] = useState({
     count: 0,
     messages: [] as string[],
@@ -182,26 +227,44 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
     setErrors((current) => withoutError(current, field));
   }
 
-  function onSubmit(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const values = readValues(form, type);
-    const found = validateContact(
-      type,
-      { ...values, date: values.type === "demo" ? values.date : "" },
-      localToday(),
-    );
+  /** Show, announce and focus the invalid fields; true when there are any. */
+  function showErrors(form: HTMLFormElement, found: ContactErrors): boolean {
     const invalid = FIELD_ORDER.filter((field) => found[field]);
     setErrors(found);
     setAnnouncement((current) => ({
       count: current.count + 1,
       messages: invalid.map((field) => found[field] ?? ""),
     }));
-    if (invalid.length > 0) {
-      form.querySelector<HTMLElement>(`#${FIELD_IDS[invalid[0]]}`)?.focus();
+    if (invalid.length === 0) return false;
+    form.querySelector<HTMLElement>(`#${FIELD_IDS[invalid[0]]}`)?.focus();
+    return true;
+  }
+
+  async function onSubmit(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const values = readValues(data, type);
+    const found = validateContact(
+      type,
+      { ...values, date: values.type === "demo" ? values.date : "" },
+      localToday(),
+    );
+    setFailure(null);
+    if (showErrors(form, found)) return;
+
+    setStatus("sending");
+    const result = await postSubmission({
+      ...values,
+      website: text(data, "website"),
+    });
+    if (result.kind === "sent") {
+      setStatus("sent");
       return;
     }
-    onValidSubmit(values);
+    setStatus("idle");
+    if (result.kind === "errors") showErrors(form, result.errors);
+    else setFailure(result.kind);
   }
 
   const invalidProps = (field: ContactField) =>
@@ -216,6 +279,19 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
         {errors[field]}
       </span>
     ) : null;
+
+  if (status === "sent") {
+    return (
+      <>
+        <h2>{S.heading}</h2>
+        <div className="form-ok" role="status">
+          <CheckCircleIcon weight="fill" aria-hidden="true" />
+          <h3>{S.successHeading}</h3>
+          <p>{S.successText}</p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -257,6 +333,7 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
               id="f-name"
               name="name"
               autoComplete="name"
+              maxLength={TEXT_MAX_LENGTH}
               required
               {...invalidProps("name")}
             />
@@ -269,6 +346,7 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
               name="email"
               type="email"
               autoComplete="email"
+              maxLength={EMAIL_MAX_LENGTH}
               required
               {...invalidProps("email")}
             />
@@ -280,6 +358,7 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
               id="f-org"
               name="org"
               autoComplete="organization"
+              maxLength={TEXT_MAX_LENGTH}
               required
               {...invalidProps("org")}
             />
@@ -291,6 +370,7 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
               id="f-role"
               name="role"
               autoComplete="organization-title"
+              maxLength={TEXT_MAX_LENGTH}
               aria-describedby="f-role-help"
             />
             <span id="f-role-help" className="help">
@@ -375,8 +455,24 @@ export function ContactForm({ onValidSubmit = () => {} }: ContactFormProps) {
             {fieldError("message")}
           </div>
         </div>
-        <button className="btn btn-primary" type="submit">
-          <span>{S.submit}</span>
+        <input
+          className="sr-only"
+          name="website"
+          tabIndex={-1}
+          aria-hidden="true"
+          autoComplete="off"
+        />
+        {failure && (
+          <p className="form-alert" role="alert">
+            {failure === "rate" ? S.rateError : S.sendError}
+          </p>
+        )}
+        <button
+          className="btn btn-primary"
+          type="submit"
+          disabled={status === "sending"}
+        >
+          <span>{status === "sending" ? S.sending : S.submit}</span>
           <PaperPlaneTiltIcon aria-hidden="true" />
         </button>
         <p className="consent">
