@@ -71,6 +71,10 @@ describe("HomeHero", () => {
   it("paints the static glow layer behind the content", () => {
     const hero = renderHero();
 
+    // The glow sits at z-index -2; it stays inside the hero only while the
+    // section is its own stacking context.
+    expect(hero.classList.contains("relative")).toBe(true);
+    expect(hero.classList.contains("isolate")).toBe(true);
     const glow = hero.querySelector(".silk-fallback");
     expect(glow?.getAttribute("aria-hidden")).toBe("true");
     expect(hero.firstElementChild).toBe(glow);

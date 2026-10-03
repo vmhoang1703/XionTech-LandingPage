@@ -158,3 +158,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-5-site-footer.md`
   summary: Wrap the footer link columns (Products, Services, Company) in a `<nav aria-label="Footer">` landmark.
   evidence: Blind Hunter review 2026-10-01; the prototype has no landmark and FR-7 does not ask for one, so it is an a11y improvement beyond this story.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-3-1-dark-home-hero.md`
+  summary: Add an automated browser check for the Home hero CSS (glow layer painted, 2 columns at 900px / 1 at 899px, no sideways scroll at 390px); today only the walk script checks it.
+  evidence: jsdom tests check class names only and the smoke project is request-only; a deleted `.silk-fallback` rule would pass every test. The team has to choose which Playwright project runs it.

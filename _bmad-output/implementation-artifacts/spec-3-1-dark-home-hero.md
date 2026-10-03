@@ -46,3 +46,19 @@ Sources: story spec CAP-1 to CAP-5, `EXPERIENCE.md`, `DESIGN.md`, prototype `ind
 - The walk then found two more: the H1 rendered at about 1.1rem (now 1.1's `text-display-hero-fluid`, test first) and the phone caption overflowed at 390px (smaller, wrapping caption). Also caught before the walk: the caption first used `--color-heading`, which is white inside the ink hero, so it would vanish on the paper frame; it uses navy.
 - Exactly 900px shows two columns because 1.1's breakpoints switch at `width >= 900px` site-wide; the spec says one column "at 900px and below". Pending: Amber.
 
+
+## Review Triage Log
+
+Full `bmad-code-review` of the 2026-10-03 fix (211 lines; Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor):
+
+- Glow depends on `relative isolate` with no test — medium, patched: the test now asserts both classes.
+- Comment said the glow shows only without JavaScript or WebGL — low, patched: it is always painted, the canvas draws above it.
+- Raw sizes in the hero CSS (560px, paddings, notch, 30px, 0.58rem) — low, patched with a comment: they are the prototype's own values (`.devices`, `.tablet`, `.phone`, `.notch`, `.phone .slot`, `.hint small`); no 1.1 token exists for them.
+- Phone caption 0.58rem is a new value — false: prototype `.phone .slot .hint small{font-size:.58rem}`.
+- No `-webkit-mask` prefix for older Safari — false: the built CSS (`.next/…globals_css…css`) contains `-webkit-mask`; Tailwind v4 adds it.
+- Old class names left as dead CSS — false: they were never defined in `globals.css`.
+- `<mark>` replaced by `<span class="hl">` — low, rejected: the prototype and Story 1.1 use a span; `<mark>`'s default yellow fill would fight `.hl`.
+- Exactly 900px shows two columns — known, pending Amber (UX checks).
+- CSS look checked only by the walk, no automated browser test — maybe-false, deferred (`deferred-work.md`).
+- Duplicate label assertion, class-order-sensitive `btn btn-primary` check, `#000` in the mask, forced-colors outline, CTA icon size at mobile — low, rejected: no user-visible harm found (walk shows the icon aligned at 390px).
+- Missing AI log — patched (`docs/ai-log.md`).

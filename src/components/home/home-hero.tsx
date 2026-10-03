@@ -3,8 +3,8 @@ import Link from "next/link";
 import { homeHero } from "@/content/home";
 
 // Server Component: text and CTA render without JavaScript. The static navy
-// and amber glow (.silk-fallback) shows when JavaScript or WebGL is off;
-// Story 3.2 adds the silk canvas and the motion toggle as a client island.
+// and amber glow (.silk-fallback) is always painted; Story 3.2's silk canvas
+// draws above it, so it is what shows without JavaScript or WebGL.
 export function HomeHero() {
   const { label, title, sub, cta, devices } = homeHero;
 

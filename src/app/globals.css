@@ -917,7 +917,9 @@
   /*
     Home hero (Story 3.1, Sammy). Ported from the prototype site.css:
     the static glow behind the silk, and the tablet and phone frames with an
-    empty media frame until product media lands (Story 4.4).
+    empty media frame until product media lands (Story 4.4). Sizes with no
+    token (560px, frame paddings, notch, phone radius 30px, caption 0.58rem)
+    are the prototype's own values.
   */
   .silk-fallback {
     position: absolute;
