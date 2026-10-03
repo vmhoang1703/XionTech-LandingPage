@@ -16,6 +16,8 @@ const SUBJECTS: Record<ContactSubmission["type"], string> = {
   project: "Outsourcing project request",
 };
 
+const MAIL_TIMEOUT_MS = 5000;
+
 function required(name: string): string {
   const value = process.env[name];
   if (!value) throw new Error(`${name} is not set`);
@@ -47,9 +49,15 @@ export function rateLimitKey(ip: string | undefined, email: string): string {
     .digest("hex");
 }
 
+/** One log line; `cause` is an error class or "timeout", never a message. */
+function logRateLimitUnavailable(cause: string): void {
+  console.error("Contact delivery: rate limit unavailable", cause);
+}
+
 /**
  * True when the send may go ahead: at most 5 per key in 10 minutes. When the
- * store fails the send is allowed (fail open) and one line is logged.
+ * store fails or does not answer in 3 s the send is allowed (fail open) and
+ * one line is logged.
  */
 export async function checkRateLimit(key: string): Promise<boolean> {
   try {
@@ -61,11 +69,13 @@ export async function checkRateLimit(key: string): Promise<boolean> {
       limiter: Ratelimit.slidingWindow(5, "10 m"),
       prefix: "contact",
       ephemeralCache: false,
+      timeout: 3000,
     });
-    const { success } = await limiter.limit(key);
+    const { success, reason } = await limiter.limit(key);
+    if (reason === "timeout") logRateLimitUnavailable("timeout");
     return success;
-  } catch {
-    console.error("Contact delivery: rate limit unavailable");
+  } catch (error) {
+    logRateLimitUnavailable(error instanceof Error ? error.name : "unknown");
     return true;
   }
 }
@@ -106,6 +116,9 @@ export async function sendContactMail(
     service: "gmail",
     secure: true,
     auth: { user: config.gmailUser, pass: config.gmailAppPassword },
+    connectionTimeout: MAIL_TIMEOUT_MS,
+    greetingTimeout: MAIL_TIMEOUT_MS,
+    socketTimeout: MAIL_TIMEOUT_MS,
   });
   await transport.sendMail({
     from: config.gmailUser,

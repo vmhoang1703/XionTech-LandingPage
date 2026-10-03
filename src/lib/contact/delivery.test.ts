@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ContactSubmission } from "@/components/contact/contact-form";
 
 const {
@@ -93,6 +93,10 @@ beforeEach(() => {
   limitMock.mockResolvedValue({ success: true });
 });
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("getDeliveryConfig", () => {
   it("returns the inbox and the Gmail login when all five variables are set", () => {
     expect(getDeliveryConfig()).toEqual(CONFIG);
@@ -164,7 +168,7 @@ describe("checkRateLimit", () => {
     expect(await checkRateLimit("key-1")).toBe(false);
   });
 
-  it("uses 5 sends per 10 minutes, the contact prefix and no in-process cache", async () => {
+  it("uses 5 sends per 10 minutes, the contact prefix, no in-process cache and a 3 s store timeout", async () => {
     await checkRateLimit("key-1");
 
     expect(slidingWindowMock).toHaveBeenCalledWith(5, "10 m");
@@ -173,6 +177,7 @@ describe("checkRateLimit", () => {
         limiter: "sliding-window-limiter",
         prefix: "contact",
         ephemeralCache: false,
+        timeout: 3000,
       }),
     );
   });
@@ -186,29 +191,60 @@ describe("checkRateLimit", () => {
     });
   });
 
-  it("allows the send and logs once when the store fails", async () => {
+  it("allows the send and logs once when the store times out", async () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {});
-    limitMock.mockRejectedValue(new Error(`boom for ${ENV.KV_REST_API_URL}`));
+    limitMock.mockResolvedValue({ success: true, reason: "timeout" });
 
     expect(await checkRateLimit("key-1")).toBe(true);
 
     expect(error).toHaveBeenCalledTimes(1);
-    const line = String(error.mock.calls[0].join(" "));
+    const line = error.mock.calls[0].join(" ");
     expect(line).toContain("rate limit unavailable");
     expect(line).not.toContain("key-1");
+  });
+
+  it("allows the send and logs once, with the error class only, when the store fails", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    limitMock.mockRejectedValue(
+      new TypeError(`boom for ${ENV.KV_REST_API_URL} and Ana@Sunrise.edu`),
+    );
+
+    expect(await checkRateLimit("key-1")).toBe(true);
+
+    expect(error).toHaveBeenCalledTimes(1);
+    const line = error.mock.calls[0].join(" ");
+    expect(line).toContain("rate limit unavailable");
+    expect(line).toContain("TypeError");
+    expect(line).not.toContain("boom");
+    expect(line).not.toContain("key-1");
     expect(line).not.toContain(ENV.KV_REST_API_URL);
-    error.mockRestore();
+    expect(line).not.toContain("Sunrise");
+  });
+
+  it("logs an unknown class when the store rejects with something that is not an Error", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    limitMock.mockRejectedValue("boom");
+
+    expect(await checkRateLimit("key-1")).toBe(true);
+
+    const line = error.mock.calls[0].join(" ");
+    expect(line).toContain("rate limit unavailable");
+    expect(line).toContain("unknown");
+    expect(line).not.toContain("boom");
   });
 });
 
 describe("sendContactMail", () => {
-  it("logs in to Gmail with the app password", async () => {
+  it("logs in to Gmail with the app password and gives up after 5 s", async () => {
     await sendContactMail(CONFIG, DEMO);
 
     expect(createTransportMock).toHaveBeenCalledWith({
       service: "gmail",
       secure: true,
       auth: { user: ENV.GMAIL_USER, pass: ENV.GMAIL_APP_PASSWORD },
+      connectionTimeout: 5000,
+      greetingTimeout: 5000,
+      socketTimeout: 5000,
     });
   });
 
