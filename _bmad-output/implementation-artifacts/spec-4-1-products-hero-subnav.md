@@ -64,7 +64,7 @@ One layer (Blind Hunter, 9 kB, 4 findings floor):
 - `/demo#form` route — false: `src/app/demo/page.tsx` has `id="form"`.
 - `#iot` cannot reach the top, 144px offset hard-coded — maybe-false: settles when Stories 4.2/4.3 add content; the offset is the 1.1 token.
 
-Full `bmad-code-review` on 2026-10-05 after rebasing onto `develop` (bb79ab2), 5 layers (Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor, Security). Security: clean. Acceptance: CAP-1 to CAP-4 and T5 met.
+Full `bmad-code-review` on 2026-10-03 after rebasing onto `develop` (bb79ab2), 5 layers (Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor, Security). Security: clean. Acceptance: CAP-1 to CAP-4 and T5 met.
 
 - patch (fixed): site-wide `scroll-behavior: smooth` made every route change animate the scroll to the top, because Next.js 16 no longer overrides it (`version-16.md`, "Scroll Behavior Override"); `<html data-scroll-behavior="smooth">` in `layout.tsx`, with a test. Walk: `/` → `/privacy` from scrollY 4000 lands at 0 within 50ms.
 - patch (fixed): no `@smoke` test for `/products` (SPEC constraint); `e2e/products.spec.ts` added. The earlier "no smoke" rejection is reversed.
