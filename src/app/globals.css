@@ -514,10 +514,18 @@
     transform: translateY(1px) scale(0.98);
   }
 
-  .btn:disabled {
+  /* A disabled button, or a stand-in label styled as one (aria-disabled) */
+  .btn:disabled,
+  .btn[aria-disabled="true"],
+  .btn[aria-disabled="true"]:hover,
+  .btn[aria-disabled="true"]:active {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
+  }
+
+  .btn-glass[aria-disabled="true"]:hover {
+    border-color: var(--color-border);
   }
 
   .btn-primary {
@@ -2162,6 +2170,122 @@
       var(--spacing-anchor-offset-subnav) - var(--spacing-header-height)
     );
     padding-block: var(--spacing-section-mobile);
+  }
+
+  /*
+    PXP section (Story 4.2): the phone comes first in the markup, as in the
+    mockup. Below md (one column in .split) it moves under the text, so a
+    #pxp jump shows the heading (lead, 2026-10-03).
+  */
+  @media (width < --theme(--breakpoint-md)) {
+    .pxp-phone {
+      order: 1;
+    }
+  }
+
+  /*
+    Products page: PXP story phone, phone tabs, feature list and store
+    buttons (Story 4.2). Screens reuse the empty .home-media frame; inactive
+    screens carry `hidden`. The 0.55s crossfade follows after demo.
+  */
+  .story-phone {
+    position: relative;
+    width: 260px;
+    aspect-ratio: 1170 / 2532;
+    margin-inline: auto;
+    padding: 10px;
+    border-radius: 42px;
+    background: var(--color-ink);
+    box-shadow: 0 60px 90px -30px rgb(11 23 48 / 0.6);
+  }
+
+  .story-phone .notch {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    z-index: 1;
+    width: 32%;
+    height: 18px;
+    border-radius: var(--radius-full);
+    background: var(--color-ink);
+    transform: translateX(-50%);
+  }
+
+  .story-phone .story-screen {
+    position: absolute;
+    inset: 10px;
+    width: auto;
+    height: auto;
+    border-radius: 33px;
+    font-size: 0.72rem;
+  }
+
+  .ptabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .ptabs button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1.5px solid var(--color-field-border);
+    border-radius: var(--radius-full);
+    color: var(--color-muted);
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .ptabs button[aria-selected="true"] {
+    border-color: var(--color-navy);
+    background: var(--color-navy);
+    color: var(--color-white);
+  }
+
+  .feature-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 26px;
+  }
+
+  .feature-list > div {
+    display: flex;
+    gap: 12px;
+  }
+
+  .feature-list svg {
+    flex-shrink: 0;
+    color: var(--color-heading);
+    font-size: 1.4rem;
+  }
+
+  .feature-list b {
+    display: block;
+    color: var(--color-heading);
+    font-size: 0.98rem;
+  }
+
+  .feature-list span {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  @media (width <= --theme(--breakpoint-sm)) {
+    .feature-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .store-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
   }
 }
 

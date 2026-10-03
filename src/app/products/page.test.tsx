@@ -69,6 +69,16 @@ describe("Products page", () => {
     }
   });
 
+  it("renders the PXP story section in #pxp, not the stub", () => {
+    const { container } = render(<ProductsPage />);
+    const pxp = container.querySelector("section#pxp") as HTMLElement;
+    expect(within(pxp).getByRole("heading", { level: 2 }).textContent).toBe(
+      "The school day, in a parent's pocket.",
+    );
+    const tablist = within(pxp).getByRole("tablist", { name: "PXP screens" });
+    expect(within(tablist).getAllByRole("tab")).toHaveLength(5);
+  });
+
   it("sets the page metadata", () => {
     expect(metadata.title).toBe(productsMeta.title);
     expect(metadata.description).toBe(productsMeta.description);
