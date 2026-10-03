@@ -2,7 +2,7 @@
 title: 'Story 3.2: Continuous silk animation and motion toggle'
 type: 'feature'
 created: '2026-10-04'
-status: 'in-progress'
+status: 'done'
 route: 'oneshot'
 review_loop_iteration: 0
 context: ['{project-root}/AGENTS.md']
@@ -47,3 +47,8 @@ Sources: story spec CAP-1 to CAP-8, `EXPERIENCE.md` Component Patterns › Motio
 - The first walk reported the silk still moving after Pause: it compared the whole canvas area, which includes the toggle and text drawn over it. Measuring a 30px strip at the hero's right edge shows it stopped.
 - Shader colours stay hex in `silk-shader.ts`: WebGL uniforms need numbers; the comment names the DESIGN.md hero-silk palette they come from.
 
+
+## Review Triage Log
+
+- Full `bmad-code-review` (4 layers) ran on 3.1–3.6 together on 2026-10-01; its 3.2 findings were fixed then (reduced-motion label, unmount cleanup test, spy restore).
+- Light review of the 2026-10-04 fix and `develop` merge (42 lines plus the conflict resolution, Edge Case Hunter): no findings.
