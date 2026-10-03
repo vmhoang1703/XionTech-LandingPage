@@ -2,7 +2,7 @@
 title: 'Story 3.1: Dark Home hero with one CTA'
 type: 'feature'
 created: '2026-10-03'
-status: 'in-progress'
+status: 'done'
 route: 'oneshot'
 review_loop_iteration: 0
 context: ['{project-root}/AGENTS.md']
