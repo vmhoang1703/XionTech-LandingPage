@@ -8,7 +8,8 @@ It says where the code lives, how to set up, what happens when something fails, 
 | Path                                      | What it does                                                                                                         |
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `src/app/api/contact/route.ts`            | `POST /api/contact`. Runs the steps in order (see "What the route does"). `maxDuration` is 10 seconds.               |
-| `src/lib/contact/submission.ts`           | `parseSubmission`: checks the body, reads the honeypot, runs the shared rules.                                       |
+| `src/lib/contact/submission.ts`           | `parseSubmission`: checks the body, reads the honeypot, runs the shared rules. Also reads the capture body.          |
+| `src/components/contact/capture-band.tsx` | The email band. It posts a capture to the same route (see "Capture mails").                                          |
 | `src/lib/contact/contact-rules.ts`        | The shared rules and error text. The browser and the server use the same file.                                       |
 | `src/lib/contact/delivery.ts`             | Reads the five variables, builds the rate-limit keys, checks both limits in Upstash, sends the mail with Gmail SMTP. |
 | `src/components/contact/contact-form.tsx` | The client form. It posts JSON with `fetch` and waits at most 15 seconds.                                            |
@@ -54,23 +55,34 @@ Unit tests mock Gmail and Upstash. They never send mail.
 
 The route runs these steps in order. It stops at the first one that fails.
 
-| Step | Check                                                                                   | Answer                                   |
-| ---- | --------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 1    | Body is not a JSON object, or `type` is not `demo` or `project`                         | 400 `{ "error": "send" }`                |
-| 2    | Honeypot field `website` is not empty                                                   | 200 `{ "ok": true }`. Nothing else runs. |
-| 3    | Role is over 200 characters, or a select or products value is not an option in the form | 400 `{ "error": "send" }`                |
-| 4    | One of the five variables is not set                                                    | 500 `{ "error": "send" }`                |
-| 5    | A field breaks the shared rules                                                         | 400 `{ "errors": { field: text } }`      |
-| 6    | About 5 sends in 10 minutes for the same IP and email                                   | 429 `{ "error": "rate" }`                |
-| 7    | About 20 sends in 1 hour for the same IP, whatever the email                            | 429 `{ "error": "rate" }`                |
-| 8    | The mail fails to send                                                                  | 502 `{ "error": "send" }`                |
-| 9    | The mail is sent                                                                        | 200 `{ "ok": true }`                     |
+| Step | Check                                                                                                                                     | Answer                                   |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| 1    | Body is not a JSON object, or `type` is not `demo`, `project` or `capture`                                                                | 400 `{ "error": "send" }`                |
+| 2    | Honeypot field `website` is not empty                                                                                                     | 200 `{ "ok": true }`. Nothing else runs. |
+| 3    | Role is over 200 characters, or a select or products value is not an option in the form. For a capture: `kind` is not `demo` or `project` | 400 `{ "error": "send" }`                |
+| 4    | One of the five variables is not set                                                                                                      | 500 `{ "error": "send" }`                |
+| 5    | A field breaks the shared rules. For a capture: the email is empty, not valid or over 254 characters                                      | 400 `{ "errors": { field: text } }`      |
+| 6    | About 5 sends in 10 minutes for the same IP and email                                                                                     | 429 `{ "error": "rate" }`                |
+| 7    | About 20 sends in 1 hour for the same IP, whatever the email                                                                              | 429 `{ "error": "rate" }`                |
+| 8    | The mail fails to send                                                                                                                    | 502 `{ "error": "send" }`                |
+| 9    | The mail is sent                                                                                                                          | 200 `{ "ok": true }`                     |
 
 Notes:
 
 - The honeypot answer is 200 on purpose. A bot gets no sign that it was caught. No mail is sent and no rate-limit call is made. The honeypot is checked before the role and option checks (step 3), so a filled honeypot with a long role still gets 200. The smoke test uses this step, so it needs no secrets.
 - The mail is plain text. The subject is "Product demo request: <school or company>" or "Outsourcing project request: <school or company>". CR and LF are removed from the subject. Reply-To is the visitor's email.
 - In the form, 400 with field errors shows inline. Any other failure, and a 15 second timeout, shows the send message above the button. 429 shows the rate-limit message. The visitor keeps every value and presses "Send request" again.
+
+## Capture mails
+
+The email band (`src/components/contact/capture-band.tsx`) posts to the same `POST /api/contact`. There is no second route and no second sender. The body is `{ "type": "capture", "kind": "demo" | "project", "email": "...", "website": "" }`.
+
+- The route runs the same steps as in the table above. The email is trimmed first, then it must pass `isValidEmail` and be at most 254 characters. A bad email gets 400 `{ "errors": { "email": text } }`. A bad `kind` gets 400 `{ "error": "send" }`.
+- The honeypot, the config check and both rate limits are the same as for the form. A filled honeypot gets 200 and no mail.
+- The subject is "Demo capture" or "Project capture". It has no personal data. CR and LF cannot appear in it.
+- The body has two lines: `Kind: <kind>` and `Email: <email>`. Reply-To is the visitor's email.
+- A capture counts as one send for the IP and email limit. The full form that the visitor then sends counts as a second one. So the visitor has about 3 more sends in the same 10 minutes.
+- After a 200, the band keeps the email in session storage under `xt-capture-email` and opens `/demo#form` or `/demo#project`. `/demo` reads the key once, fills Work email only if it is empty, and removes the key. The email is never in a URL and never in a log line. If session storage throws, the visitor still lands on the right tab with no prefill.
 
 ## Rate limit
 

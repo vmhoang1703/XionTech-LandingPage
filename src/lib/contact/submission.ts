@@ -1,10 +1,24 @@
 import type { ContactSubmission } from "@/components/contact/contact-form";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import {
+  CONTACT_ERRORS,
+  EMAIL_MAX_LENGTH,
   TEXT_MAX_LENGTH,
+  isValidEmail,
   validateContact,
   type ContactErrors,
+  type ContactType,
 } from "./contact-rules";
+
+/** The email band: which form the visitor goes to next, and their email. */
+export interface CaptureSubmission {
+  type: "capture";
+  kind: ContactType;
+  email: string;
+}
+
+/** A request that passed every check and is ready to mail. */
+export type ValidSubmission = ContactSubmission | CaptureSubmission;
 
 /**
  * `ok` with the values to send, `ok: false` with field errors in the client
@@ -12,7 +26,7 @@ import {
  * route answers it as if it worked).
  */
 export type ParsedSubmission =
-  | { ok: true; submission: ContactSubmission }
+  | { ok: true; submission: ValidSubmission }
   | { ok: false; errors: ContactErrors }
   | { ok: false; bad: true }
   | { ok: false; honeypot: true };
@@ -89,8 +103,23 @@ function readProject(
 }
 
 /**
+ * The email band's request, or `bad` when the kind is not demo or project.
+ * The email follows the form's rule: trimmed, valid and at most 254 characters.
+ */
+function readCapture(raw: Record<string, unknown>): ParsedSubmission {
+  const { kind } = raw;
+  if (kind !== "demo" && kind !== "project") return bad();
+  const email = text(raw.email).trim();
+  if (!isValidEmail(email) || email.length > EMAIL_MAX_LENGTH) {
+    return { ok: false, errors: { email: CONTACT_ERRORS.email } };
+  }
+  return { ok: true, submission: { type: "capture", kind, email } };
+}
+
+/**
  * Check an untrusted request body with the rules of the form. Only the fields
- * of the chosen tab are read. `serverToday` is the current time on the server.
+ * of the chosen tab (or of the email band) are read. `serverToday` is the
+ * current time on the server.
  */
 export function parseSubmission(
   body: unknown,
@@ -99,8 +128,9 @@ export function parseSubmission(
   if (typeof body !== "object" || body === null) return bad();
   const raw = body as Record<string, unknown>;
   const { type } = raw;
-  if (type !== "demo" && type !== "project") return bad();
+  if (type !== "demo" && type !== "project" && type !== "capture") return bad();
   if (raw.website) return { ok: false, honeypot: true };
+  if (type === "capture") return readCapture(raw);
 
   // Role has no error slot in the form; its 200-character cap is an input
   // `maxLength`, so a longer value did not come from the form.

@@ -399,6 +399,34 @@ describe("sendContactMail", () => {
     );
   });
 
+  it.each([
+    ["demo", "Demo capture"],
+    ["project", "Project capture"],
+  ] as const)(
+    "sends a %s capture with a subject that holds no personal data",
+    async (kind, subject) => {
+      await sendContactMail(CONFIG, { type: "capture", kind, email: EMAIL });
+
+      const mail = sentMail();
+      expect(mail.subject).toBe(subject);
+      expect(mail.to).toBe(ENV.CONTACT_INBOX);
+      expect(mail.from).toBe(ENV.GMAIL_USER);
+      expect(mail.replyTo).toBe(EMAIL);
+    },
+  );
+
+  it("puts the kind and the email in a plain-text capture body and nothing else", async () => {
+    await sendContactMail(CONFIG, {
+      type: "capture",
+      kind: "project",
+      email: EMAIL,
+    });
+
+    const mail = sentMail();
+    expect(mail).not.toHaveProperty("html");
+    expect(mail.text).toBe(`Kind: project\nEmail: ${EMAIL}`);
+  });
+
   it("lets a send failure through so the route can answer 502", async () => {
     sendMailMock.mockRejectedValue(new Error("SMTP down"));
 
