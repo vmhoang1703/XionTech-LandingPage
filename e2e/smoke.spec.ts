@@ -8,6 +8,7 @@ test(
 
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain("XionTech");
+    expect(await response.text()).toContain("See it working at your school.");
   },
 );
 
