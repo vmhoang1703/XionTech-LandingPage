@@ -180,3 +180,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-3-1-dark-home-hero.md`
   summary: Add an automated browser check for the Home hero CSS (glow layer painted, 2 columns at 900px / 1 at 899px, no sideways scroll at 390px); today only the walk script checks it.
   evidence: jsdom tests check class names only and the smoke project is request-only; a deleted `.silk-fallback` rule would pass every test. The team has to choose which Playwright project runs it.
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-7-not-found-page.md`
+  summary: Tighten the 404 smoke test (page marker and noindex end to end, band absence by marker, not by one string) and check `min-h-[70dvh]` at 320px.
+  evidence: full review 2026-10-03, Minor findings 4 and 5.
