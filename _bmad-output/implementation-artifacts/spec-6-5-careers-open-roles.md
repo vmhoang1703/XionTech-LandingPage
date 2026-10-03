@@ -2,7 +2,7 @@
 title: 'Story 6.5: Careers page and open roles'
 type: 'feature'
 created: '2026-10-03'
-status: 'in-review'
+status: 'done'
 baseline_commit: '8964d3c710d3da64d3458afe3052538b2ae3f93e'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -113,9 +113,28 @@ Sources: `EXPERIENCE.md` (Component Patterns › Role card, Spotlight card, Medi
 
 ## Implementation Notes
 
+- 2026-10-03: task reviews were skipped by the controller's rule for this run (one review layer inside the build); the ledger records each skip.
+- 2026-10-03, step 4: added an `undefinedClasses` guard test for all five careers sections (lesson from Stories 3.1, 3.4, 3.5 in `docs/ai-log.md`); it passed on first run, so it is a guard, not a red test.
+
 ## Spec Change Log
 
 ## Review Triage Log
+
+Step 4 on 2026-10-03: one layer (Edge Case Hunter), by the controller's rule for this run (deadline-speed-first; the full 5-layer `bmad-code-review` runs before the PR). Blind Hunter, Verification Gap, Acceptance Auditor and Security Auditor were not run. Task reviews were also skipped for the same reason.
+
+| # | Finding (source) | Verdict | Route | Evidence |
+|---|---|---|---|---|
+| 1 | `roleMeta` reads a plain object, so type `constructor` / `toString` prints function text (Edge, also as a claim check) | low | patch | Real: `TYPE_LABELS[type]` returns inherited members; breaks the matrix row "unknown type left out". Fixed with a `Map` lookup and a 3-case test (`6584322`). |
+| 2 | Empty `slug.current` passes `defined()` and links to `/careers/` (Edge) | low | reject | The schema marks slug required, and the Studio's slug field never publishes an empty string; a guard adds a branch for an unlikely case. |
+| 3 | Hand-typed slug with space, `?`, `#` or `/` breaks the link (Edge) | low | reject | Sanity's slug field slugifies from the title; only a deliberate hand edit gets there; the lead is the only editor. |
+| 4 | Empty or whitespace `title.en` gives a card with no title (Edge) | low | reject | Unlikely with one editor; a guard adds complexity. |
+| 5 | Two jobs with the same slug give duplicate React keys (Edge) | false | reject | Sanity's `slug` type checks uniqueness per document type by default (`isUnique`), so two published jobs cannot share a slug through the Studio. |
+| 6 | A Sanity error fails the build or shows the error page instead of an empty list (Edge) | false | reject | Intended: the frozen matrix row "Sanity error → propagates; not swallowed" (CLAUDE.md: never swallow errors). |
+| 7 | Role cards link to `/careers/[slug]`, which does not exist yet (Edge) | false | reject | By design: CAP-2 links to the Story 6.6 job page (T3); until 6.6 merges the link shows the Story 1.7 Not found page, and the only role is a `[Placeholder]`. Merge order is the lead's. |
+| 8 | No lift on keyboard focus, only on hover (Edge) | false | reject | DESIGN.md Role card: "Lifts 2px on hover"; keyboard focus shows the 2px focus ring (UX checks row, T9). |
+| 9 | Smoke build needs the Sanity env vars and network (Edge) | false | reject | Pre-existing since Story 1.8: `next.config.ts` checks the variables and smoke builds with `.env.local` (spec 1.8 Code Map). |
+
+Patch re-review: not run as a separate subagent (16-line change, one review layer for this run); covered by `npx vitest run src/lib/careers/open-roles.test.ts` (13 passed) and the full re-verification below.
 
 ## Design Notes
 
@@ -135,12 +154,12 @@ Sources: `EXPERIENCE.md` (Component Patterns › Role card, Spotlight card, Medi
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-03.
+Re-captured in step 4 on 2026-10-03, after the review patch (`6584322`) and the class guard test (`1b62497`).
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- "All matched files use Prettier code style!"
-- `npm test` -- exit 0 -- "Test Files 45 passed (45)", "Tests 707 passed (707)"
+- `npm test` -- exit 0 -- "Test Files 45 passed (45)", "Tests 711 passed (711)"
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%", "C1 ok: 9 changed file(s) with branch coverage >= 80% vs origin/develop."
 
 **Observed**
@@ -149,7 +168,7 @@ Captured at the end of step-03 on 2026-10-03.
 
 **Artifacts**
 
-- spec-6-5-careers-open-roles-evidence/verification.txt -- 3824 bytes -- sha256 f1ed11f42e7d -- transcript of the three command runs
+- spec-6-5-careers-open-roles-evidence/verification.txt -- 3925 bytes -- sha256 fb9eabe98d6b -- transcript of the three command runs
 - spec-6-5-careers-open-roles-evidence/observed.md -- 921 bytes -- sha256 a19db74e200d -- surface not reached; what the tests observed instead
 
 **Not captured**

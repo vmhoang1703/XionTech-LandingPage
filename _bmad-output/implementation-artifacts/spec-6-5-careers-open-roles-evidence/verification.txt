@@ -26,12 +26,13 @@ $ npm test
 
 
  Test Files  45 passed (45)
-      Tests  707 passed (707)
-   Start at  20:57:37
-   Duration  85.06s (import 47%, tests 23%, environment 23%, setup 5%, transform 1%)
+      Tests  711 passed (711)
+   Start at  21:07:48
+   Duration  52.93s (import 48%, environment 27%, tests 17%, setup 6%, transform 2%)
 
-    Isolate  45 workers spawned · ~4.35s startup each (spawn + environment, per file)
-             at least ~4.97s faster with isolate: false — reuses workers across files instead of one per file
+Environment  jsdom was created 45 times · 187.47s total, 27% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
 
 exit 0
 $ npm run test:coverage && npm run coverage:diff
@@ -45,11 +46,11 @@ $ npm run test:coverage && npm run coverage:diff
 
 
  Test Files  45 passed (45)
-      Tests  707 passed (707)
-   Start at  20:59:06
-   Duration  55.14s (import 44%, environment 29%, tests 17%, setup 7%, transform 2%, worker 1%)
+      Tests  711 passed (711)
+   Start at  21:08:44
+   Duration  59.00s (import 44%, environment 29%, tests 18%, setup 6%, transform 2%, worker 1%)
 
-Environment  jsdom was created 45 times · 178.88s total, 29% of tracked time
+Environment  jsdom was created 45 times · 196.20s total, 29% of tracked time
              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
              learn more: https://vitest.dev/guide/improving-performance#test-environments
 

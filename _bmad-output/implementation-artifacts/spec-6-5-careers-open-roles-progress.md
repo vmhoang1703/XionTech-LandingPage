@@ -39,3 +39,10 @@ Acceptance: BLOCKED — npm run build && npm run test:smoke not run: Turbopack r
 Acceptance: BLOCKED — manual browser walk of /careers (1280/900/390px, keyboard, every UX checks row) not run: no dev server in the worktree; pending (controller)
 Acceptance: evidence — spec-6-5-careers-open-roles-evidence/verification.txt — 3824 bytes — sha256 f1ed11f42e7d — transcript of the three command runs
 Acceptance: evidence — spec-6-5-careers-open-roles-evidence/observed.md — 921 bytes — sha256 a19db74e200d — surface not reached; what the jsdom tests observed instead
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm test — exit 0 — Test Files 45 passed (45), Tests 711 passed (711)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100% (Missing: 0 lines); C1 ok: 9 changed file(s) with branch coverage >= 80% vs origin/develop.
+Acceptance: BLOCKED — npm run build && npm run test:smoke not run: Turbopack rejects the worktree node_modules junction; pending (controller, main checkout)
+Acceptance: BLOCKED — manual browser walk of /careers (1280/900/390px, keyboard, every UX checks row) not run: no dev server in the worktree; pending (controller)
+Acceptance: evidence — spec-6-5-careers-open-roles-evidence/verification.txt — 3925 bytes — sha256 fb9eabe98d6b — transcript after the review patch (6584322) and the class guard test (1b62497)
+Acceptance: evidence — spec-6-5-careers-open-roles-evidence/observed.md — 921 bytes — sha256 a19db74e200d — surface not reached; what the jsdom tests observed instead
