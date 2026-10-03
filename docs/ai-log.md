@@ -573,3 +573,9 @@ Template:
 - **Prompt (Hoang Vu):** "XionTech is right" (the Products title said "XionTechs", `/privacy` said "XionTech"), then "both" (fix the footer and start the next stories).
 - **What the AI did:** changed the footer logo alt text and copyright to "XionTech", tests first. The mockup and the old site say "XionTechs"; the domain stays `xiontechs.com`.
 - **AI got it wrong?** Yes. The first test anchored the copyright with `$`, but the line has more text after the name; it now uses a word boundary. The AI also dated this entry and the Story 4.1 entry 2026-10-05 (copied from the entries above) instead of the real date, 2026-10-03; the review caught it. The rule now sits in `AGENTS.md`.
+
+## 2026-10-03 — Story 4.2 PXP story phone (`bmad-build`, one-shot, built in parallel with 4.3)
+
+- **Prompt (Hoang Vu):** build Story 4.2 in its own worktree while 4.3 is built in another; change only the PXP part.
+- **What the AI did:** one-shot build of `/products#pxp`: a Server Component section (badge, H2, lede, four features, `[Placeholder]` App Store and Google Play buttons that open a new tab) and one client island, the story phone with five ARIA tabs (roving tabindex, arrows, Home, End) and five empty `[Placeholder]` screens; inactive screens use `hidden` (AC-A11Y-3). Temporary store links live in a new `src/content/product-links.ts`, the one place 4.3 also uses (A1). Tests first, 19-line UX checks table, one review layer. Build, smoke and the browser walk wait for the controller (the worktree's `node_modules` junction blocks Turbopack).
+- **AI got it wrong?** Yes. The first draft of the UX table invented a 0.3s hover colour for the tab pills that the prototype does not have. The review found icons matched to content by array position (a reorder would crash), a keyboard test that fired keys on the tablist instead of the focused tab, a focus test that could never fail and a brand-name test on text that never says "XionTech"; all fixed.
