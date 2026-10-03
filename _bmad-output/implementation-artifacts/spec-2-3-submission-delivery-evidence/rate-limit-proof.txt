@@ -1,0 +1,9 @@
+===== $ node --env-file=.env.local .rateproof.mjs (real Upstash, slidingWindow 5 / 10 m, prefix contact-proof, throwaway keys; no mail)
+key A call 1: success=true remaining=4 reason=-
+key A call 2: success=true remaining=3 reason=-
+key A call 3: success=true remaining=2 reason=-
+key A call 4: success=true remaining=1 reason=-
+key A call 5: success=true remaining=0 reason=-
+key A call 6: success=false remaining=0 reason=-
+key B (same IP, other email) call 1: success=true remaining=4
+===== exit 0

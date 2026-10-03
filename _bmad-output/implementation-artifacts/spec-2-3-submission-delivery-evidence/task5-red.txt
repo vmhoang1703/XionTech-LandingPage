@@ -1,0 +1,49 @@
+===== $ npx vitest run src/app/api/contact/route.test.ts --reporter=verbose (route.ts temporarily replaced by a 501 stub; task 5 RED re-run)
+ ✓ src/app/api/contact/route.test.ts > POST /api/contact valid send > allows up to 10 seconds 8ms
+ × src/app/api/contact/route.test.ts > POST /api/contact valid send > answers 200 and sends one mail to the inbox for a demo request 42ms
+ × src/app/api/contact/route.test.ts > POST /api/contact valid send > answers 200 and sends one mail to the inbox for a project request 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact valid send > checks the limits with hashes of the client IP and the email, not the raw values 3ms
+ ✓ src/app/api/contact/route.test.ts > POST /api/contact valid send > writes no log line 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact honeypot > answers 200 and does nothing else when the website field is filled 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact honeypot > answers 200 even when the delivery is not configured and logs nothing 3ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for a missing name 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for a bad email 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for a message over 2,000 characters 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for a past date 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for a bad date format 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for a name over 200 characters 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for an email over 254 characters 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > answers 400 with the client wording for an organisation over 200 characters 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > reports every wrong field in one answer 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bypassed client > applies the same rules to a project request 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > answers 400 send for not JSON 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > answers 400 send for an empty body 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > answers 400 send for JSON null 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > answers 400 send for a JSON array 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > answers 400 send for no type 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > answers 400 send for an unknown type 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > answers 400 send for a select value that is not an option 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact bad body > is judged before the configuration is read 6ms
+ × src/app/api/contact/route.test.ts > POST /api/contact not configured > answers 500 send and logs one line naming CONTACT_INBOX when it is missing 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact not configured > answers 500 send and logs one line naming GMAIL_USER when it is missing 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact not configured > answers 500 send and logs one line naming GMAIL_APP_PASSWORD when it is missing 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact not configured > answers 500 send and logs one line naming KV_REST_API_URL when it is missing 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact not configured > answers 500 send and logs one line naming KV_REST_API_TOKEN when it is missing 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact not configured > is judged before the fields are validated 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > answers 429 rate and sends nothing for the sixth send 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > answers 429 rate and sends nothing when the IP alone is over its limit 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > blocks the 21st send in the hour from one IP even with a new email each time 3ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > blocks the sixth send of one email from one IP 4ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > lets the same IP through with another email 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > counts the same email in another case as the same visitor 3ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > sends the mail anyway, logs once and asks the store once when the store is down 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact rate limit > sends the mail anyway, logs once and asks the store once when the store does not answer 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact mail fails > answers 502 send and logs the step, the error class and the SMTP code only 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact mail fails > logs no code when the error has none or the code is not a string 2ms
+ × src/app/api/contact/route.test.ts > POST /api/contact mail fails > logs an unknown class when the mail rejects with something that is not an Error 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact logs > keeps the visitor's email, name, organisation and limit key out of the log when the mail fails 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact logs > keeps the visitor's email, name, organisation and limit key out of the log when the store is down 1ms
+ × src/app/api/contact/route.test.ts > POST /api/contact logs > keeps the visitor's email, name, organisation and limit key out of the log when the delivery is not configured 1ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 43 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed (1)
+      Tests  43 failed | 2 passed (45)
