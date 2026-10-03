@@ -40,10 +40,10 @@ Hà uses a screen reader or keyboard and must be able to use the whole site. WCA
 
 ## Constraints
 
-- Checks each page as it is merged; the final run follows Sammy's last page (planned 2026-10-07).
+- Checks each page as it is merged; the final run follows the last page story merged: Andy's 6.6 or 6.2, or Sammy's 6.4 (planned 2026-10-07).
 - No CI yet (PRD open question 20): axe and keyboard suites run locally before release. Free tools only (axe-core with Playwright), as devDependencies, kept apart from the `@smoke` project.
 - Story 1.1 already checks amber contrast (AC-A11Y-1); CAP-2 extends that test to all surface pairs instead of adding a second one.
-- Fixes keep the design (the spines win over the prototype). Fixes in Sammy's files are agreed with Sammy.
+- Fixes keep the design (the spines win over the prototype). Fixes go to the owner of each file; fixes in Sammy's files (`src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*`, the footer) are agreed with Sammy.
 - Definition of Done from `CLAUDE.md` (100% changed lines, 80% branches, smoke, lint, local Sonar gate, `bmad-code-review`).
 
 ## Non-goals

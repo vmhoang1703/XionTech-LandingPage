@@ -1,7 +1,7 @@
 ---
 id: SPEC-1-7-not-found-page
-owner: Sammy
-build_day: 2026-10-01
+owner: Andy
+build_day: 2026-10-04
 depends_on: ["1.1"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
@@ -34,7 +34,7 @@ Pain (FR-9): a visitor on a broken or mistyped link must not reach a dead end. A
 
 ## Constraints
 
-- Story 1.1 tokens must be merged first; the header/footer check passes only once Stories 1.3 and 1.5 are merged.
+- Story 1.1 tokens must be merged first; the header/footer check passes only once Stories 1.3 and 1.5 are merged. If the footer is not yet mounted in `src/app/layout.tsx` on `develop` when this story is built (PR #15 and Andy's mount PR, decision T10), skip the footer check and record it for the mount PR.
 - Use the Next.js 16 not-found convention so the status is a real 404, not a 200 page.
 - Definition of Done (CLAUDE.md): unit tests with 100% changed-line and 80% branch coverage, an `@smoke` Playwright test, lint, typecheck, format check, build, local Sonar gate (LOCAL ONLY) and bmad-code-review must pass.
 - Next.js 16 App Router; Server Components by default, `"use client"` only for state, effects or browser APIs; read `node_modules/next/dist/docs/` before using a Next.js API.
@@ -42,7 +42,7 @@ Pain (FR-9): a visitor on a broken or mistyped link must not reach a dead end. A
 - Port the prototype markup, copy and look; do not redesign. The UX spines win over the prototype on any conflict.
 - Routes have no `/en` or `/vi` prefix (locale routing, Story 1.2, is after demo); Demo day is English only, but every string is kept in a form that can be translated later (no copy baked into logic).
 - Every visible fact is real or starts with `[Placeholder]` (NFR-7).
-- Sammy owns `src/components/home/*`, page-level `src/app/**/page.tsx` and page sections; do not edit Andy's files (`src/app/layout.tsx`, `@theme` in `globals.css`, `src/components/layout/*`, `src/lib/sanity/*`, `src/app/api/*`).
+- Andy owns this story's files. Sammy owns `src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*` and the footer (`src/components/layout/site-footer.tsx`); do not edit those.
 
 ## Non-goals
 

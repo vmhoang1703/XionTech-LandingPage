@@ -38,3 +38,11 @@ Decided by Hoang Vu (Andy) before Story 1.3.
 | D2 | **XionTech IT / Vinni controls DNS** for newxion.com. Andy asks them to add the mail service's SPF and DKIM records before Story 2.3 (Sun 05/10). | 2.3 |
 | D3 | For demo, project and capture requests **the inbox is the record**: the site stores no copy. If sending fails, the form shows a retryable error and keeps every value. (CVs still go to the private Blob store, T1.) | 2.3, 2.2, 2.4 |
 | T11 | **Mega menus open on hover** on desktop with a mouse (moved forward from "after demo"): moving away closes after 150ms, a click never closes a menu that hover just opened (AC-NAV-3), touch and pen still use click. This follows `EXPERIENCE.md` "Mega menu" and the prototype. The 0.3s fade and drop stay after demo. | 1.3, 1.4 |
+
+## Added 2026-10-03
+
+Decided by Hoang Vu (Andy), team lead, after Sammy had 1 of 20 stories started on 03/10.
+
+| ID | Decision | Specs |
+| --- | --- | --- |
+| P1 | **Plan C:** 9 stories move from Sammy to Andy: 1.7 Not found, 2.1 Privacy, 6.5 Careers, 3.7 Home news and demo capture, 6.1 News, 6.2 Story detail, 4.1–4.3 Products. Andy builds the forms and every page that reads Sanity, plus Products (15 stories, about 9.5 developer-days); Sammy owns Home, Services and About and places the capture band in 5.4 and 6.4 (11 stories, about 6.5 developer-days, or 6.0 without the footer under review). Total remaining is about 16 developer-days. The spec folders moved to `specs/andy/`. Cross-owner waits left: Sammy's 5.4 and 6.4 on Andy's 2.4, Andy's 3.7 on Sammy's 3.1, and the footer mount on Sammy's PR #15; 7.3 and 7.4 wait on all pages. The `epics.md` Demo-day plan table (Amber's file) still shows the old split; Amber is told to update it (the lead tells her). Work still exceeds the days left; cuts to decide: 6.3 (lead edits in the Studio by hand), slim 7.3/7.4, 6.6 without CV upload on Demo day, Thu 08 morning as buffer. | 1.7, 1.8, 2.1, 2.4, 3.7, 4.1, 4.2, 4.3, 6.1, 6.2, 6.5, 6.6, 7.3, 7.4 |

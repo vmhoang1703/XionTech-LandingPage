@@ -1,8 +1,8 @@
 ---
 id: SPEC-3-7-home-news-demo-capture
-owner: Sammy
+owner: Andy
 build_day: 2026-10-06
-depends_on: ["2.4", "1.8"]
+depends_on: ["2.4", "1.8", "3.1"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
@@ -43,10 +43,10 @@ Opportunity. Lan, finishing the Home page (Flow 1), should see that the company 
 
 ## Constraints
 
-- Stories 2.4 (capture band) and 1.8 (Sanity setup) must be merged first.
+- Stories 2.4 (capture band), 1.8 (Sanity setup) and 3.1 (Home page, Sammy) must be merged first.
 - Stories are read on the server with the Sanity client and the one tagged fetch helper from Story 1.8 (`src/lib/sanity/*`, Andy owns that folder), with `useCdn: true` and tag-based caching, never `force-dynamic` (`cms-spike.md`). This story writes its own GROQ query for the three newest stories, in its own files; there is no shared content access module, and Stories 6.1 and 6.2 write their own queries (T2).
 - The `[Placeholder]` sample stories are entered in Sanity by the Demo-day editor, Hoang Vu (Andy), who needs a Sanity account invited to the project (free plan: 20 users) (A5).
-- Sammy owns `src/app/page.tsx` and `src/components/home/*`.
+- Andy owns this story's files: the news section in `src/components/news/*` and the capture placement; in Sammy's `src/app/page.tsx` he adds only the import and render lines for them, after Sammy's sections (FR-14 order). If Sammy's 3.3 to 3.6 are not merged yet, add them after the last section that exists; Sammy then inserts later sections above Andy's lines. Sammy owns `src/app/page.tsx` and `src/components/home/*` (Stories 3.1 to 3.6); add this story's sections to that page and do not change Sammy's sections.
 - Next.js 16 App Router, Server Components by default. Read `node_modules/next/dist/docs/` before using a Next.js API.
 - Tailwind v4 tokens from Story 1.1. Port the prototype, do not redesign.
 - Route has no `/en` or `/vi` prefix (Story 1.2 is after demo); keep copy in a form that can be translated later.
