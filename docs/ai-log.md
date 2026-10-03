@@ -606,3 +606,25 @@ Template:
 - **AI got it wrong?** Flagged, not wrong yet: removing the header Book a demo button changes AC-NAV-2. Book a demo
   stays reachable through heroes, capture bands and the footer "Contact" link, but pages without a capture band
   (Careers, Job, News story, Privacy, Not found) now rely on the footer only.
+
+## 2026-10-03 — One prototype, one enhancement branch and an enhancement log
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt / task:** Amber's manager asked for a clearer way of working on the prototype: keep rebasing on
+  `develop`, keep all prototype work on one branch instead of one branch per change, give the prototype a plain
+  name, and log enhancements for the technical team instead of editing the PRD and stories directly.
+- **What changed:** The prototype moved from
+  `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/` to
+  `_bmad-output/prototype-enhancement/prototype/`, and every live reference was updated (the UX specs, PRD, epics,
+  the story specs under `_bmad-output/specs/`, the epic contexts and `scripts/ux/browser.mjs`). Historical records
+  (this log, the `.memlog.md` files and the 2026-09-28 code review) keep the old name. New
+  `_bmad-output/prototype-enhancement/README.md` (folder, names and the six-step flow) and `enhancement-log.md`
+  (`ENH-NNN` entries with status Proposed, Approved, In PR, Merged, Built). The branch `docs/second-draft` became
+  `docs/prototype-enhancement`, rebuilt as `develop` plus batch 1 (PR #10) and rebased on `develop`. The site-v6
+  proposal folder is retired; its homepage ideas come back as logged enhancements in the one prototype.
+  `AGENTS.md` records the folder and the branch exception.
+- **Decision / result:** Amber chose one prototype folder (not site-v3 kept beside a copy), the branch name
+  `docs/prototype-enhancement`, a PR from the branch to `develop` for each approved set of enhancements, and to merge
+  PR #10 as it is (batch 1 had already updated the specs).
+- **AI got it wrong?** Not yet. Risk flagged: open developer branches that still point to `mockups/site-v3` (for
+  example the footer story, PR #15) need the new path after this reaches `develop`.
