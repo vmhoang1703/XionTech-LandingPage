@@ -20,6 +20,17 @@ const FEATURE_ICONS: Record<(typeof pxpSection.features)[number]["id"], Icon> =
     fees: WalletIcon,
   };
 
+// "#" is a stand-in address (decision A1): it stays on the page. A real
+// store address opens in a new tab and says so.
+export function storeLinkAttributes(href: string, label: string) {
+  if (href === "#") return { "aria-label": label };
+  return {
+    target: "_blank",
+    rel: "noopener noreferrer",
+    "aria-label": `${label}${pxpSection.stores.newTab}`,
+  };
+}
+
 const STORES = [
   {
     href: productLinks.pxpAppStore,
@@ -43,8 +54,9 @@ export function PxpSection() {
       aria-labelledby="pxp-h"
       className="sec surface-paper products-anchor"
     >
+      {/* Text first, so a #pxp jump on a narrow screen shows the heading;
+          from md up, .pxp-phone moves the phone back to the left. */}
       <div className="wrap split">
-        <PxpStoryPhone />
         <div>
           <span className="badge b-pxp size-14">{badge}</span>
           <h2 id="pxp-h" className="mt-4.5">
@@ -71,15 +83,16 @@ export function PxpSection() {
                 key={label}
                 className="btn btn-glass"
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${label}${stores.newTab}`}
+                {...storeLinkAttributes(href, label)}
               >
                 <Icon weight="fill" aria-hidden="true" />
                 {label}
               </a>
             ))}
           </div>
+        </div>
+        <div className="pxp-phone">
+          <PxpStoryPhone />
         </div>
       </div>
     </section>

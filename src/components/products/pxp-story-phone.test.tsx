@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { createEvent, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { pxpSection } from "@/content/products";
 import { PxpStoryPhone } from "./pxp-story-phone";
@@ -110,5 +110,18 @@ describe("PxpStoryPhone", () => {
     render(<PxpStoryPhone />);
     fireEvent.keyDown(tab("Attendance"), { key: "a" });
     expect(tab("Attendance").getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("leaves browser shortcuts with a modifier key alone (Alt+Left is Back)", () => {
+    render(<PxpStoryPhone />);
+    for (const mod of ["altKey", "ctrlKey", "metaKey", "shiftKey"]) {
+      const event = createEvent.keyDown(tab("Attendance"), {
+        key: "ArrowLeft",
+        [mod]: true,
+      });
+      fireEvent(tab("Attendance"), event);
+      expect(event.defaultPrevented).toBe(false);
+      expect(tab("Attendance").getAttribute("aria-selected")).toBe("true");
+    }
   });
 });

@@ -49,7 +49,7 @@ export const productsSections = productsSubnav.items.map(({ id, label }) => ({
 export const pxpSection = {
   badge: "PXP",
   heading: "The school day, in a parent's pocket.",
-  lede: "Parent eXperience Place keeps parents close to every school day, on iOS and Android.",
+  lede: "[Placeholder] Parent eXperience Place keeps parents close to every school day, on iOS and Android.",
   tabsLabel: "PXP screens",
   screens: [
     { id: "attendance", label: "Attendance" },
@@ -63,22 +63,22 @@ export const pxpSection = {
     {
       id: "arrived",
       title: "Know they arrived",
-      body: "Alerts when your child reaches the gate.",
+      body: "[Placeholder] Alerts when your child reaches the gate.",
     },
     {
       id: "progress",
       title: "See progress early",
-      body: "Scores and comments as soon as published.",
+      body: "[Placeholder] Scores and comments as soon as published.",
     },
     {
       id: "teachers",
       title: "Talk to teachers",
-      body: "Two-way messages with teachers.",
+      body: "[Placeholder] Two-way messages with teachers.",
     },
     {
       id: "fees",
       title: "Pay fees in a tap",
-      body: "Clear due dates and receipts.",
+      body: "[Placeholder] Clear due dates and receipts.",
     },
   ],
   stores: {

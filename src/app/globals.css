@@ -2169,6 +2169,13 @@
     buttons (Story 4.2). Screens reuse the empty .home-media frame; inactive
     screens carry `hidden`. The 0.55s crossfade follows after demo.
   */
+  /* The phone follows the text in the markup; from md it sits on the left */
+  @media (width >= --theme(--breakpoint-md)) {
+    .pxp-phone {
+      order: -1;
+    }
+  }
+
   .story-phone {
     position: relative;
     width: 260px;

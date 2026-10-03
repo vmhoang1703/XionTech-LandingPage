@@ -59,15 +59,16 @@ const tab = (p, name) => sec(p).getByRole("tab", { name });
   log(`[1280] features: ${feat.items} items, columns "${feat.cols}"`);
   // Store button hover + new tab
   const store = sec(p).locator(".store-row a").first();
+  await store.scrollIntoViewIfNeeded(); await p.mouse.move(0, 0); await p.waitForTimeout(600);
   const before = await box(store);
   log(`[1280] store before hover: ${await css(store, ["borderColor", "transform"])}`);
-  await store.hover(); await p.waitForTimeout(500);
-  log(`[1280] store after hover: ${await css(store, ["borderColor", "transform", "transitionDuration"])} | y ${before.y} -> ${(await box(store)).y}`);
+  await store.hover(); await p.waitForTimeout(900);
+  log(`[1280] store after hover (900ms, no scroll): ${await css(store, ["borderColor", "transform", "transitionDuration"])} | y ${before.y} -> ${(await box(store)).y}`);
   log(`[1280] store link: href ${await store.getAttribute("href")} target ${await store.getAttribute("target")} rel ${await store.getAttribute("rel")}`);
-  const [popup] = await Promise.all([ctx.waitForEvent("page", { timeout: 10000 }), store.click()]);
-  await popup.waitForLoadState("load").catch(() => {});
-  log(`[1280] store click opens a new tab: ${new URL(popup.url()).pathname}${new URL(popup.url()).hash}`);
-  await popup.close();
+  const pagesBefore = ctx.pages().length;
+  await store.click();
+  await p.waitForTimeout(1500);
+  log(`[1280] store click with href "#": new tabs ${ctx.pages().length - pagesBefore} | url ${new URL(p.url()).pathname}${new URL(p.url()).hash}`);
   // Sub-nav pill and mega menu
   await p.goto(`${BASE}/products`, { waitUntil: "load" }); await settle(p);
   await p.evaluate(() => window.scrollTo(0, 2000)); await p.waitForTimeout(400);
@@ -88,6 +89,7 @@ for (const w of [899, 640]) {
   const ph = await box(sec(p).locator(".story-phone"));
   const h = await box(sec(p).locator("#pxp-h"));
   const cols = await sec(p).locator(".feature-list").evaluate((el) => getComputedStyle(el).gridTemplateColumns);
+  log(`[${w}] after /products#pxp: #pxp top ${(await box(sec(p))).y} | H2 top ${h.y} bottom ${h.y + h.h} | H2 inside the ${await p.evaluate(() => window.innerHeight)}px screen ${h.y >= 133 && h.y + h.h <= (await p.evaluate(() => window.innerHeight))}`);
   log(`[${w}] phone ${JSON.stringify(ph)} | H2 y ${h.y} | one column ${h.y >= ph.y + ph.h || ph.y >= h.y + h.h} | features columns "${cols}" | no sideways scroll ${await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)}`);
   if (w === 640) await p.screenshot({ path: `${OUT}/pxp-640.png`, fullPage: false });
   await p.close();
@@ -108,7 +110,10 @@ for (const w of [899, 640]) {
     el.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true, clientX: x, clientY: y }));
   }, { x: pb.x + pb.w / 2, y: pb.y + pb.h / 2 });
   await p.waitForTimeout(100);
-  log(`[390] pen-type pointer + click on Payments (synthetic events): selected ${await tab(p, /Payments/).getAttribute("aria-selected")} | shown ${await shown(p)}`);
+  log(`[390] pen-type pointer + click on Payments (synthetic pointer events: proves the click handler, not real pen hardware): selected ${await tab(p, /Payments/).getAttribute("aria-selected")} | shown ${await shown(p)}`);
+  await p.goto(`${BASE}/products#pxp`, { waitUntil: "load" }); await settle(p);
+  const h390 = await box(sec(p).locator("#pxp-h"));
+  log(`[390] after /products#pxp: H2 top ${h390.y} bottom ${h390.y + h390.h} | inside the 844px screen ${h390.y >= 133 && h390.y + h390.h <= 844}`);
   log(`[390] phone width ${(await box(sec(p).locator(".story-phone"))).w} | no sideways scroll ${await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)}`);
   await p.screenshot({ path: `${OUT}/pxp-390.png` });
   await p.close();

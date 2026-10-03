@@ -39,7 +39,9 @@ export function PxpStoryPhone() {
 
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     const step = KEY_STEPS[event.key];
-    if (!step) return;
+    const modified =
+      event.altKey || event.ctrlKey || event.metaKey || event.shiftKey;
+    if (!step || modified) return;
     event.preventDefault();
     const next = step(selected, screens.length - 1);
     setSelected(next);
