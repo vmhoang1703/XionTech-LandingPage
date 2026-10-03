@@ -50,7 +50,7 @@ export function HomeHero() {
           </div>
         </div>
       </div>
-      <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto w-full pb-30 sm:pb-37.5">
+      <div className="wrap w-full pb-30 sm:pb-37.5">
         <StatsBand
           label={homeStats.label}
           stats={homeStats.stats}
