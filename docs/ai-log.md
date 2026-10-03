@@ -562,14 +562,14 @@ Template:
 - **What the AI did:** merged `develop` (page, test and content conflicts), wrote the 3.6 build spec with a 13-line UX checks table, ported the prototype's illustrated flow (track, nodes, step art with orbs, dashed rules, grid texture) with Phosphor icons as step data for 5.4, fixed the load flash, tests first, a Chrome walk that records every reveal phase (including opening `/#process-title`) at six widths with reduced motion and JavaScript off, and a full 4-layer review: 7 patched, the rest triaged.
 - **AI got it wrong?** Yes. The first build had no illustrations and replayed the reveal after a flash. During the fix the walk showed the stagger delay also delayed hiding (steps 2–4 stayed visible off screen for up to 2s), and the first "already in view" check counted 1px as seen, which the review caught. Andy's "no CSS hides content without JavaScript" test flagged a `display: none` inside a media query; the nodes are now visually hidden instead. The walk's first "in view at load" scenario used a tall window, which only made the 100dvh hero taller.
 
-## 2026-10-05 — Story 4.1 Products hero and sticky sub-nav (`bmad-build`, one-shot, built in parallel)
+## 2026-10-03 — Story 4.1 Products hero and sticky sub-nav (`bmad-build`, one-shot, built in parallel)
 
 - **Prompt (Hoang Vu):** build easy stories in parallel (1.7, 2.1, 4.1); later "Remember to rebase with latest develop".
 - **What the AI did:** one-shot build of `/products`: amber hero with breadcrumbs, highlighted H1, Book a demo, empty device frames; a sticky glass sub-nav with PXP, LXP, SXP, IoT pills and four anchor stubs. Browser walk, full 5-layer review, rebase onto `develop`, then a second walk.
 - **AI got it wrong?** Yes. The build counted the header twice in the anchor offset (sections landed at 216px, not 144px) and left the pill hover without its 0.3s fade; the walk caught both. It set smooth scroll site-wide without the Next.js 16 `data-scroll-behavior` attribute, so every page change would animate; two reviewers caught it from the Next 16 upgrade guide. The first evidence measured the header's Book a demo instead of the hero's, ticked "scrolls sideways" when nothing overflowed, and copied scroll numbers from an older run. The one-shot triage had wrongly rejected a `/products` smoke test the spec asks for.
 
-## 2026-10-05 — Brand name "XionTech" in the footer
+## 2026-10-03 — Brand name "XionTech" in the footer
 
 - **Prompt (Hoang Vu):** "XionTech is right" (the Products title said "XionTechs", `/privacy` said "XionTech"), then "both" (fix the footer and start the next stories).
 - **What the AI did:** changed the footer logo alt text and copyright to "XionTech", tests first. The mockup and the old site say "XionTechs"; the domain stays `xiontechs.com`.
-- **AI got it wrong?** Yes, once: the first test anchored the copyright with `$`, but the line has more text after the name; it now checks "XionTech" not followed by "s".
+- **AI got it wrong?** Yes. The first test anchored the copyright with `$`, but the line has more text after the name; it now uses a word boundary. The AI also dated this entry and the Story 4.1 entry 2026-10-05 (copied from the entries above) instead of the real date, 2026-10-03; the review caught it. The rule now sits in `AGENTS.md`.

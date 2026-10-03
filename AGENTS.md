@@ -24,6 +24,9 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 - **Hand-in:** public URL (https://xion-tech-landing-page.vercel.app), full git history, this context
   file, `docs/ai-log.md`.
 - **Scoring:** build quality 30%, AI usage 25%, teamwork & context sharing 25%, presentation 20%.
+- **Brand name:** write "XionTech" in page copy, titles and alt text, even where the mockup,
+  the planning docs or the old site say "XionTechs" (lead, 2026-10-03). The domain
+  `xiontechs.com` and the logo image stay as they are.
 
 ## Hard rules (from the challenge)
 
