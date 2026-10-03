@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Home from "./page";
 
 // jsdom has no WebGL; the silk falls back to the static glow.
@@ -7,6 +7,24 @@ vi.mock("@/components/home/silk-shader", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/components/home/silk-shader")>()),
   createSilk: () => null,
 }));
+
+beforeEach(() => {
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn(() => ({ matches: false })),
+  );
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      observe() {}
+      disconnect() {}
+    },
+  );
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),
@@ -32,6 +50,17 @@ describe("Home page", () => {
     const [hero, doors] = Array.from(container.children);
     expect(hero.getAttribute("aria-labelledby")).toBe("home-hero-title");
     expect(doors.getAttribute("aria-label")).toBe("What we do");
+  });
+  it("shows the 4-D process on the navy band after the services", () => {
+    render(<Home />);
+
+    const band = screen.getByRole("region", {
+      name: "From your request to launch, in four steps.",
+    });
+    expect(band.textContent).toContain("How we work");
+    expect(
+      screen.getByRole("list", { name: "4-D process" }).closest("section"),
+    ).toBe(band);
   });
 
   it("keeps the demo capture band last, after the hero", () => {

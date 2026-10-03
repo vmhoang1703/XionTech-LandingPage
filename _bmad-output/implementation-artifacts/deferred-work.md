@@ -189,3 +189,8 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-2-1-privacy-policy-page.md`
   summary: Find the capture band by one marker in every test (unit, smoke, walk) instead of `<form`; use section id plus index as the paragraph key on `/privacy`.
   evidence: full review 2026-10-03, Blind Hunter and Edge Case Hunter (Minor).
+
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-3-6-4d-process-flow.md`
+  summary: On `/services#process` (Story 5.4), check that the flow opened by the hash link is not dimmed and replayed (the browser's hash scroll may come after the reveal's first measurement).
+  evidence: maybe-false; on Home `/#process-title` goes static > on in the walk, but the Services page layout and timing differ. Settle with the 3.6 walk's hash scenario on `/services#process`.

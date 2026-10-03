@@ -149,3 +149,8 @@ export const homeServices = {
     },
   ],
 } as const;
+
+export const homeProcess = {
+  label: "How we work",
+  title: "From your request to launch, in four steps.",
+};
