@@ -40,10 +40,10 @@ Hà opens the site on a mid-range phone and gives up if it is slow. The Home her
 
 ## Constraints
 
-- Runs after Story 3.2 (silk) and checks each page as it is merged; the final run follows Sammy's last page (planned 2026-10-07).
+- Runs after Story 3.2 (silk) and checks each page as it is merged; the final run follows the last page story merged: Andy's 6.6 or 6.2, or Sammy's 6.4 (planned 2026-10-07).
 - No CI yet (PRD open question 20): the check runs locally before release. Tools must be free, added as devDependencies, with scripts outside `src/`.
 - Measure a production build only, never `next dev`.
-- Fixes must not change design, content or targets. Fixes in Sammy's files (`src/components/home/*`, page sections) are agreed with Sammy.
+- Fixes must not change design, content or targets. Fixes go to the owner of each file; fixes in Sammy's files (`src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*`, the footer) are agreed with Sammy.
 - Definition of Done from `CLAUDE.md` (100% changed lines, 80% branches, smoke, lint, local Sonar gate, `bmad-code-review`).
 
 ## Non-goals

@@ -9,10 +9,14 @@ vi.mock("next/font/google", () => ({
   JetBrains_Mono: () => ({ variable: "font-jetbrains-mono" }),
 }));
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+  useRouter: () => ({ push: vi.fn() }),
+}));
 
 const { default: RootLayout } = await import("./layout");
 const { default: Home } = await import("./page");
+const { siteFooter } = await import("@/content/site-footer");
 
 describe("no JavaScript", () => {
   it("server-renders all page content with no client script", () => {
@@ -22,11 +26,14 @@ describe("no JavaScript", () => {
 
     expect(html).toMatch(/^<html lang="en"/);
     expect(html).toMatch(
-      /<h1[^>]*>Every school community, <mark[^>]*>connected<\/mark>\.<\/h1>/,
+      /<h1[^>]*>Every school community, <span class="hl">connected<\/span>\.<\/h1>/,
     );
     expect(html).toContain("Explore our products");
+    expect(html).toContain("See it working at your school.");
     expect(html).toContain("<header");
     expect(html).toContain('<main id="main" tabindex="-1"');
+    expect(html).toMatch(/<\/main><footer/);
+    expect(html).toContain(siteFooter.copyright);
     expect(html).not.toContain("<script");
   });
 });

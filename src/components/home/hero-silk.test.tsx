@@ -69,6 +69,12 @@ describe("HeroSilk", () => {
     expect(silk.resize).toHaveBeenCalled();
   });
 
+  it("paints the canvas above the hero's static glow (z-index -2)", () => {
+    const { canvas } = renderSilk();
+
+    expect(canvas.classList.contains("-z-1")).toBe(true);
+  });
+
   it("hides the toggle and the canvas when WebGL is unavailable", () => {
     vi.mocked(createSilk).mockReturnValue(null);
     const { canvas } = renderSilk();
@@ -82,10 +88,16 @@ describe("HeroSilk", () => {
 
     const button = screen.getByRole("button", { name: "Pause motion" });
     expect(button.getAttribute("aria-pressed")).toBeNull();
+    // Phosphor icons draw on a 256 grid.
+    const pauseIcon = button.querySelector("svg");
+    expect(pauseIcon?.getAttribute("viewBox")).toBe("0 0 256 256");
     expect(requestAnimationFrame).toHaveBeenCalled();
 
     fireEvent.click(button);
     expect(screen.getByRole("button", { name: "Play motion" })).toBe(button);
+    expect(button.querySelector("svg")?.innerHTML).not.toBe(
+      pauseIcon?.innerHTML,
+    );
     expect(cancelAnimationFrame).toHaveBeenCalled();
 
     fireEvent.click(button);
@@ -169,5 +181,14 @@ describe("HeroSilk", () => {
     expect(label.className).toContain("group-hover:max-w-50");
     expect(label.className).toContain("group-focus-visible:max-w-50");
     expect(label.className).not.toContain("motion-reduce:max-w");
+  });
+
+  it("is a 36px round button while its label is hidden", () => {
+    renderSilk();
+
+    const button = screen.getByRole("button", { name: "Pause motion" });
+    for (const name of ["h-9", "min-w-9", "px-2", "justify-center"]) {
+      expect(button.classList.contains(name)).toBe(true);
+    }
   });
 });

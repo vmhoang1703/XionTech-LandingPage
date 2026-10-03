@@ -1,0 +1,20 @@
+aurora / canvas aria-hidden: true / true
+aurora style: filter blur(70px); animation hero-drift 5s forwards; z -2
+focusable inside art: 0
+highlight word: school
+highlight animation: hl-draw 1.2s delay 0.5s
+highlight scale soon after load (drawing in): matrix(0.700458, 0, 0, 1, 0, 0)
+ribbon moving at 1-2s: true
+aurora at 1-2s: running@1424 -> running@2366
+highlight scale after 2s: matrix(1, 0, 0, 1, 0, 0)
+ribbon still after 6s: true
+aurora after 6s: finished@5000 -> finished@5000
+sideways scroll 1280: false
+reduced motion: draws at load / in the next 2s: 4 / 0
+reduced motion: aurora animations: none
+reduced motion: highlight: none none
+JS off: aurora shown / ribbon drawn: true / canvas size 300x150
+JS off: H1: Let's talk about your school or your project.
+scrolled away: hero bottom above viewport: true
+scrolled away, resized, back: repainted on return: true
+sideways scroll 390: false

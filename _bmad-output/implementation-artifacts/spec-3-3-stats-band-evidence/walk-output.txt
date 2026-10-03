@@ -1,0 +1,14 @@
+band bottom within first screen (px): 872 of 900
+label: Experience you can count on | "Lexend Exa" uppercase; rule rgb(255, 192, 0)
+line above figures: 1px rgba(255, 255, 255, 0.14)
+accessible group name: Experience you can count on
+figures: 25+ | Years of leadership experience in software  //  24/7 | Global coverage across time zones  //  20+ | Technology stacks we work in  //  8 | Service offerings, from idea to operation  //  2 | Offices: Ho Chi Minh City and Plano
+figure style: Unbounded 700 46.08px rgb(255, 255, 255)
+suffix colour: rgb(255, 192, 0)
+caption: rgb(197, 208, 227); max-width 218.916px
+dividers (left border per item): 0px 1px 1px 1px 1px
+layout 1080px: 5 columns, row gap 28px, borders 0px 1px 1px 1px 1px, sideways scroll false
+layout 1079px: 3 columns, row gap 28px, borders 0px 1px 1px 1px 1px, sideways scroll false
+layout 640px: 3 columns, row gap 28px, borders 0px 1px 1px 1px 1px, sideways scroll false
+layout 639px: 2 columns, row gap 28px, borders 0px 0px 0px 0px 0px, sideways scroll false
+layout 390px: 2 columns, row gap 28px, borders 0px 0px 0px 0px 0px, sideways scroll false

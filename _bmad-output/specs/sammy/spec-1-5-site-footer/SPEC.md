@@ -49,7 +49,7 @@ Mandate (FR-7, Demo-day must-have): every visitor, such as Quân the CTO checkin
 - Port the prototype markup, copy and look; do not redesign. The UX spines win over the prototype on any conflict.
 - Routes have no `/en` or `/vi` prefix (locale routing, Story 1.2, is after demo); Demo day is English only, but every string is kept in a form that can be translated later (no copy baked into logic).
 - Every visible fact is real or starts with `[Placeholder]` (NFR-7).
-- Sammy owns `src/components/home/*`, page-level `src/app/**/page.tsx`, page sections and `src/components/layout/site-footer.tsx`; do not edit Andy's other files (`src/app/layout.tsx`, `@theme` in `globals.css`, the rest of `src/components/layout/*`, `src/lib/sanity/*`, `src/app/api/*`).
+- Sammy owns `src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*` and `src/components/layout/site-footer.tsx`; do not edit Andy's other files (`src/app/layout.tsx`, `@theme` in `globals.css`, the rest of `src/components/layout/*`, `src/lib/sanity/*`, `src/app/api/*`, and the products, news, careers, privacy, not-found and demo pages).
 
 ## Non-goals
 
