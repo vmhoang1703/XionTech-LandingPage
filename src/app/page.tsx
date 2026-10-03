@@ -1,3 +1,4 @@
+import { FrontDoors } from "@/components/home/front-doors";
 import { HomeHero } from "@/components/home/home-hero";
 import { CaptureBand } from "@/components/contact/capture-band";
 
@@ -7,6 +8,7 @@ export default function Home() {
   return (
     <>
       <HomeHero />
+      <FrontDoors />
       <CaptureBand kind="demo" />
     </>
   );

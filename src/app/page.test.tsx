@@ -26,6 +26,13 @@ describe("Home page", () => {
 
     expect(screen.queryByRole("main")).toBeNull();
   });
+  it("puts the two front doors directly after the hero", () => {
+    const { container } = render(<Home />);
+
+    const [hero, doors] = Array.from(container.children);
+    expect(hero.getAttribute("aria-labelledby")).toBe("home-hero-title");
+    expect(doors.getAttribute("aria-label")).toBe("What we do");
+  });
 
   it("keeps the demo capture band last, after the hero", () => {
     const { container } = render(<Home />);

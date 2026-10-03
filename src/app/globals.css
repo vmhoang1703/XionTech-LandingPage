@@ -1175,6 +1175,192 @@
     font-size: 0.58rem;
     overflow-wrap: anywhere;
   }
+
+  /*
+    Front doors (Story 3.4), ported from the prototype site.css. The product
+    badges and chips are shared with the app bento (Story 3.5).
+  */
+  .doors {
+    position: relative;
+    /* Above the hero, below the sticky sub-nav (40); no layer token fits. */
+    z-index: 5;
+    margin-top: -80px;
+  }
+
+  .doors-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-grid-gap);
+  }
+
+  @media (width >= --theme(--breakpoint-md)) {
+    .doors {
+      margin-top: -104px;
+    }
+
+    .doors-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .door {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 300px;
+    padding: 34px;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.5s var(--ease-brand);
+  }
+
+  .door h2 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+  }
+
+  .door p {
+    max-width: 46ch;
+  }
+
+  .door .chips {
+    margin-top: auto;
+  }
+
+  .door .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .door .go {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-full);
+    opacity: 0.6;
+    transition:
+      opacity 0.35s var(--ease-brand),
+      transform 0.35s var(--ease-brand);
+  }
+
+  /* Pointer effects only on hover-capable devices (EXPERIENCE.md) */
+  @media (hover: hover) {
+    .door:hover {
+      transform: translateY(-4px);
+    }
+
+    .door:hover .go {
+      opacity: 1;
+      transform: rotate(-45deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .door:hover,
+    .door:hover .go {
+      transform: none;
+    }
+  }
+
+  .door-products {
+    border: 1px solid var(--color-border);
+    background: linear-gradient(
+      150deg,
+      var(--color-white),
+      var(--color-door-tint)
+    );
+    color: var(--color-heading);
+  }
+
+  .door-products p {
+    color: var(--color-muted);
+  }
+
+  .door-products .go {
+    color: var(--color-navy);
+  }
+
+  .door-services p {
+    color: var(--color-muted);
+  }
+
+  .door-services .go {
+    color: var(--color-amber-tint);
+  }
+
+  .badge {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-size: 0.66rem;
+    font-weight: 700;
+  }
+
+  .b-pxp {
+    background: linear-gradient(
+      135deg,
+      var(--color-amber-light),
+      var(--color-amber)
+    );
+    color: var(--color-navy);
+  }
+
+  .b-lxp {
+    background: linear-gradient(
+      135deg,
+      var(--color-navy-soft),
+      var(--color-navy)
+    );
+    color: var(--color-white);
+  }
+
+  .b-sxp {
+    background: linear-gradient(135deg, var(--color-navy), var(--color-ink));
+    color: var(--color-amber-tint);
+  }
+
+  .b-iot {
+    border: 1px solid var(--color-border);
+    background: var(--color-mist);
+    color: var(--color-navy);
+    font-size: 1.2rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--glass);
+    color: var(--color-heading);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .door-products .chip {
+    border-color: color-mix(in srgb, var(--color-navy) 15%, transparent);
+    background: var(--color-white);
+    color: var(--color-navy);
+  }
+
+  .door-services .chip {
+    border-color: color-mix(in srgb, var(--color-white) 20%, transparent);
+    background: color-mix(in srgb, var(--color-white) 6%, transparent);
+    color: var(--color-white);
+  }
 }
 
 @layer components {
