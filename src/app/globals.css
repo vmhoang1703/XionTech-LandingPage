@@ -902,12 +902,35 @@
     padding-block: var(--spacing-capture);
   }
 
+  .capture::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -6%;
+    width: 55%;
+    aspect-ratio: 1;
+    border: 1.5px solid rgb(22 54 99 / 0.16);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 44px rgb(255 255 255 / 0.08),
+      0 0 0 88px rgb(255 255 255 / 0.05);
+    pointer-events: none;
+  }
+
   .cap-grid {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
     align-items: center;
+  }
+
+  .cap-grid h2 {
+    max-width: 15ch;
+  }
+
+  .cap-grid .lede {
+    margin-top: 14px;
   }
 
   .cap-form {
@@ -974,13 +997,13 @@
     color: inherit;
   }
 
-  @media (width <= --theme(--breakpoint-md)) {
+  @media (width < --theme(--breakpoint-md)) {
     .cap-grid {
       grid-template-columns: 1fr;
     }
   }
 
-  @media (width <= --theme(--breakpoint-sm)) {
+  @media (width < --theme(--breakpoint-sm)) {
     .cap-row {
       flex-direction: column;
       border-radius: 20px;

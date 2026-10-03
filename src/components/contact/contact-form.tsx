@@ -305,6 +305,7 @@ export function ContactForm() {
       </div>
       <form
         id="demoForm"
+        method="post"
         noValidate
         onSubmit={onSubmit}
         onChange={onFieldChange}

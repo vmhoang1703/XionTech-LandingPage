@@ -68,6 +68,13 @@ afterEach(() => {
 });
 
 describe("ContactForm", () => {
+  it("posts the form natively, so a press before hydration never puts details in the URL", () => {
+    render(<ContactForm />);
+    expect(document.getElementById("demoForm")?.getAttribute("method")).toBe(
+      "post",
+    );
+  });
+
   it("selects Product demo by default and links each tab to its panel", () => {
     render(<ContactForm />);
     expect(screen.getByRole("tablist").getAttribute("aria-label")).toBe(

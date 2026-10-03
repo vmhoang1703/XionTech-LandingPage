@@ -105,6 +105,29 @@ describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
     expect(honeypot().value).toBe("");
   });
 
+  it("posts the form natively, so a press before hydration never puts the email in the URL", () => {
+    render(<CaptureBand kind={kind} />);
+    expect(emailField().closest("form")?.getAttribute("method")).toBe("post");
+  });
+
+  it("ignores a late 200 after the visitor left the page", async () => {
+    let finish: (response: Response) => void = () => {};
+    fetchMock.mockReturnValue(
+      new Promise<Response>((resolve) => {
+        finish = resolve;
+      }),
+    );
+    const { unmount } = render(<CaptureBand kind={kind} />);
+    type(EMAIL);
+    submit();
+    unmount();
+    finish(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+    await settle();
+
+    expect(setItem).not.toHaveBeenCalled();
+    expect(push).not.toHaveBeenCalled();
+  });
+
   it("posts a valid email, stores it, then goes to the right form tab", async () => {
     fetchMock.mockReturnValue(reply(200, { ok: true }));
     render(<CaptureBand kind={kind} />);

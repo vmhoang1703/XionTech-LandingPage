@@ -793,8 +793,30 @@ describe("email capture band styles", () => {
 
   it("stacks the band in one column up to the md breakpoint", () => {
     expect(source).toMatch(
-      /@media \(width <= --theme\(--breakpoint-md\)\)\s*\{\s*\.cap-grid\s*\{[^}]*grid-template-columns:\s*1fr;/,
+      /@media \(width < --theme\(--breakpoint-md\)\)\s*\{\s*\.cap-grid\s*\{[^}]*grid-template-columns:\s*1fr;/,
     );
+  });
+
+  it("draws a decorative ring behind the band text that ignores the pointer", () => {
+    const ring = baseRule(".capture::before");
+    expect(ring.get("position")).toBe("absolute");
+    expect(ring.get("width")).toBe("55%");
+    expect(ring.get("aspect-ratio")).toBe("1");
+    expect(ring.get("border-radius")).toBe("50%");
+    expect(ring.get("border")).toBe("1.5px solid rgb(22 54 99 / 0.16)");
+    expect(ring.get("box-shadow")).toBe(
+      "0 0 0 44px rgb(255 255 255 / 0.08), 0 0 0 88px rgb(255 255 255 / 0.05)",
+    );
+    expect(ring.get("pointer-events")).toBe("none");
+    expect(baseRule(".cap-grid").get("position")).toBe("relative");
+  });
+
+  it("limits the band heading to 15 characters wide", () => {
+    expect(rule(".cap-grid h2").get("max-width")).toBe("15ch");
+  });
+
+  it("spaces the band lede 14px below the heading", () => {
+    expect(rule(".cap-grid .lede").get("margin-top")).toBe("14px");
   });
 
   it("draws the field row as a white pill with a 1.5px navy border", () => {
@@ -812,7 +834,7 @@ describe("email capture band styles", () => {
 
   it("stacks the field above the button up to the sm breakpoint", () => {
     expect(source).toMatch(
-      /@media \(width <= --theme\(--breakpoint-sm\)\)\s*\{\s*\.cap-row\s*\{[^}]*flex-direction:\s*column/,
+      /@media \(width < --theme\(--breakpoint-sm\)\)\s*\{\s*\.cap-row\s*\{[^}]*flex-direction:\s*column/,
     );
   });
 

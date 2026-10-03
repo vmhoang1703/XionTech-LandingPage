@@ -50,6 +50,14 @@ export function CaptureBand({ kind }: Readonly<{ kind: ContactType }>) {
 
   // The button was disabled while sending and lost focus, so put it back
   // where the visitor can read the message and retry.
+  const mountedRef = useRef(true);
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     if (problem === "send" || problem === "rate") submitRef.current?.focus();
   }, [problem]);
@@ -75,6 +83,8 @@ export function CaptureBand({ kind }: Readonly<{ kind: ContactType }>) {
       email: value,
       website,
     });
+    // The visitor left while the send was pending: do not pull them back.
+    if (!mountedRef.current) return;
     if (result.kind === "sent") {
       // The button stays disabled until the new page replaces this one.
       rememberEmail(value);
@@ -93,7 +103,7 @@ export function CaptureBand({ kind }: Readonly<{ kind: ContactType }>) {
           <h2 id="cap-h">{copy.heading}</h2>
           <p className="lede">{copy.lede}</p>
         </div>
-        <form className="cap-form" noValidate onSubmit={onSubmit}>
+        <form className="cap-form" method="post" noValidate onSubmit={onSubmit}>
           <label htmlFor="cap-email">{S.emailLabel}</label>
           <div className="cap-row">
             <input
