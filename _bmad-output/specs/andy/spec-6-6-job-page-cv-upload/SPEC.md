@@ -1,7 +1,7 @@
 ---
 id: SPEC-6-6-job-page-cv-upload
 owner: Andy
-build_day: 2026-10-06
+build_day: 2026-10-07
 depends_on: ["1.7", "1.8", "2.3", "6.5"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
@@ -47,7 +47,7 @@ Nam, a QA engineer, should read a role in full and apply with his CV in one shor
 ## Constraints
 
 - Merged first: 1.7 (Not found), 1.8 (Sanity, `job` schema, tagged fetch helper), 2.3 (server validation, honeypot, rate limit, mail sender), 6.5 (role cards link here). Reuse the 2.3 server module and mail sender and the 2.2 field and error patterns; no second copy.
-- Andy owns `src/lib/sanity/*`, `src/app/api/*` and `src/app/careers/[slug]/*` (T3); he coordinates with Sammy, whose 6.5 role cards link here.
+- Andy owns `src/lib/sanity/*`, `src/app/api/*` and `src/app/careers/[slug]/*` (T3); he also owns Story 6.5, whose role cards link here, so there is no hand-off with Sammy.
 - Applications and CVs are never stored in Sanity: free datasets are public (T1). The Blob store token is server-only (never `NEXT_PUBLIC_*`), validated at startup, never logged. Logs must not contain applicant data.
 - The free Blob store holds 1 GB on Hobby, about 200 CVs at 5 MB. Applications and CVs are kept with no time limit and the privacy policy (Story 2.1) says so (A4). Name the limit in the PR.
 - Job content is read with this story's own GROQ query through the 1.8 tagged fetch helper; there is no content access module (T2). Sample roles start with `[Placeholder]`. Breadcrumbs use the simple prototype markup until Story 1.6.

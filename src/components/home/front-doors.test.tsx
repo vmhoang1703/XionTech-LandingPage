@@ -1,4 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { FrontDoors } from "./front-doors";
 
@@ -67,5 +69,74 @@ describe("FrontDoors", () => {
         link.querySelector("a, button, input, select, textarea"),
       ).toBeNull();
     }
+  });
+
+  it("uses the ported door, badge and chip classes", () => {
+    render(<FrontDoors />);
+
+    const region = screen.getByRole("region", { name: "What we do" });
+    expect(region.classList.contains("doors")).toBe(true);
+    const links = within(region).getAllByRole("link");
+    expect(links).toHaveLength(2);
+    const [products, services] = links;
+    for (const name of ["door", "door-products"]) {
+      expect(products.classList.contains(name)).toBe(true);
+    }
+    for (const name of ["door", "door-services", "surface-navy"]) {
+      expect(services.classList.contains(name)).toBe(true);
+    }
+    expect(
+      Array.from(products.querySelectorAll(".badge")).map((b) =>
+        Array.from(b.classList).find((c) => c.startsWith("b-")),
+      ),
+    ).toEqual(["b-pxp", "b-lxp", "b-sxp", "b-iot"]);
+    expect(products.querySelectorAll(".chip")).toHaveLength(4);
+    expect(services.querySelectorAll(".chip")).toHaveLength(6);
+    expect(products.querySelector(".badge")?.parentElement?.className).toBe(
+      "chips",
+    );
+    for (const link of [products, services]) {
+      expect(link.querySelector(".go svg")?.getAttribute("aria-hidden")).toBe(
+        "true",
+      );
+    }
+    expect(
+      within(services)
+        .getByText("Outsourcing services")
+        .classList.contains("label"),
+    ).toBe(true);
+  });
+
+  it("shows the IoT badge as a CPU icon and keeps IoT in the door's name", () => {
+    render(<FrontDoors />);
+
+    const iot = document.querySelector(".b-iot");
+    expect(iot?.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
+    expect(iot?.querySelector(".sr-only")?.textContent).toBe("IoT");
+  });
+
+  it("uses only classes that globals.css defines, with a reduced-motion reset", () => {
+    // The first build shipped class names no stylesheet defined, and every
+    // class-name test still passed. Check the CSS side too.
+    const css = readFileSync(
+      join(process.cwd(), "src/app/globals.css"),
+      "utf8",
+    );
+    const { container } = render(<FrontDoors />);
+    const used = new Set(
+      Array.from(container.querySelectorAll("[class]")).flatMap((el) =>
+        Array.from(el.classList).filter((name) => !name.includes(":")),
+      ),
+    );
+    const tailwind = /^(flex|flex-wrap|gap-\d+|sr-only)$/;
+    for (const name of used) {
+      if (tailwind.test(name)) continue;
+      expect(css, `.${name}`).toMatch(
+        new RegExp(String.raw`\.${name}[\s,:{.]`),
+      );
+    }
+    expect(css).toMatch(
+      /prefers-reduced-motion: reduce\)\s*\{\s*\.door:hover,\s*\.door:hover \.go\s*\{\s*transform: none;/,
+    );
   });
 });

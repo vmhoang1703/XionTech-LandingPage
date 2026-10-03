@@ -166,6 +166,7 @@ Re-captured after the step 4 review patches on 2026-10-02.
 
 **Observed**
 
+- Webhook delivery after merge (#14): the first attempt got 401 "Invalid signature" (the webhook held the variable name, not its value); after the lead fixed the secret, attempt `atm-3K8SNs6H0mRHsux0zVQmfXus5CZ` on 2026-10-02T10:41:03Z got 200 `{"revalidated":"post"}` -- sanity.io/manage attempts log, pasted by the lead
 - No Studio code in the build: `grep -rlE 'styled-components|@sanity/ui|sanity/structure|sanity/desk' .next --exclude-dir=cache --exclude-dir=dev` prints "files: 0" -- transcript in `verification.txt`. `@sanity/client` is allowed on the server and is not bundled yet, because no page imports `sanityFetch`.
 
 **Artifacts**
@@ -174,4 +175,4 @@ Re-captured after the step 4 review patches on 2026-10-02.
 
 **Not captured**
 
-- Webhook delivery 200: the webhook is not created and the route is not deployed yet (account steps 4–5).
+- Production webhook delivery: the production webhook is added after the first release to `main` (lead).

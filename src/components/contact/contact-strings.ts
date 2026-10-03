@@ -1,6 +1,8 @@
 import { SERVICES } from "@/components/layout/nav-data";
 import { CONTACT_ERRORS } from "@/lib/contact/contact-rules";
 
+const DETAILS_CONSENT = "We only use your details to respond to this request.";
+
 /**
  * Every visible string of the /demo hero and contact form, in one place so it
  * can be translated later. Service and product names stay in English.
@@ -22,8 +24,6 @@ export const CONTACT_STRINGS = {
       "For projects: a first Discovery conversation in our 4-D process.",
     ],
     officesLabel: "Our offices",
-    whatsappPrefix: "WhatsApp",
-    whatsappNewTab: "(opens in a new tab)",
   },
   form: {
     heading: "What can we help with?",
@@ -42,9 +42,32 @@ export const CONTACT_STRINGS = {
     startTiming: "Start timing",
     message: "Message (optional)",
     submit: "Send request",
-    consent: "We only use your details to respond to this request.",
+    sending: "Sending...",
+    successHeading: "Thank you!",
+    successText: "We will be in touch soon.",
+    sendError: "We could not send your request. Please try again.",
+    rateError:
+      "You have sent several requests in a short time. Please try again in a few minutes.",
+    consent: DETAILS_CONSENT,
     privacyLink: "Privacy policy",
     errorsHeading: "Please fix the following:",
+  },
+  capture: {
+    emailLabel: "Work email",
+    demo: {
+      heading: "See it working at your school.",
+      lede: "Leave your work email and we'll arrange a walkthrough built around your school.",
+      placeholder: "name@school.edu.vn",
+      button: "Book a demo",
+      consent: "We only use your email to arrange your demo.",
+    },
+    project: {
+      heading: "Tell us what you're building.",
+      lede: "Leave your work email and we'll reach out to start Discovery.",
+      placeholder: "name@company.com",
+      button: "Start a project",
+      consent: DETAILS_CONSENT,
+    },
   },
   errors: CONTACT_ERRORS,
   productPills: ["PXP", "LXP", "SXP", "IoT"],

@@ -1,0 +1,23 @@
+canvas visible / aria-hidden: true / true
+canvas z-index vs glow: -1 vs -2
+silk moving on load: true
+toggle aria-pressed: null
+toggle accessible name: Pause motion
+toggle size px: 36 x 36; top 16, right 24
+toggle style: opacity 0.7; background oklab(0.209397 -0.00614703 -0.052164 / 0.5); border oklab(0.999994 0.0000455678 0.0000200868 / 0.3); radius 9999px
+label width hidden: 0
+hover: opacity / label width: 1 / 105
+after click: name: Play motion
+after click: silk moving: false
+after second click: name: Pause motion
+after second click: silk moving: true
+keyboard focus: Pause motion [outline solid 2px rgb(255, 192, 0)] label width 105
+Enter: name: Play motion
+Space: name: Pause motion
+after scrolling away and back: silk moving: true
+reduced motion: name: Play motion
+reduced motion: silk moving: false
+JS off: toggle count / canvas visible: 0 / false
+no WebGL: toggle count / canvas hidden: 0 / true
+390px: toggle right gap: 16
+390px: toggle overlaps label: false

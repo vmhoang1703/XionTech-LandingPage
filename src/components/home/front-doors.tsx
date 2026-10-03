@@ -1,29 +1,27 @@
+import { ArrowRightIcon, CpuIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { homeDoors } from "@/content/home";
 
 const BADGE_CLASS = {
-  PXP: "product-badge-pxp",
-  LXP: "product-badge-lxp",
-  SXP: "product-badge-sxp",
-  IoT: "product-badge-iot",
+  PXP: "b-pxp",
+  LXP: "b-lxp",
+  SXP: "b-sxp",
+  IoT: "b-iot",
 } as const;
 
-const doorClass =
-  "relative flex min-h-75 flex-col gap-3.5 overflow-hidden rounded-xl p-8.5 transition-transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0";
-
-function Arrow() {
+function Go() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" className="size-5 fill-current">
-      <path d="M9.3 3.3 8.2 4.4l2.8 2.8H2v1.6h9l-2.8 2.8 1.1 1.1L14 8z" />
-    </svg>
+    <span className="go">
+      <ArrowRightIcon aria-hidden="true" />
+    </span>
   );
 }
 
 function Chips({ items }: Readonly<{ items: string[] }>) {
   return (
-    <div className="mt-auto flex flex-wrap gap-2">
+    <div className="chips">
       {items.map((item) => (
-        <span key={item} className="industry-chip">
+        <span key={item} className="chip">
           {item}
         </span>
       ))}
@@ -37,36 +35,35 @@ export function FrontDoors() {
   const { label, products, services } = homeDoors;
 
   return (
-    <section aria-label={label} className="relative z-10 -mt-20 md:-mt-26">
-      <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto grid grid-cols-1 gap-4.5 md:grid-cols-2">
-        <Link
-          href={products.href}
-          className={`front-door-products ${doorClass}`}
-        >
-          <div className="flex items-start justify-between">
-            <div className="flex flex-wrap gap-2">
+    <section aria-label={label} className="doors">
+      <div className="wrap doors-grid">
+        <Link href={products.href} className="door door-products">
+          <div className="top">
+            <div className="chips">
               {products.badges.map((badge) => (
-                <span key={badge} className={BADGE_CLASS[badge]}>
-                  {badge}
+                <span key={badge} className={`badge ${BADGE_CLASS[badge]}`}>
+                  {badge === "IoT" ? (
+                    <>
+                      <CpuIcon aria-hidden="true" />
+                      <span className="sr-only">{badge}</span>
+                    </>
+                  ) : (
+                    badge
+                  )}
                 </span>
               ))}
             </div>
-            <Arrow />
+            <Go />
           </div>
           <h2>{products.title}</h2>
-          <p className="text-muted">{products.line}</p>
+          <p>{products.line}</p>
           <Chips items={products.chips} />
         </Link>
 
-        <Link
-          href={services.href}
-          className={`front-door-services surface-navy ${doorClass}`}
-        >
-          <div className="flex items-start justify-between">
-            <span className="font-brand text-label uppercase">
-              {services.label}
-            </span>
-            <Arrow />
+        <Link href={services.href} className="door door-services surface-navy">
+          <div className="top">
+            <span className="label">{services.label}</span>
+            <Go />
           </div>
           <h2>{services.title}</h2>
           <p>{services.line}</p>

@@ -8,6 +8,10 @@ vi.mock("@/components/home/silk-shader", async (importOriginal) => ({
   createSilk: () => null,
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
 describe("Home page", () => {
   it("opens with the Home hero as the only H1", () => {
     render(<Home />);
@@ -28,5 +32,18 @@ describe("Home page", () => {
     const [hero, doors] = Array.from(container.children);
     expect(hero.getAttribute("aria-labelledby")).toBe("home-hero-title");
     expect(doors.getAttribute("aria-label")).toBe("What we do");
+  });
+
+  it("keeps the demo capture band last, after the hero", () => {
+    const { container } = render(<Home />);
+
+    const band = screen
+      .getByRole("heading", { name: "See it working at your school." })
+      .closest("section");
+    expect(container.lastElementChild).toBe(band);
+    expect(container.firstElementChild?.getAttribute("aria-labelledby")).toBe(
+      "home-hero-title",
+    );
+    expect(screen.getByRole("button", { name: "Book a demo" })).toBeDefined();
   });
 });
