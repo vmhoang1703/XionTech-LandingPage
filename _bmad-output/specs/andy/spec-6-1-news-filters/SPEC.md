@@ -1,6 +1,6 @@
 ---
 id: SPEC-6-1-news-filters
-owner: Sammy
+owner: Andy
 build_day: 2026-10-06
 depends_on: ["1.8", "2.4", "3.7"]
 companions:

@@ -1,6 +1,6 @@
 ---
 id: SPEC-4-3-lxp-sxp-iot-sections
-owner: Sammy
+owner: Andy
 build_day: 2026-10-04
 depends_on: ["4.1"]
 companions:

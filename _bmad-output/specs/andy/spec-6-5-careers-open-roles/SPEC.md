@@ -1,6 +1,6 @@
 ---
 id: SPEC-6-5-careers-open-roles
-owner: Sammy
+owner: Andy
 build_day: 2026-10-05
 depends_on: ["1.8"]
 companions:

@@ -1,6 +1,6 @@
 ---
 id: SPEC-2-1-privacy-policy-page
-owner: Sammy
+owner: Andy
 build_day: 2026-10-01
 depends_on: ["1.1"]
 companions:

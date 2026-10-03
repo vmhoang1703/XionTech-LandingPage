@@ -1,6 +1,6 @@
 ---
 id: SPEC-6-2-story-detail
-owner: Sammy
+owner: Andy
 build_day: 2026-10-07
 depends_on: ["1.7", "1.8", "6.1"]
 companions:

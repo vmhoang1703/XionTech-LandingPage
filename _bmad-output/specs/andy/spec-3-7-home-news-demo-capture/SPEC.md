@@ -1,6 +1,6 @@
 ---
 id: SPEC-3-7-home-news-demo-capture
-owner: Sammy
+owner: Andy
 build_day: 2026-10-06
 depends_on: ["2.4", "1.8"]
 companions:

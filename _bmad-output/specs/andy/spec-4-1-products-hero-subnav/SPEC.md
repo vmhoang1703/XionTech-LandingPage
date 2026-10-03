@@ -1,6 +1,6 @@
 ---
 id: SPEC-4-1-products-hero-subnav
-owner: Sammy
+owner: Andy
 build_day: 2026-10-04
 depends_on: ["1.1"]
 companions:
