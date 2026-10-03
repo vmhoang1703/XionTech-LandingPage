@@ -1693,9 +1693,9 @@
 
   /*
     4-D process (Story 3.6), ported from the prototype site.css, shared with
-    Services #process (5.4). Steps are hidden only while the flow is "armed"
-    (off screen, waiting for 30% visibility); server HTML and reduced motion
-    are "static" and show everything. The travelling dot is after demo.
+    Services #process (5.4). Steps are dimmed and lowered only while the flow
+    is "armed" (off screen, waiting for 30% visibility); server HTML and
+    reduced motion are "static" and show everything. The travelling dot is after demo.
   */
   .gridbg {
     position: relative;
@@ -1774,7 +1774,7 @@
     transform: scaleX(0);
   }
 
-  .node {
+  .flow .node {
     z-index: 1;
     flex-direction: column;
     align-items: center;
@@ -1782,7 +1782,7 @@
     text-align: center;
   }
 
-  .node .dot {
+  .flow .node .dot {
     display: grid;
     place-items: center;
     width: 128px;
@@ -1794,20 +1794,20 @@
     font-size: 2.2rem;
   }
 
-  .node b {
+  .flow .node b {
     color: var(--color-heading);
     font-family: var(--font-display);
     font-size: 0.9rem;
     font-weight: 600;
   }
 
-  .node small {
+  .flow .node small {
     color: var(--color-muted);
     font-size: 0.82rem;
     line-height: 1.4;
   }
 
-  .node.end .dot {
+  .flow .node.end .dot {
     border: 0;
     background: linear-gradient(
       135deg,
@@ -1878,7 +1878,8 @@
     height: 62px;
     border-radius: 18px;
     background: var(--color-navy);
-    box-shadow: 0 16px 30px -12px rgb(11 23 48 / 0.6);
+    box-shadow: 0 16px 30px -12px
+      color-mix(in srgb, var(--color-ink) 60%, transparent);
     color: var(--color-amber-tint);
     font-size: 1.8rem;
   }
@@ -1891,9 +1892,14 @@
     height: 34px;
     border-radius: 10px;
     background: var(--color-white);
-    box-shadow: 0 8px 20px -8px rgb(11 23 48 / 0.4);
+    box-shadow: 0 8px 20px -8px
+      color-mix(in srgb, var(--color-ink) 40%, transparent);
     color: var(--color-navy);
     font-size: 1rem;
+  }
+
+  /* The orbs bob once when the steps show, not while they wait off screen. */
+  .flow:not([data-phase="armed"]) .step4 .art .orb {
     animation: step-bob 2.5s ease-in-out 1;
   }
 
@@ -1905,13 +1911,19 @@
   .step4 .art .o2 {
     top: 30%;
     right: 16%;
-    animation-delay: 1.2s;
   }
 
   .step4 .art .o3 {
     bottom: 14%;
     left: 28%;
     background: var(--color-amber);
+  }
+
+  .flow:not([data-phase="armed"]) .step4 .art .o2 {
+    animation-delay: 1.2s;
+  }
+
+  .flow:not([data-phase="armed"]) .step4 .art .o3 {
     animation-delay: 2.4s;
   }
 
@@ -1989,7 +2001,7 @@
       position: relative;
       display: flex;
       grid-row: 1 / span 5;
-      width: 120px;
+      width: 128px;
       height: auto;
       overflow: visible;
       clip-path: none;

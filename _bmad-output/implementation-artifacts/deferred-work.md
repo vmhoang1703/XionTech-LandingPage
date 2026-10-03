@@ -183,3 +183,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-7-not-found-page.md`
   summary: Tighten the 404 smoke test (page marker and noindex end to end, band absence by marker, not by one string) and check `min-h-[70dvh]` at 320px.
   evidence: full review 2026-10-03, Minor findings 4 and 5.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-3-6-4d-process-flow.md`
+  summary: On `/services#process` (Story 5.4), check that the flow opened by the hash link is not dimmed and replayed (the browser's hash scroll may come after the reveal's first measurement).
+  evidence: maybe-false; on Home `/#process-title` goes static > on in the walk, but the Services page layout and timing differ. Settle with the 3.6 walk's hash scenario on `/services#process`.

@@ -2,7 +2,7 @@
 title: 'Story 3.6: 4-D process component'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-progress'
+status: 'done'
 route: 'oneshot'
 review_loop_iteration: 0
 context: ['{project-root}/AGENTS.md']
@@ -26,12 +26,12 @@ Sources: story spec CAP-1 to CAP-5, `EXPERIENCE.md` (Motion, Responsive), `DESIG
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
 | Band | page load | — | navy section with the faint grid texture; label "How we work" with the amber rule; H2 "From your request to launch, in four steps." | static | CAP-1, prototype `.s-navy.gridbg`, `.sec-head` |  ✅ walk + unit test: navy gradient, grid texture layer; "How we work" with amber rule; H2 (after fix: plain caps, no texture) |
 | Flow | read | — | one ordered list: Your request, 01 Discovery, 02 Design, 03 Development, 04 Deployment, Launch; each step's line and "You receive" text | static | CAP-1 |  ✅ walk + unit tests: Your request > Discovery > Design > Development > Deployment > Launch, lines and "You receive" |
-| Nodes | 1280px | — | 128px dashed circle with a paper-plane icon for "Your request"; amber circle with a flag icon for "Launch" | static | prototype `.node`, `.node.end` |  ✅ walk + unit test: 128px dashed glass circle with svg; amber gradient circle with svg (after fix: no icons) |
+| Nodes | 1280px | — | 128px dashed circle with a paper-plane icon for "Your request"; amber circle with a flag icon for "Launch" | static | prototype `.node`, `.node.end` |  ✅ walk + unit test: 128px dashed glass circle with svg, node 128px wide (after review: 120px, circle spilled 4px); amber gradient circle with svg (after fix: no icons) |
 | Steps | 1280px | — | each card: art panel (navy icon tile, three small orbs, amber glow), amber mono number, Unbounded title, muted line, dashed rule, "You receive" label and text | static | CAP-1, prototype `.step4`, `.art` |  ✅ walk + unit test: 24px card, art 128px with main svg and 3 orbs, mono number in amber-tint, dashed `.get` rule (after fix: no art) |
 | Track | 1280px | — | dashed line behind the nodes and card tops, at the art's middle | static | prototype `.flow .track` |  ✅ walk: track y 447 vs art middle 448; dashed |
 | Reveal | flow scrolled to 30% visible | — | amber track fills left to right; steps fade and rise in at 0.3s, 0.85s, 1.4s, 1.95s; once only | track 2.4s | CAP-2 |  ✅ walk + unit tests: off screen all four at 0.35/18px; at 0.85s step 1 in, step 2 entering, 3–4 waiting; at 3.3s all in, track full; delays 0.3/0.85/1.4/1.95s; phases static > armed > on, unchanged after scrolling away and back (after fix: the delay also delayed hiding) |
-| Reveal | flow already in view when the page loads | — | no hide-and-replay flash: steps stay visible | instant | audit 2026-10-04 (flash) |  ✅ walk (`/#process-title`) + unit test: phases static > on, steps 1/0 from the start (after fix: armed then replayed) |
-| Reveal | reduced motion | — | full track and all steps shown at once, no orb bob | static | CAP-3 |  ✅ walk + unit test: phase static, steps 1/0, track none, orb animation none |
+| Reveal | flow already 30% in view when the page loads | — | no hide-and-replay flash: steps stay visible; a flow that only peeks above the fold still reveals on scroll | instant | audit 2026-10-04 (flash) |  ✅ walk (`/#process-title`) + unit tests: phases static > on, steps 1/0 from the start; peeking (under 30%), below-fold and above-viewport cases arm (after fix: armed then replayed; then any 1px counted as seen) |
+| Reveal | reduced motion | — | full track and all steps shown at once, no orb bob | static | CAP-3 |  ✅ walk + unit test: phase static, steps 1/0, track none, orb animation none; orbs bob only once the steps show (none while armed) |
 | Reveal | JavaScript off | — | all steps and the full track visible | static | CAP-3 |  ✅ walk (JS off): phase static, steps 1/0, track full |
 | Alignment | 1280px | — | the four "You receive" rows start on one line | static | CAP-4 (AC-UI-2) |  ✅ walk: all four rows at 663px (subgrid) |
 | Layout | 1079px / 639px / 390px | — | track and nodes out of the layout (kept in the list for screen readers); steps 2 columns at 1079, 1 column at 639 and 390; no sideways scroll | static | CAP-5 |  ✅ walk: 1079 and 640 2 columns, 639 and 390 1 column; node and track visually hidden (1px, clipped) but in the list; no sideways scroll |
@@ -45,4 +45,21 @@ Sources: story spec CAP-1 to CAP-5, `EXPERIENCE.md` (Motion, Responsive), `DESIG
 - The reveal skips the hide when the flow is already on screen at hydration; the step delay is a `--d` variable applied only while revealing (`.flow[data-phase="on"] .step4`), so hiding is never delayed — the walk first showed steps 2–4 still visible off screen for up to 2s.
 - Andy's "no CSS hides content until JavaScript" test flags any `display: none`, even in a media query. Below 1080px the track and nodes are visually hidden (1px, clipped) instead: out of the layout, still in the list for screen readers, not gated on JavaScript.
 - Test first: 5 new tests failed, then passed; the delay test failed, then passed. The walk's first "already in view" check used a tall window, which only makes the 100dvh hero taller; it now opens `/#process-title`.
+
+## Review Triage Log
+
+Full `bmad-code-review` (4 layers: Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor), 2026-10-05:
+
+- The "already in view" check counted 1px on screen as seen, so a flow just past the fold never revealed (three layers) — medium, patched test-first: the same 30% rule as the reveal (`REVEAL_AT`), with tests for 30% in view, peeking, below the fold and above the viewport; no test relies on jsdom's zero rect any more.
+- Node 120px but its circle 128px, spilling into the gap — low, patched (128px).
+- Orb bob ran once at mount, usually off screen — low, patched: it starts when the flow is not armed.
+- `.node`, `.dot` rules unscoped (generic names) — low, patched: scoped under `.flow`.
+- Two raw shadow colours — low, patched: `color-mix` with `--color-ink`.
+- CSS comment said "hidden" where the steps are dimmed — low, patched.
+- Mock restore in the test body — low, patched (`afterEach`).
+- The reveal CSS is checked by source text and the walk only — deferred with the 3.1 browser-test entry in `deferred-work.md`.
+- `/services#process` (5.4): the hash jump may happen after the effect measures the list — maybe-false, deferred to 5.4: on Home the walk shows `/#process-title` goes static > on; 5.4 re-checks it on its page.
+- More than four steps get no `--d`; repeated orb icons would repeat keys; repeated track height; copied test stubs; the `transition-delay` regex depends on formatting; node fill `--glass` (6%) vs the prototype's 5% — low, rejected: the content has exactly four steps with distinct orbs; no visible harm.
+- Exactly 1080px / 640px use the wider layout — pending Amber/Hoang (same as 3.1, 3.3–3.5).
+- Raw sizes (128px, 62px, 34px, 56px grid) — low, rejected: prototype values with no 1.1 token.
 

@@ -40,6 +40,7 @@ const band = page.locator(BAND);
 log("band", `${await css(band, ["background-image"])} | grid texture ${await band.evaluate((b) => getComputedStyle(b, "::before").backgroundImage.slice(0, 40))}`);
 log("label / heading", `${await band.locator(".label").textContent()} (rule ${await band.locator(".label").evaluate((l) => getComputedStyle(l, "::before").backgroundColor)}) / ${await band.locator("h2").textContent()}`);
 log("list items", (await page.locator(FLOW).evaluate((ol) => Array.from(ol.children).filter((li) => li.getAttribute("aria-hidden") !== "true").map((li) => li.querySelector("h3, b")?.textContent)).then((x) => x)).join(" > "));
+log("orb animation while armed", await page.locator(`${FLOW} .orb`).first().evaluate((o) => getComputedStyle(o).animationName));
 log("phase before scrolling (flow off screen)", `${await page.locator(FLOW).getAttribute("data-phase")}; steps ${await steps(page)}; track ${await page.locator(`${FLOW} .track i`).evaluate((i) => getComputedStyle(i).transform)}`);
 
 await band.scrollIntoViewIfNeeded();
@@ -51,6 +52,8 @@ const mid = await steps(page);
 await sleep(2600);
 log("reveal: steps early / at 0.85s / at 3.3s", `${early} | ${mid} | ${await steps(page)}`);
 log("reveal: phase and track at the end", `${await page.locator(FLOW).getAttribute("data-phase")}; ${await page.locator(`${FLOW} .track i`).evaluate((i) => getComputedStyle(i).transform)} (${Date.now() - t}ms)`);
+log("orb animation while armed / after reveal", `${await page.locator(`${FLOW} .orb`).first().evaluate((o) => getComputedStyle(o).animationName)} (now)`);
+log("node width vs dot", await page.locator(`${FLOW} .node`).first().evaluate((n) => `${Math.round(n.getBoundingClientRect().width)} / ${Math.round(n.querySelector(".dot").getBoundingClientRect().width)}`));
 log("step delays (--d, applied only while revealing)", (await page.locator(`${FLOW} .step4`).evaluateAll((ls) => ls.map((l) => `${l.style.getPropertyValue("--d")}→${getComputedStyle(l).transitionDelay.split(",")[0]}`))).join(" "));
 log("phases seen", (await page.evaluate(() => window.__phases)).join(" > "));
 await page.evaluate(() => window.scrollTo(0, 0));

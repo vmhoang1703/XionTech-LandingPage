@@ -1,9 +1,12 @@
 band: background-image radial-gradient(50% 70% at 100% 0%, color(srgb 1 0.752941 0  | grid texture linear-gradient(color(srgb 0.862745 0.90
 label / heading: How we work (rule rgb(255, 192, 0)) / From your request to launch, in four steps.
 list items: Your request > Discovery > Design > Development > Deployment > Launch
-phase before scrolling (flow off screen): armed; steps 0.350016/17.9996) 0.350016/17.9996) 0.350016/17.9996) 0.350016/17.9996); track matrix(0.130244, 0, 0, 1, 0, 0)
-reveal: steps early / at 0.85s / at 3.3s: 0.35/18) 0.35/18) 0.35/18) 0.35/18) | 0.999257/0.0205653) 0.399384/16.6325) 0.35/18) 0.35/18) | 1/0 1/0 1/0 1/0
-reveal: phase and track at the end: on; none (3333ms)
+orb animation while armed: none
+phase before scrolling (flow off screen): armed; steps 0.35/18) 0.35/18) 0.35/18) 0.35/18); track matrix(0.0687672, 0, 0, 1, 0, 0)
+reveal: steps early / at 0.85s / at 3.3s: 0.35/18) 0.35/18) 0.35/18) 0.35/18) | 0.999089/0.025228) 0.35/18) 0.35/18) 0.35/18) | 1/0 1/0 1/0 1/0
+reveal: phase and track at the end: on; none (3340ms)
+orb animation while armed / after reveal: step-bob (now)
+node width vs dot: 128 / 128
 step delays (--d, applied only while revealing): 0.3s→0.3s 0.85s→0.85s 1.4s→1.4s 1.95s→1.95s
 phases seen: static > armed > on
 once only: phase after leaving and coming back: static > armed > on
@@ -16,7 +19,7 @@ already in view at load: phases seen: static > on
 already in view at load: steps: 1/0 1/0 1/0 1/0
 reduced motion: phase / steps / track / orb animation: static / 1/0 1/0 1/0 1/0 / none / none
 JS off: phase / steps / track: static / 1/0 1/0 1/0 1/0 / none
-layout 1080px: 6 columns, node width 120px, track 1032xnone, sideways scroll false
+layout 1080px: 6 columns, node width 128px, track 1032xnone, sideways scroll false
 layout 1079px: 2 columns, node width 1px, track 1xinset(50%), sideways scroll false
 layout 640px: 2 columns, node width 1px, track 1xinset(50%), sideways scroll false
 layout 639px: 1 columns, node width 1px, track 1xinset(50%), sideways scroll false

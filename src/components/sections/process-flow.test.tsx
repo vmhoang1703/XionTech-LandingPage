@@ -11,6 +11,7 @@ let reducedMotion = false;
 
 beforeEach(() => {
   reducedMotion = false;
+  observedThreshold = undefined;
   disconnect.mockClear();
   vi.stubGlobal(
     "matchMedia",
@@ -38,7 +39,18 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
+
+// jsdom has no layout; place the list relative to a 900px-tall window.
+function listAt(top: number, bottom: number) {
+  vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
+    top,
+    bottom,
+    height: bottom - top,
+  } as DOMRect);
+  vi.stubGlobal("innerHeight", 900);
+}
 
 function flow() {
   return screen.getByRole("list", { name: "4-D process" });
@@ -78,6 +90,7 @@ describe("ProcessFlow", () => {
   });
 
   it("arms the animation and plays it once when 30% visible", () => {
+    listAt(2000, 2600);
     render(<ProcessFlow flow={processFlow} />);
 
     expect(flow().dataset.phase).toBe("armed");
@@ -121,15 +134,31 @@ describe("ProcessFlow", () => {
     expect(disconnect).toHaveBeenCalled();
   });
 
-  it("does not hide steps that are already in view when it loads", () => {
-    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
-      top: 100,
-      bottom: 600,
-    } as DOMRect);
+  it("does not hide steps that are already 30% in view when it loads", () => {
+    listAt(100, 600);
     render(<ProcessFlow flow={processFlow} />);
 
     expect(flow().dataset.phase).toBe("on");
-    vi.restoreAllMocks();
+    expect(observedThreshold).toBeUndefined();
+  });
+
+  it("still arms a flow that only peeks above the fold, so it reveals on scroll", () => {
+    // 50px of a 600px list visible: under 30%.
+    listAt(850, 1450);
+    render(<ProcessFlow flow={processFlow} />);
+
+    expect(flow().dataset.phase).toBe("armed");
+  });
+
+  it("arms a flow that starts below the fold or above the viewport", () => {
+    listAt(2000, 2600);
+    const { unmount } = render(<ProcessFlow flow={processFlow} />);
+    expect(flow().dataset.phase).toBe("armed");
+    unmount();
+
+    listAt(-900, -100);
+    render(<ProcessFlow flow={processFlow} />);
+    expect(flow().dataset.phase).toBe("armed");
   });
 
   it("renders the prototype track, nodes and illustrated step cards", () => {
