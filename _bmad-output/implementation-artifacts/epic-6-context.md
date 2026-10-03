@@ -4,7 +4,7 @@
 
 ## Goal
 
-Visitors read dated stories about products, schools, team and company; learn who XionTechs is (story, values, FAQ, offices); and job seekers find an open role and apply with a CV on the role's own page. XionTechs editors publish stories, roles, team and office photos and product clips in Sanity Studio without a developer or a deploy. This epic turns the shared shell, capture bands and Sanity setup from earlier epics into the trust-building and hiring pages of the site.
+Visitors read dated stories about products, schools, team and company; learn who XionTech is (story, values, FAQ, offices); and job seekers find an open role and apply with a CV on the role's own page. XionTech editors publish stories, roles, team and office photos and product clips in Sanity Studio without a developer or a deploy. This epic turns the shared shell, capture bands and Sanity setup from earlier epics into the trust-building and hiring pages of the site.
 
 ## Stories
 
@@ -22,7 +22,7 @@ Visitors read dated stories about products, schools, team and company; learn who
 - **News:** filter chips All, Product, Company, Schools, Team; exactly one active; instant, no reload; pressing the active chip does nothing; result count announced ("Showing 1 story" / "Showing N stories"); empty category shows "No stories in this category yet." with a "Show all" reset. The list is rendered on the server.
 - **Story page** `/news/[slug]`: breadcrumbs, H1, mono date and category tag, photo, body, related product link, "Back to News"; dates read `18 SEP 2026` (EN) and `18/09/2026` (VI) in mono; own title, meta and Open Graph image (OG image is after demo). Unknown slug renders the Not found page.
 - **About:** no leadership section and no names from the old site. Six core values at `#values`, nine-question FAQ at `#faq` (the data security answer stays `[Placeholder]`), office cards with live local time, address and `tel:` link. FAQPage structured data is after demo.
-- **Careers:** culture, four benefits, open roles at `#roles`, Life at XionTechs photos at `#life`. Missing photos show placeholder frames with a `[Placeholder]` caption (never shipped at public launch). No roles shows "No open roles right now."
+- **Careers:** culture, four benefits, open roles at `#roles`, Life at XionTech photos at `#life`. Missing photos show placeholder frames with a `[Placeholder]` caption (never shipped at public launch). No roles shows "No open roles right now."
 - **Job application:** Full name (required), Email (required, valid), Phone (optional, tel keypad), CV (required, `.pdf`/`.doc`/`.docx`, up to 5 MB, checked on selection and on submit), Cover note (optional, up to 2,000 characters). Error wording is fixed in the story. Unknown or closed role renders Not found.
 - **Capture band placement:** demo capture on News and About; none on the story page, Careers or job pages; no newsletter or talent-network sign-up anywhere.
 - **Privacy (Vietnam PDPD):** personal data only through forms, never in any URL. Each form has a consent line ending with a "Privacy policy" link.
@@ -31,10 +31,10 @@ Visitors read dated stories about products, schools, team and company; learn who
 
 ## Technical Decisions
 
-- **CMS is Sanity** (free plan: 10,000 documents per dataset, 250k API and 1M CDN requests per month, public datasets). Setup is Story 1.8. Stories and roles are read through **one shared content access module** (built in Story 3.7) with `useCdn: true` for public reads and **tag-based revalidation** from a Sanity webhook with a secret. Editor changes appear on News, Home, Products `#updates` and Careers with no code change and no deploy.
+- **CMS is Sanity** (free plan: 10,000 documents per dataset, 250k API and 1M CDN requests per month, public datasets). Setup is Story 1.8. There is **no shared content access module** (decision T2, 2026-10-01): each page story writes its own GROQ query with the Story 1.8 server-only client and its one tagged fetch helper `sanityFetch` in `src/lib/sanity/*` (`useCdn: true`, published perspective, `force-cache` with `post` / `job` tags), with **tag-based revalidation** from the Story 1.8 Sanity webhook with a secret. Never `force-dynamic`. Editor changes appear on News, Home, Products `#updates` and Careers with no code change and no deploy.
 - Pages are Server Components by default; only interactive parts (filter chips, FAQ is native `<details>`, job form, clocks) need client code.
-- **Job applications** go through a server-side handler that repeats every client check (including file type and size), rejects a filled honeypot, applies the shared rate limit (IP plus email, 5 per 10 minutes) from Story 2.3, and stores the application with its CV in Sanity linked to the role.
-- **Open risk:** uploaded Sanity files may be reachable by anyone with the link. Whether CVs may be stored in Sanity is an open question owned by Hoang Vu; it must be settled before job applications go live. Retention for CVs is also undecided.
+- **Job applications** go through a server-side handler that repeats every client check (including file type and size), rejects a filled honeypot, applies the shared rate limit (IP plus email, 5 per 10 minutes) from Story 2.3, and sends the application with the Story 2.3 mail sender. The CV is uploaded from the browser straight to a **private Vercel Blob store** (decision T1). Applications and CVs are **never stored in Sanity**: free Sanity datasets are public. Sanity holds only published content (news stories, job posts, Life at XionTech photos).
+- **Retention:** applications and CVs are kept with no time limit, and the privacy policy says so (decision A4). How an applicant asks for deletion is still open (owner: Amber).
 - Shared components are reused, not rebuilt: stats band (Story 3.3), clock module with IANA zones `Asia/Ho_Chi_Minh` and `America/Chicago`, 30s refresh and server-rendered zone label (Story 5.1), email capture band (Story 2.4), Not found page (Story 1.7).
 - Breadcrumbs: until the shared breadcrumb component (Story 1.6, after demo) lands, each page builds them with simple markup.
 - Next.js 16 differs from training data: read `node_modules/next/dist/docs/` before using a Next.js API (dynamic routes, metadata, `notFound`, revalidation).
@@ -54,7 +54,7 @@ Visitors read dated stories about products, schools, team and company; learn who
 
 ## Cross-Story Dependencies
 
-- 6.1 and 6.2 need Story 1.8 (Sanity) and the content module from Story 3.7; 6.1 also needs the capture band (2.4); 6.2 needs Not found (1.7).
+- 6.1 and 6.2 need Story 1.8 (Sanity and its tagged fetch helper; no content module, T2); 6.1 also needs the capture band (2.4); 6.2 needs Not found (1.7).
 - 6.3 needs 1.8 and 3.7; it covers editor workflow (AC-FORM-3: an upload or paste changes only the selected item).
 - 6.4 needs the stats band (3.3), the clock module (5.1) and the capture band (2.4). About stats: fourth figure "4 School products ready to demo"; capture "See our apps in action." with "Book a demo".
 - 6.5 needs 1.8; its role cards link to `/careers/[slug]`, which 6.6 builds.
