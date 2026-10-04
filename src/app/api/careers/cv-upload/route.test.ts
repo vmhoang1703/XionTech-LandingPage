@@ -2,15 +2,22 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CV_MAX_BYTES, CV_TYPES } from "@/lib/careers/application-rules";
 
-const { handleUploadMock, checkUploadLimitMock, ipAddressMock } = vi.hoisted(
-  () => ({
-    handleUploadMock: vi.fn(),
-    checkUploadLimitMock: vi.fn(),
-    ipAddressMock: vi.fn(),
-  }),
-);
+const {
+  handleUploadMock,
+  issueSignedTokenMock,
+  checkUploadLimitMock,
+  ipAddressMock,
+} = vi.hoisted(() => ({
+  handleUploadMock: vi.fn(),
+  issueSignedTokenMock: vi.fn(),
+  checkUploadLimitMock: vi.fn(),
+  ipAddressMock: vi.fn(),
+}));
 
-vi.mock("@vercel/blob/client", () => ({ handleUpload: handleUploadMock }));
+vi.mock("@vercel/blob", () => ({ issueSignedToken: issueSignedTokenMock }));
+vi.mock("@vercel/blob/client", () => ({
+  handleUploadPresigned: handleUploadMock,
+}));
 vi.mock("@vercel/functions", () => ({ ipAddress: ipAddressMock }));
 vi.mock("@/lib/contact/delivery", () => ({
   checkUploadLimit: checkUploadLimitMock,
@@ -18,7 +25,8 @@ vi.mock("@/lib/contact/delivery", () => ({
 
 import { POST } from "./route";
 
-const TOKEN = "test-only-blob-token";
+const STORE_ID = "store_test";
+const WEBHOOK_KEY = "test-only-webhook-key";
 
 function post(body: unknown): Request {
   return new Request("https://site.test/api/careers/cv-upload", {
@@ -30,7 +38,7 @@ function post(body: unknown): Request {
 
 function tokenBody(pathname: string) {
   return {
-    type: "blob.generate-client-token",
+    type: "blob.generate-presigned-url",
     payload: { pathname, clientPayload: null, multipart: false },
   };
 }
@@ -39,12 +47,14 @@ describe("POST /api/careers/cv-upload", () => {
   let errorSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    vi.stubEnv("BLOB_READ_WRITE_TOKEN", TOKEN);
+    vi.stubEnv("BLOB_STORE_ID", STORE_ID);
+    vi.stubEnv("BLOB_WEBHOOK_PUBLIC_KEY", WEBHOOK_KEY);
     ipAddressMock.mockReturnValue("203.0.113.9");
     checkUploadLimitMock.mockResolvedValue(true);
+    issueSignedTokenMock.mockResolvedValue({ signed: "token" });
     handleUploadMock.mockResolvedValue({
-      type: "blob.generate-client-token",
-      clientToken: "client-token",
+      type: "blob.generate-presigned-url",
+      presignedUrlPayload: { url: "https://blob.test/put" },
     });
     errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
   });
@@ -59,11 +69,29 @@ describe("POST /api/careers/cv-upload", () => {
     ["not JSON", "{nope"],
     ["not an object", "null"],
     ["upload-completed event", { type: "blob.upload-completed", payload: {} }],
+    [
+      "old client-token event",
+      {
+        type: "blob.generate-client-token",
+        payload: { pathname: "cv/application.pdf" },
+      },
+    ],
     ["unknown type", { type: "other" }],
-    ["no payload", { type: "blob.generate-client-token" }],
+    ["no payload", { type: "blob.generate-presigned-url" }],
+    [
+      "payload not an object",
+      { type: "blob.generate-presigned-url", payload: "cv" },
+    ],
     [
       "pathname not a string",
-      { type: "blob.generate-client-token", payload: { pathname: 5 } },
+      { type: "blob.generate-presigned-url", payload: { pathname: 5 } },
+    ],
+    [
+      "multipart upload",
+      {
+        type: "blob.generate-presigned-url",
+        payload: { pathname: "cv/application.pdf", multipart: true },
+      },
     ],
   ])("answers 400 for a body that is %s", async (_label, body) => {
     const response = await POST(post(body));
@@ -88,13 +116,17 @@ describe("POST /api/careers/cv-upload", () => {
     expect(handleUploadMock).not.toHaveBeenCalled();
   });
 
-  it("answers 500 and logs the variable name when the token is not set", async () => {
-    vi.stubEnv("BLOB_READ_WRITE_TOKEN", "");
+  it.each([
+    ["BLOB_STORE_ID", "", WEBHOOK_KEY],
+    ["BLOB_WEBHOOK_PUBLIC_KEY", STORE_ID, ""],
+  ])("answers 500 and logs %s when it is not set", async (name, id, key) => {
+    vi.stubEnv("BLOB_STORE_ID", id);
+    vi.stubEnv("BLOB_WEBHOOK_PUBLIC_KEY", key);
     const response = await POST(post(tokenBody("cv/application.pdf")));
     expect(response.status).toBe(500);
     expect(await response.json()).toEqual({ error: "send" });
     expect(errorSpy).toHaveBeenCalledTimes(1);
-    expect(String(errorSpy.mock.calls[0])).toContain("BLOB_READ_WRITE_TOKEN");
+    expect(String(errorSpy.mock.calls[0])).toContain(name);
     expect(handleUploadMock).not.toHaveBeenCalled();
   });
 
@@ -108,34 +140,46 @@ describe("POST /api/careers/cv-upload", () => {
   });
 
   it.each(Object.entries(CV_TYPES))(
-    "issues a token for .%s with the fixed options",
+    "issues a presigned URL for .%s with the fixed options",
     async (extension, mime) => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date("2026-10-04T10:00:00Z"));
       try {
-        const body = tokenBody(`cv/application.${extension}`);
-        const response = await POST(post(body));
+        const pathname = `cv/application.${extension}`;
+        const response = await POST(post(tokenBody(pathname)));
         expect(response.status).toBe(200);
         expect(await response.json()).toEqual({
-          type: "blob.generate-client-token",
-          clientToken: "client-token",
+          type: "blob.generate-presigned-url",
+          presignedUrlPayload: { url: "https://blob.test/put" },
         });
 
         const options = handleUploadMock.mock.calls[0][0];
-        expect(options.token).toBe(TOKEN);
-        expect(options.body).toEqual(body);
+        expect(options.webhookPublicKey).toBe(WEBHOOK_KEY);
+        expect(options.body).toEqual(tokenBody(pathname));
         expect(options.request).toBeInstanceOf(Request);
         expect(options.onUploadCompleted).toBeUndefined();
-        const settings = await options.onBeforeGenerateToken(
-          `cv/application.${extension}`,
-          null,
-          false,
-        );
-        expect(settings).toEqual({
+
+        const signed = await options.getSignedToken(pathname, null, false);
+        const validUntil = Date.now() + 10 * 60_000;
+        expect(issueSignedTokenMock).toHaveBeenCalledWith({
+          pathname,
+          operations: ["put"],
           allowedContentTypes: [mime],
           maximumSizeInBytes: CV_MAX_BYTES,
-          addRandomSuffix: true,
-          validUntil: Date.now() + 10 * 60_000,
+          validUntil,
+          storeId: STORE_ID,
+        });
+        expect(issueSignedTokenMock.mock.calls[0][0]).not.toHaveProperty(
+          "token",
+        );
+        expect(signed).toEqual({
+          token: { signed: "token" },
+          urlOptions: {
+            addRandomSuffix: true,
+            allowedContentTypes: [mime],
+            maximumSizeInBytes: CV_MAX_BYTES,
+            validUntil,
+          },
         });
       } finally {
         vi.useRealTimers();
@@ -152,13 +196,6 @@ describe("POST /api/careers/cv-upload", () => {
     const line = errorSpy.mock.calls[0].join(" ");
     expect(line).toContain("TypeError");
     expect(line).not.toContain("secret detail");
-    expect(line).not.toContain(TOKEN);
-  });
-
-  it("logs 'unknown' when a non-error is thrown", async () => {
-    handleUploadMock.mockRejectedValue("text");
-    const response = await POST(post(tokenBody("cv/application.pdf")));
-    expect(response.status).toBe(502);
-    expect(errorSpy.mock.calls[0].join(" ")).toContain("unknown");
+    expect(line).not.toContain(WEBHOOK_KEY);
   });
 });

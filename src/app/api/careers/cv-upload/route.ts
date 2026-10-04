@@ -1,16 +1,24 @@
-import { handleUpload } from "@vercel/blob/client";
+import { issueSignedToken } from "@vercel/blob";
+import { handleUploadPresigned } from "@vercel/blob/client";
 import { ipAddress } from "@vercel/functions";
 import { CV_MAX_BYTES, CV_TYPES } from "@/lib/careers/application-rules";
-import { CV_PATH_PREFIX, getBlobToken } from "@/lib/careers/cv-storage";
+import { CV_PATH_PREFIX, getBlobConfig } from "@/lib/careers/cv-storage";
 import { checkUploadLimit } from "@/lib/contact/delivery";
-import { readBody } from "@/lib/http/route-helpers";
+import { describeError, readBody } from "@/lib/http/route-helpers";
 
 const SEND_FAILED = { error: "send" } as const;
 const TOKEN_LIFETIME_MS = 10 * 60_000;
-const GENERATE_TOKEN = "blob.generate-client-token";
+const GENERATE_URL = "blob.generate-presigned-url";
 
-interface TokenRequest {
-  body: { type: typeof GENERATE_TOKEN; payload: { pathname: string } };
+interface UploadRequest {
+  body: {
+    type: typeof GENERATE_URL;
+    payload: {
+      pathname: string;
+      clientPayload: string | null;
+      multipart: false;
+    };
+  };
   extension: string;
 }
 
@@ -22,28 +30,36 @@ function cvExtension(pathname: string): string | undefined {
   return Object.hasOwn(CV_TYPES, extension) ? extension : undefined;
 }
 
-/** The token request when the body is a CV token request, else null. */
-function parseTokenRequest(body: unknown): TokenRequest | null {
+/** The upload request when the body is a single-part CV request, else null. */
+function parseUploadRequest(body: unknown): UploadRequest | null {
   if (typeof body !== "object" || body === null) return null;
-  if (!("type" in body) || body.type !== GENERATE_TOKEN) return null;
+  if (!("type" in body) || body.type !== GENERATE_URL) return null;
   if (!("payload" in body)) return null;
   const { payload } = body;
   if (typeof payload !== "object" || payload === null) return null;
   if (!("pathname" in payload) || typeof payload.pathname !== "string") {
     return null;
   }
+  if ("multipart" in payload && payload.multipart === true) return null;
   const extension = cvExtension(payload.pathname);
   if (!extension) return null;
   return {
-    body: { type: GENERATE_TOKEN, payload: { pathname: payload.pathname } },
+    body: {
+      type: GENERATE_URL,
+      payload: {
+        pathname: payload.pathname,
+        clientPayload: null,
+        multipart: false,
+      },
+    },
     extension,
   };
 }
 
-/** The Blob token, or null after one log line naming the missing variable. */
-function readToken(): string | null {
+/** The Blob settings, or null after one log line naming the missing variable. */
+function readConfig(): ReturnType<typeof getBlobConfig> | null {
   try {
-    return getBlobToken();
+    return getBlobConfig();
   } catch (error) {
     console.error("CV upload: not configured:", String(error));
     return null;
@@ -51,41 +67,45 @@ function readToken(): string | null {
 }
 
 export async function POST(request: Request): Promise<Response> {
-  const parsed = parseTokenRequest(await readBody(request));
+  const parsed = parseUploadRequest(await readBody(request));
   if (!parsed) return Response.json(SEND_FAILED, { status: 400 });
 
-  const token = readToken();
-  if (!token) return Response.json(SEND_FAILED, { status: 500 });
+  const config = readConfig();
+  if (!config) return Response.json(SEND_FAILED, { status: 500 });
 
   if (!(await checkUploadLimit(ipAddress(request)))) {
     return Response.json({ error: "rate" }, { status: 429 });
   }
 
+  const allowedContentTypes = [CV_TYPES[parsed.extension]];
   try {
-    const result = await handleUpload({
-      token,
+    const result = await handleUploadPresigned({
       request,
-      body: {
-        ...parsed.body,
-        payload: {
-          ...parsed.body.payload,
-          clientPayload: null,
-          multipart: false,
-        },
+      body: parsed.body,
+      webhookPublicKey: config.webhookPublicKey,
+      getSignedToken: async (pathname) => {
+        const validUntil = Date.now() + TOKEN_LIFETIME_MS;
+        return {
+          token: await issueSignedToken({
+            pathname,
+            operations: ["put"],
+            allowedContentTypes,
+            maximumSizeInBytes: CV_MAX_BYTES,
+            validUntil,
+            storeId: config.storeId,
+          }),
+          urlOptions: {
+            addRandomSuffix: true,
+            allowedContentTypes,
+            maximumSizeInBytes: CV_MAX_BYTES,
+            validUntil,
+          },
+        };
       },
-      onBeforeGenerateToken: async () => ({
-        allowedContentTypes: [CV_TYPES[parsed.extension]],
-        maximumSizeInBytes: CV_MAX_BYTES,
-        addRandomSuffix: true,
-        validUntil: Date.now() + TOKEN_LIFETIME_MS,
-      }),
     });
     return Response.json(result);
   } catch (error) {
-    console.error(
-      "CV upload: token failed",
-      error instanceof Error ? error.name : "unknown",
-    );
+    console.error("CV upload: token failed", describeError(error));
     return Response.json(SEND_FAILED, { status: 502 });
   }
 }
