@@ -78,19 +78,19 @@ Sources: SPEC CAP-1..5; `EXPERIENCE.md` News card, States (Home news), Responsiv
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
 | News section | page load | — | mist band after the navy 4-D, before the amber capture; H2 "Latest from XionTech." | — | CAP-4, CAP-5, DESIGN.md 438, brand rule | ✅ Chrome 1280 (pre-merge walk): mist gradient, after the 4-D process and before the capture band; H2 "Latest from XionTech."; "See all news" → `/news` |
-| Sample note | stories exist | — | small italic muted "[Placeholder] Sample stories…" under H2 | — | CAP-3 | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| Sample note | stories exist | — | small italic muted "[Placeholder] Sample stories…" under H2 | — | CAP-3 | removed on 2026-10-04 (lead): the 3 published posts are real, written only from confirmed facts, so the note would be false |
 | News grid | ≥3 stories | — | 3 cards, newest first | — | CAP-1 | test `home-news.test.tsx` (3 cards), `latest-posts.test.ts` (order desc, [0...3]) |
 | News grid | 1–2 stories | — | only those cards, no empty slots | — | CAP-1 | test `home-news.test.tsx` (1 story) |
 | News grid | 0 stories | — | no grid, no note; "See all news" stays | — | CAP-2, EXPERIENCE.md States | test `home-news.test.tsx` (0 stories) |
-| News card | page load | — | 16:10 empty frame (faint navy grid), mono date `18 SEP 2026`, tag, title 1.08rem, excerpt, "Read story →"; 24px radius | — | DESIGN.md News card, Media frame | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| Category tag | product story | — | amber pill, navy text, "PRODUCT · PXP" | — | DESIGN.md Category tag | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| Read story | click / Enter | mouse, keyboard, touch | opens `/news/[slug]` (Not found until 6.2) | — | EXPERIENCE.md News card | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| Read story, See all news | focus | keyboard | 2px focus ring | — | T9 | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| Read story, See all news | hover | mouse | arrow moves 4px right | 0.3s | prototype `.link-arrow:hover` | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| News grid | width 900px or less | — | 2 columns | — | EXPERIENCE.md Responsive | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
-| News grid | width 640px or less | — | 1 column | — | EXPERIENCE.md Responsive | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| News card | page load | — | 16:10 empty frame (faint navy grid), mono date `18 SEP 2026`, tag, title 1.08rem, excerpt, "Read story →"; 24px radius | — | DESIGN.md News card, Media frame | ✅ dev site 2026-10-04: 24px radius, 16:10 frame, mono date "4 OCT 2026", tag, title, excerpt (`walk-dev-output.txt`) |
+| Category tag | product story | — | amber pill, navy text, "PRODUCT · PXP" | — | DESIGN.md Category tag | ✅ dev site: "PRODUCT · PXP" tag on the PXP post |
+| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | ✅ dev site: "COMPANY" tag on the offices post (colour by class; unit test) |
+| Read story | click / Enter | mouse, keyboard, touch | opens `/news/[slug]` (Not found until 6.2) | — | EXPERIENCE.md News card | ✅ dev site: click opens `/news/pxp-the-school-day-in-a-parents-pocket` (Not found until 6.2) |
+| Read story, See all news | focus | keyboard | 2px focus ring | — | T9 | ✅ dev site: Tab reaches Read story, `:focus-visible`, solid 2px ring |
+| Read story, See all news | hover | mouse | arrow moves 4px right | 0.3s | prototype `.link-arrow:hover` | ✅ dev site: arrow moves 4px (x 156 → 160) |
+| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | ✅ dev site: no transform, no shadow |
+| News grid | width 900px or less | — | 2 columns | — | EXPERIENCE.md Responsive | ✅ dev site: 2 columns at 900 |
+| News grid | width 640px or less | — | 1 column | — | EXPERIENCE.md Responsive | ✅ dev site: 1 column at 640 and 390, no sideways scroll |
 | Capture band | page load | — | "See it working at your school." last before footer | — | CAP-4 | test `page.test.tsx` (capture last), `no-js.test.tsx` (news before capture in server HTML) |
 
 ## Implementation Notes
@@ -170,3 +170,5 @@ Second full review of the fixes (2026-10-04, 5 layers): no Critical; Security cl
 - patch (docs only): `docs/sanity.md` now says how to recover after an outage (re-publish a post or redeploy; the empty news section is cached until then), and that a post also needs an English title; the schema test name no longer claims slug and date alone are enough.
 - follow-up for the lead (similar check): `/careers` (Story 6.5) still lets a Sanity error fail the page and the build; the same guard could be applied there.
 - defer (Minor): an optional time-based refresh for Home so news recovers by itself; the empty `<time>` for an unreadable date; the console spy restore in the failure test; the frozen I/O row still reads "error propagates" (overridden by A9 as noted above); `docs/sanity.md` step 3 still says one post; a shared validation-rule helper.
+
+After merge (2026-10-04): the lead deployed the Studio and the controller published 3 posts written only from confirmed facts (A7 product copy, verified offices; no invented events or numbers). The card rows were walked on https://xiontech-dev.vercel.app (`walk-dev-output.txt`). The first webhook refresh cached 0 cards because the Sanity CDN still returned the old result; a second save showed 3. Follow-up PR: the client reads past the CDN, and the sample note is removed.
