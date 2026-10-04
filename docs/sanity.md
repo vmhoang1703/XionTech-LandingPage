@@ -43,7 +43,7 @@ The project ID `1khn3hf4` and the dataset `production` are public values.
    - `https://xion-tech-landing-page.vercel.app` (no credentials)
    - `https://xiontech-dev.vercel.app` (no credentials)
    - `https://xion-tech-landing-page-*-vmhoang1703s-projects.vercel.app` (no credentials). This is the preview pattern.
-3. Run `cd studio && npm install && npx sanity login && npx sanity deploy`. Use the host `xiontech-landing`. The Studio is then at `https://xiontech-landing.sanity.studio`. Create one `[Placeholder]` post and one `[Placeholder]` job. Publish both.
+3. Run `cd studio && npm install && npx sanity login && npx sanity deploy`. Use the host `xiontech-landing`. The Studio is then at `https://xiontech-landing.sanity.studio`. Create one real post (see the post rules below) and one `[Placeholder]` job. Publish both.
 
 **Every later schema change** (a merged PR that edits `studio/schemas/`): deploy from an up-to-date `develop`, or the Studio keeps the old fields.
 
@@ -60,7 +60,7 @@ After the deploy for Story 3.7 (decision A9), each news post needs:
 - a **slug** (Generate) and a **Published at** date (the Studio now requires both, and the category);
 - a **category**, and the **app** for a Product story.
 
-Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home.
+Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home. The first test post, "[Placeholder] First news post test 1", is still published but has no slug or date, so it stays hidden; delete it in the Studio when convenient.
 
 If Sanity cannot be reached while Home is built or refreshed, Home still renders: the news section shows its heading and "See all news", and the log says "Home news: could not load the latest posts from Sanity". That empty news section stays until the next refresh, so after an outage **re-publish any post** (the webhook refreshes Home) **or redeploy**.
 
