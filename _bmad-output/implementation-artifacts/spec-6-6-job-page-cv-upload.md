@@ -168,3 +168,27 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 **Manual checks:**
 - Browser walk of `/careers/placeholder-sample-job` at 1280, 900, 899, 640 and 390px plus reduced motion; a real upload and mail after the lead creates the private Blob store -- pending (controller).
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-04.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- "All matched files use Prettier code style!"
+- `npm test` -- exit 0 -- "Test Files 57 passed (57)", "Tests 928 passed (928)"
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (260 lines, 0 missing), "C1 ok: 18 changed file(s) with branch coverage >= 80% vs origin/develop."
+
+**Observed**
+
+- Page, form and both routes in jsdom/node tests: every I/O matrix row has a passing test (apply route `it.each` bad bodies, config per variable, stored CV wrong, rate, mail; form wrong CV, upload and apply failure; page `notFound`) -- `src/app/api/careers/*/route.test.ts`, `src/components/careers/job-application-form.test.tsx`, `src/app/careers/[slug]/page.test.tsx`
+
+**Artifacts**
+
+- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4389 bytes -- sha256 bf0e8ba60997 -- transcript of the three command runs
+- spec-6-6-job-page-cv-upload-evidence/observed.md -- 1331 bytes -- sha256 c3994b890b4d -- surface not reached; what the tests observed instead
+
+**Not captured**
+
+- `npm run build && npm run test:smoke` -- pending (controller, main checkout; Turbopack rejects the worktree's `node_modules` junction).
+- Browser walk of every UX checks row, a real upload to the private store and a real mail -- pending (controller).

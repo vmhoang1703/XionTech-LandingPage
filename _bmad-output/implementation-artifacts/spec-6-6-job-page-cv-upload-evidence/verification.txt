@@ -1,0 +1,113 @@
+### npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+exit 0
+
+### npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage-6-6
+
+
+ Test Files  57 passed (57)
+      Tests  928 passed (928)
+   Start at  13:44:38
+   Duration  55.45s (import 51%, environment 29%, tests 12%, setup 6%, transform 1%)
+
+Environment  jsdom was created 57 times · 278.73s total, 29% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+exit 0
+
+### npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage-6-6
+      Coverage enabled with v8
+
+
+ Test Files  57 passed (57)
+      Tests  928 passed (928)
+   Start at  13:45:39
+   Duration  70.06s (import 50%, environment 27%, tests 14%, setup 6%, transform 1%, worker 1%)
+
+Environment  jsdom was created 57 times · 269.96s total, 27% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.66 |    98.08 |   99.35 |     100 |                   
+ ...onents/careers |     100 |    97.46 |     100 |     100 |                   
+  ...tion-form.tsx |     100 |    96.72 |     100 |     100 | 43,120            
+ ...onents/contact |   99.07 |       96 |   98.27 |     100 |                   
+  contact-form.tsx |   98.49 |    93.58 |   97.61 |     100 | ...26,189,219,404 
+ components/home   |   99.21 |    95.34 |   96.77 |     100 |                   
+  hero-silk.tsx    |   98.18 |       95 |   91.66 |     100 | 27                
+  silk-shader.ts   |     100 |     92.3 |     100 |     100 | 95                
+ ...nents/sections |     100 |    95.45 |     100 |     100 |                   
+  hero-art.tsx     |     100 |       90 |     100 |     100 | 36,65             
+ test-utils        |      96 |    85.71 |     100 |     100 |                   
+  css-classes.ts   |      96 |    85.71 |     100 |     100 | 50                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.66% ( 1202/1206 )
+Branches     : 98.08% ( 615/627 )
+Functions    : 99.35% ( 306/308 )
+Lines        : 100% ( 1082/1082 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/app/api/careers/apply/route.ts (100%)
+src/app/api/careers/cv-upload/route.ts (100%)
+src/app/api/contact/route.ts (100%)
+src/app/careers/[slug]/page.tsx (100%)
+src/components/careers/job-application-form.tsx (100%)
+src/components/careers/job-details.tsx (100%)
+src/components/careers/job-hero.tsx (100%)
+src/components/contact/post-submission.ts (100%)
+src/content/job.ts (100%)
+src/lib/careers/application-rules.ts (100%)
+src/lib/careers/application.ts (100%)
+src/lib/careers/cv-storage.ts (100%)
+src/lib/careers/open-roles.ts (100%)
+src/lib/contact/delivery.ts (100%)
+src/lib/http/route-helpers.ts (100%)
+-------------
+Total:   260 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 18 changed file(s) with branch coverage >= 80% vs origin/develop.
+exit 0

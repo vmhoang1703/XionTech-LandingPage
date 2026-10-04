@@ -85,3 +85,10 @@ Task 16: dispatched (model sonnet, base 42a02e5, report C:/Users/DELL/AppData/Lo
 Task 16: no-red (docs and .env.example only; names only, no values; prettier --check passes on the md)
 Task 16: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
 Task 16: complete (commits ac072dd..2e5fe87, diff verified)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm test — exit 0 — Test Files 57 passed (57), Tests 928 passed (928)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100% (Missing: 0 lines, 260 lines); C1 ok: 18 changed file(s) with branch coverage >= 80% vs origin/develop.
+Acceptance: BLOCKED — npm run build && npm run test:smoke not run: Turbopack rejects the worktree node_modules junction; pending (controller, main checkout)
+Acceptance: BLOCKED — browser walk of /careers/placeholder-sample-job (1280/900/899/640/390px, reduced motion) and a real upload and mail not run: no dev server in the worktree, real sends are the controller's; pending (controller)
+Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/verification.txt — 4389 bytes — sha256 bf0e8ba60997 — transcript of the three command runs
+Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/observed.md — 1331 bytes — sha256 c3994b890b4d — surface not reached; what the tests observed instead
