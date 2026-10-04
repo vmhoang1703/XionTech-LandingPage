@@ -1,0 +1,18 @@
+[1081] Menu button visible false | desktop nav visible true
+[800] Menu: visible true | {"x":704,"y":16,"w":72,"h":40} | rgb(22, 54, 99) | oklab(0.335095 -0.019048 -0.0858169 / 0.14) | 9999px | text "Menu" | icon 0
+[800] header Book a demo visible true
+[800] Tab x4 reaches Menu | :focus-visible true | outline solid | 2px
+[800] Enter: expanded true | focus button:Menu | panel {"x":0,"y":71,"w":800,"h":249} | header bottom 72
+[800] panel look: rgb(253, 253, 254) | auto | CTA in panel visible false
+[800] Tab order while open: a:Products -> a:Services -> a:News -> a:About -> a:Careers -> a:XionTech home -> a:Book a demo -> button:Menu -> a:Products -> a:Services
+[800] wheel while open: scrollY 0 -> 0 | html overflow hidden
+[800] Escape: expanded false | focus button:Menu | html overflow visible
+[800->1200] resize while open: expanded false | html overflow visible
+[800 /careers] current item "Careers" | rgb(22, 54, 99) | 700 | rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 192, 0) 0px -2px 0px 0px inset
+[375] header Book a demo visible false | logo height 26
+[375] tap: expanded true | panel items: Book a demo | Products | Services | News | About | Careers | CTA class "btn btn-primary mb-2.5 hidden justify-center max-[640px]:inline-flex"
+[375] no sideways scroll true
+[375] scroll attempt while open: scrollY 0 -> 0
+[375] tap Careers: url /careers | expanded false | html overflow visible
+[641] panel CTA visible false | header CTA visible true
+[800 reduced] open after 50ms: panel visible true | running animations 0

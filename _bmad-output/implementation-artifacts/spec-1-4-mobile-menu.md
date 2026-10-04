@@ -44,7 +44,7 @@ context:
 - jsdom has no layout, so `mobile-menu.test.tsx` stubs `getClientRects` from the breakpoint classes at a test width (375, 640, 641, 800) and stubs `matchMedia` to fire the 1081px change.
 - Surprise: ESLint `@next/next/no-html-link-for-pages` also checks test files; the test header uses `next/link`.
 - Full suite under load: `scripts/eslint-config.test.mjs` timed out once at 120s (typed ESLint, unrelated); alone it passed (3 tests, 37.6s), and the re-run of the whole suite passed.
-- Not run here (Turbopack rejects the worktree's `node_modules` junction): `npm run build`, `npm run test:smoke`, browser walk -- pending (controller).
+- Build, smoke and browser walk ran in the main checkout (Turbopack rejects the worktree's `node_modules` junction): `npm run build` passes, `npm run test:smoke` 8 passed; walk at 1081, 800, 641 and 375px plus reduced motion (`spec-1-4-mobile-menu-evidence/walk.mjs`, `walk-output.txt`).
 
 ## UX checks
 
@@ -52,31 +52,31 @@ Sources: SPEC CAP-1 to CAP-8, `EXPERIENCE.md` Component Patterns › Mobile menu
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Menu button | width 1080px or less | — | 40px-high pill, text "Menu", no icon, navy text, navy border at 14% | — | CAP-1, DESIGN.md Mobile menu | mobile-menu.test (classes, text); look: pending (controller walk) |
-| Menu button | width 1081px or more | — | not shown; desktop nav shown | — | CAP-1 | mobile-menu.test (class `min-[1081px]:hidden`); pending (controller walk) |
+| Menu button | width 1080px or less | — | 40px-high pill, text "Menu", no icon, navy text, navy border at 14% | — | CAP-1, DESIGN.md Mobile menu | ✅ Chrome 800: 72×40 pill, text "Menu", no icon, navy text, navy border at 14%, fully rounded |
+| Menu button | width 1081px or more | — | not shown; desktop nav shown | — | CAP-1 | ✅ Chrome 1081: Menu hidden, desktop nav shown |
 | Menu button | closed state | — | `aria-expanded="false"`, `aria-controls` = panel id | — | AC-NAV-4 | mobile-menu.test "renders a closed Menu pill" |
-| Menu button | tap | touch, pen | panel opens under the header; `aria-expanded="true"` | — | CAP-1 | mobile-menu.test "opens on click"; touch: pending (controller walk) |
+| Menu button | tap | touch, pen | panel opens under the header; `aria-expanded="true"` | — | CAP-1 | ✅ Chrome 375 touch tap: opens, `aria-expanded=true` (pen not checked) |
 | Menu button | click, then click again | mouse | opens, then closes | — | CAP-1 | mobile-menu.test "toggles closed" |
-| Menu button | Enter or Space | keyboard | opens; focus stays on "Menu"; Tab moves into the panel | — | CAP-1, EXPERIENCE.md Interaction Primitives | native `<button>`; pending (controller walk) |
-| Panel | open | any | paper panel, full width, under the 72px header, scrolls inside the viewport when taller | — | DESIGN.md Mobile menu | pending (controller walk) |
-| Panel | open | any | Products, Services, News, About, Careers link to `/products`, `/services`, `/news`, `/about`, `/careers` | — | CAP-7 | mobile-menu.test "lists the five pages", nav-data.test |
-| Panel | open on `/news/x` | any | News marked current (`aria-current="page"`, navy bold, amber underline) | — | DESIGN.md Site header | mobile-menu.test "marks the current section"; look: pending (controller walk) |
+| Menu button | Enter or Space | keyboard | opens; focus stays on "Menu"; Tab moves into the panel | — | CAP-1, EXPERIENCE.md Interaction Primitives | ✅ Chrome 800 Enter: opens, focus stays on Menu, Tab moves into the panel (Space: native button, not walked) |
+| Panel | open | any | paper panel, full width, under the 72px header, scrolls inside the viewport when taller | — | DESIGN.md Mobile menu | ✅ Chrome 800: paper panel, full width (800px), top at 71px under the 72px header, `overflow-y: auto` |
+| Panel | open | any | Products, Services, News, About, Careers link to `/products`, `/services`, `/news`, `/about`, `/careers` | — | CAP-7 | ✅ Chrome 800: paper panel, full width (800px), top at 71px under the 72px header, `overflow-y: auto` |
+| Panel | open on `/news/x` | any | News marked current (`aria-current="page"`, navy bold, amber underline) | — | DESIGN.md Site header | ✅ Chrome 800 on `/careers` (no `/news` page yet): Careers navy, bold 700, amber 2px underline |
 | Panel | Escape | keyboard | closes; focus on "Menu" | — | CAP-2, AC-NAV-4 | mobile-menu.test "closes on Escape" |
 | Panel | Tab from the last item | keyboard | focus wraps to the logo link | — | CAP-3 | mobile-menu.test focus trap, real site header |
 | Panel | Shift+Tab from the logo link | keyboard | focus wraps to the last menu item | — | CAP-3 | mobile-menu.test focus trap, real site header |
-| Panel | Tab through, width 641–1080px | keyboard | order: logo, Book a demo, Menu, five links; never the page below | — | CAP-3; pending: CAP-3 and EXPERIENCE.md list logo, EN/VI and Menu only — confirm the header Book a demo (shown 641–1080px) belongs in the trap (Amber) | mobile-menu.test "keeps the header Book a demo in the trap at 800px"; order: pending (controller walk) |
-| Page | menu open, swipe or wheel | touch, mouse | background page does not scroll | — | CAP-3 | mobile-menu.test (root `overflow: hidden`); pending (controller walk) |
+| Panel | Tab through, width 641–1080px | keyboard | order: logo, Book a demo, Menu, five links; never the page below | — | CAP-3; pending: CAP-3 and EXPERIENCE.md list logo, EN/VI and Menu only — confirm the header Book a demo (shown 641–1080px) belongs in the trap (Amber) | ✅ Chrome 800: Menu → Products, Services, News, About, Careers → logo → Book a demo → Menu (trap cycles; never the page) |
+| Page | menu open, swipe or wheel | touch, mouse | background page does not scroll | — | CAP-3 | ✅ Chrome 800 wheel and 375 touch: scrollY stays 0, `html` overflow hidden |
 | Page | menu closed | any | page scrolls again | — | CAP-8 | mobile-menu.test "locks page scroll … releases" |
 | Panel | closed, Tab through the page | keyboard | no menu item gets focus | — | CAP-4, AC-A11Y-3 | mobile-menu.test "keeps closed menu items out of reach" (`hidden`) |
-| Panel | tap or click a menu link | touch, mouse | goes to the page; menu closed; page scrolls | — | CAP-8, T6 | mobile-menu.test "closes when a menu link is activated"; pending (controller walk) |
+| Panel | tap or click a menu link | touch, mouse | goes to the page; menu closed; page scrolls | — | CAP-8, T6 | ✅ Chrome 375 tap on Careers: goes to `/careers`, menu closed, overflow restored |
 | Header links | menu open, tap the logo on Home | touch, mouse | menu closes; page scrolls | — | CAP-8 (review finding) | mobile-menu.test "closes when a header link to the current page" |
 | Panel | page changes (back button) | any | menu closed | — | CAP-8 | mobile-menu.test "closes when the pathname changes" |
-| Panel | open, window grows above 1080px | any | menu closes; scroll lock released | — | CAP-8, T6 | mobile-menu.test "closes when the viewport grows"; pending (controller walk) |
-| Book a demo | width 640px or less, open menu | any | first item, amber primary button style, links `/demo#form`; not in the header bar | — | CAP-5, AC-NAV-2 | mobile-menu.test "shows Book a demo first"; look: pending (controller walk) |
-| Book a demo | width 641–1080px | any | in the header next to the EN/VI slot; not in the open menu | — | CAP-6, AC-NAV-2 | mobile-menu.test "leaves Book a demo out"; look: pending (controller walk) |
+| Panel | open, window grows above 1080px | any | menu closes; scroll lock released | — | CAP-8, T6 | ✅ Chrome 800 → 1200: menu closed, overflow restored |
+| Book a demo | width 640px or less, open menu | any | first item, amber primary button style, links `/demo#form`; not in the header bar | — | CAP-5, AC-NAV-2 | ✅ Chrome 375: first item, `btn-primary`, not in the header bar |
+| Book a demo | width 641–1080px | any | in the header next to the EN/VI slot; not in the open menu | — | CAP-6, AC-NAV-2 | ✅ Chrome 641: in the header, not in the open menu |
 | Panel | open | reduced motion | opens and closes with no animation | — | EXPERIENCE.md reduced motion | hand (code: no animation; global reduced-motion rule) |
-| Header | width 375px, menu open | any | no sideways scroll; logo 26px high | — | Success signal, EXPERIENCE.md Responsive | pending (controller walk) |
-| Menu button | Tab to it | keyboard | 2px focus ring visible | — | EXPERIENCE.md Accessibility Floor, T9 | global `:focus-visible`; pending (controller walk) |
+| Header | width 375px, menu open | any | no sideways scroll; logo 26px high | — | Success signal, EXPERIENCE.md Responsive | ✅ Chrome 375: no sideways scroll, logo 26px high |
+| Menu button | Tab to it | keyboard | 2px focus ring visible | — | EXPERIENCE.md Accessibility Floor, T9 | ✅ Chrome 800: `:focus-visible`, solid 2px ring |
 
 ## Review Triage Log
 
