@@ -75,6 +75,13 @@ describe("getLatestPosts", () => {
 
     await expect(getLatestPosts()).resolves.toEqual(posts);
   });
+
+  it("lets a failed fetch reach the caller", async () => {
+    const error = new Error("Sanity fetch failed for tags [post]");
+    sanityFetchMock.mockRejectedValue(error);
+
+    await expect(getLatestPosts()).rejects.toBe(error);
+  });
 });
 
 describe("newsDate", () => {
