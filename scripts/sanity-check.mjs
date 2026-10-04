@@ -16,7 +16,8 @@ export function summarize({ post, job, probeId, probeCount }) {
       lines.push(`${kind}: ${doc._id} ${doc.title ?? "(no English title)"}`);
     } else {
       ok = false;
-      lines.push(`FAIL: no ${kind} found — publish a ${kind} in the Studio`);
+      const hint = kind === "job" ? "a [Placeholder] job" : "a real post";
+      lines.push(`FAIL: no ${kind} found — publish ${hint} in the Studio`);
     }
   }
 
