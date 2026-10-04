@@ -77,20 +77,20 @@ Sources: SPEC CAP-1..5; `EXPERIENCE.md` News card, States (Home news), Responsiv
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| News section | page load | — | mist band after the navy 4-D, before the amber capture; H2 "Latest from XionTech." | — | CAP-4, CAP-5, DESIGN.md 438, brand rule | test `page.test.tsx` (order, surfaces), `home-news.test.tsx` (H2); colours pending (controller, browser) |
-| Sample note | stories exist | — | small italic muted "[Placeholder] Sample stories…" under H2 | — | CAP-3 | test `home-news.test.tsx` (text); italic/muted pending (controller, browser) |
+| News section | page load | — | mist band after the navy 4-D, before the amber capture; H2 "Latest from XionTech." | — | CAP-4, CAP-5, DESIGN.md 438, brand rule | ✅ Chrome 1280 (pre-merge walk): mist gradient, after the 4-D process and before the capture band; H2 "Latest from XionTech."; "See all news" → `/news` |
+| Sample note | stories exist | — | small italic muted "[Placeholder] Sample stories…" under H2 | — | CAP-3 | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
 | News grid | ≥3 stories | — | 3 cards, newest first | — | CAP-1 | test `home-news.test.tsx` (3 cards), `latest-posts.test.ts` (order desc, [0...3]) |
 | News grid | 1–2 stories | — | only those cards, no empty slots | — | CAP-1 | test `home-news.test.tsx` (1 story) |
 | News grid | 0 stories | — | no grid, no note; "See all news" stays | — | CAP-2, EXPERIENCE.md States | test `home-news.test.tsx` (0 stories) |
-| News card | page load | — | 16:10 empty frame (faint navy grid), mono date `18 SEP 2026`, tag, title 1.08rem, excerpt, "Read story →"; 24px radius | — | DESIGN.md News card, Media frame | test `news-card.test.tsx` (date, tag, title, excerpt, link, aria-hidden frame); looks pending (controller, browser) |
-| Category tag | product story | — | amber pill, navy text, "PRODUCT · PXP" | — | DESIGN.md Category tag | test `latest-posts.test.ts` ("Product · PXP"), `news-card.test.tsx` (`product` class); colours pending (controller, browser); needs A9 Studio deploy for live data |
-| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | test `latest-posts.test.ts` (Team, Schools, Company); colours pending (controller, browser) |
-| Read story | click / Enter | mouse, keyboard, touch | opens `/news/[slug]` (Not found until 6.2) | — | EXPERIENCE.md News card | test `news-card.test.tsx` (href `/news/<encoded slug>`); click pending (controller, browser) |
-| Read story, See all news | focus | keyboard | 2px focus ring | — | T9 | pending (controller, browser) |
-| Read story, See all news | hover | mouse | arrow moves 4px right | 0.3s | prototype `.link-arrow:hover` | pending (controller, browser) |
-| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | pending (controller, browser) (no hover rule on `.ncard` in `globals.css`) |
-| News grid | width 900px or less | — | 2 columns | — | EXPERIENCE.md Responsive | pending (controller, browser) (shared `.news-grid` rule, Story 6.5) |
-| News grid | width 640px or less | — | 1 column | — | EXPERIENCE.md Responsive | pending (controller, browser) (shared `.news-grid` rule, Story 6.5) |
+| News card | page load | — | 16:10 empty frame (faint navy grid), mono date `18 SEP 2026`, tag, title 1.08rem, excerpt, "Read story →"; 24px radius | — | DESIGN.md News card, Media frame | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| Category tag | product story | — | amber pill, navy text, "PRODUCT · PXP" | — | DESIGN.md Category tag | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| Read story | click / Enter | mouse, keyboard, touch | opens `/news/[slug]` (Not found until 6.2) | — | EXPERIENCE.md News card | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| Read story, See all news | focus | keyboard | 2px focus ring | — | T9 | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| Read story, See all news | hover | mouse | arrow moves 4px right | 0.3s | prototype `.link-arrow:hover` | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| News grid | width 900px or less | — | 2 columns | — | EXPERIENCE.md Responsive | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
+| News grid | width 640px or less | — | 1 column | — | EXPERIENCE.md Responsive | after merge on the dev site: no published post had a slug and date before merge (lead chose to walk after merge, 2026-10-04); unit tests cover the logic |
 | Capture band | page load | — | "See it working at your school." last before footer | — | CAP-4 | test `page.test.tsx` (capture last), `no-js.test.tsx` (news before capture in server HTML) |
 
 ## Implementation Notes
@@ -132,7 +132,7 @@ Patch re-review (task reviewer, sonnet): pass, 0 Critical, 0 Important; its Mino
 - `npm run lint && npm run typecheck && npm run format:check` -- expected: exit 0
 - `npm test` -- expected: all pass
 - `npm run test:coverage && npm run coverage:diff` -- expected: 100% changed lines, branches ≥ 80% on changed files
-- `npm run build`, `npm run test:smoke`, browser walk -- pending (controller; Turbopack rejects the worktree junction)
+- `npm run build`, `npm run test:smoke`, browser walk -- done in the main checkout: build passes, smoke 8 passed; walk of the empty state (card rows after merge) -- (controller; Turbopack rejects the worktree junction)
 
 ## Acceptance Evidence
 
