@@ -92,3 +92,11 @@ Acceptance: BLOCKED — npm run build && npm run test:smoke not run: Turbopack r
 Acceptance: BLOCKED — browser walk of /careers/placeholder-sample-job (1280/900/899/640/390px, reduced motion) and a real upload and mail not run: no dev server in the worktree, real sends are the controller's; pending (controller)
 Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/verification.txt — 4389 bytes — sha256 bf0e8ba60997 — transcript of the three command runs
 Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/observed.md — 1331 bytes — sha256 c3994b890b4d — surface not reached; what the tests observed instead
+Review: one layer (Edge Case Hunter); 1 patch (apply POST timeout 35 s, commit 4a13c32), 2 deferred (orphan CV blobs; .split at 900px), rest rejected — see Review Triage Log
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style! (after review patch)
+Acceptance: verification — npm test — exit 0 — Test Files 57 passed (57), Tests 929 passed (929) (after review patch)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100% (Missing: 0 lines); C1 ok: 18 changed file(s) with branch coverage >= 80% vs origin/develop. (after review patch)
+Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/verification.txt — 4389 bytes — sha256 792a418348c2 — transcript of the three command runs after the review patch
+Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/observed.md — 1331 bytes — sha256 c3994b890b4d — surface not reached; what the tests observed instead
+Acceptance: BLOCKED — npm run build && npm run test:smoke not run: Turbopack rejects the worktree node_modules junction; pending (controller, main checkout)
+Acceptance: BLOCKED — browser walk and a real upload and mail not run; pending (controller)

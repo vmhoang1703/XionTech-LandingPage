@@ -2,7 +2,7 @@
 title: 'Story 6.6: Job page and application with CV upload'
 type: 'feature'
 created: '2026-10-04'
-status: 'in-progress'
+status: 'in-review'
 baseline_commit: '5973d9b340c9392ad401f4f200f9b45a9ac4147e'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -151,6 +151,24 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 ## Review Triage Log
 
+Step 4 on 2026-10-04: one layer (Edge Case Hunter, opus), by the controller's rule for this run (one review layer inside the build; the full 5-layer `bmad-code-review` runs before the PR). Blind Hunter, Verification Gap, Acceptance Auditor and Security Auditor were not run. Task reviews were skipped for the same reason; the ledger's `minor` rows are triaged here too.
+
+| # | Finding (source) | Verdict | Route | Evidence |
+|---|---|---|---|---|
+| 1 | Apply POST times out at 15 s in the browser while the route may run 30 s; the server still mails and a retry duplicates it (Edge) | medium | patch | `postSubmission` aborts at `SEND_TIMEOUT_MS` (15 s); the apply route does a Sanity lookup, two Upstash calls, a 5 MB Blob read and an SMTP send with the attachment, `maxDuration = 30`. Fix: optional `timeoutMs`, 35 s from the job form. |
+| 2 | Uploaded CVs that never reach a successful apply stay in the store; a script can fill the 1 GB Hobby store (about 50 MB per IP per hour at the 10/h token limit) and lock it for 30 days (Edge) | medium | defer | Real: nothing deletes `cv/` blobs (A4 keeps applications with no time limit), and the token route is public by design (T1). A fix needs a design choice the spec does not settle (cleanup job, lower token limit, delete on a failed apply). Listed for the lead in `deferred-work.md`. |
+| 3 | A 429 from the token route shows the send error, not the rate message (Edge) | low | reject | `uploadPresigned` throws one generic `BlobError("Failed to retrieve the presigned URL")` for any non-2xx, so telling 429 apart needs a pre-check request; 10 token requests an hour per IP is rarely reached by a real applicant. |
+| 4 | Token route does not check `KV_REST_API_URL` / `KV_REST_API_TOKEN`; when unset the upload limit fails open (Edge) | low | reject | Only on a misconfigured deployment; the apply route then answers 500 for every application (its `getDeliveryConfig` requires both), so the gap is noticed at once. Matches the contact route's fail-open design. |
+| 5 | A role closed in Sanity may still be accepted once from the stale tagged cache (Edge) | low | reject | The webhook revalidates the `job` tag; at worst one application for a just-closed role reaches the lead's inbox. A second, uncached fetch path would break T2's one helper. |
+| 6 | Duplicate React keys when an editor repeats a list line, a paragraph, or team equals location (Edge; also Task 12 minor) | low | reject | Server Components render these lists once, so items are never reordered or dropped; the cost is a dev-only warning. Index keys would trip the lint rule against array-index keys. |
+| 7 | The 60 s abort does not cover the token request: `@vercel/blob@2.8.0` `retrievePresignedUrlPayload` ignores `abortSignal` (Edge, claim) | low | reject | Confirmed in `node_modules/@vercel/blob/dist/client.js` (the fetch's `signal` is `options.abortSignal`, but `getPresignedUrlPayload` never passes it). The token route is ended by the platform's function timeout, which rejects the fetch, so the form still reaches the send error. A `Promise.race` wrapper adds complexity for a rare case. |
+| 8 | At exactly 900px `.split` is still two columns, but the AC says the form is below at 900px and below (Edge, claim) | low | defer | Pre-existing: the shared `.split` from Story 6.5 switches at 900px (already deferred there, `deferred-work.md`). Not changed by this story. |
+| 9 | `getOpenRole` guards `Array.isArray` for a `[0]` query (Task 3 minor) | low | reject | Defensive branch; harmless and covered by a test. |
+| 10 | Type-label export for the chips missing after Task 3 (Task 3 minor) | false | reject | Added in Task 12 (`roleTypeLabel`, `1aa3d02`). |
+| 11 | `slug` has no length cap in `parseApplication` (Task 5 minor) | low | reject | Only used as a GROQ parameter and, after `getOpenRole` finds an open role, in the mail; an unknown slug answers 400. |
+| 12 | `readBody` duplicated in the token route (Task 7 minor) | false | reject | Moved to `src/lib/http/route-helpers.ts` in Task 8 (`f16a877`); all three routes import it. |
+| 13 | `statusCode !== 200` branch in `readStoredCv` cannot happen without `ifNoneMatch` (Task 8 minor) | low | reject | Defensive; covered by a test. |
+
 ## Design Notes
 
 - Two requests per application: the browser uploads the CV with a short-lived token (Vercel Function body limit 4.5 MB never applies), then sends a small JSON body with the blob path. The apply route trusts nothing from the upload: it re-reads the stored blob's size and type from `get` before attaching it.
@@ -171,12 +189,12 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-04.
+Captured at the end of step-03 on 2026-10-04 and re-captured in step 4 after the review patch.
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- "All matched files use Prettier code style!"
-- `npm test` -- exit 0 -- "Test Files 57 passed (57)", "Tests 928 passed (928)"
+- `npm test` -- exit 0 -- "Test Files 57 passed (57)", "Tests 929 passed (929)"
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (260 lines, 0 missing), "C1 ok: 18 changed file(s) with branch coverage >= 80% vs origin/develop."
 
 **Observed**
@@ -185,7 +203,7 @@ Captured at the end of step-03 on 2026-10-04.
 
 **Artifacts**
 
-- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4389 bytes -- sha256 bf0e8ba60997 -- transcript of the three command runs
+- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4389 bytes -- sha256 792a418348c2 -- transcript of the three command runs
 - spec-6-6-job-page-cv-upload-evidence/observed.md -- 1331 bytes -- sha256 c3994b890b4d -- surface not reached; what the tests observed instead
 
 **Not captured**
