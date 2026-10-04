@@ -882,3 +882,23 @@ Template:
   instead of the reference look (Amber sent a screenshot to correct it), counted one carousel dot per card
   (too many), and its first case study images used a navy mock-window style that did not match the
   placeholder images in other sections.
+
+## 2026-10-04 — ENH-011 and ENH-012: five steps on Services, a light process on Home
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers), headless Edge
+  checks (nothing shown on screen)
+- **Prompt / task:** Use the same five steps on Services as on Home, highlight the chosen step, then move the full
+  tabbed process to Services and give Home a lighter version (a simple five-step row with one short line each and
+  a link to Services). Logged as ENH-011 and ENH-012; the last "4-D" wording on About and Contact was retired
+  and the old four-card flow code removed. `wireframes-final.md` and its change tags were updated.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: the arrow
+  keys skipped a step on Services (two keyboard handlers both moved the tabs), the Home connector line ran past
+  the last step on phones, disappeared without JavaScript and ended at a guessed position, the Home step text fell
+  to about 2.2:1 contrast on the light end of the gradient (Home now uses a deeper gradient and full white text),
+  long step names could overflow the rail at mid widths, a stray hover band stayed after a tap, Home and Services
+  worded two steps differently, Services had dropped "estimate" from Discovery's outcome, and the About and
+  Contact wording repeated "step". Developers' follow-up: the Next.js app still shows the four-step "4-D
+  process" and its tests pin it.
+- **AI got it wrong?** Yes: a CSS cleanup regex removed part of a keyframes rule and broke the stylesheet's
+  braces; it was restored from the last commit and the old block removed by exact line numbers after checking
+  each line.

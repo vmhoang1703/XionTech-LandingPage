@@ -12,18 +12,20 @@ language dropdown, Why XionTechs and the four-app row on Home). Batch 1 reaches 
 branch instead of PR #10, which was closed unmerged on 2026-10-03; it was written into the specs
 directly, before this log existed.
 
-| ID      | Date       | Page and section                            | Change                                                                                                                                                                                                                                                                                            | Status   | Stories to update                     |
-| ------- | ---------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------- |
-| ENH-001 | 2026-10-03 | Home, last section                          | The demo email band becomes a contact form: "Have something you want to build?"                                                                                                                                                                                                                   | Approved | 3.7, 2.2, 2.3, 2.4                    |
-| ENH-002 | 2026-10-04 | Home hero and Why XionTechs; header         | Amber headline word, no button glow, two stats ("25+ Years"), silk across the hero fading out before the stats, bigger hero text on small screens, front doors moved into Why XionTechs, Products as a plain link, underline-only hover on the word, numbers count up from 0, hamburger menu icon | Approved | 1.3, 1.4, 3.1, 3.2, 3.3, 3.4, 3.5     |
-| ENH-003 | 2026-10-04 | Home, new sections                          | Placeholder partner logo strip (scrolling; pauses on hover, focus or tap) under the hero, and three placeholder case study cards                                                                                                                                                                  | Approved | new stories (Epic 3)                  |
-| ENH-004 | 2026-10-04 | Every section; Home Why XionTechs           | Tighter space above and below section headings; each section shows its heading first, then its content; Why XionTechs rebuilt as a four-card bento (app logos, reveal animation, +3 hover reveal) with a small Get IT Done line                                                                   | Approved | 3.5, 7.x (reveal), every page section |
-| ENH-005 | 2026-10-04 | Home, section order                         | The products section moves below the 4-D process and becomes "Apps for every role in school."; case studies turn white                                                                                                                                                                            | Approved | 3.5                                   |
-| ENH-006 | 2026-10-04 | Home, Case studies; every section           | Case studies become a full-width slider of six placeholder partner cards with carousel dots (from Amber's reference HTML); tighter section spacing                                                                                                                                                | Approved | new stories (Epic 3)                  |
-| ENH-007 | 2026-10-04 | Home and News, news cards                   | Home news gets a one-line intro with "See all news" on the same row; a story about an app shows only the app name in its pill; the third story is about PXP                                                                                                                                       | Approved | 3.7, 6.1                              |
-| ENH-008 | 2026-10-04 | Home, products section; Our partners        | "Apps for every role in school." becomes "What we build." with AI Tutor and AI Timetable added and back and forward buttons; the partners heading is left-aligned                                                                                                                                 | Approved | 3.5, new stories                      |
-| ENH-009 | 2026-10-04 | Home, process; What we build; every section | The 4-D process becomes "How we approach." with five steps (Amber's reference HTML); equal-size app cards; more space between headings and their descriptions                                                                                                                                     | Approved | 3.6, 3.5                              |
-| ENH-010 | 2026-10-04 | Home, contact form                          | The phone field shows an example number as its placeholder instead of a hint line; "Start the conversation" has no glow or lift                                                                                                                                                                   | Approved | 2.2                                   |
+| ID      | Date       | Page and section                                          | Change                                                                                                                                                                                                                                                                                            | Status   | Stories to update                     |
+| ------- | ---------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------- |
+| ENH-001 | 2026-10-03 | Home, last section                                        | The demo email band becomes a contact form: "Have something you want to build?"                                                                                                                                                                                                                   | Approved | 3.7, 2.2, 2.3, 2.4                    |
+| ENH-002 | 2026-10-04 | Home hero and Why XionTechs; header                       | Amber headline word, no button glow, two stats ("25+ Years"), silk across the hero fading out before the stats, bigger hero text on small screens, front doors moved into Why XionTechs, Products as a plain link, underline-only hover on the word, numbers count up from 0, hamburger menu icon | Approved | 1.3, 1.4, 3.1, 3.2, 3.3, 3.4, 3.5     |
+| ENH-003 | 2026-10-04 | Home, new sections                                        | Placeholder partner logo strip (scrolling; pauses on hover, focus or tap) under the hero, and three placeholder case study cards                                                                                                                                                                  | Approved | new stories (Epic 3)                  |
+| ENH-004 | 2026-10-04 | Every section; Home Why XionTechs                         | Tighter space above and below section headings; each section shows its heading first, then its content; Why XionTechs rebuilt as a four-card bento (app logos, reveal animation, +3 hover reveal) with a small Get IT Done line                                                                   | Approved | 3.5, 7.x (reveal), every page section |
+| ENH-005 | 2026-10-04 | Home, section order                                       | The products section moves below the 4-D process and becomes "Apps for every role in school."; case studies turn white                                                                                                                                                                            | Approved | 3.5                                   |
+| ENH-006 | 2026-10-04 | Home, Case studies; every section                         | Case studies become a full-width slider of six placeholder partner cards with carousel dots (from Amber's reference HTML); tighter section spacing                                                                                                                                                | Approved | new stories (Epic 3)                  |
+| ENH-007 | 2026-10-04 | Home and News, news cards                                 | Home news gets a one-line intro with "See all news" on the same row; a story about an app shows only the app name in its pill; the third story is about PXP                                                                                                                                       | Approved | 3.7, 6.1                              |
+| ENH-008 | 2026-10-04 | Home, products section; Our partners                      | "Apps for every role in school." becomes "What we build." with AI Tutor and AI Timetable added and back and forward buttons; the partners heading is left-aligned                                                                                                                                 | Approved | 3.5, new stories                      |
+| ENH-009 | 2026-10-04 | Home, process; What we build; every section               | The 4-D process becomes "How we approach." with five steps (Amber's reference HTML); equal-size app cards; more space between headings and their descriptions                                                                                                                                     | Approved | 3.6, 3.5                              |
+| ENH-010 | 2026-10-04 | Home, contact form                                        | The phone field shows an example number as its placeholder instead of a hint line; "Start the conversation" has no glow or lift                                                                                                                                                                   | Approved | 2.2                                   |
+| ENH-011 | 2026-10-04 | Services process; Home and Services steps; About, Contact | Services uses the same five-step "How we work." component and content as Home; the chosen step is highlighted; the 4-D wording is retired                                                                                                                                                         | Approved | 5.4, 3.6                              |
+| ENH-012 | 2026-10-04 | Home, How we approach                                     | Home shows a light five-step diagram with one short line per step and a link to Services; the full tabbed component stays on Services                                                                                                                                                             | Approved | 3.6                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -359,8 +361,7 @@ directly, before this log existed.
   - Story 3.6: the four-card 4-D flow on Home is replaced by the tabbed five-step layout (WAI-ARIA tabs,
     vertical). The Services page still shows the four-step 4-D process; the two should match (open item).
   - The step content (titles, bullets, outcomes) comes from Amber's reference.
-- **Open items:** Services still describes a four-step 4-D process: switch it to the same five steps, or
-  keep both (Amber).
+- **Open items:** resolved by ENH-011 (Services uses the same five steps).
 
 ## ENH-010: Contact form phone placeholder and a quiet button
 
@@ -373,4 +374,51 @@ directly, before this log existed.
     slightly deeper amber on hover so it still shows a hover state.
 - **Developer notes:** the placeholder is an example only, not a label; the field keeps its visible label
   "Phone number (optional)". The validation rules in ENH-001 are unchanged.
+- **Open items:** none.
+
+## ENH-011: Five steps on Services, and a highlighted step
+
+- **Why:** Amber's review, 2026-10-04: Home and Services described the process differently.
+- **What changed:**
+  - **Services:** the four-card "Our 4-D process" becomes "How we work.", with its own line "Every step ends with
+    something you can see, test and approve." and the same five-step component and content as Home (diagram,
+    step tabs, detail panel, blue gradient). The hero button "See our 4-D process" becomes "See how we work";
+    it still jumps to the section (`#process`).
+  - **Same steps on both pages:** one set of step names and outcomes. ENH-012 then made Home the short version
+    and kept the full detail (diagram, tabs, panel) on Services only.
+  - **Chosen step highlighted (Services; Home had it until ENH-012 made Home static):** a soft white band (14% white with a thin light outline,
+    rounded) behind the chosen step's number and name, its name a little bolder (600), and a fainter band on hover
+    (only on devices that hover). Long step names may wrap below 1240px so they stay inside the rail.
+    The other steps stay at 85% so they remain readable on the blue.
+  - **4-D wording retired:** About's FAQ answer (page and structured data) now says "Discovery, the first step
+    of our five steps"; the Contact page checklist says "a first Discovery conversation, step one of our five
+    steps". No page mentions 4-D any more.
+  - The old four-card flow styles and script are removed. Discovery's outcome keeps the estimate: "A clear
+    scope, estimate and delivery plan.", and its third point reads "Scope, risks, priorities and constraints" (both
+    pages' panel content comes from this one set).
+- **Developer notes:** Story 5.4 (Services process) uses the tabbed component. The Next.js app still shows
+  the "4-D process" with four steps (Home, Services, the contact checklist) and its tests pin that wording
+  (`src/app/page.test.tsx`, `src/components/sections/process-flow.test.tsx`); update both when Stories 3.6 and
+  5.4 pick up ENH-011 and ENH-012.
+- **Open items:** none.
+
+## ENH-012: A light "How we approach" on Home
+
+- **Why:** Amber's review, 2026-10-04: Home should carry lighter content, shorter text and a simple diagram; the
+  full process belongs on Services.
+- **What changed:**
+  - **Home:** "How we approach." with the line "Five clear steps, from the first conversation to launch and
+    beyond." and "See how we work" on the same row (to `services.html#process`). Below, one row of five steps
+    joined by short lines between the circles: a numbered circle (navy with an amber ring), the step name and one
+    short line each, all in full white:
+    Discovery "Learn your goals, users and scope.", Design "Shape flows, interfaces and architecture.",
+    Development "Build the product in agile sprints.", QA & Improvement "Test and refine before release.",
+    Deployment "Release, monitor and keep improving." The line draws in from left to right and the steps follow
+    one after another; with reduced motion everything shows at once. Below 900px the steps stack vertically
+    with the line on the left. Home uses a deeper version of the blue gradient (it ends at #445fca instead of the light sky blue) so the
+    white text keeps at least 4.5:1 contrast everywhere. Each connector draws in just before the next step
+    appears; without JavaScript the lines and steps show at once.
+  - **Services:** unchanged; it keeps the full component (diagram, step tabs, detail panel, highlighted step).
+- **Developer notes:** Story 3.6 (Home) becomes a static five-step diagram with no tabs; Story 5.4 (Services)
+  keeps the tabbed component.
 - **Open items:** none.

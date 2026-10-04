@@ -190,7 +190,7 @@
     rail.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();go(e.key==='ArrowRight'?1:-1)}});
     rail.addEventListener('scroll',()=>requestAnimationFrame(state),{passive:true});addEventListener('resize',state);state()}
 
-  /* ---------- How we approach: the steps are tabs; click, or arrow keys up and down, show a step's detail ---------- */
+  /* ---------- Services "How we work": the steps are tabs; click, or arrow keys up and down, show a step's detail ---------- */
   document.querySelectorAll('.ap-rail').forEach(rl=>{const tabs=[...rl.querySelectorAll('.ap-step')];
     const pick=(t,focus)=>{tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;const p=document.getElementById(x.getAttribute('aria-controls'));if(p)p.hidden=!on});if(focus)t.focus()};
     pick(tabs.find(t=>t.getAttribute('aria-selected')==='true')||tabs[0]);
@@ -224,10 +224,6 @@
     if(!blk||blk.classList.contains('in'))run();else{const mo=new MutationObserver(()=>{if(blk.classList.contains('in')){mo.disconnect();run()}});mo.observe(blk,{attributes:true,attributeFilter:['class']})}}),{threshold:.5});
   if(!reduce)document.querySelectorAll('[data-count]').forEach(el=>{show(el,0);sio.observe(el)});
 
-  /* ---------- 4-D flow lights up when seen ---------- */
-  const fio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('lit');fio.unobserve(e.target)}}),{threshold:.3});
-  document.querySelectorAll('.flow').forEach(f=>fio.observe(f));
-
   /* ---------- filters (news page) ---------- */
   document.querySelectorAll('[data-filter-for]').forEach(group=>{const box=document.getElementById(group.dataset.filterFor);
     const cnt=document.getElementById(group.dataset.count||''),empty=document.getElementById(group.dataset.empty||'');
@@ -244,7 +240,7 @@
     tabs.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',x===b));show(i)});show(0)});
 
   /* ---------- ARIA tabs: arrow keys, Home/End, roving tabindex ---------- */
-  document.querySelectorAll('[role="tablist"]').forEach(list=>{const tabs=[...list.querySelectorAll('[role="tab"]')];if(!tabs.length)return;
+  document.querySelectorAll('[role="tablist"]:not(.ap-rail)').forEach(list=>{const tabs=[...list.querySelectorAll('[role="tab"]')];if(!tabs.length)return;
     const sync=()=>tabs.forEach(t=>t.tabIndex=t.getAttribute('aria-selected')==='true'?0:-1);sync();list.addEventListener('click',()=>setTimeout(sync));
     list.addEventListener('keydown',e=>{const i=tabs.indexOf(document.activeElement);if(i<0)return;let j=null;
       if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')j=0;else if(e.key==='End')j=tabs.length-1;

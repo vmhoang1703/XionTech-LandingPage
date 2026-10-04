@@ -23,7 +23,8 @@ also has a Vietnamese version in the prototype.
 | Home, Our partners | — | New: placeholder logo strip that scrolls in a loop (pauses on hover, focus or tap); heading left-aligned | ENH-003, ENH-008 |
 | Home, Why XionTechs | — | New in Batch 1 (four tiles); rebuilt as a four-card bento: Products with app logos, Delivery with live clocks, Industries with a "+3" reveal, Outsourcing services; a small "Get IT Done" line | Batch 1, ENH-004 |
 | Home, Case studies | — | New (ENH-003); now "Work built with our partners.": a full-width slider of six placeholder partner cards (partner name, description, "View case study") with carousel dots | ENH-003, ENH-006 |
-| Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a layered diagram, a rail of five steps (Discovery to Deployment) that work as tabs, and a detail panel, on a blue gradient | Batch 1, ENH-009 |
+| Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a light row of five steps (Discovery to Deployment), one short line each, joined by a line, with "See how we work" to Services, on a blue gradient | Batch 1, ENH-009, ENH-012 |
+| Services, process | "Our 4-D process": four cards | "How we work.": the full five-step component (layered diagram, step tabs with the chosen step highlighted, detail panel) on a blue gradient; About and Contact say five steps | ENH-011 |
 | Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, AI Tutor, AI Timetable) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
@@ -112,7 +113,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
-Changes on this page: Batch 1, ENH-001 to ENH-010 (see the change list at the top).
+Changes on this page: Batch 1, ENH-001 to ENH-012 (see the change list at the top).
 
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -209,79 +210,20 @@ Changes on this page: Batch 1, ENH-001 to ENH-010 (see the change list at the to
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009] ─────────────────────────────────────────┐ ║
+║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009 · light version in ENH-012] ──────────────┐ ║
 ║ │ H2: How we approach.                                                                                 │ ║
-║ │ Text: Five clear steps take your idea from the first conversation to a product that keeps improving. │ ║
-║ │ [BUTTON: 01 · Discovery (tab)]                                                                       │ ║
-║ │ [BUTTON: 02 · Design (tab)]                                                                          │ ║
-║ │ [BUTTON: 03 · Development (tab)]                                                                     │ ║
-║ │ [BUTTON: 04 · QA & Improvement (tab)]                                                                │ ║
-║ │ [BUTTON: 05 · Deployment (tab)]                                                                      │ ║
-║ │ Text: Step 01 — · Discovery                                                                          │ ║
-║ │ H3: Learn your goals, users and scope                                                                │ ║
-║ │ Text: We begin by understanding your business context, audience, product goals and delivery          │ ║
-║ │   boundaries so the project starts with clarity.                                                     │ ║
-║ │ • Stakeholder alignment and kickoff workshops                                                        │ ║
-║ │ • User goals, pain points and workflow discovery                                                     │ ║
-║ │ • Scope definition, priorities and constraints                                                       │ ║
-║ │ • Initial roadmap and delivery planning                                                              │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A clear scope and delivery plan.                                                               │ ║
-║ │ • Clear project scope                                                                                │ ║
-║ │ • Priorities agreed                                                                                  │ ║
-║ │ • Delivery roadmap                                                                                   │ ║
-║ │ Text: Step 02 — · Design                                                                             │ ║
-║ │ H3: Shape flows, interfaces and architecture                                                         │ ║
-║ │ Text: We turn the discovery findings into user journeys, interface concepts and technical direction  │ ║
-║ │   so everyone can see how the product should work.                                                   │ ║
-║ │ • User flows and information architecture                                                            │ ║
-║ │ • Wireframes and UI exploration                                                                      │ ║
-║ │ • Clickable prototype creation                                                                       │ ║
-║ │ • Technical design and solution structure                                                            │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A clickable prototype and technical design.                                                    │ ║
-║ │ • Clickable prototype                                                                                │ ║
-║ │ • User flows                                                                                         │ ║
-║ │ • Technical direction                                                                                │ ║
-║ │ Text: Step 03 — · Development                                                                        │ ║
-║ │ H3: Build the product in agile sprints                                                               │ ║
-║ │ Text: We implement the solution in working increments, keeping progress visible through regular      │ ║
-║ │   updates, reviews and collaboration.                                                                │ ║
-║ │ • Frontend and backend implementation                                                                │ ║
-║ │ • Agile sprint planning and demos                                                                    │ ║
-║ │ • Continuous collaboration and feedback loops                                                        │ ║
-║ │ • Ongoing refinement during delivery                                                                 │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: Working software every sprint.                                                                 │ ║
-║ │ • Sprint builds                                                                                      │ ║
-║ │ • Regular demos                                                                                      │ ║
-║ │ • Visible progress                                                                                   │ ║
-║ │ Text: Step 04 — · QA & Improvement                                                                   │ ║
-║ │ H3: Test, refine and optimise before release                                                         │ ║
-║ │ Text: Before go-live, we strengthen quality through validation, issue fixing and improvement so the  │ ║
-║ │   release is more polished and reliable.                                                             │ ║
-║ │ • Functional testing and defect resolution                                                           │ ║
-║ │ • UX refinement and performance checks                                                               │ ║
-║ │ • Quality review against requirements                                                                │ ║
-║ │ • Final improvement pass before release                                                              │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A polished, launch-ready product.                                                              │ ║
-║ │ • Tested build                                                                                       │ ║
-║ │ • Resolved issues                                                                                    │ ║
-║ │ • Final refinements                                                                                  │ ║
-║ │ Text: Step 05 — · Deployment                                                                         │ ║
-║ │ H3: Release, monitor and keep improving                                                              │ ║
-║ │ Text: We launch the product, monitor how it performs and continue supporting improvements so the     │ ║
-║ │   solution keeps delivering value after release.                                                     │ ║
-║ │ • Deployment and release coordination                                                                │ ║
-║ │ • Production monitoring and support                                                                  │ ║
-║ │ • Post-launch review and iteration planning                                                          │ ║
-║ │ • Continuous enhancement and maintenance                                                             │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A live release with ongoing support.                                                           │ ║
-║ │ • Live production release                                                                            │ ║
-║ │ • Monitoring                                                                                         │ ║
-║ │ • Ongoing support                                                                                    │ ║
+║ │ Text: Five clear steps, from the first conversation to launch and beyond.                            │ ║
+║ │ [LINK: See how we work → services.html#process]                                                      │ ║
+║ │ H3: Discovery                                                                                        │ ║
+║ │ Text: Learn your goals, users and scope.                                                             │ ║
+║ │ H3: Design                                                                                           │ ║
+║ │ Text: Shape flows, interfaces and architecture.                                                      │ ║
+║ │ H3: Development                                                                                      │ ║
+║ │ Text: Build the product in agile sprints.                                                            │ ║
+║ │ H3: QA & Improvement                                                                                 │ ║
+║ │ Text: Test and refine before release.                                                                │ ║
+║ │ H3: Deployment                                                                                       │ ║
+║ │ Text: Release, monitor and keep improving.                                                           │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 6. What we build. · white · [Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009] ───────┐ ║
@@ -517,7 +459,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `services.html` · page title: "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D process); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ SERVICES PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -530,7 +472,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 ║ │ Text: Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across     │ ║
 ║ │   USA, Europe and Australia time zones.                                                              │ ║
 ║ │ [BUTTON: Start a project → demo.html#project]                                                        │ ║
-║ │ [BUTTON: See our 4-D process → #process]                                                             │ ║
+║ │ [BUTTON: See how we work → #process]                                                                 │ ║
 ║ │ Text: Ho Chi Minh City · GMT+7 · Plano · US Central                                                  │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
@@ -591,29 +533,79 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. Our 4-D process: from your request to launch. · navy, grid texture ──────────────────────────────┐ ║
-║ │ H2: Our 4-D process: from your request to launch.                                                    │ ║
+║ ┌─ 5. How we work. · blue gradient · [five steps in ENH-011 (full version)] ───────────────────────────┐ ║
+║ │ H2: How we work.                                                                                     │ ║
 ║ │ Text: Every step ends with something you can see, test and approve.                                  │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ • Your request · An idea, a  │ │ Text: 01                     │ │ Text: 02                       │ │ ║
-║ │ │   brief or a requirement.    │ │ H3: Discovery                │ │ H3: Design                     │ │ ║
-║ │ │                              │ │ Text: Workshops to           │ │ Text: User flows, interfaces   │ │ ║
-║ │ │                              │ │   understand your goals,     │ │   and architecture agreed      │ │ ║
-║ │ │                              │ │   users, risks and scope.    │ │   before code is written.      │ │ ║
-║ │ │                              │ │ Text: You receive · A clear  │ │ Text: You receive · A          │ │ ║
-║ │ │                              │ │   scope, estimate and        │ │   clickable prototype and      │ │ ║
-║ │ │                              │ │   delivery plan.             │ │   technical design.            │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ Text: 03                     │ │ Text: 04                     │ │ • Launch · And we keep growing │ │ ║
-║ │ │ H3: Development              │ │ H3: Deployment               │ │   it together.                 │ │ ║
-║ │ │ Text: Agile sprints with     │ │ Text: A safe release,        │ │                                │ │ ║
-║ │ │   regular demos, testing and │ │   monitoring and improvement │ │                                │ │ ║
-║ │ │   open progress updates.     │ │   after launch.              │ │                                │ │ ║
-║ │ │ Text: You receive · Working  │ │ Text: You receive · A live   │ │                                │ │ ║
-║ │ │   software every sprint.     │ │   release with ongoing       │ │                                │ │ ║
-║ │ │                              │ │   support.                   │ │                                │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ [BUTTON: 01 · Discovery (tab)]                                                                       │ ║
+║ │ [BUTTON: 02 · Design (tab)]                                                                          │ ║
+║ │ [BUTTON: 03 · Development (tab)]                                                                     │ ║
+║ │ [BUTTON: 04 · QA & Improvement (tab)]                                                                │ ║
+║ │ [BUTTON: 05 · Deployment (tab)]                                                                      │ ║
+║ │ Text: Step 01 — · Discovery                                                                          │ ║
+║ │ H3: Learn your goals, users and scope                                                                │ ║
+║ │ Text: We begin by understanding your business context, audience, product goals and delivery          │ ║
+║ │   boundaries so the project starts with clarity.                                                     │ ║
+║ │ • Stakeholder alignment and kickoff workshops                                                        │ ║
+║ │ • User goals, pain points and workflow discovery                                                     │ ║
+║ │ • Scope, risks, priorities and constraints                                                           │ ║
+║ │ • Initial roadmap and delivery planning                                                              │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A clear scope, estimate and delivery plan.                                                     │ ║
+║ │ • Clear project scope                                                                                │ ║
+║ │ • Priorities agreed                                                                                  │ ║
+║ │ • Delivery roadmap                                                                                   │ ║
+║ │ Text: Step 02 — · Design                                                                             │ ║
+║ │ H3: Shape flows, interfaces and architecture                                                         │ ║
+║ │ Text: We turn the discovery findings into user journeys, interface concepts and technical direction  │ ║
+║ │   so everyone can see how the product should work.                                                   │ ║
+║ │ • User flows and information architecture                                                            │ ║
+║ │ • Wireframes and UI exploration                                                                      │ ║
+║ │ • Clickable prototype creation                                                                       │ ║
+║ │ • Technical design and solution structure                                                            │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A clickable prototype and technical design.                                                    │ ║
+║ │ • Clickable prototype                                                                                │ ║
+║ │ • User flows                                                                                         │ ║
+║ │ • Technical direction                                                                                │ ║
+║ │ Text: Step 03 — · Development                                                                        │ ║
+║ │ H3: Build the product in agile sprints                                                               │ ║
+║ │ Text: We implement the solution in working increments, keeping progress visible through regular      │ ║
+║ │   updates, reviews and collaboration.                                                                │ ║
+║ │ • Frontend and backend implementation                                                                │ ║
+║ │ • Agile sprint planning and demos                                                                    │ ║
+║ │ • Continuous collaboration and feedback loops                                                        │ ║
+║ │ • Ongoing refinement during delivery                                                                 │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: Working software every sprint.                                                                 │ ║
+║ │ • Sprint builds                                                                                      │ ║
+║ │ • Regular demos                                                                                      │ ║
+║ │ • Visible progress                                                                                   │ ║
+║ │ Text: Step 04 — · QA & Improvement                                                                   │ ║
+║ │ H3: Test, refine and optimise before release                                                         │ ║
+║ │ Text: Before go-live, we strengthen quality through validation, issue fixing and improvement so the  │ ║
+║ │   release is more polished and reliable.                                                             │ ║
+║ │ • Functional testing and defect resolution                                                           │ ║
+║ │ • UX refinement and performance checks                                                               │ ║
+║ │ • Quality review against requirements                                                                │ ║
+║ │ • Final improvement pass before release                                                              │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A polished, launch-ready product.                                                              │ ║
+║ │ • Tested build                                                                                       │ ║
+║ │ • Resolved issues                                                                                    │ ║
+║ │ • Final refinements                                                                                  │ ║
+║ │ Text: Step 05 — · Deployment                                                                         │ ║
+║ │ H3: Release, monitor and keep improving                                                              │ ║
+║ │ Text: We launch the product, monitor how it performs and continue supporting improvements so the     │ ║
+║ │   solution keeps delivering value after release.                                                     │ ║
+║ │ • Deployment and release coordination                                                                │ ║
+║ │ • Production monitoring and support                                                                  │ ║
+║ │ • Post-launch review and iteration planning                                                          │ ║
+║ │ • Continuous enhancement and maintenance                                                             │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A live release with ongoing support.                                                           │ ║
+║ │ • Live production release                                                                            │ ║
+║ │ • Monitoring                                                                                         │ ║
+║ │ • Ongoing support                                                                                    │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 6. Industries we serve. · light blue ───────────────────────────────────────────────────────────────┐ ║
@@ -647,7 +639,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: Batch 1 (no label above "Our core values."); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -735,8 +727,8 @@ Changes on this page: Batch 1 (no label above "Our core values."); site-wide rul
 ║ │ A: Our teams in Ho Chi Minh City and Plano cover USA, Europe and Australia time zones, with shared   │ ║
 ║ │     tools for real-time updates.                                                                     │ ║
 ║ │ [FAQ, opens on click] Q: When do you shape the solution to our needs?                                │ ║
-║ │ A: From the start. Discovery, the first step of our 4-D process, sets your goals, users and scope    │ ║
-║ │     before design begins.                                                                            │ ║
+║ │ A: From the start. Discovery, the first of our five steps, sets your goals, users and scope before   │ ║
+║ │     design begins.                                                                                   │ ║
 ║ │ [FAQ, opens on click] Q: What results can we expect?                                                 │ ║
 ║ │ A: Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results  │ ║
 ║ │     that support your growth.                                                                        │ ║
@@ -1001,7 +993,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `demo.html` · page title: "Book a Demo or Start a Project | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-011 (checklist says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ CONTACT PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1017,7 +1009,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 ║ │ │   your school's scenarios.                    │ │ │ [FIELD: Full name (text, required)]        │ │ │ ║
 ║ │ │ • Answers on setup, data and support.         │ │ │ error: "Please enter your name."           │ │ │ ║
 ║ │ │ • For projects: a first Discovery             │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │   conversation in our 4-D process.            │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │   conversation, the first of our five steps.  │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ ┌───────────────────────────────────────────┐ │ │ │ [FIELD: Work email (email, required)]      │ │ │ ║
 ║ │ │ │ Text: Plano, Texas, USA                   │ │ │ │ error: "Please enter a valid email         │ │ │ ║
 ║ │ │ │ Text: 7950 Legacy Drive, Suite 400        │ │ │ │     address."                              │ │ │ ║

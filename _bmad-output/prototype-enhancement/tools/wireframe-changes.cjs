@@ -16,7 +16,8 @@ module.exports = {
     "index.html#partners-h": "new in ENH-003 · left-aligned in ENH-008",
     "index.html#why-h": "new in Batch 1 · rebuilt in ENH-004",
     "index.html#cases-h": "new in ENH-003 · slider in ENH-006",
-    "index.html#approach-h": "rebuilt in ENH-009",
+    "index.html#approach-h": "rebuilt in ENH-009 · light version in ENH-012",
+    "services.html#process-h": "five steps in ENH-011 (full version)",
     "index.html#prod-h": "Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009",
     "index.html#news-h": "ENH-007",
     "index.html#contact-h": "new in ENH-001 · ENH-010",
@@ -24,15 +25,15 @@ module.exports = {
 
   // one line under each page title
   pages: {
-    "index.html": "Batch 1, ENH-001 to ENH-010 (see the change list at the top).",
+    "index.html": "Batch 1, ENH-001 to ENH-012 (see the change list at the top).",
     "products.html": SITE_WIDE,
-    "services.html": SITE_WIDE,
-    "about.html": 'Batch 1 (no label above "Our core values."); ' + SITE_WIDE,
+    "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); " + SITE_WIDE,
+    "about.html": 'Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ' + SITE_WIDE,
     "news.html": "ENH-007 (a story about an app shows the app name in its pill); " + SITE_WIDE,
     "news-story.html": SITE_WIDE,
     "careers.html": SITE_WIDE,
     "job.html": SITE_WIDE,
-    "demo.html": SITE_WIDE,
+    "demo.html": "ENH-011 (checklist says five steps); " + SITE_WIDE,
     "privacy.html": SITE_WIDE,
     "404.html": "Batch 1 (no label above the heading); " + SITE_WIDE,
   },
@@ -51,7 +52,8 @@ module.exports = {
 | Home, Our partners | — | New: placeholder logo strip that scrolls in a loop (pauses on hover, focus or tap); heading left-aligned | ENH-003, ENH-008 |
 | Home, Why XionTechs | — | New in Batch 1 (four tiles); rebuilt as a four-card bento: Products with app logos, Delivery with live clocks, Industries with a "+3" reveal, Outsourcing services; a small "Get IT Done" line | Batch 1, ENH-004 |
 | Home, Case studies | — | New (ENH-003); now "Work built with our partners.": a full-width slider of six placeholder partner cards (partner name, description, "View case study") with carousel dots | ENH-003, ENH-006 |
-| Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a layered diagram, a rail of five steps (Discovery to Deployment) that work as tabs, and a detail panel, on a blue gradient | Batch 1, ENH-009 |
+| Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a light row of five steps (Discovery to Deployment), one short line each, joined by a line, with "See how we work" to Services, on a blue gradient | Batch 1, ENH-009, ENH-012 |
+| Services, process | "Our 4-D process": four cards | "How we work.": the full five-step component (layered diagram, step tabs with the chosen step highlighted, detail panel) on a blue gradient; About and Contact say five steps | ENH-011 |
 | Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, AI Tutor, AI Timetable) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |

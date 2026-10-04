@@ -230,35 +230,6 @@ header.nav{position:sticky;top:0;z-index:50;background:rgb(247 249 253 / .9);bac
 .svc.navy{background:linear-gradient(150deg,var(--navy),var(--ink));border:0;--heading:var(--white);--muted:var(--on-navy-muted);--surface-2:rgb(255 255 255 / .1)}
 .svc.navy .ic{color:var(--amber-tint)}
 
-/* ---------- 4-D process (illustrated flow; one authored moment: the track fills, steps enter in turn) ---------- */
-.flow{list-style:none;position:relative;display:grid;grid-template-columns:auto repeat(4,1fr) auto;gap:18px;align-items:stretch}
-.flow .track{position:absolute;left:0;right:0;top:64px;height:3px;border-top:3px dashed var(--border);z-index:0}
-.flow .track i{position:absolute;left:0;right:0;top:-3px;height:3px;background:linear-gradient(90deg,var(--amber-tint),var(--amber));transform-origin:left;transform:scaleX(0);transition:transform 2.4s var(--ease);border-radius:3px}
-.flow.lit .track i{transform:scaleX(1)}
-.flow .track b{position:absolute;top:-8px;left:0;width:13px;height:13px;border-radius:50%;background:var(--amber);opacity:0}
-.flow.lit .track b{opacity:1;animation:travel 2.5s 2.4s var(--ease) 1 forwards}
-@keyframes travel{from{left:0}to{left:calc(100% - 13px)}}
-.node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;width:120px}
-.node .dot{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;font-size:2.2rem;background:var(--surface);border:1.5px dashed var(--border);color:var(--heading)}
-.node b{font-family:var(--f-display);font-weight:600;font-size:var(--fs-small);color:var(--heading)}
-.node small{color:var(--muted);font-size:var(--fs-caption);line-height:1.4}
-.node.end .dot{background:linear-gradient(135deg,var(--amber-light),var(--amber));border:0;color:var(--navy)}
-.step4{position:relative;z-index:1;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border);padding:0 22px 24px;display:flex;flex-direction:column;
-  opacity:.35;transform:translateY(18px);transition:opacity .7s var(--ease) var(--d),transform .7s var(--ease) var(--d),box-shadow .7s}
-.flow.lit .step4{opacity:1;transform:none}
-.step4 .art{position:relative;height:128px;margin:0 -22px 18px;border-radius:var(--r-lg) var(--r-lg) 0 0;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--mist),var(--white))}
-.s-navy .step4 .art{background:linear-gradient(160deg,rgb(255 255 255 / .1),rgb(255 255 255 / .02))}
-.step4 .art .main{width:62px;height:62px;border-radius:var(--r-md);display:grid;place-items:center;font-size:1.8rem;background:var(--navy);color:var(--amber-tint);box-shadow:0 16px 30px -12px rgb(11 23 48 / .6)}
-.step4 .art .orb{position:absolute;width:34px;height:34px;border-radius:var(--r-xs);display:grid;place-items:center;font-size:var(--fs-body);background:var(--white);color:var(--navy);box-shadow:0 8px 20px -8px rgb(11 23 48 / .4);animation:bob 2.5s ease-in-out 1}
-.step4 .art .o1{left:18%;top:22%}.step4 .art .o2{right:16%;top:30%;animation-delay:1.2s}.step4 .art .o3{left:28%;bottom:14%;animation-delay:2.4s;background:var(--amber)}
-@keyframes bob{50%{transform:translateY(-7px)}}
-.step4 .num{font-family:var(--f-mono);font-size:var(--fs-caption);font-weight:500;color:var(--amber-text);letter-spacing:.08em}
-.s-navy .step4 .num{color:var(--amber-tint)}
-.step4 h3{font-family:var(--f-display);font-weight:600;font-size:var(--fs-title-md);margin:4px 0 8px}
-.step4 p{color:var(--muted);font-size:var(--fs-small)}
-.step4 .get{margin-top:auto;padding-top:16px;border-top:1px dashed var(--border);font-size:var(--fs-small);color:var(--text)}
-.step4 .get b{display:block;font-family:var(--f-brand);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:500}
-
 /* industries */
 .industries{display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px}
 .ind{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--r-full);border:1px solid var(--border);font-weight:600;font-size:var(--fs-small);color:var(--heading);background:var(--glass)}
@@ -478,8 +449,6 @@ body[data-page="products"] [id]{scroll-margin-top:144px}
   .menu{display:none}.burger{display:grid}
   .tools{margin-left:auto}
   .menu.mobile-open{display:flex;flex-direction:column;align-items:stretch;position:absolute;top:72px;left:0;right:0;background:var(--paper);padding:16px 24px 24px;border-bottom:1px solid rgb(22 54 99 / .1);max-height:calc(100dvh - 72px);overflow:auto}
-  .flow{grid-template-columns:1fr 1fr}
-  .flow .track,.node{display:none}
   .stats{grid-template-columns:repeat(3,1fr);row-gap:28px}
   .stat:nth-child(4){border-left:0;padding-left:0}
   .svc-grid{grid-template-columns:repeat(2,1fr)}
@@ -497,7 +466,7 @@ body[data-page="products"] [id]{scroll-margin-top:144px}
 @media (max-width:640px){
   .wrap{padding:0 16px}.home-grid{padding:28px 16px 10px}
   .sec{padding:48px 0}.page-hero{padding:64px 0 72px}
-  .values,.news-grid,.svc-grid,.flow,.fgrid2,.feature-list,.feature-list.cols-4{grid-template-columns:1fr}
+  .values,.news-grid,.svc-grid,.fgrid2,.feature-list,.feature-list.cols-4{grid-template-columns:1fr}
   .svc.feature{grid-column:auto}
   .stats{grid-template-columns:1fr 1fr}
   .stat{border-left:0;padding-left:0}
@@ -516,12 +485,9 @@ body[data-page="products"] [id]{scroll-margin-top:144px}
 /* ---------- reduced motion: no movement, but state changes still show (short fades) ---------- */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .tablet,.phone,.step4 .art .orb,.flow.lit .track b,.aurora{animation:none}
+  .tablet,.phone,.aurora{animation:none}
   .hl::after{animation:none}
   .reveal,.reveal.in{transform:none;transition:opacity .25s linear}
-  .step4,.flow.lit .step4{opacity:1;transform:none;transition:none}
-  .flow .track i{transform:scaleX(1);transition:none}
-  .flow .track b{display:none}
   .lang-btn i{transition:none}
   .btn:hover,.btn:active,.spot:hover,.role:hover,.link-arrow:hover i{transform:none}
   .toast{transform:none;transition:opacity .15s linear,visibility .15s}
@@ -765,14 +731,18 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
   .sec-head-row .rail-nav{align-self:flex-end}
 }
 
-/* ---------- Home: How we approach (ENH-009), styled after Amber's reference ---------- */
+/* ---------- Services: How we work, the full five-step component (ENH-009, ENH-011); the blue gradient is shared with Home ---------- */
 .approach{--ap-blue-1:#13245a;--ap-blue-2:#445fca;--ap-blue-3:#69b8ea;--ap-panel-1:#08113a;--ap-panel-2:#10205c;--ap-amber:#f2b548;--ap-amber-ring:#ffd98f;--ap-dot:#deeff8;
   background:radial-gradient(circle at 85% 8%,rgb(242 181 72 / .15),transparent 18%),linear-gradient(135deg,var(--ap-blue-1) 0%,var(--ap-blue-2) 48%,var(--ap-blue-3) 100%);--muted:rgb(255 255 255 / .78)}
 .ap-shell{display:grid;grid-template-columns:.7fr .6fr 1.35fr;gap:24px;align-items:center}
 .ap-visual img{display:block;width:100%;max-width:300px;height:auto;margin:0 auto;filter:drop-shadow(0 22px 30px rgb(0 0 0 / .18))}
 .ap-rail{position:relative;padding-left:34px;display:grid}
 .ap-rail::before{content:"";position:absolute;left:9px;top:25px;bottom:25px;width:2px;background:rgb(255 255 255 / .24)}
-.ap-step{position:relative;display:flex;align-items:center;gap:10px;min-height:var(--target);padding:10px 0;text-align:left;color:var(--white)}
+.ap-step{position:relative;display:flex;align-items:center;gap:10px;min-height:var(--target);padding:10px 14px;margin:2px 0;border-radius:var(--r-md);text-align:left;color:var(--white);transition:background .25s}
+.ap-step[aria-selected="true"]{background:rgb(255 255 255 / .14);box-shadow:inset 0 0 0 1px rgb(255 255 255 / .18)}
+.ap-step[aria-selected="true"] .ap-name{font-weight:600}
+@media (hover:hover){.ap-step:hover:not([aria-selected="true"]){background:rgb(255 255 255 / .06)}}
+@media (max-width:1240px){.ap-name{white-space:normal}}
 .ap-dot{position:absolute;left:-34px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:2px solid var(--ap-dot);background:transparent;transition:background .25s,border-color .25s,box-shadow .25s}
 .ap-num{min-width:36px;font-size:var(--fs-label);letter-spacing:.14em;color:var(--white)}
 .ap-name{font-family:var(--f-body);font-weight:500;font-size:clamp(1.05rem,1.3vw,1.2rem);line-height:1.08;letter-spacing:-.02em;color:var(--white);white-space:nowrap;transition:color .25s}
@@ -807,4 +777,33 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 }
 @media (prefers-reduced-motion:reduce){
   .js-anim .ap-panel:not([hidden]){animation:none}
+}
+
+/* ---------- Home: How we approach, light version (ENH-012); the full component is on Services ---------- */
+.approach-lite{background:radial-gradient(circle at 85% 8%,rgb(242 181 72 / .15),transparent 18%),linear-gradient(135deg,var(--ap-blue-1) 0%,#2c45a8 55%,var(--ap-blue-2) 100%)}
+.approach-lite .sec-head-row>.link-arrow{color:var(--white)}
+.steps-lite{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin-top:8px}
+.steps-lite li{position:relative;display:grid;gap:8px;align-content:start}
+.steps-lite li:not(:last-child)::after{content:"";position:absolute;top:21px;left:calc(var(--target) + 8px);right:-16px;height:2px;background:rgb(255 255 255 / .45);transform-origin:left}
+.sl-num{position:relative;z-index:1;width:var(--target);height:var(--target);border-radius:50%;display:grid;place-items:center;background:var(--ap-panel-1);border:2px solid var(--ap-amber);color:var(--white);font-family:var(--f-mono);font-size:var(--fs-caption);font-weight:500;margin-bottom:6px}
+.steps-lite h3{font-family:var(--f-body);font-weight:600;font-size:var(--fs-lead);color:var(--white);letter-spacing:-.01em}
+.steps-lite p{color:var(--white);font-size:var(--fs-small);max-width:24ch}
+.js-anim .steps-lite.reveal li{opacity:0;transform:translateY(12px)}
+.js-anim .steps-lite.reveal li:not(:last-child)::after{transform:scaleX(0);transition:transform .45s var(--ease)}
+.steps-lite.in li{animation:wUp .5s var(--ease) both}
+.js-anim .steps-lite.in li:not(:last-child)::after{transform:none}
+.steps-lite.in li:nth-child(2){animation-delay:.3s}.steps-lite.in li:nth-child(3){animation-delay:.6s}.steps-lite.in li:nth-child(4){animation-delay:.9s}.steps-lite.in li:nth-child(5){animation-delay:1.2s}
+.js-anim .steps-lite.in li:nth-child(1)::after{transition-delay:.15s}.js-anim .steps-lite.in li:nth-child(2)::after{transition-delay:.45s}.js-anim .steps-lite.in li:nth-child(3)::after{transition-delay:.75s}.js-anim .steps-lite.in li:nth-child(4)::after{transition-delay:1.05s}
+@media (max-width:900px){
+  .steps-lite{grid-template-columns:1fr;gap:18px}
+  .steps-lite li{grid-template-columns:var(--target) 1fr;column-gap:16px;row-gap:2px}
+  .steps-lite li:not(:last-child)::after{top:calc(var(--target) + 4px);bottom:-14px;left:21px;right:auto;width:2px;height:auto;transform-origin:top}
+  .js-anim .steps-lite.reveal li:not(:last-child)::after{transform:scaleY(0)}
+  .js-anim .steps-lite.in li:not(:last-child)::after{transform:none}
+  .sl-num{grid-row:span 2;margin:0}
+  .steps-lite p{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .js-anim .steps-lite.reveal li,.steps-lite.in li{opacity:1;transform:none;animation:none}
+  .js-anim .steps-lite.reveal li:not(:last-child)::after{transform:none;transition:none}
 }
