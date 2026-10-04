@@ -15,6 +15,8 @@ import { describeError, readBody } from "@/lib/http/route-helpers";
 export const maxDuration = 30;
 
 const SEND_FAILED = { error: "send" } as const;
+// The SDK retries a failed delete with backoff; stop it well inside maxDuration.
+const DELETE_TIMEOUT_MS = 3000;
 const CV_FAILED = { errors: { cv: JOB_ERRORS.cv } } as const;
 
 interface Config {
@@ -87,7 +89,10 @@ async function discardCv(body: unknown): Promise<void> {
     return;
   }
   try {
-    await del(cv, { storeId });
+    await del(cv, {
+      storeId,
+      abortSignal: AbortSignal.timeout(DELETE_TIMEOUT_MS),
+    });
   } catch (error) {
     logFailed("CV delete", error);
   }

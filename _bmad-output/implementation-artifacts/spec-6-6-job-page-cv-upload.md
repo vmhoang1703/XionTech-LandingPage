@@ -198,7 +198,7 @@ Captured at the end of step-03 on 2026-10-04 re-captured after the review patch,
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- "All matched files use Prettier code style!"
 - `npm test` -- exit 0 -- "Test Files 57 passed (57)", "Tests 947 passed (947)"
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (260 lines, 0 missing), "C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop."
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (278 lines, 0 missing), "C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop."
 
 **Observed**
 
