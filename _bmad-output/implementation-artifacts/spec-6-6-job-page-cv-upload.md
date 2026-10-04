@@ -120,7 +120,7 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 | --- | --- | --- | --- | --- | --- | --- |
 | Hero | page load | — | amber hero, crumbs Home / Careers / job title (current not a link), H1 job title, chips team, location, work type | ribbon 5s, then still | CAP-1, DESIGN.md 444 | partly: Chrome 1280 (prod build): crumbs Home / Careers / title (current not a link), H1, chip (`walk-output.txt`); amber gradient seen in `job-1280.png`; ribbon timing not checked |
 | Hero chips | a part is empty | — | that chip is not shown | — | CAP-1, I/O "Missing meta part" (6.5) | ✅ Chrome: the sample role has only a team, so only the Engineering chip shows |
-| Details | page load | — | paper surface; "About the role" paragraphs; "What you'll do" and "What you bring" check lists | — | CAP-1 | partly: paper surface ✅; the sample role has no description or lists yet, so the paragraphs and lists are shown by unit tests only (`job.test.tsx`); walk again after the lead fills them |
+| Details | page load | — | paper surface; "About the role" paragraphs; "What you'll do" and "What you bring" check lists | — | CAP-1 | ✅ dev site 2026-10-04 on the real role: About the role (1 paragraph), What you'll do (3), What you bring (5) (`walk-dev-output.txt`, `job-dev-1280.png`); paper surface on the production build |
 | Details | a list is empty | — | its heading is not shown | — | CAP-1, content rule (no invented content) | ✅ Chrome: no list headings for the empty sample role |
 | "All open roles" | click / Enter | mouse, keyboard | arrow-left link goes to `/careers#roles` | — | CAP-1 | partly: Chrome: href `/careers#roles`, click lands `/careers#roles`, focus ring 2px; Enter not pressed |
 | Layout | width above 900px / 900px or less | — | form card beside details / below details | — | CAP-1, EXPERIENCE.md Responsive | fail: at exactly 900px the form is still beside the details (shared `.split` switches below 900px; deferred in `deferred-work.md`). Beside at 1280, below at 899, 640 and 390; no sideways scroll at 390 after the file-input fix |
@@ -130,7 +130,7 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 | CV field | choose a valid PDF after an error | mouse, touch | error and red border gone | on change | CAP-2 | ✅ Chrome: error and red border gone |
 | Submit | empty name, bad email, no CV, note over 2,000 | mouse, keyboard | each field's error text, `aria-invalid`, `aria-describedby`; errors announced; focus on the first invalid field | — | CAP-2, AC-A11Y-5 | ✅ Chrome: four errors, `aria-invalid` and `aria-describedby` on each, focus on Full name |
 | Submit | sending | mouse, keyboard | button disabled, reads "Sending..." | until done | CAP-3 | ✅ Chrome: disabled, "Sending..." |
-| Submit | success | — | form replaced by "Thank you!" and "We've received your application and will be in touch if it's a match." in a `role="status"` panel with focus | — | CAP-3 | unit test (`job-application-form.test.tsx`); real send after merge on the dev site (lead) |
+| Submit | success | — | form replaced by "Thank you!" and "We've received your application and will be in touch if it's a match." in a `role="status"` panel with focus | — | CAP-3 | ✅ dev site 2026-10-04: real upload and apply (200, 200), success panel shown; the lead received the mail with the CV attached (`walk-dev-output.txt`); focus by unit test |
 | Submit | upload or send fails | — | error with retry above the button; every value and the chosen CV kept | — | CAP-3 | ✅ Chrome: upload failure (token route 500) shows the send error above the button, focus on the submit button (as in Story 2.2); values and the CV kept; apply-route 502 by unit test |
 | Submit | rate limited | — | rate message above the button; values kept | — | CAP-4 | ✅ Chrome: upload limit used up (token route 200, no presigned URL, real Blob SDK) shows the rate message, values kept; apply-route 429 by unit test |
 | Consent | page load | — | "We only use your details and CV to consider your application." then "Privacy policy" → `/privacy` | — | CAP-5 | ✅ Chrome: exact text, link `/privacy` |
@@ -201,7 +201,7 @@ Follow-up review on 2026-10-04 of the A10 part 4 change (`4a13c32..f5e5b89`, 224
 - `npm run build && npm run test:smoke` -- passed 2026-10-04 in this worktree after it got its own `node_modules` (smoke 10 passed, incl. the 404 and the apply honeypot; `smoke-output.txt`).
 
 **Manual checks:**
-- Browser walk of `/careers/placeholder-sample-job` at 1280, 900, 899, 640 and 390px plus reduced motion -- done 2026-10-04 on the production build (`walk.mjs`, `walk-output.txt`, `job-1280.png`, `job-form-*.png`). A real upload and mail -- after merge on the dev site (lead).
+- Browser walk of `/careers/placeholder-sample-job` at 1280, 900, 899, 640 and 390px plus reduced motion -- done 2026-10-04 on the production build (`walk.mjs`, `walk-output.txt`, `job-1280.png`, `job-form-*.png`). A real upload and mail -- done 2026-10-04 on the dev site after merge (`walk-dev-output.txt`; the lead confirmed the mail and its CV).
 
 ## Acceptance Evidence
 
@@ -226,4 +226,4 @@ Captured at the end of step-03 on 2026-10-04 re-captured after the review patch,
 **Not captured**
 
 - `npm run build && npm run test:smoke` -- passed 2026-10-04 in this worktree (smoke 10 passed).
-- Browser walk of every UX checks row -- done 2026-10-04 (see the UX checks table). A real upload to the private store and a real mail -- after merge on the dev site (lead).
+- Browser walk of every UX checks row -- done 2026-10-04 (see the UX checks table). A real upload to the private store and a real mail -- done 2026-10-04 on the dev site (`walk-dev-output.txt`).
