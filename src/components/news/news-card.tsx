@@ -8,12 +8,16 @@ import {
 } from "@/lib/news/latest-posts";
 
 // Server Component. A static card: the frame is decorative (no image field yet)
-// and "Read story" is the only link (CAP-1).
-export function NewsCard({ post }: Readonly<{ post: LatestPost }>) {
+// and "Read story" is the only link (CAP-1). `feature` makes the wide first card
+// of the News page (Story 6.1).
+export function NewsCard({
+  post,
+  feature = false,
+}: Readonly<{ post: LatestPost; feature?: boolean }>) {
   const tag = categoryTag(post);
 
   return (
-    <article className="spot ncard">
+    <article className={feature ? "spot ncard big" : "spot ncard"}>
       <div className="frame home-media" aria-hidden="true" />
       <div className="meta">
         <time dateTime={post.publishedAt}>{newsDate(post.publishedAt)}</time>
