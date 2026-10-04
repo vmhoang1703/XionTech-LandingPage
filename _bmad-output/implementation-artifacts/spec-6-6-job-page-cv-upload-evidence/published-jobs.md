@@ -1,6 +1,6 @@
 # Published job openings (Sanity, dataset `production`)
 
-Published 2026-10-04 after the lead confirmed in chat that XionTech is hiring this role now ("Publish as open, I confirm"). The text is copied word for word from XionTech's own posting, <https://xiontechs.com/job/fresh-full-stack-developer-202505/> (that page says "Offer ended on 30.06.2025"; the lead re-opened the role). Nothing was added. The posting's benefits are not published: the `job` schema has no benefits field.
+Published 2026-10-04 after the lead, Hoang Vu, confirmed in chat that XionTech is hiring this role now ("Publish as open, I confirm"). The text comes from XionTech's own posting, <https://xiontechs.com/job/fresh-full-stack-developer-202505/> (that page says "Offer ended on 30.06.2025"; the lead re-opened the role). The title, About paragraph, duties, requirements and "Full-time" are word for word; only the curly apostrophe in "Bachelor's" was straightened and the bold was dropped. Two fields are the lead's choice, not the posting's: the team "Engineering" and the location shortened to the city. The 2025 requirements were not changed; whether they are still current is the lead's call. The posting's benefits ("Why XionTech?") and its hiring process are not published: the `job` schema has no fields for them.
 
 ## `job-fresh-full-stack-developer`
 

@@ -4,4 +4,4 @@
 [dev 1280] closed sample /careers/placeholder-sample-job -> 404
 [dev 1280] /careers role links: /careers/fresh-full-stack-developer "Fresh Full Stack DeveloperEngineering · Ho Chi Minh City · Full-timeView and apply"
 [dev] test application 2026-10-04: POST /api/careers/cv-upload 200, POST /api/careers/apply 200, success panel "Thank you! We've received your application and will be in touch if it's a match." (name "[Test] Claude walk", email test@example.com, 623-byte test PDF)
-[dev] the lead confirmed the application mail arrived in the careers inbox with the CV attached
+[hand, lead] the lead confirmed the application mail arrived in the careers inbox with the CV attached
