@@ -16,9 +16,8 @@ export function summarize({ post, job, probeId, probeCount }) {
       lines.push(`${kind}: ${doc._id} ${doc.title ?? "(no English title)"}`);
     } else {
       ok = false;
-      lines.push(
-        `FAIL: no ${kind} found — publish a [Placeholder] ${kind} in the Studio`,
-      );
+      const hint = kind === "job" ? "a [Placeholder] job" : "a real post";
+      lines.push(`FAIL: no ${kind} found — publish ${hint} in the Studio`);
     }
   }
 
@@ -48,12 +47,12 @@ async function main() {
     return 1;
   }
 
-  // Same settings as src/lib/sanity/client.ts: CDN, published perspective, no token.
+  // Same settings as src/lib/sanity/client.ts: no CDN, published perspective, no token.
   const client = createClient({
     projectId,
     dataset,
     apiVersion: API_VERSION,
-    useCdn: true,
+    useCdn: false,
     perspective: "published",
   });
   // The published perspective hides drafts, so the probe uses the raw perspective.

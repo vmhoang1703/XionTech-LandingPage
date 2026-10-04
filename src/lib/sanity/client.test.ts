@@ -20,7 +20,7 @@ describe("sanityFetch", () => {
     vi.stubEnv("NEXT_PUBLIC_SANITY_DATASET", "production");
   });
 
-  it("creates a CDN client with the published perspective and no token", async () => {
+  it("creates a client with no CDN, the published perspective and no token", async () => {
     const { sanityFetch } = await import("./client");
     fetchMock.mockResolvedValue([]);
 
@@ -34,7 +34,7 @@ describe("sanityFetch", () => {
       projectId: "abc123",
       dataset: "production",
       apiVersion: "2025-02-19",
-      useCdn: true,
+      useCdn: false,
       perspective: "published",
     });
     expect(config).not.toHaveProperty("token");

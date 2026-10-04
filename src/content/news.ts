@@ -2,8 +2,6 @@
 
 export const homeNews = {
   heading: "Latest from XionTech.",
-  sampleNote:
-    "[Placeholder] Sample stories. Replace with real news before launch.",
   seeAll: { href: "/news", label: "See all news" },
   readStory: "Read story",
 };

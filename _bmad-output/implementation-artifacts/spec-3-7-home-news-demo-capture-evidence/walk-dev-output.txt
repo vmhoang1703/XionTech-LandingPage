@@ -1,0 +1,12 @@
+[1280] section order: home-hero-title > doors > apps-title > services-title > process-title > news-h > cap-h
+[1280] news: class "sec surface-mist" | bg linear-gradient(rgb(238, 242, 249), rgb(244, 247, 252)) | rgba(0, 0, 0 | H2 "Latest from XionTech."
+[1280] sample note: "[Placeholder] Sample stories. Replace with real news before launch." | cards 3 | grid columns 3
+[1280] card radius 24px | frame ratio 1.60 | meta "4 OCT 2026 PRODUCT · PXP" | tag 1
+[1280] Read story: href /news/pxp-the-school-day-in-a-parents-pocket | name "Read story PXP: the school day, in a parent's pocket"
+[1280] hover Read story: card y 4169 -> 43 (no lift) | arrow x 156 -> 160 | card shadow none
+[1280] Tab x25 reaches Read story true | :focus-visible true | outline solid | 2px
+[1280] click Read story lands /news/pxp-the-school-day-in-a-parents-pocket | h1 "We couldn't find that page."
+[1280] See all news: href /news
+[900] news grid columns 2 | no sideways scroll true
+[640] news grid columns 1 | no sideways scroll true
+[390] news grid columns 1 | no sideways scroll true

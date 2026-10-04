@@ -30,7 +30,7 @@ describe("HomeNews", () => {
     vi.mocked(getLatestPosts).mockReset();
   });
 
-  it("shows three cards, the sample note and the links", async () => {
+  it("shows three cards and the links, with no sample note (the posts are real)", async () => {
     const { container } = await renderNews([1, 2, 3].map(makePost));
 
     const section = container.querySelector("section");
@@ -39,7 +39,7 @@ describe("HomeNews", () => {
     expect(
       screen.getByRole("heading", { level: 2, name: "Latest from XionTech." }),
     ).toBeTruthy();
-    expect(screen.getByText(/^\[Placeholder\]/)).toBeTruthy();
+    expect(screen.queryByText(/\[Placeholder\]|sample/i)).toBeNull();
     expect(container.querySelectorAll("article")).toHaveLength(3);
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
@@ -50,10 +50,9 @@ describe("HomeNews", () => {
     const { container } = await renderNews([makePost(1)]);
 
     expect(container.querySelectorAll("article")).toHaveLength(1);
-    expect(screen.getByText(/^\[Placeholder\]/)).toBeTruthy();
   });
 
-  it("hides the grid and the note with no stories but keeps the heading and link", async () => {
+  it("hides the grid with no stories but keeps the heading and link", async () => {
     const { container } = await renderNews([]);
 
     expect(container.querySelector(".news-grid")).toBeNull();

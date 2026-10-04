@@ -39,7 +39,7 @@ describe("summarize", () => {
     const result = summarize({ post: null, job, probeId, probeCount: 0 });
     expect(result.ok).toBe(false);
     expect(result.lines.join("\n")).toContain(
-      "no post found — publish a [Placeholder] post in the Studio",
+      "no post found — publish a real post in the Studio",
     );
   });
 

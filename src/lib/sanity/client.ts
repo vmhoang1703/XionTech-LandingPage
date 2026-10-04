@@ -4,9 +4,12 @@ import { createClient } from "@sanity/client";
 
 import { getSanityConfig } from "./config";
 
+// No CDN: the webhook refreshes pages right after a publish, and the CDN can
+// still answer with the old data then, which would be cached again. Next.js
+// caches every result (force-cache plus tags), so Sanity sees few requests.
 const client = createClient({
   ...getSanityConfig(),
-  useCdn: true,
+  useCdn: false,
   perspective: "published",
 });
 
