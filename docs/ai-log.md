@@ -842,3 +842,20 @@ Template:
   hover is exactly the word. Its first Why XionTechs illustrations were too busy and were removed. A
   cleanup regex clipped one CSS rule (caught by comparing every selector with the last commit), and the
   wireframe generator skipped the logo strip because its class contained "track".
+
+## 2026-10-04 — Two wireframe files: the original and the final with tracked changes
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Edge Case Hunter)
+- **Prompt / task:** Keep one wireframe of the original first draft and one of the final prototype that tracks
+  every change. `wireframes-original.md` is built once from the first draft on `develop` (commit ae606f7,
+  `mockups/site-v3`); `wireframes-final.md` has a change list at the top and every Home section tagged with the
+  entry that shaped it (Batch 1, ENH-001 to ENH-005). The generator and the change tags live in
+  `_bmad-output/prototype-enhancement/tools/`, and regenerating the final file is now a step after each approval.
+- **Decision / result:** Approved by Amber. The review found real problems in the generator, fixed before commit:
+  the "Years" unit was missing from the stats, original mode could silently rebuild from the current prototype,
+  a run date changed the files on every run, a PowerShell redirect would garble the box characters (now `--out`
+  writes UTF-8), missing pages or elements crashed it, one line-wrapping case could loop forever, and a block's
+  own text was dropped when it also held links (the office addresses were missing).
+- **AI got it wrong?** Yes: the first final file gave the Products hero the Home hero's tag (both headings have
+  the id "h1"), and tagged the 4-D section "unchanged" although Batch 1 changed its heading. Tags are now keyed
+  by page and heading.

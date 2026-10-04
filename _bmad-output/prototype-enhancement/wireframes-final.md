@@ -1,12 +1,32 @@
-# Prototype wireframes
+# Prototype wireframes: final
 
-Owner: Amber Do. Generated on 2026-10-04 from `prototype/` on branch `docs/prototype-enhancement`
-(batch 1 plus the approved enhancements in `enhancement-log.md`).
+Owner: Amber Do. The prototype as it is now (`prototype/` on `docs/prototype-enhancement`).
+Each section title ends, in brackets, with the change that shaped it; `enhancement-log.md` has the details of every
+entry. Site-wide rows (every page) apply to every section too, so "content unchanged" means the section's content did not
+change. The first draft is `wireframes-original.md`. Regenerated whenever an enhancement is approved.
 
 Each page is one frame (double line), drawn top to bottom as it appears on a desktop screen. Inside it, each section is a
 block (single line); columns and cards that sit side by side on screen sit side by side here (at most three per row; grids
 with more columns continue on the next row). On phones every block stacks into one column. English text only; every string
 also has a Vietnamese version in the prototype.
+
+## Changes since the original
+
+| Where                | Original (first draft)                                                                 | Now                                                                                                                                                                                            | Entry            |
+| -------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| Header, every page   | Menu in the middle, Book a demo button, EN/VI toggle, Products and Services mega menus | Menu on the right, no Book a demo button, EN/VI dropdown last                                                                                                                                  | Batch 1          |
+| Header, every page   | Products mega menu; mist pill on hover; "Menu" text button on small screens            | Products is a plain link (Services already was); amber underline under the word on hover; hamburger icon before the language dropdown; no header border                                        | ENH-002          |
+| Every page           | Small labels above headings; some text under 11.5px; some controls under 44px          | No labels above headings; text at least 11.5px; controls at least 44px; one tokenised stylesheet                                                                                               | Batch 1          |
+| Every page           | 112px around sections; content revealed on its own                                     | 80px around sections (56px on phones); each section's heading appears first, then its content                                                                                                  | ENH-004          |
+| Home, hero           | Underlined "connected"; five stats; silk on the right only                             | Amber "connected"; no button glow; two stats ("25+ Years", "8") that count up from 0; silk across the hero, quieter on the left, fading out before the stats; bigger headline on small screens | ENH-002          |
+| Home, below the hero | Two front doors overlapping the hero                                                   | Removed here; their content is the first row of Why XionTechs                                                                                                                                  | ENH-002, ENH-004 |
+| Home, Our partners   | —                                                                                      | New: placeholder logo strip that scrolls in a loop (pauses on hover, focus or tap)                                                                                                             | ENH-003          |
+| Home, Why XionTechs  | —                                                                                      | New in Batch 1 (four tiles); rebuilt as a four-card bento: Products with app logos, Delivery with live clocks, Industries with a "+3" reveal, Outsourcing services; a small "Get IT Done" line | Batch 1, ENH-004 |
+| Home, products       | Four-app bento with phone mockups, right after the doors                               | A four-app row (Batch 1), now "Apps for every role in school." below the process                                                                                                               | Batch 1, ENH-005 |
+| Home, eight services | Eight service cards                                                                    | Removed from Home (they stay on Services)                                                                                                                                                      | Batch 1          |
+| Home, process        | "From your request to launch, in four steps." under a small label                      | "Our 4-D process: from your request to launch." (label merged into the heading)                                                                                                                | Batch 1          |
+| Home, Case studies   | —                                                                                      | New: three placeholder case study cards and "Start a project"                                                                                                                                  | ENH-003          |
+| Home, last section   | Amber "See it working at your school." email band (Book a demo)                        | Amber contact form "Have something you want to build?"                                                                                                                                         | ENH-001          |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
 block with its intended size · `[BUTTON: …]` button · `[LINK: …]` text link · `[WHOLE CARD IS A LINK]` the whole card
@@ -29,7 +49,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ## Header and footer (on every page)
 
 ```text
-┌─ Header · sticky, glass ─────────────────────────────────────────────────────────────────────────────────┐
+┌─ Header · sticky, glass · [Batch 1 · ENH-002] ───────────────────────────────────────────────────────────┐
 │ [LINK: Skip to content → #main]                                                                          │
 │ [LINK: XionTechs home → index.html]                                                                      │
 │ [LINK: Products → products.html]                                                                         │
@@ -37,11 +57,11 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 │ [LINK: News → news.html]                                                                                 │
 │ [LINK: About → about.html]                                                                               │
 │ [LINK: Careers → careers.html]                                                                           │
-│ [BUTTON: button]                                                                                         │
+│ [BUTTON: Menu (small screens only; opens the menu)]                                                      │
 │ [BUTTON: EN]                                                                                             │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
-┌─ Footer · dark navy ─────────────────────────────────────────────────────────────────────────────────────┐
+┌─ Footer · dark navy · [content unchanged] ───────────────────────────────────────────────────────────────┐
 │ ┌────────────────────────────────┐ ┌────────────────────────────────┐ ┌────────────────────────────────┐ │
 │ │ [LINK: XionTechs logo →        │ │ H4: Products                   │ │ H4: Services                   │ │
 │ │   index.html]                  │ │ [LINK: PXP →                   │ │ [LINK: Product Engineering →   │ │
@@ -61,17 +81,25 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 │ ┌────────────────────────────────┐ ┌────────────────────────────────┐                                    │
 │ │ H4: Company                    │ │ H4: Offices                    │                                    │
 │ │ [LINK: About → about.html]     │ │ Text: Plano, Texas, USA        │                                    │
-│ │ [LINK: Core values →           │ │ [LINK: +1 469 322 9899 →       │                                    │
-│ │   about.html#values]           │ │   tel:+14693229899]            │                                    │
-│ │ [LINK: FAQ → about.html#faq]   │ │ [LINK: WhatsApp +1 469 439     │                                    │
-│ │ [LINK: News → news.html]       │ │   9345 →                       │                                    │
-│ │ [LINK: Careers → careers.html] │ │   https://wa.me/14694399345]   │                                    │
-│ │ [LINK: Contact → demo.html]    │ │ [LINK: vinni.tran@newxion.com  │                                    │
+│ │ [LINK: Core values →           │ │ Text: 7950 Legacy Drive, Suite │                                    │
+│ │   about.html#values]           │ │   400                          │                                    │
+│ │ [LINK: FAQ → about.html#faq]   │ │ Text: Plano, Texas 75024, USA  │                                    │
+│ │ [LINK: News → news.html]       │ │ [LINK: +1 469 322 9899 →       │                                    │
+│ │ [LINK: Careers → careers.html] │ │   tel:+14693229899]            │                                    │
+│ │ [LINK: Contact → demo.html]    │ │ [LINK: WhatsApp +1 469 439     │                                    │
+│ │                                │ │   9345 →                       │                                    │
+│ │                                │ │   https://wa.me/14694399345]   │                                    │
+│ │                                │ │ [LINK: vinni.tran@newxion.com  │                                    │
 │ │                                │ │   → mailto:vinni.tran@newxion. │                                    │
 │ │                                │ │ com]                           │                                    │
 │ │                                │ │ Text: Ho Chi Minh City,        │                                    │
 │ │                                │ │   Vietnam                      │                                    │
 │ │                                │ │ Text: Vietnam Delivery Center  │                                    │
+│ │                                │ │ Text: Floor 15, B1 Building    │                                    │
+│ │                                │ │ Text: 279 Nguyen Tri Phuong    │                                    │
+│ │                                │ │   Street                       │                                    │
+│ │                                │ │ Text: Dien Hong Ward, Ho Chi   │                                    │
+│ │                                │ │   Minh City, Vietnam           │                                    │
 │ │                                │ │ [LINK: +84 908 107 552 →       │                                    │
 │ │                                │ │   tel:+84908107552]            │                                    │
 │ └────────────────────────────────┘ └────────────────────────────────┘                                    │
@@ -83,11 +111,13 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
+Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the top).
+
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Every school community, connected. · dark hero, animated silk ───────────────────────────────────┐ ║
+║ ┌─ 1. Every school community, connected. · dark hero, animated silk · [Batch 1 · ENH-002] ─────────────┐ ║
 ║ │ [BACKGROUND: animated silk (WebGL)]                                                                  │ ║
 ║ │ [BUTTON: Pause motion]                                                                               │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
@@ -100,13 +130,13 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ │ H2: Experience you can count on                                                                      │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ H3: 25+                                       │ │ H3: 8                                          │ │ ║
+║ │ │ H3: 25+ Years                                 │ │ H3: 8                                          │ │ ║
 ║ │ │ Text: Leadership experience in software       │ │ Text: Service offerings, from idea to          │ │ ║
 ║ │ │                                               │ │   operation                                    │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Our partners. · white ───────────────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 2. Our partners. · white · [new in ENH-003] ────────────────────────────────────────────────────────┐ ║
 ║ │ H2: Our partners.                                                                                    │ ║
 ║ │ [ANIMATION: logos scroll right to left in a loop; hover, focus or tap pauses]                        │ ║
 ║ │ [IMAGE: [Placeholder] Partner logo 1 · 320 × 160]                                                    │ ║
@@ -119,7 +149,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ [IMAGE: [Placeholder] Partner logo 8 · 320 × 160]                                                    │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 3. Why XionTechs. · light blue ─────────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 3. Why XionTechs. · light blue · [new in Batch 1 · rebuilt in ENH-004] ─────────────────────────────┐ ║
 ║ │ H2: Why XionTechs.                                                                                   │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ [WHOLE CARD IS A LINK → products.html]        │ │ Text: Delivery                                 │ │ ║
@@ -148,7 +178,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ Text: Ownership of our commitments and pride in quality.                                             │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. Case studies. · white ───────────────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 4. Case studies. · white · [new in ENH-003] ────────────────────────────────────────────────────────┐ ║
 ║ │ H2: Case studies.                                                                                    │ ║
 ║ │ Text: [Placeholder] Real client stories replace these sample cards once each client approves them.   │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
@@ -171,7 +201,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ [BUTTON: Start a project → #contact]                                                                 │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. Our 4-D process: from your request to launch. · navy, grid texture ──────────────────────────────┐ ║
+║ ┌─ 5. Our 4-D process: from your request to launch. · navy, grid texture · [Batch 1 (heading)] ────────┐ ║
 ║ │ H2: Our 4-D process: from your request to launch.                                                    │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ • Your request · An idea, a  │ │ Text: 01                     │ │ Text: 02                       │ │ ║
@@ -193,7 +223,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. Apps for every role in school. · white ──────────────────────────────────────────────────────────┐ ║
+║ ┌─ 6. Apps for every role in school. · white · [Batch 1 · moved in ENH-005] ───────────────────────────┐ ║
 ║ │ H2: Apps for every role in school.                                                                   │ ║
 ║ │ Text: Four apps serving schools today, with more products on the way.                                │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
@@ -216,7 +246,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ [LINK: Explore our products → products.html]                                                         │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 7. Latest from XionTechs. · light blue ─────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 7. Latest from XionTechs. · light blue · [content unchanged] ───────────────────────────────────────┐ ║
 ║ │ H2: Latest from XionTechs.                                                                           │ ║
 ║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
@@ -229,7 +259,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 8. Have something you want to build? · amber ───────────────────────────────────────────────────────┐ ║
+║ ┌─ 8. Have something you want to build? · amber · [new in ENH-001] ────────────────────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: Have something you want to build?         │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ Text: Tell us a little about yourself and     │ │ │ [FIELD: Your name (text, required)]        │ │ │ ║
@@ -276,6 +306,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ## Products
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
+
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -422,6 +454,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `services.html` · page title: "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs"
 
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+
 ```text
 ╔═ SERVICES PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
@@ -549,6 +583,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ## About
 
 `about.html` · page title: "About XionTechs | Get IT Done"
+
+Changes on this page: Batch 1 (no label above "Our core values."); ENH-004 spacing and heading-first reveal.
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -685,6 +721,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `news.html` · page title: "News | XionTechs"
 
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+
 ```text
 ╔═ NEWS PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
@@ -732,6 +770,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `news-story.html` · page title: "[Placeholder] Parents can now pay school fees in PXP | XionTechs News"
 
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+
 ```text
 ╔═ NEWS STORY PAGE ════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
@@ -761,6 +801,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ## Careers
 
 `careers.html` · page title: "Careers at XionTechs | Software Jobs in Ho Chi Minh City"
+
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
 
 ```text
 ╔═ CAREERS PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -838,6 +880,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `job.html` · page title: "[Placeholder] Job title | Careers at XionTechs"
 
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+
 ```text
 ╔═ JOB PAGE ═══════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
@@ -894,6 +938,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `demo.html` · page title: "Book a Demo or Start a Project | XionTechs"
 
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+
 ```text
 ╔═ CONTACT PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
@@ -911,25 +957,25 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ║ │ │   conversation in our 4-D process.            │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ ┌───────────────────────────────────────────┐ │ │ │ [FIELD: Work email (email, required)]      │ │ │ ║
 ║ │ │ │ Text: Plano, Texas, USA                   │ │ │ │ error: "Please enter a valid email         │ │ │ ║
-║ │ │ │ [LINK: +1 469 322 9899 →                  │ │ │ │     address."                              │ │ │ ║
-║ │ │ │   tel:+14693229899]                       │ │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │ │ [LINK: WhatsApp +1 469 439 9345 →         │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ │   https://wa.me/14694399345]              │ │ │ │ [FIELD: School or company (text,           │ │ │ ║
-║ │ │ │ [LINK: vinni.tran@newxion.com →           │ │ │ │   required)]                               │ │ │ ║
-║ │ │ │   mailto:vinni.tran@newxion.com]          │ │ │ │ error: "Please enter your organisation."   │ │ │ ║
-║ │ │ └───────────────────────────────────────────┘ │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │ ┌───────────────────────────────────────────┐ │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ │ Text: Ho Chi Minh City, Vietnam           │ │ │ │ [FIELD: Your role (text)]                  │ │ │ ║
-║ │ │ │ Text: Vietnam Delivery Center             │ │ │ │ help: "For example: Principal, Head of IT" │ │ │ ║
-║ │ │ │ [LINK: +84 908 107 552 →                  │ │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │ │   tel:+84908107552]                       │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ └───────────────────────────────────────────┘ │ │ │ [CHECKBOXES: Products of interest: PXP /   │ │ │ ║
-║ │ │                                               │ │ │   LXP / SXP / IoT; Product demo tab only]  │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │                                               │ │ │ [FIELD: School size (dropdown: Under 500   │ │ │ ║
-║ │ │                                               │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
-║ │ │                                               │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
+║ │ │ │ Text: 7950 Legacy Drive, Suite 400        │ │ │ │     address."                              │ │ │ ║
+║ │ │ │ Text: Plano, Texas 75024, USA             │ │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ │ [LINK: +1 469 322 9899 →                  │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │ │   tel:+14693229899]                       │ │ │ │ [FIELD: School or company (text,           │ │ │ ║
+║ │ │ │ [LINK: WhatsApp +1 469 439 9345 →         │ │ │ │   required)]                               │ │ │ ║
+║ │ │ │   https://wa.me/14694399345]              │ │ │ │ error: "Please enter your organisation."   │ │ │ ║
+║ │ │ │ [LINK: vinni.tran@newxion.com →           │ │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ │   mailto:vinni.tran@newxion.com]          │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │ └───────────────────────────────────────────┘ │ │ │ [FIELD: Your role (text)]                  │ │ │ ║
+║ │ │ ┌───────────────────────────────────────────┐ │ │ │ help: "For example: Principal, Head of IT" │ │ │ ║
+║ │ │ │ Text: Ho Chi Minh City, Vietnam           │ │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ │ Text: Vietnam Delivery Center             │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │ │ Text: Floor 15, B1 Building               │ │ │ │ [CHECKBOXES: Products of interest: PXP /   │ │ │ ║
+║ │ │ │ Text: 279 Nguyen Tri Phuong Street        │ │ │ │   LXP / SXP / IoT; Product demo tab only]  │ │ │ ║
+║ │ │ │ Text: Dien Hong Ward, Ho Chi Minh City,   │ │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ │   Vietnam                                 │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │ │ [LINK: +84 908 107 552 →                  │ │ │ │ [FIELD: School size (dropdown: Under 500   │ │ │ ║
+║ │ │ │   tel:+84908107552]                       │ │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
+║ │ │ └───────────────────────────────────────────┘ │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
 ║ │ │                                               │ │ │   Product demo tab only)]                  │ │ │ ║
 ║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
@@ -976,6 +1022,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `privacy.html` · page title: "Privacy Policy | XionTechs"
 
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+
 ```text
 ╔═ PRIVACY POLICY PAGE ════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
@@ -1020,6 +1068,8 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ## Not found (404)
 
 `404.html` · page title: "Page not found | XionTechs"
+
+Changes on this page: Batch 1 (no label above the heading); ENH-004 spacing.
 
 ```text
 ╔═ NOT FOUND (404) PAGE ═══════════════════════════════════════════════════════════════════════════════════╗
