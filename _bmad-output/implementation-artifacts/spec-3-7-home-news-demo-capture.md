@@ -48,7 +48,7 @@ context: ['{project-root}/AGENTS.md', '{project-root}/CLAUDE.md']
 - `src/components/careers/open-roles.tsx` -- section/`sec-head`/`link-arrow` + `ArrowRightIcon` from `@phosphor-icons/react/ssr` pattern.
 - `studio/schemas/post.ts`, `studio/schemas/schemas.test.ts` -- post fields; job `type` list field is the list-field pattern.
 - `src/app/globals.css` -- `.news-grid` and `.link-arrow` (Story 6.5, ~line 1704–1800), `.spot` and `.sec-head` (~1380–1425), `.home-media` empty frame (~1154), `.surface-*` (~374). Add news card rules near the 6.5 block.
-- Prototype: `mockups/site-v3/index.html` lines 132–138, `js/site.js` lines 80–87 (card markup, category labels), `css/site.css` lines 287–304, 446, 456.
+- Prototype: `prototype-enhancement/prototype/index.html` lines 132–138, `js/site.js` lines 80–87 (card markup, category labels), `css/site.css` lines 287–304, 446, 456.
 
 ## Tasks & Acceptance
 

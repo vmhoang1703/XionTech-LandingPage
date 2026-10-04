@@ -34,7 +34,7 @@ Build the Home page so a visitor understands in about five seconds what XionTech
 ## Technical Decisions
 
 - Next.js 16 App Router; Server Components by default; client islands only where needed (silk canvas and toggle, scroll-triggered animations, count-up).
-- Tailwind v4 tokens and surfaces (`hero-silk`, `surface-mist`, `surface-paper`, `surface-navy`, `surface-amber`) in `src/app/globals.css`; port the prototype `mockups/site-v3/index.html`, `css/site.css` and `js/site.js`, do not redesign. The UX spines win over the prototype on any conflict.
+- Tailwind v4 tokens and surfaces (`hero-silk`, `surface-mist`, `surface-paper`, `surface-navy`, `surface-amber`) in `src/app/globals.css`; port the prototype `prototype-enhancement/prototype/index.html`, `css/site.css` and `js/site.js`, do not redesign. The UX spines win over the prototype on any conflict.
 - WebGL silk is a client-only component loaded after first paint, ported from the prototype shader (time scale 0.35). Without JavaScript, without WebGL, or on `webglcontextlost`, the toggle hides and the static navy and amber glow fallback shows.
 - Motion choice is remembered (prototype key `xt3-motion`); a saved Play or Pause wins over `prefers-reduced-motion`; with no saved choice, reduced motion starts paused.
 - Stats band and 4-D process flow are one shared component each, data-driven, usable on navy and light surfaces (stat suffix amber on navy, `#8A6700` on light).
