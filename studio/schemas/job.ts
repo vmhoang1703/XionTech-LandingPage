@@ -36,4 +36,6 @@ export const job = {
     },
     localized("description", "Description", "array"),
   ],
+  // Lists in the Studio show the English title instead of "Untitled".
+  preview: { select: { title: "title.en", subtitle: "team.en" } },
 };

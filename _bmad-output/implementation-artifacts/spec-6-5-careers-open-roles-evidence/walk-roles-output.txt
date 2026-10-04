@@ -1,0 +1,14 @@
+[1280] cards 1
+[1280] card href /careers/placeholder-sample-job | name "[Placeholder] Sample job Engineering View and apply" | nested links/buttons 0
+[1280] title font Unbounded, "Unbounded Fallback", system-ui, sans-serif | meta "Engineering" color rgb(74, 91, 120)
+[1280] meta contrast 6.75:1 on section bg rgb(253, 253, 254)
+[1280] hover: card y 282 -> 280 | shadow rgba(11, 23, 48, 0.45) 0px 40px 80px -40 | arrow x 1191 -> 1195
+[1280] Tab x1 reaches card true | :focus-visible true | outline solid | 2px | 3px
+[1280] Enter lands /careers/placeholder-sample-job | h1 "We couldn't find that page."
+[1280] click on the meta text lands /careers/placeholder-sample-job
+[641] "View and apply" under the title false (title y 291 h 59, link y 308) | no sideways scroll true
+[640] "View and apply" under the title true (title y 259 h 59, link y 338) | no sideways scroll true
+[390] "View and apply" under the title true (title y 259 h 59, link y 338) | no sideways scroll true
+[390 touch] hover media false | card transform none
+[390 touch] tap lands /careers/placeholder-sample-job
+[1280 reduced] card transition 0s | transform none

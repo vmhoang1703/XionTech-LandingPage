@@ -609,3 +609,9 @@ Template:
 - **Prompt (Hoang Vu):** answered the plan questions (job schema gets slug, team and closed; Life photos stay `[Placeholder]` frames until Story 6.3; the culture photo is a fixed frame), then approved the plan; the build ran in its own worktree.
 - **What the AI did:** rebased onto `develop`, ran build and smoke in the main checkout, walked `/careers` at six widths plus reduced motion, ran the 5-layer review, fixed the clipped Life frames, added tests for the query projection and the required slug, and recorded the decisions as A8.
 - **AI got it wrong?** Yes. The Life frames reused `.illo`, whose 320px minimum height overflowed the 4:3 box, so the bottom and caption were cut off; the first walk only measured the outer box and missed it. Two tests passed whatever the code did (the query text only, and "validation is a function"). The role cards cannot be checked in a browser until a role with a slug is published.
+
+## 2026-10-04 — Studio deploy, role-card walk and Studio list titles
+
+- **Prompt (Hoang Vu):** "I don't see the slug and team" (screenshots of the Studio after `sanity deploy`), then "published", then "1" (the small follow-up PR).
+- **What the AI did:** found that the deploy ran from a checkout that had not pulled the merged #35, so the old schema went live; pulled `develop` and the lead deployed again. Checked the published role through Sanity's public query API and the dev site's cache headers, then walked the role-card rows on the dev site. The follow-up adds Studio list titles (`preview`) to `job` and `post`, records the Studio `appId` in `sanity.cli.ts`, and writes the walk into the 6.5 spec.
+- **AI got it wrong?** Yes. The AI told the lead to deploy right after the merge without saying to pull `develop` first. Both Studio types had no `preview`, so every list showed "Untitled"; the 1.8 and 6.5 reviews did not notice it.
