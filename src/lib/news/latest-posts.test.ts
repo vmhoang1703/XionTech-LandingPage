@@ -85,6 +85,10 @@ describe("getLatestPosts", () => {
 });
 
 describe("newsDate", () => {
+  it("returns an empty date for a value that is not a date, so one bad post cannot break Home", () => {
+    expect(newsDate("not a date")).toBe("");
+  });
+
   it("formats as day, upper-case month and year", () => {
     expect(newsDate("2026-09-18T03:00:00Z")).toBe("18 SEP 2026");
   });

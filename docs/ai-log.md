@@ -633,3 +633,9 @@ Template:
 - **Prompt (Hoang Vu, through the controller):** build Story 3.7 in its own worktree; answered the question about the news tag: add `category` and `app` to the `post` schema in this PR (decision A9).
 - **What the AI did:** found that the `post` schema had no category field, so the CAP-1 tag on the news card had no data source. It asked the lead instead of guessing a value or hard-coding tags. After the answer it added `category` (required) and `app` (only for Product) with schema tests, and recorded A9 and the post-merge deploy step in `docs/sanity.md`. The heading reads "Latest from XionTech." because the brand rule wins over the mockup's "XionTechs".
 - **AI got it wrong?** Not on this point: the gap was caught while reading the spec against the schema, before any code used a made-up field.
+
+## 2026-10-04 — Story 3.7 Home news: full review and lead decisions
+
+- **Prompt (Hoang Vu):** two answers from the review: Home must survive a Sanity failure; make the post slug and published date required.
+- **What the AI did:** rebased onto `develop`, ran build and smoke, walked Home, ran the 5-layer review, and fixed only the Critical and Important points: a guarded news fetch and date, the required post fields, the class-rule test, and complete post-merge steps.
+- **AI got it wrong?** Yes. The build copied "Sanity error propagates" from Careers to Home, so one outage or one post with a bad date would have broken the landing page and the build; two reviewers caught it. The post-merge docs left out the slug and the date, so following them would still show 0 cards; the walk found 0 cards because the only post had neither. The first review layer had also found an inherited-key lookup (`categoryLabels["toString"]`) and an unencoded slug, which were fixed during the build.

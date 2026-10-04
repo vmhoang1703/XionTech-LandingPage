@@ -33,12 +33,14 @@ export function getLatestPosts(): Promise<LatestPost[]> {
   });
 }
 
+// An unreadable date shows as no date, so one bad post cannot break Home.
 export function newsDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
   const parts = Object.fromEntries(
-    DATE_FORMAT.formatToParts(new Date(iso)).map(({ type, value }) => [
-      type,
-      value,
-    ]),
+    DATE_FORMAT.formatToParts(date).map(({ type, value }) => [type, value]),
   );
   return `${parts.day} ${parts.month} ${parts.year}`.toUpperCase();
 }

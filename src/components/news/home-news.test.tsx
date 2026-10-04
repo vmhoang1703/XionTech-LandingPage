@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { LatestPost } from "@/lib/news/latest-posts";
 import { getLatestPosts } from "@/lib/news/latest-posts";
+import { undefinedClasses } from "@/test-utils/css-classes";
 import { HomeNews } from "./home-news";
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
@@ -64,5 +65,29 @@ describe("HomeNews", () => {
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
     ).toBe("/news");
+  });
+
+  it("keeps Home up when the news fetch fails: logs it and shows the no-stories state", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.mocked(getLatestPosts).mockRejectedValue(new Error("Sanity down"));
+    const { container } = render(await HomeNews());
+
+    expect(container.querySelector(".news-grid")).toBeNull();
+    expect(
+      screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
+    ).toBe("/news");
+    expect(error).toHaveBeenCalledWith(
+      expect.stringContaining("Home news"),
+      expect.any(Error),
+    );
+    error.mockRestore();
+  });
+
+  it("defines every class it uses in globals.css", async () => {
+    const { container } = await renderNews([
+      makePost(1),
+      { ...makePost(2), category: "product", app: "PXP" },
+    ]);
+    expect(undefinedClasses(container, /^sr-only$/)).toEqual([]);
   });
 });

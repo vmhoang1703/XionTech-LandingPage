@@ -1,13 +1,27 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { homeNews } from "@/content/news";
-import { getLatestPosts } from "@/lib/news/latest-posts";
+import { getLatestPosts, type LatestPost } from "@/lib/news/latest-posts";
 import { NewsCard } from "./news-card";
 
 // Server Component. Fetches its own stories so Home only renders it (CAP-1..3).
-// With no stories the grid and the sample note are left out.
+// With no stories the grid and the sample note are left out. A failed fetch is
+// logged and shown as "no stories", so Sanity can never take Home (or the build
+// that prerenders it) down with it (lead, 2026-10-04).
+async function loadPosts(): Promise<LatestPost[]> {
+  try {
+    return await getLatestPosts();
+  } catch (error) {
+    console.error(
+      "Home news: could not load the latest posts from Sanity",
+      error,
+    );
+    return [];
+  }
+}
+
 export async function HomeNews() {
-  const posts = await getLatestPosts();
+  const posts = await loadPosts();
   const { heading, sampleNote, seeAll } = homeNews;
 
   return (

@@ -75,6 +75,19 @@ describe("studio schemas", () => {
     });
   });
 
+  it("makes the post slug and published date required, so every published post can show on Home", () => {
+    for (const name of ["slug", "publishedAt"]) {
+      const field = findField(post, name) as Field & { validation?: unknown };
+      const required = vi.fn().mockReturnValue("required-rule");
+      expect(
+        (field.validation as (r: { required: typeof required }) => unknown)({
+          required,
+        }),
+      ).toBe("required-rule");
+      expect(required).toHaveBeenCalledTimes(1);
+    }
+  });
+
   it("gives a post a required category with four values", () => {
     const category = findField(post, "category") as Field & {
       options?: { list?: { title: string; value: string }[] };

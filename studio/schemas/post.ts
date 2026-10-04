@@ -11,8 +11,15 @@ export const post = {
       title: "Slug",
       type: "slug",
       options: { source: "title.en", maxLength: 96 },
+      // Home and News list only posts with a slug and a date (decision A9).
+      validation: (rule: { required: () => unknown }) => rule.required(),
     },
-    { name: "publishedAt", title: "Published at", type: "datetime" },
+    {
+      name: "publishedAt",
+      title: "Published at",
+      type: "datetime",
+      validation: (rule: { required: () => unknown }) => rule.required(),
+    },
     {
       name: "category",
       title: "Category",

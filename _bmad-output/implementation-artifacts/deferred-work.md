@@ -224,3 +224,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-3-7-home-news-demo-capture.md`
   summary: Similar check: `src/components/careers/open-roles.tsx:26` builds `/careers/${role.slug}` without `encodeURIComponent`, the idiom Story 3.7 fixed for news links; apply the same encoding there (and in 6.6 links) or record why job slugs cannot hold "/", "?" or "#".
   evidence: 3.7 review patch 312fe79 encodes the news slug; the job slug is required but hand-editable in the Studio (2026-10-04).
+- source_spec: `_bmad-output/implementation-artifacts/spec-3-7-home-news-demo-capture.md`
+  summary: Home news follow-ups: use the `--text-*` tokens for the card tag, meta and excerpt sizes; clamp the excerpt to one line (DESIGN.md); type the categories and their labels from one list; the "[Placeholder] Sample stories" note must go (or become data-driven) when real stories are published; query `.frame` directly in the card test; add a static-HTML test of real cards; scope the `.sec-head ~ .link-arrow` hover to the news section; mark after-demo items in `epic-3-context.md`; strip ANSI codes from the verification files; replace pre-rebase commit hashes in the spec.
+  evidence: full review 2026-10-04, all layers (Minor).

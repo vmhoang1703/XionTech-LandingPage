@@ -157,3 +157,10 @@ Captured after the step-04 review patches on 2026-10-04.
 **Not captured**
 
 - `npm run build`, `npm run test:smoke` and the browser walk (UX rows for looks, hover, focus, 900px / 640px): Turbopack rejects the worktree's `node_modules` junction; pending (controller).
+
+Full `bmad-code-review` on 2026-10-04 after rebasing onto `develop` (0e60f7e), 5 layers. Security: clean. Acceptance: CAP-1 to CAP-5 logic met.
+
+- patch (lead decisions, 2026-10-04, A9): Home no longer fails with the news fetch: `HomeNews` logs a failed fetch ("Home news: could not load the latest posts from Sanity") and shows its no-stories state, and `newsDate` returns "" for an unreadable date. This replaces this spec's "Sanity error propagates" row for Home (the Home page is prerendered, so a Sanity outage would have failed the build). The Studio now requires the post `slug` and `publishedAt`.
+- patch (docs): the post-merge steps now name slug, Published at, category, a `[Placeholder]` title and 3 posts; the only published post had no slug or date, so Home showed 0 cards.
+- patch (test): the news tests now check that every class has a CSS rule (`undefinedClasses`), like the other Home sections.
+- defer (Minor, `deferred-work.md`): hard-coded font sizes next to the `--text-*` tokens; no excerpt line clamp; schema values and labels in two places; the fixed sample note will also label real stories; a weak `aria-hidden` query; no static-HTML test of real cards; the `.sec-head ~ .link-arrow` hover reaches other sections; `epic-3-context.md` mixes after-demo items; ANSI codes in the verification files; pre-rebase commit hashes in this spec.
