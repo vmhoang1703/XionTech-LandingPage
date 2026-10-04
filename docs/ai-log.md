@@ -940,3 +940,21 @@ Template:
 - **AI got it wrong?** Yes: the first version reworded Amber's description and two timeline lines instead of
   using her text, and a hunk filter first staged unrelated FAQ work from another session (caught and
   unstaged before commit).
+
+## 2026-10-04 — ENH-018: Pause motion button on the Products hero
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor, as the change was small)
+- **Prompt / task:** The drifting glows from ENH-014 move for longer than 5 seconds, so WCAG 2.2.2 asks for a
+  way to stop them. Amber first suggested pausing on hover, then asked whether the card links (which jump down
+  the page) were enough; neither works for keyboard and touch users or keeps the motion stopped, so she chose
+  Home's "Pause motion" button. It now sits in the Products hero, in solid navy, and shares the saved choice
+  with Home's hero and partner logos.
+- **Decision / result:** Approved by Amber. The acceptance audit met 10 of 11 checks; the button and its label
+  touched the heading on 320 and 375px phones, so the hero has more room at the top there. Also fixed: the
+  icon is hidden from screen readers, and with reduced motion a pause after Play freezes the glows where they
+  are instead of jumping them back.
+- **AI got it wrong?** Yes: the previous commit (ENH-014 and ENH-015) also carried another session's unapproved
+  ENH-016 and ENH-017 log entries, because the log file was staged whole; this commit removes them from the
+  branch (they stay in the working copy until approved). The first ENH-018 draft was also numbered ENH-016,
+  which that session had already used.

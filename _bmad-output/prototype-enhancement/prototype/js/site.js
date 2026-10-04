@@ -198,10 +198,15 @@
       t.addEventListener('keydown',e=>{const k=e.key;let j=null;if(k==='ArrowDown'||k==='ArrowRight')j=(i+1)%tabs.length;else if(k==='ArrowUp'||k==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(k==='Home')j=0;else if(k==='End')j=tabs.length-1;
         if(j!==null){e.preventDefault();pick(tabs[j],true)}})})});
 
-  /* ---------- Products hero glows: rest off screen, follow the saved motion choice ---------- */
+  /* ---------- Products hero glows: rest off screen; Pause motion button shares Home's saved choice ---------- */
   const eco=document.querySelector('.eco-hero');
   if(eco){
-    if(store.get('xt3-motion')==='off')eco.classList.add('motion-off');
+    const saved=store.get('xt3-motion'),btn=eco.querySelector('.motion-toggle');let paused=saved?saved==='off':reduce;
+    const apply=()=>{eco.classList.toggle('motion-off',paused);eco.classList.toggle('motion-on',!paused);if(!btn)return;
+      const vi=root.lang==='vi';btn.querySelector('i').className='ph '+(paused?'ph-play':'ph-pause');
+      btn.querySelector('span').textContent=paused?(vi?'Chạy chuyển động':'Play motion'):(vi?'Tạm dừng chuyển động':'Pause motion')};
+    if(btn)btn.onclick=()=>{if(!paused)eco.classList.add('was-on');paused=!paused;store.set('xt3-motion',paused?'off':'on');apply()};
+    document.addEventListener('xt-lang',apply);apply();
     if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>eco.classList.toggle('is-off',!e.isIntersecting))).observe(eco);
   }
 

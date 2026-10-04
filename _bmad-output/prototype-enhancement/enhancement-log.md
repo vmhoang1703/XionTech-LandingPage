@@ -29,8 +29,7 @@ directly, before this log existed.
 | ENH-013 | 2026-10-04 | Home, What we build                                       | AI Tutor (Students) and AI Timetable (School leaders) are marked "Coming soon"                                                                                                                                                                                                                    | Approved | 3.5, new stories                      |
 | ENH-014 | 2026-10-04 | Products, hero                                            | "Built apart. Better together." with one button and a diagram of the four apps around the X tile, on a warm light background with drifting glows                                                                                                                                                  | Approved | 4.1                                   |
 | ENH-015 | 2026-10-04 | Products, after the four apps                             | New "One event. Multiple experiences." timeline: one school day from 07:45 to 15:30 across the apps                                                                                                                                                                                               | Approved | 4.1                                   |
-| ENH-016 | 2026-10-04 | About, frequently asked questions                         | The FAQ becomes "Your question, we answer": two columns of hairline rows, closed by default, on a soft animated light-to-navy background                                                                                                                                                          | Proposed | 6.4                                   |
-| ENH-017 | 2026-10-04 | Products, LXP and IoT sections                            | The two centred section headings move to the left, so every heading on the site is left aligned                                                                                                                                                                                                   | Proposed | 4.1                                   |
+| ENH-018 | 2026-10-04 | Products, hero                                            | A "Pause motion" button stops the drifting glows; the choice is shared with Home                                                                                                                                                                                                                  | Approved | 4.1                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -451,7 +450,7 @@ directly, before this log existed.
   - a warm light background (Amber's option 2 reference, 2026-10-04): a pale cream-to-mist gradient with a soft amber glow, a faint navy glow and a white glow that drift slowly around the section (34 to 38 seconds per pass; the amber and navy glows move at the same pace), plus a very slow light sheen; the amber background and the moving strands are removed. No small label above the heading.
 - **Rules:** each card links to its app section on the same page; the breadcrumb and the "Book a demo" and "Product updates" buttons are left out on purpose (Product updates stays in the bar under the hero). On phones the diagram sits under the text. The glows pause while the hero is off screen and when the visitor has turned motion off on Home. With reduced motion, the lines are shown at once, the glows stay still and the cards do not lift on hover or focus.
 - **Developer notes:** the X tile is decorative (hidden from screen readers); the diagram is a labelled group, and each card is a link whose name reads "Parent experience PXP". Vietnamese copy is in the prototype.
-- **Open items:** the moving glows have no pause button of their own (WCAG 2.2.2 asks for one when motion lasts over 5 seconds); Amber to decide whether to add the Home motion button here.
+- **Open items:** resolved by ENH-018: a Pause motion button stops the glows.
 
 ## ENH-015: Products shows one school day across the apps
 
@@ -464,24 +463,10 @@ directly, before this log existed.
 - **Developer notes:** the timeline is an ordered list; each time is a `time` element; the dots are decorative. Vietnamese copy is in the prototype. The times are an example day, not product data.
 - **Open items:** none. Amber chose on 2026-10-04 to keep the reference wording under the heading.
 
-## ENH-016: FAQ in two columns under "Your question, we answer"
+## ENH-018: Pause motion button on the Products hero
 
-- **Why:** Amber sent a reference screenshot on 2026-10-04 of a help-centre style FAQ and asked for the About page FAQ to match it, with no search box.
-- **What changed:** the FAQ section on About:
-  - the heading "Frequently asked questions." becomes "Your question, we answer", with the existing line "Straight answers about our products, our services and how we work." under it;
-  - the reference's search field is left out, as Amber asked;
-  - the nine questions move from one column of bordered cards to two columns of plain rows separated by hairlines;
-  - the + / − marker sits in its own column at the right of each question;
-  - the section carries the soft animated background Amber chose (option 1 of her reference file): a light-to-navy gradient with three slow drifting shapes and a very slow sheen passing across.
-- **Rules:** every answer is closed when the page loads; several can be open at once (UX-DR27). On phones the two columns become one. With reduced motion the background holds still and keeps its gradient.
-- **Developer notes:** still native `details`/`summary`, so the FAQ works without JavaScript and keeps its FAQPage structured data. The nine answers are unchanged, Vietnamese copy included. The moving shapes are empty `aria-hidden` divs, ignored by screen readers. The background uses the site's own navy and light tokens rather than the hex values in the reference file, so it matches the rest of the site.
-- **Fixed on 2026-10-04 after Amber's screenshot:** the left column's + sat hard against the right column's question because a `gap:0` written after `column-gap` cancelled it; the two declarations no longer fight, and the columns are 96px apart. The tinted band behind the heading was also dropped, so the whole section shares one background.
-- **Open items:** the last row holds a single card because there are nine questions, not ten.
-
-## ENH-017: Every section heading is left aligned
-
-- **Why:** Amber on 2026-10-04: section titles should all be left aligned.
-- **What changed:** the two centred section headings on Products, "A calm place to learn." (LXP) and "A campus you run from one screen." (IoT), now start at the left like every other heading on the site. Their badges move left with them.
-- **Rules:** no other page had a centred heading, so nothing else moved.
-- **Developer notes:** the `center` modifier was removed from those two `sec-head` blocks. The modifier itself stays in the stylesheet, unused, in case a future section wants it.
+- **Why:** the drifting glows in ENH-014 move for longer than 5 seconds, so WCAG 2.2.2 (Pause, Stop, Hide) asks for a way to stop them that works for mouse, touch and keyboard. Amber chose a button on 2026-10-04 after pausing on hover was ruled out (keyboard and touch users cannot hover, and the motion restarts when the pointer leaves).
+- **What changed:** the round "Pause motion" button from the Home hero now also sits in the top-right corner of the Products hero, in solid navy so it reads on the light background. Its label slides out on hover or focus; it reads "Play motion" when the glows are stopped (Vietnamese "Tạm dừng chuyển động" and "Chạy chuyển động").
+- **Rules:** the choice is saved and shared: pausing on Products also pauses Home's hero and partner logos, and the other way round. With reduced motion, the glows start still and the button offers "Play motion". The glows still rest while the hero is off screen. On phones the hero has extra room at the top so the button and its label never touch the heading.
+- **Developer notes:** the button is a real `button` reached by Tab; its accessible name is its label text. It is hidden without JavaScript, as on Home. Use one shared motion setting for every animated background.
 - **Open items:** none.

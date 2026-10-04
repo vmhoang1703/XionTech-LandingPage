@@ -815,6 +815,10 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 .eco-hero{padding:72px 0 88px;background:linear-gradient(140deg,var(--cream) 0%,var(--page) 50%,var(--mist) 100%)}
 /* the glows rest when the hero is off screen or the visitor turned motion off */
 .eco-hero.is-off .eco-bg i,.eco-hero.motion-off .eco-bg i{animation-play-state:paused}
+/* Pause motion button: solid navy so it reads on the light background (ENH-018) */
+.eco-hero .motion-toggle{background:var(--navy);border-color:transparent;opacity:.9}
+.eco-hero .motion-toggle:hover,.eco-hero .motion-toggle:focus-visible{opacity:1;border-color:transparent}
+.eco-hero .motion-toggle span{background:var(--navy)}
 .eco-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
 .eco-bg i{position:absolute;border-radius:50%;filter:blur(32px);will-change:transform}
 .eco-bg .g1{width:380px;height:380px;left:-110px;top:-100px;background:var(--amber);opacity:.3;animation:ecoDrift1 34s ease-in-out infinite alternate}
@@ -850,13 +854,14 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
   .eco-diagram{justify-self:center}
 }
 @media (max-width:640px){
-  .eco-hero{padding:48px 0 64px}
+  .eco-hero{padding:88px 0 64px}
   .eco-card{padding:12px 14px;border-radius:14px}
   .eco-hub{border-radius:20px}
 }
 @media (prefers-reduced-motion:reduce){
   .eco-lines line,.eco-diagram.in .eco-lines line{animation:none;stroke-dashoffset:0}
-  .eco-bg i[class]{animation:none}
+  .eco-hero:not(.motion-on):not(.motion-off) .eco-bg i[class]{animation:none}
+  .eco-hero.motion-off:not(.was-on) .eco-bg i[class]{animation:none}
   .eco-card,.eco-card:hover,.eco-card:focus-visible{transition:none;transform:none}
 }
 

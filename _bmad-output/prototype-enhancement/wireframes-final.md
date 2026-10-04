@@ -28,7 +28,7 @@ also has a Vietnamese version in the prototype.
 | Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, and AI Tutor and AI Timetable marked Coming soon) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009, ENH-013 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
-| Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows | ENH-014 |
+| Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018 |
 | Products, after the four apps | — | New: "One event. Multiple experiences.", a five-step school-day timeline (07:45 to 15:30) on dark navy | ENH-015 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
@@ -315,13 +315,14 @@ Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the to
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-018 (Pause motion button); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Built apart. Better together. · warm light, drifting glows · [rebuilt in ENH-014] ───────────────┐ ║
+║ ┌─ 1. Built apart. Better together. · warm light, drifting glows · [ENH-014 · ENH-018] ────────────────┐ ║
+║ │ [BUTTON: Pause motion]                                                                               │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H1: Built apart. Better together.             │ │ [LINK: Parent experience · PXP → #pxp]         │ │ ║
 ║ │ │ Text: A connected suite for school            │ │ [LINK: Learning experience · LXP → #lxp]       │ │ ║
