@@ -17,7 +17,7 @@
 [1280]   #a-note: aria-invalid true | describedby a-note-err
 [1280] focus after submit: #a-name
 [1280] sending: disabled true | text "Sending..."
-[1280] upload fails: alert "We could not send your application. Please try again." role alert | above button true | name "Walk Tester" | email "walk@example.com" | note "Cover note" | CV kept cv.pdf | focus #btn btn-primary
+[1280] upload fails: alert "We could not send your application. Please try again." role alert | above button true | name "Walk Tester" | email "walk@example.com" | note "Cover note" | CV kept cv.pdf | focus button "Send application"
 [1280] upload limit used up: alert "You have sent several requests in a short time. Please try again in a few minutes." | name kept "Walk Tester" | CV kept cv.pdf
 [1280] Tab -> #a-email | outline solid | 2px
 [1280] All open roles focus: outline solid | 2px | :focus-visible true

@@ -89,7 +89,7 @@ try {
     log(`[1280] sending: disabled ${await submit.isDisabled()} | text "${(await submit.innerText()).trim()}"`);
     release();
     await card.locator(".form-alert").waitFor({ timeout: 15000 });
-    log(`[1280] upload fails: alert "${await card.locator(".form-alert").innerText()}" role ${await card.locator(".form-alert").getAttribute("role")} | above button ${(await box(card.locator(".form-alert"))).y < (await box(submit)).y} | name "${await p.locator("#a-name").inputValue()}" | email "${await p.locator("#a-email").inputValue()}" | note "${await p.locator("#a-note").inputValue()}" | CV kept ${await cv.evaluate((el) => el.files?.[0]?.name ?? "none")} | focus #${await p.evaluate(() => document.activeElement?.className)}`);
+    log(`[1280] upload fails: alert "${await card.locator(".form-alert").innerText()}" role ${await card.locator(".form-alert").getAttribute("role")} | above button ${(await box(card.locator(".form-alert"))).y < (await box(submit)).y} | name "${await p.locator("#a-name").inputValue()}" | email "${await p.locator("#a-email").inputValue()}" | note "${await p.locator("#a-note").inputValue()}" | CV kept ${await cv.evaluate((el) => el.files?.[0]?.name ?? "none")} | focus ${await p.evaluate(() => `${document.activeElement?.tagName.toLowerCase()} "${document.activeElement?.textContent?.trim()}"`)}`);
     await p.unroute("**/api/careers/cv-upload");
     await card.screenshot({ path: `${OUT}/job-form-failed-1280.png` });
 
@@ -99,7 +99,7 @@ try {
       route.fulfill({ status: 200, contentType: "application/json", body: '{"error":"rate","presignedUrlPayload":null}' }),
     );
     await submit.click();
-    await p.waitForFunction(() => document.querySelector(".form-card .form-alert")?.textContent?.includes("several requests"), null, { timeout: 15000 }).catch(() => {});
+    await p.waitForFunction(() => document.querySelector(".form-card .form-alert")?.textContent?.includes("several requests"), null, { timeout: 15000 });
     log(`[1280] upload limit used up: alert "${await card.locator(".form-alert").innerText()}" | name kept "${await p.locator("#a-name").inputValue()}" | CV kept ${await cv.evaluate((el) => el.files?.[0]?.name ?? "none")}`);
     await p.unroute("**/api/careers/cv-upload");
 

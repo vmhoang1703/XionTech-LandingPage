@@ -135,19 +135,18 @@ describe("POST /api/careers/apply", () => {
     expect(String(errorSpy.mock.calls[0])).toContain("GMAIL_APP_PASSWORD");
   });
 
-  it.each([
-    // The missing store id also skips the CV delete, with its own log line.
-    ["BLOB_STORE_ID", 1],
-    ["BLOB_WEBHOOK_PUBLIC_KEY", 1],
-  ])("answers 500 when %s is missing", async (name, lines) => {
-    vi.stubEnv(name, "");
-    const response = await POST(post(valid));
-    expect(response.status).toBe(500);
-    expect(await response.json()).toEqual({ error: "send" });
-    expect(errorSpy).toHaveBeenCalledTimes(lines);
-    expect(String(errorSpy.mock.calls[0])).toContain(name);
-    expect(getOpenRoleMock).not.toHaveBeenCalled();
-  });
+  it.each(["BLOB_STORE_ID", "BLOB_WEBHOOK_PUBLIC_KEY"])(
+    "answers 500 when %s is missing",
+    async (name) => {
+      vi.stubEnv(name, "");
+      const response = await POST(post(valid));
+      expect(response.status).toBe(500);
+      expect(await response.json()).toEqual({ error: "send" });
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+      expect(String(errorSpy.mock.calls[0])).toContain(name);
+      expect(getOpenRoleMock).not.toHaveBeenCalled();
+    },
+  );
 
   it("answers 400 with field errors", async () => {
     const response = await POST(post({ ...valid, name: "", email: "nope" }));

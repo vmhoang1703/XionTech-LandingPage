@@ -1,0 +1,19 @@
+
+> xiontech-landing-page@0.1.0 test:smoke
+> playwright test --project=smoke
+
+
+Running 10 tests using 7 workers
+
+  ✓   7 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (258ms)
+  ✓   4 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (305ms)
+  ✓   2 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (390ms)
+  ✓   1 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, the open roles and the life sections @smoke (420ms)
+  ✓   8 [smoke] › e2e\smoke.spec.ts:15:5 › demo page responds 200 with send request button @smoke (45ms)
+  ✓   5 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (373ms)
+  ✓   3 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the Not found copy and no capture band @smoke (416ms)
+  ✓   6 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with its H1, the four pills and no Updates link @smoke (356ms)
+  ✓   9 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (195ms)
+  ✓  10 [smoke] › e2e\smoke.spec.ts:26:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (180ms)
+
+  10 passed (16.6s)

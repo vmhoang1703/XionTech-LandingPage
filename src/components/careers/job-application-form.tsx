@@ -143,8 +143,8 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
     if (showErrors(form, found) || !file) return;
 
     setStatus("sending");
-    // Upload on every submit: the server deletes the CV of any application it
-    // does not send (decision A10), so an earlier upload cannot be reused.
+    // Upload on every submit: the server may delete the CV of an application
+    // it does not send (decision A10), so an earlier upload cannot be reused.
     let pathname: string;
     try {
       pathname = await uploadCv(file);
