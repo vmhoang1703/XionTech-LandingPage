@@ -80,7 +80,7 @@ context: ['{project-root}/AGENTS.md']
 
 **Execution:**
 - [x] `package.json`, `package-lock.json` -- add `@vercel/blob@2.8.0` (pinned, as the other runtime deps) -- T1 (Q3-A).
-- [ ] `studio/schemas/localized.ts`, `job.ts`, `schemas.test.ts` -- `responsibilities`, `requirements` EN/VI string lists -- CAP-1 (Q2-A).
+- [x] `studio/schemas/localized.ts`, `job.ts`, `schemas.test.ts` -- `responsibilities`, `requirements` EN/VI string lists -- CAP-1 (Q2-A).
   - red: `schemas.test.ts` -- job has both list fields with EN/VI string arrays.
 - [ ] `src/lib/careers/open-roles.ts` + test -- `getOpenRole(slug)` returning `{ slug, title, team, location, type, about, responsibilities, requirements }` or `null` -- CAP-1, CAP-6.
   - red: `open-roles.test.ts` -- query has the open filter, `$slug` param, `pt::text(description.en)`, tag `job`; `[]`/null gives null.
