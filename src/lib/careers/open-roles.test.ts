@@ -38,10 +38,10 @@ describe("getOpenRoles", () => {
       '"title": title.en',
       '"team": team.en',
       '"location": location.en',
-      "type",
     ]) {
       expect(projection).toContain(line);
     }
+    expect(projection).toMatch(/[,{]\s*type\s*}/);
   });
 
   it("returns the roles from the fetch", async () => {

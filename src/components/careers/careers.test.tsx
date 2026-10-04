@@ -131,7 +131,9 @@ describe("OpenRoles", () => {
 describe("LifeFrames", () => {
   it("lets each frame shrink to its 4:3 box, so the caption is never clipped", () => {
     const { container } = render(<LifeFrames />);
-    for (const frame of container.querySelectorAll("#life .spot .illo")) {
+    const frames = container.querySelectorAll("#life .spot .illo");
+    expect(frames).toHaveLength(3);
+    for (const frame of frames) {
       expect(frame.classList.contains("min-h-0")).toBe(true);
     }
   });
