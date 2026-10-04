@@ -65,7 +65,21 @@ describe("Products page", () => {
     for (const id of ["pxp", "lxp", "sxp", "iot"]) {
       const section = container.querySelector(`section#${id}`);
       expect(section?.classList.contains("products-anchor")).toBe(true);
-      expect(within(section as HTMLElement).getByRole("heading")).toBeDefined();
+      expect(
+        within(section as HTMLElement).getByRole("heading", { level: 2 }),
+      ).toBeDefined();
+    }
+  });
+
+  it("renders PXP, LXP, SXP and IoT sections in order, LXP to IoT in full", () => {
+    const { container } = render(<ProductsPage />);
+    const ids = [...container.querySelectorAll("section.products-anchor")].map(
+      (section) => section.id,
+    );
+    expect(ids).toEqual(["pxp", "lxp", "sxp", "iot"]);
+    for (const id of ["lxp", "sxp", "iot"]) {
+      const section = container.querySelector(`section#${id}`);
+      expect(section?.querySelector(".browser .bar-url")).not.toBeNull();
     }
   });
 
