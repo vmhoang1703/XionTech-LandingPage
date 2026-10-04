@@ -40,6 +40,7 @@ directly, before this log existed.
 | ENH-024 | 2026-10-04 | Products, Product updates and email band                  | "See all news" moves onto the heading row; the email band loses its ring illustration                                                                                                                                                                                                             | Approved | 4.1                                   |
 | ENH-025 | 2026-10-05 | Every page, typography                                    | Calmer weights: headings, labels, numbers and buttons drop from bold (600 to 700) to 500; original fonts and sizes kept                                                                                                                                                                           | Approved | Batch 1 (all pages)                   |
 | ENH-026 | 2026-10-05 | Job page and Home contact section                         | On phones no page scrolls sideways: the job page and Home's contact section fit the screen                                                                                                                                                                                                        | Approved | 6.5                                   |
+| ENH-027 | 2026-10-05 | Products, app cards                                       | Resizing a window across the phone/desktop breakpoint keeps the reader on the card they were reading                                                                                                                                                                                              | Approved | 4.1                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -546,7 +547,7 @@ directly, before this log existed.
   - A page opened at a card from Home lands with that card settled.
   - Hovering a settled card no longer moves it.
 - **Open items:**
-  - resizing a window across the 993px breakpoint keeps the scroll position but not the card being read (low priority);
+  - resolved by ENH-027: resizing across the 993px breakpoint keeps the card being read;
   - Product updates is no longer linked from the bar (the section is still on the page);
   - ENH-017 (left-aligning the LXP and IoT headings) no longer applies, because those sections are now cards;
   - App Store, Google Play and prototype links (all but AI Tutor) are needed before launch.
@@ -646,4 +647,12 @@ directly, before this log existed.
 - **What changed:** the job description and apply form, and Home's contact section ("Have something you want to build?"), now fit the screen at every width; nothing else changes.
 - **Rules:** none new.
 - **Developer notes:** the two-column layout becomes one column on phones, but a grid column will not shrink below its widest content, and the form fields (inputs, the CV file picker) kept it at 448px. Home's contact grid had the same cause (its column held 306px in a 288px space at 320px). Grid items in these layouts and form fields may now shrink (min-width 0; fields capped at 100% width; checkboxes and radio buttons keep their size; long words such as email addresses in the contact section wrap). Desktop layouts were compared before and after on all 11 pages and are unchanged. All 11 pages were checked at 320, 360, 375, 414, 768, 1024 and 1440px: none scroll sideways.
+- **Open items:** none.
+
+## ENH-027: Resizing keeps the reader on their app card
+
+- **Why:** left open in ENH-020: resizing a browser window across 993px (stacked cards on desktop, one column on phones) kept the scroll position but not the card, because the two layouts have very different lengths. Amber asked for it to be fixed on 2026-10-05.
+- **What changed:** after a resize that crosses the breakpoint, the page returns to the card the reader was on, settled on desktop or just under the audience pills on phones, and the right pill stays highlighted. Away from the cards (the hero, the school day, Product updates, the footer), the section the reader was reading stays at the same place on screen.
+- **Rules:** a resize that stays on one side of the breakpoint (including a phone keyboard opening) does not move the page.
+- **Developer notes:** the card being read is noted only while scrolling and ignored during a resize (resize handlers would otherwise overwrite it with the half-changed layout); a short pause after the last resize event triggers the return. Away from the cards, the section crossing a line 30% down the screen and its offset are kept instead. The restore always finishes its clean-up, even in browsers that reject an instant scroll. Checked from several cards and from the hero, school day, Product updates and footer, desktop to phone and back, and with a phone-keyboard resize.
 - **Open items:** none.

@@ -290,7 +290,7 @@
     let tick=false;const soon=()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{update();tick=false})};
     addEventListener('scroll',soon,{passive:true});
     let rt=0;addEventListener('resize',()=>{cancelAnimationFrame(rt);rt=requestAnimationFrame(()=>{clear();update()})},{passive:true});
-    DESK.addEventListener('change',()=>{clear();update()});
+    let crossed=false,schedule=()=>{};DESK.addEventListener('change',()=>{clear();update();crossed=true;schedule()});
     addEventListener('load',update);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(update);
     if('ResizeObserver' in window){const ro=new ResizeObserver(soon);all.forEach(c=>ro.observe(c))}
     update();
@@ -316,6 +316,18 @@
     all.forEach((c,i)=>c.addEventListener('focusin',e=>{if(e.target===c||!DESK.matches)return;const o=parseFloat(cols(c)[0].style.opacity||'1');if(o<1)scrollTo({top:restY(i),behavior:'auto'})}));
     let mtick=false;addEventListener('scroll',()=>{if(mtick)return;mtick=true;requestAnimationFrame(()=>{mark();mtick=false})},{passive:true});
     addEventListener('resize',mark,{passive:true});mark();
+    // resizing across the desktop breakpoint keeps the reader on the card they were reading: the card is noted only
+    // while scrolling (never mid-resize), and once the resize settles the page returns to it in the new layout
+    let readK=-1,anchor=null,resizing=false,settle=0;
+    const noteK=()=>{if(resizing)return;let k=-1;all.forEach((c,i)=>{const r=c.getBoundingClientRect(),o=parseFloat(cols(c)[0].style.opacity||'1');if(r.bottom>innerHeight*.3&&(DESK.matches?r.top<innerHeight*.6&&o>.5:r.top<=200))k=i});readK=k;
+      // away from the cards, the reader's place is kept as the section at the top of the screen and its offset
+      anchor=null;if(k<0){const el=[...document.querySelectorAll('main > section, footer')].find(s=>s.getBoundingClientRect().bottom>innerHeight*.3);if(el)anchor=[el,el.getBoundingClientRect().top]}};
+    let nt=false;addEventListener('scroll',()=>{if(nt)return;nt=true;requestAnimationFrame(()=>{noteK();nt=false})},{passive:true});noteK();
+    schedule=()=>{resizing=true;clearTimeout(settle);settle=setTimeout(()=>{const k=readK;
+      const an=anchor;
+      try{if(crossed&&(k>=0||an)){clear();update();const h=root.style.scrollBehavior;root.style.scrollBehavior='auto';scrollTo(0,k>=0?restY(k):scrollY+an[0].getBoundingClientRect().top-an[1]);root.style.scrollBehavior=h;update();mark()}}
+      finally{crossed=false;resizing=false;noteK()}},250)};
+    addEventListener('resize',schedule,{passive:true});
     addEventListener('load',()=>{const i=all.indexOf(document.getElementById(location.hash.slice(1)));if(i>=0)requestAnimationFrame(()=>scrollTo({top:restY(i),behavior:'auto'}))});
   }
 

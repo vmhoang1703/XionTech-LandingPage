@@ -1033,3 +1033,19 @@ Template:
   were compared before and after (unchanged).
 - **AI got it wrong?** No, beyond first logging the Home overflow as a separate issue before finding it had the
   same cause.
+
+## 2026-10-05 — ENH-027: resizing across the breakpoint keeps the reader's place
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor)
+- **Prompt / task:** Fix the open item from ENH-020: resizing a window across 993px (stacked cards on desktop,
+  one column on phones) kept the scroll position but lost the reader's card, because the two layouts differ
+  greatly in length.
+- **Decision / result:** Approved by Amber. The card being read is noted only while scrolling (never mid-resize)
+  and restored once the resize settles; away from the cards, the section at a reading line and its offset are
+  restored instead. The review caught that a reader at the footer would have been pulled back to the last card,
+  that an unsupported instant scroll could have stopped the tracking for good, and that a breakpoint change
+  without a resize could leave a later keyboard resize jumping; all fixed and re-checked.
+- **AI got it wrong?** Yes: the first attempt (in ENH-020) let resize handlers overwrite the remembered card and
+  was reverted; here the first version of the non-card case kept the distance from the page end, which drifted
+  because sections change height between layouts, and was replaced by a section anchor.
