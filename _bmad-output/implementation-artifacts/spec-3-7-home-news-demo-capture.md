@@ -164,3 +164,9 @@ Full `bmad-code-review` on 2026-10-04 after rebasing onto `develop` (0e60f7e), 5
 - patch (docs): the post-merge steps now name slug, Published at, category, a `[Placeholder]` title and 3 posts; the only published post had no slug or date, so Home showed 0 cards.
 - patch (test): the news tests now check that every class has a CSS rule (`undefinedClasses`), like the other Home sections.
 - defer (Minor, `deferred-work.md`): hard-coded font sizes next to the `--text-*` tokens; no excerpt line clamp; schema values and labels in two places; the fixed sample note will also label real stories; a weak `aria-hidden` query; no static-HTML test of real cards; the `.sec-head ~ .link-arrow` hover reaches other sections; `epic-3-context.md` mixes after-demo items; ANSI codes in the verification files; pre-rebase commit hashes in this spec.
+
+Second full review of the fixes (2026-10-04, 5 layers): no Critical; Security clean; Verification Gap found every fix guarded by a test.
+
+- patch (docs only): `docs/sanity.md` now says how to recover after an outage (re-publish a post or redeploy; the empty news section is cached until then), and that a post also needs an English title; the schema test name no longer claims slug and date alone are enough.
+- follow-up for the lead (similar check): `/careers` (Story 6.5) still lets a Sanity error fail the page and the build; the same guard could be applied there.
+- defer (Minor): an optional time-based refresh for Home so news recovers by itself; the empty `<time>` for an unreadable date; the console spy restore in the failure test; the frozen I/O row still reads "error propagates" (overridden by A9 as noted above); `docs/sanity.md` step 3 still says one post; a shared validation-rule helper.

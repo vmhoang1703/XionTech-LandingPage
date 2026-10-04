@@ -75,7 +75,7 @@ describe("studio schemas", () => {
     });
   });
 
-  it("makes the post slug and published date required, so every published post can show on Home", () => {
+  it("makes the post slug and published date required (Home also needs an English title)", () => {
     for (const name of ["slug", "publishedAt"]) {
       const field = findField(post, name) as Field & { validation?: unknown };
       const required = vi.fn().mockReturnValue("required-rule");
