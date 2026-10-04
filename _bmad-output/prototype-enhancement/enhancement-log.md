@@ -32,6 +32,7 @@ directly, before this log existed.
 | ENH-016 | 2026-10-04 | About, frequently asked questions                         | The FAQ becomes "Your question, we answer": two columns of hairline rows, closed by default, on a soft animated light-to-navy background                                                                                                                                                          | Approved | 6.4                                   |
 | ENH-017 | 2026-10-04 | Products, LXP and IoT sections                            | The two centred section headings move to the left, so every heading on the site is left aligned                                                                                                                                                                                                   | Approved | 4.1                                   |
 | ENH-018 | 2026-10-04 | Products, hero                                            | A "Pause motion" button stops the drifting glows; the choice is shared with Home                                                                                                                                                                                                                  | Approved | 4.1                                   |
+| ENH-019 | 2026-10-04 | About, frequently asked questions                         | The FAQ background stops moving: the clouds and the gradient stay, the drifting and the sheen go                                                                                                                                                                                                  | Approved  | 6.4                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -498,3 +499,14 @@ directly, before this log existed.
 - **Rules:** the choice is saved and shared: pausing on Products also pauses Home's hero and partner logos, and the other way round. With reduced motion, the glows start still and the button offers "Play motion". The glows still rest while the hero is off screen. On phones the hero has extra room at the top so the button and its label never touch the heading.
 - **Developer notes:** the button is a real `button` reached by Tab; its accessible name is its label text. It is hidden without JavaScript, as on Home. Use one shared motion setting for every animated background.
 - **Open items:** none.
+
+## ENH-019: The FAQ background holds still
+
+- **Why:** Amber on 2026-10-04, after seeing ENH-016 in place: the section does not need animation.
+- **What changed:** on the About page FAQ:
+  - the three clouds no longer drift; they keep their shapes, colours and places in the bottom left corner;
+  - the slow sheen is removed altogether, since a sheen that does not travel is only a faint band of light sitting off to one side;
+  - the light-to-navy gradient behind everything is unchanged.
+- **Rules:** the section now has no motion at all, so there is nothing for a reduced-motion setting to switch off, and the rule that did that is gone.
+- **Developer notes:** both keyframe sets (`faqFloat`, `faqSheen`) and the `.faq-sheen` layer are deleted, so the page carries no FAQ animation code. The clouds stay as three `aria-hidden` divs painted with stacked radial gradients.
+- **Open items:** this also settles the question left open by ENH-016: with the FAQ still, the Pause motion button from ENH-018 no longer has anything to govern here, so it can stay scoped to the Products and Home heroes.

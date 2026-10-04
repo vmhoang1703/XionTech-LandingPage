@@ -31,6 +31,7 @@ also has a Vietnamese version in the prototype.
 | Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018 |
 | Products, after the four apps | — | New: "One event. Multiple experiences.", a five-step school-day timeline (07:45 to 15:30) on dark navy | ENH-015 |
 | About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; soft clouds drifting in the bottom left of a light-to-navy background | ENH-016 |
+| About, FAQ background | — | The clouds and gradient hold still; the drifting and the sheen are gone | ENH-019 |
 | Products, LXP and IoT | Both section headings centred | Both start at the left, like every other heading on the site | ENH-017 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
@@ -661,7 +662,7 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -735,7 +736,7 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ 
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. Your question, we answer · [rebuilt in ENH-016] ─────────────────────────────────────────────────┐ ║
+║ ┌─ 5. Your question, we answer · [rebuilt in ENH-016 · background stilled in ENH-019] ─────────────────┐ ║
 ║ │ H2: Your question, we answer                                                                         │ ║
 ║ │ Text: Straight answers about our products, our services and how we work.                             │ ║
 ║ │ [FAQ, opens on click] Q: What does XionTechs do?                                                     │ ║

@@ -981,3 +981,17 @@ Template:
   branch at the same time and restored `about.html` and `site.css` over the finished FAQ work; it was
   re-applied with in-place edits so that session's ENH-014, ENH-015 and ENH-018 survived, and Amber closed the
   other session.
+
+## 2026-10-04 — ENH-019: the FAQ background holds still
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5)
+- **Prompt / task:** Amber, after living with ENH-016 for a few minutes: the FAQ section does not need
+  animation. The clouds and the light-to-navy gradient stay exactly where they are; the drifting stops.
+- **Decision / result:** Approved by Amber. Both keyframe sets are deleted, so the page carries no FAQ
+  animation code at all, and the reduced-motion rule went with them since there is nothing left to switch off.
+  The sheen layer was removed rather than frozen: a sheen is a travelling band of light, and standing still it
+  is only a faint streak parked off to one side. This also settles the open item from ENH-016 — with the FAQ
+  still, the Pause motion button from ENH-018 can stay scoped to the Products and Home heroes.
+- **AI got it wrong?** No, but a judgement call worth recording: "no animation" was read as keeping the look
+  and removing the motion, not as reverting the background Amber had chosen one message earlier. Removing the
+  sheen outright went slightly beyond the literal ask and was flagged to her rather than done quietly.
