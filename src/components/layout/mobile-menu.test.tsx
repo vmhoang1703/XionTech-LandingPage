@@ -15,8 +15,9 @@ let width = 375;
 function shown(el: Element) {
   if (el.closest("[hidden]")) return false;
   const css = el.classList;
-  if (css.contains("max-[640px]:hidden")) return width > 640;
-  if (css.contains("max-[640px]:inline-flex")) return width <= 640;
+  // Tailwind v4 compiles max-[641px] to (width < 641px), that is 640px and below.
+  if (css.contains("max-[641px]:hidden")) return width >= 641;
+  if (css.contains("max-[641px]:inline-flex")) return width < 641;
   if (css.contains("min-[1081px]:hidden")) return width <= 1080;
   if (css.contains("min-[1081px]:flex")) return width > 1080;
   return !css.contains("hidden");
@@ -58,12 +59,13 @@ afterEach(() => {
   document.documentElement.style.overflow = "";
 });
 
-// The real header: logo, Book a demo (hidden at 640px and below), then the menu.
+// Stand-in header with the real breakpoint classes: logo, Book a demo (hidden at
+// 640px and below), then the menu. The real SiteHeader is tested further down.
 function Header() {
   return (
     <header>
       <Link href="/">logo</Link>
-      <Link href="/demo#form" className="max-[640px]:hidden">
+      <Link href="/demo#form" className="max-[641px]:hidden">
         Book a demo
       </Link>
       <MobileMenu />
@@ -305,6 +307,41 @@ describe("MobileMenu", () => {
       for (const listener of mediaListeners) listener({ matches: false });
     });
     expect(expanded()).toBe("true");
+  });
+
+  it("keeps the menu open for a modifier or middle click on a link (new tab)", () => {
+    render(<Header />);
+    fireEvent.click(menuButton());
+    const logo = screen.getByRole("link", { name: "logo" });
+    logo.addEventListener("click", (event) => event.preventDefault());
+    for (const init of [
+      { ctrlKey: true },
+      { metaKey: true },
+      { shiftKey: true },
+      { button: 1 },
+    ]) {
+      fireEvent.click(logo, init);
+      expect(expanded()).toBe("true");
+    }
+  });
+
+  it("ignores a click whose target is not an element", () => {
+    render(<Header />);
+    fireEvent.click(menuButton());
+    expect(() => fireEvent.click(document)).not.toThrow();
+    expect(expanded()).toBe("true");
+  });
+
+  it("puts focus back on Menu when a menu link to the current page is activated", () => {
+    mockPathname = "/careers";
+    render(<Header />);
+    fireEvent.click(menuButton());
+    const careers = menuLinks().find((a) => a.textContent === "Careers");
+    careers?.addEventListener("click", (event) => event.preventDefault());
+    careers?.focus();
+    fireEvent.click(careers as HTMLElement);
+    expect(expanded()).toBe("false");
+    expect(document.activeElement).toBe(menuButton());
   });
 
   it("closes when a header link to the current page is activated", () => {

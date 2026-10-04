@@ -35,7 +35,6 @@ try {
   // 800: look, keyboard open, tab order, focus ring, scroll lock, resize close
   {
     const p = await b.newPage({ viewport: { width: 800, height: 700 } });
-    await p.goto(`${BASE}/news/x`, { waitUntil: "load" }).catch(() => {});
     await p.goto(`${BASE}/`, { waitUntil: "load" });
     await settle(p);
     const m = menuBtn(p);
@@ -52,7 +51,7 @@ try {
     await p.keyboard.press("Enter");
     await p.waitForTimeout(300);
     log(`[800] Enter: expanded ${await isOpen(p)} | focus ${await active(p)} | panel ${JSON.stringify(await box(panel(p)))} | header bottom ${(await box(p.locator("header"))).y + (await box(p.locator("header"))).h}`);
-    log(`[800] panel look: ${await css(panel(p), ["backgroundColor", "overflowY"])} | CTA in panel visible ${await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => false)}`);
+    log(`[800] panel look: ${await css(panel(p), ["backgroundColor", "overflowY"])} | CTA in panel visible ${await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => "error")}`);
     const order = [];
     for (let i = 0; i < 10; i++) {
       await p.keyboard.press("Tab");
@@ -83,7 +82,7 @@ try {
     await menuBtn(p).click();
     await p.waitForTimeout(200);
     const cur = panel(p).locator('[aria-current="page"]');
-    log(`[800 /careers] current item "${(await cur.innerText().catch(() => "none")).trim()}" | ${await css(cur, ["color", "fontWeight", "boxShadow"]).catch(() => "")}`);
+    log(`[800 /careers] current item "${(await cur.innerText().catch(() => "none")).trim()}" | ${await css(cur, ["color", "fontWeight", "boxShadow"]).catch(() => "error")}`);
     await p.close();
   }
 
@@ -93,7 +92,7 @@ try {
     const p = await ctx.newPage();
     await p.goto(`${BASE}/`, { waitUntil: "load" });
     await settle(p);
-    log(`[375] header Book a demo visible ${await p.locator("header > * a", { hasText: /Book a demo/ }).first().isVisible().catch(() => false)} | logo height ${(await box(p.locator("header img").first())).h}`);
+    log(`[375] header Book a demo visible ${await p.locator("header > * a", { hasText: /Book a demo/ }).first().isVisible().catch(() => "error")} | logo height ${(await box(p.locator("header img").first())).h}`);
     await menuBtn(p).tap();
     await p.waitForTimeout(300);
     const items = await panel(p).locator("a").evaluateAll((els) => els.filter((e) => e.getClientRects().length).map((e) => e.textContent.trim()));
@@ -120,8 +119,24 @@ try {
     await settle(p);
     await menuBtn(p).click();
     await p.waitForTimeout(200);
-    log(`[641] panel CTA visible ${await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => false)} | header CTA visible ${await p.locator("header").getByRole("link", { name: /Book a demo/ }).first().isVisible()}`);
+    log(`[641] panel CTA visible ${await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => "error")} | header CTA visible ${await p.locator("header").getByRole("link", { name: /Book a demo/ }).first().isVisible()}`);
     await p.screenshot({ path: `${OUT}/menu-641-open.png` });
+    await p.close();
+  }
+
+  // Exact breakpoints: 640 (CTA in the panel), 1080 (Menu shown)
+  for (const w of [640, 1080]) {
+    const p = await b.newPage({ viewport: { width: w, height: 700 } });
+    await p.goto(`${BASE}/`, { waitUntil: "load" });
+    await settle(p);
+    const shown = await menuBtn(p).isVisible();
+    let cta = "n/a";
+    if (shown) {
+      await menuBtn(p).click();
+      await p.waitForTimeout(200);
+      cta = String(await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => "error"));
+    }
+    log(`[${w}] Menu visible ${shown} | panel CTA visible ${cta} | header CTA visible ${await p.locator("header").getByRole("link", { name: /Book a demo/ }).first().isVisible()}`);
     await p.close();
   }
 

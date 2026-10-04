@@ -65,10 +65,28 @@ export function MobileMenu() {
       }
     };
     // Any link closes the menu, also one to the current page (the logo on Home), which
-    // changes no pathname (CAP-8).
+    // changes no pathname (CAP-8). A modifier or middle click opens a new tab, so the
+    // menu stays open. A panel link to this page hides itself, so focus goes to Menu.
     const onClick = (event: MouseEvent) => {
-      if ((event.target as Element).closest("a[href]")) {
-        setOpenedOn(null);
+      const link =
+        event.target instanceof Element
+          ? event.target.closest("a[href]")
+          : null;
+      const newTab =
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey;
+      if (!link || newTab) {
+        return;
+      }
+      setOpenedOn(null);
+      const samePage =
+        link instanceof HTMLAnchorElement &&
+        new URL(link.href).pathname === pathname;
+      if (samePage && document.getElementById(MENU_ID)?.contains(link)) {
+        buttonRef.current?.focus();
       }
     };
     const desktop = matchMedia(DESKTOP_QUERY);
@@ -87,7 +105,7 @@ export function MobileMenu() {
       document.removeEventListener("click", onClick);
       desktop.removeEventListener("change", onWiden);
     };
-  }, [open]);
+  }, [open, pathname]);
 
   return (
     <>
@@ -109,7 +127,7 @@ export function MobileMenu() {
       >
         <Link
           href="/demo#form"
-          className="btn btn-primary mb-2.5 hidden justify-center max-[640px]:inline-flex"
+          className="btn btn-primary mb-2.5 hidden justify-center max-[641px]:inline-flex"
         >
           {LABELS.bookDemo}
         </Link>

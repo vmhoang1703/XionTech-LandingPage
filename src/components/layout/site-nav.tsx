@@ -180,6 +180,7 @@ export function SiteNav() {
 
   const link = (key: Section, href: string, label: string) => (
     <Link
+      key={key}
       href={href}
       className={itemClass}
       aria-current={section === key ? "page" : undefined}

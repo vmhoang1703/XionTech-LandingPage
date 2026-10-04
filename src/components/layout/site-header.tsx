@@ -20,7 +20,7 @@ export function SiteHeader() {
                 width={250}
                 height={46}
                 loading="eager"
-                className="h-8 w-auto max-[640px]:h-[26px]"
+                className="h-8 w-auto max-[641px]:h-[26px]"
               />
             </Link>
             <SiteNav />
@@ -28,7 +28,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-2">
             <Link
               href="/demo#form"
-              className="btn btn-primary btn-sm max-[640px]:hidden"
+              className="btn btn-primary btn-sm max-[641px]:hidden"
             >
               {LABELS.bookDemo}
             </Link>
