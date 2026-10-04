@@ -104,7 +104,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `page.test.tsx` -- null role calls `notFound`; open role renders H1, crumbs, form.
 - [x] `src/app/globals.css` -- port `.job-body` and file-field rules.
 - [x] `e2e/job.spec.ts` -- `@smoke`: `/careers/no-such-role` is 404; honeypot POST to `/api/careers/apply` is 200.
-- [ ] `.env.example`, `docs/contact-delivery.md` -- `BLOB_STORE_ID`, `BLOB_WEBHOOK_PUBLIC_KEY`, `VERCEL_OIDC_TOKEN` (local), routes, lead steps, Blob free limits.
+- [x] `.env.example`, `docs/contact-delivery.md` -- `BLOB_STORE_ID`, `BLOB_WEBHOOK_PUBLIC_KEY`, `VERCEL_OIDC_TOKEN` (local), routes, lead steps, Blob free limits.
 
 **Acceptance Criteria:**
 - Given `/careers/placeholder-sample-job`, when it loads, then the amber hero shows crumbs Home / Careers / title, the H1 title and chips, the details sit left of the form card above 900px and above it at 900px and below, and there is no capture band.
