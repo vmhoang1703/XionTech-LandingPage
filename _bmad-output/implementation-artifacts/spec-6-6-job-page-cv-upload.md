@@ -22,9 +22,9 @@ context: ['{project-root}/AGENTS.md']
 **Always:**
 - Reuse, never copy: `isValidEmail`, `EMAIL_MAX_LENGTH`, `TEXT_MAX_LENGTH`, `MESSAGE_MAX_LENGTH`, `LENGTH_ERROR` (`contact-rules.ts`); `getDeliveryConfig`, `checkRateLimits`, the Gmail transport (`delivery.ts`); `postSubmission` (`post-submission.ts`, made endpoint- and field-aware with defaults so contact and capture callers do not change); the 2.2 field, error, announce, focus and `form-ok` patterns.
 - Error wording exactly as SPEC CAP-2; success, consent and "Sending..." exactly as CAP-3 and CAP-5.
-- CV: `.pdf`, `.doc`, `.docx`, MIME `application/pdf`, `application/msword`, `application/vnd.openxmlformats-officedocument.wordprocessingml.document`, 1 byte to 5 × 1024 × 1024 bytes. Checked on choose, on submit, by the Blob token (`allowedContentTypes`, `maximumSizeInBytes`) and again by the apply route on the stored blob (`head`).
+- CV: `.pdf`, `.doc`, `.docx`, MIME `application/pdf`, `application/msword`, `application/vnd.openxmlformats-officedocument.wordprocessingml.document`, 1 byte to 5 × 1024 × 1024 bytes. Checked on choose, on submit, by the Blob signed upload token (`allowedContentTypes`, `maximumSizeInBytes`) and again by the apply route on the stored blob (`get` metadata).
 - The blob path is `cv/application.<ext>` with a random suffix: no file name, name or email in any path or URL. Store access `private`. Nothing goes to Sanity.
-- `BLOB_READ_WRITE_TOKEN` is server-only, read and checked per request like the five mail variables (`docs/contact-delivery.md` explains why not at build), never logged. Log lines name step and error class only.
+- Blob auth is OIDC (controller note 2026-10-04): `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` are server-only, read and checked per request like the five mail variables (`docs/contact-delivery.md` explains why not at build), never logged. The OIDC token comes from the `x-vercel-oidc-token` request header on Vercel and from `VERCEL_OIDC_TOKEN` (written by `vercel link` / `vercel env pull`) locally, so it is not checked as an env var; a missing token fails the Blob call (502). There is no `BLOB_READ_WRITE_TOKEN`. Log lines name step and error class only.
 - Applications share the contact rate limits (prefix `contact`, about 5 per 10 minutes per IP and email; `contact-ip`, about 20 per hour per IP). Token requests get their own IP limit.
 - Page is a Server Component; only the form is `"use client"`. No capture band. No `/en` `/vi`. Strings in one place for later translation. Brand "XionTech".
 
@@ -48,7 +48,7 @@ context: ['{project-root}/AGENTS.md']
 | Apply after upload fails | apply route 502 / network | same as above; retry reuses the uploaded blob for the same file | N/A |
 | Honeypot filled | `website` not empty | 200 `{ ok: true }`, no mail, no rate-limit call | N/A |
 | Bad body | not an object, missing `slug`/`cv` strings, phone > 200, CV path not `cv/<name>` ending `.pdf`, `.doc` or `.docx` | 400 `{ error: "send" }` | N/A |
-| Config missing | a mail variable or `BLOB_READ_WRITE_TOKEN` unset | 500 `{ error: "send" }`, one log line naming the variable | N/A |
+| Config missing | a mail variable, `BLOB_STORE_ID` or `BLOB_WEBHOOK_PUBLIC_KEY` unset | 500 `{ error: "send" }`, one log line naming the variable | N/A |
 | Field errors | empty name, bad email, note > 2,000 | 400 `{ errors }` in client wording | N/A |
 | Role gone | slug no longer open at send | 400 `{ error: "send" }` | N/A |
 | Stored CV wrong | blob missing, size > 5 MiB, MIME not allowed or not matching the extension | 400 `{ errors: { cv } }` | N/A |
@@ -91,8 +91,8 @@ context: ['{project-root}/AGENTS.md']
 - [x] `src/lib/contact/delivery.ts` + test -- application mail (subject, body lines, Reply-To applicant, CV attachment, Q1-A), `checkUploadLimit` -- CAP-4, T4.
   - red: `delivery.test.ts` -- application subject strips CR/LF; body names role, page path, CV path; upload limit uses prefix `cv-upload` and fails open.
 - [x] `src/app/api/careers/cv-upload/route.ts` + test -- only `blob.generate-client-token`; config → 500; upload limit → 429; pathname must be `cv/application.<ext>`; token: `allowedContentTypes`, `maximumSizeInBytes`, `addRandomSuffix: true`, `validUntil` 10 min -- CAP-4.
-  - red: `route.test.ts` -- other event type 400; wrong path 400; token options asserted on a mocked `handleUpload`.
-- [ ] `src/app/api/careers/apply/route.ts` + test -- matrix steps in order: bad, honeypot, config, field errors, role (`getOpenRole`), rate, `head` CV, send -- CAP-4.
+  - red: `route.test.ts` -- other event type 400; wrong path 400; token options asserted on a mocked `handleUploadPresigned` / `issueSignedToken`.
+- [ ] `src/app/api/careers/apply/route.ts` + test -- matrix steps in order: bad, honeypot, config, field errors, role (`getOpenRole`), rate, CV (`get` metadata), send -- CAP-4.
   - red: `route.test.ts` -- one test per matrix row, Blob and Gmail mocked.
 - [ ] `src/components/contact/post-submission.ts` + test -- optional endpoint and field list -- reuse.
   - red: `post-submission.test.ts` -- a given endpoint is called and its field errors are read.
@@ -104,7 +104,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `page.test.tsx` -- null role calls `notFound`; open role renders H1, crumbs, form.
 - [ ] `src/app/globals.css` -- port `.job-body` and file-field rules.
 - [ ] `e2e/job.spec.ts` -- `@smoke`: `/careers/no-such-role` is 404; honeypot POST to `/api/careers/apply` is 200.
-- [ ] `.env.example`, `docs/contact-delivery.md` -- `BLOB_READ_WRITE_TOKEN`, routes, lead steps, Blob free limits.
+- [ ] `.env.example`, `docs/contact-delivery.md` -- `BLOB_STORE_ID`, `BLOB_WEBHOOK_PUBLIC_KEY`, `VERCEL_OIDC_TOKEN` (local), routes, lead steps, Blob free limits.
 
 **Acceptance Criteria:**
 - Given `/careers/placeholder-sample-job`, when it loads, then the amber hero shows crumbs Home / Careers / title, the H1 title and chips, the details sit left of the form card above 900px and above it at 900px and below, and there is no capture band.
@@ -142,15 +142,18 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 - 2026-10-04: this worktree's `node_modules` is a junction to the main checkout's. Turbopack rejects it, so never run `npm run build`, `npm run dev` or `npm run test:smoke` here (pending, controller). Never run `npm install`, `npm ci` or `npm uninstall` (Task 1 already added `@vercel/blob`; an install here once pruned `vite` from the shared `node_modules`). Run tests with `npx vitest run <file>`. Run `npx next typegen` if `PageProps` types are missing. Commit with Conventional Commits and the trailers `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>` and `Claude-Session: https://claude.ai/code/session_0169ynHXpgbJUKDWC3nosnjr`. No push.
 - 2026-10-04: task reviews are skipped by the controller's rule for this run (one review layer inside the build); the ledger records each skip.
+- 2026-10-04, controller note (env facts): the lead's private Blob store gives `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY`, not `BLOB_READ_WRITE_TOKEN`. In `@vercel/blob@2.8.0`, `handleUpload` needs a read-write token (`generateClientTokenFromReadWriteToken`), so the token route uses `handleUploadPresigned` with `issueSignedToken` (OIDC + store id, `operations: ["put"]`, pathname-scoped, `allowedContentTypes`, `maximumSizeInBytes`, `validUntil`) and `urlOptions` (`addRandomSuffix: true`, same limits); its body event is `blob.generate-presigned-url`. The browser uses `uploadPresigned` from `@vercel/blob/client`. The apply route reads the CV with `get(pathname, { access: "private", storeId, useCache: false })` and passes no `token`. Tasks 7 and 8 are reworked in fix rounds; Task 16 documents `BLOB_STORE_ID`, `BLOB_WEBHOOK_PUBLIC_KEY` and `VERCEL_OIDC_TOKEN` (local only).
 - 2026-10-04, Task 4: `validateApplication({ name, email, note })` checks the text fields only. A phone over 200 characters (input `maxLength`, no error slot) is a bad body in `parseApplication`; the CV is checked with `cvError` (browser, extension and size) and `storedCvError` (server, on the stored blob).
 
 ## Spec Change Log
+
+- 2026-10-04 (controller note, env facts; no change to the lead's decisions): Blob auth changed from `BLOB_READ_WRITE_TOKEN` + `handleUpload` to OIDC + `BLOB_STORE_ID` + `BLOB_WEBHOOK_PUBLIC_KEY` with `handleUploadPresigned`, because the lead's store has no read-write token. Amended: frozen Always line on Blob auth, frozen matrix row "Config missing", the CV check line (`get` metadata instead of `head`), tasks 7, 8 and 16 wording, Design Notes. Avoids: routes that fail with "Invalid `BLOB_READ_WRITE_TOKEN`" on every upload. KEEP: private store, path `cv/application.<ext>` + random suffix, two requests per application, every server check.
 
 ## Review Triage Log
 
 ## Design Notes
 
-- Two requests per application: the browser uploads the CV with a short-lived token (Vercel Function body limit 4.5 MB never applies), then sends a small JSON body with the blob path. The apply route trusts nothing from the upload: it re-reads the stored blob's size and type with `head`.
+- Two requests per application: the browser uploads the CV with a short-lived token (Vercel Function body limit 4.5 MB never applies), then sends a small JSON body with the blob path. The apply route trusts nothing from the upload: it re-reads the stored blob's size and type from `get` before attaching it.
 - Retry: the form keeps the uploaded path for the same `File` object, so a mail failure does not upload a second copy. An upload that fails leaves no blob.
 - Vercel Blob Hobby (`docs/spikes/cms-spike.md`): 1 GB storage (about 200 CVs at 5 MB, kept with no time limit, A4), 10k simple and 2k advanced operations and 10 GB transfer per month; at the limit the store is locked for 30 days. Name it in the PR. Re-read the pricing page before Demo day.
 - Page metadata: one static title and description from `src/content/job.ts` (per-role metadata is Story 7.1).
