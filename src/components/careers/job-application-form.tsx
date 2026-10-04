@@ -84,8 +84,6 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
   });
   const panelRef = useRef<HTMLDivElement>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
-  // The last file that reached the store, so a retry does not upload it again.
-  const uploaded = useRef<{ file: File; pathname: string } | null>(null);
 
   // The button that had focus is gone (success) or was disabled (failure), so
   // put focus where the visitor can read the result and go on.
@@ -142,18 +140,16 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
     if (showErrors(form, found) || !file) return;
 
     setStatus("sending");
+    // Upload on every submit: the server deletes the CV of any application it
+    // does not send (decision A10), so an earlier upload cannot be reused.
     let pathname: string;
     try {
-      pathname =
-        uploaded.current?.file === file
-          ? uploaded.current.pathname
-          : await uploadCv(file);
+      pathname = await uploadCv(file);
     } catch {
       setStatus("idle");
       setFailure("send");
       return;
     }
-    uploaded.current = { file, pathname };
 
     const result = await postSubmission(
       {
@@ -177,7 +173,6 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
     }
     setStatus("idle");
     if (result.kind === "errors") {
-      if (result.errors.cv) uploaded.current = null;
       showErrors(form, result.errors);
     } else {
       setFailure(result.kind);

@@ -337,21 +337,31 @@ describe("JobApplicationForm failures", () => {
     expectKept(file);
   });
 
-  it("reuses the uploaded blob on retry for the same file, and clears the alert", async () => {
-    fetchMock.mockReturnValueOnce(reply(502, { error: "send" }));
-    render(<JobApplicationForm slug="role" />);
-    fillValid();
-    submit();
-    await settle();
-    fetchMock.mockReturnValueOnce(reply(200, { ok: true }));
-    submit();
-    expect(screen.queryByRole("alert")).toBeNull();
-    await settle();
-    expect(uploadMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(sentBody(1).cv).toBe(PATHNAME);
-    expect(screen.getByRole("status")).toBeTruthy();
-  });
+  it.each([
+    ["a send failure", () => reply(502, { error: "send" })],
+    ["a rate limit", () => reply(429, { error: "rate" })],
+    [
+      "server field errors",
+      () => reply(400, { errors: { note: JOB_ERRORS.note } }),
+    ],
+  ])(
+    "uploads the same CV again on the next submit after %s, because the server deleted it",
+    async (_label, failure) => {
+      fetchMock.mockReturnValueOnce(failure());
+      render(<JobApplicationForm slug="role" />);
+      fillValid();
+      submit();
+      await settle();
+      fetchMock.mockReturnValueOnce(reply(200, { ok: true }));
+      submit();
+      expect(screen.queryByRole("alert")).toBeNull();
+      await settle();
+      expect(uploadMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(sentBody(1).cv).toBe(PATHNAME);
+      expect(screen.getByRole("status")).toBeTruthy();
+    },
+  );
 
   it("uploads again when another file is chosen", async () => {
     fetchMock.mockReturnValueOnce(reply(502, { error: "send" }));
@@ -388,7 +398,7 @@ describe("JobApplicationForm failures", () => {
     expect(button().hasAttribute("disabled")).toBe(false);
   });
 
-  it("drops the cached upload when the server flags the CV", async () => {
+  it("uploads again after the server flags the CV", async () => {
     fetchMock.mockReturnValueOnce(
       reply(400, { errors: { cv: JOB_ERRORS.cv } }),
     );
