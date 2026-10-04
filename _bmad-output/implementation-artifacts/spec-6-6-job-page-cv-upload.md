@@ -150,7 +150,7 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 ## Spec Change Log
 
 - 2026-10-04 (lead decision, A10 part 4, after the review): the apply route deletes the uploaded CV when it does not send the mail, the form uploads on every submit, and the token limit is about 5 per IP per hour. Amended: frozen matrix row "Apply after upload fails", the frozen rate-limit line plus a delete line, Code Map limit, Design Notes retry line, triage row 2. Avoids: orphan CVs from failed or abandoned applications filling the 1 GB store. KEEP: a sent application keeps its CV (A4); delete failures never change the answer.
-- 2026-10-04 (lead decision in chat, after the full review's security finding): the apply route checks its rate limits before the role lookup and deletes an unsent CV only after they passed, so a caller cannot drive deletes or Sanity reads freely; the token route answers a used-up upload limit with 200 and no presigned URL, so the form can show the rate message. Amended: the delete rows above, and "Config missing" now logs one line again.
+- 2026-10-04 (lead decision in chat, after the full review's security finding): the apply route checks its rate limits before the role lookup and deletes an unsent CV only after they passed, so deletes and Sanity reads are rate-limited like sends (the limits fail open when Upstash is down, deferred); the token route answers a used-up upload limit with 200 and no presigned URL, so the form can show the rate message. Amended: the delete rows above, and "Config missing" now logs one line again.
 
 - 2026-10-04 (controller note, env facts; no change to the lead's decisions): Blob auth changed from `BLOB_READ_WRITE_TOKEN` + `handleUpload` to OIDC + `BLOB_STORE_ID` + `BLOB_WEBHOOK_PUBLIC_KEY` with `handleUploadPresigned`, because the lead's store has no read-write token. Amended: frozen Always line on Blob auth, frozen matrix row "Config missing", the CV check line (`get` metadata instead of `head`), tasks 7, 8 and 16 wording, Design Notes. Avoids: routes that fail with "Invalid `BLOB_READ_WRITE_TOKEN`" on every upload. KEEP: private store, path `cv/application.<ext>` + random suffix, two requests per application, every server check.
 
@@ -219,7 +219,8 @@ Captured at the end of step-03 on 2026-10-04 re-captured after the review patch,
 
 **Artifacts**
 
-- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4288 bytes -- sha256 85d0b0fdd86e -- transcript of the three command runs
+- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4288 bytes -- sha256 85d0b0fdd86e -- transcript of the three command runs (before the full reviews)
+- spec-6-6-job-page-cv-upload-evidence/verification-after-review.txt -- 877 bytes -- sha256 eb1a9d5730d2 -- lint, typecheck, format, 1008 tests, diff coverage 100% on the code after the full reviews (363c4df); smoke in `smoke-output.txt`
 - spec-6-6-job-page-cv-upload-evidence/observed.md -- 1331 bytes -- sha256 c3994b890b4d -- surface not reached; what the tests observed instead
 
 **Not captured**

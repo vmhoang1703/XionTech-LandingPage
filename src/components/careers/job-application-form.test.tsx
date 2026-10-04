@@ -360,7 +360,7 @@ describe("JobApplicationForm failures", () => {
       () => reply(400, { errors: { note: JOB_ERRORS.note } }),
     ],
   ])(
-    "uploads the same CV again on the next submit after %s, because the server deleted it",
+    "uploads the CV again on the next submit after %s (the server may have deleted it)",
     async (_label, failure) => {
       fetchMock.mockReturnValueOnce(failure());
       render(<JobApplicationForm slug="role" />);
