@@ -44,7 +44,10 @@ export function newsDate(iso: string): string {
 }
 
 export function categoryTag({ category, app }: LatestPost): string | null {
-  const label = category ? categoryLabels[category] : undefined;
+  const label =
+    category && Object.hasOwn(categoryLabels, category)
+      ? categoryLabels[category]
+      : undefined;
   if (!label) return null;
   return category === "product" && app ? `${label} · ${app}` : label;
 }

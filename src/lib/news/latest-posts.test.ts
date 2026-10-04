@@ -115,6 +115,7 @@ describe("categoryTag", () => {
 
   it("returns null for an unknown category", () => {
     expect(categoryTag(post({ category: "sports" }))).toBeNull();
+    expect(categoryTag(post({ category: "toString" }))).toBeNull();
   });
 
   it("returns null for a missing category", () => {

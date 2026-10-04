@@ -31,6 +31,16 @@ describe("NewsCard", () => {
     expect(container.querySelector("[aria-hidden='true']")).not.toBeNull();
   });
 
+  it("encodes the slug in the story link", () => {
+    render(<NewsCard post={{ ...post, slug: "a/b?c" }} />);
+
+    expect(
+      screen
+        .getByRole("link", { name: "Read story PXP launches" })
+        .getAttribute("href"),
+    ).toBe("/news/a%2Fb%3Fc");
+  });
+
   it("marks a product tag with the amber class", () => {
     render(<NewsCard post={{ ...post, category: "product", app: "PXP" }} />);
 

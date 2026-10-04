@@ -25,7 +25,10 @@ export function NewsCard({ post }: Readonly<{ post: LatestPost }>) {
       </div>
       <h3>{post.title}</h3>
       {post.excerpt ? <p>{post.excerpt}</p> : null}
-      <Link href={`/news/${post.slug}`} className="link-arrow">
+      <Link
+        href={`/news/${encodeURIComponent(post.slug)}`}
+        className="link-arrow"
+      >
         <span>
           {homeNews.readStory} <span className="sr-only">{post.title}</span>
         </span>
