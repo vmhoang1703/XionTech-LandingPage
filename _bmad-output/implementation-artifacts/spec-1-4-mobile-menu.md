@@ -72,8 +72,8 @@ Sources: SPEC CAP-1 to CAP-8, `EXPERIENCE.md` Component Patterns › Mobile menu
 | Header links | menu open, tap the logo on Home | touch, mouse | menu closes; page scrolls | — | CAP-8 (review finding) | mobile-menu.test "closes when a header link to the current page" |
 | Panel | page changes (back button) | any | menu closed | — | CAP-8 | mobile-menu.test "closes when the pathname changes" |
 | Panel | open, window grows above 1080px | any | menu closes; scroll lock released | — | CAP-8, T6 | ✅ Chrome 800 → 1200: menu closed, overflow restored |
-| Book a demo | width 640px or less, open menu | any | first item, amber primary button style, links `/demo#form`; not in the header bar | — | CAP-5, AC-NAV-2 | ✅ Chrome 375: first item, `btn-primary`, not in the header bar |
-| Book a demo | width 641–1080px | any | in the header next to the EN/VI slot; not in the open menu | — | CAP-6, AC-NAV-2 | ✅ Chrome 641: in the header, not in the open menu |
+| Book a demo | width 640px or less, open menu | any | first item, amber primary button style, links `/demo#form`; not in the header bar | — | CAP-5, AC-NAV-2 | ✅ Chrome 375 and exactly 640: first item, `btn-primary`; the header `a.btn-sm` is hidden (fixed in review: at 640 it was the other way round) |
+| Book a demo | width 641–1080px | any | in the header next to the EN/VI slot; not in the open menu | — | CAP-6, AC-NAV-2 | ✅ Chrome 641 and 1080: in the header (`a.btn-sm` shown), not in the open menu |
 | Panel | open | reduced motion | opens and closes with no animation | — | EXPERIENCE.md reduced motion | hand (code: no animation; global reduced-motion rule) |
 | Header | width 375px, menu open | any | no sideways scroll; logo 26px high | — | Success signal, EXPERIENCE.md Responsive | ✅ Chrome 375: no sideways scroll, logo 26px high |
 | Menu button | Tab to it | keyboard | 2px focus ring visible | — | EXPERIENCE.md Accessibility Floor, T9 | ✅ Chrome 800: `:focus-visible`, solid 2px ring |

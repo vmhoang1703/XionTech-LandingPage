@@ -10,9 +10,13 @@
 [800->1200] resize while open: expanded false | html overflow visible
 [800 /careers] current item "Careers" | rgb(22, 54, 99) | 700 | rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(255, 192, 0) 0px -2px 0px 0px inset
 [375] header Book a demo visible false | logo height 26
-[375] tap: expanded true | panel items: Book a demo | Products | Services | News | About | Careers | CTA class "btn btn-primary mb-2.5 hidden justify-center max-[640px]:inline-flex"
+[375] tap: expanded true | panel items: Book a demo | Products | Services | News | About | Careers | CTA class "btn btn-primary mb-2.5 hidden justify-center max-[641px]:inline-flex"
 [375] no sideways scroll true
 [375] scroll attempt while open: scrollY 0 -> 0
 [375] tap Careers: url /careers | expanded false | html overflow visible
 [641] panel CTA visible false | header CTA visible true
+[640] Menu visible true | panel CTA visible true | header CTA visible true
+[1080] Menu visible true | panel CTA visible false | header CTA visible true
 [800 reduced] open after 50ms: panel visible true | running animations 0
+[640] header CTA (a.btn-sm) shown false | logo height 26
+[641] header CTA (a.btn-sm) shown true | logo height 32

@@ -12,6 +12,8 @@ const box = (l) =>
     const r = el.getBoundingClientRect();
     return { x: Math.round(r.left), y: Math.round(r.top), w: Math.round(r.width), h: Math.round(r.height) };
   });
+// The header Book a demo is `header a.btn-sm`; a role query would skip it when
+// hidden and could match the panel copy instead.
 const menuBtn = (p) => p.locator("header").getByRole("button", { name: "Menu" });
 const panel = (p) => p.locator("#mobile-menu");
 // The button is hidden above 1080px, so read its state by attribute, not by role.
@@ -39,7 +41,7 @@ try {
     await settle(p);
     const m = menuBtn(p);
     log(`[800] Menu: visible ${await m.isVisible()} | ${JSON.stringify(await box(m))} | ${await css(m, ["color", "borderColor", "borderRadius"])} | text "${(await m.innerText()).trim()}" | icon ${await m.locator("svg").count()}`);
-    log(`[800] header Book a demo visible ${await p.locator("header").getByRole("link", { name: /Book a demo/ }).first().isVisible()}`);
+    log(`[800] header Book a demo visible ${await p.locator("header a.btn-sm").evaluate((el) => el.getClientRects().length > 0)}`);
     await p.mouse.move(0, 0);
     let n = 0;
     while (n < 20 && !(await m.evaluate((el) => el === document.activeElement))) {
@@ -119,7 +121,7 @@ try {
     await settle(p);
     await menuBtn(p).click();
     await p.waitForTimeout(200);
-    log(`[641] panel CTA visible ${await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => "error")} | header CTA visible ${await p.locator("header").getByRole("link", { name: /Book a demo/ }).first().isVisible()}`);
+    log(`[641] panel CTA visible ${await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => "error")} | header CTA visible ${await p.locator("header a.btn-sm").evaluate((el) => el.getClientRects().length > 0)}`);
     await p.screenshot({ path: `${OUT}/menu-641-open.png` });
     await p.close();
   }
@@ -136,7 +138,7 @@ try {
       await p.waitForTimeout(200);
       cta = String(await panel(p).getByRole("link", { name: /Book a demo/ }).isVisible().catch(() => "error"));
     }
-    log(`[${w}] Menu visible ${shown} | panel CTA visible ${cta} | header CTA visible ${await p.locator("header").getByRole("link", { name: /Book a demo/ }).first().isVisible()}`);
+    log(`[${w}] Menu visible ${shown} | panel CTA visible ${cta} | header CTA visible ${await p.locator("header a.btn-sm").evaluate((el) => el.getClientRects().length > 0)}`);
     await p.close();
   }
 
