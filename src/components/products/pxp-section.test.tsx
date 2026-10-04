@@ -45,10 +45,10 @@ describe("PxpSection", () => {
     ]);
   });
 
-  it("marks the unconfirmed PXP claims as [Placeholder]", () => {
-    expect(pxpSection.lede.startsWith("[Placeholder]")).toBe(true);
+  it("marks only the unconfirmed platforms as [Placeholder]; the feature lines are confirmed copy", () => {
+    expect(pxpSection.lede).toContain("[Placeholder] iOS and Android");
     for (const feature of pxpSection.features) {
-      expect(feature.body.startsWith("[Placeholder]")).toBe(true);
+      expect(feature.body).not.toContain("[Placeholder]");
     }
   });
 

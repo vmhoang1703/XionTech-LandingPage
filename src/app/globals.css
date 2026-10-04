@@ -2262,6 +2262,169 @@
     }
   }
 
+  /*
+    Products web app sections LXP, SXP, IoT (Story 4.3), ported from the
+    prototype site.css. Reuses the badges, chips, linen, grid, service cards
+    and the empty media frame from Home.
+  */
+  .sec-head-center {
+    justify-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .sec-head-center .chips {
+    justify-content: center;
+  }
+
+  .badge-lg {
+    width: 56px;
+    height: 56px;
+  }
+
+  .web-app-wide {
+    max-width: 1000px;
+    margin-inline: auto;
+  }
+
+  .web-app-after {
+    margin-top: 40px;
+  }
+
+  .web-app-text h2 {
+    margin-top: 18px;
+  }
+
+  .web-app-text .lede {
+    margin-top: 12px;
+  }
+
+  .web-app-text .chips {
+    margin-top: 16px;
+  }
+
+  .feature-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 26px;
+  }
+
+  .web-app-wide .feature-list {
+    margin-top: 36px;
+  }
+
+  @media (width > --theme(--breakpoint-sm)) {
+    .feature-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width >= --theme(--breakpoint-lg)) {
+    .feature-list-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* The frame comes first in the markup; below md it moves under the text */
+  @media (width < --theme(--breakpoint-md)) {
+    .split-media-first > .browser {
+      order: 1;
+    }
+  }
+
+  /* Items are li (LXP, SXP, IoT) or div (PXP, Story 4.2) */
+  .feature-list li,
+  .feature-list > div {
+    display: flex;
+    gap: 12px;
+  }
+
+  .feature-list svg {
+    flex-shrink: 0;
+    color: var(--color-heading);
+    font-size: 1.4rem;
+  }
+
+  .surface-navy .feature-list svg {
+    color: var(--color-amber-tint);
+  }
+
+  .feature-list b {
+    display: block;
+    color: var(--color-heading);
+    font-size: 0.98rem;
+  }
+
+  .feature-list span {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Browser frame: paper chrome on every surface, so its tokens are fixed */
+  .browser {
+    --color-focus: var(--color-navy);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--color-navy) 12%, transparent);
+    border-radius: var(--radius-browser);
+    background: var(--color-paper);
+    box-shadow: var(--shadow-card);
+  }
+
+  .browser .bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    padding-inline: 14px;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-navy) 10%, transparent);
+    background: var(--color-mist);
+  }
+
+  .browser .bar i {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--color-navy) 15%, transparent);
+  }
+
+  /* 24px line keeps the pill a 24px target (Accessibility Floor); on a
+     narrow phone the address ends in an ellipsis, not a hard cut */
+  .browser .bar-url {
+    min-width: 0;
+    overflow: hidden;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 12px;
+    padding-inline: 12px;
+    border-radius: var(--radius-full);
+    background: var(--color-paper);
+    color: var(--paper-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-decoration: none;
+  }
+
+  .browser .bar-url:hover,
+  .browser .bar-url:focus-visible {
+    text-decoration: underline;
+  }
+
+  .browser .bar-url[aria-disabled="true"] {
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+
+  .browser-media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .browser-media .home-media {
+    border-radius: 0;
+  }
+
   /* Products page: sticky sub-nav of glass pills (Story 4.1) */
   .subnav {
     position: sticky;
@@ -2307,7 +2470,6 @@
     scroll-margin-top: calc(
       var(--spacing-anchor-offset-subnav) - var(--spacing-header-height)
     );
-    padding-block: var(--spacing-section-mobile);
   }
 
   /*
@@ -2382,41 +2544,6 @@
     border-color: var(--color-navy);
     background: var(--color-navy);
     color: var(--color-white);
-  }
-
-  .feature-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 26px;
-  }
-
-  .feature-list > div {
-    display: flex;
-    gap: 12px;
-  }
-
-  .feature-list svg {
-    flex-shrink: 0;
-    color: var(--color-heading);
-    font-size: 1.4rem;
-  }
-
-  .feature-list b {
-    display: block;
-    color: var(--color-heading);
-    font-size: 0.98rem;
-  }
-
-  .feature-list span {
-    color: var(--color-muted);
-    font-size: 0.9rem;
-  }
-
-  @media (width <= --theme(--breakpoint-sm)) {
-    .feature-list {
-      grid-template-columns: 1fr;
-    }
   }
 
   .store-row {
