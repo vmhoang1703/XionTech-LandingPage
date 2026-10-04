@@ -28,10 +28,13 @@ vi.mock("@upstash/ratelimit", () => ({
 
 import {
   checkRateLimits,
+  checkUploadLimit,
   getDeliveryConfig,
   ipRateLimitKey,
   rateLimitKey,
+  sendApplicationMail,
   sendContactMail,
+  type ApplicationMail,
 } from "./delivery";
 
 const ENV = {
@@ -431,5 +434,121 @@ describe("sendContactMail", () => {
     sendMailMock.mockRejectedValue(new Error("SMTP down"));
 
     await expect(sendContactMail(CONFIG, DEMO)).rejects.toThrow("SMTP down");
+  });
+});
+
+const APPLICATION: ApplicationMail = {
+  role: { slug: "senior-engineer", title: "Senior Engineer" },
+  name: "Nam Nguyen",
+  email: "nam@example.test",
+  phone: "+84 900 000 000",
+  note: "I like the role.\nThanks.",
+  cv: {
+    pathname: "cv/application-AbC123.PDF",
+    size: 1234,
+    contentType: "application/pdf",
+    content: Buffer.from("cv-bytes"),
+  },
+};
+
+describe("checkUploadLimit", () => {
+  it("allows an upload within 10 per hour under the cv-upload prefix, keyed by the IP", async () => {
+    expect(await checkUploadLimit(IP)).toBe(true);
+
+    expect(slidingWindowMock.mock.calls).toEqual([[10, "1 h"]]);
+    expect(ratelimitMock.mock.calls[0][0].prefix).toBe("cv-upload");
+    expect(limitMock.mock.calls).toEqual([[ipRateLimitKey(IP)]]);
+  });
+
+  it("denies an upload the limit refuses", async () => {
+    limitMock.mockResolvedValueOnce({ success: false });
+
+    expect(await checkUploadLimit(IP)).toBe(false);
+  });
+
+  it("fails open and logs once when the store is unavailable", async () => {
+    const logged = spyOnLog();
+    limitMock.mockRejectedValue(new TypeError("boom"));
+
+    expect(await checkUploadLimit(undefined)).toBe(true);
+
+    expect(logged()).toHaveLength(1);
+    expect(logged()[0]).toContain("rate limit unavailable");
+  });
+});
+
+describe("sendApplicationMail", () => {
+  it("uses the same Gmail transport settings as the contact mail", async () => {
+    await sendApplicationMail(CONFIG, APPLICATION);
+
+    expect(createTransportMock).toHaveBeenCalledWith({
+      service: "gmail",
+      secure: true,
+      auth: { user: ENV.GMAIL_USER, pass: ENV.GMAIL_APP_PASSWORD },
+      connectionTimeout: 5000,
+      greetingTimeout: 5000,
+      socketTimeout: 5000,
+    });
+  });
+
+  it("sends to the inbox with Reply-To set to the applicant", async () => {
+    await sendApplicationMail(CONFIG, APPLICATION);
+
+    const mail = sentMail();
+    expect(mail.to).toBe(ENV.CONTACT_INBOX);
+    expect(mail.from).toBe(ENV.GMAIL_USER);
+    expect(mail.replyTo).toBe(APPLICATION.email);
+    expect(mail.subject).toBe("Job application: Senior Engineer");
+  });
+
+  it("removes CR and LF from the subject", async () => {
+    await sendApplicationMail(CONFIG, {
+      ...APPLICATION,
+      role: { slug: "x", title: "Eng\r\nBcc: spy@example.test\nineer" },
+    });
+
+    const subject = sentMail().subject as string;
+    expect(subject).not.toMatch(/[\r\n]/);
+    expect(subject).toBe("Job application: EngBcc: spy@example.testineer");
+  });
+
+  it("names the role, the page path, the CV path and the applicant in a plain-text body", async () => {
+    await sendApplicationMail(CONFIG, APPLICATION);
+
+    const mail = sentMail();
+    expect(mail).not.toHaveProperty("html");
+    expect(mail.text).toBe(
+      [
+        "Role: Senior Engineer",
+        "Role page: /careers/senior-engineer",
+        "Name: Nam Nguyen",
+        "Email: nam@example.test",
+        "Phone: +84 900 000 000",
+        "CV: cv/application-AbC123.PDF (1234 bytes, application/pdf)",
+        "",
+        "Cover note:",
+        "I like the role.\nThanks.",
+      ].join("\n"),
+    );
+  });
+
+  it("attaches the CV with its type and a filename that holds no personal data", async () => {
+    await sendApplicationMail(CONFIG, APPLICATION);
+
+    expect(sentMail().attachments).toEqual([
+      {
+        filename: "cv.pdf",
+        contentType: "application/pdf",
+        content: APPLICATION.cv.content,
+      },
+    ]);
+  });
+
+  it("lets a send failure through so the route can answer 502", async () => {
+    sendMailMock.mockRejectedValue(new Error("SMTP down"));
+
+    await expect(sendApplicationMail(CONFIG, APPLICATION)).rejects.toThrow(
+      "SMTP down",
+    );
   });
 });
