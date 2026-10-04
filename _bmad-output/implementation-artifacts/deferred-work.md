@@ -206,3 +206,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-4-3-lxp-sxp-iot-sections.md`
   summary: Products layout follow-ups (decision L1): below 900px the media comes before the text in the markup, so once a real address makes the URL pill or store button a link, mobile Tab and reading order will not match the screen; `.pxp-phone` and `.split-media-first > .browser` hold the same `order` rule twice (one shared class would stop drift); `FeatureList` type safety relies on the content objects staying `as const`.
   evidence: second full review 2026-10-03, Blind Hunter, Edge Case Hunter and Verification Gap (Minor).
+- source_spec: `_bmad-output/implementation-artifacts/spec-6-5-careers-open-roles.md`
+  summary: Careers follow-ups: walk the role-card rows (look, hover, focus ring, 640px stacking, meta contrast) once a slugged role is published after the Studio deploy; the culture photo frame has no story that adds a real photo; `.news-grid` is shared with Story 6.1 (keep one rule); breadcrumbs lack `aria-current` and a hidden separator (Story 1.6); the shared `.split` / `.svc-grid` breakpoints are 1px off the "or less" wording in UX rows.
+  evidence: full review 2026-10-04, all five layers (Minor).

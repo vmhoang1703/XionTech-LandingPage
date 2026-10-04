@@ -1700,6 +1700,144 @@
     color: var(--color-amber-tint);
   }
 
+  /* Careers open roles and life frames (Story 6.5), ported from the prototype site.css */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-link);
+    font-weight: 700;
+  }
+
+  .link-arrow svg {
+    transition: transform 0.3s var(--ease-brand);
+  }
+
+  .roles {
+    display: grid;
+    gap: 14px;
+  }
+
+  .role {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px 28px;
+    color: inherit;
+    text-decoration: none;
+    transition:
+      transform 0.3s var(--ease-brand),
+      box-shadow 0.3s var(--ease-brand);
+  }
+
+  .role-main {
+    display: grid;
+    gap: 6px;
+  }
+
+  .role-main b {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+
+  .role-main small {
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  .roles-empty {
+    display: grid;
+    gap: 10px;
+    padding: 34px;
+    border: 1.5px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .illo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 320px;
+    padding: 22px;
+    border: 1.5px dashed
+      color-mix(in srgb, var(--color-heading) 35%, transparent);
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--color-amber) 14%, transparent),
+        transparent 60%
+      ),
+      var(--color-mist);
+  }
+
+  .illo b {
+    font-family: var(--font-brand);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .illo span {
+    max-width: 44ch;
+    margin-top: 6px;
+    font-size: 0.88rem;
+    color: var(--color-text);
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  @media (width <= 900px) {
+    .news-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width <= 640px) {
+    .news-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .role {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  /* Pointer effects only on hover-capable devices (EXPERIENCE.md) */
+  @media (hover: hover) {
+    .role:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .role:hover .link-arrow svg {
+      transform: translateX(4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .role,
+    .link-arrow svg {
+      transition: none;
+    }
+
+    .role:hover,
+    .role:hover .link-arrow svg {
+      transform: none;
+    }
+  }
+
   /*
     4-D process (Story 3.6), ported from the prototype site.css, shared with
     Services #process (5.4). Steps are dimmed and lowered only while the flow

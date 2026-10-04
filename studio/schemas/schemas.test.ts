@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { job } from "./job";
 import { post } from "./post";
 
@@ -14,7 +14,7 @@ const findField = (schema: Schema, name: string): Field => {
 
 const translated: [Schema, string[]][] = [
   [post, ["title", "excerpt", "body"]],
-  [job, ["title", "location", "description"]],
+  [job, ["title", "location", "team", "description"]],
 ];
 
 describe("studio schemas", () => {
@@ -36,8 +36,40 @@ describe("studio schemas", () => {
     );
     const jobNames = job.fields.map((f) => f.name);
     expect(jobNames).toEqual(
-      expect.arrayContaining(["title", "location", "type", "description"]),
+      expect.arrayContaining([
+        "title",
+        "slug",
+        "location",
+        "team",
+        "type",
+        "closed",
+        "description",
+      ]),
     );
+  });
+
+  it("makes the job slug required, from the English title", () => {
+    const slug = findField(job, "slug") as Field & {
+      options?: { source?: string };
+      validation?: unknown;
+    };
+    expect(slug.type).toBe("slug");
+    expect(slug.options?.source).toBe("title.en");
+    expect(slug.validation).toBeTypeOf("function");
+    const required = vi.fn().mockReturnValue("required-rule");
+    const rule = { required };
+    expect((slug.validation as (r: typeof rule) => unknown)(rule)).toBe(
+      "required-rule",
+    );
+    expect(required).toHaveBeenCalledTimes(1);
+  });
+
+  it("has a job closed flag that starts false", () => {
+    const closed = findField(job, "closed") as Field & {
+      initialValue?: boolean;
+    };
+    expect(closed.type).toBe("boolean");
+    expect(closed.initialValue).toBe(false);
   });
 
   it.each(translated)(

@@ -6,6 +6,14 @@ export const job = {
   type: "document",
   fields: [
     localized("title", "Title", "string"),
+    {
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title.en", maxLength: 96 },
+      validation: (rule: { required: () => unknown }) => rule.required(),
+    },
+    localized("team", "Team", "string"),
     localized("location", "Location", "string"),
     {
       name: "type",
@@ -19,6 +27,12 @@ export const job = {
           { title: "Internship", value: "internship" },
         ],
       },
+    },
+    {
+      name: "closed",
+      title: "Closed",
+      type: "boolean",
+      initialValue: false,
     },
     localized("description", "Description", "array"),
   ],

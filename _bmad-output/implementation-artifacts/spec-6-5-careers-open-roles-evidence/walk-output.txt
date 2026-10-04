@@ -1,0 +1,29 @@
+[1280] status 200 | title "Careers at XionTech | Software Jobs in Ho Chi Minh City"
+[1280] H1 "Build what schools use every day." | highlight "every day" | crumbs "Home / Careers"
+[1280] hero class "hero-amber page-hero" | ribbon svg 1
+[1280] h2 list: A culture that goes beyond employment. | Why you'll grow here. | Open roles. | Life at XionTech.
+[1280] See open roles: href #roles class "btn btn-navy" | Life: href #life class "btn btn-glass"
+[1280] See open roles hover: transform matrix(1, 0, 0, 1, 0, -2) | transition 0.35s, 0.35s, 0.3s, 0.3s
+[1280] click See open roles: hash #roles | #roles top 72
+[1280] Enter on Life at XionTech: hash #life | #life top 72
+[1280] culture class "sec surface-paper" | check bullets 3 | photo frame "[PLACEHOLDER] PHOTO
+A real photo of the team at work or at a company event."
+[1280] benefits class "sec surface-mist linen" | cards 4 | columns 4 | card classes spot svc feature ; spot svc ; spot svc navy ; spot svc
+[1280] #roles: cards 0 | empty panel "No open roles right now."
+[1280] #life class "sec surface-mist" | frames 3 | captions [PLACEHOLDER] TEAM PHOTO | [PLACEHOLDER] OFFICE PHOTO | [PLACEHOLDER] EVENT PHOTO | columns 3 | links inside 0
+[1280] life frame ratio 1.33
+[1280] last section in main #life | next after main: FOOTER | capture band 0
+[1280] contrast lede rgb(35, 64, 107) on amber #FFC000: 6.34:1
+[1280] culture stacked false | benefits columns 4 | life columns 3 | no sideways scroll true
+[1280] life frame 384x288 | inner bottom -1px past frame | caption inside true
+[1080] culture stacked false | benefits columns 4 | life columns 3 | no sideways scroll true
+[1080] life frame 331x248 | inner bottom -1px past frame | caption inside true
+[900] culture stacked false | benefits columns 2 | life columns 2 | no sideways scroll true
+[900] life frame 416x312 | inner bottom -1px past frame | caption inside true
+[899] culture stacked true | benefits columns 2 | life columns 2 | no sideways scroll true
+[899] life frame 416x312 | inner bottom -1px past frame | caption inside true
+[640] culture stacked true | benefits columns 2 | life columns 1 | no sideways scroll true
+[640] life frame 608x456 | inner bottom -1px past frame | caption inside true
+[390] culture stacked true | benefits columns 1 | life columns 1 | no sideways scroll true
+[390] life frame 358x269 | inner bottom -1px past frame | caption inside true
+[1280 reduced] hero button transition 0s | ribbon animations running 0
