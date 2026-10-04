@@ -27,7 +27,7 @@ One `/products` page where school buyers and parents explore every XionTech app 
 ## Technical Decisions
 
 - Next.js 16 App Router; Server Components by default, client islands only for interaction (the PXP tab switcher).
-- Tailwind v4 tokens and component classes in `src/app/globals.css`; port the prototype `mockups/site-v3/products.html` and `css/site.css`, do not redesign.
+- Tailwind v4 tokens and component classes in `src/app/globals.css`; port the prototype `prototype-enhancement/prototype/products.html` and `css/site.css`, do not redesign.
 - Icons from `@phosphor-icons/react` (`/ssr` entry in Server Components).
 - Owner of the Products stories on Demo day: Andy (decision P1).
 
