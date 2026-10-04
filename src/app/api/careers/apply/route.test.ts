@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { JOB_ERRORS } from "@/lib/careers/application-rules";
 
 const {
+  delMock,
   getMock,
   getOpenRoleMock,
   getDeliveryConfigMock,
@@ -10,6 +11,7 @@ const {
   sendApplicationMailMock,
   ipAddressMock,
 } = vi.hoisted(() => ({
+  delMock: vi.fn(),
   getMock: vi.fn(),
   getOpenRoleMock: vi.fn(),
   getDeliveryConfigMock: vi.fn(),
@@ -18,7 +20,7 @@ const {
   ipAddressMock: vi.fn(),
 }));
 
-vi.mock("@vercel/blob", () => ({ get: getMock }));
+vi.mock("@vercel/blob", () => ({ del: delMock, get: getMock }));
 vi.mock("@vercel/functions", () => ({ ipAddress: ipAddressMock }));
 vi.mock("@/lib/careers/open-roles", () => ({ getOpenRole: getOpenRoleMock }));
 vi.mock("@/lib/contact/delivery", () => ({
@@ -87,6 +89,7 @@ describe("POST /api/careers/apply", () => {
     checkRateLimitsMock.mockResolvedValue(true);
     getMock.mockResolvedValue(blobResult({}).result);
     sendApplicationMailMock.mockResolvedValue(undefined);
+    delMock.mockResolvedValue(undefined);
     errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
@@ -139,7 +142,6 @@ describe("POST /api/careers/apply", () => {
       const response = await POST(post(valid));
       expect(response.status).toBe(500);
       expect(await response.json()).toEqual({ error: "send" });
-      expect(errorSpy).toHaveBeenCalledTimes(1);
       expect(String(errorSpy.mock.calls[0])).toContain(name);
       expect(getOpenRoleMock).not.toHaveBeenCalled();
     },
@@ -279,6 +281,95 @@ describe("POST /api/careers/apply", () => {
         contentType: PDF,
         content: Buffer.from([1, 2, 3]),
       },
+    });
+  });
+
+  describe("deletes the uploaded CV when no mail is sent", () => {
+    const failures: [string, unknown, () => void][] = [
+      [
+        "a bad body with a CV path",
+        { ...valid, phone: "1".repeat(201) },
+        () => {},
+      ],
+      ["a honeypot", { ...valid, website: "http://spam" }, () => {}],
+      ["field errors", { ...valid, name: "" }, () => {}],
+      [
+        "a missing mail variable",
+        valid,
+        () =>
+          getDeliveryConfigMock.mockImplementation(() => {
+            throw new Error("GMAIL_USER is not set");
+          }),
+      ],
+      ["a closed role", valid, () => getOpenRoleMock.mockResolvedValue(null)],
+      [
+        "a failed role lookup",
+        valid,
+        () => getOpenRoleMock.mockRejectedValue(new Error("x")),
+      ],
+      [
+        "a rate limit",
+        valid,
+        () => checkRateLimitsMock.mockResolvedValue(false),
+      ],
+      ["a wrong stored CV", valid, () => getMock.mockResolvedValue(null)],
+      [
+        "a failed CV read",
+        valid,
+        () => getMock.mockRejectedValue(new Error("x")),
+      ],
+      [
+        "a failed mail",
+        valid,
+        () => sendApplicationMailMock.mockRejectedValue(new Error("x")),
+      ],
+    ];
+
+    it.each(failures)("after %s", async (_label, body, arrange) => {
+      arrange();
+      await POST(post(body));
+      expect(delMock).toHaveBeenCalledTimes(1);
+      expect(delMock).toHaveBeenCalledWith("cv/application-abc123.pdf", {
+        storeId: STORE_ID,
+      });
+    });
+
+    it("keeps the CV when the mail is sent", async () => {
+      const response = await POST(post(valid));
+      expect(response.status).toBe(200);
+      expect(delMock).not.toHaveBeenCalled();
+    });
+
+    it.each([
+      ["no CV path", { ...valid, cv: undefined }],
+      ["a CV path outside cv/", { ...valid, cv: "other/x.pdf" }],
+      ["a body that is not JSON", "{nope"],
+    ])("deletes nothing for %s", async (_label, body) => {
+      await POST(post(body));
+      expect(delMock).not.toHaveBeenCalled();
+    });
+
+    it("keeps the answer and logs only the error class when the delete fails", async () => {
+      checkRateLimitsMock.mockResolvedValue(false);
+      delMock.mockRejectedValue(
+        new TypeError("cv/application-abc123.pdf gone"),
+      );
+      const response = await POST(post(valid));
+      expect(response.status).toBe(429);
+      expect(await response.json()).toEqual({ error: "rate" });
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+      const line = String(errorSpy.mock.calls[0]);
+      expect(line).toContain("CV delete failed");
+      expect(line).toContain("TypeError");
+      expect(line).not.toContain("cv/");
+    });
+
+    it("logs the missing store id and deletes nothing", async () => {
+      vi.stubEnv("BLOB_STORE_ID", "");
+      await POST(post({ ...valid, website: "http://spam" }));
+      expect(delMock).not.toHaveBeenCalled();
+      expect(errorSpy).toHaveBeenCalledTimes(1);
+      expect(String(errorSpy.mock.calls[0])).toContain("BLOB_STORE_ID");
     });
   });
 });

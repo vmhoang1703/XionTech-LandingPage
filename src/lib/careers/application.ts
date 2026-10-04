@@ -28,6 +28,11 @@ export type ParsedApplication =
 /** The blob pathname the token route issues: `cv/<name>` with one CV extension. */
 const CV_PATH = /^cv\/[\w-]+\.(?:pdf|docx?)$/i;
 
+/** True for a path the token route can issue, so only such paths are ever deleted. */
+export function isCvPath(value: unknown): value is string {
+  return typeof value === "string" && CV_PATH.test(value);
+}
+
 const bad = (): ParsedApplication => ({ ok: false, bad: true });
 
 function text(value: unknown): string {
@@ -48,7 +53,7 @@ export function parseApplication(body: unknown): ParsedApplication {
   // Phone has no error slot in the form; its 200-character cap is an input
   // `maxLength`, so a longer value did not come from the form.
   const phone = text(raw.phone).trim();
-  if (!slug || !CV_PATH.test(cv) || phone.length > TEXT_MAX_LENGTH) {
+  if (!slug || !isCvPath(cv) || phone.length > TEXT_MAX_LENGTH) {
     return bad();
   }
 

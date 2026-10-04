@@ -1,8 +1,8 @@
-import { get } from "@vercel/blob";
+import { del, get } from "@vercel/blob";
 import { ipAddress } from "@vercel/functions";
 import { JOB_ERRORS, storedCvError } from "@/lib/careers/application-rules";
-import { parseApplication } from "@/lib/careers/application";
-import { getBlobConfig } from "@/lib/careers/cv-storage";
+import { isCvPath, parseApplication } from "@/lib/careers/application";
+import { getBlobConfig, getBlobStoreId } from "@/lib/careers/cv-storage";
 import { getOpenRole } from "@/lib/careers/open-roles";
 import {
   checkRateLimits,
@@ -68,8 +68,37 @@ async function readStoredCv(
   return { size, contentType, content: await readStream(blob.stream) };
 }
 
-export async function POST(request: Request): Promise<Response> {
-  const parsed = parseApplication(await readBody(request));
+/**
+ * Delete the uploaded CV of an application that was not mailed (decision A10).
+ * Only a path the token route can issue is deleted. A failure is logged with
+ * the error class only and never changes the answer.
+ */
+async function discardCv(body: unknown): Promise<void> {
+  const cv =
+    typeof body === "object" && body !== null && "cv" in body
+      ? body.cv
+      : undefined;
+  if (!isCvPath(cv)) return;
+  let storeId: string;
+  try {
+    storeId = getBlobStoreId();
+  } catch (error) {
+    console.error("Job application: CV delete skipped:", String(error));
+    return;
+  }
+  try {
+    await del(cv, { storeId });
+  } catch (error) {
+    logFailed("CV delete", error);
+  }
+}
+
+async function handle(
+  body: unknown,
+  request: Request,
+  outcome: { sent: boolean },
+): Promise<Response> {
+  const parsed = parseApplication(body);
   if (!parsed.ok && "bad" in parsed) {
     return Response.json(SEND_FAILED, { status: 400 });
   }
@@ -117,5 +146,17 @@ export async function POST(request: Request): Promise<Response> {
     logFailed("send", error);
     return Response.json(SEND_FAILED, { status: 502 });
   }
+  outcome.sent = true;
   return Response.json({ ok: true });
+}
+
+export async function POST(request: Request): Promise<Response> {
+  const body = await readBody(request);
+  const outcome = { sent: false };
+  try {
+    return await handle(body, request, outcome);
+  } finally {
+    // A CV is kept only with a sent application (A4); any other end deletes it.
+    if (!outcome.sent) await discardCv(body);
+  }
 }
