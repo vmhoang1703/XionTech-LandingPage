@@ -9,6 +9,11 @@ vi.mock("next/font/google", () => ({
   JetBrains_Mono: () => ({ variable: "font-jetbrains-mono" }),
 }));
 
+// An async Server Component cannot render to static markup here (Story 3.7).
+vi.mock("@/components/news/home-news", () => ({
+  HomeNews: () => <section>Latest from XionTech.</section>,
+}));
+
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
   useRouter: () => ({ push: vi.fn() }),
@@ -30,6 +35,10 @@ describe("no JavaScript", () => {
     );
     expect(html).toContain("Explore our products");
     expect(html).toContain("See it working at your school.");
+    expect(html.indexOf("Latest from XionTech.")).toBeGreaterThan(-1);
+    expect(html.indexOf("Latest from XionTech.")).toBeLessThan(
+      html.indexOf("See it working at your school."),
+    );
     expect(html).toContain("<header");
     expect(html).toContain('<main id="main" tabindex="-1"');
     expect(html).toMatch(/<\/main><footer/);
