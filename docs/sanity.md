@@ -60,7 +60,7 @@ After the deploy for Story 3.7 (decision A9), each news post needs:
 - a **slug** (Generate) and a **Published at** date (the Studio now requires both, and the category);
 - a **category**, and the **app** for a Product story.
 
-Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home. The first test post, "[Placeholder] First news post test 1", is still published but has no slug or date, so it stays hidden on Home; delete it in the Studio when convenient.
+Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home. The first test post, "[Placeholder] First news post test 1" (no slug or date), was deleted on 2026-10-04.
 
 If Sanity cannot be reached while Home is built or refreshed, Home still renders: the news section shows its heading and "See all news", and the log says "Home news: could not load the latest posts from Sanity". That empty news section stays until the next refresh, so after an outage **re-publish any post** (the webhook refreshes Home) **or redeploy**.
 

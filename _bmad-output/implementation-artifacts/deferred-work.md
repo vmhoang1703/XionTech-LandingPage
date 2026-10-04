@@ -236,9 +236,9 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-3-7-home-news-demo-capture.md`
   summary: Second review of the real-posts/no-CDN PR: the "time-based `revalidate`" idea in the outage entry above is now ruled out by A11; the offices post slug and id still say "one team" (fix before 6.2 makes `/news/[slug]` live; list the three corrected phrases in `published-posts.md`); the 3.7 build spec's Approach, I/O row, tasks and verification lines and A9's "sample post" still mention the sample note; `home-news-dev-1280.png` shows the texts before the fix; A10 lives on the 6.6 branch, so keep A10 before A11 when it merges; Story 6.2 `/news/[slug]` should limit unknown slugs (`generateStaticParams`, `dynamicParams`) so bots cannot use up the 250k API quota; no test pins the `sanity:check` client config; `rawClient` repeats `useCdn: false`; the post wording could follow the source more literally.
   evidence: second full review 2026-10-04, all layers (Important points fixed: A11 cost and Replaces list, `docs/sanity.md` step 3, the `sanity:check` message; these are Minor).
-- source_spec: `C:\XionTech\LandingPage-6-6\_bmad-output\implementation-artifacts\spec-6-6-job-page-cv-upload.md`
+- source_spec: `_bmad-output/implementation-artifacts/spec-6-6-job-page-cv-upload.md`
   summary: A cleanup job for CVs after Demo day, for uploads that never reach the apply route (a script or an abandoned form).
   evidence: Story 6.6 review 2026-10-04; the lead chose option 1 (A10): the apply route deletes the CV of any application it does not send, and the token limit is about 5 per IP per hour, but a CV uploaded without any apply call stays in the 1 GB store (about 25 MB per IP per hour at most).
-- source_spec: `C:\XionTech\LandingPage-6-6\_bmad-output\implementation-artifacts\spec-6-6-job-page-cv-upload.md`
+- source_spec: `_bmad-output/implementation-artifacts/spec-6-6-job-page-cv-upload.md`
   summary: On the job page at exactly 900px the shared `.split` is still two columns, but the AC and UX checks say the form sits below the details at 900px and below.
   evidence: Story 6.6 review 2026-10-04 (Edge Case Hunter); `.split` switches at `--breakpoint-md` (900px) since before this story, same as the 6.5 deferral of the 1px offset.
