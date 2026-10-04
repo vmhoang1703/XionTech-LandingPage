@@ -28,11 +28,11 @@ exit 0
 
  Test Files  57 passed (57)
       Tests  947 passed (947)
-   Start at  16:26:11
-   Duration  54.50s (import 55%, environment 25%, tests 11%, setup 6%, transform 3%)
+   Start at  16:33:21
+   Duration  79.14s (import 54%, environment 24%, tests 15%, setup 6%, transform 2%)
 
-    Isolate  57 workers spawned · ~4.70s startup each (spawn + environment, per file)
-             at least ~8.06s faster with isolate: false — reuses workers across files instead of one per file
+    Isolate  57 workers spawned · ~4.93s startup each (spawn + environment, per file)
+             at least ~8.44s faster with isolate: false — reuses workers across files instead of one per file
 
 exit 0
 
@@ -48,10 +48,10 @@ exit 0
 
  Test Files  57 passed (57)
       Tests  947 passed (947)
-   Start at  16:27:07
-   Duration  66.74s (import 50%, environment 27%, tests 15%, setup 6%, transform 1%, worker 1%)
+   Start at  16:34:48
+   Duration  79.42s (import 47%, environment 29%, tests 14%, setup 6%, transform 3%, worker 1%)
 
-Environment  jsdom was created 57 times · 254.59s total, 27% of tracked time
+Environment  jsdom was created 57 times · 325.05s total, 29% of tracked time
              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
              learn more: https://vitest.dev/guide/improving-performance#test-environments
 
@@ -74,10 +74,10 @@ All files          |   99.67 |    98.11 |   99.35 |     100 |
 -------------------|---------|----------|---------|---------|-------------------
 
 =============================== Coverage summary ===============================
-Statements   : 99.67% ( 1219/1223 )
+Statements   : 99.67% ( 1220/1224 )
 Branches     : 98.11% ( 624/636 )
 Functions    : 99.35% ( 310/312 )
-Lines        : 100% ( 1099/1099 )
+Lines        : 100% ( 1100/1100 )
 ================================================================================
 
 > xiontech-landing-page@0.1.0 coverage:diff
@@ -103,7 +103,7 @@ src/lib/careers/open-roles.ts (100%)
 src/lib/contact/delivery.ts (100%)
 src/lib/http/route-helpers.ts (100%)
 -------------
-Total:   278 lines
+Total:   279 lines
 Missing: 0 lines
 Coverage: 100%
 -------------

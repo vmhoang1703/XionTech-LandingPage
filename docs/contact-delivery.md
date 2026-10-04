@@ -107,7 +107,7 @@ Flow:
 3. The browser uploads the CV straight to Blob. It waits at most 60 seconds.
 4. `POST /api/careers/apply` with JSON: `slug`, `name`, `email`, `phone`, `note`, `cv` (the blob path) and the honeypot `website`.
 
-When the apply route does not send the mail, it deletes the uploaded CV (decision A10): for a bad body, the honeypot, a missing variable, field errors, a closed role, the rate limit, a wrong stored CV and every 502. Only a path of the form `cv/<name>.<ext>` is deleted. A delete failure writes one log line with the error class (no path, no name) and never changes the answer. A sent application keeps its CV with no time limit (A4). So the form uploads the CV again on every submit.
+When the apply route does not send the mail, it deletes the uploaded CV (decision A10): for a bad body, the honeypot, a missing variable, field errors, a closed role, the rate limit, a wrong stored CV and every 502. Only a path of the form `cv/<name>.<ext>` is deleted. The delete stops after 3 seconds (the Blob SDK would otherwise retry with backoff past the route's 30 seconds). A delete failure writes one log line with the error class (no path, no name) and never changes the answer. A sent application keeps its CV with no time limit (A4). So the form uploads the CV again on every submit.
 
 `POST /api/careers/cv-upload`. It stops at the first step that fails.
 

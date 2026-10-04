@@ -109,3 +109,8 @@ Acceptance: verification — npm test — exit 1 — first run: 1 failed | 946 p
 Acceptance: verification — npm test — exit 0 — second run: Test Files 57 passed (57), Tests 947 passed (947)
 Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100% (Missing: 0 lines); C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop.
 Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/verification.txt — 4288 bytes — sha256 9b7867fd8e57 — transcript of the three command runs after the A10 follow-up (second run)
+Follow-up review: one layer (Edge Case Hunter) on 4a13c32..f5e5b89; 2 patches (delete capped at 3 s, log-count test restored; commit 466d603), 4 rejected — see Review Triage Log
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style! (after 466d603)
+Acceptance: verification — npm test — exit 0 — Test Files 57 passed (57), Tests 947 passed (947) (after 466d603)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100% (279 lines, 0 missing); C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop.
+Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/verification.txt — 4288 bytes — sha256 85d0b0fdd86e — transcript of the three command runs after 466d603

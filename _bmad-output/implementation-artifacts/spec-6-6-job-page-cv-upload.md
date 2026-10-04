@@ -172,6 +172,17 @@ Step 4 on 2026-10-04: one layer (Edge Case Hunter, opus), by the controller's ru
 | 12 | `readBody` duplicated in the token route (Task 7 minor) | false | reject | Moved to `src/lib/http/route-helpers.ts` in Task 8 (`f16a877`); all three routes import it. |
 | 13 | `statusCode !== 200` branch in `readStoredCv` cannot happen without `ifNoneMatch` (Task 8 minor) | low | reject | Defensive; covered by a test. |
 
+Follow-up review on 2026-10-04 of the A10 part 4 change (`4a13c32..f5e5b89`, 224 changed lines in `src/`): one layer (Edge Case Hunter, opus). The full 5-layer `bmad-code-review` before the PR is the controller's.
+
+| # | Finding (source) | Verdict | Route | Evidence |
+|---|---|---|---|---|
+| F1 | `del` is awaited and the SDK retries with backoff (up to 10 tries), so a slow Blob API can push the route past `maxDuration` and the answer becomes a 504 (Edge, also as a claim) | medium | patch | Confirmed in `requestApi` (`async-retry`, network errors and 5xx retried); an `AbortError` bails. Fixed with `abortSignal: AbortSignal.timeout(3000)` (`466d603`). |
+| F2 | The removed log-count assertion for a missing Blob variable (Edge, deletion) | low | patch | Direct test fix: 2 lines for `BLOB_STORE_ID` (config + skipped delete), 1 for `BLOB_WEBHOOK_PUBLIC_KEY`. |
+| F3 | A function killed at `maxDuration`, or an apply POST that never arrives, leaves the CV (Edge, also as a claim) | low | reject | Rare; the cleanup job after Demo day in `deferred-work.md` covers every orphan. |
+| F4 | A replayed POST with the same CV path after a sent application deletes that CV (Edge) | low | reject | The path has a random suffix known only to the applicant's browser, the button is disabled while sending, and the mailed copy is the record (D3). |
+| F5 | A 429 from the token route shows the send error, not the rate message; more likely now at 5 per hour with an upload per submit (Edge) | low | reject | Same as row 3: `uploadPresigned` gives one generic error for any non-2xx. A real applicant needs 6 submits in an hour; the client checks stop most failed submits before the upload. Noted for the lead. |
+| F6 | `isCvPath` is case-insensitive, so `CV/x.PDF` passes and gets a pointless delete (Edge) | low | reject | Such a path was never issued, so `get` answers 400 cv and `del` deletes nothing; no harm. |
+
 ## Design Notes
 
 - Two requests per application: the browser uploads the CV with a short-lived token (Vercel Function body limit 4.5 MB never applies), then sends a small JSON body with the blob path. The apply route trusts nothing from the upload: it re-reads the stored blob's size and type from `get` before attaching it.
@@ -198,7 +209,7 @@ Captured at the end of step-03 on 2026-10-04 re-captured after the review patch,
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- "All matched files use Prettier code style!"
 - `npm test` -- exit 0 -- "Test Files 57 passed (57)", "Tests 947 passed (947)"
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (278 lines, 0 missing), "C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop."
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (279 lines, 0 missing), "C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop."
 
 **Observed**
 
@@ -206,7 +217,7 @@ Captured at the end of step-03 on 2026-10-04 re-captured after the review patch,
 
 **Artifacts**
 
-- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4288 bytes -- sha256 9b7867fd8e57 -- transcript of the three command runs
+- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4288 bytes -- sha256 85d0b0fdd86e -- transcript of the three command runs
 - spec-6-6-job-page-cv-upload-evidence/observed.md -- 1331 bytes -- sha256 c3994b890b4d -- surface not reached; what the tests observed instead
 
 **Not captured**
