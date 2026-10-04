@@ -26,6 +26,15 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
+// An async Server Component cannot render in jsdom; Story 3.7 tests it alone.
+vi.mock("@/components/news/home-news", () => ({
+  HomeNews: () => (
+    <section className="sec surface-mist" aria-labelledby="news-h">
+      <h2 id="news-h">Latest from XionTech.</h2>
+    </section>
+  ),
+}));
+
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),
 }));
@@ -74,5 +83,35 @@ describe("Home page", () => {
       "home-hero-title",
     );
     expect(screen.getByRole("button", { name: "Book a demo" })).toBeDefined();
+  });
+
+  it("puts the news section between the 4-D band and the capture band", () => {
+    const { container } = render(<Home />);
+
+    const rhythm = Array.from(container.children)
+      .slice(1)
+      .map((section) =>
+        Array.from(section.classList).filter(
+          (name) => name.startsWith("surface-") || name === "linen",
+        ),
+      );
+    expect(rhythm).toEqual([
+      [],
+      ["surface-mist", "linen"],
+      ["surface-paper"],
+      ["surface-navy"],
+      ["surface-mist"],
+      ["surface-amber"],
+    ]);
+    const news = screen
+      .getByRole("heading", { name: "Latest from XionTech." })
+      .closest("section");
+    expect(news?.previousElementSibling?.getAttribute("aria-labelledby")).toBe(
+      screen
+        .getByRole("list", { name: "4-D process" })
+        .closest("section")
+        ?.getAttribute("aria-labelledby"),
+    );
+    expect(news?.nextElementSibling).toBe(container.lastElementChild);
   });
 });

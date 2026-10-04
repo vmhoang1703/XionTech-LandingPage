@@ -1,0 +1,7 @@
+[1280] section order: home-hero-title > doors > apps-title > services-title > process-title > news-h > cap-h
+[1280] news: class "sec surface-mist" | bg linear-gradient(rgb(238, 242, 249), rgb(244, 247, 252)) | rgba(0, 0, 0 | H2 "Latest from XionTech."
+[1280] sample note: "none" | cards 0 | grid columns error
+[1280] See all news: href /news
+[900] news grid columns error | no sideways scroll true
+[640] news grid columns error | no sideways scroll true
+[390] news grid columns error | no sideways scroll true

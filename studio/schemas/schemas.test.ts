@@ -75,6 +75,59 @@ describe("studio schemas", () => {
     });
   });
 
+  it("makes the post slug and published date required (Home also needs an English title)", () => {
+    for (const name of ["slug", "publishedAt"]) {
+      const field = findField(post, name) as Field & { validation?: unknown };
+      const required = vi.fn().mockReturnValue("required-rule");
+      expect(
+        (field.validation as (r: { required: typeof required }) => unknown)({
+          required,
+        }),
+      ).toBe("required-rule");
+      expect(required).toHaveBeenCalledTimes(1);
+    }
+  });
+
+  it("gives a post a required category with four values", () => {
+    const category = findField(post, "category") as Field & {
+      options?: { list?: { title: string; value: string }[] };
+      validation?: unknown;
+    };
+    expect(category.type).toBe("string");
+    expect(category.options?.list?.map((o) => o.value)).toEqual([
+      "product",
+      "company",
+      "schools",
+      "team",
+    ]);
+    const required = vi.fn().mockReturnValue("required-rule");
+    expect(
+      (category.validation as (r: { required: typeof required }) => unknown)({
+        required,
+      }),
+    ).toBe("required-rule");
+    expect(required).toHaveBeenCalledTimes(1);
+  });
+
+  it("gives a post an app field with four apps, hidden unless Product", () => {
+    const app = findField(post, "app") as Field & {
+      options?: { list?: { title: string; value: string }[] };
+      hidden?: (ctx: { document?: { category?: string } }) => boolean;
+    };
+    expect(app.type).toBe("string");
+    expect(app.options?.list?.map((o) => o.value)).toEqual([
+      "PXP",
+      "LXP",
+      "SXP",
+      "IoT",
+    ]);
+    expect(app.hidden).toBeTypeOf("function");
+    expect(app.hidden?.({ document: { category: "product" } })).toBe(false);
+    expect(app.hidden?.({ document: { category: "team" } })).toBe(true);
+    expect(app.hidden?.({ document: {} })).toBe(true);
+    expect(app.hidden?.({})).toBe(true);
+  });
+
   it("has a job closed flag that starts false", () => {
     const closed = findField(job, "closed") as Field & {
       initialValue?: boolean;

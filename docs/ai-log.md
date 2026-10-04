@@ -627,3 +627,15 @@ Template:
 - **Prompt (Hoang Vu):** build 1.4 in parallel with 3.7 and 6.6; the controller walks and reviews each story before asking "push".
 - **What the AI did:** walked the menu at 1081, 1080, 800, 641, 640 and 375px plus reduced motion and `/demo`, and ran the full 5-layer review four times, because each round of fixes went over CLAUDE.md's 50-line limit for a light review.
 - **AI got it wrong?** Yes, several times. Round 1: the desktop links lost their React `key`, and `max-[640px]` means below 640px in Tailwind v4, so the menu had no Book a demo at exactly 640px (the test stub had the same wrong idea). Round 2: to fix review points the AI made modifier clicks and `target="_blank"` links keep the menu open, which narrowed CAP-8 without a human decision; round 3 reverted it. Also in round 2, a `#form` link on `/demo` left focus on the page body; the browser walk showed it, and focus now goes to the form. The controller also wrote a wrong evidence cell (a copy of the row above) and claimed no site link uses `target="_blank"`, which was false. Lesson: fixing every Minor review point keeps the line count over 50 and starts another full round; until Demo day only Critical and Important points are fixed.
+
+## 2026-10-04 — Story 3.7 Home latest news: category field and heading
+
+- **Prompt (Hoang Vu, through the controller):** build Story 3.7 in its own worktree; answered the question about the news tag: add `category` and `app` to the `post` schema in this PR (decision A9).
+- **What the AI did:** found that the `post` schema had no category field, so the CAP-1 tag on the news card had no data source. It asked the lead instead of guessing a value or hard-coding tags. After the answer it added `category` (required) and `app` (only for Product) with schema tests, and recorded A9 and the post-merge deploy step in `docs/sanity.md`. The heading reads "Latest from XionTech." because the brand rule wins over the mockup's "XionTechs".
+- **AI got it wrong?** Not on this point: the gap was caught while reading the spec against the schema, before any code used a made-up field.
+
+## 2026-10-04 — Story 3.7 Home news: full review and lead decisions
+
+- **Prompt (Hoang Vu):** two answers from the review: Home must survive a Sanity failure; make the post slug and published date required.
+- **What the AI did:** rebased onto `develop`, ran build and smoke, walked Home, ran the 5-layer review, and fixed only the Critical and Important points: a guarded news fetch and date, the required post fields, the class-rule test, and complete post-merge steps.
+- **AI got it wrong?** Yes. The build copied "Sanity error propagates" from Careers to Home, so one outage or one post with a bad date would have broken the landing page and the build; two reviewers caught it. The post-merge docs left out the slug and the date, so following them would still show 0 cards; the walk found 0 cards because the only post had neither. The first review layer had also found an inherited-key lookup (`categoryLabels["toString"]`) and an unencoded slug, which were fixed during the build.
