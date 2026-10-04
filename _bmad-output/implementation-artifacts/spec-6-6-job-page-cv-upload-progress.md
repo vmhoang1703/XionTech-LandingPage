@@ -18,3 +18,9 @@ Task 3: minor — src/lib/careers/open-roles.ts getOpenRole: `Array.isArray(role
 Task 3: minor — Code Map's type-label export for chips not added here; assigned to the hero task
 Task 3: complete (commits f94337f..466c257, diff verified)
 Task 4: dispatched (model sonnet, base 466c257, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t4-report.md)
+Task 4: red — npx vitest run src/lib/careers/application-rules.test.ts — failed: module missing (no tests ran)
+Task 4: green — npx vitest run src/lib/careers/application-rules.test.ts — 34 passed (34)
+Task 4: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 4: fix round 1/5 (controller review: phone has no error slot, a long phone is a bad body per the matrix; validateApplication must not need a cv object because the server only has a blob path; now validates name, email, note only; 31 passed, commit 69da026)
+Task 4: complete (commits 377fa42..69da026, diff verified)
+Task 5: dispatched (model sonnet, base 69da026, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t5-report.md)

@@ -84,7 +84,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `schemas.test.ts` -- job has both list fields with EN/VI string arrays.
 - [x] `src/lib/careers/open-roles.ts` + test -- `getOpenRole(slug)` returning `{ slug, title, team, location, type, about, responsibilities, requirements }` or `null` -- CAP-1, CAP-6.
   - red: `open-roles.test.ts` -- query has the open filter, `$slug` param, `pt::text(description.en)`, tag `job`; `[]`/null gives null.
-- [ ] `src/lib/careers/application-rules.ts` + test -- `JOB_ERRORS`, `CV_MAX_BYTES`, `CV_TYPES` (ext → MIME), `cvError({ name, size })`, `storedCvError({ pathname, size, contentType })`, `validateApplication(values)` -- CAP-2, CAP-4.
+- [x] `src/lib/careers/application-rules.ts` + test -- `JOB_ERRORS`, `CV_MAX_BYTES`, `CV_TYPES` (ext → MIME), `cvError({ name, size })`, `storedCvError({ pathname, size, contentType })`, `validateApplication(values)` -- CAP-2, CAP-4.
   - red: `application-rules.test.ts` -- matrix rows for fields and CV (ext case-insensitive, 0 bytes, exactly 5 MiB passes, +1 byte fails, MIME mismatch).
 - [ ] `src/lib/careers/application.ts` + test -- `parseApplication(body)` → ok / errors / bad / honeypot, like `parseSubmission` -- CAP-4.
   - red: `application.test.ts` -- bad-body, honeypot-first, long phone, bad CV path, field errors.
@@ -142,6 +142,7 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 - 2026-10-04: this worktree's `node_modules` is a junction to the main checkout's. Turbopack rejects it, so never run `npm run build`, `npm run dev` or `npm run test:smoke` here (pending, controller). Never run `npm install`, `npm ci` or `npm uninstall` (Task 1 already added `@vercel/blob`; an install here once pruned `vite` from the shared `node_modules`). Run tests with `npx vitest run <file>`. Run `npx next typegen` if `PageProps` types are missing. Commit with Conventional Commits and the trailers `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>` and `Claude-Session: https://claude.ai/code/session_0169ynHXpgbJUKDWC3nosnjr`. No push.
 - 2026-10-04: task reviews are skipped by the controller's rule for this run (one review layer inside the build); the ledger records each skip.
+- 2026-10-04, Task 4: `validateApplication({ name, email, note })` checks the text fields only. A phone over 200 characters (input `maxLength`, no error slot) is a bad body in `parseApplication`; the CV is checked with `cvError` (browser, extension and size) and `storedCvError` (server, on the stored blob).
 
 ## Spec Change Log
 
