@@ -120,6 +120,17 @@ export async function checkRateLimits(
   return byIp !== "blocked";
 }
 
+/**
+ * True when a CV upload token may be issued: about 5 per IP in 1 hour. When
+ * the store is unavailable the upload is allowed (fail open).
+ */
+export async function checkUploadLimit(
+  ip: string | undefined,
+): Promise<boolean> {
+  const outcome = await askLimit("cv-upload", 5, "1 h", ipRateLimitKey(ip));
+  return outcome !== "blocked";
+}
+
 function mailText(submission: ValidSubmission): string {
   if (submission.type === "capture") {
     return `Kind: ${submission.kind}\nEmail: ${submission.email}`;
@@ -153,6 +164,17 @@ function mailSubject(submission: ValidSubmission): string {
   return `${SUBJECTS[submission.type]}: ${submission.org.replaceAll(/[\r\n]/g, "")}`;
 }
 
+function gmailTransport(config: DeliveryConfig) {
+  return createTransport({
+    service: "gmail",
+    secure: true,
+    auth: { user: config.gmailUser, pass: config.gmailAppPassword },
+    connectionTimeout: MAIL_TIMEOUT_MS,
+    greetingTimeout: MAIL_TIMEOUT_MS,
+    socketTimeout: MAIL_TIMEOUT_MS,
+  });
+}
+
 /**
  * Send one plain-text mail to the inbox through Gmail. Reply-To is the
  * visitor. A send failure is thrown for the caller to handle.
@@ -161,19 +183,68 @@ export async function sendContactMail(
   config: DeliveryConfig,
   submission: ValidSubmission,
 ): Promise<void> {
-  const transport = createTransport({
-    service: "gmail",
-    secure: true,
-    auth: { user: config.gmailUser, pass: config.gmailAppPassword },
-    connectionTimeout: MAIL_TIMEOUT_MS,
-    greetingTimeout: MAIL_TIMEOUT_MS,
-    socketTimeout: MAIL_TIMEOUT_MS,
-  });
-  await transport.sendMail({
+  await gmailTransport(config).sendMail({
     from: config.gmailUser,
     to: config.inbox,
     replyTo: submission.email,
     subject: mailSubject(submission),
     text: mailText(submission),
+  });
+}
+
+export interface ApplicationMail {
+  role: { slug: string; title: string };
+  name: string;
+  email: string;
+  phone: string;
+  note: string;
+  cv: { pathname: string; size: number; contentType: string; content: Buffer };
+}
+
+function applicationText({
+  role,
+  name,
+  email,
+  phone,
+  note,
+  cv,
+}: ApplicationMail): string {
+  return [
+    `Role: ${role.title}`,
+    `Role page: /careers/${role.slug}`,
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Phone: ${phone}`,
+    `CV: ${cv.pathname} (${cv.size} bytes, ${cv.contentType})`,
+    "",
+    "Cover note:",
+    note,
+  ].join("\n");
+}
+
+/**
+ * Send one application mail to the inbox through Gmail. Reply-To is the
+ * applicant and the CV is attached under a name with no personal data. A send
+ * failure is thrown for the caller to handle.
+ */
+export async function sendApplicationMail(
+  config: DeliveryConfig,
+  application: ApplicationMail,
+): Promise<void> {
+  const { role, email, cv } = application;
+  const extension = cv.pathname.slice(cv.pathname.lastIndexOf(".") + 1);
+  await gmailTransport(config).sendMail({
+    from: config.gmailUser,
+    to: config.inbox,
+    replyTo: email,
+    subject: `Job application: ${role.title.replaceAll(/[\r\n]/g, "")}`,
+    text: applicationText(application),
+    attachments: [
+      {
+        filename: `cv.${extension.toLowerCase()}`,
+        contentType: cv.contentType,
+        content: cv.content,
+      },
+    ],
   });
 }

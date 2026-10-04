@@ -1,0 +1,28 @@
+Checks after the full reviews, 2026-10-04, worktree at 363c4df (code unchanged since 363c4df)
+
+## npm run lint && npm run typecheck && npm run format:check
+> xiontech-landing-page@0.1.0 lint
+> eslint
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+Generating route types...
+✓ Types generated successfully
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+Checking formatting...
+All matched files use Prettier code style!
+
+## npm run test:coverage
+ Test Files  61 passed (61)
+      Tests  1008 passed (1008)
+   Duration  78.74s (import 50%, environment 26%, tests 15%, setup 7%, transform 1%, worker 1%)
+
+## npm run coverage:diff
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 15 changed file(s) with branch coverage >= 80% vs origin/develop.
+
+## npm run build && npm run test:smoke
+see smoke-output.txt (10 passed, run on 363c4df)

@@ -3,7 +3,12 @@ import { describe, expect, it, vi } from "vitest";
 import { job } from "./job";
 import { post } from "./post";
 
-type Field = { name: string; type: string; fields?: Field[] };
+type Field = {
+  name: string;
+  type: string;
+  fields?: Field[];
+  of?: { type: string }[];
+};
 type Schema = { name: string; type: string; fields: Field[] };
 
 const findField = (schema: Schema, name: string): Field => {
@@ -14,7 +19,17 @@ const findField = (schema: Schema, name: string): Field => {
 
 const translated: [Schema, string[]][] = [
   [post, ["title", "excerpt", "body"]],
-  [job, ["title", "location", "team", "description"]],
+  [
+    job,
+    [
+      "title",
+      "location",
+      "team",
+      "description",
+      "responsibilities",
+      "requirements",
+    ],
+  ],
 ];
 
 describe("studio schemas", () => {
@@ -143,6 +158,19 @@ describe("studio schemas", () => {
         const field = findField(schema, name);
         expect(field.type).toBe("object");
         expect((field.fields ?? []).map((f) => f.name)).toEqual(["en", "vi"]);
+      }
+    },
+  );
+
+  it.each(["responsibilities", "requirements"])(
+    "has a job %s list of EN and VI strings",
+    (name) => {
+      const field = findField(job, name);
+      expect(field.type).toBe("object");
+      expect((field.fields ?? []).map((f) => f.name)).toEqual(["en", "vi"]);
+      for (const lang of field.fields ?? []) {
+        expect(lang.type).toBe("array");
+        expect(lang.of).toEqual([{ type: "string" }]);
       }
     },
   );

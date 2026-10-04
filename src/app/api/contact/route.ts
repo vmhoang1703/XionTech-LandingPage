@@ -6,19 +6,11 @@ import {
   type DeliveryConfig,
 } from "@/lib/contact/delivery";
 import { parseSubmission } from "@/lib/contact/submission";
+import { describeError, readBody } from "@/lib/http/route-helpers";
 
 export const maxDuration = 10;
 
 const SEND_FAILED = { error: "send" } as const;
-
-/** The parsed body, or undefined when it is not JSON (judged as a bad body). */
-async function readBody(request: Request): Promise<unknown> {
-  try {
-    return await request.json();
-  } catch {
-    return undefined;
-  }
-}
 
 /** The delivery settings, or null after one log line naming the missing variable. */
 function readConfig(): DeliveryConfig | null {
@@ -30,20 +22,9 @@ function readConfig(): DeliveryConfig | null {
   }
 }
 
-/** The SMTP error code (EAUTH, ETIMEDOUT...) when the error has a string one. */
-function errorCode(error: unknown): string | undefined {
-  if (!(error instanceof Error) || !("code" in error)) return undefined;
-  return typeof error.code === "string" ? error.code : undefined;
-}
-
 /** Log lines name the step, the error class and the code, never a message. */
 function logSendFailed(error: unknown): void {
-  const name = error instanceof Error ? error.name : "unknown";
-  const code = errorCode(error);
-  console.error(
-    "Contact delivery: send failed",
-    code ? `${name} ${code}` : name,
-  );
+  console.error("Contact delivery: send failed", describeError(error));
 }
 
 export async function POST(request: Request): Promise<Response> {
