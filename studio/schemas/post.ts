@@ -13,6 +13,35 @@ export const post = {
       options: { source: "title.en", maxLength: 96 },
     },
     { name: "publishedAt", title: "Published at", type: "datetime" },
+    {
+      name: "category",
+      title: "Category",
+      type: "string",
+      options: {
+        list: [
+          { title: "Product", value: "product" },
+          { title: "Company", value: "company" },
+          { title: "Schools", value: "schools" },
+          { title: "Team", value: "team" },
+        ],
+      },
+      validation: (rule: { required: () => unknown }) => rule.required(),
+    },
+    {
+      name: "app",
+      title: "App",
+      type: "string",
+      options: {
+        list: [
+          { title: "PXP", value: "PXP" },
+          { title: "LXP", value: "LXP" },
+          { title: "SXP", value: "SXP" },
+          { title: "IoT", value: "IoT" },
+        ],
+      },
+      hidden: ({ document }: { document?: { category?: string } }) =>
+        document?.category !== "product",
+    },
     localized("excerpt", "Excerpt", "text"),
     localized("body", "Body", "array"),
   ],
