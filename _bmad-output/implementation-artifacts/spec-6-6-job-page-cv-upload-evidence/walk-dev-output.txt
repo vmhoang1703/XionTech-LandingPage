@@ -1,0 +1,7 @@
+[dev 1280] GET /careers/fresh-full-stack-developer -> 200
+[dev 1280] H1 "Fresh Full Stack Developer" | chips [Engineering, Ho Chi Minh City, Full-time]
+[dev 1280] details: headings [About the role / What you'll do / What you bring] | about paragraphs 1 | check lists 2 | items [3, 5]
+[dev 1280] closed sample /careers/placeholder-sample-job -> 404
+[dev 1280] /careers role links: /careers/fresh-full-stack-developer "Fresh Full Stack DeveloperEngineering · Ho Chi Minh City · Full-timeView and apply"
+[dev] test application 2026-10-04: POST /api/careers/cv-upload 200, POST /api/careers/apply 200, success panel "Thank you! We've received your application and will be in touch if it's a match." (name "[Test] Claude walk", email test@example.com, 623-byte test PDF)
+[hand, lead] the lead confirmed the application mail arrived in the careers inbox with the CV attached
