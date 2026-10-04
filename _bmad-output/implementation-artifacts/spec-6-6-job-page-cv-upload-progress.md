@@ -24,3 +24,9 @@ Task 4: review — skipped — controller rule for this run: one review layer in
 Task 4: fix round 1/5 (controller review: phone has no error slot, a long phone is a bad body per the matrix; validateApplication must not need a cv object because the server only has a blob path; now validates name, email, note only; 31 passed, commit 69da026)
 Task 4: complete (commits 377fa42..69da026, diff verified)
 Task 5: dispatched (model sonnet, base 69da026, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t5-report.md)
+Task 5: red — npx vitest run src/lib/careers/application.test.ts — failed: module missing (no tests ran)
+Task 5: green — npx vitest run src/lib/careers/application.test.ts — 25 passed (25); application.ts 100% lines and branches
+Task 5: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 5: minor — src/lib/careers/application.ts: `slug` has no length cap (only used as a GROQ param and in the mail; bounded by the route's role lookup)
+Task 5: complete (commits 2a8d542..2babaa3, diff verified)
+Task 6: dispatched (model sonnet, base 2babaa3, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t6-report.md)

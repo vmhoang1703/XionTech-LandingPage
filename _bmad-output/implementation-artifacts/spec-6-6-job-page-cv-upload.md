@@ -86,7 +86,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `open-roles.test.ts` -- query has the open filter, `$slug` param, `pt::text(description.en)`, tag `job`; `[]`/null gives null.
 - [x] `src/lib/careers/application-rules.ts` + test -- `JOB_ERRORS`, `CV_MAX_BYTES`, `CV_TYPES` (ext → MIME), `cvError({ name, size })`, `storedCvError({ pathname, size, contentType })`, `validateApplication(values)` -- CAP-2, CAP-4.
   - red: `application-rules.test.ts` -- matrix rows for fields and CV (ext case-insensitive, 0 bytes, exactly 5 MiB passes, +1 byte fails, MIME mismatch).
-- [ ] `src/lib/careers/application.ts` + test -- `parseApplication(body)` → ok / errors / bad / honeypot, like `parseSubmission` -- CAP-4.
+- [x] `src/lib/careers/application.ts` + test -- `parseApplication(body)` → ok / errors / bad / honeypot, like `parseSubmission` -- CAP-4.
   - red: `application.test.ts` -- bad-body, honeypot-first, long phone, bad CV path, field errors.
 - [ ] `src/lib/contact/delivery.ts` + test -- application mail (subject, body lines, Reply-To applicant, CV attachment, Q1-A), `checkUploadLimit` -- CAP-4, T4.
   - red: `delivery.test.ts` -- application subject strips CR/LF; body names role, page path, CV path; upload limit uses prefix `cv-upload` and fails open.
