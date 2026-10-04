@@ -12,6 +12,7 @@ import {
 import {
   currentSection,
   LABELS,
+  NAV_LINKS,
   PRODUCTS,
   PRODUCTS_FOOTER,
   SERVICES,
@@ -21,12 +22,14 @@ import {
 } from "./nav-data";
 
 type MenuId = "products" | "services";
+const isMenu = (section: Section): section is MenuId =>
+  section === "products" || section === "services";
 
 // EXPERIENCE.md "Mega menu": moving away closes after this delay, so the pointer can cross
 // the gap between the trigger and its panel.
 const HOVER_CLOSE_DELAY_MS = 150;
 
-const itemClass =
+export const itemClass =
   "inline-flex h-10 items-center rounded-full px-3.5 py-[9px] text-ui leading-none text-text transition-colors duration-[250ms] ease-[var(--ease-brand)] hover:bg-mist aria-expanded:bg-mist aria-[current=page]:rounded-none aria-[current=page]:font-bold aria-[current=page]:text-navy aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]";
 
 // Prototype values with no design token.
@@ -255,9 +258,9 @@ export function SiteNav() {
           <MegaFooterRow footer={SERVICES_FOOTER} onNavigate={close} />
         </div>
       </div>
-      {link("news", "/news", LABELS.news)}
-      {link("about", "/about", LABELS.about)}
-      {link("careers", "/careers", LABELS.careers)}
+      {NAV_LINKS.filter((item) => !isMenu(item.section)).map((item) =>
+        link(item.section, item.href, item.label),
+      )}
     </nav>
   );
 }

@@ -212,3 +212,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-6-5-careers-open-roles.md`
   summary: Role-card checks not done on 2026-10-04: pen input, and a meta line with all three parts (team · location · work type, wrapping at 390px) — the sample role has only a team. Studio lists show "Untitled" for a document with only a Vietnamese title (`preview` reads `title.en`). Release risk: live role cards link to `/careers/<slug>`, which is the Not found page until Story 6.6 merges — ship 6.6 before the release PR, or unpublish the sample role. Studio lists could mark closed or slugless roles, and format the post date.
   evidence: role-card walk on the dev site and the Studio follow-up review, 2026-10-04 (Minor).
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-mobile-menu.md`
+  summary: Mobile menu has no browser test: no `e2e/*.spec.ts` for the scroll lock, the 375px layout and the 640px/1080px switches, and no Menu-button probe in `scripts/ux/surfaces/header.json` (line 88 above); the layout UX rows are "pending (controller walk)".
+  evidence: one-layer review (Blind Hunter) 2026-10-04; jsdom cannot check layout and Turbopack rejects the build worktree, so neither could run there (Minor).

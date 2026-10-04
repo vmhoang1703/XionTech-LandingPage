@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LABELS } from "./nav-data";
+import { MobileMenu } from "./mobile-menu";
 import { SiteNav } from "./site-nav";
 
 export function SiteHeader() {
@@ -31,6 +32,7 @@ export function SiteHeader() {
             >
               {LABELS.bookDemo}
             </Link>
+            <MobileMenu />
           </div>
         </div>
       </header>
