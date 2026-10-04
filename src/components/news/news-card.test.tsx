@@ -1,0 +1,48 @@
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import type { LatestPost } from "@/lib/news/latest-posts";
+import { NewsCard } from "./news-card";
+
+vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
+
+const post: LatestPost = {
+  slug: "pxp-launch",
+  title: "PXP launches",
+  excerpt: "A short summary.",
+  publishedAt: "2026-09-18T03:00:00.000Z",
+  category: "team",
+  app: null,
+};
+
+describe("NewsCard", () => {
+  it("shows date, tag, title, excerpt and a link to the story", () => {
+    const { container } = render(<NewsCard post={post} />);
+
+    const time = container.querySelector("time");
+    expect(time?.getAttribute("datetime")).toBe(post.publishedAt);
+    expect(time?.textContent).toBe("18 SEP 2026");
+    expect(screen.getByText("Team").className).toBe("cat");
+    expect(
+      screen.getByRole("heading", { level: 3, name: "PXP launches" }),
+    ).toBeTruthy();
+    expect(screen.getByText("A short summary.")).toBeTruthy();
+    const link = screen.getByRole("link", { name: "Read story PXP launches" });
+    expect(link.getAttribute("href")).toBe("/news/pxp-launch");
+    expect(container.querySelector("[aria-hidden='true']")).not.toBeNull();
+  });
+
+  it("marks a product tag with the amber class", () => {
+    render(<NewsCard post={{ ...post, category: "product", app: "PXP" }} />);
+
+    expect(screen.getByText("Product · PXP").className).toBe("cat product");
+  });
+
+  it("leaves out the tag and the excerpt when they are missing", () => {
+    const { container } = render(
+      <NewsCard post={{ ...post, category: null, excerpt: null }} />,
+    );
+
+    expect(container.querySelector(".cat")).toBeNull();
+    expect(container.querySelector("p")).toBeNull();
+  });
+});
