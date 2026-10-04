@@ -69,6 +69,7 @@ Sources: SPEC CAP-1 to CAP-8, `EXPERIENCE.md` Component Patterns › Mobile menu
 | Page | menu closed | any | page scrolls again | — | CAP-8 | mobile-menu.test "locks page scroll … releases" |
 | Panel | closed, Tab through the page | keyboard | no menu item gets focus | — | CAP-4, AC-A11Y-3 | mobile-menu.test "keeps closed menu items out of reach" (`hidden`) |
 | Panel | tap or click a menu link | touch, mouse | goes to the page; menu closed; page scrolls | — | CAP-8, T6 | ✅ Chrome 375 tap on Careers: goes to `/careers`, menu closed, overflow restored |
+| Panel | Ctrl/Cmd/Shift/Alt-click, or a `target="_blank"` link | mouse | the link opens a new tab; the menu stays open (narrows CAP-8: this page does not change) | — | CAP-8, review 2026-10-04 | mobile-menu.test "keeps the menu open for a modifier…" and "…target _blank" |
 | Header links | menu open, tap the logo on Home | touch, mouse | menu closes; page scrolls | — | CAP-8 (review finding) | mobile-menu.test "closes when a header link to the current page" |
 | Panel | page changes (back button) | any | menu closed | — | CAP-8 | mobile-menu.test "closes when the pathname changes" |
 | Panel | open, window grows above 1080px | any | menu closes; scroll lock released | — | CAP-8, T6 | ✅ Chrome 800 → 1200: menu closed, overflow restored |
@@ -94,7 +95,7 @@ One layer (Blind Hunter), 2026-10-04, 11 findings.
 - Width not checked when the effect starts -- low, rejected: the Menu button is hidden above 1080px, so the menu cannot open there; a state set in the effect body breaks the React 19 lint rule.
 - No e2e / browser test for layout rows; UX probe for the Menu button not added to `scripts/ux/surfaces/header.json` -- low, deferred: Turbopack rejects this worktree, so neither can run here; the probe tools are optional until Demo day (lead, 2026-10-02). Deferred-work entry added.
 
-Full `bmad-code-review` on 2026-10-04, 5 layers. Security: clean. Acceptance: CAP-1 to CAP-8 met.
+Full `bmad-code-review` on 2026-10-04, 5 layers. Security: clean. Acceptance: CAP-1 to CAP-8 met after the patches below (CAP-5 failed at exactly 640px before).
 
 - patch: the desktop links rendered in a list without a `key` (React warning, a 1.3 regression); a test now checks the five top-level items in order and no warning.
 - patch: `max-[640px]:` is `width < 640px` in Tailwind v4, so at exactly 640px the panel CTA was hidden and the header CTA shown; the classes are `max-[641px]:` now, and the test stub copies the real rule.
@@ -103,3 +104,10 @@ Full `bmad-code-review` on 2026-10-04, 5 layers. Security: clean. Acceptance: CA
 - defer (Minor, `deferred-work.md`): a real touch swipe on a phone; focus falls to the page when the window grows above 1080px with focus in the panel (Menu is hidden there); back/forward that only changes the hash keeps the menu open; `inert` on the page while open (screen reader virtual cursor); the panel's z-index token works only inside the header's stacking context.
 - release risk: the panel's Services, News and About links open the Not found page until those pages ship (on desktop Services is a mega menu).
 - open for Amber: the header Book a demo (641–1080px) is inside the focus trap; CAP-3 lists only logo, EN/VI and Menu.
+
+Second full review of the fixes (2026-10-04, 5 layers): Security clean; Acceptance: no AC broken, CAP-5/CAP-6 hold at exactly 640 and 641.
+
+- patch: a panel link to a part of this page (Book a demo `/demo#form` on `/demo`) sent focus to Menu, away from the form; focus now moves only for a same-page link with no `#part`, and only panel links (always well-formed) are parsed as URLs. A `target="_blank"` link keeps the menu open like a modifier click.
+- patch (tests): Alt-click; focus stays on the logo and on a link to another page; the console spy in the nav test is restored; comments next to the `max-[641px]` classes say why it is 641.
+- patch (evidence): `walk-output.txt` re-run from the committed `walk.mjs` (header CTA read as `header a.btn-sm`), so it no longer mixes lines from an older script.
+- defer (Minor): a middle click fires `auxclick` in browsers, so the `button !== 0` check is only a guard; fractional widths between 640 and 641px.
