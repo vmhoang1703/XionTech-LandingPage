@@ -3,6 +3,7 @@ import { ipAddress } from "@vercel/functions";
 import { CV_MAX_BYTES, CV_TYPES } from "@/lib/careers/application-rules";
 import { CV_PATH_PREFIX, getBlobToken } from "@/lib/careers/cv-storage";
 import { checkUploadLimit } from "@/lib/contact/delivery";
+import { readBody } from "@/lib/http/route-helpers";
 
 const SEND_FAILED = { error: "send" } as const;
 const TOKEN_LIFETIME_MS = 10 * 60_000;
@@ -11,15 +12,6 @@ const GENERATE_TOKEN = "blob.generate-client-token";
 interface TokenRequest {
   body: { type: typeof GENERATE_TOKEN; payload: { pathname: string } };
   extension: string;
-}
-
-/** The parsed body, or undefined when it is not JSON (judged as a bad body). */
-async function readBody(request: Request): Promise<unknown> {
-  try {
-    return await request.json();
-  } catch {
-    return undefined;
-  }
 }
 
 /** The extension of an allowed `cv/application.<ext>` path, else undefined. */
