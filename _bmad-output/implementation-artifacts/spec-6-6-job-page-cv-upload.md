@@ -2,7 +2,7 @@
 title: 'Story 6.6: Job page and application with CV upload'
 type: 'feature'
 created: '2026-10-04'
-status: 'in-review'
+status: 'done'
 baseline_commit: '5973d9b340c9392ad401f4f200f9b45a9ac4147e'
 route: 'dispatch'
 review_loop_iteration: 0
