@@ -49,3 +49,8 @@ Task 8: complete (commits 00cecdb..f16a877, diff verified; mid-task course corre
 Task 7: fix round 1/5 (controller: the lead's store has no BLOB_READ_WRITE_TOKEN and handleUpload needs one; route reworked to handleUploadPresigned + issueSignedToken with OIDC and BLOB_STORE_ID; getBlobToken removed; 463 passed in src/app/api and src/lib, 100% on the two changed files; commit de771e3)
 Task 7: complete (commits 912435a..de771e3, diff verified)
 Task 9: dispatched (model sonnet, base de771e3, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t9-report.md)
+Task 9: red — npx vitest run src/components/contact/post-submission.test.ts — 2 failed (custom endpoint not called; custom field errors not read)
+Task 9: green — same command — 17 passed (17); npm test 886 passed
+Task 9: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 9: complete (commits 733b57d..a0b4d2d, diff verified)
+Task 10: dispatched (model haiku, base a0b4d2d, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t10-report.md)

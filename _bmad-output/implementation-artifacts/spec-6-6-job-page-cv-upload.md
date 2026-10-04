@@ -94,7 +94,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `route.test.ts` -- other event type 400; wrong path 400; token options asserted on a mocked `handleUploadPresigned` / `issueSignedToken`.
 - [x] `src/app/api/careers/apply/route.ts` + test -- matrix steps in order: bad, honeypot, config, field errors, role (`getOpenRole`), rate, CV (`get` metadata), send -- CAP-4.
   - red: `route.test.ts` -- one test per matrix row, Blob and Gmail mocked.
-- [ ] `src/components/contact/post-submission.ts` + test -- optional endpoint and field list -- reuse.
+- [x] `src/components/contact/post-submission.ts` + test -- optional endpoint and field list -- reuse.
   - red: `post-submission.test.ts` -- a given endpoint is called and its field errors are read.
 - [ ] `src/content/job.ts` -- page and form strings, metadata -- CAP-1…CAP-5.
 - [ ] `src/components/careers/job-application-form.tsx` + test -- client form, CV check on change, upload then apply, states, file reuse on retry, 60 s upload timeout -- CAP-2, CAP-3, CAP-5.
