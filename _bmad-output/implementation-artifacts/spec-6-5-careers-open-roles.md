@@ -78,7 +78,7 @@ context: ['{project-root}/AGENTS.md']
 
 **Acceptance Criteria:**
 - Given `/careers`, when it loads, then the amber hero reads "Build what schools use every day." with "See open roles" → `#roles` and "Life at XionTech" → `#life`, then culture, four benefits (Innovative workspace, Growth opportunities, Engaging work, Meaningful impact), open roles and Life at XionTech, and no capture band.
-- Given the controller runs `npm run build && npm run test:smoke` in the main checkout, then `/careers` returns 200 -- pending (controller).
+- Given the controller runs `npm run build && npm run test:smoke` in the main checkout, then `/careers` returns 200 -- done: build passes, smoke 8 passed (controller).
 
 ## UX checks
 
@@ -86,30 +86,30 @@ Sources: `EXPERIENCE.md` (Component Patterns › Role card, Spotlight card, Medi
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Hero | page load | — | amber hero, breadcrumbs Home / Careers, H1 "Build what schools use every day." with "every day" highlighted, lede, amber strand ribbon | ribbon 5s, then still | CAP-1, DESIGN.md 443, Story 1.6 HeroArt | |
-| Hero "See open roles" | click / Enter | mouse, keyboard | goes to `#roles`; navy pill with arrow | — | CAP-1, DESIGN.md Button | |
-| Hero "Life at XionTech" | click / Enter | mouse, keyboard | goes to `#life`; glass pill | — | CAP-1, brand rule (AGENTS.md) | |
-| Hero buttons | hover | mouse | lift 2px | 0.35s | DESIGN.md Button | |
-| Hero buttons | press | mouse, touch | 1px down, scale 0.98 | — | DESIGN.md Button | |
-| Culture | page load | — | paper surface; H2 "A culture that goes beyond employment."; 3 check bullets; dashed "[Placeholder] Photo" frame on the right | — | CAP-1, Q3, DESIGN.md Placeholder frame | |
-| Culture | width 900px or less | — | text and photo frame stack in one column | — | EXPERIENCE.md Responsive | |
-| Benefits | page load | — | mist linen surface; "Why you'll grow here."; 4 cards with icons; variants feature (1st) and navy (3rd) | — | CAP-1, mockup | |
-| Benefits | width 1080px / 640px | — | 4 → 2 → 1 columns | — | EXPERIENCE.md Responsive (services grid) | |
-| Role card | roles open | — | glass card: title in display face, then team · location · work type in muted text, "View and apply" with arrow on the right | — | CAP-2, DESIGN.md Role card | |
-| Role card | click anywhere on the card | mouse, touch, pen | opens `/careers/<slug>` | — | CAP-2, EXPERIENCE.md Role card | |
-| Role card | Tab, then Enter | keyboard | one tab stop per card; 2px focus ring around the card; Enter opens the job page | — | AC-A11Y-2, AC-A11Y-4, T9 | |
-| Role card | screen reader | — | one link whose name holds title, meta and "View and apply"; no nested link or button | — | AC-A11Y-4 | |
-| Role card | hover | mouse | lifts 2px with shadow; arrow moves 4px right | 0.3–0.5s | DESIGN.md Role card, mockup `.link-arrow` | |
-| Role card | hover | touch, pen | no lift (hover-capable devices only) | — | EXPERIENCE.md pointer effects | |
-| Role card | pointer-following amber glow | mouse | not shown | — | pending: no shared spotlight glow exists in the codebase yet; no story owns it | |
-| Role card | width 640px or less | — | "View and apply" stacks under the title | — | DESIGN.md Role card | |
-| Open roles panel | no open roles | — | dashed panel "No open roles right now."; no card | — | CAP-3, EXPERIENCE.md States, DESIGN.md Open roles panel | |
-| Open roles | a role is closed or has no slug | — | that role does not appear | — | CAP-3, Q1-B | |
-| Life frames | page load | — | mist surface; H2 "Life at XionTech."; three 4:3 dashed frames captioned "[Placeholder] Team photo", "[Placeholder] Office photo", "[Placeholder] Event photo"; not clickable | — | CAP-4, Q2-B, EXPERIENCE.md Media frame | |
-| Life frames | width 900px / 640px | — | 3 → 2 → 1 columns | — | EXPERIENCE.md Responsive (news grid) | |
-| Page | scroll to the end | — | footer follows Life at XionTech; no email capture band | — | CAP-1, EXPERIENCE.md capture band rule | |
-| Page | reduced motion | — | no lift or arrow transition; ribbon drawn once, still | — | EXPERIENCE.md Motion | |
-| Page | contrast | — | muted meta text and amber-hero text meet 4.5:1 | — | AC-A11Y-1 | |
+| Hero | page load | — | amber hero, breadcrumbs Home / Careers, H1 "Build what schools use every day." with "every day" highlighted, lede, amber strand ribbon | ribbon 5s, then still | CAP-1, DESIGN.md 443, Story 1.6 HeroArt | ✅ Chrome 1280: amber hero, crumbs Home / Careers, H1 with "every day" highlighted, ribbon svg |
+| Hero "See open roles" | click / Enter | mouse, keyboard | goes to `#roles`; navy pill with arrow | — | CAP-1, DESIGN.md Button | ✅ Chrome 1280: navy pill, click goes to `#roles` |
+| Hero "Life at XionTech" | click / Enter | mouse, keyboard | goes to `#life`; glass pill | — | CAP-1, brand rule (AGENTS.md) | ✅ Chrome 1280: glass pill, Enter goes to `#life` |
+| Hero buttons | hover | mouse | lift 2px | 0.35s | DESIGN.md Button | ✅ Chrome 1280: lifts 2px (transform 0.35s) |
+| Hero buttons | press | mouse, touch | 1px down, scale 0.98 | — | DESIGN.md Button | not walked (shared `.btn:active` rule from Story 1.1) |
+| Culture | page load | — | paper surface; H2 "A culture that goes beyond employment."; 3 check bullets; dashed "[Placeholder] Photo" frame on the right | — | CAP-1, Q3, DESIGN.md Placeholder frame | ✅ Chrome 1280: paper surface, H2, 3 check bullets, `[Placeholder] Photo` frame |
+| Culture | width 900px or less | — | text and photo frame stack in one column | — | EXPERIENCE.md Responsive | ✅ Chrome: stacks below 900px (899 yes, 900 no; the site's shared `.split` switches at 900) |
+| Benefits | page load | — | mist linen surface; "Why you'll grow here."; 4 cards with icons; variants feature (1st) and navy (3rd) | — | CAP-1, mockup | ✅ Chrome 1280: mist linen, 4 cards, feature (1st) and navy (3rd) |
+| Benefits | width 1080px / 640px | — | 4 → 2 → 1 columns | — | EXPERIENCE.md Responsive (services grid) | ✅ Chrome: 4 columns at 1280/1080, 2 at 900/899/640, 1 at 390 (shared Story 3.5 `.svc-grid`: 1 column below 640) |
+| Role card | roles open | — | glass card: title in display face, then team · location · work type in muted text, "View and apply" with arrow on the right | — | CAP-2, DESIGN.md Role card | not walkable yet: no published role with a slug (decision A8, lead step after merge); test: card markup |
+| Role card | click anywhere on the card | mouse, touch, pen | opens `/careers/<slug>` | — | CAP-2, EXPERIENCE.md Role card | not walkable yet (as above); test: one link to `/careers/<slug>` |
+| Role card | Tab, then Enter | keyboard | one tab stop per card; 2px focus ring around the card; Enter opens the job page | — | AC-A11Y-2, AC-A11Y-4, T9 | not walkable yet (as above); test: one link per card, no nested control |
+| Role card | screen reader | — | one link whose name holds title, meta and "View and apply"; no nested link or button | — | AC-A11Y-4 | test: link name holds title, meta and "View and apply"; no nested link or button |
+| Role card | hover | mouse | lifts 2px with shadow; arrow moves 4px right | 0.3–0.5s | DESIGN.md Role card, mockup `.link-arrow` | not walkable yet (as above); CSS ported from the mockup |
+| Role card | hover | touch, pen | no lift (hover-capable devices only) | — | EXPERIENCE.md pointer effects | not walkable yet (as above); hover rules sit under `(hover: hover)` |
+| Role card | pointer-following amber glow | mouse | not shown | — | pending: no shared spotlight glow exists in the codebase yet; no story owns it | not shown: no glow rule exists (by design until a story owns it) |
+| Role card | width 640px or less | — | "View and apply" stacks under the title | — | DESIGN.md Role card | not walkable yet (as above) |
+| Open roles panel | no open roles | — | dashed panel "No open roles right now."; no card | — | CAP-3, EXPERIENCE.md States, DESIGN.md Open roles panel | ✅ Chrome 1280: dashed panel "No open roles right now.", 0 cards |
+| Open roles | a role is closed or has no slug | — | that role does not appear | — | CAP-3, Q1-B | test: query filter (closed, slug, title) and projection; the sample role without a slug does not show (walk: 0 cards) |
+| Life frames | page load | — | mist surface; H2 "Life at XionTech."; three 4:3 dashed frames captioned "[Placeholder] Team photo", "[Placeholder] Office photo", "[Placeholder] Event photo"; not clickable | — | CAP-4, Q2-B, EXPERIENCE.md Media frame | ✅ Chrome 1280: mist surface, H2, three 4:3 frames with `[Placeholder]` captions, 0 links; caption inside the frame at every width (fixed in review: it was clipped) |
+| Life frames | width 900px / 640px | — | 3 → 2 → 1 columns | — | EXPERIENCE.md Responsive (news grid) | ✅ Chrome: 3 columns at 1280/1080, 2 at 900/899, 1 at 640/390 |
+| Page | scroll to the end | — | footer follows Life at XionTech; no email capture band | — | CAP-1, EXPERIENCE.md capture band rule | ✅ Chrome 1280: `#life` is the last section, then the footer; no capture band |
+| Page | reduced motion | — | no lift or arrow transition; ribbon drawn once, still | — | EXPERIENCE.md Motion | ✅ Chrome reduced motion: button transition 0s, 0 running animations |
+| Page | contrast | — | muted meta text and amber-hero text meet 4.5:1 | — | AC-A11Y-1 | ✅ hero lede 6.34:1 on amber; role meta not measurable yet (no card) |
 
 ## Implementation Notes
 
@@ -136,6 +136,13 @@ Step 4 on 2026-10-03: one layer (Edge Case Hunter), by the controller's rule for
 
 Patch re-review: not run as a separate subagent (16-line change, one review layer for this run); covered by `npx vitest run src/lib/careers/open-roles.test.ts` (13 passed) and the full re-verification below.
 
+Full `bmad-code-review` on 2026-10-04 after rebasing onto `develop`, 5 layers. Security: clean (one unverifiable item: who can publish in Sanity decides what `/careers` shows — the lead checks Members in sanity.io/manage). Acceptance: CAP-1 to CAP-3 met; CAP-4 met as narrowed by decision A8.
+
+- patch: Life frame captions were clipped (`.illo` min-height 320px inside a 4:3 box about 288px tall); `min-h-0` lets the frame fit. The query projection and the required slug rule are now tested.
+- patch (docs): decisions recorded as A8 in `decisions-2026-10-01.md`; UX rows checked from the walk; build and smoke recorded.
+- defer (Minor, `deferred-work.md`): role-card rows need a slugged role (after the Studio deploy); the shared `.split` and `.svc-grid` switch 1px off the "900px or less" / "640px or less" wording; the card focus ring follows the card's 24px radius; breadcrumb `aria-current` and separator (shared with other pages, Story 1.6); the culture photo frame has no owner for a real photo; `.news-grid` is shared with Story 6.1.
+- open for the lead: the page title says "Software Jobs in Ho Chi Minh City" (from the mockup).
+
 ## Design Notes
 
 - The mockup's "[Placeholder] Sample roles. Real roles are published through Sanity." note and the `#life` lede "Click a frame to add a real team photo." are prototype tooling (EXPERIENCE.md: prototype-only tooling is not part of the product), so they are left out. Sample roles already carry `[Placeholder]` titles.
@@ -147,10 +154,10 @@ Patch re-review: not run as a separate subagent (16-line change, one review laye
 - `npm run lint && npm run typecheck && npm run format:check` -- expected: no errors
 - `npm test` -- expected: all pass
 - `npm run test:coverage && npm run coverage:diff` -- expected: 100% changed lines, branches ≥ 80% on changed files
-- `npm run build && npm run test:smoke` -- pending (controller, main checkout)
+- `npm run build && npm run test:smoke` -- exit 0 in the main checkout: "8 passed"
 
 **Manual checks:**
-- Browser walk of `/careers` at 1280px, 900px and 390px; keyboard through the hero buttons and role cards; every UX row above -- pending (controller).
+- Browser walk of `/careers` at 1280, 1080, 900, 899, 640 and 390px plus reduced motion -- done (`walk.mjs`, `walk-output.txt`); role-card rows wait for a published role with a slug (decision A8).
 
 ## Acceptance Evidence
 
@@ -173,6 +180,6 @@ Re-captured in step 4 on 2026-10-03, after the review patch (`6584322`) and the 
 
 **Not captured**
 
-- `npm run build && npm run test:smoke` -- pending (controller, main checkout): Turbopack rejects the worktree's `node_modules` junction.
-- Browser walk of `/careers` and every UX checks row -- pending (controller).
+- `npm run build && npm run test:smoke` -- exit 0 in the main checkout (Turbopack rejects the worktree's `node_modules` junction): `/careers` built, "8 passed".
+- Role-card rows in a browser: wait for the lead's Studio deploy and a slugged role (decision A8).
 - The GROQ filter (`closed != true`, `defined(slug.current)`, order by title) against the real dataset -- only the query text is asserted; checked after the lead redeploys the Studio and fills the sample role.

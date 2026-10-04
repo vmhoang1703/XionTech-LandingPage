@@ -14,9 +14,16 @@ A real photo of the team at work or at a company event."
 [1280] life frame ratio 1.33
 [1280] last section in main #life | next after main: FOOTER | capture band 0
 [1280] contrast lede rgb(35, 64, 107) on amber #FFC000: 6.34:1
+[1280] culture stacked false | benefits columns 4 | life columns 3 | no sideways scroll true
+[1280] life frame 384x288 | inner bottom -1px past frame | caption inside true
 [1080] culture stacked false | benefits columns 4 | life columns 3 | no sideways scroll true
+[1080] life frame 331x248 | inner bottom -1px past frame | caption inside true
 [900] culture stacked false | benefits columns 2 | life columns 2 | no sideways scroll true
+[900] life frame 416x312 | inner bottom -1px past frame | caption inside true
 [899] culture stacked true | benefits columns 2 | life columns 2 | no sideways scroll true
+[899] life frame 416x312 | inner bottom -1px past frame | caption inside true
 [640] culture stacked true | benefits columns 2 | life columns 1 | no sideways scroll true
+[640] life frame 608x456 | inner bottom -1px past frame | caption inside true
 [390] culture stacked true | benefits columns 1 | life columns 1 | no sideways scroll true
+[390] life frame 358x269 | inner bottom -1px past frame | caption inside true
 [1280 reduced] hero button transition 0s | ribbon animations running 0
