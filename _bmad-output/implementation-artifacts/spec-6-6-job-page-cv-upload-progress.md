@@ -46,3 +46,6 @@ Task 8: green — npx vitest run src/app/api src/lib --coverage — 16 files, 46
 Task 8: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
 Task 8: minor — src/app/api/careers/apply/route.ts readStoredCv: `statusCode !== 200` branch cannot happen without `ifNoneMatch` (defensive)
 Task 8: complete (commits 00cecdb..f16a877, diff verified; mid-task course correction to OIDC auth: getBlobConfig, get without token; shared readBody/describeError moved to src/lib/http/route-helpers.ts)
+Task 7: fix round 1/5 (controller: the lead's store has no BLOB_READ_WRITE_TOKEN and handleUpload needs one; route reworked to handleUploadPresigned + issueSignedToken with OIDC and BLOB_STORE_ID; getBlobToken removed; 463 passed in src/app/api and src/lib, 100% on the two changed files; commit de771e3)
+Task 7: complete (commits 912435a..de771e3, diff verified)
+Task 9: dispatched (model sonnet, base de771e3, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t9-report.md)

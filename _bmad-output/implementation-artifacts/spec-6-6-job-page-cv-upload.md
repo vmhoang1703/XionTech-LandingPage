@@ -92,7 +92,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `delivery.test.ts` -- application subject strips CR/LF; body names role, page path, CV path; upload limit uses prefix `cv-upload` and fails open.
 - [x] `src/app/api/careers/cv-upload/route.ts` + test -- only `blob.generate-client-token`; config → 500; upload limit → 429; pathname must be `cv/application.<ext>`; token: `allowedContentTypes`, `maximumSizeInBytes`, `addRandomSuffix: true`, `validUntil` 10 min -- CAP-4.
   - red: `route.test.ts` -- other event type 400; wrong path 400; token options asserted on a mocked `handleUploadPresigned` / `issueSignedToken`.
-- [ ] `src/app/api/careers/apply/route.ts` + test -- matrix steps in order: bad, honeypot, config, field errors, role (`getOpenRole`), rate, CV (`get` metadata), send -- CAP-4.
+- [x] `src/app/api/careers/apply/route.ts` + test -- matrix steps in order: bad, honeypot, config, field errors, role (`getOpenRole`), rate, CV (`get` metadata), send -- CAP-4.
   - red: `route.test.ts` -- one test per matrix row, Blob and Gmail mocked.
 - [ ] `src/components/contact/post-submission.ts` + test -- optional endpoint and field list -- reuse.
   - red: `post-submission.test.ts` -- a given endpoint is called and its field errors are read.
