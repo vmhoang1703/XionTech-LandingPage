@@ -58,3 +58,8 @@ Task 10: no-red (static copy module; its strings are asserted by the form, hero,
 Task 10: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
 Task 10: complete (commits 6c68b83..744858e, diff verified)
 Task 11: dispatched (model sonnet, base 744858e, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t11-report.md)
+Task 11: red — npx vitest run src/components/careers/job-application-form.test.tsx — failed: component file missing (import error)
+Task 11: green — same command with coverage — 25 passed (25); 100% lines, 96.72% branches
+Task 11: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 11: complete (commits e929fdd..9e1bb0e, diff verified)
+Task 12: dispatched (model sonnet, base 9e1bb0e, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t12-report.md)

@@ -97,7 +97,7 @@ context: ['{project-root}/AGENTS.md']
 - [x] `src/components/contact/post-submission.ts` + test -- optional endpoint and field list -- reuse.
   - red: `post-submission.test.ts` -- a given endpoint is called and its field errors are read.
 - [x] `src/content/job.ts` -- page and form strings, metadata -- CAP-1…CAP-5.
-- [ ] `src/components/careers/job-application-form.tsx` + test -- client form, CV check on change, upload then apply, states, file reuse on retry, 60 s upload timeout -- CAP-2, CAP-3, CAP-5.
+- [x] `src/components/careers/job-application-form.tsx` + test -- client form, CV check on change, upload then apply, states, file reuse on retry, 60 s upload timeout -- CAP-2, CAP-3, CAP-5.
   - red: `job-application-form.test.tsx` -- wrong CV flagged on change; submit errors focus first and announce; sending state; success panel; failure keeps values and file.
 - [ ] `src/components/careers/job-details.tsx`, `job-hero.tsx` + tests -- hero with crumbs and chips; details with hidden empty sections and "All open roles" → `/careers#roles` -- CAP-1.
 - [ ] `src/app/careers/[slug]/page.tsx` + test -- await params, `getOpenRole`, `notFound()` when null, sections, no capture band -- CAP-1, CAP-6.
