@@ -902,3 +902,19 @@ Template:
 - **AI got it wrong?** Yes: a CSS cleanup regex removed part of a keyframes rule and broke the stylesheet's
   braces; it was restored from the last commit and the old block removed by exact line numbers after checking
   each line.
+
+## 2026-10-04 — ENH-013: AI Tutor and AI Timetable marked Coming soon
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor, as the change was small)
+- **Prompt / task:** Amber confirmed AI Tutor is for students and AI Timetable is for school leaders, both coming
+  soon, and that the manager wants the partner logo and case study placeholders now. The two cards got a
+  "Coming soon" tag; their placeholder descriptions stay by Amber's choice. Open items in ENH-003, ENH-006 and
+  ENH-008 were closed.
+- **Decision / result:** Approved by Amber. The acceptance audit found no violations. Two hardening fixes from
+  the review were applied: the tag text is semibold (its contrast only just passed at 500 weight) and its
+  colours use the brand amber token. The cards linking to a Products page that does not describe them yet is
+  noted for when the product text exists.
+- **AI got it wrong?** Yes: the tag was first placed in the card's top-right corner, where it covered the app
+  name; it now sits under the audience line, and the card rows were adjusted so every description sits right
+  under its header.

@@ -25,7 +25,7 @@ also has a Vietnamese version in the prototype.
 | Home, Case studies | — | New (ENH-003); now "Work built with our partners.": a full-width slider of six placeholder partner cards (partner name, description, "View case study") with carousel dots | ENH-003, ENH-006 |
 | Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a light row of five steps (Discovery to Deployment), one short line each, joined by a line, with "See how we work" to Services, on a blue gradient | Batch 1, ENH-009, ENH-012 |
 | Services, process | "Our 4-D process": four cards | "How we work.": the full five-step component (layered diagram, step tabs with the chosen step highlighted, detail panel) on a blue gradient; About and Contact say five steps | ENH-011 |
-| Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, AI Tutor, AI Timetable) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009 |
+| Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, and AI Tutor and AI Timetable marked Coming soon) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009, ENH-013 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
@@ -113,7 +113,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
-Changes on this page: Batch 1, ENH-001 to ENH-012 (see the change list at the top).
+Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the top).
 
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -226,7 +226,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-012 (see the change list at the to
 ║ │ Text: Release, monitor and keep improving.                                                           │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. What we build. · white · [Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009] ───────┐ ║
+║ ┌─ 6. What we build. · white · [Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · Com… ─┐ ║
 ║ │ H2: What we build.                                                                                   │ ║
 ║ │ Text: Digital products we design, build and run for every role in school, with more on the way.      │ ║
 ║ │ [BUTTON: Previous apps]                                                                              │ ║
@@ -245,9 +245,10 @@ Changes on this page: Batch 1, ENH-001 to ENH-012 (see the change list at the to
 ║ │ │   products.html#iot]         │ │   products.html]             │ │   products.html]               │ │ ║
 ║ │ │ Text: IoT                    │ │ Text: AI Tutor               │ │ Text: AI Timetable             │ │ ║
 ║ │ │ Text: School staff and       │ │ Text: Students               │ │ Text: School leaders           │ │ ║
-║ │ │   facilities                 │ │ Text: [Placeholder] Study    │ │ Text: [Placeholder] The whole  │ │ ║
-║ │ │ Text: Devices, lighting and  │ │   help at each student's own │ │   school timetable, planned in │ │ ║
-║ │ │   climate.                   │ │   pace.                      │ │   fewer steps.                 │ │ ║
+║ │ │   facilities                 │ │ Text: Coming soon            │ │ Text: Coming soon              │ │ ║
+║ │ │ Text: Devices, lighting and  │ │ Text: [Placeholder] Study    │ │ Text: [Placeholder] The whole  │ │ ║
+║ │ │   climate.                   │ │   help at each student's own │ │   school timetable, planned in │ │ ║
+║ │ │                              │ │   pace.                      │ │   fewer steps.                 │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ │ [LINK: Explore our products → products.html]                                                         │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║

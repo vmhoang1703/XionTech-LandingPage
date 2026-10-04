@@ -26,6 +26,7 @@ directly, before this log existed.
 | ENH-010 | 2026-10-04 | Home, contact form                                        | The phone field shows an example number as its placeholder instead of a hint line; "Start the conversation" has no glow or lift                                                                                                                                                                   | Approved | 2.2                                   |
 | ENH-011 | 2026-10-04 | Services process; Home and Services steps; About, Contact | Services uses the same five-step "How we work." component and content as Home; the chosen step is highlighted; the 4-D wording is retired                                                                                                                                                         | Approved | 5.4, 3.6                              |
 | ENH-012 | 2026-10-04 | Home, How we approach                                     | Home shows a light five-step diagram with one short line per step and a link to Services; the full tabbed component stays on Services                                                                                                                                                             | Approved | 3.6                                   |
+| ENH-013 | 2026-10-04 | Home, What we build                                       | AI Tutor (Students) and AI Timetable (School leaders) are marked "Coming soon"                                                                                                                                                                                                                    | Approved | 3.5, new stories                      |
 
 ## ENH-001: Contact form on Home
 
@@ -159,9 +160,8 @@ directly, before this log existed.
   - Real logos need the partner's written OK; real case studies need the client's approval (team rule:
     no invented logos or client stories).
   - No story covers these sections yet; they need new stories (or additions to Epic 3).
-- **Open items:** the manager's homepage brief (2026-10-02) said not to add partner logo or case study
-  placeholders until real evidence exists. Amber to confirm with the manager that these placeholders
-  are wanted now.
+- **Open items:** resolved on 2026-10-04: the manager confirmed the partner logo and case study placeholders
+  are wanted now, although the homepage brief (2026-10-02) had said to wait for real evidence.
 
 ## ENH-004: Section spacing, heading-first reveal and the Why XionTechs bento
 
@@ -278,7 +278,7 @@ directly, before this log existed.
   - "View case study" is not a link yet (no case study pages exist); it becomes one when the pages do.
   - A drag never opens a card's screenshot slot (prototype tooling).
   - The spacing replaces the values in ENH-004.
-- **Open items:** the manager's brief note on case study placeholders (see ENH-003) still applies.
+- **Open items:** none (the manager confirmed the placeholders on 2026-10-04, see ENH-003).
 
 ## ENH-007: News intro row and app pills
 
@@ -319,8 +319,8 @@ directly, before this log existed.
 - **Developer notes:** Story 3.5's app row becomes a horizontal rail with previous and next buttons
   (`aria-controls`, disabled at the ends). AI Tutor and AI Timetable need product facts (description,
   audience, status, Products page section) before they ship; their descriptions are placeholders.
-- **Open items:** confirm the two apps' names, audiences and descriptions (Amber), and whether they are
-  live or coming soon.
+- **Open items:** resolved by ENH-013: AI Tutor (Students) and AI Timetable (School leaders) are coming soon.
+  Their descriptions are still placeholders.
 
 ## ENH-009: How we approach, equal app cards, heading spacing
 
@@ -422,3 +422,17 @@ directly, before this log existed.
 - **Developer notes:** Story 3.6 (Home) becomes a static five-step diagram with no tabs; Story 5.4 (Services)
   keeps the tabbed component.
 - **Open items:** none.
+
+## ENH-013: AI Tutor and AI Timetable are coming soon
+
+- **Why:** Amber confirmed on 2026-10-04 that AI Tutor is for students, AI Timetable is for school leaders, and both
+  are coming soon. She also confirmed with the manager that the partner logo and case study placeholders are
+  wanted now (closes the open items in ENH-003, ENH-006 and ENH-008).
+- **What changed:** the AI Tutor and AI Timetable cards in "What we build." show a small amber "Coming soon" tag
+  (Vietnamese "Sắp ra mắt") under their audience line. Their names and audiences are confirmed; the one-line
+  descriptions stay "[Placeholder]" until the product text is written. The cards keep the same size as the
+  others, and every card's description now sits right under its header, with or without a tag.
+- **Developer notes:** the tag is plain text inside the card link, so screen readers hear "AI Tutor, Students,
+  Coming soon". When the apps launch, remove the tag and replace the placeholder descriptions. Both cards link to the Products page, which does not describe them yet; add their sections (or an anchor) when the product text exists. The tag uses the brand amber token and semibold text to keep its contrast above 4.5:1.
+- **Open items:** none. Amber chose on 2026-10-04 to keep the placeholder descriptions for now; they will be
+  replaced when the product text exists.
