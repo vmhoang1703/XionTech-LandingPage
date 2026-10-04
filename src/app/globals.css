@@ -1886,6 +1886,66 @@
     margin-top: 32px;
   }
 
+  /* News page (Story 6.1), ported from the prototype site.css. The first card is a wide feature. */
+  .ncard.big {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    /* meta, title, excerpt, link; the frame spans all four rows */
+    grid-template-rows: auto auto auto 1fr;
+    padding-block: 0 26px;
+  }
+
+  .ncard.big .frame {
+    grid-row: 1 / -1;
+    min-height: 320px;
+    margin-bottom: 0;
+    aspect-ratio: auto;
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  }
+
+  .ncard.big .meta {
+    margin-top: 26px;
+  }
+
+  .ncard.big h3 {
+    font-size: 1.5rem;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .filters button {
+    min-height: 36px;
+    padding: 8px 16px;
+    border: 1px solid var(--color-field-border);
+    border-radius: 999px;
+    color: var(--color-muted);
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+
+  .filters button[aria-pressed="true"] {
+    border-color: var(--color-navy);
+    background: var(--color-navy);
+    color: var(--color-white);
+  }
+
+  .news-empty {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    padding: 26px;
+    border: 1.5px dashed var(--color-field-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-muted);
+  }
+
   .sample {
     color: var(--color-muted);
     font-size: 0.8rem;
@@ -1895,6 +1955,22 @@
   @media (width <= 900px) {
     .news-grid {
       grid-template-columns: 1fr 1fr;
+    }
+
+    .ncard.big {
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr;
+    }
+
+    .ncard.big .frame {
+      grid-row: auto;
+      min-height: 240px;
+      margin-bottom: 14px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .ncard.big .meta {
+      margin-top: 0;
     }
   }
 

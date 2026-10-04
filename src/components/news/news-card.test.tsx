@@ -31,6 +31,16 @@ describe("NewsCard", () => {
     expect(container.querySelector("[aria-hidden='true']")).not.toBeNull();
   });
 
+  it("is a plain card by default and a wide feature card with the feature flag", () => {
+    const { container, rerender } = render(<NewsCard post={post} />);
+    expect(container.querySelector("article")?.className).toBe("spot ncard");
+
+    rerender(<NewsCard post={post} feature />);
+    expect(container.querySelector("article")?.className).toBe(
+      "spot ncard big",
+    );
+  });
+
   it("encodes the slug in the story link", () => {
     render(<NewsCard post={{ ...post, slug: "a/b?c" }} />);
 

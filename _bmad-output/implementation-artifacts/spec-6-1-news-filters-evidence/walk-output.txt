@@ -1,0 +1,22 @@
+[1280] GET /news -> 200
+[1280] hero: crumbs "Home / News" | links Home | H1 "What we've been up to." | hl "up to" | lede "Short stories about our products, schools, team and client work."
+[1280] chips: group "Filter stories" | All=true Product=false Company=false Schools=false Team=false
+[1280] chip styles: active rgb(22, 54, 99) | rgb(255, 255, 255) | 999px | idle rgba(0, 0, 0, 0) | rgb(74, 91, 120) | rgb(117, 134, 159)
+[1280] grid: cards 3 | titles [PXP: the school day, in a parent's pocket / One workspace for the whole school / Two offices: Ho Chi Minh City and Plano] | first class "spot ncard big" | columns 3
+[1280] feature: card w 788 | frame x 1 w 408 h 458 | title size 24px | 2nd card w 384
+[1280] live: "Showing 3 stories" | aria-live polite
+[1280] press Product: url same true | All=false Product=true Company=false Schools=false Team=false | titles [PXP: the school day, in a parent's pocket / One workspace for the whole school] | live "Showing 2 stories"
+[1280] press Company: titles [Two offices: Ho Chi Minh City and Plano] | live "Showing 1 story"
+[1280] press Company again: All=false Product=false Company=true Schools=false Team=false | live "Showing 1 story"
+[1280] press Team: grid 0 | empty "No stories in this category yet. Show all" | border dashed | live "Showing 0 stories"
+[1280] Show all: All=true Product=false Company=false Schools=false Team=false | cards 3 | focus "All" | live "Showing 3 stories"
+[1280] Tab -> "Product" | outline solid | 2px
+[1280] Enter on Product: All=false Product=true Company=false Schools=false Team=false
+[1280] Space on Company: All=false Product=false Company=true Schools=false Team=false
+[1280] Read story focus: outline solid | 2px | :focus-visible true
+[1280] Show all focus: outline solid | 2px
+[1280] capture band: "See it working at your school." | newsletter 0
+[900] columns 2 | feature full width true | no sideways scroll true
+[640] columns 1 | feature full width true | no sideways scroll true
+[390] columns 1 | feature full width true | no sideways scroll true
+[no JS] cards 3 | chips 5
