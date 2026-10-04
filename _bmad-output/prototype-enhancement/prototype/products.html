@@ -13,6 +13,7 @@
 <body data-page="products">
 <div id="site-header"></div>
 <main id="main">
+<div class="flow-bg" aria-hidden="true"></div>
 
 <section class="hero s-paper page-hero eco-hero" aria-labelledby="h1">
   <div class="eco-bg" aria-hidden="true"><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="sheen"></i></div>
@@ -21,7 +22,6 @@
     <div class="eco-copy">
       <h1 id="h1" class="reveal" data-vi-html="Xây dựng riêng.<br>Mạnh hơn<br>khi kết nối.">Built apart.<br>Better<br>together.</h1>
       <p class="lede reveal" data-vi="Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung.">A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.</p>
-      <div class="cta-row reveal"><a class="btn btn-navy" href="#pxp"><span data-vi="Khám phá sản phẩm">Explore products</span><i class="ph ph-arrow-down-right" aria-hidden="true"></i></a></div>
     </div>
     <div class="eco-diagram reveal" role="group" aria-label="The four apps share one platform" data-vi-aria="Bốn ứng dụng dùng chung một nền tảng">
       <svg class="eco-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -36,123 +36,164 @@
   </div>
 </section>
 
-<nav class="subnav" aria-label="Products on this page"><div class="wrap">
-  <a href="#pxp">PXP</a><a href="#lxp">LXP</a><a href="#sxp">SXP</a><a href="#iot">IoT</a><a href="#updates" data-vi="Cập nhật">Updates</a>
-</div></nav>
-
-<section id="pxp" class="sec s-paper" aria-labelledby="pxp-h">
-  <div class="wrap split">
-    <div class="reveal">
-      <div class="story-phone" id="pxpPhone"><span class="notch"></span>
-        <div class="slot on" data-slot="pxp-attendance" data-hint="PXP: Attendance" data-size="1170 × 2532"></div>
-        <div class="slot" data-slot="pxp-grades" data-hint="PXP: Grades" data-size="1170 × 2532"></div>
-        <div class="slot" data-slot="pxp-messages" data-hint="PXP: Messages" data-size="1170 × 2532"></div>
-        <div class="slot" data-slot="pxp-payments" data-hint="PXP: Payments" data-size="1170 × 2532"></div>
-        <div class="slot" data-slot="pxp-events" data-hint="PXP: Events" data-size="1170 × 2532"></div>
-      </div>
-      <div class="ptabs center" data-phone-tabs="pxpPhone" role="tablist">
-        <button role="tab" aria-selected="true"><i class="ph ph-check-circle"></i><span data-vi="Điểm danh">Attendance</span></button>
-        <button role="tab" aria-selected="false"><i class="ph ph-chart-line-up"></i><span data-vi="Điểm số">Grades</span></button>
-        <button role="tab" aria-selected="false"><i class="ph ph-chats-circle"></i><span data-vi="Tin nhắn">Messages</span></button>
-        <button role="tab" aria-selected="false"><i class="ph ph-wallet"></i><span data-vi="Học phí">Payments</span></button>
-        <button role="tab" aria-selected="false"><i class="ph ph-calendar-star"></i><span data-vi="Sự kiện">Events</span></button>
-      </div>
-    </div>
-    <div>
-      <span class="badge b-pxp reveal badge-lg">PXP</span>
-      <h2 id="pxp-h" class="reveal mt-m" data-vi="Cả ngày học của con, trong tay phụ huynh.">The school day, in a parent's pocket.</h2>
-      <p class="lede reveal mt-s" data-vi="Parent eXperience Place giúp phụ huynh đồng hành cùng con mỗi ngày, trên iOS và Android.">Parent eXperience Place keeps parents close to every school day, on iOS and Android.</p>
-      <div class="feature-list reveal">
-        <div><i class="ph ph-check-circle"></i><p><b data-vi="Biết con đã đến trường">Know they arrived</b><span data-vi="Thông báo khi con qua cổng trường.">Alerts when your child reaches the gate.</span></p></div>
-        <div><i class="ph ph-chart-line-up"></i><p><b data-vi="Theo dõi tiến bộ">See progress early</b><span data-vi="Điểm và nhận xét ngay khi công bố.">Scores and comments as soon as published.</span></p></div>
-        <div><i class="ph ph-chats-circle"></i><p><b data-vi="Nhắn tin với giáo viên">Talk to teachers</b><span data-vi="Trao đổi hai chiều với giáo viên.">Two-way messages with teachers.</span></p></div>
-        <div><i class="ph ph-wallet"></i><p><b data-vi="Đóng học phí một chạm">Pay fees in a tap</b><span data-vi="Hạn nộp và biên lai rõ ràng.">Clear due dates and receipts.</span></p></div>
-      </div>
-      
-      <div class="cta-row reveal mt-l"><a class="btn btn-glass" href="#" target="_blank" rel="noopener noreferrer" aria-label="[Placeholder] App Store (opens in a new tab)"><i class="ph-fill ph-apple-logo"></i>[Placeholder] App Store</a><a class="btn btn-glass" href="#" target="_blank" rel="noopener noreferrer" aria-label="[Placeholder] Google Play (opens in a new tab)"><i class="ph-fill ph-google-play-logo"></i>[Placeholder] Google Play</a></div>
-    </div>
-  </div>
-</section>
-
-<section id="lxp" class="sec s-mist linen" aria-labelledby="lxp-h">
+<section id="apps" class="sec apps" aria-labelledby="apps-h">
+<div class="apps-body">
+  <nav class="subnav aud-nav" aria-label="Apps by audience" data-vi-aria="Ứng dụng theo đối tượng"><div class="wrap"><div class="aud-capsule"><a href="#sxp" data-aud="school"><i class="aud-dot" aria-hidden="true"></i><span data-vi="Nhà trường">School</span></a><a href="#pxp" data-aud="parents"><i class="aud-dot" aria-hidden="true"></i><span data-vi="Phụ huynh">Parents</span></a><a href="#lxp" data-aud="students"><i class="aud-dot" aria-hidden="true"></i><span data-vi="Học sinh">Students</span></a></div></div></nav>
   <div class="wrap">
-    <div class="sec-head"><span class="badge b-lxp reveal badge-lg">LXP</span>
-      <h2 id="lxp-h" class="reveal" data-vi="Không gian học tập gọn gàng cho học sinh.">A calm place to learn.</h2>
-      <p class="lede reveal" data-vi="Learner eXperience Place tập hợp bài học, bài tập và tiến độ của học sinh ở một nơi.">Learner eXperience Place brings a student's lessons, assignments and progress into one place.</p>
-      <div class="chips reveal"><span class="chip" data-vi="Học sinh">Students</span><span class="chip" data-vi="Ứng dụng web">Web app</span></div></div>
-    <div class="browser reveal center-1000"><div class="bar"><i></i><i></i><i></i><a class="bar-url" href="#" target="_blank" rel="noopener noreferrer" aria-label="[Placeholder] lxp.xiontechs.com (opens in a new tab)">[Placeholder] lxp.xiontechs.com</a></div><div class="slot" data-slot="lxp-main" data-hint="LXP screenshot or clip still" data-size="1600 × 1000"></div></div>
-    <div class="feature-list reveal cols-4 center-1000 mt-xl">
-      <div><i class="ph ph-book-open"></i><p><b data-vi="Bài học">Lessons</b><span data-vi="Mọi tài liệu ở một nơi.">Every material in one place.</span></p></div>
-      <div><i class="ph ph-clipboard-text"></i><p><b data-vi="Bài tập">Assignments</b><span data-vi="Hạn nộp rõ ràng.">Clear due dates.</span></p></div>
-      <div><i class="ph ph-chart-donut"></i><p><b data-vi="Tiến độ">Progress</b><span data-vi="Xem nhanh trong nháy mắt.">Seen at a glance.</span></p></div>
-      <div><i class="ph ph-chat-teardrop-text"></i><p><b data-vi="Phản hồi">Feedback</b><span data-vi="Nhận xét từ giáo viên.">Comments from teachers.</span></p></div>
+    <h2 id="apps-h" class="sr-only" data-vi="Ứng dụng của chúng tôi">Our apps</h2>
+    <div class="pstack">
+      <article id="sxp" class="pcard" data-aud="school" aria-labelledby="sxp-h">
+        <div class="pcol pcol-media"><div class="pmedia"><div class="pm-frame pm-browser browser"><div class="bar"><i></i><i></i><i></i><span>[Placeholder] sxp.xiontechs.com</span></div><div class="slot" data-slot="prod-sxp" data-hint="[Placeholder] SXP screenshot" data-size="1600 × 1000"></div></div></div></div>
+        <div class="pcol pcol-copy">
+          <div class="pc-kick"><span class="badge" aria-hidden="true">SXP</span><h3 class="pc-name" id="sxp-h">Staff eXperience Place</h3></div>
+          <p class="pc-title"><span data-vi="Một không gian làm việc để nhân viên, giáo viên và lãnh đạo dùng chung dữ liệu.">One workspace where staff, teachers and leaders share the same data.</span></p>
+          <div class="pc-group">
+            <h4 class="pc-label" data-vi="Tính năng">Features</h4>
+            <ul class="pc-feats">
+              <li data-vi="Điểm danh và hồ sơ theo thời gian thực">Attendance and records in real time</li>
+              <li data-vi="Lớp, thời khóa biểu và điểm số">Classes, timetables and grades</li>
+              <li data-vi="Gửi tin đến phụ huynh qua PXP">Messages to parents through PXP</li>
+              <li data-vi="Bảng điều khiển cho việc cần xử lý hôm nay">Leader dashboards for today's priorities</li>
+            </ul>
+          </div>
+          <div class="cta-row"><a class="btn btn-navy" href="#" target="_blank" rel="noopener noreferrer"><span data-vi="Xem bản mẫu">View prototype</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a></div>
+        </div>
+      </article>
+      <article id="iot" class="pcard" data-aud="school" aria-labelledby="iot-h">
+        <div class="pcol pcol-media"><div class="pmedia"><div class="pm-frame pm-browser browser"><div class="bar"><i></i><i></i><i></i><span>[Placeholder] iot.xiontechs.com</span></div><div class="slot" data-slot="prod-iot" data-hint="[Placeholder] IoT Device Management screenshot" data-size="1600 × 1000"></div></div></div></div>
+        <div class="pcol pcol-copy">
+          <div class="pc-kick"><span class="badge" aria-hidden="true"><i class="ph ph-cpu"></i></span><h3 class="pc-name" id="iot-h">IoT Device Management</h3></div>
+          <p class="pc-title"><span data-vi="Điều khiển thiết bị lớp học, ánh sáng, điều hòa và ra vào từ một màn hình.">Run classroom devices, lighting, climate and access from one screen.</span></p>
+          <div class="pc-group">
+            <h4 class="pc-label" data-vi="Tính năng">Features</h4>
+            <ul class="pc-feats">
+              <li data-vi="Máy chiếu, màn hình và âm thanh">Projectors, displays and sound</li>
+              <li data-vi="Ánh sáng và điều hòa theo thời khóa biểu">Lighting and climate on the timetable</li>
+              <li data-vi="Quản lý cửa và khu vực tập trung">Doors and zones managed centrally</li>
+              <li data-vi="Mức dùng năng lượng toàn trường">Energy use across the campus</li>
+            </ul>
+          </div>
+          <div class="cta-row"><a class="btn btn-navy" href="#" target="_blank" rel="noopener noreferrer"><span data-vi="Xem bản mẫu">View prototype</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a></div>
+        </div>
+      </article>
+      <article id="ai-timetable" class="pcard" data-aud="school" aria-labelledby="ai-timetable-h">
+        <div class="pcol pcol-media"><div class="pmedia"><div class="pm-frame pm-browser browser"><div class="bar"><i></i><i></i><i></i><span>[Placeholder] timetable.xiontechs.com</span></div><div class="slot" data-slot="prod-ai-timetable" data-hint="[Placeholder] AI Timetable screenshot" data-size="1600 × 1000"></div></div></div></div>
+        <div class="pcol pcol-copy">
+          <div class="pc-kick"><span class="badge" aria-hidden="true"><i class="ph ph-calendar-check"></i></span><h3 class="pc-name" id="ai-timetable-h">AI Timetable</h3></div>
+          <p class="pc-title"><span data-vi="Thời khóa biểu “phù hợp nhất” minh bạch, xây dựng theo điều nhà trường coi trọng.">A transparent “best fit” timetable, built around what your school values.</span></p>
+          <div class="pc-group">
+            <h4 class="pc-label" data-vi="Tính năng">Features</h4>
+            <ul class="pc-feats">
+              <li data-vi="Đưa dữ liệu của trường vào">Bring in your school’s data</li>
+              <li data-vi="Cho Felix biết điều nhà trường coi trọng">Tell Felix what your school values</li>
+              <li data-vi="Tự tạo thời khóa biểu “phù hợp nhất”, minh bạch">A transparent “best fit” timetable, generated for you</li>
+              <li data-vi="Được hướng dẫn từng bước, ngay cạnh thời khóa biểu">Talked through every step, alongside the timetable</li>
+            </ul>
+          </div>
+          <div class="cta-row"><a class="btn btn-navy" href="#" target="_blank" rel="noopener noreferrer"><span data-vi="Xem bản mẫu">View prototype</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a></div>
+        </div>
+      </article>
+      <article id="ai-grader" class="pcard" data-aud="school" aria-labelledby="ai-grader-h">
+        <div class="pcol pcol-media"><div class="pmedia"><div class="pm-frame pm-browser browser"><div class="bar"><i></i><i></i><i></i><span>[Placeholder] grader.xiontechs.com</span></div><div class="slot" data-slot="prod-ai-grader" data-hint="[Placeholder] AI Grader screenshot" data-size="1600 × 1000"></div></div></div></div>
+        <div class="pcol pcol-copy">
+          <div class="pc-kick"><span class="badge" aria-hidden="true"><i class="ph ph-exam"></i></span><h3 class="pc-name" id="ai-grader-h">AI Grader</h3></div>
+          <p class="pc-title"><span data-vi="Chấm cả lớp theo tiêu chí của bạn, và bạn quyết định mọi điểm số.">Mark a whole class against your rubric, with you in charge of every mark.</span></p>
+          <div class="pc-group">
+            <h4 class="pc-label" data-vi="Tính năng">Features</h4>
+            <ul class="pc-feats">
+              <li data-vi="Chấm bài đánh máy, viết tay, hình ảnh và âm thanh">Marks typed, handwritten, image and audio work</li>
+              <li data-vi="Điểm và nhận xét theo tiêu chí cho từng học sinh">Rubric-aligned marks and feedback for every student</li>
+              <li data-vi="Mỗi điểm gắn với minh chứng trong bài làm">Each score linked to evidence in the work</li>
+              <li data-vi="Không điểm nào vào sổ điểm khi bạn chưa duyệt">Nothing reaches the markbook until you approve</li>
+            </ul>
+          </div>
+          <div class="cta-row"><a class="btn btn-navy" href="#" target="_blank" rel="noopener noreferrer"><span data-vi="Xem bản mẫu">View prototype</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a></div>
+        </div>
+      </article>
+      <article id="pxp" class="pcard" data-aud="parents" aria-labelledby="pxp-h">
+        <div class="pcol pcol-media"><div class="pmedia is-mobile"><div class="pm-frame pm-phone"><span class="notch" aria-hidden="true"></span><div class="slot" data-slot="prod-pxp" data-hint="[Placeholder] PXP phone screenshot" data-size="1170 × 2532"></div></div></div></div>
+        <div class="pcol pcol-copy">
+          <div class="pc-kick"><span class="badge" aria-hidden="true">PXP</span><h3 class="pc-name" id="pxp-h">Parent eXperience Place</h3></div>
+          <p class="pc-title"><span data-vi="Giúp phụ huynh đồng hành cùng con mỗi ngày học, ngay trên điện thoại.">Keeps parents close to every school day, on their phone.</span></p>
+          <div class="pc-group">
+            <h4 class="pc-label" data-vi="Tính năng">Features</h4>
+            <ul class="pc-feats">
+              <li data-vi="Thông báo khi con qua cổng trường">Alerts when your child reaches the gate</li>
+              <li data-vi="Điểm và nhận xét ngay khi công bố">Scores and comments as soon as published</li>
+              <li data-vi="Nhắn tin hai chiều với giáo viên">Two-way messages with teachers</li>
+              <li data-vi="Đóng học phí với biên lai rõ ràng">Fee payments with clear receipts</li>
+            </ul>
+          </div>
+          <div class="cta-row store-row"><a class="store-btn" href="#" target="_blank" rel="noopener noreferrer"><i class="ph-fill ph-apple-logo" aria-hidden="true"></i><span><small data-vi="Tải trên">Download on the</small><b>App Store</b></span><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a><a class="store-btn" href="#" target="_blank" rel="noopener noreferrer"><i class="ph-fill ph-google-play-logo" aria-hidden="true"></i><span><small data-vi="Tải trên">Get it on</small><b>Google Play</b></span><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a></div>
+        </div>
+      </article>
+      <article id="lxp" class="pcard" data-aud="students" aria-labelledby="lxp-h">
+        <div class="pcol pcol-media"><div class="pmedia"><div class="pm-frame pm-browser browser"><div class="bar"><i></i><i></i><i></i><span>[Placeholder] lxp.xiontechs.com</span></div><div class="slot" data-slot="prod-lxp" data-hint="[Placeholder] LXP screenshot" data-size="1600 × 1000"></div></div></div></div>
+        <div class="pcol pcol-copy">
+          <div class="pc-kick"><span class="badge" aria-hidden="true">LXP</span><h3 class="pc-name" id="lxp-h">Learner eXperience Place</h3></div>
+          <p class="pc-title"><span data-vi="Bài học, bài tập và tiến độ trong một không gian học tập gọn gàng.">Lessons, assignments and progress in one calm place to learn.</span></p>
+          <div class="pc-group">
+            <h4 class="pc-label" data-vi="Tính năng">Features</h4>
+            <ul class="pc-feats">
+              <li data-vi="Mọi tài liệu bài học ở một nơi">Every lesson material in one place</li>
+              <li data-vi="Bài tập với hạn nộp rõ ràng">Assignments with clear due dates</li>
+              <li data-vi="Xem tiến độ trong nháy mắt">Progress at a glance</li>
+              <li data-vi="Nhận xét từ giáo viên">Comments from teachers</li>
+            </ul>
+          </div>
+          <div class="cta-row"><a class="btn btn-navy" href="#" target="_blank" rel="noopener noreferrer"><span data-vi="Xem bản mẫu">View prototype</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a></div>
+        </div>
+      </article>
+      <article id="ai-tutor" class="pcard" data-aud="students" aria-labelledby="ai-tutor-h">
+        <div class="pcol pcol-media"><div class="pmedia"><div class="pm-frame pm-browser browser"><div class="bar"><i></i><i></i><i></i><span>xt-ai-tutor-demo.azurewebsites.net</span></div><div class="slot" data-slot="prod-ai-tutor" data-hint="[Placeholder] AI Tutor screenshot" data-size="1600 × 1000"></div></div></div></div>
+        <div class="pcol pcol-copy">
+          <div class="pc-kick"><span class="badge" aria-hidden="true"><i class="ph ph-sparkle"></i></span><h3 class="pc-name" id="ai-tutor-h">AI Tutor</h3></div>
+          <p class="pc-title"><span data-vi="Tự giải bài mới. Không chỉ đọc lời giải.">Solve new problems on your own. Not just read solutions.</span></p>
+          <div class="pc-group">
+            <h4 class="pc-label" data-vi="Tính năng">Features</h4>
+            <ul class="pc-feats">
+              <li data-vi="Chẩn đoán theo từng kỹ năng">Skill-by-skill diagnosis</li>
+              <li data-vi="Gợi ý từng bước sau khi đã thử">Step-by-step hints once you have tried</li>
+              <li data-vi="Chỉ thành thạo khi tự làm được">Mastery only when you can do it alone</li>
+            </ul>
+          </div>
+          <div class="cta-row"><a class="btn btn-navy" href="https://xt-ai-tutor-demo.azurewebsites.net/" target="_blank" rel="noopener noreferrer"><span data-vi="Xem bản mẫu">View prototype</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i><span class="sr-only" data-vi="(mở trong thẻ mới)"> (opens in a new tab)</span></a></div>
+        </div>
+      </article>
     </div>
-    
   </div>
-</section>
-
-<section id="sxp" class="sec s-navy gridbg" aria-labelledby="sxp-h">
-  <div class="wrap split">
-    <div class="browser reveal"><div class="bar"><i></i><i></i><i></i><a class="bar-url" href="#" target="_blank" rel="noopener noreferrer" aria-label="[Placeholder] sxp.xiontechs.com (opens in a new tab)">[Placeholder] sxp.xiontechs.com</a></div><div class="slot" data-slot="sxp-main" data-hint="SXP screenshot or clip still" data-size="1600 × 1000"></div></div>
-    <div>
-      <span class="badge b-pxp reveal badge-lg">SXP</span>
-      <h2 id="sxp-h" class="reveal mt-m" data-vi="Một không gian làm việc cho cả nhà trường.">One workspace for the whole school.</h2>
-      <p class="lede reveal mt-s" data-vi="Staff eXperience Place có giao diện riêng cho nhân viên, giáo viên và lãnh đạo, cùng dùng chung dữ liệu.">Staff eXperience Place gives staff, teachers and leaders their own views of the same data.</p>
-      <div class="chips reveal mt-m"><span class="chip" data-vi="Nhân viên">Staff</span><span class="chip" data-vi="Giáo viên">Teachers</span><span class="chip" data-vi="Lãnh đạo">Leaders</span></div>
-      <div class="feature-list reveal">
-        <div><i class="ph ph-identification-card"></i><p><b data-vi="Điểm danh và hồ sơ">Attendance and records</b><span data-vi="Cập nhật theo thời gian thực.">Updated in real time.</span></p></div>
-        <div><i class="ph ph-chalkboard-teacher"></i><p><b data-vi="Lớp học">Classes</b><span data-vi="Lớp, thời khóa biểu và điểm số.">Classes, timetables and grades.</span></p></div>
-        <div><i class="ph ph-megaphone"></i><p><b data-vi="Liên lạc">Communication</b><span data-vi="Gửi tin đến phụ huynh qua PXP.">Reach parents through PXP.</span></p></div>
-        <div><i class="ph ph-gauge"></i><p><b data-vi="Bảng điều khiển lãnh đạo">Leader dashboards</b><span data-vi="Việc cần xử lý hôm nay.">What needs attention today.</span></p></div>
-      </div>
-      
-    </div>
-  </div>
-</section>
-
-<section id="iot" class="sec s-paper" aria-labelledby="iot-h">
-  <div class="wrap">
-    <div class="sec-head"><span class="badge b-iot reveal badge-lg"><i class="ph ph-cpu"></i></span>
-      <h2 id="iot-h" class="reveal" data-vi="Khuôn viên vận hành từ một màn hình.">A campus you run from one screen.</h2>
-      <p class="lede reveal" data-vi="IoT Device Management giúp nhân viên điều khiển thiết bị lớp học, ánh sáng, điều hòa và ra vào trên toàn trường.">IoT Device Management lets school staff control classroom AV, lighting, climate and access across campus.</p></div>
-    <div class="svc-grid">
-      <div class="spot svc reveal"><span class="ic"><i class="ph ph-projector-screen"></i></span><h3 data-vi="Thiết bị lớp học">Classroom AV</h3><p data-vi="Máy chiếu, màn hình và âm thanh.">Projectors, displays and sound.</p></div>
-      <div class="spot svc feature reveal"><span class="ic"><i class="ph ph-lightbulb"></i></span><h3 data-vi="Ánh sáng và điều hòa">Lighting and climate</h3><p data-vi="Lên lịch theo thời khóa biểu.">Scheduled around the timetable.</p></div>
-      <div class="spot svc reveal"><span class="ic"><i class="ph ph-door-open"></i></span><h3 data-vi="Ra vào">Access</h3><p data-vi="Quản lý cửa và khu vực.">Doors and zones, managed centrally.</p></div>
-      <div class="spot svc navy reveal"><span class="ic"><i class="ph ph-lightning"></i></span><h3 data-vi="Năng lượng">Energy</h3><p data-vi="Theo dõi mức sử dụng toàn trường.">See usage across the campus.</p></div>
-    </div>
-    
-    <div class="browser reveal center-1000 mt-xl"><div class="bar"><i></i><i></i><i></i><a class="bar-url" href="#" target="_blank" rel="noopener noreferrer" aria-label="[Placeholder] iot.xiontechs.com (opens in a new tab)">[Placeholder] iot.xiontechs.com</a></div><div class="slot" data-slot="iot-main" data-hint="IoT screenshot or clip still" data-size="1600 × 1000"></div></div>
-  </div>
+</div>
 </section>
 
 <section id="school-day" class="sec s-navy day" aria-labelledby="day-h">
   <div class="wrap">
     <div class="day-head">
-      <h2 id="day-h" class="reveal" data-vi-html="Một sự kiện.<br>Nhiều trải nghiệm.">One event.<br>Multiple experiences.</h2>
-      <p class="lede reveal" data-vi="Dùng một tình huống thật trong ngày học để cho thấy vì sao các sản phẩm mạnh hơn khi đi cùng nhau, thay vì thêm một lưới tính năng chung chung.">Use a real school-day scenario to explain why the products are stronger together instead of adding another generic feature grid.</p>
+      <h2 id="day-h" class="reveal" data-vi="Một ngày ở trường.">A day at school.</h2>
+      <p class="lede reveal" data-vi="Theo chân một học sinh qua một ngày học điển hình để thấy học sinh, phụ huynh và nhà trường luôn được cập nhật và kết nối ở từng bước.">Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step.</p>
     </div>
-    <ol class="day-line reveal">
-      <li><span class="day-dot" aria-hidden="true"></span><time datetime="07:45">07:45</time><h3 data-vi="Học sinh đến trường">Student arrives</h3><p data-vi="Hệ thống khuôn viên ghi nhận ngày học bắt đầu.">Campus systems detect the start of the day.</p></li>
-      <li><span class="day-dot" aria-hidden="true"></span><time datetime="08:00">08:00</time><h3 data-vi="Điểm danh được ghi nhận">Attendance recorded</h3><p data-vi="Nhân viên xác nhận điểm danh qua SXP.">Staff confirms attendance through SXP.</p></li>
-      <li><span class="day-dot" aria-hidden="true"></span><time datetime="08:01">08:01</time><h3 data-vi="Phụ huynh được cập nhật">Parent updated</h3><p data-vi="PXP hiển thị tình trạng mới nhất trong ngày học.">PXP reflects the latest school-day status.</p></li>
-      <li><span class="day-dot" aria-hidden="true"></span><time datetime="09:30">09:30</time><h3 data-vi="Bắt đầu học">Learning begins</h3><p data-vi="LXP kết nối hoạt động học và phản hồi.">LXP connects activity and feedback.</p></li>
-      <li><span class="day-dot" aria-hidden="true"></span><time datetime="15:30">15:30</time><h3 data-vi="Cả ngày luôn kết nối">Day stays connected</h3><p data-vi="Mỗi vai trò thấy điều quan trọng với mình.">Every role sees what matters to them.</p></li>
+    <ol class="day-line">
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="07:45">07:45</time><h3 data-vi="Học sinh đến trường">Student arrives</h3><p data-vi="Học sinh đến khuôn viên trường.">The student arrives on campus.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="08:00">08:00</time><h3 data-vi="Ghi nhận điểm danh">Attendance recorded</h3><p data-vi="Giáo viên điểm danh học sinh trên SXP.">A teacher marks the student's attendance in SXP.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="08:01">08:01</time><h3 data-vi="Phụ huynh được cập nhật">Parent updated</h3><p data-vi="PXP báo cho phụ huynh rằng con đã đến trường.">PXP notifies parents that the student is at school.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="09:30">09:30</time><h3 data-vi="Học sinh học trên LXP">Student learns in LXP</h3><p data-vi="Học sinh truy cập tài liệu học tập, điểm số và bài tập trên LXP.">Students access learning materials, marks and assignments in LXP.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="15:30">15:30</time><h3 data-vi="Cả ngày luôn kết nối">Day stays connected</h3><p data-vi="Thông báo và thông tin của trường luôn kết nối trên toàn hệ thống.">Notifications and school information stay connected across the system.</p></li>
     </ol>
   </div>
 </section>
 
 <section id="updates" class="sec s-mist" aria-labelledby="up-h">
   <div class="wrap">
-    <div class="sec-head"><h2 id="up-h" class="reveal" data-vi="Cập nhật sản phẩm.">Product updates.</h2>
+    <div class="sec-head-row">
+      <div class="sec-head"><h2 id="up-h" class="reveal" data-vi="Cập nhật sản phẩm.">Product updates.</h2>
       <p class="lede reveal" data-vi="Tính năng mới và câu chuyện từ PXP, LXP, SXP và IoT.">New features and stories from PXP, LXP, SXP and IoT.</p>
       <p class="sample reveal" data-vi="[Placeholder] Tin mẫu. Thay bằng tin thật trước khi ra mắt.">[Placeholder] Sample stories. Replace with real news before launch.</p></div>
+      <a class="link-arrow reveal" href="news.html"><span data-vi="Xem tất cả tin tức">See all news</span><i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+    </div>
     <div class="news-grid" data-news="product" data-limit="3"></div>
-    <p class="mt-xl"><a class="link-arrow" href="news.html"><span data-vi="Xem tất cả tin tức">See all news</span><i class="ph ph-arrow-right"></i></a></p>
   </div>
 </section>
 
-<section class="capture s-navy" aria-labelledby="cap-h">
+<section class="capture capture-plain s-navy" aria-labelledby="cap-h">
   <div class="wrap cap-grid">
     <div><h2 id="cap-h" data-vi="Xem hệ thống hoạt động tại trường của bạn.">See it working at your school.</h2>
       <p class="lede" data-vi="Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo phù hợp với trường bạn.">Leave your work email and we'll arrange a walkthrough built around your school.</p></div>

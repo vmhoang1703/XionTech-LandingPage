@@ -25,14 +25,17 @@ also has a Vietnamese version in the prototype.
 | Home, Case studies | — | New (ENH-003); now "Work built with our partners.": a full-width slider of six placeholder partner cards (partner name, description, "View case study") with carousel dots | ENH-003, ENH-006 |
 | Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a light row of five steps (Discovery to Deployment), one short line each, joined by a line, with "See how we work" to Services, on a blue gradient | Batch 1, ENH-009, ENH-012 |
 | Services, process | "Our 4-D process": four cards | "How we work.": the full five-step component (layered diagram, step tabs with the chosen step highlighted, detail panel) on a blue gradient; About and Contact say five steps | ENH-011 |
-| Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, and AI Tutor and AI Timetable marked Coming soon) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009, ENH-013 |
+| Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": seven equal app cards (PXP, LXP, SXP, IoT, AI Tutor, AI Timetable, AI Grader) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009, ENH-013, ENH-021 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
-| Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018 |
-| Products, after the four apps | — | New: "One event. Multiple experiences.", a five-step school-day timeline (07:45 to 15:30) on dark navy | ENH-015 |
+| Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", no button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018, ENH-020 |
+| Products, after the apps | — | New: "A day at school.", a five-step timeline (07:45 to 15:30) on dark blue that plays step by step once, filling the rail and each dot with amber | ENH-015, ENH-023 |
 | About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; soft clouds drifting in the bottom left of a light-to-navy background | ENH-016 |
 | About, FAQ background | — | The clouds and gradient hold still; the drifting and the sheen are gone | ENH-019 |
-| Products, LXP and IoT | Both section headings centred | Both start at the left, like every other heading on the site | ENH-017 |
+| Products, the apps | Four separate sections (PXP, LXP, SXP, IoT) with their own layouts, and a PXP / LXP / SXP / IoT / Updates bar | Seven stacked app cards (SXP, IoT, AI Timetable, AI Grader, PXP, LXP, AI Tutor) that pin and replace one another on desktop; phone or browser mockup, app name, one sentence, a Features list, store or View prototype buttons; School / Parents / Students pills that jump and highlight | ENH-020 |
+| Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |
+| Products, updates and last band | "See all news" below the stories; navy band with a ring illustration | "See all news" on the heading row; plain dark navy band, continuous with the footer | ENH-024 |
+| Every page, type | Bold headings, labels and buttons (600 to 700) | The same fonts and sizes at weight 500; body 400 | ENH-025 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
@@ -118,7 +121,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
-Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the top).
+Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025 (see the change list at the top).
 
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -231,7 +234,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the to
 ║ │ Text: Release, monitor and keep improving.                                                           │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. What we build. · white · [Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · Com… ─┐ ║
+║ ┌─ 6. What we build. · white · [Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · AI … ─┐ ║
 ║ │ H2: What we build.                                                                                   │ ║
 ║ │ Text: Digital products we design, build and run for every role in school, with more on the way.      │ ║
 ║ │ [BUTTON: Previous apps]                                                                              │ ║
@@ -247,14 +250,21 @@ Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the to
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →        │ │ ║
-║ │ │   products.html#iot]         │ │   products.html]             │ │   products.html]               │ │ ║
+║ │ │   products.html#iot]         │ │   products.html#ai-tutor]    │ │   products.html#ai-timetable]  │ │ ║
 ║ │ │ Text: IoT                    │ │ Text: AI Tutor               │ │ Text: AI Timetable             │ │ ║
 ║ │ │ Text: School staff and       │ │ Text: Students               │ │ Text: School leaders           │ │ ║
-║ │ │   facilities                 │ │ Text: Coming soon            │ │ Text: Coming soon              │ │ ║
-║ │ │ Text: Devices, lighting and  │ │ Text: [Placeholder] Study    │ │ Text: [Placeholder] The whole  │ │ ║
-║ │ │   climate.                   │ │   help at each student's own │ │   school timetable, planned in │ │ ║
-║ │ │                              │ │   pace.                      │ │   fewer steps.                 │ │ ║
+║ │ │   facilities                 │ │ Text: Solve new problems on  │ │ Text: A transparent “best fit” │ │ ║
+║ │ │ Text: Devices, lighting and  │ │   your own, not just read    │ │   timetable.                   │ │ ║
+║ │ │   climate.                   │ │   solutions.                 │ │                                │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐                                                                     │ ║
+║ │ │ [WHOLE CARD IS A LINK →      │                                                                     │ ║
+║ │ │   products.html#ai-grader]   │                                                                     │ ║
+║ │ │ Text: AI Grader              │                                                                     │ ║
+║ │ │ Text: Teachers               │                                                                     │ ║
+║ │ │ Text: Rubric-based marking,  │                                                                     │ ║
+║ │ │   with teachers in charge.   │                                                                     │ ║
+║ │ └──────────────────────────────┘                                                                     │ ║
 ║ │ [LINK: Explore our products → products.html]                                                         │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
@@ -318,13 +328,13 @@ Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the to
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-017 (headings left-aligned), ENH-018 (Pause motion button); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Built apart. Better together. · warm light, drifting glows · [ENH-014 · ENH-018] ────────────────┐ ║
+║ ┌─ 1. Built apart. Better together. · warm light, drifting glows · [ENH-014 · ENH-018 · ENH-020] ──────┐ ║
 ║ │ [BUTTON: Pause motion]                                                                               │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H1: Built apart. Better together.             │ │ [LINK: Parent experience · PXP → #pxp]         │ │ ║
@@ -332,127 +342,130 @@ Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-017 (he
 ║ │ │   communities — bringing parents, learning,   │ │ [LINK: Staff experience · SXP → #sxp]          │ │ ║
 ║ │ │   staff operations and campus technology into │ │ [LINK: Connected campus · IoT → #iot]          │ │ ║
 ║ │ │   one shared ecosystem.                       │ │                                                │ │ ║
-║ │ │ [BUTTON: Explore products → #pxp]             │ │                                                │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Products on this page ───────────────────────────────────────────────────────────────────────────┐ ║
-║ │ [LINK: PXP → #pxp]                                                                                   │ ║
-║ │ [LINK: LXP → #lxp]                                                                                   │ ║
-║ │ [LINK: SXP → #sxp]                                                                                   │ ║
-║ │ [LINK: IoT → #iot]                                                                                   │ ║
-║ │ [LINK: Updates → #updates]                                                                           │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 3. The school day, in a parent's pocket. · white ───────────────────────────────────────────────────┐ ║
+║ ┌─ 2. Our apps · [new in ENH-020] ─────────────────────────────────────────────────────────────────────┐ ║
+║ │ [LINK: School → #sxp]                                                                                │ ║
+║ │ [LINK: Parents → #pxp]                                                                               │ ║
+║ │ [LINK: Students → #lxp]                                                                              │ ║
+║ │ H2: Our apps                                                                                         │ ║
+║ │ [CARDS PIN AND STACK ON SCROLL (desktop): each card settles under the header and the next slides     │ ║
+║ │   over and replaces it; the School / Parents / Students pills jump to a group and highlight the one  │ ║
+║ │   being read]                                                                                        │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ [IMAGE: PXP: Attendance · 1170 × 2532]        │ │ H2: The school day, in a parent's pocket.      │ │ ║
-║ │ │ [IMAGE: PXP: Grades · 1170 × 2532]            │ │ Text: Parent eXperience Place keeps parents    │ │ ║
-║ │ │ [IMAGE: PXP: Messages · 1170 × 2532]          │ │   close to every school day, on iOS and        │ │ ║
-║ │ │ [IMAGE: PXP: Payments · 1170 × 2532]          │ │   Android.                                     │ │ ║
-║ │ │ [IMAGE: PXP: Events · 1170 × 2532]            │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ [BUTTON: Attendance (tab)]                    │ │ │ Text: Know they arrived · Alerts when your │ │ │ ║
-║ │ │ [BUTTON: Grades (tab)]                        │ │ │   child reaches the gate.                  │ │ │ ║
-║ │ │ [BUTTON: Messages (tab)]                      │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │ [BUTTON: Payments (tab)]                      │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ [BUTTON: Events (tab)]                        │ │ │ Text: See progress early · Scores and      │ │ │ ║
-║ │ │                                               │ │ │   comments as soon as published.           │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │                                               │ │ │ Text: Talk to teachers · Two-way messages  │ │ │ ║
-║ │ │                                               │ │ │   with teachers.                           │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │                                               │ │ │ Text: Pay fees in a tap · Clear due dates  │ │ │ ║
-║ │ │                                               │ │ │   and receipts.                            │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │                                               │ │ [BUTTON: [Placeholder] App Store → #]          │ │ ║
-║ │ │                                               │ │ [BUTTON: [Placeholder] Google Play → #]        │ │ ║
+║ │ │ Text: [Placeholder] sxp.xiontechs.com         │ │ H3: Staff eXperience Place                     │ │ ║
+║ │ │ [IMAGE: [Placeholder] SXP screenshot · 1600 × │ │ Text: One workspace where staff, teachers and  │ │ ║
+║ │ │   1000]                                       │ │   leaders share the same data.                 │ │ ║
+║ │ │                                               │ │ H4: Features                                   │ │ ║
+║ │ │                                               │ │ • Attendance and records in real time          │ │ ║
+║ │ │                                               │ │ • Classes, timetables and grades               │ │ ║
+║ │ │                                               │ │ • Messages to parents through PXP              │ │ ║
+║ │ │                                               │ │ • Leader dashboards for today's priorities     │ │ ║
+║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 4. A calm place to learn. · light blue, linen · [left-aligned in ENH-017] ──────────────────────────┐ ║
-║ │ H2: A calm place to learn.                                                                           │ ║
-║ │ Text: Learner eXperience Place brings a student's lessons, assignments and progress into one place.  │ ║
-║ │ Tags: Students · Web app                                                                             │ ║
-║ │ [LINK: [Placeholder] lxp.xiontechs.com → #]                                                          │ ║
-║ │ [IMAGE: LXP screenshot or clip still · 1600 × 1000]                                                  │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ Text: Lessons · Every        │ │ Text: Assignments · Clear    │ │ Text: Progress · Seen at a     │ │ ║
-║ │ │   material in one place.     │ │   due dates.                 │ │   glance.                      │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐                                                                     │ ║
-║ │ │ Text: Feedback · Comments    │                                                                     │ ║
-║ │ │   from teachers.             │                                                                     │ ║
-║ │ └──────────────────────────────┘                                                                     │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 5. One workspace for the whole school. · navy, grid texture ────────────────────────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ [LINK: [Placeholder] sxp.xiontechs.com → #]   │ │ H2: One workspace for the whole school.        │ │ ║
-║ │ │ [IMAGE: SXP screenshot or clip still · 1600 × │ │ Text: Staff eXperience Place gives staff,      │ │ ║
-║ │ │   1000]                                       │ │   teachers and leaders their own views of the  │ │ ║
-║ │ │                                               │ │   same data.                                   │ │ ║
-║ │ │                                               │ │ Tags: Staff · Teachers · Leaders               │ │ ║
-║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │                                               │ │ │ Text: Attendance and records · Updated in  │ │ │ ║
-║ │ │                                               │ │ │   real time.                               │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │                                               │ │ │ Text: Classes · Classes, timetables and    │ │ │ ║
-║ │ │                                               │ │ │   grades.                                  │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │                                               │ │ │ Text: Communication · Reach parents        │ │ │ ║
-║ │ │                                               │ │ │   through PXP.                             │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │                                               │ │ │ Text: Leader dashboards · What needs       │ │ │ ║
-║ │ │                                               │ │ │   attention today.                         │ │ │ ║
-║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ Text: [Placeholder] iot.xiontechs.com         │ │ H3: IoT Device Management                      │ │ ║
+║ │ │ [IMAGE: [Placeholder] IoT Device Management   │ │ Text: Run classroom devices, lighting, climate │ │ ║
+║ │ │   screenshot · 1600 × 1000]                   │ │   and access from one screen.                  │ │ ║
+║ │ │                                               │ │ H4: Features                                   │ │ ║
+║ │ │                                               │ │ • Projectors, displays and sound               │ │ ║
+║ │ │                                               │ │ • Lighting and climate on the timetable        │ │ ║
+║ │ │                                               │ │ • Doors and zones managed centrally            │ │ ║
+║ │ │                                               │ │ • Energy use across the campus                 │ │ ║
+║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
+║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
+║ │ │ Text: [Placeholder] timetable.xiontechs.com   │ │ H3: AI Timetable                               │ │ ║
+║ │ │ [IMAGE: [Placeholder] AI Timetable screenshot │ │ Text: A transparent “best fit” timetable,      │ │ ║
+║ │ │   · 1600 × 1000]                              │ │   built around what your school values.        │ │ ║
+║ │ │                                               │ │ H4: Features                                   │ │ ║
+║ │ │                                               │ │ • Bring in your school’s data                  │ │ ║
+║ │ │                                               │ │ • Tell Felix what your school values           │ │ ║
+║ │ │                                               │ │ • A transparent “best fit” timetable,          │ │ ║
+║ │ │                                               │ │   generated for you                            │ │ ║
+║ │ │                                               │ │ • Talked through every step, alongside the     │ │ ║
+║ │ │                                               │ │   timetable                                    │ │ ║
+║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
+║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
+║ │ │ Text: [Placeholder] grader.xiontechs.com      │ │ H3: AI Grader                                  │ │ ║
+║ │ │ [IMAGE: [Placeholder] AI Grader screenshot ·  │ │ Text: Mark a whole class against your rubric,  │ │ ║
+║ │ │   1600 × 1000]                                │ │   with you in charge of every mark.            │ │ ║
+║ │ │                                               │ │ H4: Features                                   │ │ ║
+║ │ │                                               │ │ • Marks typed, handwritten, image and audio    │ │ ║
+║ │ │                                               │ │   work                                         │ │ ║
+║ │ │                                               │ │ • Rubric-aligned marks and feedback for every  │ │ ║
+║ │ │                                               │ │   student                                      │ │ ║
+║ │ │                                               │ │ • Each score linked to evidence in the work    │ │ ║
+║ │ │                                               │ │ • Nothing reaches the markbook until you       │ │ ║
+║ │ │                                               │ │   approve                                      │ │ ║
+║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
+║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
+║ │ │ [IMAGE: [Placeholder] PXP phone screenshot ·  │ │ H3: Parent eXperience Place                    │ │ ║
+║ │ │   1170 × 2532]                                │ │ Text: Keeps parents close to every school day, │ │ ║
+║ │ │                                               │ │   on their phone.                              │ │ ║
+║ │ │                                               │ │ H4: Features                                   │ │ ║
+║ │ │                                               │ │ • Alerts when your child reaches the gate      │ │ ║
+║ │ │                                               │ │ • Scores and comments as soon as published     │ │ ║
+║ │ │                                               │ │ • Two-way messages with teachers               │ │ ║
+║ │ │                                               │ │ • Fee payments with clear receipts             │ │ ║
+║ │ │                                               │ │ [BUTTON: Download on the · App Store → #]      │ │ ║
+║ │ │                                               │ │ [BUTTON: Get it on · Google Play → #]          │ │ ║
+║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
+║ │ │ Text: [Placeholder] lxp.xiontechs.com         │ │ H3: Learner eXperience Place                   │ │ ║
+║ │ │ [IMAGE: [Placeholder] LXP screenshot · 1600 × │ │ Text: Lessons, assignments and progress in one │ │ ║
+║ │ │   1000]                                       │ │   calm place to learn.                         │ │ ║
+║ │ │                                               │ │ H4: Features                                   │ │ ║
+║ │ │                                               │ │ • Every lesson material in one place           │ │ ║
+║ │ │                                               │ │ • Assignments with clear due dates             │ │ ║
+║ │ │                                               │ │ • Progress at a glance                         │ │ ║
+║ │ │                                               │ │ • Comments from teachers                       │ │ ║
+║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
+║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
+║ │ │ Text: xt-ai-tutor-demo.azurewebsites.net      │ │ H3: AI Tutor                                   │ │ ║
+║ │ │ [IMAGE: [Placeholder] AI Tutor screenshot ·   │ │ Text: Solve new problems on your own. Not just │ │ ║
+║ │ │   1600 × 1000]                                │ │   read solutions.                              │ │ ║
+║ │ │                                               │ │ H4: Features                                   │ │ ║
+║ │ │                                               │ │ • Skill-by-skill diagnosis                     │ │ ║
+║ │ │                                               │ │ • Step-by-step hints once you have tried       │ │ ║
+║ │ │                                               │ │ • Mastery only when you can do it alone        │ │ ║
+║ │ │                                               │ │ [BUTTON: View prototype →                      │ │ ║
+║ │ │                                               │ │   https://xt-ai-tutor-demo.azurewebsites.net/] │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. A campus you run from one screen. · white · [left-aligned in ENH-017] ───────────────────────────┐ ║
-║ │ H2: A campus you run from one screen.                                                                │ ║
-║ │ Text: IoT Device Management lets school staff control classroom AV, lighting, climate and access     │ ║
-║ │   across campus.                                                                                     │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ H3: Classroom AV             │ │ H3: Lighting and climate     │ │ H3: Access                     │ │ ║
-║ │ │ Text: Projectors, displays   │ │ Text: Scheduled around the   │ │ Text: Doors and zones, managed │ │ ║
-║ │ │   and sound.                 │ │   timetable.                 │ │   centrally.                   │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐                                                                     │ ║
-║ │ │ H3: Energy                   │                                                                     │ ║
-║ │ │ Text: See usage across the   │                                                                     │ ║
-║ │ │   campus.                    │                                                                     │ ║
-║ │ └──────────────────────────────┘                                                                     │ ║
-║ │ [LINK: [Placeholder] iot.xiontechs.com → #]                                                          │ ║
-║ │ [IMAGE: IoT screenshot or clip still · 1600 × 1000]                                                  │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 7. One event. Multiple experiences. · dark navy · [new in ENH-015] ─────────────────────────────────┐ ║
-║ │ H2: One event. Multiple experiences.                                                                 │ ║
-║ │ Text: Use a real school-day scenario to explain why the products are stronger together instead of    │ ║
-║ │   adding another generic feature grid.                                                               │ ║
+║ ┌─ 3. A day at school. · dark navy · [new in ENH-015 · rebuilt in ENH-023] ────────────────────────────┐ ║
+║ │ H2: A day at school.                                                                                 │ ║
+║ │ Text: Follow one student journey through a typical school day and see how students, parents and      │ ║
+║ │   school staff stay informed and connected across each step.                                         │ ║
+║ │ [TIMELINE PLAYS ONCE on arrival: step by step every 1.8s, the rail and each dot fill with amber;     │ ║
+║ │   resets only above the section]                                                                     │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ Text: 07:45                  │ │ Text: 08:00                  │ │ Text: 08:01                    │ │ ║
 ║ │ │ H3: Student arrives          │ │ H3: Attendance recorded      │ │ H3: Parent updated             │ │ ║
-║ │ │ Text: Campus systems detect  │ │ Text: Staff confirms         │ │ Text: PXP reflects the latest  │ │ ║
-║ │ │   the start of the day.      │ │   attendance through SXP.    │ │   school-day status.           │ │ ║
+║ │ │ Text: The student arrives on │ │ Text: A teacher marks the    │ │ Text: PXP notifies parents     │ │ ║
+║ │ │   campus.                    │ │   student's attendance in    │ │   that the student is at       │ │ ║
+║ │ │                              │ │   SXP.                       │ │   school.                      │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐                                    │ ║
 ║ │ │ Text: 09:30                  │ │ Text: 15:30                  │                                    │ ║
-║ │ │ H3: Learning begins          │ │ H3: Day stays connected      │                                    │ ║
-║ │ │ Text: LXP connects activity  │ │ Text: Every role sees what   │                                    │ ║
-║ │ │   and feedback.              │ │   matters to them.           │                                    │ ║
+║ │ │ H3: Student learns in LXP    │ │ H3: Day stays connected      │                                    │ ║
+║ │ │ Text: Students access        │ │ Text: Notifications and      │                                    │ ║
+║ │ │   learning materials, marks  │ │   school information stay    │                                    │ ║
+║ │ │   and assignments in LXP.    │ │   connected across the       │                                    │ ║
+║ │ │                              │ │   system.                    │                                    │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘                                    │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 8. Product updates. · light blue ───────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 4. Product updates. · light blue · [ENH-024] ───────────────────────────────────────────────────────┐ ║
 ║ │ H2: Product updates.                                                                                 │ ║
 ║ │ Text: New features and stories from PXP, LXP, SXP and IoT.                                           │ ║
 ║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
+║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ [IMAGE: story photo]         │ │ [IMAGE: story photo]         │ │ [IMAGE: story photo]           │ │ ║
 ║ │ │ Category · date              │ │ Category · date              │ │ Category · date                │ │ ║
@@ -460,10 +473,9 @@ Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-017 (he
 ║ │ │ Text: summary                │ │ Text: summary                │ │ Text: summary                  │ │ ║
 ║ │ │ [LINK: Read more → story]    │ │ [LINK: Read more → story]    │ │ [LINK: Read more → story]      │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 9. See it working at your school. · navy ───────────────────────────────────────────────────────────┐ ║
+║ ┌─ 5. See it working at your school. · navy ───────────────────────────────────────────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: See it working at your school.            │ │ [FIELD: Work email (email, required)]          │ │ ║
 ║ │ │ Text: Leave your work email and we'll arrange │ │ placeholder: "name@school.edu.vn"              │ │ ║
@@ -482,7 +494,7 @@ Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-017 (he
 
 `services.html` · page title: "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs"
 
-Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D process); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D process); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ SERVICES PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -662,7 +674,7 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -799,7 +811,7 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ 
 
 `news.html` · page title: "News | XionTechs"
 
-Changes on this page: ENH-007 (a story about an app shows the app name in its pill); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-007 (a story about an app shows the app name in its pill); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ NEWS PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -848,7 +860,7 @@ Changes on this page: ENH-007 (a story about an app shows the app name in its pi
 
 `news-story.html` · page title: "[Placeholder] Parents can now pay school fees in PXP | XionTechs News"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ NEWS STORY PAGE ════════════════════════════════════════════════════════════════════════════════════════╗
@@ -880,7 +892,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `careers.html` · page title: "Careers at XionTechs | Software Jobs in Ho Chi Minh City"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ CAREERS PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -958,7 +970,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `job.html` · page title: "[Placeholder] Job title | Careers at XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ JOB PAGE ═══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1016,7 +1028,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `demo.html` · page title: "Book a Demo or Start a Project | XionTechs"
 
-Changes on this page: ENH-011 (checklist says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-011 (checklist says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ CONTACT PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1100,7 +1112,7 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 
 `privacy.html` · page title: "Privacy Policy | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ PRIVACY POLICY PAGE ════════════════════════════════════════════════════════════════════════════════════╗
@@ -1147,7 +1159,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `404.html` · page title: "Page not found | XionTechs"
 
-Changes on this page: Batch 1 (no label above the heading); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: Batch 1 (no label above the heading); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ NOT FOUND (404) PAGE ═══════════════════════════════════════════════════════════════════════════════════╗

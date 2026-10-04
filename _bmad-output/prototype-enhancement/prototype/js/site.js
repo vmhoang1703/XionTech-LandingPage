@@ -202,7 +202,7 @@
   const eco=document.querySelector('.eco-hero');
   if(eco){
     const saved=store.get('xt3-motion'),btn=eco.querySelector('.motion-toggle');let paused=saved?saved==='off':reduce;
-    const apply=()=>{eco.classList.toggle('motion-off',paused);eco.classList.toggle('motion-on',!paused);if(!btn)return;
+    const apply=()=>{eco.classList.toggle('motion-off',paused);eco.classList.toggle('motion-on',!paused);root.classList.toggle('flow-off',paused);root.classList.toggle('flow-on',!paused);if(!btn)return;
       const vi=root.lang==='vi';btn.querySelector('i').className='ph '+(paused?'ph-play':'ph-pause');
       btn.querySelector('span').textContent=paused?(vi?'Chạy chuyển động':'Play motion'):(vi?'Tạm dừng chuyển động':'Pause motion')};
     if(btn)btn.onclick=()=>{if(!paused)eco.classList.add('was-on');paused=!paused;store.set('xt3-motion',paused?'off':'on');apply()};
@@ -259,11 +259,132 @@
       if(j===null)return;e.preventDefault();tabs[j].focus();tabs[j].click()})});
 
   /* ---------- sub-nav highlight ---------- */
-  const sub=[...document.querySelectorAll('.subnav a')];
+  const sub=[...document.querySelectorAll('.subnav:not(.aud-nav) a')];
   if(sub.length){const map=sub.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
     const nio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)sub.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'});
     map.forEach(s=>nio.observe(s));
     const ft=document.querySelector('footer.site');if(ft)new IntersectionObserver(es=>{if(es[0].isIntersecting)sub.forEach((a,i)=>a.classList.toggle('on',i===sub.length-1))}).observe(ft)}
+
+  /* ---------- Products: stacked app cards (desktop) and the audience pills ---------- */
+  const pstack=document.querySelector('.pstack');
+  if(pstack){
+    const all=[...pstack.children].filter(c=>c.classList.contains('pcard')),DESK=matchMedia('(min-width: 993px)');
+    const cols=c=>[...c.children].filter(x=>x.classList.contains('pcol'));
+    const clear=()=>all.forEach(c=>{c.style.top='';c.style.backgroundSize='';c.style.backgroundPosition='';c.classList.remove('parked');cols(c).forEach(x=>x.style.opacity='')});
+    // each card pins; the next one slides over it and fades it (stacking-cases spec). All reads happen first, then all writes.
+    let tops=[];
+    const update=()=>{const cards=all;if(!DESK.matches||!cards.length)return;
+      const stickyTop=parseFloat(getComputedStyle(pstack).getPropertyValue('--sticky-top'))||172,vh=innerHeight;
+      const fb=document.querySelector('.flow-bg'),fh=fb?fb.offsetHeight:0,fw=fb?fb.offsetWidth:0,fTop=fb?fb.getBoundingClientRect().top+scrollY:0;
+      // where each card parks: under the header, or bottom-aligned when it would not fit, so its last line is never cut off
+      tops=cards.map(c=>{const col=cols(c)[0],mt=col?col.offsetTop:0,ch=c.offsetHeight,t=stickyTop-mt;return t+ch>vh?Math.min(t,vh-ch-16):t});
+      const rects=cards.map(c=>c.getBoundingClientRect());
+      cards.forEach((c,i)=>{const r=rects[i];c.style.top=tops[i]+'px';c.classList.toggle('parked',i>0&&Math.abs(r.top-tops[i])<1);
+        // each card shows the slice of the page gradient that sits behind it
+        if(fh&&r.bottom>-50&&r.top<vh+50){c.style.backgroundSize=fw+'px '+fh+'px';c.style.backgroundPosition=(-Math.round(r.left+scrollX))+'px '+(-Math.round(r.top+scrollY-fTop))+'px'}
+        // the card fades out as the next one approaches and is gone before the next one passes the content line,
+        // so nothing of it shows above the new card (opacity only, so it stays reachable by keyboard and screen readers)
+        const nx=rects[i+1];let k=1;
+        if(nx){k=(nx.top-stickyTop)/(vh*.4);k=Math.max(0,Math.min(1,k))}
+        cols(c).forEach(x=>x.style.opacity=k)})};
+    let tick=false;const soon=()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{update();tick=false})};
+    addEventListener('scroll',soon,{passive:true});
+    let rt=0;addEventListener('resize',()=>{cancelAnimationFrame(rt);rt=requestAnimationFrame(()=>{clear();update()})},{passive:true});
+    DESK.addEventListener('change',()=>{clear();update()});
+    addEventListener('load',update);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(update);
+    if('ResizeObserver' in window){const ro=new ResizeObserver(soon);all.forEach(c=>ro.observe(c))}
+    update();
+    // one-shot screenshot reveal
+    const seen=c=>c.classList.add('is-visible');
+    if('IntersectionObserver' in window){const vio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){seen(e.target);vio.unobserve(e.target)}}),{threshold:.2});all.forEach(c=>vio.observe(c))}
+    else all.forEach(seen);
+    // audience pills: a pill jumps to its audience's first card (parked, ready to read); the pill of the audience
+    // being read highlights itself
+    const pills=[...document.querySelectorAll('.aud-nav [data-aud]')];
+    const restY=i=>{const c=all[i];if(!DESK.matches)return c.getBoundingClientRect().top+scrollY-148;
+      let y=pstack.getBoundingClientRect().top+scrollY;for(let j=0;j<i;j++)y+=all[j].offsetHeight+parseFloat(getComputedStyle(pstack).rowGap||0);
+      return y-(tops[i]||0)};
+    const mark=()=>{if(!all.length)return;let k=-1;all.forEach((c,i)=>{const t=c.getBoundingClientRect().top,o=parseFloat(cols(c)[0].style.opacity||'1');if((DESK.matches?t<innerHeight*.6&&o>.5:t<=200))k=i});
+      const aud=k<0?null:all[k].dataset.aud;
+      pills.forEach(a=>{a.dataset.aud===aud?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')})};
+    // any link to an app card (the pills and the hero diagram) lands on the card parked and ready to read
+    document.addEventListener('click',e=>{if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+      const l=e.target.closest('a[href^="#"]');if(!l)return;const card=document.getElementById(l.getAttribute('href').slice(1)),i=all.indexOf(card);if(i<0)return;
+      e.preventDefault();scrollTo({top:restY(i),behavior:reduce?'auto':'smooth'});history.replaceState(null,'',l.getAttribute('href'));
+      card.setAttribute('tabindex','-1');card.focus({preventScroll:true})});
+    // tabbing into a covered card brings it back to the front
+    all.forEach((c,i)=>c.addEventListener('focusin',e=>{if(e.target===c||!DESK.matches)return;const o=parseFloat(cols(c)[0].style.opacity||'1');if(o<1)scrollTo({top:restY(i),behavior:'auto'})}));
+    let mtick=false;addEventListener('scroll',()=>{if(mtick)return;mtick=true;requestAnimationFrame(()=>{mark();mtick=false})},{passive:true});
+    addEventListener('resize',mark,{passive:true});mark();
+    addEventListener('load',()=>{const i=all.indexOf(document.getElementById(location.hash.slice(1)));if(i>=0)requestAnimationFrame(()=>scrollTo({top:restY(i),behavior:'auto'}))});
+  }
+
+  /* ---------- Products: one background colour flowing down the page ---------- */
+  // Every section in <main> gets a phase from its place in the page, so a new section extends the flow on its own:
+  // the first is white with amber dots, the middle ones warm up to bright amber, then ease from
+  // halfway down their second-to-last card into light blue and on into the dark sections; the last three are dark blue, deepening
+  // into the footer's colour. data-flow="light|rise|night|blue|deep" on a section overrides it.
+  // The gradient is drawn once for the whole page (and again when the layout changes), so scrolling stays smooth.
+  const flowBg=document.querySelector('.flow-bg');
+  if(flowBg){
+    root.classList.add('flow-js');
+    const C={white:'#FFFFFF',plat:'#F3F5F7',cream:'#F4EBC6',sun:'#F6D96F',amber:'#F6C30A',ice:'#C9D5E6',frost:'#AFBED4',steel:'#5F7394',slate:'#33476A',dusk:'#1C2A46',navy:'#12284C',prussian:'#0D1930',ink:'#0B1730'};
+    const phaseOf=(i,n)=>i===0?'light':i===n-1?'deep':i===n-2?'blue':i===n-3?'night':'rise';
+    const Y=el=>el.getBoundingClientRect().top+scrollY,B=el=>el.getBoundingClientRect().bottom+scrollY;
+    const measure=()=>{const secs=[...document.querySelectorAll('main > section')].filter(s=>s.offsetParent),n=secs.length;if(!n)return;
+      secs.forEach((s,i)=>{s.dataset.flowPhase=s.dataset.flow||phaseOf(i,n)});
+      flowBg.style.height='0';const O=flowBg.getBoundingClientRect().top+scrollY,H=document.documentElement.scrollHeight-O;
+      const list=[],add=(y,c)=>{y=Math.round(y-O);if(!list.length||y>list[list.length-1][0])list.push([y,c])},glows=[];
+      const rise=secs.filter(s=>s.dataset.flowPhase==='rise'),rTop=rise.length?Y(rise[0]):0;
+      secs.forEach(s=>{const top=Y(s),bot=B(s),h=bot-top,ph=s.dataset.flowPhase;
+        if(ph==='light'){add(top,C.white);add(bot,C.plat);glows.push([14,top+h*.45,380,.16])}
+        else if(ph==='rise'){if(s===rise[0])add(top,C.plat);
+          if(s===rise[rise.length-1]){const kids=[...s.children].filter(k=>k.offsetParent),ce=kids.length?B(kids[kids.length-1]):bot;
+            // bright amber by the last two cards (sticky cards move, so their resting place is worked out from heights)
+            const cards=[...s.querySelectorAll('.pcard')],gap=cards.length>1?parseFloat(getComputedStyle(cards[0].parentElement).rowGap)||0:0;
+            const last=cards[cards.length-1],prev=cards[cards.length-2],tTop=last?ce-last.offsetHeight:ce,lTop=prev?tTop-gap-prev.offsetHeight:rTop+(ce-rTop)*.75,lMid=prev?lTop+prev.offsetHeight/2:lTop;
+            add(rTop+(lTop-rTop)*.35,C.cream);add(rTop+(lTop-rTop)*.75,C.sun);add(lTop,C.amber);add(lMid,C.amber);
+            // from halfway down the second-to-last card the amber eases into light blue by the last card, then deepens
+            add(tTop,C.ice);add(ce,C.frost);
+            add(bot,C.steel);
+            glows.push([86,rTop+(lTop-rTop)*.25,340,.12])}}
+        else if(ph==='night'){add(top+48,C.slate);add(top+110,C.dusk);add(top+h*.45,C.navy);add(bot,C.prussian)}
+        else if(ph==='blue'){add(top,C.prussian);add(bot,C.ink)}
+        else{add(top,C.ink);add(bot,C.ink)}});
+      // blend in a perceptual colour space where the browser supports it, for an even fade
+      const space=CSS.supports('background-image','linear-gradient(180deg in oklab,red,blue)')?'180deg in oklab':'180deg';
+      const img=glows.map(([x,y,r,a])=>'radial-gradient(circle '+r+'px at '+x+'% '+Math.round(y-O)+'px,rgb(246 195 10 / '+a+') 0,transparent 100%)').concat('linear-gradient('+space+','+list.map(([y,c])=>c+' '+y+'px').join(',')+')').join(',');
+      flowBg.style.height=H+'px';flowBg.style.backgroundImage=img;root.style.setProperty('--flow-page',img);
+      dispatchEvent(new Event('scroll'))};
+    let mt=0;const later=()=>{cancelAnimationFrame(mt);mt=requestAnimationFrame(measure)};
+    addEventListener('resize',later,{passive:true});addEventListener('load',later);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(later);
+    if('ResizeObserver' in window)new ResizeObserver(later).observe(document.querySelector('main'));
+    measure();
+  }
+
+  /* ---------- Products: A day at school, played once as the reader arrives ---------- */
+  // Step 1 lights up, the rail fills to step 2, step 2 lights up, and so on to step 5, then it stops. It only
+  // resets when the reader scrolls back above the whole section, and replays from step 1 on the way back down.
+  const dayLine=document.querySelector('.day-line');
+  if(dayLine){
+    const items=[...dayLine.children],sec=dayLine.closest('section'),STEP=1800;let timers=[],state='idle';
+    const stop=()=>{timers.forEach(clearTimeout);timers=[]};
+    const reset=()=>{stop();state='idle';dayLine.classList.remove('is-playing','is-done');items.forEach(li=>li.classList.remove('is-reached','is-current','is-passed'))};
+    const go=i=>{items.forEach(li=>li.classList.remove('is-current'));items[i].classList.add('is-reached','is-current');
+      if(i<items.length-1){timers.push(setTimeout(()=>items[i].classList.add('is-passed'),STEP-1000-100));timers.push(setTimeout(()=>go(i+1),STEP))}
+      else{state='done';dayLine.classList.add('is-done');dayLine.classList.remove('is-playing');timers.push(setTimeout(()=>items[i].classList.remove('is-current'),1200))}};
+    const still=()=>reduce||root.classList.contains('flow-off');
+    const finish=()=>{stop();dayLine.classList.remove('is-playing');items.forEach((li,i)=>{li.classList.add('is-reached');li.classList.remove('is-current');if(i<items.length-1)li.classList.add('is-passed')});state='done';dayLine.classList.add('is-done')};
+    const play=()=>{if(state!=='idle')return;state='playing';
+      if(still()){items.forEach((li,i)=>{li.classList.add('is-reached');if(i<items.length-1)li.classList.add('is-passed')});state='done';dayLine.classList.add('is-done');return}
+      dayLine.classList.add('is-playing');go(0)};
+    // starts when the timeline itself is well on screen (the heading above it can be tall on phones)
+    const check=()=>{const r=sec.getBoundingClientRect(),l=dayLine.getBoundingClientRect();if(r.top>=innerHeight){if(state!=='idle')reset()}else if(l.top<innerHeight*.7&&l.bottom>innerHeight*.15)play()};
+    let dt=false;addEventListener('scroll',()=>{if(dt)return;dt=true;requestAnimationFrame(()=>{check();dt=false})},{passive:true});
+    // pressing Pause motion while it plays shows the finished day straight away
+    new MutationObserver(()=>{if(state==='playing'&&still())finish()}).observe(root,{attributes:true,attributeFilter:['class']});
+    check();
+  }
 
   /* ---------- office clocks ---------- */
   function clocks(){document.querySelectorAll('[data-tz]').forEach(el=>{try{el.textContent=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:el.dataset.tz}).format(new Date())}catch(e){}})}

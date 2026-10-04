@@ -995,3 +995,27 @@ Template:
 - **AI got it wrong?** No, but a judgement call worth recording: "no animation" was read as keeping the look
   and removing the motion, not as reverting the background Amber had chosen one message earlier. Removing the
   sheen outright went slightly beyond the literal ask and was flagged to her rather than done quietly.
+
+## 2026-10-05 — ENH-020 to ENH-025: Products apps, colour flow, A day at school, calmer weights
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap, Acceptance Auditor)
+- **Prompt / task:** Over many rounds from Amber's notes, screenshots and three supplied specs (stacking cards,
+  day at school, typography): the Products apps became seven stacked cards that pin and replace one another,
+  with School / Parents / Students pills that jump and highlight (ENH-020); Home's app row matched (ENH-021);
+  one background colour flows down the page, white with amber dots, amber through the apps, light blue from
+  mid-LXP, then dark blue into the footer (ENH-022); "A day at school." became an animated timeline (ENH-023);
+  "See all news" moved to the heading row and the email band went plain (ENH-024); bold weights dropped to 500
+  across the site with the original fonts kept (ENH-025).
+- **Decision / result:** Approved by Amber. The four-layer review found real issues, fixed before commit: cards
+  cut off on short laptop screens, covered cards dropping out of keyboard and screen-reader reach, pill jumps
+  not moving focus, the hover lift making a settled card jump 100px, the pill highlight lagging, a one-pixel
+  seam at the school day, the timeline ignoring Pause motion and dimming text below contrast, the capsule
+  clipped on small phones, the phone timeline starting off-screen, and card headings that did not name the apps.
+  The page background is now drawn once rather than on every scroll frame, which fixed the sluggish scrolling.
+  Open: keeping the reader's card when a window is resized across 993px; the job page's pre-existing phone
+  overflow.
+- **AI got it wrong?** Yes, several times: an early fixed background repainted on every frame and made scrolling
+  sluggish; a first typography pass switched the heading font, which Amber rejected because it no longer matched
+  the logo; the colour flow went through several wrong orders (too much blue, then a wasted empty gap) before
+  matching her description; and a breakpoint scroll fix that did not hold was reverted rather than shipped.

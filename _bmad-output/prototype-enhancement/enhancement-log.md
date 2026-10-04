@@ -32,7 +32,13 @@ directly, before this log existed.
 | ENH-016 | 2026-10-04 | About, frequently asked questions                         | The FAQ becomes "Your question, we answer": two columns of hairline rows, closed by default, on a soft animated light-to-navy background                                                                                                                                                          | Approved | 6.4                                   |
 | ENH-017 | 2026-10-04 | Products, LXP and IoT sections                            | The two centred section headings move to the left, so every heading on the site is left aligned                                                                                                                                                                                                   | Approved | 4.1                                   |
 | ENH-018 | 2026-10-04 | Products, hero                                            | A "Pause motion" button stops the drifting glows; the choice is shared with Home                                                                                                                                                                                                                  | Approved | 4.1                                   |
-| ENH-019 | 2026-10-04 | About, frequently asked questions                         | The FAQ background stops moving: the clouds and the gradient stay, the drifting and the sheen go                                                                                                                                                                                                  | Approved  | 6.4                                   |
+| ENH-019 | 2026-10-04 | About, frequently asked questions                         | The FAQ background stops moving: the clouds and the gradient stay, the drifting and the sheen go                                                                                                                                                                                                  | Approved | 6.4                                   |
+| ENH-020 | 2026-10-04 | Products, hero and app sections                           | No hero button; audience pills that jump and highlight (School navy, Parents amber, Students white); seven apps (with the new AI Grader) become stacked cards with device mockups and grouped features                                                                                            | Approved | 4.1                                   |
+| ENH-021 | 2026-10-04 | Home, What we build                                       | Matches Products: AI Tutor and AI Timetable lose "Coming soon" and get real lines; AI Grader added; AI cards link to their Products card                                                                                                                                                          | Approved | 3.5                                   |
+| ENH-022 | 2026-10-04 | Products, whole page                                      | The background colour follows the scroll: white with amber dots, bright amber by the last app cards, the school day turning into blue, blue Product updates, dark blue into the footer; phases come from section order                                                                            | Approved | 4.1                                   |
+| ENH-023 | 2026-10-04 | Products, school-day section                              | "One event. Multiple experiences." becomes "A day at school.": new copy, lighter type, dark background and a timeline that plays step by step once                                                                                                                                                | Approved | 4.1                                   |
+| ENH-024 | 2026-10-04 | Products, Product updates and email band                  | "See all news" moves onto the heading row; the email band loses its ring illustration                                                                                                                                                                                                             | Approved | 4.1                                   |
+| ENH-025 | 2026-10-05 | Every page, typography                                    | Calmer weights: headings, labels, numbers and buttons drop from bold (600 to 700) to 500; original fonts and sizes kept                                                                                                                                                                           | Approved | Batch 1 (all pages)                   |
 
 ## ENH-001: Contact form on Home
 
@@ -510,3 +516,125 @@ directly, before this log existed.
 - **Rules:** the section now has no motion at all, so there is nothing for a reduced-motion setting to switch off, and the rule that did that is gone.
 - **Developer notes:** both keyframe sets (`faqFloat`, `faqSheen`) and the `.faq-sheen` layer are deleted, so the page carries no FAQ animation code. The clouds stay as three `aria-hidden` divs painted with stacked radial gradients.
 - **Open items:** this also settles the question left open by ENH-016: with the FAQ still, the Pause motion button from ENH-018 no longer has anything to govern here, so it can stay scoped to the Products and Home heroes.
+
+## ENH-020: Products apps as stacked cards, grouped by audience
+
+- **Why:** Amber on 2026-10-04: drop the hero button and show the apps by audience (Parents, School, Students), with every app card following the stacking cards spec she supplied (`.working/stacking-cases-effect.md`, after the Featured cases effect on phenomenonstudio.com). Second and third rounds the same day, from her notes and a reference screenshot: no section title, audience colours, a real filter, one sentence per card, device mockups, store and prototype buttons, and features grouped under a label.
+- **What changed:**
+  - the "Explore products" button in the hero is removed;
+  - the bar under the hero (PXP, LXP, SXP, IoT, Updates) becomes three audience pills, each with a colour dot: School (dark navy), Parents (amber), Students (white). They sit in one small floating white capsule lined up with the content's left edge, with no full-width bar, so the background shows around it;
+  - the four app sections become one section of seven app cards, with no visible title or description (a hidden heading keeps the page outline for screen readers). Order: School (SXP, IoT Device Management, AI Timetable, AI Grader), Parents (PXP), Students (LXP, AI Tutor). no card carries a "Coming soon" tag. AI Grader is new (a teacher-facing marking web app, Amber 2026-10-04); AI Timetable, AI Grader and AI Tutor use Amber's product copy; AI Tutor has its demo link;
+  - each card: on the left a device mockup only (no panel behind it), at the full size of its column: a phone at full height for PXP (the only mobile app) and a full-width browser window for the five web apps; on the right the app badge in its audience colour with the full app name beside it (Staff eXperience Place, IoT Device Management, AI Timetable, AI Grader, Parent eXperience Place, Learner eXperience Place, AI Tutor; no audience text), one short sentence, a "Features" group (a small label over a thin line, then one short line per feature, four per live app) and the buttons;
+  - buttons: PXP has two store buttons of equal weight in the familiar black badge style, "Download on the App Store" and "Get it on Google Play" (use Apple's and Google's official badge artwork in production); the six web apps have a primary "View prototype". All open in a new tab. AI Tutor's goes to https://xt-ai-tutor-demo.azurewebsites.net/; the others are placeholders until the store pages and prototype links exist.
+- **Card sentences:** PXP "Keeps parents close to every school day, on their phone."; SXP "One workspace where staff, teachers and leaders share the same data."; IoT "Run classroom devices, lighting, climate and access from one screen."; LXP "Lessons, assignments and progress in one calm place to learn."; AI Tutor "Solve new problems on your own. Not just read solutions." with the features "Skill-by-skill diagnosis", "Step-by-step hints once you have tried" and "Mastery only when you can do it alone" (Amber's copy); AI Timetable "A transparent “best fit” timetable, built around what your school values." (features: bring in your school’s data; tell Felix what your school values; a transparent “best fit” timetable, generated for you; talked through every step, alongside the timetable); AI Grader "Mark a whole class against your rubric, with you in charge of every mark." (features: marks typed, handwritten, image and audio work; rubric-aligned marks and feedback for every student; each score linked to evidence in the work; nothing reaches the markbook until you approve).
+- **Rules:**
+  - Audience pills (jump and highlight, chosen by Amber over filtering so no app is ever hidden): a pill jumps to its audience's first card, landing with the card settled and ready to read. As the reader scrolls, the pill of the audience being read highlights on its own (no count). The hero diagram cards land the same way.
+  - A card always moves as one piece: its screenshot no longer holds still on its own while the text scrolls past (the spec's inner sticky image is dropped), so screenshot, text and buttons stay together, including on the last card as it scrolls away.
+  - Hovering anywhere on a card lifts the whole card slightly (both columns together); its buttons no longer move on their own. No outline, shadow or box appears around the card: the card shows exactly the same background as the page behind it.
+  - Each new card replaces the one before it completely. It settles right under the header with its content padded below the audience bar. The card underneath fades out as the new one approaches and is fully hidden before the new one reaches the content line, so no text from the previous card ever shows. This was checked every 20px of scroll at four screen sizes.
+  - Desktop (993px and wider): each card is as tall as its content; cards are spaced a little over a quarter of a screen apart, so a whole card stays readable with nothing covering it for about 200 to 580px of scrolling (1557 × 933) before the next one arrives, without long empty stretches (Amber found full-screen cards too padded and the scrolling sluggish).
+  - Desktop (993px and wider): each shown card pins below the audience bar and the next shown card slides over it on a white sheet with a thin top line and two small amber sparkles; the card underneath fades out as it is covered, and it reverses when scrolling up. Each mockup opens with a one-time wipe and straighten.
+  - Phones and tablets (under 993px): a plain single column of the same cards, with the mockup reveal only; the pills jump and highlight the same way.
+  - Reduced motion: no mockup reveal; the stacking (which follows the scroll rather than playing an animation) stays.
+- **Developer notes:** follow the spec's structure: cards are direct children of the stack, each with exactly two columns, the mockup box has a fixed 4:3 ratio, and the pin position is recalculated on resize and font load, and cleared below 993px. The pills are links to each audience's first card inside a labelled navigation; the highlighted one carries `aria-current`. The hero diagram cards still link to each app (`#pxp`, `#lxp`, `#sxp`, `#iot`).
+- **After review (2026-10-05):**
+  - A card that would not fit on a short screen settles by its bottom edge, so its buttons are never cut off.
+  - Covered cards fade out but stay reachable by keyboard and screen reader. Tabbing into one brings it to the front, and a pill or hero link moves focus to the card it opens.
+  - Each card's heading is now the app's name. The sentence below it is a paragraph, so a screen reader's heading list names all seven apps.
+  - The pill highlight follows the card being read, with nothing highlighted before the cards are reached. On small phones the capsule tightens so all three pills fit, in English and in Vietnamese.
+  - A page opened at a card from Home lands with that card settled.
+  - Hovering a settled card no longer moves it.
+- **Open items:**
+  - resizing a window across the 993px breakpoint keeps the scroll position but not the card being read (low priority);
+  - Product updates is no longer linked from the bar (the section is still on the page);
+  - ENH-017 (left-aligning the LXP and IoT headings) no longer applies, because those sections are now cards;
+  - App Store, Google Play and prototype links (all but AI Tutor) are needed before launch.
+
+## ENH-021: Home's app row matches the Products page
+
+- **Why:** Amber on 2026-10-04: once Products dropped "Coming soon" and added AI Grader (ENH-020), Home should match.
+- **What changed:** in "What we build." on Home:
+  - AI Tutor (Students) loses the "Coming soon" tag; its line becomes "Solve new problems on your own, not just read solutions.";
+  - AI Timetable (School leaders) loses the tag; its line becomes "A transparent “best fit” timetable.";
+  - a new seventh card, AI Grader (Teachers): "Rubric-based marking, with teachers in charge.";
+  - the three AI cards now link to their own card on Products (`#ai-tutor`, `#ai-timetable`, `#ai-grader`) instead of the top of the page.
+- **Rules:** the row keeps its back and forward buttons and equal card sizes; seven cards scroll the same way six did.
+- **Developer notes:** this closes ENH-013's Coming soon tags; the tag style stays in the stylesheet for future apps.
+- **Open items:** none.
+
+## ENH-022: The Products background colour follows the scroll
+
+- **Why:** Amber on 2026-10-04, over four rounds:
+  - a background with no visible boundaries between sections (`seamless-three-section-gradient-flow.md`);
+  - a colour order (`seamless-six-section-color-order.html`), changing only colours and keeping her circle animations;
+  - a colour that "dynamically trails and expands across the content" instead of sitting in bands;
+  - a final colour order: white with yellow dots at the start; bright amber through the app cards; from halfway down the LXP card, a gradual move into light blue by AI Tutor and then into dark blue, with no empty space added for it; dark blue from the school day down, matching the footer. Any section added later should extend the gradient on its own.
+    She also asked for the School, Parents and Students bar to stay sticky only within its own section.
+- **What changed:** one background colour flows down the whole Products page, with no line between sections:
+  - 1 Hero: white and platinum, with a soft amber dot. The hero keeps its original drifting circles (amber, navy, white, slow light sheen), which fade out before the hero's lower edge.
+  - 2 App cards: amber builds up from platinum behind the School apps and is bright amber on the Parents card and the top half of LXP. From halfway down the LXP card it eases into light blue, so AI Tutor sits on light blue; below AI Tutor, with no extra space added, the light blue deepens into dark blue. Staying in one colour family (light blue to navy) keeps that last step smooth.
+  - 3 A day at school: dark blue (deep blue into Prussian blue), with a faint regal-navy glow at the top right (ENH-023).
+  - 4 Product updates: Prussian blue deepening to the footer's colour (#0B1730).
+  - 5 See it working at your school: the footer's dark navy (#0B1730) throughout.
+  - 6 Footer: the same dark navy, so the last sections read as one block.
+- **More changes:**
+  - Text colours follow the phase: navy on white and amber, white on blue.
+  - The audience bar sits inside the apps section and sticks below the header only while the app cards are on screen.
+- **Rules:**
+  - The phases come from the order of the sections, not from their names: the first is white, the middle ones warm up to bright amber and, from halfway down their second-to-last card, ease into light blue, and the last three are dark blue, deepening into the footer. A new section therefore extends the flow and takes the right text colours with no extra work. A section can be forced into a phase with `data-flow="light|rise|night|blue|deep"`.
+  - The colours are part of the page, not an animation, so they also show with reduced motion. The hero circles follow the Pause motion button (ENH-018) and reduced motion.
+  - All text keeps at least 4.5:1 contrast.
+- **Developer notes:**
+  - One page-long gradient is drawn behind the content once, and again only when the layout changes (resize, fonts, sections added). Scrolling just moves it, with no repainting, which keeps scrolling smooth.
+  - Each pinned app card shows the slice of that same gradient that sits behind it (its position is updated as it moves), so it matches the page exactly and still hides the card beneath.
+  - Without JavaScript the sections keep their own backgrounds.
+  - The apps section and the school day clip sideways overflow, so tilted mockups and glows never widen the page.
+- **After review (2026-10-05):** the faint glow at the top of the school day was removed, because it drew a one-pixel line over the flowing background. Colour stops are measured from the backdrop's own top. Without JavaScript the apps stay on a light background all the way down.
+- **Open items:** none.
+
+## ENH-023: A day at school
+
+- **Why:** Amber supplied a build brief on 2026-10-04 (`day-at-school-section-instructions.md`) for the section after the apps, and asked for the drifting circles behind it to go.
+- **What changed:**
+  - Heading "A day at school." and the line "Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step." The heading is large but light (weight 500) and the line is 22px.
+  - Five steps:
+    - 07:45 Student arrives: the student arrives on campus.
+    - 08:00 Attendance recorded: a teacher marks the student's attendance in SXP.
+    - 08:01 Parent updated: PXP notifies parents that the student is at school.
+    - 09:30 Student learns in LXP: students access learning materials, marks and assignments in LXP.
+    - 15:30 Day stays connected: notifications and school information stay connected across the system.
+  - Desktop: one horizontal rail with each dot sitting on it. Phones: a vertical rail with the text to the right of each dot.
+  - Dark blue background. No decorative dots, circles, cards, extra panels or buttons; the only dots are the timeline's own.
+- **Rules:**
+  - The timeline plays once when the reader reaches the section. Step 1 lights up, the rail fills to step 2, step 2 lights up, and so on every 1.8 seconds, stopping at step 5. Completed steps stay lit and the rail stays full; it does not loop or restart while the reader carries on down.
+  - It resets only when the reader scrolls back above the whole section, and replays from step 1 on re-entry.
+  - Dots: dark with a faint white ring by default, filled solid amber once the rail reaches them, and a slightly larger dot with a soft amber halo while current. Amber is used only for this progress. Steps not yet reached are dimmed while it plays.
+  - With reduced motion, every step shows as reached at once. Without JavaScript, all steps show in full.
+- **After review (2026-10-05):**
+  - The timeline follows the Pause motion button: with motion off it shows the finished day at once, and pressing Pause while it plays finishes it straight away.
+  - Steps not reached yet are dimmed to 70%, so their text keeps its contrast.
+  - The halo shows only on the step being played.
+  - On phones it starts once the timeline itself is on screen.
+  - The description stays 22px on phones.
+- **Developer notes:** the rail is one segment per gap, from each dot to the next, so it never runs past the last dot. The step states are classes (reached, current, passed) set by a timer that starts on scroll, with the timing in one constant. Vietnamese copy is in the prototype.
+- **Open items:** none.
+
+## ENH-024: Product updates link on the heading row; a plain email band
+
+- **Why:** Amber on 2026-10-04 asked whether "See all news" should sit with the title and description, and asked for the email band's illustration to go.
+- **What changed:**
+  - "See all news" moves from below the stories to the right end of the heading row, as on Home (ENH-007).
+  - The email band ("See it working at your school.") drops its large ring illustration; it is now plain dark navy, continuous with the footer.
+- **Rules:** on small screens the link drops under the description, as on Home.
+- **Developer notes:** the ring stays available on other pages; only this band switches it off.
+- **Open items:** none.
+
+## ENH-025: Calmer type weights across the site
+
+- **Why:** Amber on 2026-10-04 felt the type was "screaming at the customer" and supplied guidelines (`website-typography-guidelines.md`): hierarchy from size, spacing, colour and layout, not heavy weights. A first pass also switched the headings to Be Vietnam Pro at the guideline sizes. Amber found on 2026-10-05 that this no longer matched the logo, and asked to keep the original fonts and change only the weights.
+- **What changed (every page):**
+  - The original fonts and sizes stay: Unbounded for headings (it matches the logo), Be Vietnam Pro for text, Lexend Exa for small brand labels.
+  - Nothing is bold any more. Every heading, card title, label, link, number and button that was 600 to 700 is now 500. Body and intro copy are 400, navigation is 450 (500 for the current page), and inline bold text is 600.
+- **Rules:** do not use 700, 800 or 900 for marketing text. When something needs more emphasis, add space, size, colour or layout first, and weight only last.
+- **Developer notes:** weights only; font families, sizes and spacing are unchanged from before this entry. All pages were checked at 1440 and 375px. The job page's body text already overflowed by 89px on phones before this change; it is a separate fix.
+- **Open items:** the job page's phone overflow (pre-existing).
