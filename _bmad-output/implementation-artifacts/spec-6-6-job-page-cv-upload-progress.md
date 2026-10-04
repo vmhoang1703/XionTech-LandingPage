@@ -35,3 +35,9 @@ Task 6: green — npx vitest run src/lib/contact/delivery.test.ts — 45 passed 
 Task 6: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
 Task 6: complete (commits 203ab02..32941fa, diff verified)
 Task 7: dispatched (model sonnet, base 32941fa, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t7-report.md)
+Task 7: red — npx vitest run src/app/api/careers/cv-upload/route.test.ts src/lib/careers/cv-storage.test.ts — failed: Cannot find module (route and cv-storage missing)
+Task 7: green — same command — 2 files, 23 passed; 100% lines, 97% branches
+Task 7: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 7: minor — src/app/api/careers/cv-upload/route.ts: `readBody` duplicates the contact route's 6-line helper (Sonar duplication watch; Task 8 may extract it)
+Task 7: complete (commits e9da119..912435a, diff verified)
+Task 8: dispatched (model sonnet, base 912435a, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t8-report.md)

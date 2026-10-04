@@ -90,7 +90,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `application.test.ts` -- bad-body, honeypot-first, long phone, bad CV path, field errors.
 - [x] `src/lib/contact/delivery.ts` + test -- application mail (subject, body lines, Reply-To applicant, CV attachment, Q1-A), `checkUploadLimit` -- CAP-4, T4.
   - red: `delivery.test.ts` -- application subject strips CR/LF; body names role, page path, CV path; upload limit uses prefix `cv-upload` and fails open.
-- [ ] `src/app/api/careers/cv-upload/route.ts` + test -- only `blob.generate-client-token`; config → 500; upload limit → 429; pathname must be `cv/application.<ext>`; token: `allowedContentTypes`, `maximumSizeInBytes`, `addRandomSuffix: true`, `validUntil` 10 min -- CAP-4.
+- [x] `src/app/api/careers/cv-upload/route.ts` + test -- only `blob.generate-client-token`; config → 500; upload limit → 429; pathname must be `cv/application.<ext>`; token: `allowedContentTypes`, `maximumSizeInBytes`, `addRandomSuffix: true`, `validUntil` 10 min -- CAP-4.
   - red: `route.test.ts` -- other event type 400; wrong path 400; token options asserted on a mocked `handleUpload`.
 - [ ] `src/app/api/careers/apply/route.ts` + test -- matrix steps in order: bad, honeypot, config, field errors, role (`getOpenRole`), rate, `head` CV, send -- CAP-4.
   - red: `route.test.ts` -- one test per matrix row, Blob and Gmail mocked.
