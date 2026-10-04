@@ -30,3 +30,8 @@ Task 5: review — skipped — controller rule for this run: one review layer in
 Task 5: minor — src/lib/careers/application.ts: `slug` has no length cap (only used as a GROQ param and in the mail; bounded by the route's role lookup)
 Task 5: complete (commits 2a8d542..2babaa3, diff verified)
 Task 6: dispatched (model sonnet, base 2babaa3, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t6-report.md)
+Task 6: red — npx vitest run src/lib/contact/delivery.test.ts — failed: checkUploadLimit / sendApplicationMail is not a function
+Task 6: green — npx vitest run src/lib/contact/delivery.test.ts — 45 passed (45); delivery.ts 100% lines and branches
+Task 6: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 6: complete (commits 203ab02..32941fa, diff verified)
+Task 7: dispatched (model sonnet, base 32941fa, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t7-report.md)
