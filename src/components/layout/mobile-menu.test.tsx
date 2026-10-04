@@ -365,6 +365,31 @@ describe("MobileMenu", () => {
     expect(form?.getAttribute("tabindex")).toBe("-1");
   });
 
+  it("closes on any link click, also a modifier click or a new-tab link (CAP-8 as written)", () => {
+    render(
+      <header>
+        <a href="https://example.com/" target="_blank" rel="noreferrer">
+          external
+        </a>
+        <MobileMenu />
+      </header>,
+    );
+    const external = screen.getByRole("link", { name: "external" });
+    external.addEventListener("click", (event) => event.preventDefault());
+    for (const init of [
+      {},
+      { ctrlKey: true },
+      { metaKey: true },
+      { shiftKey: true },
+      { altKey: true },
+    ]) {
+      fireEvent.click(menuButton());
+      expect(expanded()).toBe("true");
+      fireEvent.click(external, init);
+      expect(expanded()).toBe("false");
+    }
+  });
+
   it("restores an earlier overflow value on close", () => {
     document.documentElement.style.overflow = "clip";
     render(<Header />);
