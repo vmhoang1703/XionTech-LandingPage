@@ -452,10 +452,10 @@ const APPLICATION: ApplicationMail = {
 };
 
 describe("checkUploadLimit", () => {
-  it("allows an upload within 10 per hour under the cv-upload prefix, keyed by the IP", async () => {
+  it("allows an upload within 5 per hour under the cv-upload prefix, keyed by the IP", async () => {
     expect(await checkUploadLimit(IP)).toBe(true);
 
-    expect(slidingWindowMock.mock.calls).toEqual([[10, "1 h"]]);
+    expect(slidingWindowMock.mock.calls).toEqual([[5, "1 h"]]);
     expect(ratelimitMock.mock.calls[0][0].prefix).toBe("cv-upload");
     expect(limitMock.mock.calls).toEqual([[ipRateLimitKey(IP)]]);
   });

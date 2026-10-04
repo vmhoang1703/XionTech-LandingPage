@@ -121,13 +121,13 @@ export async function checkRateLimits(
 }
 
 /**
- * True when a CV upload token may be issued: about 10 per IP in 1 hour. When
+ * True when a CV upload token may be issued: about 5 per IP in 1 hour. When
  * the store is unavailable the upload is allowed (fail open).
  */
 export async function checkUploadLimit(
   ip: string | undefined,
 ): Promise<boolean> {
-  const outcome = await askLimit("cv-upload", 10, "1 h", ipRateLimitKey(ip));
+  const outcome = await askLimit("cv-upload", 5, "1 h", ipRateLimitKey(ip));
   return outcome !== "blocked";
 }
 
