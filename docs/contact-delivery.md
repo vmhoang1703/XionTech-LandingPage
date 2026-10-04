@@ -103,11 +103,11 @@ The job page (`/careers/<slug>`) has a form with a CV. The CV never passes throu
 Flow:
 
 1. The browser checks the CV: `.pdf`, `.doc` or `.docx`, 1 byte to 5 MB. It checks again on submit.
-2. `POST /api/careers/cv-upload` gives a short upload token. The path is `cv/application.<ext>` and Blob adds a random suffix. No name or email is in the path. The store is private. A token request is limited to about 10 per hour per IP (Upstash key prefix `cv-upload`). The token lasts 10 minutes and allows one CV type and 5 MB at most.
+2. `POST /api/careers/cv-upload` gives a short upload token. The path is `cv/application.<ext>` and Blob adds a random suffix. No name or email is in the path. The store is private. A token request is limited to about 5 per hour per IP (Upstash key prefix `cv-upload`, decision A10). The token lasts 10 minutes and allows one CV type and 5 MB at most.
 3. The browser uploads the CV straight to Blob. It waits at most 60 seconds.
 4. `POST /api/careers/apply` with JSON: `slug`, `name`, `email`, `phone`, `note`, `cv` (the blob path) and the honeypot `website`.
 
-If the mail fails, the form keeps the uploaded path for the same file. A retry does not upload a second copy.
+When the apply route does not send the mail, it deletes the uploaded CV (decision A10): for a bad body, the honeypot, a missing variable, field errors, a closed role, the rate limit, a wrong stored CV and every 502. Only a path of the form `cv/<name>.<ext>` is deleted. A delete failure writes one log line with the error class (no path, no name) and never changes the answer. A sent application keeps its CV with no time limit (A4). So the form uploads the CV again on every submit.
 
 `POST /api/careers/cv-upload`. It stops at the first step that fails.
 
@@ -115,7 +115,7 @@ If the mail fails, the form keeps the uploaded path for the same file. A retry d
 | ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
 | 1    | Body is not an object, the event is not `blob.generate-presigned-url`, the upload is multipart, or the path is not `cv/application.pdf`, `.doc` or `.docx` | 400 `{ "error": "send" }`       |
 | 2    | `BLOB_STORE_ID` or `BLOB_WEBHOOK_PUBLIC_KEY` is not set                                                                                                    | 500 `{ "error": "send" }`       |
-| 3    | About 10 token requests in 1 hour for the same IP                                                                                                          | 429 `{ "error": "rate" }`       |
+| 3    | About 5 token requests in 1 hour for the same IP                                                                                                           | 429 `{ "error": "rate" }`       |
 | 4    | The token cannot be made                                                                                                                                   | 502 `{ "error": "send" }`       |
 | 5    | The token is made                                                                                                                                          | 200 with the Blob upload answer |
 

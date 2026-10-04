@@ -25,7 +25,8 @@ context: ['{project-root}/AGENTS.md']
 - CV: `.pdf`, `.doc`, `.docx`, MIME `application/pdf`, `application/msword`, `application/vnd.openxmlformats-officedocument.wordprocessingml.document`, 1 byte to 5 × 1024 × 1024 bytes. Checked on choose, on submit, by the Blob signed upload token (`allowedContentTypes`, `maximumSizeInBytes`) and again by the apply route on the stored blob (`get` metadata).
 - The blob path is `cv/application.<ext>` with a random suffix: no file name, name or email in any path or URL. Store access `private`. Nothing goes to Sanity.
 - Blob auth is OIDC (controller note 2026-10-04): `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` are server-only, read and checked per request like the five mail variables (`docs/contact-delivery.md` explains why not at build), never logged. The OIDC token comes from the `x-vercel-oidc-token` request header on Vercel and from `VERCEL_OIDC_TOKEN` (written by `vercel link` / `vercel env pull`) locally, so it is not checked as an env var; a missing token fails the Blob call (502). There is no `BLOB_READ_WRITE_TOKEN`. Log lines name step and error class only.
-- Applications share the contact rate limits (prefix `contact`, about 5 per 10 minutes per IP and email; `contact-ip`, about 20 per hour per IP). Token requests get their own IP limit.
+- Applications share the contact rate limits (prefix `contact`, about 5 per 10 minutes per IP and email; `contact-ip`, about 20 per hour per IP). Token requests get their own IP limit (about 5 per hour, A10).
+- When the apply route does not send the mail, it deletes the uploaded CV; a delete failure is logged (error class only) and never changes the answer; a sent application keeps its CV (A10, lead 2026-10-04).
 - Page is a Server Component; only the form is `"use client"`. No capture band. No `/en` `/vi`. Strings in one place for later translation. Brand "XionTech".
 
 **Never:** applicant data or CVs in Sanity, a public blob, a server action, a CV passing through a function body, `force-dynamic`, a second mail sender, Open Graph or per-role SEO metadata (Story 7.1), a shared breadcrumb component (1.6), Vietnamese copy (1.2), editing Amber's planning docs, a redesign.
@@ -45,7 +46,7 @@ context: ['{project-root}/AGENTS.md']
 | Unknown / closed slug | no match, or `closed: true` | Not found page, 404 | N/A |
 | Wrong CV chosen | `.png`, or 6 MB `.pdf`, or 0 bytes | CV error at once, `aria-invalid` | form not sent |
 | Upload fails | Blob or token route error, or 60 s timeout | send error above the button, every value and the file kept | retry re-uploads |
-| Apply after upload fails | apply route 502 / network | same as above; retry reuses the uploaded blob for the same file | N/A |
+| Apply after upload fails | apply route 400 / 429 / 502 / network | same as above; the route deleted the CV, so the retry uploads it again (A10, lead 2026-10-04) | N/A |
 | Honeypot filled | `website` not empty | 200 `{ ok: true }`, no mail, no rate-limit call | N/A |
 | Bad body | not an object, missing `slug`/`cv` strings, phone > 200, CV path not `cv/<name>` ending `.pdf`, `.doc` or `.docx` | 400 `{ error: "send" }` | N/A |
 | Config missing | a mail variable, `BLOB_STORE_ID` or `BLOB_WEBHOOK_PUBLIC_KEY` unset | 500 `{ error: "send" }`, one log line naming the variable | N/A |
@@ -60,7 +61,7 @@ context: ['{project-root}/AGENTS.md']
 ## Code Map
 
 - `src/lib/contact/contact-rules.ts` -- shared rules and limits; import, do not change.
-- `src/lib/contact/delivery.ts` -- `getDeliveryConfig()` (5 vars, per request), `checkRateLimits(ip, email)`, private `askLimit(prefix, tokens, window, key)`, `ipRateLimitKey`, `sendContactMail(config, submission)` with `mailText`/`mailSubject` over `ValidSubmission`. Extend: application mail text and subject ("Job application: <role title>", CR/LF removed), the CV as an attachment (Q1-A), `checkUploadLimit(ip)` (prefix `cv-upload`, about 10 per hour per IP, fails open like the others).
+- `src/lib/contact/delivery.ts` -- `getDeliveryConfig()` (5 vars, per request), `checkRateLimits(ip, email)`, private `askLimit(prefix, tokens, window, key)`, `ipRateLimitKey`, `sendContactMail(config, submission)` with `mailText`/`mailSubject` over `ValidSubmission`. Extend: application mail text and subject ("Job application: <role title>", CR/LF removed), the CV as an attachment (Q1-A), `checkUploadLimit(ip)` (prefix `cv-upload`, about 5 per hour per IP (A10), fails open like the others).
 - `src/lib/contact/submission.ts` -- `ValidSubmission` union; add the application member type only if the mail code needs it.
 - `src/app/api/contact/route.ts` -- order of steps, status bodies, `readBody`, `readConfig`, `logSendFailed`, `ipAddress` from `@vercel/functions`; copy the order, move shared helpers into a lib module if a second route needs them (Sonar duplication).
 - `src/components/contact/post-submission.ts` -- `postSubmission(payload)` with fixed endpoint and `FIELD_ORDER`; add optional endpoint and fields.
@@ -147,6 +148,8 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 ## Spec Change Log
 
+- 2026-10-04 (lead decision, A10 part 4, after the review): the apply route deletes the uploaded CV when it does not send the mail, the form uploads on every submit, and the token limit is about 5 per IP per hour. Amended: frozen matrix row "Apply after upload fails", the frozen rate-limit line plus a delete line, Code Map limit, Design Notes retry line, triage row 2. Avoids: orphan CVs from failed or abandoned applications filling the 1 GB store. KEEP: a sent application keeps its CV (A4); delete failures never change the answer.
+
 - 2026-10-04 (controller note, env facts; no change to the lead's decisions): Blob auth changed from `BLOB_READ_WRITE_TOKEN` + `handleUpload` to OIDC + `BLOB_STORE_ID` + `BLOB_WEBHOOK_PUBLIC_KEY` with `handleUploadPresigned`, because the lead's store has no read-write token. Amended: frozen Always line on Blob auth, frozen matrix row "Config missing", the CV check line (`get` metadata instead of `head`), tasks 7, 8 and 16 wording, Design Notes. Avoids: routes that fail with "Invalid `BLOB_READ_WRITE_TOKEN`" on every upload. KEEP: private store, path `cv/application.<ext>` + random suffix, two requests per application, every server check.
 
 ## Review Triage Log
@@ -156,7 +159,7 @@ Step 4 on 2026-10-04: one layer (Edge Case Hunter, opus), by the controller's ru
 | # | Finding (source) | Verdict | Route | Evidence |
 |---|---|---|---|---|
 | 1 | Apply POST times out at 15 s in the browser while the route may run 30 s; the server still mails and a retry duplicates it (Edge) | medium | patch | `postSubmission` aborts at `SEND_TIMEOUT_MS` (15 s); the apply route does a Sanity lookup, two Upstash calls, a 5 MB Blob read and an SMTP send with the attachment, `maxDuration = 30`. Fix: optional `timeoutMs`, 35 s from the job form. |
-| 2 | Uploaded CVs that never reach a successful apply stay in the store; a script can fill the 1 GB Hobby store (about 50 MB per IP per hour at the 10/h token limit) and lock it for 30 days (Edge) | medium | defer | Real: nothing deletes `cv/` blobs (A4 keeps applications with no time limit), and the token route is public by design (T1). A fix needs a design choice the spec does not settle (cleanup job, lower token limit, delete on a failed apply). Listed for the lead in `deferred-work.md`. |
+| 2 | Uploaded CVs that never reach a successful apply stay in the store; a script can fill the 1 GB Hobby store (about 50 MB per IP per hour at the 10/h token limit) and lock it for 30 days (Edge) | medium | fixed (lead's choice, A10) | Real: nothing deletes `cv/` blobs (A4 keeps applications with no time limit), and the token route is public by design (T1). A fix needs a design choice the spec does not settle (cleanup job, lower token limit, delete on a failed apply). Lead chose option 1 on 2026-10-04: the apply route deletes the CV of every application it does not send (`8de0f23`), the form uploads on every submit (`06718f5`), and the token limit is about 5 per IP per hour (`75a7b3a`). A script that never calls apply can still upload about 25 MB per IP per hour; a cleanup job after Demo day is in `deferred-work.md`. |
 | 3 | A 429 from the token route shows the send error, not the rate message (Edge) | low | reject | `uploadPresigned` throws one generic `BlobError("Failed to retrieve the presigned URL")` for any non-2xx, so telling 429 apart needs a pre-check request; 10 token requests an hour per IP is rarely reached by a real applicant. |
 | 4 | Token route does not check `KV_REST_API_URL` / `KV_REST_API_TOKEN`; when unset the upload limit fails open (Edge) | low | reject | Only on a misconfigured deployment; the apply route then answers 500 for every application (its `getDeliveryConfig` requires both), so the gap is noticed at once. Matches the contact route's fail-open design. |
 | 5 | A role closed in Sanity may still be accepted once from the stale tagged cache (Edge) | low | reject | The webhook revalidates the `job` tag; at worst one application for a just-closed role reaches the lead's inbox. A second, uncached fetch path would break T2's one helper. |
@@ -172,7 +175,7 @@ Step 4 on 2026-10-04: one layer (Edge Case Hunter, opus), by the controller's ru
 ## Design Notes
 
 - Two requests per application: the browser uploads the CV with a short-lived token (Vercel Function body limit 4.5 MB never applies), then sends a small JSON body with the blob path. The apply route trusts nothing from the upload: it re-reads the stored blob's size and type from `get` before attaching it.
-- Retry: the form keeps the uploaded path for the same `File` object, so a mail failure does not upload a second copy. An upload that fails leaves no blob.
+- Retry: the form uploads the CV on every submit, because the apply route deletes the CV of any application it does not send (A10). An upload that fails leaves no blob.
 - Vercel Blob Hobby (`docs/spikes/cms-spike.md`): 1 GB storage (about 200 CVs at 5 MB, kept with no time limit, A4), 10k simple and 2k advanced operations and 10 GB transfer per month; at the limit the store is locked for 30 days. Name it in the PR. Re-read the pricing page before Demo day.
 - Page metadata: one static title and description from `src/content/job.ts` (per-role metadata is Story 7.1).
 
@@ -189,13 +192,13 @@ Step 4 on 2026-10-04: one layer (Edge Case Hunter, opus), by the controller's ru
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-04 and re-captured in step 4 after the review patch.
+Captured at the end of step-03 on 2026-10-04 re-captured after the review patch, and again after the A10 follow-up (the first full `npm test` of that run timed out once in `scripts/eslint-config.test.mjs` under load; the second run passed).
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- "All matched files use Prettier code style!"
-- `npm test` -- exit 0 -- "Test Files 57 passed (57)", "Tests 929 passed (929)"
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (260 lines, 0 missing), "C1 ok: 18 changed file(s) with branch coverage >= 80% vs origin/develop."
+- `npm test` -- exit 0 -- "Test Files 57 passed (57)", "Tests 947 passed (947)"
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- "Coverage: 100%" (260 lines, 0 missing), "C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop."
 
 **Observed**
 
@@ -203,7 +206,7 @@ Captured at the end of step-03 on 2026-10-04 and re-captured in step 4 after the
 
 **Artifacts**
 
-- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4389 bytes -- sha256 792a418348c2 -- transcript of the three command runs
+- spec-6-6-job-page-cv-upload-evidence/verification.txt -- 4288 bytes -- sha256 9b7867fd8e57 -- transcript of the three command runs
 - spec-6-6-job-page-cv-upload-evidence/observed.md -- 1331 bytes -- sha256 c3994b890b4d -- surface not reached; what the tests observed instead
 
 **Not captured**

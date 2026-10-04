@@ -100,3 +100,12 @@ Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/verification.txt �
 Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/observed.md — 1331 bytes — sha256 c3994b890b4d — surface not reached; what the tests observed instead
 Acceptance: BLOCKED — npm run build && npm run test:smoke not run: Turbopack rejects the worktree node_modules junction; pending (controller, main checkout)
 Acceptance: BLOCKED — browser walk and a real upload and mail not run; pending (controller)
+Follow-up (lead decision A10 part 4, 2026-10-04): red — npx vitest run src/app/api/careers/apply/route.test.ts — 12 failed (del never called; no delete log line)
+Follow-up: green — apply route, src/lib/careers — 123 passed; route.ts, application.ts, cv-storage.ts 100% lines and branches; commit 8de0f23
+Follow-up: red — npx vitest run src/lib/contact/delivery.test.ts — 1 failed (slidingWindow called with 10, expected 5); green 45 passed; commit 75a7b3a
+Follow-up: red — npx vitest run src/components/careers/job-application-form.test.tsx — 3 failed (upload called once, expected twice after a failure); green 27 passed, 100% lines, 96.49% branches; commit 06718f5
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style! (after A10 follow-up)
+Acceptance: verification — npm test — exit 1 — first run: 1 failed | 946 passed (scripts/eslint-config.test.mjs timed out at 120 s under load; alone it passed, 3 passed in 19 s); not a code change of this story
+Acceptance: verification — npm test — exit 0 — second run: Test Files 57 passed (57), Tests 947 passed (947)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100% (Missing: 0 lines); C1 ok: 19 changed file(s) with branch coverage >= 80% vs origin/develop.
+Acceptance: evidence — spec-6-6-job-page-cv-upload-evidence/verification.txt — 4288 bytes — sha256 9b7867fd8e57 — transcript of the three command runs after the A10 follow-up (second run)
