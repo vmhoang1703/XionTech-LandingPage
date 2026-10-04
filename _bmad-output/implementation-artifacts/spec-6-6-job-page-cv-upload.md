@@ -26,7 +26,7 @@ context: ['{project-root}/AGENTS.md']
 - The blob path is `cv/application.<ext>` with a random suffix: no file name, name or email in any path or URL. Store access `private`. Nothing goes to Sanity.
 - Blob auth is OIDC (controller note 2026-10-04): `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` are server-only, read and checked per request like the five mail variables (`docs/contact-delivery.md` explains why not at build), never logged. The OIDC token comes from the `x-vercel-oidc-token` request header on Vercel and from `VERCEL_OIDC_TOKEN` (written by `vercel link` / `vercel env pull`) locally, so it is not checked as an env var; a missing token fails the Blob call (502). There is no `BLOB_READ_WRITE_TOKEN`. Log lines name step and error class only.
 - Applications share the contact rate limits (prefix `contact`, about 5 per 10 minutes per IP and email; `contact-ip`, about 20 per hour per IP). Token requests get their own IP limit (about 5 per hour, A10).
-- When the apply route does not send the mail, it deletes the uploaded CV; a delete failure is logged (error class only) and never changes the answer; a sent application keeps its CV (A10, lead 2026-10-04).
+- When the apply route does not send the mail after its rate limits passed, it deletes the uploaded CV (before them it deletes nothing; A10 narrowed after the full review); a delete failure is logged (error class only) and never changes the answer; a sent application keeps its CV (A10, lead 2026-10-04).
 - Page is a Server Component; only the form is `"use client"`. No capture band. No `/en` `/vi`. Strings in one place for later translation. Brand "XionTech".
 
 **Never:** applicant data or CVs in Sanity, a public blob, a server action, a CV passing through a function body, `force-dynamic`, a second mail sender, Open Graph or per-role SEO metadata (Story 7.1), a shared breadcrumb component (1.6), Vietnamese copy (1.2), editing Amber's planning docs, a redesign.
@@ -54,6 +54,7 @@ context: ['{project-root}/AGENTS.md']
 | Role gone | slug no longer open at send | 400 `{ error: "send" }` | N/A |
 | Stored CV wrong | blob missing, size > 5 MiB, MIME not allowed or not matching the extension | 400 `{ errors: { cv } }` | N/A |
 | Rate limited | 6th send in 10 min, same IP and email | 429 `{ error: "rate" }`, rate message | N/A |
+| Upload limit used up | 6th CV token in 1 h, same IP | token route 200 `{ error: "rate", presignedUrlPayload: null }`; the SDK throws "Missing presignedUrlPayload"; rate message, values kept (A10, after the full review) | N/A |
 | Mail fails | SMTP error / timeout, or the CV cannot be read for the attachment | 502 `{ error: "send" }` | log class and code only |
 
 </frozen-after-approval>
@@ -117,27 +118,27 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Hero | page load | — | amber hero, crumbs Home / Careers / job title (current not a link), H1 job title, chips team, location, work type | ribbon 5s, then still | CAP-1, DESIGN.md 444 | |
-| Hero chips | a part is empty | — | that chip is not shown | — | CAP-1, I/O "Missing meta part" (6.5) | |
-| Details | page load | — | paper surface; "About the role" paragraphs; "What you'll do" and "What you bring" check lists | — | CAP-1 | |
-| Details | a list is empty | — | its heading is not shown | — | CAP-1, content rule (no invented content) | |
-| "All open roles" | click / Enter | mouse, keyboard | arrow-left link goes to `/careers#roles` | — | CAP-1 | |
-| Layout | width above 900px / 900px or less | — | form card beside details / below details | — | CAP-1, EXPERIENCE.md Responsive | |
-| Form card | page load | — | paper card, 28px radius, H2 "Apply for this role", fields Full name, Email, Phone (optional), CV with help "PDF or Word, up to 5 MB.", Cover note (optional), "Send application" | — | CAP-2, DESIGN.md Contact form | |
-| Phone | focus | touch | telephone keypad | — | CAP-2 | |
-| CV field | choose `.png` or a 6 MB PDF | mouse, touch, keyboard | error "Please upload your CV as a PDF or Word file, up to 5 MB." and red border at once; announced | on change | CAP-2, DESIGN.md File field | |
-| CV field | choose a valid PDF after an error | mouse, touch | error and red border gone | on change | CAP-2 | |
-| Submit | empty name, bad email, no CV, note over 2,000 | mouse, keyboard | each field's error text, `aria-invalid`, `aria-describedby`; errors announced; focus on the first invalid field | — | CAP-2, AC-A11Y-5 | |
-| Submit | sending | mouse, keyboard | button disabled, reads "Sending..." | until done | CAP-3 | |
-| Submit | success | — | form replaced by "Thank you!" and "We've received your application and will be in touch if it's a match." in a `role="status"` panel with focus | — | CAP-3 | |
-| Submit | upload or send fails | — | error with retry above the button; every value and the chosen CV kept | — | CAP-3 | |
-| Submit | rate limited | — | rate message above the button; values kept | — | CAP-4 | |
-| Consent | page load | — | "We only use your details and CV to consider your application." then "Privacy policy" → `/privacy` | — | CAP-5 | |
-| Fields, buttons, links | Tab | keyboard | 2px focus ring | — | T9 | |
-| Button | hover / press | mouse, touch | lift 2px / 1px down, scale 0.98 | 0.35s | DESIGN.md Button | |
-| Unknown or closed slug | open the URL | — | Story 1.7 Not found page, HTTP 404 | — | CAP-6 | |
-| Page | scroll to the end | — | no email capture band before the footer | — | CAP-1, EXPERIENCE.md capture rule | |
-| Page | reduced motion | — | no lift transition; ribbon still | — | EXPERIENCE.md Motion | |
+| Hero | page load | — | amber hero, crumbs Home / Careers / job title (current not a link), H1 job title, chips team, location, work type | ribbon 5s, then still | CAP-1, DESIGN.md 444 || ✅ Chrome 1280 (prod build): amber gradient hero, crumbs Home / Careers / title (current not a link), H1, chip; ribbon not timed (`walk-output.txt`, `job-1280.png`) |
+| Hero chips | a part is empty | — | that chip is not shown | — | CAP-1, I/O "Missing meta part" (6.5) || ✅ Chrome: the sample role has only a team, so only the Engineering chip shows |
+| Details | page load | — | paper surface; "About the role" paragraphs; "What you'll do" and "What you bring" check lists | — | CAP-1 || partly: paper surface ✅; the sample role has no description or lists yet, so the paragraphs and lists are shown by unit tests only (`job.test.tsx`); walk again after the lead fills them |
+| Details | a list is empty | — | its heading is not shown | — | CAP-1, content rule (no invented content) || ✅ Chrome: no list headings for the empty sample role |
+| "All open roles" | click / Enter | mouse, keyboard | arrow-left link goes to `/careers#roles` | — | CAP-1 || ✅ Chrome: href `/careers#roles`; click lands `/careers#roles`; focus ring 2px |
+| Layout | width above 900px / 900px or less | — | form card beside details / below details | — | CAP-1, EXPERIENCE.md Responsive || ✅ Chrome: beside at 1280 and 900 (shared `.split` switches below 900, deferred), below at 899, 640, 390; no sideways scroll at 390 after the file-input fix |
+| Form card | page load | — | paper card, 28px radius, H2 "Apply for this role", fields Full name, Email, Phone (optional), CV with help "PDF or Word, up to 5 MB.", Cover note (optional), "Send application" | — | CAP-2, DESIGN.md Contact form || ✅ Chrome: 28px radius, H2, five labels, help text, "Send application" |
+| Phone | focus | touch | telephone keypad | — | CAP-2 || ✅ Chrome: `type="tel"` (keypad on touch devices; no real phone used) |
+| CV field | choose `.png` or a 6 MB PDF | mouse, touch, keyboard | error "Please upload your CV as a PDF or Word file, up to 5 MB." and red border at once; announced | on change | CAP-2, DESIGN.md File field || ✅ Chrome: error text, red border rgb(179, 38, 30), `aria-invalid`, announced in the live region |
+| CV field | choose a valid PDF after an error | mouse, touch | error and red border gone | on change | CAP-2 || ✅ Chrome: error and red border gone |
+| Submit | empty name, bad email, no CV, note over 2,000 | mouse, keyboard | each field's error text, `aria-invalid`, `aria-describedby`; errors announced; focus on the first invalid field | — | CAP-2, AC-A11Y-5 || ✅ Chrome: four errors, `aria-invalid` and `aria-describedby` on each, focus on Full name |
+| Submit | sending | mouse, keyboard | button disabled, reads "Sending..." | until done | CAP-3 || ✅ Chrome: disabled, "Sending..." |
+| Submit | success | — | form replaced by "Thank you!" and "We've received your application and will be in touch if it's a match." in a `role="status"` panel with focus | — | CAP-3 || unit test (`job-application-form.test.tsx`); real send after merge on the dev site (lead) |
+| Submit | upload or send fails | — | error with retry above the button; every value and the chosen CV kept | — | CAP-3 || ✅ Chrome: upload failure (token route 500) shows the send error above the button with focus on it; values and the CV kept |
+| Submit | rate limited | — | rate message above the button; values kept | — | CAP-4 || ✅ Chrome: upload limit used up (token route 200, no presigned URL, real Blob SDK) shows the rate message, values kept; apply-route 429 by unit test |
+| Consent | page load | — | "We only use your details and CV to consider your application." then "Privacy policy" → `/privacy` | — | CAP-5 || ✅ Chrome: exact text, link `/privacy` |
+| Fields, buttons, links | Tab | keyboard | 2px focus ring | — | T9 || ✅ Chrome: solid 2px ring on fields and links |
+| Button | hover / press | mouse, touch | lift 2px / 1px down, scale 0.98 | 0.35s | DESIGN.md Button || ✅ Chrome: hover translateY(-2px), press translateY(1px) scale(0.98), 0.35s |
+| Unknown or closed slug | open the URL | — | Story 1.7 Not found page, HTTP 404 | — | CAP-6 || ✅ Chrome and smoke: `/careers/no-such-role` 404 with the Not found page; closed role by unit test |
+| Page | scroll to the end | — | no email capture band before the footer | — | CAP-1, EXPERIENCE.md capture rule || ✅ Chrome: no capture band |
+| Page | reduced motion | — | no lift transition; ribbon still | — | EXPERIENCE.md Motion || ✅ Chrome: button transition 0s |
 
 ## Implementation Notes
 
@@ -149,6 +150,7 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 ## Spec Change Log
 
 - 2026-10-04 (lead decision, A10 part 4, after the review): the apply route deletes the uploaded CV when it does not send the mail, the form uploads on every submit, and the token limit is about 5 per IP per hour. Amended: frozen matrix row "Apply after upload fails", the frozen rate-limit line plus a delete line, Code Map limit, Design Notes retry line, triage row 2. Avoids: orphan CVs from failed or abandoned applications filling the 1 GB store. KEEP: a sent application keeps its CV (A4); delete failures never change the answer.
+- 2026-10-04 (lead decision after the full 5-layer review): the apply route checks its rate limits before the role lookup and deletes an unsent CV only after they passed, so a caller cannot drive deletes or Sanity reads freely; the token route answers a used-up upload limit with 200 and no presigned URL, so the form can show the rate message. Amended: the delete rows above, and "Config missing" now logs one line again.
 
 - 2026-10-04 (controller note, env facts; no change to the lead's decisions): Blob auth changed from `BLOB_READ_WRITE_TOKEN` + `handleUpload` to OIDC + `BLOB_STORE_ID` + `BLOB_WEBHOOK_PUBLIC_KEY` with `handleUploadPresigned`, because the lead's store has no read-write token. Amended: frozen Always line on Blob auth, frozen matrix row "Config missing", the CV check line (`get` metadata instead of `head`), tasks 7, 8 and 16 wording, Design Notes. Avoids: routes that fail with "Invalid `BLOB_READ_WRITE_TOKEN`" on every upload. KEEP: private store, path `cv/application.<ext>` + random suffix, two requests per application, every server check.
 
@@ -196,10 +198,10 @@ Follow-up review on 2026-10-04 of the A10 part 4 change (`4a13c32..f5e5b89`, 224
 - `npm run lint && npm run typecheck && npm run format:check` -- expected: no errors
 - `npm test` -- expected: all pass
 - `npm run test:coverage && npm run coverage:diff` -- expected: 100% changed lines, branches ≥ 80% on changed files
-- `npm run build && npm run test:smoke` -- pending (controller, main checkout)
+- `npm run build && npm run test:smoke` -- passed 2026-10-04 in this worktree after it got its own `node_modules` (smoke 10 passed, incl. the 404 and the apply honeypot).
 
 **Manual checks:**
-- Browser walk of `/careers/placeholder-sample-job` at 1280, 900, 899, 640 and 390px plus reduced motion; a real upload and mail after the lead creates the private Blob store -- pending (controller).
+- Browser walk of `/careers/placeholder-sample-job` at 1280, 900, 899, 640 and 390px plus reduced motion -- done 2026-10-04 on the production build (`walk.mjs`, `walk-output.txt`, `job-1280.png`, `job-form-*.png`). A real upload and mail -- after merge on the dev site (lead).
 
 ## Acceptance Evidence
 
@@ -222,5 +224,5 @@ Captured at the end of step-03 on 2026-10-04 re-captured after the review patch,
 
 **Not captured**
 
-- `npm run build && npm run test:smoke` -- pending (controller, main checkout; Turbopack rejects the worktree's `node_modules` junction).
-- Browser walk of every UX checks row, a real upload to the private store and a real mail -- pending (controller).
+- `npm run build && npm run test:smoke` -- passed 2026-10-04 in this worktree (smoke 10 passed).
+- Browser walk of every UX checks row -- done 2026-10-04 (see the UX checks table). A real upload to the private store and a real mail -- after merge on the dev site (lead).

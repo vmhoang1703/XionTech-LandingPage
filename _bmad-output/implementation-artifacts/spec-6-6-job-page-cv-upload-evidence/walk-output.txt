@@ -1,0 +1,33 @@
+[1280] GET /careers/placeholder-sample-job -> 200
+[1280] hero: bg rgba(0, 0, 0, 0) | crumbs "Home / Careers / [Placeholder] Sample job" | current is link Home,Careers | H1 "[Placeholder] Sample job" | chips [Engineering]
+[1280] details: bg rgb(253, 253, 254) | headings [] | paragraphs 1 | check lists 0
+[1280] All open roles: href /careers#roles
+[1280] layout: details x 44 y 534 | form x 668 y 534 -> beside
+[1280] form card: radius 28px | bg rgb(253, 253, 254) | H2 "Apply for this role" | labels [Full name, Email, Phone (optional), CV, Cover note (optional)] | help "PDF or Word, up to 5 MB." | button "Send application"
+[1280] phone: type tel
+[1280] consent: "We only use your details and CV to consider your application. Privacy policy" | link /privacy
+[1280] email capture band: 0
+[1280] CV photo.png: error "Please upload your CV as a PDF or Word file, up to 5 MB." | aria-invalid true | border rgb(179, 38, 30) | live "Please fix the following: Please upload your CV as a PDF or Word file, up to 5 MB."
+[1280] CV big.pdf: error "Please upload your CV as a PDF or Word file, up to 5 MB." | aria-invalid true | border rgb(179, 38, 30) | live "Please fix the following: Please upload your CV as a PDF or Word file, up to 5 MB."
+[1280] CV cv.pdf after error: error 0 | aria-invalid null | border rgb(117, 134, 159)
+[1280] empty submit: errors [Please enter your name. | Please enter a valid email address. | Please upload your CV as a PDF or Word file, up to 5 MB. | Please keep your note under 2,000 characters.]
+[1280]   #a-name: aria-invalid true | describedby a-name-err
+[1280]   #a-email: aria-invalid true | describedby a-email-err
+[1280]   #a-cv: aria-invalid true | describedby a-cv-help a-cv-err
+[1280]   #a-note: aria-invalid true | describedby a-note-err
+[1280] focus after submit: #a-name
+[1280] sending: disabled true | text "Sending..."
+[1280] upload fails: alert "We could not send your application. Please try again." role alert | above button true | name "Walk Tester" | email "walk@example.com" | note "Cover note" | CV kept cv.pdf | focus #btn btn-primary
+[1280] upload limit used up: alert "You have sent several requests in a short time. Please try again in a few minutes." | name kept "Walk Tester" | CV kept cv.pdf
+[1280] Tab -> #a-email | outline solid | 2px
+[1280] All open roles focus: outline solid | 2px | :focus-visible true
+[1280] button transition: 0.35s, 0.35s, 0.3s, 0.3s
+[1280] button hover: transform none -> matrix(1, 0, 0, 1, 0, -2)
+[1280] button press: transform matrix(0.98, 0, 0, 0.98, 0, 1)
+[1280] All open roles click lands /careers#roles
+[900] layout: form beside details | no sideways scroll true
+[899] layout: form below details | no sideways scroll true
+[640] layout: form below details | no sideways scroll true
+[390] layout: form below details | no sideways scroll true
+[reduced] button transition: 0s
+[404] /careers/no-such-role -> 404 | h1 "We couldn't find that page."
