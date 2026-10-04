@@ -88,13 +88,20 @@ describe("Home page", () => {
   it("puts the news section between the 4-D band and the capture band", () => {
     const { container } = render(<Home />);
 
-    const surfaces = Array.from(container.children).map((section) =>
-      Array.from(section.classList).find((name) => name.startsWith("surface-")),
-    );
-    expect(surfaces.slice(-3)).toEqual([
-      "surface-navy",
-      "surface-mist",
-      "surface-amber",
+    const rhythm = Array.from(container.children)
+      .slice(1)
+      .map((section) =>
+        Array.from(section.classList).filter(
+          (name) => name.startsWith("surface-") || name === "linen",
+        ),
+      );
+    expect(rhythm).toEqual([
+      [],
+      ["surface-mist", "linen"],
+      ["surface-paper"],
+      ["surface-navy"],
+      ["surface-mist"],
+      ["surface-amber"],
     ]);
     const news = screen
       .getByRole("heading", { name: "Latest from XionTech." })
