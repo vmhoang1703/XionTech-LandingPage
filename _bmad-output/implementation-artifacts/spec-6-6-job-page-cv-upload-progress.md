@@ -73,3 +73,8 @@ Task 12: minor — src/components/careers/job-details.tsx CheckList: `key={item}
 Task 12: complete (commits 6748e63..1aa3d02, diff verified; section uses `sec surface-paper` because plain `.sec` has no background)
 Task 14: complete (commits 6748e63..1aa3d02, diff verified)
 Task 13: dispatched (model sonnet, base 1aa3d02, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t13-report.md)
+Task 13: red — npx vitest run "src/app/careers" — failed: ./page does not exist
+Task 13: green — npx vitest run src/app/careers — 9 passed; page 100% lines and branches
+Task 13: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 13: complete (commits d67fc92..4dddfe5, diff verified)
+Task 15: dispatched (model haiku, base 4dddfe5, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t15-report.md)
