@@ -131,4 +131,44 @@ describe("postSubmission", () => {
     expect(vi.getTimerCount()).toBe(0);
     expect(fetchMock.mock.calls[0][1].signal.aborted).toBe(false);
   });
+
+  it("posts to a custom endpoint when provided", async () => {
+    fetchMock.mockReturnValue(reply(200, { ok: true }));
+    const payload = { name: "Alice", email: "alice@example.com" };
+
+    await postSubmission(payload, { endpoint: "/api/careers/apply" });
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url] = fetchMock.mock.calls[0];
+    expect(url).toBe("/api/careers/apply");
+  });
+
+  it("reads field errors for custom fields", async () => {
+    fetchMock.mockReturnValue(
+      reply(400, {
+        errors: {
+          cv: "Please upload your CV as a PDF or Word file, up to 5 MB.",
+          note: "Please keep your note under 2,000 characters.",
+          unknown: "Ignored",
+        },
+      }),
+    );
+
+    const result = await postSubmission(
+      {},
+      { fields: ["name", "email", "cv", "note"] as const },
+    );
+
+    expect(result).toEqual({
+      kind: "errors",
+      errors: {
+        cv: "Please upload your CV as a PDF or Word file, up to 5 MB.",
+        note: "Please keep your note under 2,000 characters.",
+      },
+    });
+    expect(result.kind === "errors" ? Object.keys(result.errors) : []).toEqual([
+      "cv",
+      "note",
+    ]);
+  });
 });
