@@ -8,7 +8,7 @@ It says where the code lives, how to set up, and what the free plan allows.
 | Path                              | What it does                                                                                             |
 | --------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `src/lib/sanity/config.ts`        | Reads and checks `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`.                       |
-| `src/lib/sanity/client.ts`        | `sanityFetch`: the one server-only read helper (CDN, `published` perspective, no token, cached by tags). |
+| `src/lib/sanity/client.ts`        | `sanityFetch`: the one server-only read helper (no CDN, `published` perspective, no token, cached by tags; decision A11). |
 | `src/app/api/revalidate/route.ts` | Webhook. Checks Sanity's signature, then calls `revalidateTag("post" or "job", "max")`.                  |
 | `studio/`                         | Sanity Studio. A separate package with its own `package.json` and lockfile. It is not an npm workspace.  |
 | `scripts/sanity-check.mjs`        | Run with `npm run sanity:check`. Reads one post, one job and a draft read from the real project.         |
@@ -31,7 +31,7 @@ The project ID `1khn3hf4` and the dataset `production` are public values.
 - Use `sanityFetch({ query, params, tags })` from `src/lib/sanity/client.ts`.
 - Use the tag `post` for news and the tag `job` for jobs.
 - Write your own GROQ query in your page story (decision T2). There is no shared query file.
-- Never use `force-dynamic`. The cache is cleared by the webhook, not by time.
+- Never use `force-dynamic`, `cache: "no-store"` or a time-based `revalidate` on a Sanity read. The cache is cleared by the webhook, not by time, and every uncached read counts against the 250k API requests per month (the client skips the CDN, decision A11).
 - Do not store CVs or application data in Sanity (decision T1).
 
 ## Account steps (the lead does these, in this order)
@@ -56,11 +56,11 @@ cd studio && npx sanity deploy
 
 After the deploy for Story 3.7 (decision A9), each news post needs:
 
-- an English title starting with `[Placeholder]`;
+- a real English title (posts are real and use only confirmed facts; a `[Placeholder]` post would show on Home with no sample note);
 - a **slug** (Generate) and a **Published at** date (the Studio now requires both, and the category);
 - a **category**, and the **app** for a Product story.
 
-Home shows the 3 newest posts, so publish 3 sample posts. A post without an English title, a slug or a date never shows on Home.
+Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home.
 
 If Sanity cannot be reached while Home is built or refreshed, Home still renders: the news section shows its heading and "See all news", and the log says "Home news: could not load the latest posts from Sanity". That empty news section stays until the next refresh, so after an outage **re-publish any post** (the webhook refreshes Home) **or redeploy**.
 

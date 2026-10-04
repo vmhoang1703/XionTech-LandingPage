@@ -84,11 +84,11 @@ Sources: SPEC CAP-1..5; `EXPERIENCE.md` News card, States (Home news), Responsiv
 | News grid | 0 stories | — | no grid, no note; "See all news" stays | — | CAP-2, EXPERIENCE.md States | test `home-news.test.tsx` (0 stories) |
 | News card | page load | — | 16:10 empty frame (faint navy grid), mono date `18 SEP 2026`, tag, title 1.08rem, excerpt, "Read story →"; 24px radius | — | DESIGN.md News card, Media frame | ✅ dev site 2026-10-04: 24px radius, 16:10 frame, mono date "4 OCT 2026", tag, title, excerpt (`walk-dev-output.txt`) |
 | Category tag | product story | — | amber pill, navy text, "PRODUCT · PXP" | — | DESIGN.md Category tag | ✅ dev site: "PRODUCT · PXP" tag on the PXP post |
-| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | ✅ dev site: "COMPANY" tag on the offices post (colour by class; unit test) |
+| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | ✅ dev site screenshot `home-news-dev-1280.png`: "COMPANY" mist pill on the offices post; colour by class (unit test) |
 | Read story | click / Enter | mouse, keyboard, touch | opens `/news/[slug]` (Not found until 6.2) | — | EXPERIENCE.md News card | ✅ dev site: click opens `/news/pxp-the-school-day-in-a-parents-pocket` (Not found until 6.2) |
 | Read story, See all news | focus | keyboard | 2px focus ring | — | T9 | ✅ dev site: Tab reaches Read story, `:focus-visible`, solid 2px ring |
 | Read story, See all news | hover | mouse | arrow moves 4px right | 0.3s | prototype `.link-arrow:hover` | ✅ dev site: arrow moves 4px (x 156 → 160) |
-| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | ✅ dev site: no transform, no shadow |
+| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | partly: dev site shows no card shadow on hover; the lift was not measured (the page scrolled between the two readings) |
 | News grid | width 900px or less | — | 2 columns | — | EXPERIENCE.md Responsive | ✅ dev site: 2 columns at 900 |
 | News grid | width 640px or less | — | 1 column | — | EXPERIENCE.md Responsive | ✅ dev site: 1 column at 640 and 390, no sideways scroll |
 | Capture band | page load | — | "See it working at your school." last before footer | — | CAP-4 | test `page.test.tsx` (capture last), `no-js.test.tsx` (news before capture in server HTML) |

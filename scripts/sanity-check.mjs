@@ -48,12 +48,12 @@ async function main() {
     return 1;
   }
 
-  // Same settings as src/lib/sanity/client.ts: CDN, published perspective, no token.
+  // Same settings as src/lib/sanity/client.ts: no CDN, published perspective, no token.
   const client = createClient({
     projectId,
     dataset,
     apiVersion: API_VERSION,
-    useCdn: true,
+    useCdn: false,
     perspective: "published",
   });
   // The published perspective hides drafts, so the probe uses the raw perspective.
