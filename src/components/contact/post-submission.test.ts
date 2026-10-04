@@ -122,6 +122,27 @@ describe("postSubmission", () => {
     expect(result).toEqual({ kind: "send" });
   });
 
+  it("aborts after a given timeout instead of 15 seconds", async () => {
+    vi.useFakeTimers();
+    fetchMock.mockImplementation(
+      (_url: string, init: RequestInit) =>
+        new Promise((_resolve, reject) => {
+          init.signal?.addEventListener("abort", () =>
+            reject(new DOMException("Aborted", "AbortError")),
+          );
+        }),
+    );
+    let result: unknown;
+    void postSubmission({}, { timeoutMs: 35_000 }).then((value) => {
+      result = value;
+    });
+
+    await vi.advanceTimersByTimeAsync(34_999);
+    expect(result).toBeUndefined();
+    await vi.advanceTimersByTimeAsync(1);
+    expect(result).toEqual({ kind: "send" });
+  });
+
   it("clears the timeout once the request is answered", async () => {
     vi.useFakeTimers();
     fetchMock.mockReturnValue(reply(200, { ok: true }));

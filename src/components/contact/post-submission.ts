@@ -39,12 +39,19 @@ function readFieldErrors(
 /** Post the request; every way to fail comes back as a result, never a throw. */
 export async function postSubmission(
   payload: unknown,
-  options?: { endpoint?: string; fields?: readonly string[] },
+  options?: {
+    endpoint?: string;
+    fields?: readonly string[];
+    timeoutMs?: number;
+  },
 ): Promise<SendResult> {
   const endpoint = options?.endpoint ?? CONTACT_ENDPOINT;
   const fields = options?.fields ?? FIELD_ORDER;
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), SEND_TIMEOUT_MS);
+  const timer = setTimeout(
+    () => controller.abort(),
+    options?.timeoutMs ?? SEND_TIMEOUT_MS,
+  );
   try {
     const response = await fetch(endpoint, {
       method: "POST",

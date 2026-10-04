@@ -24,6 +24,8 @@ type JobField = "name" | "email" | "cv" | "note";
 type JobErrors = Partial<Record<JobField, string>>;
 
 const UPLOAD_TIMEOUT_MS = 60_000;
+// The apply route may run for 30 s; wait longer so a slow send is not sent twice.
+const APPLY_TIMEOUT_MS = 35_000;
 const CV_ACCEPT =
   ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
@@ -163,7 +165,11 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
         cv: pathname,
         website: text(data, "website"),
       },
-      { endpoint: "/api/careers/apply", fields: FIELD_ORDER },
+      {
+        endpoint: "/api/careers/apply",
+        fields: FIELD_ORDER,
+        timeoutMs: APPLY_TIMEOUT_MS,
+      },
     );
     if (result.kind === "sent") {
       setStatus("sent");

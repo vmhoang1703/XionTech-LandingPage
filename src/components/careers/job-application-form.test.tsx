@@ -195,6 +195,7 @@ describe("JobApplicationForm sending", () => {
 
   it("uploads, then posts JSON with the pathname and no file name", async () => {
     fetchMock.mockReturnValue(reply(200, { ok: true }));
+    const setTimeoutSpy = vi.spyOn(globalThis, "setTimeout");
     const file = pdf();
     render(<JobApplicationForm slug="sample-role" />);
     fillValid(file);
@@ -222,6 +223,7 @@ describe("JobApplicationForm sending", () => {
       website: "",
     });
     expect(JSON.stringify(sentBody())).not.toContain("Ana CV");
+    expect(setTimeoutSpy.mock.calls.map(([, ms]) => ms)).toContain(35_000);
   });
 
   it("replaces the form with the success panel, focused", async () => {
