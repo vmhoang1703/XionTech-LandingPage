@@ -30,14 +30,14 @@ module.exports = {
 
   // one line under each page title
   pages: {
-    "index.html": "Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025 (see the change list at the top).",
+    "index.html": "Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026 (see the change list at the top).",
     "products.html": "ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band); " + SITE_WIDE,
     "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); " + SITE_WIDE,
     "about.html": 'Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); ' + SITE_WIDE,
     "news.html": "ENH-007 (a story about an app shows the app name in its pill); " + SITE_WIDE,
     "news-story.html": SITE_WIDE,
     "careers.html": SITE_WIDE,
-    "job.html": SITE_WIDE,
+    "job.html": "ENH-026 (fits phone screens); " + SITE_WIDE,
     "demo.html": "ENH-011 (checklist says five steps); " + SITE_WIDE,
     "privacy.html": SITE_WIDE,
     "404.html": "Batch 1 (no label above the heading); " + SITE_WIDE,
@@ -70,5 +70,6 @@ module.exports = {
 | Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |
 | Products, updates and last band | "See all news" below the stories; navy band with a ring illustration | "See all news" on the heading row; plain dark navy band, continuous with the footer | ENH-024 |
 | Every page, type | Bold headings, labels and buttons (600 to 700) | The same fonts and sizes at weight 500; body 400 | ENH-025 |
+| Job page and Home contact, phones | The job page ran 89px past a phone screen; Home ran 2px at 320px | Both fit the screen at every width | ENH-026 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |`,
 };

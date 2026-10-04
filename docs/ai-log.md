@@ -1019,3 +1019,17 @@ Template:
   sluggish; a first typography pass switched the heading font, which Amber rejected because it no longer matched
   the logo; the colour flow went through several wrong orders (too much blue, then a wasted empty gap) before
   matching her description; and a breakpoint scroll fix that did not hold was reverted rather than shipped.
+
+## 2026-10-05 — ENH-026: the job page and Home contact section fit phone screens
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter; the change is three
+  lines of CSS)
+- **Prompt / task:** Fix the job page scrolling sideways on phones (found during the ENH-025 checks), and a 2px
+  sideways scroll on Home at 320px.
+- **Decision / result:** Approved by Amber. Both had one cause: a one-column grid on phones will not shrink below
+  its widest content, and the apply form (job) and the contact block (Home) held their columns wider than the
+  screen. Grid items in those layouts and form fields may now shrink; checkboxes keep their size and long words
+  wrap after the review. All 11 pages were checked at seven widths (no sideways scroll), and desktop layouts
+  were compared before and after (unchanged).
+- **AI got it wrong?** No, beyond first logging the Home overflow as a separate issue before finding it had the
+  same cause.

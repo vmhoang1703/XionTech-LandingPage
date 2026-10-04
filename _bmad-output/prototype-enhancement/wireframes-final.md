@@ -36,6 +36,7 @@ also has a Vietnamese version in the prototype.
 | Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |
 | Products, updates and last band | "See all news" below the stories; navy band with a ring illustration | "See all news" on the heading row; plain dark navy band, continuous with the footer | ENH-024 |
 | Every page, type | Bold headings, labels and buttons (600 to 700) | The same fonts and sizes at weight 500; body 400 | ENH-025 |
+| Job page and Home contact, phones | The job page ran 89px past a phone screen; Home ran 2px at 320px | Both fit the screen at every width | ENH-026 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
@@ -121,7 +122,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
-Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025 (see the change list at the top).
+Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026 (see the change list at the top).
 
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -970,7 +971,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `job.html` · page title: "[Placeholder] Job title | Careers at XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-026 (fits phone screens); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ JOB PAGE ═══════════════════════════════════════════════════════════════════════════════════════════════╗

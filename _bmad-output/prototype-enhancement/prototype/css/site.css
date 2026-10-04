@@ -331,6 +331,10 @@ fieldset.field{border:0}
 /* misc blocks */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3xl);align-items:center}
 .split.align-start{align-items:start}
+/* grid columns and form fields may shrink below their content width, so a form never widens the page on phones (ENH-026) */
+.split>*,.fgrid2>*,.contact-grid>*,.field{min-width:0}
+.contact-grid>*{overflow-wrap:anywhere}
+.field input:not([type=checkbox]):not([type=radio]),.field select,.field textarea{min-width:0;max-width:100%}
 .list-check{list-style:none;display:grid;gap:14px}
 .list-check.roomy{gap:var(--sp-l)}
 .list-check li{display:flex;gap:12px;align-items:flex-start;color:var(--text)}

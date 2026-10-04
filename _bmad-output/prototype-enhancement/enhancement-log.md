@@ -39,6 +39,7 @@ directly, before this log existed.
 | ENH-023 | 2026-10-04 | Products, school-day section                              | "One event. Multiple experiences." becomes "A day at school.": new copy, lighter type, dark background and a timeline that plays step by step once                                                                                                                                                | Approved | 4.1                                   |
 | ENH-024 | 2026-10-04 | Products, Product updates and email band                  | "See all news" moves onto the heading row; the email band loses its ring illustration                                                                                                                                                                                                             | Approved | 4.1                                   |
 | ENH-025 | 2026-10-05 | Every page, typography                                    | Calmer weights: headings, labels, numbers and buttons drop from bold (600 to 700) to 500; original fonts and sizes kept                                                                                                                                                                           | Approved | Batch 1 (all pages)                   |
+| ENH-026 | 2026-10-05 | Job page and Home contact section                         | On phones no page scrolls sideways: the job page and Home's contact section fit the screen                                                                                                                                                                                                        | Approved | 6.5                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -638,3 +639,11 @@ directly, before this log existed.
 - **Rules:** do not use 700, 800 or 900 for marketing text. When something needs more emphasis, add space, size, colour or layout first, and weight only last.
 - **Developer notes:** weights only; font families, sizes and spacing are unchanged from before this entry. All pages were checked at 1440 and 375px. The job page's body text already overflowed by 89px on phones before this change; it is a separate fix.
 - **Open items:** the job page's phone overflow (pre-existing).
+
+## ENH-026: The job page and Home contact section fit phone screens
+
+- **Why:** found while checking ENH-025: on phones the job page scrolled sideways (its text and apply form ran 89px past a 375px screen). Amber asked for it to be fixed on 2026-10-05, together with a 2px sideways scroll on Home at 320px.
+- **What changed:** the job description and apply form, and Home's contact section ("Have something you want to build?"), now fit the screen at every width; nothing else changes.
+- **Rules:** none new.
+- **Developer notes:** the two-column layout becomes one column on phones, but a grid column will not shrink below its widest content, and the form fields (inputs, the CV file picker) kept it at 448px. Home's contact grid had the same cause (its column held 306px in a 288px space at 320px). Grid items in these layouts and form fields may now shrink (min-width 0; fields capped at 100% width; checkboxes and radio buttons keep their size; long words such as email addresses in the contact section wrap). Desktop layouts were compared before and after on all 11 pages and are unchanged. All 11 pages were checked at 320, 360, 375, 414, 768, 1024 and 1440px: none scroll sideways.
+- **Open items:** none.
