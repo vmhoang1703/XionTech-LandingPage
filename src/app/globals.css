@@ -1797,6 +1797,77 @@
     gap: 20px;
   }
 
+  /* News cards (Story 3.7), ported from the prototype site.css. Static: no glow or lift until after demo. */
+  .ncard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 26px;
+  }
+
+  .ncard > :not(.frame) {
+    margin-inline: 24px;
+  }
+
+  .ncard .frame {
+    height: auto;
+    margin-bottom: 14px;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+  }
+
+  .cat {
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--color-mist);
+    color: var(--color-navy);
+    font-family: var(--font-brand);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .cat.product {
+    background: var(--color-amber);
+  }
+
+  .ncard h3 {
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.38;
+  }
+
+  .ncard p {
+    color: var(--color-muted);
+    font-size: 0.93rem;
+  }
+
+  .ncard .link-arrow {
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: 0.9rem;
+  }
+
+  .news-grid + .link-arrow {
+    margin-top: 32px;
+  }
+
+  .sample {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
   @media (width <= 900px) {
     .news-grid {
       grid-template-columns: 1fr 1fr;
@@ -1821,7 +1892,9 @@
       box-shadow: var(--shadow-card);
     }
 
-    .role:hover .link-arrow svg {
+    .role:hover .link-arrow svg,
+    .ncard .link-arrow:hover svg,
+    .sec-head ~ .link-arrow:hover svg {
       transform: translateX(4px);
     }
   }
@@ -1833,7 +1906,9 @@
     }
 
     .role:hover,
-    .role:hover .link-arrow svg {
+    .role:hover .link-arrow svg,
+    .ncard .link-arrow:hover svg,
+    .sec-head ~ .link-arrow:hover svg {
       transform: none;
     }
   }
