@@ -44,6 +44,16 @@ The project ID `1khn3hf4` and the dataset `production` are public values.
    - `https://xiontech-dev.vercel.app` (no credentials)
    - `https://xion-tech-landing-page-*-vmhoang1703s-projects.vercel.app` (no credentials). This is the preview pattern.
 3. Run `cd studio && npm install && npx sanity login && npx sanity deploy`. Use the host `xiontech-landing`. The Studio is then at `https://xiontech-landing.sanity.studio`. Create one `[Placeholder]` post and one `[Placeholder]` job. Publish both.
+
+**Every later schema change** (a merged PR that edits `studio/schemas/`): deploy from an up-to-date `develop`, or the Studio keeps the old fields.
+
+```bash
+git switch develop && git pull
+cd studio && npx sanity deploy
+```
+
+`studio/sanity.cli.ts` holds the Studio's `appId` (public, not a secret), so the deploy does not ask for it. After a publish, the first visit to a page may still show the old content; the next visit shows the new one (the webhook marks the cached page stale).
+
 4. Make the webhook. Copy `SANITY_REVALIDATE_SECRET` from `.env.local`. In Manage, open API, then Webhooks. Use these settings:
    - URL: `https://xiontech-dev.vercel.app/api/revalidate`. Add a second webhook for the production URL `https://xion-tech-landing-page.vercel.app/api/revalidate`.
    - Filter: `_type in ["post", "job"]`

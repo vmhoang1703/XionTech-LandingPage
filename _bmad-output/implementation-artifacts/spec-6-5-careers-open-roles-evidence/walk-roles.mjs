@@ -1,6 +1,7 @@
 import { chromium } from "@playwright/test";
-// Run against the dev site after a role with a slug is published.
-const BASE = process.env.BASE_URL ?? "https://xiontech-dev.vercel.app";
+// Run against a deployed site that has a published role with a slug.
+const BASE = process.env.BASE_URL;
+if (!BASE) throw new Error("Set BASE_URL, for example the dev site");
 const OUT = process.env.OUT;
 if (!OUT) throw new Error("Set OUT to the evidence folder");
 const b = await chromium.launch({ channel: "chrome", timeout: 120000 });
@@ -13,6 +14,7 @@ try {
   const p = await ctx.newPage();
   await p.goto(`${BASE}/careers#roles`, { waitUntil: "load" }); await p.waitForTimeout(1500);
   const cards = p.locator("#roles a.role");
+  if ((await cards.count()) === 0) throw new Error("No role card: publish a role with a slug first");
   log(`[1280] cards ${await cards.count()}`);
   const card = cards.first();
   log(`[1280] card href ${await card.getAttribute("href")} | name "${(await card.innerText()).replace(/\s+/g, " ")}" | nested links/buttons ${await card.locator("a, button").count()}`);
@@ -29,6 +31,7 @@ try {
   await p.mouse.move(0, 0); await p.waitForTimeout(500);
   await p.evaluate(() => document.activeElement?.blur?.());
   let n = 0; while (n < 80 && !(await card.evaluate((el) => el === document.activeElement))) { await p.keyboard.press("Tab"); n++; }
+  if (!(await card.evaluate((el) => el === document.activeElement))) throw new Error("Tab never reached the card");
   log(`[1280] Tab x${n} reaches card ${await card.evaluate((el) => el === document.activeElement)} | :focus-visible ${await card.evaluate((el) => el.matches(":focus-visible"))} | outline ${await css(card, ["outlineStyle", "outlineWidth", "outlineOffset"])}`);
   await p.keyboard.press("Enter"); await p.waitForTimeout(2000);
   log(`[1280] Enter lands ${new URL(p.url()).pathname} | h1 "${await p.locator("h1").first().innerText().catch(() => "")}"`);
@@ -47,7 +50,6 @@ try {
     const t = await box(card2.locator(".role-main")); const l = await box(card2.locator(".link-arrow"));
     log(`[${w}] "View and apply" under the title ${l.y >= t.y + t.h - 2} (title y ${t.y} h ${t.h}, link y ${l.y}) | no sideways scroll ${await q.evaluate(() => document.documentElement.scrollWidth <= innerWidth)}`);
     if (w === 390) {
-      const y0 = (await box(card2)).y;
       await card2.dispatchEvent("pointerover", { pointerType: "touch" });
       log(`[390 touch] hover media ${await q.evaluate(() => matchMedia("(hover: hover)").matches)} | card transform ${await css(card2, ["transform"])}`);
       await card2.tap(); await q.waitForTimeout(2000);
