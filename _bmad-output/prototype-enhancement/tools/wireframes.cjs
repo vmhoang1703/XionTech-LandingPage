@@ -69,7 +69,7 @@ const GRID = {
   mega: 2,
   "proof-grid": 3,
   why2: 2,
-  "case-grid": 3,
+  "case-slider": 3,
   bento: 2,
 };
 const BLOCK = new Set([
@@ -146,6 +146,7 @@ const surface = (el) => {
   else if (/hero-navy/.test(c)) s.push("navy hero");
   else if (/hero-amber/.test(c)) s.push("amber hero");
   else if (/hero-light/.test(c)) s.push("light hero");
+  else if (/\bapproach\b/.test(c)) s.push("blue gradient");
   else if (/s-navy/.test(c)) s.push("navy");
   else if (/s-amber/.test(c)) s.push("amber");
   else if (/s-mist/.test(c)) s.push("light blue");
@@ -240,6 +241,8 @@ function walk(el, out, doc) {
     out.push("[GRAPHIC: code window]");
     return;
   }
+  if (el.id === "caseSlider") out.push("[ROW SCROLLS SIDEWAYS: drag, swipe or arrow keys; carousel dots below, one per page of cards; all cards listed in order]");
+  if (el.id === "appRail") out.push("[ROW SCROLLS SIDEWAYS: back and forward buttons beside the heading; four cards visible on desktop]");
   const cols = gridCols(el);
   if (cols) {
     const cells = [...el.children]

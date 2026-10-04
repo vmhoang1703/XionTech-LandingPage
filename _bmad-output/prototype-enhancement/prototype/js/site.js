@@ -51,7 +51,7 @@
   const NEWS=[
     {id:'n1',date:'18 SEP 2026',cat:'product',app:'PXP',t:'[Placeholder] Parents can now pay school fees in PXP',tv:'[Placeholder] Phụ huynh giờ có thể đóng học phí ngay trên PXP',x:'Tuition and service fees, with receipts sent straight to the app.',xv:'Học phí và phí dịch vụ, kèm biên lai gửi ngay trong ứng dụng.'},
     {id:'n2',date:'09 SEP 2026',cat:'team',t:'[Placeholder] A day at our Ho Chi Minh City office',tv:'[Placeholder] Một ngày tại văn phòng TP. Hồ Chí Minh',x:'Meet the engineers, testers and designers behind our products and client projects.',xv:'Gặp gỡ các kỹ sư, kiểm thử viên và nhà thiết kế đứng sau sản phẩm và dự án khách hàng.'},
-    {id:'n3',date:'05 SEP 2026',cat:'schools',t:'[Placeholder] Back-to-school week with PXP',tv:'[Placeholder] Tuần đầu năm học cùng PXP',x:'Our team was on campus helping teachers and parents get started with SXP and PXP.',xv:'Đội ngũ có mặt tại trường để hỗ trợ giáo viên và phụ huynh bắt đầu với SXP và PXP.'},
+    {id:'n3',date:'05 SEP 2026',cat:'schools',app:'PXP',t:'[Placeholder] Back-to-school week with PXP',tv:'[Placeholder] Tuần đầu năm học cùng PXP',x:'Our team was on campus helping parents get started with PXP.',xv:'Đội ngũ có mặt tại trường để hỗ trợ phụ huynh bắt đầu với PXP.'},
     {id:'n4',date:'28 AUG 2026',cat:'product',app:'SXP',t:'[Placeholder] SXP adds dashboards for school leaders',tv:'[Placeholder] SXP bổ sung bảng điều khiển cho lãnh đạo nhà trường',x:'A role-based view that shows what needs attention today.',xv:'Giao diện theo vai trò cho thấy việc cần xử lý hôm nay.'},
     {id:'n5',date:'22 AUG 2026',cat:'team',t:'[Placeholder] Inside our pre-term release testing week',tv:'[Placeholder] Bên trong tuần kiểm thử trước năm học',x:'How our QA team checked every critical flow before students came back.',xv:'Cách đội QA kiểm tra mọi luồng quan trọng trước khi học sinh trở lại trường.'},
     {id:'n6',date:'12 AUG 2026',cat:'product',app:'LXP',t:'[Placeholder] LXP shows assignment progress at a glance',tv:'[Placeholder] LXP hiển thị tiến độ bài tập trong nháy mắt',x:'Students see what is due, what is done and what needs another look.',xv:'Học sinh thấy bài nào sắp đến hạn, bài nào đã xong và bài nào cần xem lại.'},
@@ -63,7 +63,7 @@
   const viDate=d=>{const [dd,m,y]=d.split(' ');return MON[m]?dd+'/'+MON[m]+'/'+y:d};
   const card=(n,big)=>`<article class="spot ncard${big?' big':''} reveal" data-c="${n.cat}">
     <div class="slot" data-slot="news-${n.id}" data-hint="Story photo" data-size="1200 × 750"></div>
-    <div class="body"><div class="meta"><span data-vi="${viDate(n.date)}">${n.date}</span><span class="cat ${n.cat==='product'?'product':''}" data-vi="${CAT[n.cat][1]}${n.app?' · '+n.app:''}">${CAT[n.cat][0]}${n.app?' · '+n.app:''}</span></div>
+    <div class="body"><div class="meta"><span data-vi="${viDate(n.date)}">${n.date}</span>${n.app?`<span class="cat product">${n.app}</span>`:`<span class="cat" data-vi="${CAT[n.cat][1]}">${CAT[n.cat][0]}</span>`}</div>
     <h3 data-vi="${n.tv}">${n.t}</h3><p data-vi="${n.xv}">${n.x}</p>
     <a class="link-arrow" href="news-story.html"><span data-vi="Đọc tiếp">Read story</span><i class="ph ph-arrow-right"></i></a></div></article>`;
   document.querySelectorAll('[data-news]').forEach(box=>{
@@ -153,6 +153,50 @@
     const fit=()=>w.style.setProperty('--more-w',Math.ceil(l.scrollWidth)+'px');fit();addEventListener('resize',fit);document.addEventListener('xt-lang',fit);
     b.addEventListener('click',()=>{const o=!w.classList.contains('open');w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
     w.addEventListener('focusout',e=>{if(!w.contains(e.relatedTarget)){w.classList.remove('open');b.setAttribute('aria-expanded','false')}})});
+
+  /* ---------- case studies slider: drag with a mouse (touch scrolls natively), arrow keys step one card ---------- */
+  const cs=document.getElementById('caseSlider');
+  if(cs){let down=false,moved=false,x0=0,s0=0;cs.querySelectorAll('.slot').forEach(s=>s.tabIndex=-1);cs.addEventListener('dragstart',e=>e.preventDefault());
+    const shell=cs.closest('.case-shell');const ends=()=>{if(shell)shell.classList.toggle('at-end',cs.scrollLeft>=cs.scrollWidth-cs.clientWidth-4)};cs.addEventListener('scroll',()=>requestAnimationFrame(ends),{passive:true});addEventListener('resize',ends);ends();
+    cs.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;down=true;moved=false;x0=e.clientX;s0=cs.scrollLeft});
+    cs.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-x0;if(!moved&&Math.abs(dx)>5){moved=true;cs.classList.add('dragging');cs.setPointerCapture(e.pointerId)}if(moved)cs.scrollLeft=s0-dx});
+    const stop=()=>{if(!down)return;down=false;cs.classList.remove('dragging');setTimeout(()=>{moved=false},0)};
+    cs.addEventListener('pointerup',stop);cs.addEventListener('pointercancel',stop);
+    cs.addEventListener('click',e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
+    cs.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const c=cs.querySelector('.case-card');if(!c)return;e.preventDefault();
+      const step=c.getBoundingClientRect().width+(parseFloat(getComputedStyle(cs).columnGap)||0);cs.scrollBy({left:e.key==='ArrowRight'?step:-step,behavior:reduce?'auto':'smooth'})});
+    const dotsBox=document.querySelector('.case-dots'),cards=[...cs.querySelectorAll('.case-card')];
+    if(dotsBox&&cards.length){let per=1,dots=[];
+      const stepW=()=>cards[0].getBoundingClientRect().width+(parseFloat(getComputedStyle(cs).columnGap)||0);
+      const label=(from,to)=>root.lang==='vi'?'Case study '+from+(to>from?' đến '+to:''):'Case studies '+from+(to>from?' to '+to:'');
+      const build=force=>{const w=stepW();if(!w){dotsBox.hidden=true;return}const st=getComputedStyle(cs),visible=cs.clientWidth-parseFloat(st.paddingLeft)-parseFloat(st.paddingRight);
+        const p2=Math.max(1,Math.floor((visible+1)/w)),pages=Math.max(1,Math.ceil(cards.length/p2));if(!force&&p2===per&&dots.length===pages){mark();return}
+        const fi=dots.indexOf(document.activeElement);per=p2;dotsBox.innerHTML='';dotsBox.hidden=pages<2;
+        dots=Array.from({length:pages},(_,p)=>{const b=document.createElement('button');b.type='button';b.className='case-dot';const from=p*per+1,to=Math.min(cards.length,from+per-1);
+          b.setAttribute('aria-label',label(from,to));b.onclick=()=>cs.scrollTo({left:cards[Math.min(p*per,cards.length-1)].offsetLeft-cards[0].offsetLeft,behavior:reduce?'auto':'smooth'});dotsBox.appendChild(b);return b});
+        mark();if(fi>=0)(dots[fi]||dots[dots.length-1]).focus()};
+      const mark=()=>{if(!dots.length)return;const x=cs.scrollLeft,max=cs.scrollWidth-cs.clientWidth;let k=Math.round(x/(stepW()*per));if(x>=max-4)k=dots.length-1;
+        k=Math.max(0,Math.min(k,dots.length-1));dots.forEach((d,i)=>d.setAttribute('aria-current',i===k?'true':'false'))};
+      cs.addEventListener('scroll',()=>requestAnimationFrame(mark),{passive:true});addEventListener('resize',()=>build());document.addEventListener('xt-lang',()=>build(true));build(true)}
+  }
+
+  /* ---------- What we build rail: back and forward buttons and arrow keys move one app; buttons switch off at the ends ---------- */
+  const rail=document.getElementById('appRail');
+  if(rail){const btns=[...document.querySelectorAll('.rail-btn[aria-controls="appRail"]')];
+    const step=()=>{const li=rail.querySelector('li');return li?li.getBoundingClientRect().width:rail.clientWidth};
+    const go=d=>rail.scrollBy({left:d*step(),behavior:reduce?'auto':'smooth'});
+    const state=()=>{const max=rail.scrollWidth-rail.clientWidth;btns.forEach(b=>{b.disabled=+b.dataset.dir<0?rail.scrollLeft<=2:rail.scrollLeft>=max-2})};
+    btns.forEach(b=>b.addEventListener('click',()=>go(+b.dataset.dir)));
+    rail.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();go(e.key==='ArrowRight'?1:-1)}});
+    rail.addEventListener('scroll',()=>requestAnimationFrame(state),{passive:true});addEventListener('resize',state);state()}
+
+  /* ---------- How we approach: the steps are tabs; click, or arrow keys up and down, show a step's detail ---------- */
+  document.querySelectorAll('.ap-rail').forEach(rl=>{const tabs=[...rl.querySelectorAll('.ap-step')];
+    const pick=(t,focus)=>{tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;const p=document.getElementById(x.getAttribute('aria-controls'));if(p)p.hidden=!on});if(focus)t.focus()};
+    pick(tabs.find(t=>t.getAttribute('aria-selected')==='true')||tabs[0]);
+    tabs.forEach((t,i)=>{t.addEventListener('click',()=>pick(t));
+      t.addEventListener('keydown',e=>{const k=e.key;let j=null;if(k==='ArrowDown'||k==='ArrowRight')j=(i+1)%tabs.length;else if(k==='ArrowUp'||k==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(k==='Home')j=0;else if(k==='End')j=tabs.length-1;
+        if(j!==null){e.preventDefault();pick(tabs[j],true)}})})});
 
   /* ---------- reveal, spotlight, tilt ---------- */
   /* reveal: in each section the heading appears first; the rest of the section follows it in turn, and never before it */

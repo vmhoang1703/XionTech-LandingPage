@@ -12,13 +12,18 @@ language dropdown, Why XionTechs and the four-app row on Home). Batch 1 reaches 
 branch instead of PR #10, which was closed unmerged on 2026-10-03; it was written into the specs
 directly, before this log existed.
 
-| ID      | Date       | Page and section                    | Change                                                                                                                                                                                                                                                                                            | Status   | Stories to update                     |
-| ------- | ---------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------- |
-| ENH-001 | 2026-10-03 | Home, last section                  | The demo email band becomes a contact form: "Have something you want to build?"                                                                                                                                                                                                                   | Approved | 3.7, 2.2, 2.3, 2.4                    |
-| ENH-002 | 2026-10-04 | Home hero and Why XionTechs; header | Amber headline word, no button glow, two stats ("25+ Years"), silk across the hero fading out before the stats, bigger hero text on small screens, front doors moved into Why XionTechs, Products as a plain link, underline-only hover on the word, numbers count up from 0, hamburger menu icon | Approved | 1.3, 1.4, 3.1, 3.2, 3.3, 3.4, 3.5     |
-| ENH-003 | 2026-10-04 | Home, new sections                  | Placeholder partner logo strip (scrolling; pauses on hover, focus or tap) under the hero, and three placeholder case study cards                                                                                                                                                                  | Approved | new stories (Epic 3)                  |
-| ENH-004 | 2026-10-04 | Every section; Home Why XionTechs   | Tighter space above and below section headings; each section shows its heading first, then its content; Why XionTechs rebuilt as a four-card bento (app logos, reveal animation, +3 hover reveal) with a small Get IT Done line                                                                   | Approved | 3.5, 7.x (reveal), every page section |
-| ENH-005 | 2026-10-04 | Home, section order                 | The products section moves below the 4-D process and becomes "Apps for every role in school."; case studies turn white                                                                                                                                                                            | Approved | 3.5                                   |
+| ID      | Date       | Page and section                            | Change                                                                                                                                                                                                                                                                                            | Status   | Stories to update                     |
+| ------- | ---------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------- |
+| ENH-001 | 2026-10-03 | Home, last section                          | The demo email band becomes a contact form: "Have something you want to build?"                                                                                                                                                                                                                   | Approved | 3.7, 2.2, 2.3, 2.4                    |
+| ENH-002 | 2026-10-04 | Home hero and Why XionTechs; header         | Amber headline word, no button glow, two stats ("25+ Years"), silk across the hero fading out before the stats, bigger hero text on small screens, front doors moved into Why XionTechs, Products as a plain link, underline-only hover on the word, numbers count up from 0, hamburger menu icon | Approved | 1.3, 1.4, 3.1, 3.2, 3.3, 3.4, 3.5     |
+| ENH-003 | 2026-10-04 | Home, new sections                          | Placeholder partner logo strip (scrolling; pauses on hover, focus or tap) under the hero, and three placeholder case study cards                                                                                                                                                                  | Approved | new stories (Epic 3)                  |
+| ENH-004 | 2026-10-04 | Every section; Home Why XionTechs           | Tighter space above and below section headings; each section shows its heading first, then its content; Why XionTechs rebuilt as a four-card bento (app logos, reveal animation, +3 hover reveal) with a small Get IT Done line                                                                   | Approved | 3.5, 7.x (reveal), every page section |
+| ENH-005 | 2026-10-04 | Home, section order                         | The products section moves below the 4-D process and becomes "Apps for every role in school."; case studies turn white                                                                                                                                                                            | Approved | 3.5                                   |
+| ENH-006 | 2026-10-04 | Home, Case studies; every section           | Case studies become a full-width slider of six placeholder partner cards with carousel dots (from Amber's reference HTML); tighter section spacing                                                                                                                                                | Approved | new stories (Epic 3)                  |
+| ENH-007 | 2026-10-04 | Home and News, news cards                   | Home news gets a one-line intro with "See all news" on the same row; a story about an app shows only the app name in its pill; the third story is about PXP                                                                                                                                       | Approved | 3.7, 6.1                              |
+| ENH-008 | 2026-10-04 | Home, products section; Our partners        | "Apps for every role in school." becomes "What we build." with AI Tutor and AI Timetable added and back and forward buttons; the partners heading is left-aligned                                                                                                                                 | Approved | 3.5, new stories                      |
+| ENH-009 | 2026-10-04 | Home, process; What we build; every section | The 4-D process becomes "How we approach." with five steps (Amber's reference HTML); equal-size app cards; more space between headings and their descriptions                                                                                                                                     | Approved | 3.6, 3.5                              |
+| ENH-010 | 2026-10-04 | Home, contact form                          | The phone field shows an example number as its placeholder instead of a hint line; "Start the conversation" has no glow or lift                                                                                                                                                                   | Approved | 2.2                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -234,4 +239,138 @@ directly, before this log existed.
     white, news light blue, contact amber.
 - **Developer notes:** Story 3.5's app row moves after the process (Story 3.6) on Home; ENH-003's note
   about section colours is replaced by the order above.
+- **Open items:** none.
+
+## ENH-006: Case studies as a full-width slider, and tighter section spacing
+
+- **Why:** Amber's reference HTML (`partner-case-study-full-width-slider-text-link.html`) and her review,
+  2026-10-04.
+- **What changed:**
+  - Heading "Work built with our partners." with the line "Explore a selection of company partnerships and
+    see how different business needs became focused digital solutions." The reference's small label
+    ("Selected partnerships") is left out: no labels above section headings.
+  - A full-width row of six cards that runs past the right edge of the page (fading out there). The first
+    card lines up with the page content; cards snap into place. A mouse can drag it, touch screens swipe
+    it, and when the row has keyboard focus the left and right arrow keys move one card (it is one Tab
+    stop, named "Partner case studies. Use the arrow keys to scroll.").
+  - **Carousel dots** under the row, one per page of cards (as many cards as fit on the screen: 2 dots on a
+    1280px to 1440px desktop, 3 at about 900px to 1100px, one per card below 900px where one card fills the
+    width; recounted when the window size changes, without losing keyboard focus). The current
+    page's dot is a longer navy bar, and clicking a dot scrolls to that page (each dot is a 44px button
+    named "Case studies 1 to 3" and so on, in Vietnamese "Case study 1 đến 3", the current one marked with
+    `aria-current`). The right-edge fade disappears when the row reaches its end. The hint line is
+    removed.
+  - Each card: an image area that uses the same light grid placeholder as every other image on the site
+    (an image drop zone for a real screenshot) with a small "01 / 06" number; then the partner name as the
+    card's heading ("[Placeholder] Partner 1", small caps), a one-to-two-sentence placeholder description,
+    28px of space, and "View case study" with an arrow. No case study title. Cards are as tall as their
+    content.
+  - About 26% of the screen width per card on desktop, 62% below 900px, 86% on phones.
+  - The "Start a project" button and the old three-card grid are removed.
+  - **Section spacing (every page):** sections have 64px above and below (was 80px; 48px on phones, was
+    56px), and a section heading has 24px below it (was 32px). The partner strip has 48px.
+- **Developer notes:**
+  - The reference uses invented partners (Northstar Education, Atlas Finance and others); the team rule
+    allows only real content or `[Placeholder]`, so every card is a placeholder until a client approves
+    its story.
+  - "View case study" is not a link yet (no case study pages exist); it becomes one when the pages do.
+  - A drag never opens a card's screenshot slot (prototype tooling).
+  - The spacing replaces the values in ENH-004.
+- **Open items:** the manager's brief note on case study placeholders (see ENH-003) still applies.
+
+## ENH-007: News intro row and app pills
+
+- **Why:** Amber's review, 2026-10-04.
+- **What changed:**
+  - **Home, Latest from XionTechs.:** under the heading, the line "Catch up with what our team is building and
+    shipping." On the same row, on the right, "See all news" (it was a link under the cards). On phones the
+    link sits under the line. The "[Placeholder] Sample stories…" note is removed (each sample title still
+    starts with "[Placeholder]").
+  - **Pills (Home and News):** a story about an app shows only the app's name in its pill ("PXP", "SXP",
+    "LXP", "IoT"), in the amber product style; other stories keep their category ("Team", "Company").
+    Before, product stories showed "Product · PXP".
+  - **Third story:** "[Placeholder] Back-to-school week with PXP" is now a PXP story: its pill reads "PXP"
+    and its text "Our team was on campus helping parents get started with PXP." It stays under the Schools
+    filter on the News page.
+- **Developer notes:** Story 3.7 (Home news) and 6.1 (news filters): the pill shows the app name when a story
+  has an app; the category still drives the News filters. A reusable "section head with a link on the
+  same row" layout is added (`.sec-head-row`).
+- **Open items:** none.
+
+## ENH-008: What we build, with AI Tutor and AI Timetable
+
+- **Why:** Amber's review, 2026-10-04: XionTechs is building more apps than the first four.
+- **What changed:**
+  - **Heading:** "Apps for every role in school." becomes "What we build.", with the line "Digital products we
+    design, build and run for every role in school, with more on the way."
+  - **Two new apps** after PXP, LXP, SXP and IoT: "AI Tutor" (Students, "[Placeholder] Study help at each
+    student's own pace.") and "AI Timetable" (School leaders, "[Placeholder] The whole school timetable,
+    planned in fewer steps."), each with an amber icon tile (a sparkle and a calendar). Both link to the
+    Products page for now, which does not describe them yet.
+  - **Back and forward buttons:** the row now scrolls sideways (four apps visible on desktop, two below
+    1080px, one and a bit on phones, snapping to each app). Two round arrow buttons on the right of the
+    heading row move it one app; each switches off at its end. Each app card is a Tab stop (they
+    are links); while one has focus, the left and right arrow keys move the row; on touch screens it swipes.
+  - **Our partners:** the heading is left-aligned, like every other section (it was centred in ENH-003).
+  - **Section spacing:** back to 64px above and below (48px on phones), as in ENH-006, after a short try
+    with less space above.
+- **Developer notes:** Story 3.5's app row becomes a horizontal rail with previous and next buttons
+  (`aria-controls`, disabled at the ends). AI Tutor and AI Timetable need product facts (description,
+  audience, status, Products page section) before they ship; their descriptions are placeholders.
+- **Open items:** confirm the two apps' names, audiences and descriptions (Amber), and whether they are
+  live or coming soon.
+
+## ENH-009: How we approach, equal app cards, heading spacing
+
+- **Why:** Amber's reference HTML (`company-process-5-steps-simplified.html`) and her review, 2026-10-04.
+- **What changed:**
+  - **Home process:** "Our 4-D process: from your request to launch." becomes "How we approach.", with the line
+    "Five clear steps take your idea from the first conversation to a product that keeps improving." Three
+    columns on the reference's blue gradient (deep blue #13245a to #445fca to sky #69b8ea, with a soft amber glow
+    top right), styled exactly as Amber's screenshot:
+    - left: the layered 3D process diagram from the reference (re-encoded as WebP, 768 × 1152, 103 KB instead
+      of a 1.27 MB PNG; decorative, so it has empty alt text);
+    - middle: a vertical rail of five steps, each a dot, a small number and a large name in the body font: Discovery,
+      Design, Development, QA & Improvement, Deployment. The chosen step has an amber dot with a soft ring and its
+      number and name in full white; the other steps are dimmed to 85% opacity (95% on hover), the
+      faintest that still keeps 4.5:1 contrast on the blue (55% would fall to about 2.6:1);
+    - right: a deep navy panel (#08113a to #10205c, a faint diamond in the corner) for the chosen step: "Step
+      01 — Discovery", a title in the body font, a short intro, four bullet
+      points and a "You receive" box with a one-line outcome and three small outcome chips.
+    - The reference's plus icon next to the step tag and its small label above the heading are left out.
+    - The steps are tabs: click a step, or use the arrow keys (up, down, Home, End) on the rail; the panel
+      changes with a short fade (none with reduced motion). Below 1080px the panel moves under the diagram
+      and the rail; on phones everything stacks.
+  - **Sizes (after Amber's review):** the panel is the widest column (about 1.35 parts to the diagram's 0.7 and
+    the rail's 0.6; about 580px wide on a 1440px screen); the diagram is at most 300px wide (220px on phones);
+    step names are 1.05rem to 1.2rem; inside the panel the tag, intro and bullets use the small text size and the
+    title is 1.4rem to 2rem.
+  - **Step names are the large element and the numbers stay small:** the name is what people scan and what the
+    panel is about; the number only shows order, so it stays a small mono label.
+  - **What we build:** every app card is the same width (a quarter of the row, minus a 16px gap) and the same
+    height, with a light border and rounded corners; content sits at the top so the icons and names line up.
+  - **Every section:** 20px between a section heading and its description (was 12px).
+- **Developer notes:**
+  - The section uses the reference's own blues, outside the brand palette in DESIGN.md (Amber chose the
+    reference look). The prototype defines them as section tokens (`--ap-blue-1` to `--ap-blue-3`, `--ap-panel-1`,
+    `--ap-panel-2`, `--ap-amber`, `--ap-amber-ring`, `--ap-dot`); production should do the same.
+  - Every step's panel is in the page and focusable (`tabindex="0"`); the script hides all but the chosen one,
+    so without JavaScript all five steps can be read.
+  - Story 3.6: the four-card 4-D flow on Home is replaced by the tabbed five-step layout (WAI-ARIA tabs,
+    vertical). The Services page still shows the four-step 4-D process; the two should match (open item).
+  - The step content (titles, bullets, outcomes) comes from Amber's reference.
+- **Open items:** Services still describes a four-step 4-D process: switch it to the same five steps, or
+  keep both (Amber).
+
+## ENH-010: Contact form phone placeholder and a quiet button
+
+- **Why:** Amber's review, 2026-10-04 (follows ENH-001).
+- **What changed:**
+  - **Phone number (optional):** the field shows "+1 469 322 9899" as greyed placeholder text ("+84 908 107 552"
+    in Vietnamese); the hint line under it ("Include your country code, for example …") is removed. The
+    error message is unchanged.
+  - **"Start the conversation":** no amber glow and no lift on hover or press; it keeps its amber fill and turns a
+    slightly deeper amber on hover so it still shows a hover state.
+- **Developer notes:** the placeholder is an example only, not a label; the field keeps its visible label
+  "Phone number (optional)". The validation rules in ENH-001 are unchanged.
 - **Open items:** none.

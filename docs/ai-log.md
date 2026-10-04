@@ -859,3 +859,26 @@ Template:
 - **AI got it wrong?** Yes: the first final file gave the Products hero the Home hero's tag (both headings have
   the id "h1"), and tagged the 4-D section "unchanged" although Batch 1 changed its heading. Tags are now keyed
   by page and heading.
+
+## 2026-10-04 — ENH-006 to ENH-010: case study slider, news row, What we build rail, How we approach, form details
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers), headless Edge
+  checks (nothing shown on screen), two reference HTML files and a screenshot from Amber
+- **Prompt / task:** Amber's review rounds, logged in `_bmad-output/prototype-enhancement/enhancement-log.md`:
+  ENH-006 (case studies as a full-width slider of six placeholder partner cards with carousel dots; section
+  spacing), ENH-007 (news intro row with "See all news", app name only in news pills), ENH-008 ("What we
+  build." with AI Tutor and AI Timetable in a rail with back and forward buttons; partners heading left),
+  ENH-009 ("How we approach.": the five-step tabbed process from Amber's reference, its layered diagram
+  re-encoded from a 1.27 MB PNG to a 103 KB WebP; equal app cards; heading spacing) and ENH-010 (phone
+  placeholder, quiet submit button). `wireframes-final.md` and its change tags were updated.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: the
+  case study row had seven Tab stops instead of one, the News story page still showed "Product · PXP", the
+  process section switched layout at 1120px and 760px instead of the site's 1080px and 640px, dot labels
+  stayed in English and were rebuilt on every resize (dropping focus), step panels were unreachable without
+  JavaScript, the case study fade covered the last card, a drag could block the next click, focus rings
+  were clipped in the app rail, and the generator drew both rails as plain grids. One request was adjusted
+  for accessibility: dimmed steps use 85% opacity, because 55% falls to about 2.6:1 contrast on the blue.
+- **AI got it wrong?** Yes: it first built the process section in the site's own navy and display font
+  instead of the reference look (Amber sent a screenshot to correct it), counted one carousel dot per card
+  (too many), and its first case study images used a navy mock-window style that did not match the
+  placeholder images in other sections.

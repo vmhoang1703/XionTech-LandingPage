@@ -12,21 +12,22 @@ also has a Vietnamese version in the prototype.
 
 ## Changes since the original
 
-| Where                | Original (first draft)                                                                 | Now                                                                                                                                                                                            | Entry            |
-| -------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| Header, every page   | Menu in the middle, Book a demo button, EN/VI toggle, Products and Services mega menus | Menu on the right, no Book a demo button, EN/VI dropdown last                                                                                                                                  | Batch 1          |
-| Header, every page   | Products mega menu; mist pill on hover; "Menu" text button on small screens            | Products is a plain link (Services already was); amber underline under the word on hover; hamburger icon before the language dropdown; no header border                                        | ENH-002          |
-| Every page           | Small labels above headings; some text under 11.5px; some controls under 44px          | No labels above headings; text at least 11.5px; controls at least 44px; one tokenised stylesheet                                                                                               | Batch 1          |
-| Every page           | 112px around sections; content revealed on its own                                     | 80px around sections (56px on phones); each section's heading appears first, then its content                                                                                                  | ENH-004          |
-| Home, hero           | Underlined "connected"; five stats; silk on the right only                             | Amber "connected"; no button glow; two stats ("25+ Years", "8") that count up from 0; silk across the hero, quieter on the left, fading out before the stats; bigger headline on small screens | ENH-002          |
-| Home, below the hero | Two front doors overlapping the hero                                                   | Removed here; their content is the first row of Why XionTechs                                                                                                                                  | ENH-002, ENH-004 |
-| Home, Our partners   | —                                                                                      | New: placeholder logo strip that scrolls in a loop (pauses on hover, focus or tap)                                                                                                             | ENH-003          |
-| Home, Why XionTechs  | —                                                                                      | New in Batch 1 (four tiles); rebuilt as a four-card bento: Products with app logos, Delivery with live clocks, Industries with a "+3" reveal, Outsourcing services; a small "Get IT Done" line | Batch 1, ENH-004 |
-| Home, products       | Four-app bento with phone mockups, right after the doors                               | A four-app row (Batch 1), now "Apps for every role in school." below the process                                                                                                               | Batch 1, ENH-005 |
-| Home, eight services | Eight service cards                                                                    | Removed from Home (they stay on Services)                                                                                                                                                      | Batch 1          |
-| Home, process        | "From your request to launch, in four steps." under a small label                      | "Our 4-D process: from your request to launch." (label merged into the heading)                                                                                                                | Batch 1          |
-| Home, Case studies   | —                                                                                      | New: three placeholder case study cards and "Start a project"                                                                                                                                  | ENH-003          |
-| Home, last section   | Amber "See it working at your school." email band (Book a demo)                        | Amber contact form "Have something you want to build?"                                                                                                                                         | ENH-001          |
+| Where | Original (first draft) | Now | Entry |
+| --- | --- | --- | --- |
+| Header, every page | Menu in the middle, Book a demo button, EN/VI toggle, Products and Services mega menus | Menu on the right, no Book a demo button, EN/VI dropdown last | Batch 1 |
+| Header, every page | Products mega menu; mist pill on hover; "Menu" text button on small screens | Products is a plain link (Services already was); amber underline under the word on hover; hamburger icon before the language dropdown; no header border | ENH-002 |
+| Every page | Small labels above headings; some text under 11.5px; some controls under 44px | No labels above headings; text at least 11.5px; controls at least 44px; one tokenised stylesheet | Batch 1 |
+| Every page | 112px around sections; 48px under a heading; 14px between a heading and its description; content revealed on its own | 64px around sections (48px on phones); 24px under a heading; 20px between a heading and its description; each section's heading appears first, then its content | ENH-004, ENH-006, ENH-009 |
+| Home, hero | Underlined "connected"; five stats; silk on the right only | Amber "connected"; no button glow; two stats ("25+ Years", "8") that count up from 0; silk across the hero, quieter on the left, fading out before the stats; bigger headline on small screens | ENH-002 |
+| Home, below the hero | Two front doors overlapping the hero | Removed here; their content is the first row of Why XionTechs | ENH-002, ENH-004 |
+| Home, Our partners | — | New: placeholder logo strip that scrolls in a loop (pauses on hover, focus or tap); heading left-aligned | ENH-003, ENH-008 |
+| Home, Why XionTechs | — | New in Batch 1 (four tiles); rebuilt as a four-card bento: Products with app logos, Delivery with live clocks, Industries with a "+3" reveal, Outsourcing services; a small "Get IT Done" line | Batch 1, ENH-004 |
+| Home, Case studies | — | New (ENH-003); now "Work built with our partners.": a full-width slider of six placeholder partner cards (partner name, description, "View case study") with carousel dots | ENH-003, ENH-006 |
+| Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a layered diagram, a rail of five steps (Discovery to Deployment) that work as tabs, and a detail panel, on a blue gradient | Batch 1, ENH-009 |
+| Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, AI Tutor, AI Timetable) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009 |
+| Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
+| Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
+| Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
 block with its intended size · `[BUTTON: …]` button · `[LINK: …]` text link · `[WHOLE CARD IS A LINK]` the whole card
@@ -111,7 +112,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
-Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the top).
+Changes on this page: Batch 1, ENH-001 to ENH-010 (see the change list at the top).
 
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -136,7 +137,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the to
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Our partners. · white · [new in ENH-003] ────────────────────────────────────────────────────────┐ ║
+║ ┌─ 2. Our partners. · white · [new in ENH-003 · left-aligned in ENH-008] ──────────────────────────────┐ ║
 ║ │ H2: Our partners.                                                                                    │ ║
 ║ │ [ANIMATION: logos scroll right to left in a loop; hover, focus or tap pauses]                        │ ║
 ║ │ [IMAGE: [Placeholder] Partner logo 1 · 320 × 160]                                                    │ ║
@@ -178,54 +179,117 @@ Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the to
 ║ │ Text: Ownership of our commitments and pride in quality.                                             │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. Case studies. · white · [new in ENH-003] ────────────────────────────────────────────────────────┐ ║
-║ │ H2: Case studies.                                                                                    │ ║
-║ │ Text: [Placeholder] Real client stories replace these sample cards once each client approves them.   │ ║
+║ ┌─ 4. Work built with our partners. · white · [new in ENH-003 · slider in ENH-006] ────────────────────┐ ║
+║ │ H2: Work built with our partners.                                                                    │ ║
+║ │ Text: Explore a selection of company partnerships and see how different business needs became        │ ║
+║ │   focused digital solutions.                                                                         │ ║
+║ │ [ROW SCROLLS SIDEWAYS: drag, swipe or arrow keys; carousel dots below, one per page of cards; all    │ ║
+║ │   cards listed in order]                                                                             │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ [IMAGE: [Placeholder] Case   │ │ [IMAGE: [Placeholder] Case   │ │ [IMAGE: [Placeholder] Case     │ │ ║
-║ │ │   study image 1 · 1200 ×     │ │   study image 2 · 1200 ×     │ │   study image 3 · 1200 × 750]  │ │ ║
-║ │ │   750]                       │ │   750]                       │ │ Text: [Placeholder] Industry   │ │ ║
-║ │ │ Text: [Placeholder] Industry │ │ Text: [Placeholder] Industry │ │ H3: [Placeholder] Case study   │ │ ║
-║ │ │ H3: [Placeholder] Case study │ │ H3: [Placeholder] Case study │ │   title 3                      │ │ ║
-║ │ │   title 1                    │ │   title 2                    │ │ Text: [Placeholder] The        │ │ ║
-║ │ │ Text: [Placeholder] The      │ │ Text: [Placeholder] The      │ │   challenge, what we built and │ │ ║
-║ │ │   challenge, what we built   │ │   challenge, what we built   │ │   the result, in two           │ │ ║
-║ │ │   and the result, in two     │ │   and the result, in two     │ │   sentences.                   │ │ ║
-║ │ │   sentences.                 │ │   sentences.                 │ │ Text: [Placeholder] Result ·   │ │ ║
-║ │ │ Text: [Placeholder] Result · │ │ Text: [Placeholder] Result · │ │   for example time to launch   │ │ ║
-║ │ │   for example time to launch │ │   for example time to launch │ │   or active users              │ │ ║
-║ │ │   or active users            │ │   or active users            │ │ Text: Full case study coming   │ │ ║
-║ │ │ Text: Full case study coming │ │ Text: Full case study coming │ │   soon                         │ │ ║
-║ │ │   soon                       │ │   soon                       │ │                                │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ [BUTTON: Start a project → #contact]                                                                 │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 5. Our 4-D process: from your request to launch. · navy, grid texture · [Batch 1 (heading)] ────────┐ ║
-║ │ H2: Our 4-D process: from your request to launch.                                                    │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ • Your request · An idea, a  │ │ Text: 01                     │ │ Text: 02                       │ │ ║
-║ │ │   brief or a requirement.    │ │ H3: Discovery                │ │ H3: Design                     │ │ ║
-║ │ │                              │ │ Text: We learn your goals,   │ │ Text: We shape flows,          │ │ ║
-║ │ │                              │ │   users and scope.           │ │   interfaces and architecture. │ │ ║
-║ │ │                              │ │ Text: You receive · A clear  │ │ Text: You receive · A          │ │ ║
-║ │ │                              │ │   scope and delivery plan.   │ │   clickable prototype and      │ │ ║
-║ │ │                              │ │                              │ │   technical design.            │ │ ║
+║ │ │   study screenshot 1 · 1200  │ │   study screenshot 2 · 1200  │ │   study screenshot 3 · 1200 ×  │ │ ║
+║ │ │   × 750]                     │ │   × 750]                     │ │   750]                         │ │ ║
+║ │ │ H3: [Placeholder] Partner 1  │ │ H3: [Placeholder] Partner 2  │ │ H3: [Placeholder] Partner 3    │ │ ║
+║ │ │ Text: [Placeholder] One or   │ │ Text: [Placeholder] One or   │ │ Text: [Placeholder] One or two │ │ ║
+║ │ │   two sentences: the         │ │   two sentences: the         │ │   sentences: the partner's     │ │ ║
+║ │ │   partner's need and what we │ │   partner's need and what we │ │   need and what we built.      │ │ ║
+║ │ │   built.                     │ │   built.                     │ │ [LINK: View case study]        │ │ ║
+║ │ │ [LINK: View case study]      │ │ [LINK: View case study]      │ │                                │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ Text: 03                     │ │ Text: 04                     │ │ • Launch · And we keep growing │ │ ║
-║ │ │ H3: Development              │ │ H3: Deployment               │ │   it together.                 │ │ ║
-║ │ │ Text: We build in agile      │ │ Text: We release, monitor    │ │                                │ │ ║
-║ │ │   sprints with open updates. │ │   and keep improving.        │ │                                │ │ ║
-║ │ │ Text: You receive · Working  │ │ Text: You receive · A live   │ │                                │ │ ║
-║ │ │   software every sprint.     │ │   release with ongoing       │ │                                │ │ ║
-║ │ │                              │ │   support.                   │ │                                │ │ ║
+║ │ │ [IMAGE: [Placeholder] Case   │ │ [IMAGE: [Placeholder] Case   │ │ [IMAGE: [Placeholder] Case     │ │ ║
+║ │ │   study screenshot 4 · 1200  │ │   study screenshot 5 · 1200  │ │   study screenshot 6 · 1200 ×  │ │ ║
+║ │ │   × 750]                     │ │   × 750]                     │ │   750]                         │ │ ║
+║ │ │ H3: [Placeholder] Partner 4  │ │ H3: [Placeholder] Partner 5  │ │ H3: [Placeholder] Partner 6    │ │ ║
+║ │ │ Text: [Placeholder] One or   │ │ Text: [Placeholder] One or   │ │ Text: [Placeholder] One or two │ │ ║
+║ │ │   two sentences: the         │ │   two sentences: the         │ │   sentences: the partner's     │ │ ║
+║ │ │   partner's need and what we │ │   partner's need and what we │ │   need and what we built.      │ │ ║
+║ │ │   built.                     │ │   built.                     │ │ [LINK: View case study]        │ │ ║
+║ │ │ [LINK: View case study]      │ │ [LINK: View case study]      │ │                                │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. Apps for every role in school. · white · [Batch 1 · moved in ENH-005] ───────────────────────────┐ ║
-║ │ H2: Apps for every role in school.                                                                   │ ║
-║ │ Text: Four apps serving schools today, with more products on the way.                                │ ║
+║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009] ─────────────────────────────────────────┐ ║
+║ │ H2: How we approach.                                                                                 │ ║
+║ │ Text: Five clear steps take your idea from the first conversation to a product that keeps improving. │ ║
+║ │ [BUTTON: 01 · Discovery (tab)]                                                                       │ ║
+║ │ [BUTTON: 02 · Design (tab)]                                                                          │ ║
+║ │ [BUTTON: 03 · Development (tab)]                                                                     │ ║
+║ │ [BUTTON: 04 · QA & Improvement (tab)]                                                                │ ║
+║ │ [BUTTON: 05 · Deployment (tab)]                                                                      │ ║
+║ │ Text: Step 01 — · Discovery                                                                          │ ║
+║ │ H3: Learn your goals, users and scope                                                                │ ║
+║ │ Text: We begin by understanding your business context, audience, product goals and delivery          │ ║
+║ │   boundaries so the project starts with clarity.                                                     │ ║
+║ │ • Stakeholder alignment and kickoff workshops                                                        │ ║
+║ │ • User goals, pain points and workflow discovery                                                     │ ║
+║ │ • Scope definition, priorities and constraints                                                       │ ║
+║ │ • Initial roadmap and delivery planning                                                              │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A clear scope and delivery plan.                                                               │ ║
+║ │ • Clear project scope                                                                                │ ║
+║ │ • Priorities agreed                                                                                  │ ║
+║ │ • Delivery roadmap                                                                                   │ ║
+║ │ Text: Step 02 — · Design                                                                             │ ║
+║ │ H3: Shape flows, interfaces and architecture                                                         │ ║
+║ │ Text: We turn the discovery findings into user journeys, interface concepts and technical direction  │ ║
+║ │   so everyone can see how the product should work.                                                   │ ║
+║ │ • User flows and information architecture                                                            │ ║
+║ │ • Wireframes and UI exploration                                                                      │ ║
+║ │ • Clickable prototype creation                                                                       │ ║
+║ │ • Technical design and solution structure                                                            │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A clickable prototype and technical design.                                                    │ ║
+║ │ • Clickable prototype                                                                                │ ║
+║ │ • User flows                                                                                         │ ║
+║ │ • Technical direction                                                                                │ ║
+║ │ Text: Step 03 — · Development                                                                        │ ║
+║ │ H3: Build the product in agile sprints                                                               │ ║
+║ │ Text: We implement the solution in working increments, keeping progress visible through regular      │ ║
+║ │   updates, reviews and collaboration.                                                                │ ║
+║ │ • Frontend and backend implementation                                                                │ ║
+║ │ • Agile sprint planning and demos                                                                    │ ║
+║ │ • Continuous collaboration and feedback loops                                                        │ ║
+║ │ • Ongoing refinement during delivery                                                                 │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: Working software every sprint.                                                                 │ ║
+║ │ • Sprint builds                                                                                      │ ║
+║ │ • Regular demos                                                                                      │ ║
+║ │ • Visible progress                                                                                   │ ║
+║ │ Text: Step 04 — · QA & Improvement                                                                   │ ║
+║ │ H3: Test, refine and optimise before release                                                         │ ║
+║ │ Text: Before go-live, we strengthen quality through validation, issue fixing and improvement so the  │ ║
+║ │   release is more polished and reliable.                                                             │ ║
+║ │ • Functional testing and defect resolution                                                           │ ║
+║ │ • UX refinement and performance checks                                                               │ ║
+║ │ • Quality review against requirements                                                                │ ║
+║ │ • Final improvement pass before release                                                              │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A polished, launch-ready product.                                                              │ ║
+║ │ • Tested build                                                                                       │ ║
+║ │ • Resolved issues                                                                                    │ ║
+║ │ • Final refinements                                                                                  │ ║
+║ │ Text: Step 05 — · Deployment                                                                         │ ║
+║ │ H3: Release, monitor and keep improving                                                              │ ║
+║ │ Text: We launch the product, monitor how it performs and continue supporting improvements so the     │ ║
+║ │   solution keeps delivering value after release.                                                     │ ║
+║ │ • Deployment and release coordination                                                                │ ║
+║ │ • Production monitoring and support                                                                  │ ║
+║ │ • Post-launch review and iteration planning                                                          │ ║
+║ │ • Continuous enhancement and maintenance                                                             │ ║
+║ │ Text: You receive                                                                                    │ ║
+║ │ Text: A live release with ongoing support.                                                           │ ║
+║ │ • Live production release                                                                            │ ║
+║ │ • Monitoring                                                                                         │ ║
+║ │ • Ongoing support                                                                                    │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 6. What we build. · white · [Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009] ───────┐ ║
+║ │ H2: What we build.                                                                                   │ ║
+║ │ Text: Digital products we design, build and run for every role in school, with more on the way.      │ ║
+║ │ [BUTTON: Previous apps]                                                                              │ ║
+║ │ [BUTTON: Next apps]                                                                                  │ ║
+║ │ [ROW SCROLLS SIDEWAYS: back and forward buttons beside the heading; four cards visible on desktop]   │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →        │ │ ║
 ║ │ │   products.html#pxp]         │ │   products.html#lxp]         │ │   products.html#sxp]           │ │ ║
@@ -234,21 +298,22 @@ Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the to
 ║ │ │ Text: Attendance, grades,    │ │ Text: Lessons, assignments   │ │ Text: One workspace with       │ │ ║
 ║ │ │   messages and fees.         │ │   and progress.              │ │   role-based views.            │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐                                                                     │ ║
-║ │ │ [WHOLE CARD IS A LINK →      │                                                                     │ ║
-║ │ │   products.html#iot]         │                                                                     │ ║
-║ │ │ Text: IoT                    │                                                                     │ ║
-║ │ │ Text: School staff and       │                                                                     │ ║
-║ │ │   facilities                 │                                                                     │ ║
-║ │ │ Text: Devices, lighting and  │                                                                     │ ║
-║ │ │   climate.                   │                                                                     │ ║
-║ │ └──────────────────────────────┘                                                                     │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →        │ │ ║
+║ │ │   products.html#iot]         │ │   products.html]             │ │   products.html]               │ │ ║
+║ │ │ Text: IoT                    │ │ Text: AI Tutor               │ │ Text: AI Timetable             │ │ ║
+║ │ │ Text: School staff and       │ │ Text: Students               │ │ Text: School leaders           │ │ ║
+║ │ │   facilities                 │ │ Text: [Placeholder] Study    │ │ Text: [Placeholder] The whole  │ │ ║
+║ │ │ Text: Devices, lighting and  │ │   help at each student's own │ │   school timetable, planned in │ │ ║
+║ │ │   climate.                   │ │   pace.                      │ │   fewer steps.                 │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ │ [LINK: Explore our products → products.html]                                                         │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 7. Latest from XionTechs. · light blue · [content unchanged] ───────────────────────────────────────┐ ║
+║ ┌─ 7. Latest from XionTechs. · light blue · [ENH-007] ─────────────────────────────────────────────────┐ ║
 ║ │ H2: Latest from XionTechs.                                                                           │ ║
-║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
+║ │ Text: Catch up with what our team is building and shipping.                                          │ ║
+║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ [IMAGE: story photo]         │ │ [IMAGE: story photo]         │ │ [IMAGE: story photo]           │ │ ║
 ║ │ │ Category · date              │ │ Category · date              │ │ Category · date                │ │ ║
@@ -256,10 +321,9 @@ Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the to
 ║ │ │ Text: summary                │ │ Text: summary                │ │ Text: summary                  │ │ ║
 ║ │ │ [LINK: Read more → story]    │ │ [LINK: Read more → story]    │ │ [LINK: Read more → story]      │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 8. Have something you want to build? · amber · [new in ENH-001] ────────────────────────────────────┐ ║
+║ ┌─ 8. Have something you want to build? · amber · [new in ENH-001 · ENH-010] ──────────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: Have something you want to build?         │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ Text: Tell us a little about yourself and     │ │ │ [FIELD: Your name (text, required)]        │ │ │ ║
@@ -272,8 +336,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the to
 ║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │                                               │ │ │ [FIELD: Phone number (optional) (tel)]     │ │ │ ║
-║ │ │                                               │ │ │ help: "Include your country code, for      │ │ │ ║
-║ │ │                                               │ │ │     example +1 469 322 9899"               │ │ │ ║
+║ │ │                                               │ │ │ placeholder: "+1 469 322 9899"             │ │ │ ║
 ║ │ │                                               │ │ │ error: "Please enter a valid phone number, │ │ │ ║
 ║ │ │                                               │ │ │     for example +1 469 322 9899."          │ │ │ ║
 ║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
@@ -307,7 +370,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-005 (see the change list at the to
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -454,7 +517,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `services.html` · page title: "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ SERVICES PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -584,7 +647,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: Batch 1 (no label above "Our core values."); ENH-004 spacing and heading-first reveal.
+Changes on this page: Batch 1 (no label above "Our core values."); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -721,7 +784,7 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-004 spaci
 
 `news.html` · page title: "News | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: ENH-007 (a story about an app shows the app name in its pill); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ NEWS PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -770,7 +833,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `news-story.html` · page title: "[Placeholder] Parents can now pay school fees in PXP | XionTechs News"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ NEWS STORY PAGE ════════════════════════════════════════════════════════════════════════════════════════╗
@@ -779,7 +842,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 ║ ┌─ 1. [Placeholder] Parents can now pay school fees in… · light hero ──────────────────────────────────┐ ║
 ║ │ Breadcrumb: Home › News › Story                                                                      │ ║
 ║ │ H1: [Placeholder] Parents can now pay school fees in PXP                                             │ ║
-║ │ Text: 18 SEP 2026 · Product · PXP                                                                    │ ║
+║ │ Text: 18 SEP 2026 · PXP                                                                              │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 2. Story · white ───────────────────────────────────────────────────────────────────────────────────┐ ║
@@ -802,7 +865,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `careers.html` · page title: "Careers at XionTechs | Software Jobs in Ho Chi Minh City"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ CAREERS PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -880,7 +943,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `job.html` · page title: "[Placeholder] Job title | Careers at XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ JOB PAGE ═══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -938,7 +1001,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `demo.html` · page title: "Book a Demo or Start a Project | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ CONTACT PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1022,7 +1085,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `privacy.html` · page title: "Privacy Policy | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing and heading-first reveal).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ PRIVACY POLICY PAGE ════════════════════════════════════════════════════════════════════════════════════╗
@@ -1069,7 +1132,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 spacing
 
 `404.html` · page title: "Page not found | XionTechs"
 
-Changes on this page: Batch 1 (no label above the heading); ENH-004 spacing.
+Changes on this page: Batch 1 (no label above the heading); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ NOT FOUND (404) PAGE ═══════════════════════════════════════════════════════════════════════════════════╗
