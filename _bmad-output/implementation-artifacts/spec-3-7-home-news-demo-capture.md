@@ -2,7 +2,7 @@
 title: 'Story 3.7: Home latest news, demo capture and section rhythm'
 type: 'feature'
 created: '2026-10-04'
-status: 'in-progress'
+status: 'done'
 baseline_commit: '5973d9b340c9392ad401f4f200f9b45a9ac4147e'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -53,19 +53,19 @@ context: ['{project-root}/AGENTS.md', '{project-root}/CLAUDE.md']
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `studio/schemas/post.ts` -- add `category` and `app` (A9) -- tag source.
+- [x] `studio/schemas/post.ts` -- add `category` and `app` (A9) -- tag source.
   - red: `studio/schemas/schemas.test.ts` -- post has a required `category` with the four values and an `app` with the four apps, hidden unless category is product
-- [ ] `src/lib/news/latest-posts.ts` -- `getLatestPosts()`: posts with `defined(slug.current) && defined(title.en) && defined(publishedAt)`, `order(publishedAt desc)[0...3]`, flat projection (slug, title, excerpt, publishedAt, category, app), tag `post`; `newsDate(iso)` → `18 SEP 2026` in `Asia/Ho_Chi_Minh`; `categoryTag(post)` → label or null -- CAP-1 data.
+- [x] `src/lib/news/latest-posts.ts` -- `getLatestPosts()`: posts with `defined(slug.current) && defined(title.en) && defined(publishedAt)`, `order(publishedAt desc)[0...3]`, flat projection (slug, title, excerpt, publishedAt, category, app), tag `post`; `newsDate(iso)` → `18 SEP 2026` in `Asia/Ho_Chi_Minh`; `categoryTag(post)` → label or null -- CAP-1 data.
   - red: `src/lib/news/latest-posts.test.ts` -- query filter, order, limit, projection and tag; date format; tag labels incl. product app and unknown category
-- [ ] `src/content/news.ts` -- heading, sample note `[Placeholder] Sample stories. Replace with real news before launch.`, "See all news", "Read story", category labels -- one copy module.
-- [ ] `src/components/news/news-card.tsx` -- `article.spot.ncard`: `aria-hidden` 16:10 empty frame, `<time dateTime>` mono date, `.cat` (`.cat.product` amber), `h3` title, excerpt, "Read story" `Link` to `/news/{slug}` with the title in an `sr-only` suffix -- CAP-1.
+- [x] `src/content/news.ts` -- heading, sample note `[Placeholder] Sample stories. Replace with real news before launch.`, "See all news", "Read story", category labels -- one copy module.
+- [x] `src/components/news/news-card.tsx` -- `article.spot.ncard`: `aria-hidden` 16:10 empty frame, `<time dateTime>` mono date, `.cat` (`.cat.product` amber), `h3` title, excerpt, "Read story" `Link` to `/news/{slug}` with the title in an `sr-only` suffix -- CAP-1.
   - red: `src/components/news/news-card.test.tsx` -- date, tag, title, excerpt and link href/name; product tag amber class; no tag/excerpt when missing
-- [ ] `src/components/news/home-news.tsx` -- async section `sec surface-mist`, `aria-labelledby="news-h"`, H2, sample note and grid only when stories exist, "See all news" to `/news` always -- CAP-1..3.
+- [x] `src/components/news/home-news.tsx` -- async section `sec surface-mist`, `aria-labelledby="news-h"`, H2, sample note and grid only when stories exist, "See all news" to `/news` always -- CAP-1..3.
   - red: `src/components/news/home-news.test.tsx` -- 3, 1 and 0 stories; note starts `[Placeholder]`
-- [ ] `src/app/globals.css` -- port `.ncard`, `.ncard .frame`, `.meta`, `.cat`, `.cat.product`, `.sample` with tokens.
-- [ ] `src/app/page.tsx`, `src/app/page.test.tsx` -- add the render line; mock `HomeNews`; test order process → news → capture last, and the surface rhythm -- CAP-4, CAP-5.
+- [x] `src/app/globals.css` -- port `.ncard`, `.ncard .frame`, `.meta`, `.cat`, `.cat.product`, `.sample` with tokens.
+- [x] `src/app/page.tsx`, `src/app/page.test.tsx` -- add the render line; mock `HomeNews`; test order process → news → capture last, and the surface rhythm -- CAP-4, CAP-5.
   - red: `src/app/page.test.tsx` -- news section sits between the 4-D band and the capture band
-- [ ] `_bmad-output/specs/decisions-2026-10-01.md`, `docs/sanity.md`, `docs/ai-log.md` -- record A9 (2026-10-04) and the post-merge deploy step; one AI-log entry.
+- [x] `_bmad-output/specs/decisions-2026-10-01.md`, `docs/sanity.md`, `docs/ai-log.md` -- record A9 (2026-10-04) and the post-merge deploy step; one AI-log entry.
 
 **Acceptance Criteria:**
 - Given Home, when it renders, then the sections after the hero are doors, products (mist, linen), services (paper), 4-D (navy), news (mist), capture (amber, last before the footer).
@@ -77,27 +77,47 @@ Sources: SPEC CAP-1..5; `EXPERIENCE.md` News card, States (Home news), Responsiv
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| News section | page load | — | mist band after the navy 4-D, before the amber capture; H2 "Latest from XionTech." | — | CAP-4, CAP-5, DESIGN.md 438, brand rule | |
-| Sample note | stories exist | — | small italic muted "[Placeholder] Sample stories…" under H2 | — | CAP-3 | |
-| News grid | ≥3 stories | — | 3 cards, newest first | — | CAP-1 | |
-| News grid | 1–2 stories | — | only those cards, no empty slots | — | CAP-1 | |
-| News grid | 0 stories | — | no grid, no note; "See all news" stays | — | CAP-2, EXPERIENCE.md States | |
-| News card | page load | — | 16:10 empty frame (faint navy grid), mono date `18 SEP 2026`, tag, title 1.08rem, excerpt, "Read story →"; 24px radius | — | DESIGN.md News card, Media frame | |
-| Category tag | product story | — | amber pill, navy text, "PRODUCT · PXP" | — | DESIGN.md Category tag | |
-| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | |
-| Read story | click / Enter | mouse, keyboard, touch | opens `/news/[slug]` (Not found until 6.2) | — | EXPERIENCE.md News card | |
-| Read story, See all news | focus | keyboard | 2px focus ring | — | T9 | |
-| Read story, See all news | hover | mouse | arrow moves 4px right | 0.3s | prototype `.link-arrow:hover` | |
-| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | |
-| News grid | width 900px or less | — | 2 columns | — | EXPERIENCE.md Responsive | |
-| News grid | width 640px or less | — | 1 column | — | EXPERIENCE.md Responsive | |
-| Capture band | page load | — | "See it working at your school." last before footer | — | CAP-4 | |
+| News section | page load | — | mist band after the navy 4-D, before the amber capture; H2 "Latest from XionTech." | — | CAP-4, CAP-5, DESIGN.md 438, brand rule | test `page.test.tsx` (order, surfaces), `home-news.test.tsx` (H2); colours pending (controller, browser) |
+| Sample note | stories exist | — | small italic muted "[Placeholder] Sample stories…" under H2 | — | CAP-3 | test `home-news.test.tsx` (text); italic/muted pending (controller, browser) |
+| News grid | ≥3 stories | — | 3 cards, newest first | — | CAP-1 | test `home-news.test.tsx` (3 cards), `latest-posts.test.ts` (order desc, [0...3]) |
+| News grid | 1–2 stories | — | only those cards, no empty slots | — | CAP-1 | test `home-news.test.tsx` (1 story) |
+| News grid | 0 stories | — | no grid, no note; "See all news" stays | — | CAP-2, EXPERIENCE.md States | test `home-news.test.tsx` (0 stories) |
+| News card | page load | — | 16:10 empty frame (faint navy grid), mono date `18 SEP 2026`, tag, title 1.08rem, excerpt, "Read story →"; 24px radius | — | DESIGN.md News card, Media frame | test `news-card.test.tsx` (date, tag, title, excerpt, link, aria-hidden frame); looks pending (controller, browser) |
+| Category tag | product story | — | amber pill, navy text, "PRODUCT · PXP" | — | DESIGN.md Category tag | test `latest-posts.test.ts` ("Product · PXP"), `news-card.test.tsx` (`product` class); colours pending (controller, browser); needs A9 Studio deploy for live data |
+| Category tag | other story | — | mist pill, navy text, e.g. "TEAM" | — | DESIGN.md Category tag | test `latest-posts.test.ts` (Team, Schools, Company); colours pending (controller, browser) |
+| Read story | click / Enter | mouse, keyboard, touch | opens `/news/[slug]` (Not found until 6.2) | — | EXPERIENCE.md News card | test `news-card.test.tsx` (href `/news/<encoded slug>`); click pending (controller, browser) |
+| Read story, See all news | focus | keyboard | 2px focus ring | — | T9 | pending (controller, browser) |
+| Read story, See all news | hover | mouse | arrow moves 4px right | 0.3s | prototype `.link-arrow:hover` | pending (controller, browser) |
+| News card | hover | mouse | no glow, no lift (after demo) | — | epic-3 context (3.5 slice) | pending (controller, browser) (no hover rule on `.ncard` in `globals.css`) |
+| News grid | width 900px or less | — | 2 columns | — | EXPERIENCE.md Responsive | pending (controller, browser) (shared `.news-grid` rule, Story 6.5) |
+| News grid | width 640px or less | — | 1 column | — | EXPERIENCE.md Responsive | pending (controller, browser) (shared `.news-grid` rule, Story 6.5) |
+| Capture band | page load | — | "See it working at your school." last before footer | — | CAP-4 | test `page.test.tsx` (capture last), `no-js.test.tsx` (news before capture in server HTML) |
 
 ## Implementation Notes
+
+- 2026-10-04: Tasks 2 and 3 were one dispatch (`categoryTag` reads the labels from the copy module). Per-task reviews were skipped on the controller's instruction (one review layer in this build; the full `bmad-code-review` runs before the PR); the controller checked each diff.
+- `newsDate` uses `en-US` `formatToParts`: `en-GB` gives "SEPT".
+- `HomeNews` is stubbed in `page.test.tsx` and `no-js.test.tsx`: `server-only` is not installed outside the Next.js compiler, and an async component cannot render to static markup. `home-news.test.tsx` renders the awaited component.
+- Matrix row "Sanity fails" had no test; added `lets a failed fetch reach the caller` (8959229).
+- The news card frame reuses `.home-media` (empty media frame) with a 16:10 ratio; "See all news" gets 32px only after a grid (`.news-grid + .link-arrow`).
 
 ## Spec Change Log
 
 ## Review Triage Log
+
+Review on 2026-10-04: one layer (Edge Case Hunter), on the controller's instruction; Blind Hunter, Verification Gap, Acceptance Auditor and Security Auditor skipped here and covered by the full `bmad-code-review` before the PR. The two task `minor` rows from the ledger are included.
+
+| # | Finding | Verdict | Route | Evidence |
+| --- | --- | --- | --- | --- |
+| 1 | `categoryTag` reads inherited keys ("toString") (Edge; also ledger Task 2 minor) | low | patch | `categoryLabels` is a plain object, so `categoryLabels["toString"]` is a function and the card would render it; an own-key lookup is a direct correction. |
+| 2 | Invalid `publishedAt` string makes `formatToParts` throw and Home fail (Edge) | low | reject | Only the Studio writes posts and its `datetime` input always stores ISO; reaching it needs a hand-made API write. The fix adds a guard branch. |
+| 3 | Future `publishedAt` shows a scheduled story now (Edge) | low | reject | Only published documents are read (`perspective: published`); the spec has no scheduling. A `now()` filter in a tag-cached query would also stay stale until the next publish. |
+| 4 | Empty-string title or slug passes `defined()` (Edge) | low | reject | The Studio unsets a cleared string field rather than storing `""`, and the post slug is generated from the title; the extra filters add complexity for a case editors do not meet. |
+| 5 | Hand-typed slug with "/", "?", "#" breaks the Read story path (Edge) | low | patch | The post slug has no validation and can be typed; `encodeURIComponent` is a direct correction and a no-op for normal slugs. |
+| 6 | "See all news" opens Not found until `/news` exists (Edge) | false | reject | Intended: CAP-2 keeps the link; Story 6.1 builds `/news` next (and 6.2 the story page, EXPERIENCE.md says Read story shows Not found until then). |
+| 7 | News card pulls the server-only Sanity client through `latest-posts.ts`, so a 6.1 client island cannot import it (Edge claim; also ledger Task 4 minor) | maybe-false | defer | True if 6.1 imports the card into a client component; 6.1 says the chip filter is the only client part and the list is server HTML, so the server page can render the cards. Settled when 6.1 is built. |
+
+Patch re-review (task reviewer, sonnet): pass, 0 Critical, 0 Important; its Minor (other slug links) became the similar-check entry in `deferred-work.md` (`open-roles.tsx:26`).
 
 ## Design Notes
 
@@ -113,3 +133,27 @@ Sources: SPEC CAP-1..5; `EXPERIENCE.md` News card, States (Home news), Responsiv
 - `npm test` -- expected: all pass
 - `npm run test:coverage && npm run coverage:diff` -- expected: 100% changed lines, branches ≥ 80% on changed files
 - `npm run build`, `npm run test:smoke`, browser walk -- pending (controller; Turbopack rejects the worktree junction)
+
+## Acceptance Evidence
+
+Captured after the step-04 review patches on 2026-10-04.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
+- `npm test` -- exit 0 -- Test Files 51 passed (51), Tests 781 passed (781)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- diff-cover 17 lines, 0 missing, 100%; C1 ok: 5 changed files with branch coverage >= 80% (project branches 97.82%)
+
+**Observed**
+
+- Home news section in jsdom: 3 / 1 / 0 stories, sample note, "See all news", card date `18 SEP 2026`, tag, "Read story" to `/news/<encoded slug>`; section rhythm [doors, mist + linen, paper, navy, mist, amber] -- `home-news.test.tsx`, `news-card.test.tsx`, `page.test.tsx`, `no-js.test.tsx`
+
+**Artifacts**
+
+- spec-3-7-home-news-demo-capture-evidence/verification-after-review.txt -- 3697 bytes -- sha256 64bbcd6ee5c6 -- the three declared commands after the review patches
+- spec-3-7-home-news-demo-capture-evidence/observed.md -- 1517 bytes -- sha256 aeabcb44aed2 -- what was and was not observed
+- spec-3-7-home-news-demo-capture-evidence/verification.txt -- 3651 bytes -- sha256 6b72f710d71e -- the same commands before the review patches (history)
+
+**Not captured**
+
+- `npm run build`, `npm run test:smoke` and the browser walk (UX rows for looks, hover, focus, 900px / 640px): Turbopack rejects the worktree's `node_modules` junction; pending (controller).
