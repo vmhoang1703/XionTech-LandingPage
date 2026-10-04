@@ -23,14 +23,17 @@ module.exports = {
     "index.html#contact-h": "new in ENH-001 · ENH-010",
     "products.html#h1": "ENH-014 · ENH-018", // Products hero
     "products.html#day-h": "new in ENH-015",
+    "products.html#lxp-h": "left-aligned in ENH-017",
+    "products.html#iot-h": "left-aligned in ENH-017",
+    "about.html#faq-h": "rebuilt in ENH-016",
   },
 
   // one line under each page title
   pages: {
     "index.html": "Batch 1, ENH-001 to ENH-013 (see the change list at the top).",
-    "products.html": "ENH-014 (hero), ENH-015 (school-day timeline), ENH-018 (Pause motion button); " + SITE_WIDE,
+    "products.html": "ENH-014 (hero), ENH-015 (school-day timeline), ENH-017 (headings left-aligned), ENH-018 (Pause motion button); " + SITE_WIDE,
     "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); " + SITE_WIDE,
-    "about.html": 'Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ' + SITE_WIDE,
+    "about.html": 'Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt); ' + SITE_WIDE,
     "news.html": "ENH-007 (a story about an app shows the app name in its pill); " + SITE_WIDE,
     "news-story.html": SITE_WIDE,
     "careers.html": SITE_WIDE,
@@ -61,5 +64,7 @@ module.exports = {
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
 | Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018 |
 | Products, after the four apps | — | New: "One event. Multiple experiences.", a five-step school-day timeline (07:45 to 15:30) on dark navy | ENH-015 |
+| About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; soft clouds drifting in the bottom left of a light-to-navy background | ENH-016 |
+| Products, LXP and IoT | Both section headings centred | Both start at the left, like every other heading on the site | ENH-017 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |`,
 };

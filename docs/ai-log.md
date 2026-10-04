@@ -958,3 +958,26 @@ Template:
   ENH-016 and ENH-017 log entries, because the log file was staged whole; this commit removes them from the
   branch (they stay in the working copy until approved). The first ENH-018 draft was also numbered ENH-016,
   which that session had already used.
+
+## 2026-10-04 — ENH-016 and ENH-017: the FAQ rebuilt, every heading left aligned
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5)
+- **Prompt / task:** Amber sent a screenshot of a help-centre style FAQ and asked for the About page FAQ to
+  match it, titled "Your question, we answer", with no search box. Then, from her own screenshots of the
+  result: one background for the whole section, all answers closed, the two columns further apart, every
+  section title left aligned, the round background blobs turned into clouds in the bottom left corner, and no
+  line under the last question. The animated background is option 1 of her reference file
+  (`soft-animated-brand-backgrounds-balanced-speed.html`), mapped onto the site's own navy and light tokens.
+- **Decision / result:** Approved by Amber. ENH-016 covers the FAQ; ENH-017 left-aligns the two centred
+  headings on Products, which were the only centred ones on the site. Checks were static only, as Amber asks:
+  `npm run lint` and the 976 unit tests pass, and `format:check` is clean apart from an untracked scratch file
+  outside this change.
+- **AI got it wrong?** Three times. First, the `+` marker was absolutely positioned over the question's own
+  padding and collided with the next column; worse, `column-gap:96px` was followed by `gap:0` in the same
+  rule, and the shorthand silently reset the gap to zero, which is what Amber's screenshot caught. Second, the
+  heading looked centred although its text was left aligned: the box carried both `wrap` and a 760px width
+  limit, so `wrap`'s automatic side margins centred the narrowed box; `text-align` could never fix that and
+  the width limit had to move onto the heading text. Third, a second Claude session was editing this same
+  branch at the same time and restored `about.html` and `site.css` over the finished FAQ work; it was
+  re-applied with in-place edits so that session's ENH-014, ENH-015 and ENH-018 survived, and Amber closed the
+  other session.

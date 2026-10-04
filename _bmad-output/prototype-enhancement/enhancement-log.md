@@ -29,6 +29,8 @@ directly, before this log existed.
 | ENH-013 | 2026-10-04 | Home, What we build                                       | AI Tutor (Students) and AI Timetable (School leaders) are marked "Coming soon"                                                                                                                                                                                                                    | Approved | 3.5, new stories                      |
 | ENH-014 | 2026-10-04 | Products, hero                                            | "Built apart. Better together." with one button and a diagram of the four apps around the X tile, on a warm light background with drifting glows                                                                                                                                                  | Approved | 4.1                                   |
 | ENH-015 | 2026-10-04 | Products, after the four apps                             | New "One event. Multiple experiences." timeline: one school day from 07:45 to 15:30 across the apps                                                                                                                                                                                               | Approved | 4.1                                   |
+| ENH-016 | 2026-10-04 | About, frequently asked questions                         | The FAQ becomes "Your question, we answer": two columns of hairline rows, closed by default, on a soft animated light-to-navy background                                                                                                                                                          | Approved | 6.4                                   |
+| ENH-017 | 2026-10-04 | Products, LXP and IoT sections                            | The two centred section headings move to the left, so every heading on the site is left aligned                                                                                                                                                                                                   | Approved | 4.1                                   |
 | ENH-018 | 2026-10-04 | Products, hero                                            | A "Pause motion" button stops the drifting glows; the choice is shared with Home                                                                                                                                                                                                                  | Approved | 4.1                                   |
 
 ## ENH-001: Contact form on Home
@@ -462,6 +464,32 @@ directly, before this log existed.
 - **Rules:** the line draws in and the steps appear one after another; on phones the timeline turns vertical. With reduced motion, everything shows at once.
 - **Developer notes:** the timeline is an ordered list; each time is a `time` element; the dots are decorative. Vietnamese copy is in the prototype. The times are an example day, not product data.
 - **Open items:** none. Amber chose on 2026-10-04 to keep the reference wording under the heading.
+
+## ENH-016: FAQ in two columns under "Your question, we answer"
+
+- **Why:** Amber sent a reference screenshot on 2026-10-04 of a help-centre style FAQ and asked for the About page FAQ to match it, with no search box.
+- **What changed:** the FAQ section on About:
+  - the heading "Frequently asked questions." becomes "Your question, we answer", with the existing line "Straight answers about our products, our services and how we work." under it;
+  - the reference's search field is left out, as Amber asked;
+  - the nine questions move from one column of bordered cards to two columns of plain rows separated by hairlines;
+  - the + / − marker sits in its own column at the right of each question;
+  - the section carries the soft animated background Amber chose (option 1 of her reference file): a light-to-navy gradient with a very slow sheen passing across and three soft cloud shapes drifting in the bottom left corner;
+  - the heading, the line under it and the two columns all start at the same left edge.
+- **Rules:** every answer is closed when the page loads; several can be open at once (UX-DR27). On phones the two columns become one. With reduced motion the background holds still and keeps its gradient.
+- **Developer notes:** still native `details`/`summary`, so the FAQ works without JavaScript and keeps its FAQPage structured data. The nine answers are unchanged, Vietnamese copy included. The moving shapes are empty `aria-hidden` divs, ignored by screen readers. The background uses the site's own navy and light tokens rather than the hex values in the reference file, so it matches the rest of the site.
+- **Fixed on 2026-10-04 after Amber's screenshot:** the left column's + sat hard against the right column's question because a `gap:0` written after `column-gap` cancelled it; the two declarations no longer fight, and the columns are 96px apart. The tinted band behind the heading was also dropped, so the whole section shares one background.
+- **Fixed on 2026-10-04:** the heading looked centred because its box carried both `wrap` and a 760px width limit, and `wrap`’s automatic side margins then centred the narrowed box. The box is now a full-width `wrap`, with the width limit on the heading text itself, so the heading starts on the same left edge as the questions.
+- **Changed on 2026-10-04 on Amber’s review:** the closing rule under the last row was removed, so each question has a line above it and the list simply ends.
+- **Changed on 2026-10-04 on Amber’s review:** the drifting round blobs became cloud shapes and moved together into the bottom left corner, rather than one sitting over the top right of the questions.
+- **Open items:** the last row holds a single card because there are nine questions, not ten. The Pause motion button added by ENH-018 only governs the Products hero glows, so a visitor who pauses motion there still sees the FAQ clouds drifting; worth deciding whether that saved choice should cover every moving background.
+
+## ENH-017: Every section heading is left aligned
+
+- **Why:** Amber on 2026-10-04: section titles should all be left aligned.
+- **What changed:** the two centred section headings on Products, "A calm place to learn." (LXP) and "A campus you run from one screen." (IoT), now start at the left like every other heading on the site. Their badges move left with them.
+- **Rules:** no other page had a centred heading, so nothing else moved.
+- **Developer notes:** the `center` modifier was removed from those two `sec-head` blocks. The modifier itself stays in the stylesheet, unused, in case a future section wants it.
+- **Open items:** none.
 
 ## ENH-018: Pause motion button on the Products hero
 

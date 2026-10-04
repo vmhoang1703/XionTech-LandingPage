@@ -30,6 +30,8 @@ also has a Vietnamese version in the prototype.
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
 | Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018 |
 | Products, after the four apps | — | New: "One event. Multiple experiences.", a five-step school-day timeline (07:45 to 15:30) on dark navy | ENH-015 |
+| About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; soft clouds drifting in the bottom left of a light-to-navy background | ENH-016 |
+| Products, LXP and IoT | Both section headings centred | Both start at the left, like every other heading on the site | ENH-017 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
@@ -315,7 +317,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the to
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-018 (Pause motion button); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-017 (headings left-aligned), ENH-018 (Pause motion button); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -368,7 +370,7 @@ Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-018 (Pa
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. A calm place to learn. · light blue, linen ──────────────────────────────────────────────────────┐ ║
+║ ┌─ 4. A calm place to learn. · light blue, linen · [left-aligned in ENH-017] ──────────────────────────┐ ║
 ║ │ H2: A calm place to learn.                                                                           │ ║
 ║ │ Text: Learner eXperience Place brings a student's lessons, assignments and progress into one place.  │ ║
 ║ │ Tags: Students · Web app                                                                             │ ║
@@ -410,7 +412,7 @@ Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline), ENH-018 (Pa
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. A campus you run from one screen. · white ───────────────────────────────────────────────────────┐ ║
+║ ┌─ 6. A campus you run from one screen. · white · [left-aligned in ENH-017] ───────────────────────────┐ ║
 ║ │ H2: A campus you run from one screen.                                                                │ ║
 ║ │ Text: IoT Device Management lets school staff control classroom AV, lighting, climate and access     │ ║
 ║ │   across campus.                                                                                     │ ║
@@ -659,7 +661,7 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -733,8 +735,8 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ 
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. Frequently asked questions. · white ─────────────────────────────────────────────────────────────┐ ║
-║ │ H2: Frequently asked questions.                                                                      │ ║
+║ ┌─ 5. Your question, we answer · [rebuilt in ENH-016] ─────────────────────────────────────────────────┐ ║
+║ │ H2: Your question, we answer                                                                         │ ║
 ║ │ Text: Straight answers about our products, our services and how we work.                             │ ║
 ║ │ [FAQ, opens on click] Q: What does XionTechs do?                                                     │ ║
 ║ │ A: We build our own school platforms (PXP, LXP, SXP and IoT Device Management) and deliver software  │ ║
