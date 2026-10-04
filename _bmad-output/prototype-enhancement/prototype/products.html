@@ -14,20 +14,24 @@
 <div id="site-header"></div>
 <main id="main">
 
-<section class="hero hero-amber s-amber page-hero" aria-labelledby="h1">
-  <div class="aurora" aria-hidden="true"></div>
-  <canvas class="strands" data-tone="amber" aria-hidden="true"></canvas>
-  <div class="wrap split">
-    <div>
-      <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="index.html" data-vi="Trang chủ">Home</a><span>/</span><span data-vi="Sản phẩm">Products</span></nav>
-      <h1 id="h1" class="reveal" data-vi-html="Bốn ứng dụng. Một <span class='hl'>trường học</span> kết nối.">Four apps. One <span class="hl">connected</span> school.</h1>
-      <p class="lede reveal" data-vi="PXP, LXP, SXP và IoT dùng chung một nguồn dữ liệu, để mọi vai trò cùng nhìn thấy một ngày học.">PXP, LXP, SXP and IoT share one source of truth, so every role sees the same school day.</p>
-      <div class="cta-row reveal"><a class="btn btn-navy" href="demo.html"><span data-vi="Đặt lịch demo">Book a demo</span><i class="ph ph-arrow-right"></i></a><a class="btn btn-glass" href="#updates" data-vi="Cập nhật sản phẩm">Product updates</a></div>
+<section class="hero s-paper page-hero eco-hero" aria-labelledby="h1">
+  <div class="eco-bg" aria-hidden="true"><i class="g1"></i><i class="g2"></i><i class="g3"></i><i class="sheen"></i></div>
+  <div class="wrap eco-grid">
+    <div class="eco-copy">
+      <h1 id="h1" class="reveal" data-vi-html="Xây dựng riêng.<br>Mạnh hơn<br>khi kết nối.">Built apart.<br>Better<br>together.</h1>
+      <p class="lede reveal" data-vi="Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung.">A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.</p>
+      <div class="cta-row reveal"><a class="btn btn-navy" href="#pxp"><span data-vi="Khám phá sản phẩm">Explore products</span><i class="ph ph-arrow-down-right" aria-hidden="true"></i></a></div>
     </div>
-    <div class="devices reveal"><div class="tilt">
-      <div class="tablet"><div class="slot" data-slot="prod-web" data-hint="Web app screenshot" data-size="1440 × 1080"></div></div>
-      <div class="phone"><span class="notch"></span><div class="slot" data-slot="prod-phone" data-hint="Phone screenshot" data-size="1170 × 2532"></div></div>
-    </div></div>
+    <div class="eco-diagram reveal" role="group" aria-label="The four apps share one platform" data-vi-aria="Bốn ứng dụng dùng chung một nền tảng">
+      <svg class="eco-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <line x1="20" y1="22" x2="80" y2="78" pathLength="100"/><line x1="80" y1="22" x2="20" y2="78" pathLength="100"/>
+      </svg>
+      <span class="eco-hub" aria-hidden="true">X</span>
+        <a class="eco-card c-pxp" href="#pxp"><small data-vi="Trải nghiệm phụ huynh">Parent experience</small><b>PXP</b></a>
+        <a class="eco-card c-lxp" href="#lxp"><small data-vi="Trải nghiệm học tập">Learning experience</small><b>LXP</b></a>
+        <a class="eco-card c-sxp" href="#sxp"><small data-vi="Trải nghiệm nhân viên">Staff experience</small><b>SXP</b></a>
+        <a class="eco-card c-iot" href="#iot"><small data-vi="Khuôn viên kết nối">Connected campus</small><b>IoT</b></a>
+    </div>
   </div>
 </section>
 
@@ -118,6 +122,22 @@
     </div>
     
     <div class="browser reveal center-1000 mt-xl"><div class="bar"><i></i><i></i><i></i><a class="bar-url" href="#" target="_blank" rel="noopener noreferrer" aria-label="[Placeholder] iot.xiontechs.com (opens in a new tab)">[Placeholder] iot.xiontechs.com</a></div><div class="slot" data-slot="iot-main" data-hint="IoT screenshot or clip still" data-size="1600 × 1000"></div></div>
+  </div>
+</section>
+
+<section id="school-day" class="sec s-navy day" aria-labelledby="day-h">
+  <div class="wrap">
+    <div class="day-head">
+      <h2 id="day-h" class="reveal" data-vi-html="Một sự kiện.<br>Nhiều trải nghiệm.">One event.<br>Multiple experiences.</h2>
+      <p class="lede reveal" data-vi="Dùng một tình huống thật trong ngày học để cho thấy vì sao các sản phẩm mạnh hơn khi đi cùng nhau, thay vì thêm một lưới tính năng chung chung.">Use a real school-day scenario to explain why the products are stronger together instead of adding another generic feature grid.</p>
+    </div>
+    <ol class="day-line reveal">
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="07:45">07:45</time><h3 data-vi="Học sinh đến trường">Student arrives</h3><p data-vi="Hệ thống khuôn viên ghi nhận ngày học bắt đầu.">Campus systems detect the start of the day.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="08:00">08:00</time><h3 data-vi="Điểm danh được ghi nhận">Attendance recorded</h3><p data-vi="Nhân viên xác nhận điểm danh qua SXP.">Staff confirms attendance through SXP.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="08:01">08:01</time><h3 data-vi="Phụ huynh được cập nhật">Parent updated</h3><p data-vi="PXP hiển thị tình trạng mới nhất trong ngày học.">PXP reflects the latest school-day status.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="09:30">09:30</time><h3 data-vi="Bắt đầu học">Learning begins</h3><p data-vi="LXP kết nối hoạt động học và phản hồi.">LXP connects activity and feedback.</p></li>
+      <li><span class="day-dot" aria-hidden="true"></span><time datetime="15:30">15:30</time><h3 data-vi="Cả ngày luôn kết nối">Day stays connected</h3><p data-vi="Mỗi vai trò thấy điều quan trọng với mình.">Every role sees what matters to them.</p></li>
+    </ol>
   </div>
 </section>
 

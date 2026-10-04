@@ -71,6 +71,8 @@ const GRID = {
   why2: 2,
   "case-slider": 3,
   bento: 2,
+  "eco-grid": 2,
+  "day-line": 5,
 };
 const BLOCK = new Set([
   "DIV",
@@ -107,6 +109,9 @@ const BLOCK = new Set([
 ]);
 const SEP = new Set(["STRONG", "SMALL", "B", "SPAN"]);
 const clean = (t) => (t || "").replace(/\s+/g, " ").trim();
+// a line break inside a heading reads as a space ("Built apart. Better together.")
+const readPage = (f) =>
+  fs.readFileSync(DIR + f, "utf8").replace(/<br\b[^>]*>/gi, " ");
 function textOf(el) {
   const parts = [];
   for (const n of el.childNodes) {
@@ -146,6 +151,8 @@ const surface = (el) => {
   else if (/hero-navy/.test(c)) s.push("navy hero");
   else if (/hero-amber/.test(c)) s.push("amber hero");
   else if (/hero-light/.test(c)) s.push("light hero");
+  else if (/eco-hero/.test(c)) s.push("warm light, drifting glows");
+  else if (el.classList.contains("day")) s.push("dark navy");
   else if (/\bapproach\b/.test(c)) s.push("blue gradient");
   else if (/s-navy/.test(c)) s.push("navy");
   else if (/s-amber/.test(c)) s.push("amber");
@@ -566,7 +573,7 @@ for (const [f, n] of PAGES) {
     md += `\n## ${n}\n\nThis page did not exist in this version.\n`;
     continue;
   }
-  const d = new JSDOM(fs.readFileSync(DIR + f, "utf8")).window.document;
+  const d = new JSDOM(readPage(f)).window.document;
   if (!d.querySelector("main")) {
     console.error(f + ": no <main>");
     process.exit(1);
@@ -591,7 +598,7 @@ if (CH) {
   const used = new Set();
   for (const [f] of PAGES)
     if (fs.existsSync(DIR + f))
-      new JSDOM(fs.readFileSync(DIR + f, "utf8")).window.document
+      new JSDOM(readPage(f)).window.document
         .querySelectorAll("h1[id],h2[id]")
         .forEach((h) => used.add(f + "#" + h.id));
   Object.keys(CH.sections)

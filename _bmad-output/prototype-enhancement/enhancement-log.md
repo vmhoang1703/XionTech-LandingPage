@@ -27,6 +27,10 @@ directly, before this log existed.
 | ENH-011 | 2026-10-04 | Services process; Home and Services steps; About, Contact | Services uses the same five-step "How we work." component and content as Home; the chosen step is highlighted; the 4-D wording is retired                                                                                                                                                         | Approved | 5.4, 3.6                              |
 | ENH-012 | 2026-10-04 | Home, How we approach                                     | Home shows a light five-step diagram with one short line per step and a link to Services; the full tabbed component stays on Services                                                                                                                                                             | Approved | 3.6                                   |
 | ENH-013 | 2026-10-04 | Home, What we build                                       | AI Tutor (Students) and AI Timetable (School leaders) are marked "Coming soon"                                                                                                                                                                                                                    | Approved | 3.5, new stories                      |
+| ENH-014 | 2026-10-04 | Products, hero                                            | "Built apart. Better together." with one button and a diagram of the four apps around the X tile, on a warm light background with drifting glows                                                                                                                                                  | Approved | 4.1                                   |
+| ENH-015 | 2026-10-04 | Products, after the four apps                             | New "One event. Multiple experiences." timeline: one school day from 07:45 to 15:30 across the apps                                                                                                                                                                                               | Approved | 4.1                                   |
+| ENH-016 | 2026-10-04 | About, frequently asked questions                         | The FAQ becomes "Your question, we answer": two columns of hairline rows, closed by default, on a soft animated light-to-navy background                                                                                                                                                          | Proposed | 6.4                                   |
+| ENH-017 | 2026-10-04 | Products, LXP and IoT sections                            | The two centred section headings move to the left, so every heading on the site is left aligned                                                                                                                                                                                                   | Proposed | 4.1                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -436,3 +440,48 @@ directly, before this log existed.
   Coming soon". When the apps launch, remove the tag and replace the placeholder descriptions. Both cards link to the Products page, which does not describe them yet; add their sections (or an anchor) when the product text exists. The tag uses the brand amber token and semibold text to keep its contrast above 4.5:1.
 - **Open items:** none. Amber chose on 2026-10-04 to keep the placeholder descriptions for now; they will be
   replaced when the product text exists.
+
+## ENH-014: Products hero shows the connected suite
+
+- **Why:** Amber sent a reference screenshot on 2026-10-04 for the first section of the Products page.
+- **What changed:** the hero "Four apps. One connected school." with device mockups, two buttons and a breadcrumb is replaced by:
+  - the heading "Built apart. Better together." and the line "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.";
+  - one navy button "Explore products" (arrow down-right) that jumps to the PXP section;
+  - on the right, four navy cards (PXP "Parent experience", LXP "Learning experience", SXP "Staff experience", IoT "Connected campus") around a white X tile with a soft glow, joined by thin lines that draw in when the section appears;
+  - a warm light background (Amber's option 2 reference, 2026-10-04): a pale cream-to-mist gradient with a soft amber glow, a faint navy glow and a white glow that drift slowly around the section (34 to 38 seconds per pass; the amber and navy glows move at the same pace), plus a very slow light sheen; the amber background and the moving strands are removed. No small label above the heading.
+- **Rules:** each card links to its app section on the same page; the breadcrumb and the "Book a demo" and "Product updates" buttons are left out on purpose (Product updates stays in the bar under the hero). On phones the diagram sits under the text. The glows pause while the hero is off screen and when the visitor has turned motion off on Home. With reduced motion, the lines are shown at once, the glows stay still and the cards do not lift on hover or focus.
+- **Developer notes:** the X tile is decorative (hidden from screen readers); the diagram is a labelled group, and each card is a link whose name reads "Parent experience PXP". Vietnamese copy is in the prototype.
+- **Open items:** the moving glows have no pause button of their own (WCAG 2.2.2 asks for one when motion lasts over 5 seconds); Amber to decide whether to add the Home motion button here.
+
+## ENH-015: Products shows one school day across the apps
+
+- **Why:** Amber sent a reference screenshot on 2026-10-04: after the four apps, show why they are stronger together with a real school-day moment instead of another feature grid.
+- **What changed:** a new dark section between IoT and Product updates:
+  - the heading "One event. Multiple experiences." and the line "Use a real school-day scenario to explain why the products are stronger together instead of adding another generic feature grid." (Amber's wording from the reference);
+  - a five-step timeline joined by a thin line: 07:45 Student arrives (campus systems detect the start of the day), 08:00 Attendance recorded (staff confirms attendance through SXP), 08:01 Parent updated (PXP reflects the latest school-day status), 09:30 Learning begins (LXP connects activity and feedback), 15:30 Day stays connected (every role sees what matters to them);
+  - no small label above the heading (the reference's "The connected school day" label is left out, as on every other section).
+- **Rules:** the line draws in and the steps appear one after another; on phones the timeline turns vertical. With reduced motion, everything shows at once.
+- **Developer notes:** the timeline is an ordered list; each time is a `time` element; the dots are decorative. Vietnamese copy is in the prototype. The times are an example day, not product data.
+- **Open items:** none. Amber chose on 2026-10-04 to keep the reference wording under the heading.
+
+## ENH-016: FAQ in two columns under "Your question, we answer"
+
+- **Why:** Amber sent a reference screenshot on 2026-10-04 of a help-centre style FAQ and asked for the About page FAQ to match it, with no search box.
+- **What changed:** the FAQ section on About:
+  - the heading "Frequently asked questions." becomes "Your question, we answer", with the existing line "Straight answers about our products, our services and how we work." under it;
+  - the reference's search field is left out, as Amber asked;
+  - the nine questions move from one column of bordered cards to two columns of plain rows separated by hairlines;
+  - the + / − marker sits in its own column at the right of each question;
+  - the section carries the soft animated background Amber chose (option 1 of her reference file): a light-to-navy gradient with three slow drifting shapes and a very slow sheen passing across.
+- **Rules:** every answer is closed when the page loads; several can be open at once (UX-DR27). On phones the two columns become one. With reduced motion the background holds still and keeps its gradient.
+- **Developer notes:** still native `details`/`summary`, so the FAQ works without JavaScript and keeps its FAQPage structured data. The nine answers are unchanged, Vietnamese copy included. The moving shapes are empty `aria-hidden` divs, ignored by screen readers. The background uses the site's own navy and light tokens rather than the hex values in the reference file, so it matches the rest of the site.
+- **Fixed on 2026-10-04 after Amber's screenshot:** the left column's + sat hard against the right column's question because a `gap:0` written after `column-gap` cancelled it; the two declarations no longer fight, and the columns are 96px apart. The tinted band behind the heading was also dropped, so the whole section shares one background.
+- **Open items:** the last row holds a single card because there are nine questions, not ten.
+
+## ENH-017: Every section heading is left aligned
+
+- **Why:** Amber on 2026-10-04: section titles should all be left aligned.
+- **What changed:** the two centred section headings on Products, "A calm place to learn." (LXP) and "A campus you run from one screen." (IoT), now start at the left like every other heading on the site. Their badges move left with them.
+- **Rules:** no other page had a centred heading, so nothing else moved.
+- **Developer notes:** the `center` modifier was removed from those two `sec-head` blocks. The modifier itself stays in the stylesheet, unused, in case a future section wants it.
+- **Open items:** none.

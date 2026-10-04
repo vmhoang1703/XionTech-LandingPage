@@ -28,6 +28,8 @@ also has a Vietnamese version in the prototype.
 | Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, and AI Tutor and AI Timetable marked Coming soon) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009, ENH-013 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
+| Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows | ENH-014 |
+| Products, after the four apps | — | New: "One event. Multiple experiences.", a five-step school-day timeline (07:45 to 15:30) on dark navy | ENH-015 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
@@ -313,22 +315,20 @@ Changes on this page: Batch 1, ENH-001 to ENH-013 (see the change list at the to
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
+Changes on this page: ENH-014 (hero), ENH-015 (school-day timeline); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Four apps. One connected school. · amber hero ───────────────────────────────────────────────────┐ ║
-║ │ [BACKGROUND: animated strands]                                                                       │ ║
+║ ┌─ 1. Built apart. Better together. · warm light, drifting glows · [rebuilt in ENH-014] ───────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Breadcrumb: Home › Products                   │ │ [IMAGE: Web app screenshot · 1440 × 1080]      │ │ ║
-║ │ │ H1: Four apps. One connected school.          │ │ [IMAGE: Phone screenshot · 1170 × 2532]        │ │ ║
-║ │ │ Text: PXP, LXP, SXP and IoT share one source  │ │                                                │ │ ║
-║ │ │   of truth, so every role sees the same       │ │                                                │ │ ║
-║ │ │   school day.                                 │ │                                                │ │ ║
-║ │ │ [BUTTON: Book a demo → demo.html]             │ │                                                │ │ ║
-║ │ │ [BUTTON: Product updates → #updates]          │ │                                                │ │ ║
+║ │ │ H1: Built apart. Better together.             │ │ [LINK: Parent experience · PXP → #pxp]         │ │ ║
+║ │ │ Text: A connected suite for school            │ │ [LINK: Learning experience · LXP → #lxp]       │ │ ║
+║ │ │   communities — bringing parents, learning,   │ │ [LINK: Staff experience · SXP → #sxp]          │ │ ║
+║ │ │   staff operations and campus technology into │ │ [LINK: Connected campus · IoT → #iot]          │ │ ║
+║ │ │   one shared ecosystem.                       │ │                                                │ │ ║
+║ │ │ [BUTTON: Explore products → #pxp]             │ │                                                │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
@@ -427,7 +427,25 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 ║ │ [IMAGE: IoT screenshot or clip still · 1600 × 1000]                                                  │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 7. Product updates. · light blue ───────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 7. One event. Multiple experiences. · dark navy · [new in ENH-015] ─────────────────────────────────┐ ║
+║ │ H2: One event. Multiple experiences.                                                                 │ ║
+║ │ Text: Use a real school-day scenario to explain why the products are stronger together instead of    │ ║
+║ │   adding another generic feature grid.                                                               │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ Text: 07:45                  │ │ Text: 08:00                  │ │ Text: 08:01                    │ │ ║
+║ │ │ H3: Student arrives          │ │ H3: Attendance recorded      │ │ H3: Parent updated             │ │ ║
+║ │ │ Text: Campus systems detect  │ │ Text: Staff confirms         │ │ Text: PXP reflects the latest  │ │ ║
+║ │ │   the start of the day.      │ │   attendance through SXP.    │ │   school-day status.           │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐                                    │ ║
+║ │ │ Text: 09:30                  │ │ Text: 15:30                  │                                    │ ║
+║ │ │ H3: Learning begins          │ │ H3: Day stays connected      │                                    │ ║
+║ │ │ Text: LXP connects activity  │ │ Text: Every role sees what   │                                    │ ║
+║ │ │   and feedback.              │ │   matters to them.           │                                    │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘                                    │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 8. Product updates. · light blue ───────────────────────────────────────────────────────────────────┐ ║
 ║ │ H2: Product updates.                                                                                 │ ║
 ║ │ Text: New features and stories from PXP, LXP, SXP and IoT.                                           │ ║
 ║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
@@ -441,7 +459,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 ║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 8. See it working at your school. · navy ───────────────────────────────────────────────────────────┐ ║
+║ ┌─ 9. See it working at your school. · navy ───────────────────────────────────────────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: See it working at your school.            │ │ [FIELD: Work email (email, required)]          │ │ ║
 ║ │ │ Text: Leave your work email and we'll arrange │ │ placeholder: "name@school.edu.vn"              │ │ ║
@@ -748,9 +766,9 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ 
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ Text: US Central                              │ │ Text: GMT+7                                    │ │ ║
 ║ │ │ H3: Plano, Texas, USA                         │ │ H3: Ho Chi Minh City, Vietnam                  │ │ ║
-║ │ │ Text: 7950 Legacy Drive, Suite 400Plano,      │ │ Text: Vietnam Delivery Center                  │ │ ║
-║ │ │   Texas 75024, USA                            │ │ Text: Floor 15, B1 Building279 Nguyen Tri      │ │ ║
-║ │ │ [LINK: +1 469 322 9899 → tel:+14693229899]    │ │   Phuong StreetDien Hong Ward, Ho Chi Minh     │ │ ║
+║ │ │ Text: 7950 Legacy Drive, Suite 400 Plano,     │ │ Text: Vietnam Delivery Center                  │ │ ║
+║ │ │   Texas 75024, USA                            │ │ Text: Floor 15, B1 Building 279 Nguyen Tri     │ │ ║
+║ │ │ [LINK: +1 469 322 9899 → tel:+14693229899]    │ │   Phuong Street Dien Hong Ward, Ho Chi Minh    │ │ ║
 ║ │ │ [LINK: WhatsApp +1 469 439 9345 →             │ │   City, Vietnam                                │ │ ║
 ║ │ │   https://wa.me/14694399345]                  │ │ [LINK: +84 908 107 552 → tel:+84908107552]     │ │ ║
 ║ │ │ [LINK: vinni.tran@newxion.com →               │ │                                                │ │ ║
@@ -1013,8 +1031,8 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 ║ │ │   conversation, the first of our five steps.  │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ ┌───────────────────────────────────────────┐ │ │ │ [FIELD: Work email (email, required)]      │ │ │ ║
 ║ │ │ │ Text: Plano, Texas, USA                   │ │ │ │ error: "Please enter a valid email         │ │ │ ║
-║ │ │ │ Text: 7950 Legacy Drive, Suite 400        │ │ │ │     address."                              │ │ │ ║
-║ │ │ │ Text: Plano, Texas 75024, USA             │ │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ │ Text: 7950 Legacy Drive, Suite 400 Plano, │ │ │ │     address."                              │ │ │ ║
+║ │ │ │   Texas 75024, USA                        │ │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │ │ [LINK: +1 469 322 9899 →                  │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ │   tel:+14693229899]                       │ │ │ │ [FIELD: School or company (text,           │ │ │ ║
 ║ │ │ │ [LINK: WhatsApp +1 469 439 9345 →         │ │ │ │   required)]                               │ │ │ ║
@@ -1025,13 +1043,13 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 ║ │ │ ┌───────────────────────────────────────────┐ │ │ │ help: "For example: Principal, Head of IT" │ │ │ ║
 ║ │ │ │ Text: Ho Chi Minh City, Vietnam           │ │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │ │ Text: Vietnam Delivery Center             │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ │ Text: Floor 15, B1 Building               │ │ │ │ [CHECKBOXES: Products of interest: PXP /   │ │ │ ║
-║ │ │ │ Text: 279 Nguyen Tri Phuong Street        │ │ │ │   LXP / SXP / IoT; Product demo tab only]  │ │ │ ║
-║ │ │ │ Text: Dien Hong Ward, Ho Chi Minh City,   │ │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │ │   Vietnam                                 │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ │ [LINK: +84 908 107 552 →                  │ │ │ │ [FIELD: School size (dropdown: Under 500   │ │ │ ║
-║ │ │ │   tel:+84908107552]                       │ │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
-║ │ │ └───────────────────────────────────────────┘ │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
+║ │ │ │ Text: Floor 15, B1 Building 279 Nguyen    │ │ │ │ [CHECKBOXES: Products of interest: PXP /   │ │ │ ║
+║ │ │ │   Tri Phuong Street Dien Hong Ward, Ho    │ │ │ │   LXP / SXP / IoT; Product demo tab only]  │ │ │ ║
+║ │ │ │   Chi Minh City, Vietnam                  │ │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ │ [LINK: +84 908 107 552 →                  │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │ │   tel:+84908107552]                       │ │ │ │ [FIELD: School size (dropdown: Under 500   │ │ │ ║
+║ │ │ └───────────────────────────────────────────┘ │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
+║ │ │                                               │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
 ║ │ │                                               │ │ │   Product demo tab only)]                  │ │ │ ║
 ║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║

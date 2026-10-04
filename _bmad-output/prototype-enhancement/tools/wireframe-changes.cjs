@@ -21,12 +21,14 @@ module.exports = {
     "index.html#prod-h": "Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · Coming soon in ENH-013",
     "index.html#news-h": "ENH-007",
     "index.html#contact-h": "new in ENH-001 · ENH-010",
+    "products.html#h1": "rebuilt in ENH-014", // Products hero
+    "products.html#day-h": "new in ENH-015",
   },
 
   // one line under each page title
   pages: {
     "index.html": "Batch 1, ENH-001 to ENH-013 (see the change list at the top).",
-    "products.html": SITE_WIDE,
+    "products.html": "ENH-014 (hero), ENH-015 (school-day timeline); " + SITE_WIDE,
     "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); " + SITE_WIDE,
     "about.html": 'Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ' + SITE_WIDE,
     "news.html": "ENH-007 (a story about an app shows the app name in its pill); " + SITE_WIDE,
@@ -57,5 +59,7 @@ module.exports = {
 | Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": six equal app cards (PXP, LXP, SXP, IoT, and AI Tutor and AI Timetable marked Coming soon) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009, ENH-013 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
+| Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", one "Explore products" button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows | ENH-014 |
+| Products, after the four apps | — | New: "One event. Multiple experiences.", a five-step school-day timeline (07:45 to 15:30) on dark navy | ENH-015 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |`,
 };

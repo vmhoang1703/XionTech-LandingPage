@@ -918,3 +918,25 @@ Template:
 - **AI got it wrong?** Yes: the tag was first placed in the card's top-right corner, where it covered the app
   name; it now sits under the audience line, and the card rows were adjusted so every description sits right
   under its header.
+
+## 2026-10-04 — ENH-014 and ENH-015: Products hero and a school-day timeline
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case
+  Hunter, Verification Gap, Acceptance Auditor)
+- **Prompt / task:** From Amber's reference screenshots, the Products hero became "Built apart. Better
+  together." with one "Explore products" button and a diagram of the four apps around an X tile, on her
+  "warm light" background option with slowly drifting glows (ENH-014). A new "One event. Multiple
+  experiences." section after the four apps follows one school day from 07:45 to 15:30 across the apps
+  (ENH-015). Both are drawn in HTML and CSS rather than images, so they stay sharp, translate and adapt to
+  phones. `wireframes-final.md` and its change tags were updated.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: two
+  diagram lines vanished on phones (the dash pattern was measured in screen pixels), the lines did not show
+  without JavaScript, reduced motion did not stop the glows (a more specific rule won), Vietnamese accents
+  touched between heading lines, timeline times sat at different heights in Vietnamese, the phone timeline
+  line ran past the last dot, the cards had no focus lift, a few raw colours replaced tokens, and the wording
+  drifted from Amber's text (em dash, "confirms", "reflects"). The glows now pause off screen and follow the
+  saved motion choice. Open: whether to add a pause button for the glows (WCAG 2.2.2). The wireframe tool now
+  reads a line break as a space, which also fixes "Suite 400Plano" on About.
+- **AI got it wrong?** Yes: the first version reworded Amber's description and two timeline lines instead of
+  using her text, and a hunk filter first staged unrelated FAQ work from another session (caught and
+  unstaged before commit).

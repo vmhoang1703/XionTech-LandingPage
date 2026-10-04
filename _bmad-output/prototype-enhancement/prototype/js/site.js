@@ -198,6 +198,13 @@
       t.addEventListener('keydown',e=>{const k=e.key;let j=null;if(k==='ArrowDown'||k==='ArrowRight')j=(i+1)%tabs.length;else if(k==='ArrowUp'||k==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(k==='Home')j=0;else if(k==='End')j=tabs.length-1;
         if(j!==null){e.preventDefault();pick(tabs[j],true)}})})});
 
+  /* ---------- Products hero glows: rest off screen, follow the saved motion choice ---------- */
+  const eco=document.querySelector('.eco-hero');
+  if(eco){
+    if(store.get('xt3-motion')==='off')eco.classList.add('motion-off');
+    if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>eco.classList.toggle('is-off',!e.isIntersecting))).observe(eco);
+  }
+
   /* ---------- reveal, spotlight, tilt ---------- */
   /* reveal: in each section the heading appears first; the rest of the section follows it in turn, and never before it */
   const headOf=el=>{const sec=el.closest('section');if(!sec)return null;const h=sec.querySelector('h1,h2');if(!h)return null;return h.classList.contains('reveal')?h:h.closest('.reveal')};
