@@ -54,6 +54,8 @@ cd studio && npx sanity deploy
 
 `studio/sanity.cli.ts` holds the Studio's `appId` (public, not a secret), so the deploy does not ask for it. After a publish, the first visit to a page may still show the old content; the next visit shows the new one (the webhook marks the cached page stale).
 
+After the deploy that adds `category` and `app` to `post` (Story 3.7, decision A9): open each sample post in the Studio, set a category, and for a Product story set the app. Publish it. Until you do, the Home news cards show no tag.
+
 4. Make the webhook. Copy `SANITY_REVALIDATE_SECRET` from `.env.local`. In Manage, open API, then Webhooks. Use these settings:
    - URL: `https://xiontech-dev.vercel.app/api/revalidate`. Add a second webhook for the production URL `https://xion-tech-landing-page.vercel.app/api/revalidate`.
    - Filter: `_type in ["post", "job"]`

@@ -50,3 +50,11 @@ Decided by Hoang Vu (Andy), team lead, after Sammy had 1 of 20 stories started o
 | A7 | **Product feature copy is shown as fact** for PXP, LXP, SXP and IoT: the business confirmed descriptions and feature lists on 2026-09-28 (EXPERIENCE.md). PXP's platforms ("iOS and Android") stay `[Placeholder]` until confirmed. | 4.2, 4.3 |
 | L1 | **Products layout:** the media (PXP phone, SXP browser frame) comes first in the markup, as in the mockup, so desktop Tab order matches the screen; below 900px CSS `order` shows the text first so an anchor jump shows the heading. Accepted: below 900px a screen reader reads the media before the text. | 4.2, 4.3 |
 | A8 | **Careers (Story 6.5):** the Sanity `job` type gets `slug` (from `title.en`, required), `team` (EN/VI) and `closed` (starts false); an open role is published and not closed. The Life at XionTech photos are three fixed `[Placeholder]` frames until Story 6.3 adds the photo schema; the culture photo is a fixed `[Placeholder]` frame. Replaces the Sanity part of 6.5 CAP-4 and closes its open question. After merge the lead runs `cd studio && npx sanity deploy` and fills slug and team on the sample role. | 6.5, 6.3, 6.6 |
+
+## Added 2026-10-04
+
+Decided by Hoang Vu (Andy), team lead, while building Story 3.7.
+
+| ID | Decision | Specs |
+| --- | --- | --- |
+| A9 | **News category (Story 3.7):** the Sanity `post` type gets `category` (Product, Company, Schools or Team; required) and `app` (PXP, LXP, SXP or IoT; shown only when the category is Product). The Home news card tag reads from them ("Product · PXP", "Team"); the post had no category field, so the tag had no data source. After merge the lead switches to `develop` and pulls, runs `cd studio && npx sanity deploy`, then sets a category (and an app for product stories) on each sample post. Until then the Home cards show no tag. | 3.7, 6.1, 6.3 |
