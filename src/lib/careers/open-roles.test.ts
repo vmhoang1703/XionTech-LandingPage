@@ -5,7 +5,12 @@ const { sanityFetchMock } = vi.hoisted(() => ({ sanityFetchMock: vi.fn() }));
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: sanityFetchMock }));
 
-import { getOpenRole, getOpenRoles, roleMeta } from "./open-roles";
+import {
+  getOpenRole,
+  getOpenRoles,
+  roleMeta,
+  roleTypeLabel,
+} from "./open-roles";
 
 describe("getOpenRoles", () => {
   beforeEach(() => {
@@ -188,4 +193,17 @@ describe("roleMeta", () => {
   it("returns an empty string when no part is present", () => {
     expect(roleMeta({ slug: "a", title: "A", type: null })).toBe("");
   });
+});
+
+describe("roleTypeLabel", () => {
+  it("maps a known type to its label", () => {
+    expect(roleTypeLabel("full-time")).toBe("Full-time");
+  });
+
+  it.each([undefined, null, "", "weekend", "constructor"])(
+    "gives undefined for %s",
+    (type) => {
+      expect(roleTypeLabel(type)).toBeUndefined();
+    },
+  );
 });

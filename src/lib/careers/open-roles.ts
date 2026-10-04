@@ -55,7 +55,10 @@ export async function getOpenRole(
   return !role || Array.isArray(role) ? null : role;
 }
 
+export function roleTypeLabel(type?: string | null): string | undefined {
+  return type ? TYPE_LABELS.get(type) : undefined;
+}
+
 export function roleMeta({ team, location, type }: OpenRole): string {
-  const typeLabel = type ? TYPE_LABELS.get(type) : undefined;
-  return [team, location, typeLabel].filter(Boolean).join(" · ");
+  return [team, location, roleTypeLabel(type)].filter(Boolean).join(" · ");
 }

@@ -645,6 +645,19 @@
     }
   }
 
+  .job-body h2 {
+    font-size: 1.35rem;
+    margin: 32px 0 12px;
+  }
+
+  .job-body h2:first-of-type {
+    margin-top: 8px;
+  }
+
+  .job-body .list-check {
+    margin-top: 4px;
+  }
+
   .list-check {
     display: grid;
     gap: 14px;
@@ -835,6 +848,16 @@
   .field.bad input,
   .field.bad select,
   .field.bad textarea {
+    border-color: var(--color-error-border);
+  }
+
+  .field input[type="file"] {
+    height: auto;
+    padding: 12px 14px;
+    cursor: pointer;
+  }
+
+  .field.bad input[type="file"] {
     border-color: var(--color-error-border);
   }
 
