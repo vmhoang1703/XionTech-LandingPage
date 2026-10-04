@@ -6,17 +6,11 @@ import {
   isValidEmail,
 } from "@/lib/contact/contact-rules";
 
-export type ApplicationField = "name" | "email" | "phone" | "note" | "cv";
+export type ApplicationField = "name" | "email" | "note";
 
 export type ApplicationErrors = Partial<Record<ApplicationField, string>>;
 
-export type ApplicationValues = {
-  name: string;
-  email: string;
-  phone: string;
-  note: string;
-  cv: { name: string; size: number } | null;
-};
+export type ApplicationValues = Record<ApplicationField, string>;
 
 export const JOB_ERRORS = {
   name: "Please enter your name.",
@@ -65,6 +59,7 @@ export function storedCvError(blob: {
     : JOB_ERRORS.cv;
 }
 
+/** Text fields only. The CV is checked with `cvError` (browser) or `storedCvError` (server). */
 export function validateApplication(
   values: ApplicationValues,
 ): ApplicationErrors {
@@ -75,10 +70,8 @@ export function validateApplication(
   if (!isValidEmail(email) || email.length > EMAIL_MAX_LENGTH) {
     errors.email = JOB_ERRORS.email;
   }
-  if (values.phone.length > TEXT_MAX_LENGTH) errors.phone = LENGTH_ERROR;
   if (values.note.replaceAll("\r\n", "\n").length > MESSAGE_MAX_LENGTH) {
     errors.note = JOB_ERRORS.note;
   }
-  if (!values.cv || cvError(values.cv)) errors.cv = JOB_ERRORS.cv;
   return errors;
 }

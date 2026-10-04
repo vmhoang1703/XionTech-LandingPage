@@ -18,9 +18,7 @@ const DOCX =
 const valid: ApplicationValues = {
   name: "Nam Tran",
   email: "nam@example.com",
-  phone: "",
   note: "",
-  cv: { name: "cv.pdf", size: 1000 },
 };
 
 describe("constants", () => {
@@ -138,16 +136,6 @@ describe("validateApplication", () => {
     );
   });
 
-  it("allows an empty phone and flags a phone over 200 characters", () => {
-    expect(validateApplication({ ...valid, phone: "" }).phone).toBeUndefined();
-    expect(
-      validateApplication({ ...valid, phone: "1".repeat(200) }).phone,
-    ).toBeUndefined();
-    expect(
-      validateApplication({ ...valid, phone: "1".repeat(201) }).phone,
-    ).toBe(LENGTH_ERROR);
-  });
-
   it("counts a CRLF in the note as one character", () => {
     const edge = "a\r\n".repeat(1000);
     expect(validateApplication({ ...valid, note: edge }).note).toBeUndefined();
@@ -156,27 +144,15 @@ describe("validateApplication", () => {
     );
   });
 
-  it("flags a missing CV", () => {
-    expect(validateApplication({ ...valid, cv: null }).cv).toBe(JOB_ERRORS.cv);
-  });
-
-  it("flags a wrong CV", () => {
-    expect(
-      validateApplication({ ...valid, cv: { name: "cv.png", size: 5 } }).cv,
-    ).toBe(JOB_ERRORS.cv);
-  });
-
   it("returns every error at once", () => {
     expect(
       Object.keys(
         validateApplication({
           name: "",
           email: "x",
-          phone: "",
           note: "a".repeat(2001),
-          cv: null,
         }),
       ).sort(),
-    ).toEqual(["cv", "email", "name", "note"]);
+    ).toEqual(["email", "name", "note"]);
   });
 });
