@@ -11,3 +11,10 @@ Task 2: green — npx vitest run studio/schemas/schemas.test.ts — 11 passed (1
 Task 2: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
 Task 2: complete (commits a30d632..e8034bc, diff verified)
 Task 3: dispatched (model sonnet, base e8034bc, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t3-report.md)
+Task 3: red — npx vitest run src/lib/careers/open-roles.test.ts — 7 failed (TypeError: getOpenRole is not a function)
+Task 3: green — npx vitest run src/lib/careers/open-roles.test.ts — 21 passed (21)
+Task 3: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 3: minor — src/lib/careers/open-roles.ts getOpenRole: `Array.isArray(role)` guard for a `[0]` query that cannot return an array (defensive branch)
+Task 3: minor — Code Map's type-label export for chips not added here; assigned to the hero task
+Task 3: complete (commits f94337f..466c257, diff verified)
+Task 4: dispatched (model sonnet, base 466c257, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t4-report.md)
