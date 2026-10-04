@@ -82,7 +82,7 @@ try {
     await ctx.close();
   }
   // Widths
-  for (const w of [1080, 900, 899, 640, 390]) {
+  for (const w of [1280, 1080, 900, 899, 640, 390]) {
     const p = await b.newPage({ viewport: { width: w, height: 900 } });
     await p.goto(`${BASE}/careers`, { waitUntil: "load" });
     await settle(p);
@@ -91,6 +91,13 @@ try {
     const photo = await box(culture.locator(".illo"));
     const benefits = p.locator("section").filter({ has: p.locator("h2", { hasText: "Why you" }) });
     log(`[${w}] culture stacked ${photo.y >= text.y + text.h} | benefits columns ${await cols(benefits.locator(".svc-grid"))} | life columns ${await cols(p.locator("#life .news-grid"))} | no sideways scroll ${await noSideways(p)}`);
+    const clip = await p.locator("#life .spot").first().evaluate((spot) => {
+      const s = spot.getBoundingClientRect();
+      const cap = spot.querySelector("b").getBoundingClientRect();
+      const illo = spot.querySelector(".illo").getBoundingClientRect();
+      return `frame ${Math.round(s.width)}x${Math.round(s.height)} | inner bottom ${Math.round(illo.bottom - s.bottom)}px past frame | caption inside ${cap.bottom <= s.bottom && cap.top >= s.top}`;
+    });
+    log(`[${w}] life ${clip}`);
     if (w === 390) await p.screenshot({ path: `${OUT}/careers-390.png`, fullPage: true });
     await p.close();
   }

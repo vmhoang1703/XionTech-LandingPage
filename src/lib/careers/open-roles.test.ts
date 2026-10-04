@@ -26,6 +26,24 @@ describe("getOpenRoles", () => {
     expect(query).toContain("order(title.en asc)");
   });
 
+  it("projects each role to flat strings: slug, title, team, location, type", async () => {
+    sanityFetchMock.mockResolvedValue([]);
+
+    await getOpenRoles();
+
+    const { query } = sanityFetchMock.mock.calls[0][0];
+    const projection = query.slice(query.indexOf("{"));
+    for (const line of [
+      '"slug": slug.current',
+      '"title": title.en',
+      '"team": team.en',
+      '"location": location.en',
+      "type",
+    ]) {
+      expect(projection).toContain(line);
+    }
+  });
+
   it("returns the roles from the fetch", async () => {
     const roles = [
       {

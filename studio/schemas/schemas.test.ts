@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { job } from "./job";
 import { post } from "./post";
 
@@ -56,6 +56,12 @@ describe("studio schemas", () => {
     expect(slug.type).toBe("slug");
     expect(slug.options?.source).toBe("title.en");
     expect(slug.validation).toBeTypeOf("function");
+    const required = vi.fn().mockReturnValue("required-rule");
+    const rule = { required };
+    expect((slug.validation as (r: typeof rule) => unknown)(rule)).toBe(
+      "required-rule",
+    );
+    expect(required).toHaveBeenCalledTimes(1);
   });
 
   it("has a job closed flag that starts false", () => {

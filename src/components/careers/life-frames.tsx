@@ -13,7 +13,7 @@ export function LifeFrames() {
         <div className="news-grid">
           {frames.map((caption) => (
             <div key={caption} className="spot aspect-4/3">
-              <div className="illo h-full">
+              <div className="illo h-full min-h-0">
                 <b>{caption}</b>
               </div>
             </div>
