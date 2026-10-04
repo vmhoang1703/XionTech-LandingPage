@@ -140,6 +140,9 @@ Sources: `EXPERIENCE.md` (Job page, Job application fields, State Patterns › J
 
 ## Implementation Notes
 
+- 2026-10-04: this worktree's `node_modules` is a junction to the main checkout's. Turbopack rejects it, so never run `npm run build`, `npm run dev` or `npm run test:smoke` here (pending, controller). Run tests with `npx vitest run <file>`. Run `npx next typegen` if `PageProps` types are missing. Commit with Conventional Commits and the trailers `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>` and `Claude-Session: https://claude.ai/code/session_0169ynHXpgbJUKDWC3nosnjr`. No push.
+- 2026-10-04: task reviews are skipped by the controller's rule for this run (one review layer inside the build); the ledger records each skip.
+
 ## Spec Change Log
 
 ## Review Triage Log
