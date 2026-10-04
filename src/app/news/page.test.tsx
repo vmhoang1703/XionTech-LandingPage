@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
@@ -71,6 +71,19 @@ describe("NewsPage", () => {
     expect(cards[0].textContent).toContain("Story 1");
     expect(screen.getByTestId("capture-demo")).toBeTruthy();
     expect(screen.queryByText(/\[Placeholder\]|sample/i)).toBeNull();
+  });
+
+  it("passes each story's category to the filter, so a chip shows only its stories", async () => {
+    await renderPage([post(1, "product"), post(2, "team"), post(3, "company")]);
+
+    fireEvent.click(screen.getByRole("button", { name: "Team" }));
+
+    expect(
+      screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent),
+    ).toEqual(["Story 2"]);
+    expect(document.querySelector("[aria-live]")?.textContent).toBe(
+      "Showing 1 story",
+    );
   });
 
   it("keeps the page up when the fetch fails: logs it and shows the empty panel", async () => {
