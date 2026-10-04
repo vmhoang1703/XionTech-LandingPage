@@ -17,4 +17,6 @@
 [641] panel CTA visible false | header CTA visible true
 [640] Menu visible true | panel CTA visible true | header CTA visible false
 [1080] Menu visible true | panel CTA visible false | header CTA visible true
+[375 /demo tap Book a demo] expanded false | focus div#form | #form top 72
+[375 /demo Enter Book a demo] expanded false | focus div#form | #form top 72
 [800 reduced] open after 50ms: panel visible true | running animations 0
