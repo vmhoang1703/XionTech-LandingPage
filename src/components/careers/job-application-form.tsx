@@ -52,6 +52,9 @@ function withoutError(errors: JobErrors, field: JobField): JobErrors {
   return next;
 }
 
+/** The SDK error for the token route's rate-limit answer (@vercel/blob 2.8.0). */
+const UPLOAD_RATE_LIMITED = "Vercel Blob: Missing presignedUrlPayload";
+
 /** Lower-cased extension of a file the visitor chose; `cvError` has checked it. */
 const extensionOf = (name: string) =>
   name.slice(name.lastIndexOf(".") + 1).toLowerCase();
@@ -145,9 +148,13 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
     let pathname: string;
     try {
       pathname = await uploadCv(file);
-    } catch {
+    } catch (error) {
       setStatus("idle");
-      setFailure("send");
+      setFailure(
+        error instanceof Error && error.message === UPLOAD_RATE_LIMITED
+          ? "rate"
+          : "send",
+      );
       return;
     }
 

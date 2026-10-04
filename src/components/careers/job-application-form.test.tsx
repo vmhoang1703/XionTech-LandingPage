@@ -309,6 +309,21 @@ describe("JobApplicationForm failures", () => {
     expectKept(file);
   });
 
+  it("shows the rate message and keeps values when the upload limit is used up", async () => {
+    // @vercel/blob 2.8.0 throws this for the token route's rate-limit answer.
+    uploadMock.mockRejectedValue(
+      new Error("Vercel Blob: Missing presignedUrlPayload"),
+    );
+    const file = pdf();
+    render(<JobApplicationForm slug="role" />);
+    fillValid(file);
+    submit();
+    await settle();
+    expect(screen.getByRole("alert").textContent).toBe(RATE_ERROR);
+    expect(fetchMock).not.toHaveBeenCalled();
+    expectKept(file);
+  });
+
   it("re-uploads on retry after an upload failure", async () => {
     uploadMock.mockRejectedValueOnce(new Error("blob down"));
     fetchMock.mockReturnValue(reply(200, { ok: true }));

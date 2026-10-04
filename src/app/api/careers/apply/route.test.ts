@@ -137,7 +137,7 @@ describe("POST /api/careers/apply", () => {
 
   it.each([
     // The missing store id also skips the CV delete, with its own log line.
-    ["BLOB_STORE_ID", 2],
+    ["BLOB_STORE_ID", 1],
     ["BLOB_WEBHOOK_PUBLIC_KEY", 1],
   ])("answers 500 when %s is missing", async (name, lines) => {
     vi.stubEnv(name, "");
@@ -165,7 +165,7 @@ describe("POST /api/careers/apply", () => {
     expect(response.status).toBe(400);
     expect(await response.json()).toEqual({ error: "send" });
     expect(getOpenRoleMock).toHaveBeenCalledWith("backend-engineer");
-    expect(checkRateLimitsMock).not.toHaveBeenCalled();
+    expect(checkRateLimitsMock).toHaveBeenCalled();
   });
 
   it("answers 502 and logs the class when the role lookup throws", async () => {
@@ -187,6 +187,7 @@ describe("POST /api/careers/apply", () => {
       "203.0.113.9",
       "nam@example.test",
     );
+    expect(getOpenRoleMock).not.toHaveBeenCalled();
     expect(getMock).not.toHaveBeenCalled();
   });
 
@@ -286,33 +287,13 @@ describe("POST /api/careers/apply", () => {
     });
   });
 
-  describe("deletes the uploaded CV when no mail is sent", () => {
+  describe("deletes the uploaded CV when no mail is sent after the rate limits", () => {
     const failures: [string, unknown, () => void][] = [
-      [
-        "a bad body with a CV path",
-        { ...valid, phone: "1".repeat(201) },
-        () => {},
-      ],
-      ["a honeypot", { ...valid, website: "http://spam" }, () => {}],
-      ["field errors", { ...valid, name: "" }, () => {}],
-      [
-        "a missing mail variable",
-        valid,
-        () =>
-          getDeliveryConfigMock.mockImplementation(() => {
-            throw new Error("GMAIL_USER is not set");
-          }),
-      ],
       ["a closed role", valid, () => getOpenRoleMock.mockResolvedValue(null)],
       [
         "a failed role lookup",
         valid,
         () => getOpenRoleMock.mockRejectedValue(new Error("x")),
-      ],
-      [
-        "a rate limit",
-        valid,
-        () => checkRateLimitsMock.mockResolvedValue(false),
       ],
       ["a wrong stored CV", valid, () => getMock.mockResolvedValue(null)],
       [
@@ -347,32 +328,42 @@ describe("POST /api/careers/apply", () => {
       ["no CV path", { ...valid, cv: undefined }],
       ["a CV path outside cv/", { ...valid, cv: "other/x.pdf" }],
       ["a body that is not JSON", "{nope"],
+      ["a bad body with a CV path", { ...valid, phone: "1".repeat(201) }],
+      ["a honeypot", { ...valid, website: "http://spam" }],
+      ["field errors", { ...valid, name: "" }],
     ])("deletes nothing for %s", async (_label, body) => {
       await POST(post(body));
       expect(delMock).not.toHaveBeenCalled();
     });
 
+    it.each([
+      [
+        "a missing mail variable",
+        () =>
+          getDeliveryConfigMock.mockImplementation(() => {
+            throw new Error("GMAIL_USER is not set");
+          }),
+      ],
+      ["a rate limit", () => checkRateLimitsMock.mockResolvedValue(false)],
+    ])("deletes nothing after %s", async (_label, arrange) => {
+      arrange();
+      await POST(post(valid));
+      expect(delMock).not.toHaveBeenCalled();
+    });
+
     it("keeps the answer and logs only the error class when the delete fails", async () => {
-      checkRateLimitsMock.mockResolvedValue(false);
+      getOpenRoleMock.mockResolvedValue(null);
       delMock.mockRejectedValue(
         new TypeError("cv/application-abc123.pdf gone"),
       );
       const response = await POST(post(valid));
-      expect(response.status).toBe(429);
-      expect(await response.json()).toEqual({ error: "rate" });
+      expect(response.status).toBe(400);
+      expect(await response.json()).toEqual({ error: "send" });
       expect(errorSpy).toHaveBeenCalledTimes(1);
       const line = String(errorSpy.mock.calls[0]);
       expect(line).toContain("CV delete failed");
       expect(line).toContain("TypeError");
       expect(line).not.toContain("cv/");
-    });
-
-    it("logs the missing store id and deletes nothing", async () => {
-      vi.stubEnv("BLOB_STORE_ID", "");
-      await POST(post({ ...valid, website: "http://spam" }));
-      expect(delMock).not.toHaveBeenCalled();
-      expect(errorSpy).toHaveBeenCalledTimes(1);
-      expect(String(errorSpy.mock.calls[0])).toContain("BLOB_STORE_ID");
     });
   });
 });

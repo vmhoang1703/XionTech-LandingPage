@@ -130,11 +130,14 @@ describe("POST /api/careers/cv-upload", () => {
     expect(handleUploadMock).not.toHaveBeenCalled();
   });
 
-  it("answers 429 when the upload limit is used up", async () => {
+  it("answers 200 with no presigned URL when the upload limit is used up", async () => {
     checkUploadLimitMock.mockResolvedValue(false);
     const response = await POST(post(tokenBody("cv/application.pdf")));
-    expect(response.status).toBe(429);
-    expect(await response.json()).toEqual({ error: "rate" });
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({
+      error: "rate",
+      presignedUrlPayload: null,
+    });
     expect(checkUploadLimitMock).toHaveBeenCalledWith("203.0.113.9");
     expect(handleUploadMock).not.toHaveBeenCalled();
   });

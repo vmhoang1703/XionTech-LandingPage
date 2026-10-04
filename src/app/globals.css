@@ -852,6 +852,7 @@
   }
 
   .field input[type="file"] {
+    min-width: 0;
     height: auto;
     padding: 12px 14px;
     cursor: pointer;

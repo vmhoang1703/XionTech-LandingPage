@@ -1,8 +1,8 @@
 import { del, get } from "@vercel/blob";
 import { ipAddress } from "@vercel/functions";
 import { JOB_ERRORS, storedCvError } from "@/lib/careers/application-rules";
-import { isCvPath, parseApplication } from "@/lib/careers/application";
-import { getBlobConfig, getBlobStoreId } from "@/lib/careers/cv-storage";
+import { parseApplication } from "@/lib/careers/application";
+import { getBlobConfig } from "@/lib/careers/cv-storage";
 import { getOpenRole } from "@/lib/careers/open-roles";
 import {
   checkRateLimits,
@@ -28,6 +28,11 @@ interface StoredCv {
   size: number;
   contentType: string;
   content: Buffer;
+}
+
+interface StoredCvRef {
+  pathname: string;
+  storeId: string;
 }
 
 /** The mail and Blob settings, or null after one log line naming the missing variable. */
@@ -72,24 +77,11 @@ async function readStoredCv(
 
 /**
  * Delete the uploaded CV of an application that was not mailed (decision A10).
- * Only a path the token route can issue is deleted. A failure is logged with
- * the error class only and never changes the answer.
+ * A failure is logged with the error class only and never changes the answer.
  */
-async function discardCv(body: unknown): Promise<void> {
-  const cv =
-    typeof body === "object" && body !== null && "cv" in body
-      ? body.cv
-      : undefined;
-  if (!isCvPath(cv)) return;
-  let storeId: string;
+async function discardCv({ pathname, storeId }: StoredCvRef): Promise<void> {
   try {
-    storeId = getBlobStoreId();
-  } catch (error) {
-    console.error("Job application: CV delete skipped:", String(error));
-    return;
-  }
-  try {
-    await del(cv, {
+    await del(pathname, {
       storeId,
       abortSignal: AbortSignal.timeout(DELETE_TIMEOUT_MS),
     });
@@ -98,10 +90,16 @@ async function discardCv(body: unknown): Promise<void> {
   }
 }
 
+interface Outcome {
+  /** Set once the rate limits passed: only then may the CV be deleted. */
+  cv?: StoredCvRef;
+  sent: boolean;
+}
+
 async function handle(
   body: unknown,
   request: Request,
-  outcome: { sent: boolean },
+  outcome: Outcome,
 ): Promise<Response> {
   const parsed = parseApplication(body);
   if (!parsed.ok && "bad" in parsed) {
@@ -116,6 +114,12 @@ async function handle(
   }
 
   const { application } = parsed;
+  // Rate limits first: they guard the Sanity lookup and the CV delete.
+  if (!(await checkRateLimits(ipAddress(request), application.email))) {
+    return Response.json({ error: "rate" }, { status: 429 });
+  }
+  outcome.cv = { pathname: application.cv, storeId: config.storeId };
+
   let role;
   try {
     role = await getOpenRole(application.slug);
@@ -124,10 +128,6 @@ async function handle(
     return Response.json(SEND_FAILED, { status: 502 });
   }
   if (!role) return Response.json(SEND_FAILED, { status: 400 });
-
-  if (!(await checkRateLimits(ipAddress(request), application.email))) {
-    return Response.json({ error: "rate" }, { status: 429 });
-  }
 
   let cv;
   try {
@@ -157,11 +157,13 @@ async function handle(
 
 export async function POST(request: Request): Promise<Response> {
   const body = await readBody(request);
-  const outcome = { sent: false };
+  const outcome: Outcome = { sent: false };
   try {
     return await handle(body, request, outcome);
   } finally {
-    // A CV is kept only with a sent application (A4); any other end deletes it.
-    if (!outcome.sent) await discardCv(body);
+    // A CV is kept only with a sent application (A4). An unsent one is deleted
+    // only after the rate limits passed, so the delete cannot be driven freely
+    // (A10 part 4, narrowed 2026-10-04).
+    if (outcome.cv && !outcome.sent) await discardCv(outcome.cv);
   }
 }

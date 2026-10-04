@@ -74,7 +74,10 @@ export async function POST(request: Request): Promise<Response> {
   if (!config) return Response.json(SEND_FAILED, { status: 500 });
 
   if (!(await checkUploadLimit(ipAddress(request)))) {
-    return Response.json({ error: "rate" }, { status: 429 });
+    // 200 with no presigned URL: the Blob SDK hides a 429 behind one generic
+    // error, but throws "Missing presignedUrlPayload" for this body, so the
+    // form can show the rate message.
+    return Response.json({ error: "rate", presignedUrlPayload: null });
   }
 
   const allowedContentTypes = [CV_TYPES[parsed.extension]];
