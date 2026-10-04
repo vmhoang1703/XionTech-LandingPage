@@ -35,6 +35,8 @@ export const job = {
       initialValue: false,
     },
     localized("description", "Description", "array"),
+    localized("responsibilities", "What you'll do", "stringList"),
+    localized("requirements", "What you bring", "stringList"),
   ],
   // Lists in the Studio show the English title instead of "Untitled".
   preview: { select: { title: "title.en", subtitle: "team.en" } },
