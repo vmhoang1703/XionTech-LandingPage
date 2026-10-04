@@ -817,3 +817,28 @@ Template:
   server checks, rate limit, send-failure state) and every story it touches (3.7, 2.2, 2.3, 2.4, AC-NAV-2).
 - **AI got it wrong?** Yes: the first version of the form copied the redesign's phone check, which let strings
   like "(------" through, and wrote the log's rules too vaguely for a developer to build or test from.
+
+## 2026-10-04 — ENH-002 to ENH-005: Home hero, header, partners, case studies, Why XionTechs bento, section order
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers), headless Edge
+  checks (nothing shown on screen), plus a screen recording and two reference designs from Amber
+- **Prompt / task:** Several rounds of Amber's review of the prototype Home, logged in
+  `_bmad-output/prototype-enhancement/enhancement-log.md` as ENH-002 (hero, stats with count-up, silk,
+  header: Products as a plain link, underline-only hover on the word, hamburger icon), ENH-003 (partner
+  logo strip and case study placeholders), ENH-004 (tighter section spacing, heading-first reveal, Why
+  XionTechs rebuilt as a four-card bento with a "+3" hover reveal from Amber's reference HTML) and ENH-005
+  (products section moved below the process). Also `wireframes.md`, a text wireframe of every page,
+  generated from the prototype.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit:
+  content could stay invisible when the page opened below a section heading; a second tap could not
+  restart the partner strip, each logo was its own Tab stop, Enter or Space did nothing and wide screens
+  showed a gap in the loop; "+3" closed itself on phones, ignored taps on iPhone and could be clipped at
+  some widths; the count-up started during the fade-in; the phone menu's focus trap let Tab escape; plus
+  dead front-door and mega-menu styles, a motto marked up as a heading, clocks showing "--:--" without
+  JavaScript and three identical case study headings. Developers' follow-up: the UX parity header
+  surface still probes the removed mega menu.
+- **AI got it wrong?** Yes, several times. It first read "hovering on the padding" as a dead strip and
+  made the menu items full height, which Amber rejected; the fix was to remove the side padding so the
+  hover is exactly the word. Its first Why XionTechs illustrations were too busy and were removed. A
+  cleanup regex clipped one CSS rule (caught by comparing every selector with the last commit), and the
+  wireframe generator skipped the logo strip because its class contained "track".

@@ -9,6 +9,7 @@ made to it. Developers build from the prototype; the log tells them what changed
 | --- | --- |
 | `prototype/` | The prototype: static HTML, CSS and JS. Open `prototype/index.html` in a browser (double-click, no build step). |
 | `enhancement-log.md` | Every change made to the prototype since 2026-10-03: what, why, status and the stories it touches. |
+| `wireframes.md` | Text wireframe of every page: sections in order, with their headings, text, image blocks, buttons, links and form fields. |
 
 The UX specs (`_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md`
 and `EXPERIENCE.md`), the PRD and the epics are not edited for prototype changes. The log is the

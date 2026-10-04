@@ -1,7 +1,7 @@
 /* XionTechs prototype: shared behaviour. Production would render header/footer/news server-side for SEO. */
 (function(){
   const root=document.documentElement;
-  root.classList.remove('no-js');
+  root.classList.remove('no-js');root.classList.add('js-anim');
   const page=document.body.dataset.page||'';
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
@@ -14,23 +14,16 @@
 <header class="nav"><div class="wrap nav-in">
   <a class="logo" href="index.html" aria-label="XionTechs home"><img src="assets/logo.png" alt="XionTechs, Get IT Done"></a>
   <nav class="menu" id="menu" aria-label="Main">
-    <div class="dd"><button class="${page==='products'?'current':''}" aria-expanded="false"><span data-vi="Sản phẩm">Products</span></button>
-      <div class="mega">
-        <a href="products.html#pxp"><span><strong>PXP</strong><small data-vi="Parent eXperience Place. Cả ngày học của con trong tay phụ huynh.">Parent eXperience Place. The school day in every parent's pocket.</small><small class="for" data-vi="Phụ huynh">Parents</small></span></a>
-        <a href="products.html#lxp"><span><strong>LXP</strong><small data-vi="Learner eXperience Place. Bài học, bài tập và tiến độ cho học sinh.">Learner eXperience Place. Lessons, tasks and progress for students.</small><small class="for" data-vi="Học sinh">Students</small></span></a>
-        <a href="products.html#sxp"><span><strong>SXP</strong><small data-vi="Staff eXperience Place. Một không gian làm việc, giao diện theo vai trò.">Staff eXperience Place. One workspace, role-based views.</small><small class="for" data-vi="Nhân viên · Giáo viên · Lãnh đạo">Staff · Teachers · Leaders</small></span></a>
-        <a href="products.html#iot"><span><strong data-vi="Quản lý thiết bị IoT">IoT Device Management</strong><small data-vi="Điều khiển thiết bị trong trường từ một màn hình.">Control campus devices from one screen.</small><small class="for" data-vi="Nhân viên và cơ sở vật chất">School staff and facilities</small></span></a>
-        <div class="foot"><span data-vi="Nhiều sản phẩm mới sắp ra mắt.">More products are on the way.</span><a href="products.html"><span data-vi="Tất cả sản phẩm">All products</span></a></div>
-      </div></div>
+    <a href="products.html"${cur('products')} data-vi="Sản phẩm">Products</a>
     <a href="services.html"${cur('services')} data-vi="Dịch vụ">Services</a>
     <a href="news.html"${cur('news')} data-vi="Tin tức">News</a>
     <a href="about.html"${cur('about')} data-vi="Về chúng tôi">About</a>
     <a href="careers.html"${cur('careers')} data-vi="Tuyển dụng">Careers</a>
   </nav>
   <div class="tools">
+    <button class="menu-btn burger" id="burger" aria-controls="menu" aria-expanded="false"><i class="ph ph-list" aria-hidden="true"></i><span class="sr-only" data-vi="Menu">Menu</span></button>
     <div class="lang"><button class="lang-btn" id="langBtn" aria-expanded="false" aria-controls="langList"><span class="sr-only" data-vi="Ngôn ngữ: ">Language: </span><span id="langCode">EN</span><i class="ph ph-caret-down" aria-hidden="true"></i></button>
       <ul class="lang-list" id="langList" hidden><li><button type="button" data-lang="en" lang="en">EN<span class="sr-only"> English</span></button></li><li><button type="button" data-lang="vi" lang="vi">VI<span class="sr-only"> Tiếng Việt</span></button></li></ul></div>
-    <button class="menu-btn burger" id="burger" aria-controls="menu" aria-expanded="false"><span data-vi="Menu">Menu</span></button>
   </div>
 </div></header>`;
   const footer=`
@@ -92,7 +85,7 @@
   /* language dropdown: opens on click, closes on choice, Escape or a click outside */
   const langBtn=document.getElementById('langBtn'),langList=document.getElementById('langList');
   const setLangOpen=o=>{if(!langBtn)return;langList.hidden=!o;langBtn.setAttribute('aria-expanded',o)};
-  if(langBtn){langBtn.onclick=e=>{e.stopPropagation();document.querySelectorAll('.dd.open').forEach(d=>{d.classList.remove('open');d.firstElementChild.setAttribute('aria-expanded','false')});setLangOpen(langList.hidden)};
+  if(langBtn){langBtn.onclick=e=>{e.stopPropagation();setLangOpen(langList.hidden)};
     langBtn.parentElement.addEventListener('focusout',e=>{if(!e.currentTarget.contains(e.relatedTarget))setLangOpen(false)});
     document.addEventListener('click',e=>{if(!e.target.closest('.lang'))setLangOpen(false)});
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!langList.hidden){setLangOpen(false);langBtn.focus();e.stopImmediatePropagation()}})}
@@ -100,23 +93,13 @@
   setLang(store.get('xt3-lang')||'en');
 
   /* ---------- menus ---------- */
-  const dds=[...document.querySelectorAll('.dd')];
-  const closeAll=except=>dds.forEach(d=>{if(d!==except){d.classList.remove('open');d.firstElementChild.setAttribute('aria-expanded','false')}});
-  dds.forEach(d=>{const b=d.firstElementChild;let byHover=false,closeT;
-    b.addEventListener('click',e=>{e.stopPropagation();setLangOpen(false);const isOpen=d.classList.contains('open');const o=isOpen&&byHover?true:!isOpen;byHover=false;closeAll(d);d.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
-    if(matchMedia('(hover:hover) and (min-width:1081px)').matches){
-      d.addEventListener('mouseenter',()=>{clearTimeout(closeT);if(!d.classList.contains('open'))byHover=true;closeAll(d);d.classList.add('open');b.setAttribute('aria-expanded','true')});
-      d.addEventListener('mouseleave',()=>{closeT=setTimeout(()=>{byHover=false;d.classList.remove('open');b.setAttribute('aria-expanded','false')},150)})}
-  });
-  document.addEventListener('click',e=>{if(!e.target.closest('.dd'))closeAll()});
-  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const openDd=dds.find(d=>d.classList.contains('open'));closeAll();
-    if(openDd&&openDd.contains(document.activeElement))openDd.firstElementChild.focus();
+  document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;
     const m=document.getElementById('menu');if(m&&m.classList.contains('mobile-open')){setMenuOpen(false);document.getElementById('burger').focus()}});
   const menu=document.getElementById('menu'),burger=document.getElementById('burger');
-  function setMenuOpen(o){menu.classList.toggle('mobile-open',o);burger.setAttribute('aria-expanded',o);root.style.overflow=o?'hidden':''}
+  function setMenuOpen(o){menu.classList.toggle('mobile-open',o);burger.setAttribute('aria-expanded',o);burger.querySelector('i').className='ph '+(o?'ph-x':'ph-list');root.style.overflow=o?'hidden':''}
   burger.onclick=()=>setMenuOpen(!menu.classList.contains('mobile-open'));
   document.addEventListener('keydown',e=>{if(e.key!=='Tab'||!menu.classList.contains('mobile-open'))return;
-    const f=[document.querySelector('.logo'),langBtn,...(langList&&!langList.hidden?langList.querySelectorAll('button'):[]),burger,...menu.querySelectorAll('a,button')].filter(el=>el&&el.offsetParent!==null);if(!f.length)return;
+    const f=[document.querySelector('.logo'),...menu.querySelectorAll('a,button'),burger,langBtn,...(langList&&!langList.hidden?langList.querySelectorAll('button'):[])].filter(el=>el&&el.offsetParent!==null);if(!f.length)return;
     const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}});
 
   /* ---------- screenshot slots: click / drop / paste, saved in this browser ---------- */
@@ -151,19 +134,51 @@
     if(!target)return;const item=[...((e.clipboardData||{}).items||[])].find(i=>i.type.startsWith('image/'));
     if(item){e.preventDefault();put(target,item.getAsFile())}});
 
+  /* ---------- partner logo strip: a copy of the set makes the loop seamless; the copy is hidden from
+     screen readers and keyboards and follows the original when a logo is added or removed ---------- */
+  document.querySelectorAll('.logo-marquee').forEach(mq=>{
+    const track=mq.querySelector('.logo-track'),set=track.querySelector('.logo-set');
+    set.querySelectorAll('.slot').forEach(s=>s.tabIndex=-1); /* prototype image slots: still clickable for uploads, not Tab stops */
+    const copy=()=>{track.querySelectorAll('.logo-copy').forEach(n=>n.remove());for(let i=0;i<2;i++){const c=set.cloneNode(true);c.classList.add('logo-copy');c.removeAttribute('aria-label');c.setAttribute('aria-hidden','true');c.inert=true;
+      c.querySelectorAll('[tabindex],[role],[aria-label],input,.rm').forEach(n=>{if(n.matches('input,.rm'))n.remove();else{n.removeAttribute('tabindex');n.removeAttribute('role');n.removeAttribute('aria-label')}});track.appendChild(c)}};
+    copy();new MutationObserver(copy).observe(set,{subtree:true,childList:true,attributes:true,attributeFilter:['src']});
+    /* pause: hover and keyboard focus (CSS), tap or click toggles, and the hero's Pause motion stops it too */
+    mq.addEventListener('click',e=>{if(!e.target.closest('.slot'))mq.classList.toggle('paused')});
+    mq.addEventListener('keydown',e=>{if(e.target===mq&&(e.key==='Enter'||e.key===' ')){e.preventDefault();mq.classList.toggle('paused')}});
+    if(store.get('xt3-motion')==='off'&&document.querySelector('.motion-toggle'))mq.classList.add('motion-off');
+  });
+
+  /* ---------- Why XionTechs "+3": hover, focus or a tap opens the other industries on the same line ---------- */
+  document.querySelectorAll('.w-more').forEach(w=>{const b=w.querySelector('.w-more-trigger'),l=w.querySelector('.w-more-list');
+    const fit=()=>w.style.setProperty('--more-w',Math.ceil(l.scrollWidth)+'px');fit();addEventListener('resize',fit);document.addEventListener('xt-lang',fit);
+    b.addEventListener('click',()=>{const o=!w.classList.contains('open');w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
+    w.addEventListener('focusout',e=>{if(!w.contains(e.relatedTarget)){w.classList.remove('open');b.setAttribute('aria-expanded','false')}})});
+
   /* ---------- reveal, spotlight, tilt ---------- */
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const t=e.target;t.classList.add('in');io.unobserve(t);setTimeout(()=>{t.style.transitionDelay=''},1200)}}),{threshold:.12});
-  document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*70+'ms';io.observe(el)});
+  /* reveal: in each section the heading appears first; the rest of the section follows it in turn, and never before it */
+  const headOf=el=>{const sec=el.closest('section');if(!sec)return null;const h=sec.querySelector('h1,h2');if(!h)return null;return h.classList.contains('reveal')?h:h.closest('.reveal')};
+  const waiting=new Map();
+  const showIn=(el,ms)=>setTimeout(()=>el.classList.add('in'),ms);
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;io.unobserve(t);const hd=headOf(t);
+    const headIn=h=>{if(h.dataset.shown)return;showIn(h,0);io.unobserve(h);h.dataset.shown=Date.now();h.dataset.next=0;(waiting.get(h)||[]).forEach(el=>showIn(el,450+(h.dataset.next++)*160));waiting.delete(h)};
+    if(!hd||hd===t||t.contains(hd)){if(hd)headIn(hd);else showIn(t,0)}
+    else{if(!hd.dataset.shown&&hd.getBoundingClientRect().bottom<0)headIn(hd);
+      if(hd.dataset.shown){const base=+hd.dataset.shown+450-Date.now();showIn(t,base>0?base+(hd.dataset.next++)*160:120)}
+      else{if(!waiting.has(hd))waiting.set(hd,[]);waiting.get(hd).push(t)}}}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   document.querySelectorAll('.spot').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')}));
   document.querySelectorAll('.devices').forEach(dev=>{const tilt=dev.querySelector('.tilt');if(!tilt||reduce||!matchMedia('(hover:hover)').matches)return;
     dev.addEventListener('pointermove',e=>{const r=dev.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;tilt.style.transform=`rotateY(${x*8}deg) rotateX(${-y*6}deg)`});
     dev.addEventListener('pointerleave',()=>tilt.style.transform='')});
 
   /* ---------- stats count-up ---------- */
+  /* numbers start at 0 and count up once they are on screen (after the fade-in); reduced motion shows the final number */
+  const show=(el,v)=>{el.innerHTML=v+'<em>'+(el.dataset.suffix||'')+'</em>'};
   const sio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;sio.unobserve(e.target);
-    const el=e.target,to=+el.dataset.count,suf=el.dataset.suffix||'';if(reduce){el.innerHTML=to+'<em>'+suf+'</em>';return}
-    const t0=performance.now();(function step(now){const p=Math.min(1,(now-t0)/1400),v=Math.round(to*(1-Math.pow(1-p,3)));el.innerHTML=v+'<em>'+suf+'</em>';if(p<1)requestAnimationFrame(step)})(t0)}),{threshold:.6});
-  document.querySelectorAll('[data-count]').forEach(el=>sio.observe(el));
+    const el=e.target,to=+el.dataset.count,blk=el.closest('.reveal');
+    const run=()=>setTimeout(()=>{const t0=performance.now();(function step(now){const p=Math.min(1,(now-t0)/1800);show(el,Math.round(to*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(step)})(t0)},900);
+    if(!blk||blk.classList.contains('in'))run();else{const mo=new MutationObserver(()=>{if(blk.classList.contains('in')){mo.disconnect();run()}});mo.observe(blk,{attributes:true,attributeFilter:['class']})}}),{threshold:.5});
+  if(!reduce)document.querySelectorAll('[data-count]').forEach(el=>{show(el,0);sio.observe(el)});
 
   /* ---------- 4-D flow lights up when seen ---------- */
   const fio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('lit');fio.unobserve(e.target)}}),{threshold:.3});
@@ -271,7 +286,7 @@ void main(){
  float diff=clamp(dot(n,L),0.,1.);float spec=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),28.);
  vec3 col=mix(fold,base,smoothstep(.25,.95,diff));col+=sheen*spec*.55;
  float th=abs(sin(hc*7.5+p.x*.35));th=1.-smoothstep(0.,.045,th);col=mix(col,thread,th*(.35+.4*diff));
- float m=smoothstep(.30,.95,uv.x+uv.y*.10+hc*.07);m=max(m,smoothstep(.55,0.,uv.y)*smoothstep(.15,.7,uv.x)*.9);
+ float m=.35+.65*smoothstep(.15,.85,uv.x+uv.y*.08+hc*.06);
  gl_FragColor=vec4(mix(bg,col,m),1.);}`;
     const sh=(type,src)=>{const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s};
     const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);
@@ -290,7 +305,7 @@ void main(){
     const label=()=>{if(!btn)return;const vi=root.lang==='vi',txt=paused?(vi?'Chạy chuyển động':'Play motion'):(vi?'Tạm dừng chuyển động':'Pause motion');
       btn.querySelector('i').className='ph '+(paused?'ph-play':'ph-pause');btn.querySelector('span').textContent=txt};
     const kick=()=>{if(!raf&&!paused&&vis){prev=performance.now();raf=requestAnimationFrame(loop)}};
-    if(btn)btn.onclick=()=>{paused=!paused;store.set('xt3-motion',paused?'off':'on');label();kick()};
+    if(btn)btn.onclick=()=>{paused=!paused;store.set('xt3-motion',paused?'off':'on');label();kick();document.querySelectorAll('.logo-marquee').forEach(m=>m.classList.toggle('motion-off',paused))};
     document.addEventListener('xt-lang',label);
     new IntersectionObserver(es=>{vis=es[0].isIntersecting;kick()}).observe(cv);
     function loop(now){const dt=Math.min((now-prev)/1000,.1);prev=now;last+=dt*.35;draw(last);raf=(!paused&&vis)?requestAnimationFrame(loop):0}
