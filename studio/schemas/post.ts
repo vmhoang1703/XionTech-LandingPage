@@ -16,4 +16,6 @@ export const post = {
     localized("excerpt", "Excerpt", "text"),
     localized("body", "Body", "array"),
   ],
+  // Lists in the Studio show the English title instead of "Untitled".
+  preview: { select: { title: "title.en", subtitle: "publishedAt" } },
 };

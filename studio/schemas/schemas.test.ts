@@ -64,6 +64,17 @@ describe("studio schemas", () => {
     expect(required).toHaveBeenCalledTimes(1);
   });
 
+  it("shows the English title in the Studio lists, not Untitled", () => {
+    const preview = (schema: unknown) =>
+      (schema as { preview?: { select?: Record<string, string> } }).preview
+        ?.select;
+    expect(preview(job)).toEqual({ title: "title.en", subtitle: "team.en" });
+    expect(preview(post)).toEqual({
+      title: "title.en",
+      subtitle: "publishedAt",
+    });
+  });
+
   it("has a job closed flag that starts false", () => {
     const closed = findField(job, "closed") as Field & {
       initialValue?: boolean;

@@ -95,21 +95,21 @@ Sources: `EXPERIENCE.md` (Component Patterns › Role card, Spotlight card, Medi
 | Culture | width 900px or less | — | text and photo frame stack in one column | — | EXPERIENCE.md Responsive | ✅ Chrome: stacks below 900px (899 yes, 900 no; the site's shared `.split` switches at 900) |
 | Benefits | page load | — | mist linen surface; "Why you'll grow here."; 4 cards with icons; variants feature (1st) and navy (3rd) | — | CAP-1, mockup | ✅ Chrome 1280: mist linen, 4 cards, feature (1st) and navy (3rd) |
 | Benefits | width 1080px / 640px | — | 4 → 2 → 1 columns | — | EXPERIENCE.md Responsive (services grid) | ✅ Chrome: 4 columns at 1280/1080, 2 at 900/899/640, 1 at 390 (shared Story 3.5 `.svc-grid`: 1 column below 640) |
-| Role card | roles open | — | glass card: title in display face, then team · location · work type in muted text, "View and apply" with arrow on the right | — | CAP-2, DESIGN.md Role card | not walkable yet: no published role with a slug (decision A8, lead step after merge); test: card markup |
-| Role card | click anywhere on the card | mouse, touch, pen | opens `/careers/<slug>` | — | CAP-2, EXPERIENCE.md Role card | not walkable yet (as above); test: one link to `/careers/<slug>` |
-| Role card | Tab, then Enter | keyboard | one tab stop per card; 2px focus ring around the card; Enter opens the job page | — | AC-A11Y-2, AC-A11Y-4, T9 | not walkable yet (as above); test: one link per card, no nested control |
+| Role card | roles open | — | glass card: title in display face, then team · location · work type in muted text, "View and apply" with arrow on the right | — | CAP-2, DESIGN.md Role card | ✅ dev site 2026-10-04: title in Unbounded, meta "Engineering" (location and type empty in Sanity), "View and apply" with arrow |
+| Role card | click anywhere on the card | mouse, touch, pen | opens `/careers/<slug>` | — | CAP-2, EXPERIENCE.md Role card | ✅ dev site: click on the meta text at 1280 and touch tap at 390 open `/careers/placeholder-sample-job` (Not found until Story 6.6); pen not checked |
+| Role card | Tab, then Enter | keyboard | one tab stop per card; 2px focus ring around the card; Enter opens the job page | — | AC-A11Y-2, AC-A11Y-4, T9 | ✅ dev site: one tab stop, `:focus-visible`, solid 2px ring with 3px offset; Enter opens the job URL |
 | Role card | screen reader | — | one link whose name holds title, meta and "View and apply"; no nested link or button | — | AC-A11Y-4 | test: link name holds title, meta and "View and apply"; no nested link or button |
-| Role card | hover | mouse | lifts 2px with shadow; arrow moves 4px right | 0.3–0.5s | DESIGN.md Role card, mockup `.link-arrow` | not walkable yet (as above); CSS ported from the mockup |
-| Role card | hover | touch, pen | no lift (hover-capable devices only) | — | EXPERIENCE.md pointer effects | not walkable yet (as above); hover rules sit under `(hover: hover)` |
+| Role card | hover | mouse | lifts 2px with shadow; arrow moves 4px right | 0.3–0.5s | DESIGN.md Role card, mockup `.link-arrow` | ✅ dev site 1280: lifts 2px with shadow, arrow moves 4px right |
+| Role card | hover | touch, pen | no lift (hover-capable devices only) | — | EXPERIENCE.md pointer effects | ✅ dev site 390 touch: `(hover: hover)` false, no transform |
 | Role card | pointer-following amber glow | mouse | not shown | — | pending: no shared spotlight glow exists in the codebase yet; no story owns it | not shown: no glow rule exists (by design until a story owns it) |
-| Role card | width 640px or less | — | "View and apply" stacks under the title | — | DESIGN.md Role card | not walkable yet (as above) |
+| Role card | width 640px or less | — | "View and apply" stacks under the title | — | DESIGN.md Role card | ✅ dev site: stacked at 640 and 390, side by side at 641 |
 | Open roles panel | no open roles | — | dashed panel "No open roles right now."; no card | — | CAP-3, EXPERIENCE.md States, DESIGN.md Open roles panel | ✅ Chrome 1280: dashed panel "No open roles right now.", 0 cards |
 | Open roles | a role is closed or has no slug | — | that role does not appear | — | CAP-3, Q1-B | test: query filter (closed, slug, title) and projection; the sample role without a slug does not show (walk: 0 cards) |
 | Life frames | page load | — | mist surface; H2 "Life at XionTech."; three 4:3 dashed frames captioned "[Placeholder] Team photo", "[Placeholder] Office photo", "[Placeholder] Event photo"; not clickable | — | CAP-4, Q2-B, EXPERIENCE.md Media frame | ✅ Chrome 1280: mist surface, H2, three 4:3 frames with `[Placeholder]` captions, 0 links; caption inside the frame at every width (fixed in review: it was clipped) |
 | Life frames | width 900px / 640px | — | 3 → 2 → 1 columns | — | EXPERIENCE.md Responsive (news grid) | ✅ Chrome: 3 columns at 1280/1080, 2 at 900/899, 1 at 640/390 |
 | Page | scroll to the end | — | footer follows Life at XionTech; no email capture band | — | CAP-1, EXPERIENCE.md capture band rule | ✅ Chrome 1280: `#life` is the last section, then the footer; no capture band |
 | Page | reduced motion | — | no lift or arrow transition; ribbon drawn once, still | — | EXPERIENCE.md Motion | ✅ Chrome reduced motion: button transition 0s, 0 running animations |
-| Page | contrast | — | muted meta text and amber-hero text meet 4.5:1 | — | AC-A11Y-1 | ✅ hero lede 6.34:1 on amber; role meta not measurable yet (no card) |
+| Page | contrast | — | muted meta text and amber-hero text meet 4.5:1 | — | AC-A11Y-1 | ✅ hero lede 6.34:1 on amber; role meta 6.75:1 (dev site) |
 
 ## Implementation Notes
 
@@ -142,6 +142,8 @@ Full `bmad-code-review` on 2026-10-04 after rebasing onto `develop`, 5 layers. S
 - patch (docs): decisions recorded as A8 in `decisions-2026-10-01.md`; UX rows checked from the walk; build and smoke recorded.
 - defer (Minor, `deferred-work.md`): role-card rows need a slugged role (after the Studio deploy); the shared `.split` and `.svc-grid` switch 1px off the "900px or less" / "640px or less" wording; the card focus ring follows the card's 24px radius; breadcrumb `aria-current` and separator (shared with other pages, Story 1.6); the culture photo frame has no owner for a real photo; `.news-grid` is shared with Story 6.1.
 - open for the lead: the page title says "Software Jobs in Ho Chi Minh City" (from the mockup).
+
+Role-card walk on 2026-10-04 on https://xiontech-dev.vercel.app after the lead deployed the Studio and published the sample role with a slug (`walk-roles.mjs`, `walk-roles-output.txt`, `role-1280.png`, `role-390.png`). Also checked: reduced motion turns the card transition off. The page showed the role on the second request after publishing: the webhook marks the cached page stale and the next request rebuilds it.
 
 ## Design Notes
 
