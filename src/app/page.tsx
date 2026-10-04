@@ -4,6 +4,7 @@ import { HomeProcess } from "@/components/home/home-process";
 import { ProductBento } from "@/components/home/product-bento";
 import { ServiceCards } from "@/components/home/service-cards";
 import { CaptureBand } from "@/components/contact/capture-band";
+import { HomeNews } from "@/components/news/home-news";
 
 // Home sections from Sammy's stories above; Andy's demo capture band stays
 // last (FR-14, Story 3.7 CAP-4).
@@ -15,6 +16,7 @@ export default function Home() {
       <ProductBento />
       <ServiceCards />
       <HomeProcess />
+      <HomeNews />
       <CaptureBand kind="demo" />
     </>
   );
