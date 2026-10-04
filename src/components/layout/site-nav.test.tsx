@@ -17,7 +17,29 @@ beforeEach(() => {
   mockPathname = "/";
 });
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("SiteNav", () => {
+  it("lists Products, Services, News, About, Careers in order, with no React warning", () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    const { container } = render(<SiteNav />);
+    const nav = container.querySelector("nav") as HTMLElement;
+    // Top-level items: the mega menu triggers and the plain links, in DOM order.
+    const items = [
+      ...nav.querySelectorAll(":scope button[aria-expanded], :scope > a"),
+    ].map((el) => `${el.tagName.toLowerCase()}:${el.textContent}`);
+    expect(items).toEqual([
+      "button:Products",
+      "button:Services",
+      "a:News",
+      "a:About",
+      "a:Careers",
+    ]);
+    expect(error).not.toHaveBeenCalled();
+  });
+
   it("renders every nav item with the right link targets", () => {
     render(<SiteNav />);
     expect(href("News")).toBe("/news");

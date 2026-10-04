@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LABELS } from "./nav-data";
+import { MobileMenu } from "./mobile-menu";
 import { SiteNav } from "./site-nav";
 
 export function SiteHeader() {
@@ -19,18 +20,20 @@ export function SiteHeader() {
                 width={250}
                 height={46}
                 loading="eager"
-                className="h-8 w-auto max-[640px]:h-[26px]"
+                className="h-8 w-auto max-[641px]:h-[26px]"
               />
             </Link>
             <SiteNav />
           </div>
           <div className="flex items-center gap-2">
+            {/* max-[641px] is Tailwind v4 for (width < 641px): 640px and below. */}
             <Link
               href="/demo#form"
-              className="btn btn-primary btn-sm max-[640px]:hidden"
+              className="btn btn-primary btn-sm max-[641px]:hidden"
             >
               {LABELS.bookDemo}
             </Link>
+            <MobileMenu />
           </div>
         </div>
       </header>

@@ -26,6 +26,7 @@ export interface NavLabels {
   mainNav: string;
   homeLink: string;
   logoAlt: string;
+  menu: string;
 }
 
 export interface MegaFooter {
@@ -46,6 +47,7 @@ export const LABELS: NavLabels = {
   mainNav: "Main",
   homeLink: "XionTech home",
   logoAlt: "XionTech, Get IT Done",
+  menu: "Menu",
 };
 
 // Products (4 total, in order)
@@ -129,6 +131,21 @@ export const SERVICES_FOOTER: MegaFooter = {
 };
 
 export type Section = "products" | "services" | "news" | "about" | "careers";
+
+export interface NavLink {
+  section: Section;
+  href: string;
+  label: string;
+}
+
+// Top-level pages in header order (the mobile menu lists these as plain links).
+export const NAV_LINKS: readonly NavLink[] = [
+  { section: "products", href: "/products", label: LABELS.products },
+  { section: "services", href: "/services", label: LABELS.services },
+  { section: "news", href: "/news", label: LABELS.news },
+  { section: "about", href: "/about", label: LABELS.about },
+  { section: "careers", href: "/careers", label: LABELS.careers },
+];
 
 const SECTIONS: readonly Section[] = [
   "news",

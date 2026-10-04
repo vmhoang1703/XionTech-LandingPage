@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { currentSection, PRODUCTS, SERVICES } from "./nav-data";
+import {
+  currentSection,
+  LABELS,
+  NAV_LINKS,
+  PRODUCTS,
+  SERVICES,
+} from "./nav-data";
 
 describe("nav-data", () => {
   describe("currentSection", () => {
@@ -96,6 +102,22 @@ describe("nav-data", () => {
         "ai-solutions",
         "cloud",
       ]);
+    });
+  });
+
+  describe("NAV_LINKS", () => {
+    it("lists the five top-level pages in header order", () => {
+      expect(NAV_LINKS.map((l) => [l.section, l.href, l.label])).toEqual([
+        ["products", "/products", "Products"],
+        ["services", "/services", "Services"],
+        ["news", "/news", "News"],
+        ["about", "/about", "About"],
+        ["careers", "/careers", "Careers"],
+      ]);
+    });
+
+    it("labels the mobile menu button Menu", () => {
+      expect(LABELS.menu).toBe("Menu");
     });
   });
 });
