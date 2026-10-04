@@ -5,30 +5,42 @@ It says where the code lives, how to set up, what happens when something fails, 
 
 ## What lives where
 
-| Path                                      | What it does                                                                                                         |
-| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `src/app/api/contact/route.ts`            | `POST /api/contact`. Runs the steps in order (see "What the route does"). `maxDuration` is 10 seconds.               |
-| `src/lib/contact/submission.ts`           | `parseSubmission`: checks the body, reads the honeypot, runs the shared rules. Also reads the capture body.          |
-| `src/components/contact/capture-band.tsx` | The email band. It posts a capture to the same route (see "Capture mails").                                          |
-| `src/lib/contact/contact-rules.ts`        | The shared rules and error text. The browser and the server use the same file.                                       |
-| `src/lib/contact/delivery.ts`             | Reads the five variables, builds the rate-limit keys, checks both limits in Upstash, sends the mail with Gmail SMTP. |
-| `src/components/contact/contact-form.tsx` | The client form. It posts JSON with `fetch` and waits at most 15 seconds.                                            |
-| `e2e/smoke.spec.ts`                       | The `@smoke` test posts a filled honeypot to `/api/contact` and expects 200. It needs no secrets.                    |
-| `.env.example`                            | The five variable names. Copy it to `.env.local`.                                                                    |
+| Path                                              | What it does                                                                                                         |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `src/app/api/contact/route.ts`                    | `POST /api/contact`. Runs the steps in order (see "What the route does"). `maxDuration` is 10 seconds.               |
+| `src/lib/contact/submission.ts`                   | `parseSubmission`: checks the body, reads the honeypot, runs the shared rules. Also reads the capture body.          |
+| `src/components/contact/capture-band.tsx`         | The email band. It posts a capture to the same route (see "Capture mails").                                          |
+| `src/lib/contact/contact-rules.ts`                | The shared rules and error text. The browser and the server use the same file.                                       |
+| `src/lib/contact/delivery.ts`                     | Reads the five variables, builds the rate-limit keys, checks both limits in Upstash, sends the mail with Gmail SMTP. |
+| `src/components/contact/contact-form.tsx`         | The client form. It posts JSON with `fetch` and waits at most 15 seconds.                                            |
+| `e2e/smoke.spec.ts`                               | The `@smoke` test posts a filled honeypot to `/api/contact` and expects 200. It needs no secrets.                    |
+| `src/app/api/careers/cv-upload/route.ts`          | `POST /api/careers/cv-upload`. Gives the browser a short upload token (see "Job applications").                      |
+| `src/app/api/careers/apply/route.ts`              | `POST /api/careers/apply`. Checks the application and sends the mail. `maxDuration` is 30 seconds.                   |
+| `src/components/careers/job-application-form.tsx` | The client form on the job page. It uploads the CV, then posts JSON.                                                 |
+| `src/lib/careers/cv-storage.ts`                   | Reads `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` on each request.                                                 |
+| `src/lib/careers/application.ts`                  | `parseApplication`: checks the body, reads the honeypot, runs the shared rules.                                      |
+| `src/lib/careers/application-rules.ts`            | The CV rules (type, size) and the error text. The browser and the server use the same file.                          |
+| `src/lib/http/route-helpers.ts`                   | `readBody` and `describeError`, shared by the routes.                                                                |
+| `e2e/job.spec.ts`                                 | The `@smoke` tests: `/careers/no-such-role` is 404, and a filled honeypot to `/api/careers/apply` is 200.            |
+| `.env.example`                                    | The variable names. Copy it to `.env.local`.                                                                         |
 
 ## Variables
 
-All five are server-only. Never use `NEXT_PUBLIC_*` for them. Never put a value in the repo, in chat or in a log.
+The first five are for mail and the rate limit. The next two are for CV storage. All of them are server-only. Never use `NEXT_PUBLIC_*` for them. Never put a value in the repo, in chat or in a log.
 
-| Name                 | What it is                                                                   |
-| -------------------- | ---------------------------------------------------------------------------- |
-| `CONTACT_INBOX`      | The inbox that receives every request. It is the lead's company email.       |
-| `GMAIL_USER`         | The Gmail account that sends the mail.                                       |
-| `GMAIL_APP_PASSWORD` | An App Password of that Gmail account (not the normal password).             |
-| `KV_REST_API_URL`    | The Upstash Redis REST URL. The Vercel Upstash integration adds this name.   |
-| `KV_REST_API_TOKEN`  | The Upstash Redis REST token. The Vercel Upstash integration adds this name. |
+| Name                      | What it is                                                                   |
+| ------------------------- | ---------------------------------------------------------------------------- |
+| `CONTACT_INBOX`           | The inbox that receives every request. It is the lead's company email.       |
+| `GMAIL_USER`              | The Gmail account that sends the mail.                                       |
+| `GMAIL_APP_PASSWORD`      | An App Password of that Gmail account (not the normal password).             |
+| `KV_REST_API_URL`         | The Upstash Redis REST URL. The Vercel Upstash integration adds this name.   |
+| `KV_REST_API_TOKEN`       | The Upstash Redis REST token. The Vercel Upstash integration adds this name. |
+| `BLOB_STORE_ID`           | The id of the private Vercel Blob store. The Blob store connection adds it.  |
+| `BLOB_WEBHOOK_PUBLIC_KEY` | The public key for Blob upload callbacks. The Blob store connection adds it. |
 
-The route reads them on each request, not at build time. A build check would make every teammate's `npm run build` and smoke test need the Gmail and Upstash secrets.
+`VERCEL_OIDC_TOKEN` is the Blob login. It is not in the table because the code does not check it. On Vercel it comes from the `x-vercel-oidc-token` request header. In a local run it comes from `.env.local`, where `vercel link` and `vercel env pull` write it. It expires after about 12 hours, so pull again. If it is missing, the Blob call fails and the route answers 502. There is no `BLOB_READ_WRITE_TOKEN`: the store uses OIDC only.
+
+The routes read the variables on each request, not at build time. This includes `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY`. A build check would make every teammate's `npm run build` and smoke test need the Gmail and Upstash secrets.
 
 Decision (lead, 2026-10-03): `CONTACT_INBOX` is the lead's company email, the same value in every environment where it is set. The address is never written in the repo.
 
@@ -84,6 +96,60 @@ The email band (`src/components/contact/capture-band.tsx`) posts to the same `PO
 - A capture counts as one send for the IP and email limit. The full form that the visitor then sends counts as a second one. So the visitor has about 3 more sends in the same 10 minutes.
 - After a 200, the band keeps the email in session storage under `xt-capture-email` and opens `/demo#form` or `/demo#project`. `/demo` reads the key once, fills Work email only if it is empty, and removes the key. The email is never in a URL and never in a log line. If session storage throws, the visitor still lands on the right tab with no prefill.
 
+## Job applications
+
+The job page (`/careers/<slug>`) has a form with a CV. The CV never passes through a function. The browser uploads it straight to a private Vercel Blob store. Then the browser sends a small JSON body with the blob path, and one route sends the mail with the CV attached.
+
+Flow:
+
+1. The browser checks the CV: `.pdf`, `.doc` or `.docx`, 1 byte to 5 MB. It checks again on submit.
+2. `POST /api/careers/cv-upload` gives a short upload token. The path is `cv/application.<ext>` and Blob adds a random suffix. No name or email is in the path. The store is private. A token request is limited to about 10 per hour per IP (Upstash key prefix `cv-upload`). The token lasts 10 minutes and allows one CV type and 5 MB at most.
+3. The browser uploads the CV straight to Blob. It waits at most 60 seconds.
+4. `POST /api/careers/apply` with JSON: `slug`, `name`, `email`, `phone`, `note`, `cv` (the blob path) and the honeypot `website`.
+
+If the mail fails, the form keeps the uploaded path for the same file. A retry does not upload a second copy.
+
+`POST /api/careers/cv-upload`. It stops at the first step that fails.
+
+| Step | Check                                                                                                                                                      | Answer                          |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| 1    | Body is not an object, the event is not `blob.generate-presigned-url`, the upload is multipart, or the path is not `cv/application.pdf`, `.doc` or `.docx` | 400 `{ "error": "send" }`       |
+| 2    | `BLOB_STORE_ID` or `BLOB_WEBHOOK_PUBLIC_KEY` is not set                                                                                                    | 500 `{ "error": "send" }`       |
+| 3    | About 10 token requests in 1 hour for the same IP                                                                                                          | 429 `{ "error": "rate" }`       |
+| 4    | The token cannot be made                                                                                                                                   | 502 `{ "error": "send" }`       |
+| 5    | The token is made                                                                                                                                          | 200 with the Blob upload answer |
+
+`POST /api/careers/apply`. It stops at the first step that fails.
+
+| Step | Check                                                                                                                                                           | Answer                                   |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| 1    | Body is not a JSON object, `slug` or `cv` is not a string, the phone is over 200 characters, or the CV path is not `cv/<name>` ending `.pdf`, `.doc` or `.docx` | 400 `{ "error": "send" }`                |
+| 2    | Honeypot field `website` is not empty. For any object body this is checked before step 1.                                                                       | 200 `{ "ok": true }`. Nothing else runs. |
+| 3    | One of the five mail variables, `BLOB_STORE_ID` or `BLOB_WEBHOOK_PUBLIC_KEY` is not set                                                                         | 500 `{ "error": "send" }`                |
+| 4    | A field breaks the shared rules (name, email, note over 2,000 characters)                                                                                       | 400 `{ "errors": { field: text } }`      |
+| 5    | The role lookup in Sanity fails                                                                                                                                 | 502 `{ "error": "send" }`                |
+| 6    | The role is not open any more                                                                                                                                   | 400 `{ "error": "send" }`                |
+| 7    | About 5 sends in 10 minutes for the same IP and email, or about 20 in 1 hour for the same IP                                                                    | 429 `{ "error": "rate" }`                |
+| 8    | The stored CV is missing, is over 5 MB, or its type is not allowed or does not match the extension                                                              | 400 `{ "errors": { "cv": text } }`       |
+| 9    | The CV read fails (a Blob error, for example no OIDC token)                                                                                                     | 502 `{ "error": "send" }`                |
+| 10   | The mail fails to send                                                                                                                                          | 502 `{ "error": "send" }`                |
+| 11   | The mail is sent                                                                                                                                                | 200 `{ "ok": true }`                     |
+
+Notes:
+
+- Applications share the `contact` and `contact-ip` limits with the contact form (see "Rate limit"). One IP has one budget for both.
+- The honeypot answer is 200 on purpose, as in the contact form. The smoke test uses it, so it needs no secrets.
+- The mail is plain text. The subject is "Job application: <role title>". CR and LF are removed from the subject. Reply-To is the applicant's email. The body has these lines: `Role`, `Role page` (the path), `Name`, `Email`, `Phone`, `CV` (path, size, type) and the cover note.
+- The CV is attached as `cv.<ext>`, with no personal data in the file name (decision A10, Q1-A). The route reads it from the private store, so its `maxDuration` is 30 seconds.
+- Nothing about the applicant goes to Sanity.
+- Log lines name the step and the error class. They never hold a message, a name, an email or a value.
+
+Lead steps for job applications (the private store was created and connected on 2026-10-04):
+
+1. Add `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` to `.env.local`. Run `vercel env pull` for local runs. It also writes `VERCEL_OIDC_TOKEN`, which expires after about 12 hours.
+2. After merge to `develop`: switch to `develop` and pull. Run `cd studio && npx sanity deploy`. Fill "What you'll do" and "What you bring" on the sample role (decision A10, `docs/sanity.md`).
+3. Send one real application with a small PDF on https://xiontech-dev.vercel.app/careers/placeholder-sample-job. Check the mail and the attachment. Check the blob in the store. Check that its URL does not open without auth. Check that nothing new appeared in Sanity.
+
 ## Rate limit
 
 There are two limits. A request must pass both. If either one says no, the route answers 429 and sends no mail.
@@ -122,6 +188,15 @@ Upstash Redis (the rate-limit store, free plan, from the story spec of 2026-10-0
 - 256 MB of data
 - 10 GB bandwidth
 - 1 database
+
+Vercel Blob (the CV store, Hobby plan, from `docs/spikes/cms-spike.md`; pricing page https://vercel.com/docs/vercel-blob/usage-and-pricing):
+
+- 1 GB of storage. This is about 200 CVs at 5 MB. CVs are kept with no time limit (decision A4).
+- 10,000 simple operations, 2,000 advanced operations and 10 GB of data transfer per month.
+- At the limit the store is locked for 30 days.
+- Each application uses one upload (advanced), one read (simple) and the CV size in transfer.
+- Gmail: one application is one mail of up to about 6.7 MB with the attachment (base64). This is under the Gmail limit of 25 MB.
+- Read the pricing page again before Demo day.
 
 What would force a paid plan:
 
