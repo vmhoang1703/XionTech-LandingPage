@@ -103,7 +103,7 @@ context: ['{project-root}/AGENTS.md']
 - [x] `src/app/careers/[slug]/page.tsx` + test -- await params, `getOpenRole`, `notFound()` when null, sections, no capture band -- CAP-1, CAP-6.
   - red: `page.test.tsx` -- null role calls `notFound`; open role renders H1, crumbs, form.
 - [x] `src/app/globals.css` -- port `.job-body` and file-field rules.
-- [ ] `e2e/job.spec.ts` -- `@smoke`: `/careers/no-such-role` is 404; honeypot POST to `/api/careers/apply` is 200.
+- [x] `e2e/job.spec.ts` -- `@smoke`: `/careers/no-such-role` is 404; honeypot POST to `/api/careers/apply` is 200.
 - [ ] `.env.example`, `docs/contact-delivery.md` -- `BLOB_STORE_ID`, `BLOB_WEBHOOK_PUBLIC_KEY`, `VERCEL_OIDC_TOKEN` (local), routes, lead steps, Blob free limits.
 
 **Acceptance Criteria:**

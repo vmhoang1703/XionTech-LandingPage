@@ -78,3 +78,7 @@ Task 13: green — npx vitest run src/app/careers — 9 passed; page 100% lines 
 Task 13: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
 Task 13: complete (commits d67fc92..4dddfe5, diff verified)
 Task 15: dispatched (model haiku, base 4dddfe5, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t15-report.md)
+Task 15: no-red (smoke file; it cannot run in this worktree because Turbopack rejects the node_modules junction; `npx playwright test --list --project=smoke` lists it: 10 tests in 7 files; the controller runs it in the main checkout)
+Task 15: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 15: complete (commits a57afa4..42a02e5, diff verified)
+Task 16: dispatched (model sonnet, base 42a02e5, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t16-report.md)
