@@ -65,8 +65,9 @@ export function MobileMenu() {
       }
     };
     // Any link closes the menu, also one to the current page (the logo on Home), which
-    // changes no pathname (CAP-8). A modifier or middle click opens a new tab, so the
-    // menu stays open. A panel link to this page hides itself, so focus goes to Menu.
+    // changes no pathname (CAP-8). A link that opens a new tab (modifier click,
+    // target _blank) leaves this page as it is, so the menu stays open. A panel link
+    // to this same page (no #part) hides itself, so focus goes back to Menu.
     const onClick = (event: MouseEvent) => {
       const link =
         event.target instanceof Element
@@ -77,16 +78,21 @@ export function MobileMenu() {
         event.metaKey ||
         event.ctrlKey ||
         event.shiftKey ||
-        event.altKey;
+        event.altKey ||
+        link?.getAttribute("target") === "_blank";
       if (!link || newTab) {
         return;
       }
       setOpenedOn(null);
-      const samePage =
+      // Panel links are the app's own NAV_LINKS, so their href always parses.
+      if (
         link instanceof HTMLAnchorElement &&
-        new URL(link.href).pathname === pathname;
-      if (samePage && document.getElementById(MENU_ID)?.contains(link)) {
-        buttonRef.current?.focus();
+        document.getElementById(MENU_ID)?.contains(link)
+      ) {
+        const url = new URL(link.href);
+        if (url.pathname === pathname && url.hash === "") {
+          buttonRef.current?.focus();
+        }
       }
     };
     const desktop = matchMedia(DESKTOP_QUERY);
@@ -125,6 +131,7 @@ export function MobileMenu() {
         hidden={!open}
         className="border-border bg-paper absolute inset-x-0 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-height))] flex-col items-stretch gap-0.5 overflow-auto border-b px-6 pt-4 pb-6"
       >
+        {/* 640px and below: max-[641px] is (width < 641px) in Tailwind v4. */}
         <Link
           href="/demo#form"
           className="btn btn-primary mb-2.5 hidden justify-center max-[641px]:inline-flex"

@@ -26,6 +26,7 @@ export function SiteHeader() {
             <SiteNav />
           </div>
           <div className="flex items-center gap-2">
+            {/* max-[641px] is Tailwind v4 for (width < 641px): 640px and below. */}
             <Link
               href="/demo#form"
               className="btn btn-primary btn-sm max-[641px]:hidden"

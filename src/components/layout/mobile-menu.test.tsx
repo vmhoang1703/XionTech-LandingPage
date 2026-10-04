@@ -273,9 +273,12 @@ describe("MobileMenu", () => {
     fireEvent.click(menuButton());
     const link = screen.getByRole("link", { name: "Services" });
     link.addEventListener("click", (event) => event.preventDefault());
+    link.focus();
     fireEvent.click(link);
     expect(expanded()).toBe("false");
     expect(document.documentElement.style.overflow).toBe("");
+    // Another page: the router moves on, so focus is not sent to Menu.
+    expect(document.activeElement).not.toBe(menuButton());
   });
 
   it("closes when the pathname changes", () => {
@@ -318,6 +321,7 @@ describe("MobileMenu", () => {
       { ctrlKey: true },
       { metaKey: true },
       { shiftKey: true },
+      { altKey: true },
       { button: 1 },
     ]) {
       fireEvent.click(logo, init);
@@ -337,9 +341,10 @@ describe("MobileMenu", () => {
     render(<Header />);
     fireEvent.click(menuButton());
     const careers = menuLinks().find((a) => a.textContent === "Careers");
-    careers?.addEventListener("click", (event) => event.preventDefault());
-    careers?.focus();
-    fireEvent.click(careers as HTMLElement);
+    if (!careers) throw new Error("no Careers link in the panel");
+    careers.addEventListener("click", (event) => event.preventDefault());
+    careers.focus();
+    fireEvent.click(careers);
     expect(expanded()).toBe("false");
     expect(document.activeElement).toBe(menuButton());
   });
@@ -349,9 +354,41 @@ describe("MobileMenu", () => {
     fireEvent.click(menuButton());
     const logo = screen.getByRole("link", { name: "logo" });
     logo.addEventListener("click", (event) => event.preventDefault());
+    logo.focus();
     fireEvent.click(logo);
     expect(expanded()).toBe("false");
     expect(document.documentElement.style.overflow).toBe("");
+    // The logo stays visible, so focus stays on it.
+    expect(document.activeElement).toBe(logo);
+  });
+
+  it("leaves focus alone for a menu link to a part of this page (#form on /demo)", () => {
+    mockPathname = "/demo";
+    render(<Header />);
+    fireEvent.click(menuButton());
+    const demo = panel()?.querySelector('a[href="/demo#form"]') as HTMLElement;
+    expect(demo).not.toBeNull();
+    demo.addEventListener("click", (event) => event.preventDefault());
+    demo.focus();
+    fireEvent.click(demo);
+    expect(expanded()).toBe("false");
+    expect(document.activeElement).not.toBe(menuButton());
+  });
+
+  it("keeps the menu open for a link that opens a new tab (target _blank)", () => {
+    render(
+      <header>
+        <a href="https://example.com/" target="_blank" rel="noreferrer">
+          external
+        </a>
+        <MobileMenu />
+      </header>,
+    );
+    fireEvent.click(menuButton());
+    const external = screen.getByRole("link", { name: "external" });
+    external.addEventListener("click", (event) => event.preventDefault());
+    fireEvent.click(external);
+    expect(expanded()).toBe("true");
   });
 
   it("restores an earlier overflow value on close", () => {

@@ -34,6 +34,7 @@ describe("SiteNav", () => {
       "a:Careers",
     ]);
     expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
   });
 
   it("renders every nav item with the right link targets", () => {
