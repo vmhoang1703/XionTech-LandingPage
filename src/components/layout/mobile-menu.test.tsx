@@ -277,8 +277,8 @@ describe("MobileMenu", () => {
     fireEvent.click(link);
     expect(expanded()).toBe("false");
     expect(document.documentElement.style.overflow).toBe("");
-    // Another page: the router moves on, so focus is not sent to Menu.
-    expect(document.activeElement).not.toBe(menuButton());
+    // Another page: the code does not move focus (jsdom keeps it on the link).
+    expect(document.activeElement).toBe(link);
   });
 
   it("closes when the pathname changes", () => {
@@ -310,23 +310,6 @@ describe("MobileMenu", () => {
       for (const listener of mediaListeners) listener({ matches: false });
     });
     expect(expanded()).toBe("true");
-  });
-
-  it("keeps the menu open for a modifier or middle click on a link (new tab)", () => {
-    render(<Header />);
-    fireEvent.click(menuButton());
-    const logo = screen.getByRole("link", { name: "logo" });
-    logo.addEventListener("click", (event) => event.preventDefault());
-    for (const init of [
-      { ctrlKey: true },
-      { metaKey: true },
-      { shiftKey: true },
-      { altKey: true },
-      { button: 1 },
-    ]) {
-      fireEvent.click(logo, init);
-      expect(expanded()).toBe("true");
-    }
   });
 
   it("ignores a click whose target is not an element", () => {
@@ -362,33 +345,24 @@ describe("MobileMenu", () => {
     expect(document.activeElement).toBe(logo);
   });
 
-  it("leaves focus alone for a menu link to a part of this page (#form on /demo)", () => {
+  it("moves focus to the target of a menu link to a part of this page (#form on /demo)", () => {
     mockPathname = "/demo";
-    render(<Header />);
+    render(
+      <>
+        <Header />
+        <section id="form">form</section>
+      </>,
+    );
     fireEvent.click(menuButton());
-    const demo = panel()?.querySelector('a[href="/demo#form"]') as HTMLElement;
-    expect(demo).not.toBeNull();
+    const demo = panel()?.querySelector('a[href="/demo#form"]');
+    if (!(demo instanceof HTMLElement)) throw new Error("no /demo#form link");
     demo.addEventListener("click", (event) => event.preventDefault());
     demo.focus();
     fireEvent.click(demo);
     expect(expanded()).toBe("false");
-    expect(document.activeElement).not.toBe(menuButton());
-  });
-
-  it("keeps the menu open for a link that opens a new tab (target _blank)", () => {
-    render(
-      <header>
-        <a href="https://example.com/" target="_blank" rel="noreferrer">
-          external
-        </a>
-        <MobileMenu />
-      </header>,
-    );
-    fireEvent.click(menuButton());
-    const external = screen.getByRole("link", { name: "external" });
-    external.addEventListener("click", (event) => event.preventDefault());
-    fireEvent.click(external);
-    expect(expanded()).toBe("true");
+    const form = document.getElementById("form");
+    expect(document.activeElement).toBe(form);
+    expect(form?.getAttribute("tabindex")).toBe("-1");
   });
 
   it("restores an earlier overflow value on close", () => {

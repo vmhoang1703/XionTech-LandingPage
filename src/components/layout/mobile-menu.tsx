@@ -64,35 +64,41 @@ export function MobileMenu() {
         next.focus();
       }
     };
-    // Any link closes the menu, also one to the current page (the logo on Home), which
-    // changes no pathname (CAP-8). A link that opens a new tab (modifier click,
-    // target _blank) leaves this page as it is, so the menu stays open. A panel link
-    // to this same page (no #part) hides itself, so focus goes back to Menu.
+    // Any link closes the menu (CAP-8), also one to the current page (the logo on
+    // Home), which changes no pathname. A clicked panel link to this page hides with
+    // the panel, so focus moves on: to the #part it names (the form on /demo), or to
+    // Menu when it names none.
     const onClick = (event: MouseEvent) => {
       const link =
         event.target instanceof Element
           ? event.target.closest("a[href]")
           : null;
-      const newTab =
-        event.button !== 0 ||
-        event.metaKey ||
-        event.ctrlKey ||
-        event.shiftKey ||
-        event.altKey ||
-        link?.getAttribute("target") === "_blank";
-      if (!link || newTab) {
+      if (!link) {
         return;
       }
       setOpenedOn(null);
-      // Panel links are the app's own NAV_LINKS, so their href always parses.
+      // Panel links are the app's own (NAV_LINKS and /demo#form), so they parse.
       if (
-        link instanceof HTMLAnchorElement &&
-        document.getElementById(MENU_ID)?.contains(link)
+        !(link instanceof HTMLAnchorElement) ||
+        !document.getElementById(MENU_ID)?.contains(link)
       ) {
-        const url = new URL(link.href);
-        if (url.pathname === pathname && url.hash === "") {
-          buttonRef.current?.focus();
+        return;
+      }
+      const url = new URL(link.href);
+      if (url.pathname !== pathname) {
+        return;
+      }
+      const target = url.hash
+        ? document.getElementById(url.hash.slice(1))
+        : null;
+      if (target) {
+        // Like the skip link's #main: focusable from script, not a Tab stop.
+        if (!target.hasAttribute("tabindex")) {
+          target.setAttribute("tabindex", "-1");
         }
+        target.focus({ preventScroll: true });
+      } else {
+        buttonRef.current?.focus();
       }
     };
     const desktop = matchMedia(DESKTOP_QUERY);

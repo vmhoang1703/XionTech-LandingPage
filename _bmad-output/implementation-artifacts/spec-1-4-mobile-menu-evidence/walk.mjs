@@ -142,6 +142,25 @@ try {
     await p.close();
   }
 
+  // #form on /demo: focus moves to the form after the panel closes
+  for (const how of ["tap", "Enter"]) {
+    const ctx = await b.newContext({ viewport: { width: 375, height: 700 }, hasTouch: true, isMobile: true });
+    const p = await ctx.newPage();
+    await p.goto(`${BASE}/demo`, { waitUntil: "load" });
+    await settle(p);
+    await menuBtn(p).tap();
+    await p.waitForTimeout(300);
+    const cta = panel(p).getByRole("link", { name: /Book a demo/ });
+    if (how === "tap") await cta.tap();
+    else {
+      await cta.focus();
+      await p.keyboard.press("Enter");
+    }
+    await p.waitForTimeout(1200);
+    log(`[375 /demo ${how} Book a demo] expanded ${await isOpen(p)} | focus ${await p.evaluate(() => `${document.activeElement.tagName.toLowerCase()}#${document.activeElement.id}`)} | #form top ${(await box(p.locator("#form"))).y}`);
+    await ctx.close();
+  }
+
   // Reduced motion
   {
     const ctx = await b.newContext({ viewport: { width: 800, height: 700 }, reducedMotion: "reduce" });

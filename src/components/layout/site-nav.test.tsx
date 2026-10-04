@@ -17,6 +17,10 @@ beforeEach(() => {
   mockPathname = "/";
 });
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("SiteNav", () => {
   it("lists Products, Services, News, About, Careers in order, with no React warning", () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {});
@@ -34,7 +38,6 @@ describe("SiteNav", () => {
       "a:Careers",
     ]);
     expect(error).not.toHaveBeenCalled();
-    error.mockRestore();
   });
 
   it("renders every nav item with the right link targets", () => {

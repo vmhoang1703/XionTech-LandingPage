@@ -69,7 +69,7 @@ Sources: SPEC CAP-1 to CAP-8, `EXPERIENCE.md` Component Patterns › Mobile menu
 | Page | menu closed | any | page scrolls again | — | CAP-8 | mobile-menu.test "locks page scroll … releases" |
 | Panel | closed, Tab through the page | keyboard | no menu item gets focus | — | CAP-4, AC-A11Y-3 | mobile-menu.test "keeps closed menu items out of reach" (`hidden`) |
 | Panel | tap or click a menu link | touch, mouse | goes to the page; menu closed; page scrolls | — | CAP-8, T6 | ✅ Chrome 375 tap on Careers: goes to `/careers`, menu closed, overflow restored |
-| Panel | Ctrl/Cmd/Shift/Alt-click, or a `target="_blank"` link | mouse | the link opens a new tab; the menu stays open (narrows CAP-8: this page does not change) | — | CAP-8, review 2026-10-04 | mobile-menu.test "keeps the menu open for a modifier…" and "…target _blank" |
+| Panel | Book a demo (`/demo#form`) on `/demo`, 640px and below | touch, keyboard | menu closes; focus moves to the form (`#form`, `tabindex=-1` like the skip link's `#main`), not to the page body | — | CAP-8, EXPERIENCE.md Accessibility Floor, review 2026-10-04 | mobile-menu.test "moves focus to the target…"; Chrome walk (see output) |
 | Header links | menu open, tap the logo on Home | touch, mouse | menu closes; page scrolls | — | CAP-8 (review finding) | mobile-menu.test "closes when a header link to the current page" |
 | Panel | page changes (back button) | any | menu closed | — | CAP-8 | mobile-menu.test "closes when the pathname changes" |
 | Panel | open, window grows above 1080px | any | menu closes; scroll lock released | — | CAP-8, T6 | ✅ Chrome 800 → 1200: menu closed, overflow restored |
@@ -111,3 +111,10 @@ Second full review of the fixes (2026-10-04, 5 layers): Security clean; Acceptan
 - patch (tests): Alt-click; focus stays on the logo and on a link to another page; the console spy in the nav test is restored; comments next to the `max-[641px]` classes say why it is 641.
 - patch (evidence): `walk-output.txt` re-run from the committed `walk.mjs` (header CTA read as `header a.btn-sm`), so it no longer mixes lines from an older script.
 - defer (Minor): a middle click fires `auxclick` in browsers, so the `button !== 0` check is only a guard; fractional widths between 640 and 641px.
+
+Third full review of the fixes (2026-10-04, 5 layers): Security clean; Verification Gap found every changed condition guarded by a test (mutations).
+
+- patch: after the `#form` link on `/demo` focus fell to the page body (the panel hides; Next's Link scrolls but does not move focus); focus now goes to the `#part` target, made focusable with `tabindex=-1` like the skip link's `#main`, and to Menu for a same-page link with no `#part`.
+- reverted: the modifier-click and `target="_blank"` exception from the second round narrowed CAP-8 ("any link closes the menu") without a human decision, and no site link uses `target="_blank"`; CAP-8 holds as written again.
+- patch (tests): the nav test restores mocks in `afterEach`, so a failing assertion cannot leave `console.error` silenced; the "another page" test asserts where focus is.
+- note: after a panel link to another page the browser drops focus to the page body, as for every link in the app; not changed here.
