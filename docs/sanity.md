@@ -5,14 +5,14 @@ It says where the code lives, how to set up, and what the free plan allows.
 
 ## What lives where
 
-| Path                              | What it does                                                                                             |
-| --------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `src/lib/sanity/config.ts`        | Reads and checks `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`.                       |
+| Path                              | What it does                                                                                                              |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `src/lib/sanity/config.ts`        | Reads and checks `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`.                                        |
 | `src/lib/sanity/client.ts`        | `sanityFetch`: the one server-only read helper (no CDN, `published` perspective, no token, cached by tags; decision A11). |
-| `src/app/api/revalidate/route.ts` | Webhook. Checks Sanity's signature, then calls `revalidateTag("post" or "job", "max")`.                  |
-| `studio/`                         | Sanity Studio. A separate package with its own `package.json` and lockfile. It is not an npm workspace.  |
-| `scripts/sanity-check.mjs`        | Run with `npm run sanity:check`. Reads one post, one job and a draft read from the real project.         |
-| `.env.example`                    | The three variable names. Copy it to `.env.local`.                                                       |
+| `src/app/api/revalidate/route.ts` | Webhook. Checks Sanity's signature, then calls `revalidateTag("post" or "job", "max")`.                                   |
+| `studio/`                         | Sanity Studio. A separate package with its own `package.json` and lockfile. It is not an npm workspace.                   |
+| `scripts/sanity-check.mjs`        | Run with `npm run sanity:check`. Reads one post, one job and a draft read from the real project.                          |
+| `.env.example`                    | The three variable names. Copy it to `.env.local`.                                                                        |
 
 The Next.js build does not contain the Studio. The root app installs only `@sanity/client` and `@sanity/webhook`.
 
