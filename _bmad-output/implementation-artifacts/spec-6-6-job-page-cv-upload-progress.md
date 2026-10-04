@@ -63,3 +63,13 @@ Task 11: green — same command with coverage — 25 passed (25); 100% lines, 96
 Task 11: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
 Task 11: complete (commits e929fdd..9e1bb0e, diff verified)
 Task 12: dispatched (model sonnet, base 9e1bb0e, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t12-report.md)
+Task 14: dispatched (model sonnet, base 6748e63, batched with Task 12: the components' class-guard test needs the CSS; report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t12-report.md)
+Task 12: red — npx vitest run src/components/careers src/lib/careers — 6 failed (job-hero / job-details modules missing; roleTypeLabel is not a function)
+Task 12: green — same command with coverage on job-hero.tsx, job-details.tsx, open-roles.ts — 129 passed in 7 files; 100% lines and branches
+Task 14: no-red (CSS port; the class-guard test `undefinedClasses` in src/components/careers/job.test.tsx failed red with Task 12 and passes with these rules; look checked by the controller's browser walk)
+Task 12: review — skipped — controller rule for this run: one review layer inside the build; step 4 covers it
+Task 14: review — skipped — same rule
+Task 12: minor — src/components/careers/job-details.tsx CheckList: `key={item}` gives duplicate keys if an editor types the same line twice
+Task 12: complete (commits 6748e63..1aa3d02, diff verified; section uses `sec surface-paper` because plain `.sec` has no background)
+Task 14: complete (commits 6748e63..1aa3d02, diff verified)
+Task 13: dispatched (model sonnet, base 1aa3d02, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/66-t13-report.md)

@@ -99,10 +99,10 @@ context: ['{project-root}/AGENTS.md']
 - [x] `src/content/job.ts` -- page and form strings, metadata -- CAP-1…CAP-5.
 - [x] `src/components/careers/job-application-form.tsx` + test -- client form, CV check on change, upload then apply, states, file reuse on retry, 60 s upload timeout -- CAP-2, CAP-3, CAP-5.
   - red: `job-application-form.test.tsx` -- wrong CV flagged on change; submit errors focus first and announce; sending state; success panel; failure keeps values and file.
-- [ ] `src/components/careers/job-details.tsx`, `job-hero.tsx` + tests -- hero with crumbs and chips; details with hidden empty sections and "All open roles" → `/careers#roles` -- CAP-1.
+- [x] `src/components/careers/job-details.tsx`, `job-hero.tsx` + tests -- hero with crumbs and chips; details with hidden empty sections and "All open roles" → `/careers#roles` -- CAP-1.
 - [ ] `src/app/careers/[slug]/page.tsx` + test -- await params, `getOpenRole`, `notFound()` when null, sections, no capture band -- CAP-1, CAP-6.
   - red: `page.test.tsx` -- null role calls `notFound`; open role renders H1, crumbs, form.
-- [ ] `src/app/globals.css` -- port `.job-body` and file-field rules.
+- [x] `src/app/globals.css` -- port `.job-body` and file-field rules.
 - [ ] `e2e/job.spec.ts` -- `@smoke`: `/careers/no-such-role` is 404; honeypot POST to `/api/careers/apply` is 200.
 - [ ] `.env.example`, `docs/contact-delivery.md` -- `BLOB_STORE_ID`, `BLOB_WEBHOOK_PUBLIC_KEY`, `VERCEL_OIDC_TOKEN` (local), routes, lead steps, Blob free limits.
 
