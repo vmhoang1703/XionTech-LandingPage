@@ -259,3 +259,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-6-3-editors-publish-sanity.md`
   summary: Story 6.3 review (Minor): a test that reads `studio/sanity.config.ts` (singleton wiring); check Sanity project write roles before Story 4.4 shows clips and check the clip type there; honour the editor's crop and hotspot (image URL builder) and use width/height or a hand-made srcset instead of one `?w=800`; style the Life figcaption; keep the PXP/LXP/SXP/IoT list in one place in the Studio; loosen the whitespace-bound query test; guard `/careers` if `getOpenRoles` throws inside `Promise.all`; drop local absolute paths from build ledgers; make walk scripts throw on a bad status.
   evidence: full 5-layer review 2026-10-05 (medium points patched: product fields removed, blank alt guarded).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-5-2-stats-eight-services.md`
+  summary: Add an automated browser check that `/services#<id>` lands each service heading below the sticky header (CAP-3, AC-NAV-5).
+  evidence: The Playwright `smoke` project is request-only, so the landing is covered only by the CSS-source unit test and the evidence walk (`spec-5-2-stats-eight-services-evidence/walk.mjs`). A browser project, also useful for `#process` (5.4) and the Products anchors, would catch a broken `scroll-margin-top`.

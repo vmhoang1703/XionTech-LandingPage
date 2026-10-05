@@ -681,3 +681,21 @@ Template:
 - **What the AI did:** a full spec (approved), six tasks by sub-agents tests first (schemas, Studio structure, webhook tags, `getLifePhotos`, the `#life` frames, the editor guide), the full 5-layer review, then patches. Task reviews were skipped by the controller's rule for this run (as in 6.6), so the one full review is the gate.
 - **AI got it wrong?** Yes. Task 5 added an image rule to `next.config.ts` but ran only the careers tests, so `next-config.test.ts` broke; the controller's full run caught it. Task 1 added `name` and `app` fields the spec did not ask for, which could conflict with the fixed product ids; the review removed them. The AI also first wrote design replies that were too long for the lead.
 - **Decision / result:** the Studio has two fixed-document sections, the webhook refreshes them, and `/careers` shows a photo per slot when one is published. The live proof with `[Test]` documents, the Studio deploy and the webhook filter update are the lead's steps after merge.
+
+## 2026-10-05 — Story 5.2 Stats and eight services with anchors (`bmad-build`, full route)
+
+- **Prompt (Son Nguyen):** "move to 5.2, PR 44 done".
+- **What the AI did:** wrote a build spec with a 14-line UX checks table.
+  - **Route:** the full route, because one question needed the human: the shared stats band shows a visible label on Home, but the Services mockup has none.
+  - **Decision:** Son chose (a), an optional `hideLabel` that keeps the label for screen readers only. Home stays unchanged.
+  - **Build:** 6 tasks by implementer subagents, tests first, each with an independent review. The service icon map moved into one shared module for Home and Services.
+  - **Checks:** the AI ran the four verification commands itself, plus a Chrome walk on a production build of all eight `#anchors` at 1280px and 390px.
+  - **Review:** a 5-layer review, with 7 patches and 1 item deferred (an automated browser check of the anchor landing). An independent auditor re-checked every evidence hash.
+- **AI got it wrong?** Yes.
+  - **390px landings:** the first walk reported 5 of the 8 cards landing 6–43px low and put it down to "content still settling" without checking. A probe showed the page was still smooth-scrolling; the walk now waits for the scroll to stop, and every card lands at exactly 88px.
+  - **UX rows:** the walk marked the mega-menu row ✅ without trying the mega menu, and the reduced-motion row checked card motion that cannot differ.
+  - **Screen readers:** the stats section and its group were both named "Key facts", so the name was read twice.
+  - **Implementers:** they left two tasks uncommitted, and one first missed a Prettier error.
+  - **Outcome:** the reviews caught all of these, and they are fixed.
+- **Decision / result:** `/services#<id>` from the Home cards, the footer and the mega menu lands each card fully below the sticky header.
+- **Same day, at PR time:** my script that filled the UX table's "Checked" column wrote `||`, which added an empty extra column to every row. This is the same mistake logged for Story 6.6. It was caught when the table was copied into the PR and has been fixed.

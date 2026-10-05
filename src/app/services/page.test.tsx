@@ -73,12 +73,107 @@ describe("ServicesPage", () => {
 
   it("defines every class it uses in globals.css", () => {
     const { container } = render(<ServicesPage />);
-    expect(undefinedClasses(container, /^mt-5$/)).toEqual([]);
+    // The stats band is Tailwind utilities, covered by its own tests.
+    container.querySelector('[role="group"][aria-labelledby]')?.remove();
+    expect(undefinedClasses(container, /^(mt-5|pt-10)$/)).toEqual([]);
+  });
+
+  it("shows the five confirmed figures with amber-text suffixes", () => {
+    render(<ServicesPage />);
+
+    const band = screen.getByRole("group", { name: "Key facts" });
+    const statsSection = band.closest("section");
+    expect(statsSection?.className).toBe("sec surface-paper");
+    expect(statsSection?.hasAttribute("aria-label")).toBe(false);
+    expect(band.querySelector("h2")?.className).toContain("sr-only");
+    const items = Array.from(band.querySelectorAll("li"));
+    expect(items.map((li) => li.querySelector("p")?.textContent)).toEqual([
+      "25+",
+      "24/7",
+      "20+",
+      "8",
+      "2",
+    ]);
+    const suffixes = Array.from(band.querySelectorAll("li p span"));
+    expect(suffixes.map((s) => s.textContent)).toEqual(["+", "/7", "+"]);
+    for (const s of suffixes) expect(s.className).toBe("text-amber-text");
+  });
+
+  it("titles the services section and lays it on mist with linen", () => {
+    render(<ServicesPage />);
+
+    const h2 = screen.getByRole("heading", {
+      level: 2,
+      name: "Eight services, one team.",
+    });
+    const section = h2.closest("section");
+    expect(section?.className).toBe("sec surface-mist linen pt-10");
+    expect(section?.getAttribute("aria-labelledby")).toBe(h2.id);
+    expect(h2.parentElement?.className).toBe("sec-head");
+    expect(h2.parentElement?.querySelector("p.lede")?.textContent).toContain(
+      "Pick one service or combine several",
+    );
+  });
+
+  it("renders eight non-link cards with ids, headings, copy and tags", () => {
+    const { container } = render(<ServicesPage />);
+
+    const cards = Array.from(container.querySelectorAll(".svc-grid > article"));
+    expect(cards.map((c) => c.id)).toEqual([
+      "product-engineering",
+      "ai-analytics",
+      "co-creation",
+      "staffing",
+      "custom-apps",
+      "low-code",
+      "ai-solutions",
+      "cloud",
+    ]);
+    for (const card of cards) {
+      expect(card.classList.contains("spot")).toBe(true);
+      expect(card.classList.contains("svc")).toBe(true);
+      expect(card.querySelector(".ic svg")?.getAttribute("aria-hidden")).toBe(
+        "true",
+      );
+      expect(card.querySelector("h3")?.textContent).toBeTruthy();
+      expect(card.querySelector("p")?.textContent).toBeTruthy();
+      expect(card.querySelectorAll("a, button")).toHaveLength(0);
+    }
+    expect(cards[0].classList.contains("feature")).toBe(true);
+    expect(cards[6].classList.contains("navy")).toBe(true);
+    expect(cards[7].classList.contains("feature")).toBe(true);
+    expect(cards[1].classList.contains("feature")).toBe(false);
+  });
+
+  it("lists mono tags only where the prototype has them", () => {
+    const { container } = render(<ServicesPage />);
+
+    const tagsOf = (id: string) =>
+      Array.from(
+        container.querySelector(`#${id}`)?.querySelectorAll(".tags") ?? [],
+      ).map((t) => t.textContent);
+    expect(tagsOf("product-engineering")).toEqual(["Web · Mobile"]);
+    expect(tagsOf("ai-analytics")).toEqual(["AI/ML · Dashboards"]);
+    expect(tagsOf("ai-solutions")).toEqual(["Generative AI · AI/ML"]);
+    expect(tagsOf("low-code")).toEqual([
+      "Power Platform · Make · n8n · Retool · Bubble",
+    ]);
+    expect(tagsOf("cloud")).toEqual(["Azure · AWS · GCP"]);
+    for (const id of ["co-creation", "staffing", "custom-apps"]) {
+      expect(tagsOf(id)).toEqual([]);
+    }
   });
 
   it("styles only the clock pills, not the span LiveClock renders inside them", () => {
     const css = globalsCss();
     expect(css).toMatch(/\.clock-strip > span\s*\{/);
     expect(css).not.toMatch(/\.clock-strip span\s*\{/);
+  });
+
+  it(".svc[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
+    const css = globalsCss();
+    expect(css).toMatch(
+      /\.svc\[id\]\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+    );
   });
 });
