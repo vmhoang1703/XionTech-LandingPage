@@ -12,7 +12,7 @@ export function formatOfficeTime(date: Date, timeZone: string): string {
   const formatter = new Intl.DateTimeFormat("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
+    hourCycle: "h23",
     timeZone,
   });
 
