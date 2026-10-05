@@ -18,7 +18,7 @@ export function LifeFrames({
         <div className="news-grid">
           {frames.map(({ slot, placeholder }) => {
             const photo = photos?.[slot];
-            if (!photo?.url || !photo.alt) {
+            if (!photo?.url || !photo.alt?.trim()) {
               return (
                 <div key={slot} className="spot aspect-4/3">
                   <div className="illo h-full min-h-0">

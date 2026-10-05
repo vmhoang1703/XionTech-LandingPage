@@ -183,7 +183,26 @@ describe("LifeFrames", () => {
     expect(container.querySelectorAll(".illo")).toHaveLength(2);
   });
 
-  it("keeps the placeholder when a photo has no alt text", () => {
+  it.each([null, "   "])(
+    "keeps the placeholder when a photo's alt text is %j",
+    (alt) => {
+      render(
+        <LifeFrames
+          photos={{
+            team: {
+              url: "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg",
+              alt,
+            },
+          }}
+        />,
+      );
+
+      expect(screen.queryByRole("img")).toBeNull();
+      expect(screen.getByText("[Placeholder] Team photo")).not.toBeNull();
+    },
+  );
+
+  it("keeps the other placeholders when one photo has no alt text", () => {
     render(
       <LifeFrames
         photos={{

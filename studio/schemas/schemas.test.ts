@@ -243,31 +243,14 @@ describe("studio schemas", () => {
   });
 
   describe("product", () => {
-    it("is a document with a name, an app and an mp4 clip", () => {
+    it("is a document with only an mp4 clip (the fixed id names the app)", () => {
       expect(product).toMatchObject({ name: "product", type: "document" });
-      expect(product.fields.map((f) => f.name)).toEqual([
-        "name",
-        "app",
-        "clip",
-      ]);
+      expect(product.fields.map((f) => f.name)).toEqual(["clip"]);
       const clip = findField(product, "clip") as Field & {
         options?: { accept?: string };
       };
       expect(clip.type).toBe("file");
       expect(clip.options?.accept).toBe("video/mp4");
-    });
-
-    it("lists the four apps and shows the name in lists", () => {
-      const app = findField(product, "app") as Field & {
-        options?: { list?: { value: string }[] };
-      };
-      expect(app.options?.list?.map((o) => o.value)).toEqual([
-        "PXP",
-        "LXP",
-        "SXP",
-        "IoT",
-      ]);
-      expect(product.preview.select).toEqual({ title: "name" });
     });
   });
 });

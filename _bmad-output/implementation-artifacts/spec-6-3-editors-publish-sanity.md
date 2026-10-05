@@ -2,7 +2,7 @@
 title: 'Story 6.3 Editors publish stories and roles without a developer'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-progress'
+status: 'in-review'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: 'edf34e09510fc3210f1f93686da35434a636db48'
@@ -104,6 +104,20 @@ Sources: SPEC CAP-3, `EXPERIENCE.md` (Careers `#life`, placeholder frame), `DESI
 ## Spec Change Log
 
 ## Review Triage Log
+
+Full review, 5 layers, 2026-10-05. Security: no open path (2 unverifiable notes). Task reviews were skipped by the controller rule for this run.
+
+| # | Finding | Verdict | Route / evidence |
+| --- | --- | --- | --- |
+| 1 | `product` has `name` and `app` fields the spec did not ask for; `app` can conflict with the fixed id (Acceptance, Blind Hunter) | medium | patch: fields and preview removed; the id names the app |
+| 2 | Alt text of only spaces renders an image with blank alt (Edge Case) | medium | patch: `alt?.trim()`; test for `"   "` |
+| 3 | `remotePatterns` is not checked for `unoptimized` images; the test comment claimed it restricts hosts (Verification Gap, Edge Case, Blind Hunter) | low | patch: the comment says what it does; the rule stays for optimized use |
+| 4 | Docs table row read like a five-argument call; no line on deleting a photo file (Blind Hunter, Security) | low | patch: row rewritten; "delete the file in Media" added |
+| 5 | No AI-log entry for 6.3 (Blind Hunter) | low | patch: entry added |
+| 6 | No test reads `studio/sanity.config.ts`, so the singleton wiring is unproven (Verification Gap) | medium | defer: importing the Studio in node is heavy; the lead's Studio check after merge is the gate |
+| 7 | Studio-only guards (create/delete, mp4 accept) do not bind API writes; who can write is set in sanity.io/manage (Security) | maybe-false | defer: check project roles before Story 4.4 shows clips |
+| 8 | Two Studio UX rows and Task 7 open until after merge (Acceptance) | low | recorded: the lead's steps after merge, listed in the PR |
+| 9 | Other Minor: crop/hotspot ignored, unused width/height, `sizes` with no srcset, figcaption unstyled, PXP/LXP/SXP/IoT list in three places, query test bound to whitespace, `Promise.all` failure path, local paths in the ledger, walk.mjs status checks | low | deferred in `deferred-work.md` |
 
 ## Acceptance Evidence
 

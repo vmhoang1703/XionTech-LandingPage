@@ -23,7 +23,8 @@ describe("next.config.ts", () => {
 
     const { default: nextConfig } = await import("../../../next.config");
 
-    // Only this project's Sanity images may be shown (Story 6.3).
+    // Allows this project's Sanity images for optimized use; the life photos
+    // are `unoptimized`, so this list is not checked for them (Story 6.3).
     expect(nextConfig).toEqual({
       images: {
         remotePatterns: [
