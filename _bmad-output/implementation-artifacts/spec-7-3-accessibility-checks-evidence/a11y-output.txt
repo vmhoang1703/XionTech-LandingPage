@@ -1,0 +1,26 @@
+
+Running 21 tests using 1 worker
+
+  ✓   1 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /: axe, one H1, alt text @a11y (3.8s)
+  ✓   2 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /products: axe, one H1, alt text @a11y (2.0s)
+  ✓   3 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /services: axe, one H1, alt text @a11y (2.1s)
+  ✓   4 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /news: axe, one H1, alt text @a11y (1.7s)
+  ✓   5 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /about: axe, one H1, alt text @a11y (1.8s)
+  ✓   6 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /careers: axe, one H1, alt text @a11y (1.9s)
+  ✓   7 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /demo: axe, one H1, alt text @a11y (1.8s)
+  ✓   8 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /privacy: axe, one H1, alt text @a11y (1.3s)
+  ✓   9 [a11y] › e2e\a11y.spec.ts:50:9 › every page type › /no-such-page: axe, one H1, alt text @a11y (1.6s)
+  ✓  10 [a11y] › e2e\a11y.spec.ts:55:7 › every page type › one news story: axe, one H1, alt text @a11y (3.0s)
+  ✓  11 [a11y] › e2e\a11y.spec.ts:61:7 › every page type › one job page: axe, one H1, alt text @a11y (3.2s)
+  ✓  12 [a11y] › e2e\a11y.spec.ts:137:9 › keyboard › /: every Tab stop shows a ring and none is inside a closed part @a11y (3.1s)
+  ✓  13 [a11y] › e2e\a11y.spec.ts:137:9 › keyboard › /products: every Tab stop shows a ring and none is inside a closed part @a11y (1.3s)
+  ✓  14 [a11y] › e2e\a11y.spec.ts:137:9 › keyboard › /services: every Tab stop shows a ring and none is inside a closed part @a11y (1.4s)
+  ✓  15 [a11y] › e2e\a11y.spec.ts:137:9 › keyboard › /news: every Tab stop shows a ring and none is inside a closed part @a11y (1.3s)
+  ✓  16 [a11y] › e2e\a11y.spec.ts:137:9 › keyboard › /demo: every Tab stop shows a ring and none is inside a closed part @a11y (1.4s)
+  ✓  17 [a11y] › e2e\a11y.spec.ts:137:9 › keyboard › /about: every Tab stop shows a ring and none is inside a closed part @a11y (1.7s)
+  ✓  18 [a11y] › e2e\a11y.spec.ts:152:7 › keyboard › Tab stops covered paper, mist, amber and navy surfaces @a11y (6ms)
+  ✓  19 [a11y] › e2e\a11y.spec.ts:179:7 › form errors › contact form on /demo @a11y (764ms)
+  ✓  20 [a11y] › e2e\a11y.spec.ts:184:7 › form errors › capture band on Home @a11y (983ms)
+  ✓  21 [a11y] › e2e\a11y.spec.ts:189:7 › form errors › job application form @a11y (988ms)
+
+  21 passed (1.2m)

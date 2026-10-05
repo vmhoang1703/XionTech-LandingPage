@@ -16,6 +16,13 @@ export default defineConfig({
       name: "smoke",
       grep: /@smoke/,
     },
+    {
+      // Story 7.3: axe and keyboard checks in Chrome. Run locally before a
+      // release with `npm run test:a11y`; not part of the smoke gate.
+      name: "a11y",
+      grep: /@a11y/,
+      use: { browserName: "chromium", channel: "chrome" },
+    },
   ],
   webServer: {
     command: `npm run build && npm run start -- --port ${PORT}`,

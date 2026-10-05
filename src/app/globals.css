@@ -834,6 +834,13 @@
       color-mix(in srgb, var(--color-focus) 15%, transparent);
   }
 
+  /* Chrome gives a date field's calendar button its own Tab stop inside the
+     field, which :focus-visible on the field does not match (Story 7.3). */
+  .field input[type="date"]:focus-within {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
   .field .help {
     font-size: 0.8rem;
     color: var(--color-muted);

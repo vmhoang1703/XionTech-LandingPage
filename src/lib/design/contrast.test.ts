@@ -588,6 +588,12 @@ const AA_PAIRS: [string, string, number][] = [
   ["focus", "amber", NON_TEXT],
   ["on-amber-text", "amber-deep", TEXT],
   ["on-amber-muted", "amber-deep", TEXT],
+  ["navy", "amber-deep", TEXT],
+  ["error", "amber-deep", TEXT],
+  ["focus", "amber-deep", NON_TEXT],
+  // Gaps closed in Story 7.3
+  ["amber-tint", "navy-glow", TEXT],
+  ["white", "navy-glow", TEXT],
   // Navy button
   ["white", "navy", TEXT],
 ];
