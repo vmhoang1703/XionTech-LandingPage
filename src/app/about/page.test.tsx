@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { undefinedClasses } from "@/test-utils/css-classes";
+import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import AboutPage, { metadata } from "./page";
 
 vi.mock("@/components/sections/hero-art", () => ({ HeroArt: () => null }));
@@ -242,12 +242,14 @@ describe("AboutPage", () => {
     const { container } = render(<AboutPage />);
     // The stats band is Tailwind utilities, covered by its own tests.
     container.querySelector('[role="group"][aria-labelledby]')?.remove();
-    // The About CSS comes with the globals.css task, which `values|value|feat|faq|office-card|clock` from this exemption.
-    expect(
-      undefinedClasses(
-        container,
-        /^(mt-4|mt-5|mt-6|sr-only|values|value|feat|faq|office-card|clock)$/,
-      ),
-    ).toEqual([]);
+    expect(undefinedClasses(container, /^(mt-4|mt-5|mt-6|sr-only)$/)).toEqual(
+      [],
+    );
+  });
+
+  it("#values and #faq have a scroll-margin-top that uses --spacing-anchor-offset", () => {
+    expect(globalsCss()).toMatch(
+      /#values\s*,\s*#faq\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+    );
   });
 });
