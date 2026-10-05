@@ -66,12 +66,12 @@ context: ['{project-root}/AGENTS.md']
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/content/service-icons.ts` (new), `src/components/home/service-cards.tsx` -- move `CARD` (icon and variant per service id) into the shared module; Home imports it -- one icon map for both pages
+- [x] `src/content/service-icons.ts` (new), `src/components/home/service-cards.tsx` -- move `CARD` (icon and variant per service id) into the shared module; Home imports it -- one icon map for both pages
   - red: `src/content/service-icons.test.ts` -- all eight ids map to an icon; `product-engineering` and `cloud` are `feature`, `ai-solutions` is `navy`
-- [ ] `src/components/sections/stats-band.tsx` -- optional `hideLabel`: label `<h2>` gets `sr-only`; the list drops `mt-4.5 border-t pt-6.5`; default output unchanged -- Services stats match the prototype
+- [x] `src/components/sections/stats-band.tsx` -- optional `hideLabel`: label `<h2>` gets `sr-only`; the list drops `mt-4.5 border-t pt-6.5`; default output unchanged -- Services stats match the prototype
   - red: `src/components/sections/stats-band.test.tsx` -- with `hideLabel` the h2 still names the group but has `sr-only`, and the list has no `border-t`; without it the classes are unchanged
-- [ ] `src/content/services.ts` -- stats aria label "Key facts"; services section title, lede and the eight items with the prototype descriptions and tags -- copy out of components
-- [ ] `src/app/services/page.tsx` -- after the hero:
+- [x] `src/content/services.ts` -- stats aria label "Key facts"; services section title, lede and the eight items with the prototype descriptions and tags -- copy out of components
+- [x] `src/app/services/page.tsx` -- after the hero:
   - **Stats:** `<section class="sec surface-paper" aria-label=…>` with `StatsBand` (`homeStats.stats`, `tone="light"`, `hideLabel`, label "Key facts").
   - **Services:**
     - `<section class="sec surface-mist linen pt-10" aria-labelledby=…>`, with `.sec-head` holding the h2 and `.lede`.
@@ -83,9 +83,9 @@ context: ['{project-root}/AGENTS.md']
     - eight articles with the exact ids in order, each with an h3 and a description, and tags where the prototype has them;
     - no link inside any card;
     - the CSS contract passes.
-- [ ] `src/app/globals.css` -- `.svc .tags` (mono, 0.7rem, muted, `margin-top:auto`); `.svc[id]` `scroll-margin-top` from the anchor-offset token -- missing rules, CAP-3
+- [x] `src/app/globals.css` -- `.svc .tags` (mono, 0.7rem, muted, `margin-top:auto`); `.svc[id]` `scroll-margin-top` from the anchor-offset token -- missing rules, CAP-3
   - red: `src/app/services/page.test.tsx` -- `.svc[id]` has a `scroll-margin-top` that uses `--spacing-anchor-offset`
-- [ ] `e2e/services.spec.ts` -- `@smoke`: the eight `id="…"` and "Eight services, one team." in the `/services` HTML -- anchors exist without JavaScript
+- [x] `e2e/services.spec.ts` -- `@smoke`: the eight `id="…"` and "Eight services, one team." in the `/services` HTML -- anchors exist without JavaScript
 
 **Acceptance Criteria:**
 - Given `/services`, when it loads, then a paper band shows 25+, 24/7, 20+, 8 and 2 with their captions, and the suffixes are amber-text (CAP-1).
