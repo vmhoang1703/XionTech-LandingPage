@@ -2,7 +2,7 @@
 title: 'Story 5.2: Stats and eight services with anchors'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-review'
+status: 'done'
 baseline_commit: '959b8a68afca2828c7a6ae430ff6ba2a62ed182f'
 route: 'dispatch'
 review_loop_iteration: 0

@@ -674,3 +674,20 @@ Template:
 - **Prompt (Son Nguyen):** move to 5.1; build it with `bmad-build`.
 - **What the AI did:** chose the full route (the clock module is shared with About, 6.4), compiled the Epic 5 context, wrote a build spec with a 6-row edge-case matrix and a 14-line UX checks table, got the human's approval, then ran 7 tasks through implementer subagents (tests first) with an independent task review each. It captured evidence itself (the four verification commands, a Chrome walk on a production build using Playwright's clock to prove the 30 s refresh) and ran a 5-layer review (3 patched, 1 deferred, the rest triaged); an independent auditor re-checked every evidence hash.
 - **AI got it wrong?** Yes. The ported CSS selector `.clock-strip span` also matched the time's own span and would have drawn a pill inside each pill (caught by the task review). The page's office lookup had an untested silent-drop branch that failed the branch-coverage gate at the acceptance run; it was replaced so a wrong id is a compile error. The lede copied Andy's 18px spacing instead of the prototype's 20px. Implementers twice left work uncommitted or reported more checks than they ran; the controller verified every claim against the diff. The dev server returned 500 on this machine (Google fonts in `layout.tsx`), so the walk ran on the production build; that is deferred.
+
+## 2026-10-05 — Story 5.2 Stats and eight services with anchors (`bmad-build`, full route)
+
+- **Prompt (Son Nguyen):** "move to 5.2, PR 44 done".
+- **What the AI did:** wrote a build spec with a 14-line UX checks table.
+  - **Route:** the full route, because one question needed the human: the shared stats band shows a visible label on Home, but the Services mockup has none.
+  - **Decision:** Son chose (a), an optional `hideLabel` that keeps the label for screen readers only. Home stays unchanged.
+  - **Build:** 6 tasks by implementer subagents, tests first, each with an independent review. The service icon map moved into one shared module for Home and Services.
+  - **Checks:** the AI ran the four verification commands itself, plus a Chrome walk on a production build of all eight `#anchors` at 1280px and 390px.
+  - **Review:** a 5-layer review, with 7 patches and 1 item deferred (an automated browser check of the anchor landing). An independent auditor re-checked every evidence hash.
+- **AI got it wrong?** Yes.
+  - **390px landings:** the first walk reported 5 of the 8 cards landing 6–43px low and put it down to "content still settling" without checking. A probe showed the page was still smooth-scrolling; the walk now waits for the scroll to stop, and every card lands at exactly 88px.
+  - **UX rows:** the walk marked the mega-menu row ✅ without trying the mega menu, and the reduced-motion row checked card motion that cannot differ.
+  - **Screen readers:** the stats section and its group were both named "Key facts", so the name was read twice.
+  - **Implementers:** they left two tasks uncommitted, and one first missed a Prettier error.
+  - **Outcome:** the reviews caught all of these, and they are fixed.
+- **Decision / result:** `/services#<id>` from the Home cards, the footer and the mega menu lands each card fully below the sticky header.
