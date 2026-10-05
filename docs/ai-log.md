@@ -698,3 +698,4 @@ Template:
   - **Implementers:** they left two tasks uncommitted, and one first missed a Prettier error.
   - **Outcome:** the reviews caught all of these, and they are fixed.
 - **Decision / result:** `/services#<id>` from the Home cards, the footer and the mega menu lands each card fully below the sticky header.
+- **Same day, at PR time:** my script that filled the UX table's "Checked" column wrote `||`, which added an empty extra column to every row. This is the same mistake logged for Story 6.6. It was caught when the table was copied into the PR and has been fixed.
