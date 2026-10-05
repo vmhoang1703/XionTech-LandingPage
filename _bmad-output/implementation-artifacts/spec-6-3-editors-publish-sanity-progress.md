@@ -21,3 +21,8 @@
 - Task 4: green — npx vitest run src/lib/careers/life-photos.test.ts — 5 passed
 - Task 4: review — skipped (controller rule for this run)
 - Task 4: complete (commits 5a8e7b4..d7b57f9, diff verified)
+- Task 5: dispatched (model sonnet, base 983372c, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t5.md)
+- Task 5: red — npx vitest run src/components/careers src/app/careers — 2 failed: a photo slot still rendered the [Placeholder] frame
+- Task 5: green — npx vitest run src/components/careers src/app/careers — 59 passed (5 files)
+- Task 5: review — skipped (controller rule for this run); controller checked `.spot` is position: relative for `fill`
+- Task 5: complete (commits 983372c..a0c8b66, diff verified)

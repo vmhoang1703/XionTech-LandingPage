@@ -61,7 +61,7 @@ Lead decisions (2026-10-05, the lead said "start to build" on these defaults): D
   - red: `route.test.ts` -- a signed `careersPhotos` or `product` body answers 400.
 - [x] `src/lib/careers/life-photos.ts` + test -- `getLifePhotos()`: GROQ on `_id == "careersPhotos"`, per slot `url` (`asset->url`), width, height, alt, caption; tag `careersPhotos`; null on failure with one log line -- CAP-3.
   - red: `life-photos.test.ts` -- the function does not exist.
-- [ ] `src/components/careers/life-frames.tsx`, `src/app/careers/page.tsx`, `src/content/careers.ts`, `next.config.ts` + tests -- a slot with a photo shows `next/image` (`unoptimized`, `?w=800&auto=format`, alt, caption); an empty slot keeps its `[Placeholder]` frame -- CAP-3.
+- [x] `src/components/careers/life-frames.tsx`, `src/app/careers/page.tsx`, `src/content/careers.ts`, `next.config.ts` + tests -- a slot with a photo shows `next/image` (`unoptimized`, `?w=800&auto=format`, alt, caption); an empty slot keeps its `[Placeholder]` frame -- CAP-3.
   - red: `careers.test.tsx` -- a photo slot still renders the placeholder.
 - [ ] `docs/sanity.md` -- editor guide (publish, unpublish, close a role, photos, clips) and the webhook filter `_type in ["post", "job", "careersPhotos", "product"]` -- CAP-1..5.
 - [ ] Live proof (after merge, lead approves each Sanity change): a `[Test]` story and a `[Test]` role published, edited, unpublished or closed on the dev site; CAP-5 checked by hand in Studio; test documents deleted -- CAP-1, CAP-2, CAP-5.
