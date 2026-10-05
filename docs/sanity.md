@@ -9,7 +9,7 @@ It says where the code lives, how to set up, and what the free plan allows.
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `src/lib/sanity/config.ts`        | Reads and checks `NEXT_PUBLIC_SANITY_PROJECT_ID` and `NEXT_PUBLIC_SANITY_DATASET`.                                        |
 | `src/lib/sanity/client.ts`        | `sanityFetch`: the one server-only read helper (no CDN, `published` perspective, no token, cached by tags; decision A11). |
-| `src/app/api/revalidate/route.ts` | Webhook. Checks Sanity's signature, then calls `revalidateTag("post" or "job", "max")`.                                   |
+| `src/app/api/revalidate/route.ts` | Webhook. Checks Sanity's signature, then calls `revalidateTag("post", "job", "careersPhotos" or "product", "max")`.       |
 | `studio/`                         | Sanity Studio. A separate package with its own `package.json` and lockfile. It is not an npm workspace.                   |
 | `scripts/sanity-check.mjs`        | Run with `npm run sanity:check`. Reads one post, one job and a draft read from the real project.                          |
 | `.env.example`                    | The three variable names. Copy it to `.env.local`.                                                                        |
@@ -66,7 +66,7 @@ If Sanity cannot be reached while Home is built or refreshed, Home still renders
 
 4. Make the webhook. Copy `SANITY_REVALIDATE_SECRET` from `.env.local`. In Manage, open API, then Webhooks. Use these settings:
    - URL: `https://xiontech-dev.vercel.app/api/revalidate`. Add a second webhook for the production URL `https://xion-tech-landing-page.vercel.app/api/revalidate`.
-   - Filter: `_type in ["post", "job"]`
+   - Filter: `_type in ["post", "job", "careersPhotos", "product"]`. If the filter does not list all four types, a new photo shows only after a redeploy.
    - Projection: `{_type}`
    - Trigger on: create, update, delete
    - Method: POST
@@ -74,6 +74,48 @@ If Sanity cannot be reached while Home is built or refreshed, Home still renders
 5. In Vercel, open Settings, then Environment Variables. Set these for Preview and Production: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET` (`production`) and `SANITY_REVALIDATE_SECRET`. Do this before you merge. The build stops without the first two.
 
 Webhook answers: 200 is OK, 401 is a bad or missing signature, 400 is an unknown document type or bad JSON, 500 means the secret is not set. After you publish a change in the Studio, the webhook delivery in sanity.io/manage must show 200. A 401 "Invalid signature" means the webhook secret differs from the one in Vercel.
+
+## Editor guide (no developer needed)
+
+Open the Studio at https://xiontech-landing.sanity.studio and sign in. The site follows your change with no deploy. After a publish, the first visit may show the old content. The next visit shows the new content (stale-while-revalidate).
+
+### Publish a story
+
+1. Open **News posts** and create a post.
+2. Fill the English title, the slug (use Generate), the Published at date and the category. Add the app for a Product story.
+3. Click Publish.
+
+A post shows on the site only with an English title, a slug and a date. It then shows on `/news` and on Home.
+
+### Unpublish a story
+
+Open the post and use Unpublish. It leaves `/news` and Home after the webhook runs.
+
+### Close a role
+
+1. Open **Job openings** and open the role.
+2. Turn on the **Closed** switch. Click Publish.
+
+The role page then answers Not found. The role leaves the list on `/careers`. Turn the switch off and publish to open it again.
+
+### Add a team photo
+
+1. Open **Careers photos**. It is one document with three slots: team, office and event.
+2. For one slot, upload a photo. The alt text is required when a photo is set. Studio blocks the publish and says "Describe the photo for screen readers." Add a caption too.
+3. Click Publish. The frame in `#life` on `/careers` shows the photo. A slot with no photo keeps its `[Placeholder]` frame.
+
+Only add photos of people who agreed. Datasets are public, so anyone can read an uploaded photo.
+
+### Add a product clip
+
+1. Open **Products**. There are four fixed documents: PXP, LXP, SXP and IoT.
+2. Upload an mp4 clip in the clip field. Click Publish.
+
+No page shows the clips yet. Story 4.4 will show them.
+
+### If a change does not show
+
+Check the webhook filter in sanity.io/manage. It must be `_type in ["post", "job", "careersPhotos", "product"]`. If a type is missing, new photos show only after a redeploy. After a schema change, deploy the Studio from an up-to-date `develop` (see "Every later schema change" above).
 
 ## Draft privacy proof
 
