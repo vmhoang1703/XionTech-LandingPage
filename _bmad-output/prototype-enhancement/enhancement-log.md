@@ -43,6 +43,7 @@ directly, before this log existed.
 | ENH-027 | 2026-10-05 | Products, app cards                                       | Resizing a window across the phone/desktop breakpoint keeps the reader on the card they were reading                                                                                                                                                                                              | Approved | 4.1                                   |
 | ENH-028 | 2026-10-05 | Products, app cards                                       | Phone rotation keeps the card; the pill clears below the cards; one rule for "the card being read"                                                                                                                                                                                                | Approved | 4.1                                   |
 | ENH-029 | 2026-10-05 | Products, audience pills                                  | The pill clears as soon as "A day at school" reaches the middle of the screen                                                                                                                                                                                                                     | Approved | 4.1                                   |
+| ENH-030 | 2026-10-05 | About, hero                                               | "Inspired by a mountain." becomes the hero: a held two-chapter story with the title at the top, the mountain climbing beside it, X mark at the summit; the old hero, key facts, breadcrumb and "Two strengths, one team." go                                                                      | Approved | 4.1                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -61,6 +62,7 @@ directly, before this log existed.
     and get in touch with you." (The prototype's extra line "Prototype: nothing was sent." is not for
     production.)
 - **Rules:**
+  - The Mount Zion tag is the only link in the story. It is reached by keyboard, at least 44px tall, and says it opens in a new tab.
   - Required: name, work email (a valid address) and the message.
   - Phone is optional. When filled, it has 7 to 15 digits, may start with +, and may use spaces, dots,
     dashes and brackets. Extensions ("ext 2") are not accepted.
@@ -676,4 +678,28 @@ directly, before this log existed.
 - **What changed:** the audience pill clears as soon as the section after the app cards reaches the middle of the screen, on desktop and phones.
 - **Rules:** a resize from that point keeps the reader's place in the section rather than returning to the last card, since the same rule decides which card is being read. Away from the cards, the place is kept as the section at mid-screen and how far down the screen it sits (for example 45%), so it holds on any window size; on desktop this also applies to resizes that only change the height, because the card stack above changes length with the window. A phone keyboard opening still never moves the page.
 - **Developer notes:** the check uses the bottom of the cards' own section (whatever section follows it), so it keeps working if sections are reordered. The review found that the saved place used a different line (30%) from the pill (50%), and that desktop resizes let the school-day section drift; both fixed and re-checked at five resize pairs.
+- **Open items:** none.
+
+## ENH-030: The mountain story opens the About page
+
+- **Why:** Amber asked on 2026-10-05 to bring the mountain story from `xiontechs-mountain-story.html` into the About page, without the thin frame lines around and between its parts. She then asked for it to be the page's hero, told on the left while the picture changes beside it (like the night-to-dawn reference), with the XionTech X mark at the summit. After seeing three short steps she chose two fuller ones, with the title kept at the top and highlighted, and no breadcrumb. Finally she asked for wording that does not mention God, faith or spiritual ideas while still letting readers look up the origin themselves, with the place referenced on the picture, and the title above both columns.
+- **What changed:** the navy hero ("Tech made simple. Solutions made powerful." and its description), the five key-fact figures, "Two strengths, one team." and the breadcrumb are removed. The page now opens with the story, held in place for about one extra screen of scrolling:
+  - Top, centred above both columns: the title "Inspired by a mountain. United by purpose.", with "purpose" in the site's amber highlight. It stays while the chapters change.
+  - Left: chapter 01 The inspiration (the name comes from Zion, the ancient mountain city in Jerusalem, a place where people belong together and look towards a brighter future) with a Scroll cue, which gives way to chapter 02 The purpose (the pioneers who founded newXion), closing with "Our inspiration is a mountain. Our purpose is people." and "Vision · Community · Technology".
+  - Right: the mountain, grey at first. When chapter 02 takes over, the colour climbs from the foot to the summit with an amber dot following the trail, and the X mark on the summit turns from grey to full colour. Two small dots under the picture show the chapter.
+  - Place tags on the picture, like a survey map, each with a short leader line and an amber point: "Mount Zion, Jerusalem, 31.77° N 35.23° E" beside the summit, a link that opens the Wikipedia page in a new tab so readers can look the place up; and "newXion, Founded in America" at the village on the slope, which appears with chapter 02.
+- **Rules:**
+  - Chapter 02 takes over 40% of the way through the held scroll; scrolling back up returns to chapter 01 and climbs back down. There is no timer or autoplay.
+  - Phones and portrait tablets stack the title, the picture and the chapter text, all held in place together. Short screens cannot fit that (phones under about 740px tall, and landscape phones of any width), so there nothing is held: the picture stays in view while both chapters scroll past it, and chapter 02 takes over once its heading is 60% of the way down the screen.
+  - Both chapters are ordinary page text, read in order by screen readers; the picture is decorative.
+  - With reduced motion the picture and text change without movement, and the dot is hidden. Without JavaScript nothing is held, both chapters show one after the other, and the whole mountain, X mark included, is in colour.
+  - No frame lines and no eyebrow label. The picture's edges fade into the page so no box shows, and the colour's leading edge is soft.
+- **Content:** no mention of God, faith or spiritual ideas; the origin is given as a place (Mount Zion, with its coordinates) that readers can look up. Chapter 02 is the newXion story from the reference. All copy has Vietnamese.
+- **After review (2026-10-05):**
+  - Landscape phones wider than 800px used to get the held layout, which did not fit; they now scroll normally with the picture beside the text.
+  - Short desktop windows tighten slightly so the held story fits in Vietnamese too.
+  - The 40% switch point is measured from where the story starts to stick under the header (it was landing at about 47%).
+  - A page opened or reloaded part-way down shows the right chapter straight away instead of replaying the climb.
+  - The Mount Zion tag underlines on keyboard focus as well as hover; the newXion tag clears the edge on 320px phones; the trail glow uses the brand amber.
+- **Developer notes:** the picture is `assets/mountain-story.webp` (1536×1024, 177 KB), taken from the source file, which embedded the same image twice; it is used twice here too (grey base and colour layer). The X mark is `assets/x-mark.webp` (160×86, 8 KB), cut from `logo-square.png` with its white background removed.
 - **Open items:** none.

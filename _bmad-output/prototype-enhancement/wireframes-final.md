@@ -30,6 +30,7 @@ also has a Vietnamese version in the prototype.
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
 | Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", no button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018, ENH-020 |
 | Products, after the apps | — | New: "A day at school.", a five-step timeline (07:45 to 15:30) on dark blue that plays step by step once, filling the rail and each dot with amber | ENH-015, ENH-023 |
+| About, hero | Navy hero "Tech made simple. Solutions made powerful." with a breadcrumb and description; five key-fact figures; "Two strengths, one team." | "Inspired by a mountain. United by purpose." centred at the top ("purpose" highlighted). Held for about a screen of scrolling: chapter 01 The inspiration (the name comes from Zion, the ancient mountain city in Jerusalem) gives way to 02 The purpose (the pioneers who founded newXion), while the mountain beside it fills with colour to the summit, where the X mark turns full colour. Map-style tags on the picture: "Mount Zion, Jerusalem, 31.77° N 35.23° E" (links out) and "newXion, Founded in America" | ENH-030 |
 | About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; soft clouds drifting in the bottom left of a light-to-navy background | ENH-016 |
 | About, FAQ background | — | The clouds and gradient hold still; the drifting and the sheen are gone | ENH-019 |
 | Products, the apps | Four separate sections (PXP, LXP, SXP, IoT) with their own layouts, and a PXP / LXP / SXP / IoT / Updates bar | Seven stacked app cards (SXP, IoT, AI Timetable, AI Grader, PXP, LXP, AI Tutor) that pin and replace one another on desktop; phone or browser mockup, app name, one sentence, a Features list, store or View prototype buttons; School / Parents / Students pills that jump and highlight | ENH-020 |
@@ -675,52 +676,28 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Tech made simple. Solutions made powerful. · navy hero ──────────────────────────────────────────┐ ║
-║ │ [BACKGROUND: animated strands]                                                                       │ ║
-║ │ Breadcrumb: Home › About                                                                             │ ║
-║ │ H1: Tech made simple. Solutions made powerful.                                                       │ ║
-║ │ Text: We are an education technology company and software partner. We build our own school platforms │ ║
-║ │   and deliver digital products for clients around the world.                                         │ ║
+║ ┌─ 1. Inspired by a mountain. United by purpose. · white · [new in ENH-030] ───────────────────────────┐ ║
+║ │ H1: Inspired by a mountain. United by purpose.                                                       │ ║
+║ │ H2: 01 The inspiration                                                                               │ ║
+║ │ Text: Our name comes from Zion, the ancient mountain city in Jerusalem. For thousands of years, it   │ ║
+║ │   has stood for a place where people belong together and look towards a brighter future.             │ ║
+║ │ H2: 02 The purpose                                                                                   │ ║
+║ │ Text: Inspired by this vision, a group of pioneers established newXion in America. Guided by         │ ║
+║ │   enduring core values, they set out to build a community that echoes the mountain city: where       │ ║
+║ │   people unite, harness cutting-edge technology, and build exceptional IT systems to advance         │ ║
+║ │   humanity and shape a brighter future for all.                                                      │ ║
+║ │ Text: Our inspiration is a mountain. Our purpose is people.                                          │ ║
+║ │ Text: Vision · Community · Technology                                                                │ ║
+║ │ [LINK: Mount Zion · Jerusalem · 31.77° N 35.23° E → https://en.wikipedia.org/wiki/Mount_Zion]        │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Key facts · white ───────────────────────────────────────────────────────────────────────────────┐ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ H3: 25+                      │ │ H3: 24/7                     │ │ H3: 20+                        │ │ ║
-║ │ │ Text: Years of leadership    │ │ Text: Global coverage across │ │ Text: Technology stacks we     │ │ ║
-║ │ │   experience in software     │ │   time zones                 │ │   work in                      │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐                                    │ ║
-║ │ │ H3: 4                        │ │ H3: 2                        │                                    │ ║
-║ │ │ Text: School products ready  │ │ Text: Offices: Ho Chi Minh   │                                    │ ║
-║ │ │   to demo                    │ │   City and Plano             │                                    │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘                                    │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 3. Two strengths, one team. · light blue, linen ────────────────────────────────────────────────────┐ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: [Placeholder] Photo · Real team photo   │ │ H2: Two strengths, one team.                   │ │ ║
-║ │ │   at the Ho Chi Minh City office (no AI       │ │ Text: We build PXP, LXP, SXP and IoT Device    │ │ ║
-║ │ │   imagery).                                   │ │   Management for schools. The same team        │ │ ║
-║ │ │                                               │ │   delivers software for companies in           │ │ ║
-║ │ │                                               │ │   education, healthcare, logistics and private │ │ ║
-║ │ │                                               │ │   equity.                                      │ │ ║
-║ │ │                                               │ │ • We understand education from the inside,     │ │ ║
-║ │ │                                               │ │   because we run products for schools.         │ │ ║
-║ │ │                                               │ │ • Led by more than 25 years of leadership      │ │ ║
-║ │ │                                               │ │   experience in software.                      │ │ ║
-║ │ │                                               │ │ • Offices in Ho Chi Minh City and Plano,       │ │ ║
-║ │ │                                               │ │   serving clients in the USA, Europe and       │ │ ║
-║ │ │                                               │ │   Australia.                                   │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 4. Our core values. · white ────────────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 2. Our core values. · white ────────────────────────────────────────────────────────────────────────┐ ║
 ║ │ H2: Our core values.                                                                                 │ ║
 ║ │ Text: What guides how we work.                                                                       │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
@@ -749,7 +726,7 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ 
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. Your question, we answer · [rebuilt in ENH-016 · background stilled in ENH-019] ─────────────────┐ ║
+║ ┌─ 3. Your question, we answer · [rebuilt in ENH-016 · background stilled in ENH-019] ─────────────────┐ ║
 ║ │ H2: Your question, we answer                                                                         │ ║
 ║ │ Text: Straight answers about our products, our services and how we work.                             │ ║
 ║ │ [FAQ, opens on click] Q: What does XionTechs do?                                                     │ ║
@@ -778,7 +755,7 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ 
 ║ │ A: We track speed, quality, product impact and team autonomy, and share them openly with you.        │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. Two offices, serving the world. · navy, grid texture ────────────────────────────────────────────┐ ║
+║ ┌─ 4. Two offices, serving the world. · navy, grid texture ────────────────────────────────────────────┐ ║
 ║ │ H2: Two offices, serving the world.                                                                  │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ Text: US Central                              │ │ Text: GMT+7                                    │ │ ║
@@ -793,7 +770,7 @@ Changes on this page: Batch 1 (no label above "Our core values."); ENH-011 (FAQ 
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 7. See our apps in action. · amber ─────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 5. See our apps in action. · amber ─────────────────────────────────────────────────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: See our apps in action.                   │ │ [FIELD: Work email (email, required)]          │ │ ║
 ║ │ │ Text: Leave your work email and we'll arrange │ │ placeholder: "name@company.com"                │ │ ║

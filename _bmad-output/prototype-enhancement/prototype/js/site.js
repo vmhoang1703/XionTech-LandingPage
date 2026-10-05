@@ -405,6 +405,38 @@
     check();
   }
 
+  /* ---------- About: the mountain story. Scrolling through the pinned story moves to the next chapter and climbs the mountain ---------- */
+  const mtn=document.querySelector('.mtn');
+  if(mtn){
+    const chs=[...mtn.querySelectorAll('.mtn-ch')],dots=[...mtn.querySelectorAll('.mtn-dots span')],pin=mtn.querySelector('.mtn-pin'),
+      targets=[0,1],path=[[20,69.5],[28,65.5],[38.7,54.2],[43.3,47],[47.3,45],[53.3,35.5],[52.8,30],[55.5,25],[58.4,19.4]];
+    let p=0,frame=0,active=-1;
+    const draw=(v,i)=>{p=Math.min(1,Math.max(0,v));mtn.style.setProperty('--mtn',p.toFixed(4));
+      const f=p*(path.length-1),j=Math.min(path.length-2,Math.floor(f)),q=f-j;
+      mtn.style.setProperty('--mx',(path[j][0]+(path[j+1][0]-path[j][0])*q)+'%');mtn.style.setProperty('--my',(path[j][1]+(path[j+1][1]-path[j][1])*q)+'%');
+      mtn.classList.toggle('at-top',p>.985);
+      if(i!==active){active=i;mtn.classList.toggle('is-2',i===1);chs.forEach((c,n)=>c.classList.toggle('on',n===i));dots.forEach((d,n)=>d.classList.toggle('on',n===i))}};
+    const stop=()=>{cancelAnimationFrame(frame);frame=0};
+    const travel=i=>{stop();const from=p,to=targets[i],dist=Math.abs(to-from);draw(from,i);
+      if(reduce||dist<.001){draw(to,i);return}
+      const t0=performance.now(),dur=1400+dist*3000;
+      const tick=t=>{const f=Math.min(1,(t-t0)/dur),e=f<.5?4*f*f*f:1-Math.pow(-2*f+2,3)/2;draw(from+(to-from)*e,i);frame=f<1?requestAnimationFrame(tick):0};
+      frame=requestAnimationFrame(tick)};
+    // the second chapter takes over 40% of the way through the held scroll (measured from where it starts to stick, under the header); scrolling back up returns to the first. On short
+    // screens nothing is held, so the second chapter takes over once its heading is 60% of the way down the screen. No timer, no autoplay
+    const onScroll=instant=>{let k;
+      const cs=getComputedStyle(pin);
+      if(cs.position==='sticky'){const run=Math.max(1,mtn.offsetHeight-pin.offsetHeight);k=(parseFloat(cs.top)-mtn.getBoundingClientRect().top)/run>=.4?1:0}
+      else k=chs[1].querySelector('.mtn-title').getBoundingClientRect().top<innerHeight*.6?1:0;
+      // when the page opens (or reloads) part-way down, show that chapter straight away instead of replaying the climb
+      if(instant===true){stop();draw(targets[k],k);return}
+      if(k!==active)travel(k)};
+    let mt=false;addEventListener('scroll',()=>{if(mt)return;mt=true;requestAnimationFrame(()=>{onScroll();mt=false})},{passive:true});
+    addEventListener('resize',onScroll,{passive:true});
+    document.addEventListener('visibilitychange',()=>{if(document.hidden&&active>=0){stop();draw(targets[active],active)}});
+    draw(0,0);onScroll(true);addEventListener('load',()=>onScroll(true),{once:true});
+  }
+
   /* ---------- office clocks ---------- */
   function clocks(){document.querySelectorAll('[data-tz]').forEach(el=>{try{el.textContent=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:el.dataset.tz}).format(new Date())}catch(e){}})}
   clocks();setInterval(clocks,30000);

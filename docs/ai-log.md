@@ -1078,3 +1078,22 @@ Template:
   fraction of the screen height, on desktop for any resize; phone keyboard resizes still never move the page.
 - **AI got it wrong?** Yes: the first fix kept the section at the same pixel offset, which on a shorter window
   fell below the middle and brought the pill back; it now keeps the same fraction of the screen.
+
+## 2026-10-05 — ENH-030: the mountain story opens the About page
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Bring the "Inspired by a mountain" story from a design file into the About page without its
+  frame lines, then make it the page hero: the story told on the left while the mountain picture climbs beside
+  it, the XionTech X mark at the summit, two fuller chapters, the title above both columns, no breadcrumb, and no
+  mention of God, faith or spiritual ideas while still letting readers look the origin up themselves.
+- **Decision / result:** Approved by Amber after six rounds. The old navy hero, key facts and "Two strengths, one
+  team." are gone. The story is held for about a screen of scrolling; chapter 02 takes over at 40%, the colour
+  climbs to the summit and the X turns full colour. The origin is a map-style tag on the picture, "Mount Zion,
+  Jerusalem, 31.77° N 35.23° E", linking to Wikipedia. The review found landscape phones getting a held layout
+  that did not fit, a short Vietnamese desktop window overflowing by 7px, the switch point measured from the
+  wrong line (about 47% instead of 40%), and a reload part-way down replaying the climb; all fixed and re-checked
+  at ten window sizes.
+- **AI got it wrong?** Yes: the first scroll version let a step click be overridden by the scroll it caused, the
+  phone chapters slid under the picture before the next one took over, and the held block was stretched to a
+  full screen, leaving an empty band under it that Amber had to point out.

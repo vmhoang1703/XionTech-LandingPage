@@ -1024,3 +1024,121 @@ b,strong{font-weight:600}
 .menu>a{font-weight:450}
 .menu>a[aria-current="page"]{font-weight:500}
 .pc-label{letter-spacing:.14em}
+
+/* ---------- About: Inspired by a mountain (ENH-030). The story is held for about one extra screen of scrolling: the title stays at
+   the top, the chapter text swaps beneath it, and the mountain climbs beside it. No frame lines ---------- */
+.mtn{--mtn:0;--hdr:72px;height:calc(190svh - var(--hdr))}
+.mtn-pin{position:sticky;top:var(--hdr);display:flex;align-items:flex-start;padding:48px 0 0}
+.mtn-pin>.wrap{width:100%}
+/* the title sits above both columns and stays while the chapters change */
+.mtn h1{font-family:var(--f-display);font-weight:500;font-size:clamp(2rem,3.4vw,3rem);letter-spacing:-.03em;line-height:1.1;margin:0 auto clamp(20px,4vh,40px);text-align:center;text-wrap:balance}
+.mtn-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:center}
+/* both chapters share one place; the one being read shows, the other waits (screen readers still read both, in order) */
+.mtn-chs{display:grid}
+.mtn-ch{grid-area:1/1}
+.mtn-title{display:flex;align-items:baseline;gap:14px;font-family:var(--f-display);font-weight:500;font-size:clamp(1.4rem,2.2vw,1.85rem);letter-spacing:-.02em;line-height:1.15;margin:0}
+.mtn-num{color:var(--amber-text);font-size:.8em}
+.mtn-text{margin:16px 0 0;font-size:var(--fs-lead);line-height:1.7;color:var(--text);max-width:46ch}
+.mtn-cue{margin:24px 0 0;display:flex;align-items:center;gap:10px;font-size:var(--fs-label);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.mtn-cue::after{content:"";width:38px;height:1px;background:currentColor;opacity:.6}
+.mtn-close{margin-top:28px;display:grid;gap:6px;font-size:var(--fs-small);color:var(--muted)}
+.mtn-close p{margin:0}
+.mtn-close strong{color:var(--heading);font-weight:500}
+.js-anim .mtn-ch>*{transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.js-anim .mtn-ch:not(.on)>*{opacity:0;transform:translateY(20px);transition-duration:.35s}
+.js-anim .mtn-ch.on>*:nth-child(2){transition-delay:.08s}.js-anim .mtn-ch.on>*:nth-child(3){transition-delay:.16s}
+.mtn-stage{display:flex;flex-direction:column;gap:18px}
+.mtn-art{position:relative;isolation:isolate;width:min(100%,calc((100svh - var(--hdr) - 240px) * 1.5));margin:0 auto}
+.mtn-img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;mix-blend-mode:multiply;
+  /* the picture's own background fades into the page, so no box or edge shows */
+  -webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%)}
+.mtn-base{filter:grayscale(1);opacity:.9}
+/* the colour climbs the mountain with the story, with a soft leading edge (the fade mask and the climb mask are combined) */
+.mtn-color{position:absolute;inset:0;opacity:.9;--edge:calc(var(--mtn)*112%);
+  -webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%),linear-gradient(to top,#000 calc(var(--edge) - 12%),transparent var(--edge));
+  mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%),linear-gradient(to top,#000 calc(var(--edge) - 12%),transparent var(--edge));
+  -webkit-mask-composite:source-in;mask-composite:intersect}
+.mtn-beacon{position:absolute;left:var(--mx,20%);top:var(--my,69.5%);width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 7px rgb(255 192 0 / .16),0 0 24px rgb(255 192 0 / .45);transform:translate(-50%,-50%);transition:opacity .5s var(--ease)}
+/* the X mark crowns the summit: grey until the story reaches the top, then in full colour, taking over from the dot */
+.mtn-summit{position:absolute;left:58.4%;top:19.4%;width:clamp(30px,3.6vw,52px);height:auto;transform:translate(-50%,-78%);filter:grayscale(1);opacity:.55;transition:filter .8s var(--ease),opacity .8s var(--ease),transform .8s var(--ease)}
+.mtn.at-top .mtn-summit{filter:none;opacity:1;transform:translate(-50%,-86%)}
+.mtn.at-top .mtn-beacon{opacity:0}
+/* place tags on the picture, like a survey map: a short leader line runs from the tag to the spot it names */
+.mtn-tag{--lead:clamp(14px,3.2vw,44px);position:absolute;top:var(--ty);right:calc(100% - var(--tx));transform:translateY(-50%);display:flex;flex-direction:column;align-items:flex-end;justify-content:center;min-height:44px;padding:4px calc(var(--lead) + 8px) 4px 8px;
+  font-family:var(--f-mono);font-size:var(--fs-label);line-height:1.45;letter-spacing:.04em;color:var(--muted);text-align:right;white-space:nowrap;border-radius:6px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--paper) 88%,transparent) 22%);transition:opacity .6s var(--ease)}
+.mtn-tag::after{content:"";position:absolute;right:0;top:50%;width:var(--lead);height:1px;background:currentColor;opacity:.7}
+.mtn-tag::before{content:"";position:absolute;right:-3px;top:calc(50% - 3px);width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.mtn-tag-name{color:var(--heading);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.mtn-tag-geo{color:var(--muted)}
+/* Mount Zion sits beside the summit; the tag is a link out, so readers can look the place up */
+.mtn-tag-zion{--tx:55.5%;--ty:15%;text-decoration:none}
+.mtn-tag-zion .mtn-tag-name::after{content:" ↗";letter-spacing:0}
+.mtn-tag-zion:hover .mtn-tag-name,.mtn-tag-zion:focus-visible .mtn-tag-name{text-decoration:underline;text-decoration-color:var(--amber);text-decoration-thickness:2px;text-underline-offset:3px}
+/* newXion marks the village on the slope, and appears with chapter 02 */
+.mtn-tag-xion{--tx:45.5%;--ty:44%}
+.mtn-tag-xion .mtn-tag-name{text-transform:none;letter-spacing:.02em}
+.js-anim .mtn:not(.is-2) .mtn-tag-xion{opacity:0}
+.mtn-dots{display:flex;justify-content:center;gap:8px}
+.mtn-dots span{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--navy) 18%,transparent);transition:background .4s var(--ease),width .4s var(--ease)}
+.mtn-dots span.on{width:24px;border-radius:4px;background:var(--amber)}
+/* without JavaScript nothing is pinned: both chapters show one after the other and the mountain is in full colour */
+.no-js .mtn{--mtn:1;height:auto}
+.no-js .mtn-pin{position:static}
+.no-js .mtn-chs{gap:40px}
+.no-js .mtn-ch{grid-area:auto}
+.no-js .mtn-cue,.no-js .mtn-beacon,.no-js .mtn-dots{display:none}
+.no-js .mtn-summit{filter:none;opacity:1}
+/* phones: title, then the picture, then the chapter text, all pinned together */
+@media (max-width:800px){
+  .mtn-pin{align-items:flex-start;padding:24px 0 0}
+  .mtn-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  .mtn-story{display:contents}
+  .mtn h1{margin:0 0 12px;font-size:clamp(1.6rem,7.4vw,2.1rem)}
+  .mtn-stage{order:1;gap:0}
+  .mtn-chs{order:2}
+  .mtn-art{width:min(100%,calc(26svh * 1.5));margin:0 auto}
+  .mtn-dots{display:none}
+  .mtn-title{font-size:1.3rem}
+  .mtn-text{font-size:var(--fs-ui);line-height:1.6;margin-top:10px}
+  .mtn-cue{margin-top:16px}
+  .mtn-tag{--lead:12px;padding-right:18px;letter-spacing:.02em}
+  .mtn-tag-name{letter-spacing:.04em}
+  .mtn-close{margin-top:14px}
+  .mtn-beacon{width:6px;height:6px;box-shadow:0 0 0 4px rgb(255 192 0 / .16)}
+}
+/* tablets in portrait have the height for a bigger picture */
+@media (min-width:600px) and (max-width:800px) and (min-height:900px){
+  .mtn-art{width:min(100%,calc(40svh * 1.5))}
+}
+/* short screens (short phones, and landscape phones of any width): the held story would not fit, so the chapters simply
+   follow one another and the mountain climbs as they are read */
+@media (max-width:800px) and (max-height:740px),(max-height:520px){
+  .mtn{height:auto}
+  .mtn-pin{position:static;padding-bottom:0}
+  .mtn-stage{position:sticky;top:var(--hdr);z-index:2;background:var(--paper);padding-bottom:6px;box-shadow:0 14px 14px -6px var(--paper)}
+  .mtn-chs{gap:36px}
+  .mtn-ch{grid-area:auto}
+  .js-anim .mtn-ch:not(.on)>*{opacity:1;transform:none}
+  .mtn-cue{display:none}
+}
+/* landscape phones keep two columns, so the picture fills its column instead of shrinking with the height */
+@media (min-width:801px) and (max-height:520px){
+  .mtn-art{width:min(100%,calc((100svh - var(--hdr) - 24px) * 1.5))}
+}
+/* short desktop windows: a little tighter, so the held story still fits in Vietnamese */
+@media (min-width:801px) and (min-height:521px) and (max-height:700px){
+  .mtn-pin{padding-top:28px}
+  .mtn h1{margin-bottom:16px}
+  .mtn-text{font-size:var(--fs-body);line-height:1.6}
+}
+/* very narrow phones: the newXion tag tucks in so it clears the screen edge */
+@media (max-width:360px){
+  .mtn-tag{--lead:8px;padding-left:4px;padding-right:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .js-anim .mtn-ch>*,.mtn-summit,.mtn-beacon,.mtn-dots span,.mtn-tag{transition:none}
+  .js-anim .mtn-ch:not(.on)>*{transform:none}
+  .mtn.at-top .mtn-summit{transform:translate(-50%,-78%)}
+  .mtn-beacon{display:none}
+}
