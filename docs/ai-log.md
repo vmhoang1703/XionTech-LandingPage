@@ -723,3 +723,26 @@ Template:
     - the capture input is 20px tall at 390px (Andy, 2.4);
     - the mega menu's same-hash link may not re-scroll;
     - a browser test of the anchor landing.
+
+## 2026-10-05 — Story 6.4 About page (`bmad-build`, full route)
+
+- **Prompt (Son Nguyen):** "PR 47 done, move to the last one".
+- **What the AI did:**
+  - **Spec:** a full-route spec with a 23-line UX checks table.
+    - It found that the shared capture band only had Home's demo wording. Son chose (a): an optional `copy` override on Andy's `CaptureBand`, which keeps the button, checks and redirect.
+    - Decision A2 was never confirmed, so the fourth stat ships as `[Placeholder]`.
+    - The FAQ's "XionTechs" became "XionTech".
+  - **Build:** 5 tasks by implementer subagents, tests first, each reviewed independently.
+  - **Checks:** a Chrome walk on a production build: footer anchors, the FAQ by mouse, keyboard and touch, the clocks with and without JavaScript, and the capture (POST answered by the walk).
+  - **Review:** a 5-layer review with patches, then an independent evidence re-audit.
+- **AI got it wrong?** Yes.
+  - **Task 4 CSS:** the agent said the prototype CSS was "not in the repo" and invented its own styles. The task reviewer passed it, and the controller caught it by comparing with `site.css` and had it ported.
+  - **Office layout:** the walk found the office cards in one column at 1280px. The shared `.offices` base rule overrides its own md query, which also affects `/demo` (deferred to Andy).
+  - **Evidence wording:** it claimed "no leadership words" although "leadership experience" is real copy.
+  - **Weakened test:** a services test regex was loosened so it no longer proved `#process` stays in the anchor rule.
+  - **Regex:** a controller Python script turned `\b` into backspace characters in the new no-people test (logged before as a repeated mistake). It was caught at review and fixed, along with a `\b` after `Mr\.` that could never match.
+  - **Uncommitted work:** implementers left two tasks uncommitted again.
+- **Decision / result:**
+  - `/about` shows the hero, stats, story, six values, a nine-question FAQ, two offices with live clocks, and "See our apps in action.".
+  - The footer's "Core values" and "FAQ" land below the header.
+  - Pending: the story at exactly 900px (the site-wide ≥/≤ breakpoint question).
