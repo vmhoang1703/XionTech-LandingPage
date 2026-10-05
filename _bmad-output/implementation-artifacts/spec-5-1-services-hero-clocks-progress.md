@@ -26,3 +26,8 @@ Task 4: review — pass — 0 critical, 0 important, 1 minor; ⚠️ resolved by
 Task 4: minor — src/content/services.ts:3 — no as const (consistent with siblings)
 Task 4: complete (commits 4bb81a4..b323f38, diff verified)
 Task 5: dispatched (model sonnet, base b323f38, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t5-report.md)
+Task 5: red — npx vitest run src/app/services/page.test.tsx — Failed to resolve import ./page; after implementation 5 passed, 1 failed (CSS contract: .cta-row, .clock-strip not defined until Task 6)
+Task 5: review — pass — 0 critical, 0 important, 2 minor; ⚠️ resolved by controller: prototype services.html has ph-arrow-right on Start a project; CSS contract red by design until Task 6
+Task 5: minor — src/app/services/page.tsx:18 — a clockCities id with no office silently drops a pill (pill-count test covers it)
+Task 5: minor — src/app/services/page.tsx:16 — destructuring split over two lines; clockStripLabel read inline
+Task 6: dispatched (model sonnet, base 9006cde, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t6-report.md)
