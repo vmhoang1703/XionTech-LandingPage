@@ -73,7 +73,7 @@ describe("ServicesPage", () => {
 
   it("defines every class it uses in globals.css", () => {
     const { container } = render(<ServicesPage />);
-    expect(undefinedClasses(container, /^mt-4\.5$/)).toEqual([]);
+    expect(undefinedClasses(container, /^mt-5$/)).toEqual([]);
   });
 
   it("styles only the clock pills, not the span LiveClock renders inside them", () => {
