@@ -2915,7 +2915,7 @@
   }
 
   .faq details[open] summary::after {
-    content: "2";
+    content: "\2212";
   }
 
   .faq summary:focus-visible {
