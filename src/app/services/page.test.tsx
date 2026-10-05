@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
-import { undefinedClasses } from "@/test-utils/css-classes";
+import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import ServicesPage, { metadata } from "./page";
 
 vi.mock("@/components/sections/hero-art", () => ({ HeroArt: () => null }));
@@ -74,5 +74,11 @@ describe("ServicesPage", () => {
   it("defines every class it uses in globals.css", () => {
     const { container } = render(<ServicesPage />);
     expect(undefinedClasses(container, /^mt-4\.5$/)).toEqual([]);
+  });
+
+  it("styles only the clock pills, not the span LiveClock renders inside them", () => {
+    const css = globalsCss();
+    expect(css).toMatch(/\.clock-strip > span\s*\{/);
+    expect(css).not.toMatch(/\.clock-strip span\s*\{/);
   });
 });

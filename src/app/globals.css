@@ -2746,7 +2746,7 @@
     margin-top: 22px;
   }
 
-  .clock-strip span {
+  .clock-strip > span {
     display: inline-flex;
     align-items: center;
     gap: 10px;
