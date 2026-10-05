@@ -13,3 +13,15 @@ test(
     expect(html).toContain("See it working at your school.");
   },
 );
+
+test(
+  "unknown story slug answers 404 with the Not found page",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    const response = await request.get("/news/no-such-story");
+    const html = await response.text();
+
+    expect(response.status()).toBe(404);
+    expect(html).toContain("that page");
+  },
+);
