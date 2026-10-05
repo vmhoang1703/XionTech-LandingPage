@@ -48,9 +48,11 @@ export default function ServicesPage() {
               {primaryCta.label}
               <ArrowRightIcon aria-hidden="true" />
             </Link>
-            <Link className="btn btn-glass" href={secondaryCta.href}>
+            {/* A plain anchor: next/link does not scroll again when the
+                hash is already #process, so a second click did nothing. */}
+            <a className="btn btn-glass" href={secondaryCta.href}>
               {secondaryCta.label}
-            </Link>
+            </a>
           </div>
           <div
             className="clock-strip"
