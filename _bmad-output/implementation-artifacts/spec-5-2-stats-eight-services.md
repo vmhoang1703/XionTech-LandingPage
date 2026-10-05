@@ -98,20 +98,20 @@ Sources: SPEC CAP-1 to CAP-3, `EXPERIENCE.md` (Stats band line 134; Responsive l
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Stats band | page loads | — | paper surface right under the navy hero; 25+, 24/7, 20+, 8, 2, each with its caption | static (count-up after demo) | CAP-1, DESIGN.md Stats band || ✅ walk: figures, paper after hero; page.test five figures |
-| Stats suffix | page loads | — | "+" and "/7" in amber-text (#8A6700), never #C99700 | — | CAP-1, DESIGN.md Stats band || ✅ walk: rgb(138, 103, 0); page.test amber-text |
-| Stats band | width | — | 5 columns above 1080px, 3 at 1080px and below, 2 at 640px and below; 1px column dividers | — | EXPERIENCE.md Responsive || ✅ walk: 5 / 3 / 2 columns, 1px dividers |
-| Stats label | page loads | — | no visible eyebrow label and no top rule; screen readers name the band "Key facts" | — | prototype services.html 35; decision 2026-10-05 || ✅ walk: h2 1×1, border 0px, group "Key facts" named once (no section aria-label); stats-band.test, page.test |
-| Services section | page loads | — | mist surface with linen texture; h2 "Eight services, one team." and the lede | — | DESIGN.md Services surfaces, prototype || ✅ walk: mist gradient, linen, h2 and lede; page.test h2 |
-| Service grid | width | — | 4 columns above 1080px, 2 at 1080px and below, 1 at 640px and below | — | EXPERIENCE.md Responsive || ✅ walk: 4 / 2 / 1 columns |
-| Service card | page loads | — | 48px icon tile, title, one line of copy, mono tags where given; Product Engineering and Cloud amber-tinted, AI-Powered Solutions navy | — | EXPERIENCE.md Service card, prototype || ✅ walk: 48px tiles, variants, mono tags on 5 cards; page.test |
-| Service card | hover or click | mouse, touch, pen | nothing happens; not a link, no pointer cursor | — | CAP-2 || ✅ walk: cursor auto, URL unchanged; page.test no links |
-| Service card | Tab through the section | keyboard | no focus stop on any card | — | CAP-2 || ✅ walk: Tab goes hero CTA → footer, 0 focusables in grid |
-| Service anchors | open `/services#<id>` for each of the 8 | link | the card's heading fully visible below the sticky header; card top at about 88px | on load | CAP-3, AC-NAV-5 || ✅ walk: 1280px all cards at 88, h3 172–173 |
-| Service anchors | Home card, footer link or mega-menu link to a service | mouse | lands on that card on `/services`, heading visible | on load | CAP-3 || ✅ walk: Home card, footer link and Services mega-menu link land at 88 |
-| Service anchors | same at 390px | touch | heading fully visible below the header | on load | CAP-3 || ✅ walk: all 8 cards at 88, h3 172–173 after the smooth scroll settles |
-| Whole page | reduced motion | — | stats show final numbers; no card motion | — | EXPERIENCE.md Reduced motion || ✅ walk: final figures; scroll-behavior auto, instant landing at 88; cards have no motion in either mode |
-| Whole page | width 390px | — | no sideways scroll | — | EXPERIENCE.md Responsive || ✅ walk: no sideways scroll |
+| Stats band | page loads | — | paper surface right under the navy hero; 25+, 24/7, 20+, 8, 2, each with its caption | static (count-up after demo) | CAP-1, DESIGN.md Stats band | ✅ walk: figures, paper after hero; page.test five figures |
+| Stats suffix | page loads | — | "+" and "/7" in amber-text (#8A6700), never #C99700 | — | CAP-1, DESIGN.md Stats band | ✅ walk: rgb(138, 103, 0); page.test amber-text |
+| Stats band | width | — | 5 columns above 1080px, 3 at 1080px and below, 2 at 640px and below; 1px column dividers | — | EXPERIENCE.md Responsive | ✅ walk: 5 / 3 / 2 columns, 1px dividers |
+| Stats label | page loads | — | no visible eyebrow label and no top rule; screen readers name the band "Key facts" | — | prototype services.html 35; decision 2026-10-05 | ✅ walk: h2 1×1, border 0px, group "Key facts" named once (no section aria-label); stats-band.test, page.test |
+| Services section | page loads | — | mist surface with linen texture; h2 "Eight services, one team." and the lede | — | DESIGN.md Services surfaces, prototype | ✅ walk: mist gradient, linen, h2 and lede; page.test h2 |
+| Service grid | width | — | 4 columns above 1080px, 2 at 1080px and below, 1 at 640px and below | — | EXPERIENCE.md Responsive | ✅ walk: 4 / 2 / 1 columns |
+| Service card | page loads | — | 48px icon tile, title, one line of copy, mono tags where given; Product Engineering and Cloud amber-tinted, AI-Powered Solutions navy | — | EXPERIENCE.md Service card, prototype | ✅ walk: 48px tiles, variants, mono tags on 5 cards; page.test |
+| Service card | hover or click | mouse, touch, pen | nothing happens; not a link, no pointer cursor | — | CAP-2 | ✅ walk: cursor auto, URL unchanged; page.test no links |
+| Service card | Tab through the section | keyboard | no focus stop on any card | — | CAP-2 | ✅ walk: Tab goes hero CTA → footer, 0 focusables in grid |
+| Service anchors | open `/services#<id>` for each of the 8 | link | the card's heading fully visible below the sticky header; card top at about 88px | on load | CAP-3, AC-NAV-5 | ✅ walk: 1280px all cards at 88, h3 172–173 |
+| Service anchors | Home card, footer link or mega-menu link to a service | mouse | lands on that card on `/services`, heading visible | on load | CAP-3 | ✅ walk: Home card, footer link and Services mega-menu link land at 88 |
+| Service anchors | same at 390px | touch | heading fully visible below the header | on load | CAP-3 | ✅ walk: all 8 cards at 88, h3 172–173 after the smooth scroll settles |
+| Whole page | reduced motion | — | stats show final numbers; no card motion | — | EXPERIENCE.md Reduced motion | ✅ walk: final figures; scroll-behavior auto, instant landing at 88; cards have no motion in either mode |
+| Whole page | width 390px | — | no sideways scroll | — | EXPERIENCE.md Responsive | ✅ walk: no sideways scroll |
 
 ## Implementation Notes
 
