@@ -1,6 +1,6 @@
 # Architecture
 
-How the XionTech landing page is built, why, and where each decision is recorded. Written 2026-10-05, after Stories 1.1 to 6.6 and Sammy's 5.1, 5.2, 5.4 and 6.4 were merged. The BMad architecture step was skipped in planning; its decisions live in `_bmad-output/specs/decisions-2026-10-01.md` (T1 to T11, A1 to A11), `docs/spikes/cms-spike.md`, `docs/sanity.md` and `docs/contact-delivery.md`. This file ties them together.
+How the XionTech landing page is built, why, and where each decision is recorded. Written 2026-10-05, when 29 of the 31 Demo-day stories were merged (7.3 and 7.4 open; after-demo stories such as 1.2, 4.4, 4.5 and 5.3 are not built). Specs: `_bmad-output/implementation-artifacts/`. Keep this file current in the same PR as any change it describes (AGENTS.md). The BMad architecture step was skipped in planning; its decisions live in `_bmad-output/specs/decisions-2026-10-01.md` (T1 to T11, A1 to A11), `docs/spikes/cms-spike.md`, `docs/sanity.md` and `docs/contact-delivery.md`. This file ties them together.
 
 ## 1. The big picture
 
@@ -28,12 +28,12 @@ flowchart LR
 | `develop` | https://xiontech-dev.vercel.app           | Integration. Every story PR merges here.                 |
 | PR branch | Vercel preview URL                        | One per PR.                                              |
 
-Both sites read the same Sanity dataset (`1khn3hf4` / `production`). Secrets live only in Vercel env vars and each developer's `.env.local` (names in `.env.example`, values never in git).
+Both sites read the same Sanity dataset (`1khn3hf4` / `production`), so a publish shows on both. Today only the dev site's webhook exists; the production webhook is added after the first release, and until then production refreshes only on a deploy. Secrets live only in Vercel env vars and each developer's `.env.local` (names in `.env.example`, values never in git).
 
 ## 3. The website
 
 - **Framework:** Next.js 16 App Router, React 19, TypeScript strict, Tailwind v4 (tokens in `src/app/globals.css`).
-- **Server first.** Pages are Server Components: the HTML holds the real content, so it works without JavaScript and search engines see it. Client code only where something must react in the browser: the mobile menu, the hero animation, the News filter chips, the office clocks, and the forms.
+- **Server first.** Pages are Server Components: the HTML holds the real content, so it works without JavaScript and search engines see it. Client code only where something must react in the browser: the mobile menu and desktop mega menus, the hero and inner-page hero animations, the PXP story tabs, the 4-D flow reveal, the News filter chips, the office clocks (Services and About), and the forms.
 - **Routes:**
 
 | Route                         | Story         | Content source                       |
@@ -54,20 +54,20 @@ Both sites read the same Sanity dataset (`1khn3hf4` / `production`). Secrets liv
 
 ### Reading
 
-- **One fetch helper** (`src/lib/sanity/client.ts`, `sanityFetch`). Every read uses `cache: "force-cache"` and one cache tag (`post`, `job`, `careersPhotos`, `product`). Each page writes its own GROQ query next to its feature (decision T2); there is no shared content module.
+- **One fetch helper** (`src/lib/sanity/client.ts`, `sanityFetch`). Every read uses `cache: "force-cache"` and one cache tag (`post`, `job`, `careersPhotos`; `product` is accepted by the webhook but no page reads it until Story 4.4). Each page writes its own GROQ query next to its feature (decision T2); there is no shared content module.
 - **No CDN for data** (A11): the Sanity API CDN once served old data right after a publish. Next.js caches every result instead, so Sanity is read only on a build, on the first visit to a page or slug, and after a webhook.
 - **Never** `force-dynamic`, `no-store` or a timed `revalidate` on a Sanity read: each uncached read counts against the free 250k API requests a month.
-- **Only complete posts show** (A9): a post needs an English title, a slug and a publish date. A role must not be closed.
+- **Only complete posts show** (A9): a post needs an English title, a slug and a publish date. A role needs an English title and a slug and must not be closed.
 - **Unknown addresses are cheap.** `/news/[slug]` checks the slug against the cached post list before it asks Sanity (6.2). `/careers/[slug]` still asks Sanity directly (follow-up in `deferred-work.md`).
-- **A Sanity outage never breaks Home or News:** the error is logged and the section shows its empty state. `/careers` still fails its build if Sanity is down (deferred).
+- **A Sanity outage never breaks the Home news section or the News list:** the error is logged and the section shows its empty state. A story page, `/careers` and a job page still fail (no branded error page yet); a failed build keeps the last good deploy live on Vercel. Both are follow-ups in `deferred-work.md`.
 
 ### Publishing (Story 6.3)
 
 1. An editor changes a post, a role, the Careers photos or a product clip in Studio and publishes.
 2. Sanity calls `POST /api/revalidate` with a signed body (`SANITY_REVALIDATE_SECRET`). The route rejects a bad signature (401), an unknown type (400) or a missing secret (500).
-3. The route calls `revalidateTag(<type>, "max")`: the next visit still gets the old page and triggers a fresh read; the visit after that shows the change. Measured on the dev site: 5 to 10 seconds, no deploy.
+3. The route calls `revalidateTag(<type>, "max")`: the next visit still gets the old page and triggers a fresh read; the visit after that shows the change. In the 6.3 live proof on 2026-10-05 (6.3 ledger) a publish, an edit, a delete and a closed role each showed on the dev site within about 10 seconds, with no deploy.
 
-The Studio is hosted by Sanity (outside our build) and has two fixed-document sections: **Careers photos** (team, office, event: photo, alt text, caption) and **Products** (PXP, LXP, SXP, IoT: an mp4 clip, not shown on any page until Story 4.4). Who may edit is set by project members in sanity.io/manage; the site has no login. Datasets on the free plan are public, so only consented photos and no personal data go into Sanity.
+The Studio is hosted by Sanity (outside our build). It lists News posts and Job openings, and two fixed-document sections: **Careers photos** (team, office, event: photo, alt text, caption) and **Products** (PXP, LXP, SXP, IoT: an mp4 clip, not shown on any page until Story 4.4). Who may edit is set by project members in sanity.io/manage; the site has no login. Datasets on the free plan are public, so only consented photos and no personal data go into Sanity.
 
 ## 5. Forms and email
 
@@ -87,17 +87,18 @@ The Studio is hosted by Sanity (outside our build) and has two fixed-document se
 
 ## 6. Security choices
 
-- Secrets only in env vars; logs carry the step and the error class, never values or personal data.
+- Secrets only in env vars; the form routes log only the step and the error class; the Sanity reads log the error object, which holds no personal data.
 - Signed webhook; allow-lists for webhook types, upload paths and file types.
 - Every form: honeypot, server-side checks, rate limits; personal data only in form bodies, never in URLs.
 - Fixed Sanity queries with parameters (no string building); React escapes all content.
-- Known gaps (in `deferred-work.md`): the rate limits let traffic through when Upstash is down; no cleanup job yet for CVs left in Blob; Studio-only guards do not bind API writes.
+- Known gaps: the rate limits let traffic through when Upstash is down, and no cleanup job removes CVs left in Blob (`deferred-work.md`); the Studio's no-create and mp4-only rules are UI only, so a member with write access could still change data through the Sanity API (6.3 review row 7; check project roles before Story 4.4).
 
 ## 7. Quality gates
 
 | Gate                                              | Command                                                     | When                                                                         |
 | ------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | Lint (incl. SonarQube JS/TS rules), types, format | `npm run lint && npm run typecheck && npm run format:check` | every change; the `pre-push` hook runs lint                                  |
+| Build                                             | `npm run build`                                             | before every PR                                                              |
 | Unit tests + 100% of changed lines, C1 ≥ 80%      | `npm run test:coverage && npm run coverage:diff`            | every change                                                                 |
 | Smoke (boot, key pages, 404s, honeypots)          | `npm run test:smoke`                                        | every change                                                                 |
 | Browser walk of the UX checks table               | story `walk.mjs`                                            | every UI story                                                               |
@@ -111,23 +112,25 @@ The Studio is hosted by Sanity (outside our build) and has two fixed-document se
 | Sanity Free         | 250k API requests/month, 10k documents, public datasets | tag cache, no CDN, no timed refresh, unknown slugs cost nothing                      |
 | Vercel Hobby        | 4.5 MB function body; image optimization quota          | CVs go straight to Blob; Sanity images are resized by Sanity and shown `unoptimized` |
 | Vercel Blob (Hobby) | 1 GB                                                    | CVs deleted when not sent; cleanup job after Demo day                                |
-| Upstash Free        | command quota                                           | small fixed windows per IP                                                           |
+| Upstash Free        | command quota                                           | sliding windows per IP and IP+email                                                  |
 
 ## 9. Decision index
 
-| ID  | Decision                                                           | Where                                |
-| --- | ------------------------------------------------------------------ | ------------------------------------ |
-| T1  | CVs in a private Vercel Blob store                                 | decisions file                       |
-| T2  | One tagged fetch helper; each page owns its query                  | decisions file                       |
-| T4  | Free mail sender and shared rate-limit store                       | `docs/contact-delivery.md`           |
-| A4  | Applications kept with no time limit                               | decisions file                       |
-| A9  | Real posts; complete posts only; Home survives a Sanity failure    | decisions file                       |
-| A10 | CV attached to the mail; deleted when unsent after the rate limits | decisions file                       |
-| A11 | No Sanity CDN for data                                             | decisions file                       |
-| 6.3 | Careers photos singleton, product clips upload only                | `spec-6-3-editors-publish-sanity.md` |
+The decisions that shape the architecture; the full list (T1 to T11, A1 to A11) is in `_bmad-output/specs/decisions-2026-10-01.md`. A4 keeps sent applications (the mail and its CV in the inbox) with no time limit; A10 deletes only CVs that were never sent.
+
+| ID  | Decision                                                           | Where                                                                      |
+| --- | ------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| T1  | CVs in a private Vercel Blob store                                 | decisions file                                                             |
+| T2  | One tagged fetch helper; each page owns its query                  | decisions file                                                             |
+| T4  | Free mail sender and shared rate-limit store                       | decisions file; result in `docs/contact-delivery.md`                       |
+| A4  | Applications kept with no time limit                               | decisions file                                                             |
+| A9  | Real posts; complete posts only; Home survives a Sanity failure    | decisions file                                                             |
+| A10 | CV attached to the mail; deleted when unsent after the rate limits | decisions file                                                             |
+| A11 | No Sanity CDN for data                                             | decisions file                                                             |
+| 6.3 | Careers photos singleton, product clips upload only                | `_bmad-output/implementation-artifacts/spec-6-3-editors-publish-sanity.md` |
 
 ## 10. Open before Demo day
 
 - Release `develop` to `main` (production is far behind), then add the production webhook.
-- Stories 7.3 (accessibility checks) and 7.4 (performance budget).
+- Stories 7.3 (accessibility checks) and 7.4 (performance budget): until then there is no automated accessibility or Lighthouse gate.
 - The 6.3 Studio check by hand (fixed documents, one-slot upload).

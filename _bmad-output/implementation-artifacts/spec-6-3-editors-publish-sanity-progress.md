@@ -51,3 +51,10 @@
 - Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/life-1280.png — 57180 bytes — sha256 afcbc676cc3e — #life with three [Placeholder] frames (kept, same reason)
 - Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/observed.md — 1075 bytes — sha256 4565d934ceed — what was and was not observed
 - Acceptance: BLOCKED — deployed Studio (singletons, CAP-5 upload), a clip upload and GROQ read, and the CAP-1/CAP-2 live proof: need the merge, the lead's Studio deploy, the webhook filter and the lead's OK for each [Test] change
+- Task 7: live proof 2026-10-05 on https://xiontech-dev.vercel.app (lead OK; [Test] documents only, deleted after; cleanup query returned []):
+- Acceptance: manual — publish a [Test] story — observed: on /news and Home after 10 s, its page 200 after 5 s
+- Acceptance: manual — edit its title — observed: new title on /news after 10 s
+- Acceptance: manual — delete it — observed: gone from /news and Home after 10 s; /news/test-editor-check 404
+- Acceptance: manual — publish a [Test] role — observed: on /careers after 10 s; its page 200 after 5 s
+- Acceptance: manual — close it — observed: gone from /careers after 10 s; /careers/test-editor-check 404
+- Task 7: BLOCKED — the Studio checks (fixed documents, CAP-5 one-slot upload, mp4 only) need a logged-in Studio: the Chrome extension was not connected, so the lead checks by hand
