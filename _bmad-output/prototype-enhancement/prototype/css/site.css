@@ -357,9 +357,9 @@ fieldset.field{border:0}
 .illo b{font-family:var(--f-brand);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .illo span{font-size:var(--fs-small);color:var(--text);margin-top:6px;max-width:44ch}
 .ar-4-3{aspect-ratio:4/3}
-.offices{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.office-card{padding:30px;display:grid;gap:10px}
-.office-card .clock{font-family:var(--f-mono);font-size:2rem;color:var(--heading);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.offices{display:grid;grid-template-columns:repeat(2,minmax(0,400px));justify-content:space-between;gap:40px}
+.office-card{padding:22px 24px;display:grid;gap:6px;align-content:start}
+.office-card .clock{font-family:var(--f-mono);font-size:1.6rem;color:var(--heading);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .office-card h3{font-family:var(--f-display);font-weight:400;font-size:var(--fs-title-md)}
 .office-card p{color:var(--muted);font-size:var(--fs-small)}
 .tz-card{padding:var(--sp-xl)}
@@ -454,7 +454,7 @@ fieldset.field{border:0}
 
 /* footer */
 footer.site{position:relative;background:var(--ink);color:var(--on-navy-muted);padding:72px 0 36px;--focus:var(--amber)}
-footer.site .fgrid{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:36px}
+footer.site .fgrid{display:grid;grid-template-columns:1.2fr .8fr 1fr .7fr 1.4fr;gap:32px}
 footer.site h4{font-family:var(--f-brand);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:var(--amber-tint);margin-bottom:16px;font-weight:500}
 footer.site ul{list-style:none;display:grid;gap:2px}
 footer.site li a{display:inline-flex;align-items:center;min-height:32px;font-size:var(--fs-small);color:var(--on-navy-muted)}
@@ -464,9 +464,27 @@ footer.site .flogo img{height:30px}
 footer.site p.about{margin-top:18px;max-width:32ch;font-size:var(--fs-small)}
 .office{font-size:var(--fs-small);line-height:1.55;font-style:normal}
 .office b{display:block;color:var(--white);font-size:var(--fs-small);margin-bottom:2px}
-.office+.office{margin-top:16px}
+.office+.office{margin-top:20px}
+.office b{display:block;margin-bottom:6px}
+.orow{display:flex;gap:10px;align-items:flex-start;margin-top:6px}
+.orow i{flex:0 0 auto;margin-top:3px;font-size:1rem;color:var(--amber-tint)}
+footer.site .orow:has(a){align-items:center;margin-top:0}
+footer.site .orow:has(a) i{margin-top:0}
+footer.site .orow a{display:inline-flex;align-items:center;min-height:var(--target)}
+.office-card .orow{color:var(--muted);font-size:var(--fs-small);line-height:1.55;margin-top:2px}
+.office-card .orow:has(a){align-items:center}
+.office-card .orow:has(a) i{margin-top:0}
+.office-card .orow i{color:var(--amber-text);font-size:1.05rem}
+.s-navy .office-card .orow i{color:var(--amber-tint)}
+/* city drawings on a light page */
+.s-paper .office-card .city-near path,.s-paper .office-card .city-near circle,.s-paper .office-card .balloon path{stroke:#A87600}
+.s-paper .office-card .city-far path{fill:rgb(22 54 99 / .05);stroke:rgb(22 54 99 / .3)}
+.s-paper .office-card .city-ground{stroke:rgb(22 54 99 / .25)}
+.s-paper .office-card .balloon.b2 path,.s-paper .office-card .balloon.b3 path{stroke:rgb(22 54 99 / .45)}
+.office-card .orow a{display:inline-flex;align-items:center;min-height:var(--target);color:var(--heading);font-weight:500;overflow-wrap:break-word}
+.office-card .orow a:hover{color:var(--link)}
 .office.mt-0{margin-top:0}
-.office a{overflow-wrap:anywhere}
+.office a{overflow-wrap:break-word}
 .office a:hover{color:var(--white)}
 .office-tag{display:block;font-family:var(--f-brand);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;opacity:.8;margin:2px 0 6px}
 .fbot{margin-top:52px;padding-top:24px;border-top:1px solid rgb(255 255 255 / .1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:var(--fs-small)}
@@ -910,13 +928,18 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 
 /* ---------- Products: A day at school, an animated timeline (ENH-015, rebuilt in ENH-023) ---------- */
 .day{position:relative;isolation:isolate;background:radial-gradient(circle at 80% 0%,rgb(41 63 97 / .16),transparent 28%),linear-gradient(180deg,#0D1930 0%,#0B1730 100%)}
-.day-head{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:end;margin-bottom:80px}
+.day-head{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-bottom:80px}
 .day-head h2{color:var(--white)}
-.day-head .lede{font-size:1.375rem;font-weight:400;line-height:1.58;color:var(--on-navy-muted);max-width:40ch}
+.day-head .lede{font-size:1.125rem;font-weight:400;line-height:1.6;color:var(--on-navy-muted);max-width:52ch;margin:0}
 .day-line{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;margin:0;padding:0}
 .day-line li{position:relative;display:grid;justify-items:center;align-content:start;text-align:center;gap:8px;transition:opacity .5s var(--ease)}
 .day-dot{position:relative;z-index:1;width:18px;height:18px;border-radius:50%;background:#0D1930;border:2px solid rgb(255 255 255 / .32);margin-bottom:16px;transition:border-color .4s var(--ease),transform .4s var(--ease),box-shadow .4s var(--ease)}
 .day-line li.is-reached .day-dot{border-color:var(--amber);background:var(--amber)}
+/* a reached step plants a flag on its dot */
+.day-dot{display:grid;place-items:center}
+.day-flag{width:13px;height:13px;fill:none;stroke:var(--navy);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:translateY(3px) scale(.6);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.day-flag path+path{fill:var(--navy)}
+.day-line li.is-reached .day-flag{opacity:1;transform:none}
 .day-line li.is-current .day-dot{transform:scale(1.18);box-shadow:0 0 0 10px rgb(246 195 10 / .10)}
 /* the rail: one segment from each dot to the next, filled with amber as the day moves on */
 .day-line li:not(:last-child)::after{content:"";position:absolute;top:8px;left:calc(50% + 9px);width:calc(100% + 24px - 18px);height:2px;
@@ -948,9 +971,8 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 .aud-nav a{display:inline-flex;align-items:center;gap:8px;min-height:var(--target);padding:0 16px;border-radius:var(--r-full);font-weight:500;font-size:var(--fs-small);color:var(--ink-muted);white-space:nowrap;transition:background .25s,color .25s}
 .aud-nav a:hover{background:var(--mist);color:var(--navy)}
 .aud-nav a[aria-current="true"]{background:var(--navy);color:var(--white)}
-.aud-dot{width:12px;height:12px;border-radius:50%;background:var(--aud-bg);box-shadow:inset 0 0 0 1px var(--aud-line),0 0 0 2px color-mix(in srgb,var(--white) 70%,transparent)}
 /* small phones: the capsule tightens so all three pills fit inside the gutters */
-@media (max-width:420px){.aud-capsule{gap:0;padding:4px}.aud-nav a{padding:0 11px;gap:6px;font-size:var(--fs-caption)}}
+
 /* the parking line sits below the header (72px) and the audience bar (61px), with room for the sparkles */
 .apps{--sticky-top:172px;--card-gap:56px;--card-pt:56px;padding-top:0;overflow-x:clip;
   --apps-bg:linear-gradient(180deg,#F3F5F7 0,#EEF2F6 30%,#F4EBC6 70%,#F6D96F 100%);background:var(--apps-bg)}
@@ -959,7 +981,6 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 /* the audience switcher: a small floating capsule, no full-width bar */
 .aud-nav{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:0;pointer-events:none}
 .aud-nav .wrap{padding-top:12px;padding-bottom:12px}
-.aud-capsule{pointer-events:auto;display:inline-flex;gap:4px;padding:5px;border-radius:var(--r-full);background:color-mix(in srgb,var(--white) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid color-mix(in srgb,var(--navy) 10%,transparent);box-shadow:0 12px 28px -14px color-mix(in srgb,var(--ink) 35%,transparent)}
 .pstack{display:grid;gap:var(--card-gap)}
 .pcard{display:grid;grid-template-columns:1fr 1fr;gap:48px;position:relative}
 /* the screenshot moves with its card (no separate sticky), so the whole card always moves as one */
@@ -1044,7 +1065,7 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 .flow-js .approach[data-flow-phase="rise"] .ap-step[aria-selected="true"] .ap-dot{background:var(--navy);border-color:var(--navy);box-shadow:0 0 0 4px rgb(22 54 99 / .16)}
 .flow-js .approach .ap-panel:focus-visible{outline-color:var(--amber)}
 /* warm pages (Services, ENH-033): the hero glow is amber only, no blue */
-.flow-bg[data-palette="warm"]~.hero-light .aurora{background:radial-gradient(35% 40% at 78% 18%,rgb(255 192 0 / .4),transparent 70%),radial-gradient(40% 50% at 92% 70%,rgb(246 217 111 / .45),transparent 70%),
+.flow-bg[data-palette="warm"]~.hero-light .aurora,.flow-bg[data-palette="soft"]~.hero-light .aurora{background:radial-gradient(35% 40% at 78% 18%,rgb(255 192 0 / .4),transparent 70%),radial-gradient(40% 50% at 92% 70%,rgb(246 217 111 / .45),transparent 70%),
   radial-gradient(45% 45% at 55% 40%,rgb(255 236 180 / .5),transparent 70%),radial-gradient(30% 35% at 10% 85%,rgb(255 214 110 / .3),transparent 70%)}
 /* pastel pages (Careers, ENH-035): the hero glow is soft amber only */
 .flow-bg[data-palette="pastel"]~.hero-light .aurora{background:radial-gradient(35% 40% at 78% 18%,rgb(255 214 110 / .34),transparent 70%),radial-gradient(40% 50% at 92% 70%,rgb(252 231 176 / .5),transparent 70%),
@@ -1137,10 +1158,7 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 .reel-card:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
 .reel-card:hover .reel-label,.reel-card:focus-visible .reel-label{opacity:1;transform:none}
 @media (hover:none){.reel-label{opacity:1;transform:none}}
-.reel-ctrl{display:flex;justify-content:flex-end;width:min(1240px,100%);margin:4px auto 0;padding:0 var(--sp-l)}
-.reel-btn{width:var(--target);height:var(--target);display:grid;place-items:center;border-radius:50%;border:1px solid rgb(22 54 99 / .25);background:rgb(255 255 255 / .7);color:var(--navy);font-size:1rem}
-.reel-btn:hover{border-color:var(--navy)}
-.reel-btn[hidden]{display:none}
+#life .sec-head{max-width:none}
 @media (max-width:700px){.reel-card{width:280px}}
 @media (prefers-reduced-motion:reduce){.reel-card,.reel-label{transition:none}.reel-card:hover,.reel-card:focus-visible{transform:none}.reel-view{overflow-x:auto;scrollbar-width:thin;padding-inline:max(24px,calc((100vw - 1240px)/2 + 24px))}}
 
@@ -1149,21 +1167,153 @@ h2,.art-body h2{line-height:1.06;letter-spacing:-.035em}
 main h3{line-height:1.3}
 .svc h3,.value h3,.ncard h3,.office-card h3,.tz-card h3,.form-ok h3{letter-spacing:-.02em}
 /* Vietnamese stacks accents above the letters, so headings keep a little more line height there */
-:lang(vi) :is(.page-hero h1,.home-hero h1,.eco-copy h1,.nhead h1,.art-hero h1,.mtn h1){line-height:1.14}
+:lang(vi) :is(.page-hero h1,.home-hero h1,.eco-copy h1,.nhead h1,.art-hero h1,.mtn .mtn-h){line-height:1.14}
 :lang(vi) h2{line-height:1.16}
 
+/* ---------- About as a company story (ENH-046) ---------- */
+.co-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.co-grid h3{font-family:var(--f-display);font-weight:400;font-size:var(--fs-card);line-height:1.3;letter-spacing:-.02em;margin:0 0 8px}
+.co-grid p{color:var(--muted)}
+.co-grid .link-arrow{margin-top:12px}
+@media (max-width:640px){.co-grid{grid-template-columns:minmax(0,1fr);gap:24px}}
+/* the FAQ now sits on Services' flowing background, without its own clouds */
+.flow-js .faq-cloud{display:none}
+
+/* ---------- About: who we are, a centred statement over soft pastel mountains (ENH-049) ---------- */
+.about-hero{position:relative;overflow:hidden;isolation:isolate;padding:104px 0 200px;text-align:center;background:linear-gradient(180deg,var(--paper) 0%,var(--paper) 45%,#FFF9EC 100%)}
+.ah-peaks{position:absolute;left:0;right:0;bottom:0;width:100%;height:clamp(180px,26vw,360px);z-index:-1}
+.ah-ground{fill:var(--paper)}
+.ah-inner{max-width:980px}
+.about-hero h1{font-family:var(--f-display);font-weight:300;font-size:clamp(2.2rem,4.8vw,4rem);line-height:1.04;letter-spacing:-.04em;margin:0 auto;text-wrap:balance}
+.ah-text{max-width:62ch;margin:28px auto 0;font-size:var(--fs-lead);line-height:1.7;color:var(--text)}
+.ah-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 32px;margin-top:28px}
+@media (max-width:640px){.about-hero{padding:64px 0 150px}}
+
+/* ---------- Services: what we can help you achieve (ENH-048) ---------- */
+.outcomes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.outcome{padding:28px 28px 32px;border:1px solid var(--border);border-radius:var(--r-lg);background:rgb(255 255 255 / .75)}
+.oc-num{display:block;font-family:var(--f-mono);font-size:var(--fs-label);letter-spacing:.14em;color:var(--heading)}
+.outcome h3{font-family:var(--f-display);font-weight:400;font-size:var(--fs-card);line-height:1.3;letter-spacing:-.02em;margin:26px 0 10px}
+.outcome p{color:var(--muted);max-width:52ch}
+@media (max-width:760px){.outcomes{grid-template-columns:minmax(0,1fr)}}
+.stats.stats-3{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}
+.stats.stats-3 .stat{border-left:0;border-top:2px solid var(--heading);padding:22px 24px 0}
+@media (max-width:640px){.stats.stats-3{grid-template-columns:minmax(0,1fr);row-gap:24px}}
+
+.ah-accent{color:#A87600}
+/* the office cards carry a small line drawing of their city */
+.office-card .city{display:block;width:100%;height:auto;max-height:72px;margin:0 0 8px}
+.city-far path{fill:rgb(170 195 235 / .08);stroke:rgb(170 195 235 / .35);stroke-width:1.2}
+.city-near path{fill:none;stroke:var(--amber-tint);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.city-ground{stroke:rgb(255 255 255 / .3);stroke-width:1}
+.balloon path{fill:none;stroke:var(--amber-tint);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.balloon path:first-child{fill:rgb(255 192 0 / .14)}
+.balloon.b2 path{stroke:rgb(170 195 235 / .8)}.balloon.b2 path:first-child{fill:rgb(170 195 235 / .12)}
+.balloon.b3 path{stroke:rgb(255 255 255 / .55)}
+.city-near circle{fill:none;stroke:var(--amber-tint);stroke-width:1.4}
+
+/* ---------- Products: "What we build." above underlined audience tabs (ENH-049) ---------- */
+.apps-head{padding-top:72px;padding-bottom:8px;text-align:center}
+.apps-head h2{margin:0}
+.aud-nav{pointer-events:auto;background:color-mix(in srgb,var(--paper) 45%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:0}
+.aud-nav .wrap{overflow:visible}
+.aud-nav .wrap{padding-top:0;padding-bottom:0;border-bottom:1px solid color-mix(in srgb,var(--navy) 18%,transparent)}
+.aud-nav .aud-capsule{display:flex;width:100%;justify-content:center;gap:8px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.aud-nav a,.aud-nav a:hover,.aud-nav a[aria-current="true"]{position:relative;min-height:60px;padding:0 28px;border-radius:0;background:none;font-size:var(--fs-body);color:var(--heading)}
+.aud-nav a::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:3px;border-radius:2px;background:transparent;transition:background .25s}
+.aud-nav a:hover::after{background:color-mix(in srgb,var(--navy) 25%,transparent)}
+.aud-nav a[aria-current="true"]{color:var(--navy);font-weight:500}
+.aud-nav.amber-ok:not(.on-amber) a[aria-current="true"]{color:var(--amber-text)}
+.aud-nav a[aria-current="true"]::after{background:var(--amber)}
+/* over amber the selected tab, the underline and the bar's line turn navy so they stay readable */
+.aud-nav.on-amber a[aria-current="true"]{color:var(--navy)}
+.aud-nav.on-amber a[aria-current="true"]::after{background:var(--navy)}
+.aud-nav.on-amber .wrap{border-bottom-color:color-mix(in srgb,var(--navy) 30%,transparent)}
+.pstack .pcard.on-amber + .pcard::before,.pstack .pcard.on-amber + .pcard::after,.pstack .pcard + .pcard.on-amber::before,.pstack .pcard + .pcard.on-amber::after{filter:brightness(0) saturate(100%) invert(15%) sepia(42%) saturate(1700%) hue-rotate(196deg)}
+.pstack .pcard.on-amber{border-top-color:color-mix(in srgb,var(--navy) 30%,transparent)}
+@media (max-width:520px){.aud-capsule{gap:0}.aud-nav a,.aud-nav a:hover,.aud-nav a[aria-current="true"]{padding:0 12px;font-size:var(--fs-small)}}
+@media (max-width:360px){.aud-nav a,.aud-nav a:hover,.aud-nav a[aria-current="true"]{padding:0 8px}}
+
 /* ---------- News: a bento grid of mixed shapes (ENH-045) ---------- */
-#newsGrid{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:250px;grid-auto-flow:dense}
-#newsGrid .scard{min-height:0;grid-row:auto}
-#newsGrid .scard.s-feat{grid-column:span 2;grid-row:span 2}
-#newsGrid .scard.s-tall{grid-row:span 2}
-#newsGrid .scard.s-wide{grid-column:span 2}
-#newsGrid .scard.s-full{grid-column:1/-1;grid-row:span 2}
-#newsGrid .scard .scard-title{font-size:clamp(1.05rem,1.3vw,1.2rem)}
-#newsGrid .scard.s-wide .scard-title{font-size:clamp(1.2rem,1.6vw,1.45rem)}
-#newsGrid .scard.s-feat .scard-title{font-size:clamp(1.35rem,2vw,1.75rem)}
-@media (max-width:1000px){#newsGrid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:230px}}
-@media (max-width:640px){#newsGrid{grid-template-columns:minmax(0,1fr);grid-auto-rows:300px}#newsGrid .scard.s-feat,#newsGrid .scard.s-tall,#newsGrid .scard.s-wide,#newsGrid .scard.s-full{grid-column:auto;grid-row:auto}}
+/* the shorter cards: the dark fade starts higher so their titles keep AA contrast on bright photos, and long titles stop at three lines */
+
+/* ---------- Careers: hero with the Growth Learning Model (ENH-055) ---------- */
+.careers-hero{padding:72px 0 64px}
+.ch-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.careers-hero h1{max-width:none}
+.cycle{margin:0;display:grid;justify-items:center;gap:6px}
+.cycle figcaption{font-family:var(--f-brand);font-size:var(--fs-label);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.cycle-stage{--cycle-radius:clamp(120px,15vw,190px);--node-size:clamp(72px,7.5vw,96px);position:relative;width:min(480px,100%);aspect-ratio:1}
+.cycle-ring{position:absolute;left:50%;top:50%;width:calc(var(--cycle-radius)*2);height:calc(var(--cycle-radius)*2);transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid rgb(22 54 99 / .2)}
+.cycle-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(120px,12vw,160px);aspect-ratio:1;border-radius:50%;background:var(--navy);color:var(--white);display:grid;place-items:center;box-shadow:0 24px 70px rgb(10 39 70 / .12);z-index:6}
+.cycle-center strong{font-family:var(--f-display);font-weight:300;font-size:clamp(1.4rem,2.2vw,1.9rem);letter-spacing:-.03em}
+.cycle-node{position:absolute;top:50%;left:50%;width:var(--node-size);height:var(--node-size);margin:calc(var(--node-size)/-2);border-radius:50%;background:var(--white);border:1px solid var(--border);box-shadow:0 10px 30px rgb(14 49 93 / .07);
+  display:grid;place-items:center;align-content:center;gap:2px;text-align:center;color:var(--heading);font-weight:500;font-size:var(--fs-small);
+  transform:rotate(calc(var(--a)*1deg)) translateX(var(--cycle-radius)) rotate(calc(var(--a)*-1deg));z-index:7;transition:background .6s var(--ease),border-color .6s var(--ease),transform .6s var(--ease),box-shadow .6s var(--ease)}
+.cycle-node[data-step="1"]{--a:-90}.cycle-node[data-step="2"]{--a:-18}.cycle-node[data-step="3"]{--a:54}.cycle-node[data-step="4"]{--a:126}.cycle-node[data-step="5"]{--a:198}
+.cycle-node .stepno{font-family:var(--f-mono);font-size:var(--fs-label);letter-spacing:.1em;color:var(--muted)}
+.cycle-node.current{background:var(--amber);border-color:var(--amber);box-shadow:0 16px 38px rgb(255 197 31 / .25);transform:rotate(calc(var(--a)*1deg)) translateX(var(--cycle-radius)) rotate(calc(var(--a)*-1deg)) scale(1.08)}
+.cycle-node.current .stepno{color:var(--navy)}
+.cycle-dot{position:absolute;top:50%;left:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 5px rgb(255 197 31 / .16);z-index:4;transform:rotate(-90deg) translateX(var(--cycle-radius)) rotate(90deg);transition:transform 2.2s cubic-bezier(.4,0,.2,1)}
+@media (max-width:900px){.ch-grid{grid-template-columns:minmax(0,1fr);gap:24px}.cycle-stage{--cycle-radius:clamp(110px,30vw,170px)}}
+@media (max-width:420px){.cycle-stage{--node-size:66px}.cycle-node{font-size:var(--fs-caption)}}
+@media (prefers-reduced-motion:reduce){.cycle-node,.cycle-dot{transition:none}}
+
+/* ---------- Careers: Inside XionTechs (ENH-055) ---------- */
+.flow-js main>section.inside,.inside{background:var(--navy)}
+.ins-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:48px;align-items:end;max-width:none}
+.ins-head .lede{margin:0}
+.ins-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;grid-template-rows:250px 250px;gap:14px}
+.ins-card{position:relative;isolation:isolate;overflow:hidden;border-radius:24px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;color:var(--white)}
+.ins-card::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(160deg,#224f81,#0d2d54)}
+.ins-card::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(transparent 35%,rgb(5 24 45 / .8))}
+.ins-card.big{grid-row:span 2}
+.ins-card.yellow,.ins-card.cream{color:var(--navy)}
+.ins-card.yellow::before{background:linear-gradient(145deg,#ffe47c,#ffc31f)}
+.ins-card.cream::before{background:linear-gradient(145deg,#fff,#efe6d1)}
+.ins-card.yellow::after,.ins-card.cream::after{background:none}
+.ins-card h3{font-family:var(--f-display);font-weight:400;font-size:clamp(1.3rem,1.9vw,1.7rem);line-height:1.15;letter-spacing:-.02em;margin:0 0 8px;color:inherit}
+.ins-card p{margin:0;line-height:1.5;font-size:var(--fs-small);color:#d9e2ed}
+.ins-card.yellow p,.ins-card.cream p{color:#3F4F6C}
+.ins-tag{position:absolute;top:18px;left:18px;padding:7px 12px;border-radius:var(--r-full);font-size:var(--fs-label);font-weight:500;background:rgb(255 255 255 / .16);color:inherit}
+.ins-card.yellow .ins-tag,.ins-card.cream .ins-tag{background:rgb(255 255 255 / .75)}
+/* tablets and phones: every card the same size */
+@media (max-width:980px){.ins-head{grid-template-columns:minmax(0,1fr);gap:16px}.ins-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:240px}.ins-card.big{grid-row:auto}}
+@media (max-width:640px){.ins-grid{grid-template-columns:minmax(0,1fr);grid-auto-rows:220px}}
+
+/* ---------- Careers: five things that shape the way we work, as flip cards (ENH-055) ---------- */
+.flip-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.flip-card{display:block;min-height:304px;perspective:1100px;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.flip-inner{position:relative;display:block;width:100%;height:100%;min-height:304px;transition:transform .65s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:20px;border:1px solid var(--border);border-radius:22px;background:var(--white);color:var(--heading);backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.flip-back{background:var(--mist);transform:rotateY(180deg)}
+.flip-card.accent .flip-front{background:var(--amber);border-color:var(--amber)}
+.flip-card.accent .flip-back{background:#FFF3B7}
+.flip-num{font-family:var(--f-mono);font-size:var(--fs-label);letter-spacing:.14em;color:var(--muted)}
+.flip-card.accent .flip-num{color:var(--navy)}
+.flip-ill{width:84px;height:84px;align-self:center;margin:6px 0}
+.flip-ill .stroke{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.flip-title{display:block;font-family:var(--f-display);font-weight:400;font-size:1.2rem;line-height:1.2;letter-spacing:-.02em}
+.flip-back .flip-title{margin-bottom:10px}
+.flip-text{display:block;font-size:var(--fs-small);line-height:1.55;color:var(--muted)}
+.flip-hint{font-size:var(--fs-label);color:var(--muted)}
+.flip-card.accent .flip-hint{color:var(--navy)}
+.flip-card:focus-visible{outline:3px solid var(--navy);outline-offset:4px;border-radius:22px}
+@media (max-width:1180px){.flip-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:820px){.flip-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.flip-cards{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.flip-inner{transition:none}}
+
+/* ---------- News: one large lead story, then square cards three to a row (ENH-053) ---------- */
+#newsGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:auto;gap:20px}
+#newsGrid .scard{grid-column:auto;grid-row:auto;min-height:0;aspect-ratio:1/1}
+#newsGrid .scard.s-lead{grid-column:1/-1;aspect-ratio:auto;min-height:clamp(380px,40vw,520px)}
+#newsGrid .scard .scard-title{font-size:clamp(1.05rem,1.35vw,1.25rem)}
+#newsGrid .scard.s-lead .scard-title{font-size:clamp(1.5rem,2.6vw,2.3rem);max-width:min(92%,26ch)}
+#newsGrid .scard:not(.s-lead)::before{background:linear-gradient(180deg,rgb(7 25 54 / .2) 0%,rgb(7 25 54 / .1) 16%,rgb(7 25 54 / .5) 40%,rgb(7 25 54 / .85) 66%,rgb(7 25 54 / .94) 100%)}
+@media (max-width:900px){#newsGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){#newsGrid{grid-template-columns:minmax(0,1fr)}#newsGrid .scard.s-lead{min-height:380px}}
 
 /* ---------- News rows on Home and Products use the story cards (ENH-042) ---------- */
 .sgrid-row{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -1234,11 +1384,12 @@ b,strong{font-weight:600}
 
 /* ---------- About: Inspired by a mountain (ENH-030). The story is held for about one extra screen of scrolling: the title stays at
    the top, the chapter text swaps beneath it, and the mountain climbs beside it. No frame lines ---------- */
-.mtn{--mtn:0;--hdr:72px;height:calc(190svh - var(--hdr))}
+.mtn{--mtn:0;--hdr:72px;height:calc(330svh - var(--hdr))}
+.mtn[data-late="1"]{height:calc(190svh - var(--hdr))}
 .mtn-pin{position:sticky;top:var(--hdr);display:flex;align-items:flex-start;padding:48px 0 0}
 .mtn-pin>.wrap{width:100%}
 /* the title sits above both columns and stays while the chapters change */
-.mtn h1{font-family:var(--f-display);font-weight:300;font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1.04;letter-spacing:-.04em;margin:0 auto clamp(20px,4vh,40px);text-align:center;text-wrap:balance}
+.mtn .mtn-h{font-family:var(--f-display);font-weight:300;font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1.04;letter-spacing:-.04em;margin:0 auto clamp(20px,4vh,40px);text-align:center;text-wrap:balance}
 .mtn-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,64px);align-items:center}
 /* both chapters share one place; the one being read shows, the other waits (screen readers still read both, in order) */
 .mtn-chs{display:grid}
@@ -1256,15 +1407,19 @@ b,strong{font-weight:600}
 .js-anim .mtn-ch.on>*:nth-child(2){transition-delay:.08s}.js-anim .mtn-ch.on>*:nth-child(3){transition-delay:.16s}
 .mtn-stage{display:flex;flex-direction:column;gap:18px}
 .mtn-art{position:relative;isolation:isolate;width:min(100%,calc((100svh - var(--hdr) - 240px) * 1.5));margin:0 auto}
-.mtn-img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;mix-blend-mode:multiply;
-  /* the picture's own background fades into the page, so no box or edge shows */
-  -webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%)}
+/* a soft pastel-amber glow around the mountain, brightest behind the peak and fading out to the page */
+.mtn-art::before{content:"";position:absolute;left:-4%;right:-4%;top:6%;bottom:-6%;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 46% 44% at 50% 62%,rgb(255 226 150 / .26) 0%,rgb(255 238 196 / .12) 45%,transparent 75%);filter:blur(10px)}
+.mtn-img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+
+/* a soft amber glow around the mountain's lines: a blurred, amber-tinted copy underneath */
+.mtn-glow{position:absolute;inset:0;mix-blend-mode:normal;opacity:.55;transform:scale(1.01)}
+.mtn-base,.mtn-color{position:relative}
+.mtn-color{position:absolute}
 .mtn-base{filter:grayscale(1);opacity:.9}
 /* the colour climbs the mountain with the story, with a soft leading edge (the fade mask and the climb mask are combined) */
 .mtn-color{position:absolute;inset:0;opacity:.9;--edge:calc(var(--mtn)*112%);
-  -webkit-mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%),linear-gradient(to top,#000 calc(var(--edge) - 12%),transparent var(--edge));
-  mask-image:radial-gradient(ellipse 62% 58% at 50% 52%,#000 62%,transparent 100%),linear-gradient(to top,#000 calc(var(--edge) - 12%),transparent var(--edge));
-  -webkit-mask-composite:source-in;mask-composite:intersect}
+  -webkit-mask-image:linear-gradient(to top,#000 calc(var(--edge) - 12%),transparent var(--edge));mask-image:linear-gradient(to top,#000 calc(var(--edge) - 12%),transparent var(--edge))}
 .mtn-beacon{position:absolute;left:var(--mx,20%);top:var(--my,69.5%);width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 7px rgb(255 192 0 / .16),0 0 24px rgb(255 192 0 / .45);transform:translate(-50%,-50%);transition:opacity .5s var(--ease)}
 /* the X mark crowns the summit: grey until the story reaches the top, then in full colour, taking over from the dot */
 .mtn-summit{position:absolute;left:58.4%;top:19.4%;width:clamp(30px,3.6vw,52px);height:auto;transform:translate(-50%,-78%);filter:grayscale(1);opacity:.55;transition:filter .8s var(--ease),opacity .8s var(--ease),transform .8s var(--ease)}
@@ -1277,20 +1432,20 @@ b,strong{font-weight:600}
 .mtn-tag::after{content:"";position:absolute;right:0;top:50%;width:var(--lead);height:1px;background:currentColor;opacity:.7}
 .mtn-tag::before{content:"";position:absolute;right:-3px;top:calc(50% - 3px);width:6px;height:6px;border-radius:50%;background:var(--amber)}
 .mtn-tag-name{color:var(--heading);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
-.mtn-tag-geo{color:var(--muted)}
-/* Mount Zion sits beside the summit; the tag is a link out, so readers can look the place up */
-.mtn-tag-zion{--tx:55.5%;--ty:15%;text-decoration:none}
-.mtn-tag-zion .mtn-tag-name::after{content:" ↗";letter-spacing:0}
-.mtn-tag-zion:hover .mtn-tag-name,.mtn-tag-zion:focus-visible .mtn-tag-name{text-decoration:underline;text-decoration-color:var(--amber);text-decoration-thickness:2px;text-underline-offset:3px}
 /* newXion marks the village on the slope, and appears with chapter 02 */
-.mtn-tag-xion{--tx:45.5%;--ty:44%}
+/* newXion sits on top of the X at the summit, with a short line down to it */
+.mtn-tag-xion{left:58.4%;right:auto;top:19.4%;transform:translate(-50%,-100%) translateY(-38px);align-items:center;text-align:center;padding:4px 12px}
+.mtn-tag-xion::after{right:auto;left:50%;top:100%;width:1px;height:12px}
+.mtn-tag-xion::before{display:none}
+/* phones have no room above the peak, so the label sits to the left of the X with a short line across */
+@media (max-width:800px){.mtn-tag-xion{left:auto;right:calc(100% - 58.4% + 18px);top:15%;transform:translateY(-50%);align-items:flex-end;text-align:right;padding:2px 8px}.mtn-tag-xion::after{left:auto;right:-14px;top:50%;width:12px;height:1px}}
 .mtn-tag-xion .mtn-tag-name{text-transform:none;letter-spacing:.02em}
-.js-anim .mtn:not(.is-2) .mtn-tag-xion{opacity:0}
+.js-anim .mtn:not(.is-late) .mtn-tag-xion{opacity:0}
 .mtn-dots{display:flex;justify-content:center;gap:8px}
 .mtn-dots span{width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--navy) 18%,transparent);transition:background .4s var(--ease),width .4s var(--ease)}
 .mtn-dots span.on{width:24px;border-radius:4px;background:var(--amber)}
 /* without JavaScript nothing is pinned: both chapters show one after the other and the mountain is in full colour */
-.no-js .mtn{--mtn:1;height:auto}
+.no-js .mtn,.no-js .mtn[data-late="1"]{--mtn:1;height:auto}
 .no-js .mtn-pin{position:static}
 .no-js .mtn-chs{gap:40px}
 .no-js .mtn-ch{grid-area:auto}
@@ -1301,7 +1456,7 @@ b,strong{font-weight:600}
   .mtn-pin{align-items:flex-start;padding:24px 0 0}
   .mtn-grid{grid-template-columns:minmax(0,1fr);gap:12px}
   .mtn-story{display:contents}
-  .mtn h1{margin:0 0 12px;font-size:clamp(1.6rem,7.4vw,2.1rem)}
+  .mtn .mtn-h{margin:0 0 12px;font-size:clamp(1.6rem,7.4vw,2.1rem)}
   .mtn-stage{order:1;gap:0}
   .mtn-chs{order:2}
   .mtn-art{width:min(100%,calc(26svh * 1.5));margin:0 auto}
@@ -1321,7 +1476,7 @@ b,strong{font-weight:600}
 /* short screens (short phones, and landscape phones of any width): the held story would not fit, so the chapters simply
    follow one another and the mountain climbs as they are read */
 @media (max-width:800px) and (max-height:740px),(max-height:520px){
-  .mtn{height:auto}
+  .mtn,.mtn[data-late="1"]{height:auto}
   .mtn-pin{position:static;padding-bottom:0}
   .mtn-stage{position:sticky;top:var(--hdr);z-index:2;background:var(--paper);padding-bottom:6px;box-shadow:0 14px 14px -6px var(--paper)}
   .mtn-chs{gap:36px}
@@ -1336,7 +1491,7 @@ b,strong{font-weight:600}
 /* short desktop windows: a little tighter, so the held story still fits in Vietnamese */
 @media (min-width:801px) and (min-height:521px) and (max-height:700px){
   .mtn-pin{padding-top:28px}
-  .mtn h1{margin-bottom:16px}
+  .mtn .mtn-h{margin-bottom:16px}
   .mtn-text{font-size:var(--fs-body);line-height:1.6}
 }
 /* very narrow phones: the newXion tag tucks in so it clears the screen edge */
@@ -1347,7 +1502,7 @@ b,strong{font-weight:600}
 @media (min-width:1500px) and (min-height:1050px){
   .mtn-pin{padding-top:clamp(48px,7svh,120px)}
   .mtn-grid{margin-right:calc((1240px - min(100vw - 144px,2000px)) / 2)}
-  .mtn h1{font-size:clamp(3rem,3vw,4rem);margin-bottom:clamp(40px,4svh,64px)}
+  .mtn .mtn-h{font-size:clamp(3rem,3vw,4rem);margin-bottom:clamp(40px,4svh,64px)}
   .mtn-title{font-size:clamp(1.85rem,1.6vw,2.3rem)}
   .mtn-text{font-size:1.25rem;max-width:44ch}
   .mtn-close{font-size:var(--fs-body)}

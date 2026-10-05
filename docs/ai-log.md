@@ -746,6 +746,7 @@ Template:
   - `/about` shows the hero, stats, story, six values, a nine-question FAQ, two offices with live clocks, and "See our apps in action.".
   - The footer's "Core values" and "FAQ" land below the header.
   - Pending: the story at exactly 900px (the site-wide ≥/≤ breakpoint question).
+
 ## 2026-10-01 — Batch 1 into site-v3: readability, accessibility and the new header
 
 - **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
@@ -1153,3 +1154,25 @@ Template:
   had to clarify), the first reel loop length ignored the last gap, the expanded articles added a few details the
   newsroom never said (an "evening", a link between two unrelated posts), and a script check line aborted a log
   update before it was saved.
+
+## 2026-10-05 — ENH-046 to ENH-059: About rebuilt, Services and Careers refreshed, News lead story, new footer
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Rebuild About from Amber's recommendation notes (a "We're XionTechs" intro over pastel peaks,
+  then the mountain story with a transparent mountain, no place name or religious reference, city drawings in the
+  office cards, white after the intro); a white and pastel-amber Services page with "What can we help you
+  achieve?"; Careers from Amber's two careers files (Growth Learning Model hero, Inside XionTechs tiles, flip
+  cards); transparent audience tabs on Products; a lead story and square cards on News; a footer grouped by
+  audience with icon office rows and bracketed phone codes; the XionTech X as the site icon.
+- **Decision / result:** Approved by Amber after several rounds (two About versions, then a page comparing three
+  About backgrounds; Amber chose white after the hero). Review fixes before commit: the About story's inline
+  height overrode the no-JavaScript and short-screen rules (a 939px gap); the Vietnamese back of a Careers flip card
+  was clipped and screen readers heard both faces; filtered News could leave one square card beside a lead; square
+  titles were cut at four lines; links to removed stories opened a different story; the Services hero linked to a
+  missing demo anchor; the footer's contact links were 19px tall; the tabs spilled at 320px in Vietnamese; a
+  leftover "mountain city" phrase; and dead CSS from the earlier layouts.
+- **AI got it wrong?** Yes: the first mountain glow was far too strong, the first transparent mountain picture had a
+  cyan tint from an overflowing colour calculation, the timeline dot first slid in from the centre, two review
+  suggestions (restore the email privacy line and the footer Contact link) went against Amber's explicit requests
+  and were not applied, and a review agent left a temporary script in the repo root that the lint caught.

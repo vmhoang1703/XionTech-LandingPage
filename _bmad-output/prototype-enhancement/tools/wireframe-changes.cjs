@@ -3,12 +3,12 @@
 // "Batch 1" = the readability, accessibility and header changes written into the specs before the log existed.
 
 const SITE_WIDE =
-  "site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page).";
+  "site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).";
 
 module.exports = {
   // header and footer frames (shared by every page)
   header: "Batch 1 · ENH-002",
-  footer: "content unchanged",
+  footer: "ENH-056 to ENH-058 (Products by audience, Company: News, About, Careers; offices with icons, Vietnam first; phone codes in brackets)",
 
   // section tags, keyed by page and the id of the section heading
   sections: {
@@ -21,36 +21,40 @@ module.exports = {
     "index.html#prod-h": "Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · AI apps in ENH-013, ENH-021",
     "index.html#contact-h": "new in ENH-001 · ENH-010 · blended in ENH-036",
     "products.html#h1": "ENH-014 · ENH-018 · ENH-020", // Products hero
-    "products.html#apps-h": "new in ENH-020",
-    "about.html#h1": "new in ENH-030", // About hero: the mountain story
-    "about.html#faq-h": "rebuilt in ENH-016 · background stilled in ENH-019 · last slot in ENH-031",
-    "about.html#cap-h": "blended in ENH-036",
+    "about.html#h1": "We’re XionTechs intro in ENH-049 · rounder peaks in ENH-051", // About hero
+    "about.html#story-h": "the mountain story (ENH-030) moved below the intro in ENH-046 and ENH-049 · no place name in ENH-050 · softer glow in ENH-057",
+    "about.html#off-h": "city drawings in ENH-050 to ENH-052 · smaller, further apart in ENH-054 and ENH-055 · icon rows in ENH-058 · white in ENH-059",
+    "about.html#faq-h": "rebuilt in ENH-016 · background stilled in ENH-019 · last slot in ENH-031 · white in ENH-059",
+    "about.html#cap-h": "blended in ENH-036 · white in ENH-059",
     "services.html#h1": "light hero in ENH-033",
-    "services.html#cap-h": "blended in ENH-036",
-    "news.html#h1": "white and light blue in ENH-034 · rebuilt in ENH-037 · newsroom stories in ENH-042 · bento grid in ENH-045",
+    "services.html#out-h": "new in ENH-048",
+    "news.html#h1": "white and light blue in ENH-034 · rebuilt in ENH-037 · newsroom stories in ENH-042 · lead story and square cards in ENH-053",
     "index.html#news-h": "ENH-007 · story cards in ENH-042",
     "products.html#up-h": "ENH-024 · story cards in ENH-042",
     "404.html#h1": "lost-trail map in ENH-043",
     "news-story.html#h1": "editorial article in ENH-037",
-    "careers.html#life-h": "event reel in ENH-041",
-    "products.html#day-h": "new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040",
+    "careers.html#life-h": "Inside XionTechs tiles in ENH-055",
+    "careers.html#cul-h": "five flip cards in ENH-055",
+    "careers.html#roles-h": "Find your next challenge. in ENH-049",
+    "products.html#apps-h": "new in ENH-020 · audience tabs in ENH-049 to ENH-052",
+    "products.html#day-h": "new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040 · flags on reached dots in ENH-050",
     "news.html#cap-h": "blended in ENH-036",
-    "careers.html#h1": "pastel hero in ENH-035",
+    "careers.html#h1": "Stay curious. Build what’s next. with the Growth Learning Model in ENH-055",
   },
 
   // one line under each page title
   pages: {
     "index.html": "Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in), ENH-037 (news cards show their photo and open their story) (see the change list at the top).",
-    "products.html": "ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-037 (news row shows the app stories with photos), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen); " + SITE_WIDE,
-    "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); " + SITE_WIDE,
-    "about.html": 'ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 (email section continues the navy into the footer); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); ' + SITE_WIDE,
-    "news.html": "ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-037 (audience filter and full-photo story cards); ENH-036 (email section blends in); " + SITE_WIDE,
+    "products.html": "ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-037 (news row shows the app stories with photos), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen), ENH-049 to ENH-052 (transparent audience tabs that stay readable over amber; “Student learns”; flags on A day at school); " + SITE_WIDE,
+    "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); ENH-048 (white with pastel amber; What can we help you achieve? before How we work; three facts); ENH-055 (no email band); " + SITE_WIDE,
+    "about.html": 'ENH-046 and ENH-049 to ENH-059 (a We’re XionTechs intro over pastel peaks, then the mountain story with newXion at the peak and no place name, core values, FAQ, two office cards with city drawings and icon rows, all on white after the intro); ENH-030 (the mountain story; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 then ENH-059 (email section on white, the navy footer follows); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); ' + SITE_WIDE,
+    "news.html": "ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-037 (audience filter and full-photo story cards); ENH-047 (two thin company posts removed); ENH-053 (one large lead story, then square cards three to a row); ENH-036 (email section blends in); " + SITE_WIDE,
     "news-story.html": "ENH-037 (an editorial article: label, date, headline, summary, wide photo); ENH-042 and ENH-044 (each story's own text, with subheadings, from the newXion newsroom); " + SITE_WIDE,
-    "careers.html": "ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-041 (Life at XionTechs is an event reel of team photos); " + SITE_WIDE,
+    "careers.html": "ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-041 (event reel, later replaced); ENH-049 and ENH-055 (Stay curious. Build what’s next. hero with the Growth Learning Model, Inside XionTechs tiles, five flip cards, Find your next challenge.; Why you’ll grow here removed); " + SITE_WIDE,
     "job.html": "ENH-026 (fits phone screens); " + SITE_WIDE,
     "demo.html": "ENH-011 (checklist says five steps); " + SITE_WIDE,
     "privacy.html": SITE_WIDE,
-    "404.html": "Batch 1 (no label above the heading); ENH-043 (You’ve wandered off the trail, with a trail map); " + SITE_WIDE,
+    "404.html": "Batch 1 (no label above the heading); ENH-043 (You’ve wandered off the trail, with a trail map); ENH-052 (no underline in the heading); " + SITE_WIDE,
   },
 
   // the change list printed at the top of wireframes-final.md
@@ -74,8 +78,8 @@ module.exports = {
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
 | Products, hero | "Four apps. One connected school." with a breadcrumb, two buttons and tablet and phone mockups, on amber | "Built apart. Better together.", no button, and four app cards (PXP, LXP, SXP, IoT) around an X tile joined by lines, on a warm light background with slowly drifting glows and a Pause motion button (shared with Home) | ENH-014, ENH-018, ENH-020 |
 | Products, after the apps | — | New: "A day at school.", a five-step timeline (07:45 to 15:30) on dark blue that plays step by step once, filling the rail and each dot with amber | ENH-015, ENH-023 |
-| About, hero | Navy hero "Tech made simple. Solutions made powerful." with a breadcrumb and description; five key-fact figures; "Two strengths, one team." | "Inspired by a mountain. United by purpose." centred at the top ("purpose" highlighted). Held for about a screen of scrolling: chapter 01 The inspiration (the name comes from Zion, the ancient mountain city in Jerusalem) gives way to 02 The purpose (the pioneers who founded newXion), while the mountain beside it fills with colour to the summit, where the X mark turns full colour. Map-style tags on the picture: "Mount Zion, Jerusalem, 31.77° N 35.23° E" (links out) and "newXion, Founded in America" | ENH-030 |
-| About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; soft clouds drifting in the bottom left of a light-to-navy background | ENH-016 |
+| About, hero | Navy hero "Tech made simple. Solutions made powerful." with a breadcrumb and description; five key-fact figures; "Two strengths, one team." | "We’re XionTechs, technology built with ownership." ("ownership" in amber) over soft pastel peaks; below it the mountain story "Inspired by a mountain. United by purpose.": two chapters (the vision, then the pioneers who founded newXion) beside a transparent mountain that fills to the summit, where newXion labels the X; no place name | ENH-030, ENH-046, ENH-049 to ENH-051, ENH-056, ENH-057 |
+| About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; on white (the clouds and light-to-navy background were removed in ENH-059) | ENH-016, ENH-059 |
 | About, FAQ background | — | The clouds and gradient hold still; the drifting and the sheen are gone | ENH-019 |
 | About, FAQ last row | The ninth question alone on the last row | "Still have a question? Ask us directly" fills the slot beside it, linking to the contact form | ENH-031 |
 | About, hero on very large screens | — | On screens at least 1500 × 1050 the held story widens and grows, roughly halving the empty space below it | ENH-032 |
@@ -85,16 +89,22 @@ module.exports = {
 | News, whole page (again) | Product/Company/Schools/Team filters; compact cards | "What we’re building, learning and sharing"; filters by audience (Schools, Students, Parents, Company); full-photo story cards with the newest featured; hover or focus lifts the card and shows "Read story" | ENH-037 |
 | Story page | Placeholder headline and body | An editorial article: Back to News, audience label and date, headline, summary, wide rounded photo, subheadings, amber pull quote, inline photo | ENH-037 |
 | Every page, headings | Display headings at 500 (reading as bold); page titles in five sizes; Products titles in the body font | One page-title style; display headings at 300 and card titles at 400; the guideline's line height and letter spacing | ENH-038, ENH-039, ENH-040 |
-| Careers, Life at XionTechs | Three photo frames in a row | A reel of real team photos, all one size, drifting edge to edge; holds on hover and focus, with a pause button | ENH-040, ENH-041 |
-| News content | Sample stories | The six newXion newsroom stories (news-style titles, fuller articles) plus marked mock stories for Students and Parents; a bento grid of mixed card shapes; Home and Products rows use the story cards | ENH-042, ENH-044, ENH-045 |
+| Careers, Life at XionTechs | Three photo frames in a row | Replaced by Inside XionTechs tiles (ENH-055); the photo reel is gone | ENH-040, ENH-041, ENH-055 |
+| News content | Sample stories | Four newXion newsroom stories (news-style titles, fuller articles) plus marked mock stories for Students and Parents; a lead story and square cards (ENH-053); Home and Products rows use the story cards | ENH-042, ENH-044, ENH-045, ENH-047, ENH-053 |
 | Every page, footer | Flat footer top | A mountain ridgeline; a small climber stands at a spot set by the page’s place in the navigation (Home at the foot, Careers on the summit) and walks there between pages | ENH-043 to ENH-045 |
 | 404 | “We couldn’t find that page.” | “You’ve wandered off the trail.” with a trail map from You are here to Home | ENH-043 |
 | Forms (contact, demo, job) | Check-mark thank-you | A flag rises on a small summit above “Summit reached.” and the thank-you | ENH-043 |
-| Email and contact sections | Fixed amber or navy boxes with corner rings | Home's contact, and the email sections on About, Services and News, blend into the colours around them; no rings | ENH-036 |
+| Email and contact sections | Fixed amber or navy boxes with corner rings | Home's contact, and the email sections on About and News, blend into the colours around them; no rings; Services has no email section (ENH-055); About's is white (ENH-059) | ENH-036, ENH-055, ENH-059 |
 | Products, the apps | Four separate sections (PXP, LXP, SXP, IoT) with their own layouts, and a PXP / LXP / SXP / IoT / Updates bar | Seven stacked app cards (SXP, IoT, AI Timetable, AI Grader, PXP, LXP, AI Tutor) that pin and replace one another on desktop; phone or browser mockup, app name, one sentence, a Features list, store or View prototype buttons; School / Parents / Students pills that jump and highlight | ENH-020 |
 | Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |
 | Products, updates and last band | "See all news" below the stories; navy band with a ring illustration | "See all news" on the heading row; plain dark navy band, continuous with the footer | ENH-024 |
 | Every page, type | Bold headings, labels and buttons (600 to 700) | The same fonts and sizes at weight 500; body 400 | ENH-025 |
 | Job page and Home contact, phones | The job page ran 89px past a phone screen; Home ran 2px at 320px | Both fit the screen at every width | ENH-026 |
+| About, after the intro | Navy offices and email band; blue FAQ | Plain white from the mountain story to the footer; two office cards with a city drawing each (Plano balloons, Ben Thanh Market), local time, delivery-center tag and icon rows for address, phone, WhatsApp and email | ENH-050 to ENH-055, ENH-058, ENH-059 |
+| Services, more | Four-step process; email band | "What can we help you achieve?" before How we work; three facts; no email band | ENH-048, ENH-055 |
+| Careers, whole page (again) | Pastel hero; event reel; Why you’ll grow here | "Stay curious. Build what’s next." with the Growth Learning Model cycle; Inside XionTechs tiles; five flip cards; "Find your next challenge."; Why you’ll grow here removed | ENH-049, ENH-054, ENH-055 |
+| Products, audience tabs | School / Parents / Students pills with colour dots | Transparent tabs on a light frosted bar; the selected tab is amber only where that reads, navy over amber; reached A day at school dots show a flag | ENH-049 to ENH-052 |
+| News, layout | Bento grid of mixed shapes | One large lead story (the newest), then square cards three to a row; two thin company posts removed | ENH-047, ENH-051, ENH-053 |
+| Footer, every page | Plain link columns | Products: For schools, For students, For parents; Company: News, About, Careers; offices with icons, Vietnam Delivery Center first, US Delivery Center second; phone codes in brackets; the climber only climbs; XionTech X as the site icon | ENH-051, ENH-056 to ENH-058 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |`,
 };

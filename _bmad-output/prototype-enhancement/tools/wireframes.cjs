@@ -249,8 +249,9 @@ function walk(el, out, doc) {
     out.push("[GRAPHIC: code window]");
     return;
   }
-  if (el.classList.contains("pstack")) out.push("[CARDS PIN AND STACK ON SCROLL (desktop): each card settles under the header and the next slides over and replaces it; the School / Parents / Students pills jump to a group and highlight the one being read]");
+  if (el.classList.contains("pstack")) out.push("[CARDS PIN AND STACK ON SCROLL (desktop): each card settles under the header and the next slides over and replaces it; the School / Parents / Students tabs jump to a group and highlight the one being read]");
   if (el.classList.contains("day-line")) out.push("[TIMELINE PLAYS ONCE on arrival: step by step every 1.8s, the rail and each dot fill with amber; resets only above the section]");
+  if (el.id === "newsGrid") out.push("[NEWS: the newest story is one large lead card across the row; the rest are square cards, three to a row (two on tablets, one on phones); a filter with too few stories for a full row shows squares only]");
   if (el.id === "caseSlider") out.push("[ROW SCROLLS SIDEWAYS: drag, swipe or arrow keys; carousel dots below, one per page of cards; all cards listed in order]");
   if (el.id === "appRail") out.push("[ROW SCROLLS SIDEWAYS: back and forward buttons beside the heading; four cards visible on desktop]");
   const cols = gridCols(el);

@@ -31,12 +31,12 @@
   <div class="fgrid">
     <div><a class="flogo" href="index.html"><img src="assets/logo.png" alt="XionTechs"></a>
       <p class="about" data-vi="Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp.">Education technology products and software delivery services for schools and businesses.</p></div>
-    <div><h4 data-vi="Sản phẩm">Products</h4><ul><li><a href="products.html#pxp">PXP</a></li><li><a href="products.html#lxp">LXP</a></li><li><a href="products.html#sxp">SXP</a></li><li><a href="products.html#iot" data-vi="Quản lý thiết bị IoT">IoT Device Management</a></li><li><a href="products.html#updates" data-vi="Cập nhật sản phẩm">Product updates</a></li></ul></div>
-    <div><h4 data-vi="Dịch vụ">Services</h4><ul><li><a href="services.html#product-engineering">Product Engineering</a></li><li><a href="services.html#ai-analytics">AI-Driven Analytics</a></li><li><a href="services.html#staffing">Staffing Service</a></li><li><a href="services.html#low-code">Low-code Solutions</a></li><li><a href="services.html#cloud">Cloud Computing</a></li><li><a href="services.html" data-vi="Tất cả dịch vụ">All services</a></li></ul></div>
-    <div><h4 data-vi="Công ty">Company</h4><ul><li><a href="about.html" data-vi="Về chúng tôi">About</a></li><li><a href="about.html#values" data-vi="Giá trị cốt lõi">Core values</a></li><li><a href="about.html#faq" data-vi="Câu hỏi thường gặp">FAQ</a></li><li><a href="news.html" data-vi="Tin tức">News</a></li><li><a href="careers.html" data-vi="Tuyển dụng">Careers</a></li><li><a href="demo.html" data-vi="Liên hệ">Contact</a></li></ul></div>
+    <div><h4 data-vi="Sản phẩm">Products</h4><ul><li><a href="products.html#sxp" data-vi="Cho nhà trường">For schools</a></li><li><a href="products.html#lxp" data-vi="Cho học sinh">For students</a></li><li><a href="products.html#pxp" data-vi="Cho phụ huynh">For parents</a></li></ul></div>
+    <div><h4 data-vi="Dịch vụ">Services</h4><ul><li><a href="services.html#product-engineering">Product Engineering</a></li><li><a href="services.html#ai-analytics">AI-Driven Analytics</a></li><li><a href="services.html#staffing">Staffing Service</a></li><li><a href="services.html#low-code">Low-code Solutions</a></li><li><a href="services.html#cloud">Cloud Computing</a></li><li><a href="services.html#process" data-vi="Cách chúng tôi làm việc">How we work</a></li><li><a href="services.html" data-vi="Tất cả dịch vụ">All services</a></li></ul></div>
+    <div><h4 data-vi="Công ty">Company</h4><ul><li><a href="news.html" data-vi="Tin tức">News</a></li><li><a href="about.html" data-vi="Về chúng tôi">About</a></li><li><a href="careers.html" data-vi="Tuyển dụng">Careers</a></li></ul></div>
     <div><h4 data-vi="Văn phòng">Offices</h4>
-      <address class="office"><b>Plano, Texas, USA</b>7950 Legacy Drive, Suite 400<br>Plano, Texas 75024, USA<br><a href="tel:+14693229899">+1 469 322 9899</a><br><a href="https://wa.me/14694399345" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp +1 469 439 9345 (opens in a new tab)">WhatsApp +1 469 439 9345</a><br><a href="mailto:vinni.tran@newxion.com">vinni.tran@newxion.com</a></address>
-      <address class="office"><b>Ho Chi Minh City, Vietnam</b><small class="office-tag" data-vi="Vietnam Delivery Center">Vietnam Delivery Center</small>Floor 15, B1 Building<br>279 Nguyen Tri Phuong Street<br>Dien Hong Ward, Ho Chi Minh City, Vietnam<br><a href="tel:+84908107552">+84 908 107 552</a></address></div>
+      <address class="office"><b data-vi="Trung tâm Phát triển Việt Nam">Vietnam Delivery Center</b><span class="orow"><i class="ph ph-map-pin" aria-hidden="true"></i><span>Floor 15, B1 Building<br>279 Nguyen Tri Phuong Street<br>Dien Hong Ward, Ho Chi Minh City, Vietnam</span></span><span class="orow"><i class="ph ph-phone" aria-hidden="true"></i><span><a href="tel:+84908107552">(+84) 908 107 552</a></span></span></address>
+      <address class="office"><b data-vi="Trung tâm Phát triển Hoa Kỳ">US Delivery Center</b><span class="orow"><i class="ph ph-map-pin" aria-hidden="true"></i><span>7950 Legacy Drive, Suite 400<br>Plano, Texas 75024, USA</span></span><span class="orow"><i class="ph ph-phone" aria-hidden="true"></i><span><a href="tel:+14693229899">(+1) 469 322 9899</a></span></span><span class="orow"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i><span><a href="https://wa.me/14694399345" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp (+1) 469 439 9345 (opens in a new tab)" data-vi-aria="WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)">(+1) 469 439 9345</a></span></span><span class="orow"><i class="ph ph-envelope-simple" aria-hidden="true"></i><span><a href="mailto:vinni.tran@newxion.com">vinni.tran@newxion.com</a></span></span></address></div>
   </div>
   <div class="fbot"><span>© 2026 XionTechs · <a href="privacy.html" data-vi="Chính sách bảo mật">Privacy policy</a></span><span class="tag">GET IT <b>DONE</b></span></div>
 </div></footer><div class="toast" id="toast" role="status"></div>`;
@@ -54,9 +54,9 @@
     // the length along the ridge line where it reaches the peak (x 860 of 1440)
     for(let lo=0,hi=total,i=0;i<30;i++){const mid=(lo+hi)/2;if(rline.getPointAtLength(mid).x<860)lo=mid;else hi=mid;peakLen=hi}
     const SPOT={home:.06,products:.24,services:.42,news:.6,about:.8,careers:1},page=document.body.dataset.page,known=SPOT[page]!=null;
-    let from=known?SPOT[page]:SPOT.home;try{const v=parseFloat(sessionStorage.getItem('xt-climber'));if(!isNaN(v))from=v}catch(e){}
-    // Privacy, Demo and 404 are not in the navigation, so the climber stays where it was
-    const goal=known?SPOT[page]:from;if(known)try{sessionStorage.setItem('xt-climber',String(goal))}catch(e){}
+    let from=known?SPOT[page]:SPOT.home;try{const v=parseFloat(sessionStorage.getItem('xt-climber'));if(!isNaN(v))from=Math.min(1,Math.max(0,v))}catch(e){}
+    // the climber only ever climbs: a page lower on the mountain keeps it where it is (and Privacy, Demo and 404 never move it)
+    const goal=known?Math.max(from,SPOT[page]):from;if(known)try{sessionStorage.setItem('xt-climber',String(goal))}catch(e){}
     let p=from,frame=0;
     const put=v=>{const r=ridge.getBoundingClientRect(),pt=rline.getPointAtLength(Math.min(1,Math.max(0,v))*peakLen);
       climber.style.transform='translate('+(pt.x*r.width/1440).toFixed(1)+'px,'+(pt.y*r.height/120).toFixed(1)+'px)'};
@@ -75,9 +75,7 @@
   // real stories from the newXion newsroom (captured 5 Oct 2026); mock:1 marks sample stories for audiences the newsroom does not cover yet
   const NEWS=[
     {id:'work-smart-play-sharp',date:'31 Jul 2026',aud:'company',t:'How our team is putting agentic AI to work every day',tv:'Cách đội ngũ của chúng tôi đưa AI tác tử vào công việc hằng ngày',x:'At our “Thực Chiến AI với Agentic Workflow” workshop, team members showed how they use AI tools in their everyday work, then stayed on to celebrate together.',xv:'Tại workshop “Thực Chiến AI với Agentic Workflow”, các thành viên chia sẻ cách họ dùng công cụ AI trong công việc hằng ngày, rồi cùng ở lại vui chơi gắn kết.',img:'assets/news/01-work-smart-play-sharp.jpg',alt:'Team members at the Agentic Workflow AI workshop',b:[['Applying AI not only to software development but also to everyday work activities is becoming increasingly important for improving productivity and efficiency. That idea shaped the internal workshop we held on July 31.','Ứng dụng AI không chỉ trong phát triển phần mềm mà cả trong công việc hằng ngày ngày càng quan trọng để nâng cao năng suất và hiệu quả. Đó cũng là tinh thần của buổi workshop nội bộ chúng tôi tổ chức ngày 31/7.'],['## Learning from the people doing the work','## Học từ chính những người trong cuộc'],['At the “Thực Chiến AI với Agentic Workflow” workshop, team members shared practical experiences from their day-to-day roles and demonstrated how they leverage AI tools to take on parts of their daily work.','Tại workshop “Thực Chiến AI với Agentic Workflow”, các thành viên chia sẻ kinh nghiệm thực tế từ công việc hằng ngày và trình diễn cách họ dùng công cụ AI để đảm nhận một phần công việc của mình.'],['Because the examples came from real work, the session quickly became an exchange of ideas. Team members learned from one another and explored new ways to integrate AI into their own workflows, so they can work smarter and more effectively.','Vì các ví dụ đều đến từ công việc thật, buổi chia sẻ nhanh chóng trở thành nơi trao đổi ý tưởng. Mọi người học hỏi lẫn nhau và tìm cách mới để đưa AI vào quy trình của mình, giúp làm việc thông minh và hiệu quả hơn.'],['## Beyond the workshop','## Sau buổi workshop'],['To conclude the event, we enjoyed a team-building gathering where conversations extended beyond work. It was a valuable time to connect, share personal experiences and strengthen relationships across the team.','Khép lại sự kiện là buổi gắn kết đội ngũ, nơi câu chuyện vượt ra ngoài công việc. Đó là khoảng thời gian quý giá để kết nối, chia sẻ trải nghiệm cá nhân và thắt chặt tình cảm trong đội.'],['Moments like this reinforce the culture that makes newXion feel not just like a workplace, but like a family, and keep learning an everyday habit rather than a one-off event.','Những khoảnh khắc như vậy củng cố văn hóa giúp newXion không chỉ là nơi làm việc mà còn như một gia đình, và giúp việc học hỏi trở thành thói quen hằng ngày thay vì một sự kiện đơn lẻ.']]},
-    {id:'ai-in-action',date:'08 Apr 2026',aud:'company',t:'Inside the XionTech AI team’s workshop on staying ahead with AI',tv:'Bên trong buổi workshop của đội XionTech AI về việc luôn đi trước cùng AI',x:'On April 8, the XionTech AI team ran an AI workshop for colleagues, part of how newXion Group keeps learning and sharing knowledge.',xv:'Ngày 8/4, đội XionTech AI tổ chức buổi workshop AI cho đồng nghiệp, một phần trong cách newXion Group duy trì học hỏi và chia sẻ kiến thức.',img:'assets/news/02-ai-in-action.jpg',alt:'Highlights from the XionTech AI team workshop',b:[['As an AI-powered IT services company, newXion Group is committed to leveraging advanced AI technologies in the services we provide to our clients. Doing that well depends on a team that keeps learning as fast as the technology changes.','Là công ty dịch vụ CNTT ứng dụng AI, newXion Group cam kết khai thác các công nghệ AI tiên tiến trong những dịch vụ chúng tôi mang đến cho khách hàng. Để làm tốt điều đó, đội ngũ cần học hỏi nhanh như chính tốc độ thay đổi của công nghệ.'],['## Learning as a shared priority','## Học hỏi là ưu tiên chung'],['Continuous learning and knowledge sharing are key priorities at newXion Group. We make time for teams to learn from each other, so what works on one project can help on the next.','Học hỏi liên tục và chia sẻ kiến thức là những ưu tiên hàng đầu tại newXion Group. Chúng tôi dành thời gian để các đội học hỏi lẫn nhau, để điều hiệu quả ở dự án này có thể giúp ích cho dự án tiếp theo.'],['On April 8, 2026, the XionTech AI team conducted an AI workshop; the photos above are highlights from the day.','Ngày 8/4/2026, đội XionTech AI tổ chức một buổi workshop AI; hình ảnh phía trên là những điểm nổi bật trong ngày.'],['## What it means for clients','## Ý nghĩa với khách hàng'],['Sessions like this help our team stay ahead in a rapidly evolving industry and bring that knowledge into the work we deliver. Congratulations to the XionTech AI team on a great workshop!','Những buổi chia sẻ như vậy giúp đội ngũ luôn đi trước trong một ngành thay đổi nhanh chóng và đưa kiến thức đó vào công việc chúng tôi thực hiện. Chúc mừng đội XionTech AI với buổi workshop thành công!']]},
     {id:'lunar-new-year-2026',date:'23 Feb 2026',aud:'company',t:'Welcoming the Year of the Horse with our Vietnam team',tv:'Chào đón năm Bính Ngọ cùng đội ngũ tại Việt Nam',x:'Our Vietnam Delivery Centers took a full week off for Tết, then came back on February 23 to exchange new year wishes and lucky money.',xv:'Các Trung tâm Phát triển tại Việt Nam được nghỉ trọn một tuần dịp Tết, rồi trở lại vào ngày 23/2 để chúc Tết và nhận lì xì đầu năm.',img:'assets/news/03-lunar-new-year-2026.jpg',alt:'Lunar New Year celebration at the Vietnam Delivery Centers',b:[['Lunar New Year has always been a cherished and traditional celebration for Vietnamese, and it is one of the most important moments of the year for our team.','Tết Nguyên Đán luôn là dịp lễ truyền thống được người Việt trân quý, và cũng là một trong những khoảnh khắc quan trọng nhất trong năm của đội ngũ chúng tôi.'],['This year, our members in the Vietnam Delivery Centers enjoyed a full week of holiday from February 16th to February 20th, time to rest and celebrate with loved ones, and returned to work on February 23rd.','Năm nay, các thành viên tại các Trung tâm Phát triển ở Việt Nam được nghỉ trọn một tuần từ 16 đến 20/2, có thời gian nghỉ ngơi và sum vầy bên người thân, rồi trở lại làm việc vào ngày 23/2.'],['## Starting the year together','## Cùng nhau khởi đầu năm mới'],['As part of our tradition, we welcomed the new year on our return by exchanging wishes of prosperity and receiving lucky money from the Board of Management.','Theo truyền thống, chúng tôi chào đón năm mới khi trở lại làm việc bằng những lời chúc thịnh vượng và nhận lì xì từ Ban Điều hành.'],['2026 is the Year of the Horse. We are moving forward with the strength and endurance of the horse.','2026 là năm Bính Ngọ. Chúng tôi tiến bước với sức mạnh và sự bền bỉ của loài ngựa.']]},
-    {id:'year-end-town-hall',date:'19 Dec 2025',aud:'company',t:'Looking back on 2025 and ahead to 2026 at our year-end town hall',tv:'Nhìn lại năm 2025 và hướng tới năm 2026 tại buổi họp toàn công ty cuối năm',x:'As 2025 closed, the Board of Directors shared business updates and plans for 2026, followed by a game, team rewards and a Christmas celebration.',xv:'Khi năm 2025 khép lại, Ban Giám đốc chia sẻ cập nhật kinh doanh và kế hoạch năm 2026, tiếp nối là trò chơi, phần thưởng cho các đội và tiệc mừng Giáng sinh.',img:'assets/news/04-year-end-town-hall.jpg',alt:'Year-end company town hall and Christmas celebration',b:[['As 2025 came to a close, the Board of Directors hosted our year-end company town hall, bringing the team together to reflect on the year.','Khi năm 2025 khép lại, Ban Giám đốc tổ chức buổi họp toàn công ty cuối năm, đưa mọi người cùng nhau nhìn lại một năm đã qua.'],['## Updates and plans','## Cập nhật và kế hoạch'],['The town hall shared key business updates and outlined our strategic plans for 2026, giving everyone a clear view of where the company is heading.','Buổi họp chia sẻ các cập nhật kinh doanh quan trọng và định hướng chiến lược cho năm 2026, giúp mọi người thấy rõ công ty đang hướng tới đâu.'],['## Celebrating the year','## Mừng một năm đã qua'],['The gathering kicked off with a fun game and team rewards, followed by a festive Christmas celebration where XionTech team members enjoyed food, drinks and time together like family.','Buổi gặp mặt mở đầu bằng trò chơi vui nhộn và phần thưởng cho các đội, tiếp nối là tiệc mừng Giáng sinh rộn ràng, nơi các thành viên XionTech cùng thưởng thức đồ ăn, thức uống và quây quần như một gia đình.'],['The year-end town hall is one of our established traditions: a moment to say thank you and to start the new year with shared goals.','Buổi họp cuối năm là một truyền thống của chúng tôi: dịp để nói lời cảm ơn và bắt đầu năm mới với những mục tiêu chung.']]},
     {id:'ai-robotics-client-visit',date:'10 Oct 2025',aud:'schools',t:'Exploring AI and robotics for education with a visiting client',tv:'Cùng khách hàng khám phá AI và robot cho giáo dục',x:'A client visited our XionTech Delivery Center in Ho Chi Minh City to explore how AI and robotics could be applied in education.',xv:'Một khách hàng đã đến thăm Trung tâm Phát triển XionTech tại TP. Hồ Chí Minh để tìm hiểu cách ứng dụng AI và robot trong giáo dục.',img:'assets/news/05-ai-robotics-client-visit.jpg',alt:'Client visit to the XionTech Delivery Center in Ho Chi Minh City',b:[['We were delighted to welcome an esteemed client to the XionTech Delivery Center in Ho Chi Minh City. The visit focused on a shared interest: exploring opportunities for applying AI and robotics in education.','Chúng tôi rất vui được chào đón một khách hàng quý mến đến Trung tâm Phát triển XionTech tại TP. Hồ Chí Minh. Chuyến thăm tập trung vào mối quan tâm chung: tìm hiểu cơ hội ứng dụng AI và robot trong giáo dục.'],['## Why AI and robotics in education','## Vì sao là AI và robot trong giáo dục'],['Education is where we go deepest as a company, and AI and robotics open up new ways to bring technology into learning. Meeting in person gave both teams the chance to discuss those possibilities together.','Giáo dục là lĩnh vực chúng tôi chuyên sâu nhất, và AI cùng robot mở ra những cách mới để đưa công nghệ vào việc học. Gặp gỡ trực tiếp giúp hai bên cùng trao đổi về những khả năng đó.'],['Visits like this help clients get to know the team behind their projects first-hand, and help us understand their goals early.','Những chuyến thăm như vậy giúp khách hàng trực tiếp làm quen với đội ngũ đứng sau dự án của mình, và giúp chúng tôi hiểu mục tiêu của họ ngay từ sớm.']]},
     {id:'project-kickoff',date:'08 Apr 2025',aud:'schools',t:'Kicking off a major education initiative with our client in Ho Chi Minh City',tv:'Khởi động một sáng kiến giáo dục quan trọng cùng khách hàng tại TP. Hồ Chí Minh',x:'Our client joined us at the Besco Delivery Center in Ho Chi Minh City to set out the project requirements and officially start a major education initiative.',xv:'Khách hàng đã cùng chúng tôi có mặt tại Trung tâm Phát triển Besco ở TP. Hồ Chí Minh để thống nhất yêu cầu dự án và chính thức khởi động một sáng kiến giáo dục quan trọng.',img:'assets/news/06-project-kickoff.jpg',alt:'Project kickoff at the Besco Delivery Center in Ho Chi Minh City',b:[['A strong start makes a big difference to any project. Our valued client visited the Besco Delivery Center in Ho Chi Minh City to outline the project requirements and officially kick off a major education initiative.','Một khởi đầu vững chắc tạo nên khác biệt lớn cho mọi dự án. Khách hàng thân thiết đã đến Trung tâm Phát triển Besco tại TP. Hồ Chí Minh để trao đổi yêu cầu dự án và chính thức khởi động một sáng kiến giáo dục quan trọng.'],['## Aligning from day one','## Thống nhất ngay từ ngày đầu'],['Meeting in person at the start gave both teams the chance to agree on the requirements before delivery begins, so everyone moves forward with the same understanding.','Gặp gỡ trực tiếp ngay từ đầu giúp hai bên thống nhất yêu cầu trước khi bắt tay vào triển khai, để mọi người cùng tiến lên với một cách hiểu chung.']]},
     {id:'ai-tutor',date:'20 Mar 2025',aud:'students',app:'AI Tutor',mock:1,t:'[Placeholder] Why better AI tutoring starts with guiding the student’s thinking',tv:'[Placeholder] Vì sao gia sư AI tốt hơn bắt đầu từ việc dẫn dắt tư duy của học sinh',x:'A useful AI tutor should not simply produce the answer. It should help the learner understand what went wrong, try again and build confidence in the reasoning.',xv:'Một gia sư AI hữu ích không chỉ đưa ra đáp án. Nó giúp người học hiểu mình sai ở đâu, thử lại và tự tin hơn vào cách lập luận của mình.',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=88',alt:'',b:[]},
@@ -100,16 +98,15 @@
     const list=mode==='product'?NEWS.filter(n=>n.app):NEWS;
     box.classList.remove('news-grid');box.classList.add('sgrid','sgrid-row');box.innerHTML=list.slice(0,lim).map((n,i)=>scard(n,i+1)).join('');
   });
-  // News is a bento grid: a large featured story, then tall, wide and square cards in a repeating mix that follows the visible order
-  const SHAPES=['feat','tall','small','small','wide','small','small','wide','wide'],newsGrid=document.getElementById('newsGrid');
-  const shape=()=>{if(!newsGrid)return;const vis=[...newsGrid.querySelectorAll('.scard')].filter(c=>{c.classList.remove('s-feat','s-tall','s-wide','s-small','s-full');return c.style.display!=='none'});
+  // News: the first story shown is a large lead story and the rest are square cards; a lead only when a full row of squares follows (or it is alone)
+  const newsGrid=document.getElementById('newsGrid');
+  const shape=()=>{if(!newsGrid)return;const vis=[...newsGrid.querySelectorAll('.scard')].filter(c=>c.style.display!=='none');
     const cols=getComputedStyle(newsGrid).gridTemplateColumns.split(' ').length,n=vis.length;
-    const plan=n===1?['full']:n===2?(cols>=4?['feat','feat']:['feat','wide']):n===3?(cols>=4?['feat','tall','tall']:['feat','small','small']):null;
-    vis.forEach((c,k)=>c.classList.add('s-'+(plan?plan[k]:(k<SHAPES.length?SHAPES[k]:SHAPES[4+(k-4)%5]))))};
+    newsGrid.querySelectorAll('.s-lead').forEach(c=>c.classList.remove('s-lead'));if(vis[0]&&(n===1||n-1>=cols))vis[0].classList.add('s-lead')};
   shape();addEventListener('resize',()=>requestAnimationFrame(shape),{passive:true});document.querySelectorAll('[data-filter-for="newsGrid"] button').forEach(btn=>btn.addEventListener('click',()=>requestAnimationFrame(shape)));
   // story page: the header follows ?id= (the article body is the shared sample)
   const artTitle=document.querySelector('.art-hero h1');
-  if(artTitle){const id=new URLSearchParams(location.search).get('id'),n=NEWS.find(s=>s.id===id)||NEWS[0];
+  if(artTitle){const id=new URLSearchParams(location.search).get('id'),n=NEWS.find(s=>s.id===id)||NEWS[0];if(id&&n.id!==id)location.replace('news.html');
     const set=(el,en,vi)=>{if(!el)return;el.textContent=en;el.dataset.vi=vi};
     set(document.getElementById('artAudience'),AUD[n.aud][0],AUD[n.aud][1]);set(document.getElementById('artDate'),n.date,viDate(n.date));
     set(artTitle,n.t,n.tv);set(document.getElementById('artDek'),n.x,n.xv);
@@ -231,12 +228,12 @@
   /* ---------- Careers: the event reel drifts past like the partner strip (ENH-041). It holds while the reader hovers or
      focuses it and stops with the pause button; with reduced motion it stays still and can be scrolled sideways instead. ---------- */
   const reel=document.querySelector('.reel');
-  if(reel){const track=reel.querySelector('.reel-track'),view=reel.querySelector('.reel-view'),originals=[...track.children],toggle=reel.querySelector('.reel-toggle');
+  if(reel&&reel.closest('section')&&reel.closest('section').querySelector('.reel-toggle')){const track=reel.querySelector('.reel-track'),view=reel.querySelector('.reel-view'),originals=[...track.children],toggle=reel.closest('section').querySelector('.reel-toggle');
     if(reduce){toggle.hidden=true}else{
     // a second copy makes the loop seamless; hidden from screen readers and the keyboard, its labels follow the originals' language
-    const clones=originals.map(n=>{const k=n.cloneNode(true);k.setAttribute('aria-hidden','true');k.tabIndex=-1;k.removeAttribute('href');
+    const clones=[...originals,...originals].map(n=>{const k=n.cloneNode(true);k.setAttribute('aria-hidden','true');k.tabIndex=-1;k.removeAttribute('href');
       k.querySelectorAll('[data-vi]').forEach(e=>e.removeAttribute('data-vi'));k.querySelectorAll('img').forEach(i=>i.removeAttribute('loading'));track.appendChild(k);return k});
-    document.addEventListener('xt-lang',()=>requestAnimationFrame(()=>clones.forEach((k,i)=>{k.querySelector('.reel-label').textContent=originals[i].querySelector('.reel-label').textContent})));
+    document.addEventListener('xt-lang',()=>requestAnimationFrame(()=>clones.forEach((k,i)=>{k.querySelector('.reel-label').textContent=originals[i%originals.length].querySelector('.reel-label').textContent})));
     const SPEED=34;let x=0,half=1,paused=false,hover=false,focus=false,inview=true,last=0,running=false;
     // one loop is exactly the distance from the first photo to its copy (gaps included)
     const measure=()=>{half=(clones[0].offsetLeft-originals[0].offsetLeft)||1};
@@ -256,6 +253,21 @@
     if('IntersectionObserver' in window)new IntersectionObserver(es=>{inview=es[0].isIntersecting;kick()}).observe(reel);
     addEventListener('resize',measure,{passive:true});addEventListener('load',measure);track.querySelectorAll('img').forEach(i=>i.addEventListener('load',measure));
     measure();kick()}}
+
+  /* ---------- Careers: the Growth Learning Model. The dot travels once round the ring when it comes into view, lighting
+     each step in turn, and rests on the last; with reduced motion it simply shows the first step. ---------- */
+  const cyc=document.querySelector('.cycle-stage');
+  if(cyc){const nodes=[...cyc.querySelectorAll('.cycle-node')],dot=cyc.querySelector('.cycle-dot');
+    const at=a=>'rotate('+a+'deg) translateX(var(--cycle-radius)) rotate('+(-a)+'deg)';
+    const go=i=>{dot.style.transform=at(+nodes[i].dataset.angle);nodes.forEach((n,k)=>n.classList.toggle('current',k===i))};
+    // the dot starts on the ring at the first step with no animation; only the later steps travel
+    dot.style.transition='none';go(0);void dot.offsetWidth;requestAnimationFrame(()=>{dot.style.transition=''});
+    if(!reduce&&'IntersectionObserver' in window){let ran=false;const io=new IntersectionObserver(es=>{if(!es[0].isIntersecting||ran)return;ran=true;io.disconnect();
+      let i=0;const next=()=>{if(++i<nodes.length){go(i);setTimeout(next,2600)}};setTimeout(next,1200)},{threshold:.4});io.observe(cyc)}}
+  /* ---------- Careers: flip cards (click, tap, Enter or Space) ---------- */
+  document.querySelectorAll('.flip-card').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(on));b.classList.toggle('flipped',on);
+    // only the face on show is read out
+    b.querySelector('.flip-front')?.setAttribute('aria-hidden',String(on));b.querySelector('.flip-back')?.setAttribute('aria-hidden',String(!on))}));
 
   /* ---------- What we build rail: back and forward buttons and arrow keys move one app; buttons switch off at the ends ---------- */
   const rail=document.getElementById('appRail');
@@ -421,6 +433,18 @@
   // halfway down their second-to-last card into light blue and on into the dark sections; the last three are dark blue, deepening
   // into the footer's colour. data-flow="light|rise|night|blue|deep" on a section overrides it.
   // The gradient is drawn once for the whole page (and again when the layout changes), so scrolling stays smooth.
+  // the page colour at a point down the page, so things on top can switch to navy where the colour turns amber
+  let flowStops=[];
+  const onAmber=yDoc=>{if(flowStops.length<2)return false;let i=flowStops.findIndex(s=>s[0]>=yDoc);if(i<=0)i=Math.max(1,i<0?flowStops.length-1:1);
+    const [y0,c0]=flowStops[i-1],[y1,c1]=flowStops[i],t=Math.min(1,Math.max(0,(yDoc-y0)/Math.max(1,y1-y0)));
+    const h=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),A=h(c0),B=h(c1),m=A.map((v,k)=>v+(B[k]-v)*t);
+    // saturated yellow: red and green well above blue
+    return Math.min(m[0],m[1])-m[2]>90};
+  // the page colour's relative luminance at a point, so text can pick the colour that stays readable
+  const lumAt=yDoc=>{if(flowStops.length<2)return 1;let i=flowStops.findIndex(s=>s[0]>=yDoc);if(i<=0)i=Math.max(1,i<0?flowStops.length-1:1);
+    const [y0,c0]=flowStops[i-1],[y1,c1]=flowStops[i],t=Math.min(1,Math.max(0,(yDoc-y0)/Math.max(1,y1-y0)));
+    const h=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),A=h(c0),B=h(c1);
+    const ch=A.map((v,k)=>(v+(B[k]-v)*t)/255).map(v=>v<=.03928?v/12.92:((v+.055)/1.055)**2.4);return .2126*ch[0]+.7152*ch[1]+.0722*ch[2]};
   const flowBg=document.querySelector('.flow-bg');
   if(flowBg){
     root.classList.add('flow-js');
@@ -439,13 +463,15 @@
         // cool (News): white with light blue shading drifting through the whole page, hero included.
         // pastel (Careers): white into light, soft amber shades and back, never full amber.
         const first=secs[0],mid=secs.slice(1),a=mid.length?Y(mid[0]):B(first),z=mid.length?B(mid[mid.length-1]):a;
-        add(Y(first),C.white);add(B(first),pal==='cool'?'#F7FAFE':C.plat);
+        add(Y(first),C.white);add(B(first),pal==='cool'?'#F7FAFE':pal==='soft'?C.white:C.plat);
         glows.push([14,Y(first)+(B(first)-Y(first))*.45,380,pal==='cool'?.07:.16,pal==='cool'?'63 102 160':'246 195 10']);
-        const path=pal==='pastel'?[[0,'#FFFAEE'],[.25,'#FEF1CF'],[.5,'#FCE7B0'],[.75,'#FDF0CC'],[1,'#FFF7E2']]
+        const path=pal==='soft'?[[0,C.white],[1,C.white]]:pal==='pastel'?[[0,'#FFFAEE'],[.25,'#FEF1CF'],[.5,'#FCE7B0'],[.75,'#FDF0CC'],[1,'#FFF7E2']]
           :pal==='warm'?[[0,C.plat],[.16,C.cream],[.36,C.sun],[.52,C.amber],[.7,C.sun],[.86,C.cream],[1,'#FFF3D0']]
           :[[0,'#F7FAFE'],[.22,'#EEF4FC'],[.45,'#E6EEF9'],[.68,'#F0F5FC'],[.86,'#E7EFF9'],[1,'#E1EAF7']];
         path.forEach(([f,c])=>add(a+(z-a)*f,c));
         if(pal==='cool'){for(let k=0;k<5;k++)glows.push([k%2?86:10,a+(z-a)*(.08+k*.21),460,.07,'63 102 160'])}
+        // soft (Services): white, with large pale amber washes drifting in from alternate sides
+        else if(pal==='soft'){for(let k=0;k<4;k++)glows.push([k%2?96:2,a+(z-a)*(.06+k*.28),620,.16,'246 195 10'])}
         else glows.push([86,a+(z-a)*.3,360,pal==='pastel'?.08:.12,'246 195 10']);
       }else
       secs.forEach(s=>{const top=Y(s),bot=B(s),h=bot-top,ph=s.dataset.flowPhase;
@@ -467,12 +493,21 @@
       const space=CSS.supports('background-image','linear-gradient(180deg in oklab,red,blue)')?'180deg in oklab':'180deg';
       const img=glows.map(([x,y,r,a,c])=>'radial-gradient(circle '+r+'px at '+x+'% '+Math.round(y-O)+'px,rgb('+(c||'246 195 10')+' / '+a+') 0,transparent 100%)').concat('linear-gradient('+space+','+list.map(([y,c])=>c+' '+y+'px').join(',')+')').join(',');
       flowBg.style.height=H+'px';flowBg.style.backgroundImage=img;root.style.setProperty('--flow-page',img);
+      flowStops=list.map(([y,c])=>[y+O,c]);
       dispatchEvent(new Event('scroll'))};
     let mt=0;const later=()=>{cancelAnimationFrame(mt);mt=requestAnimationFrame(measure)};
     addEventListener('resize',later,{passive:true});addEventListener('load',later);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(later);
     if('ResizeObserver' in window)new ResizeObserver(later).observe(document.querySelector('main'));
     measure();
   }
+
+  /* ---------- Products: the tab bar and the card dividers turn navy where the background is amber ---------- */
+  const audBar=document.querySelector('.aud-nav'),stackCards=[...document.querySelectorAll('.pstack .pcard')];
+  if(audBar&&flowBg){const tone=()=>{const r=audBar.getBoundingClientRect(),y=r.top+r.height/2+scrollY;audBar.classList.toggle('on-amber',onAmber(y));
+      // dark amber (#8A6700, luminance .15) only where it keeps 4.5:1; navy everywhere else
+      audBar.classList.toggle('amber-ok',(lumAt(y)+.05)/(.151+.05)>=4.5);
+      stackCards.forEach(c=>{const t=c.getBoundingClientRect().top+scrollY;c.classList.toggle('on-amber',onAmber(t))})};
+    let tq=false;addEventListener('scroll',()=>{if(tq)return;tq=true;requestAnimationFrame(()=>{tone();tq=false})},{passive:true});addEventListener('resize',tone,{passive:true});tone()}
 
   /* ---------- Products: A day at school, played once as the reader arrives ---------- */
   // Step 1 lights up, the rail fills to step 2, step 2 lights up, and so on to step 5, then it stops. It only
@@ -498,29 +533,29 @@
     check();
   }
 
-  /* ---------- About: the mountain story. Scrolling through the pinned story moves to the next chapter and climbs the mountain ---------- */
+  /* ---------- About: the mountain story. Scrolling through the held story moves through its chapters and climbs the mountain ---------- */
   const mtn=document.querySelector('.mtn');
   if(mtn){
     const chs=[...mtn.querySelectorAll('.mtn-ch')],dots=[...mtn.querySelectorAll('.mtn-dots span')],pin=mtn.querySelector('.mtn-pin'),
-      targets=[0,1],path=[[20,69.5],[28,65.5],[38.7,54.2],[43.3,47],[47.3,45],[53.3,35.5],[52.8,30],[55.5,25],[58.4,19.4]];
+      targets=chs.map((c,i)=>chs.length>1?i/(chs.length-1):0),path=[[20,69.5],[28,65.5],[38.7,54.2],[43.3,47],[47.3,45],[53.3,35.5],[52.8,30],[55.5,25],[58.4,19.4]];
     let p=0,frame=0,active=-1;
     const draw=(v,i)=>{p=Math.min(1,Math.max(0,v));mtn.style.setProperty('--mtn',p.toFixed(4));
       const f=p*(path.length-1),j=Math.min(path.length-2,Math.floor(f)),q=f-j;
       mtn.style.setProperty('--mx',(path[j][0]+(path[j+1][0]-path[j][0])*q)+'%');mtn.style.setProperty('--my',(path[j][1]+(path[j+1][1]-path[j][1])*q)+'%');
       mtn.classList.toggle('at-top',p>.985);
-      if(i!==active){active=i;mtn.classList.toggle('is-2',i===1);chs.forEach((c,n)=>c.classList.toggle('on',n===i));dots.forEach((d,n)=>d.classList.toggle('on',n===i))}};
+      if(i!==active){active=i;mtn.classList.toggle('is-late',i>=(mtn.dataset.late!=null?+mtn.dataset.late:3));chs.forEach((c,n)=>c.classList.toggle('on',n===i));dots.forEach((d,n)=>d.classList.toggle('on',n===i))}};
     const stop=()=>{cancelAnimationFrame(frame);frame=0};
     const travel=i=>{stop();const from=p,to=targets[i],dist=Math.abs(to-from);draw(from,i);
       if(reduce||dist<.001){draw(to,i);return}
       const t0=performance.now(),dur=1400+dist*3000;
       const tick=t=>{const f=Math.min(1,(t-t0)/dur),e=f<.5?4*f*f*f:1-Math.pow(-2*f+2,3)/2;draw(from+(to-from)*e,i);frame=f<1?requestAnimationFrame(tick):0};
       frame=requestAnimationFrame(tick)};
-    // the second chapter takes over 40% of the way through the held scroll (measured from where it starts to stick, under the header); scrolling back up returns to the first. On short
-    // screens nothing is held, so the second chapter takes over once its heading is 60% of the way down the screen. No timer, no autoplay
+    // each chapter takes an equal share of the held scroll (measured from where it starts to stick, under the header); scrolling back up
+    // goes back down. On short screens nothing is held, so a chapter takes over once its heading is 60% of the way down the screen. No timer, no autoplay
     const onScroll=instant=>{let k;
       const cs=getComputedStyle(pin);
-      if(cs.position==='sticky'){const run=Math.max(1,mtn.offsetHeight-pin.offsetHeight);k=(parseFloat(cs.top)-mtn.getBoundingClientRect().top)/run>=.4?1:0}
-      else k=chs[1].querySelector('.mtn-title').getBoundingClientRect().top<innerHeight*.6?1:0;
+      if(cs.position==='sticky'){const run=Math.max(1,mtn.offsetHeight-pin.offsetHeight),prog=(parseFloat(cs.top)-mtn.getBoundingClientRect().top)/run;k=Math.max(0,Math.min(chs.length-1,Math.floor(prog*chs.length)))}
+      else{k=0;chs.forEach((c,i)=>{if(c.querySelector('.mtn-title').getBoundingClientRect().top<innerHeight*.6)k=i})}
       // when the page opens (or reloads) part-way down, show that chapter straight away instead of replaying the climb
       if(instant===true){stop();draw(targets[k],k);return}
       if(k!==active)travel(k)};
@@ -657,4 +692,6 @@ void main(){
         ctx.strokeStyle=acc?col[1]:col[0](.06+.12*(1-Math.abs(k)*2));ctx.lineWidth=acc?1.2:1;ctx.stroke()}}
     const loop=now=>{const s=(now-t0)/1000;tHold=reduce?4:Math.min(s,5)+4;if(vis)draw(tHold);if(!reduce&&s<5)requestAnimationFrame(loop)};
     new ResizeObserver(()=>{size();draw(tHold)}).observe(cv);new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(cv);size();requestAnimationFrame(loop)});
+  if(location.hash)addEventListener('load',()=>{let t=null;try{t=document.getElementById(decodeURIComponent(location.hash.slice(1)))}catch(e){}
+    if(t)(document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{const off=t.getBoundingClientRect().top-(parseFloat(getComputedStyle(t).scrollMarginTop)||0);if(Math.abs(off)>24)t.scrollIntoView()})});
 })();
