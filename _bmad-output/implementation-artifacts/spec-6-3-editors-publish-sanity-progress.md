@@ -26,3 +26,8 @@
 - Task 5: green — npx vitest run src/components/careers src/app/careers — 59 passed (5 files)
 - Task 5: review — skipped (controller rule for this run); controller checked `.spot` is position: relative for `fill`
 - Task 5: complete (commits 983372c..a0c8b66, diff verified)
+- Task 6: dispatched (model sonnet, base 204ef41, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t6.md)
+- Task 6: no-red (docs only; prettier --check passes)
+- Task 6: review — skipped (controller rule for this run)
+- Task 6: complete (commits 204ef41..d9fd05a, diff verified)
+- Task 7: BLOCKED — after merge by design: the live proof needs the merged code on the dev site, the Studio deploy and the webhook filter (lead), and the lead's OK for each [Test] change

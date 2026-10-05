@@ -23,6 +23,17 @@ describe("next.config.ts", () => {
 
     const { default: nextConfig } = await import("../../../next.config");
 
-    expect(nextConfig).toEqual({});
+    // Only this project's Sanity images may be shown (Story 6.3).
+    expect(nextConfig).toEqual({
+      images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "cdn.sanity.io",
+            pathname: "/images/1khn3hf4/**",
+          },
+        ],
+      },
+    });
   });
 });
