@@ -87,7 +87,7 @@ The Studio is hosted by Sanity (outside our build). It lists News posts and Job 
 
 ## 6. Security choices
 
-- Secrets only in env vars; the form routes log only the step and the error class; the Sanity reads log the error object, which holds no personal data.
+- Secrets only in env vars; the form routes log the step and the error class (a missing setting logs its name), never form data; the Sanity reads log the error object, which holds no personal data.
 - Signed webhook; allow-lists for webhook types, upload paths and file types.
 - Every form: honeypot, server-side checks, rate limits; personal data only in form bodies, never in URLs.
 - Fixed Sanity queries with parameters (no string building); React escapes all content.
