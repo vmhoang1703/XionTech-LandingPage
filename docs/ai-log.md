@@ -1097,3 +1097,21 @@ Template:
 - **AI got it wrong?** Yes: the first scroll version let a step click be overridden by the scroll it caused, the
   phone chapters slid under the picture before the next one took over, and the held block was stretched to a
   full screen, leaving an empty band under it that Amber had to point out.
+
+## 2026-10-05 — ENH-031 to ENH-036: FAQ slot, big-screen About, page colours, blended email sections
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor); PR #48 opened with the team's `create-pr` skill
+- **Prompt / task:** Open the hand-over PR, then: fill the FAQ's last slot, use the space on very large screens on
+  About, and bring Services, News and Careers up to the new look one page at a time (Services white and amber,
+  News white with light blue throughout, Careers pastel amber), make every email section blend into its page, and
+  blend Home's contact section too.
+- **Decision / result:** Approved by Amber. PR #48 carries ENH-001 to ENH-030 and batch 1. The page background
+  script now takes a palette (warm, cool, pastel); Products is unchanged, checked string for string against HEAD.
+  The FAQ slot became "Still have a question? Ask us directly" instead of an invented tenth question. Review
+  fixes before commit: the moving hero lines now fade out behind the text (contrast had dipped to 1–3:1, already
+  failing on News before), a navy marker for the selected step on amber, blue left in the Services hero removed,
+  the About seam and big-screen alignment fixed, and log wording corrected to match the code.
+- **AI got it wrong?** Yes: the first Services version ended in navy like Products, which Amber did not want; the
+  first News version still had a visible header glow and a dark email band; and an existing bug turned the News
+  filter buttons into "NaN" once the page was scrolled, which earlier checks missed because they did not scroll.

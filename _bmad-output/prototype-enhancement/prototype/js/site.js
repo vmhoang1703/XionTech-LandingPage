@@ -234,7 +234,7 @@
     const el=e.target,to=+el.dataset.count,blk=el.closest('.reveal');
     const run=()=>setTimeout(()=>{const t0=performance.now();(function step(now){const p=Math.min(1,(now-t0)/1800);show(el,Math.round(to*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(step)})(t0)},900);
     if(!blk||blk.classList.contains('in'))run();else{const mo=new MutationObserver(()=>{if(blk.classList.contains('in')){mo.disconnect();run()}});mo.observe(blk,{attributes:true,attributeFilter:['class']})}}),{threshold:.5});
-  if(!reduce)document.querySelectorAll('[data-count]').forEach(el=>{show(el,0);sio.observe(el)});
+  if(!reduce)document.querySelectorAll('[data-count]').forEach(el=>{if(el.dataset.count===''||isNaN(+el.dataset.count))return;show(el,0);sio.observe(el)});
 
   /* ---------- filters (news page) ---------- */
   document.querySelectorAll('[data-filter-for]').forEach(group=>{const box=document.getElementById(group.dataset.filterFor);
@@ -338,7 +338,7 @@
     addEventListener('load',()=>{const i=all.indexOf(document.getElementById(location.hash.slice(1)));if(i>=0)requestAnimationFrame(()=>scrollTo({top:restY(i),behavior:'auto'}))});
   }
 
-  /* ---------- Products: one background colour flowing down the page ---------- */
+  /* ---------- Products, Services, News and Careers: one background colour flowing down the page ---------- */
   // Every section in <main> gets a phase from its place in the page, so a new section extends the flow on its own:
   // the first is white with amber dots, the middle ones warm up to bright amber, then ease from
   // halfway down their second-to-last card into light blue and on into the dark sections; the last three are dark blue, deepening
@@ -351,10 +351,26 @@
     const phaseOf=(i,n)=>i===0?'light':i===n-1?'deep':i===n-2?'blue':i===n-3?'night':'rise';
     const Y=el=>el.getBoundingClientRect().top+scrollY,B=el=>el.getBoundingClientRect().bottom+scrollY;
     const measure=()=>{const secs=[...document.querySelectorAll('main > section')].filter(s=>s.offsetParent),n=secs.length;if(!n)return;
-      secs.forEach((s,i)=>{s.dataset.flowPhase=s.dataset.flow||phaseOf(i,n)});
+      const pal=flowBg.dataset.palette;
+      secs.forEach((s,i)=>{s.dataset.flowPhase=s.dataset.flow||(pal?(i===0?'light':'rise'):phaseOf(i,n))});
       flowBg.style.height='0';const O=flowBg.getBoundingClientRect().top+scrollY,H=document.documentElement.scrollHeight-O;
       const list=[],add=(y,c)=>{y=Math.round(y-O);if(!list.length||y>list[list.length-1][0])list.push([y,c])},glows=[];
       const rise=secs.filter(s=>s.dataset.flowPhase==='rise'),rTop=rise.length?Y(rise[0]):0;
+      if(pal){
+        // Every section after the hero, the email band included, shares one gradient, so nothing sits in its own box.
+        // warm (Services): white into amber and back to a warm cream; nothing blue.
+        // cool (News): white with light blue shading drifting through the whole page, hero included.
+        // pastel (Careers): white into light, soft amber shades and back, never full amber.
+        const first=secs[0],mid=secs.slice(1),a=mid.length?Y(mid[0]):B(first),z=mid.length?B(mid[mid.length-1]):a;
+        add(Y(first),C.white);add(B(first),pal==='cool'?'#F7FAFE':C.plat);
+        glows.push([14,Y(first)+(B(first)-Y(first))*.45,380,pal==='cool'?.07:.16,pal==='cool'?'63 102 160':'246 195 10']);
+        const path=pal==='pastel'?[[0,'#FFFAEE'],[.25,'#FEF1CF'],[.5,'#FCE7B0'],[.75,'#FDF0CC'],[1,'#FFF7E2']]
+          :pal==='warm'?[[0,C.plat],[.16,C.cream],[.36,C.sun],[.52,C.amber],[.7,C.sun],[.86,C.cream],[1,'#FFF3D0']]
+          :[[0,'#F7FAFE'],[.22,'#EEF4FC'],[.45,'#E6EEF9'],[.68,'#F0F5FC'],[.86,'#E7EFF9'],[1,'#E1EAF7']];
+        path.forEach(([f,c])=>add(a+(z-a)*f,c));
+        if(pal==='cool'){for(let k=0;k<5;k++)glows.push([k%2?86:10,a+(z-a)*(.08+k*.21),460,.07,'63 102 160'])}
+        else glows.push([86,a+(z-a)*.3,360,pal==='pastel'?.08:.12,'246 195 10']);
+      }else
       secs.forEach(s=>{const top=Y(s),bot=B(s),h=bot-top,ph=s.dataset.flowPhase;
         if(ph==='light'){add(top,C.white);add(bot,C.plat);glows.push([14,top+h*.45,380,.16])}
         else if(ph==='rise'){if(s===rise[0])add(top,C.plat);
@@ -372,7 +388,7 @@
         else{add(top,C.ink);add(bot,C.ink)}});
       // blend in a perceptual colour space where the browser supports it, for an even fade
       const space=CSS.supports('background-image','linear-gradient(180deg in oklab,red,blue)')?'180deg in oklab':'180deg';
-      const img=glows.map(([x,y,r,a])=>'radial-gradient(circle '+r+'px at '+x+'% '+Math.round(y-O)+'px,rgb(246 195 10 / '+a+') 0,transparent 100%)').concat('linear-gradient('+space+','+list.map(([y,c])=>c+' '+y+'px').join(',')+')').join(',');
+      const img=glows.map(([x,y,r,a,c])=>'radial-gradient(circle '+r+'px at '+x+'% '+Math.round(y-O)+'px,rgb('+(c||'246 195 10')+' / '+a+') 0,transparent 100%)').concat('linear-gradient('+space+','+list.map(([y,c])=>c+' '+y+'px').join(',')+')').join(',');
       flowBg.style.height=H+'px';flowBg.style.backgroundImage=img;root.style.setProperty('--flow-page',img);
       dispatchEvent(new Event('scroll'))};
     let mt=0;const later=()=>{cancelAnimationFrame(mt);mt=requestAnimationFrame(measure)};
@@ -557,7 +573,7 @@ void main(){
   document.querySelectorAll('canvas.strands').forEach(cv=>{
     const ctx=cv.getContext('2d'),tone=cv.dataset.tone||'light';let W=0,H=0,vis=true,tHold=4;const t0=performance.now();
     const size=()=>{const d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)};
-    const col={light:[a=>`rgba(22,54,99,${a})`,'rgba(230,173,0,.55)'],navy:[a=>`rgba(170,195,235,${a*.9})`,'rgba(255,192,0,.6)'],amber:[a=>`rgba(255,255,255,${a*2.4})`,'rgba(22,54,99,.35)']}[tone];
+    const col={light:[a=>`rgba(22,54,99,${a})`,'rgba(230,173,0,.55)'],navy:[a=>`rgba(170,195,235,${a*.9})`,'rgba(255,192,0,.6)'],cool:[a=>`rgba(22,54,99,${a})`,'rgba(63,102,160,.5)'],warm:[a=>`rgba(176,122,0,${a})`,'rgba(240,179,0,.55)'],amber:[a=>`rgba(255,255,255,${a*2.4})`,'rgba(22,54,99,.35)']}[tone];
     function draw(t){ctx.clearRect(0,0,W,H);const N=54,S=46;
       for(let i=0;i<N;i++){const k=i/(N-1)-.5,acc=i%9===4;ctx.beginPath();
         for(let j=0;j<=S;j++){const u=j/S,x=-.08*W+u*1.16*W,cy=H*(.92-.62*u)+H*.07*Math.sin(u*3.2+t*.25),sp=H*.2*(.35+.65*Math.pow(Math.sin(u*Math.PI*.95+.2),2)),y=cy+k*sp*Math.cos(u*4.2+t*.45+k*.9);j?ctx.lineTo(x,y):ctx.moveTo(x,y)}

@@ -20,24 +20,30 @@ module.exports = {
     "services.html#process-h": "five steps in ENH-011 (full version)",
     "index.html#prod-h": "Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · AI apps in ENH-013, ENH-021",
     "index.html#news-h": "ENH-007",
-    "index.html#contact-h": "new in ENH-001 · ENH-010",
+    "index.html#contact-h": "new in ENH-001 · ENH-010 · blended in ENH-036",
     "products.html#h1": "ENH-014 · ENH-018 · ENH-020", // Products hero
     "products.html#apps-h": "new in ENH-020",
     "products.html#day-h": "new in ENH-015 · rebuilt in ENH-023",
     "products.html#up-h": "ENH-024",
     "about.html#h1": "new in ENH-030", // About hero: the mountain story
-    "about.html#faq-h": "rebuilt in ENH-016 · background stilled in ENH-019",
+    "about.html#faq-h": "rebuilt in ENH-016 · background stilled in ENH-019 · last slot in ENH-031",
+    "about.html#cap-h": "blended in ENH-036",
+    "services.html#h1": "light hero in ENH-033",
+    "services.html#cap-h": "blended in ENH-036",
+    "news.html#h1": "white and light blue in ENH-034",
+    "news.html#cap-h": "blended in ENH-036",
+    "careers.html#h1": "pastel hero in ENH-035",
   },
 
   // one line under each page title
   pages: {
-    "index.html": "Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026 (see the change list at the top).",
+    "index.html": "Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in) (see the change list at the top).",
     "products.html": "ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen); " + SITE_WIDE,
-    "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); " + SITE_WIDE,
-    "about.html": 'ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); ' + SITE_WIDE,
-    "news.html": "ENH-007 (a story about an app shows the app name in its pill); " + SITE_WIDE,
+    "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); " + SITE_WIDE,
+    "about.html": 'ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 (email section continues the navy into the footer); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); ' + SITE_WIDE,
+    "news.html": "ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); " + SITE_WIDE,
     "news-story.html": SITE_WIDE,
-    "careers.html": SITE_WIDE,
+    "careers.html": "ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); " + SITE_WIDE,
     "job.html": "ENH-026 (fits phone screens); " + SITE_WIDE,
     "demo.html": "ENH-011 (checklist says five steps); " + SITE_WIDE,
     "privacy.html": SITE_WIDE,
@@ -68,6 +74,12 @@ module.exports = {
 | About, hero | Navy hero "Tech made simple. Solutions made powerful." with a breadcrumb and description; five key-fact figures; "Two strengths, one team." | "Inspired by a mountain. United by purpose." centred at the top ("purpose" highlighted). Held for about a screen of scrolling: chapter 01 The inspiration (the name comes from Zion, the ancient mountain city in Jerusalem) gives way to 02 The purpose (the pioneers who founded newXion), while the mountain beside it fills with colour to the summit, where the X mark turns full colour. Map-style tags on the picture: "Mount Zion, Jerusalem, 31.77° N 35.23° E" (links out) and "newXion, Founded in America" | ENH-030 |
 | About, FAQ | "Frequently asked questions." above one column of nine bordered cards | "Your question, we answer": the same nine questions in two columns of hairline rows, closed by default, a + or − at the right of each; soft clouds drifting in the bottom left of a light-to-navy background | ENH-016 |
 | About, FAQ background | — | The clouds and gradient hold still; the drifting and the sheen are gone | ENH-019 |
+| About, FAQ last row | The ninth question alone on the last row | "Still have a question? Ask us directly" fills the slot beside it, linking to the contact form | ENH-031 |
+| About, hero on very large screens | — | On screens at least 1500 × 1050 the held story widens and grows, roughly halving the empty space below it | ENH-032 |
+| Services, whole page | Navy hero; white and grey bands; amber email band | One white-and-amber background flowing down the page (no blue); light hero; How we work on amber with a navy step list | ENH-033 |
+| News, whole page | Light hero with its own glow; white stories; amber email band | White with light blue shading throughout, header included; filter buttons no longer turn into "NaN" | ENH-034 |
+| Careers, whole page | Bright amber hero; white and grey bands | One pastel, light-amber background flowing down the page; light hero | ENH-035 |
+| Email and contact sections | Fixed amber or navy boxes with corner rings | Home's contact, and the email sections on About, Services and News, blend into the colours around them; no rings | ENH-036 |
 | Products, the apps | Four separate sections (PXP, LXP, SXP, IoT) with their own layouts, and a PXP / LXP / SXP / IoT / Updates bar | Seven stacked app cards (SXP, IoT, AI Timetable, AI Grader, PXP, LXP, AI Tutor) that pin and replace one another on desktop; phone or browser mockup, app name, one sentence, a Features list, store or View prototype buttons; School / Parents / Students pills that jump and highlight | ENH-020 |
 | Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |
 | Products, updates and last band | "See all news" below the stories; navy band with a ring illustration | "See all news" on the heading row; plain dark navy band, continuous with the footer | ENH-024 |

@@ -122,6 +122,11 @@ header.nav{position:sticky;top:0;z-index:50;background:rgb(247 249 253 / .9);bac
 /* ---------- heroes ---------- */
 .hero{position:relative;overflow:hidden;isolation:isolate}
 .hero .strands{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.hero-light .strands{-webkit-mask-image:linear-gradient(90deg,transparent 0,transparent 56%,#000 82%);mask-image:linear-gradient(90deg,transparent 0,transparent 56%,#000 82%)}
+/* mid-size screens: the text takes more of the width */
+@media (min-width:761px) and (max-width:1200px){.hero-light .strands{-webkit-mask-image:linear-gradient(90deg,transparent 0,transparent 68%,#000 94%);mask-image:linear-gradient(90deg,transparent 0,transparent 68%,#000 94%)}}
+/* phones: the text fills the hero, so the lines only show as a faint edge at the very bottom */
+@media (max-width:760px){.hero-light .strands{opacity:.5;-webkit-mask-image:linear-gradient(180deg,transparent 0,transparent 90%,#000 100%);mask-image:linear-gradient(180deg,transparent 0,transparent 90%,#000 100%)}}
 .hero-light{background:var(--page)}
 .hero-light .aurora{position:absolute;inset:-20%;z-index:-2;filter:blur(60px);
   background:radial-gradient(35% 40% at 78% 18%,rgb(255 192 0 / .42),transparent 70%),radial-gradient(40% 50% at 92% 70%,rgb(22 54 99 / .28),transparent 70%),
@@ -271,6 +276,10 @@ header.nav{position:sticky;top:0;z-index:50;background:rgb(247 249 253 / .9);bac
 /* email capture */
 .capture{padding:88px 0;position:relative;overflow:hidden}
 .capture-plain::before{display:none}
+/* About's email band continues the navy of the offices section above it and runs into the footer (ENH-036) */
+.fade-to-navy::after{content:"";position:absolute;left:0;right:0;bottom:0;height:200px;pointer-events:none;background:linear-gradient(180deg,transparent,#122B54)}
+.fade-to-navy>.wrap{position:relative;z-index:1}
+.capture-dark{background:linear-gradient(180deg,#122B54,var(--ink))}
 .capture::before{content:"";position:absolute;right:-6%;top:-50%;width:55%;aspect-ratio:1;border-radius:50%;border:1.5px solid rgb(22 54 99 / .16);box-shadow:0 0 0 44px rgb(255 255 255 / .08),0 0 0 88px rgb(255 255 255 / .05);pointer-events:none}
 .cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative}
 .cap-grid h2{max-width:15ch}
@@ -422,6 +431,11 @@ fieldset.field{border:0}
 .faq summary:hover{color:var(--navy)}
 .faq summary:focus-visible{outline-offset:-3px;border-radius:var(--r-xs)}
 .faq p{padding:0 40px 24px 0;color:var(--muted);max-width:46ch}
+/* the slot after the last question invites the rest (ENH-031) */
+.faq-ask{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;min-height:44px;padding:22px 0 12px;border-top:1px solid var(--border);font-family:var(--f-display);font-weight:500;font-size:var(--fs-body);line-height:1.4;color:var(--heading);text-decoration:none}
+.faq-ask span{text-decoration:underline;text-decoration-color:var(--amber);text-decoration-thickness:2px;text-underline-offset:5px}
+.faq-ask i{flex:0 0 auto;width:16px;margin-top:3px;color:var(--muted);transition:transform .3s var(--ease)}
+.faq-ask:hover i,.faq-ask:focus-visible i{transform:translateX(4px);color:var(--heading)}
 @media (max-width:760px){.faq{grid-template-columns:1fr;column-gap:0}.faq-head{margin-bottom:28px}}
 .roles{display:grid;gap:14px}
 .role{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 28px;color:inherit;text-decoration:none}
@@ -537,6 +551,8 @@ body[data-page="products"] [id]{scroll-margin-top:144px}
 .app-strip a>span:last-child{grid-column:1/-1;margin-top:var(--sp-s);color:var(--text);font-size:var(--fs-small)}
 
 /* ---------- Home: contact form (ENH-001) ---------- */
+/* the section picks up the light grey of the news row above it and warms into amber towards the footer, instead of a fixed amber box (ENH-036) */
+.sec.contact{background:linear-gradient(180deg,var(--mist-end) 0%,#FDF3D6 22%,#FCE6A8 55%,var(--amber-light) 100%)}
 .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--sp-3xl);align-items:start}
 .contact-intro h2{max-width:14ch}
 .contact-intro .lede{margin-top:var(--sp-m)}
@@ -1016,6 +1032,27 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 .flow-js [data-flow-phase="light"],.flow-js [data-flow-phase="rise"]{--heading:var(--navy);--text:var(--ink-text);--muted:var(--ink-muted);--border:rgb(22 54 99 / .16);--surface:var(--paper);--surface-2:var(--mist);--glass:rgb(255 255 255 / .5);--link:var(--navy);--focus:var(--navy);--shadow:rgb(22 54 99 / .18);color:var(--text)}
 .flow-js [data-flow-phase="night"],.flow-js [data-flow-phase="blue"],.flow-js [data-flow-phase="deep"]{--heading:var(--white);--text:var(--on-navy-text);--muted:var(--on-navy-muted);--border:rgb(255 255 255 / .14);--surface:rgb(255 255 255 / .05);--surface-2:rgb(255 255 255 / .09);--glass:rgb(255 255 255 / .06);--link:var(--amber-tint);--focus:var(--amber);--shadow:rgb(11 23 48 / .6);color:var(--text)}
 
+/* on the warm (amber) stretch the secondary text is a shade darker, so it keeps AA contrast on full amber (5:1, was 4.2:1) */
+.flow-js [data-flow-phase="rise"]{--muted:#3F4F6C}
+/* warm pages (Services, ENH-033): How we work sits on amber, so its step list uses navy instead of white; the detail panel keeps its own dark card */
+.flow-js .approach[data-flow-phase="rise"] .ap-step,.flow-js .approach[data-flow-phase="rise"] .ap-num,.flow-js .approach[data-flow-phase="rise"] .ap-name,
+.flow-js .approach[data-flow-phase="rise"] .ap-step[aria-selected="true"] .ap-name,.flow-js .approach[data-flow-phase="rise"] .ap-step[aria-selected="true"] .ap-num{color:var(--navy)}
+.flow-js .approach[data-flow-phase="rise"] .ap-rail::before{background:rgb(22 54 99 / .22)}
+.flow-js .approach[data-flow-phase="rise"] .ap-step[aria-selected="true"]{background:rgb(255 255 255 / .55);box-shadow:inset 0 0 0 1px rgb(22 54 99 / .14)}
+@media (hover:hover){.flow-js .approach[data-flow-phase="rise"] .ap-step:hover:not([aria-selected="true"]){background:rgb(255 255 255 / .3)}}
+.flow-js .approach[data-flow-phase="rise"] .ap-step:not([aria-selected="true"]) .ap-dot{border-color:rgb(22 54 99 / .45)}
+.flow-js .approach[data-flow-phase="rise"] .ap-step[aria-selected="true"]{box-shadow:inset 3px 0 0 var(--navy),inset 0 0 0 1px rgb(22 54 99 / .3)}
+.flow-js .approach[data-flow-phase="rise"] .ap-step[aria-selected="true"] .ap-dot{background:var(--navy);border-color:var(--navy);box-shadow:0 0 0 4px rgb(22 54 99 / .16)}
+.flow-js .approach .ap-panel:focus-visible{outline-color:var(--amber)}
+/* warm pages (Services, ENH-033): the hero glow is amber only, no blue */
+.flow-bg[data-palette="warm"]~.hero-light .aurora{background:radial-gradient(35% 40% at 78% 18%,rgb(255 192 0 / .4),transparent 70%),radial-gradient(40% 50% at 92% 70%,rgb(246 217 111 / .45),transparent 70%),
+  radial-gradient(45% 45% at 55% 40%,rgb(255 236 180 / .5),transparent 70%),radial-gradient(30% 35% at 10% 85%,rgb(255 214 110 / .3),transparent 70%)}
+/* pastel pages (Careers, ENH-035): the hero glow is soft amber only */
+.flow-bg[data-palette="pastel"]~.hero-light .aurora{background:radial-gradient(35% 40% at 78% 18%,rgb(255 214 110 / .34),transparent 70%),radial-gradient(40% 50% at 92% 70%,rgb(252 231 176 / .5),transparent 70%),
+  radial-gradient(45% 45% at 55% 40%,rgb(255 240 200 / .5),transparent 70%),radial-gradient(30% 35% at 10% 85%,rgb(255 226 150 / .3),transparent 70%)}
+/* cool pages (News): no separate hero glow, so the header and the stories share one white-and-light-blue background */
+.flow-bg[data-palette="cool"]~.hero-light .aurora{display:none}
+
 /* ---------- Calmer weights (ENH-025): the original fonts and sizes, nothing bold ---------- */
 body{font-weight:400;text-rendering:optimizeLegibility}
 h1,h2,h3,h4{font-weight:500}
@@ -1135,6 +1172,17 @@ b,strong{font-weight:600}
 /* very narrow phones: the newXion tag tucks in so it clears the screen edge */
 @media (max-width:360px){
   .mtn-tag{--lead:8px;padding-left:4px;padding-right:12px}
+}
+/* very large screens (ENH-032): the held story grows into the space instead of leaving a tall empty band below it */
+@media (min-width:1500px) and (min-height:1050px){
+  .mtn-pin{padding-top:clamp(48px,7svh,120px)}
+  .mtn-grid{margin-right:calc((1240px - min(100vw - 144px,2000px)) / 2)}
+  .mtn h1{font-size:clamp(3rem,3vw,4rem);margin-bottom:clamp(40px,4svh,64px)}
+  .mtn-title{font-size:clamp(1.85rem,1.6vw,2.3rem)}
+  .mtn-text{font-size:1.25rem;max-width:44ch}
+  .mtn-close{font-size:var(--fs-body)}
+  .mtn-art{width:min(100%,calc((100svh - var(--hdr) - 300px) * 1.5))}
+  .mtn-tag{font-size:var(--fs-caption)}
 }
 @media (prefers-reduced-motion:reduce){
   .js-anim .mtn-ch>*,.mtn-summit,.mtn-beacon,.mtn-dots span,.mtn-tag{transition:none}

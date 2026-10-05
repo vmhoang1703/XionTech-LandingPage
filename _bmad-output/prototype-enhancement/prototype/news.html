@@ -13,10 +13,11 @@
 <body data-page="news">
 <div id="site-header"></div>
 <main id="main">
+<div class="flow-bg" data-palette="cool" aria-hidden="true"></div>
 
 <section class="hero hero-light page-hero pb-m" aria-labelledby="h1">
   <div class="aurora" aria-hidden="true"></div>
-  <canvas class="strands" data-tone="light" aria-hidden="true"></canvas>
+  <canvas class="strands" data-tone="cool" aria-hidden="true"></canvas>
   <div class="wrap">
     <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="index.html" data-vi="Trang chủ">Home</a><span>/</span><span data-vi="Tin tức">News</span></nav>
     <h1 id="h1" class="reveal" data-vi-html="Chúng tôi đã <span class='hl'>làm gì</span> gần đây.">What we've been <span class="hl">up to</span>.</h1>
@@ -42,13 +43,13 @@
   </div>
 </section>
 
-<section class="capture s-amber" aria-labelledby="cap-h">
+<section class="capture capture-plain s-paper" aria-labelledby="cap-h">
   <div class="wrap cap-grid">
     <div><h2 id="cap-h" data-vi="Xem hệ thống hoạt động tại trường của bạn.">See it working at your school.</h2>
       <p class="lede" data-vi="Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo phù hợp với trường bạn.">Leave your work email and we'll arrange a walkthrough built around your school.</p></div>
     <form class="cap-form" data-mode="demo" novalidate>
       <label for="cap-email" data-vi="Email công việc">Work email</label>
-      <div class="cap-row"><input type="email" id="cap-email" autocomplete="email" placeholder="name@school.edu.vn" required><button class="btn btn-navy" type="submit" data-vi="Đặt lịch demo">Book a demo</button></div>
+      <div class="cap-row"><input type="email" id="cap-email" autocomplete="email" placeholder="name@school.edu.vn" required><button class="btn btn-primary" type="submit" data-vi="Đặt lịch demo">Book a demo</button></div>
       <small class="err" hidden data-vi="Vui lòng nhập địa chỉ email hợp lệ.">Please enter a valid email address.</small>
       <small><span data-vi="Chúng tôi chỉ dùng email của bạn để sắp xếp buổi demo.">We only use your email to arrange your demo.</span> <a href="privacy.html" data-vi="Chính sách bảo mật">Privacy policy</a></small>
     </form>
