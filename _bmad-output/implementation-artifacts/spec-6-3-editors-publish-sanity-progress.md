@@ -31,3 +31,14 @@
 - Task 6: review — skipped (controller rule for this run)
 - Task 6: complete (commits 204ef41..d9fd05a, diff verified)
 - Task 7: BLOCKED — after merge by design: the live proof needs the merged code on the dev site, the Studio deploy and the webhook filter (lead), and the lead's OK for each [Test] change
+- Task 5: fix round 1/5 (controller: next-config.test.ts expected an empty config; now expects the cdn.sanity.io remotePatterns; npx vitest run src/lib/sanity/next-config.test.ts passes)
+- Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+- Acceptance: verification — npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff — exit 0 — 1061 passed; Coverage: 100%; C1 ok: 7 changed file(s)
+- Acceptance: verification — npm run build && npm run test:smoke — exit 0 — 13 passed
+- Acceptance: verification — cd studio && npx sanity schema validate — exit 0 — 0 errors, 0 warnings
+- Acceptance: manual — /careers on the production build — observed: three [Placeholder] frames (no careersPhotos document yet), 3 columns at 1280, 1 at 640 and 390, no sideways scroll
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/verification.txt — 1023 bytes — sha256 eb6ef767f927 — the four Verification commands
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/walk-output.txt — 517 bytes — sha256 8d5b93e5a406 — the /careers walk at 1280, 640, 390
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/life-1280.png — 57180 bytes — sha256 afcbc676cc3e — the #life section with three [Placeholder] frames
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/observed.md — 1075 bytes — sha256 4565d934ceed — what was and was not observed
+- Acceptance: BLOCKED — deployed Studio (singletons, CAP-5 upload) and the CAP-1/CAP-2 live proof: need the merge, the lead's Studio deploy, the webhook filter and the lead's OK for each [Test] change

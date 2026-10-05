@@ -77,11 +77,11 @@ Sources: SPEC CAP-3, `EXPERIENCE.md` (Careers `#life`, placeholder frame), `DESI
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Life frame | no photo | — | `[Placeholder]` frame with its caption, as today | — | CAP-3, A8 | |
-| Life frame | photo set | — | photo fills the 4:3 frame (cover), caption below, alt text on the image | — | CAP-3, DESIGN.md media frame | |
-| Life frames | width 640px or less | — | one column, no sideways scroll | — | EXPERIENCE.md Responsive | |
-| Studio | open | mouse | "Careers photos" and "Products" open one fixed document each; no "create new" for them | — | CAP-3, CAP-4 | |
-| Studio | upload or paste an image | mouse, keyboard | only the selected slot changes | — | CAP-5 (AC-FORM-3) | |
+| Life frame | no photo | — | `[Placeholder]` frame with its caption, as today | — | CAP-3, A8 | ✅ Chrome (prod build): three `[Placeholder]` frames with captions (`walk-output.txt`, `life-1280.png`) |
+| Life frame | photo set | — | photo fills the 4:3 frame (cover), caption below, alt text on the image | — | CAP-3, DESIGN.md media frame | unit test (`careers.test.tsx`): image with alt and caption, other slots keep `[Placeholder]`; no consented photo yet (D6), so not seen in a browser |
+| Life frames | width 640px or less | — | one column, no sideways scroll | — | EXPERIENCE.md Responsive | ✅ Chrome: 1 column at 640 and 390, no sideways scroll |
+| Studio | open | mouse | "Careers photos" and "Products" open one fixed document each; no "create new" for them | — | CAP-3, CAP-4 | fail: not checked yet — the Studio is deployed by the lead after merge; schema validates (0 errors) |
+| Studio | upload or paste an image | mouse, keyboard | only the selected slot changes | — | CAP-5 (AC-FORM-3) | fail: not checked yet — after the Studio deploy (lead, by hand) |
 
 ## Design Notes
 
@@ -104,3 +104,31 @@ Sources: SPEC CAP-3, `EXPERIENCE.md` (Careers `#life`, placeholder frame), `DESI
 ## Spec Change Log
 
 ## Review Triage Log
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-05.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
+- `npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff` -- exit 0 -- 1061 passed; Coverage: 100%; C1 ok
+- `npm run build && npm run test:smoke` -- exit 0 -- 13 passed
+- `cd studio && npx sanity schema validate` -- exit 0 -- 0 errors, 0 warnings
+
+**Observed**
+
+- Three `[Placeholder]` frames in `#life`, 3 / 1 / 1 columns at 1280 / 640 / 390, no sideways scroll -- `/careers` on the production build
+
+**Artifacts**
+
+- spec-6-3-editors-publish-sanity-evidence/verification.txt -- 1023 bytes -- sha256 eb6ef767f927 -- the four Verification commands
+- spec-6-3-editors-publish-sanity-evidence/walk-output.txt -- 517 bytes -- sha256 8d5b93e5a406 -- the /careers walk
+- spec-6-3-editors-publish-sanity-evidence/life-1280.png -- 57180 bytes -- sha256 afcbc676cc3e -- `#life` with three `[Placeholder]` frames
+- spec-6-3-editors-publish-sanity-evidence/observed.md -- 1075 bytes -- sha256 4565d934ceed -- what was and was not observed
+
+**Not captured**
+
+- A real photo in a frame (no consented photo yet, D6; unit tests cover it).
+- The deployed Studio and the CAP-5 upload check (after the lead's Studio deploy).
+- The CAP-1 / CAP-2 live proof with `[Test]` documents (Task 7, after merge, with the lead's OK).
