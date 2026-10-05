@@ -1886,6 +1886,30 @@
     margin-top: 32px;
   }
 
+  /* Story page (Story 6.2), ported from the prototype site.css: one 720px reading column. */
+  .story-body {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .story-body > p {
+    margin-top: 16px;
+    color: var(--color-text);
+    font-size: 1.075rem;
+  }
+
+  .story-body > h2 {
+    margin-top: 40px;
+    font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+  }
+
+  .story-media {
+    height: auto;
+    margin: 8px 0 12px;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+  }
+
   /* News page (Story 6.1), ported from the prototype site.css. The first card is a wide feature. */
   .ncard.big {
     grid-column: span 2;

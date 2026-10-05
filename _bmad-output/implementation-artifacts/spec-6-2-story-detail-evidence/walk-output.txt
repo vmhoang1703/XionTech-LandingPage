@@ -1,0 +1,16 @@
+[1280] News first Read story lands /news/pxp-the-school-day-in-a-parents-pocket | tab title "PXP: the school day, in a parent's pocket | XionTech"
+[1280] crumbs "Home / News / PXP: the school day, in a parent's pocket" | links [Home=/, News=/news] | current "PXP: the school day, in a parent's pocket"
+[1280] H1 "PXP: the school day, in a parent's pocket" | date "4 OCT 2026" font "JetBrains Mono", "JetBrains Mono Fallba | tag "PRODUCT · PXP" bg rgb(255, 192, 0)
+[1280] frame 672x378 ratio 1.78 | column 720px
+[1280] body paragraphs 4 | h2 0 | first "Parent eXperience Place (PXP) keeps parents close to every s"
+[1280] buttons [See PXP=/products#pxp, Back to News=/news] | capture band 0
+[1280] button focus: outline solid | 2px | :focus-visible true
+[1280] News crumb focus: outline solid | 2px | :focus-visible true
+[1280] See PXP (click) lands /products#pxp
+[1280] See PXP (Enter) lands /products#pxp
+[1280] Back to News (click) lands /news
+[1280] Back to News (Enter) lands /news
+[1280] Company story /news/two-offices-one-team-ho-chi-minh-city-and-plano | tag "COMPANY" | buttons [Back to News]
+[1280] Home Read story lands /news/pxp-the-school-day-in-a-parents-pocket | H1 "PXP: the school day, in a parent's pocket"
+[404] /news/no-such-story -> 404 | h1 "We couldn't find that page."
+[390] no sideways scroll true
