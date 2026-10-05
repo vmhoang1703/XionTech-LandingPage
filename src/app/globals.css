@@ -2727,6 +2727,40 @@
     gap: 12px;
     margin-top: 28px;
   }
+
+  /* Services hero (Story 5.1), ported from the prototype site.css. */
+  .page-hero .cta-row {
+    margin-top: 32px;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .clock-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .clock-strip span {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text);
+    font-size: 0.88rem;
+  }
+
+  .clock-strip b {
+    color: var(--color-heading);
+    font-family: var(--font-mono);
+  }
 }
 
 @layer utilities {
