@@ -1115,3 +1115,22 @@ Template:
 - **AI got it wrong?** Yes: the first Services version ended in navy like Products, which Amber did not want; the
   first News version still had a visible header glow and a dark email band; and an existing bug turned the News
   filter buttons into "NaN" once the page was scrolled, which earlier checks missed because they did not scroll.
+
+## 2026-10-05 — ENH-037 to ENH-040: News by audience, story page, heading typography, Life carousel
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Rebuild News and the story page from two design files Amber supplied; check the typography
+  guideline on every page (fonts, heading weight, line height, letter spacing); shrink the new photos and the News
+  header; make the News titles smaller; turn "Life at XionTechs" into a horizontal carousel.
+- **Decision / result:** Approved by Amber. News filters by audience with full-photo story cards; the story page is
+  an editorial article whose header follows the story opened. The audit of about 1,100 text elements found no
+  bold text but two leftovers of the rejected body-font headings (Products hero, "A day at school"), five page-title
+  sizes, and loose heading rhythm; all fixed. Headings now use the display font at 300 (its 500 reads as bold).
+  Review fixes before commit: white card dates moved onto a dark pill (they fell to about 1.2:1 on bright photos),
+  a deeper title fade on touch screens, Home and Products news photos no longer wiped by the photo-frame tool,
+  link names led by the title, and the carousel sized to the four frames the log promised.
+- **AI got it wrong?** Yes: the design file's featured photo was a dead Unsplash link, and the first replacement
+  had "Someone in your family has cancer" on its blackboard; the compact news photos were reused inside a
+  photo-frame element that the prototype's upload tool rewrites; and a first contrast check flagged the date pills
+  falsely by sampling outside their rounded corners.

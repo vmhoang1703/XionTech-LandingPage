@@ -3,7 +3,7 @@
 // "Batch 1" = the readability, accessibility and header changes written into the specs before the log existed.
 
 const SITE_WIDE =
-  "site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).";
+  "site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).";
 
 module.exports = {
   // header and footer frames (shared by every page)
@@ -23,27 +23,29 @@ module.exports = {
     "index.html#contact-h": "new in ENH-001 · ENH-010 · blended in ENH-036",
     "products.html#h1": "ENH-014 · ENH-018 · ENH-020", // Products hero
     "products.html#apps-h": "new in ENH-020",
-    "products.html#day-h": "new in ENH-015 · rebuilt in ENH-023",
     "products.html#up-h": "ENH-024",
     "about.html#h1": "new in ENH-030", // About hero: the mountain story
     "about.html#faq-h": "rebuilt in ENH-016 · background stilled in ENH-019 · last slot in ENH-031",
     "about.html#cap-h": "blended in ENH-036",
     "services.html#h1": "light hero in ENH-033",
     "services.html#cap-h": "blended in ENH-036",
-    "news.html#h1": "white and light blue in ENH-034",
+    "news.html#h1": "white and light blue in ENH-034 · rebuilt in ENH-037",
+    "news-story.html#h1": "editorial article in ENH-037",
+    "careers.html#life-h": "carousel in ENH-040",
+    "products.html#day-h": "new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040",
     "news.html#cap-h": "blended in ENH-036",
     "careers.html#h1": "pastel hero in ENH-035",
   },
 
   // one line under each page title
   pages: {
-    "index.html": "Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in) (see the change list at the top).",
-    "products.html": "ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen); " + SITE_WIDE,
+    "index.html": "Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in), ENH-037 (news cards show their photo and open their story) (see the change list at the top).",
+    "products.html": "ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-037 (news row shows the app stories with photos), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen); " + SITE_WIDE,
     "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); " + SITE_WIDE,
     "about.html": 'ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 (email section continues the navy into the footer); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); ' + SITE_WIDE,
-    "news.html": "ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); " + SITE_WIDE,
-    "news-story.html": SITE_WIDE,
-    "careers.html": "ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); " + SITE_WIDE,
+    "news.html": "ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-037 (audience filter and full-photo story cards); ENH-036 (email section blends in); " + SITE_WIDE,
+    "news-story.html": "ENH-037 (an editorial article: label, date, headline, summary, wide photo, pull quote); " + SITE_WIDE,
+    "careers.html": "ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-040 (Life at XionTechs is a horizontal carousel); " + SITE_WIDE,
     "job.html": "ENH-026 (fits phone screens); " + SITE_WIDE,
     "demo.html": "ENH-011 (checklist says five steps); " + SITE_WIDE,
     "privacy.html": SITE_WIDE,
@@ -79,6 +81,10 @@ module.exports = {
 | Services, whole page | Navy hero; white and grey bands; amber email band | One white-and-amber background flowing down the page (no blue); light hero; How we work on amber with a navy step list | ENH-033 |
 | News, whole page | Light hero with its own glow; white stories; amber email band | White with light blue shading throughout, header included; filter buttons no longer turn into "NaN" | ENH-034 |
 | Careers, whole page | Bright amber hero; white and grey bands | One pastel, light-amber background flowing down the page; light hero | ENH-035 |
+| News, whole page (again) | Product/Company/Schools/Team filters; compact cards | "What we’re building, learning and sharing"; filters by audience (Schools, Students, Parents, Company); full-photo story cards with the newest featured; hover or focus lifts the card and shows "Read story" | ENH-037 |
+| Story page | Placeholder headline and body | An editorial article: Back to News, audience label and date, headline, summary, wide rounded photo, subheadings, amber pull quote, inline photo | ENH-037 |
+| Every page, headings | Display headings at 500 (reading as bold); page titles in five sizes; Products titles in the body font | One page-title style; display headings at 300 and card titles at 400; the guideline's line height and letter spacing | ENH-038, ENH-039, ENH-040 |
+| Careers, Life at XionTechs | Three photo frames in a row | A horizontal carousel of six frames with drag, swipe, arrow keys and page dots | ENH-040 |
 | Email and contact sections | Fixed amber or navy boxes with corner rings | Home's contact, and the email sections on About, Services and News, blend into the colours around them; no rings | ENH-036 |
 | Products, the apps | Four separate sections (PXP, LXP, SXP, IoT) with their own layouts, and a PXP / LXP / SXP / IoT / Updates bar | Seven stacked app cards (SXP, IoT, AI Timetable, AI Grader, PXP, LXP, AI Tutor) that pin and replace one another on desktop; phone or browser mockup, app name, one sentence, a Features list, store or View prototype buttons; School / Parents / Students pills that jump and highlight | ENH-020 |
 | Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |

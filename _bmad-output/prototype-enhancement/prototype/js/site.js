@@ -47,30 +47,54 @@
   const toastEl=document.getElementById('toast');let tt;
   const toast=m=>{toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('on'),2600)};
 
-  /* ---------- news data (SAMPLE stories, single source for home / news / products) ---------- */
+  /* ---------- news data (SAMPLE stories, single source for home / news / products / story page) ---------- */
+  // aud is the audience the News filter uses; app names the product a story is about (Products shows those).
   const NEWS=[
-    {id:'n1',date:'18 SEP 2026',cat:'product',app:'PXP',t:'[Placeholder] Parents can now pay school fees in PXP',tv:'[Placeholder] Phụ huynh giờ có thể đóng học phí ngay trên PXP',x:'Tuition and service fees, with receipts sent straight to the app.',xv:'Học phí và phí dịch vụ, kèm biên lai gửi ngay trong ứng dụng.'},
-    {id:'n2',date:'09 SEP 2026',cat:'team',t:'[Placeholder] A day at our Ho Chi Minh City office',tv:'[Placeholder] Một ngày tại văn phòng TP. Hồ Chí Minh',x:'Meet the engineers, testers and designers behind our products and client projects.',xv:'Gặp gỡ các kỹ sư, kiểm thử viên và nhà thiết kế đứng sau sản phẩm và dự án khách hàng.'},
-    {id:'n3',date:'05 SEP 2026',cat:'schools',app:'PXP',t:'[Placeholder] Back-to-school week with PXP',tv:'[Placeholder] Tuần đầu năm học cùng PXP',x:'Our team was on campus helping parents get started with PXP.',xv:'Đội ngũ có mặt tại trường để hỗ trợ phụ huynh bắt đầu với PXP.'},
-    {id:'n4',date:'28 AUG 2026',cat:'product',app:'SXP',t:'[Placeholder] SXP adds dashboards for school leaders',tv:'[Placeholder] SXP bổ sung bảng điều khiển cho lãnh đạo nhà trường',x:'A role-based view that shows what needs attention today.',xv:'Giao diện theo vai trò cho thấy việc cần xử lý hôm nay.'},
-    {id:'n5',date:'22 AUG 2026',cat:'team',t:'[Placeholder] Inside our pre-term release testing week',tv:'[Placeholder] Bên trong tuần kiểm thử trước năm học',x:'How our QA team checked every critical flow before students came back.',xv:'Cách đội QA kiểm tra mọi luồng quan trọng trước khi học sinh trở lại trường.'},
-    {id:'n6',date:'12 AUG 2026',cat:'product',app:'LXP',t:'[Placeholder] LXP shows assignment progress at a glance',tv:'[Placeholder] LXP hiển thị tiến độ bài tập trong nháy mắt',x:'Students see what is due, what is done and what needs another look.',xv:'Học sinh thấy bài nào sắp đến hạn, bài nào đã xong và bài nào cần xem lại.'},
-    {id:'n7',date:'30 JUL 2026',cat:'product',app:'IoT',t:'[Placeholder] A new campus joins the IoT pilot',tv:'[Placeholder] Một khuôn viên mới tham gia thí điểm IoT',x:'Classroom lighting and climate are now scheduled from one screen.',xv:'Ánh sáng và điều hòa trong lớp học giờ được lên lịch từ một màn hình.'},
-    {id:'n8',date:'15 JUL 2026',cat:'company',t:'[Placeholder] Low-code, delivered: automating client workflows',tv:'[Placeholder] Low-code thực chiến: tự động hóa quy trình cho khách hàng',x:'How our team uses Power Platform and n8n to ship internal tools faster.',xv:'Cách đội ngũ dùng Power Platform và n8n để ra mắt công cụ nội bộ nhanh hơn.'}
+    {id:'connected-school',date:'19 Jul 2026',aud:'schools',t:'What a connected school day looks like when every experience works together',tv:'Một ngày học kết nối trông như thế nào khi mọi trải nghiệm cùng vận hành',x:'One school day can involve dozens of small moments across staff, students and families. The value comes when those moments connect instead of living in separate systems.',xv:'Một ngày học có thể gồm hàng chục khoảnh khắc nhỏ giữa giáo viên, nhân viên, học sinh và gia đình. Giá trị đến khi những khoảnh khắc ấy được kết nối, thay vì nằm rải rác ở các hệ thống riêng lẻ.',img:'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1400&q=88'},
+    {id:'ai-timetable',date:'12 Jul 2026',aud:'schools',app:'AI Timetable',t:'Rethinking complex school scheduling with AI',tv:'Nhìn lại việc xếp lịch phức tạp của nhà trường cùng AI',x:'School timetabling becomes difficult because every change affects people, rooms, lessons and priorities. AI can help teams explore better options without losing operational control.',xv:'Xếp thời khóa biểu trở nên khó vì mỗi thay đổi đều ảnh hưởng đến con người, phòng học, tiết học và thứ tự ưu tiên. AI giúp đội ngũ tìm phương án tốt hơn mà vẫn giữ quyền kiểm soát vận hành.',img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1400&q=88'},
+    {id:'ai-tutor',date:'05 Jul 2026',aud:'students',app:'AI Tutor',t:'Why better AI tutoring starts with guiding the student’s thinking',tv:'Vì sao gia sư AI tốt hơn bắt đầu từ việc dẫn dắt tư duy của học sinh',x:'A useful AI tutor should not simply produce the answer. It should help the learner understand what went wrong, try again and build confidence in the reasoning.',xv:'Một gia sư AI hữu ích không chỉ đưa ra đáp án. Nó giúp người học hiểu mình sai ở đâu, thử lại và tự tin hơn vào cách lập luận của mình.',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=88'},
+    {id:'lxp',date:'28 Jun 2026',aud:'students',app:'LXP',t:'Designing a learning experience that keeps progress visible',tv:'Thiết kế trải nghiệm học tập giúp tiến độ luôn rõ ràng',x:'Learning feels more coherent when activities, feedback and progress are connected around the student instead of spread across separate tools.',xv:'Việc học liền mạch hơn khi hoạt động, phản hồi và tiến độ được kết nối quanh học sinh, thay vì trải rộng trên nhiều công cụ riêng lẻ.',img:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=88'},
+    {id:'pxp',date:'20 Jun 2026',aud:'parents',app:'PXP',t:'Making the school day easier for parents to follow',tv:'Giúp phụ huynh dễ dàng theo dõi một ngày học của con',x:'Parents need simple, reliable visibility into the moments that matter without having to chase information across different systems.',xv:'Phụ huynh cần nắm được những khoảnh khắc quan trọng một cách đơn giản và đáng tin cậy, mà không phải đi tìm thông tin ở nhiều hệ thống khác nhau.',img:'https://images.unsplash.com/photo-1602030028438-4cf153cbae9e?auto=format&fit=crop&w=1400&q=88'},
+    {id:'company',date:'14 Jun 2026',aud:'company',t:'How we approach building technology around real school experiences',tv:'Cách chúng tôi xây dựng công nghệ xoay quanh trải nghiệm thực tế ở trường học',x:'Our product thinking starts with the real workflows, moments and people inside a school day before deciding what technology should do.',xv:'Tư duy sản phẩm của chúng tôi bắt đầu từ quy trình, khoảnh khắc và con người thật trong một ngày học, trước khi quyết định công nghệ nên làm gì.',img:'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1400&q=88'}
   ];
-  const CAT={product:['Product','Sản phẩm'],team:['Team','Đội ngũ'],schools:['Schools','Trường học'],company:['Company','Công ty']};
+  const AUD={schools:['Schools','Trường học'],students:['Students','Học sinh'],parents:['Parents','Phụ huynh'],company:['Company','Công ty']};
   const MON={JAN:'01',FEB:'02',MAR:'03',APR:'04',MAY:'05',JUN:'06',JUL:'07',AUG:'08',SEP:'09',OCT:'10',NOV:'11',DEC:'12'};
-  const viDate=d=>{const [dd,m,y]=d.split(' ');return MON[m]?dd+'/'+MON[m]+'/'+y:d};
-  const card=(n,big)=>`<article class="spot ncard${big?' big':''} reveal" data-c="${n.cat}">
-    <div class="slot" data-slot="news-${n.id}" data-hint="Story photo" data-size="1200 × 750"></div>
-    <div class="body"><div class="meta"><span data-vi="${viDate(n.date)}">${n.date}</span>${n.app?`<span class="cat product">${n.app}</span>`:`<span class="cat" data-vi="${CAT[n.cat][1]}">${CAT[n.cat][0]}</span>`}</div>
+  const viDate=d=>{const [dd,m,y]=d.split(' ');const mm=MON[(m||'').toUpperCase()];return mm?dd+'/'+mm+'/'+y:d};
+  const href=n=>'news-story.html?id='+n.id;
+  // Home and Products rows keep their compact card
+  const card=n=>`<article class="spot ncard reveal" data-c="${n.aud}">
+    <div class="ncard-img"><img src="${n.img}" alt="" loading="lazy" width="1400" height="933" onerror="this.remove()"></div>
+    <div class="body"><div class="meta"><span data-vi="${viDate(n.date)}">${n.date}</span>${n.app?`<span class="cat product">${n.app}</span>`:`<span class="cat" data-vi="${AUD[n.aud][1]}">${AUD[n.aud][0]}</span>`}</div>
     <h3 data-vi="${n.tv}">${n.t}</h3><p data-vi="${n.xv}">${n.x}</p>
-    <a class="link-arrow" href="news-story.html"><span data-vi="Đọc tiếp">Read story</span><i class="ph ph-arrow-right"></i></a></div></article>`;
+    <a class="link-arrow" href="${href(n)}"><span data-vi="Đọc tiếp">Read story</span><i class="ph ph-arrow-right"></i></a></div></article>`;
+  // News: full-image story cards (ENH-037). The first is the featured one; the whole card is the link.
+  const scard=(n,i)=>`<a class="scard${i===0?' featured':''}" data-c="${n.aud}" href="${href(n)}" aria-labelledby="st-${n.id} sd-${n.id} sa-${n.id}">
+    <img src="${n.img}" alt="" width="1400" height="933"${i>1?' loading="lazy"':''} onerror="this.remove()">
+    <span class="scard-meta"><span class="scard-pill${n.aud==='company'?' company':''}" id="sa-${n.id}" data-vi="${AUD[n.aud][1]}">${AUD[n.aud][0]}</span><span class="scard-date" id="sd-${n.id}" data-vi="${viDate(n.date)}">${n.date}</span></span>
+    <span class="scard-content"><span class="scard-title" id="st-${n.id}" data-vi="${n.tv}">${n.t}</span></span>
+    <span class="scard-read" aria-hidden="true"><span data-vi="Đọc tiếp">Read story</span></span></a>`;
   document.querySelectorAll('[data-news]').forEach(box=>{
     const mode=box.dataset.news,lim=+box.dataset.limit||99;
-    let list=NEWS;if(mode==='product')list=NEWS.filter(n=>n.cat==='product');
-    box.innerHTML=list.slice(0,lim).map((n,i)=>card(n,mode==='all'&&i===0)).join('');
+    if(mode==='all'){box.innerHTML=NEWS.map(scard).join('');return}
+    const list=mode==='product'?NEWS.filter(n=>n.app):NEWS;
+    box.innerHTML=list.slice(0,lim).map(card).join('');
   });
+  // a card fades as it opens its story (a plain link for new tabs, modified clicks and reduced motion)
+  document.querySelectorAll('.scard').forEach(a=>a.addEventListener('click',e=>{
+    if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||reduce)return;
+    e.preventDefault();if(a.classList.contains('is-opening'))return;a.classList.add('is-opening');setTimeout(()=>{location.href=a.href},400)}));
+  // while a filter is on, the first card shown is not featured, so the grid stays even
+  document.querySelectorAll('[data-filter-for="newsGrid"] button').forEach(btn=>btn.addEventListener('click',()=>{const g=document.getElementById('newsGrid');if(g)g.classList.toggle('filtered',btn.dataset.f!=='all')}));
+  addEventListener('pageshow',()=>document.querySelectorAll('.scard.is-opening').forEach(a=>a.classList.remove('is-opening')));
+  // story page: the header follows ?id= (the article body is the shared sample)
+  const artTitle=document.querySelector('.art-hero h1');
+  if(artTitle){const id=new URLSearchParams(location.search).get('id'),n=NEWS.find(s=>s.id===id)||NEWS[0];
+    const set=(el,en,vi)=>{if(!el)return;el.textContent=en;el.dataset.vi=vi};
+    set(document.getElementById('artAudience'),AUD[n.aud][0],AUD[n.aud][1]);set(document.getElementById('artDate'),n.date,viDate(n.date));
+    set(artTitle,n.t,n.tv);set(document.getElementById('artDek'),n.x,n.xv);
+    const img=document.getElementById('artImage');if(img)img.src=n.img.replace('w=1400','w=1800').replace('q=88','q=90');
+    const og=document.querySelector('meta[property="og:title"]');if(og)og.setAttribute('content',n.t);
+    const tab=()=>{document.title=(root.lang==='vi'?n.tv:n.t)+' | XionTechs'};tab();document.addEventListener('xt-lang',tab)}
 
   /* ---------- i18n (EN from markup, VI from data-vi / data-vi-html / data-vi-ph) ---------- */
   const txt=[...document.querySelectorAll('[data-vi]')].map(el=>[el,el.textContent,el.dataset.vi]);
@@ -154,21 +178,21 @@
     b.addEventListener('click',()=>{const o=!w.classList.contains('open');w.classList.toggle('open',o);b.setAttribute('aria-expanded',o)});
     w.addEventListener('focusout',e=>{if(!w.contains(e.relatedTarget)){w.classList.remove('open');b.setAttribute('aria-expanded','false')}})});
 
-  /* ---------- case studies slider: drag with a mouse (touch scrolls natively), arrow keys step one card ---------- */
-  const cs=document.getElementById('caseSlider');
-  if(cs){let down=false,moved=false,x0=0,s0=0;cs.querySelectorAll('.slot').forEach(s=>s.tabIndex=-1);cs.addEventListener('dragstart',e=>e.preventDefault());
+  /* ---------- sliders (Home case studies, Careers life photos): drag with a mouse (touch scrolls natively), arrow keys step one card ---------- */
+  document.querySelectorAll('.case-slider').forEach(cs=>{let down=false,moved=false,x0=0,s0=0;if(!cs.classList.contains('life-slider'))cs.querySelectorAll('.slot').forEach(s=>s.tabIndex=-1);cs.addEventListener('dragstart',e=>e.preventDefault());
     const shell=cs.closest('.case-shell');const ends=()=>{if(shell)shell.classList.toggle('at-end',cs.scrollLeft>=cs.scrollWidth-cs.clientWidth-4)};cs.addEventListener('scroll',()=>requestAnimationFrame(ends),{passive:true});addEventListener('resize',ends);ends();
     cs.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;down=true;moved=false;x0=e.clientX;s0=cs.scrollLeft});
     cs.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-x0;if(!moved&&Math.abs(dx)>5){moved=true;cs.classList.add('dragging');cs.setPointerCapture(e.pointerId)}if(moved)cs.scrollLeft=s0-dx});
     const stop=()=>{if(!down)return;down=false;cs.classList.remove('dragging');setTimeout(()=>{moved=false},0)};
     cs.addEventListener('pointerup',stop);cs.addEventListener('pointercancel',stop);
     cs.addEventListener('click',e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
-    cs.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const c=cs.querySelector('.case-card');if(!c)return;e.preventDefault();
+    cs.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;const c=cs.querySelector(':scope > .case-card, :scope > .life-card');if(!c)return;e.preventDefault();
       const step=c.getBoundingClientRect().width+(parseFloat(getComputedStyle(cs).columnGap)||0);cs.scrollBy({left:e.key==='ArrowRight'?step:-step,behavior:reduce?'auto':'smooth'})});
-    const dotsBox=document.querySelector('.case-dots'),cards=[...cs.querySelectorAll('.case-card')];
+    const dotsBox=(cs.closest('section')||document).querySelector('.case-dots'),cards=[...cs.querySelectorAll(':scope > .case-card, :scope > .life-card')];
     if(dotsBox&&cards.length){let per=1,dots=[];
       const stepW=()=>cards[0].getBoundingClientRect().width+(parseFloat(getComputedStyle(cs).columnGap)||0);
-      const label=(from,to)=>root.lang==='vi'?'Case study '+from+(to>from?' đến '+to:''):'Case studies '+from+(to>from?' to '+to:'');
+      const en=dotsBox.dataset.dotEn||'Case studies',vi=dotsBox.dataset.dotVi||'Case study';
+      const label=(from,to)=>root.lang==='vi'?vi+' '+from+(to>from?' đến '+to:''):en+' '+from+(to>from?' to '+to:'');
       const build=force=>{const w=stepW();if(!w){dotsBox.hidden=true;return}const st=getComputedStyle(cs),visible=cs.clientWidth-parseFloat(st.paddingLeft)-parseFloat(st.paddingRight);
         const p2=Math.max(1,Math.floor((visible+1)/w)),pages=Math.max(1,Math.ceil(cards.length/p2));if(!force&&p2===per&&dots.length===pages){mark();return}
         const fi=dots.indexOf(document.activeElement);per=p2;dotsBox.innerHTML='';dotsBox.hidden=pages<2;
@@ -178,7 +202,7 @@
       const mark=()=>{if(!dots.length)return;const x=cs.scrollLeft,max=cs.scrollWidth-cs.clientWidth;let k=Math.round(x/(stepW()*per));if(x>=max-4)k=dots.length-1;
         k=Math.max(0,Math.min(k,dots.length-1));dots.forEach((d,i)=>d.setAttribute('aria-current',i===k?'true':'false'))};
       cs.addEventListener('scroll',()=>requestAnimationFrame(mark),{passive:true});addEventListener('resize',()=>build());document.addEventListener('xt-lang',()=>build(true));build(true)}
-  }
+  });
 
   /* ---------- What we build rail: back and forward buttons and arrow keys move one app; buttons switch off at the ends ---------- */
   const rail=document.getElementById('appRail');

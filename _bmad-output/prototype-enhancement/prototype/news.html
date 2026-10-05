@@ -6,7 +6,7 @@
 <title>News | XionTechs</title>
 <meta name="description" content="Stories from XionTechs: product updates for PXP, LXP, SXP and IoT, school life, our team and client work.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Lexend+Exa:wght@400;500;600&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Lexend+Exa:wght@400;500;600&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script defer src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
 <link rel="stylesheet" href="css/site.css">
 </head>
@@ -15,31 +15,28 @@
 <main id="main">
 <div class="flow-bg" data-palette="cool" aria-hidden="true"></div>
 
-<section class="hero hero-light page-hero pb-m" aria-labelledby="h1">
-  <div class="aurora" aria-hidden="true"></div>
-  <canvas class="strands" data-tone="cool" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <nav class="crumbs reveal" aria-label="Breadcrumb"><a href="index.html" data-vi="Trang chủ">Home</a><span>/</span><span data-vi="Tin tức">News</span></nav>
-    <h1 id="h1" class="reveal" data-vi-html="Chúng tôi đã <span class='hl'>làm gì</span> gần đây.">What we've been <span class="hl">up to</span>.</h1>
-    <p class="lede reveal" data-vi="Những câu chuyện ngắn về sản phẩm, trường học, đội ngũ và công việc với khách hàng.">Short stories about our products, schools, team and client work.</p>
+<section class="hero hero-light page-hero nhead-sec" aria-labelledby="h1">
+  <div class="wrap nhead">
+    <h1 id="h1" class="reveal" data-vi-html="Những gì chúng tôi đang xây dựng,<br>học hỏi và chia sẻ">What we’re building,<br>learning and sharing</h1>
+    <p class="reveal" data-vi="Xem tin theo đối tượng, mỗi thẻ tin đều có ngày đăng và nhãn đối tượng rõ ràng.">Browse stories by audience, with a clear date stamp and audience label shown on every story card.</p>
   </div>
 </section>
 
-<section class="sec s-paper pt-m" aria-label="All stories">
+<section class="sec s-paper nlist" aria-label="All stories" data-vi-aria="Tất cả tin">
   <div class="wrap">
     <div class="news-bar">
-      <div class="filters" data-filter-for="newsGrid" data-count="newsCount" data-empty="newsEmpty" role="group" aria-label="Filter stories">
+      <div class="filters" data-filter-for="newsGrid" data-count="newsCount" data-empty="newsEmpty" role="group" aria-label="Filter stories by audience" data-vi-aria="Lọc tin theo đối tượng">
         <button aria-pressed="true" data-f="all" data-vi="Tất cả">All</button>
-        <button aria-pressed="false" data-f="product" data-vi="Sản phẩm">Product</button>
-        <button aria-pressed="false" data-f="company" data-vi="Công ty">Company</button>
         <button aria-pressed="false" data-f="schools" data-vi="Trường học">Schools</button>
-        <button aria-pressed="false" data-f="team" data-vi="Đội ngũ">Team</button>
+        <button aria-pressed="false" data-f="students" data-vi="Học sinh">Students</button>
+        <button aria-pressed="false" data-f="parents" data-vi="Phụ huynh">Parents</button>
+        <button aria-pressed="false" data-f="company" data-vi="Công ty">Company</button>
       </div>
       <p class="sample" data-vi="[Placeholder] Tin mẫu. Thay bằng tin thật trước khi ra mắt.">[Placeholder] Sample stories. Replace with real news before launch.</p>
     </div>
-    <div class="news-grid" id="newsGrid" data-news="all"></div>
+    <div class="sgrid" id="newsGrid" data-news="all"></div>
     <p class="sr-only" id="newsCount" aria-live="polite"></p>
-    <div class="news-empty" id="newsEmpty" hidden><span data-vi="Chưa có tin trong mục này.">No stories in this category yet.</span><button class="btn btn-glass btn-sm" type="button" data-vi="Xem tất cả">Show all</button></div>
+    <div class="news-empty" id="newsEmpty" hidden><span data-vi="Chưa có tin nào trong mục này.">No stories are available in this category yet.</span><button class="btn btn-glass btn-sm" type="button" data-vi="Xem tất cả">Show all</button></div>
   </div>
 </section>
 

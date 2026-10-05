@@ -38,6 +38,10 @@ also has a Vietnamese version in the prototype.
 | Services, whole page | Navy hero; white and grey bands; amber email band | One white-and-amber background flowing down the page (no blue); light hero; How we work on amber with a navy step list | ENH-033 |
 | News, whole page | Light hero with its own glow; white stories; amber email band | White with light blue shading throughout, header included; filter buttons no longer turn into "NaN" | ENH-034 |
 | Careers, whole page | Bright amber hero; white and grey bands | One pastel, light-amber background flowing down the page; light hero | ENH-035 |
+| News, whole page (again) | Product/Company/Schools/Team filters; compact cards | "What we’re building, learning and sharing"; filters by audience (Schools, Students, Parents, Company); full-photo story cards with the newest featured; hover or focus lifts the card and shows "Read story" | ENH-037 |
+| Story page | Placeholder headline and body | An editorial article: Back to News, audience label and date, headline, summary, wide rounded photo, subheadings, amber pull quote, inline photo | ENH-037 |
+| Every page, headings | Display headings at 500 (reading as bold); page titles in five sizes; Products titles in the body font | One page-title style; display headings at 300 and card titles at 400; the guideline's line height and letter spacing | ENH-038, ENH-039, ENH-040 |
+| Careers, Life at XionTechs | Three photo frames in a row | A horizontal carousel of six frames with drag, swipe, arrow keys and page dots | ENH-040 |
 | Email and contact sections | Fixed amber or navy boxes with corner rings | Home's contact, and the email sections on About, Services and News, blend into the colours around them; no rings | ENH-036 |
 | Products, the apps | Four separate sections (PXP, LXP, SXP, IoT) with their own layouts, and a PXP / LXP / SXP / IoT / Updates bar | Seven stacked app cards (SXP, IoT, AI Timetable, AI Grader, PXP, LXP, AI Tutor) that pin and replace one another on desktop; phone or browser mockup, app name, one sentence, a Features list, store or View prototype buttons; School / Parents / Students pills that jump and highlight | ENH-020 |
 | Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |
@@ -129,7 +133,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
-Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in) (see the change list at the top).
+Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in), ENH-037 (news cards show their photo and open their story) (see the change list at the top).
 
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -336,7 +340,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-037 (news row shows the app stories with photos), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -446,7 +450,7 @@ Changes on this page: ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), E
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 3. A day at school. · dark navy · [new in ENH-015 · rebuilt in ENH-023] ────────────────────────────┐ ║
+║ ┌─ 3. A day at school. · dark navy · [new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040] ──┐ ║
 ║ │ H2: A day at school.                                                                                 │ ║
 ║ │ Text: Follow one student journey through a typical school day and see how students, parents and      │ ║
 ║ │   school staff stay informed and connected across each step.                                         │ ║
@@ -502,7 +506,7 @@ Changes on this page: ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), E
 
 `services.html` · page title: "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs"
 
-Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ SERVICES PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -682,7 +686,7 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 (email section continues the navy into the footer); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 (email section continues the navy into the footer); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -796,25 +800,24 @@ Changes on this page: ENH-030 (the mountain story is the hero; the old hero, key
 
 `news.html` · page title: "News | XionTechs"
 
-Changes on this page: ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-037 (audience filter and full-photo story cards); ENH-036 (email section blends in); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ NEWS PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. What we've been up to. · light hero · [white and light blue in ENH-034] ─────────────────────────┐ ║
-║ │ [BACKGROUND: animated strands]                                                                       │ ║
-║ │ Breadcrumb: Home › News                                                                              │ ║
-║ │ H1: What we've been up to.                                                                           │ ║
-║ │ Text: Short stories about our products, schools, team and client work.                               │ ║
+║ ┌─ 1. What we’re building, learning and sharing · light hero · [white and light blue in ENH-034 · re… ─┐ ║
+║ │ H1: What we’re building, learning and sharing                                                        │ ║
+║ │ Text: Browse stories by audience, with a clear date stamp and audience label shown on every story    │ ║
+║ │   card.                                                                                              │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 2. All stories · white ─────────────────────────────────────────────────────────────────────────────┐ ║
 ║ │ [BUTTON: All]                                                                                        │ ║
-║ │ [BUTTON: Product]                                                                                    │ ║
-║ │ [BUTTON: Company]                                                                                    │ ║
 ║ │ [BUTTON: Schools]                                                                                    │ ║
-║ │ [BUTTON: Team]                                                                                       │ ║
+║ │ [BUTTON: Students]                                                                                   │ ║
+║ │ [BUTTON: Parents]                                                                                    │ ║
+║ │ [BUTTON: Company]                                                                                    │ ║
 ║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ [IMAGE: story photo]         │ │ [IMAGE: story photo]         │ │ [IMAGE: story photo]           │ │ ║
@@ -843,30 +846,43 @@ Changes on this page: ENH-007 (a story about an app shows the app name in its pi
 
 ## News story
 
-`news-story.html` · page title: "[Placeholder] Parents can now pay school fees in PXP | XionTechs News"
+`news-story.html` · page title: "What a connected school day looks like when every experience works together | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-037 (an editorial article: label, date, headline, summary, wide photo, pull quote); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ NEWS STORY PAGE ════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. [Placeholder] Parents can now pay school fees in… · light hero ──────────────────────────────────┐ ║
-║ │ Breadcrumb: Home › News › Story                                                                      │ ║
-║ │ H1: [Placeholder] Parents can now pay school fees in PXP                                             │ ║
-║ │ Text: 18 SEP 2026 · PXP                                                                              │ ║
+║ ┌─ 1. What a connected school day looks like when ever… · light hero · [editorial article in ENH-037] ─┐ ║
+║ │ [LINK: Back to News → news.html]                                                                     │ ║
+║ │ Text: Schools · 19 Jul 2026                                                                          │ ║
+║ │ H1: What a connected school day looks like when every experience works together                      │ ║
+║ │ Text: One school day can involve dozens of small moments across staff, students and families. The    │ ║
+║ │   value comes when those moments connect instead of living in separate systems.                      │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 2. Story · white ───────────────────────────────────────────────────────────────────────────────────┐ ║
-║ │ [IMAGE: Story photo · 1600 × 900]                                                                    │ ║
+║ │ Text: A connected school experience is not defined by the number of apps a school uses. It is        │ ║
+║ │   defined by how clearly those experiences work together for the people who depend on them.          │ ║
+║ │ Text: A parent may only see an attendance update, while a member of staff sees the operational       │ ║
+║ │   action behind it. A student sees the learning context that follows. Each experience is different,  │ ║
+║ │   but the underlying information should remain consistent.                                           │ ║
+║ │ H2: Start with the school day, not the software                                                      │ ║
+║ │ Text: The strongest product experiences begin with real moments. A late arrival, a timetable change, │ ║
+║ │   a new learning task or a parent update all create different needs for different people.            │ ║
+║ │ Text: One event can create several actions while still leading to one shared outcome                 │ ║
+║ │ Text: That is why connected products should be designed around the flow of the day rather than       │ ║
+║ │   around isolated feature lists.                                                                     │ ║
+║ │ H2: Different roles need different views                                                             │ ║
+║ │ Text: Staff need operational clarity. Students need a focused learning experience. Parents need      │ ║
+║ │   confidence that the information they see is current and reliable.                                  │ ║
+║ │ Text: The interface for each audience should therefore be purpose-built, while the underlying school │ ║
+║ │   information remains connected.                                                                     │ ║
+║ │ H2: Connected does not mean complicated                                                              │ ║
+║ │ Text: The goal is not to expose more systems to the user. The goal is to make the experience feel    │ ║
+║ │   simpler because the systems behind it already understand one another.                              │ ║
 ║ │ Text: [Placeholder] Sample story to show the layout. Replace with a real story before launch.        │ ║
-║ │ Text: [Placeholder] Opening paragraph: what happened, when, and why it matters to schools and        │ ║
-║ │   parents.                                                                                           │ ║
-║ │ H2: [Placeholder] Subheading                                                                         │ ║
-║ │ Text: [Placeholder] Main body: two to four short paragraphs, optionally with a quote from a school   │ ║
-║ │   (with permission).                                                                                 │ ║
-║ │ [BUTTON: See PXP → products.html#pxp]                                                                │ ║
-║ │ [BUTTON: Back to News → news.html]                                                                   │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ [FOOTER: see "Header and footer"]                                                                        ║
@@ -877,7 +893,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `careers.html` · page title: "Careers at XionTechs | Software Jobs in Ho Chi Minh City"
 
-Changes on this page: ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-040 (Life at XionTechs is a horizontal carousel); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ CAREERS PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -938,12 +954,16 @@ Changes on this page: ENH-035 (one pastel light-amber background, light hero; th
 ║ │ Text: View and apply                                                                                 │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. Life at XionTechs. · light blue ─────────────────────────────────────────────────────────────────┐ ║
+║ ┌─ 5. Life at XionTechs. · light blue · [carousel in ENH-040] ─────────────────────────────────────────┐ ║
 ║ │ H2: Life at XionTechs.                                                                               │ ║
 ║ │ Text: Click a frame to add a real team photo.                                                        │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ [IMAGE: Team photo · 1200 ×  │ │ [IMAGE: Office photo · 1200  │ │ [IMAGE: Event photo · 1200 ×   │ │ ║
 ║ │ │   900]                       │ │   × 900]                     │ │   900]                         │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ [IMAGE: Workshop photo ·     │ │ [IMAGE: Celebration photo ·  │ │ [IMAGE: Community photo · 1200 │ │ ║
+║ │ │   1200 × 900]                │ │   1200 × 900]                │ │   × 900]                       │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
@@ -955,7 +975,7 @@ Changes on this page: ENH-035 (one pastel light-amber background, light hero; th
 
 `job.html` · page title: "[Placeholder] Job title | Careers at XionTechs"
 
-Changes on this page: ENH-026 (fits phone screens); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-026 (fits phone screens); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ JOB PAGE ═══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1013,7 +1033,7 @@ Changes on this page: ENH-026 (fits phone screens); site-wide rules only (Batch 
 
 `demo.html` · page title: "Book a Demo or Start a Project | XionTechs"
 
-Changes on this page: ENH-011 (checklist says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-011 (checklist says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ CONTACT PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1097,7 +1117,7 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 
 `privacy.html` · page title: "Privacy Policy | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ PRIVACY POLICY PAGE ════════════════════════════════════════════════════════════════════════════════════╗
@@ -1144,7 +1164,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `404.html` · page title: "Page not found | XionTechs"
 
-Changes on this page: Batch 1 (no label above the heading); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: Batch 1 (no label above the heading); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).
 
 ```text
 ╔═ NOT FOUND (404) PAGE ═══════════════════════════════════════════════════════════════════════════════════╗
