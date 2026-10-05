@@ -263,3 +263,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-5-2-stats-eight-services.md`
   summary: Add an automated browser check that `/services#<id>` lands each service heading below the sticky header (CAP-3, AC-NAV-5).
   evidence: The Playwright `smoke` project is request-only, so the landing is covered only by the CSS-source unit test and the evidence walk (`spec-5-2-stats-eight-services-evidence/walk.mjs`). A browser project, also useful for `#process` (5.4) and the Products anchors, would catch a broken `scroll-margin-top`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-5-4-process-project-capture.md`
+  summary: At 390px the capture band's email input (`#cap-email`, Story 2.4, Andy) is 344×20px, below the 24×24 target-size floor, on Home and on Services.
+  evidence: Measured in Chrome on the production build on 2026-10-05: 20px tall at 390px, 50px at 1280px, padding 0 18px. The white `.cap-row` pill around it looks taller than the input itself. Owner: Andy (capture band CSS).
