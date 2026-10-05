@@ -3,7 +3,7 @@
 // "Batch 1" = the readability, accessibility and header changes written into the specs before the log existed.
 
 const SITE_WIDE =
-  "site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm).";
+  "site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page).";
 
 module.exports = {
   // header and footer frames (shared by every page)
@@ -19,19 +19,20 @@ module.exports = {
     "index.html#approach-h": "rebuilt in ENH-009 · light version in ENH-012",
     "services.html#process-h": "five steps in ENH-011 (full version)",
     "index.html#prod-h": "Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · AI apps in ENH-013, ENH-021",
-    "index.html#news-h": "ENH-007",
     "index.html#contact-h": "new in ENH-001 · ENH-010 · blended in ENH-036",
     "products.html#h1": "ENH-014 · ENH-018 · ENH-020", // Products hero
     "products.html#apps-h": "new in ENH-020",
-    "products.html#up-h": "ENH-024",
     "about.html#h1": "new in ENH-030", // About hero: the mountain story
     "about.html#faq-h": "rebuilt in ENH-016 · background stilled in ENH-019 · last slot in ENH-031",
     "about.html#cap-h": "blended in ENH-036",
     "services.html#h1": "light hero in ENH-033",
     "services.html#cap-h": "blended in ENH-036",
-    "news.html#h1": "white and light blue in ENH-034 · rebuilt in ENH-037",
+    "news.html#h1": "white and light blue in ENH-034 · rebuilt in ENH-037 · newsroom stories in ENH-042 · bento grid in ENH-045",
+    "index.html#news-h": "ENH-007 · story cards in ENH-042",
+    "products.html#up-h": "ENH-024 · story cards in ENH-042",
+    "404.html#h1": "lost-trail map in ENH-043",
     "news-story.html#h1": "editorial article in ENH-037",
-    "careers.html#life-h": "carousel in ENH-040",
+    "careers.html#life-h": "event reel in ENH-041",
     "products.html#day-h": "new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040",
     "news.html#cap-h": "blended in ENH-036",
     "careers.html#h1": "pastel hero in ENH-035",
@@ -44,12 +45,12 @@ module.exports = {
     "services.html": "ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); " + SITE_WIDE,
     "about.html": 'ENH-030 (the mountain story is the hero; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 (email section continues the navy into the footer); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); ' + SITE_WIDE,
     "news.html": "ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-037 (audience filter and full-photo story cards); ENH-036 (email section blends in); " + SITE_WIDE,
-    "news-story.html": "ENH-037 (an editorial article: label, date, headline, summary, wide photo, pull quote); " + SITE_WIDE,
-    "careers.html": "ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-040 (Life at XionTechs is a horizontal carousel); " + SITE_WIDE,
+    "news-story.html": "ENH-037 (an editorial article: label, date, headline, summary, wide photo); ENH-042 and ENH-044 (each story's own text, with subheadings, from the newXion newsroom); " + SITE_WIDE,
+    "careers.html": "ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-041 (Life at XionTechs is an event reel of team photos); " + SITE_WIDE,
     "job.html": "ENH-026 (fits phone screens); " + SITE_WIDE,
     "demo.html": "ENH-011 (checklist says five steps); " + SITE_WIDE,
     "privacy.html": SITE_WIDE,
-    "404.html": "Batch 1 (no label above the heading); " + SITE_WIDE,
+    "404.html": "Batch 1 (no label above the heading); ENH-043 (You’ve wandered off the trail, with a trail map); " + SITE_WIDE,
   },
 
   // the change list printed at the top of wireframes-final.md
@@ -84,7 +85,11 @@ module.exports = {
 | News, whole page (again) | Product/Company/Schools/Team filters; compact cards | "What we’re building, learning and sharing"; filters by audience (Schools, Students, Parents, Company); full-photo story cards with the newest featured; hover or focus lifts the card and shows "Read story" | ENH-037 |
 | Story page | Placeholder headline and body | An editorial article: Back to News, audience label and date, headline, summary, wide rounded photo, subheadings, amber pull quote, inline photo | ENH-037 |
 | Every page, headings | Display headings at 500 (reading as bold); page titles in five sizes; Products titles in the body font | One page-title style; display headings at 300 and card titles at 400; the guideline's line height and letter spacing | ENH-038, ENH-039, ENH-040 |
-| Careers, Life at XionTechs | Three photo frames in a row | A horizontal carousel of six frames with drag, swipe, arrow keys and page dots | ENH-040 |
+| Careers, Life at XionTechs | Three photo frames in a row | A reel of real team photos, all one size, drifting edge to edge; holds on hover and focus, with a pause button | ENH-040, ENH-041 |
+| News content | Sample stories | The six newXion newsroom stories (news-style titles, fuller articles) plus marked mock stories for Students and Parents; a bento grid of mixed card shapes; Home and Products rows use the story cards | ENH-042, ENH-044, ENH-045 |
+| Every page, footer | Flat footer top | A mountain ridgeline; a small climber stands at a spot set by the page’s place in the navigation (Home at the foot, Careers on the summit) and walks there between pages | ENH-043 to ENH-045 |
+| 404 | “We couldn’t find that page.” | “You’ve wandered off the trail.” with a trail map from You are here to Home | ENH-043 |
+| Forms (contact, demo, job) | Check-mark thank-you | A flag rises on a small summit above “Summit reached.” and the thank-you | ENH-043 |
 | Email and contact sections | Fixed amber or navy boxes with corner rings | Home's contact, and the email sections on About, Services and News, blend into the colours around them; no rings | ENH-036 |
 | Products, the apps | Four separate sections (PXP, LXP, SXP, IoT) with their own layouts, and a PXP / LXP / SXP / IoT / Updates bar | Seven stacked app cards (SXP, IoT, AI Timetable, AI Grader, PXP, LXP, AI Tutor) that pin and replace one another on desktop; phone or browser mockup, app name, one sentence, a Features list, store or View prototype buttons; School / Parents / Students pills that jump and highlight | ENH-020 |
 | Products, background | Separate coloured bands per section | One background flowing down the page: white with amber dots, bright amber through the apps, easing into light blue by AI Tutor, then dark blue to the footer | ENH-022 |

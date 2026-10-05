@@ -453,7 +453,7 @@ fieldset.field{border:0}
 .lede.spaced{margin:var(--sp-s) 0 var(--sp-l)}
 
 /* footer */
-footer.site{background:var(--ink);color:var(--on-navy-muted);padding:72px 0 36px;--focus:var(--amber)}
+footer.site{position:relative;background:var(--ink);color:var(--on-navy-muted);padding:72px 0 36px;--focus:var(--amber)}
 footer.site .fgrid{display:grid;grid-template-columns:1.3fr repeat(4,1fr);gap:36px}
 footer.site h4{font-family:var(--f-brand);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:var(--amber-tint);margin-bottom:16px;font-weight:500}
 footer.site ul{list-style:none;display:grid;gap:2px}
@@ -1090,8 +1090,6 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 /* touch screens have no hover, so "Read story" always shows there */
 @media (hover:none){.scard-content{transform:translateY(-48px)}.scard-read{opacity:1;transform:none}
   .scard::before{background:linear-gradient(180deg,rgb(7 25 54 / .2) 0%,rgb(7 25 54 / .08) 20%,rgb(7 25 54 / .58) 38%,rgb(7 25 54 / .86) 56%,rgb(7 25 54 / .94) 100%)}}
-.scard.is-opening{animation:openStory .46s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes openStory{to{opacity:0;transform:scale(.985) translateY(-5px)}}
 @media (max-width:900px){
   .nhead{flex-direction:column;align-items:flex-start;gap:20px}
   .sgrid{grid-template-columns:minmax(0,1fr)}
@@ -1103,9 +1101,7 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
   .scard:hover,.scard:focus-visible,.scard:hover img,.scard:focus-visible img{transform:none}
 }
 /* the compact cards on Home and Products now carry the story photo */
-.ncard-img{aspect-ratio:16/10;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--mist)}
-.ncard-img img{width:100%;height:100%;object-fit:cover;display:block}
-.ncard p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
 
 /* ---------- Story page: an editorial article (ENH-037) ---------- */
 .art-hero{padding:56px 0 24px}
@@ -1129,13 +1125,24 @@ a.w-card:hover .w-link i{transform:translateX(4px)}
 @media (max-width:900px){.art-img img{height:340px}}
 @media (max-width:650px){.art-meta{align-items:flex-start}.art-img{border-radius:20px}.art-img img{height:240px}.art-inline img{height:220px}}
 
-/* ---------- Careers: Life at XionTechs as a horizontal carousel (ENH-040), reusing the case-study slider ---------- */
-.life-slider{grid-auto-columns:calc((100vw - 2 * max(24px,(100vw - 1240px) / 2 + 24px) - 54px) / 4)}
-.life-card{scroll-snap-align:start;margin:0;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3;min-width:0;background:var(--paper);border:1px solid rgb(22 54 99 / .12)}
-.life-card .slot{width:100%;height:100%;border-radius:0}
-.life-shell::after{display:none}
-@media (max-width:900px){.life-slider{grid-auto-columns:calc((100vw - 66px) / 2)}}
-@media (max-width:640px){.life-slider{grid-auto-columns:82vw}}
+/* ---------- Careers: Life at XionTechs as a horizontal event reel (ENH-041): photos only, all one size, edge to edge ---------- */
+.reel{position:relative;margin-top:8px;margin-inline:calc(50% - 50vw)}
+.reel-view{overflow:hidden;padding:12px 0 20px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.reel-track{display:flex;gap:18px;width:max-content;will-change:transform}
+.reel-card{position:relative;flex:none;display:block;width:380px;aspect-ratio:3/2;border-radius:var(--r-lg);overflow:hidden;background:var(--mist);transition:transform .35s ease}
+.reel-card img{display:block;width:100%;height:100%;object-fit:cover}
+.reel-label{position:absolute;left:14px;bottom:14px;display:inline-flex;align-items:center;min-height:32px;padding:0 12px;border-radius:var(--r-full);
+  background:rgb(255 255 255 / .92);color:var(--navy);font-size:var(--fs-label);font-weight:600;opacity:0;transform:translateY(10px);transition:opacity .3s ease,transform .3s ease}
+.reel-card:hover,.reel-card:focus-visible{transform:translateY(-6px)}
+.reel-card:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+.reel-card:hover .reel-label,.reel-card:focus-visible .reel-label{opacity:1;transform:none}
+@media (hover:none){.reel-label{opacity:1;transform:none}}
+.reel-ctrl{display:flex;justify-content:flex-end;width:min(1240px,100%);margin:4px auto 0;padding:0 var(--sp-l)}
+.reel-btn{width:var(--target);height:var(--target);display:grid;place-items:center;border-radius:50%;border:1px solid rgb(22 54 99 / .25);background:rgb(255 255 255 / .7);color:var(--navy);font-size:1rem}
+.reel-btn:hover{border-color:var(--navy)}
+.reel-btn[hidden]{display:none}
+@media (max-width:700px){.reel-card{width:280px}}
+@media (prefers-reduced-motion:reduce){.reel-card,.reel-label{transition:none}.reel-card:hover,.reel-card:focus-visible{transform:none}.reel-view{overflow-x:auto;scrollbar-width:thin;padding-inline:max(24px,calc((100vw - 1240px)/2 + 24px))}}
 
 /* ---------- Heading rhythm from the typography guideline (ENH-040): page titles line height 1.04 and -0.04em, section headings 1.06 and -0.035em, card titles 1.3 ---------- */
 h2,.art-body h2{line-height:1.06;letter-spacing:-.035em}
@@ -1144,6 +1151,76 @@ main h3{line-height:1.3}
 /* Vietnamese stacks accents above the letters, so headings keep a little more line height there */
 :lang(vi) :is(.page-hero h1,.home-hero h1,.eco-copy h1,.nhead h1,.art-hero h1,.mtn h1){line-height:1.14}
 :lang(vi) h2{line-height:1.16}
+
+/* ---------- News: a bento grid of mixed shapes (ENH-045) ---------- */
+#newsGrid{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:250px;grid-auto-flow:dense}
+#newsGrid .scard{min-height:0;grid-row:auto}
+#newsGrid .scard.s-feat{grid-column:span 2;grid-row:span 2}
+#newsGrid .scard.s-tall{grid-row:span 2}
+#newsGrid .scard.s-wide{grid-column:span 2}
+#newsGrid .scard.s-full{grid-column:1/-1;grid-row:span 2}
+#newsGrid .scard .scard-title{font-size:clamp(1.05rem,1.3vw,1.2rem)}
+#newsGrid .scard.s-wide .scard-title{font-size:clamp(1.2rem,1.6vw,1.45rem)}
+#newsGrid .scard.s-feat .scard-title{font-size:clamp(1.35rem,2vw,1.75rem)}
+@media (max-width:1000px){#newsGrid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:230px}}
+@media (max-width:640px){#newsGrid{grid-template-columns:minmax(0,1fr);grid-auto-rows:300px}#newsGrid .scard.s-feat,#newsGrid .scard.s-tall,#newsGrid .scard.s-wide,#newsGrid .scard.s-full{grid-column:auto;grid-row:auto}}
+
+/* ---------- News rows on Home and Products use the story cards (ENH-042) ---------- */
+.sgrid-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sgrid-row .scard{min-height:360px}
+@media (max-width:1000px){.sgrid-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:641px) and (max-width:1000px){.sgrid-row .scard:nth-child(3){display:none}}
+@media (max-width:640px){.sgrid-row{grid-template-columns:minmax(0,1fr)}.sgrid-row .scard{min-height:320px}}
+.scard img[src^="assets/news/"]{object-position:center 30%}
+
+/* ---------- Mountain touches (ENH-043) ---------- */
+/* every page: the footer sits on a ridgeline, with the X on the highest peak */
+.ridge{position:absolute;left:0;right:0;bottom:100%;height:120px;pointer-events:none}
+.ridge svg{display:block;width:100%;height:100%}
+/* the last section on a page leaves room for the ridge, so it never covers content */
+main>section:last-of-type:not(.hero){padding-bottom:160px}
+main>section.hero:only-of-type{padding-bottom:180px}
+@media (max-width:640px){main>section:last-of-type:not(.hero){padding-bottom:110px}main>section.hero:only-of-type{padding-bottom:120px}}
+.ridge-fill{fill:var(--ink)}
+.ridge-line{fill:none;stroke:var(--amber);stroke-width:1.5;stroke-opacity:.55;vector-effect:non-scaling-stroke}
+.ridge-climber{position:absolute;left:0;top:0;width:26px;height:30px;margin:-29px 0 0 -13px;will-change:transform}
+.ridge-climber svg{transform-origin:50% 100%}
+.ridge-climber.left svg{transform:scaleX(-1)}
+.ridge-climber.walking svg{animation:climbStep .42s ease-in-out infinite alternate}
+.ridge-climber.left.walking svg{animation-name:climbStepL}
+@keyframes climbStep{from{transform:translateY(0) rotate(-3deg)}to{transform:translateY(-2px) rotate(3deg)}}
+@keyframes climbStepL{from{transform:scaleX(-1) translateY(0) rotate(-3deg)}to{transform:scaleX(-1) translateY(-2px) rotate(3deg)}}
+.ridge-climber svg{display:block;width:100%;height:100%}
+.rc-head{fill:var(--navy)}
+.rc-body{fill:none;stroke:var(--navy);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.rc-pack{fill:var(--amber)}
+@media (max-width:640px){.ridge{height:72px}.ridge-climber{width:18px;height:21px;margin:-20px 0 0 -9px}}
+@media (prefers-reduced-motion:reduce){.ridge-climber.walking svg{animation:none}}
+/* 404: a small trail map from "You are here" up to Home */
+.trail-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:center}
+.trail-map{position:relative;margin:0}
+.trail-map svg{display:block;width:100%;height:auto;overflow:visible;-webkit-mask-image:radial-gradient(ellipse 95% 95% at 52% 45%,#000 70%,transparent 100%);mask-image:radial-gradient(ellipse 95% 95% at 52% 45%,#000 70%,transparent 100%)}
+.tm-range{fill:rgb(255 255 255 / .05)}
+.tm-ridge{fill:none;stroke:rgb(170 195 235 / .55);stroke-width:2}
+.tm-contour{fill:none;stroke:rgb(170 195 235 / .18);stroke-width:1.5}
+.tm-trail{fill:none;stroke:var(--amber);stroke-width:3;stroke-linecap:round;stroke-dasharray:2 10;animation:trailWalk 2.4s linear infinite}
+@keyframes trailWalk{to{stroke-dashoffset:-48}}
+.tm-here{fill:var(--amber)}
+.tm-here-ring{fill:none;stroke:var(--amber);stroke-width:2;transform-origin:88px 318px;animation:herePulse 2s var(--ease) infinite}
+@keyframes herePulse{from{transform:scale(1);opacity:.8}to{transform:scale(3);opacity:0}}
+.tm-label{font-family:var(--f-body);font-size:16px;fill:var(--on-navy-text)}
+@media (max-width:600px){.tm-label{font-size:24px}}
+.tm-x{position:absolute;left:68.75%;top:20.5%;width:13%;height:auto;transform:translate(-50%,-100%)}
+@media (max-width:860px){.trail-grid{grid-template-columns:minmax(0,1fr)}.trail-map{max-width:420px}}
+/* form success: a flag goes up on the summit */
+.summit{width:120px;margin:0 auto}
+.summit svg{display:block;width:100%;height:auto}
+.sm-range{fill:none;stroke:var(--navy);stroke-width:2.5;stroke-linejoin:round}
+.sm-pole{stroke:var(--navy);stroke-width:2}
+.sm-flag{fill:var(--amber);transform-box:fill-box;transform-origin:left center}
+.form-card.sent .sm-flag{animation:flagUp .9s .2s var(--ease) both}
+@keyframes flagUp{from{transform:translateY(14px) scaleX(.2);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.tm-trail,.tm-here-ring,.form-card.sent .sm-flag{animation:none}.tm-here-ring{display:none}}
 
 /* ---------- Calmer weights (ENH-025): the original fonts and sizes, nothing bold ---------- */
 body{font-weight:400;text-rendering:optimizeLegibility}

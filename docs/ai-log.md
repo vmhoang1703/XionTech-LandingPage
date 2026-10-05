@@ -1134,3 +1134,22 @@ Template:
   had "Someone in your family has cancer" on its blackboard; the compact news photos were reused inside a
   photo-frame element that the prototype's upload tool rewrites; and a first contrast check flagged the date pills
   falsely by sampling outside their rounded corners.
+
+## 2026-10-05 — ENH-041 to ENH-045: event reel, newsroom stories, bento News, mountain touches
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Life at XionTechs as a horizontal event reel from Amber's options file (photos only, one size,
+  no back or forward buttons); real news from the captured newXion newsroom with mock stories where needed, news-
+  style titles and fuller articles; story cards on Home and Products; a bento News grid; the footer ridgeline with a
+  climber whose spot follows the page's place in the navigation; the 404 lost-trail map; "Summit reached" on forms.
+- **Decision / result:** Approved by Amber. The reel uses the real team photos (each links to its story) and keeps
+  a pause button for WCAG 2.2.2. The six newsroom posts are the real stories; three marked mock stories fill
+  Students and Parents. Review fixes before commit: a 9px seam in the reel loop, the first photo vanishing when
+  focused, copied photos keeping the old language, the reel animating while idle, bento holes for small filters,
+  Home's row showing mostly mock stories, Privacy and 404 resetting the climber, and three article sentences that
+  went beyond the newsroom capture.
+- **AI got it wrong?** Yes: the first climber followed the scroll instead of staying at one spot per page (Amber
+  had to clarify), the first reel loop length ignored the last gap, the expanded articles added a few details the
+  newsroom never said (an "evening", a link between two unrelated posts), and a script check line aborted a log
+  update before it was saved.
