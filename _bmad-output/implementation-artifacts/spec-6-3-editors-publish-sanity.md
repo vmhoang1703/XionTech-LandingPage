@@ -57,7 +57,7 @@ Lead decisions (2026-10-05, the lead said "start to build" on these defaults): D
 - [x] `studio/schemas/careers-photos.ts`, `studio/schemas/product.ts`, `index.ts`, `schemas.test.ts` -- the two types with titles, descriptions and validation (alt required when a photo is set; clip accepts `video/mp4`) -- CAP-3, CAP-4.
   - red: `schemas.test.ts` -- the new types and their fields and validation are missing.
 - [x] `studio/sanity.config.ts` -- structure: "Careers photos" (one document, id `careersPhotos`), "Products" (four documents, ids `product-pxp` ... `product-iot`), then News posts and Job openings; no create, duplicate or delete for the singletons -- CAP-3, CAP-4, CAP-5.
-- [ ] `src/lib/sanity/client.ts`, `src/app/api/revalidate/route.ts` + test -- new tags accepted by the webhook -- CAP-3.
+- [x] `src/lib/sanity/client.ts`, `src/app/api/revalidate/route.ts` + test -- new tags accepted by the webhook -- CAP-3.
   - red: `route.test.ts` -- a signed `careersPhotos` or `product` body answers 400.
 - [ ] `src/lib/careers/life-photos.ts` + test -- `getLifePhotos()`: GROQ on `_id == "careersPhotos"`, per slot `url` (`asset->url`), width, height, alt, caption; tag `careersPhotos`; null on failure with one log line -- CAP-3.
   - red: `life-photos.test.ts` -- the function does not exist.
