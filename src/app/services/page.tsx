@@ -1,13 +1,16 @@
 import { ArrowRightIcon, ClockIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CaptureBand } from "@/components/contact/capture-band";
 import { HeroArt } from "@/components/sections/hero-art";
 import { LiveClock } from "@/components/sections/live-clock";
+import { ProcessFlow } from "@/components/sections/process-flow";
 import { StatsBand } from "@/components/sections/stats-band";
 import { serviceIcons } from "@/content/service-icons";
 import {
   servicesMeta,
   servicesPage,
+  servicesProcess,
   servicesSection,
   servicesStats,
 } from "@/content/services";
@@ -17,7 +20,9 @@ export const metadata: Metadata = {
   description: servicesMeta.description,
 };
 
-// Stories 5.1 and 5.2. Server-rendered hero, stats and service cards; LiveClock is the only client part.
+// Stories 5.1, 5.2 and 5.4: hero, stats, service cards, the 4-D process at
+// #process and the project capture. The clocks, the 4-D reveal and the
+// capture form are the client parts.
 export default function ServicesPage() {
   const { breadcrumbLabel, breadcrumbHome, breadcrumbCurrent } = servicesPage;
   const { title, lede, primaryCta, secondaryCta } = servicesPage;
@@ -43,9 +48,11 @@ export default function ServicesPage() {
               {primaryCta.label}
               <ArrowRightIcon aria-hidden="true" />
             </Link>
-            <Link className="btn btn-glass" href={secondaryCta.href}>
+            {/* A plain anchor: next/link does not scroll again when the
+                hash is already #process, so a second click did nothing. */}
+            <a className="btn btn-glass" href={secondaryCta.href}>
               {secondaryCta.label}
-            </Link>
+            </a>
           </div>
           <div
             className="clock-strip"
@@ -109,6 +116,21 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+      <section
+        id="process"
+        className="sec surface-navy gridbg"
+        aria-labelledby="services-process-h"
+      >
+        <div className="wrap">
+          <div className="sec-head">
+            <span className="label">{servicesProcess.label}</span>
+            <h2 id="services-process-h">{servicesProcess.title}</h2>
+            <p className="lede">{servicesProcess.lede}</p>
+          </div>
+          <ProcessFlow flow={servicesProcess.flow} />
+        </div>
+      </section>
+      <CaptureBand kind="project" />
     </>
   );
 }

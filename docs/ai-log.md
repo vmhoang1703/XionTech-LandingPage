@@ -699,3 +699,27 @@ Template:
   - **Outcome:** the reviews caught all of these, and they are fixed.
 - **Decision / result:** `/services#<id>` from the Home cards, the footer and the mega menu lands each card fully below the sticky header.
 - **Same day, at PR time:** my script that filled the UX table's "Checked" column wrote `||`, which added an empty extra column to every row. This is the same mistake logged for Story 6.6. It was caught when the table was copied into the PR and has been fixed.
+
+## 2026-10-05 — Story 5.4 4-D process at #process and project capture (`bmad-build`, one-shot)
+
+- **Prompt (Son Nguyen):** "PR 46 done, move to 5.4 please".
+- **What the AI did:**
+  - **Route:** chose the one-shot route, because the story only places two finished components (the 3.6 4-D flow and the 2.4 capture band).
+  - **Build:** wrote a short spec with a 14-line UX checks table and built it tests first. The Services step lines are passed to the shared flow as data.
+  - **Checks:** walked it in Chrome on a production build. The walk answers the capture's `POST /api/contact` itself, so no mail is sent.
+  - **Review:** ran all five review layers before the PR.
+- **AI got it wrong?** Yes.
+  - **UX table:** the same `||` slip as Story 5.2 again, in the same session. A column check caught it this time, before the commit.
+  - **Evidence:**
+    - The walk claimed "navy glow" and "amber gradient" while it only logged `background-color`, which read transparent.
+    - It counted 1×3px boxes as hidden without reading how they were hidden.
+    - It marked the 1080/640px row ✅ although the walk showed the layout switching one pixel late.
+  - **Repeat click:** the review found that a second click on "See our 4-D process" did nothing, because `next/link` skips the scroll when the hash is unchanged. It is now a plain `<a>`, and the walk shows it landing.
+  - **Outcome:** the five reviewers caught all of these, and they are fixed or recorded as pending.
+- **Decision / result:**
+  - Quân's path works on `/services`: "See our 4-D process" lands on the band with aligned "You receive" rows, and a work email in the amber capture opens `/demo#project` on the Outsourcing tab with the email filled in.
+  - Pending: the site-wide ≥/≤ breakpoint question (Amber/Hoang).
+  - Deferred:
+    - the capture input is 20px tall at 390px (Andy, 2.4);
+    - the mega menu's same-hash link may not re-scroll;
+    - a browser test of the anchor landing.

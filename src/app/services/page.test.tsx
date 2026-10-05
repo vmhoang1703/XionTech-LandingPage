@@ -1,10 +1,32 @@
 import { render, screen } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import ServicesPage, { metadata } from "./page";
 
 vi.mock("@/components/sections/hero-art", () => ({ HeroArt: () => null }));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
+// The 4-D reveal reads matchMedia and IntersectionObserver, which jsdom lacks.
+beforeEach(() => {
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn(() => ({ matches: false })),
+  );
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      observe() {}
+      disconnect() {}
+    },
+  );
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe("ServicesPage", () => {
   it("has its own title and description", () => {
@@ -75,7 +97,8 @@ describe("ServicesPage", () => {
     const { container } = render(<ServicesPage />);
     // The stats band is Tailwind utilities, covered by its own tests.
     container.querySelector('[role="group"][aria-labelledby]')?.remove();
-    expect(undefinedClasses(container, /^(mt-5|pt-10)$/)).toEqual([]);
+    // The capture band's honeypot label uses the Tailwind sr-only utility.
+    expect(undefinedClasses(container, /^(mt-5|pt-10|sr-only)$/)).toEqual([]);
   });
 
   it("shows the five confirmed figures with amber-text suffixes", () => {
@@ -173,7 +196,88 @@ describe("ServicesPage", () => {
   it(".svc[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
     const css = globalsCss();
     expect(css).toMatch(
-      /\.svc\[id\]\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+      /\.svc\[id\](\s*,\s*#process)?\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+    );
+  });
+
+  it("places the 4-D process on a navy band at #process, after the services", () => {
+    const { container } = render(<ServicesPage />);
+
+    const band = container.querySelector("section#process");
+    expect(band?.className).toBe("sec surface-navy gridbg");
+    const h2 = screen.getByRole("heading", {
+      level: 2,
+      name: "From your request to launch, in four steps.",
+    });
+    expect(band?.getAttribute("aria-labelledby")).toBe(h2.id);
+    const head = h2.parentElement;
+    expect(head?.className).toBe("sec-head");
+    expect(head?.querySelector(".label")?.textContent).toBe("Our 4-D process");
+    expect(head?.querySelector("p.lede")?.textContent).toBe(
+      "Every step ends with something you can see, test and approve.",
+    );
+    const services = container.querySelector("section.surface-mist");
+    expect(services?.nextElementSibling).toBe(band);
+  });
+
+  it("passes the Services step copy to the shared 4-D flow", () => {
+    render(<ServicesPage />);
+
+    const flow = screen.getByRole("list", { name: "4-D process" });
+    const steps = Array.from(flow.querySelectorAll("li.step4"));
+    expect(steps.map((s) => s.querySelector("h3")?.textContent)).toEqual([
+      "Discovery",
+      "Design",
+      "Development",
+      "Deployment",
+    ]);
+    expect(
+      steps.map((s) => s.querySelector(":scope > p")?.textContent),
+    ).toEqual([
+      "Workshops to understand your goals, users, risks and scope.",
+      "User flows, interfaces and architecture agreed before code is written.",
+      "Agile sprints with regular demos, testing and open progress updates.",
+      "A safe release, monitoring and improvement after launch.",
+    ]);
+    expect(steps.map((s) => s.querySelector(".get span")?.textContent)).toEqual(
+      [
+        "A clear scope, estimate and delivery plan.",
+        "A clickable prototype and technical design.",
+        "Working software every sprint.",
+        "A live release with ongoing support.",
+      ],
+    );
+    expect(flow.querySelector(".node b")?.textContent).toBe("Your request");
+    expect(flow.querySelector(".node.end b")?.textContent).toBe("Launch");
+  });
+
+  it("ends with the project capture band", () => {
+    const { container } = render(<ServicesPage />);
+
+    const h2 = screen.getByRole("heading", {
+      level: 2,
+      name: "Tell us what you're building.",
+    });
+    const capture = h2.closest("section");
+    expect(capture?.className).toBe("capture surface-amber");
+    expect(capture?.querySelector('button[type="submit"]')?.textContent).toBe(
+      "Start a project",
+    );
+    expect(container.lastElementChild).toBe(capture);
+  });
+
+  it("keeps the colour rhythm: navy hero, navy 4-D band, one amber band", () => {
+    const { container } = render(<ServicesPage />);
+
+    expect(container.querySelectorAll(".hero-navy")).toHaveLength(1);
+    expect(container.querySelectorAll(".surface-navy")).toHaveLength(1);
+    expect(container.querySelectorAll(".surface-amber")).toHaveLength(1);
+  });
+
+  it("#process has a scroll-margin-top that uses --spacing-anchor-offset", () => {
+    const css = globalsCss();
+    expect(css).toMatch(
+      /#process\s*[,{][^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
   });
 });
