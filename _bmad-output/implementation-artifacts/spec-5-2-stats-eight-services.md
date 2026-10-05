@@ -101,16 +101,16 @@ Sources: SPEC CAP-1 to CAP-3, `EXPERIENCE.md` (Stats band line 134; Responsive l
 | Stats band | page loads | — | paper surface right under the navy hero; 25+, 24/7, 20+, 8, 2, each with its caption | static (count-up after demo) | CAP-1, DESIGN.md Stats band || ✅ walk: figures, paper after hero; page.test five figures |
 | Stats suffix | page loads | — | "+" and "/7" in amber-text (#8A6700), never #C99700 | — | CAP-1, DESIGN.md Stats band || ✅ walk: rgb(138, 103, 0); page.test amber-text |
 | Stats band | width | — | 5 columns above 1080px, 3 at 1080px and below, 2 at 640px and below; 1px column dividers | — | EXPERIENCE.md Responsive || ✅ walk: 5 / 3 / 2 columns, 1px dividers |
-| Stats label | page loads | — | no visible eyebrow label and no top rule; screen readers name the band "Key facts" | — | prototype services.html 35; decision 2026-10-05 || ✅ walk: h2 1×1, border 0px, group "Key facts"; stats-band.test |
+| Stats label | page loads | — | no visible eyebrow label and no top rule; screen readers name the band "Key facts" | — | prototype services.html 35; decision 2026-10-05 || ✅ walk: h2 1×1, border 0px, group "Key facts" named once (no section aria-label); stats-band.test, page.test |
 | Services section | page loads | — | mist surface with linen texture; h2 "Eight services, one team." and the lede | — | DESIGN.md Services surfaces, prototype || ✅ walk: mist gradient, linen, h2 and lede; page.test h2 |
 | Service grid | width | — | 4 columns above 1080px, 2 at 1080px and below, 1 at 640px and below | — | EXPERIENCE.md Responsive || ✅ walk: 4 / 2 / 1 columns |
 | Service card | page loads | — | 48px icon tile, title, one line of copy, mono tags where given; Product Engineering and Cloud amber-tinted, AI-Powered Solutions navy | — | EXPERIENCE.md Service card, prototype || ✅ walk: 48px tiles, variants, mono tags on 5 cards; page.test |
 | Service card | hover or click | mouse, touch, pen | nothing happens; not a link, no pointer cursor | — | CAP-2 || ✅ walk: cursor auto, URL unchanged; page.test no links |
 | Service card | Tab through the section | keyboard | no focus stop on any card | — | CAP-2 || ✅ walk: Tab goes hero CTA → footer, 0 focusables in grid |
 | Service anchors | open `/services#<id>` for each of the 8 | link | the card's heading fully visible below the sticky header; card top at about 88px | on load | CAP-3, AC-NAV-5 || ✅ walk: 1280px all cards at 88, h3 172–173 |
-| Service anchors | Home card, footer link or mega-menu link to a service | mouse | lands on that card on `/services`, heading visible | on load | CAP-3 || ✅ walk: Home card and footer link land at 88 |
-| Service anchors | same at 390px | touch | heading fully visible below the header | on load | CAP-3 || ✅ walk: every h3 visible; cards at 88–131 (see observed.md) |
-| Whole page | reduced motion | — | stats show final numbers; no card motion | — | EXPERIENCE.md Reduced motion || ✅ walk: final figures, animation none |
+| Service anchors | Home card, footer link or mega-menu link to a service | mouse | lands on that card on `/services`, heading visible | on load | CAP-3 || ✅ walk: Home card, footer link and Services mega-menu link land at 88 |
+| Service anchors | same at 390px | touch | heading fully visible below the header | on load | CAP-3 || ✅ walk: all 8 cards at 88, h3 172–173 after the smooth scroll settles |
+| Whole page | reduced motion | — | stats show final numbers; no card motion | — | EXPERIENCE.md Reduced motion || ✅ walk: final figures; scroll-behavior auto, instant landing at 88; cards have no motion in either mode |
 | Whole page | width 390px | — | no sideways scroll | — | EXPERIENCE.md Responsive || ✅ walk: no sideways scroll |
 
 ## Implementation Notes
@@ -167,31 +167,32 @@ Step 4 review, 2026-10-05. Layers: Blind Hunter, Edge Case Hunter, Verification 
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-05.
+Captured again after the step-04 review patches on 2026-10-05.
 
 **Commands**
 
-- `npm test` -- exit 0 -- Test Files 70 passed (70), Tests 1073 passed (1073)
+- `npm test` -- exit 0 -- Test Files 71 passed (71), Tests 1074 passed (1074)
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total: 7 lines, Missing: 0 lines, Coverage: 100%; branches on changed files 100% (page.tsx 2/2, stats-band.tsx 10/10)
-- `npm run test:smoke` -- exit 0 -- 14 passed (11.8s)
+- `npm run test:smoke` -- exit 0 -- 14 passed (14.1s)
 
 **Observed**
 
-- At 1280px, all eight `/services#<id>` links land with the card top at 88 and the h3 at 172–173, below the 72px header. At 390px every h3 is fully visible, with cards at 88–131. -- walk on `next start -p 3005`
-- Stats show 5/3/2 columns, services 4/2/1. The suffixes are #8A6700, the label is sr-only, the grid has no focusable elements, and no width scrolls sideways. -- same walk
+- All eight `/services#<id>` links land with the card top at 88 and the h3 at 172–173, below the 72px header, at 1280px and at 390px once the smooth scroll stops. -- walk on `next start -p 3005`
+- Home card, footer and Services mega-menu links land at 88. Under reduced motion the jump is instant (`scroll-behavior: auto`). -- same walk
+- Stats show 5/3/2 columns, services 4/2/1. The suffixes are #8A6700; "Key facts" is sr-only and named once; the grid has no focusable elements; no width scrolls sideways. -- same walk
 
 **Artifacts**
 
-- [observed.md](spec-5-2-stats-eight-services-evidence/observed.md) -- 2092 bytes -- sha256 0c03620b3ce5 -- the full observations
-- [walk-output.txt](spec-5-2-stats-eight-services-evidence/walk-output.txt) -- 2589 bytes -- sha256 de37ae94b99a -- raw walk output
-- [verification.txt](spec-5-2-stats-eight-services-evidence/verification.txt) -- 5804 bytes -- sha256 70a3e71579eb -- the four commands' output
-- [services-5-2-1280.png](spec-5-2-stats-eight-services-evidence/services-5-2-1280.png) -- 344133 bytes -- sha256 ffe343619703 -- stats band and section head at 1280px
-- [services-5-2-899.png](spec-5-2-stats-eight-services-evidence/services-5-2-899.png) -- 303851 bytes -- sha256 05afec209216 -- 899px
-- [services-5-2-390.png](spec-5-2-stats-eight-services-evidence/services-5-2-390.png) -- 155349 bytes -- sha256 b7be09323f4b -- 390px
+- [observed.md](spec-5-2-stats-eight-services-evidence/observed.md) -- 2463 bytes -- sha256 8bae5576b1c2 -- the full observations
+- [walk-output.txt](spec-5-2-stats-eight-services-evidence/walk-output.txt) -- 2844 bytes -- sha256 b93d9ca5be3f -- raw walk output
+- [verification.txt](spec-5-2-stats-eight-services-evidence/verification.txt) -- 5831 bytes -- sha256 f778f0384d4a -- the four commands' output
+- [services-5-2-1280.png](spec-5-2-stats-eight-services-evidence/services-5-2-1280.png) -- 343973 bytes -- sha256 87ad492327f1 -- stats band and section head at 1280px
+- [services-5-2-899.png](spec-5-2-stats-eight-services-evidence/services-5-2-899.png) -- 303720 bytes -- sha256 0025ba9fc3f0 -- 899px
+- [services-5-2-390.png](spec-5-2-stats-eight-services-evidence/services-5-2-390.png) -- 155372 bytes -- sha256 c594195d96d3 -- 390px
 - [anchor-low-code-1280.png](spec-5-2-stats-eight-services-evidence/anchor-low-code-1280.png) -- 231132 bytes -- sha256 693908322b96 -- `#low-code` landing at 1280px
-- [anchor-low-code-390.png](spec-5-2-stats-eight-services-evidence/anchor-low-code-390.png) -- 121391 bytes -- sha256 125056680203 -- `#low-code` landing at 390px
+- [anchor-low-code-390.png](spec-5-2-stats-eight-services-evidence/anchor-low-code-390.png) -- 120357 bytes -- sha256 d492c83fb50d -- `#low-code` landing at 390px
 
 **Not captured**
 
-- Touch and pen input on a real device. The walk used a mouse and keyboard in Chromium; the cards have no handlers or links, so they cannot react to touch either.
+- Touch and pen input on a real device. The walk used a mouse and keyboard in Chrome; the cards have no handlers or links, so they cannot react to touch either.

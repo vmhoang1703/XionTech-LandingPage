@@ -50,3 +50,17 @@ Acceptance: evidence — spec-5-2-stats-eight-services-evidence/walk-output.txt 
 Acceptance: evidence — spec-5-2-stats-eight-services-evidence/observed.md — 2092 bytes — sha256 0c03620b3ce5 — observed.md
 Acceptance: evidence — spec-5-2-stats-eight-services-evidence/verification.txt — 5804 bytes — sha256 70a3e71579eb — verification.txt
 Acceptance: manual — Chrome walk on a production build (8 anchors at 1280 and 390px; stats and services at 1280/899/390; reduced motion) — observed: 1280px every card top 88 and h3 172-173 below the 72px header; 390px cards 88-131, every h3 fully visible; stats 5/3/2 and services 4/2/1 columns; suffix rgb(138,103,0); label sr-only 1x1; 0 focusables in the grid; no sideways scroll
+Review patches: e9f80a8 (7 patch findings); scoped re-review pass, 7/7 addressed, 0 open; .svc rule-order concern resolved by controller (no other .svc rule sets margin-top or scroll-margin-top)
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/services-5-2-1280.png — 343973 bytes — sha256 87ad492327f1 — re-captured after review patches
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/services-5-2-899.png — 303720 bytes — sha256 0025ba9fc3f0 — re-captured after review patches
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/services-5-2-390.png — 155372 bytes — sha256 c594195d96d3 — re-captured after review patches
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/anchor-low-code-1280.png — 231132 bytes — sha256 693908322b96 — re-captured after review patches
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/anchor-low-code-390.png — 120357 bytes — sha256 d492c83fb50d — re-captured after review patches
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/walk-output.txt — 2844 bytes — sha256 b93d9ca5be3f — re-captured after review patches
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/observed.md — 2463 bytes — sha256 8bae5576b1c2 — re-captured after review patches
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/verification.txt — 5831 bytes — sha256 f778f0384d4a — re-captured after review patches
+Acceptance: verification — npm test — exit 0 — Test Files 71 passed (71), Tests 1074 passed (1074)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total: 7 lines, Missing: 0 lines, Coverage: 100%
+Acceptance: verification — npm run test:smoke — exit 0 — 14 passed (14.1s)
+Acceptance: manual — Chrome walk after review patches — observed: all 8 anchors card top 88, h3 172-173 at 1280 and 390px after the smooth scroll settles; Home card, footer and mega-menu links land at 88; reduced motion scroll-behavior auto, instant landing at 88; section has no aria-label

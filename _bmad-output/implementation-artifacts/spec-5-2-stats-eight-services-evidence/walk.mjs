@@ -9,7 +9,7 @@ const IDS = ["product-engineering", "ai-analytics", "co-creation", "staffing", "
 const browser = await chromium.launch().catch(() => chromium.launch({ channel: "chrome" }));
 const log = (k, v) => console.log(`${k}: ${v}`);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const STATS = 'section[aria-label="Key facts"]';
+const STATS = 'section.surface-paper:has([role="group"])';
 const SVC = 'section[aria-labelledby="services-all-h"]';
 
 async function open(width, path = "/services", options = {}) {
@@ -49,6 +49,7 @@ log("figures", (await stats.locator("li").evaluateAll((ls) => ls.map((l) => l.qu
 log("suffix colours", (await stats.locator("li p span").evaluateAll((ss) => ss.map((s) => `${s.textContent} ${getComputedStyle(s).color}`))).join(" | "));
 const h2 = stats.locator("h2");
 log("stats label", `text "${await h2.textContent()}" | box ${JSON.stringify(await h2.evaluate((e) => { const r = e.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; }))} | group name ${await stats.locator('[role="group"]').evaluate((g) => document.getElementById(g.getAttribute("aria-labelledby")).textContent)}`);
+log("stats section aria-label (none: the group alone names it)", await stats.getAttribute("aria-label"));
 log("stats list top border", await stats.locator("ul").evaluate((u) => getComputedStyle(u).borderTopWidth));
 log("stats column dividers (2nd item border-left)", await stats.locator("li").nth(1).evaluate((l) => getComputedStyle(l).borderLeftWidth));
 const svc = page.locator(SVC);

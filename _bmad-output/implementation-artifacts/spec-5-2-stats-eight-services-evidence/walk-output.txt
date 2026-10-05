@@ -2,6 +2,7 @@ stats section: rgb(253, 253, 254) | directly after hero: true
 figures: 25+ / Years of leadership experience in software | 24/7 / Global coverage across time zones | 20+ / Technology stacks we work in | 8 / Service offerings, from idea to operation | 2 / Offices: Ho Chi Minh City and Plano
 suffix colours: + rgb(138, 103, 0) | /7 rgb(138, 103, 0) | + rgb(138, 103, 0)
 stats label: text "Key facts" | box [1,1] | group name Key facts
+stats section aria-label (none: the group alone names it): null
 stats list top border: 0px
 stats column dividers (2nd item border-left): 1px
 services section: linear-gradient(rgb(238, 242, 249), rgb( | linen true | padding-top 40px
@@ -33,14 +34,16 @@ anchors at 390px:
   product-engineering header 72 card 88 h3 173 visible true
   ai-analytics header 72 card 88 h3 173 visible true
   co-creation header 72 card 88 h3 173 visible true
-  staffing header 72 card 94 h3 179 visible true
-  custom-apps header 72 card 101 h3 186 visible true
-  low-code header 72 card 100 h3 185 visible true
-  ai-solutions header 72 card 131 h3 215 visible true
-  cloud header 72 card 127 h3 212 visible true
+  staffing header 72 card 88 h3 173 visible true
+  custom-apps header 72 card 88 h3 173 visible true
+  low-code header 72 card 88 h3 173 visible true
+  ai-solutions header 72 card 88 h3 172 visible true
+  cloud header 72 card 88 h3 173 visible true
 Home card → /services#low-code: {"header":72,"card":88,"h3":173,"visible":true}
 footer link → /services#cloud: {"header":72,"card":88,"h3":173,"visible":true}
+mega menu → /services#low-code: {"header":72,"card":88,"h3":173,"visible":true}
 columns 899: stats / services: 3 / 2 | sideways scroll false
 columns 390: stats / services: 2 / 1 | sideways scroll false
 reduced motion: figures: 25+ 24/7 20+ 8 2
-reduced motion: card animation/transition: none / 0s
+reduced motion 390px: scroll-behavior / #cloud right after load: auto / {"header":72,"card":88,"h3":173,"visible":true}
+motion allowed 390px: scroll-behavior: smooth
