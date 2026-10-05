@@ -45,6 +45,8 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 
 ## Tech stack
 
+How the parts fit together (routes, Sanity flow, forms, security, limits, decision index): `docs/architecture.md`.
+
 | Area         | Choice                                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------ |
 | Framework    | Next.js 16 (App Router, `src/` dir), React 19                                                    |
