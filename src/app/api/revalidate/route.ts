@@ -3,7 +3,12 @@ import { revalidateTag } from "next/cache";
 
 import type { SanityTag } from "@/lib/sanity/client";
 
-const ALLOWED_TYPES: readonly SanityTag[] = ["post", "job"];
+const ALLOWED_TYPES: readonly SanityTag[] = [
+  "post",
+  "job",
+  "careersPhotos",
+  "product",
+];
 
 function isSanityTag(value: unknown): value is SanityTag {
   return ALLOWED_TYPES.includes(value as SanityTag);

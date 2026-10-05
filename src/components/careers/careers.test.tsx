@@ -156,6 +156,83 @@ describe("LifeFrames", () => {
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.queryByRole("button")).toBeNull();
   });
+
+  it("shows a photo with alt text and caption, and keeps the placeholder for empty slots", () => {
+    const { container } = render(
+      <LifeFrames
+        photos={{
+          team: {
+            url: "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg",
+            alt: "The team at a desk",
+            caption: "Our team",
+          },
+          office: null,
+          event: { url: null, alt: "x", caption: "y" },
+        }}
+      />,
+    );
+
+    const image = screen.getByAltText("The team at a desk");
+    expect(image.getAttribute("src")).toBe(
+      "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg?w=800&auto=format",
+    );
+    expect(screen.getByText("Our team")).not.toBeNull();
+    expect(screen.queryByText("[Placeholder] Team photo")).toBeNull();
+    expect(screen.getByText("[Placeholder] Office photo")).not.toBeNull();
+    expect(screen.getByText("[Placeholder] Event photo")).not.toBeNull();
+    expect(container.querySelectorAll(".illo")).toHaveLength(2);
+  });
+
+  it.each([null, "   "])(
+    "keeps the placeholder when a photo's alt text is %j",
+    (alt) => {
+      render(
+        <LifeFrames
+          photos={{
+            team: {
+              url: "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg",
+              alt,
+            },
+          }}
+        />,
+      );
+
+      expect(screen.queryByRole("img")).toBeNull();
+      expect(screen.getByText("[Placeholder] Team photo")).not.toBeNull();
+    },
+  );
+
+  it("keeps the other placeholders when one photo has no alt text", () => {
+    render(
+      <LifeFrames
+        photos={{
+          team: {
+            url: "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg",
+            alt: null,
+          },
+        }}
+      />,
+    );
+
+    expect(screen.queryByRole("img")).toBeNull();
+    expect(screen.getByText("[Placeholder] Team photo")).not.toBeNull();
+  });
+
+  it("shows no caption text when a photo has none", () => {
+    const { container } = render(
+      <LifeFrames
+        photos={{
+          team: {
+            url: "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg",
+            alt: "The team",
+          },
+        }}
+      />,
+    );
+
+    expect(screen.getByAltText("The team")).not.toBeNull();
+    expect(container.querySelector("figcaption")).toBeNull();
+  });
 });
 
 describe("Careers sections", () => {

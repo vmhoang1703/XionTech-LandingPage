@@ -13,7 +13,7 @@ const client = createClient({
   perspective: "published",
 });
 
-export type SanityTag = "post" | "job";
+export type SanityTag = "post" | "job" | "careersPhotos" | "product";
 
 type SanityFetchOptions = {
   query: string;
