@@ -1724,6 +1724,20 @@
     color: var(--color-amber-tint);
   }
 
+  .svc .tags {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    margin-top: auto;
+  }
+
+  /* Service card anchors (Story 5.2) */
+  .svc[id] {
+    scroll-margin-top: calc(
+      var(--spacing-anchor-offset) - var(--spacing-header-height)
+    );
+  }
+
   /* Careers open roles and life frames (Story 6.5), ported from the prototype site.css */
   .link-arrow {
     display: inline-flex;

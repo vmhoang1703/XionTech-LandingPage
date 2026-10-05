@@ -75,8 +75,7 @@ describe("ServicesPage", () => {
     const { container } = render(<ServicesPage />);
     // The stats band is Tailwind utilities, covered by its own tests.
     container.querySelector('[role="group"][aria-labelledby]')?.remove();
-    // `tags` gets its rule in the globals.css task of Story 5.2; drop it from this list there.
-    expect(undefinedClasses(container, /^(mt-5|pt-10|tags)$/)).toEqual([]);
+    expect(undefinedClasses(container, /^(mt-5|pt-10)$/)).toEqual([]);
   });
 
   it("shows the five confirmed figures with amber-text suffixes", () => {
@@ -165,5 +164,12 @@ describe("ServicesPage", () => {
     const css = globalsCss();
     expect(css).toMatch(/\.clock-strip > span\s*\{/);
     expect(css).not.toMatch(/\.clock-strip span\s*\{/);
+  });
+
+  it(".svc[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
+    const css = globalsCss();
+    expect(css).toMatch(
+      /\.svc\[id\]\s*\{[\s\S]*?scroll-margin-top[\s\S]*?--spacing-anchor-offset/,
+    );
   });
 });
