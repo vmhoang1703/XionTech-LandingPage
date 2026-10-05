@@ -2,7 +2,7 @@
 title: 'Story 5.1: Services hero with live office clocks'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-progress'
+status: 'in-review'
 baseline_commit: 'f9ad4d033ad8e9d8a3c5615323d9cf7abde08935'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -75,7 +75,7 @@ Sources: story spec CAP-1 to CAP-3, `EXPERIENCE.md` (Component Patterns › Cloc
 | Hero | page load, 1280px | — | navy gradient hero with the aurora and strand ribbon (5s then still) | ribbon ≤ 5s | CAP-1, Story 1.6 motion (shared) |  ✅ walk: navy gradient, aurora 1, ribbon 1 |
 | Breadcrumbs | read | — | mono "Home / Services"; Home links to `/` | static | CAP-1, constraint (prototype crumbs) |  ✅ walk + page test: "Home / Services" in JetBrains Mono; Home → / |
 | H1 | read | — | "Software teams that get IT done." in white Unbounded, amber bar under "get IT done" drawing in | 1.2s after 0.5s | CAP-1, prototype |  ✅ walk + page test: Unbounded white; `.hl` "get IT done" with `hl-draw` |
-| Lede | read | — | the prototype lede in on-navy muted, 20px below the H1 | static | prototype `.page-hero .lede` |  ⚠️ walk: on-navy muted rgb(197,208,227) but 18px below the H1 (`mt-4.5`), not 20px — see review |
+| Lede | read | — | the prototype lede in on-navy muted, 20px below the H1 | static | prototype `.page-hero .lede` |  ✅ walk: on-navy muted rgb(197,208,227), 20px below the H1 (after review patch; was 18px) |
 | Primary CTA | read / click | mouse | amber pill "Start a project" with an arrow → `/demo#project` | instant | CAP-1 |  ✅ walk + page test: amber pill with arrow svg → /demo#project |
 | Glass CTA | read / click | mouse | glass pill "See our 4-D process" → `#process` (top of Services until 5.4) | instant | CAP-1, constraint |  ✅ walk + page test: glass pill → /services#process, scrollY 0 |
 | CTAs | hover | mouse | lift 2px | 0.35s | DESIGN.md button |  ✅ walk: primary lifts 2px |
@@ -93,6 +93,24 @@ Sources: story spec CAP-1 to CAP-3, `EXPERIENCE.md` (Component Patterns › Cloc
 
 ## Review Triage Log
 
+Step 4 review, 2026-10-05: Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor, Security Auditor (clean), plus the task-review minors from the ledger.
+
+- Lede 18px below the H1, spec and prototype say 20px (Acceptance Auditor, Verification Gap, Blind Hunter, Edge Case Hunter) — medium, patch: `mt-5`; contract-test exemption follows.
+- `hour12: false` may render "24:05" at midnight on some engines (Edge Case Hunter, Acceptance Auditor, Task 2 minor) — low, patch: `hourCycle: "h23"` plus a 00:05 test (Node already gave 00:05).
+- Formatter tests: the "padding" test asserted 23:59, the "daylight saving" cases were October vs December, HCMC "DST" test meaningless (Blind Hunter, Task 2 minors) — low, patch: an 08:05 padding case, a real 2026-03-08 spring-forward pair, honest names.
+- Dev server returns 500 on every page (Google font loading in `src/app/layout.tsx`) (Blind Hunter, Edge Case Hunter) — maybe-false, defer: pre-existing in Andy's file; may be this machine's network to Google Fonts. Settle by running `npm run dev` on another machine.
+- The live time replaces the zone label (Blind Hunter) — false: `EXPERIENCE.md` States table, "shows the zone label … then the live time".
+- `epic-5-context.md` outside the tasks (Acceptance Auditor) — false: written by bmad-build step 1 on purpose.
+- LiveClock: stale time when `timeZone` changes at runtime, no resync on `visibilitychange`, ticks not aligned to the minute, StrictMode double warning in dev, `clearInterval(id)` in `tick` (Edge Case Hunter, Blind Hunter, Task 3 minor) — low, rejected: no caller changes the zone; a 30 s refresh meets the spec's "within 30 seconds"; the warning repeat is dev-only; `tick` runs only after `id` is assigned.
+- Smoke test checks city names that the footer also has; H1 as substrings (Edge Case Hunter, Blind Hunter, Task 7 minors) — low, rejected: the zone labels are the tight check (rendered only by the clocks); the page test pins the H1.
+- `.cta-row` may already exist (Edge Case Hunter) — false: no `.cta-row` rule existed in `globals.css` before this diff.
+- `offices.ts` restructured into named constants; city strings duplicate `office.name` (Blind Hunter, Task 5 minor) — low, rejected: needed so the clock strip cannot drop a pill; reviewed in Task 5's fix round; short city names differ from the full names on purpose.
+- Lede and meta description are unverified claims (Blind Hunter) — false: the lede is the prototype's copy (service descriptions confirmed by the business, `EXPERIENCE.md`); the meta reuses the Home door's confirmed line.
+- Breadcrumb separator not `aria-hidden`, no `aria-current` (Blind Hunter) — low, rejected: the same pattern as every inner page; the shared breadcrumb is Story 1.6.
+- Absolute local paths in the ledger and evidence (Blind Hunter) — low, rejected: BMad workflow records (the ledger identity line requires the absolute spec path), not source or config.
+- Empty triage log, no AI log entry (Blind Hunter) — false at the time of reading: written in steps 4 and 5.
+- Task minors: `offices.test.ts` no IANA validity check, `services.ts` no `as const` (consistent with siblings), page destructuring style, CSS tests by source text — low, rejected: no user-visible harm.
+
 ## Verification
 
 **Commands:**
@@ -106,32 +124,30 @@ Sources: story spec CAP-1 to CAP-3, `EXPERIENCE.md` (Component Patterns › Cloc
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-05.
+Re-captured in step 4 after the review patches, on 2026-10-05.
 
 **Commands**
 
-- `npm test` -- exit 0 -- Test Files 67 passed (67), Tests 1041 passed (1041)
+- `npm test` -- exit 0 -- Test Files 67 passed (67), Tests 1043 passed (1043)
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100%; C1 ok: 6 changed file(s) with branch coverage >= 80% (a first run exited 1 on page.tsx branches; fixed in Task 5 fix round 1)
-- `npm run test:smoke` -- exit 0 -- 12 passed (13.1s)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100%; C1 ok: 6 changed file(s) with branch coverage >= 80%
+- `npm run test:smoke` -- exit 0 -- 12 passed (10.5s)
 
 **Observed**
 
-- `/services` on a production build (`next start`): navy hero, crumbs, H1 with highlight, both CTAs to `/demo#project` and `#process`; clock pills "Ho Chi Minh City 10:15 | Plano 22:15", then 10:16 / 22:16 after 30 s (Playwright clock); JavaScript off shows "GMT+7" and "US Central"; reduced motion stops the hero motion but not the clocks -- spec-5-1-services-hero-clocks-evidence/walk-output.txt
-- Lede sits 18px below the H1 (prototype 20px) -- same walk
+- `/services` on a production build (`next start`): navy hero, crumbs, H1 with highlight, lede 20px below it, both CTAs to `/demo#project` and `#process`; clock pills "Ho Chi Minh City 10:15 | Plano 22:15", then 10:16 / 22:16 after 30 s (Playwright clock); JavaScript off shows "GMT+7" and "US Central"; reduced motion stops the hero motion but not the clocks -- spec-5-1-services-hero-clocks-evidence/walk-output.txt
 
 **Artifacts**
 
-- spec-5-1-services-hero-clocks-evidence/verification.txt -- 5958 bytes -- sha256 5b19c6c391b9 -- the four commands' output
-- spec-5-1-services-hero-clocks-evidence/walk-output.txt -- 1430 bytes -- sha256 af83360e79ab -- walk observations
-- spec-5-1-services-hero-clocks-evidence/observed.md -- 1765 bytes -- sha256 734074414e93 -- route, steps, what was seen
-- spec-5-1-services-hero-clocks-evidence/services-1280.png -- 463359 bytes -- sha256 25a9bde26359 -- hero after the 30 s refresh
-- spec-5-1-services-hero-clocks-evidence/services-899.png -- 322809 bytes -- sha256 be570c27aac8 -- 899px
-- spec-5-1-services-hero-clocks-evidence/services-390.png -- 220562 bytes -- sha256 0fcbeac616a0 -- 390px (highlight mid draw-in)
-- spec-5-1-services-hero-clocks-evidence/services-no-js-1280.png -- 346311 bytes -- sha256 26ce919a03e2 -- JavaScript off: zone labels
+- spec-5-1-services-hero-clocks-evidence/verification.txt -- 5794 bytes -- sha256 dca734b17014 -- the four commands' output
+- spec-5-1-services-hero-clocks-evidence/walk-output.txt -- 1430 bytes -- sha256 9ab7483b4468 -- walk observations
+- spec-5-1-services-hero-clocks-evidence/observed.md -- 1738 bytes -- sha256 410cced07d4d -- route, steps, what was seen
+- spec-5-1-services-hero-clocks-evidence/services-1280.png -- 463025 bytes -- sha256 1377a7b0538a -- hero after the 30 s refresh
+- spec-5-1-services-hero-clocks-evidence/services-899.png -- 322724 bytes -- sha256 27270f53afb7 -- 899px
+- spec-5-1-services-hero-clocks-evidence/services-390.png -- 220837 bytes -- sha256 2e599069de6d -- 390px
+- spec-5-1-services-hero-clocks-evidence/services-no-js-1280.png -- 346731 bytes -- sha256 8c637ab826af -- JavaScript off: zone labels
 - spec-5-1-services-hero-clocks-evidence/walk.mjs -- 5838 bytes -- sha256 9bdae8e70361 -- the walk script
 
 **Not captured**
 
-- The dev server returned 500 on every page in this run (Google font loading in `src/app/layout.tsx`); the walk used the production server instead. Not observed: touch input, a screen reader.
-
+- The dev server returned 500 on every page on this machine (Google font loading in `src/app/layout.tsx`; deferred); the walk used the production server. Not observed: touch input, a screen reader.

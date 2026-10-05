@@ -69,3 +69,16 @@ Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-899.png
 Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-390.png — 220562 bytes — sha256 0fcbeac616a0 — services-390.png
 Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-no-js-1280.png — 346311 bytes — sha256 26ce919a03e2 — services-no-js-1280.png
 Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/walk.mjs — 5838 bytes — sha256 9bdae8e70361 — walk.mjs
+Acceptance: verification — npm test — exit 0 — Test Files 67 passed (67), Tests 1043 passed (1043)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100%; C1 ok: 6 changed file(s) with branch coverage >= 80%
+Acceptance: verification — npm run test:smoke — exit 0 — 12 passed (10.5s)
+Acceptance: manual — Chrome walk after the review patches (production build) — observed: lede 20px below H1; pills 10:15/22:15 then 10:16/22:16 after 30 s; JS off GMT+7 / US Central; no sideways scroll at 899/390
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/verification.txt — 5794 bytes — sha256 dca734b17014 — verification.txt
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/walk-output.txt — 1430 bytes — sha256 9ab7483b4468 — walk-output.txt
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/observed.md — 1738 bytes — sha256 410cced07d4d — observed.md
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-1280.png — 463025 bytes — sha256 1377a7b0538a — services-1280.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-899.png — 322724 bytes — sha256 27270f53afb7 — services-899.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-390.png — 220837 bytes — sha256 2e599069de6d — services-390.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-no-js-1280.png — 346731 bytes — sha256 8c637ab826af — services-no-js-1280.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/walk.mjs — 5838 bytes — sha256 9bdae8e70361 — walk.mjs

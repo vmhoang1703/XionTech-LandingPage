@@ -6,7 +6,7 @@ Steps and what was seen are in `walk-output.txt` (written by `walk.mjs`, Playwri
 
 - Navy gradient hero with the aurora and strand ribbon; crumbs "Home / Services" in JetBrains Mono, Home → `/`.
 - H1 "Software teams that get IT done." in white Unbounded; the highlight on "get IT done" draws in (`hl-draw`).
-- Lede in on-navy muted (rgb 197,208,227), **18px** below the H1 (`mt-4.5`, as Andy's News page); the prototype's `.page-hero .lede` is 20px.
+- Lede in on-navy muted (rgb 197,208,227), 20px below the H1 (`mt-5`, after the step-4 review patch; it was 18px).
 - "Start a project" (amber, arrow) → `/demo#project`; "See our 4-D process" (glass) → `/services#process`, page stays at the top (scrollY 0; no target until 5.4). Hover lifts 2px; Tab gives a 2px amber ring on each.
 - Clock strip, group "Office local times": "Ho Chi Minh City 10:15 | Plano 22:15", then after 30 s "10:16 | 22:16". Pills have a 1px border and full radius, a clock icon, mono times, and no nested pill around the time.
 - JavaScript off: "Ho Chi Minh City GMT+7 | Plano US Central".

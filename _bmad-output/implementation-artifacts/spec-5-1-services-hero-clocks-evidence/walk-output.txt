@@ -1,7 +1,7 @@
 hero: linear-gradient(160deg, rgb(11, 23, 48), rgb(22, 54, 99) 65% | aurora 1 | ribbon 1
 breadcrumbs: Home/Services | Home → / | "JetBrains Mono"
 H1: Software teams that get IT done. | Unbounded rgb(255, 255, 255) | hl "get IT done" hl-draw
-lede: Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. | rgb(197, 208, 227) | 18px below H1
+lede: Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. | rgb(197, 208, 227) | 20px below H1
 CTAs: Start a project → /demo#project [btn btn-primary; svg 1] | See our 4-D process → #process [btn btn-glass; svg 0]
 primary hover lift px: 2
 Tab after the breadcrumb: Start a project [solid 2px rgb(255, 192, 0)]  >  See our 4-D process [solid 2px rgb(255, 192, 0)]
@@ -14,5 +14,5 @@ Start a project → URL: http://localhost:3005/demo#project
 JS off: pills: Ho Chi Minh City GMT+7 | Plano US Central
 reduced motion: aurora / highlight animation: none / none
 reduced motion: pills after 30 s: Ho Chi Minh City 10:16 | Plano 22:16
-layout 899px: CTA and pill tops 398 398 472 472, sideways scroll false
-layout 390px: CTA and pill tops 446 510 584 637, sideways scroll false
+layout 899px: CTA and pill tops 400 400 474 474, sideways scroll false
+layout 390px: CTA and pill tops 448 512 586 639, sideways scroll false
