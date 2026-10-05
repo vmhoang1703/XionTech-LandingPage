@@ -42,7 +42,7 @@ Production build made by `npm run test:smoke`, served with `npx next start -p 30
 - **Capture.**
   - It is the last section in `main`: "See our apps in action.", "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.", "Book a demo".
   - A valid email plus Enter lands on `/demo#form` with the email prefilled.
-- **People.** No leadership words (CEO, CTO, Founder, Director, Leadership, Manager, Mr., Ms.) appear in `main`. The only name-like text is the business-supplied office email.
+- **People.** No title words (CEO, CTO, Founder, Director, Leadership, Manager, Mr., Ms.; case-sensitive) appear in `main`; "leadership" appears only in "leadership experience". There is no leadership section and no photo. The only name-like text is the business-supplied office email.
 - **Anchors.**
   - From Home, the footer's "Core values" goes to `/about#values` (h2 at 230–281) and "FAQ" goes to `/about#faq` (h2 at 200–250). Both are below the 72px header, measured after the smooth scroll stops.
   - Opened directly at 390px, `#values` puts the h2 at 199 and `#faq` at 168.

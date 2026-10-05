@@ -40,14 +40,14 @@ function rememberEmail(email: string) {
 
 export function CaptureBand({
   kind,
-  copy: customCopy,
+  copy: copyOverride,
 }: Readonly<{
   kind: ContactType;
   copy?: { heading: string; lede: string };
 }>) {
   const router = useRouter();
-  const copy = customCopy
-    ? { ...S[kind], heading: customCopy.heading, lede: customCopy.lede }
+  const copy = copyOverride
+    ? { ...S[kind], heading: copyOverride.heading, lede: copyOverride.lede }
     : S[kind];
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");

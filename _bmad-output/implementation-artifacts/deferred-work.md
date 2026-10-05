@@ -274,3 +274,10 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-5-4-process-project-capture.md`
   summary: The mega menu's "See the process" (`next/link` to `/services#process`, Andy's `site-nav.tsx`) may not scroll when the visitor is already on `/services#process`.
   evidence: maybe-false, medium if true. The same `next/link` same-hash behaviour broke the Services hero link (fixed in 5.4 with a plain `<a>`). Settle it by opening `/services#process`, scrolling up, and choosing "See the process" from the mega menu.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-6-4-about-page.md`
+  summary: The shared `.offices` rule in `globals.css` (Andy's, used on `/demo`) is one column at every width, because its base `grid-template-columns: 1fr` comes after its own `width >= md` two-column query.
+  evidence: Found by the 6.4 walk, where the About office cards were one column at 1280px. About now widens only `.offices:has(> .office-card)`. Check whether `/demo` should be two columns from md, and if so, move the base rule above the query.
+- source_spec: `_bmad-output/implementation-artifacts/spec-6-4-about-page.md`
+  summary: The `/about` layouts (values 3/2/1 columns, offices 2/1), the featured cell, the FAQ marker and the anchor landings are checked only by the hand-run `walk.mjs`; add them to a browser Playwright project with the 5.2 and 5.4 anchor checks.
+  evidence: Story 6.4 review (Verification Gap). jsdom cannot evaluate media queries, so unit tests only check class names and CSS text.

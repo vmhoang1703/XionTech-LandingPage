@@ -61,6 +61,11 @@ const submitAndSettle = async () => {
 
 const setItem = vi.fn();
 
+const CUSTOM_COPY = {
+  heading: "See our apps in action.",
+  lede: "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.",
+};
+
 beforeEach(() => {
   fetchMock.mockReset();
   push.mockReset();
@@ -331,30 +336,23 @@ describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
   });
 
   it("with custom copy prop, shows the custom heading and lede while keeping button, placeholder and redirect from the kind", () => {
-    const customCopy = {
-      heading: "See our apps in action.",
-      lede: "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.",
-    };
-    render(<CaptureBand kind={kind} copy={customCopy} />);
-    const region = screen.getByRole("region", { name: customCopy.heading });
+    render(<CaptureBand kind={kind} copy={CUSTOM_COPY} />);
+    const region = screen.getByRole("region", { name: CUSTOM_COPY.heading });
     expect(region.tagName).toBe("SECTION");
     expect(
-      screen.getByRole("heading", { level: 2, name: customCopy.heading }),
+      screen.getByRole("heading", { level: 2, name: CUSTOM_COPY.heading }),
     ).toBeTruthy();
-    expect(screen.getByText(customCopy.lede)).toBeTruthy();
+    expect(screen.getByText(CUSTOM_COPY.lede)).toBeTruthy();
+    expect(screen.queryByText(band.heading)).toBeNull();
+    expect(screen.queryByText(band.lede)).toBeNull();
     expect(emailField().getAttribute("placeholder")).toBe(band.placeholder);
     expect(button().textContent).toBe(band.button);
-    const consent = screen.getByText(band.consent);
-    expect(consent).toBeTruthy();
+    expect(screen.getByText(band.consent)).toBeTruthy();
   });
 
   it("with custom copy prop, still redirects to the kind's destination on successful submission", async () => {
     fetchMock.mockReturnValue(reply(200, { ok: true }));
-    const customCopy = {
-      heading: "See our apps in action.",
-      lede: "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.",
-    };
-    render(<CaptureBand kind={kind} copy={customCopy} />);
+    render(<CaptureBand kind={kind} copy={CUSTOM_COPY} />);
     type(EMAIL);
     await submitAndSettle();
 

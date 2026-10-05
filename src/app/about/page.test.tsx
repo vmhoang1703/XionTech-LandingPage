@@ -260,4 +260,26 @@ describe("AboutPage", () => {
       /@media \(width > --theme\(--breakpoint-md\)\)\s*\{\s*\.offices:has\(> \.office-card\)\s*\{[^}]*grid-template-columns:\s*1fr 1fr/,
     );
   });
+
+  it("names no people: no leadership section, no photos, no titles", () => {
+    const { container } = render(<AboutPage />);
+
+    expect(container.querySelectorAll("img")).toHaveLength(0);
+    const headings = Array.from(container.querySelectorAll("h2, h3")).map(
+      (h) => h.textContent ?? "",
+    );
+    for (const heading of headings) {
+      expect(heading).not.toMatch(/leadership|our team|founder|management/i);
+    }
+    expect(container.textContent).not.toMatch(
+      /(CEO|CTO|COO|Founder|Co-founder|Director|Mr\.|Ms\.|Mrs\.)/,
+    );
+    // The only address with a person's name is the office email the business supplied.
+    const mailtos = Array.from(
+      container.querySelectorAll('a[href^="mailto:"]'),
+    );
+    expect(mailtos.map((a) => a.getAttribute("href"))).toEqual([
+      "mailto:vinni.tran@newxion.com",
+    ]);
+  });
 });

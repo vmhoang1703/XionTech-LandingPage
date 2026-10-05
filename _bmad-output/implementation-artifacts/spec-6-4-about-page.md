@@ -2,7 +2,7 @@
 title: 'Story 6.4: About page'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-progress'
+status: 'in-review'
 baseline_commit: '057ff8744d68ce4ced00036f8e7d41e1dedb7d6c'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -122,15 +122,50 @@ Sources: SPEC CAP-1 to CAP-7, `EXPERIENCE.md` (FAQ, Office card, Clock, Stats ba
 | Office links | click phone / WhatsApp / email | mouse | `tel:` link; WhatsApp opens a new tab; `mailto:` | — | CAP-6, PRD offices |  ✅ walk: tel: links, WhatsApp target _blank, mailto: |
 | Capture | page loads | — | amber band last; "See our apps in action.", About lede, "Book a demo" | — | CAP-7 |  ✅ walk: last in main, About heading and lede, Book a demo; page.test |
 | Capture | submit a valid email | keyboard | lands on `/demo#form` with the email prefilled | after send | Story 2.4 behaviour |  ✅ walk (POST intercepted): /demo#form, email prefilled |
-| People | whole page | — | no leadership section, no photos, names or titles of people | — | CAP-5, FR-29 |  ✅ walk: no leadership words in main; page.test no XionTechs |
+| People | whole page | — | no leadership section, no photos, names or titles of people | — | CAP-5, FR-29 |  ✅ page.test "names no people" (no img, no leadership/team headings, no titles, one office mailto); walk: no title words in main |
 | Whole page | reduced motion | — | no animation; anchor jumps instant | — | EXPERIENCE.md Reduced motion |  ✅ walk: scroll-behavior auto, transition 0s, #faq lands on load |
 | Whole page | width 390px | — | no sideways scroll | — | EXPERIENCE.md Responsive |  ✅ walk: no sideways scroll at 900, 899, 640, 390 |
 
 ## Implementation Notes
 
+- **Office grid (acceptance fix by the controller).** The walk showed the office cards in one column at 1280px. In `globals.css` the shared `.offices` base rule comes after its own md query and wins, which also affects `/demo` (deferred to Andy). About adds `.offices:has(> .office-card)`: two columns above md, gap 18px and no top margin, all ported from the prototype (`site.css` 369, 441). `/demo` is unchanged.
+- **Review patches (controller):**
+  - The services anchor test names `#process` explicitly again.
+  - The capture band's `copy` alias is now `copyOverride`, and its tests share one constant and assert the default heading and lede are gone.
+  - The smoke test checks one H1 with the About headline and counts `<details` exactly.
+  - A "names no people" page test was added.
+
 ## Spec Change Log
 
 ## Review Triage Log
+
+Step 4 review, 2026-10-05. Layers: Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor, and the Security Auditor (clean). The task-review minors from the ledger are included.
+
+- **Services anchor test no longer proves `#process` stays** (Edge Case Hunter, Blind Hunter) — medium, patch: the regex names `#process`.
+- **"No leadership words" overstated, People row cited the brand test** (Edge Case Hunter, Blind Hunter) — low, patch: a real "names no people" page test. The walk wording now says "no title words", because "leadership experience" is real copy.
+- **Smoke checks any `<h1` and a loose `<details` count** (Edge Case Hunter, Blind Hunter, Task 5 minors) — low, patch.
+- **Capture `copy` tests: defaults not asserted absent; duplicated literal; `customCopy` alias** (Blind Hunter, Verification Gap, Task 2 minors) — low, patch.
+- **The 900px story row is still pending** (Acceptance Auditor, Blind Hunter, Edge Case Hunter) — kept as pending.
+  - It is the site-wide ≥/≤ breakpoint question with Amber and Hoang. The shared `.split` is Andy's.
+  - `docs/ux-checks.md` lets pending lines merge if they are listed in the PR.
+- **About spacing overrides on `.offices` (gap, margin-top) not in the spec** (Acceptance Auditor) — low, recorded in Implementation Notes: ported from the prototype, needed for the two-column fix.
+- **Shared `.offices` md query is dead on `/demo`** (Edge Case Hunter, Verification Gap) — defer: Andy's rule.
+- **CSS layouts, hover, marker and featured cell only verified by the manual walk** (Verification Gap) — medium, defer: jsdom has no media queries. It joins the browser Playwright project entry.
+- **Safari `::-webkit-details-marker` not hidden** (Edge Case Hunter, Blind Hunter, Task 4 minor) — low, rejected:
+  - The contrast test forbids `display: none`.
+  - `list-style: none` already hides the marker in current Safari, where `summary` is `display: list-item`.
+- **Office clock read before the city** (Blind Hunter) — low, rejected: the prototype order. The h3 follows immediately, and the time is not interactive.
+- **FAQ "Book a demo" / 4-D mentions not linked; OG, canonical, sitemap, FAQPage** (Blind Hunter) — rejected: not in the prototype or the spec. FAQPage is after demo (SPEC non-goals).
+- **Unverified claims in FAQ and values copy; "Led by more than 25 years"** (Blind Hunter) — false:
+  - FR-46 and CAP-3 make only the security answer `[Placeholder]`.
+  - The values are the office-banner wording (UX-DR23).
+  - The copy is the prototype's word for word, which is the copy authority.
+- **`homeStats` picked by position** (Edge Case Hunter) — false: the page test pins all five figures and captions, so a reorder fails it.
+- **Empty `copy` strings** (Edge Case Hunter) — false: the only caller passes static content.
+- **FAQ shadow transition under reduced motion** (Edge Case Hunter) — false: the global reduced-motion rule sets `transition: none` on every element.
+- **No AI log entry; no review recorded; status still in-review** (Blind Hunter) — false at the time: this review, then step 5.
+- **Absolute paths in the ledger and `verification.txt`; `walk.mjs` committed** (Blind Hunter, Acceptance Auditor) — low, rejected: BMad records and the evidence convention since Story 1.1.
+- **Task minors not listed above** (copy checks cover exports only; Plano order pinned by the page test; exemption comment fixed in Task 4) — resolved in later tasks.
 
 ## Verification
 
