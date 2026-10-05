@@ -63,4 +63,36 @@ describe("StatsBand", () => {
     expect(first.classList.contains("sm:first:border-l-0")).toBe(true);
     expect(first.classList.contains("sm:first:pl-0")).toBe(true);
   });
+
+  it("applies sr-only class to h2 when hideLabel is true", () => {
+    render(
+      <StatsBand label="Experience" stats={STATS} tone="navy" hideLabel />,
+    );
+
+    const label = screen.getByRole("heading", { level: 2, name: "Experience" });
+    expect(label.classList.contains("sr-only")).toBe(true);
+  });
+
+  it("removes border-t and top spacing from list when hideLabel is true", () => {
+    render(
+      <StatsBand label="Experience" stats={STATS} tone="navy" hideLabel />,
+    );
+
+    const list = screen.getByRole("list");
+    expect(list.classList.contains("border-t")).toBe(false);
+    expect(list.classList.contains("mt-4.5")).toBe(false);
+    expect(list.classList.contains("pt-6.5")).toBe(false);
+  });
+
+  it("keeps h2 without sr-only and list with border-t when hideLabel is not set", () => {
+    render(<StatsBand label="Experience" stats={STATS} tone="navy" />);
+
+    const label = screen.getByRole("heading", { level: 2, name: "Experience" });
+    expect(label.classList.contains("sr-only")).toBe(false);
+
+    const list = screen.getByRole("list");
+    expect(list.classList.contains("border-t")).toBe(true);
+    expect(list.classList.contains("mt-4.5")).toBe(true);
+    expect(list.classList.contains("pt-6.5")).toBe(true);
+  });
 });

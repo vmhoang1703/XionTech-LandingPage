@@ -13,20 +13,32 @@ type StatsBandProps = {
   stats: Stat[];
   // navy: amber suffix; light (paper or mist): amber-text suffix (UX-DR13).
   tone: "navy" | "light";
+  // When true, hides the label visually but keeps it for screen readers; list drops top border and gap.
+  hideLabel?: boolean;
 };
 
 // Shared stats band: Home hero (3.3), Services (5.2) and About (6.4) pass
 // their own figures. Final values render on load; the count-up is after demo.
-export function StatsBand({ label, stats, tone }: Readonly<StatsBandProps>) {
+export function StatsBand({
+  label,
+  stats,
+  tone,
+  hideLabel,
+}: Readonly<StatsBandProps>) {
   const labelId = useId();
   const suffixClass = tone === "navy" ? "text-amber" : "text-amber-text";
 
   return (
     <div role="group" aria-labelledby={labelId}>
-      <h2 id={labelId} className="label">
+      <h2
+        id={labelId}
+        className={`label ${hideLabel ? "sr-only" : ""}`}
+      >
         {label}
       </h2>
-      <ul className="border-border mt-4.5 grid grid-cols-2 gap-y-7 border-t pt-6.5 sm:grid-cols-3 lg:grid-cols-5">
+      <ul
+        className={`border-border grid grid-cols-2 gap-y-7 sm:grid-cols-3 lg:grid-cols-5${hideLabel ? "" : " mt-4.5 border-t pt-6.5"}`}
+      >
         {stats.map((stat) => (
           <li
             key={stat.caption}
