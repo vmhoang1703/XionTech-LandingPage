@@ -33,16 +33,36 @@ try {
     for (let i = 0; i < 40 && !(await see.evaluate((el) => el === document.activeElement)); i++) {
       await p.keyboard.press("Tab");
     }
+    if (!(await see.evaluate((el) => el === document.activeElement))) throw new Error("Tab never reached See PXP");
     log(`[1280] button focus: outline ${await css(see, ["outlineStyle", "outlineWidth"])} | :focus-visible ${await see.evaluate((el) => el.matches(":focus-visible"))}`);
+    const crumb = p.locator(".crumbs a").nth(1);
+    await p.locator("body").click({ position: { x: 5, y: 300 } });
+    for (let i = 0; i < 40 && !(await crumb.evaluate((el) => el === document.activeElement)); i++) {
+      await p.keyboard.press("Tab");
+    }
+    if (!(await crumb.evaluate((el) => el === document.activeElement))) throw new Error("Tab never reached the News crumb");
+    log(`[1280] News crumb focus: outline ${await css(crumb, ["outlineStyle", "outlineWidth"])} | :focus-visible ${await crumb.evaluate((el) => el.matches(":focus-visible"))}`);
     await p.screenshot({ path: `${OUT}/story-1280.png`, fullPage: true });
     await p.getByRole("link", { name: "See PXP" }).click();
     await p.waitForURL(/\/products/);
-    log(`[1280] See PXP lands ${new URL(p.url()).pathname}${new URL(p.url()).hash}`);
+    log(`[1280] See PXP (click) lands ${new URL(p.url()).pathname}${new URL(p.url()).hash}`);
+    await p.goBack();
+    await p.locator("#story-h1").waitFor();
+    await p.getByRole("link", { name: "See PXP" }).focus();
+    await p.keyboard.press("Enter");
+    await p.waitForURL(/\/products/);
+    log(`[1280] See PXP (Enter) lands ${new URL(p.url()).pathname}${new URL(p.url()).hash}`);
     await p.goBack();
     await p.locator("#story-h1").waitFor();
     await p.getByRole("link", { name: "Back to News" }).click();
     await p.waitForURL(/\/news$/);
-    log(`[1280] Back to News lands ${new URL(p.url()).pathname}`);
+    log(`[1280] Back to News (click) lands ${new URL(p.url()).pathname}`);
+    await p.goBack();
+    await p.locator("#story-h1").waitFor();
+    await p.getByRole("link", { name: "Back to News" }).focus();
+    await p.keyboard.press("Enter");
+    await p.waitForURL(/\/news$/);
+    log(`[1280] Back to News (Enter) lands ${new URL(p.url()).pathname}`);
 
     // A non-product story: the Company card.
     await p.locator(".filters").getByRole("button", { name: "Company" }).click();

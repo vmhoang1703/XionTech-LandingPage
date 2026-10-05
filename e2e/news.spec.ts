@@ -22,6 +22,24 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    expect(html).toContain("that page");
+    // The Story 1.7 Not found page's H1 id.
+    expect(html).toContain("not-found-title");
+  },
+);
+
+test(
+  "the first story on the News page answers 200 with its own H1",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    const news = await (await request.get("/news")).text();
+    const href = /href="(\/news\/[^"#?]+)"/.exec(news)?.[1];
+    test.skip(!href, "No published story in Sanity to open.");
+
+    const response = await request.get(href ?? "");
+    const html = await response.text();
+
+    expect(response.status()).toBe(200);
+    expect(html).toContain('id="story-h1"');
+    expect(html).toContain("Back to News");
   },
 );

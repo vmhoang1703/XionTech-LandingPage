@@ -106,15 +106,35 @@ describe("StoryPage", () => {
     expect(screen.getByRole("link", { name: "Back to News" })).toBeTruthy();
   });
 
-  it("renders a story with no body or tag", async () => {
+  it("shows no product link when the category is not Product, even with an app left over", async () => {
+    await renderPage({ ...story, category: "company", app: "PXP" });
+
+    expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
+    expect(screen.getByText("Company").className).toBe("cat");
+  });
+
+  it("shows the excerpt when the story has no body text", async () => {
     const { container } = await renderPage({
       ...story,
       category: null,
       app: null,
-      body: null,
+      body: [{ style: "normal", text: "" }],
     });
 
     expect(container.querySelector(".cat")).toBeNull();
+    const paragraphs = [...container.querySelectorAll(".story-body > p")].map(
+      (p) => p.textContent,
+    );
+    expect(paragraphs).toEqual([story.excerpt]);
+  });
+
+  it("renders no body paragraph when there is neither body nor excerpt", async () => {
+    const { container } = await renderPage({
+      ...story,
+      excerpt: null,
+      body: null,
+    });
+
     expect(container.querySelectorAll(".story-body > p")).toHaveLength(0);
   });
 

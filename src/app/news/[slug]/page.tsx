@@ -20,17 +20,25 @@ export async function generateMetadata({
   };
 }
 
-/** A block styled as a heading shows as an H2; empty blocks are left out. */
-function StoryBody({ blocks }: Readonly<{ blocks: StoryBlock[] }>) {
-  return blocks
-    .filter((block) => block.text)
-    .map((block, index) =>
-      block.style?.startsWith("h") ? (
-        <h2 key={index}>{block.text}</h2>
-      ) : (
-        <p key={index}>{block.text}</p>
-      ),
-    );
+/**
+ * A block styled as a heading shows as an H2; empty blocks are left out. With
+ * no body text at all the excerpt stands in, so a listed story is never blank.
+ */
+function StoryBody({
+  blocks,
+  excerpt,
+}: Readonly<{ blocks: StoryBlock[]; excerpt?: string | null }>) {
+  const filled = blocks.filter((block) => block.text);
+  if (filled.length === 0) {
+    return excerpt ? [<p key="excerpt">{excerpt}</p>] : [];
+  }
+  return filled.map((block, index) =>
+    block.style?.startsWith("h") ? (
+      <h2 key={index}>{block.text}</h2>
+    ) : (
+      <p key={index}>{block.text}</p>
+    ),
+  );
 }
 
 // Story 6.2. No loading.tsx here: streaming would turn the 404 into a 200.
@@ -40,7 +48,10 @@ export default async function StoryPage({ params }: StoryProps) {
   if (!story) notFound();
 
   const tag = categoryTag(story);
-  const product = productAnchor(story.app);
+  // Only a Product story links to an app: Sanity keeps a hidden app value
+  // when the editor changes the category (the tag ignores it too).
+  const product =
+    story.category === "product" ? productAnchor(story.app) : null;
   const { breadcrumbLabel, breadcrumbHome, breadcrumbNews, backToNews } =
     newsStory;
 
@@ -81,7 +92,7 @@ export default async function StoryPage({ params }: StoryProps) {
       >
         <div className="wrap story-body">
           <div className="home-media story-media" aria-hidden="true" />
-          <StoryBody blocks={story.body ?? []} />
+          <StoryBody blocks={story.body ?? []} excerpt={story.excerpt} />
           <div className="mt-9 flex flex-wrap gap-3">
             {product && story.app ? (
               <Link className="btn btn-glass" href={product}>

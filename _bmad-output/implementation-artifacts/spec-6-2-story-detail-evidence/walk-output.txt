@@ -5,8 +5,11 @@
 [1280] body paragraphs 4 | h2 0 | first "Parent eXperience Place (PXP) keeps parents close to every s"
 [1280] buttons [See PXP=/products#pxp, Back to News=/news] | capture band 0
 [1280] button focus: outline solid | 2px | :focus-visible true
-[1280] See PXP lands /products#pxp
-[1280] Back to News lands /news
+[1280] News crumb focus: outline solid | 2px | :focus-visible true
+[1280] See PXP (click) lands /products#pxp
+[1280] See PXP (Enter) lands /products#pxp
+[1280] Back to News (click) lands /news
+[1280] Back to News (Enter) lands /news
 [1280] Company story /news/two-offices-one-team-ho-chi-minh-city-and-plano | tag "COMPANY" | buttons [Back to News]
 [1280] Home Read story lands /news/pxp-the-school-day-in-a-parents-pocket | H1 "PXP: the school day, in a parent's pocket"
 [404] /news/no-such-story -> 404 | h1 "We couldn't find that page."

@@ -2,7 +2,7 @@
 title: 'Story 6.2 Story detail page'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-progress'
+status: 'done'
 route: 'oneshot'
 review_loop_iteration: 0
 context:
@@ -28,10 +28,10 @@ Sources: SPEC CAP-1..4, `EXPERIENCE.md` (News story row, capture band rule, date
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
 | Hero | page load | — | light hero; crumbs Home / News / story title (Home and News links, title current); H1 story title; mono date `4 OCT 2026` and the category tag (amber "PRODUCT · PXP" for product) | — | CAP-1, CAP-2, mockup | ✅ Chrome 1280 (prod build): crumbs Home / News / title (links Home, News; title `aria-current`), H1, mono date "4 OCT 2026", amber "PRODUCT · PXP" (`walk-output.txt`, `story-1280.png`) |
-| Body | page load | — | 16:9 frame, then the story paragraphs (a block styled as a heading shows as H2), 720px reading column | — | CAP-1, mockup `.story-body` | partly: 16:9 frame (672 x 378), 4 paragraphs in a 720px column; the real stories have no heading blocks, so the H2 path is by unit test (`page.test.tsx`) |
-| Links | product story | mouse, keyboard | "See PXP" goes to `/products#pxp`; "Back to News" goes to `/news`; glass buttons with arrows | — | CAP-1, mockup | ✅ Chrome: "See PXP" lands `/products#pxp`, "Back to News" lands `/news` (mouse) |
+| Body | page load | — | 16:9 frame, then the story paragraphs (a block styled as a heading shows as H2), 720px reading column | — | CAP-1, mockup `.story-body` | ✅ Chrome: 16:9 frame (672 x 378), 4 paragraphs in a 720px column; the H2 path by unit test (`page.test.tsx` "renders crumbs, H1, mono date and tag…"); no body: the excerpt shows ("shows the excerpt when the story has no body text") |
+| Links | product story | mouse, keyboard | "See PXP" goes to `/products#pxp`; "Back to News" goes to `/news`; glass buttons with arrows | — | CAP-1, mockup | ✅ Chrome: "See PXP" lands `/products#pxp` and "Back to News" lands `/news`, each by click and by Enter |
 | Links | other story | — | only "Back to News" | — | developer choice (no product to link) | ✅ Chrome: the Company story shows only "Back to News" |
-| Links | Tab | keyboard | 2px focus ring on crumbs and buttons | — | T9 | partly: Chrome Tab to "See PXP": solid 2px ring; crumb links not measured |
+| Links | Tab | keyboard | 2px focus ring on crumbs and buttons | — | T9 | ✅ Chrome Tab: solid 2px ring on the News crumb and on "See PXP" |
 | Read story | click on Home and News | mouse | opens the story page | — | CAP-1, Success signal | ✅ Chrome: News and Home "Read story" open the PXP story |
 | Page | page load | — | no email capture band; tab title "<story title> \| XionTech" | — | CAP-1, CAP-3, EXPERIENCE.md | ✅ Chrome: no capture band; tab title "PXP: the school day, in a parent's pocket \| XionTech" |
 | Unknown slug | open `/news/no-such-story` | — | Story 1.7 Not found page, HTTP 404 | — | CAP-4 | ✅ Chrome and smoke: 404 with "We couldn't find that page." |
@@ -39,9 +39,23 @@ Sources: SPEC CAP-1..4, `EXPERIENCE.md` (News story row, capture band rule, date
 
 ## Implementation Notes
 
-- Reuse: `getAllPosts` (`src/lib/news/all-posts.ts`, cached under tag `post`) to check the slug; `newsDate`, `categoryTag`, `LatestPost`; `sanityFetch` with `params`; the `hero-light page-hero`, `crumbs`, `meta`, `cat`, `btn btn-glass`, `frame` classes; the careers job page pattern (no `loading.tsx`, `notFound()`).
+- Reuse: `getAllPosts` (`src/lib/news/all-posts.ts`, cached under tag `post`) to check the slug; `newsDate`, `categoryTag`, `LatestPost`; `sanityFetch` with `params`; the `hero-light page-hero`, `crumbs`, `meta`, `cat`, `btn btn-glass`, `home-media` (frame look) classes; the careers job page pattern (no `loading.tsx`, `notFound()`).
 - New: `src/lib/news/post.ts` (`getPost(slug)`, own GROQ query, T2), `src/app/news/[slug]/page.tsx` with `generateMetadata`, copy in `src/content/news.ts`, `.story-body` / `.story-media` CSS, a `@smoke` e2e for the 404.
 - My choices: no `generateStaticParams` (pages render on first visit and stay cached by tag, like the job page); the body is plain paragraphs and H2s from the blocks (`pt::text`), with no links or images yet; a non-product story has no product link; the description is the excerpt, else the News description.
 - Red first: `npx vitest run src/lib/news/post.test.ts "src/app/news/[slug]"` failed (no `post`, no `page`), then passed after the code (49 news tests).
 - Checks: lint, typecheck, format pass; `npm run test:coverage -- --maxWorkers=3` 1033 passed; diff coverage 100% (21 lines), C1 ok; build passes (`/news/[slug]` renders on demand); smoke 12 passed incl. the `/news/no-such-story` 404.
 - The walk script first read the old page after a client-side navigation; it now waits for the URL and the story H1, and checks focus with real Tab presses.
+- After the review: the "See <app>" link shows only for a Product story (Sanity keeps a hidden app value when the category changes); with no body text the excerpt shows; a `@smoke` test opens the first story linked from `/news` and expects 200 with its H1; the 404 smoke checks the Not found page's H1 id. Smoke 13 passed.
+
+## Review Triage Log
+
+Full `bmad-code-review`, 5 layers, 2026-10-05. Security clean (unknown slugs cost no Sanity request; `/news/[slug]` is `ƒ` in the build, so nothing is stored per unknown path).
+
+| # | Finding | Verdict | Evidence / action |
+| --- | --- | --- | --- |
+| 1 | "See <app>" shows for a non-product story with a leftover app (Acceptance, Edge, Verification Gap) | medium | patch: link only when `category === "product"`; test "shows no product link when the category is not Product…" |
+| 2 | A story with no body text renders an almost blank page (Blind Hunter) | medium | patch: the excerpt shows; tests for both empty cases |
+| 3 | UX rows marked ✅ for keyboard and crumbs that the walk had not checked (all layers) | medium | patch: the walk now presses Enter on both buttons and measures the crumb focus ring; rows updated |
+| 4 | No automated check opens a real story (Verification Gap) | medium | patch: `@smoke` test for the first story on `/news` |
+| 5 | `/careers/[slug]` still costs one Sanity request per unknown slug (Security, similar check) | low | deferred: copy the list-first check into `getOpenRole` (its tests read the first fetch call) |
+| 6 | Other Minor points: `productAnchor("")`, crumb separators read aloud, lists/quotes/h3+ flattened, whitespace blocks, empty `<time>`, no Open Graph tags, `getPost` called twice, duplicated crumb copy, no branded error page, hand-typed slug encoding, empty photo frame with no `[Placeholder]` caption | low | deferred in `deferred-work.md` |
