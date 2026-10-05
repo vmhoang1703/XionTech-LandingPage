@@ -31,6 +31,17 @@ async function landing(page, id) {
   }, id);
 }
 
+// The page smooth-scrolls to an anchor (about 1s on a phone): wait until scrollY stops changing.
+async function settle(page) {
+  let last = -1;
+  for (let i = 0; i < 40; i++) {
+    const y = await page.evaluate(() => scrollY);
+    if (y === last) return;
+    last = y;
+    await sleep(150);
+  }
+}
+
 const { page, context } = await open(1280);
 const stats = page.locator(STATS);
 log("stats section", `${await stats.evaluate((s) => getComputedStyle(s).backgroundColor)} | directly after hero: ${await stats.evaluate((s) => s.previousElementSibling?.classList.contains("hero-navy"))}`);
@@ -71,6 +82,7 @@ for (const width of [1280, 390]) {
   const rows = [];
   for (const id of IDS) {
     const { page: p, context: c } = await open(width, `/services#${id}`);
+    await settle(p);
     const r = await landing(p, id);
     rows.push(`${id} header ${r.header} card ${r.card} h3 ${r.h3} visible ${r.visible}`);
     if (id === "low-code") await p.screenshot({ path: `${OUT}/anchor-low-code-${width}.png` });
@@ -83,13 +95,22 @@ for (const width of [1280, 390]) {
 const home = await open(1280, "/");
 await home.page.locator('.svc-grid a[href="/services#low-code"]').click();
 await home.page.waitForURL("**/services#low-code");
-await sleep(900);
+await settle(home.page);
 log("Home card → /services#low-code", JSON.stringify(await landing(home.page, "low-code")));
 await home.page.locator('footer a[href="/services#cloud"]').click();
 await home.page.waitForURL("**/services#cloud");
-await sleep(900);
+await settle(home.page);
 log("footer link → /services#cloud", JSON.stringify(await landing(home.page, "cloud")));
 await home.context.close();
+
+// From the Services mega menu (hover opens it) on Home: "Low-code Solutions".
+const mega = await open(1280, "/");
+await mega.page.locator('button[aria-controls="mega-services"]').hover();
+await mega.page.locator('#mega-services a[href="/services#low-code"]').click();
+await mega.page.waitForURL("**/services#low-code");
+await settle(mega.page);
+log("mega menu → /services#low-code", JSON.stringify(await landing(mega.page, "low-code")));
+await mega.context.close();
 
 for (const width of [899, 390]) {
   const { page: p, context: c } = await open(width);
@@ -103,6 +124,16 @@ for (const width of [899, 390]) {
 
 const reduced = await open(1280, "/services", { reducedMotion: "reduce" });
 log("reduced motion: figures", (await reduced.page.locator(`${STATS} li p:first-child`).allTextContents()).join(" "));
-log("reduced motion: card animation/transition", await reduced.page.locator("article#cloud").evaluate((a) => `${getComputedStyle(a).animationName} / ${getComputedStyle(a).transitionDuration}`));
 await reduced.context.close();
+// Reduced motion turns smooth scroll off: the jump is instant, so the card is at 88 right after load.
+const jump = await browser.newContext({ viewport: { width: 390, height: 900 }, reducedMotion: "reduce" });
+const jp = await jump.newPage();
+await jp.goto(`${BASE}/services#cloud`, { waitUntil: "load" });
+log("reduced motion 390px: scroll-behavior / #cloud right after load", `${await jp.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)} / ${JSON.stringify(await landing(jp, "cloud"))}`);
+await jump.close();
+const smooth = await browser.newContext({ viewport: { width: 390, height: 900 } });
+const sp = await smooth.newPage();
+await sp.goto(`${BASE}/services#cloud`, { waitUntil: "load" });
+log("motion allowed 390px: scroll-behavior", await sp.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior));
+await smooth.close();
 await browser.close();

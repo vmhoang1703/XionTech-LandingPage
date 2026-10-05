@@ -256,3 +256,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-5-1-services-hero-clocks.md`
   summary: `npm run dev` returned 500 on every page on Sammy's machine on 2026-10-05: "next/font/google queries have exactly one entry" from the Google fonts in `src/app/layout.tsx`.
   evidence: maybe-false, medium if true (it blocks UX walks on the dev server for the team); the production build and `next start` work. Settle by running `npm run dev` on another machine or network.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-5-2-stats-eight-services.md`
+  summary: Add an automated browser check that `/services#<id>` lands each service heading below the sticky header (CAP-3, AC-NAV-5).
+  evidence: The Playwright `smoke` project is request-only, so the landing is covered only by the CSS-source unit test and the evidence walk (`spec-5-2-stats-eight-services-evidence/walk.mjs`). A browser project, also useful for `#process` (5.4) and the Products anchors, would catch a broken `scroll-margin-top`.

@@ -2,7 +2,7 @@
 title: 'Story 5.2: Stats and eight services with anchors'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-progress'
+status: 'in-review'
 baseline_commit: '959b8a68afca2828c7a6ae430ff6ba2a62ed182f'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -115,9 +115,40 @@ Sources: SPEC CAP-1 to CAP-3, `EXPERIENCE.md` (Stats band line 134; Responsive l
 
 ## Implementation Notes
 
+- Review patch: the stats `<section>` drops its `aria-label`. The `StatsBand` group is named "Key facts" by its sr-only h2, and a second identical name made screen readers announce it twice.
+
 ## Spec Change Log
 
 ## Review Triage Log
+
+Step 4 review, 2026-10-05. Layers: Blind Hunter, Edge Case Hunter, Verification Gap, Acceptance Auditor, and the Security Auditor (clean). The task-review minors from the ledger are included.
+
+- **390px landing 6–43px below 88px** (Acceptance Auditor, Edge Case Hunter, Blind Hunter, Verification Gap) — false as a code defect.
+  - The page smooth-scrolls to the card, which takes about 1s at 390px. A probe sampling `#cloud` and `#ai-solutions` at 50 ms to 3000 ms shows the top passing 467, then settling at exactly 88 from 1000 ms on.
+  - The walk measured at a fixed 700 ms. Patch the walk to wait until the scroll settles, then re-capture.
+- **Walk uses fixed sleeps** (Blind Hunter) — low, patch: same root cause as the 390px landing.
+- **Mega-menu row ticked without a mega-menu observation** (Acceptance Auditor, Blind Hunter) — medium, patch: the walk opens the Services mega menu and follows "Low-code Solutions".
+- **Reduced-motion card check is vacuous** (Acceptance Auditor) — low, patch: the walk checks what reduced motion actually changes here, an instant anchor jump with smooth scroll off (EXPERIENCE.md Reduced motion). The cards have no motion in either mode.
+- **"Key facts" named twice**, by the section `aria-label` and by the group's sr-only h2 (Edge Case Hunter, Blind Hunter, Task 4 minor) — low, patch: drop the section `aria-label`, so the group alone carries the name. This deviates from the Task 4 wording; see Implementation Notes.
+- **Tag test skips `ai-analytics` and `ai-solutions`** (Verification Gap, Task 4 minor) — low, patch: add both assertions.
+- **Service ids not tied across Services, Home, nav and footer** (Edge Case Hunter, Blind Hunter, Task 1 minor) — medium, patch:
+  - Test that the Services ids equal the `homeServices` ids and the `SERVICES` anchors, and that every footer `/services#` link is one of them.
+  - The `service-icons` test derives its ids from `homeServices.cards`.
+- **`service-icons` test title says "four" for five ids** (Edge Case Hunter, Task 1 minor) — low, patch: fix the title.
+- **`.svc[id]` regex has no `}` boundary** (Edge Case Hunter, Verification Gap, Task 5 minor) — low, patch: use `[^}]*`.
+- **Smoke `toContain('id=…')` would also pass on a non-card element** (Edge Case Hunter, Verification Gap, Task 6 minors) — low, patch: match `<article id="…"`, and name the anchors in the test title.
+- **New CSS sits in Home's service-card block, not the Services section** (Acceptance Auditor) — low, patch: move both rules to the Services section, after `.clock-strip b`.
+- **CAP-3 has no automated browser check of the landing position** (Verification Gap) — medium, defer: the smoke project is request-only (no browser). The walk evidence and the CSS test cover it for now.
+- **Exact 640px and 1080px column counts** (Edge Case Hunter) — low, rejected: this is the site-wide ≥/≤ breakpoint question still pending with Amber and Hoang. It is not caused by this story; `.svc-grid` and `StatsBand` are reused as built.
+- **Empty `tags` array renders an empty span** (Edge Case Hunter) — false: no item has an empty array, and the content is static.
+- **`.svc[id]` could hit other `.svc` elements with ids** (Edge Case Hunter) — false: the only other `.svc` elements are Home's links, which carry no id.
+- **Copy not verifiable against the prototype** (Acceptance Auditor) — false: the Task 3 reviewer compared every string with `services.html` lines 35–62 verbatim.
+- **Spec wording omits `pt-6.5`; the `baseline_commit` differs from the first task's base; status still in-review** (Edge Case Hunter, Blind Hunter) — rejected: fixes to the spec, or the workflow working as designed (the baseline predates the spec commit).
+- **Absolute paths in the ledger** (Blind Hunter) — low, rejected: BMad workflow records, not source or config (same ruling as Story 5.1).
+- **No AI log entry** (Blind Hunter) — false at the time of reading: written in step 5.
+- **Services stats import Home's figures** (Blind Hunter) — false: the spec says reuse, don't copy, so one source of truth is intended.
+- **Tags as one joined span; muted 11.2px contrast; no wrap line for long tags** (Blind Hunter) — low, rejected: the prototype's markup, and `--color-muted` on mist is the token `.svc p` already uses. The 390px screenshot shows the low-code tags on one line.
+- **The CSS-contract test removes the Tailwind stats group; `"tags" in` relies on the `as const` shape; `verification.txt` has ANSI codes; no Firefox, Safari, 899px anchors or touch** (Blind Hunter, Task 3 minor) — low, rejected: no user-visible harm. The cards have no handlers, so touch cannot differ.
 
 ## Verification
 
