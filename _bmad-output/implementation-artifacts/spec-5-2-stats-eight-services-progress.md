@@ -37,3 +37,16 @@ Task 6: review — pass — 0 critical, 0 important, 2 minor
 Task 6: minor — e2e/services.spec.ts:4 — test title does not mention the anchors
 Task 6: minor — e2e/services.spec.ts:20 — toContain id does not prove the id is on a card or unique
 Task 6: complete (commits bb3da9b..9199375, diff verified)
+Acceptance: verification — npm test — exit 0 — Test Files 70 passed (70), Tests 1073 passed (1073)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total: 7 lines, Missing: 0 lines, Coverage: 100%
+Acceptance: verification — npm run test:smoke — exit 0 — 14 passed (11.8s)
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/services-5-2-1280.png — 344133 bytes — sha256 ffe343619703 — services-5-2-1280.png
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/services-5-2-899.png — 303851 bytes — sha256 05afec209216 — services-5-2-899.png
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/services-5-2-390.png — 155349 bytes — sha256 b7be09323f4b — services-5-2-390.png
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/anchor-low-code-1280.png — 231132 bytes — sha256 693908322b96 — anchor-low-code-1280.png
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/anchor-low-code-390.png — 121391 bytes — sha256 125056680203 — anchor-low-code-390.png
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/walk-output.txt — 2589 bytes — sha256 de37ae94b99a — walk-output.txt
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/observed.md — 2092 bytes — sha256 0c03620b3ce5 — observed.md
+Acceptance: evidence — spec-5-2-stats-eight-services-evidence/verification.txt — 5804 bytes — sha256 70a3e71579eb — verification.txt
+Acceptance: manual — Chrome walk on a production build (8 anchors at 1280 and 390px; stats and services at 1280/899/390; reduced motion) — observed: 1280px every card top 88 and h3 172-173 below the 72px header; 390px cards 88-131, every h3 fully visible; stats 5/3/2 and services 4/2/1 columns; suffix rgb(138,103,0); label sr-only 1x1; 0 focusables in the grid; no sideways scroll

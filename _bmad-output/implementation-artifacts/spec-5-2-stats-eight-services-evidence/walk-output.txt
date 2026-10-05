@@ -1,0 +1,46 @@
+stats section: rgb(253, 253, 254) | directly after hero: true
+figures: 25+ / Years of leadership experience in software | 24/7 / Global coverage across time zones | 20+ / Technology stacks we work in | 8 / Service offerings, from idea to operation | 2 / Offices: Ho Chi Minh City and Plano
+suffix colours: + rgb(138, 103, 0) | /7 rgb(138, 103, 0) | + rgb(138, 103, 0)
+stats label: text "Key facts" | box [1,1] | group name Key facts
+stats list top border: 0px
+stats column dividers (2nd item border-left): 1px
+services section: linear-gradient(rgb(238, 242, 249), rgb( | linen true | padding-top 40px
+h2 / lede: Eight services, one team. / Pick one service or combine several. We shape the team around your product.
+cards: product-engineering[feature] ic 48px tags "Web · Mobile"
+  ai-analytics[-] ic 48px tags "AI/ML · Dashboards"
+  co-creation[-] ic 48px tags ""
+  staffing[-] ic 48px tags ""
+  custom-apps[-] ic 48px tags ""
+  low-code[-] ic 48px tags "Power Platform · Make · n8n · Retool · Bubble"
+  ai-solutions[navy] ic 48px tags "Generative AI · AI/ML"
+  cloud[feature] ic 48px tags "Azure · AWS · GCP"
+tags font: "JetBrains Mono" 11.2px
+links or focusables inside cards: 0
+card cursor: auto
+click a card → URL unchanged: true
+columns 1280: stats / services: 5 / 4
+Tab after the hero CTAs: A ""  >  A "PXP"  >  A "LXP"
+anchors at 1280px: 
+  product-engineering header 72 card 88 h3 173 visible true
+  ai-analytics header 72 card 88 h3 173 visible true
+  co-creation header 72 card 88 h3 173 visible true
+  staffing header 72 card 88 h3 173 visible true
+  custom-apps header 72 card 88 h3 173 visible true
+  low-code header 72 card 88 h3 173 visible true
+  ai-solutions header 72 card 88 h3 172 visible true
+  cloud header 72 card 88 h3 173 visible true
+anchors at 390px: 
+  product-engineering header 72 card 88 h3 173 visible true
+  ai-analytics header 72 card 88 h3 173 visible true
+  co-creation header 72 card 88 h3 173 visible true
+  staffing header 72 card 94 h3 179 visible true
+  custom-apps header 72 card 101 h3 186 visible true
+  low-code header 72 card 100 h3 185 visible true
+  ai-solutions header 72 card 131 h3 215 visible true
+  cloud header 72 card 127 h3 212 visible true
+Home card → /services#low-code: {"header":72,"card":88,"h3":173,"visible":true}
+footer link → /services#cloud: {"header":72,"card":88,"h3":173,"visible":true}
+columns 899: stats / services: 3 / 2 | sideways scroll false
+columns 390: stats / services: 2 / 1 | sideways scroll false
+reduced motion: figures: 25+ 24/7 20+ 8 2
+reduced motion: card animation/transition: none / 0s
