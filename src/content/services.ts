@@ -1,3 +1,5 @@
+import { hcmc, plano } from "@/content/offices";
+
 // Services page copy. Kept out of the components so it can be translated later.
 
 export const servicesMeta = {
@@ -25,9 +27,9 @@ export const servicesPage = {
     label: "See our 4-D process",
   },
   clockStripLabel: "Office local times",
-  // Strip order: Ho Chi Minh City first. `id` points into `offices`.
+  // Strip order: Ho Chi Minh City first.
   clockCities: [
-    { id: "hcmc", city: "Ho Chi Minh City" },
-    { id: "plano", city: "Plano" },
+    { office: hcmc, city: "Ho Chi Minh City" },
+    { office: plano, city: "Plano" },
   ],
 };

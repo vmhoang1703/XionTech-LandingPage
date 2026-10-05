@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroArt } from "@/components/sections/hero-art";
 import { LiveClock } from "@/components/sections/live-clock";
-import { offices } from "@/content/offices";
 import { servicesMeta, servicesPage } from "@/content/services";
 
 export const metadata: Metadata = {
@@ -15,10 +14,6 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   const { breadcrumbLabel, breadcrumbHome, breadcrumbCurrent } = servicesPage;
   const { title, lede, primaryCta, secondaryCta } = servicesPage;
-  const clocks = servicesPage.clockCities.flatMap(({ id, city }) => {
-    const office = offices.find((o) => o.id === id);
-    return office ? [{ ...office, city }] : [];
-  });
 
   return (
     <section className="hero-navy page-hero" aria-labelledby="services-h1">
@@ -49,10 +44,10 @@ export default function ServicesPage() {
           role="group"
           aria-label={servicesPage.clockStripLabel}
         >
-          {clocks.map((office) => (
+          {servicesPage.clockCities.map(({ office, city }) => (
             <span key={office.id}>
               <ClockIcon aria-hidden="true" />
-              {office.city}{" "}
+              {city}{" "}
               <b>
                 <LiveClock
                   timeZone={office.timeZone}
