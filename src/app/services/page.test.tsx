@@ -196,7 +196,7 @@ describe("ServicesPage", () => {
   it(".svc[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
     const css = globalsCss();
     expect(css).toMatch(
-      /\.svc\[id\][^{]*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+      /\.svc\[id\](\s*,\s*#process)?\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
   });
 
@@ -263,8 +263,7 @@ describe("ServicesPage", () => {
     expect(capture?.querySelector('button[type="submit"]')?.textContent).toBe(
       "Start a project",
     );
-    const sections = container.querySelectorAll(":scope > section");
-    expect(sections[sections.length - 1]).toBe(capture);
+    expect(container.lastElementChild).toBe(capture);
   });
 
   it("keeps the colour rhythm: navy hero, navy 4-D band, one amber band", () => {

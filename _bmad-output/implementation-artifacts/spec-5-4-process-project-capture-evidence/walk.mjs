@@ -27,6 +27,7 @@ async function settle(page) {
     last = y;
     await sleep(150);
   }
+  throw new Error("scroll did not settle");
 }
 const landing = (page) =>
   page.evaluate(() => {
@@ -34,7 +35,7 @@ const landing = (page) =>
     const h2 = document.querySelector("#process h2").getBoundingClientRect();
     return `url ${location.pathname}${location.hash} | header ${Math.round(header)} h2 ${Math.round(h2.top)}–${Math.round(h2.bottom)} visible ${h2.top >= header && h2.bottom <= innerHeight}`;
   });
-const box = (loc) => loc.evaluate((e) => { const r = e.getBoundingClientRect(); return `${Math.round(r.width)}x${Math.round(r.height)}`; });
+const box = (loc) => loc.evaluate((e) => { const r = e.getBoundingClientRect(); const s = getComputedStyle(e); return `${Math.round(r.width)}x${Math.round(r.height)} clip-path ${s.clipPath}`; });
 // Distinct row tops of the four steps = how many rows they use.
 const stepLayout = (page) =>
   page.locator(`${BAND} li.step4`).evaluateAll((ls) => {
@@ -45,7 +46,7 @@ const stepLayout = (page) =>
 // 1280px: the band, the reveal, the aligned "You receive" rows.
 const { page, context } = await open(1280);
 const band = page.locator(BAND);
-log("4-D band", `${await band.evaluate((b) => `${getComputedStyle(b).backgroundColor} | gridbg ${b.classList.contains("gridbg")} | after services ${b.previousElementSibling?.classList.contains("surface-mist")}`)}`);
+log("4-D band", `${await band.evaluate((b) => `${getComputedStyle(b).backgroundImage.slice(0, 90)} | gridbg ${b.classList.contains("gridbg")} | after services ${b.previousElementSibling?.classList.contains("surface-mist")}`)}`);
 log("head", (await band.locator(".sec-head").evaluate((h) => [...h.children].map((c) => c.textContent).join(" / "))));
 log("phase before scroll", await band.locator("ol.flow").getAttribute("data-phase"));
 await band.locator("ol.flow").scrollIntoViewIfNeeded();
@@ -63,6 +64,11 @@ await sleep(300);
 await page.getByRole("link", { name: "See our 4-D process" }).click();
 await settle(page);
 log("hero link click", await landing(page));
+await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+await sleep(300);
+await page.getByRole("link", { name: "See our 4-D process" }).click();
+await settle(page);
+log("hero link click again (URL already #process)", await landing(page));
 await page.evaluate(() => { history.replaceState(null, "", "/services"); scrollTo(0, 0); });
 await sleep(300);
 await page.getByRole("link", { name: "See our 4-D process" }).focus();
@@ -73,7 +79,7 @@ await page.screenshot({ path: `${OUT}/process-landing-1280.png` });
 
 // Capture band: last section of main, copy, invalid then valid email.
 const cap = page.locator("section.capture");
-log("capture", `${await cap.evaluate((c) => `${getComputedStyle(c).backgroundColor} | last in main ${c.parentElement.tagName === "MAIN" && !c.nextElementSibling}`)} | ${await cap.locator("h2").textContent()} | ${await cap.locator(".lede").textContent()} | label "${await cap.locator('label[for="cap-email"]').textContent()}" | button "${await cap.locator('button[type="submit"]').textContent()}" ${await cap.locator('button[type="submit"]').evaluate((b) => getComputedStyle(b).backgroundColor)}`);
+log("capture", `${await cap.evaluate((c) => `${getComputedStyle(c).backgroundImage.slice(0, 90)} | last in main ${c.parentElement.tagName === "MAIN" && !c.nextElementSibling}`)} | ${await cap.locator("h2").textContent()} | ${await cap.locator(".lede").textContent()} | label "${await cap.locator('label[for="cap-email"]').textContent()}" | button "${await cap.locator('button[type="submit"]').textContent()}" ${await cap.locator('button[type="submit"]').evaluate((b) => getComputedStyle(b).backgroundColor)}`);
 log("amber bands on the page", await page.locator(".surface-amber").count());
 log("navy surfaces (hero, 4-D)", `${await page.locator(".hero-navy").count()} hero-navy, ${await page.locator(".surface-navy").count()} surface-navy`);
 await cap.scrollIntoViewIfNeeded();
@@ -82,18 +88,18 @@ const field = cap.locator("#cap-email");
 await field.fill("not-an-email");
 await field.press("Enter");
 await sleep(400);
-log("invalid email", `error "${await cap.locator(".err").textContent().catch(() => "none")}" | focus on field ${await field.evaluate((f) => document.activeElement === f)} | url ${new URL(page.url()).pathname}`);
+log("invalid email", `error "${await cap.locator(".err").textContent({ timeout: 2000 }).catch(() => "none")}" | focus on field ${await field.evaluate((f) => document.activeElement === f)} | url ${new URL(page.url()).pathname}`);
 let posted = null;
 await page.route("**/api/contact", async (route) => {
   posted = route.request().postDataJSON();
   await route.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' });
 });
 await field.fill("quan@logistics-example.com");
-await field.press("Enter");
+await cap.getByRole("button", { name: "Start a project" }).click();
 await page.waitForURL("**/demo#project", { timeout: 10000 });
 await sleep(1200);
 await settle(page);
-log("posted (intercepted, not sent)", JSON.stringify(posted));
+log("posted by mouse click (intercepted, not sent)", JSON.stringify(posted));
 log("after valid email", await page.evaluate(() => {
   const tab = document.querySelector('[role="tab"][aria-selected="true"]');
   const email = document.getElementById("f-email");
@@ -102,6 +108,16 @@ log("after valid email", await page.evaluate(() => {
 }));
 await page.screenshot({ path: `${OUT}/demo-project-after-capture.png` });
 await context.close();
+
+// The same valid submit by keyboard (Enter in the field).
+const kb = await open(1280);
+await kb.page.route("**/api/contact", (route) => route.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }));
+await kb.page.locator("#cap-email").fill("quan@logistics-example.com");
+await kb.page.locator("#cap-email").press("Enter");
+await kb.page.waitForURL("**/demo#project", { timeout: 10000 });
+await sleep(1200);
+log("valid email by Enter", await kb.page.evaluate(() => `url ${location.pathname}${location.hash} | tab "${document.querySelector('[role="tab"][aria-selected="true"]')?.textContent}" | email "${document.getElementById("f-email").value}"`));
+await kb.context.close();
 
 // Mega menu "See the process" from Home.
 const mega = await open(1280, "/");

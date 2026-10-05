@@ -27,7 +27,11 @@ test(
     expect(html).toContain('<article id="cloud"');
     expect(html).toContain("Eight services, one team.");
     // Story 5.4: the 4-D band target and the project capture
+    expect(html).toContain('href="#process"');
     expect(html).toContain('<section id="process"');
+    expect(html.indexOf('<section id="process"')).toBeLessThan(
+      html.indexOf("Tell us what you&#x27;re building."),
+    );
     expect(html).toContain("From your request to launch, in four steps.");
     expect(html).toContain("Tell us what you&#x27;re building.");
   },

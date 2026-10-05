@@ -1,6 +1,10 @@
 import { hcmc, plano } from "@/content/offices";
-import { processFlow, type ProcessFlowContent } from "@/content/process";
-import { homeStats } from "@/content/home";
+import {
+  processFlow,
+  type ProcessFlowContent,
+  type ProcessStep,
+} from "@/content/process";
+import { homeProcess, homeStats } from "@/content/home";
 
 // Services page copy. Kept out of the components so it can be translated later.
 
@@ -101,25 +105,27 @@ export const servicesSection = {
 } as const;
 
 // Services #process: the shared 4-D flow with the prototype's Services step
-// lines. Icons and the start and end nodes stay those of the Home flow.
-const servicesStepCopy = [
-  {
+// lines, keyed by step number so a reordered or added step cannot pick up
+// another step's copy. Only Discovery's "You receive" differs from Home; the
+// icons, the other "You receive" lines and the start and end nodes stay shared.
+export const servicesStepCopy: Record<
+  string,
+  Partial<Pick<ProcessStep, "line" | "receive">>
+> = {
+  "01": {
     line: "Workshops to understand your goals, users, risks and scope.",
     receive: "A clear scope, estimate and delivery plan.",
   },
-  {
+  "02": {
     line: "User flows, interfaces and architecture agreed before code is written.",
-    receive: "A clickable prototype and technical design.",
   },
-  {
+  "03": {
     line: "Agile sprints with regular demos, testing and open progress updates.",
-    receive: "Working software every sprint.",
   },
-  {
+  "04": {
     line: "A safe release, monitoring and improvement after launch.",
-    receive: "A live release with ongoing support.",
   },
-];
+};
 
 export const servicesProcess: {
   label: string;
@@ -128,13 +134,13 @@ export const servicesProcess: {
   flow: ProcessFlowContent;
 } = {
   label: "Our 4-D process",
-  title: "From your request to launch, in four steps.",
+  title: homeProcess.title,
   lede: "Every step ends with something you can see, test and approve.",
   flow: {
     ...processFlow,
-    steps: processFlow.steps.map((step, index) => ({
+    steps: processFlow.steps.map((step) => ({
       ...step,
-      ...servicesStepCopy[index],
+      ...servicesStepCopy[step.num],
     })),
   },
 };
