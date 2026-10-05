@@ -251,3 +251,8 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-6-2-story-detail.md`
   summary: Story 6.2 review (Minor): give `getOpenRole` the same list-first check as `getPost`, so an unknown `/careers/<slug>` costs no Sanity request; `productAnchor("")` returns "" not null; `aria-hidden` on breadcrumb slashes (story and job pages); render list items, quotes and h3+ properly instead of flattening to p/h2; no `<time>` for an unreadable date; Open Graph title and description per story; wrap `getPost` in React `cache()`; share the crumb copy between `newsPage` and `newsStory`; a branded `error.tsx` for Sanity outages; slug encoding for hand-typed slugs; Amber to say whether the empty story photo frame needs a `[Placeholder]` caption.
   evidence: full 5-layer review 2026-10-05 (medium points fixed: product link gate, excerpt fallback, keyboard and crumb walk checks, a real-story smoke test).
+
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-5-1-services-hero-clocks.md`
+  summary: `npm run dev` returned 500 on every page on Sammy's machine on 2026-10-05: "next/font/google queries have exactly one entry" from the Google fonts in `src/app/layout.tsx`.
+  evidence: maybe-false, medium if true (it blocks UX walks on the dev server for the team); the production build and `next start` work. Settle by running `npm run dev` on another machine or network.

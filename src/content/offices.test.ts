@@ -27,6 +27,8 @@ describe("offices", () => {
         label: "vinni.tran@newxion.com",
       },
     ]);
+    expect(plano?.timeZone).toBe("America/Chicago");
+    expect(plano?.zoneLabel).toBe("US Central");
   });
 
   it("has the Ho Chi Minh City office with its contact data", () => {
@@ -41,6 +43,8 @@ describe("offices", () => {
     expect(hcmc?.contacts).toEqual([
       { href: "tel:+84908107552", label: "+84 908 107 552" },
     ]);
+    expect(hcmc?.timeZone).toBe("Asia/Ho_Chi_Minh");
+    expect(hcmc?.zoneLabel).toBe("GMT+7");
   });
 
   it("marks only the WhatsApp contact as external", () => {

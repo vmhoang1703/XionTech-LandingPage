@@ -1,0 +1,125 @@
+===== $ npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 D:/XionTech-LandingPage
+
+
+ Test Files  67 passed (67)
+      Tests  1043 passed (1043)
+   Start at  10:24:49
+   Duration  36.27s (import 53%, environment 23%, tests 17%, setup 5%, transform 2%)
+
+    Isolate  67 workers spawned · ~1.50s startup each (spawn + environment, per file)
+             at least ~7.63s faster with isolate: false — reuses workers across files instead of one per file
+
+===== exit 0
+===== $ npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+===== exit 0
+===== $ npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 D:/XionTech-LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  67 passed (67)
+      Tests  1043 passed (1043)
+   Start at  10:25:46
+   Duration  51.14s (import 53%, tests 21%, environment 19%, setup 5%, transform 1%, worker 1%)
+
+    Isolate  67 workers spawned · ~1.75s startup each (spawn + environment, per file)
+             at least ~8.93s faster with isolate: false — reuses workers across files instead of one per file
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |    99.7 |    98.04 |   99.43 |     100 |                   
+ ...onents/careers |     100 |    97.46 |     100 |     100 |                   
+  ...tion-form.tsx |     100 |    96.72 |     100 |     100 | 45,123            
+ ...onents/contact |   99.07 |    96.06 |   98.27 |     100 |                   
+  contact-form.tsx |   98.49 |    93.58 |   97.61 |     100 | ...26,189,219,404 
+ components/home   |   99.21 |    95.34 |   96.77 |     100 |                   
+  hero-silk.tsx    |   98.18 |       95 |   91.66 |     100 | 27                
+  silk-shader.ts   |     100 |     92.3 |     100 |     100 | 95                
+ components/layout |     100 |    97.93 |     100 |     100 |                   
+  mobile-menu.tsx  |     100 |    95.55 |     100 |     100 | 43,96             
+ ...nents/sections |     100 |    95.65 |     100 |     100 |                   
+  hero-art.tsx     |     100 |       90 |     100 |     100 | 36,65             
+ test-utils        |      96 |    85.71 |     100 |     100 |                   
+  css-classes.ts   |      96 |    85.71 |     100 |     100 | 50                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.7% ( 1364/1368 )
+Branches     : 98.04% ( 703/717 )
+Functions    : 99.43% ( 349/351 )
+Lines        : 100% ( 1243/1243 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/app/services/page.tsx (100%)
+src/components/sections/live-clock.tsx (100%)
+src/content/offices.ts (100%)
+src/content/services.ts (100%)
+src/lib/clock/office-time.ts (100%)
+-------------
+Total:   25 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+warning: in the working copy of '_bmad-output/implementation-artifacts/spec-5-1-services-hero-clocks.md', CRLF will be replaced by LF the next time Git touches it
+C1 ok: 6 changed file(s) with branch coverage >= 80% vs origin/develop.
+===== exit 0
+===== $ npm run test:smoke
+
+> xiontech-landing-page@0.1.0 test:smoke
+> playwright test --project=smoke
+
+
+Running 12 tests using 6 workers
+
+  ok  2 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, the open roles and the life sections @smoke (78ms)
+  ok  1 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (89ms)
+  ok  8 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with both zone labels and the H1 in the HTML without JavaScript @smoke (112ms)
+  ok  7 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with its H1, the four pills and no Updates link @smoke (119ms)
+  ok  6 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the Not found copy and no capture band @smoke (167ms)
+  ok  3 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (191ms)
+  ok  4 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its H1, the filter chips and the demo capture @smoke (183ms)
+  ok  5 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (176ms)
+  ok  9 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (38ms)
+  ok 10 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (95ms)
+  ok 11 [smoke] › e2e\smoke.spec.ts:15:5 › demo page responds 200 with send request button @smoke (77ms)
+  ok 12 [smoke] › e2e\smoke.spec.ts:26:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (12ms)
+
+  12 passed (10.5s)
+===== exit 0
