@@ -21,3 +21,8 @@ Task 3: minor — src/components/sections/live-clock.tsx:92 — time state not r
 Task 3: minor — src/components/sections/live-clock.test.tsx:23 — server-render assertion could pin the exact <span>
 Task 3: complete (commits b2b0708..0d2e3db, diff verified)
 Task 4: dispatched (model haiku, base 0d2e3db, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t4-report.md)
+Task 4: no-red (static copy only, no behaviour; covered by the Task 5 page test)
+Task 4: review — pass — 0 critical, 0 important, 1 minor; ⚠️ resolved by controller: news.ts and careers.ts use no as const either
+Task 4: minor — src/content/services.ts:3 — no as const (consistent with siblings)
+Task 4: complete (commits 4bb81a4..b323f38, diff verified)
+Task 5: dispatched (model sonnet, base b323f38, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t5-report.md)

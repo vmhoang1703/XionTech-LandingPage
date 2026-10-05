@@ -55,7 +55,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `src/lib/clock/office-time.test.ts` -- the matrix times, including daylight saving, and a `RangeError` for a bad zone
 - [x] `src/components/sections/live-clock.tsx` -- client; renders `zoneLabel` on the server, then the formatted time; refreshes every `CLOCK_REFRESH_MS`; clears on unmount; keeps the label and logs once on a bad zone -- the shared clock 6.4 reuses
   - red: `src/components/sections/live-clock.test.tsx` -- with fake timers: label before effects (server render), time after mount, new minute after 30s, interval cleared on unmount, bad zone keeps the label
-- [ ] `src/content/services.ts` -- breadcrumb, H1 (lead / highlight / tail), lede, the two CTAs, the clock strip label -- copy out of the components
+- [x] `src/content/services.ts` -- breadcrumb, H1 (lead / highlight / tail), lede, the two CTAs, the clock strip label -- copy out of the components
 - [ ] `src/app/services/page.tsx` -- navy page hero with `HeroArt`, crumbs, H1, lede, `.cta-row` (primary "Start a project" → `/demo#project`, glass "See our 4-D process" → `#process`), `.clock-strip` with a `ClockIcon` and `LiveClock` per office (HCMC first); metadata title and description -- the page
   - red: `src/app/services/page.test.tsx` -- one H1 "Software teams that get IT done." with `.hl`, crumbs, both CTAs and hrefs, both zone labels, strip label, metadata, CSS contract
 - [ ] `src/app/globals.css` -- Services section: `.page-hero .cta-row`, `.cta-row`, `.clock-strip` ported with tokens -- missing classes
