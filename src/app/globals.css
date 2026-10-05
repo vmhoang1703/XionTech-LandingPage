@@ -2954,6 +2954,22 @@
     font-size: 0.93rem;
     font-style: normal;
   }
+
+  /*
+    About offices: two cards side by side above md, as in the prototype. The
+    shared .offices rule stays one column (its base rule comes after its own
+    md query), so /demo is unchanged; only a grid of office cards widens.
+  */
+  .offices:has(> .office-card) {
+    gap: 18px;
+    margin-top: 0;
+  }
+
+  @media (width > --theme(--breakpoint-md)) {
+    .offices:has(> .office-card) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 }
 
 @layer utilities {

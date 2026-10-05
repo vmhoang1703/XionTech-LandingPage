@@ -252,4 +252,12 @@ describe("AboutPage", () => {
       /#values\s*,\s*#faq\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
   });
+
+  it("puts the two office cards side by side above md, as in the prototype", () => {
+    // The shared .offices rule stays one column (its base rule comes after its
+    // own md query), so About widens only the grid that holds office cards.
+    expect(globalsCss()).toMatch(
+      /@media \(width > --theme\(--breakpoint-md\)\)\s*\{\s*\.offices:has\(> \.office-card\)\s*\{[^}]*grid-template-columns:\s*1fr 1fr/,
+    );
+  });
 });
