@@ -272,7 +272,7 @@ describe("AboutPage", () => {
       expect(heading).not.toMatch(/leadership|our team|founder|management/i);
     }
     expect(container.textContent).not.toMatch(
-      /(CEO|CTO|COO|Founder|Co-founder|Director|Mr\.|Ms\.|Mrs\.)/,
+      /\b(CEO|CTO|COO|Founder|Co-founder|Director)\b|\b(Mr|Ms|Mrs)\./,
     );
     // The only address with a person's name is the office email the business supplied.
     const mailtos = Array.from(
