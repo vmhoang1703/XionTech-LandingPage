@@ -329,7 +329,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026 (se
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 (resizing keeps the card); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
+Changes on this page: ENH-014 and ENH-018 (hero), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 and ENH-028 (resizing keeps the card; pill clears below the cards); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗

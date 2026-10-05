@@ -304,7 +304,10 @@
     const restY=i=>{const c=all[i];if(!DESK.matches)return c.getBoundingClientRect().top+scrollY-148;
       let y=pstack.getBoundingClientRect().top+scrollY;for(let j=0;j<i;j++)y+=all[j].offsetHeight+parseFloat(getComputedStyle(pstack).rowGap||0);
       return y-(tops[i]||0)};
-    const mark=()=>{if(!all.length)return;let k=-1;all.forEach((c,i)=>{const t=c.getBoundingClientRect().top,o=parseFloat(cols(c)[0].style.opacity||'1');if((DESK.matches?t<innerHeight*.6&&o>.5:t<=200))k=i});
+    // the card being read: the front-most card whose top has passed the middle of the screen and that is still on screen
+    const front=()=>{let k=-1;
+      all.forEach((c,i)=>{const r=c.getBoundingClientRect();if(r.bottom>innerHeight*.3&&r.top<innerHeight*.5)k=i});return k};
+    const mark=()=>{if(!all.length)return;const k=front();
       const aud=k<0?null:all[k].dataset.aud;
       pills.forEach(a=>{a.dataset.aud===aud?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')})};
     // any link to an app card (the pills and the hero diagram) lands on the card parked and ready to read
@@ -318,15 +321,16 @@
     addEventListener('resize',mark,{passive:true});mark();
     // resizing across the desktop breakpoint keeps the reader on the card they were reading: the card is noted only
     // while scrolling (never mid-resize), and once the resize settles the page returns to it in the new layout
-    let readK=-1,anchor=null,resizing=false,settle=0;
-    const noteK=()=>{if(resizing)return;let k=-1;all.forEach((c,i)=>{const r=c.getBoundingClientRect(),o=parseFloat(cols(c)[0].style.opacity||'1');if(r.bottom>innerHeight*.3&&(DESK.matches?r.top<innerHeight*.6&&o>.5:r.top<=200))k=i});readK=k;
+    const layoutW=()=>document.documentElement.clientWidth;
+    let readK=-1,readTop=0,anchor=null,resizing=false,settle=0,lastW=layoutW(),widened=false;
+    const noteK=()=>{if(resizing)return;const k=front();readK=k;readTop=k>=0?all[k].getBoundingClientRect().top:0;
       // away from the cards, the reader's place is kept as the section at the top of the screen and its offset
       anchor=null;if(k<0){const el=[...document.querySelectorAll('main > section, footer')].find(s=>s.getBoundingClientRect().bottom>innerHeight*.3);if(el)anchor=[el,el.getBoundingClientRect().top]}};
     let nt=false;addEventListener('scroll',()=>{if(nt)return;nt=true;requestAnimationFrame(()=>{noteK();nt=false})},{passive:true});noteK();
-    schedule=()=>{resizing=true;clearTimeout(settle);settle=setTimeout(()=>{const k=readK;
+    schedule=()=>{resizing=true;const w=layoutW();if(w!==lastW){if(!DESK.matches)widened=true;lastW=w}clearTimeout(settle);settle=setTimeout(()=>{const k=readK;
       const an=anchor;
-      try{if(crossed&&(k>=0||an)){clear();update();const h=root.style.scrollBehavior;root.style.scrollBehavior='auto';scrollTo(0,k>=0?restY(k):scrollY+an[0].getBoundingClientRect().top-an[1]);root.style.scrollBehavior=h;update();mark()}}
-      finally{crossed=false;resizing=false;noteK()}},250)};
+      try{if((crossed||widened)&&(k>=0||an)){clear();update();const h=root.style.scrollBehavior;root.style.scrollBehavior='auto';scrollTo(0,k>=0?(crossed?restY(k):scrollY+all[k].getBoundingClientRect().top-readTop):scrollY+an[0].getBoundingClientRect().top-an[1]);root.style.scrollBehavior=h;update();mark()}}
+      finally{crossed=false;widened=false;resizing=false;noteK()}},250)};
     addEventListener('resize',schedule,{passive:true});
     addEventListener('load',()=>{const i=all.indexOf(document.getElementById(location.hash.slice(1)));if(i>=0)requestAnimationFrame(()=>scrollTo({top:restY(i),behavior:'auto'}))});
   }

@@ -1049,3 +1049,18 @@ Template:
 - **AI got it wrong?** Yes: the first attempt (in ENH-020) let resize handlers overwrite the remembered card and
   was reverted; here the first version of the non-card case kept the distance from the page end, which drifted
   because sections change height between layouts, and was replaced by a section anchor.
+
+## 2026-10-05 — ENH-028: pill and resize follow-ups from the ENH-027 audit
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor)
+- **Prompt / task:** Fix the three edge cases the ENH-027 audit raised: phone rotation drifting to another card,
+  a resize mid-slide landing on the incoming card, and the pill staying lit below the cards.
+- **Decision / result:** Approved by Amber. Phone width changes (rotation) keep the reader's exact spot in their
+  card; height-only changes (the keyboard) never move the page; the pill clears below the cards; the pill and the
+  resize memory share one rule for the card being read. The review caught that rotation would have snapped to the
+  card's top rather than the reader's spot, that pinch-zoom could count as a width change, and that short screens
+  could show a blank pill for a moment; all fixed and re-checked.
+- **AI got it wrong?** Yes: the first shared rule required the outgoing card to fade before the next counted,
+  which left the pill lagging at hand-overs and a possible blank moment on short screens; it was simplified to
+  the front-most card past the middle of the screen.

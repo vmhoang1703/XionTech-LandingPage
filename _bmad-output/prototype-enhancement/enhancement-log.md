@@ -41,6 +41,7 @@ directly, before this log existed.
 | ENH-025 | 2026-10-05 | Every page, typography                                    | Calmer weights: headings, labels, numbers and buttons drop from bold (600 to 700) to 500; original fonts and sizes kept                                                                                                                                                                           | Approved | Batch 1 (all pages)                   |
 | ENH-026 | 2026-10-05 | Job page and Home contact section                         | On phones no page scrolls sideways: the job page and Home's contact section fit the screen                                                                                                                                                                                                        | Approved | 6.5                                   |
 | ENH-027 | 2026-10-05 | Products, app cards                                       | Resizing a window across the phone/desktop breakpoint keeps the reader on the card they were reading                                                                                                                                                                                              | Approved | 4.1                                   |
+| ENH-028 | 2026-10-05 | Products, app cards                                       | Phone rotation keeps the card; the pill clears below the cards; one rule for "the card being read"                                                                                                                                                                                                | Approved | 4.1                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -655,4 +656,15 @@ directly, before this log existed.
 - **What changed:** after a resize that crosses the breakpoint, the page returns to the card the reader was on, settled on desktop or just under the audience pills on phones, and the right pill stays highlighted. Away from the cards (the hero, the school day, Product updates, the footer), the section the reader was reading stays at the same place on screen.
 - **Rules:** a resize that stays on one side of the breakpoint (including a phone keyboard opening) does not move the page.
 - **Developer notes:** the card being read is noted only while scrolling and ignored during a resize (resize handlers would otherwise overwrite it with the half-changed layout); a short pause after the last resize event triggers the return. Away from the cards, the section crossing a line 30% down the screen and its offset are kept instead. The restore always finishes its clean-up, even in browsers that reject an instant scroll. Checked from several cards and from the hero, school day, Product updates and footer, desktop to phone and back, and with a phone-keyboard resize.
+- **Open items:** none.
+
+## ENH-028: Pill and resize follow-ups from the ENH-027 audit
+
+- **Why:** the ENH-027 acceptance audit raised three edge cases on 2026-10-05; Amber asked for them to be fixed.
+- **What changed:**
+  - Widening or rotating a phone (for example 390 to 700px, or portrait to landscape) keeps the reader exactly where they were in their app card (the same spot on screen, even halfway down a long card). Changes that only alter the height, such as a phone keyboard opening, still do not move the page.
+  - The School, Parents or Students pill clears once the last app card has scrolled away, so nothing stays highlighted in "A day at school" or below it (as before, nothing is highlighted in the hero).
+  - The pill and the resize memory now share one rule for "the card being read": the front-most card whose top has passed the middle of the screen and that is still on screen. So a resize during a slide lands on the card the pill shows.
+- **Rules:** a desktop-only resize still does not move the page.
+- **Developer notes:** widths are measured from the page layout, not the visible area, so pinch-zoom never counts as a width change. Checked by scanning the whole stack every 40px at 1440 and 375px, comparing the pill to the card with the most visible, unfaded area. The few differences are hand-over moments where two cards share the screen about equally, or the last card leaving with under 30% of it on screen.
 - **Open items:** none.
