@@ -27,18 +27,17 @@ export function StatsBand({
 }: Readonly<StatsBandProps>) {
   const labelId = useId();
   const suffixClass = tone === "navy" ? "text-amber" : "text-amber-text";
+  const h2ClassName = hideLabel ? "label sr-only" : "label";
+  const ulClassName = hideLabel
+    ? "border-border grid grid-cols-2 gap-y-7 sm:grid-cols-3 lg:grid-cols-5"
+    : "border-border mt-4.5 grid grid-cols-2 gap-y-7 border-t pt-6.5 sm:grid-cols-3 lg:grid-cols-5";
 
   return (
     <div role="group" aria-labelledby={labelId}>
-      <h2
-        id={labelId}
-        className={`label ${hideLabel ? "sr-only" : ""}`}
-      >
+      <h2 id={labelId} className={h2ClassName}>
         {label}
       </h2>
-      <ul
-        className={`border-border grid grid-cols-2 gap-y-7 sm:grid-cols-3 lg:grid-cols-5${hideLabel ? "" : " mt-4.5 border-t pt-6.5"}`}
-      >
+      <ul className={ulClassName}>
         {stats.map((stat) => (
           <li
             key={stat.caption}

@@ -95,4 +95,27 @@ describe("StatsBand", () => {
     expect(list.classList.contains("mt-4.5")).toBe(true);
     expect(list.classList.contains("pt-6.5")).toBe(true);
   });
+
+  it("preserves exact default className strings for h2 and ul", () => {
+    render(<StatsBand label="Experience" stats={STATS} tone="navy" />);
+
+    const label = screen.getByRole("heading", { level: 2, name: "Experience" });
+    expect(label.className).toBe("label");
+
+    const list = screen.getByRole("list");
+    expect(list.className).toBe(
+      "border-border mt-4.5 grid grid-cols-2 gap-y-7 border-t pt-6.5 sm:grid-cols-3 lg:grid-cols-5",
+    );
+  });
+
+  it("preserves hideLabel className string for ul", () => {
+    render(
+      <StatsBand label="Experience" stats={STATS} tone="navy" hideLabel />,
+    );
+
+    const list = screen.getByRole("list");
+    expect(list.className).toBe(
+      "border-border grid grid-cols-2 gap-y-7 sm:grid-cols-3 lg:grid-cols-5",
+    );
+  });
 });
