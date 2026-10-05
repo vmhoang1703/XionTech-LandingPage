@@ -31,3 +31,14 @@ Task 5: review — pass — 0 critical, 0 important, 2 minor; ⚠️ resolved by
 Task 5: minor — src/app/services/page.tsx:18 — a clockCities id with no office silently drops a pill (pill-count test covers it)
 Task 5: minor — src/app/services/page.tsx:16 — destructuring split over two lines; clockStripLabel read inline
 Task 6: dispatched (model sonnet, base 9006cde, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t6-report.md)
+Task 5: green — npx vitest run src/app/services — Tests 6 passed (6) (CSS contract green once Task 6 landed)
+Task 6: red — npx vitest run src/app/services/page.test.tsx (CSS contract) — undefined classes [cta-row, clock-strip]
+Task 6: green — npx vitest run src/app/services — Tests 6 passed (6)
+Task 6: fix round 1/5 (.clock-strip span → .clock-strip > span; test that no descendant rule remains; 0bb1b74)
+Task 5: complete (commits c46cd2b..9006cde, diff verified; green once Task 6 landed)
+Task 6: review — fail — 0 critical, 1 important (.clock-strip span matched LiveClock's nested span), 1 minor
+Task 6: minor — src/app/services/page.test.tsx — CSS contract checks class existence only
+Task 6: review — pass — re-review: 0 of 1 findings open; 1 minor
+Task 6: minor — src/app/services/page.test.tsx:79 — selector test is source-text regex
+Task 6: complete (commits 50753e8..0bb1b74, diff verified)
+Task 7: dispatched (model haiku, base 0bb1b74, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t7-report.md)
