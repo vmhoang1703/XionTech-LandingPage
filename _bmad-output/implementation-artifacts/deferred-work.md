@@ -281,3 +281,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-6-4-about-page.md`
   summary: The `/about` layouts (values 3/2/1 columns, offices 2/1), the featured cell, the FAQ marker and the anchor landings are checked only by the hand-run `walk.mjs`; add them to a browser Playwright project with the 5.2 and 5.4 anchor checks.
   evidence: Story 6.4 review (Verification Gap). jsdom cannot evaluate media queries, so unit tests only check class names and CSS text.
+- source_spec: `_bmad-output/implementation-artifacts/spec-7-3-accessibility-checks.md`
+  summary: Story 7.3 review (Minor): measure ring contrast on the page, not only in the token table; log or fail on axe `incomplete` contrast results; check every required field of each form, not one; scan menus and tabs in their open state and the form error state with axe; walk /careers, a story, a job page, /privacy and 404 by keyboard; document that `test:a11y` needs Chrome and clear `.next/cache/fetch-cache` before it (a `pretest:a11y` step); the date-field ring also shows on mouse focus (`:focus-within`).
+  evidence: full review 2026-10-05 (medium points patched; these are Minor).

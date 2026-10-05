@@ -596,6 +596,13 @@
     color: var(--color-muted);
   }
 
+  /* 24 x 24px targets (WCAG 2.5.8, Story 7.3) */
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+  }
+
   .crumbs a:hover {
     color: var(--color-heading);
   }
@@ -701,6 +708,9 @@
   }
 
   .office a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
     overflow-wrap: anywhere;
   }
 
