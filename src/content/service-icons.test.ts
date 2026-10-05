@@ -1,22 +1,14 @@
 import { describe, expect, it } from "vitest";
+import { homeServices } from "@/content/home";
 import { serviceIcons } from "./service-icons";
 
 describe("serviceIcons", () => {
   it("has all eight service ids mapped to an icon", () => {
-    const expectedIds = [
-      "product-engineering",
-      "ai-analytics",
-      "co-creation",
-      "staffing",
-      "custom-apps",
-      "low-code",
-      "ai-solutions",
-      "cloud",
-    ];
+    const expectedIds = homeServices.cards.map((card) => card.id);
 
     for (const id of expectedIds) {
-      expect(serviceIcons[id as keyof typeof serviceIcons]).toBeDefined();
-      expect(serviceIcons[id as keyof typeof serviceIcons].icon).toBeDefined();
+      expect(serviceIcons[id]).toBeDefined();
+      expect(serviceIcons[id].icon).toBeDefined();
     }
   });
 
@@ -32,7 +24,7 @@ describe("serviceIcons", () => {
     expect(serviceIcons["ai-solutions"].variant).toBe("navy");
   });
 
-  it("has no variant for the other four services", () => {
+  it("has no variant for the other five services", () => {
     const noVariantIds = [
       "ai-analytics",
       "co-creation",

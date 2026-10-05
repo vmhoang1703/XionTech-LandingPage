@@ -67,10 +67,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-      <section
-        className="sec surface-paper"
-        aria-label={servicesStats.ariaLabel}
-      >
+      <section className="sec surface-paper">
         <div className="wrap">
           <StatsBand
             label={servicesStats.ariaLabel}

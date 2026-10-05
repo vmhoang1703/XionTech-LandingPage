@@ -82,7 +82,9 @@ describe("ServicesPage", () => {
     render(<ServicesPage />);
 
     const band = screen.getByRole("group", { name: "Key facts" });
-    expect(band.closest("section")?.className).toBe("sec surface-paper");
+    const statsSection = band.closest("section");
+    expect(statsSection?.className).toBe("sec surface-paper");
+    expect(statsSection?.hasAttribute("aria-label")).toBe(false);
     expect(band.querySelector("h2")?.className).toContain("sr-only");
     const items = Array.from(band.querySelectorAll("li"));
     expect(items.map((li) => li.querySelector("p")?.textContent)).toEqual([
@@ -151,6 +153,8 @@ describe("ServicesPage", () => {
         container.querySelector(`#${id}`)?.querySelectorAll(".tags") ?? [],
       ).map((t) => t.textContent);
     expect(tagsOf("product-engineering")).toEqual(["Web · Mobile"]);
+    expect(tagsOf("ai-analytics")).toEqual(["AI/ML · Dashboards"]);
+    expect(tagsOf("ai-solutions")).toEqual(["Generative AI · AI/ML"]);
     expect(tagsOf("low-code")).toEqual([
       "Power Platform · Make · n8n · Retool · Bubble",
     ]);
@@ -169,7 +173,7 @@ describe("ServicesPage", () => {
   it(".svc[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
     const css = globalsCss();
     expect(css).toMatch(
-      /\.svc\[id\]\s*\{[\s\S]*?scroll-margin-top[\s\S]*?--spacing-anchor-offset/,
+      /\.svc\[id\]\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
   });
 });
