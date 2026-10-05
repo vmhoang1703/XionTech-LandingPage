@@ -196,7 +196,7 @@ describe("ServicesPage", () => {
   it(".svc[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
     const css = globalsCss();
     expect(css).toMatch(
-      /\.svc\[id\](\s*,\s*#process)?\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+      /\.svc\[id\]\s*,\s*#process(\s*,\s*#[\w-]+)*\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
   });
 

@@ -2793,12 +2793,182 @@
     margin-top: auto;
   }
 
-  /* Service card anchors (Story 5.2) and the 4-D process (Story 5.4) */
+  /* Service card anchors (Story 5.2), the 4-D process (Story 5.4), About (Story 6.4) */
   .svc[id],
-  #process {
+  #process,
+  #values,
+  #faq {
     scroll-margin-top: calc(
       var(--spacing-anchor-offset) - var(--spacing-header-height)
     );
+  }
+
+  /* About page (Story 6.4), ported from the prototype site.css */
+  .values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .value {
+    position: relative;
+    padding: 34px 30px;
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.4s var(--ease-brand);
+  }
+
+  .value:not(.feat):hover {
+    background: var(--color-mist);
+  }
+
+  .value svg {
+    font-size: 1.8rem;
+    color: var(--color-heading);
+  }
+
+  .value h3 {
+    margin: 16px 0 8px;
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .value p {
+    color: var(--color-muted);
+    font-size: 0.96rem;
+  }
+
+  .value.feat {
+    background: linear-gradient(
+      155deg,
+      var(--color-amber-light),
+      var(--color-amber) 60%,
+      var(--color-amber-deep)
+    );
+  }
+
+  .value.feat svg,
+  .value.feat h3,
+  .value.feat p {
+    color: var(--color-navy);
+  }
+
+  @media (width <= --theme(--breakpoint-md)) {
+    .values {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width <= --theme(--breakpoint-sm)) {
+    .values {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .faq {
+    display: grid;
+    gap: 12px;
+    max-width: 880px;
+  }
+
+  .faq details {
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    background: var(--color-paper);
+    transition: box-shadow 0.3s var(--ease-brand);
+  }
+
+  .faq details[open] {
+    box-shadow: 0 20px 40px -30px
+      color-mix(in srgb, var(--color-navy) 18%, transparent);
+  }
+
+  .faq summary {
+    list-style: none;
+    cursor: pointer;
+    position: relative;
+    padding: 20px 60px 20px 22px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-heading);
+  }
+
+  .faq summary::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-mist);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+  }
+
+  .faq details[open] summary::after {
+    content: "\2212";
+  }
+
+  .faq summary:focus-visible {
+    outline-offset: -3px;
+    border-radius: 18px;
+  }
+
+  .faq p {
+    max-width: 70ch;
+    padding: 0 22px 22px;
+    color: var(--color-muted);
+  }
+
+  .office-card {
+    display: grid;
+    gap: 10px;
+    padding: 30px;
+  }
+
+  .office-card .clock {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    color: var(--color-heading);
+  }
+
+  .office-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .office-card address,
+  .office-card p {
+    color: var(--color-muted);
+    font-size: 0.93rem;
+    font-style: normal;
+  }
+
+  /*
+    About offices: two cards side by side above md, as in the prototype. The
+    shared .offices rule stays one column (its base rule comes after its own
+    md query), so /demo is unchanged; only a grid of office cards widens.
+  */
+  .offices:has(> .office-card) {
+    gap: 18px;
+    margin-top: 0;
+  }
+
+  @media (width > --theme(--breakpoint-md)) {
+    .offices:has(> .office-card) {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 }
 

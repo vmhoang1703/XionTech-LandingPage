@@ -1,0 +1,51 @@
+# Story 6.4 — what was observed
+
+Production build made by `npm run test:smoke`, served with `npx next start -p 3005`, in Chrome via Playwright. Script `walk.mjs`, raw output `walk-output.txt`. Run on 2026-10-05, last after the office-grid fix. The clock was set to 2026-10-05T03:15:45Z. The capture's `POST /api/contact` was answered by the walk, so no mail was sent.
+
+- **Order.** `main` holds: hero (`about-h1`), stats (`sec.surface-paper`), story, `#values`, `#faq`, offices, capture (`cap-h`). There is 1 H1 on the page.
+- **Hero.**
+  - 1 aurora and 1 strand canvas.
+  - Crumbs "Home/About".
+  - The H1 reads "Tech made simple. Solutions made powerful.", with "Solutions made powerful" highlighted.
+  - The lede is the prototype's.
+- **Stats.**
+  - The figures read: 25+, 24/7, 20+, "4 [Placeholder] School products ready to demo", 2, each with its caption.
+  - The "Key facts" label is 1×1 (sr-only).
+- **Story.**
+  - Mist gradient with linen.
+  - Photo frame "[PLACEHOLDER] PHOTO / Real team photo at the Ho Chi Minh City office (no AI imagery)."
+  - h2 "Two strengths, one team." and 3 check items.
+  - Side by side at 1280px and at exactly 900px; stacked at 899, 640 and 390px.
+- **Values.**
+  - Label "Our core values" and h2 "What guides how we work.".
+  - Six cells in order, with icons. "Get IT Done" Attitude is `feat`, with `linear-gradient(155deg, rgb(255, 216, 74), rgb(255, 192, 0) 60%, rgb(240, 179, 0))` and a navy h3.
+  - Columns: 3 at 1280px; 2 at 900 and 899px; 1 at 640 and 390px.
+  - Hovering a non-featured cell changes its background from transparent to rgb(238, 242, 249) over 0.4 s.
+- **FAQ, appearance.** h2 "Frequently asked questions." and lede. 9 questions, 0 open, with a "+" marker.
+- **FAQ, mouse.** Clicking Q1 opens it and the marker becomes "−"; clicking again closes it.
+- **FAQ, keyboard.**
+  - Tab from Q1 reaches Q2 with `:focus-visible`: outline solid 2px rgb(22, 54, 99), offset -3px.
+  - Enter opens Q2; Space closes it.
+  - Tab moves on to Q3. Space opens Q3 and a click opens Q1; both stay open.
+- **FAQ, touch.** At 390px, a tap opens Q4.
+- **FAQ, security answer.** It reads "[Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning."
+- **Offices.**
+  - A navy band with gridbg and the amber radial glow; h2 "Two offices, serving the world.".
+  - The grid at 1280px is `587px 587px`, with Plano on the left (x 44) and Ho Chi Minh City on the right (x 649). It is 1 column at 900px and below.
+  - Plano shows "22:15", and Ho Chi Minh City (with the "Vietnam Delivery Center" tag) shows "10:15". The clocks are JetBrains Mono at 32px.
+  - After 30 s they read 22:16 and 10:16. With JavaScript off they read "US Central" and "GMT+7".
+- **Office links.**
+  - `tel:+14693229899`.
+  - `https://wa.me/14694399345` with `target=_blank`.
+  - `mailto:vinni.tran@newxion.com`.
+  - `tel:+84908107552`.
+- **Capture.**
+  - It is the last section in `main`: "See our apps in action.", "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.", "Book a demo".
+  - A valid email plus Enter lands on `/demo#form` with the email prefilled.
+- **People.** No title words (CEO, CTO, Founder, Director, Leadership, Manager, Mr., Ms.; case-sensitive) appear in `main`; "leadership" appears only in "leadership experience". There is no leadership section and no photo. The only name-like text is the business-supplied office email.
+- **Anchors.**
+  - From Home, the footer's "Core values" goes to `/about#values` (h2 at 230–281) and "FAQ" goes to `/about#faq` (h2 at 200–250). Both are below the 72px header, measured after the smooth scroll stops.
+  - Opened directly at 390px, `#values` puts the h2 at 199 and `#faq` at 168.
+- **Reduced motion.** `scroll-behavior: auto`, a 0 s value transition, and `/about#faq` lands at 168 right after load.
+- **Widths.** No sideways scroll at 900, 899, 640 or 390px.
+- **Boundary.** At exactly 900px the story stays two columns, because the shared `.split` switches at ≥ 900, while values and offices follow the prototype's ≤ 900. This is part of the site-wide ≥/≤ breakpoint question with Amber and Hoang.
