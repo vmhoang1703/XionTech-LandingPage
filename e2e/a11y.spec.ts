@@ -12,7 +12,9 @@ async function firstDetail(page: Page, listPath: string, prefix: string) {
   await page.goto(listPath);
   const link = page.locator(`main a[href^="${prefix}"]`).first();
   await expect(link, `${listPath} links to a ${prefix} page`).toBeAttached();
-  return (await link.getAttribute("href")) ?? "";
+  const href = await link.getAttribute("href");
+  if (!href) throw new Error(`${listPath}: the ${prefix} link has no href`);
+  return href;
 }
 
 const STATIC_PAGES = [
@@ -117,7 +119,9 @@ async function tabThrough(page: Page, limit = 150): Promise<Stop[]> {
       const surface = el.closest(surfaces);
       // A checkbox or radio inside its label is pressed through the label.
       const target =
-        el instanceof HTMLInputElement && el.closest("label")
+        el instanceof HTMLInputElement &&
+        (el.type === "checkbox" || el.type === "radio") &&
+        el.closest("label")
           ? (el.closest("label") as HTMLElement)
           : el;
       const box = target.getBoundingClientRect();
@@ -139,14 +143,18 @@ async function tabThrough(page: Page, limit = 150): Promise<Stop[]> {
         // WCAG 2.5.8 exempts a link inside a sentence.
         inlineText:
           getComputedStyle(el).display === "inline" &&
-          !!el.parentElement?.closest("p, li, small"),
+          !!el.parentElement?.closest("p, small"),
       };
     }, SURFACES);
-    if (!stop) break;
-    if (stops.length > 0 && stops[0].order === stop.order) break;
+    // The walk ends when focus leaves the page (after the last control) or
+    // comes back to the first stop.
+    if (!stop) return stops;
+    if (stops.length > 0 && stops[0].order === stop.order) return stops;
     stops.push(stop);
   }
-  return stops;
+  throw new Error(
+    `Tab did not wrap back to the first stop within ${limit} presses`,
+  );
 }
 
 /** The keyboard rules for one page: ring, closed parts, order, target size. */
@@ -226,13 +234,12 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
     ).toBeAttached();
   });
 
-  test("390px: the closed mobile menu takes no focus", async ({ page }) => {
+  test("390px: ring, closed mobile menu, Tab order, 24px targets", async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/");
-    const stops = await tabThrough(page);
-    expect(stops.filter((s) => s.hiddenAncestor).map((s) => s.label)).toEqual(
-      [],
-    );
+    expectKeyboardRules("/ at 390px", await tabThrough(page));
     await expect(page.locator('[id="mobile-menu"]')).toHaveAttribute(
       "hidden",
       "",

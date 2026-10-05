@@ -36,7 +36,7 @@ Sources: SPEC CAP-1 to CAP-4, AC-A11Y-1 to 5, T9 (2px ring), `EXPERIENCE.md` acc
 - CAP-2: the Story 1.1 contrast table gains `navy`, `error` and `focus` on `amber-deep`, and `amber-tint` and `white` on `navy-glow` (all pass); no second test.
 - New: `e2e/a11y.spec.ts`, Playwright project `a11y` (Chrome) and `npm run test:a11y`; kept apart from `@smoke`.
 - Local caveat: `.next/cache/fetch-cache` survives local builds and the webhook does not reach a laptop, so a local build can serve old Sanity data (it listed the closed sample job). Clear it before `test:a11y` (`rm -rf .next/cache/fetch-cache`). The detail tests now require a 200, so a stale link fails loudly.
-- Checks: lint, typecheck, format pass; `npm run test:coverage -- --maxWorkers=3` 1135 passed (no `src/` lines changed, so diff-cover has nothing to measure); `npm run test:smoke` 15 passed; `npm run test:a11y` 21 passed.
+- Checks: lint, typecheck, format pass; `npm run test:coverage -- --maxWorkers=3` 1135 passed (only CSS changed in `src/`, which the coverage report does not count, so diff-cover has nothing to measure); `npm run test:smoke` 15 passed; `npm run test:a11y` 21 passed.
 - Review round (5 layers less Security, which had no runtime path): the suite now fails instead of skipping when no story or job link exists, walks each page until focus wraps (by element position), checks Tab order against page order, 24 x 24px targets (inline text links exempt, a checkbox measured by its label), nested controls, positive tabindex, `inert`/`aria-hidden` parts, the 390px mobile menu, and non-empty described error text.
 - Fixes found by the new target check (CAP-5): the breadcrumb links (19px tall) and the `/demo` office contact links (18px) get a 24px minimum height, like the footer links. Checked at 1280 and 390: no layout change, no sideways scroll.
 - After the fixes: `npm run test:a11y` 23 passed; lint, typecheck, format pass; 1135 unit tests; smoke 15.
@@ -51,4 +51,8 @@ Sources: SPEC CAP-1 to CAP-4, AC-A11Y-1 to 5, T9 (2px ring), `EXPERIENCE.md` acc
 | 4 | Tab order, 24px targets and nested controls only implied by axe (Acceptance) | medium | patch: explicit checks; two real fixes |
 | 5 | Closed-part check only `[hidden]`; mobile menu never walked (Blind, Edge, Acceptance) | medium | patch: `inert`/`aria-hidden`, a 390px walk, existence check |
 | 6 | Described error element not checked for text (Verification Gap, Edge) | medium | patch |
+| 8 | Round 2: walk end not asserted; `li` links exempt from 24px; 390px walk thin; `firstDetail` fallback to "" (Blind, Edge, Acceptance) | medium | patch; the 390px walk found the squashed mobile capture field (fixed) |
 | 7 | Ring contrast not measured on the page; `incomplete` axe results ignored; one field per form; opened menus not scanned; Chrome needed; local Sanity cache | low | deferred in `deferred-work.md` |
+- Round 2 (4 layers): the walk now fails unless focus leaves the page or wraps within 150 presses; the inline-link exemption covers only links in `p` and `small` (not list links); the label box counts only for checkboxes and radios; the 390px walk runs the full keyboard rules; `firstDetail` throws on a missing href.
+- Fix found by the 390px walk (CAP-5): in the stacked mobile capture row, `flex: 1` squashed the email field to 20px tall; `flex: none` keeps its 50px (checked in a 390px screenshot).
+- After round 2: `npm run test:a11y` 23 passed.

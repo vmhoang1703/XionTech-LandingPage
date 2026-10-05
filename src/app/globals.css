@@ -1059,6 +1059,12 @@
       border-radius: 20px;
     }
 
+    /* In a column, flex: 1 would squash the field to its text height
+       (20px); keep its 50px height (Story 7.3). */
+    .cap-row input {
+      flex: none;
+    }
+
     .cap-row .btn {
       justify-content: center;
     }
