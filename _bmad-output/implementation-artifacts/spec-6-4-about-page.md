@@ -2,7 +2,7 @@
 title: 'Story 6.4: About page'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-review'
+status: 'done'
 baseline_commit: '057ff8744d68ce4ced00036f8e7d41e1dedb7d6c'
 route: 'dispatch'
 review_loop_iteration: 0
@@ -186,14 +186,14 @@ Step 4 review, 2026-10-05. Layers: Blind Hunter, Edge Case Hunter, Verification 
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-05, on a production build (`next start -p 3005`).
+Captured again after the step-04 review patches on 2026-10-05, on a production build (`next start -p 3005`).
 
 **Commands**
 
-- `npm test` -- exit 0 -- Test Files 75 passed (75), Tests 1129 passed (1129)
+- `npm test` -- exit 0 -- Test Files 75 passed (75), Tests 1130 passed (1130)
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total: 18 lines, Missing: 0 lines, Coverage: 100%; "C1 ok: 3 changed file(s) with branch coverage >= 80%"
-- `npm run test:smoke` -- exit 0 -- 15 passed (14.3s)
+- `npm run test:smoke` -- exit 0 -- 15 passed (13.4s)
 
 **Observed**
 
@@ -203,12 +203,12 @@ Captured at the end of step-03 on 2026-10-05, on a production build (`next start
 **Artifacts**
 
 - [capture-1280.png](spec-6-4-about-page-evidence/capture-1280.png) -- 132466 bytes -- sha256 8b4ab797c786
-- [faq-two-open-1280.png](spec-6-4-about-page-evidence/faq-two-open-1280.png) -- 126397 bytes -- sha256 fb8ec19a120b
-- [observed.md](spec-6-4-about-page-evidence/observed.md) -- 4071 bytes -- sha256 b412539a6eaa
+- [faq-two-open-1280.png](spec-6-4-about-page-evidence/faq-two-open-1280.png) -- 126262 bytes -- sha256 86e433124601
+- [observed.md](spec-6-4-about-page-evidence/observed.md) -- 4181 bytes -- sha256 22d92ef66bef
 - [offices-1280.png](spec-6-4-about-page-evidence/offices-1280.png) -- 283838 bytes -- sha256 0b3fb17ccd4a
 - [values-1280.png](spec-6-4-about-page-evidence/values-1280.png) -- 182438 bytes -- sha256 2f6e5f6018d9
 - [values-390.png](spec-6-4-about-page-evidence/values-390.png) -- 166504 bytes -- sha256 3befe0e124ca
-- [verification.txt](spec-6-4-about-page-evidence/verification.txt) -- 5947 bytes -- sha256 46059d7b02cc
+- [verification.txt](spec-6-4-about-page-evidence/verification.txt) -- 5949 bytes -- sha256 ab03cc42c62e
 - [walk-output.txt](spec-6-4-about-page-evidence/walk-output.txt) -- 3675 bytes -- sha256 033b329b3462
 
 **Not captured**

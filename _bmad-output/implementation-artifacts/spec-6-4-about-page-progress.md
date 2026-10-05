@@ -48,3 +48,19 @@ Acceptance: evidence — spec-6-4-about-page-evidence/values-1280.png — 182438
 Acceptance: evidence — spec-6-4-about-page-evidence/values-390.png — 166504 bytes — sha256 3befe0e124ca — values-390.png
 Acceptance: evidence — spec-6-4-about-page-evidence/verification.txt — 5947 bytes — sha256 46059d7b02cc — verification.txt
 Acceptance: evidence — spec-6-4-about-page-evidence/walk-output.txt — 3675 bytes — sha256 033b329b3462 — walk-output.txt
+Review patches: f489372 (services #process regex, no-people page test, smoke H1 and details count, capture copy test and alias, triage log, deferred entries)
+Review patches: scoped re-review pass, 5/5 addressed, 0 open; word-boundary concern false (the regex uses \b … \b)
+Review patches: ef11324 restores the \b word boundaries a controller script had turned into backspace characters, and matches titles with a period correctly
+Acceptance: verification — npm test — exit 0 — Test Files 75 passed (75), Tests 1130 passed (1130)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total: 18 lines, Missing: 0 lines, Coverage: 100%; C1 ok: 3 changed files
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed (13.4s)
+Acceptance: manual — Chrome walk after review patches — observed: same as before (footer anchors h2 230/200, FAQ toggles and focus ring, clocks, offices 2 columns at 1280, capture /demo#form prefilled, reduced motion instant)
+Acceptance: evidence — spec-6-4-about-page-evidence/capture-1280.png — 132466 bytes — sha256 8b4ab797c786 — re-captured after review patches
+Acceptance: evidence — spec-6-4-about-page-evidence/faq-two-open-1280.png — 126262 bytes — sha256 86e433124601 — re-captured after review patches
+Acceptance: evidence — spec-6-4-about-page-evidence/observed.md — 4181 bytes — sha256 22d92ef66bef — re-captured after review patches
+Acceptance: evidence — spec-6-4-about-page-evidence/offices-1280.png — 283838 bytes — sha256 0b3fb17ccd4a — re-captured after review patches
+Acceptance: evidence — spec-6-4-about-page-evidence/values-1280.png — 182438 bytes — sha256 2f6e5f6018d9 — re-captured after review patches
+Acceptance: evidence — spec-6-4-about-page-evidence/values-390.png — 166504 bytes — sha256 3befe0e124ca — re-captured after review patches
+Acceptance: evidence — spec-6-4-about-page-evidence/verification.txt — 5949 bytes — sha256 ab03cc42c62e — re-captured after review patches
+Acceptance: evidence — spec-6-4-about-page-evidence/walk-output.txt — 3675 bytes — sha256 033b329b3462 — re-captured after review patches
