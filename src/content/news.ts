@@ -34,3 +34,14 @@ export const newsPage = {
   showAll: "Show all",
   count: (n: number) => (n === 1 ? "Showing 1 story" : `Showing ${n} stories`),
 };
+
+// Story page copy (Story 6.2).
+export const newsStory = {
+  breadcrumbLabel: "Breadcrumb",
+  breadcrumbHome: "Home",
+  breadcrumbNews: "News",
+  storyLabel: "Story",
+  backToNews: { href: "/news", label: "Back to News" },
+  seeApp: (app: string) => `See ${app}`,
+  metaTitle: (title: string) => `${title} | XionTech`,
+};
