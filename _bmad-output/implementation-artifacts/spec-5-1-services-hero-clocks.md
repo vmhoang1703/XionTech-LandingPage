@@ -49,7 +49,7 @@ context: ['{project-root}/AGENTS.md']
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/content/offices.ts` -- add `timeZone` and `zoneLabel` to both offices -- one source for footer, Services and About
+- [x] `src/content/offices.ts` -- add `timeZone` and `zoneLabel` to both offices -- one source for footer, Services and About
   - red: `src/content/offices.test.ts` -- HCMC is `Asia/Ho_Chi_Minh` / "GMT+7", Plano `America/Chicago` / "US Central"
 - [ ] `src/lib/clock/office-time.ts` -- `formatOfficeTime(date, timeZone)` → "HH:MM" (en-GB, 24h); `CLOCK_REFRESH_MS = 30_000` -- pure, testable, shared
   - red: `src/lib/clock/office-time.test.ts` -- the matrix times, including daylight saving, and a `RangeError` for a bad zone
