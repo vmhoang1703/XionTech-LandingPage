@@ -53,7 +53,7 @@ context: ['{project-root}/AGENTS.md']
   - red: `src/content/offices.test.ts` -- HCMC is `Asia/Ho_Chi_Minh` / "GMT+7", Plano `America/Chicago` / "US Central"
 - [x] `src/lib/clock/office-time.ts` -- `formatOfficeTime(date, timeZone)` → "HH:MM" (en-GB, 24h); `CLOCK_REFRESH_MS = 30_000` -- pure, testable, shared
   - red: `src/lib/clock/office-time.test.ts` -- the matrix times, including daylight saving, and a `RangeError` for a bad zone
-- [ ] `src/components/sections/live-clock.tsx` -- client; renders `zoneLabel` on the server, then the formatted time; refreshes every `CLOCK_REFRESH_MS`; clears on unmount; keeps the label and logs once on a bad zone -- the shared clock 6.4 reuses
+- [x] `src/components/sections/live-clock.tsx` -- client; renders `zoneLabel` on the server, then the formatted time; refreshes every `CLOCK_REFRESH_MS`; clears on unmount; keeps the label and logs once on a bad zone -- the shared clock 6.4 reuses
   - red: `src/components/sections/live-clock.test.tsx` -- with fake timers: label before effects (server render), time after mount, new minute after 30s, interval cleared on unmount, bad zone keeps the label
 - [ ] `src/content/services.ts` -- breadcrumb, H1 (lead / highlight / tail), lede, the two CTAs, the clock strip label -- copy out of the components
 - [ ] `src/app/services/page.tsx` -- navy page hero with `HeroArt`, crumbs, H1, lede, `.cta-row` (primary "Start a project" → `/demo#project`, glass "See our 4-D process" → `#process`), `.clock-strip` with a `ClockIcon` and `LiveClock` per office (HCMC first); metadata title and description -- the page
