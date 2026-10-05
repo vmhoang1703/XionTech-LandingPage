@@ -2,7 +2,7 @@
 title: 'Story 5.1: Services hero with live office clocks'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-review'
+status: 'done'
 baseline_commit: 'f9ad4d033ad8e9d8a3c5615323d9cf7abde08935'
 route: 'dispatch'
 review_loop_iteration: 0
