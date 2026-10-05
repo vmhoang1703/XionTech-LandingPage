@@ -267,3 +267,10 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-5-4-process-project-capture.md`
   summary: At 390px the capture band's email input (`#cap-email`, Story 2.4, Andy) is 344×20px, below the 24×24 target-size floor, on Home and on Services.
   evidence: Measured in Chrome on the production build on 2026-10-05: 20px tall at 390px, 50px at 1280px, padding 0 18px. The white `.cap-row` pill around it looks taller than the input itself. Owner: Andy (capture band CSS).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-5-4-process-project-capture.md`
+  summary: The `/services#process` landing (hero link, mega menu, direct link) has no automated browser test either; add it with the 5.2 anchor check when a browser Playwright project exists.
+  evidence: Story 5.4 review (Verification Gap). Only a CSS-source regex and the hand-run `walk.mjs` cover it.
+- source_spec: `_bmad-output/implementation-artifacts/spec-5-4-process-project-capture.md`
+  summary: The mega menu's "See the process" (`next/link` to `/services#process`, Andy's `site-nav.tsx`) may not scroll when the visitor is already on `/services#process`.
+  evidence: maybe-false, medium if true. The same `next/link` same-hash behaviour broke the Services hero link (fixed in 5.4 with a plain `<a>`). Settle it by opening `/services#process`, scrolling up, and choosing "See the process" from the mega menu.

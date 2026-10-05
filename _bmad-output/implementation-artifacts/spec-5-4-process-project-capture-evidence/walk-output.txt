@@ -1,4 +1,4 @@
-4-D band: rgba(0, 0, 0, 0) | gridbg true | after services true
+4-D band: radial-gradient(50% 70% at 100% 0%, color(srgb 1 0.752941 0 / 0.16), rgba(0, 0, 0, 0) 60%) | gridbg true | after services true
 head: Our 4-D process / From your request to launch, in four steps. / Every step ends with something you can see, test and approve.
 phase before scroll: armed
 phase after scroll: on
@@ -8,21 +8,23 @@ steps: Discovery: "Workshops to understand your goals, users, risks and scope." 
   Development: "Agile sprints with regular demos, testing and open progress updates." → "Working software every sprint."
   Deployment: "A safe release, monitoring and improvement after launch." → "A live release with ongoing support."
 You receive row tops (1280): 585 585 585 585
-layout 1280: 1 row(s), 4 per row | track 1192x3 | end node 128x409
+layout 1280: 1 row(s), 4 per row | track 1192x3 clip-path none | end node 128x409 clip-path none
 hero link click: url /services#process | header 72 h2 230–331 visible true
+hero link click again (URL already #process): url /services#process | header 72 h2 230–331 visible true
 hero link Enter: url /services#process | header 72 h2 230–331 visible true
-capture: rgba(0, 0, 0, 0) | last in main true | Tell us what you're building. | Leave your work email and we'll reach out to start Discovery. | label "Work email" | button "Start a project" rgb(22, 54, 99)
+capture: linear-gradient(120deg, rgb(255, 216, 74), rgb(255, 192, 0) 55%, rgb(240, 179, 0)) | last in main true | Tell us what you're building. | Leave your work email and we'll reach out to start Discovery. | label "Work email" | button "Start a project" rgb(22, 54, 99)
 amber bands on the page: 1
 navy surfaces (hero, 4-D): 1 hero-navy, 1 surface-navy
 invalid email: error "Please enter a valid email address." | focus on field true | url /services
-posted (intercepted, not sent): {"type":"capture","kind":"project","email":"quan@logistics-example.com","website":""}
+posted by mouse click (intercepted, not sent): {"type":"capture","kind":"project","email":"quan@logistics-example.com","website":""}
 after valid email: url /demo#project (email in URL: false) | tab "Outsourcing project" | email "quan@logistics-example.com" | form top 307 of 900
+valid email by Enter: url /demo#project | tab "Outsourcing project" | email "quan@logistics-example.com"
 mega menu See the process: url /services#process | header 72 h2 230–331 visible true
 /services#process at 1280px: url /services#process | header 72 h2 230–331 visible true
 /services#process at 390px: url /services#process | header 72 h2 198–300 visible true
-layout 1080: 1 row(s), 4 per row | track 1032x3 | end node 128x455 | sideways scroll false
-layout 899: 2 row(s), 2 per row | track 1x3 | end node 1x1 | sideways scroll false
-layout 640: 2 row(s), 2 per row | track 1x3 | end node 1x1 | sideways scroll false
-layout 390: 4 row(s), 1 per row | track 1x3 | end node 1x1 | sideways scroll false
+layout 1080: 1 row(s), 4 per row | track 1032x3 clip-path none | end node 128x455 clip-path none | sideways scroll false
+layout 899: 2 row(s), 2 per row | track 1x3 clip-path inset(50%) | end node 1x1 clip-path inset(50%) | sideways scroll false
+layout 640: 2 row(s), 2 per row | track 1x3 clip-path inset(50%) | end node 1x1 clip-path inset(50%) | sideways scroll false
+layout 390: 4 row(s), 1 per row | track 1x3 clip-path inset(50%) | end node 1x1 clip-path inset(50%) | sideways scroll false
 capture row at 390: input top 5608, button top 5638
 reduced motion: phase static | scroll-behavior auto | url /services#process | header 72 h2 198–300 visible true
