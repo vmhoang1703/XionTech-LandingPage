@@ -15,6 +15,8 @@ export type Office = {
   tag?: string;
   addressLines: string[];
   contacts: OfficeContact[];
+  timeZone: string;
+  zoneLabel: string;
 };
 
 export const offices: Office[] = [
@@ -35,6 +37,8 @@ export const offices: Office[] = [
         label: "vinni.tran@newxion.com",
       },
     ],
+    timeZone: "America/Chicago",
+    zoneLabel: "US Central",
   },
   {
     id: "hcmc",
@@ -46,5 +50,7 @@ export const offices: Office[] = [
       "Dien Hong Ward, Ho Chi Minh City, Vietnam",
     ],
     contacts: [{ href: "tel:+84908107552", label: "+84 908 107 552" }],
+    timeZone: "Asia/Ho_Chi_Minh",
+    zoneLabel: "GMT+7",
   },
 ];
