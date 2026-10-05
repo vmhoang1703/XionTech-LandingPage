@@ -329,4 +329,35 @@ describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
 
     expect(push).toHaveBeenCalledExactlyOnceWith(band.destination);
   });
+
+  it("with custom copy prop, shows the custom heading and lede while keeping button, placeholder and redirect from the kind", () => {
+    const customCopy = {
+      heading: "See our apps in action.",
+      lede: "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.",
+    };
+    render(<CaptureBand kind={kind} copy={customCopy} />);
+    const region = screen.getByRole("region", { name: customCopy.heading });
+    expect(region.tagName).toBe("SECTION");
+    expect(
+      screen.getByRole("heading", { level: 2, name: customCopy.heading }),
+    ).toBeTruthy();
+    expect(screen.getByText(customCopy.lede)).toBeTruthy();
+    expect(emailField().getAttribute("placeholder")).toBe(band.placeholder);
+    expect(button().textContent).toBe(band.button);
+    const consent = screen.getByText(band.consent);
+    expect(consent).toBeTruthy();
+  });
+
+  it("with custom copy prop, still redirects to the kind's destination on successful submission", async () => {
+    fetchMock.mockReturnValue(reply(200, { ok: true }));
+    const customCopy = {
+      heading: "See our apps in action.",
+      lede: "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.",
+    };
+    render(<CaptureBand kind={kind} copy={customCopy} />);
+    type(EMAIL);
+    await submitAndSettle();
+
+    expect(push).toHaveBeenCalledExactlyOnceWith(band.destination);
+  });
 });
