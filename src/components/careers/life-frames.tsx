@@ -1,7 +1,12 @@
+import Image from "next/image";
 import { careersLife } from "@/content/careers";
+import type { LifePhotos } from "@/lib/careers/life-photos";
 
-// Server Component. Three fixed placeholder frames; Story 6.3 adds real photos (CAP-4).
-export function LifeFrames() {
+// Server Component. A slot with a photo (and alt text) shows it; an empty slot
+// keeps its [Placeholder] frame.
+export function LifeFrames({
+  photos,
+}: Readonly<{ photos?: LifePhotos | null }>) {
   const { heading, frames } = careersLife;
 
   return (
@@ -11,13 +16,35 @@ export function LifeFrames() {
           <h2 id="life-h">{heading}</h2>
         </div>
         <div className="news-grid">
-          {frames.map((caption) => (
-            <div key={caption} className="spot aspect-4/3">
-              <div className="illo h-full min-h-0">
-                <b>{caption}</b>
-              </div>
-            </div>
-          ))}
+          {frames.map(({ slot, placeholder }) => {
+            const photo = photos?.[slot];
+            if (!photo?.url || !photo.alt?.trim()) {
+              return (
+                <div key={slot} className="spot aspect-4/3">
+                  <div className="illo h-full min-h-0">
+                    <b>{placeholder}</b>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <figure key={slot}>
+                <div className="spot aspect-4/3">
+                  <Image
+                    src={`${photo.url}?w=800&auto=format`}
+                    alt={photo.alt}
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+                {photo.caption ? (
+                  <figcaption>{photo.caption}</figcaption>
+                ) : null}
+              </figure>
+            );
+          })}
         </div>
       </div>
     </section>

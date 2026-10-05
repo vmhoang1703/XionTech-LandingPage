@@ -1,0 +1,3 @@
+[1280] /careers -> 200 | life: frame "[Placeholder] Team photo", frame "[Placeholder] Office photo", frame "[Placeholder] Event photo" | columns 3 | no sideways scroll true
+[640] /careers -> 200 | life: frame "[Placeholder] Team photo", frame "[Placeholder] Office photo", frame "[Placeholder] Event photo" | columns 1 | no sideways scroll true
+[390] /careers -> 200 | life: frame "[Placeholder] Team photo", frame "[Placeholder] Office photo", frame "[Placeholder] Event photo" | columns 1 | no sideways scroll true

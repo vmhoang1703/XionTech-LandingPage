@@ -256,3 +256,6 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-5-1-services-hero-clocks.md`
   summary: `npm run dev` returned 500 on every page on Sammy's machine on 2026-10-05: "next/font/google queries have exactly one entry" from the Google fonts in `src/app/layout.tsx`.
   evidence: maybe-false, medium if true (it blocks UX walks on the dev server for the team); the production build and `next start` work. Settle by running `npm run dev` on another machine or network.
+- source_spec: `_bmad-output/implementation-artifacts/spec-6-3-editors-publish-sanity.md`
+  summary: Story 6.3 review (Minor): a test that reads `studio/sanity.config.ts` (singleton wiring); check Sanity project write roles before Story 4.4 shows clips and check the clip type there; honour the editor's crop and hotspot (image URL builder) and use width/height or a hand-made srcset instead of one `?w=800`; style the Life figcaption; keep the PXP/LXP/SXP/IoT list in one place in the Studio; loosen the whitespace-bound query test; guard `/careers` if `getOpenRoles` throws inside `Promise.all`; drop local absolute paths from build ledgers; make walk scripts throw on a bad status.
+  evidence: full 5-layer review 2026-10-05 (medium points patched: product fields removed, blank alt guarded).

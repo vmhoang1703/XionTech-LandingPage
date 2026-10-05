@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { careersMeta } from "@/content/careers";
+import { getLifePhotos } from "@/lib/careers/life-photos";
 import { getOpenRoles } from "@/lib/careers/open-roles";
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
@@ -8,6 +9,8 @@ vi.mock("@/lib/careers/open-roles", async (importOriginal) => ({
   ...(await importOriginal<typeof import("@/lib/careers/open-roles")>()),
   getOpenRoles: vi.fn(),
 }));
+
+vi.mock("@/lib/careers/life-photos", () => ({ getLifePhotos: vi.fn() }));
 
 import CareersPage, { metadata } from "./page";
 
@@ -64,6 +67,27 @@ describe("Careers page", () => {
     expect(
       screen.getByRole("link", { name: /QA Engineer/ }).getAttribute("href"),
     ).toBe("/careers/qa-engineer");
+  });
+
+  it("passes the fetched life photos to the life frames", async () => {
+    vi.mocked(getOpenRoles).mockResolvedValue([]);
+    vi.mocked(getLifePhotos).mockResolvedValue({
+      team: {
+        url: "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg",
+        alt: "The team",
+      },
+    });
+    await renderPage();
+
+    expect(screen.getByAltText("The team")).not.toBeNull();
+  });
+
+  it("keeps the placeholder frames when there are no photos", async () => {
+    vi.mocked(getOpenRoles).mockResolvedValue([]);
+    vi.mocked(getLifePhotos).mockResolvedValue(null);
+    await renderPage();
+
+    expect(screen.getByText("[Placeholder] Team photo")).not.toBeNull();
   });
 
   it("has no email capture band", async () => {

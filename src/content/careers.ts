@@ -92,8 +92,8 @@ export const careersRoles = {
 export const careersLife = {
   heading: "Life at XionTech.",
   frames: [
-    "[Placeholder] Team photo",
-    "[Placeholder] Office photo",
-    "[Placeholder] Event photo",
-  ],
+    { slot: "team", placeholder: "[Placeholder] Team photo" },
+    { slot: "office", placeholder: "[Placeholder] Office photo" },
+    { slot: "event", placeholder: "[Placeholder] Event photo" },
+  ] satisfies { slot: "team" | "office" | "event"; placeholder: string }[],
 };

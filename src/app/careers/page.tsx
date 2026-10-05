@@ -5,6 +5,7 @@ import { Culture } from "@/components/careers/culture";
 import { LifeFrames } from "@/components/careers/life-frames";
 import { OpenRoles } from "@/components/careers/open-roles";
 import { careersMeta } from "@/content/careers";
+import { getLifePhotos } from "@/lib/careers/life-photos";
 import { getOpenRoles } from "@/lib/careers/open-roles";
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function CareersPage() {
-  const roles = await getOpenRoles();
+  const [roles, photos] = await Promise.all([getOpenRoles(), getLifePhotos()]);
 
   return (
     <>
@@ -21,7 +22,7 @@ export default async function CareersPage() {
       <Culture />
       <Benefits />
       <OpenRoles roles={roles} />
-      <LifeFrames />
+      <LifeFrames photos={photos} />
     </>
   );
 }

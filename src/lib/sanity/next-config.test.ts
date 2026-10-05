@@ -23,6 +23,18 @@ describe("next.config.ts", () => {
 
     const { default: nextConfig } = await import("../../../next.config");
 
-    expect(nextConfig).toEqual({});
+    // Allows this project's Sanity images for optimized use; the life photos
+    // are `unoptimized`, so this list is not checked for them (Story 6.3).
+    expect(nextConfig).toEqual({
+      images: {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "cdn.sanity.io",
+            pathname: "/images/1khn3hf4/**",
+          },
+        ],
+      },
+    });
   });
 });

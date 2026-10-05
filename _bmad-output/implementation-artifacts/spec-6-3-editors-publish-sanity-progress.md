@@ -1,0 +1,53 @@
+# Build ledger — spec: C:/XionTech/LandingPage/_bmad-output/implementation-artifacts/spec-6-3-editors-publish-sanity.md
+
+- 2026-10-05: task reviews are skipped by the controller's rule for this run (as in 6.6: one review layer inside the build, then the full 5-layer `bmad-code-review` before the PR); each skip is a `review` row.
+- Task 1: dispatched (model sonnet, base 47d3f0c, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t1.md)
+- Task 1: red — npx vitest run studio/schemas — cannot import "./careers-photos" (module missing)
+- Task 1: green — npx vitest run studio/schemas — 22 passed
+- Task 1: review — skipped (controller rule for this run)
+- Task 1: complete (commits 47d3f0c..75ab4f6, diff verified)
+- Task 2: dispatched (model sonnet, base 6f7e173, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t2.md)
+- Task 2: red — npx vitest run studio/schemas — cannot import "./structure" (module missing)
+- Task 2: green — npx vitest run studio/schemas — 27 passed (2 files); controller: npx sanity schema validate — 0 errors, 0 warnings
+- Task 2: review — skipped (controller rule for this run)
+- Task 2: complete (commits 6f7e173..bdce9b9, diff verified)
+- Task 3: dispatched (model sonnet, base 629a0e8, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t3.md)
+- Task 3: red — npx vitest run src/app/api/revalidate — 2 failed: signed careersPhotos/product bodies answered 400 (expected 200)
+- Task 3: green — npx vitest run src/app/api/revalidate — 13 passed
+- Task 3: review — skipped (controller rule for this run)
+- Task 3: complete (commits 629a0e8..1421ec7, diff verified)
+- Task 4: dispatched (model sonnet, base 5a8e7b4, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t4.md)
+- Task 4: red — npx vitest run src/lib/careers/life-photos.test.ts — failed at import: module missing
+- Task 4: green — npx vitest run src/lib/careers/life-photos.test.ts — 5 passed
+- Task 4: review — skipped (controller rule for this run)
+- Task 4: complete (commits 5a8e7b4..d7b57f9, diff verified)
+- Task 5: dispatched (model sonnet, base 983372c, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t5.md)
+- Task 5: red — npx vitest run src/components/careers src/app/careers — 2 failed: a photo slot still rendered the [Placeholder] frame
+- Task 5: green — npx vitest run src/components/careers src/app/careers — 59 passed (5 files)
+- Task 5: review — skipped (controller rule for this run); controller checked `.spot` is position: relative for `fill`
+- Task 5: complete (commits 983372c..a0c8b66, diff verified)
+- Task 6: dispatched (model sonnet, base 204ef41, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t6.md)
+- Task 6: no-red (docs only; prettier --check passes)
+- Task 6: review — skipped (controller rule for this run)
+- Task 6: complete (commits 204ef41..d9fd05a, diff verified)
+- Task 7: BLOCKED — after merge by design: the live proof needs the merged code on the dev site, the Studio deploy and the webhook filter (lead), and the lead's OK for each [Test] change
+- Task 5: fix round 1/5 (controller: next-config.test.ts expected an empty config; now expects the cdn.sanity.io remotePatterns; npx vitest run src/lib/sanity/next-config.test.ts passes)
+- Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+- Acceptance: verification — npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff — exit 0 — 1061 passed; Coverage: 100%; C1 ok: 7 changed file(s)
+- Acceptance: verification — npm run build && npm run test:smoke — exit 0 — 13 passed
+- Acceptance: verification — cd studio && npx sanity schema validate — exit 0 — 0 errors, 0 warnings
+- Acceptance: manual — /careers on the production build — observed: three [Placeholder] frames (no careersPhotos document yet), 3 columns at 1280, 1 at 640 and 390, no sideways scroll
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/verification.txt — 1023 bytes — sha256 eb6ef767f927 — the four Verification commands
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/walk-output.txt — 517 bytes — sha256 8d5b93e5a406 — the /careers walk at 1280, 640, 390
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/life-1280.png — 57180 bytes — sha256 afcbc676cc3e — the #life section with three [Placeholder] frames
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/observed.md — 1075 bytes — sha256 4565d934ceed — what was and was not observed
+- Acceptance: BLOCKED — deployed Studio (singletons, CAP-5 upload) and the CAP-1/CAP-2 live proof: need the merge, the lead's Studio deploy, the webhook filter and the lead's OK for each [Test] change
+- Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style! (after the review patches)
+- Acceptance: verification — npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff — exit 0 — 1062 passed; Coverage: 100%; C1 ok: 7 changed file(s)
+- Acceptance: verification — npm run build && npm run test:smoke — exit 0 — 13 passed
+- Acceptance: verification — cd studio && npx sanity schema validate — exit 0 — 0 errors
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/verification.txt — 1023 bytes — sha256 971d43cfeaf9 — the four Verification commands after the review patches
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/walk-output.txt — 517 bytes — sha256 8d5b93e5a406 — the /careers walk (kept: the patches change only the photo path, which no published photo reaches yet)
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/life-1280.png — 57180 bytes — sha256 afcbc676cc3e — #life with three [Placeholder] frames (kept, same reason)
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/observed.md — 1075 bytes — sha256 4565d934ceed — what was and was not observed
+- Acceptance: BLOCKED — deployed Studio (singletons, CAP-5 upload), a clip upload and GROQ read, and the CAP-1/CAP-2 live proof: need the merge, the lead's Studio deploy, the webhook filter and the lead's OK for each [Test] change

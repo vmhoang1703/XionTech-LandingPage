@@ -28,7 +28,7 @@ describe("POST /api/revalidate", () => {
     vi.stubEnv("SANITY_REVALIDATE_SECRET", SECRET);
   });
 
-  it.each(["post", "job"])(
+  it.each(["post", "job", "careersPhotos", "product"])(
     "revalidates the %s tag with the max profile for a signed request",
     async (type) => {
       const response = await POST(
