@@ -3,61 +3,115 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroArt } from "@/components/sections/hero-art";
 import { LiveClock } from "@/components/sections/live-clock";
-import { servicesMeta, servicesPage } from "@/content/services";
+import { StatsBand } from "@/components/sections/stats-band";
+import { serviceIcons } from "@/content/service-icons";
+import {
+  servicesMeta,
+  servicesPage,
+  servicesSection,
+  servicesStats,
+} from "@/content/services";
 
 export const metadata: Metadata = {
   title: servicesMeta.title,
   description: servicesMeta.description,
 };
 
-// Story 5.1. Server-rendered hero; LiveClock is the only client part.
+// Stories 5.1 and 5.2. Server-rendered hero, stats and service cards; LiveClock is the only client part.
 export default function ServicesPage() {
   const { breadcrumbLabel, breadcrumbHome, breadcrumbCurrent } = servicesPage;
   const { title, lede, primaryCta, secondaryCta } = servicesPage;
 
   return (
-    <section className="hero-navy page-hero" aria-labelledby="services-h1">
-      <HeroArt tone="navy" />
-      <div className="wrap">
-        <nav className="crumbs" aria-label={breadcrumbLabel}>
-          <Link href="/">{breadcrumbHome}</Link>
-          <span>/</span>
-          <span>{breadcrumbCurrent}</span>
-        </nav>
-        <h1 id="services-h1">
-          {title.lead}
-          <span className="hl">{title.highlight}</span>
-          {title.tail}
-        </h1>
-        <p className="lede mt-5">{lede}</p>
-        <div className="cta-row">
-          <Link className="btn btn-primary" href={primaryCta.href}>
-            {primaryCta.label}
-            <ArrowRightIcon aria-hidden="true" />
-          </Link>
-          <Link className="btn btn-glass" href={secondaryCta.href}>
-            {secondaryCta.label}
-          </Link>
+    <>
+      <section className="hero-navy page-hero" aria-labelledby="services-h1">
+        <HeroArt tone="navy" />
+        <div className="wrap">
+          <nav className="crumbs" aria-label={breadcrumbLabel}>
+            <Link href="/">{breadcrumbHome}</Link>
+            <span>/</span>
+            <span>{breadcrumbCurrent}</span>
+          </nav>
+          <h1 id="services-h1">
+            {title.lead}
+            <span className="hl">{title.highlight}</span>
+            {title.tail}
+          </h1>
+          <p className="lede mt-5">{lede}</p>
+          <div className="cta-row">
+            <Link className="btn btn-primary" href={primaryCta.href}>
+              {primaryCta.label}
+              <ArrowRightIcon aria-hidden="true" />
+            </Link>
+            <Link className="btn btn-glass" href={secondaryCta.href}>
+              {secondaryCta.label}
+            </Link>
+          </div>
+          <div
+            className="clock-strip"
+            role="group"
+            aria-label={servicesPage.clockStripLabel}
+          >
+            {servicesPage.clockCities.map(({ office, city }) => (
+              <span key={office.id}>
+                <ClockIcon aria-hidden="true" />
+                {city}{" "}
+                <b>
+                  <LiveClock
+                    timeZone={office.timeZone}
+                    zoneLabel={office.zoneLabel}
+                  />
+                </b>
+              </span>
+            ))}
+          </div>
         </div>
-        <div
-          className="clock-strip"
-          role="group"
-          aria-label={servicesPage.clockStripLabel}
-        >
-          {servicesPage.clockCities.map(({ office, city }) => (
-            <span key={office.id}>
-              <ClockIcon aria-hidden="true" />
-              {city}{" "}
-              <b>
-                <LiveClock
-                  timeZone={office.timeZone}
-                  zoneLabel={office.zoneLabel}
-                />
-              </b>
-            </span>
-          ))}
+      </section>
+      <section
+        className="sec surface-paper"
+        aria-label={servicesStats.ariaLabel}
+      >
+        <div className="wrap">
+          <StatsBand
+            label={servicesStats.ariaLabel}
+            stats={servicesStats.stats}
+            tone="light"
+            hideLabel
+          />
         </div>
-      </div>
-    </section>
+      </section>
+      <section
+        className="sec surface-mist linen pt-10"
+        aria-labelledby="services-all-h"
+      >
+        <div className="wrap">
+          <div className="sec-head">
+            <h2 id="services-all-h">{servicesSection.title}</h2>
+            <p className="lede">{servicesSection.lede}</p>
+          </div>
+          <div className="svc-grid">
+            {servicesSection.services.map((service) => {
+              const { icon: ServiceIcon, variant } = serviceIcons[service.id];
+              return (
+                <article
+                  key={service.id}
+                  id={service.id}
+                  className={["spot", "svc", variant].filter(Boolean).join(" ")}
+                >
+                  <span className="ic">
+                    <ServiceIcon aria-hidden="true" />
+                  </span>
+                  <h3>{service.name}</h3>
+                  <p>{service.description}</p>
+                  {"tags" in service ? (
+                    <span className="tags">{service.tags.join(" · ")}</span>
+                  ) : null}
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
