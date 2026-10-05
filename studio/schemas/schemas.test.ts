@@ -1,7 +1,10 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from "vitest";
+import { careersPhotos } from "./careers-photos";
 import { job } from "./job";
 import { post } from "./post";
+import { product } from "./product";
+import { schemaTypes } from "./index";
 
 type Field = {
   name: string;
@@ -180,5 +183,91 @@ describe("studio schemas", () => {
       .match(/"name":"[^"]*"/g)
       ?.join(" ");
     expect(names).not.toMatch(/appl|cv|resume|curriculum/i);
+  });
+
+  it("registers the four types", () => {
+    expect(schemaTypes.map((t) => t.name)).toEqual([
+      "post",
+      "job",
+      "careersPhotos",
+      "product",
+    ]);
+  });
+
+  describe("careersPhotos", () => {
+    type Rule = {
+      custom: (fn: (value: unknown, ctx: unknown) => unknown) => Rule;
+    };
+    const slots = ["team", "office", "event"];
+
+    it("is a document with three fixed slots", () => {
+      expect(careersPhotos).toMatchObject({
+        name: "careersPhotos",
+        type: "document",
+      });
+      expect(careersPhotos.fields.map((f) => f.name)).toEqual(slots);
+    });
+
+    it.each(slots)("slot %s has a photo, alt text and a caption", (slot) => {
+      const field = findField(careersPhotos, slot);
+      expect(field.type).toBe("object");
+      expect((field.fields ?? []).map((f) => f.name)).toEqual([
+        "photo",
+        "alt",
+        "caption",
+      ]);
+      expect(field.fields?.[0].type).toBe("image");
+    });
+
+    it("requires alt text only when a photo is set", () => {
+      const alt = findField(
+        findField(careersPhotos, "team") as Schema,
+        "alt",
+      ) as Field & { validation?: (rule: Rule) => unknown };
+      let check: (value: unknown, ctx: unknown) => unknown = () => null;
+      const rule: Rule = {
+        custom: (fn) => {
+          check = fn;
+          return rule;
+        },
+      };
+      alt.validation?.(rule);
+      const message = "Describe the photo for screen readers.";
+      const withPhoto = { parent: { photo: { asset: { _ref: "image-1" } } } };
+      expect(check(undefined, withPhoto)).toBe(message);
+      expect(check("   ", withPhoto)).toBe(message);
+      expect(check("Team at work", withPhoto)).toBe(true);
+      expect(check(undefined, { parent: {} })).toBe(true);
+      expect(check(undefined, {})).toBe(true);
+    });
+  });
+
+  describe("product", () => {
+    it("is a document with a name, an app and an mp4 clip", () => {
+      expect(product).toMatchObject({ name: "product", type: "document" });
+      expect(product.fields.map((f) => f.name)).toEqual([
+        "name",
+        "app",
+        "clip",
+      ]);
+      const clip = findField(product, "clip") as Field & {
+        options?: { accept?: string };
+      };
+      expect(clip.type).toBe("file");
+      expect(clip.options?.accept).toBe("video/mp4");
+    });
+
+    it("lists the four apps and shows the name in lists", () => {
+      const app = findField(product, "app") as Field & {
+        options?: { list?: { value: string }[] };
+      };
+      expect(app.options?.list?.map((o) => o.value)).toEqual([
+        "PXP",
+        "LXP",
+        "SXP",
+        "IoT",
+      ]);
+      expect(product.preview.select).toEqual({ title: "name" });
+    });
   });
 });
