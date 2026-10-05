@@ -59,7 +59,7 @@ Lead decisions (2026-10-05, the lead said "start to build" on these defaults): D
 - [x] `studio/sanity.config.ts` -- structure: "Careers photos" (one document, id `careersPhotos`), "Products" (four documents, ids `product-pxp` ... `product-iot`), then News posts and Job openings; no create, duplicate or delete for the singletons -- CAP-3, CAP-4, CAP-5.
 - [x] `src/lib/sanity/client.ts`, `src/app/api/revalidate/route.ts` + test -- new tags accepted by the webhook -- CAP-3.
   - red: `route.test.ts` -- a signed `careersPhotos` or `product` body answers 400.
-- [ ] `src/lib/careers/life-photos.ts` + test -- `getLifePhotos()`: GROQ on `_id == "careersPhotos"`, per slot `url` (`asset->url`), width, height, alt, caption; tag `careersPhotos`; null on failure with one log line -- CAP-3.
+- [x] `src/lib/careers/life-photos.ts` + test -- `getLifePhotos()`: GROQ on `_id == "careersPhotos"`, per slot `url` (`asset->url`), width, height, alt, caption; tag `careersPhotos`; null on failure with one log line -- CAP-3.
   - red: `life-photos.test.ts` -- the function does not exist.
 - [ ] `src/components/careers/life-frames.tsx`, `src/app/careers/page.tsx`, `src/content/careers.ts`, `next.config.ts` + tests -- a slot with a photo shows `next/image` (`unoptimized`, `?w=800&auto=format`, alt, caption); an empty slot keeps its `[Placeholder]` frame -- CAP-3.
   - red: `careers.test.tsx` -- a photo slot still renders the placeholder.

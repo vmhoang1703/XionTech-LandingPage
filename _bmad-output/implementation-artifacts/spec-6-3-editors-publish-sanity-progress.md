@@ -16,3 +16,8 @@
 - Task 3: green — npx vitest run src/app/api/revalidate — 13 passed
 - Task 3: review — skipped (controller rule for this run)
 - Task 3: complete (commits 629a0e8..1421ec7, diff verified)
+- Task 4: dispatched (model sonnet, base 5a8e7b4, report C:/Users/DELL/AppData/Local/Temp/claude/C--XionTech-LandingPage/f753fe58-8a41-440f-be5a-fbd7a1607dc9/scratchpad/report-6-3-t4.md)
+- Task 4: red — npx vitest run src/lib/careers/life-photos.test.ts — failed at import: module missing
+- Task 4: green — npx vitest run src/lib/careers/life-photos.test.ts — 5 passed
+- Task 4: review — skipped (controller rule for this run)
+- Task 4: complete (commits 5a8e7b4..d7b57f9, diff verified)
