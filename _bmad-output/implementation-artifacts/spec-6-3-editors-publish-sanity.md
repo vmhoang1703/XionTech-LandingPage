@@ -2,7 +2,7 @@
 title: 'Story 6.3 Editors publish stories and roles without a developer'
 type: 'feature'
 created: '2026-10-05'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: 'edf34e09510fc3210f1f93686da35434a636db48'
