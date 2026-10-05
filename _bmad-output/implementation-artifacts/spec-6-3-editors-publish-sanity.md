@@ -121,12 +121,12 @@ Full review, 5 layers, 2026-10-05. Security: no open path (2 unverifiable notes)
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-05.
+Captured at the end of step-03 on 2026-10-05; re-captured after the review patches the same day.
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
-- `npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff` -- exit 0 -- 1061 passed; Coverage: 100%; C1 ok
+- `npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff` -- exit 0 -- 1062 passed; Coverage: 100%; C1 ok
 - `npm run build && npm run test:smoke` -- exit 0 -- 13 passed
 - `cd studio && npx sanity schema validate` -- exit 0 -- 0 errors, 0 warnings
 
@@ -136,7 +136,7 @@ Captured at the end of step-03 on 2026-10-05.
 
 **Artifacts**
 
-- spec-6-3-editors-publish-sanity-evidence/verification.txt -- 1023 bytes -- sha256 eb6ef767f927 -- the four Verification commands
+- spec-6-3-editors-publish-sanity-evidence/verification.txt -- 1023 bytes -- sha256 971d43cfeaf9 -- the four Verification commands, after the review patches
 - spec-6-3-editors-publish-sanity-evidence/walk-output.txt -- 517 bytes -- sha256 8d5b93e5a406 -- the /careers walk
 - spec-6-3-editors-publish-sanity-evidence/life-1280.png -- 57180 bytes -- sha256 afcbc676cc3e -- `#life` with three `[Placeholder]` frames
 - spec-6-3-editors-publish-sanity-evidence/observed.md -- 1075 bytes -- sha256 4565d934ceed -- what was and was not observed
@@ -145,4 +145,6 @@ Captured at the end of step-03 on 2026-10-05.
 
 - A real photo in a frame (no consented photo yet, D6; unit tests cover it).
 - The deployed Studio and the CAP-5 upload check (after the lead's Studio deploy).
+- A clip upload and its GROQ read (Task 7).
+- A new walk after the patches: they change only the photo path, which no published photo reaches yet.
 - The CAP-1 / CAP-2 live proof with `[Test]` documents (Task 7, after merge, with the lead's OK).

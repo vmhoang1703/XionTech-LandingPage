@@ -19,7 +19,7 @@ exit 0
 
 == npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff
  Test Files  68 passed (68)
-      Tests  1061 passed (1061)
+      Tests  1062 passed (1062)
 Missing: 0 lines
 Coverage: 100%
 C1 ok: 7 changed file(s) with branch coverage >= 80% vs origin/develop.
@@ -30,8 +30,8 @@ exit 0
 ├ ƒ /api/careers/cv-upload
 ├ ○ /careers
 ├ ƒ /careers/[slug]
-  ✓   3 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, the open roles and the life sections @smoke (564ms)
-  13 passed (31.1s)
+  ✓   1 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, the open roles and the life sections @smoke (670ms)
+  13 passed (35.4s)
 exit 0
 
 == cd studio && npx sanity schema validate

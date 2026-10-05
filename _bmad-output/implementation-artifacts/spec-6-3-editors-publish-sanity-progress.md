@@ -42,3 +42,12 @@
 - Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/life-1280.png — 57180 bytes — sha256 afcbc676cc3e — the #life section with three [Placeholder] frames
 - Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/observed.md — 1075 bytes — sha256 4565d934ceed — what was and was not observed
 - Acceptance: BLOCKED — deployed Studio (singletons, CAP-5 upload) and the CAP-1/CAP-2 live proof: need the merge, the lead's Studio deploy, the webhook filter and the lead's OK for each [Test] change
+- Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style! (after the review patches)
+- Acceptance: verification — npm run test:coverage -- --maxWorkers=3 && npm run coverage:diff — exit 0 — 1062 passed; Coverage: 100%; C1 ok: 7 changed file(s)
+- Acceptance: verification — npm run build && npm run test:smoke — exit 0 — 13 passed
+- Acceptance: verification — cd studio && npx sanity schema validate — exit 0 — 0 errors
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/verification.txt — 1023 bytes — sha256 971d43cfeaf9 — the four Verification commands after the review patches
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/walk-output.txt — 517 bytes — sha256 8d5b93e5a406 — the /careers walk (kept: the patches change only the photo path, which no published photo reaches yet)
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/life-1280.png — 57180 bytes — sha256 afcbc676cc3e — #life with three [Placeholder] frames (kept, same reason)
+- Acceptance: evidence — spec-6-3-editors-publish-sanity-evidence/observed.md — 1075 bytes — sha256 4565d934ceed — what was and was not observed
+- Acceptance: BLOCKED — deployed Studio (singletons, CAP-5 upload), a clip upload and GROQ read, and the CAP-1/CAP-2 live proof: need the merge, the lead's Studio deploy, the webhook filter and the lead's OK for each [Test] change
