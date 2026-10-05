@@ -59,7 +59,7 @@ context: ['{project-root}/AGENTS.md']
 - [x] `src/app/services/page.tsx` -- navy page hero with `HeroArt`, crumbs, H1, lede, `.cta-row` (primary "Start a project" → `/demo#project`, glass "See our 4-D process" → `#process`), `.clock-strip` with a `ClockIcon` and `LiveClock` per office (HCMC first); metadata title and description -- the page
   - red: `src/app/services/page.test.tsx` -- one H1 "Software teams that get IT done." with `.hl`, crumbs, both CTAs and hrefs, both zone labels, strip label, metadata, CSS contract
 - [x] `src/app/globals.css` -- Services section: `.page-hero .cta-row`, `.cta-row`, `.clock-strip` ported with tokens -- missing classes
-- [ ] `e2e/services.spec.ts` -- `@smoke`: `/services` 200, both zone labels and the H1 in the HTML -- CAP-2 without JavaScript
+- [x] `e2e/services.spec.ts` -- `@smoke`: `/services` 200, both zone labels and the H1 in the HTML -- CAP-2 without JavaScript
 
 **Acceptance Criteria:**
 - Given `/services`, when it loads, then the navy hero shows the breadcrumbs, the H1, "Start a project" (to `/demo#project`) and "See our 4-D process" (to `#process`) (CAP-1).
@@ -72,20 +72,20 @@ Sources: story spec CAP-1 to CAP-3, `EXPERIENCE.md` (Component Patterns › Cloc
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Hero | page load, 1280px | — | navy gradient hero with the aurora and strand ribbon (5s then still) | ribbon ≤ 5s | CAP-1, Story 1.6 motion (shared) | |
-| Breadcrumbs | read | — | mono "Home / Services"; Home links to `/` | static | CAP-1, constraint (prototype crumbs) | |
-| H1 | read | — | "Software teams that get IT done." in white Unbounded, amber bar under "get IT done" drawing in | 1.2s after 0.5s | CAP-1, prototype | |
-| Lede | read | — | the prototype lede in on-navy muted, 20px below the H1 | static | prototype `.page-hero .lede` | |
-| Primary CTA | read / click | mouse | amber pill "Start a project" with an arrow → `/demo#project` | instant | CAP-1 | |
-| Glass CTA | read / click | mouse | glass pill "See our 4-D process" → `#process` (top of Services until 5.4) | instant | CAP-1, constraint | |
-| CTAs | hover | mouse | lift 2px | 0.35s | DESIGN.md button | |
-| CTAs | Tab | keyboard | amber focus ring on each, in order | instant | EXPERIENCE.md Focus ring | |
-| Clock strip | JavaScript off | — | two outlined pills with a clock icon: "Ho Chi Minh City GMT+7", "Plano US Central" | static | CAP-2, EXPERIENCE.md States | |
-| Clock strip | JavaScript on | — | the labels become the live local times in mono (HCMC first) | after hydration | CAP-3 | |
-| Clock strip | a minute turns | — | each time updates | within 30s | CAP-3 | |
-| Clock strip | screen reader | — | group named "Office local times"; each pill reads city and time | static | prototype `aria-label` | |
-| Layout | 899px / 390px | — | CTAs and pills wrap; no sideways scroll | static | EXPERIENCE.md Responsive | |
-| Reduced motion | — | — | aurora, ribbon and highlight still; clocks still update | static | NFR-2 | |
+| Hero | page load, 1280px | — | navy gradient hero with the aurora and strand ribbon (5s then still) | ribbon ≤ 5s | CAP-1, Story 1.6 motion (shared) |  ✅ walk: navy gradient, aurora 1, ribbon 1 |
+| Breadcrumbs | read | — | mono "Home / Services"; Home links to `/` | static | CAP-1, constraint (prototype crumbs) |  ✅ walk + page test: "Home / Services" in JetBrains Mono; Home → / |
+| H1 | read | — | "Software teams that get IT done." in white Unbounded, amber bar under "get IT done" drawing in | 1.2s after 0.5s | CAP-1, prototype |  ✅ walk + page test: Unbounded white; `.hl` "get IT done" with `hl-draw` |
+| Lede | read | — | the prototype lede in on-navy muted, 20px below the H1 | static | prototype `.page-hero .lede` |  ⚠️ walk: on-navy muted rgb(197,208,227) but 18px below the H1 (`mt-4.5`), not 20px — see review |
+| Primary CTA | read / click | mouse | amber pill "Start a project" with an arrow → `/demo#project` | instant | CAP-1 |  ✅ walk + page test: amber pill with arrow svg → /demo#project |
+| Glass CTA | read / click | mouse | glass pill "See our 4-D process" → `#process` (top of Services until 5.4) | instant | CAP-1, constraint |  ✅ walk + page test: glass pill → /services#process, scrollY 0 |
+| CTAs | hover | mouse | lift 2px | 0.35s | DESIGN.md button |  ✅ walk: primary lifts 2px |
+| CTAs | Tab | keyboard | amber focus ring on each, in order | instant | EXPERIENCE.md Focus ring |  ✅ walk: Tab → Start a project, See our 4-D process, each 2px rgb(255,192,0) |
+| Clock strip | JavaScript off | — | two outlined pills with a clock icon: "Ho Chi Minh City GMT+7", "Plano US Central" | static | CAP-2, EXPERIENCE.md States |  ✅ walk (JS off) + page test (renderToString) + smoke: "Ho Chi Minh City GMT+7 | Plano US Central"; 1px full-radius pills with a clock svg |
+| Clock strip | JavaScript on | — | the labels become the live local times in mono (HCMC first) | after hydration | CAP-3 |  ✅ walk (clock 03:15:45Z): "Ho Chi Minh City 10:15 | Plano 22:15", mono times, no nested pill |
+| Clock strip | a minute turns | — | each time updates | within 30s | CAP-3 |  ✅ walk + LiveClock test: 10:16 / 22:16 after 30 s |
+| Clock strip | screen reader | — | group named "Office local times"; each pill reads city and time | static | prototype `aria-label` |  ✅ walk + page test: role group "Office local times"; each pill reads city then time |
+| Layout | 899px / 390px | — | CTAs and pills wrap; no sideways scroll | static | EXPERIENCE.md Responsive |  ✅ walk: CTAs and pills wrap at 899 and 390; no sideways scroll |
+| Reduced motion | — | — | aurora, ribbon and highlight still; clocks still update | static | NFR-2 |  ✅ walk: aurora and highlight animation none; clocks still 10:16 / 22:16 after 30 s |
 
 ## Implementation Notes
 
@@ -103,3 +103,35 @@ Sources: story spec CAP-1 to CAP-3, `EXPERIENCE.md` (Component Patterns › Cloc
 
 **Manual checks (if no CLI):**
 - Chrome walk of the UX checks table at 1280, 899 and 390px, with JavaScript off and reduced motion; screenshots in the evidence folder.
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-05.
+
+**Commands**
+
+- `npm test` -- exit 0 -- Test Files 67 passed (67), Tests 1041 passed (1041)
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100%; C1 ok: 6 changed file(s) with branch coverage >= 80% (a first run exited 1 on page.tsx branches; fixed in Task 5 fix round 1)
+- `npm run test:smoke` -- exit 0 -- 12 passed (13.1s)
+
+**Observed**
+
+- `/services` on a production build (`next start`): navy hero, crumbs, H1 with highlight, both CTAs to `/demo#project` and `#process`; clock pills "Ho Chi Minh City 10:15 | Plano 22:15", then 10:16 / 22:16 after 30 s (Playwright clock); JavaScript off shows "GMT+7" and "US Central"; reduced motion stops the hero motion but not the clocks -- spec-5-1-services-hero-clocks-evidence/walk-output.txt
+- Lede sits 18px below the H1 (prototype 20px) -- same walk
+
+**Artifacts**
+
+- spec-5-1-services-hero-clocks-evidence/verification.txt -- 5958 bytes -- sha256 5b19c6c391b9 -- the four commands' output
+- spec-5-1-services-hero-clocks-evidence/walk-output.txt -- 1430 bytes -- sha256 af83360e79ab -- walk observations
+- spec-5-1-services-hero-clocks-evidence/observed.md -- 1765 bytes -- sha256 734074414e93 -- route, steps, what was seen
+- spec-5-1-services-hero-clocks-evidence/services-1280.png -- 463359 bytes -- sha256 25a9bde26359 -- hero after the 30 s refresh
+- spec-5-1-services-hero-clocks-evidence/services-899.png -- 322809 bytes -- sha256 be570c27aac8 -- 899px
+- spec-5-1-services-hero-clocks-evidence/services-390.png -- 220562 bytes -- sha256 0fcbeac616a0 -- 390px (highlight mid draw-in)
+- spec-5-1-services-hero-clocks-evidence/services-no-js-1280.png -- 346311 bytes -- sha256 26ce919a03e2 -- JavaScript off: zone labels
+- spec-5-1-services-hero-clocks-evidence/walk.mjs -- 5838 bytes -- sha256 9bdae8e70361 -- the walk script
+
+**Not captured**
+
+- The dev server returned 500 on every page in this run (Google font loading in `src/app/layout.tsx`); the walk used the production server instead. Not observed: touch input, a screen reader.
+

@@ -42,3 +42,30 @@ Task 6: review — pass — re-review: 0 of 1 findings open; 1 minor
 Task 6: minor — src/app/services/page.test.tsx:79 — selector test is source-text regex
 Task 6: complete (commits 50753e8..0bb1b74, diff verified)
 Task 7: dispatched (model haiku, base 0bb1b74, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t7-report.md)
+Task 7: no-red (smoke check of behaviour Task 5 built; the task carries no red: line)
+Task 7: review — pass — 0 critical, 0 important, 2 minor
+Task 7: minor — e2e/services.spec.ts:18 — city names also match the footer; zone labels are the tight check
+Task 7: minor — e2e/services.spec.ts:23 — H1 checked as substrings, not inside <h1>
+Task 7: complete (commits d34af07..fa1565f, diff verified)
+Acceptance: verification — npm test — exit 0 — Test Files 67 passed (67), Tests 1041 passed (1041)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 1 — C1 FAIL src/app/services/page.tsx: branch coverage 50.0% < 80% (diff lines 100%)
+Acceptance: verification — npm run test:smoke — exit 0 — 12 passed (12.0s)
+Task 5: fix round 1/5 dispatched (branch coverage 50% on page.tsx: the clockCities lookup's no-match branch silently drops a pill and is untested)
+Task 5: fix round 1/5 (clock strip bound to office objects; no lookup branch; 125c8dc)
+Task 5: review — pass — re-review: 0 of 1 findings open; 1 minor
+Task 5: minor — src/content/offices.ts:42 — plano and hcmc now exported as named constants
+Task 5: complete (commits c46cd2b..125c8dc, diff verified)
+Acceptance: verification — npm test — exit 0 — Test Files 67 passed (67), Tests 1041 passed (1041)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100%; C1 ok: 6 changed file(s) with branch coverage >= 80%
+Acceptance: verification — npm run test:smoke — exit 0 — 12 passed (13.1s)
+Acceptance: manual — Chrome walk of the UX checks at 1280/899/390px, JS off, reduced motion — observed: pills 10:15/22:15 then 10:16/22:16 after 30 s; JS off GMT+7 / US Central; lede 18px below H1 (prototype 20px); no sideways scroll
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/verification.txt — 5958 bytes — sha256 5b19c6c391b9 — verification.txt
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/walk-output.txt — 1430 bytes — sha256 af83360e79ab — walk-output.txt
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/observed.md — 1765 bytes — sha256 734074414e93 — observed.md
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-1280.png — 463359 bytes — sha256 25a9bde26359 — services-1280.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-899.png — 322809 bytes — sha256 be570c27aac8 — services-899.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-390.png — 220562 bytes — sha256 0fcbeac616a0 — services-390.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/services-no-js-1280.png — 346311 bytes — sha256 26ce919a03e2 — services-no-js-1280.png
+Acceptance: evidence — spec-5-1-services-hero-clocks-evidence/walk.mjs — 5838 bytes — sha256 9bdae8e70361 — walk.mjs
