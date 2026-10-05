@@ -131,15 +131,13 @@ describe("StoryPage", () => {
     expect(paragraphs).toEqual([story.excerpt]);
   });
 
-  it("renders no body paragraph when there is neither body nor excerpt", async () => {
-    const { container } = await renderPage({
-      ...story,
-      excerpt: "  ",
-      body: null,
-    });
-
-    expect(container.querySelectorAll(".story-body > p")).toHaveLength(0);
-  });
+  it.each([null, "  "])(
+    "renders no body paragraph when there is no body and the excerpt is %j",
+    async (excerpt) => {
+      const { container } = await renderPage({ ...story, excerpt, body: null });
+      expect(container.querySelectorAll(".story-body > p")).toHaveLength(0);
+    },
+  );
 
   it("calls notFound for an unknown slug", async () => {
     await expect(renderPage(null)).rejects.toThrow("NEXT_NOT_FOUND");
