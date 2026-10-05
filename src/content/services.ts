@@ -1,4 +1,5 @@
 import { hcmc, plano } from "@/content/offices";
+import { homeStats } from "@/content/home";
 
 // Services page copy. Kept out of the components so it can be translated later.
 
@@ -33,3 +34,67 @@ export const servicesPage = {
     { office: plano, city: "Plano" },
   ],
 };
+
+export const servicesStats = {
+  ariaLabel: "Key facts",
+  stats: homeStats.stats,
+};
+
+export const servicesSection = {
+  title: "Eight services, one team.",
+  lede: "Pick one service or combine several. We shape the team around your product.",
+  services: [
+    {
+      id: "product-engineering" as const,
+      name: "Product Engineering",
+      description:
+        "Transform innovative ideas into market-ready digital products with end-to-end engineering expertise.",
+      tags: ["Web", "Mobile"],
+    },
+    {
+      id: "ai-analytics" as const,
+      name: "AI-Driven Analytics",
+      description:
+        "Transform raw data into actionable intelligence using AI and advanced visualisation.",
+      tags: ["AI/ML", "Dashboards"],
+    },
+    {
+      id: "co-creation" as const,
+      name: "Product Co-Creation",
+      description:
+        "Accelerate innovation by combining your domain knowledge with our technical expertise.",
+    },
+    {
+      id: "staffing" as const,
+      name: "Staffing Service",
+      description:
+        "Access specialised technology talent when you need it, with flexible options.",
+    },
+    {
+      id: "custom-apps" as const,
+      name: "Custom App Development",
+      description:
+        "Develop custom solutions aligned with your unique requirements.",
+    },
+    {
+      id: "low-code" as const,
+      name: "Low-code Solutions",
+      description:
+        "Ship tools and automations faster on leading low-code platforms.",
+      tags: ["Power Platform", "Make", "n8n", "Retool", "Bubble"],
+    },
+    {
+      id: "ai-solutions" as const,
+      name: "AI-Powered Solutions",
+      description:
+        "Harness artificial intelligence to transform your operations.",
+      tags: ["Generative AI", "AI/ML"],
+    },
+    {
+      id: "cloud" as const,
+      name: "Cloud Computing",
+      description: "Expert solutions on Azure, AWS and GCP.",
+      tags: ["Azure", "AWS", "GCP"],
+    },
+  ],
+} as const;
