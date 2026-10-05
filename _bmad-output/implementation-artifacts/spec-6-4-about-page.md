@@ -63,11 +63,11 @@ Further rules:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/content/about.ts` -- meta, hero, stats (figure 4 placeholder), story, six values with icons, nine FAQ entries, offices heading, capture copy -- copy out of components
+- [x] `src/content/about.ts` -- meta, hero, stats (figure 4 placeholder), story, six values with icons, nine FAQ entries, offices heading, capture copy -- copy out of components
   - red: `src/content/about.test.ts` -- nine FAQ entries, the data-security answer starts with `[Placeholder]`, six values in order with only "Get IT Done" featured, the stats' fourth figure is "4" with `placeholder: true`, no "XionTechs" anywhere
-- [ ] `src/components/contact/capture-band.tsx` -- optional `copy?: { heading: string; lede: string }` replacing the kind's heading and lede; nothing else changes -- About wording (decision above)
+- [x] `src/components/contact/capture-band.tsx` -- optional `copy?: { heading: string; lede: string }` replacing the kind's heading and lede; nothing else changes -- About wording (decision above)
   - red: `src/components/contact/capture-band.test.tsx` -- with `copy`, the h2 and lede show the given text while the button, placeholder and redirect stay the kind's; without it, output is unchanged
-- [ ] `src/app/about/page.tsx` -- the seven sections in order, as in Intent; metadata "About | XionTech" -- CAP-1 to CAP-7
+- [x] `src/app/about/page.tsx` -- the seven sections in order, as in Intent; metadata "About | XionTech" -- CAP-1 to CAP-7
   - red: `src/app/about/page.test.tsx` --
     - one H1;
     - section order and surfaces;
@@ -79,7 +79,7 @@ Further rules:
     - the capture heading "See our apps in action." and button "Book a demo";
     - no "XionTechs";
     - the CSS contract.
-- [ ] `src/app/globals.css` -- About section:
+- [x] `src/app/globals.css` -- About section:
   - `.values`/`.value`/`.value.feat` (3 columns, 2 at 900px, 1 at 640px; hover tint on non-featured);
   - `.faq` (summary `+`/`−` marker, focus ring);
   - `.office-card` (+ large mono clock);
@@ -87,7 +87,7 @@ Further rules:
 
   Missing rules, CAP-2/4/6.
   - red: `src/app/about/page.test.tsx` -- the anchor rule lists `#values` and `#faq` with `--spacing-anchor-offset`
-- [ ] `e2e/about.spec.ts` -- `@smoke`: `/about` 200 with the H1, `id="values"`, `id="faq"`, nine `<details`, both zone labels and "See our apps in action." in the HTML -- the page without JavaScript
+- [x] `e2e/about.spec.ts` -- `@smoke`: `/about` 200 with the H1, `id="values"`, `id="faq"`, nine `<details`, both zone labels and "See our apps in action." in the HTML -- the page without JavaScript
 
 **Acceptance Criteria:**
 - Given `/about`, when it loads, then the sections appear in order: navy hero, stats, story, values, FAQ, navy offices, amber capture (CAP-1).
