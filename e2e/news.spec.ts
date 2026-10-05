@@ -31,7 +31,9 @@ test(
   "the first story on the News page answers 200 with its own H1",
   { tag: "@smoke" },
   async ({ request }) => {
-    const news = await (await request.get("/news")).text();
+    const newsResponse = await request.get("/news");
+    expect(newsResponse.status()).toBe(200);
+    const news = await newsResponse.text();
     const href = /href="(\/news\/[^"#?]+)"/.exec(news)?.[1];
     test.skip(!href, "No published story in Sanity to open.");
 

@@ -4,7 +4,7 @@ type: 'feature'
 created: '2026-10-05'
 status: 'done'
 route: 'oneshot'
-review_loop_iteration: 0
+review_loop_iteration: 1
 context:
   - '{project-root}/AGENTS.md'
 ---
@@ -34,7 +34,7 @@ Sources: SPEC CAP-1..4, `EXPERIENCE.md` (News story row, capture band rule, date
 | Links | Tab | keyboard | 2px focus ring on crumbs and buttons | — | T9 | ✅ Chrome Tab: solid 2px ring on the News crumb and on "See PXP" |
 | Read story | click on Home and News | mouse | opens the story page | — | CAP-1, Success signal | ✅ Chrome: News and Home "Read story" open the PXP story |
 | Page | page load | — | no email capture band; tab title "<story title> \| XionTech" | — | CAP-1, CAP-3, EXPERIENCE.md | ✅ Chrome: no capture band; tab title "PXP: the school day, in a parent's pocket \| XionTech" |
-| Unknown slug | open `/news/no-such-story` | — | Story 1.7 Not found page, HTTP 404 | — | CAP-4 | ✅ Chrome and smoke: 404 with "We couldn't find that page." |
+| Unknown slug | open `/news/no-such-story` | — | Story 1.7 Not found page, HTTP 404 | — | CAP-4 | ✅ Chrome: 404 with "We couldn't find that page."; smoke: 404 with the Not found page's `not-found-title` H1 |
 | Page | width 390px | — | one column, no sideways scroll | — | EXPERIENCE.md Responsive | ✅ Chrome: no sideways scroll (`story-390.png`) |
 
 ## Implementation Notes
@@ -46,6 +46,7 @@ Sources: SPEC CAP-1..4, `EXPERIENCE.md` (News story row, capture band rule, date
 - Checks: lint, typecheck, format pass; `npm run test:coverage -- --maxWorkers=3` 1033 passed; diff coverage 100% (21 lines), C1 ok; build passes (`/news/[slug]` renders on demand); smoke 12 passed incl. the `/news/no-such-story` 404.
 - The walk script first read the old page after a client-side navigation; it now waits for the URL and the story H1, and checks focus with real Tab presses.
 - After the review: the "See <app>" link shows only for a Product story (Sanity keeps a hidden app value when the category changes); with no body text the excerpt shows; a `@smoke` test opens the first story linked from `/news` and expects 200 with its H1; the 404 smoke checks the Not found page's H1 id. Smoke 13 passed.
+- Checks after the fixes: lint, typecheck, format pass; `npm run test:coverage -- --maxWorkers=3` 1035 passed; diff coverage 100%, C1 ok; build passes; smoke 13 passed (the real-story test now also checks that `/news` answers 200). Blocks of only spaces count as empty.
 
 ## Review Triage Log
 

@@ -118,7 +118,10 @@ describe("StoryPage", () => {
       ...story,
       category: null,
       app: null,
-      body: [{ style: "normal", text: "" }],
+      body: [
+        { style: "normal", text: "" },
+        { style: "normal", text: "  " },
+      ],
     });
 
     expect(container.querySelector(".cat")).toBeNull();
@@ -131,7 +134,7 @@ describe("StoryPage", () => {
   it("renders no body paragraph when there is neither body nor excerpt", async () => {
     const { container } = await renderPage({
       ...story,
-      excerpt: null,
+      excerpt: "  ",
       body: null,
     });
 

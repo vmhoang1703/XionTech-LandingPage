@@ -22,15 +22,15 @@ export async function generateMetadata({
 
 /**
  * A block styled as a heading shows as an H2; empty blocks are left out. With
- * no body text at all the excerpt stands in, so a listed story is never blank.
+ * no body text at all the excerpt stands in; only a story with neither is blank.
  */
 function StoryBody({
   blocks,
   excerpt,
 }: Readonly<{ blocks: StoryBlock[]; excerpt?: string | null }>) {
-  const filled = blocks.filter((block) => block.text);
+  const filled = blocks.filter((block) => block.text?.trim());
   if (filled.length === 0) {
-    return excerpt ? [<p key="excerpt">{excerpt}</p>] : [];
+    return excerpt?.trim() ? [<p key="excerpt">{excerpt}</p>] : [];
   }
   return filled.map((block, index) =>
     block.style?.startsWith("h") ? (
