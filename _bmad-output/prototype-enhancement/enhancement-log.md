@@ -42,6 +42,7 @@ directly, before this log existed.
 | ENH-026 | 2026-10-05 | Job page and Home contact section                         | On phones no page scrolls sideways: the job page and Home's contact section fit the screen                                                                                                                                                                                                        | Approved | 6.5                                   |
 | ENH-027 | 2026-10-05 | Products, app cards                                       | Resizing a window across the phone/desktop breakpoint keeps the reader on the card they were reading                                                                                                                                                                                              | Approved | 4.1                                   |
 | ENH-028 | 2026-10-05 | Products, app cards                                       | Phone rotation keeps the card; the pill clears below the cards; one rule for "the card being read"                                                                                                                                                                                                | Approved | 4.1                                   |
+| ENH-029 | 2026-10-05 | Products, audience pills                                  | The pill clears as soon as "A day at school" reaches the middle of the screen                                                                                                                                                                                                                     | Approved | 4.1                                   |
 
 ## ENH-001: Contact form on Home
 
@@ -667,4 +668,12 @@ directly, before this log existed.
   - The pill and the resize memory now share one rule for "the card being read": the front-most card whose top has passed the middle of the screen and that is still on screen. So a resize during a slide lands on the card the pill shows.
 - **Rules:** a desktop-only resize still does not move the page.
 - **Developer notes:** widths are measured from the page layout, not the visible area, so pinch-zoom never counts as a width change. Checked by scanning the whole stack every 40px at 1440 and 375px, comparing the pill to the card with the most visible, unfaded area. The few differences are hand-over moments where two cards share the screen about equally, or the last card leaving with under 30% of it on screen.
+- **Open items:** none.
+
+## ENH-029: The pill clears when "A day at school" reaches the middle
+
+- **Why:** the ENH-028 audit noted that the Students pill stayed lit for about the last 100px after AI Tutor, while "A day at school" was already past the middle of the screen. Amber asked on 2026-10-05 for the pill to clear at that point.
+- **What changed:** the audience pill clears as soon as the section after the app cards reaches the middle of the screen, on desktop and phones.
+- **Rules:** a resize from that point keeps the reader's place in the section rather than returning to the last card, since the same rule decides which card is being read. Away from the cards, the place is kept as the section at mid-screen and how far down the screen it sits (for example 45%), so it holds on any window size; on desktop this also applies to resizes that only change the height, because the card stack above changes length with the window. A phone keyboard opening still never moves the page.
+- **Developer notes:** the check uses the bottom of the cards' own section (whatever section follows it), so it keeps working if sections are reordered. The review found that the saved place used a different line (30%) from the pill (50%), and that desktop resizes let the school-day section drift; both fixed and re-checked at five resize pairs.
 - **Open items:** none.

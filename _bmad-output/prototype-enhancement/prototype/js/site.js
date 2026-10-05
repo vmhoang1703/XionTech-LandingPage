@@ -306,7 +306,9 @@
       return y-(tops[i]||0)};
     // the card being read: the front-most card whose top has passed the middle of the screen and that is still on screen
     const front=()=>{let k=-1;
-      all.forEach((c,i)=>{const r=c.getBoundingClientRect();if(r.bottom>innerHeight*.3&&r.top<innerHeight*.5)k=i});return k};
+      all.forEach((c,i)=>{const r=c.getBoundingClientRect();if(r.bottom>innerHeight*.3&&r.top<innerHeight*.5)k=i});
+      // once the section after the cards reaches the middle of the screen, no card is being read
+      const sec=pstack.closest('section');if(sec&&sec.getBoundingClientRect().bottom<innerHeight*.5)k=-1;return k};
     const mark=()=>{if(!all.length)return;const k=front();
       const aud=k<0?null:all[k].dataset.aud;
       pills.forEach(a=>{a.dataset.aud===aud?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')})};
@@ -324,12 +326,13 @@
     const layoutW=()=>document.documentElement.clientWidth;
     let readK=-1,readTop=0,anchor=null,resizing=false,settle=0,lastW=layoutW(),widened=false;
     const noteK=()=>{if(resizing)return;const k=front();readK=k;readTop=k>=0?all[k].getBoundingClientRect().top:0;
-      // away from the cards, the reader's place is kept as the section at the top of the screen and its offset
-      anchor=null;if(k<0){const el=[...document.querySelectorAll('main > section, footer')].find(s=>s.getBoundingClientRect().bottom>innerHeight*.3);if(el)anchor=[el,el.getBoundingClientRect().top]}};
+      // away from the cards, the reader's place is kept as the section at mid-screen and how far down the screen it sits
+      anchor=null;if(k<0){const el=[...document.querySelectorAll('main > section, footer')].find(s=>s.getBoundingClientRect().bottom>innerHeight*.5);if(el)anchor=[el,el.getBoundingClientRect().top/innerHeight]}};
     let nt=false;addEventListener('scroll',()=>{if(nt)return;nt=true;requestAnimationFrame(()=>{noteK();nt=false})},{passive:true});noteK();
-    schedule=()=>{resizing=true;const w=layoutW();if(w!==lastW){if(!DESK.matches)widened=true;lastW=w}clearTimeout(settle);settle=setTimeout(()=>{const k=readK;
+    schedule=()=>{const deskAtStart=DESK.matches;resizing=true;const w=layoutW();if(w!==lastW){if(!DESK.matches)widened=true;lastW=w}clearTimeout(settle);settle=setTimeout(()=>{const k=readK;
       const an=anchor;
-      try{if((crossed||widened)&&(k>=0||an)){clear();update();const h=root.style.scrollBehavior;root.style.scrollBehavior='auto';scrollTo(0,k>=0?(crossed?restY(k):scrollY+all[k].getBoundingClientRect().top-readTop):scrollY+an[0].getBoundingClientRect().top-an[1]);root.style.scrollBehavior=h;update();mark()}}
+      // away from the cards on desktop, the card stack above changes height with the window, so any resize restores the section
+      try{if(((crossed||widened)&&(k>=0||an))||(k<0&&an&&deskAtStart&&DESK.matches)){clear();update();const h=root.style.scrollBehavior;root.style.scrollBehavior='auto';scrollTo(0,k>=0?(crossed?restY(k):scrollY+all[k].getBoundingClientRect().top-readTop):scrollY+an[0].getBoundingClientRect().top-an[1]*innerHeight);root.style.scrollBehavior=h;update();mark()}}
       finally{crossed=false;widened=false;resizing=false;noteK()}},250)};
     addEventListener('resize',schedule,{passive:true});
     addEventListener('load',()=>{const i=all.indexOf(document.getElementById(location.hash.slice(1)));if(i>=0)requestAnimationFrame(()=>scrollTo({top:restY(i),behavior:'auto'}))});

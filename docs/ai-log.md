@@ -1064,3 +1064,17 @@ Template:
 - **AI got it wrong?** Yes: the first shared rule required the outgoing card to fade before the next counted,
   which left the pill lagging at hand-overs and a possible blank moment on short screens; it was simplified to
   the front-most card past the middle of the screen.
+
+## 2026-10-05 — ENH-029: the pill clears when "A day at school" reaches the middle
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor)
+- **Prompt / task:** Clear the audience pill as soon as the school-day section reaches the middle of the screen,
+  instead of about 100px later.
+- **Decision / result:** Approved by Amber. The pill now clears at mid-screen. The acceptance audit found two
+  real problems around it, fixed before commit: the saved resize place used a 30% line while the pill used 50%,
+  so a desktop-to-phone resize could bring the last card back; and desktop resizes let the school-day section
+  drift because the card stack changes length with the window. Away from the cards the place is now kept as a
+  fraction of the screen height, on desktop for any resize; phone keyboard resizes still never move the page.
+- **AI got it wrong?** Yes: the first fix kept the section at the same pixel offset, which on a shorter window
+  fell below the middle and brought the pill back; it now keeps the same fraction of the screen.
