@@ -1,4 +1,5 @@
 import { hcmc, plano } from "@/content/offices";
+import { processFlow, type ProcessFlowContent } from "@/content/process";
 import { homeStats } from "@/content/home";
 
 // Services page copy. Kept out of the components so it can be translated later.
@@ -98,3 +99,42 @@ export const servicesSection = {
     },
   ],
 } as const;
+
+// Services #process: the shared 4-D flow with the prototype's Services step
+// lines. Icons and the start and end nodes stay those of the Home flow.
+const servicesStepCopy = [
+  {
+    line: "Workshops to understand your goals, users, risks and scope.",
+    receive: "A clear scope, estimate and delivery plan.",
+  },
+  {
+    line: "User flows, interfaces and architecture agreed before code is written.",
+    receive: "A clickable prototype and technical design.",
+  },
+  {
+    line: "Agile sprints with regular demos, testing and open progress updates.",
+    receive: "Working software every sprint.",
+  },
+  {
+    line: "A safe release, monitoring and improvement after launch.",
+    receive: "A live release with ongoing support.",
+  },
+];
+
+export const servicesProcess: {
+  label: string;
+  title: string;
+  lede: string;
+  flow: ProcessFlowContent;
+} = {
+  label: "Our 4-D process",
+  title: "From your request to launch, in four steps.",
+  lede: "Every step ends with something you can see, test and approve.",
+  flow: {
+    ...processFlow,
+    steps: processFlow.steps.map((step, index) => ({
+      ...step,
+      ...servicesStepCopy[index],
+    })),
+  },
+};

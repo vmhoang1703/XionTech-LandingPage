@@ -2793,8 +2793,9 @@
     margin-top: auto;
   }
 
-  /* Service card anchors (Story 5.2) */
-  .svc[id] {
+  /* Service card anchors (Story 5.2) and the 4-D process (Story 5.4) */
+  .svc[id],
+  #process {
     scroll-margin-top: calc(
       var(--spacing-anchor-offset) - var(--spacing-header-height)
     );
