@@ -34,3 +34,17 @@ Task 5: review — pass — 0 critical, 0 important, 2 minor; ⚠️ nine <detai
 Task 5: minor — e2e/about.spec.ts:20 — toContain("<h1") does not check the H1 text or count
 Task 5: minor — e2e/about.spec.ts:30 — /<details/g could match a longer tag name
 Task 5: complete (commits 3ffabf9..d83f438, diff verified)
+Acceptance fix (controller): the walk showed the office cards in one column at 1280px; the shared .offices base rule overrides its own md query. Added .offices:has(> .office-card) two columns above md (test first: 1 failed, then 14 passed); commit 1249eeb
+Acceptance: verification — npm test — exit 0 — Test Files 75 passed (75), Tests 1129 passed (1129)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total: 18 lines, Missing: 0 lines, Coverage: 100%; C1 ok: 3 changed files
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed (14.3s)
+Acceptance: manual — Chrome walk on a production build — observed: section order, 1 H1; footer Core values and FAQ land h2 at 230 and 200 below header 72; FAQ click/Enter/Space/tap toggle, two open, focus-visible navy ring; clocks US Central/GMT+7 without JS, 22:15/10:15 then 22:16/10:16 with JS; offices 2 columns at 1280; capture → /demo#form prefilled; no people words; at exactly 900px the story stays two columns (pending breakpoint question)
+Acceptance: evidence — spec-6-4-about-page-evidence/capture-1280.png — 132466 bytes — sha256 8b4ab797c786 — capture-1280.png
+Acceptance: evidence — spec-6-4-about-page-evidence/faq-two-open-1280.png — 126397 bytes — sha256 fb8ec19a120b — faq-two-open-1280.png
+Acceptance: evidence — spec-6-4-about-page-evidence/observed.md — 4071 bytes — sha256 b412539a6eaa — observed.md
+Acceptance: evidence — spec-6-4-about-page-evidence/offices-1280.png — 283838 bytes — sha256 0b3fb17ccd4a — offices-1280.png
+Acceptance: evidence — spec-6-4-about-page-evidence/values-1280.png — 182438 bytes — sha256 2f6e5f6018d9 — values-1280.png
+Acceptance: evidence — spec-6-4-about-page-evidence/values-390.png — 166504 bytes — sha256 3befe0e124ca — values-390.png
+Acceptance: evidence — spec-6-4-about-page-evidence/verification.txt — 5947 bytes — sha256 46059d7b02cc — verification.txt
+Acceptance: evidence — spec-6-4-about-page-evidence/walk-output.txt — 3675 bytes — sha256 033b329b3462 — walk-output.txt

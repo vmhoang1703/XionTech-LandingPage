@@ -1,0 +1,38 @@
+section order: about-h1 > sec.surface-paper > about-story-h > values > faq > about-offices-h > cap-h
+hero: 1 aurora, 1 strands | crumbs "Home/About" | H1 "Tech made simple. Solutions made powerful." hl "Solutions made powerful" | 1 H1 on page
+hero lede: We are an education technology company and software partner. We build our own school platforms and deliver digital products for clients around the world.
+stats: 25+ Years of leadership experience in software | 24/7 Global coverage across time zones | 20+ Technology stacks we work in | 4 [Placeholder] School products ready to demo | 2 Offices: Ho Chi Minh City and Plano
+stats label: "Key facts" box 1x1
+story: sec surface-mist linen | linear-gradient(rgb(238, 242, 249), rgb(244, 247, 252)) | linen true | photo "[PLACEHOLDER] PHOTO / Real team photo at the Ho Chi Minh City office (no AI imagery)." | h2 "Two strengths, one team." | 3 checks
+story layout 1280: side by side
+values: label "Our core values" | h2 "What guides how we work." | Startup Spirit, Client Centricity, Integrity First, Innovation Driven, "Get IT Done" Attitude [feat], People-Centered Culture | 3 columns
+featured cell: linear-gradient(155deg, rgb(255, 216, 74), rgb(255, 192, 0) 60%, rgb(240, 179, 0 | h3 rgb(22, 54, 99)
+hover a non-featured cell: rgba(0, 0, 0, 0) -> rgb(238, 242, 249) (transition 0.4s)
+faq: h2 "Frequently asked questions." | lede "Straight answers about our products, our services and how we work." | 9 items, open 0 | marker ""+""
+click Q1: open true | marker "−"
+click Q1 again: open false
+Tab to Q2: "Which industries do you work with?" outline solid 2px rgb(22, 54, 99), offset -3px, focus-visible true
+Enter on Q2: open true
+Space on Q2: open false
+Tab from Q2: How can our school try PXP, LXP or SXP?
+two open (Q3 by Space, Q1 by click): open: What does XionTech do? | How can our school try PXP, LXP or SXP?
+security answer: [Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning.
+offices: sec surface-navy gridbg | radial-gradient(50% 70% at 100% 0%, color(srgb 1 0.752941 0 / 0.16), r | h2 "Two offices, serving the world." | Plano, Texas, USA: clock "22:15" | Ho Chi Minh City, Vietnam (Vietnam Delivery Center): clock "10:15"
+office grid 1280: 587px 587px | card lefts 44, 649
+clock style: "JetBrains Mono" 32px
+clocks after 30 s: 22:16 | 10:16
+office links: +1 469 322 9899 -> tel:+14693229899 | WhatsApp +1 469 439 9345 -> https://wa.me/14694399345 target=_blank | vinni.tran@newxion.com -> mailto:vinni.tran@newxion.com | +84 908 107 552 -> tel:+84908107552
+capture: last in main true | See our apps in action. | Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP. | button "Book a demo"
+people words in main: none
+capture valid email: url /demo#form | email "principal@school-example.edu"
+JS off clocks: US Central | GMT+7
+footer "Core values": url /about#values | header 72 h2 230–281 visible true
+footer "FAQ": url /about#faq | header 72 h2 200–250 visible true
+/about#values at 390: url /about#values | header 72 h2 199–267 visible true
+/about#faq at 390: url /about#faq | header 72 h2 168–236 visible true
+width 900: values 2 columns | story side by side | offices 1 columns | sideways scroll false
+width 899: values 2 columns | story stacked | offices 1 columns | sideways scroll false
+width 640: values 1 columns | story stacked | offices 1 columns | sideways scroll false
+width 390: values 1 columns | story stacked | offices 1 columns | sideways scroll false
+tap Q4: open true
+reduced motion: scroll-behavior auto | value transition 0s | url /about#faq | header 72 h2 168–236 visible true

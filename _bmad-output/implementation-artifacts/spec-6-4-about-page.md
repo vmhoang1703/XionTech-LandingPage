@@ -102,29 +102,29 @@ Sources: SPEC CAP-1 to CAP-7, `EXPERIENCE.md` (FAQ, Office card, Clock, Stats ba
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Hero | page loads | — | navy with aurora and strands; crumbs Home / About; H1 "Tech made simple. Solutions made powerful." with the highlight; lede | — | CAP-1, prototype | |
-| Stats | page loads | — | paper band; 25+, 24/7, 20+, 4, 2; the fourth caption "[Placeholder] School products ready to demo"; no visible label | static | CAP-7, A2, DESIGN.md Stats band | |
-| Story | page loads | — | mist with linen; `[Placeholder] Photo` frame and the h2 "Two strengths, one team.", lede, three check items | — | CAP-1, prototype | |
-| Story | width 900px and below | — | photo frame and text stack in one column | — | EXPERIENCE.md Responsive | |
-| Values | page loads | — | label "Our core values", h2; six cells 3 × 2 with icons; "Get IT Done" cell amber with navy text | — | CAP-4, UX-DR23 | |
-| Values | hover a non-featured cell | mouse | cell background tints | 0.4s | prototype site.css | |
-| Values | width 900px and below / 640px and below | — | 2 columns, then 1 | — | EXPERIENCE.md Responsive | |
-| Footer "Core values" | click | mouse | `/about#values`; h2 fully below the 72px header after the scroll | on load | CAP-4, AC-NAV-5 | |
-| Footer "FAQ" | click | mouse | `/about#faq`; h2 fully below the header | on load | CAP-2, AC-NAV-5 | |
-| FAQ | page loads | — | h2 "Frequently asked questions.", lede; nine closed questions with a + marker | — | CAP-2 | |
-| FAQ | click a question | mouse | answer opens, marker becomes −; click again closes | — | CAP-2, UX-DR27 | |
-| FAQ | Tab to a question, Enter / Space | keyboard | focus ring visible; Enter and Space toggle it | — | CAP-2, EXPERIENCE.md FAQ | |
-| FAQ | open two questions | mouse, keyboard | both stay open | — | CAP-2 | |
-| FAQ | tap a question | touch | toggles like a click | — | CAP-2 | |
-| FAQ | "How do you keep our data secure?" | — | answer starts with "[Placeholder]" | — | CAP-3 | |
-| Offices | page loads | — | navy band with gridbg; h2 "Two offices, serving the world."; Plano card first, then Ho Chi Minh City with "Vietnam Delivery Center" | — | CAP-6 | |
-| Office clock | without JavaScript / with JavaScript | — | "US Central" / "GMT+7" first, then the live `HH:MM` in large mono | refresh 30s | CAP-6, EXPERIENCE.md Office card | |
-| Office links | click phone / WhatsApp / email | mouse | `tel:` link; WhatsApp opens a new tab; `mailto:` | — | CAP-6, PRD offices | |
-| Capture | page loads | — | amber band last; "See our apps in action.", About lede, "Book a demo" | — | CAP-7 | |
-| Capture | submit a valid email | keyboard | lands on `/demo#form` with the email prefilled | after send | Story 2.4 behaviour | |
-| People | whole page | — | no leadership section, no photos, names or titles of people | — | CAP-5, FR-29 | |
-| Whole page | reduced motion | — | no animation; anchor jumps instant | — | EXPERIENCE.md Reduced motion | |
-| Whole page | width 390px | — | no sideways scroll | — | EXPERIENCE.md Responsive | |
+| Hero | page loads | — | navy with aurora and strands; crumbs Home / About; H1 "Tech made simple. Solutions made powerful." with the highlight; lede | — | CAP-1, prototype |  ✅ walk: aurora + strands, crumbs, H1 with highlight, lede; page.test |
+| Stats | page loads | — | paper band; 25+, 24/7, 20+, 4, 2; the fourth caption "[Placeholder] School products ready to demo"; no visible label | static | CAP-7, A2, DESIGN.md Stats band |  ✅ walk: 25+, 24/7, 20+, 4 [Placeholder], 2; label sr-only 1×1; page.test |
+| Story | page loads | — | mist with linen; `[Placeholder] Photo` frame and the h2 "Two strengths, one team.", lede, three check items | — | CAP-1, prototype |  ✅ walk: mist + linen, [Placeholder] Photo, h2, lede, 3 checks |
+| Story | width 900px and below | — | photo frame and text stack in one column | — | EXPERIENCE.md Responsive |  ⏳ pending: stacked at 899, 640 and 390px; at exactly 900px still side by side (shared `.split` switches at ≥ 900; site-wide ≥/≤ question, Amber/Hoang) |
+| Values | page loads | — | label "Our core values", h2; six cells 3 × 2 with icons; "Get IT Done" cell amber with navy text | — | CAP-4, UX-DR23 |  ✅ walk: label, h2, six cells with icons, featured amber gradient with navy text; page.test |
+| Values | hover a non-featured cell | mouse | cell background tints | 0.4s | prototype site.css |  ✅ walk: transparent → rgb(238, 242, 249), 0.4s |
+| Values | width 900px and below / 640px and below | — | 2 columns, then 1 | — | EXPERIENCE.md Responsive |  ✅ walk: 3 at 1280; 2 at 900 and 899; 1 at 640 and 390 |
+| Footer "Core values" | click | mouse | `/about#values`; h2 fully below the 72px header after the scroll | on load | CAP-4, AC-NAV-5 |  ✅ walk: /about#values, h2 230–281 below header 72 |
+| Footer "FAQ" | click | mouse | `/about#faq`; h2 fully below the header | on load | CAP-2, AC-NAV-5 |  ✅ walk: /about#faq, h2 200–250 below header 72 |
+| FAQ | page loads | — | h2 "Frequently asked questions.", lede; nine closed questions with a + marker | — | CAP-2 |  ✅ walk: h2, lede, 9 closed, + marker; page.test |
+| FAQ | click a question | mouse | answer opens, marker becomes −; click again closes | — | CAP-2, UX-DR27 |  ✅ walk: opens, marker −; second click closes |
+| FAQ | Tab to a question, Enter / Space | keyboard | focus ring visible; Enter and Space toggle it | — | CAP-2, EXPERIENCE.md FAQ |  ✅ walk: focus-visible navy 2px ring; Enter opens, Space closes |
+| FAQ | open two questions | mouse, keyboard | both stay open | — | CAP-2 |  ✅ walk: Q1 (click) and Q3 (Space) both open |
+| FAQ | tap a question | touch | toggles like a click | — | CAP-2 |  ✅ walk: tap opens Q4 at 390px |
+| FAQ | "How do you keep our data secure?" | — | answer starts with "[Placeholder]" | — | CAP-3 |  ✅ walk and page.test: starts with [Placeholder] |
+| Offices | page loads | — | navy band with gridbg; h2 "Two offices, serving the world."; Plano card first, then Ho Chi Minh City with "Vietnam Delivery Center" | — | CAP-6 |  ✅ walk: navy gridbg, h2, Plano left and HCMC right at 1280 (with tag), 1 column at 900 and below |
+| Office clock | without JavaScript / with JavaScript | — | "US Central" / "GMT+7" first, then the live `HH:MM` in large mono | refresh 30s | CAP-6, EXPERIENCE.md Office card |  ✅ walk: JS off US Central / GMT+7; JS on 22:15 / 10:15 then 22:16 / 10:16, JetBrains Mono 32px |
+| Office links | click phone / WhatsApp / email | mouse | `tel:` link; WhatsApp opens a new tab; `mailto:` | — | CAP-6, PRD offices |  ✅ walk: tel: links, WhatsApp target _blank, mailto: |
+| Capture | page loads | — | amber band last; "See our apps in action.", About lede, "Book a demo" | — | CAP-7 |  ✅ walk: last in main, About heading and lede, Book a demo; page.test |
+| Capture | submit a valid email | keyboard | lands on `/demo#form` with the email prefilled | after send | Story 2.4 behaviour |  ✅ walk (POST intercepted): /demo#form, email prefilled |
+| People | whole page | — | no leadership section, no photos, names or titles of people | — | CAP-5, FR-29 |  ✅ walk: no leadership words in main; page.test no XionTechs |
+| Whole page | reduced motion | — | no animation; anchor jumps instant | — | EXPERIENCE.md Reduced motion |  ✅ walk: scroll-behavior auto, transition 0s, #faq lands on load |
+| Whole page | width 390px | — | no sideways scroll | — | EXPERIENCE.md Responsive |  ✅ walk: no sideways scroll at 900, 899, 640, 390 |
 
 ## Implementation Notes
 
@@ -148,3 +148,35 @@ Sources: SPEC CAP-1 to CAP-7, `EXPERIENCE.md` (FAQ, Office card, Clock, Stats ba
   - 1280, 900, 899, 640 and 390px, and reduced motion.
 - The capture `POST /api/contact` is answered by the walk.
 - Screenshots go in the evidence folder.
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-05, on a production build (`next start -p 3005`).
+
+**Commands**
+
+- `npm test` -- exit 0 -- Test Files 75 passed (75), Tests 1129 passed (1129)
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total: 18 lines, Missing: 0 lines, Coverage: 100%; "C1 ok: 3 changed file(s) with branch coverage >= 80%"
+- `npm run test:smoke` -- exit 0 -- 15 passed (14.3s)
+
+**Observed**
+
+- The footer's "Core values" and "FAQ" land the h2 at 230 and 200, below the 72px header. The FAQ toggles by click, Enter, Space and tap, two stay open, and the keyboard focus ring shows. -- walk
+- The office clocks show "US Central" and "GMT+7" without JavaScript, then 22:15 and 10:15, then 22:16 and 10:16 after 30 s. The offices are two columns at 1280px. The capture goes to `/demo#form` with the email prefilled. -- walk
+
+**Artifacts**
+
+- [capture-1280.png](spec-6-4-about-page-evidence/capture-1280.png) -- 132466 bytes -- sha256 8b4ab797c786
+- [faq-two-open-1280.png](spec-6-4-about-page-evidence/faq-two-open-1280.png) -- 126397 bytes -- sha256 fb8ec19a120b
+- [observed.md](spec-6-4-about-page-evidence/observed.md) -- 4071 bytes -- sha256 b412539a6eaa
+- [offices-1280.png](spec-6-4-about-page-evidence/offices-1280.png) -- 283838 bytes -- sha256 0b3fb17ccd4a
+- [values-1280.png](spec-6-4-about-page-evidence/values-1280.png) -- 182438 bytes -- sha256 2f6e5f6018d9
+- [values-390.png](spec-6-4-about-page-evidence/values-390.png) -- 166504 bytes -- sha256 3befe0e124ca
+- [verification.txt](spec-6-4-about-page-evidence/verification.txt) -- 5947 bytes -- sha256 46059d7b02cc
+- [walk-output.txt](spec-6-4-about-page-evidence/walk-output.txt) -- 3675 bytes -- sha256 033b329b3462
+
+**Not captured**
+
+- A real mail send. The walk answered `POST /api/contact` itself.
+- A screen reader, and pen input.
