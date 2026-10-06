@@ -1197,3 +1197,17 @@ Template:
   shape version looked like floating circles, a mountain divider read as childish, the Services title hid behind the
   cards until the padding override was found, the first Home fade left a hard shift and visible banding, and a
   wrong SVG icon was briefly wired in before Amber said it was the wrong file.
+
+## 2026-10-06 — ENH-074: a design system page for the prototype
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Verification Gap)
+- **Prompt / task:** A design system HTML page for the XionTech prototype, laid out like the AI Tutor project's
+  design-system.html.
+- **Decision / result:** Approved by Amber. `prototype/design-system.html` has ten numbered sections (brand, colour,
+  surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice).
+  Every value is read from `css/site.css` when the page is built, and the components use the site's own classes.
+  Review fixes before commit: a contrast miss on the amber-text swatch labels, a focus ring that vanished on the navy
+  stage, the email demo labelled as its error state with `aria-invalid`, the audience tab demo showing the real amber
+  label, a section menu that hid links at narrow widths, working filter buttons, and a `<main>` landmark.
+- **AI got it wrong?** Yes: the path Amber gave pointed at a folder that did not exist (the file was in another
+  checkout), and the first build lost "GET IT" on the light tagline because a footer style made it white.

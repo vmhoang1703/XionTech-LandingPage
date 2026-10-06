@@ -86,6 +86,7 @@ directly, before this log existed.
 | ENH-071 | 2026-10-06 | Home background and How we approach; Services cards | Home: hero navy into Our partners, an even fall from darkest to light blue with no visible steps; news and contact keep their own colours; more room under How we approach, link over step 05. Services: cards without notes, one footer style | In PR    | 4.1 |
 | ENH-072 | 2026-10-06 | Services panel gap and spacing; Home mountain divider and smoother blends | Services: 28px gap between the two panels with the cards centred across it, more room above What can we help you achieve? and below How we work. Home: a small mountain range before Our partners, the blue lightening through Work built with our partners, one seamless layer from What we build to the contact form | In PR    | 4.1 |
 | ENH-073 | 2026-10-06 | Home spacing; footer clearance on every page | No mountain illustration; more space above and below Our partners; the last section of every page leaves room above the footer climber | In PR    | Batch 1 (all pages) |
+| ENH-074 | 2026-10-06 | Design system page | A design-system.html in the prototype folder, laid out like the AI Tutor design system, showing the real colours, type, spacing, components, illustration and motion from css/site.css | Approved | Docs |
 
 ## ENH-001: Contact form on Home
 
@@ -1247,3 +1248,14 @@ directly, before this log existed.
 - **Developer notes:** `main>section:last-of-type` bottom padding in `css/site.css` (replaces the per-page rules for Careers roles and Services How we work).
 - **After review (ENH-060 to ENH-073):** News cards unfold left to right in each row from the first load, and the thank-you takes keyboard focus; Services cards lift on hover after appearing, reduced motion stops every entrance, a card opened from a footer link lands below the header, the panel gap refits after a language switch, the cards keep 72px under the hero button, and the page stacks plainly without JavaScript; Products deep links clear the bigger tab bar and Vietnamese tabs fit from 521px; the Home link-over-step-05 grid starts at 1025px; About step numbers and Home case numbers now pass AA on the new backgrounds; footer links and the newsletter field are 44px or taller; form errors are linked to their fields; leftover styles removed.
 - **Open items:** the SVG tab icon is on hold until Amber shares the right file (the PNG icons stay as they are).
+
+## ENH-074: A design system page for the prototype
+
+- **Why:** Amber asked on 2026-10-06 for a design system HTML file for the XionTech prototype like the one in the AI Tutor project (`xt-ai-tutoring-ws/prototype/packages/design-system/docs/design-system.html`).
+- **What changed:**
+  - New `prototype/design-system.html`, following the AI Tutor page's structure: a sticky section menu, a hero, and numbered sections with a title, a short intro, examples and Do / Don't cards.
+  - **Sections:** 01 Brand (logo on white and on its white tile, the Get IT Done tagline on navy and light), 02 Colour (navy, amber and light-surface ramps; text and status tokens; the three readability rules), 03 Surfaces and backgrounds (the four section surfaces and the flowing page palettes for Home, Services and Careers), 04 Typography (Unbounded, Lexend Exa, Be Vietnam Pro, JetBrains Mono and the type scale), 05 Space, shape and depth (spacing, radius, the 44px target, shadows), 06 Icons (the Phosphor icons in use), 07 Illustration (the Plano and Ho Chi Minh City drawings and the footer climber), 08 Components (buttons and links, filters, chips, audience tabs, metric, service and outcome cards, the email field), 09 Patterns (panels with cards across the gap; the sticky heading beside cards), 10 Motion and voice (reveal, unfold and spring with their timings; writing rules).
+  - Every value is read from `css/site.css` when the page is built, and the components are the site's own classes, so the page shows exactly what the site uses. Light theme only, like the site.
+  - Checked at 1440 and 375px: no errors, no sideways scroll, no text under 11.5px; the demo animations stop with reduced motion.
+- **Developer notes:** standalone page (no site header or footer script), `noindex`, not linked from the site navigation. English only, as an internal reference.
+- **Open items:** none.

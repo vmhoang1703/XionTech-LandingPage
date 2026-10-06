@@ -66,6 +66,7 @@ also has a Vietnamese version in the prototype.
 | Home, background | Separate white, grey and blue bands | One background: the hero's navy through Our partners and Why XionTechs, lightening through Work built with our partners, light blue behind How we approach, white and light amber into the contact form, with no visible edges | ENH-070 to ENH-073 |
 | About, background | White after the intro | White with soft light blue glows | ENH-067 |
 | Footer and climber | About; climber outline | About us; Vietnam email; a bolder hiker with an amber backpack; every page leaves room above it | ENH-064, ENH-073 |
+| Design system | None | design-system.html: brand, colour, surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice, all read from css/site.css | ENH-074 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
