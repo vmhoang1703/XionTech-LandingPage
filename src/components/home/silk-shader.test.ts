@@ -14,6 +14,7 @@ function fakeGl(linked = true, shaders = true) {
       LINK_STATUS: 7,
       getProgramParameter: () => linked,
       getAttribLocation: () => 0,
+      getExtension: () => null,
       createShader: () => (shaders ? {} : null),
     } as Record<string, unknown>,
     {
@@ -40,22 +41,22 @@ function canvasWith(context: unknown) {
 }
 
 describe("createSilk", () => {
-  it("returns null when WebGL is not available", () => {
-    expect(createSilk(canvasWith(null))).toBeNull();
+  it("returns null when WebGL is not available", async () => {
+    expect(await createSilk(canvasWith(null))).toBeNull();
   });
 
-  it("returns null when a shader cannot be created", () => {
-    expect(createSilk(canvasWith(fakeGl(true, false).gl))).toBeNull();
+  it("returns null when a shader cannot be created", async () => {
+    expect(await createSilk(canvasWith(fakeGl(true, false).gl))).toBeNull();
   });
 
-  it("returns null when the shader program fails to link", () => {
-    expect(createSilk(canvasWith(fakeGl(false).gl))).toBeNull();
+  it("returns null when the shader program fails to link", async () => {
+    expect(await createSilk(canvasWith(fakeGl(false).gl))).toBeNull();
   });
 
-  it("sizes the canvas to its box and draws a frame", () => {
+  it("sizes the canvas to its box and draws a frame", async () => {
     const { gl, calls } = fakeGl();
     const canvas = canvasWith(gl);
-    const silk = createSilk(canvas);
+    const silk = await createSilk(canvas);
 
     expect(silk).not.toBeNull();
     silk?.resize();

@@ -43,7 +43,15 @@ function toRgb(hex: string) {
   return [1, 3, 5].map((i) => Number.parseInt(hex.slice(i, i + 2), 16) / 255);
 }
 
-export function createSilk(canvas: HTMLCanvasElement): Silk | null {
+const nextFrame = () =>
+  new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+// Story 7.4: the link result is read only once the driver reports the
+// compile done (KHR_parallel_shader_compile), so the compile never blocks the
+// main thread. Without the extension the check runs at once, as before.
+export async function createSilk(
+  canvas: HTMLCanvasElement,
+): Promise<Silk | null> {
   const gl = canvas.getContext("webgl", {
     premultipliedAlpha: false,
     antialias: true,
@@ -64,6 +72,12 @@ export function createSilk(canvas: HTMLCanvasElement): Silk | null {
   gl.attachShader(program, vertex);
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
+  const parallel = gl.getExtension("KHR_parallel_shader_compile");
+  if (parallel) {
+    while (!gl.getProgramParameter(program, parallel.COMPLETION_STATUS_KHR)) {
+      await nextFrame();
+    }
+  }
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
   gl.useProgram(program);
 

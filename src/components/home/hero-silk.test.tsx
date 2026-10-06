@@ -15,7 +15,7 @@ let reducedMotion = false;
 beforeEach(() => {
   reducedMotion = false;
   silk = { draw: vi.fn(), resize: vi.fn() };
-  vi.mocked(createSilk).mockReturnValue(silk);
+  vi.mocked(createSilk).mockResolvedValue(silk);
   vi.stubGlobal(
     "matchMedia",
     vi.fn(() => ({ matches: reducedMotion })),
@@ -46,6 +46,14 @@ beforeEach(() => {
     vi.fn(() => 1),
   );
   vi.stubGlobal("cancelAnimationFrame", vi.fn());
+  vi.stubGlobal(
+    "requestIdleCallback",
+    vi.fn((callback: IdleRequestCallback) => {
+      callback({} as IdleDeadline);
+      return 1;
+    }),
+  );
+  vi.stubGlobal("cancelIdleCallback", vi.fn());
 });
 
 afterEach(() => {
@@ -54,37 +62,40 @@ afterEach(() => {
   vi.mocked(createSilk).mockReset();
 });
 
-function renderSilk() {
+// The silk starts after the page load and an idle moment (Story 7.4); jsdom
+// has already loaded, and the idle callback runs at once here.
+async function renderSilk() {
   const view = render(<HeroSilk />);
+  await act(async () => {});
   const canvas = view.container.querySelector("canvas");
   if (!canvas) throw new Error("No canvas");
   return { ...view, canvas };
 }
 
 describe("HeroSilk", () => {
-  it("renders an aria-hidden canvas", () => {
-    const { canvas } = renderSilk();
+  it("renders an aria-hidden canvas", async () => {
+    const { canvas } = await renderSilk();
 
     expect(canvas.getAttribute("aria-hidden")).toBe("true");
     expect(silk.resize).toHaveBeenCalled();
   });
 
-  it("paints the canvas above the hero's static glow (z-index -2)", () => {
-    const { canvas } = renderSilk();
+  it("paints the canvas above the hero's static glow (z-index -2)", async () => {
+    const { canvas } = await renderSilk();
 
     expect(canvas.classList.contains("-z-1")).toBe(true);
   });
 
-  it("hides the toggle and the canvas when WebGL is unavailable", () => {
-    vi.mocked(createSilk).mockReturnValue(null);
-    const { canvas } = renderSilk();
+  it("hides the toggle and the canvas when WebGL is unavailable", async () => {
+    vi.mocked(createSilk).mockResolvedValue(null);
+    const { canvas } = await renderSilk();
 
     expect(screen.queryByRole("button")).toBeNull();
     expect(canvas.hidden).toBe(true);
   });
 
-  it("starts moving and toggles between Pause motion and Play motion", () => {
-    renderSilk();
+  it("starts moving and toggles between Pause motion and Play motion", async () => {
+    await renderSilk();
 
     const button = screen.getByRole("button", { name: "Pause motion" });
     expect(button.getAttribute("aria-pressed")).toBeNull();
@@ -104,29 +115,29 @@ describe("HeroSilk", () => {
     expect(screen.getByRole("button", { name: "Pause motion" })).toBe(button);
   });
 
-  it("advances the shader time on each frame", () => {
+  it("advances the shader time on each frame", async () => {
     let frame: FrameRequestCallback = () => undefined;
     vi.mocked(requestAnimationFrame).mockImplementation((callback) => {
       frame = callback;
       return 1;
     });
     vi.spyOn(performance, "now").mockReturnValue(0);
-    renderSilk();
+    await renderSilk();
 
     act(() => frame(50));
     expect(silk.draw).toHaveBeenLastCalledWith(8 + 0.05 * 0.35);
   });
 
-  it("starts paused when the visitor prefers reduced motion", () => {
+  it("starts paused when the visitor prefers reduced motion", async () => {
     reducedMotion = true;
-    renderSilk();
+    await renderSilk();
 
     expect(screen.getByRole("button", { name: "Play motion" })).toBeDefined();
     expect(requestAnimationFrame).not.toHaveBeenCalled();
   });
 
-  it("stops when the hero is off screen and resumes when back", () => {
-    renderSilk();
+  it("stops when the hero is off screen and resumes when back", async () => {
+    await renderSilk();
     vi.mocked(requestAnimationFrame).mockClear();
 
     act(() => intersect(false));
@@ -136,8 +147,8 @@ describe("HeroSilk", () => {
     expect(requestAnimationFrame).toHaveBeenCalled();
   });
 
-  it("stops while the tab is hidden", () => {
-    renderSilk();
+  it("stops while the tab is hidden", async () => {
+    await renderSilk();
     const hidden = vi.spyOn(document, "hidden", "get").mockReturnValue(true);
 
     act(() => {
@@ -147,8 +158,8 @@ describe("HeroSilk", () => {
     hidden.mockRestore();
   });
 
-  it("falls back to the static glow when the WebGL context is lost", () => {
-    const { canvas } = renderSilk();
+  it("falls back to the static glow when the WebGL context is lost", async () => {
+    const { canvas } = await renderSilk();
 
     act(() => {
       canvas.dispatchEvent(new Event("webglcontextlost"));
@@ -156,9 +167,9 @@ describe("HeroSilk", () => {
     expect(screen.queryByRole("button")).toBeNull();
     expect(canvas.hidden).toBe(true);
   });
-  it("removes its listeners when unmounted", () => {
+  it("removes its listeners when unmounted", async () => {
     const removeDocument = vi.spyOn(document, "removeEventListener");
-    const { canvas, unmount } = renderSilk();
+    const { canvas, unmount } = await renderSilk();
     const removeCanvas = vi.spyOn(canvas, "removeEventListener");
 
     unmount();
@@ -172,9 +183,9 @@ describe("HeroSilk", () => {
     );
   });
 
-  it("keeps the label visually hidden until hover or focus, even with reduced motion", () => {
+  it("keeps the label visually hidden until hover or focus, even with reduced motion", async () => {
     reducedMotion = true;
-    renderSilk();
+    await renderSilk();
 
     const label = screen.getByText("Play motion");
     expect(label.className).toContain("max-w-0");
@@ -183,8 +194,8 @@ describe("HeroSilk", () => {
     expect(label.className).not.toContain("motion-reduce:max-w");
   });
 
-  it("is a 36px round button while its label is hidden", () => {
-    renderSilk();
+  it("is a 36px round button while its label is hidden", async () => {
+    await renderSilk();
 
     const button = screen.getByRole("button", { name: "Pause motion" });
     for (const name of ["h-9", "min-w-9", "px-2", "justify-center"]) {

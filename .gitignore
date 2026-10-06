@@ -51,3 +51,4 @@ scripts/sonar/sonar.env
 scripts/sonar/sonar.local.env
 scripts/sonar/sonar.baseline
 .scannerwork/
+lighthouse-reports/

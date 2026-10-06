@@ -22,36 +22,70 @@ export function HeroSilk() {
   const [inView, setInView] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
 
+  // Story 7.4: the shader compiles only after the page has loaded and the
+  // browser is idle, so it stays off the first paint and the LCP path.
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const silk = canvas ? createSilk(canvas) : null;
-    if (!canvas || !silk) return;
-    silkRef.current = silk;
-    silk.resize();
-    setSupported(true);
-    setPaused(matchMedia("(prefers-reduced-motion: reduce)").matches);
-
-    const resizer = new ResizeObserver(() => silk.resize());
-    resizer.observe(canvas);
-    const viewer = new IntersectionObserver((entries) =>
-      setInView(entries[0].isIntersecting),
-    );
-    viewer.observe(canvas);
-    const onVisibility = () => setPageVisible(!document.hidden);
-    document.addEventListener("visibilitychange", onVisibility);
-    const onContextLost = () => {
-      silkRef.current = null;
-      setSupported(false);
+    let cancel = () => {};
+    const start = () => {
+      // Safari has no requestIdleCallback.
+      if ("requestIdleCallback" in window) {
+        const idle = requestIdleCallback(() => setReady(true), {
+          timeout: 2000,
+        });
+        const stopIdle = cancelIdleCallback;
+        cancel = () => stopIdle(idle);
+      } else {
+        const timer = setTimeout(() => setReady(true), 0);
+        cancel = () => clearTimeout(timer);
+      }
     };
-    canvas.addEventListener("webglcontextlost", onContextLost);
-
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
     return () => {
-      resizer.disconnect();
-      viewer.disconnect();
-      document.removeEventListener("visibilitychange", onVisibility);
-      canvas.removeEventListener("webglcontextlost", onContextLost);
+      window.removeEventListener("load", start);
+      cancel();
     };
   }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!ready || !canvas) return;
+    let stop = () => {};
+    let cancelled = false;
+    void createSilk(canvas).then((silk) => {
+      if (cancelled || !silk) return;
+      silkRef.current = silk;
+      silk.resize();
+      setSupported(true);
+      setPaused(matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+      const resizer = new ResizeObserver(() => silk.resize());
+      resizer.observe(canvas);
+      const viewer = new IntersectionObserver((entries) =>
+        setInView(entries[0].isIntersecting),
+      );
+      viewer.observe(canvas);
+      const onVisibility = () => setPageVisible(!document.hidden);
+      document.addEventListener("visibilitychange", onVisibility);
+      const onContextLost = () => {
+        silkRef.current = null;
+        setSupported(false);
+      };
+      canvas.addEventListener("webglcontextlost", onContextLost);
+
+      stop = () => {
+        resizer.disconnect();
+        viewer.disconnect();
+        document.removeEventListener("visibilitychange", onVisibility);
+        canvas.removeEventListener("webglcontextlost", onContextLost);
+      };
+    });
+    return () => {
+      cancelled = true;
+      stop();
+    };
+  }, [ready]);
 
   const running = supported && !paused && inView && pageVisible;
 

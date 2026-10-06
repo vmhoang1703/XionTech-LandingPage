@@ -9,23 +9,29 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import "./globals.css";
 
+// Story 7.4: `subsets` only picks what is preloaded; the Vietnamese files
+// still load when a page needs them. Preloading every subset (19 files)
+// delayed the first paint, so only the Latin files of the heading font are
+// preloaded (its late swap moved the layout); the others load on use.
 const unbounded = Unbounded({
   variable: "--font-unbounded",
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["500", "600", "700"],
   display: "swap",
 });
 
 const lexendExa = Lexend_Exa({
   variable: "--font-lexend-exa",
-  subsets: ["latin", "vietnamese"],
+  preload: false,
+  subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
 });
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
-  subsets: ["latin", "vietnamese"],
+  preload: false,
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
@@ -33,7 +39,8 @@ const beVietnamPro = Be_Vietnam_Pro({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
-  subsets: ["latin", "vietnamese"],
+  preload: false,
+  subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
 });
