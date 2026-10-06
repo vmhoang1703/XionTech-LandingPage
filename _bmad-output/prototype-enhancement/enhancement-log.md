@@ -102,6 +102,7 @@ directly, before this log existed.
 | ENH-087 | 2026-10-06 | Feedback blocks 2 to 8 (#55 to #61) | Home: Capabilities, Core Values, the original 4-D process and a four-step How we approach in the new order, no Our partners or What we build; Parent Hub and Staff Hub (P-Hub, S-Hub) with no Learner Hub; a simple four-card Products page on a navy panel; QA inside Development | In PR    | 4.1 |
 | ENH-088 | 2026-10-06 | GitHub #62 | Home: the 4-D section is titled How we approach with a short 4-D description; the separate How we approach section is removed | In PR    | 4.1 |
 | ENH-089 | 2026-10-06 | GitHub #64 | Products: the four apps become showcase cards (title top left, square expand icon top right, screenshot centred); the expand icon that opens a product detail view on the same page | In PR    | 4.1 |
+| ENH-090 | 2026-10-06 | GitHub #66 | Clean-up: styles and scripts no page uses any more are removed; the design system shows the Products showcase card instead of the audience tabs and metric card | In PR    | 4.1 |
 
 ## ENH-001: Contact form on Home
 
@@ -1446,6 +1447,17 @@ directly, before this log existed.
   - Checked at 1440 and 375px: no errors, no sideways scroll, the view opens, closes and returns focus.
 - **Developer notes:** `.pshow` cards and the four `<dialog class="pdetail">` views in products.html; `.pshows` / `.pshow` / `.ps-*`, `.pc-expand` and `.pdetail` / `.pd-*` at the end of css/site.css; the opener at the end of js/site.js. `.papps` / `.papp` (ENH-087) and the `.pstack` / `.aud-nav` styles are no longer used on Products. The implementation specs are not changed.
 - **Open items:** feature descriptions and real screenshots for each app.
+
+## ENH-090: Remove unused styles and scripts, update the design system (GitHub #66)
+
+- **Why:** after #56, #61, #62 and #64 the old Products cards, the audience tabs, the old How we approach section and the Services metric cards appear on no page, but their code stayed in the prototype.
+- **What changed:**
+  - **Styles:** 133 unused rules removed from css/site.css (stacked app cards and their tab bar, the plain ENH-087 cards, the light How we approach steps, the Services metric cards), about 14 KB less.
+  - **Scripts:** the stacked-card scrolling, the tab bar colouring and the Services metric-card spacing are removed from js/site.js.
+  - **Design system:** the audience tabs and the metric card are gone; the Products showcase card is shown with its expand icon, which opens a sample detail view; the cards-across-an-edge pattern now describes Home (two cards across the hero edge), and the motion and elevation notes no longer mention metric cards.
+  - **No visible change:** every page was screenshotted before and after at 1440 and 375px and the images match (2 anti-aliased pixels differ on Home at 375px); no errors, no sideways scroll.
+- **Developer notes:** only css/site.css, js/site.js and design-system.html change. The implementation specs are not changed.
+- **Open items:** none.
 
 ## Withdrawn: ENH-076, ENH-078 to ENH-084 (and the climber-only scope of ENH-077)
 
