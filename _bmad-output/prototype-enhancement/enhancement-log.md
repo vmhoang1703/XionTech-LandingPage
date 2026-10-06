@@ -86,7 +86,7 @@ directly, before this log existed.
 | ENH-071 | 2026-10-06 | Home background and How we approach; Services cards | Home: hero navy into Our partners, an even fall from darkest to light blue with no visible steps; news and contact keep their own colours; more room under How we approach, link over step 05. Services: cards without notes, one footer style | In PR    | 4.1 |
 | ENH-072 | 2026-10-06 | Services panel gap and spacing; Home mountain divider and smoother blends | Services: 28px gap between the two panels with the cards centred across it, more room above What can we help you achieve? and below How we work. Home: a small mountain range before Our partners, the blue lightening through Work built with our partners, one seamless layer from What we build to the contact form | In PR    | 4.1 |
 | ENH-073 | 2026-10-06 | Home spacing; footer clearance on every page | No mountain illustration; more space above and below Our partners; the last section of every page leaves room above the footer climber | In PR    | Batch 1 (all pages) |
-| ENH-074 | 2026-10-06 | Design system page | A design-system.html in the prototype folder, laid out like the AI Tutor design system, showing the real colours, type, spacing, components, illustration and motion from css/site.css | Approved | Docs |
+| ENH-074 | 2026-10-06 | Design system page | A design-system.html in the prototype folder, laid out like the AI Tutor design system, showing the real colours, type, spacing, components, illustration and motion from css/site.css | In PR    | Docs |
 
 ## ENH-001: Contact form on Home
 
