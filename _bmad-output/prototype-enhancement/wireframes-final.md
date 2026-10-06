@@ -67,6 +67,11 @@ also has a Vietnamese version in the prototype.
 | About, background | White after the intro | White with soft light blue glows | ENH-067 |
 | Footer and climber | About; climber outline | About us; Vietnam email; a bolder hiker with an amber backpack; every page leaves room above it | ENH-064, ENH-073 |
 | Design system | None | design-system.html: brand, colour, surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice, all read from css/site.css | ENH-074 |
+| Home, hero and order | Product headline, mockups, two figures | What XionTechs does, Get in touch, five figures, two cards across the hero edge; then Capabilities, Core values, the 4-D process, How we approach (four steps), case studies, news, contact; no Our partners or What we build | ENH-086, ENH-087 |
+| Products page | Stacked app cards (seven apps) | Four plain cards (Parent Hub, Staff Hub, IoT, AI Tutor) on a navy panel | ENH-087 |
+| Process | Five-step How we work | The original 4-D process with QA inside Development | ENH-087 |
+| App names | PXP, SXP, LXP | Parent Hub and Staff Hub (P-Hub, S-Hub); no Learner Hub | ENH-086, ENH-087 |
+| Footer climber | Stays at the highest page reached | Walks one step up on each page, summit on Careers | ENH-077 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
@@ -93,6 +98,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 ┌─ Header · sticky, glass · [Batch 1 · ENH-002] ───────────────────────────────────────────────────────────┐
 │ [LINK: Skip to content → #main]                                                                          │
 │ [LINK: XionTechs home → index.html]                                                                      │
+│ [LINK: Home → index.html]                                                                                │
 │ [LINK: Products → products.html]                                                                         │
 │ [LINK: Services → services.html]                                                                         │
 │ [LINK: News → news.html]                                                                                 │
@@ -108,7 +114,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 │ │   index.html]                  │ │ [LINK: For schools →           │ │ [LINK: Product Engineering →   │ │
 │ │ Text: Education technology     │ │   products.html#sxp]           │ │ services.html#product-engineer │ │
 │ │   products and software        │ │ [LINK: For students →          │ │ ing]                           │ │
-│ │   delivery services for        │ │   products.html#lxp]           │ │ [LINK: AI-Driven Analytics →   │ │
+│ │   delivery services for        │ │   products.html#ai-tutor]      │ │ [LINK: AI-Driven Analytics →   │ │
 │ │   schools and businesses.      │ │ [LINK: For parents →           │ │   services.html#ai-analytics]  │ │
 │ │                                │ │   products.html#pxp]           │ │ [LINK: Staffing Service →      │ │
 │ │                                │ │                                │ │   services.html#staffing]      │ │
@@ -150,54 +156,49 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Every school community, connected. · dark hero, animated silk · [Batch 1 · ENH-002 · part of o… ─┐ ║
+║ ┌─ 1. School apps and software teams that get IT done. · dark hero, animated silk · [Batch 1 · ENH-0… ─┐ ║
 ║ │ [BACKGROUND: animated silk (WebGL)]                                                                  │ ║
 ║ │ [BUTTON: Pause motion]                                                                               │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ H1: Every school community, connected.        │ │ [IMAGE: Web app screenshot · 1440 × 1080]      │ │ ║
-║ │ │ Text: PXP for parents, LXP for learners, SXP  │ │ [IMAGE: Phone screenshot · 1170 × 2532]        │ │ ║
-║ │ │   for staff. And the engineering team behind  │ │                                                │ │ ║
-║ │ │   them, ready to build yours.                 │ │                                                │ │ ║
-║ │ │ [BUTTON: Explore our products →               │ │                                                │ │ ║
-║ │ │   products.html]                              │ │                                                │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ H1: School apps and software teams that get IT done.                                                 │ ║
+║ │ Text: XionTechs is an education technology company and software partner. We build connected apps for │ ║
+║ │   schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi    │ ║
+║ │   Minh City and Plano.                                                                               │ ║
+║ │ [BUTTON: Get in touch → #contact]                                                                    │ ║
 ║ │ H2: Experience you can count on                                                                      │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ H3: 25+ Years                                 │ │ H3: 8                                          │ │ ║
-║ │ │ Text: Leadership experience in software       │ │ Text: Service offerings, from idea to          │ │ ║
-║ │ │                                               │ │   operation                                    │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ H3: 25+                      │ │ H3: 24/7                     │ │ H3: 20+                        │ │ ║
+║ │ │ Text: Years of leadership    │ │ Text: Global coverage across │ │ Text: Technology stacks we     │ │ ║
+║ │ │   experience in software     │ │   time zones                 │ │   work in                      │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐                                    │ ║
+║ │ │ H3: 8                        │ │ H3: 2                        │                                    │ ║
+║ │ │ Text: Service offerings,     │ │ Text: Offices: Ho Chi Minh   │                                    │ ║
+║ │ │   from idea to operation     │ │   City and Plano             │                                    │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘                                    │ ║
+║ │ [LINK: Products for schools · Connected apps for parents, students, teachers, leaders and school     │ ║
+║ │   staff. · Parent Hub · Staff Hub · IoT · AI Tutor → products.html]                                  │ ║
+║ │ [LINK: Outsourcing services · Your software delivery team · Dedicated teams and end-to-end delivery  │ ║
+║ │   for companies building digital products. · Product Engineering · AI-Driven Analytics · Staffing ·  │ ║
+║ │   Low-code · Cloud · +3 more → services.html]                                                        │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Our partners. · white · [new in ENH-003 · left-aligned in ENH-008 · hero navy and more space a… ─┐ ║
-║ │ H2: Our partners.                                                                                    │ ║
-║ │ [ANIMATION: logos scroll right to left in a loop; hover, focus or tap pauses]                        │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 1 · 320 × 160]                                                    │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 2 · 320 × 160]                                                    │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 3 · 320 × 160]                                                    │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 4 · 320 × 160]                                                    │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 5 · 320 × 160]                                                    │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 6 · 320 × 160]                                                    │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 7 · 320 × 160]                                                    │ ║
-║ │ [IMAGE: [Placeholder] Partner logo 8 · 320 × 160]                                                    │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 3. Why XionTechs. · light blue · [new in Batch 1 · rebuilt in ENH-004 · on dark blue in ENH-070] ───┐ ║
-║ │ H2: Why XionTechs.                                                                                   │ ║
+║ ┌─ 2. Capabilities. · light blue · [new in Batch 1 · rebuilt in ENH-004 · on dark blue in ENH-070] ────┐ ║
+║ │ H2: Capabilities.                                                                                    │ ║
+║ │ Text: Why XionTech: the core capabilities behind every school app and every product we deliver.      │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ [WHOLE CARD IS A LINK → products.html]        │ │ Text: Delivery                                 │ │ ║
-║ │ │ Text: Products                                │ │ H3: Two offices, one working day.              │ │ ║
+║ │ │ [WHOLE CARD IS A LINK → products.html]        │ │ Text: Global delivery                          │ │ ║
+║ │ │ Text: School platforms                        │ │ H3: Two offices, one working day.              │ │ ║
 ║ │ │ H3: Products for schools                      │ │ Text: Teams across time zones keep delivery    │ │ ║
 ║ │ │ Text: Connected apps for parents, students,   │ │   moving with practical overlap.               │ │ ║
 ║ │ │   teachers, leaders and school staff,         │ │ Text: Plano · US Central · HCMC · GMT+7        │ │ ║
 ║ │ │   designed as one ecosystem.                  │ │                                                │ │ ║
-║ │ │ Text: PXP · Parents · LXP · Students · SXP ·  │ │                                                │ │ ║
-║ │ │   Staff · Facilities                          │ │                                                │ │ ║
+║ │ │ Text: P-Hub · Parents · S-Hub · Staff ·       │ │                                                │ │ ║
+║ │ │   Facilities                                  │ │                                                │ │ ║
 ║ │ │ Text: Explore products                        │ │                                                │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: Industries                              │ │ [WHOLE CARD IS A LINK → services.html]         │ │ ║
-║ │ │ H3: Deep in education. Built to adapt.        │ │ Text: Outsourcing services                     │ │ ║
+║ │ │ Text: Domain expertise                        │ │ [WHOLE CARD IS A LINK → services.html]         │ │ ║
+║ │ │ H3: Deep in education. Built to adapt.        │ │ Text: Software engineering                     │ │ ║
 ║ │ │ Text: Education is where we go deepest, while │ │ H3: Your software delivery team                │ │ ║
 ║ │ │   the same engineering capability supports    │ │ Text: Dedicated teams and end-to-end delivery  │ │ ║
 ║ │ │   other industries too.                       │ │   for companies building digital products.     │ │ ║
@@ -211,7 +212,77 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ Text: Ownership of our commitments and pride in quality.                                             │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. Work built with our partners. · white · [new in ENH-003 · slider in ENH-006 · blue lightening … ─┐ ║
+║ ┌─ 3. Our core values. · white ────────────────────────────────────────────────────────────────────────┐ ║
+║ │ H2: Our core values.                                                                                 │ ║
+║ │ Text: What guides how we work.                                                                       │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ H3: Startup Spirit           │ │ H3: Client Centricity        │ │ H3: Integrity First            │ │ ║
+║ │ │ Text: Embody an              │ │ Text: Clients are at the     │ │ Text: Operate with honesty,    │ │ ║
+║ │ │   entrepreneurial mindset,   │ │   heart of everything we do. │ │   transparency, and            │ │ ║
+║ │ │   embracing agility,         │ │   We strive to deliver       │ │   accountability. Ethical      │ │ ║
+║ │ │   flexibility, and a passion │ │   exceptional experiences    │ │   standards guide every        │ │ ║
+║ │ │   for innovation. Our        │ │   and impactful outcomes     │ │   decision and interaction,    │ │ ║
+║ │ │   commitment to excellence   │ │   through deep               │ │   fostering trust and          │ │ ║
+║ │ │   is driven by resilience    │ │   understanding, proactive   │ │   long-term relationships.     │ │ ║
+║ │ │   and a culture of           │ │   engagement, and tailored   │ │                                │ │ ║
+║ │ │   continuous improvement.    │ │   solutions.                 │ │                                │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ H3: Innovation Driven        │ │ H3: "Get IT Done" Attitude   │ │ H3: People-Centered Culture    │ │ ║
+║ │ │ Text: Passionate about       │ │ Text: Take ownership of our  │ │ Text: Cultivate a workplace    │ │ ║
+║ │ │   exploring emerging         │ │   commitments and deliver    │ │   where every team member      │ │ ║
+║ │ │   technologies and creative  │ │   high-quality, reliable,    │ │   feels valued, supported, and │ │ ║
+║ │ │   approaches. Innovation is  │ │   and efficient solutions.   │ │   empowered. Our culture goes  │ │ ║
+║ │ │   embedded in our DNA,       │ │   Our team is driven by      │ │   beyond employment: it's      │ │ ║
+║ │ │   enabling us to evolve our  │ │   accountability and a       │ │   about belonging,             │ │ ║
+║ │ │   solutions and stay ahead   │ │   results-oriented mindset   │ │   collaboration, and shared    │ │ ║
+║ │ │   of industry trends.        │ │   that meets or exceeds      │ │   success.                     │ │ ║
+║ │ │                              │ │   industry standards.        │ │                                │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 4. Our 4-D process: from your request to launch. · white ───────────────────────────────────────────┐ ║
+║ │ H2: Our 4-D process: from your request to launch.                                                    │ ║
+║ │ Text: Every step ends with something you can see, test and approve.                                  │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ • Your request · An idea, a  │ │ Text: 01                     │ │ Text: 02                       │ │ ║
+║ │ │   brief or a requirement.    │ │ H3: Discovery                │ │ H3: Design                     │ │ ║
+║ │ │                              │ │ Text: Workshops to           │ │ Text: User flows, interfaces   │ │ ║
+║ │ │                              │ │   understand your goals,     │ │   and architecture agreed      │ │ ║
+║ │ │                              │ │   users, risks and scope.    │ │   before code is written.      │ │ ║
+║ │ │                              │ │ Text: You receive · A clear  │ │ Text: You receive · A          │ │ ║
+║ │ │                              │ │   scope, estimate and        │ │   clickable prototype and      │ │ ║
+║ │ │                              │ │   delivery plan.             │ │   technical design.            │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ Text: 03                     │ │ Text: 04                     │ │ • Launch · And we keep growing │ │ ║
+║ │ │ H3: Development              │ │ H3: Deployment               │ │   it together.                 │ │ ║
+║ │ │ Text: Agile sprints with     │ │ Text: A safe release,        │ │                                │ │ ║
+║ │ │   regular demos. Testing and │ │   monitoring and improvement │ │                                │ │ ║
+║ │ │   quality assurance (QA) run │ │   after launch.              │ │                                │ │ ║
+║ │ │   inside every sprint, not   │ │ Text: You receive · A live   │ │                                │ │ ║
+║ │ │   at the end.                │ │   release with ongoing       │ │                                │ │ ║
+║ │ │ Text: You receive · Tested,  │ │   support.                   │ │                                │ │ ║
+║ │ │   working software every     │ │                              │ │                                │ │ ║
+║ │ │   sprint.                    │ │                              │ │                                │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009 · light version in ENH-012 · no own bac… ─┐ ║
+║ │ H2: How we approach.                                                                                 │ ║
+║ │ Text: Five clear steps, from the first conversation to launch and beyond.                            │ ║
+║ │ [LINK: See how we work → services.html#process]                                                      │ ║
+║ │ H3: Discovery                                                                                        │ ║
+║ │ Text: Learn your goals, users and scope.                                                             │ ║
+║ │ H3: Design                                                                                           │ ║
+║ │ Text: Shape flows, interfaces and architecture.                                                      │ ║
+║ │ H3: Development                                                                                      │ ║
+║ │ Text: Build in agile sprints, with testing in every sprint.                                          │ ║
+║ │ H3: Deployment                                                                                       │ ║
+║ │ Text: Release, monitor and keep improving.                                                           │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 6. Work built with our partners. · white · [new in ENH-003 · slider in ENH-006 · blue lightening … ─┐ ║
 ║ │ H2: Work built with our partners.                                                                    │ ║
 ║ │ Text: Explore a selection of company partnerships and see how different business needs became        │ ║
 ║ │   focused digital solutions.                                                                         │ ║
@@ -239,56 +310,6 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ │   built.                     │ │   built.                     │ │ [LINK: View case study]        │ │ ║
 ║ │ │ [LINK: View case study]      │ │ [LINK: View case study]      │ │                                │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009 · light version in ENH-012 · no own bac… ─┐ ║
-║ │ H2: How we approach.                                                                                 │ ║
-║ │ Text: Five clear steps, from the first conversation to launch and beyond.                            │ ║
-║ │ [LINK: See how we work → services.html#process]                                                      │ ║
-║ │ H3: Discovery                                                                                        │ ║
-║ │ Text: Learn your goals, users and scope.                                                             │ ║
-║ │ H3: Design                                                                                           │ ║
-║ │ Text: Shape flows, interfaces and architecture.                                                      │ ║
-║ │ H3: Development                                                                                      │ ║
-║ │ Text: Build the product in agile sprints.                                                            │ ║
-║ │ H3: QA & Improvement                                                                                 │ ║
-║ │ Text: Test and refine before release.                                                                │ ║
-║ │ H3: Deployment                                                                                       │ ║
-║ │ Text: Release, monitor and keep improving.                                                           │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 6. What we build. · white · [Batch 1 · moved in ENH-005 · What we build in ENH-008, ENH-009 · AI … ─┐ ║
-║ │ H2: What we build.                                                                                   │ ║
-║ │ Text: Digital products we design, build and run for every role in school, with more on the way.      │ ║
-║ │ [BUTTON: Previous apps]                                                                              │ ║
-║ │ [BUTTON: Next apps]                                                                                  │ ║
-║ │ [ROW SCROLLS SIDEWAYS: back and forward buttons beside the heading; four cards visible on desktop]   │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →        │ │ ║
-║ │ │   products.html#pxp]         │ │   products.html#lxp]         │ │   products.html#sxp]           │ │ ║
-║ │ │ Text: PXP                    │ │ Text: LXP                    │ │ Text: SXP                      │ │ ║
-║ │ │ Text: Parents                │ │ Text: Students               │ │ Text: Staff, teachers, leaders │ │ ║
-║ │ │ Text: Attendance, grades,    │ │ Text: Lessons, assignments   │ │ Text: One workspace with       │ │ ║
-║ │ │   messages and fees.         │ │   and progress.              │ │   role-based views.            │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →      │ │ [WHOLE CARD IS A LINK →        │ │ ║
-║ │ │   products.html#iot]         │ │   products.html#ai-tutor]    │ │   products.html#ai-timetable]  │ │ ║
-║ │ │ Text: IoT                    │ │ Text: AI Tutor               │ │ Text: AI Timetable             │ │ ║
-║ │ │ Text: School staff and       │ │ Text: Students               │ │ Text: School leaders           │ │ ║
-║ │ │   facilities                 │ │ Text: Solve new problems on  │ │ Text: A transparent “best fit” │ │ ║
-║ │ │ Text: Devices, lighting and  │ │   your own, not just read    │ │   timetable.                   │ │ ║
-║ │ │   climate.                   │ │   solutions.                 │ │                                │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐                                                                     │ ║
-║ │ │ [WHOLE CARD IS A LINK →      │                                                                     │ ║
-║ │ │   products.html#ai-grader]   │                                                                     │ ║
-║ │ │ Text: AI Grader              │                                                                     │ ║
-║ │ │ Text: Teachers               │                                                                     │ ║
-║ │ │ Text: Rubric-based marking,  │                                                                     │ ║
-║ │ │   with teachers in charge.   │                                                                     │ ║
-║ │ └──────────────────────────────┘                                                                     │ ║
-║ │ [LINK: Explore our products → products.html]                                                         │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 7. Latest from XionTechs. · light blue · [ENH-007 · story cards in ENH-042] ────────────────────────┐ ║
@@ -350,7 +371,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 
 ## Products
 
-`products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
+`products.html` · page title: "School Apps: Parent Hub, Staff Hub, IoT & AI Tutor | XionTechs"
 
 Changes on this page: ENH-062 (bigger audience tabs with icons on the page colour); ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-037 (news row shows the app stories with photos), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen), ENH-049 to ENH-052 (transparent audience tabs that stay readable over amber; “Student learns”; flags on A day at school); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
@@ -361,9 +382,9 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║ ┌─ 1. Built apart. Better together. · warm light, drifting glows · [ENH-014 · ENH-018 · ENH-020] ──────┐ ║
 ║ │ [BUTTON: Pause motion]                                                                               │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ H1: Built apart. Better together.             │ │ [LINK: Parent experience · PXP → #pxp]         │ │ ║
-║ │ │ Text: A connected suite for school            │ │ [LINK: Learning experience · LXP → #lxp]       │ │ ║
-║ │ │   communities — bringing parents, learning,   │ │ [LINK: Staff experience · SXP → #sxp]          │ │ ║
+║ │ │ H1: Built apart. Better together.             │ │ [LINK: Parent experience · Parent Hub → #pxp]  │ │ ║
+║ │ │ Text: A connected suite for school            │ │ [LINK: AI tutoring · AI Tutor → #ai-tutor]     │ │ ║
+║ │ │   communities — bringing parents, learning,   │ │ [LINK: Staff experience · Staff Hub → #sxp]    │ │ ║
 ║ │ │   staff operations and campus technology into │ │ [LINK: Connected campus · IoT → #iot]          │ │ ║
 ║ │ │   one shared ecosystem.                       │ │                                                │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
@@ -371,95 +392,20 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║                                                                                                          ║
 ║ ┌─ 2. What we build. · [new in ENH-020 · audience tabs in ENH-049 to ENH-052 · bigger tabs with icon… ─┐ ║
 ║ │ H2: What we build.                                                                                   │ ║
-║ │ [LINK: School → #sxp]                                                                                │ ║
-║ │ [LINK: Parents → #pxp]                                                                               │ ║
-║ │ [LINK: Students → #lxp]                                                                              │ ║
-║ │ [CARDS PIN AND STACK ON SCROLL (desktop): each card settles under the header and the next slides     │ ║
-║ │   over and replaces it; the School / Parents / Students tabs jump to a group and highlight the one   │ ║
-║ │   being read]                                                                                        │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: [Placeholder] sxp.xiontechs.com         │ │ H3: Staff eXperience Place                     │ │ ║
-║ │ │ [IMAGE: [Placeholder] SXP screenshot · 1600 × │ │ Text: One workspace where staff, teachers and  │ │ ║
-║ │ │   1000]                                       │ │   leaders share the same data.                 │ │ ║
-║ │ │                                               │ │ H4: Features                                   │ │ ║
-║ │ │                                               │ │ • Attendance and records in real time          │ │ ║
-║ │ │                                               │ │ • Classes, timetables and grades               │ │ ║
-║ │ │                                               │ │ • Messages to parents through PXP              │ │ ║
-║ │ │                                               │ │ • Leader dashboards for today's priorities     │ │ ║
-║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: [Placeholder] iot.xiontechs.com         │ │ H3: IoT Device Management                      │ │ ║
-║ │ │ [IMAGE: [Placeholder] IoT Device Management   │ │ Text: Run classroom devices, lighting, climate │ │ ║
-║ │ │   screenshot · 1600 × 1000]                   │ │   and access from one screen.                  │ │ ║
-║ │ │                                               │ │ H4: Features                                   │ │ ║
-║ │ │                                               │ │ • Projectors, displays and sound               │ │ ║
-║ │ │                                               │ │ • Lighting and climate on the timetable        │ │ ║
-║ │ │                                               │ │ • Doors and zones managed centrally            │ │ ║
-║ │ │                                               │ │ • Energy use across the campus                 │ │ ║
-║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: [Placeholder] timetable.xiontechs.com   │ │ H3: AI Timetable                               │ │ ║
-║ │ │ [IMAGE: [Placeholder] AI Timetable screenshot │ │ Text: A transparent “best fit” timetable,      │ │ ║
-║ │ │   · 1600 × 1000]                              │ │   built around what your school values.        │ │ ║
-║ │ │                                               │ │ H4: Features                                   │ │ ║
-║ │ │                                               │ │ • Bring in your school’s data                  │ │ ║
-║ │ │                                               │ │ • Tell Felix what your school values           │ │ ║
-║ │ │                                               │ │ • A transparent “best fit” timetable,          │ │ ║
-║ │ │                                               │ │   generated for you                            │ │ ║
-║ │ │                                               │ │ • Talked through every step, alongside the     │ │ ║
-║ │ │                                               │ │   timetable                                    │ │ ║
-║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: [Placeholder] grader.xiontechs.com      │ │ H3: AI Grader                                  │ │ ║
-║ │ │ [IMAGE: [Placeholder] AI Grader screenshot ·  │ │ Text: Mark a whole class against your rubric,  │ │ ║
-║ │ │   1600 × 1000]                                │ │   with you in charge of every mark.            │ │ ║
-║ │ │                                               │ │ H4: Features                                   │ │ ║
-║ │ │                                               │ │ • Marks typed, handwritten, image and audio    │ │ ║
-║ │ │                                               │ │   work                                         │ │ ║
-║ │ │                                               │ │ • Rubric-aligned marks and feedback for every  │ │ ║
-║ │ │                                               │ │   student                                      │ │ ║
-║ │ │                                               │ │ • Each score linked to evidence in the work    │ │ ║
-║ │ │                                               │ │ • Nothing reaches the markbook until you       │ │ ║
-║ │ │                                               │ │   approve                                      │ │ ║
-║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ [IMAGE: [Placeholder] PXP phone screenshot ·  │ │ H3: Parent eXperience Place                    │ │ ║
-║ │ │   1170 × 2532]                                │ │ Text: Keeps parents close to every school day, │ │ ║
-║ │ │                                               │ │   on their phone.                              │ │ ║
-║ │ │                                               │ │ H4: Features                                   │ │ ║
-║ │ │                                               │ │ • Alerts when your child reaches the gate      │ │ ║
-║ │ │                                               │ │ • Scores and comments as soon as published     │ │ ║
-║ │ │                                               │ │ • Two-way messages with teachers               │ │ ║
-║ │ │                                               │ │ • Fee payments with clear receipts             │ │ ║
-║ │ │                                               │ │ [BUTTON: Download on the · App Store → #]      │ │ ║
-║ │ │                                               │ │ [BUTTON: Get it on · Google Play → #]          │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: [Placeholder] lxp.xiontechs.com         │ │ H3: Learner eXperience Place                   │ │ ║
-║ │ │ [IMAGE: [Placeholder] LXP screenshot · 1600 × │ │ Text: Lessons, assignments and progress in one │ │ ║
-║ │ │   1000]                                       │ │   calm place to learn.                         │ │ ║
-║ │ │                                               │ │ H4: Features                                   │ │ ║
-║ │ │                                               │ │ • Every lesson material in one place           │ │ ║
-║ │ │                                               │ │ • Assignments with clear due dates             │ │ ║
-║ │ │                                               │ │ • Progress at a glance                         │ │ ║
-║ │ │                                               │ │ • Comments from teachers                       │ │ ║
-║ │ │                                               │ │ [BUTTON: View prototype → #]                   │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ Text: xt-ai-tutor-demo.azurewebsites.net      │ │ H3: AI Tutor                                   │ │ ║
-║ │ │ [IMAGE: [Placeholder] AI Tutor screenshot ·   │ │ Text: Solve new problems on your own. Not just │ │ ║
-║ │ │   1600 × 1000]                                │ │   read solutions.                              │ │ ║
-║ │ │                                               │ │ H4: Features                                   │ │ ║
-║ │ │                                               │ │ • Skill-by-skill diagnosis                     │ │ ║
-║ │ │                                               │ │ • Step-by-step hints once you have tried       │ │ ║
-║ │ │                                               │ │ • Mastery only when you can do it alone        │ │ ║
-║ │ │                                               │ │ [BUTTON: View prototype →                      │ │ ║
-║ │ │                                               │ │   https://xt-ai-tutor-demo.azurewebsites.net/] │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
+║ │ Text: Four apps that connect parents, schools and students.                                          │ ║
+║ │ H3: Parent Hub                                                                                       │ ║
+║ │ Text: Keeps parents close to every school day, on their phone.                                       │ ║
+║ │ [BUTTON: Download on the · App Store → #]                                                            │ ║
+║ │ [BUTTON: Get it on · Google Play → #]                                                                │ ║
+║ │ H3: Staff Hub                                                                                        │ ║
+║ │ Text: One workspace where staff, teachers and leaders share the same data.                           │ ║
+║ │ [BUTTON: View prototype → #]                                                                         │ ║
+║ │ H3: IoT Device Management                                                                            │ ║
+║ │ Text: Run classroom devices, lighting, climate and access from one screen.                           │ ║
+║ │ [BUTTON: View prototype → #]                                                                         │ ║
+║ │ H3: AI Tutor                                                                                         │ ║
+║ │ Text: Solve new problems on your own. Not just read solutions.                                       │ ║
+║ │ [BUTTON: View prototype → https://xt-ai-tutor-demo.azurewebsites.net/]                               │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 3. A day at school. · dark navy · [new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040 … ─┐ ║
@@ -471,23 +417,23 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ Text: 07:45                  │ │ Text: 08:00                  │ │ Text: 08:01                    │ │ ║
 ║ │ │ H3: Student arrives          │ │ H3: Attendance recorded      │ │ H3: Parent updated             │ │ ║
-║ │ │ Text: The student arrives on │ │ Text: A teacher marks the    │ │ Text: PXP notifies parents     │ │ ║
-║ │ │   campus.                    │ │   student's attendance in    │ │   that the student is at       │ │ ║
-║ │ │                              │ │   SXP.                       │ │   school.                      │ │ ║
+║ │ │ Text: The student arrives on │ │ Text: A teacher marks the    │ │ Text: Parent Hub notifies      │ │ ║
+║ │ │   campus.                    │ │   student's attendance in    │ │   parents that the student is  │ │ ║
+║ │ │                              │ │   Staff Hub.                 │ │   at school.                   │ │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐                                    │ ║
 ║ │ │ Text: 09:30                  │ │ Text: 15:30                  │                                    │ ║
 ║ │ │ H3: Student learns           │ │ H3: Day stays connected      │                                    │ ║
-║ │ │ Text: Students access        │ │ Text: Notifications and      │                                    │ ║
-║ │ │   learning materials, marks  │ │   school information stay    │                                    │ ║
-║ │ │   and assignments in LXP.    │ │   connected across the       │                                    │ ║
+║ │ │ Text: Students practise and  │ │ Text: Notifications and      │                                    │ ║
+║ │ │   ask questions with the AI  │ │   school information stay    │                                    │ ║
+║ │ │   Tutor.                     │ │   connected across the       │                                    │ ║
 ║ │ │                              │ │   system.                    │                                    │ ║
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘                                    │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 4. Product updates. · light blue · [ENH-024 · story cards in ENH-042] ──────────────────────────────┐ ║
 ║ │ H2: Product updates.                                                                                 │ ║
-║ │ Text: New features and stories from PXP, LXP, SXP and IoT.                                           │ ║
+║ │ Text: New features and stories from Parent Hub, Staff Hub and IoT.                                   │ ║
 ║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
 ║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
@@ -530,26 +476,7 @@ Changes on this page: ENH-061, ENH-065 and ENH-069 to ENH-072 (rounded navy hero
 ║ │ [BUTTON: Start a project → demo.html#form]                                                           │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. XionTechs at a glance ───────────────────────────────────────────────────────────────────────────┐ ║
-║ │ Text: Coverage                                                                                       │ ║
-║ │ Text: 24/7                                                                                           │ ║
-║ │ Text: global coverage across time zones                                                              │ ║
-║ │ Text: HCMC · GMT+7 · Plano · US Central                                                              │ ║
-║ │ Text: Technology                                                                                     │ ║
-║ │ Text: 20+                                                                                            │ ║
-║ │ Text: technology stacks we work in                                                                   │ ║
-║ │ Text: Web · Mobile · AI · Cloud                                                                      │ ║
-║ │ Text: Leadership                                                                                     │ ║
-║ │ Text: 25+                                                                                            │ ║
-║ │ Text: years of software leadership experience                                                        │ ║
-║ │ Text: From idea to operation                                                                         │ ║
-║ │ Text: Industries                                                                                     │ ║
-║ │ Text: 4                                                                                              │ ║
-║ │ Text: industries we serve                                                                            │ ║
-║ │ Text: EdTech · Healthcare · Logistics · Private Equity                                               │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 3. Eight services, one team. · light blue · [sticky heading beside the cards in ENH-061 · light b… ─┐ ║
+║ ┌─ 2. Eight services, one team. · light blue · [sticky heading beside the cards in ENH-061 · light b… ─┐ ║
 ║ │ H2: Eight services, one team.                                                                        │ ║
 ║ │ Text: Pick one service or combine several. We shape the team around your product.                    │ ║
 ║ │ H3: Product Engineering                                                                              │ ║
@@ -576,7 +503,7 @@ Changes on this page: ENH-061, ENH-065 and ENH-069 to ENH-072 (rounded navy hero
 ║ │ Text: Azure · AWS · GCP                                                                              │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. What can we help you achieve? · white · [new in ENH-048 · more space above in ENH-072] ──────────┐ ║
+║ ┌─ 3. What can we help you achieve? · white · [new in ENH-048 · more space above in ENH-072] ──────────┐ ║
 ║ │ H2: What can we help you achieve?                                                                    │ ║
 ║ │ Text: 01                                                                                             │ ║
 ║ │ H3: Build a new digital product                                                                      │ ║
@@ -594,79 +521,31 @@ Changes on this page: ENH-061, ENH-065 and ENH-069 to ENH-072 (rounded navy hero
 ║ │ Text: Use AI, analytics and automation to improve products, workflows and business decision-making.  │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. How we work. · blue gradient · [five steps in ENH-011 (full version) · on light blue in ENH-06… ─┐ ║
-║ │ H2: How we work.                                                                                     │ ║
+║ ┌─ 4. Our 4-D process: from your request to launch. · white · [five steps in ENH-011 (full version) … ─┐ ║
+║ │ H2: Our 4-D process: from your request to launch.                                                    │ ║
 ║ │ Text: Every step ends with something you can see, test and approve.                                  │ ║
-║ │ [BUTTON: 01 · Discovery (tab)]                                                                       │ ║
-║ │ [BUTTON: 02 · Design (tab)]                                                                          │ ║
-║ │ [BUTTON: 03 · Development (tab)]                                                                     │ ║
-║ │ [BUTTON: 04 · QA & Improvement (tab)]                                                                │ ║
-║ │ [BUTTON: 05 · Deployment (tab)]                                                                      │ ║
-║ │ Text: Step 01 — · Discovery                                                                          │ ║
-║ │ H3: Learn your goals, users and scope                                                                │ ║
-║ │ Text: We begin by understanding your business context, audience, product goals and delivery          │ ║
-║ │   boundaries so the project starts with clarity.                                                     │ ║
-║ │ • Stakeholder alignment and kickoff workshops                                                        │ ║
-║ │ • User goals, pain points and workflow discovery                                                     │ ║
-║ │ • Scope, risks, priorities and constraints                                                           │ ║
-║ │ • Initial roadmap and delivery planning                                                              │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A clear scope, estimate and delivery plan.                                                     │ ║
-║ │ • Clear project scope                                                                                │ ║
-║ │ • Priorities agreed                                                                                  │ ║
-║ │ • Delivery roadmap                                                                                   │ ║
-║ │ Text: Step 02 — · Design                                                                             │ ║
-║ │ H3: Shape flows, interfaces and architecture                                                         │ ║
-║ │ Text: We turn the discovery findings into user journeys, interface concepts and technical direction  │ ║
-║ │   so everyone can see how the product should work.                                                   │ ║
-║ │ • User flows and information architecture                                                            │ ║
-║ │ • Wireframes and UI exploration                                                                      │ ║
-║ │ • Clickable prototype creation                                                                       │ ║
-║ │ • Technical design and solution structure                                                            │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A clickable prototype and technical design.                                                    │ ║
-║ │ • Clickable prototype                                                                                │ ║
-║ │ • User flows                                                                                         │ ║
-║ │ • Technical direction                                                                                │ ║
-║ │ Text: Step 03 — · Development                                                                        │ ║
-║ │ H3: Build the product in agile sprints                                                               │ ║
-║ │ Text: We implement the solution in working increments, keeping progress visible through regular      │ ║
-║ │   updates, reviews and collaboration.                                                                │ ║
-║ │ • Frontend and backend implementation                                                                │ ║
-║ │ • Agile sprint planning and demos                                                                    │ ║
-║ │ • Continuous collaboration and feedback loops                                                        │ ║
-║ │ • Ongoing refinement during delivery                                                                 │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: Working software every sprint.                                                                 │ ║
-║ │ • Sprint builds                                                                                      │ ║
-║ │ • Regular demos                                                                                      │ ║
-║ │ • Visible progress                                                                                   │ ║
-║ │ Text: Step 04 — · QA & Improvement                                                                   │ ║
-║ │ H3: Test, refine and optimise before release                                                         │ ║
-║ │ Text: Before go-live, we strengthen quality through validation, issue fixing and improvement so the  │ ║
-║ │   release is more polished and reliable.                                                             │ ║
-║ │ • Functional testing and defect resolution                                                           │ ║
-║ │ • UX refinement and performance checks                                                               │ ║
-║ │ • Quality review against requirements                                                                │ ║
-║ │ • Final improvement pass before release                                                              │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A polished, launch-ready product.                                                              │ ║
-║ │ • Tested build                                                                                       │ ║
-║ │ • Resolved issues                                                                                    │ ║
-║ │ • Final refinements                                                                                  │ ║
-║ │ Text: Step 05 — · Deployment                                                                         │ ║
-║ │ H3: Release, monitor and keep improving                                                              │ ║
-║ │ Text: We launch the product, monitor how it performs and continue supporting improvements so the     │ ║
-║ │   solution keeps delivering value after release.                                                     │ ║
-║ │ • Deployment and release coordination                                                                │ ║
-║ │ • Production monitoring and support                                                                  │ ║
-║ │ • Post-launch review and iteration planning                                                          │ ║
-║ │ • Continuous enhancement and maintenance                                                             │ ║
-║ │ Text: You receive                                                                                    │ ║
-║ │ Text: A live release with ongoing support.                                                           │ ║
-║ │ • Live production release                                                                            │ ║
-║ │ • Monitoring                                                                                         │ ║
-║ │ • Ongoing support                                                                                    │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ • Your request · An idea, a  │ │ Text: 01                     │ │ Text: 02                       │ │ ║
+║ │ │   brief or a requirement.    │ │ H3: Discovery                │ │ H3: Design                     │ │ ║
+║ │ │                              │ │ Text: Workshops to           │ │ Text: User flows, interfaces   │ │ ║
+║ │ │                              │ │   understand your goals,     │ │   and architecture agreed      │ │ ║
+║ │ │                              │ │   users, risks and scope.    │ │   before code is written.      │ │ ║
+║ │ │                              │ │ Text: You receive · A clear  │ │ Text: You receive · A          │ │ ║
+║ │ │                              │ │   scope, estimate and        │ │   clickable prototype and      │ │ ║
+║ │ │                              │ │   delivery plan.             │ │   technical design.            │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
+║ │ │ Text: 03                     │ │ Text: 04                     │ │ • Launch · And we keep growing │ │ ║
+║ │ │ H3: Development              │ │ H3: Deployment               │ │   it together.                 │ │ ║
+║ │ │ Text: Agile sprints with     │ │ Text: A safe release,        │ │                                │ │ ║
+║ │ │   regular demos. Testing and │ │   monitoring and improvement │ │                                │ │ ║
+║ │ │   quality assurance (QA) run │ │   after launch.              │ │                                │ │ ║
+║ │ │   inside every sprint, not   │ │ Text: You receive · A live   │ │                                │ │ ║
+║ │ │   at the end.                │ │   release with ongoing       │ │                                │ │ ║
+║ │ │ Text: You receive · Tested,  │ │   support.                   │ │                                │ │ ║
+║ │ │   working software every     │ │                              │ │                                │ │ ║
+║ │ │   sprint.                    │ │                              │ │                                │ │ ║
+║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ [FOOTER: see "Header and footer"]                                                                        ║
@@ -706,50 +585,22 @@ Changes on this page: ENH-067 (soft light blue glows); ENH-046 and ENH-049 to EN
 ║ │ Text: Vision · Community · Technology                                                                │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 3. Our core values. · white ────────────────────────────────────────────────────────────────────────┐ ║
-║ │ H2: Our core values.                                                                                 │ ║
-║ │ Text: What guides how we work.                                                                       │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ H3: Startup Spirit           │ │ H3: Client Centricity        │ │ H3: Integrity First            │ │ ║
-║ │ │ Text: Embody an              │ │ Text: Clients are at the     │ │ Text: Operate with honesty,    │ │ ║
-║ │ │   entrepreneurial mindset,   │ │   heart of everything we do. │ │   transparency, and            │ │ ║
-║ │ │   embracing agility,         │ │   We strive to deliver       │ │   accountability. Ethical      │ │ ║
-║ │ │   flexibility, and a passion │ │   exceptional experiences    │ │   standards guide every        │ │ ║
-║ │ │   for innovation. Our        │ │   and impactful outcomes     │ │   decision and interaction,    │ │ ║
-║ │ │   commitment to excellence   │ │   through deep               │ │   fostering trust and          │ │ ║
-║ │ │   is driven by resilience    │ │   understanding, proactive   │ │   long-term relationships.     │ │ ║
-║ │ │   and a culture of           │ │   engagement, and tailored   │ │                                │ │ ║
-║ │ │   continuous improvement.    │ │   solutions.                 │ │                                │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ H3: Innovation Driven        │ │ H3: "Get IT Done" Attitude   │ │ H3: People-Centered Culture    │ │ ║
-║ │ │ Text: Passionate about       │ │ Text: Take ownership of our  │ │ Text: Cultivate a workplace    │ │ ║
-║ │ │   exploring emerging         │ │   commitments and deliver    │ │   where every team member      │ │ ║
-║ │ │   technologies and creative  │ │   high-quality, reliable,    │ │   feels valued, supported, and │ │ ║
-║ │ │   approaches. Innovation is  │ │   and efficient solutions.   │ │   empowered. Our culture goes  │ │ ║
-║ │ │   embedded in our DNA,       │ │   Our team is driven by      │ │   beyond employment: it's      │ │ ║
-║ │ │   enabling us to evolve our  │ │   accountability and a       │ │   about belonging,             │ │ ║
-║ │ │   solutions and stay ahead   │ │   results-oriented mindset   │ │   collaboration, and shared    │ │ ║
-║ │ │   of industry trends.        │ │   that meets or exceeds      │ │   success.                     │ │ ║
-║ │ │                              │ │   industry standards.        │ │                                │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 4. Your question, we answer · white · [rebuilt in ENH-016 · background stilled in ENH-019 · last … ─┐ ║
+║ ┌─ 3. Your question, we answer · white · [rebuilt in ENH-016 · background stilled in ENH-019 · last … ─┐ ║
 ║ │ H2: Your question, we answer                                                                         │ ║
 ║ │ Text: Straight answers about our products, our services and how we work.                             │ ║
 ║ │ [FAQ, opens on click] Q: What does XionTechs do?                                                     │ ║
-║ │ A: We build our own school platforms (PXP, LXP, SXP and IoT Device Management) and deliver software  │ ║
-║ │     for other companies: product engineering, AI-driven analytics, product co-creation and staffing. │ ║
+║ │ A: We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver   │ ║
+║ │     software for other companies: product engineering, AI-driven analytics, product co-creation and  │ ║
+║ │     staffing.                                                                                        │ ║
 ║ │ [FAQ, opens on click] Q: Which industries do you work with?                                          │ ║
 ║ │ A: EdTech is our core. We also serve Healthcare, Logistics and Private Equity.                       │ ║
-║ │ [FAQ, opens on click] Q: How can our school try PXP, LXP or SXP?                                     │ ║
+║ │ [FAQ, opens on click] Q: How can our school try Parent Hub or Staff Hub?                             │ ║
 ║ │ A: Book a demo. We walk you through the apps using scenarios from your own school.                   │ ║
 ║ │ [FAQ, opens on click] Q: How do you work across time zones?                                          │ ║
 ║ │ A: Our teams in Ho Chi Minh City and Plano cover USA, Europe and Australia time zones, with shared   │ ║
 ║ │     tools for real-time updates.                                                                     │ ║
 ║ │ [FAQ, opens on click] Q: When do you shape the solution to our needs?                                │ ║
-║ │ A: From the start. Discovery, the first of our five steps, sets your goals, users and scope before   │ ║
+║ │ A: From the start. Discovery, the first of our four steps, sets your goals, users and scope before   │ ║
 ║ │     design begins.                                                                                   │ ║
 ║ │ [FAQ, opens on click] Q: What results can we expect?                                                 │ ║
 ║ │ A: Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results  │ ║
@@ -765,7 +616,7 @@ Changes on this page: ENH-067 (soft light blue glows); ENH-046 and ENH-049 to EN
 ║ │ [LINK: Still have a question? Ask us directly → index.html#contact]                                  │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. Two offices, serving the world. · white · [city drawings in ENH-050 to ENH-052 · smaller, furt… ─┐ ║
+║ ┌─ 4. Two offices, serving the world. · white · [city drawings in ENH-050 to ENH-052 · smaller, furt… ─┐ ║
 ║ │ H2: Two offices, serving the world.                                                                  │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ Text: US Central                              │ │ Text: GMT+7                                    │ │ ║
@@ -779,11 +630,11 @@ Changes on this page: ENH-067 (soft light blue glows); ENH-046 and ENH-049 to EN
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. See our apps in action. · white · [blended in ENH-036 · white in ENH-059] ───────────────────────┐ ║
+║ ┌─ 5. See our apps in action. · white · [blended in ENH-036 · white in ENH-059] ───────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: See our apps in action.                   │ │ [FIELD: Work email (email, required)]          │ │ ║
 ║ │ │ Text: Leave your work email and we'll arrange │ │ placeholder: "name@company.com"                │ │ ║
-║ │ │   a walkthrough of PXP, LXP and SXP.          │ │ [BUTTON: Book a demo]                          │ │ ║
+║ │ │   a walkthrough of Parent Hub and Staff Hub.  │ │ [BUTTON: Book a demo]                          │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
@@ -1027,11 +878,11 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 ║ │ │ Breadcrumb: Home › Contact                    │ │ H2: What can we help with?                     │ │ ║
 ║ │ │ H1: Let's talk about your school or your      │ │ [BUTTON: Product demo (tab)]                   │ │ ║
 ║ │ │   project.                                    │ │ [BUTTON: Outsourcing project (tab)]            │ │ ║
-║ │ │ • A walkthrough of PXP, LXP and SXP using     │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │   your school's scenarios.                    │ │ │ [FIELD: Full name (text, required)]        │ │ │ ║
+║ │ │ • A walkthrough of Parent Hub and Staff Hub   │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │   using your school's scenarios.              │ │ │ [FIELD: Full name (text, required)]        │ │ │ ║
 ║ │ │ • Answers on setup, data and support.         │ │ │ error: "Please enter your name."           │ │ │ ║
 ║ │ │ • For projects: a first Discovery             │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │   conversation, the first of our five steps.  │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │   conversation, the first of our four steps.  │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ ┌───────────────────────────────────────────┐ │ │ │ [FIELD: Work email (email, required)]      │ │ │ ║
 ║ │ │ │ Text: Plano, Texas, USA                   │ │ │ │ error: "Please enter a valid email         │ │ │ ║
 ║ │ │ │ Text: 7950 Legacy Drive, Suite 400 Plano, │ │ │ │     address."                              │ │ │ ║
@@ -1046,14 +897,15 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 ║ │ │ ┌───────────────────────────────────────────┐ │ │ │ help: "For example: Principal, Head of IT" │ │ │ ║
 ║ │ │ │ Text: Ho Chi Minh City, Vietnam           │ │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │ │ Text: Vietnam Delivery Center             │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ │ Text: Floor 15, B1 Building 279 Nguyen    │ │ │ │ [CHECKBOXES: Products of interest: PXP /   │ │ │ ║
-║ │ │ │   Tri Phuong Street Dien Hong Ward, Ho    │ │ │ │   LXP / SXP / IoT; Product demo tab only]  │ │ │ ║
-║ │ │ │   Chi Minh City, Vietnam                  │ │ │ └────────────────────────────────────────────┘ │ │ ║
-║ │ │ │ [LINK: (+84) 908 107 552 →                │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
-║ │ │ │   tel:+84908107552]                       │ │ │ │ [FIELD: School size (dropdown: Under 500   │ │ │ ║
-║ │ │ │ [LINK: vinni.tran@xiontechs.com →         │ │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
-║ │ │ │   mailto:vinni.tran@xiontechs.com]        │ │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
-║ │ │ └───────────────────────────────────────────┘ │ │ │   Product demo tab only)]                  │ │ │ ║
+║ │ │ │ Text: Floor 15, B1 Building 279 Nguyen    │ │ │ │ [CHECKBOXES: Products of interest: Parent  │ │ │ ║
+║ │ │ │   Tri Phuong Street Dien Hong Ward, Ho    │ │ │ │   Hub / Staff Hub / IoT; Product demo tab  │ │ │ ║
+║ │ │ │   Chi Minh City, Vietnam                  │ │ │ │   only]                                    │ │ │ ║
+║ │ │ │ [LINK: (+84) 908 107 552 →                │ │ │ └────────────────────────────────────────────┘ │ │ ║
+║ │ │ │   tel:+84908107552]                       │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
+║ │ │ │ [LINK: vinni.tran@xiontechs.com →         │ │ │ │ [FIELD: School size (dropdown: Under 500   │ │ │ ║
+║ │ │ │   mailto:vinni.tran@xiontechs.com]        │ │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
+║ │ │ └───────────────────────────────────────────┘ │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
+║ │ │                                               │ │ │   Product demo tab only)]                  │ │ │ ║
 ║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │                                               │ │ │ [FIELD: Preferred date (date; Product demo │ │ │ ║

@@ -1218,3 +1218,10 @@ Template:
 - **Prompt / task:** Team feedback turned into GitHub issue #52 first, then the prototype change: add Home to the header menu while the logo still goes home.
 - **Decision / result:** Approved by Amber. Home (Trang chủ) is the first menu link on every page and in the mobile menu, marked current on the home page. Issue-first so the reason is tracked before the change.
 - **AI got it wrong?** No.
+
+## 2026-10-06 — ENH-077 (climber), ENH-086 and ENH-087: team feedback issues #53 to #61
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt / task:** Turn team feedback into GitHub issues (label `prototype`) first, then update the prototype: Home hero with Get in touch and five figures, ParentHub/StaffHub naming then Parent Hub/Staff Hub (P-Hub, S-Hub), Home content and order (Capabilities, Core values, 4-D process, How we approach, case studies), QA inside Development, a four-card Products page, no metrics on Services; plus the footer climber stepping up on every page.
+- **Decision / result:** Approved by Amber. Issue-first so every change has its reason on record. Other trial work from the same day (ENH-076, ENH-078 to ENH-084 and a Products catalogue trial) was withdrawn and removed before the push.
+- **AI got it wrong?** Yes: a hero class reused by the catalogue drew a giant rounded shape; the Home page reopened at the contact form because Get in touch left #contact in the address; the first mockup removal left half a phone frame; the cards' descriptions came out empty on the first Products rebuild.

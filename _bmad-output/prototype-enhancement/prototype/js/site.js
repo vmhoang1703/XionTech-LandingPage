@@ -32,7 +32,7 @@
   <div class="fgrid">
     <div><a class="flogo" href="index.html"><img src="assets/logo.png" alt="XionTechs"></a>
       <p class="about" data-vi="Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp.">Education technology products and software delivery services for schools and businesses.</p></div>
-    <div><h4 data-vi="Sản phẩm">Products</h4><ul><li><a href="products.html#sxp" data-vi="Cho nhà trường">For schools</a></li><li><a href="products.html#lxp" data-vi="Cho học sinh">For students</a></li><li><a href="products.html#pxp" data-vi="Cho phụ huynh">For parents</a></li></ul></div>
+    <div><h4 data-vi="Sản phẩm">Products</h4><ul><li><a href="products.html#sxp" data-vi="Cho nhà trường">For schools</a></li><li><a href="products.html#ai-tutor" data-vi="Cho học sinh">For students</a></li><li><a href="products.html#pxp" data-vi="Cho phụ huynh">For parents</a></li></ul></div>
     <div><h4 data-vi="Dịch vụ">Services</h4><ul><li><a href="services.html#product-engineering">Product Engineering</a></li><li><a href="services.html#ai-analytics">AI-Driven Analytics</a></li><li><a href="services.html#staffing">Staffing Service</a></li><li><a href="services.html#low-code">Low-code Solutions</a></li><li><a href="services.html#cloud">Cloud Computing</a></li><li><a href="services.html#process" data-vi="Cách chúng tôi làm việc">How we work</a></li><li><a href="services.html" data-vi="Tất cả dịch vụ">All services</a></li></ul></div>
     <div><h4 data-vi="Công ty">Company</h4><ul><li><a href="news.html" data-vi="Tin tức">News</a></li><li><a href="about.html" data-vi="Về chúng tôi">About us</a></li><li><a href="careers.html" data-vi="Tuyển dụng">Careers</a></li></ul></div>
     <div><h4 data-vi="Văn phòng">Offices</h4>
@@ -48,6 +48,17 @@
   const toastEl=document.getElementById('toast');let tt;
   const toast=m=>{toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('on'),2600)};
 
+  /* ---------- Home always opens at the hero: no restored scroll, no jump to a #section left in the address (ENH-086) ---------- */
+  if(document.body.dataset.page==='home'){try{history.scrollRestoration='manual'}catch(e){}
+    // a link from another page (such as About's Ask us directly) may still open the contact form; a reload or a plain visit starts at the top
+    const nav=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0])||{},fromLink=location.hash&&nav.type==='navigate';
+    if(!fromLink){if(location.hash){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}scrollTo(0,0);addEventListener('load',()=>scrollTo(0,0))}
+    // in-page buttons such as Get in touch scroll smoothly without leaving a # in the address
+    document.querySelectorAll('a[href^="#"]:not([href="#"]):not(.skip)').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:reduce?'auto':'smooth'});const f=t.querySelector('input,textarea,button');if(f)setTimeout(()=>f.focus({preventScroll:true}),reduce?0:700)}))}
+
+  /* ---------- 4-D process: the track fills and the steps appear once the row is on screen ---------- */
+  {const fl=[...document.querySelectorAll('.flow')];if(reduce||!('IntersectionObserver' in window))fl.forEach(f=>f.classList.add('lit'));else{const fio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('lit');fio.unobserve(e.target)}}),{threshold:.3});fl.forEach(f=>fio.observe(f))}}
+
   /* ---------- the climber (ENH-045): each page has its own spot on the footer ridge, set by its place in the navigation,
      from Home at the foot to Careers on the summit. Arriving from another page, it walks from that page's spot. ---------- */
   const ridge=document.querySelector('.ridge'),climber=ridge&&ridge.querySelector('.ridge-climber'),rline=ridge&&ridge.querySelector('.ridge-line');
@@ -55,9 +66,10 @@
     // the length along the ridge line where it reaches the peak (x 860 of 1440)
     for(let lo=0,hi=total,i=0;i<30;i++){const mid=(lo+hi)/2;if(rline.getPointAtLength(mid).x<860)lo=mid;else hi=mid;peakLen=hi}
     const SPOT={home:.06,products:.24,services:.42,news:.6,about:.8,careers:1},page=document.body.dataset.page,known=SPOT[page]!=null;
-    let from=known?SPOT[page]:SPOT.home;try{const v=parseFloat(sessionStorage.getItem('xt-climber'));if(!isNaN(v))from=Math.min(1,Math.max(0,v))}catch(e){}
-    // the climber only ever climbs: a page lower on the mountain keeps it where it is (and Privacy, Demo and 404 never move it)
-    const goal=known?Math.max(from,SPOT[page]):from;if(known)try{sessionStorage.setItem('xt-climber',String(goal))}catch(e){}
+    // every page walks it one step forward along the ridge, from the spot of the page before it in the menu to its own spot,
+    // so it is always seen climbing (never walking back); Careers ends on the summit. Privacy, Demo and 404 rest at the foot.
+    const ORDER=['home','products','services','news','about','careers'],k=ORDER.indexOf(page);
+    const goal=known?SPOT[page]:SPOT.home,from=k>0?SPOT[ORDER[k-1]]:0;
     let p=from,frame=0;
     const put=v=>{const r=ridge.getBoundingClientRect(),pt=rline.getPointAtLength(Math.min(1,Math.max(0,v))*peakLen);
       climber.style.transform='translate('+(pt.x*r.width/1440).toFixed(1)+'px,'+(pt.y*r.height/120).toFixed(1)+'px)'};
@@ -80,8 +92,8 @@
     {id:'ai-robotics-client-visit',date:'10 Oct 2025',aud:'schools',t:'Exploring AI and robotics for education with a visiting client',tv:'Cùng khách hàng khám phá AI và robot cho giáo dục',x:'A client visited our XionTech Delivery Center in Ho Chi Minh City to explore how AI and robotics could be applied in education.',xv:'Một khách hàng đã đến thăm Trung tâm Phát triển XionTech tại TP. Hồ Chí Minh để tìm hiểu cách ứng dụng AI và robot trong giáo dục.',img:'assets/news/05-ai-robotics-client-visit.jpg',alt:'Client visit to the XionTech Delivery Center in Ho Chi Minh City',b:[['We were delighted to welcome an esteemed client to the XionTech Delivery Center in Ho Chi Minh City. The visit focused on a shared interest: exploring opportunities for applying AI and robotics in education.','Chúng tôi rất vui được chào đón một khách hàng quý mến đến Trung tâm Phát triển XionTech tại TP. Hồ Chí Minh. Chuyến thăm tập trung vào mối quan tâm chung: tìm hiểu cơ hội ứng dụng AI và robot trong giáo dục.'],['## Why AI and robotics in education','## Vì sao là AI và robot trong giáo dục'],['Education is where we go deepest as a company, and AI and robotics open up new ways to bring technology into learning. Meeting in person gave both teams the chance to discuss those possibilities together.','Giáo dục là lĩnh vực chúng tôi chuyên sâu nhất, và AI cùng robot mở ra những cách mới để đưa công nghệ vào việc học. Gặp gỡ trực tiếp giúp hai bên cùng trao đổi về những khả năng đó.'],['Visits like this help clients get to know the team behind their projects first-hand, and help us understand their goals early.','Những chuyến thăm như vậy giúp khách hàng trực tiếp làm quen với đội ngũ đứng sau dự án của mình, và giúp chúng tôi hiểu mục tiêu của họ ngay từ sớm.']]},
     {id:'project-kickoff',date:'08 Apr 2025',aud:'schools',t:'Kicking off a major education initiative with our client in Ho Chi Minh City',tv:'Khởi động một sáng kiến giáo dục quan trọng cùng khách hàng tại TP. Hồ Chí Minh',x:'Our client joined us at the Besco Delivery Center in Ho Chi Minh City to set out the project requirements and officially start a major education initiative.',xv:'Khách hàng đã cùng chúng tôi có mặt tại Trung tâm Phát triển Besco ở TP. Hồ Chí Minh để thống nhất yêu cầu dự án và chính thức khởi động một sáng kiến giáo dục quan trọng.',img:'assets/news/06-project-kickoff.jpg',alt:'Project kickoff at the Besco Delivery Center in Ho Chi Minh City',b:[['A strong start makes a big difference to any project. Our valued client visited the Besco Delivery Center in Ho Chi Minh City to outline the project requirements and officially kick off a major education initiative.','Một khởi đầu vững chắc tạo nên khác biệt lớn cho mọi dự án. Khách hàng thân thiết đã đến Trung tâm Phát triển Besco tại TP. Hồ Chí Minh để trao đổi yêu cầu dự án và chính thức khởi động một sáng kiến giáo dục quan trọng.'],['## Aligning from day one','## Thống nhất ngay từ ngày đầu'],['Meeting in person at the start gave both teams the chance to agree on the requirements before delivery begins, so everyone moves forward with the same understanding.','Gặp gỡ trực tiếp ngay từ đầu giúp hai bên thống nhất yêu cầu trước khi bắt tay vào triển khai, để mọi người cùng tiến lên với một cách hiểu chung.']]},
     {id:'ai-tutor',date:'20 Mar 2025',aud:'students',app:'AI Tutor',mock:1,t:'[Placeholder] Why better AI tutoring starts with guiding the student’s thinking',tv:'[Placeholder] Vì sao gia sư AI tốt hơn bắt đầu từ việc dẫn dắt tư duy của học sinh',x:'A useful AI tutor should not simply produce the answer. It should help the learner understand what went wrong, try again and build confidence in the reasoning.',xv:'Một gia sư AI hữu ích không chỉ đưa ra đáp án. Nó giúp người học hiểu mình sai ở đâu, thử lại và tự tin hơn vào cách lập luận của mình.',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1400&q=88',alt:'',b:[]},
-    {id:'pxp',date:'12 Feb 2025',aud:'parents',app:'PXP',mock:1,t:'[Placeholder] Making the school day easier for parents to follow',tv:'[Placeholder] Giúp phụ huynh dễ dàng theo dõi một ngày học của con',x:'Parents need simple, reliable visibility into the moments that matter without having to chase information across different systems.',xv:'Phụ huynh cần nắm được những khoảnh khắc quan trọng một cách đơn giản và đáng tin cậy, mà không phải đi tìm thông tin ở nhiều hệ thống khác nhau.',img:'https://images.unsplash.com/photo-1602030028438-4cf153cbae9e?auto=format&fit=crop&w=1400&q=88',alt:'',b:[]},
-    {id:'lxp',date:'15 Jan 2025',aud:'students',app:'LXP',mock:1,t:'[Placeholder] Designing a learning experience that keeps progress visible',tv:'[Placeholder] Thiết kế trải nghiệm học tập giúp tiến độ luôn rõ ràng',x:'Learning feels more coherent when activities, feedback and progress are connected around the student instead of spread across separate tools.',xv:'Việc học liền mạch hơn khi hoạt động, phản hồi và tiến độ được kết nối quanh học sinh, thay vì trải rộng trên nhiều công cụ riêng lẻ.',img:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=88',alt:'',b:[]}
+    {id:'pxp',date:'12 Feb 2025',aud:'parents',app:'Parent Hub',mock:1,t:'[Placeholder] Making the school day easier for parents to follow',tv:'[Placeholder] Giúp phụ huynh dễ dàng theo dõi một ngày học của con',x:'Parents need simple, reliable visibility into the moments that matter without having to chase information across different systems.',xv:'Phụ huynh cần nắm được những khoảnh khắc quan trọng một cách đơn giản và đáng tin cậy, mà không phải đi tìm thông tin ở nhiều hệ thống khác nhau.',img:'https://images.unsplash.com/photo-1602030028438-4cf153cbae9e?auto=format&fit=crop&w=1400&q=88',alt:'',b:[]},
+    {id:'lxp',date:'15 Jan 2025',aud:'students',app:'AI Tutor',mock:1,t:'[Placeholder] Designing a learning experience that keeps progress visible',tv:'[Placeholder] Thiết kế trải nghiệm học tập giúp tiến độ luôn rõ ràng',x:'Learning feels more coherent when activities, feedback and progress are connected around the student instead of spread across separate tools.',xv:'Việc học liền mạch hơn khi hoạt động, phản hồi và tiến độ được kết nối quanh học sinh, thay vì trải rộng trên nhiều công cụ riêng lẻ.',img:'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=88',alt:'',b:[]}
   ];
   const AUD={schools:['Schools','Trường học'],students:['Students','Học sinh'],parents:['Parents','Phụ huynh'],company:['Company','Công ty']};
   const MON={JAN:'01',FEB:'02',MAR:'03',APR:'04',MAY:'05',JUN:'06',JUL:'07',AUG:'08',SEP:'09',OCT:'10',NOV:'11',DEC:'12'};
@@ -477,6 +489,17 @@
       flowBg.style.height='0';const O=flowBg.getBoundingClientRect().top+scrollY,H=document.documentElement.scrollHeight-O;
       const list=[],add=(y,c)=>{y=Math.round(y-O);if(!list.length||y>list[list.length-1][0])list.push([y,c])},glows=[];
       const rise=secs.filter(s=>s.dataset.flowPhase==='rise'),rTop=rise.length?Y(rise[0]):0;
+      if(pal==='home'&&secs.filter(s=>s.dataset.flow==='night').length===1){
+        // home (reference layout): the hero is navy down to the middle of its two cards, then the page turns light at once,
+        // white through the middle sections, soft blue for the news, and the contact form's amber at the end
+        const hero=secs[0],doors=hero.querySelector('.doors'),news=document.querySelector('[aria-labelledby="news-h"]'),contact=document.getElementById('contact');
+        const cut=doors?Y(doors)+doors.offsetHeight/2:B(hero);
+        add(Y(hero),'#0B1730');add(cut-1,'#1A3C70');add(cut,'#F4F6FA');
+        secs.slice(1).forEach(s=>{if(s===news||s===contact)return;add(B(s),'#F7F9FD')});
+        if(news)add(B(news),'#F4F7FC');
+        if(contact){const t=Y(contact),hh=B(contact)-t;add(t+hh*.22,'#FDF3D6');add(t+hh*.55,'#FCE6A8');add(B(contact),'#FFD84A')}
+        glows.push([100,Y(hero),Math.round((B(hero)-Y(hero))*.9),.16,'255 192 0']);
+      }else
       if(pal==='home'){
         // home: one layer from the hero to the footer. The hero's navy carries on behind Our partners and Why XionTechs (white
         // text); Work built with our partners starts at a normal blue behind its heading and lightens behind its cards, so
