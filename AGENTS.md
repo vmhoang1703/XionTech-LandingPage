@@ -113,6 +113,8 @@ before the release PR; findings become fix PRs. After Demo day:
   Rebase merge is also allowed and keeps them too. `main` and `develop` have no branch protection
   (not available for a private repo on the free plan), so these rules rely on the team.
 - Branch names: `feature/<short-name>`, `fix/<short-name>`, `docs/<short-name>`.
+  Prototype work is the exception: it stays on the one long-lived `docs/prototype-enhancement`
+  branch, rebased on `develop` and merged into it by PR (`_bmad-output/prototype-enhancement/README.md`).
 - Commit messages: Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`). GitHub's
   own `Merge pull request #…` commits are exempt.
 - When an AI agent writes a commit, keep its `Co-Authored-By` trailer so AI work is visible.
@@ -125,6 +127,8 @@ Installed modules: Core, BMad Method (bmm), Builder (bmb), CIS, Test Architect (
 - `_bmad/` — BMad config and scripts. Committed so everyone shares the same setup.
 - `.claude/skills/` — BMad skills for Claude Code (57). Committed.
 - `_bmad-output/planning-artifacts/` — brief, PRD, architecture, UX, epics. Committed.
+- `_bmad-output/prototype-enhancement/` — the clickable prototype (`prototype/`) and
+  `enhancement-log.md`, the hand-off of every prototype change to the developers. Committed.
 - `_bmad-output/implementation-artifacts/` — stories and sprint status. Committed.
 - `docs/` — project knowledge (BMad `project_knowledge`).
 - Personal config (`_bmad/config.user.toml`, `_bmad/custom/config.user.toml`) is gitignored.

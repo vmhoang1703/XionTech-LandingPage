@@ -57,7 +57,7 @@ context: ['{project-root}/AGENTS.md']
 - `src/app/products/page.tsx`, `src/components/products/products-hero.tsx`, `src/content/products.ts` -- pattern: `metadata` from content, `hero-amber page-hero`, `crumbs`, `.hl`, `btn btn-navy`, `@phosphor-icons/react/ssr`.
 - `src/components/sections/hero-art.tsx` -- `HeroArt tone="amber"`, first child of the hero section (as in `src/app/demo/page.tsx`).
 - `src/app/globals.css` -- has `btn-glass` (551), `split` (617), `list-check` (640), `sec-head` (1372), `linen` (1379), `spot` (1408), `svc-grid` / `.svc.feature` / `.svc.navy` (1624–1690); hover lifts sit in `@media (hover: hover)` (1252). No pointer-following glow exists in the codebase.
-- Mockup `mockups/site-v3/careers.html` (markup) and `css/site.css` lines 65–67 (`.link-arrow`), 288/446/456 (`.news-grid`), 361–364 (`.illo`), 400 (`.roles-empty`), 572–585 (`.roles`, `.role`).
+- Mockup `prototype-enhancement/prototype/careers.html` (markup) and `css/site.css` lines 65–67 (`.link-arrow`), 288/446/456 (`.news-grid`), 361–364 (`.illo`), 400 (`.roles-empty`), 572–585 (`.roles`, `.role`).
 - `e2e/products.spec.ts` -- pattern for the `@smoke` test.
 - `src/app/layout.tsx` -- header and footer are mounted; the page renders only its sections.
 

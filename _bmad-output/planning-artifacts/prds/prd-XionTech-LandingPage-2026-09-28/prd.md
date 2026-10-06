@@ -2,7 +2,7 @@
 title: XionTechs Website PRD
 status: draft
 created: 2026-09-28
-updated: 2026-09-29
+updated: 2026-10-01
 owner: Amber Do
 sources:
   - AGENTS.md
@@ -13,7 +13,7 @@ sources:
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/.memlog.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/README.md
   - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/code-review-2026-09-28.md
-  - _bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/
+  - _bmad-output/prototype-enhancement/prototype/
 ---
 
 # PRD: XionTechs Website
@@ -24,7 +24,7 @@ This PRD is for the XionTechs website team (lead Hoang Vu, UX/BA owner Amber Do,
 
 - **UX source of truth:** `EXPERIENCE.md` (behaviour) and `DESIGN.md` (look), both in `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/`. They win over the prototype on any conflict. Each FR names the section it comes from as `EXP > Section` or `DES > Section`.
 - **Acceptance criteria:** the 16 criteria from `code-review-2026-09-28.md` (AC-NAV-1 to AC-NAV-5, AC-A11Y-1 to AC-A11Y-5, AC-FORM-1 to AC-FORM-3, AC-UI-1, AC-UI-2, AC-PERF-1) are cited by ID and are not restated in full.
-- **Prototype:** `mockups/site-v3/` (11 pages) shows every current UI decision. It is a design reference, not production code.
+- **Prototype:** `prototype-enhancement/prototype/` (11 pages) shows every current UI decision. It is a design reference, not production code.
 - **Conventions:** paths in this document are relative to the repo root. Terms in the Glossary (section 3) are used exactly. Inferences are tagged `[ASSUMPTION]` inline and listed in section 13. Content that the business has not verified appears on the site as `[Placeholder]`.
 
 ## 1. Vision
@@ -103,7 +103,7 @@ These mirror the four Key Flows in `EXPERIENCE.md` with the same protagonists.
 - **Placeholder:** content not verified by the business, prefixed `[Placeholder]` in both languages. A launch blocker.
 - **Locale:** `en` or `vi`, carried in the URL prefix `/en/` or `/vi/`.
 - **Motion toggle:** the discreet pause and play icon button in the Home hero that stops and restarts the silk animation.
-- **Prototype:** the static HTML reference in `mockups/site-v3/`.
+- **Prototype:** the static HTML reference in `prototype-enhancement/prototype/`.
 - **Demo day:** 2026-10-09, the challenge presentation.
 - **Public launch:** the point where the site replaces xiontechs.com for real visitors. Distinct from Demo day. `[ASSUMPTION]`
 
@@ -113,14 +113,14 @@ FRs are numbered globally. "Traces" names the spec section and AC IDs.
 
 ### 4.1 Navigation, layout and bilingual (EN/VI)
 
-**Description:** Every page shares a sticky header, a footer and a locale. Products and Services open mega menus organised by app and by service, never by audience. The EN/VI switch is always in the header. Book a demo sits next to it above 640px and becomes the first mobile menu item at 640px and below. Realizes UJ-1 to UJ-4.
+**Description:** Every page shares a sticky header, a footer and a locale. Products opens a mega menu organised by app, never by audience; Services is a plain link. The header shows the logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. Realizes UJ-1 to UJ-4.
 
 #### FR-1: Sticky header with mega menus
-A visitor can reach Products (PXP, LXP, SXP, IoT Device Management, "All products"), Services (8 services, "See the process"), News, About and Careers from a sticky header on every page.
+A visitor can reach Products (PXP, LXP, SXP, IoT Device Management, "All products"), Services, News, About and Careers from a sticky header on every page.
 
 **Consequences (testable):**
-- The header and both mega menus are text only (no product badges, service icons, arrows or caret icons); the mobile menu button reads "Menu"; Products and Services triggers are aligned with the plain links; the current page is marked with `aria-current="page"`.
-- On hover-capable desktop, hover opens a mega menu and leaving closes it after 150ms; a click never closes a menu that hover just opened; Escape closes and returns focus to the trigger; opening one closes the other; a click outside closes (AC-NAV-3).
+- The header and the Products mega menu are text only (no product badges, service icons, arrows or caret icons), except the language dropdown caret; the mobile menu button reads "Menu"; the Products trigger is aligned with the plain links; the current page is marked with `aria-current="page"`.
+- On hover-capable desktop, hover opens a mega menu and leaving closes it after 150ms; a click never closes a menu that hover just opened; Escape closes and returns focus to the trigger; a click outside closes (AC-NAV-3).
 - A new product is added as one new row in the Products mega menu without restructuring.
 
 Traces: EXP > Information Architecture (Header navigation), Component Patterns (Site header, Mega menu); AC-NAV-3.
@@ -131,7 +131,7 @@ A visitor below 1080px can open all navigation from a menu button.
 **Consequences (testable):**
 - The menu button has `aria-controls` and `aria-expanded`; Escape closes the menu and returns focus to the button (AC-NAV-4).
 - Mega content expands inline inside the menu; background does not scroll while open.
-- While open, focus is trapped in the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button), so the language switch stays reachable.
+- While open, focus is trapped in the open menu panel plus the header bar controls (logo link, language dropdown, Menu button), so the language dropdown stays reachable.
 
 Traces: EXP > Component Patterns (Mobile menu), Accessibility Floor; AC-NAV-4.
 
@@ -139,24 +139,23 @@ Traces: EXP > Component Patterns (Mobile menu), Accessibility Floor; AC-NAV-4.
 A visitor can reach "Book a demo" at every width.
 
 **Consequences (testable):**
-- Above 640px the Book a demo button sits next to the EN/VI switch in the header.
-- At 640px and below it is the first item of the mobile menu, in button style, and is not shown in the header bar (AC-NAV-2).
+- There is no Book a demo button in the header (decided 2026-10-01). Book a demo is reached from the hero button or capture band on Home, Products, About and News (Services offers "Start a project"), and from "Contact" in the footer on every page, which is the only route on Careers, Job, News story, Privacy and Not found (AC-NAV-2).
 
 Traces: EXP > Responsive & Platform (Header at every width); AC-NAV-2.
 
-#### FR-4: Language switch
+#### FR-4: Language dropdown
 
 **Demo day:** the Demo-day build is English only, with no switch; FR-4 and FR-5 land after Demo day (decided 2026-09-29).
 
 A visitor can switch between English and Vietnamese on any page.
 
 **Consequences (testable):**
-- The switch is two toggle buttons with `aria-pressed`, in a group labelled "Language", visible in the header at every width and never moved into the menu (AC-NAV-1).
+- The language control is a dropdown, the last item in the header: a button styled like the nav links showing the current code (EN or VI) with a caret that flips up when open, opening a small list of "EN" and "VI" (named English and Tiếng Việt) in the same text style on the header glass; the chosen language is marked with `aria-current`; choosing closes the list and returns focus to the button; Escape or a click outside closes it. It is visible in the header bar at every width and never moved into the menu (AC-NAV-1).
 - Switching routes to the same page under the other locale, keeps scroll position and typed form values, and updates `lang`, title and meta description.
 - Every visible string, page title, meta description, alt text, screen-reader label and toast exists in EN and VI. Product and service names stay in English.
 - Who writes and checks the Vietnamese copy is open question 17.
 
-Traces: EXP > Component Patterns (Language switch), Bilingual (EN / VI), Voice and Tone; AC-NAV-1.
+Traces: EXP > Component Patterns (Language dropdown), Bilingual (EN / VI), Voice and Tone; AC-NAV-1.
 
 #### FR-5: Locale routing
 The system serves every page under `/en/` and `/vi/`.
@@ -238,15 +237,15 @@ A visitor sees the Products door and the Services door directly under the hero, 
 
 Traces: EXP > Component Patterns (Front door); DES > Layout & Spacing (Home hero).
 
-#### FR-14: Product bento, services, 4-D process, news and demo capture
-A visitor sees, in order after the doors: the four-app bento ("Four apps. One school day."), the eight services, the 4-D process, the latest three stories and a demo capture.
+#### FR-14: Why XionTechs, four-app row, 4-D process, news and demo capture
+A visitor sees, in order after the doors: Why XionTechs, the four-app row ("Four apps for every role in school."), the 4-D process, the latest three stories and a demo capture.
 
 **Consequences (testable):**
-- Each product tile is one stretched link to its Products anchor, with no interactive element inside the link (AC-A11Y-4).
-- Each service card links to its anchor on Services.
+- Each app in the four-app row is one link to its Products anchor, with no interactive element inside the link (AC-A11Y-4).
+- Why XionTechs shows four tiles: our own school platforms (team photo slot until a real photo is supplied), two offices with live local times, education as our core, and the "Get IT Done" strip linking to `/about#values`. The wording "designed, built and supported by our own team" was confirmed by the business on 2026-10-01.
 - With no stories, the news grid hides and "See all news" stays.
 
-Traces: EXP > Information Architecture (Home), Component Patterns (Product tile, Service card, News card), State Patterns; AC-A11Y-4.
+Traces: EXP > Information Architecture (Home), Component Patterns (Why XionTechs, Four-app row, News card), State Patterns; AC-A11Y-4.
 
 ### 4.3 Products
 
@@ -425,7 +424,7 @@ A visitor opens a role and sees its job page (`/careers/[slug]`): breadcrumbs Ho
 - The application and CV are stored in Sanity (decided 2026-09-29), checked on the server with the same rules, honeypot and rate limit as FR-38. Whether uploaded CVs can be kept private is open question 21.
 - An unknown or closed role renders the Not found page. The job page has no email capture band.
 
-Traces: prototype `mockups/site-v3/job.html`; `.memlog.md` (2026-09-29 scope decisions).
+Traces: prototype `prototype-enhancement/prototype/job.html`; `.memlog.md` (2026-09-29 scope decisions).
 
 Traces: EXP > Component Patterns (Open roles panel), State Patterns (Careers); `AGENTS.md` (Hard rules).
 
@@ -543,14 +542,14 @@ Traces: EXP > Foundation (Rendering), State Patterns (No JavaScript).
 - Text contrast at least 4.5:1 (3:1 large text), icons and field borders at least 3:1; amber text on light surfaces uses `{colors.amber-text}` `#8A6700`; `{colors.amber-decor}` is never text (AC-A11Y-1).
 - Visible `:focus-visible` ring on every section colour (AC-A11Y-2).
 - Hidden content not focusable (AC-A11Y-3); no interactive element inside a link (AC-A11Y-4); errors announced and linked (AC-A11Y-5).
-- One H1 per page; tab order follows reading order; touch targets at least 24 x 24px; meaningful alt text in both languages.
+- One H1 per page; tab order follows reading order; touch targets at least 44 x 44px for controls and 24 x 24px for inline text links; functional text at least 11.5px; no small label above a section heading (front-door names and the stats heading excepted); meaningful alt text in both languages.
 
 Traces: EXP > Accessibility Floor; DES > Colors.
 
 #### NFR-2: Motion is controllable (WCAG 2.2.2)
 - The Home silk runs continuously and always has the visible motion toggle (FR-10); it pauses when off screen or when the tab is hidden.
 - Every other decorative loop (inner hero aurora and strand ribbon, device float, muted clips) stops within 5s.
-- Under `prefers-reduced-motion: reduce` there is no animation or transition anywhere, clips never autoplay, and the Home silk starts paused unless the visitor has saved an explicit choice: a saved Play or Pause wins over `prefers-reduced-motion`.
+- Under `prefers-reduced-motion: reduce` there is no movement; state changes keep short opacity fades (150 to 250ms); clips never autoplay; and the Home silk starts paused unless the visitor has saved an explicit choice: a saved Play or Pause wins over `prefers-reduced-motion`.
 
 Traces: EXP > Motion; WCAG 2.2.2.
 
@@ -601,12 +600,13 @@ Captured from the latest prototype so stories do not regress them.
 - **One primary CTA** in the hero: "Explore our products".
 - **Stats inside the hero:** "Experience you can count on": 25+ years, 24/7, 20+ stacks, 8 services, 2 offices (Ho Chi Minh City and Plano).
 - **Light after the hero:** every section after the Home hero is light, apart from the navy 4-D band and the amber capture band allowed by the colour rhythm.
-- **Header:** text-only nav (no carets); the EN/VI switch with Book a demo right next to it; Book a demo moves into the mobile menu at 640px and below; EN/VI never moves.
+- **Header (2026-10-01):** logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item; text-only nav (no carets); no Book a demo button; the language dropdown never moves into the menu.
+- **Readability (2026-10-01):** functional text at least 11.5px, 44px tap targets, no labels above section headings, reduced motion keeps short fades, one tokenised stylesheet.
 - **Colour rhythm instead of dark mode:** each page has at least one navy band and at most one full-width amber band; each page hero uses a different mix (light, navy, amber).
 - **2026-09-29 decisions:** English only on Demo day (no language switch); no newsletter sign-up; no leadership section; About ends with "See our apps in action." and Book a demo; Careers lists roles that open a job page with a CV upload form; store buttons and app web addresses are links that open a new tab.
 - **Type:** Unbounded (display), Lexend Exa (brand caps), Be Vietnam Pro (body), JetBrains Mono (dates and data), all with the Vietnamese subset.
 
-Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `mockups/site-v3/index.html`, `css/site.css`, `js/site.js`.
+Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `prototype-enhancement/prototype/index.html`, `css/site.css`, `js/site.js`.
 
 ## 7. Non-Goals (Explicit)
 
@@ -623,7 +623,7 @@ Traces: DES > Brand & Style, Colors, Typography, Layout & Spacing, Components; `
 ### 8.1 In Scope (v1)
 
 - Eleven page types: Home, Products, Services, News, News story, About, Careers, Job page, Book a demo (Contact), Privacy policy, Not found. English only on Demo day; Vietnamese follows.
-- Header, mobile menu, footer, locale routing, EN/VI switch.
+- Header, mobile menu, footer, locale routing, language dropdown.
 - Two email capture kinds (demo, project), the two-tab contact form and the job application with CV upload, with delivery, honeypot and rate limit.
 - News stories, Careers roles, team and office photos and product clips from Sanity, edited in Sanity Studio (chosen 2026-09-28, `docs/spikes/cms-spike.md`). The Demo-day plan in the epics says which parts land before Demo day.
 - SEO metadata, hreflang, JSON-LD, all 16 acceptance criteria.
@@ -672,7 +672,7 @@ Measurement: Submissions are counted at the form destination on the server, so n
 
 The prototype, the UX specs, this PRD and the user stories must stay in step.
 
-1. Any change to the HTML prototype (`mockups/site-v3/`) is checked by **Amber Do** (UX/BA owner) before it is accepted.
+1. Any change to the HTML prototype (`prototype-enhancement/prototype/`) is checked by **Amber Do** (UX/BA owner) before it is accepted.
 2. After approval, `DESIGN.md` and `EXPERIENCE.md` are updated first, because they win over the prototype on any conflict.
 3. This PRD is then updated (FRs, NFRs, section 6) and its `updated` date changed.
 4. The affected user stories and their acceptance criteria are updated.
@@ -702,7 +702,7 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 12. **About page capture:** resolved 2026-09-29. Heading "See our apps in action." with "Book a demo". The About stats band also shows "4 School products ready to demo" instead of "8 Service offerings"; confirm it is intended.
 13. **Logo:** an SVG master will be supplied later.
 14. **Dark mode:** resolved 2026-09-29. No dark mode and no theme switch; the colour rhythm stays.
-15. **Mobile Book a demo breakpoint:** resolved 2026-09-28. Book a demo sits next to the EN/VI switch above 640px and is the first mobile menu item at 640px and below (the older 1080px log entry is superseded).
+15. **Book a demo in the header:** resolved 2026-10-01. No header button; reached from heroes, capture bands and the footer "Contact" link (FR-3).
 16. **Demo day versus public launch:** resolved 2026-09-29. Yes, the Demo-day build may show `[Placeholder]` markers (section 8.3).
 17. **Vietnamese copy:** written and checked by Amber Do (to confirm), after Demo day. Needed for FR-4.
 18. **Mail sender service** (free tier, chosen in architecture): sends contact form and capture Submissions to the destination (FR-38). No vendor is decided.
@@ -710,6 +710,7 @@ The prototype, the UX specs, this PRD and the user stories must stay in step.
 20. **CI pipeline:** there is no CI yet, so axe-core, Lighthouse and the launch content check run locally before release. Setting up CI is after-demo work.
 21. **CV storage:** is Sanity acceptable for CVs? Uploaded Sanity files may be reachable by anyone with the link; a private store or the recruiting inbox may be needed. Owner: Hoang Vu.
 22. **Demo-day capacity:** the agreed Demo-day scope is about 23.5 developer-days against about 15. More days, another developer or cuts? Owner: Hoang Vu.
+23. **Why XionTechs wording:** resolved 2026-10-01. Amber Do confirmed that PXP, LXP, SXP and IoT are designed, built and supported by our own team; "Education is our core." adapts the confirmed FAQ line "EdTech is our core".
 
 ## 13. Assumptions Index
 

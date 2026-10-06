@@ -1,7 +1,7 @@
 ---
 name: XionTechs Website
 status: final
-updated: 2026-09-29
+updated: 2026-10-01
 sources:
   - .memlog.md
   - README.md
@@ -15,20 +15,20 @@ sources:
 - **Form factor:** a public, multi-page, responsive marketing website. One surface (the browser) from phone to desktop. No app shell, no sign-in.
 - **Build:** Next.js 16 (App Router) + Tailwind CSS v4 + shadcn/ui (planned) + Motion for animation. `DESIGN.md` is the visual identity reference and maps its tokens to Tailwind `@theme`; this spine is the behaviour. Where shadcn/ui is used, this spine states only the behavioural delta.
 - **Two audiences, two front doors:** Products (priority; school and university buyers who explore products and book a demo) and Outsourcing services (companies looking for a delivery partner). Home serves both near the top.
-- **Languages:** English by default, Vietnamese via the EN/VI switch. Served as `/en/` and `/vi/` URLs with `hreflang`.
+- **Languages:** English by default, Vietnamese via the language dropdown. Served as `/en/` and `/vi/` URLs with `hreflang`.
 - **No dark mode.** The section colour rhythm in `DESIGN.md` replaces it.
 - **Stakes:** a real public company website. Forms collect personal data (Vietnam PDPD, Decree 13/2023, applies). Accessibility floor is WCAG 2.2 AA.
 - **Content rule:** anything not verified by the business is marked `[Placeholder]` and must not launch unmarked (see Voice and Tone).
 - **Rendering:** header, footer and news are rendered on the server for SEO. Each page has its own title, meta description, canonical, Open Graph tags and favicon (Next.js Metadata API). Organization and app JSON-LD on Home.
 - **Performance:** icon sets and third-party scripts never block rendering (use a React icon package or defer the script) (AC-PERF-1).
 
-Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html), [`products.html`](mockups/site-v3/products.html), [`services.html`](mockups/site-v3/services.html), [`news.html`](mockups/site-v3/news.html), [`about.html`](mockups/site-v3/about.html), [`careers.html`](mockups/site-v3/careers.html), [`job.html`](mockups/site-v3/job.html), [`demo.html`](mockups/site-v3/demo.html). They are a design reference, not production code: rebuild in Next.js, do not copy the HTML. **These spines win on any conflict with the mockups.** Prototype-only tooling (screenshot slots that accept click, drop or paste and save in the browser) is not part of the product.
+Reference mockups: [`prototype-enhancement/prototype/index.html`](../../../prototype-enhancement/prototype/index.html), [`products.html`](../../../prototype-enhancement/prototype/products.html), [`services.html`](../../../prototype-enhancement/prototype/services.html), [`news.html`](../../../prototype-enhancement/prototype/news.html), [`about.html`](../../../prototype-enhancement/prototype/about.html), [`careers.html`](../../../prototype-enhancement/prototype/careers.html), [`job.html`](../../../prototype-enhancement/prototype/job.html), [`demo.html`](../../../prototype-enhancement/prototype/demo.html). They are a design reference, not production code: rebuild in Next.js, do not copy the HTML. **These spines win on any conflict with the mockups.** Prototype-only tooling (screenshot slots that accept click, drop or paste and save in the browser) is not part of the product.
 
 ## Information Architecture
 
 | Page | URL | Purpose | Sections in order |
 |---|---|---|---|
-| Home | `/` | Show what the products do in the first 5 seconds; open both front doors | Dark hero (silk background with a motion toggle, headline, one primary CTA "Explore our products", tablet + phone devices, and the stats "Experience you can count on"), then light sections: two front doors (Products for schools, Outsourcing services), four-app bento, eight services, 4-D process, latest news (3), demo capture |
+| Home | `/` | Show what the products do in the first 5 seconds; open both front doors | Dark hero (silk background with a motion toggle, headline, one primary CTA "Explore our products", tablet + phone devices, and the stats "Experience you can count on"), then light sections: two front doors (Products for schools, Outsourcing services), Why XionTechs (a 12-column grid of four tiles: "We build and run our own school platforms." with a team photo slot, spanning 7 columns and 2 rows; "Two offices, one working day." in navy with the live local times of Plano and Ho Chi Minh City; "Education is our core."; a full-width amber "Get IT Done" strip linking to the core values), the four-app row "Four apps for every role in school." (PXP, LXP, SXP, IoT: badge, name, who it is for and one line each, every item one link to its Products anchor, then "Explore our products"), 4-D process, latest news (3), demo capture |
 | Products | `/products` | Let school buyers explore every app and book a demo | Hero (devices, Book a demo, Product updates), sticky sub-nav, `#pxp` (story phone with 5 tabs, features, store links that open a new tab), `#lxp`, `#sxp`, `#iot`, `#updates` (3 product stories), demo capture |
 | Services | `/services` | Let companies judge the delivery team and start a project | Hero (Start a project, See our 4-D process, office clocks), stats, 8 services (each with an anchor), three ways to work with us, `#process` (4-D), industries + time zones, project capture |
 | News | `/news` | Dated short stories about products, schools, team and company | Hero, category filters + story grid, demo capture |
@@ -40,7 +40,7 @@ Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html), [
 | Privacy policy | `/privacy` | How personal data from the forms is used (PDPD) | Linked from every consent line and the footer. Content is an open question. |
 | Not found | any unknown path | Recover from a broken link | Short message, links to Home, Products, Services and News, in the current language. |
 
-**Demo day is English only** (decided 2026-09-29): no EN/VI switch and no `/vi/` routes until after Demo day. The rules below apply from then on.
+**Demo day is English only** (decided 2026-09-29): no language dropdown and no `/vi/` routes until after Demo day. The rules below apply from then on.
 
 **Locale routing.** Paths above are shown without the locale prefix; every page exists under `/en/` and `/vi/`. A bare `/` redirects to the saved language, else to `/vi/` if the browser prefers Vietnamese, else to `/en/`. A locale in the URL always wins over the saved choice, so a shared link opens in the sender's language. `hreflang` links pair each page, with `x-default` pointing to `/en/`.
 
@@ -49,11 +49,11 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 **Header navigation** (every page):
 
 - **Products** mega menu, organised by app, not by audience: PXP (Parents), LXP (Students), SXP (Staff, Teachers, Leaders), IoT Device Management (School staff and facilities). Footer row: "More products are on the way." + "All products". New products are added as new rows with no restructuring.
-- **Services** mega menu with all 8 services: Product Engineering, AI-Driven Analytics, Product Co-Creation, Staffing Service, Custom App Development, Low-code Solutions, AI-Powered Solutions, Cloud Computing. Footer row: the 4-D process line + "See the process" (`/services#process`).
+- **Services** as a plain link to `/services` (no mega menu, decided 2026-10-01). The 8 services and the 4-D process are on the Services page.
 - **News**, **About**, **Careers** as plain links.
-- **Text only:** the header and both mega menus show text only (no product badges, service icons, arrows or caret icons). The mobile menu button reads "Menu".
-- **Tools:** the EN/VI switch with the **Book a demo** button right next to it (above 640px). On phones (640px and below) Book a demo is the first item of the mobile menu.
-- Products and Services triggers are text only, with no caret icon, aligned with the plain links.
+- **Text only:** the header and the Products mega menu show text only (no product badges, service icons, arrows or caret icons); the language dropdown is the only control with a caret. The mobile menu button reads "Menu".
+- **Layout:** logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. There is no Book a demo button in the header (decided 2026-10-01). Book a demo is reached from the hero or capture band on Home, Products, Services, About and News, and from "Contact" in the footer on every page.
+- The Products trigger is text only, with no caret icon, aligned with the plain links.
 - Logo links home. A skip link ("Skip to content") comes first in tab order.
 
 **Footer** (every page): logo + one-line blurb; **Products** (PXP, LXP, SXP, IoT Device Management, Product updates); **Services** (Product Engineering, AI-Driven Analytics, Staffing Service, Low-code Solutions, Cloud Computing, All services); **Company** (About, Core values, FAQ, News, Careers, Contact); **Offices**: Plano, Texas, USA (7950 Legacy Drive, Suite 400, Plano, Texas 75024, USA; +1 469 322 9899; WhatsApp +1 469 439 9345; vinni.tran@newxion.com) first, then Ho Chi Minh City, Vietnam, labelled "Vietnam Delivery Center" (Floor 15, B1 Building, 279 Nguyen Tri Phuong Street, Dien Hong Ward, Ho Chi Minh City, Vietnam; +84 908 107 552). Bottom bar: copyright, Privacy policy link, GET IT DONE tag.
@@ -62,9 +62,9 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 
 | Stated need | Surface | Flow |
 |---|---|---|
-| School buyer explores products | Home bento, Products mega, `/products` | Flow 1 |
-| School buyer books a demo | Book a demo button, demo capture, `/demo#form` | Flow 1 |
-| Company finds a delivery partner | Home services door, Services mega, `/services` | Flow 2 |
+| School buyer explores products | Home four-app row, Products mega, `/products` | Flow 1 |
+| School buyer books a demo | Hero buttons, demo capture bands, footer "Contact", `/demo#form` | Flow 1 |
+| Company finds a delivery partner | Home services door, Services link, `/services` | Flow 2 |
 | Company starts a project | Start a project CTA, project capture, `/demo#project` | Flow 2 |
 | Parent finds PXP | Products mega (PXP), `/products#pxp`, store links | Flow 3 |
 | Product updates | `/products#updates`, News "Product" filter | Flow 1 |
@@ -72,7 +72,7 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 | Company facts, values, offices | `/about`, footer | Flow 2 |
 | Job seeker finds and applies for a role | `/careers#roles`, `/careers/[slug]` | Flow 4 |
 | Email capture on every page | Capture band on every page except `/demo` (which is the form), Not found, Privacy policy, News story, Careers and job pages (`/careers/[slug]`), which have no capture band | Flows 1 to 4 |
-| Read in Vietnamese | EN/VI switch in the header | Flows 1, 3 |
+| Read in Vietnamese | Language dropdown in the header | Flows 1, 3 |
 
 ## Voice and Tone
 
@@ -122,14 +122,15 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Component | Behavioural rules |
 |---|---|
 | Site header | Sticky at the top of every page. Marks the current page (`aria-current="page"`, or the current mega trigger). Below 1080px the menu collapses behind the menu button. |
-| Mega menu | Desktop with hover: hover opens; moving away closes after a 150ms delay so the pointer can cross the gap to the panel. Click toggles predictably and never closes a menu that hover just opened (AC-NAV-3). Escape closes and returns focus to the trigger. Opening one closes the other. A click outside closes. Trigger has `aria-expanded`. Mobile: the mega content expands inline inside the mobile menu. |
-| Mobile menu | Menu button has `aria-controls` and `aria-expanded` (AC-NAV-4). Escape closes it and returns focus to the button. Contains all nav items and, at 640px and below, Book a demo as its first item in button style (AC-NAV-2). The EN/VI switch never moves into the menu; it stays in the header (AC-NAV-1). While open, the focus trap covers the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button), so the language switch stays reachable. |
-| Language switch | Two toggle buttons with `aria-pressed`. Switching routes to the matching `/en/` or `/vi/` URL of the same page and keeps the scroll position and any values typed in forms. The page `lang` attribute, title and meta change with it. The choice is saved for the next visit in an essential first-party locale cookie, so the server can redirect a bare `/` (see Locale routing). |
+| Mega menu | Desktop with hover: hover opens; moving away closes after a 150ms delay so the pointer can cross the gap to the panel. Click toggles predictably and never closes a menu that hover just opened (AC-NAV-3). Escape closes and returns focus to the trigger. A click outside closes. Trigger has `aria-expanded`. Mobile: the mega content expands inline inside the mobile menu. |
+| Mobile menu | Menu button has `aria-controls` and `aria-expanded` (AC-NAV-4). Escape closes it and returns focus to the button. Contains all nav items. The language dropdown never moves into the menu; it stays in the header bar (AC-NAV-1). While open, the focus trap covers the open menu panel plus the header bar controls (logo link, language dropdown, Menu button), so the language dropdown stays reachable. |
+| Language dropdown | The last item in the header: a button styled like the nav links showing the current code (EN or VI) with a caret that flips up when open, opening a small list of "EN" and "VI" (named English and Tiếng Việt) in the same text style on the header glass; the chosen language is marked with `aria-current`; choosing closes the list and returns focus to the button; Escape or a click outside closes it. Switching routes to the matching `/en/` or `/vi/` URL of the same page and keeps the scroll position and any values typed in forms. The page `lang` attribute, title and meta change with it. The choice is saved for the next visit in an essential first-party locale cookie, so the server can redirect a bare `/` (see Locale routing). |
 | Button | Links that look like buttons navigate; buttons submit or toggle. One primary button per group. |
 | Product sub-nav | Sticky under the header on `/products`. Highlights the section in view; at the end of the page the last item (Updates) is highlighted. Links scroll to anchors that land with the heading fully visible (AC-NAV-5). Scrolls horizontally on narrow screens. |
 | Front door | Whole panel is one link (Products door to `/products`, Services door to `/services`). Chips inside are text, not links. |
-| Product tile | One link per tile to the matching Products anchor. Media inside (the mini phone) is not interactive; use a stretched-link pattern so there is no interactive element inside a link (AC-A11Y-4). |
-| Service card | On Home, links to the service anchor on `/services`. On `/services`, it is the anchor target and is not a link. |
+| Four-app row | Each item is one link to its Products anchor (`#pxp`, `#lxp`, `#sxp`, `#iot`); nothing interactive inside it. |
+| Why XionTechs | Static tiles; only the "Our core values" link in the amber strip is interactive. The navy tile shows the live local times, which update every 30 seconds like the office clocks. The team photo slot shows a placeholder frame until a real photo is supplied. |
+| Service card | Lives on `/services` only (removed from Home 2026-10-01), where it is the anchor target and is not a link. The Home services door and the Services link lead there. |
 | Spotlight card | Pointer-following glow and 4px lift on hover only. Hover starts immediately once scroll reveal has finished (AC-UI-1). |
 | Stats band | Numbers count up once when 60% visible (1.4s, ease out). "24/7" does not count. Screen readers get the final value only. Built as one shared component (the prototype copies it across pages). On Home it sits at the bottom of the dark hero. |
 | Process flow (4-D) | When 30% visible, the track fills with amber (2.4s) and steps 01 to 04 fade in one after another; then an amber dot travels the track once and rests at Launch. Below 1080px the track and end nodes hide and steps stack. "You receive" rows align across cards (AC-UI-2). One shared component. |
@@ -156,7 +157,7 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Job application form | On the job page, beside the role details (stacks below them at 900px and below). Fields and rules are in the Job application fields table below. Submit marks every invalid field and focuses the first; errors are announced and linked (AC-A11Y-5). Stored in Sanity; honeypot and rate limit as for the contact form. |
 | Site footer | Same on every page. The privacy policy link must point at a real policy before launch. |
 | Toast | Short status message, bottom centre, `role="status"`, gone after about 2.6s. |
-| Motion toggle | Discreet icon button at the top right of the Home hero; the label is always in its accessible name and slides out on hover or keyboard focus. Label and icon switch between "Pause motion" and "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"); the changing name carries the state, so there is no `aria-pressed`. Hidden without JavaScript or WebGL, or when the WebGL context is lost. |
+| Motion toggle | Discreet icon button at the top right of the Home hero; the label is always in its accessible name and fades in beside the button on hover or keyboard focus. Label and icon switch between "Pause motion" and "Play motion" (VI "Tạm dừng chuyển động" / "Chạy chuyển động"); the changing name carries the state, so there is no `aria-pressed`. Hidden without JavaScript or WebGL, or when the WebGL context is lost. Under reduced motion the label stays visible next to the button. |
 | FAQ | Native disclosure (`<details>` / `<summary>`): several answers can be open at once; Enter and Space toggle; the question is the accessible name. FAQPage structured data on `/about`. Reached from the footer "FAQ" link at `/about#faq`. |
 | Skip link | First focusable element; jumps to `main`. |
 | Focus ring | Shown on keyboard focus (`:focus-visible`) on every focusable element. Colour follows the section: `{colors.focus-on-navy}` on navy, `{colors.focus}` elsewhere. |
@@ -235,7 +236,7 @@ Built with Motion. Easing everywhere is `cubic-bezier(.16, 1, .3, 1)`.
 | Story phone | Screens crossfade over 0.55s. |
 | Mega menu | Fades and drops in over 0.3s. |
 
-**Reduced motion** (`prefers-reduced-motion: reduce`): no animation or transition anywhere. Revealed content, the full 4-D track and all steps show immediately; stats show final numbers; the strand ribbon draws one still frame; device float and tilt are off; smooth scroll is off.
+**Reduced motion** (`prefers-reduced-motion: reduce`): no movement anywhere; state changes (tabs, menus, form results, reveals) keep short opacity fades of 150 to 250ms so the change is still visible. Revealed content, the full 4-D track and all steps show immediately; stats show final numbers; the strand ribbon draws one still frame; device float and tilt are off; smooth scroll is off.
 
 ## Accessibility Floor
 
@@ -247,16 +248,17 @@ Behavioural. Visual contrast lives in `DESIGN.md` Colors. Every item below is an
 - **AC-A11Y-3:** Hidden content (inactive phone screens, closed tabs, closed menus, the inactive contact form tab) cannot receive keyboard focus.
 - **AC-A11Y-4:** No interactive element is nested inside a link. Tiles with media use a separate link or a stretched link.
 - **AC-A11Y-5:** Invalid fields get `aria-invalid="true"` and are linked to their error text with `aria-describedby`. Validation errors are announced.
-- **AC-NAV-1:** The EN/VI switch is available at every screen width.
-- **AC-NAV-2:** "Book a demo" is reachable at every width: next to the EN/VI switch in the header above 640px, and as the first mobile menu item at 640px and below.
-- **AC-NAV-3:** On desktop, a click on Products or Services never closes a menu that hover just opened. Hover opens, click toggles predictably, Escape closes.
+- **AC-NAV-1:** The language dropdown is available in the header bar at every screen width.
+- **AC-NAV-2:** "Book a demo" is reachable at every width without a header button: from the hero button or capture band on Home, Products, About and News (Services offers "Start a project"), and from "Contact" in the footer on every page, which is the only route on Careers, Job, News story, Privacy and Not found.
+- **AC-NAV-3:** On desktop, a click on Products never closes a menu that hover just opened. Hover opens, click toggles predictably, Escape closes.
 - **AC-NAV-4:** The mobile menu closes with Escape. The menu button has `aria-controls` and `aria-expanded`.
 - **AC-NAV-5:** In-page links (`#process`, `#pxp`, `#values` and the rest) land with the section heading fully visible below the sticky header and the product sub-nav, using `scroll-margin-top`.
 - Keyboard: tab order follows reading order; the skip link is first; every mega menu item is reachable by keyboard.
-- Screen readers: one H1 per page; sections labelled by their headings; decorative canvases, aurora and orbs are `aria-hidden`; tabs use the ARIA tab pattern; toasts and form success panels use `role="status"`; the language switch group is labelled "Language".
+- Screen readers: one H1 per page; sections labelled by their headings; decorative canvases, aurora and orbs are `aria-hidden`; tabs use the ARIA tab pattern; toasts and form success panels use `role="status"`; The trigger's accessible name is "Language: EN" (visually hidden "Language:" plus the visible code); the options are named "EN English" and "VI Tiếng Việt", so each name contains its visible text (WCAG 2.5.3). The list is a disclosure, not a menu role: Tab moves through the options, Escape closes it and returns focus to the trigger, moving focus out of it closes it, and only one popup (the Products mega menu or the language list) is open at a time. When the mobile menu and the language list are both open, Escape closes the language list first.
 - Images: product screens and photos have meaningful alt text in both languages; decorative images have empty alt.
-- Touch targets meet WCAG 2.2 target size (at least 24 x 24px); buttons are 42 to 52px tall.
-- Mobile menu: while open, background content does not scroll and focus stays inside the open menu panel plus the header bar controls (logo link, EN/VI switch, Menu button).
+- Touch targets: Every control (buttons, tabs, chips that act, filters, the sub-nav, checkboxes, the language dropdown and its options, the menu and pause buttons) is at least 44 x 44px; inline text links in paragraphs, breadcrumbs, the footer lists and browser-frame addresses meet the WCAG 2.2 minimum of 24 x 24px. Buttons are 44 to 52px tall. Functional text is never smaller than 11.5px.
+- Mobile menu: while open, background content does not scroll and focus stays inside the open menu panel plus the header bar controls (logo link, language dropdown, Menu button).
+- Headings: no small label sits above a section heading (the only labels are the front-door names and the stats heading); the heading carries its own meaning (for example "Our 4-D process: from your request to launch.", "Our core values.").
 
 ## Acceptance Criteria Index
 
@@ -280,17 +282,17 @@ Breakpoints from the prototype (max-width):
 | Width | Changes |
 |---|---|
 | Above 1080px | Full header menu with hover mega menus. 4-D flow in one row with track and end nodes. Stats in 5 columns. Services in 4 columns. |
-| 1080px and below | Menu moves behind the menu button; mega content expands inline in the mobile menu. 4-D steps in 2 columns without track or end nodes. Stats in 3 columns. Services in 2 columns. |
-| 900px and below | Home hero, splits, capture bands, front doors and offices stack to one column; devices max 560px wide. Bento, values and news in 2 columns; the job page form stacks below the role details; the News feature card spans full width. Footer in 2 columns. |
-| 640px and below | Gutters 16px. Section padding shrinks. Bento, values, news, services, 4-D steps, form grid and feature lists in 1 column. Stats in 2 columns. Footer in 1 column. Capture row stacks the field above the button. The highlight mark may wrap. |
+| 1080px and below | Menu moves behind the menu button; mega content expands inline in the mobile menu. 4-D steps in 2 columns without track or end nodes. Stats in 3 columns. The Home app row in 2 columns. Services in 2 columns. |
+| 900px and below | Home hero, splits, capture bands, front doors and offices stack to one column; devices max 560px wide. Why XionTechs tiles stack to one column; values and news in 2 columns; the job page form stacks below the role details; the News feature card spans full width. Footer in 2 columns. |
+| 640px and below | Gutters 16px. Section padding shrinks. Why XionTechs tiles, the app row, values, news, services, 4-D steps, form grid and feature lists in 1 column. Stats in 2 columns. Footer in 1 column. Capture row stacks the field above the button. The highlight mark may wrap. |
 
-**Header at every width** (fixes the prototype, which hid both on phones): the EN/VI switch stays in the header at every width (AC-NAV-1). Book a demo sits next to the EN/VI switch above 640px; at 640px and below it is the first item of the mobile menu (AC-NAV-2).
+**Header at every width:** the language dropdown stays in the header bar at every width (AC-NAV-1). There is no Book a demo button in the header (AC-NAV-2).
 
 Browsers: current evergreen browsers on desktop and mobile. Content is readable without JavaScript.
 
 ## Bilingual (EN / VI)
 
-- English is the default. The EN/VI switch changes the language on every page; the choice persists.
+- English is the default. The language dropdown changes the language on every page; the choice persists.
 - Each language has its own URL (`/en/...`, `/vi/...`) with `hreflang` links, translated titles, meta descriptions, alt text, screen-reader labels and toasts.
 - All four fonts load with the `vietnamese` subset. Vietnamese H1 and H2 use line-height 1.2 (never below 1.18) through a `:lang(vi)` rule (see `DESIGN.md` Typography).
 - Layouts must fit Vietnamese strings, which run longer than English. Buttons do not truncate; headlines may wrap.

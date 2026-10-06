@@ -61,7 +61,7 @@ context: ['{project-root}/AGENTS.md']
 - `src/app/demo/page.tsx` -- renders `<ContactForm />` in `#form.form-card` (:75-77); no change expected.
 - `src/app/api/revalidate/route.ts` + `route.test.ts` -- pattern: env read per request, 500 + `console.error` naming the variable, plain status codes; tests `// @vitest-environment node`, `vi.hoisted` + `vi.mock`, `new Request(...)`, `vi.stubEnv`.
 - `src/components/contact/contact-form.test.tsx` -- Testing Library `fireEvent` only, no jest-dom, no user-event.
-- Mockup: `mockups/site-v3/demo.html:64` (`.form-ok` panel, check-circle icon, `role="status"`), `css/site.css:349-353`, `js/site.js:239` (button disabled + "Sending...").
+- Mockup: `prototype-enhancement/prototype/demo.html:64` (`.form-ok` panel, check-circle icon, `role="status"`), `css/site.css:349-353`, `js/site.js:239` (button disabled + "Sending...").
 - `e2e/smoke.spec.ts` + `playwright.config.ts` -- request-only smoke on port 3100; no env block, so smoke must pass without the new secrets.
 - Next.js 16 docs read: `01-app/03-api-reference/03-file-conventions/route.md` (`request.json()`, `Response.json`), `02-route-segment-config/maxDuration.md`, `02-guides/upgrading/version-15.md:601-612` (`request.ip` removed; `ipAddress` from `@vercel/functions`).
 - Versions (npm, 2026-10-02): `nodemailer` 10.0.13, `@upstash/ratelimit` 2.2.0, `@upstash/redis` 1.39.0, `@vercel/functions` 3.9.9.

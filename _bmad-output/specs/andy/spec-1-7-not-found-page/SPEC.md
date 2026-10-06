@@ -5,8 +5,8 @@ build_day: 2026-10-04
 depends_on: ["1.1"]
 companions:
   - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/EXPERIENCE.md
-  - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/404.html
-  - ../../../planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/css/site.css
+  - ../../../prototype-enhancement/prototype/404.html
+  - ../../../prototype-enhancement/prototype/css/site.css
 sources:
   - ../../../planning-artifacts/epics.md
   - ../../../planning-artifacts/prds/prd-XionTech-LandingPage-2026-09-28/prd.md

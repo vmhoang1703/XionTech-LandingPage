@@ -746,3 +746,482 @@ Template:
   - `/about` shows the hero, stats, story, six values, a nine-question FAQ, two offices with live clocks, and "See our apps in action.".
   - The footer's "Core values" and "FAQ" land below the header.
   - Pending: the story at exactly 900px (the site-wide ≥/≤ breakpoint question).
+
+## 2026-10-01 — Batch 1 into site-v3: readability, accessibility and the new header
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "start batch 1", then "remove book a demo button, change language to be drop down, not toggle
+  switch, move those nav header on the right, make the language drop down to be final item in the navigation; in the
+  middle, add the GET IT DONE text to highlight our slogan".
+- **What the AI did:** On branch `docs/ux-readability` (from `develop`), brought the readability and accessibility
+  fixes from the site-v6 proposal into the official prototype `site-v3`, without its visual changes (aurora, grid,
+  linen, rings and cursor glow kept for batch 2): functional text at least 11.5px, 44px tap targets, reduced motion
+  with short fades, the pause label fading in, no labels above section headings ("Our 4-D process: from your request
+  to launch.", "Our core values."), one tokenised stylesheet and no inline styles. New header, after a second
+  round of Amber's feedback: logo left, menu on the right, Services as a plain link (its mega menu removed), the
+  language as outlined pills (an EN or VI trigger with a caret, options stacked below), no Book a demo button and no
+  slogan in the middle (tried in round one, then removed). The language dropdown was then restyled to match the nav links
+  (same text, mist on hover, options on the header glass). From the site-v6 proposal, "Why XionTechs" and "Four apps
+  for every role in school" moved into site-v3 Home; the four-app row replaces the Home bento (Story 3.5 rewritten).
+  The eight-services grid was removed from Home (it stays on Services). No Contact link in the menu: Book a demo stays
+  reachable through heroes, capture bands and the footer "Contact" link (Amber's decision). Updated
+  `DESIGN.md`, `EXPERIENCE.md`, the PRD (FR-3, FR-4, NFR-1, NFR-2, section 6, open question 15) and `epics.md`
+  (FR inventory, UX-DR6 to UX-DR8 and UX-DR12, AC table, Stories 1.2, 1.3, 1.4, 1.5, 3.1, 3.5, 3.7, 5.4, 7.3), and synced
+  five changed tokens into `src/app/globals.css` so the team's DESIGN.md parity test passes.
+- **Decision / result:** Approved by Amber. bmad-code-review (four layers) found real issues that were fixed before
+  commit: the mobile-menu focus trap skipped the logo and language dropdown, the Products mega menu could overflow the
+  right edge once the menu moved right, the language buttons' accessible names did not contain the visible EN/VI
+  (WCAG 2.5.3), the dropdown and Menu button were not right-aligned below 1080px, duplicate YAML keys in DESIGN.md, a
+  caret rotation under reduced motion, dead bento CSS, and stale header wording in the stories. Follow-up for the
+  developers: `globals.css` still switches every transition off under reduced motion, while the spec now keeps short
+  fades. After the PR opened, Amber confirmed the Why XionTechs claim ("designed, built and supported by our own
+  team"), so its [Placeholder] marker was removed and PRD open question 23 closed.
+- **AI got it wrong?** Flagged, not wrong yet: removing the header Book a demo button changes AC-NAV-2. Book a demo
+  stays reachable through heroes, capture bands and the footer "Contact" link, but pages without a capture band
+  (Careers, Job, News story, Privacy, Not found) now rely on the footer only.
+
+## 2026-10-03 — One prototype, one enhancement branch and an enhancement log
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt / task:** Amber's manager asked for a clearer way of working on the prototype: keep rebasing on
+  `develop`, keep all prototype work on one branch instead of one branch per change, give the prototype a plain
+  name, and log enhancements for the technical team instead of editing the PRD and stories directly.
+- **What changed:** The prototype moved from
+  `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/` to
+  `_bmad-output/prototype-enhancement/prototype/`, and every live reference was updated (the UX specs, PRD, epics,
+  the story specs under `_bmad-output/specs/`, the epic contexts and `scripts/ux/browser.mjs`). Historical records
+  (this log, the `.memlog.md` files and the 2026-09-28 code review) keep the old name. New
+  `_bmad-output/prototype-enhancement/README.md` (folder, names and the six-step flow) and `enhancement-log.md`
+  (`ENH-NNN` entries with status Proposed, Approved, In PR, Merged, Built). The branch `docs/second-draft` became
+  `docs/prototype-enhancement`, rebuilt as `develop` plus batch 1 (PR #10) and rebased on `develop`. The site-v6
+  proposal folder is retired; its homepage ideas come back as logged enhancements in the one prototype.
+  `AGENTS.md` records the folder and the branch exception.
+- **Decision / result:** Amber chose one prototype folder (not site-v3 kept beside a copy), the branch name
+  `docs/prototype-enhancement`, and a PR from the branch to `develop` for each approved set of enhancements. Hoang
+  and the manager then agreed not to merge PR #10: batch 1 reaches `develop` with this branch's PR, and PR #10 was
+  closed.
+- **AI got it wrong?** Not yet. Risk flagged: open developer branches that still point to `mockups/site-v3` (for
+  example the footer story, PR #15) need the new path after this reaches `develop`.
+
+## 2026-10-03 — ENH-001: contact form on Home (first enhancement-log entry)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers)
+- **Prompt / task:** Keep only the contact form from the manager's homepage brief and leave the rest of Home as
+  it is. The Home demo email band became "Have something you want to build?" with name, work email, optional
+  phone and project message fields, inline errors and a thank-you panel. Logged as ENH-001 in
+  `_bmad-output/prototype-enhancement/enhancement-log.md`; no PRD, story or spec edits.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: the phone
+  check accepted input with no digits (now 7 to 15 digits), the 2,000-character limit had no error message
+  (now checked by the script with its own message), an error cleared on the first keystroke even when the value
+  was still invalid, and the button icon was read by screen readers. The log entry now states every rule and
+  error message, names the form "contact", lists the production needs the prototype does not show (honeypot,
+  server checks, rate limit, send-failure state) and every story it touches (3.7, 2.2, 2.3, 2.4, AC-NAV-2).
+- **AI got it wrong?** Yes: the first version of the form copied the redesign's phone check, which let strings
+  like "(------" through, and wrote the log's rules too vaguely for a developer to build or test from.
+
+## 2026-10-04 — ENH-002 to ENH-005: Home hero, header, partners, case studies, Why XionTechs bento, section order
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers), headless Edge
+  checks (nothing shown on screen), plus a screen recording and two reference designs from Amber
+- **Prompt / task:** Several rounds of Amber's review of the prototype Home, logged in
+  `_bmad-output/prototype-enhancement/enhancement-log.md` as ENH-002 (hero, stats with count-up, silk,
+  header: Products as a plain link, underline-only hover on the word, hamburger icon), ENH-003 (partner
+  logo strip and case study placeholders), ENH-004 (tighter section spacing, heading-first reveal, Why
+  XionTechs rebuilt as a four-card bento with a "+3" hover reveal from Amber's reference HTML) and ENH-005
+  (products section moved below the process). Also `wireframes.md`, a text wireframe of every page,
+  generated from the prototype.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit:
+  content could stay invisible when the page opened below a section heading; a second tap could not
+  restart the partner strip, each logo was its own Tab stop, Enter or Space did nothing and wide screens
+  showed a gap in the loop; "+3" closed itself on phones, ignored taps on iPhone and could be clipped at
+  some widths; the count-up started during the fade-in; the phone menu's focus trap let Tab escape; plus
+  dead front-door and mega-menu styles, a motto marked up as a heading, clocks showing "--:--" without
+  JavaScript and three identical case study headings. Developers' follow-up: the UX parity header
+  surface still probes the removed mega menu.
+- **AI got it wrong?** Yes, several times. It first read "hovering on the padding" as a dead strip and
+  made the menu items full height, which Amber rejected; the fix was to remove the side padding so the
+  hover is exactly the word. Its first Why XionTechs illustrations were too busy and were removed. A
+  cleanup regex clipped one CSS rule (caught by comparing every selector with the last commit), and the
+  wireframe generator skipped the logo strip because its class contained "track".
+
+## 2026-10-04 — Two wireframe files: the original and the final with tracked changes
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Edge Case Hunter)
+- **Prompt / task:** Keep one wireframe of the original first draft and one of the final prototype that tracks
+  every change. `wireframes-original.md` is built once from the first draft on `develop` (commit ae606f7,
+  `mockups/site-v3`); `wireframes-final.md` has a change list at the top and every Home section tagged with the
+  entry that shaped it (Batch 1, ENH-001 to ENH-005). The generator and the change tags live in
+  `_bmad-output/prototype-enhancement/tools/`, and regenerating the final file is now a step after each approval.
+- **Decision / result:** Approved by Amber. The review found real problems in the generator, fixed before commit:
+  the "Years" unit was missing from the stats, original mode could silently rebuild from the current prototype,
+  a run date changed the files on every run, a PowerShell redirect would garble the box characters (now `--out`
+  writes UTF-8), missing pages or elements crashed it, one line-wrapping case could loop forever, and a block's
+  own text was dropped when it also held links (the office addresses were missing).
+- **AI got it wrong?** Yes: the first final file gave the Products hero the Home hero's tag (both headings have
+  the id "h1"), and tagged the 4-D section "unchanged" although Batch 1 changed its heading. Tags are now keyed
+  by page and heading.
+
+## 2026-10-04 — ENH-006 to ENH-010: case study slider, news row, What we build rail, How we approach, form details
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers), headless Edge
+  checks (nothing shown on screen), two reference HTML files and a screenshot from Amber
+- **Prompt / task:** Amber's review rounds, logged in `_bmad-output/prototype-enhancement/enhancement-log.md`:
+  ENH-006 (case studies as a full-width slider of six placeholder partner cards with carousel dots; section
+  spacing), ENH-007 (news intro row with "See all news", app name only in news pills), ENH-008 ("What we
+  build." with AI Tutor and AI Timetable in a rail with back and forward buttons; partners heading left),
+  ENH-009 ("How we approach.": the five-step tabbed process from Amber's reference, its layered diagram
+  re-encoded from a 1.27 MB PNG to a 103 KB WebP; equal app cards; heading spacing) and ENH-010 (phone
+  placeholder, quiet submit button). `wireframes-final.md` and its change tags were updated.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: the
+  case study row had seven Tab stops instead of one, the News story page still showed "Product · PXP", the
+  process section switched layout at 1120px and 760px instead of the site's 1080px and 640px, dot labels
+  stayed in English and were rebuilt on every resize (dropping focus), step panels were unreachable without
+  JavaScript, the case study fade covered the last card, a drag could block the next click, focus rings
+  were clipped in the app rail, and the generator drew both rails as plain grids. One request was adjusted
+  for accessibility: dimmed steps use 85% opacity, because 55% falls to about 2.6:1 contrast on the blue.
+- **AI got it wrong?** Yes: it first built the process section in the site's own navy and display font
+  instead of the reference look (Amber sent a screenshot to correct it), counted one carousel dot per card
+  (too many), and its first case study images used a navy mock-window style that did not match the
+  placeholder images in other sections.
+
+## 2026-10-04 — ENH-011 and ENH-012: five steps on Services, a light process on Home
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (four layers), headless Edge
+  checks (nothing shown on screen)
+- **Prompt / task:** Use the same five steps on Services as on Home, highlight the chosen step, then move the full
+  tabbed process to Services and give Home a lighter version (a simple five-step row with one short line each and
+  a link to Services). Logged as ENH-011 and ENH-012; the last "4-D" wording on About and Contact was retired
+  and the old four-card flow code removed. `wireframes-final.md` and its change tags were updated.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: the arrow
+  keys skipped a step on Services (two keyboard handlers both moved the tabs), the Home connector line ran past
+  the last step on phones, disappeared without JavaScript and ended at a guessed position, the Home step text fell
+  to about 2.2:1 contrast on the light end of the gradient (Home now uses a deeper gradient and full white text),
+  long step names could overflow the rail at mid widths, a stray hover band stayed after a tap, Home and Services
+  worded two steps differently, Services had dropped "estimate" from Discovery's outcome, and the About and
+  Contact wording repeated "step". Developers' follow-up: the Next.js app still shows the four-step "4-D
+  process" and its tests pin it.
+- **AI got it wrong?** Yes: a CSS cleanup regex removed part of a keyframes rule and broke the stylesheet's
+  braces; it was restored from the last commit and the old block removed by exact line numbers after checking
+  each line.
+
+## 2026-10-04 — ENH-013: AI Tutor and AI Timetable marked Coming soon
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor, as the change was small)
+- **Prompt / task:** Amber confirmed AI Tutor is for students and AI Timetable is for school leaders, both coming
+  soon, and that the manager wants the partner logo and case study placeholders now. The two cards got a
+  "Coming soon" tag; their placeholder descriptions stay by Amber's choice. Open items in ENH-003, ENH-006 and
+  ENH-008 were closed.
+- **Decision / result:** Approved by Amber. The acceptance audit found no violations. Two hardening fixes from
+  the review were applied: the tag text is semibold (its contrast only just passed at 500 weight) and its
+  colours use the brand amber token. The cards linking to a Products page that does not describe them yet is
+  noted for when the product text exists.
+- **AI got it wrong?** Yes: the tag was first placed in the card's top-right corner, where it covered the app
+  name; it now sits under the audience line, and the card rows were adjusted so every description sits right
+  under its header.
+
+## 2026-10-04 — ENH-014 and ENH-015: Products hero and a school-day timeline
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case
+  Hunter, Verification Gap, Acceptance Auditor)
+- **Prompt / task:** From Amber's reference screenshots, the Products hero became "Built apart. Better
+  together." with one "Explore products" button and a diagram of the four apps around an X tile, on her
+  "warm light" background option with slowly drifting glows (ENH-014). A new "One event. Multiple
+  experiences." section after the four apps follows one school day from 07:45 to 15:30 across the apps
+  (ENH-015). Both are drawn in HTML and CSS rather than images, so they stay sharp, translate and adapt to
+  phones. `wireframes-final.md` and its change tags were updated.
+- **Decision / result:** Approved by Amber. The review found real issues that were fixed before commit: two
+  diagram lines vanished on phones (the dash pattern was measured in screen pixels), the lines did not show
+  without JavaScript, reduced motion did not stop the glows (a more specific rule won), Vietnamese accents
+  touched between heading lines, timeline times sat at different heights in Vietnamese, the phone timeline
+  line ran past the last dot, the cards had no focus lift, a few raw colours replaced tokens, and the wording
+  drifted from Amber's text (em dash, "confirms", "reflects"). The glows now pause off screen and follow the
+  saved motion choice. Open: whether to add a pause button for the glows (WCAG 2.2.2). The wireframe tool now
+  reads a line break as a space, which also fixes "Suite 400Plano" on About.
+- **AI got it wrong?** Yes: the first version reworded Amber's description and two timeline lines instead of
+  using her text, and a hunk filter first staged unrelated FAQ work from another session (caught and
+  unstaged before commit).
+
+## 2026-10-04 — ENH-018: Pause motion button on the Products hero
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor, as the change was small)
+- **Prompt / task:** The drifting glows from ENH-014 move for longer than 5 seconds, so WCAG 2.2.2 asks for a
+  way to stop them. Amber first suggested pausing on hover, then asked whether the card links (which jump down
+  the page) were enough; neither works for keyboard and touch users or keeps the motion stopped, so she chose
+  Home's "Pause motion" button. It now sits in the Products hero, in solid navy, and shares the saved choice
+  with Home's hero and partner logos.
+- **Decision / result:** Approved by Amber. The acceptance audit met 10 of 11 checks; the button and its label
+  touched the heading on 320 and 375px phones, so the hero has more room at the top there. Also fixed: the
+  icon is hidden from screen readers, and with reduced motion a pause after Play freezes the glows where they
+  are instead of jumping them back.
+- **AI got it wrong?** Yes: the previous commit (ENH-014 and ENH-015) also carried another session's unapproved
+  ENH-016 and ENH-017 log entries, because the log file was staged whole; this commit removes them from the
+  branch (they stay in the working copy until approved). The first ENH-018 draft was also numbered ENH-016,
+  which that session had already used.
+
+## 2026-10-04 — ENH-016 and ENH-017: the FAQ rebuilt, every heading left aligned
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5)
+- **Prompt / task:** Amber sent a screenshot of a help-centre style FAQ and asked for the About page FAQ to
+  match it, titled "Your question, we answer", with no search box. Then, from her own screenshots of the
+  result: one background for the whole section, all answers closed, the two columns further apart, every
+  section title left aligned, the round background blobs turned into clouds in the bottom left corner, and no
+  line under the last question. The animated background is option 1 of her reference file
+  (`soft-animated-brand-backgrounds-balanced-speed.html`), mapped onto the site's own navy and light tokens.
+- **Decision / result:** Approved by Amber. ENH-016 covers the FAQ; ENH-017 left-aligns the two centred
+  headings on Products, which were the only centred ones on the site. Checks were static only, as Amber asks:
+  `npm run lint` and the 976 unit tests pass, and `format:check` is clean apart from an untracked scratch file
+  outside this change.
+- **AI got it wrong?** Three times. First, the `+` marker was absolutely positioned over the question's own
+  padding and collided with the next column; worse, `column-gap:96px` was followed by `gap:0` in the same
+  rule, and the shorthand silently reset the gap to zero, which is what Amber's screenshot caught. Second, the
+  heading looked centred although its text was left aligned: the box carried both `wrap` and a 760px width
+  limit, so `wrap`'s automatic side margins centred the narrowed box; `text-align` could never fix that and
+  the width limit had to move onto the heading text. Third, a second Claude session was editing this same
+  branch at the same time and restored `about.html` and `site.css` over the finished FAQ work; it was
+  re-applied with in-place edits so that session's ENH-014, ENH-015 and ENH-018 survived, and Amber closed the
+  other session.
+
+## 2026-10-04 — ENH-019: the FAQ background holds still
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5)
+- **Prompt / task:** Amber, after living with ENH-016 for a few minutes: the FAQ section does not need
+  animation. The clouds and the light-to-navy gradient stay exactly where they are; the drifting stops.
+- **Decision / result:** Approved by Amber. Both keyframe sets are deleted, so the page carries no FAQ
+  animation code at all, and the reduced-motion rule went with them since there is nothing left to switch off.
+  The sheen layer was removed rather than frozen: a sheen is a travelling band of light, and standing still it
+  is only a faint streak parked off to one side. This also settles the open item from ENH-016 — with the FAQ
+  still, the Pause motion button from ENH-018 can stay scoped to the Products and Home heroes.
+- **AI got it wrong?** No, but a judgement call worth recording: "no animation" was read as keeping the look
+  and removing the motion, not as reverting the background Amber had chosen one message earlier. Removing the
+  sheen outright went slightly beyond the literal ask and was flagged to her rather than done quietly.
+
+## 2026-10-05 — ENH-020 to ENH-025: Products apps, colour flow, A day at school, calmer weights
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap, Acceptance Auditor)
+- **Prompt / task:** Over many rounds from Amber's notes, screenshots and three supplied specs (stacking cards,
+  day at school, typography): the Products apps became seven stacked cards that pin and replace one another,
+  with School / Parents / Students pills that jump and highlight (ENH-020); Home's app row matched (ENH-021);
+  one background colour flows down the page, white with amber dots, amber through the apps, light blue from
+  mid-LXP, then dark blue into the footer (ENH-022); "A day at school." became an animated timeline (ENH-023);
+  "See all news" moved to the heading row and the email band went plain (ENH-024); bold weights dropped to 500
+  across the site with the original fonts kept (ENH-025).
+- **Decision / result:** Approved by Amber. The four-layer review found real issues, fixed before commit: cards
+  cut off on short laptop screens, covered cards dropping out of keyboard and screen-reader reach, pill jumps
+  not moving focus, the hover lift making a settled card jump 100px, the pill highlight lagging, a one-pixel
+  seam at the school day, the timeline ignoring Pause motion and dimming text below contrast, the capsule
+  clipped on small phones, the phone timeline starting off-screen, and card headings that did not name the apps.
+  The page background is now drawn once rather than on every scroll frame, which fixed the sluggish scrolling.
+  Open: keeping the reader's card when a window is resized across 993px; the job page's pre-existing phone
+  overflow.
+- **AI got it wrong?** Yes, several times: an early fixed background repainted on every frame and made scrolling
+  sluggish; a first typography pass switched the heading font, which Amber rejected because it no longer matched
+  the logo; the colour flow went through several wrong orders (too much blue, then a wasted empty gap) before
+  matching her description; and a breakpoint scroll fix that did not hold was reverted rather than shipped.
+
+## 2026-10-05 — ENH-026: the job page and Home contact section fit phone screens
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter; the change is three
+  lines of CSS)
+- **Prompt / task:** Fix the job page scrolling sideways on phones (found during the ENH-025 checks), and a 2px
+  sideways scroll on Home at 320px.
+- **Decision / result:** Approved by Amber. Both had one cause: a one-column grid on phones will not shrink below
+  its widest content, and the apply form (job) and the contact block (Home) held their columns wider than the
+  screen. Grid items in those layouts and form fields may now shrink; checkboxes keep their size and long words
+  wrap after the review. All 11 pages were checked at seven widths (no sideways scroll), and desktop layouts
+  were compared before and after (unchanged).
+- **AI got it wrong?** No, beyond first logging the Home overflow as a separate issue before finding it had the
+  same cause.
+
+## 2026-10-05 — ENH-027: resizing across the breakpoint keeps the reader's place
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor)
+- **Prompt / task:** Fix the open item from ENH-020: resizing a window across 993px (stacked cards on desktop,
+  one column on phones) kept the scroll position but lost the reader's card, because the two layouts differ
+  greatly in length.
+- **Decision / result:** Approved by Amber. The card being read is noted only while scrolling (never mid-resize)
+  and restored once the resize settles; away from the cards, the section at a reading line and its offset are
+  restored instead. The review caught that a reader at the footer would have been pulled back to the last card,
+  that an unsupported instant scroll could have stopped the tracking for good, and that a breakpoint change
+  without a resize could leave a later keyboard resize jumping; all fixed and re-checked.
+- **AI got it wrong?** Yes: the first attempt (in ENH-020) let resize handlers overwrite the remembered card and
+  was reverted; here the first version of the non-card case kept the distance from the page end, which drifted
+  because sections change height between layouts, and was replaced by a section anchor.
+
+## 2026-10-05 — ENH-028: pill and resize follow-ups from the ENH-027 audit
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor)
+- **Prompt / task:** Fix the three edge cases the ENH-027 audit raised: phone rotation drifting to another card,
+  a resize mid-slide landing on the incoming card, and the pill staying lit below the cards.
+- **Decision / result:** Approved by Amber. Phone width changes (rotation) keep the reader's exact spot in their
+  card; height-only changes (the keyboard) never move the page; the pill clears below the cards; the pill and the
+  resize memory share one rule for the card being read. The review caught that rotation would have snapped to the
+  card's top rather than the reader's spot, that pinch-zoom could count as a width change, and that short screens
+  could show a blank pill for a moment; all fixed and re-checked.
+- **AI got it wrong?** Yes: the first shared rule required the outgoing card to fade before the next counted,
+  which left the pill lagging at hand-overs and a possible blank moment on short screens; it was simplified to
+  the front-most card past the middle of the screen.
+
+## 2026-10-05 — ENH-029: the pill clears when "A day at school" reaches the middle
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Acceptance
+  Auditor)
+- **Prompt / task:** Clear the audience pill as soon as the school-day section reaches the middle of the screen,
+  instead of about 100px later.
+- **Decision / result:** Approved by Amber. The pill now clears at mid-screen. The acceptance audit found two
+  real problems around it, fixed before commit: the saved resize place used a 30% line while the pill used 50%,
+  so a desktop-to-phone resize could bring the last card back; and desktop resizes let the school-day section
+  drift because the card stack changes length with the window. Away from the cards the place is now kept as a
+  fraction of the screen height, on desktop for any resize; phone keyboard resizes still never move the page.
+- **AI got it wrong?** Yes: the first fix kept the section at the same pixel offset, which on a shorter window
+  fell below the middle and brought the pill back; it now keeps the same fraction of the screen.
+
+## 2026-10-05 — ENH-030: the mountain story opens the About page
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Bring the "Inspired by a mountain" story from a design file into the About page without its
+  frame lines, then make it the page hero: the story told on the left while the mountain picture climbs beside
+  it, the XionTech X mark at the summit, two fuller chapters, the title above both columns, no breadcrumb, and no
+  mention of God, faith or spiritual ideas while still letting readers look the origin up themselves.
+- **Decision / result:** Approved by Amber after six rounds. The old navy hero, key facts and "Two strengths, one
+  team." are gone. The story is held for about a screen of scrolling; chapter 02 takes over at 40%, the colour
+  climbs to the summit and the X turns full colour. The origin is a map-style place tag on the picture with
+  its coordinates, linking out (removed later at Amber's request). The review found landscape phones getting a held layout
+  that did not fit, a short Vietnamese desktop window overflowing by 7px, the switch point measured from the
+  wrong line (about 47% instead of 40%), and a reload part-way down replaying the climb; all fixed and re-checked
+  at ten window sizes.
+- **AI got it wrong?** Yes: the first scroll version let a step click be overridden by the scroll it caused, the
+  phone chapters slid under the picture before the next one took over, and the held block was stretched to a
+  full screen, leaving an empty band under it that Amber had to point out.
+
+## 2026-10-05 — ENH-031 to ENH-036: FAQ slot, big-screen About, page colours, blended email sections
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor); PR #48 opened with the team's `create-pr` skill
+- **Prompt / task:** Open the hand-over PR, then: fill the FAQ's last slot, use the space on very large screens on
+  About, and bring Services, News and Careers up to the new look one page at a time (Services white and amber,
+  News white with light blue throughout, Careers pastel amber), make every email section blend into its page, and
+  blend Home's contact section too.
+- **Decision / result:** Approved by Amber. PR #48 carries ENH-001 to ENH-030 and batch 1. The page background
+  script now takes a palette (warm, cool, pastel); Products is unchanged, checked string for string against HEAD.
+  The FAQ slot became "Still have a question? Ask us directly" instead of an invented tenth question. Review
+  fixes before commit: the moving hero lines now fade out behind the text (contrast had dipped to 1–3:1, already
+  failing on News before), a navy marker for the selected step on amber, blue left in the Services hero removed,
+  the About seam and big-screen alignment fixed, and log wording corrected to match the code.
+- **AI got it wrong?** Yes: the first Services version ended in navy like Products, which Amber did not want; the
+  first News version still had a visible header glow and a dark email band; and an existing bug turned the News
+  filter buttons into "NaN" once the page was scrolled, which earlier checks missed because they did not scroll.
+
+## 2026-10-05 — ENH-037 to ENH-040: News by audience, story page, heading typography, Life carousel
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Rebuild News and the story page from two design files Amber supplied; check the typography
+  guideline on every page (fonts, heading weight, line height, letter spacing); shrink the new photos and the News
+  header; make the News titles smaller; turn "Life at XionTechs" into a horizontal carousel.
+- **Decision / result:** Approved by Amber. News filters by audience with full-photo story cards; the story page is
+  an editorial article whose header follows the story opened. The audit of about 1,100 text elements found no
+  bold text but two leftovers of the rejected body-font headings (Products hero, "A day at school"), five page-title
+  sizes, and loose heading rhythm; all fixed. Headings now use the display font at 300 (its 500 reads as bold).
+  Review fixes before commit: white card dates moved onto a dark pill (they fell to about 1.2:1 on bright photos),
+  a deeper title fade on touch screens, Home and Products news photos no longer wiped by the photo-frame tool,
+  link names led by the title, and the carousel sized to the four frames the log promised.
+- **AI got it wrong?** Yes: the design file's featured photo was a dead Unsplash link, and the first replacement
+  had "Someone in your family has cancer" on its blackboard; the compact news photos were reused inside a
+  photo-frame element that the prototype's upload tool rewrites; and a first contrast check flagged the date pills
+  falsely by sampling outside their rounded corners.
+
+## 2026-10-05 — ENH-041 to ENH-045: event reel, newsroom stories, bento News, mountain touches
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Life at XionTechs as a horizontal event reel from Amber's options file (photos only, one size,
+  no back or forward buttons); real news from the captured newXion newsroom with mock stories where needed, news-
+  style titles and fuller articles; story cards on Home and Products; a bento News grid; the footer ridgeline with a
+  climber whose spot follows the page's place in the navigation; the 404 lost-trail map; "Summit reached" on forms.
+- **Decision / result:** Approved by Amber. The reel uses the real team photos (each links to its story) and keeps
+  a pause button for WCAG 2.2.2. The six newsroom posts are the real stories; three marked mock stories fill
+  Students and Parents. Review fixes before commit: a 9px seam in the reel loop, the first photo vanishing when
+  focused, copied photos keeping the old language, the reel animating while idle, bento holes for small filters,
+  Home's row showing mostly mock stories, Privacy and 404 resetting the climber, and three article sentences that
+  went beyond the newsroom capture.
+- **AI got it wrong?** Yes: the first climber followed the scroll instead of staying at one spot per page (Amber
+  had to clarify), the first reel loop length ignored the last gap, the expanded articles added a few details the
+  newsroom never said (an "evening", a link between two unrelated posts), and a script check line aborted a log
+  update before it was saved.
+
+## 2026-10-05 — ENH-046 to ENH-059: About rebuilt, Services and Careers refreshed, News lead story, new footer
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Rebuild About from Amber's recommendation notes (a "We're XionTechs" intro over pastel peaks,
+  then the mountain story with a transparent mountain, no place name or religious reference, city drawings in the
+  office cards, white after the intro); a white and pastel-amber Services page with "What can we help you
+  achieve?"; Careers from Amber's two careers files (Growth Learning Model hero, Inside XionTechs tiles, flip
+  cards); transparent audience tabs on Products; a lead story and square cards on News; a footer grouped by
+  audience with icon office rows and bracketed phone codes; the XionTech X as the site icon.
+- **Decision / result:** Approved by Amber after several rounds (two About versions, then a page comparing three
+  About backgrounds; Amber chose white after the hero). Review fixes before commit: the About story's inline
+  height overrode the no-JavaScript and short-screen rules (a 939px gap); the Vietnamese back of a Careers flip card
+  was clipped and screen readers heard both faces; filtered News could leave one square card beside a lead; square
+  titles were cut at four lines; links to removed stories opened a different story; the Services hero linked to a
+  missing demo anchor; the footer's contact links were 19px tall; the tabs spilled at 320px in Vietnamese; a
+  leftover "mountain city" phrase; and dead CSS from the earlier layouts.
+- **AI got it wrong?** Yes: the first mountain glow was far too strong, the first transparent mountain picture had a
+  cyan tint from an overflowing colour calculation, the timeline dot first slid in from the centre, two review
+  suggestions (restore the email privacy line and the footer Contact link) went against Amber's explicit requests
+  and were not applied, and a review agent left a temporary script in the repo root that the lint caught.
+
+## 2026-10-06 — ENH-060 to ENH-073: flowing backgrounds, Services panels and cards, News motion, footer room
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Careers on a light blue to white to amber gradient; Services with a sticky Eight services heading,
+  a navy hero panel and a light blue panel with four metric cards across the gap, Three ways and Industries folded in,
+  a navy to light blue to white background with glows and playful entrances; bigger Products tabs; News "Catch up with
+  us" with cards that unfold as they scroll and a newsletter sign-up; Home on one background from the hero navy through
+  blue into white and amber; About light blue glows; footer "About us", a bolder climber, the Vietnam email, and room
+  above the climber on every page; religious place names removed from the docs.
+- **Decision / result:** Approved by Amber after many visual rounds (Services backgrounds tried as conic sweeps, curved
+  bands, solid shapes, a dark navy page and finally panels with metric cards; Home blends reworked until no edges or
+  bands showed). Every page's visible text was measured against the real rendered background for WCAG AA. Review fixes
+  before commit: News reveal order and newsletter focus, Services hover lift and reduced motion, deep links under the
+  header and tab bar, the panel gap after a language switch, no-JavaScript stacking, Vietnamese tab overflow, two
+  contrast misses on the new glows, 44px footer links and newsletter field, and form errors linked to their fields.
+- **AI got it wrong?** Yes: the first conic background focused on one point when Amber wanted curved bands, a solid
+  shape version looked like floating circles, a mountain divider read as childish, the Services title hid behind the
+  cards until the padding override was found, the first Home fade left a hard shift and visible banding, and a
+  wrong SVG icon was briefly wired in before Amber said it was the wrong file.
+
+## 2026-10-06 — ENH-074: a design system page for the prototype
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter and Verification Gap)
+- **Prompt / task:** A design system HTML page for the XionTech prototype, laid out like the AI Tutor project's
+  design-system.html.
+- **Decision / result:** Approved by Amber. `prototype/design-system.html` has ten numbered sections (brand, colour,
+  surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice).
+  Every value is read from `css/site.css` when the page is built, and the components use the site's own classes.
+  Review fixes before commit: a contrast miss on the amber-text swatch labels, a focus ring that vanished on the navy
+  stage, the email demo labelled as its error state with `aria-invalid`, the audience tab demo showing the real amber
+  label, a section menu that hid links at narrow widths, working filter buttons, and a `<main>` landmark.
+- **AI got it wrong?** Yes: the path Amber gave pointed at a folder that did not exist (the file was in another
+  checkout), and the first build lost "GET IT" on the light tagline because a footer style made it white.
+
+## 2026-10-06 — ENH-085: Home link in the main menu (GitHub #52)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt / task:** Team feedback turned into GitHub issue #52 first, then the prototype change: add Home to the header menu while the logo still goes home.
+- **Decision / result:** Approved by Amber. Home (Trang chủ) is the first menu link on every page and in the mobile menu, marked current on the home page. Issue-first so the reason is tracked before the change.
+- **AI got it wrong?** No.
+
+## 2026-10-06 — ENH-077 (climber), ENH-086 and ENH-087: team feedback issues #53 to #61
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt / task:** Turn team feedback into GitHub issues (label `prototype`) first, then update the prototype: Home hero with Get in touch and five figures, ParentHub/StaffHub naming then Parent Hub/Staff Hub (P-Hub, S-Hub), Home content and order (Capabilities, Core values, 4-D process, How we approach, case studies), QA inside Development, a four-card Products page, no metrics on Services; plus the footer climber stepping up on every page.
+- **Decision / result:** Approved by Amber. Issue-first so every change has its reason on record. Other trial work from the same day (ENH-076, ENH-078 to ENH-084 and a Products catalogue trial) was withdrawn and removed before the push.
+- **AI got it wrong?** Yes: a hero class reused by the catalogue drew a giant rounded shape; the Home page reopened at the contact form because Get in touch left #contact in the address; the first mockup removal left half a phone frame; the cards' descriptions came out empty on the first Products rebuild.

@@ -50,7 +50,7 @@ Visitors read dated stories about products, schools, team and company; learn who
 - **Job form states:** idle, error, sending ("Sending...", button disabled), success (form replaced by "Thank you!" and the confirmation, `role="status"`), failure (every value kept, including the chosen CV, error with retry above the button). File field uses the normal field chrome with `{colors.error}` border on error. Form sits beside role details and stacks below them at 900px and below.
 - **Surfaces:** About hero navy, Careers hero amber, News hero light; amber text on light uses `#8A6700`, `#C99700` is never text; focus ring on navy uses the on-navy colour.
 - **Responsive:** values and news go 2 columns at 900px and 1 column at 640px; the News feature card spans full width at 900px; 16px gutters at 640px.
-- Design reference mockups: `news.html`, `news-story.html`, `about.html`, `careers.html`, `job.html` under `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/mockups/site-v3/`. `DESIGN.md` and `EXPERIENCE.md` win on any conflict with the mockups.
+- Design reference mockups: `news.html`, `news-story.html`, `about.html`, `careers.html`, `job.html` under `_bmad-output/prototype-enhancement/prototype/`. `DESIGN.md` and `EXPERIENCE.md` win on any conflict with the mockups.
 
 ## Cross-Story Dependencies
 

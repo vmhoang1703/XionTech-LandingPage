@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News | XionTechs</title>
+<meta name="description" content="Stories from XionTechs: product updates for Parent Hub, Staff Hub and IoT, school life, our team and client work.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Lexend+Exa:wght@400;500;600&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body data-page="news">
+<div id="site-header"></div>
+<main id="main">
+<div class="flow-bg" data-palette="cool" aria-hidden="true"></div>
+
+<section class="hero hero-light page-hero nhead-sec" aria-labelledby="h1">
+  <div class="wrap nhead">
+    <h1 id="h1" class="press-h" data-vi-html="<span class='w'>Cập</span> <span class='w'>nhật</span> <span class='w'>cùng</span> <span class='w'>chúng</span> <span class='w'>tôi</span>"><span class="w">Catch</span> <span class="w">up</span> <span class="w">with</span> <span class="w">us</span></h1>
+    <p class="press-sub" data-vi="Luôn nắm bắt những tin tức và thông báo mới nhất, nóng hổi vừa ra lò.">Stay informed with the latest news and announcements, fresh off the press.</p>
+  </div>
+</section>
+
+<section class="sec s-paper nlist" aria-label="All stories" data-vi-aria="Tất cả tin">
+  <div class="wrap">
+    <div class="news-bar">
+      <div class="filters" data-filter-for="newsGrid" data-count="newsCount" data-empty="newsEmpty" role="group" aria-label="Filter stories by audience" data-vi-aria="Lọc tin theo đối tượng">
+        <button aria-pressed="true" data-f="all" data-vi="Tất cả">All</button>
+        <button aria-pressed="false" data-f="schools" data-vi="Trường học">Schools</button>
+        <button aria-pressed="false" data-f="students" data-vi="Học sinh">Students</button>
+        <button aria-pressed="false" data-f="parents" data-vi="Phụ huynh">Parents</button>
+        <button aria-pressed="false" data-f="company" data-vi="Công ty">Company</button>
+      </div>
+      <p class="sample" data-vi="Tin từ newsroom của newXion; tin có nhãn [Placeholder] là tin mẫu.">Stories from the newXion newsroom; those marked [Placeholder] are samples.</p>
+    </div>
+    <div class="sgrid" id="newsGrid" data-news="all"></div>
+    <p class="sr-only" id="newsCount" aria-live="polite"></p>
+    <div class="news-empty" id="newsEmpty" hidden><span data-vi="Chưa có tin nào trong mục này.">No stories are available in this category yet.</span><button class="btn btn-glass btn-sm" type="button" data-vi="Xem tất cả">Show all</button></div>
+  </div>
+</section>
+
+<section class="capture capture-plain s-paper" aria-labelledby="cap-h">
+  <div class="wrap cap-grid">
+    <div><h2 id="cap-h" data-vi="Đăng ký nhận bản tin.">Subscribe to our newsletter.</h2>
+      <p class="lede" data-vi="Nhận tin tức mới nhất, cập nhật sản phẩm và câu chuyện từ đội ngũ ngay trong hộp thư của bạn.">Get our latest news, product updates and stories from the team, straight to your inbox.</p></div>
+    <form class="cap-form" data-mode="newsletter" novalidate>
+      <label for="cap-email" data-vi="Email của bạn">Your email</label>
+      <div class="cap-row"><input type="email" id="cap-email" autocomplete="email" placeholder="name@example.com" required><button class="btn btn-primary" type="submit" data-vi="Đăng ký">Subscribe</button></div>
+      <small class="err" hidden data-vi="Vui lòng nhập địa chỉ email hợp lệ.">Please enter a valid email address.</small>
+      <div class="cap-ok" role="status" tabindex="-1"><i class="ph ph-check-circle" aria-hidden="true"></i><span data-vi="Bạn đã đăng ký. Hãy đón chờ bản tin tiếp theo của chúng tôi.">You’re subscribed. Look out for our next newsletter.</span></div>
+    </form>
+  </div>
+</section>
+</main>
+<div id="site-footer"></div>
+<script src="js/site.js"></script>
+</body>
+</html>

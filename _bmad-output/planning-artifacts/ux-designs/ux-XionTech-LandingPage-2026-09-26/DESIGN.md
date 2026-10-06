@@ -2,7 +2,7 @@
 name: XionTechs Website
 description: Bilingual (EN/VI) multi-page company website for XionTechs, selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
 status: final
-updated: 2026-09-29
+updated: 2026-10-01
 colors:
   # Brand core, sampled from the logo
   navy: '#163663'
@@ -134,16 +134,16 @@ typography:
     fontSize: 0.72rem
     fontWeight: '500'
     lineHeight: '1.4'
-    letterSpacing: 0.18em
+    letterSpacing: 0.16em
   label-sm:
     fontFamily: Lexend Exa
-    fontSize: 0.62rem
+    fontSize: 0.72rem
     fontWeight: '500'
     lineHeight: '1.4'
     letterSpacing: 0.14em
   data:
     fontFamily: JetBrains Mono
-    fontSize: 0.76rem
+    fontSize: 0.8rem
     fontWeight: '400'
     lineHeight: '1.5'
   data-lg:
@@ -178,7 +178,8 @@ spacing:
   card-padding: 32px
   card-padding-sm: 26px
   button-height: 52px
-  button-height-sm: 42px
+  button-height-sm: 44px
+  tap-target: 44px
   field-height: 50px
   anchor-offset: 88px
   anchor-offset-subnav: 144px
@@ -201,7 +202,7 @@ components:
     foreground: '{colors.heading}'
     radius: '{rounded.full}'
   site-header:
-    background: '{colors.page} at 78% opacity, 16px blur'
+    background: '{colors.page} at 90% opacity, 16px blur'
     border-bottom: '{colors.border}'
     height: '{spacing.header-height}'
   mega-menu:
@@ -209,12 +210,15 @@ components:
     border: '{colors.border}'
     radius: '{rounded.lg}'
     item-hover: '{colors.mist}'
-  language-switch:
-    border: '{colors.border}'
-    active-background: '{colors.navy}'
-    active-foreground: '{colors.white}'
-    typography: '{typography.label-sm}'
+  language-dropdown:
+    typography: '{typography.ui}'
+    height: '{spacing.tap-target}'
     radius: '{rounded.full}'
+    foreground: '{colors.text}'
+    hover-background: '{colors.mist}'
+    list-background: '{colors.page} at 96% opacity'
+    list-radius: '{rounded.lg}'
+    current: 'bold {colors.navy}'
   product-badge-pxp:
     background: 'linear-gradient({colors.amber-light}, {colors.amber})'
     foreground: '{colors.navy}'
@@ -248,12 +252,6 @@ components:
     border: '{colors.border}'
     radius: '{rounded.lg}'
     glow: '{colors.amber} at 16% under the pointer'
-  product-tile:
-    radius: '{rounded.lg}'
-    padding: '{spacing.card-padding}'
-    title: '{typography.title-lg}'
-    badge-on-pxp-tile: '{components.product-badge-sxp}'
-    badge-on-sxp-tile: '{components.product-badge-pxp}'
   service-card:
     radius: '{rounded.lg}'
     padding: '{spacing.card-padding-sm}'
@@ -360,7 +358,7 @@ Brand inputs: `imports/xiontechs-logo.png`, `imports/xiontechs-logo-square.png` 
 
 **Build mapping.** The build is Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion. Every token here maps 1:1 into Tailwind `@theme`: `colors.*` to `--color-*`, font families to `--font-display`, `--font-brand`, `--font-body`, `--font-mono`, `typography.*` to `--text-*`, `rounded.*` to `--radius-*`, `spacing.*` to `--spacing-*` except `spacing.container`, which maps to `--container-page`. Breakpoints, layers, motion and shadows are in the Build tokens table under Layout & Spacing. shadcn variables map as `--primary` = `{colors.amber}`, `--primary-foreground` = `{colors.navy}`, `--background` = `{colors.page}`, `--foreground` = `{colors.text}`, `--muted-foreground` = `{colors.muted}`, `--border` = `{colors.border}`, `--ring` = `{colors.focus}` (overridden to `{colors.focus-on-navy}` inside navy sections), `--destructive` = `{colors.error}`.
 
-Reference mockups: [`mockups/site-v3/index.html`](mockups/site-v3/index.html) and its sibling pages show every token in use. These spines win on any conflict with the mockups.
+Reference mockups: [`prototype-enhancement/prototype/index.html`](../../../prototype-enhancement/prototype/index.html) and its sibling pages show every token in use. These spines win on any conflict with the mockups.
 
 ## Colors
 
@@ -398,7 +396,7 @@ Contrast target: WCAG 2.2 AA everywhere. 4.5:1 for text, 3:1 for large text, ico
 Four typefaces, one job each. All four load with the `vietnamese` subset from Google Fonts (in the build, through `next/font` with `subsets: ['latin', 'vietnamese']`).
 
 - **Unbounded (500 to 700): display.** Hero and section headlines, card titles, stat numbers. Wide geometric caps echo the logo. Never for paragraphs, never all caps for long headings.
-- **Lexend Exa (400 to 600): brand caps.** Eyebrow labels, category tags, "for" lines in the mega menu, footer column headings, the language switch, the GET IT DONE tag. Always uppercase with open tracking (0.12 to 0.2em). Never for paragraphs.
+- **Lexend Exa (400 to 600): brand caps.** Category tags, "for" lines in the mega menu, footer column headings and the GET IT DONE tag. (The language dropdown uses the body face, like the nav links.) Always uppercase with open tracking (0.12 to 0.2em). Never for paragraphs.
 - **Be Vietnam Pro (400 to 700): body and UI.** Paragraphs, nav, buttons, forms, lists.
 - **JetBrains Mono (400 to 500): data.** News dates, breadcrumbs, 4-D step numbers, office clocks, browser-frame URLs, screenshot size hints. Small doses only.
 
@@ -408,14 +406,14 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 | Page hero H1 | same family and weight, clamp 2.2rem, 4.4vw, 3.6rem, max 18ch | Inner pages |
 | Section H2 | `{typography.headline}`, fluid down to `{typography.headline-mobile}` | Section heads, capture bands |
 | Stat number | `{typography.stat}` (clamp 2rem, 3.6vw, 3rem) | Stats band |
-| Product tile title | `{typography.title-lg}` | Home bento |
+| Why tile title | `{typography.title-md}`, the large tile up to 1.6rem | Home Why XionTechs |
 | Step, value, office title | `{typography.title-md}` | 4-D steps, values, office cards |
 | Card title | `{typography.title-sm}` | Service cards, mega menu items, news cards (1.08rem) |
 | Lede | `{typography.body-lg}`, max 60ch | Under H1 and H2 |
 | Body | `{typography.body}` | Paragraphs |
 | Small body | `{typography.body-sm}` | Card copy, footer links, helper text |
 | Nav item | `{typography.ui}` | Header menu |
-| Eyebrow label | `{typography.label}` with a 22px amber rule before it | Above section heads |
+| Label | `{typography.label}` with a 22px amber rule before it | Door names and the stats heading only; never above a section heading |
 | Tag | `{typography.label-sm}` | Category tags, badges' "for" line |
 | Data | `{typography.data}` | Dates, crumbs, step numbers |
 | Clock | `{typography.data-lg}` | Office cards |
@@ -426,7 +424,7 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 
 - **Container:** `{spacing.container}` max width, `{spacing.gutter}` side padding, `{spacing.gutter-mobile}` below 640px.
 - **Sections:** `{spacing.section}` vertical padding (`{spacing.section-mobile}` below 640px). Email capture bands use `{spacing.capture}`. Page heroes use `{spacing.page-hero-top}` / `{spacing.page-hero-bottom}` (`{spacing.page-hero-mobile}` below 640px). Section heads sit `{spacing.section-head-gap}` above their content, max 760px wide.
-- **Grids:** 12-column bento for product tiles, 4-column service grid, 3-column news and values grids, 5-column stats, 2-column split for text + media. Gaps 14 to 20px, default `{spacing.grid-gap}`.
+- **Grids:** 12-column grid for the Why XionTechs tiles, a 4-column app row, 4-column service grid, 3-column news and values grids, 5-column stats, 2-column split for text + media. Gaps 14 to 20px, default `{spacing.grid-gap}`.
 - **Home hero:** fills the viewport under the header (`100dvh` minus `{spacing.header-height}`), text column 0.92fr, devices 1.08fr. The two front doors overlap the hero bottom by 104px (80px below 900px).
 - **Forms:** the contact form card sits in the right half of the split hero on desktop and stacks full width below 900px. Email capture rows sit in a 2-column band (copy left, form right).
 - **Anchors:** every in-page target sets `scroll-margin-top` to `{spacing.anchor-offset}` (sticky header plus breathing room) or `{spacing.anchor-offset-subnav}` on the Products page, where the sticky product sub-nav sits under the header. Confirm both values against the built header heights.
@@ -435,7 +433,7 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 
 | Page | Hero | Sections in order |
 |---|---|---|
-| Home | `hero-silk` (dark, with the stats inside) | front doors, products (mist, linen), services (paper), 4-D process (navy), news (mist), capture (amber) |
+| Home | `hero-silk` (dark, with the stats inside) | front doors, why XionTechs (paper, with a navy tile and an amber strip), four-app row (mist, linen), 4-D process (navy), news (mist), capture (amber) |
 | Products | `hero-amber` | sub-nav, PXP (paper), LXP (mist, linen), SXP (navy), IoT (paper), product updates (mist), capture (navy) |
 | Services | `hero-navy` | stats (paper), 8 services (mist, linen), ways to work (paper), 4-D process (navy), industries (mist), capture (amber) |
 | News | `hero-light` | filters + story grid (paper), demo capture (amber) |
@@ -450,7 +448,10 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 |---|---|
 | Breakpoints | `--breakpoint-sm: 640px`, `--breakpoint-md: 900px`, `--breakpoint-lg: 1080px` (what changes at each is in `EXPERIENCE.md` Responsive & Platform) |
 | Layers (z-index) | background art -1, content 0, sticky sub-nav 40, header 50, mega menu 55, mobile menu 60, toast 100, skip link 200 |
-| Motion | `--ease-brand: cubic-bezier(.16, 1, .3, 1)`; durations 300ms (menus), 550ms (screen crossfade), 900ms (reveal), 1200ms (highlight), 1400ms (count-up), 2400ms (4-D track) |
+| Motion | `--ease-brand: cubic-bezier(.16, 1, .3, 1)`; durations 300ms (menus), 550ms (screen crossfade), 900ms (reveal), 1200ms (highlight), 1400ms (count-up), 2400ms (4-D track). Reduced motion: no movement; state changes keep short opacity fades (150 to 250ms) |
+| Type scale | `--fs-label` .72rem (the smallest functional size, about 11.5px), `--fs-caption` .8rem, `--fs-small` .92rem, `--fs-ui` .95rem, `--fs-body` 1rem, `--fs-lead` 1.12rem, `--fs-title-sm` 1rem, `--fs-card` 1.08rem, `--fs-title-md` 1.2rem, `--fs-title-lg` 1.7rem |
+| Tap targets | Every control (buttons, tabs, chips that act, filters, the sub-nav, checkboxes, the language dropdown and its options, the menu and pause buttons) is at least `{spacing.tap-target}` (44px); inline text links in paragraphs, breadcrumbs, the footer lists and browser-frame addresses meet the WCAG 2.2 minimum of 24 x 24px |
+| Prototype CSS | `prototype-enhancement/prototype/css/site.css` is one consolidated file; every colour, radius, size and space is a token in `:root` that mirrors this file, and pages use shared classes, not inline styles (the only exception is the `--d` stagger delay on each 4-D step) |
 | Shadows | `--shadow-card: 0 40px 80px -40px rgb(11 23 48 / .45)`, `--shadow-device: 0 60px 100px -40px rgb(11 23 48 / .55)`, `--shadow-primary: 0 12px 30px -12px rgb(255 192 0 / .7)` |
 | Fluid sizes | Home H1 `clamp(2.2rem, 4vw, 3.5rem)`, page H1 `clamp(2.2rem, 4.4vw, 3.6rem)`, H2 `clamp(1.9rem, 3.5vw, 2.8rem)`, stat `clamp(2rem, 3.6vw, 3rem)`, news card title 1.08rem |
 
@@ -467,7 +468,7 @@ Depth is soft and navy-tinted, never grey.
 
 ## Shapes
 
-- Buttons, chips, the language switch, tags, filter chips and the email field are pills (`{rounded.full}`).
+- Buttons, chips, the language dropdown trigger, tags, filter chips and the email field are pills (`{rounded.full}`).
 - Cards, tiles, news cards, 4-D steps and office cards use `{rounded.lg}` (24px). Front doors and the contact form card use `{rounded.xl}` (28px).
 - Form fields use `{rounded.sm}` (12px). Badges, icon tiles and screenshot frames use `{rounded.md}` (14px).
 - Device frames follow real hardware: tablet `{rounded.device-tablet}`, phone `{rounded.device-phone}`.
@@ -479,15 +480,16 @@ Depth is soft and navy-tinted, never grey.
 Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the same names. shadcn/ui primitives to build on are named in brackets.
 
 - **Button** [Button]. Three variants, all pills, `{spacing.button-height}` (small `{spacing.button-height-sm}`): `button-primary` amber gradient with navy text, used for the main action on light, navy and paper surfaces; `button-navy` navy with white text, used as the main action on amber surfaces; `button-glass` translucent with a border, for secondary actions. Press state: 1px down, scale 0.98. Hover: lift 2px.
-- **Site header** [NavigationMenu]. Sticky glass bar, `{spacing.header-height}` tall. Logo 32px high on the left, menu in the middle, tools on the right (language switch with the Book a demo button next to it above 640px; menu button below 1080px). Menu items are text only: the Products and Services triggers have no caret icon and share the plain links' 40px height so they align. Active page: navy bold text with a 2px amber underline.
-- **Mobile menu** [Sheet or inline panel]. Below 1080px, a paper panel under the header, full width, scrolls within the viewport; mega content becomes a single column without shadow. Menu button is a 40px-high pill with the text "Menu" (no icon) and a navy border at 14%.
-- **Mega menu** [NavigationMenu content]. Paper panel, 24px radius, up to 660px wide, 2 columns. Text only, with no badges, icons or arrows. Products mega: app name + one-line value + "for" line in `{typography.label-sm}`, footer row "More products are on the way." + "All products". Services mega: the 8 service names, footer row with the 4-D process line and "See the process".
-- **Language switch** [ToggleGroup]. Pill segment with EN and VI. Active: navy fill, white text.
-- **Product badge.** 44px rounded square, app initials in Unbounded 700. PXP amber, LXP navy-soft to navy, SXP navy to ink with amber-tint text, IoT mist with a chip icon. On product tiles whose fill matches the badge, the badge swaps for contrast: the amber PXP tile shows the SXP badge style and the navy SXP tile shows the PXP badge style (`product-tile.badge-on-*`). The app name always sits next to the badge.
+- **Site header** [NavigationMenu]. Sticky glass bar, `{spacing.header-height}` tall: logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. Below 1080px the menu moves behind the menu button and the language dropdown stays in the bar. No Book a demo button. Menu items are text only: the Products trigger has no caret icon and shares the plain links' 44px height so they align. Services is a plain link. The language dropdown is the only control with a caret.
+- **Mobile menu** [Sheet or inline panel]. Below 1080px, a paper panel under the header, full width, scrolls within the viewport; mega content becomes a single column without shadow. Menu button is a 44px-high pill with the text "Menu" (no icon) and a navy border at 14%.
+- **Mega menu** [NavigationMenu content]. Paper panel, 24px radius, up to 660px wide, 2 columns. Text only, with no badges, icons or arrows. Products mega: app name + one-line value + "for" line in `{typography.label-sm}`, footer row "More products are on the way." + "All products". Only Products has a mega menu; Services is a plain link (decided 2026-10-01).
+- **Language dropdown** [Popover disclosure, not a menu role]. The last item in the header, styled like the nav links: Be Vietnam Pro 500 at `{typography.ui}`, ink text, no border, mist fill on hover and while open, 44px tall, with a caret that flips up when open. The options (EN, VI) open in a small list on the header glass (page at 96%, hairline border, `{rounded.lg}`), in the same text style; the current one is bold navy.
+- **Product badge.** 44px rounded square, app initials in Unbounded 700. PXP amber, LXP navy-soft to navy, SXP navy to ink with amber-tint text, IoT mist with a chip icon. On a section whose fill matches the badge (the navy SXP section on Products), the badge swaps for contrast. The app name always sits next to the badge; where it does, the badge is `aria-hidden`.
 - **Front door.** Two large linked panels under the Home hero. Products door: white to pale blue gradient, four badges, four audience chips. Services door: navy surface, amber label, service chips ("+3 more").
 - **Stats band.** Five columns separated by 1px borders. On Home it sits at the bottom of the dark hero under the label "Experience you can count on". Number in `{typography.stat}`; the suffix (+, /7) uses `{colors.amber-text}` on light and `{colors.amber}` on navy. Muted caption under each, max 22ch. The figures are confirmed by the business (2026-09-28); an italic `[Placeholder]` note is added under the band only if a figure is ever unverified.
-- **Spotlight card.** Base for tiles, service cards, news cards and office cards: glass fill, border, 24px radius, pointer-following amber glow.
-- **Product tile.** Home bento. PXP spans 7 columns and 2 rows in an amber gradient with a tilted mini phone breaking the bottom edge. SXP spans 5 in navy. LXP spans 3 and IoT spans 2 on glass. Each has a circular "go" arrow top right.
+- **Spotlight card.** Base for service cards (Services), news cards and office cards: glass fill, border, 24px radius, pointer-following amber glow.
+- **Why XionTechs grid.** Four tiles on a 12-column grid: a large paper tile (7 columns, 2 rows) with a 16:10 team photo slot and text below; a navy tile (5 columns) with a globe icon and the live local times in mono; a mist tile (5 columns); a full-width amber strip with "Get IT Done" in Unbounded and a link to the core values. Tiles use `{rounded.lg}`; they stack to one column below 900px.
+- **Four-app row.** One row of four items divided by hairlines: badge, app name in Unbounded, audience in caption size and one line below; each item is one link. Two columns at 1080px, one at 640px. Replaces the earlier Home bento.
 - **Service card.** 48px icon tile, title in `{typography.title-sm}`, one line of copy, optional mono tags row. Variants: `feature` (amber wash at 22%), `navy` (navy fill, amber icon).
 - **Process flow (4-D).** Six items in a row: "Your request" node, four step cards (01 Discovery, 02 Design, 03 Development, 04 Deployment) and an amber "Launch" node, joined by a dashed track that fills with amber. Each step card: illustrated header (navy icon tile with three floating orbs), mono step number, title, one line, then a dashed divider and a "You receive" row. The "You receive" rows align across all four cards.
 - **Industry chip.** Pill with icon. EdTech is the primary chip: navy fill on light, amber fill on navy.
@@ -512,8 +514,8 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 - **File field.** Same field chrome as other inputs, auto height; error border `{colors.error}`.
 - **Site footer.** Ink background, white logo plate, blurb, four link columns with amber-tint Lexend Exa headings, office addresses, a bottom bar with copyright, privacy policy link and the GET IT **DONE** tag (DONE in amber).
 - **Toast** [Sonner]. Small ink pill at the bottom centre.
-- **Motion toggle.** Discreet round icon button (36px high, ink at 50%, white border at 30%, 70% opacity at rest) with a pause or play icon at the top right of the Home hero. Its text label slides out on hover or keyboard focus.
-- **FAQ.** Stacked question cards (paper, 18px radius, hairline border) with the question in `{typography.title-sm}` and a round plus / minus marker; the open card gains a soft shadow. Max width 880px.
+- **Motion toggle.** Discreet round icon button (44px, ink at 50%, white border at 30%, 70% opacity at rest) with a pause or play icon at the top right of the Home hero. Its text label fades in beside it on hover or keyboard focus (opacity and transform only, no width animation).
+- **FAQ.** Stacked question cards (paper, `{rounded.md}`, hairline border) with the question in `{typography.title-sm}` and a round plus / minus marker; the open card gains a soft shadow. Max width 880px.
 - **Skip link.** Hidden until focused; then an amber pill with navy text at the top left.
 - **Focus ring.** 2.5px outline, 3px offset, 8px radius. Navy on light and amber surfaces, amber (`{colors.focus-on-navy}`) on navy surfaces. The email capture row shows a 3px ring in the same scoped colour.
 
@@ -531,3 +533,5 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 | Use real product screens, clips and team photos | Use AI-generated art or stock that looks generated; use a hand-crafted illustrator brief |
 | Mark unverified content `[Placeholder]` until verified | Ship sample names, numbers or stories as if real |
 | Highlight one phrase per hero headline | Highlight several phrases, or set whole headings in amber |
+| Let the heading carry the section; fold any label words into it | Put a small caps label above a section heading |
+| Keep functional text at `--fs-label` (11.5px) or larger | Set tags, captions or badges below 11.5px |
