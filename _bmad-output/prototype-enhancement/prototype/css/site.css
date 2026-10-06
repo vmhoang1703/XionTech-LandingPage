@@ -1674,7 +1674,7 @@ footer.site .fbot a{display:inline-flex;align-items:center;min-height:var(--targ
 
 
 
- and two doors across the hero's lower edge (ENH-086) ---------- */
+/* ---------- Home hero: five figures and two doors across the hero's lower edge (ENH-086) ---------- */
 .stats.stats-5{grid-template-columns:repeat(5,minmax(0,1fr))}
 .home-hero .stats-5 .stat{border-left:1px solid rgb(255 255 255 / .14);padding-left:20px}
 .home-hero .stats-5 .stat:first-child{border-left:0;padding-left:0}
@@ -1723,7 +1723,7 @@ body[data-page="services"] .svc-panel{margin-top:28px!important;padding-top:clam
 .flow .track b{position:absolute;top:-8px;left:0;width:13px;height:13px;border-radius:50%;background:var(--amber);opacity:0}
 .flow.lit .track b{opacity:1;animation:travel 2.5s 2.4s var(--ease) 1 forwards}
 @keyframes travel{from{left:0}to{left:calc(100% - 13px)}}
-.node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;width:120px}
+.node{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;width:128px}
 .node .dot{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;font-size:2.2rem;background:var(--white);border:1.5px dashed var(--border);color:var(--navy)}
 .node b{font-family:var(--f-display);font-weight:400;font-size:var(--fs-small);color:var(--heading)}
 .node small{color:var(--muted);font-size:var(--fs-caption);line-height:1.4}
