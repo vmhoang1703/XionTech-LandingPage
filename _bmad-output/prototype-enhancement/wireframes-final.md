@@ -68,7 +68,7 @@ also has a Vietnamese version in the prototype.
 | Footer and climber | About; climber outline | About us; Vietnam email; a bolder hiker with an amber backpack; every page leaves room above it | ENH-064, ENH-073 |
 | Design system | None | design-system.html: brand, colour, surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice, all read from css/site.css | ENH-074 |
 | Home, hero and order | Product headline, mockups, two figures | What XionTechs does, Get in touch, five figures, two cards across the hero edge; then Capabilities, Core values, How we approach (the 4-D process), case studies, news, contact; no Our partners or What we build | ENH-086 to ENH-088 |
-| Products page | Stacked app cards (seven apps) | Four plain cards (Parent Hub, Staff Hub, IoT, AI Tutor) on a navy panel | ENH-087 |
+| Products page | Stacked app cards (seven apps) | Four showcase cards (Parent Hub, Staff Hub, IoT, AI Tutor): tagline as the title, a square expand icon that opens the app's detail view on the same page, screenshot centred | ENH-087, ENH-089 |
 | Process | Five-step How we work | The original 4-D process with QA inside Development | ENH-087 |
 | App names | PXP, SXP, LXP | Parent Hub and Staff Hub (P-Hub, S-Hub); no Learner Hub | ENH-086, ENH-087 |
 | Footer climber | Stays at the highest page reached | Walks one step up on each page, summit on Careers | ENH-077 |
@@ -380,23 +380,104 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║                                                                                                          ║
 ║ ┌─ 2. What we build. · [new in ENH-020 · audience tabs in ENH-049 to ENH-052 · bigger tabs with icon… ─┐ ║
 ║ │ H2: What we build.                                                                                   │ ║
-║ │ Text: Four apps that connect parents, schools and students.                                          │ ║
-║ │ H3: Parent Hub                                                                                       │ ║
-║ │ Text: Keeps parents close to every school day, on their phone.                                       │ ║
-║ │ [BUTTON: Download on the · App Store]                                                                │ ║
-║ │ [BUTTON: Get it on · Google Play]                                                                    │ ║
-║ │ H3: Staff Hub                                                                                        │ ║
-║ │ Text: One workspace where staff, teachers and leaders share the same data.                           │ ║
-║ │ [BUTTON: View prototype]                                                                             │ ║
-║ │ H3: IoT Device Management                                                                            │ ║
-║ │ Text: Run classroom devices, lighting, climate and access from one screen.                           │ ║
-║ │ [BUTTON: View prototype]                                                                             │ ║
-║ │ H3: AI Tutor                                                                                         │ ║
-║ │ Text: Solve new problems on your own. Not just read solutions.                                       │ ║
-║ │ [BUTTON: View prototype → https://xt-ai-tutor-demo.azurewebsites.net/]                               │ ║
+║ │ Text: Four apps that connect parents, schools and students. Use the expand icon to see each app in   │ ║
+║ │   detail.                                                                                            │ ║
+║ │ Text: Parent Hub                                                                                     │ ║
+║ │ H3: Keeps parents close to every school day, on their phone.                                         │ ║
+║ │ [BUTTON: Open Parent Hub details]                                                                    │ ║
+║ │ [IMAGE: [Placeholder] Parent Hub phone screenshot · 1170 × 2532]                                     │ ║
+║ │ Text: Staff Hub                                                                                      │ ║
+║ │ H3: One workspace where staff, teachers and leaders share the same data.                             │ ║
+║ │ [BUTTON: Open Staff Hub details]                                                                     │ ║
+║ │ Text: [Placeholder] staffhub.xiontechs.com                                                           │ ║
+║ │ [IMAGE: [Placeholder] Staff Hub screenshot · 1600 × 1000]                                            │ ║
+║ │ Text: IoT Device Management                                                                          │ ║
+║ │ H3: Run classroom devices, lighting, climate and access from one screen.                             │ ║
+║ │ [BUTTON: Open IoT Device Management details]                                                         │ ║
+║ │ Text: [Placeholder] iot.xiontechs.com                                                                │ ║
+║ │ [IMAGE: [Placeholder] IoT Device Management screenshot · 1600 × 1000]                                │ ║
+║ │ Text: AI Tutor                                                                                       │ ║
+║ │ H3: Solve new problems on your own. Not just read solutions.                                         │ ║
+║ │ [BUTTON: Open AI Tutor details]                                                                      │ ║
+║ │ Text: xt-ai-tutor-demo.azurewebsites.net                                                             │ ║
+║ │ [IMAGE: [Placeholder] AI Tutor screenshot · 1600 × 1000]                                             │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 3. A day at school. · dark navy · [new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040 … ─┐ ║
+║ ┌─ 3. Staff Hub ───────────────────────────────────────────────────────────────────────────────────────┐ ║
+║ │ H2: Staff Hub                                                                                        │ ║
+║ │ [BUTTON: Close Staff Hub details]                                                                    │ ║
+║ │ Text: One workspace where staff, teachers and leaders share the same data.                           │ ║
+║ │ Text: Made for · Staff, teachers and school leaders                                                  │ ║
+║ │ [BUTTON: View prototype]                                                                             │ ║
+║ │ Text: [Placeholder] staffhub.xiontechs.com                                                           │ ║
+║ │ [IMAGE: [Placeholder] Staff Hub screenshot · 1600 × 1000]                                            │ ║
+║ │ H3: Features                                                                                         │ ║
+║ │ H4: Attendance and records in real time                                                              │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Classes, timetables and grades                                                                   │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Messages to parents through Parent Hub                                                           │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Leader dashboards for today's priorities                                                         │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 4. IoT Device Management ───────────────────────────────────────────────────────────────────────────┐ ║
+║ │ H2: IoT Device Management                                                                            │ ║
+║ │ [BUTTON: Close IoT Device Management details]                                                        │ ║
+║ │ Text: Run classroom devices, lighting, climate and access from one screen.                           │ ║
+║ │ Text: Made for · School operations and facilities teams                                              │ ║
+║ │ [BUTTON: View prototype]                                                                             │ ║
+║ │ Text: [Placeholder] iot.xiontechs.com                                                                │ ║
+║ │ [IMAGE: [Placeholder] IoT Device Management screenshot · 1600 × 1000]                                │ ║
+║ │ H3: Features                                                                                         │ ║
+║ │ H4: Projectors, displays and sound                                                                   │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Lighting and climate on the timetable                                                            │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Doors and zones managed centrally                                                                │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Energy use across the campus                                                                     │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 5. Parent Hub ──────────────────────────────────────────────────────────────────────────────────────┐ ║
+║ │ H2: Parent Hub                                                                                       │ ║
+║ │ [BUTTON: Close Parent Hub details]                                                                   │ ║
+║ │ Text: Keeps parents close to every school day, on their phone.                                       │ ║
+║ │ Text: Made for · Parents and families                                                                │ ║
+║ │ [BUTTON: Download on the · App Store]                                                                │ ║
+║ │ [BUTTON: Get it on · Google Play]                                                                    │ ║
+║ │ [IMAGE: [Placeholder] Parent Hub phone screenshot · 1170 × 2532]                                     │ ║
+║ │ H3: Features                                                                                         │ ║
+║ │ H4: Alerts when your child reaches the gate                                                          │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Scores and comments as soon as published                                                         │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Two-way messages with teachers                                                                   │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Fee payments with clear receipts                                                                 │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 6. AI Tutor ────────────────────────────────────────────────────────────────────────────────────────┐ ║
+║ │ H2: AI Tutor                                                                                         │ ║
+║ │ [BUTTON: Close AI Tutor details]                                                                     │ ║
+║ │ Text: Solve new problems on your own. Not just read solutions.                                       │ ║
+║ │ Text: Made for · Students, with teachers alongside                                                   │ ║
+║ │ [BUTTON: View prototype → https://xt-ai-tutor-demo.azurewebsites.net/]                               │ ║
+║ │ Text: xt-ai-tutor-demo.azurewebsites.net                                                             │ ║
+║ │ [IMAGE: [Placeholder] AI Tutor screenshot · 1600 × 1000]                                             │ ║
+║ │ H3: Features                                                                                         │ ║
+║ │ H4: Skill-by-skill diagnosis                                                                         │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Step-by-step hints once you have tried                                                           │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ │ H4: Mastery only when you can do it alone                                                            │ ║
+║ │ Text: [Placeholder] One or two lines on how this works for the people who use it.                    │ ║
+║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
+║                                                                                                          ║
+║ ┌─ 7. A day at school. · dark navy · [new in ENH-015 · rebuilt in ENH-023 · display font in ENH-040 … ─┐ ║
 ║ │ H2: A day at school.                                                                                 │ ║
 ║ │ Text: Follow one student journey through a typical school day and see how students, parents and      │ ║
 ║ │   school staff stay informed and connected across each step.                                         │ ║
@@ -419,7 +500,7 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘                                    │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. Product updates. · light blue · [ENH-024 · story cards in ENH-042] ──────────────────────────────┐ ║
+║ ┌─ 8. Product updates. · light blue · [ENH-024 · story cards in ENH-042] ──────────────────────────────┐ ║
 ║ │ H2: Product updates.                                                                                 │ ║
 ║ │ Text: New features and stories from Parent Hub, Staff Hub, IoT and the AI Tutor.                     │ ║
 ║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
@@ -433,7 +514,7 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. See it working at your school. · navy ───────────────────────────────────────────────────────────┐ ║
+║ ┌─ 9. See it working at your school. · navy ───────────────────────────────────────────────────────────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: See it working at your school.            │ │ [FIELD: Work email (email, required)]          │ │ ║
 ║ │ │ Text: Leave your work email and we'll arrange │ │ placeholder: "name@school.edu.vn"              │ │ ║
