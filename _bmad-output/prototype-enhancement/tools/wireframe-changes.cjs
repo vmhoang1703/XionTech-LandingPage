@@ -115,7 +115,7 @@ module.exports = {
 | Footer and climber | About; climber outline | About us; Vietnam email; a bolder hiker with an amber backpack; every page leaves room above it | ENH-064, ENH-073 |
 | Design system | None | design-system.html: brand, colour, surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice, all read from css/site.css | ENH-074 |
 | Home, hero and order | Product headline, mockups, two figures | What XionTechs does, Get in touch, five figures, two cards across the hero edge; then Capabilities, Core values, How we approach (the 4-D process), case studies, news, contact; no Our partners or What we build | ENH-086 to ENH-088 |
-| Products page | Stacked app cards (seven apps) | Four plain cards (Parent Hub, Staff Hub, IoT, AI Tutor) on a navy panel | ENH-087 |
+| Products page | Stacked app cards (seven apps) | Four showcase cards (Parent Hub, Staff Hub, IoT, AI Tutor): tagline as the title, a square expand icon that opens the app's detail view on the same page, screenshot centred | ENH-087, ENH-089 |
 | Process | Five-step How we work | The original 4-D process with QA inside Development | ENH-087 |
 | App names | PXP, SXP, LXP | Parent Hub and Staff Hub (P-Hub, S-Hub); no Learner Hub | ENH-086, ENH-087 |
 | Footer climber | Stays at the highest page reached | Walks one step up on each page, summit on Careers | ENH-077 |

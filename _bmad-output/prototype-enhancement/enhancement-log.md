@@ -101,6 +101,7 @@ directly, before this log existed.
 | ENH-086 | 2026-10-06 | Home hero: what we do, Get in touch, five figures, two doors; Services hero figures removed (#53) | Hero copy says what XionTechs is and does; Get in touch leads to the contact form; five figures; Products for schools and Your software delivery team cards across the hero edge; Services hero without figure cards | In PR    | 4.1 |
 | ENH-087 | 2026-10-06 | Feedback blocks 2 to 8 (#55 to #61) | Home: Capabilities, Core Values, the original 4-D process and a four-step How we approach in the new order, no Our partners or What we build; Parent Hub and Staff Hub (P-Hub, S-Hub) with no Learner Hub; a simple four-card Products page on a navy panel; QA inside Development | In PR    | 4.1 |
 | ENH-088 | 2026-10-06 | GitHub #62 | Home: the 4-D section is titled How we approach with a short 4-D description; the separate How we approach section is removed | In PR    | 4.1 |
+| ENH-089 | 2026-10-06 | GitHub #64 | Products: the four apps become showcase cards (title top left, square expand icon top right, screenshot centred); the expand icon that opens a product detail view on the same page | In PR    | 4.1 |
 
 ## ENH-001: Contact form on Home
 
@@ -1434,6 +1435,17 @@ directly, before this log existed.
   - Checked at 1440 and 375px: no errors, no sideways scroll, the 4-D track still animates.
 - **Developer notes:** index.html only ( heading and lede); the implementation specs are not changed.
 - **Open items:** none.
+
+## ENH-089: Products, earlier app cards with a product detail view (GitHub #64)
+
+- **Why:** Amber wants the richer earlier cards back, plus a way to read more about each app without leaving the page.
+- **What changed:**
+  - **Cards (per the reference Amber shared):** Parent Hub, Staff Hub, IoT Device Management and AI Tutor sit in a two-column grid (one column on phones). Each white card has the app badge and name, the tagline as a large title at the top left, a square expand icon at the top right, and the app screenshot centred below. Features and buttons move into the detail view; no LXP, AI Timetable or AI Grader.
+  - **Expand icon:** a square 44px button at the top right of each card opens that app's detail view over the page: name, tagline, who it is made for, a larger screenshot, the store or prototype buttons and the features as cards. It closes with the X, Esc or a click outside, and focus returns to the card.
+  - Feature descriptions in the detail view are **[Placeholder]** until the product owners supply copy.
+  - Checked at 1440 and 375px: no errors, no sideways scroll, the view opens, closes and returns focus.
+- **Developer notes:** `.pshow` cards and the four `<dialog class="pdetail">` views in products.html; `.pshows` / `.pshow` / `.ps-*`, `.pc-expand` and `.pdetail` / `.pd-*` at the end of css/site.css; the opener at the end of js/site.js. `.papps` / `.papp` (ENH-087) and the `.pstack` / `.aud-nav` styles are no longer used on Products. The implementation specs are not changed.
+- **Open items:** feature descriptions and real screenshots for each app.
 
 ## Withdrawn: ENH-076, ENH-078 to ENH-084 (and the climber-only scope of ENH-077)
 

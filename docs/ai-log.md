@@ -1233,3 +1233,11 @@ Template:
 - **What the AI did:** Removed the duplicate section, retitled the 4-D section, moved the See how we work link onto it, logged ENH-088 and regenerated the wireframes.
 - **Decision / result:** Home tells the process once. Specs under implementation-artifacts stay untouched; prototype changes live in the prototype and the enhancement log only.
 - **AI got it wrong?** Yes, at first: removing the section also dropped the only Home link to the Services process. Caught in review and restored.
+
+## 2026-10-06 — Products: showcase cards with a product detail view (ENH-089, #64)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "Use the previous version of the card, with an expand icon that opens the product detail on the same page", then a reference screenshot of the card style, then "remove the circle behind each product".
+- **What the AI did:** First restored the earlier stacked cards; after the screenshot, rebuilt them as showcase cards (title top left, square expand icon, screenshot centred) with a dialog per app for tagline, audience, buttons and features. Feature descriptions are [Placeholder].
+- **Decision / result:** Products shows four showcase cards; details open over the page and close with X, Esc or a click outside, returning focus to the card.
+- **AI got it wrong?** Yes: "previous version of the card" was read as the old stacked card until Amber shared the reference. A clean-up step also dropped the phone sizing rule; caught in the headless screenshot and restored.

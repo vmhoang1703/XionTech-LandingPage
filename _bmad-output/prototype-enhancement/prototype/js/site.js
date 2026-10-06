@@ -771,4 +771,10 @@ void main(){
     new ResizeObserver(()=>{size();draw(tHold)}).observe(cv);new IntersectionObserver(es=>{vis=es[0].isIntersecting}).observe(cv);size();requestAnimationFrame(loop)});
   if(location.hash)addEventListener('load',()=>{let t=null;try{t=document.getElementById(decodeURIComponent(location.hash.slice(1)))}catch(e){}
     if(t)(document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{const off=t.getBoundingClientRect().top-(parseFloat(getComputedStyle(t).scrollMarginTop)||0);if(Math.abs(off)>24)t.scrollIntoView()})});
+  /* ---------- Products: the expand icon opens the product detail view (ENH-089) ---------- */
+  document.querySelectorAll('.pc-expand[data-detail]').forEach(b=>{const d=document.getElementById(b.dataset.detail);if(!d||!d.showModal)return;
+    b.addEventListener('click',()=>d.showModal());
+    d.querySelector('.pd-close').addEventListener('click',()=>d.close());
+    d.addEventListener('click',e=>{if(e.target===d)d.close()});
+    d.addEventListener('close',()=>b.focus())});
 })();

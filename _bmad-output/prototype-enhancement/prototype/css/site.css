@@ -1759,3 +1759,54 @@ body[data-page="services"] .svc-panel{margin-top:28px!important;padding-top:clam
 .papp .store-btn{min-height:44px}
 @media (max-width:760px){.papps{grid-template-columns:minmax(0,1fr)}}
 body[data-page="home"] .home-hero+section{padding-top:calc(120px + clamp(64px,6vw,88px))}
+
+/* ---------- Products: expand icon and product detail view (ENH-089) ---------- */
+.pc-kick .pc-expand{margin-left:auto;width:var(--target);height:var(--target);display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--navy) 22%,transparent);border-radius:var(--r-full);background:var(--white);color:var(--navy);font-size:1.2rem;cursor:pointer;transition:background .2s,color .2s}
+.pc-kick .pc-expand:hover{background:var(--navy);color:var(--white)}
+.pc-kick .pc-expand:focus-visible,.pd-close:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.pdetail{width:min(1120px,100vw - 32px);max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:0;border:0;border-radius:var(--r-lg);background:var(--white);color:var(--ink);box-shadow:0 40px 80px -24px rgb(11 23 48 / .45);overflow:auto;overscroll-behavior:contain}
+.pdetail::backdrop{background:rgb(11 23 48 / .6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.pdetail[open]{animation:pdIn .3s var(--ease)}
+@keyframes pdIn{from{opacity:0;transform:translateY(16px) scale(.98)}}
+body:has(.pdetail[open]){overflow:hidden}
+.pd-inner{--pd-pad:clamp(20px,4vw,48px);padding:0 var(--pd-pad) var(--pd-pad)}
+.pd-top{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:16px;margin:0 calc(-1 * var(--pd-pad));padding:16px var(--pd-pad);background:var(--white);border-bottom:1px solid color-mix(in srgb,var(--navy) 10%,transparent)}
+.pd-name{margin:0;font-size:clamp(1.4rem,2.4vw,1.9rem)}
+.pd-close{margin-left:auto;flex-shrink:0;width:var(--target);height:var(--target);display:grid;place-items:center;border:0;border-radius:var(--r-full);background:var(--mist);color:var(--navy);font-size:1.3rem;cursor:pointer}
+.pd-close:hover{background:var(--navy);color:var(--white)}
+.pd-intro{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(24px,4vw,48px);align-items:center;padding:clamp(24px,4vw,40px) 0}
+.pd-tag{margin:0 0 16px;font-family:var(--f-display);font-size:clamp(1.3rem,2.2vw,1.75rem);line-height:1.3;color:var(--heading)}
+.pd-who{margin:0 0 24px;color:var(--ink-muted)}
+.pd-who .pc-label{display:block;margin:0 0 4px}
+.pd-h{margin:0 0 16px;font-size:clamp(1.2rem,1.8vw,1.4rem)}
+.pd-feats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.pd-feats li{padding:20px;border-radius:var(--r-md);background:var(--mist)}
+.pd-feats i{display:grid;place-items:center;width:44px;height:44px;margin-bottom:12px;border-radius:var(--r-md);background:var(--navy);color:var(--amber);font-size:1.3rem}
+.pd-feats h4{margin:0 0 6px;font-size:var(--fs-body);font-weight:600;color:var(--heading)}
+.pd-feats p{margin:0;font-size:var(--fs-small);color:var(--ink-muted)}
+@media (max-width:760px){.pd-intro{grid-template-columns:1fr}.pd-media{order:-1}}
+@media (prefers-reduced-motion:reduce){.pdetail[open]{animation:none}}
+.pdetail[data-aud="parents"]{--aud-bg:var(--amber);--aud-fg:var(--navy);--aud-line:color-mix(in srgb,var(--navy) 30%,transparent)}
+.pdetail[data-aud="school"]{--aud-bg:var(--navy);--aud-fg:var(--white);--aud-line:transparent}
+.pdetail[data-aud="students"]{--aud-bg:var(--white);--aud-fg:var(--navy);--aud-line:color-mix(in srgb,var(--navy) 35%,transparent)}
+.pdetail .pm-frame,.js-anim .pdetail .pm-frame{clip-path:none;transform:none;opacity:1}
+.pc-kick .badge{min-width:44px;width:auto;padding:0 8px}
+
+/* ---------- Products: showcase cards, title top left, expand icon top right (ENH-089) ---------- */
+.pshows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--card-gap,24px)}
+.pshow{position:relative;display:flex;flex-direction:column;gap:24px;min-height:560px;padding:clamp(24px,3vw,36px);border:1px solid color-mix(in srgb,var(--navy) 12%,transparent);border-radius:var(--r-lg);background:linear-gradient(180deg,var(--white),color-mix(in srgb,var(--mist) 70%,var(--white)));overflow:hidden}
+.pshow[data-aud="parents"]{--aud-bg:var(--amber);--aud-fg:var(--navy);--aud-line:color-mix(in srgb,var(--navy) 30%,transparent)}
+.pshow[data-aud="school"]{--aud-bg:var(--navy);--aud-fg:var(--white);--aud-line:transparent}
+.pshow[data-aud="students"]{--aud-bg:var(--white);--aud-fg:var(--navy);--aud-line:color-mix(in srgb,var(--navy) 35%,transparent)}
+.ps-head{position:relative;z-index:1;display:flex;align-items:flex-start;gap:16px}
+.ps-head .pc-kick{margin-bottom:12px}
+.ps-name{font-weight:500;color:var(--ink-muted)}
+.ps-title{margin:0;max-width:22ch;font-size:clamp(1.4rem,2.2vw,1.9rem);line-height:1.25;color:var(--heading)}
+.ps-head .pc-expand{flex-shrink:0;margin-left:auto;width:var(--target);height:var(--target);display:grid;place-items:center;border:0;border-radius:var(--r-md);background:var(--mist);color:var(--navy);font-size:1.15rem;cursor:pointer;transition:background .2s,color .2s}
+.ps-head .pc-expand:hover{background:var(--navy);color:var(--white)}
+.ps-head .pc-expand:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.ps-visual{position:relative;flex:1;display:grid;place-items:center;min-height:320px}
+.ps-visual .pmedia{position:relative;z-index:1;width:82%;max-width:360px}
+.ps-visual .pmedia.is-mobile{width:160px;max-width:none;height:330px;aspect-ratio:auto}
+.pshow .pm-frame,.js-anim .pshow .pm-frame{clip-path:none;transform:none;opacity:1}
+@media (max-width:860px){.pshows{grid-template-columns:1fr}.pshow{min-height:0}.ps-visual{min-height:260px}}
