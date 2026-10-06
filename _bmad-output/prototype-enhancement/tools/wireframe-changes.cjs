@@ -15,7 +15,7 @@ module.exports = {
     "index.html#h1": "Batch 1 · ENH-002 · part of one flowing background in ENH-070 to ENH-072", // Home hero
     "index.html#why-h": "new in Batch 1 · rebuilt in ENH-004 · on dark blue in ENH-070",
     "index.html#cases-h": "new in ENH-003 · slider in ENH-006 · blue lightening behind the cards in ENH-072",
-    "index.html#approach-h": "rebuilt in ENH-009 · light version in ENH-012 · no own background, more space, link over step 05 in ENH-070 to ENH-072",
+    "index.html#d4-h": "the 4-D process in ENH-087 · titled How we approach, replacing the separate section, in ENH-088",
     "services.html#process-h": "five steps in ENH-011 (full version) · on light blue in ENH-065",
     "index.html#contact-h": "new in ENH-001 · ENH-010 · blended in ENH-036",
     "products.html#h1": "ENH-014 · ENH-018 · ENH-020", // Products hero
@@ -114,7 +114,7 @@ module.exports = {
 | About, background | White after the intro | White with soft light blue glows | ENH-067 |
 | Footer and climber | About; climber outline | About us; Vietnam email; a bolder hiker with an amber backpack; every page leaves room above it | ENH-064, ENH-073 |
 | Design system | None | design-system.html: brand, colour, surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice, all read from css/site.css | ENH-074 |
-| Home, hero and order | Product headline, mockups, two figures | What XionTechs does, Get in touch, five figures, two cards across the hero edge; then Capabilities, Core values, the 4-D process, How we approach (four steps), case studies, news, contact; no Our partners or What we build | ENH-086, ENH-087 |
+| Home, hero and order | Product headline, mockups, two figures | What XionTechs does, Get in touch, five figures, two cards across the hero edge; then Capabilities, Core values, How we approach (the 4-D process), case studies, news, contact; no Our partners or What we build | ENH-086 to ENH-088 |
 | Products page | Stacked app cards (seven apps) | Four plain cards (Parent Hub, Staff Hub, IoT, AI Tutor) on a navy panel | ENH-087 |
 | Process | Five-step How we work | The original 4-D process with QA inside Development | ENH-087 |
 | App names | PXP, SXP, LXP | Parent Hub and Staff Hub (P-Hub, S-Hub); no Learner Hub | ENH-086, ENH-087 |

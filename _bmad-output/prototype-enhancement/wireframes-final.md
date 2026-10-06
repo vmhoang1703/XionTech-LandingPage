@@ -67,7 +67,7 @@ also has a Vietnamese version in the prototype.
 | About, background | White after the intro | White with soft light blue glows | ENH-067 |
 | Footer and climber | About; climber outline | About us; Vietnam email; a bolder hiker with an amber backpack; every page leaves room above it | ENH-064, ENH-073 |
 | Design system | None | design-system.html: brand, colour, surfaces and page backgrounds, type, space and shape, icons, illustration, components, patterns, motion and voice, all read from css/site.css | ENH-074 |
-| Home, hero and order | Product headline, mockups, two figures | What XionTechs does, Get in touch, five figures, two cards across the hero edge; then Capabilities, Core values, the 4-D process, How we approach (four steps), case studies, news, contact; no Our partners or What we build | ENH-086, ENH-087 |
+| Home, hero and order | Product headline, mockups, two figures | What XionTechs does, Get in touch, five figures, two cards across the hero edge; then Capabilities, Core values, How we approach (the 4-D process), case studies, news, contact; no Our partners or What we build | ENH-086 to ENH-088 |
 | Products page | Stacked app cards (seven apps) | Four plain cards (Parent Hub, Staff Hub, IoT, AI Tutor) on a navy panel | ENH-087 |
 | Process | Five-step How we work | The original 4-D process with QA inside Development | ENH-087 |
 | App names | PXP, SXP, LXP | Parent Hub and Staff Hub (P-Hub, S-Hub); no Learner Hub | ENH-086, ENH-087 |
@@ -241,9 +241,11 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. Our 4-D process: from your request to launch. · white ───────────────────────────────────────────┐ ║
-║ │ H2: Our 4-D process: from your request to launch.                                                    │ ║
-║ │ Text: Every step ends with something you can see, test and approve.                                  │ ║
+║ ┌─ 4. How we approach. · white · [the 4-D process in ENH-087 · titled How we approach, replacing the… ─┐ ║
+║ │ H2: How we approach.                                                                                 │ ║
+║ │ Text: Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and    │ ║
+║ │   every step ends with something you can see and approve.                                            │ ║
+║ │ [LINK: See how we work → services.html#process]                                                      │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
 ║ │ │ • Your request · An idea, a  │ │ Text: 01                     │ │ Text: 02                       │ │ ║
 ║ │ │   brief or a requirement.    │ │ H3: Discovery                │ │ H3: Design                     │ │ ║
@@ -268,21 +270,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009 · light version in ENH-012 · no own bac… ─┐ ║
-║ │ H2: How we approach.                                                                                 │ ║
-║ │ Text: Five clear steps, from the first conversation to launch and beyond.                            │ ║
-║ │ [LINK: See how we work → services.html#process]                                                      │ ║
-║ │ H3: Discovery                                                                                        │ ║
-║ │ Text: Learn your goals, users and scope.                                                             │ ║
-║ │ H3: Design                                                                                           │ ║
-║ │ Text: Shape flows, interfaces and architecture.                                                      │ ║
-║ │ H3: Development                                                                                      │ ║
-║ │ Text: Build in agile sprints, with testing in every sprint.                                          │ ║
-║ │ H3: Deployment                                                                                       │ ║
-║ │ Text: Release, monitor and keep improving.                                                           │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 6. Work built with our partners. · white · [new in ENH-003 · slider in ENH-006 · blue lightening … ─┐ ║
+║ ┌─ 5. Work built with our partners. · white · [new in ENH-003 · slider in ENH-006 · blue lightening … ─┐ ║
 ║ │ H2: Work built with our partners.                                                                    │ ║
 ║ │ Text: Explore a selection of company partnerships and see how different business needs became        │ ║
 ║ │   focused digital solutions.                                                                         │ ║
@@ -312,7 +300,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 7. Latest from XionTechs. · light blue · [ENH-007 · story cards in ENH-042] ────────────────────────┐ ║
+║ ┌─ 6. Latest from XionTechs. · light blue · [ENH-007 · story cards in ENH-042] ────────────────────────┐ ║
 ║ │ H2: Latest from XionTechs.                                                                           │ ║
 ║ │ Text: Catch up with what our team is building and shipping.                                          │ ║
 ║ │ [LINK: See all news → news.html]                                                                     │ ║
@@ -325,7 +313,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 8. Have something you want to build? · amber · [new in ENH-001 · ENH-010 · blended in ENH-036] ─────┐ ║
+║ ┌─ 7. Have something you want to build? · amber · [new in ENH-001 · ENH-010 · blended in ENH-036] ─────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ H2: Have something you want to build?         │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ Text: Tell us a little about yourself and     │ │ │ [FIELD: Your name (text, required)]        │ │ │ ║
@@ -395,14 +383,14 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║ │ Text: Four apps that connect parents, schools and students.                                          │ ║
 ║ │ H3: Parent Hub                                                                                       │ ║
 ║ │ Text: Keeps parents close to every school day, on their phone.                                       │ ║
-║ │ [BUTTON: Download on the · App Store → #]                                                            │ ║
-║ │ [BUTTON: Get it on · Google Play → #]                                                                │ ║
+║ │ [BUTTON: Download on the · App Store]                                                                │ ║
+║ │ [BUTTON: Get it on · Google Play]                                                                    │ ║
 ║ │ H3: Staff Hub                                                                                        │ ║
 ║ │ Text: One workspace where staff, teachers and leaders share the same data.                           │ ║
-║ │ [BUTTON: View prototype → #]                                                                         │ ║
+║ │ [BUTTON: View prototype]                                                                             │ ║
 ║ │ H3: IoT Device Management                                                                            │ ║
 ║ │ Text: Run classroom devices, lighting, climate and access from one screen.                           │ ║
-║ │ [BUTTON: View prototype → #]                                                                         │ ║
+║ │ [BUTTON: View prototype]                                                                             │ ║
 ║ │ H3: AI Tutor                                                                                         │ ║
 ║ │ Text: Solve new problems on your own. Not just read solutions.                                       │ ║
 ║ │ [BUTTON: View prototype → https://xt-ai-tutor-demo.azurewebsites.net/]                               │ ║
@@ -433,7 +421,7 @@ Changes on this page: ENH-062 (bigger audience tabs with icons on the page colou
 ║                                                                                                          ║
 ║ ┌─ 4. Product updates. · light blue · [ENH-024 · story cards in ENH-042] ──────────────────────────────┐ ║
 ║ │ H2: Product updates.                                                                                 │ ║
-║ │ Text: New features and stories from Parent Hub, Staff Hub and IoT.                                   │ ║
+║ │ Text: New features and stories from Parent Hub, Staff Hub, IoT and the AI Tutor.                     │ ║
 ║ │ Text: [Placeholder] Sample stories. Replace with real news before launch.                            │ ║
 ║ │ [LINK: See all news → news.html]                                                                     │ ║
 ║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║

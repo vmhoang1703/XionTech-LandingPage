@@ -1225,3 +1225,11 @@ Template:
 - **Prompt / task:** Turn team feedback into GitHub issues (label `prototype`) first, then update the prototype: Home hero with Get in touch and five figures, ParentHub/StaffHub naming then Parent Hub/Staff Hub (P-Hub, S-Hub), Home content and order (Capabilities, Core values, 4-D process, How we approach, case studies), QA inside Development, a four-card Products page, no metrics on Services; plus the footer climber stepping up on every page.
 - **Decision / result:** Approved by Amber. Issue-first so every change has its reason on record. Other trial work from the same day (ENH-076, ENH-078 to ENH-084 and a Products catalogue trial) was withdrawn and removed before the push.
 - **AI got it wrong?** Yes: a hero class reused by the catalogue drew a giant rounded shape; the Home page reopened at the contact form because Get in touch left #contact in the address; the first mockup removal left half a phone frame; the cards' descriptions came out empty on the first Products rebuild.
+
+## 2026-10-06 — Home: one How we approach section (ENH-088, #62)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "Remove the How we approach section; title the 4-D section How we approach with a short 4-D description." Also: never edit the implementation-artifact specs.
+- **What the AI did:** Removed the duplicate section, retitled the 4-D section, moved the See how we work link onto it, logged ENH-088 and regenerated the wireframes.
+- **Decision / result:** Home tells the process once. Specs under implementation-artifacts stay untouched; prototype changes live in the prototype and the enhancement log only.
+- **AI got it wrong?** Yes, at first: removing the section also dropped the only Home link to the Services process. Caught in review and restored.
