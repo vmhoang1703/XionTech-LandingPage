@@ -100,6 +100,7 @@ directly, before this log existed.
 | ENH-085 | 2026-10-06 | Header: Home link (#52) | Home is the first link in the main menu on every page and in the mobile menu, marked current on the home page; the logo still goes home | In PR    | Batch 1 (all pages) |
 | ENH-086 | 2026-10-06 | Home hero: what we do, Get in touch, five figures, two doors; Services hero figures removed (#53) | Hero copy says what XionTechs is and does; Get in touch leads to the contact form; five figures; Products for schools and Your software delivery team cards across the hero edge; Services hero without figure cards | In PR    | 4.1 |
 | ENH-087 | 2026-10-06 | Feedback blocks 2 to 8 (#55 to #61) | Home: Capabilities, Core Values, the original 4-D process and a four-step How we approach in the new order, no Our partners or What we build; Parent Hub and Staff Hub (P-Hub, S-Hub) with no Learner Hub; a simple four-card Products page on a navy panel; QA inside Development | In PR    | 4.1 |
+| ENH-088 | 2026-10-06 | GitHub #62 | Home: the 4-D section is titled How we approach with a short 4-D description; the separate How we approach section is removed | In PR    | 4.1 |
 
 ## ENH-001: Contact form on Home
 
@@ -1425,6 +1426,14 @@ directly, before this log existed.
   - Checked at 1440 and 375px: no errors, no sideways scroll, all visible text passes WCAG AA on Home, Products, Services and About.
 - **Developer notes:** 4-D styles (`.flow`, `.node`, `.step4`) and `.papps` / `.papp` at the end of `css/site.css`; the track lights via an observer in `js/site.js`.
 - **Open items:** products-2.html (the catalogue trial) still shows the old app set.
+
+## ENH-088: Home, one How we approach section (GitHub #62)
+
+- **Why:** Home showed the 4-D process and a separate four-step How we approach, which said the same thing twice.
+- **What changed:** the separate How we approach section is removed; the 4-D section is now titled **How we approach.** (VI: Cách chúng tôi tiếp cận.) with the description "Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve." The See how we work link to Services moves to this heading. Home order: Hero, Capabilities, Core values, How we approach, Work built with our partners, Latest from XionTechs, contact form.
+  - Checked at 1440 and 375px: no errors, no sideways scroll, the 4-D track still animates.
+- **Developer notes:** index.html only ( heading and lede); the implementation specs are not changed.
+- **Open items:** none.
 
 ## Withdrawn: ENH-076, ENH-078 to ENH-084 (and the climber-only scope of ENH-077)
 
