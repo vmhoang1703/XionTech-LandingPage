@@ -1211,3 +1211,10 @@ Template:
   label, a section menu that hid links at narrow widths, working filter buttons, and a `<main>` landmark.
 - **AI got it wrong?** Yes: the path Amber gave pointed at a folder that did not exist (the file was in another
   checkout), and the first build lost "GET IT" on the light tagline because a footer style made it white.
+
+## 2026-10-06 — ENH-085: Home link in the main menu (GitHub #52)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt / task:** Team feedback turned into GitHub issue #52 first, then the prototype change: add Home to the header menu while the logo still goes home.
+- **Decision / result:** Approved by Amber. Home (Trang chủ) is the first menu link on every page and in the mobile menu, marked current on the home page. Issue-first so the reason is tracked before the change.
+- **AI got it wrong?** No.

@@ -14,6 +14,7 @@
 <header class="nav"><div class="wrap nav-in">
   <a class="logo" href="index.html" aria-label="XionTechs home"><img src="assets/logo.png" alt="XionTechs, Get IT Done"></a>
   <nav class="menu" id="menu" aria-label="Main">
+    <a href="index.html"${cur('home')} data-vi="Trang chủ">Home</a>
     <a href="products.html"${cur('products')} data-vi="Sản phẩm">Products</a>
     <a href="services.html"${cur('services')} data-vi="Dịch vụ">Services</a>
     <a href="news.html"${cur('news')} data-vi="Tin tức">News</a>
