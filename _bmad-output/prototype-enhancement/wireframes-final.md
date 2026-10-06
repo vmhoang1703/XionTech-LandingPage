@@ -23,8 +23,8 @@ also has a Vietnamese version in the prototype.
 | Home, Our partners | — | New: placeholder logo strip that scrolls in a loop (pauses on hover, focus or tap); heading left-aligned | ENH-003, ENH-008 |
 | Home, Why XionTechs | — | New in Batch 1 (four tiles); rebuilt as a four-card bento: Products with app logos, Delivery with live clocks, Industries with a "+3" reveal, Outsourcing services; a small "Get IT Done" line | Batch 1, ENH-004 |
 | Home, Case studies | — | New (ENH-003); now "Work built with our partners.": a full-width slider of six placeholder partner cards (partner name, description, "View case study") with carousel dots | ENH-003, ENH-006 |
-| Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a light row of five steps (Discovery to Deployment), one short line each, joined by a line, with "See how we work" to Services, on a blue gradient | Batch 1, ENH-009, ENH-012 |
-| Services, process | "Our 4-D process": four cards | "How we work.": the full five-step component (layered diagram, step tabs with the chosen step highlighted, detail panel) on a blue gradient; About and Contact say five steps | ENH-011 |
+| Home, process | "From your request to launch, in four steps." under a small label, four cards | "How we approach.": a light row of five steps (Discovery to Deployment), one short line each, joined by a line, with "See how we work" to Services, on a blue gradient (now on the page's light blue, with more space and the link over step 05: ENH-070 to ENH-072) | Batch 1, ENH-009, ENH-012 |
+| Services, process | "Our 4-D process": four cards | "How we work.": the full five-step component (layered diagram, step tabs with the chosen step highlighted, detail panel) on a blue gradient (now on light blue: ENH-065); About and Contact say five steps | ENH-011 |
 | Home, products | Four-app bento with phone mockups, right after the doors | "What we build.": seven equal app cards (PXP, LXP, SXP, IoT, AI Tutor, AI Timetable, AI Grader) in a row with back and forward buttons, below the process | Batch 1, ENH-005, ENH-008, ENH-009, ENH-013, ENH-021 |
 | Home, eight services | Eight service cards | Removed from Home (they stay on Services) | Batch 1 |
 | Home and News, news | "Latest from XionTechs." with a placeholder note; pills "Product · PXP" | One-line intro with "See all news" on the same row; an app's story shows only the app name in its pill | ENH-007 |
@@ -35,7 +35,7 @@ also has a Vietnamese version in the prototype.
 | About, FAQ background | — | The clouds and gradient hold still; the drifting and the sheen are gone | ENH-019 |
 | About, FAQ last row | The ninth question alone on the last row | "Still have a question? Ask us directly" fills the slot beside it, linking to the contact form | ENH-031 |
 | About, hero on very large screens | — | On screens at least 1500 × 1050 the held story widens and grows, roughly halving the empty space below it | ENH-032 |
-| Services, whole page | Navy hero; white and grey bands; amber email band | One white-and-amber background flowing down the page (no blue); light hero; How we work on amber with a navy step list | ENH-033 |
+| Services, whole page | Navy hero; white and grey bands; amber email band | One white-and-amber background flowing down the page (no blue); light hero; How we work on amber with a navy step list (since reworked: navy hero panel, light blue below, ENH-065 and ENH-069) | ENH-033 |
 | News, whole page | Light hero with its own glow; white stories; amber email band | White with light blue shading throughout, header included; filter buttons no longer turn into "NaN" | ENH-034 |
 | Careers, whole page | Bright amber hero; white and grey bands | One pastel, light-amber background flowing down the page; light hero | ENH-035 |
 | News, whole page (again) | Product/Company/Schools/Team filters; compact cards | "What we’re building, learning and sharing"; filters by audience (Schools, Students, Parents, Company); full-photo story cards with the newest featured; hover or focus lifts the card and shows "Read story" | ENH-037 |
@@ -53,11 +53,19 @@ also has a Vietnamese version in the prototype.
 | Every page, type | Bold headings, labels and buttons (600 to 700) | The same fonts and sizes at weight 500; body 400 | ENH-025 |
 | Job page and Home contact, phones | The job page ran 89px past a phone screen; Home ran 2px at 320px | Both fit the screen at every width | ENH-026 |
 | About, after the intro | Navy offices and email band; blue FAQ | Plain white from the mountain story to the footer; two office cards with a city drawing each (Plano balloons, Ben Thanh Market), local time, delivery-center tag and icon rows for address, phone, WhatsApp and email | ENH-050 to ENH-055, ENH-058, ENH-059 |
-| Services, more | Four-step process; email band | "What can we help you achieve?" before How we work; three facts; no email band | ENH-048, ENH-055 |
+| Services, more | Four-step process; email band | "What can we help you achieve?" before How we work; three facts (now the 24/7, 20+ and 25+ cards, ENH-069); no email band | ENH-048, ENH-055 |
 | Careers, whole page (again) | Pastel hero; event reel; Why you’ll grow here | "Stay curious. Build what’s next." with the Growth Learning Model cycle; Inside XionTechs tiles; five flip cards; "Find your next challenge."; Why you’ll grow here removed | ENH-049, ENH-054, ENH-055 |
 | Products, audience tabs | School / Parents / Students pills with colour dots | Transparent tabs on a light frosted bar; the selected tab is amber only where that reads, navy over amber; reached A day at school dots show a flag | ENH-049 to ENH-052 |
 | News, layout | Bento grid of mixed shapes | One large lead story (the newest), then square cards three to a row; two thin company posts removed | ENH-047, ENH-051, ENH-053 |
-| Footer, every page | Plain link columns | Products: For schools, For students, For parents; Company: News, About, Careers; offices with icons, Vietnam Delivery Center first, US Delivery Center second; phone codes in brackets; the climber only climbs; XionTech X as the site icon | ENH-051, ENH-056 to ENH-058 |
+| Footer, every page | Plain link columns | Products: For schools, For students, For parents; Company: News, About us, Careers; offices with icons, Vietnam Delivery Center first, US Delivery Center second; phone codes in brackets; the climber only climbs; XionTech X as the site icon | ENH-051, ENH-056 to ENH-058 |
+| Careers, background | Pastel amber with a navy Inside XionTechs band | One light gradient: light blue at the top, white in the middle, amber towards the footer | ENH-060 |
+| Services, top of page | Light hero, facts strip, eight cards in a grid, Three ways, Industries | A rounded navy hero panel and a light blue Eight services panel with a gap between them; four metric cards (24/7, 20+, 25+, 4 industries) sit across the gap; the Eight services heading stays in view beside its cards; Three ways and Industries removed | ENH-061, ENH-069, ENH-071, ENH-072 |
+| Services, background and motion | White with amber washes | Light blue below the panels turning white at the end, with white and amber glows; metric cards spring in, service cards rise with a tilt, outcome cards slide in from the sides | ENH-065, ENH-070 |
+| Products, audience tabs (again) | Transparent tabs on a frosted strip | Larger tabs with icons on exactly the page colour behind them | ENH-062 |
+| News, title, motion and sign-up | What we’re building, learning and sharing; demo email band | Catch up with us; cards unfold one by one as they scroll in; Subscribe to our newsletter with an in-place thank-you | ENH-063, ENH-066 |
+| Home, background | Separate white, grey and blue bands | One background: the hero's navy through Our partners and Why XionTechs, lightening through Work built with our partners, light blue behind How we approach, white and light amber into the contact form, with no visible edges | ENH-070 to ENH-073 |
+| About, background | White after the intro | White with soft light blue glows | ENH-067 |
+| Footer and climber | About; climber outline | About us; Vietnam email; a bolder hiker with an amber backpack; every page leaves room above it | ENH-064, ENH-073 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |
 
 **Legend:** `H1`–`H4` heading · `Text` paragraph or caption · `•` list item · `[IMAGE: …]` image or screenshot
@@ -93,7 +101,7 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 │ [BUTTON: EN]                                                                                             │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
-┌─ Footer · dark navy · [ENH-056 to ENH-058 (Products by audience, Company: News, About, Careers; office… ─┐
+┌─ Footer · dark navy · [ENH-056 to ENH-058 (Products by audience, Company: News, About us, Careers; off… ─┐
 │ ┌────────────────────────────────┐ ┌────────────────────────────────┐ ┌────────────────────────────────┐ │
 │ │ [LINK: XionTechs logo →        │ │ H4: Products                   │ │ H4: Services                   │ │
 │ │   index.html]                  │ │ [LINK: For schools →           │ │ [LINK: Product Engineering →   │ │
@@ -115,10 +123,11 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 │ ┌────────────────────────────────┐ ┌────────────────────────────────┐                                    │
 │ │ H4: Company                    │ │ H4: Offices                    │                                    │
 │ │ [LINK: News → news.html]       │ │ Text: Vietnam Delivery Center  │                                    │
-│ │ [LINK: About → about.html]     │ │   · Floor 15, B1 Building279   │                                    │
+│ │ [LINK: About us → about.html]  │ │   · Floor 15, B1 Building279   │                                    │
 │ │ [LINK: Careers → careers.html] │ │   Nguyen Tri Phuong StreetDien │                                    │
 │ │                                │ │   Hong Ward, Ho Chi Minh City, │                                    │
 │ │                                │ │   Vietnam · (+84) 908 107 552  │                                    │
+│ │                                │ │   · vinni.tran@xiontechs.com   │                                    │
 │ │                                │ │ Text: US Delivery Center ·     │                                    │
 │ │                                │ │   7950 Legacy Drive, Suite     │                                    │
 │ │                                │ │   400Plano, Texas 75024, USA · │                                    │
@@ -134,13 +143,13 @@ is clickable · `[FIELD: …]` form field · `→` where it goes.
 
 `index.html` · page title: "XionTechs | School Platforms & Software Outsourcing in Vietnam"
 
-Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in), ENH-037 (news cards show their photo and open their story) (see the change list at the top).
+Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, ENH-036 (contact section blends in), ENH-037 (news cards show their photo and open their story), ENH-070 to ENH-073 (one background from the hero navy, through blue, into white and amber; more space around Our partners; the section colours below are the no-JavaScript fallback) (see the change list at the top).
 
 ```text
 ╔═ HOME PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Every school community, connected. · dark hero, animated silk · [Batch 1 · ENH-002] ─────────────┐ ║
+║ ┌─ 1. Every school community, connected. · dark hero, animated silk · [Batch 1 · ENH-002 · part of o… ─┐ ║
 ║ │ [BACKGROUND: animated silk (WebGL)]                                                                  │ ║
 ║ │ [BUTTON: Pause motion]                                                                               │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
@@ -159,7 +168,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Our partners. · white · [new in ENH-003 · left-aligned in ENH-008] ──────────────────────────────┐ ║
+║ ┌─ 2. Our partners. · white · [new in ENH-003 · left-aligned in ENH-008 · hero navy and more space a… ─┐ ║
 ║ │ H2: Our partners.                                                                                    │ ║
 ║ │ [ANIMATION: logos scroll right to left in a loop; hover, focus or tap pauses]                        │ ║
 ║ │ [IMAGE: [Placeholder] Partner logo 1 · 320 × 160]                                                    │ ║
@@ -172,7 +181,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ [IMAGE: [Placeholder] Partner logo 8 · 320 × 160]                                                    │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 3. Why XionTechs. · light blue · [new in Batch 1 · rebuilt in ENH-004] ─────────────────────────────┐ ║
+║ ┌─ 3. Why XionTechs. · light blue · [new in Batch 1 · rebuilt in ENH-004 · on dark blue in ENH-070] ───┐ ║
 ║ │ H2: Why XionTechs.                                                                                   │ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
 ║ │ │ [WHOLE CARD IS A LINK → products.html]        │ │ Text: Delivery                                 │ │ ║
@@ -201,7 +210,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ Text: Ownership of our commitments and pride in quality.                                             │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. Work built with our partners. · white · [new in ENH-003 · slider in ENH-006] ────────────────────┐ ║
+║ ┌─ 4. Work built with our partners. · white · [new in ENH-003 · slider in ENH-006 · blue lightening … ─┐ ║
 ║ │ H2: Work built with our partners.                                                                    │ ║
 ║ │ Text: Explore a selection of company partnerships and see how different business needs became        │ ║
 ║ │   focused digital solutions.                                                                         │ ║
@@ -231,7 +240,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 ║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009 · light version in ENH-012] ──────────────┐ ║
+║ ┌─ 5. How we approach. · blue gradient · [rebuilt in ENH-009 · light version in ENH-012 · no own bac… ─┐ ║
 ║ │ H2: How we approach.                                                                                 │ ║
 ║ │ Text: Five clear steps, from the first conversation to launch and beyond.                            │ ║
 ║ │ [LINK: See how we work → services.html#process]                                                      │ ║
@@ -342,7 +351,7 @@ Changes on this page: Batch 1, ENH-001 to ENH-013, ENH-021, ENH-025, ENH-026, EN
 
 `products.html` · page title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTechs"
 
-Changes on this page: ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-037 (news row shows the app stories with photos), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen), ENH-049 to ENH-052 (transparent audience tabs that stay readable over amber; “Student learns”; flags on A day at school); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-062 (bigger audience tabs with icons on the page colour); ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-037 (news row shows the app stories with photos), ENH-020 (stacked app cards), ENH-022 (background flow), ENH-023 (A day at school), ENH-024 (updates link, plain email band), ENH-027 to ENH-029 (resizing keeps the card; pill clears once A day at school reaches mid-screen), ENH-049 to ENH-052 (transparent audience tabs that stay readable over amber; “Student learns”; flags on A day at school); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ PRODUCTS PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -359,7 +368,7 @@ Changes on this page: ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-0
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. What we build. · [new in ENH-020 · audience tabs in ENH-049 to ENH-052] ─────────────────────────┐ ║
+║ ┌─ 2. What we build. · [new in ENH-020 · audience tabs in ENH-049 to ENH-052 · bigger tabs with icon… ─┐ ║
 ║ │ H2: What we build.                                                                                   │ ║
 ║ │ [LINK: School → #sxp]                                                                                │ ║
 ║ │ [LINK: Parents → #pxp]                                                                               │ ║
@@ -505,76 +514,68 @@ Changes on this page: ENH-014 and ENH-018 (hero; display font in ENH-038), ENH-0
 
 `services.html` · page title: "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs"
 
-Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); ENH-048 (white with pastel amber; What can we help you achieve? before How we work; three facts); ENH-055 (no email band); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-061, ENH-065 and ENH-069 to ENH-072 (rounded navy hero and light blue Eight services panels with four metric cards across the gap, a sticky Eight services heading beside its cards, Three ways and Industries sections removed, navy to light blue to white, playful entrances); ENH-011 (the five-step How we work. replaces the 4-D process); ENH-033 (one white-and-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-036 (email section blends in); ENH-048 (white with pastel amber; What can we help you achieve? before How we work; three facts, now cards); ENH-055 (no email band); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ SERVICES PAGE ══════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. Software teams that get IT done. · light hero · [light hero in ENH-033] ─────────────────────────┐ ║
+║ ┌─ 1. Software teams that get IT done. · light hero · [light hero in ENH-033 · rounded navy panel, o… ─┐ ║
 ║ │ [BACKGROUND: animated strands]                                                                       │ ║
 ║ │ Breadcrumb: Home › Services                                                                          │ ║
 ║ │ H1: Software teams that get IT done.                                                                 │ ║
 ║ │ Text: Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across     │ ║
 ║ │   USA, Europe and Australia time zones.                                                              │ ║
 ║ │ [BUTTON: Start a project → demo.html#form]                                                           │ ║
-║ │ [BUTTON: See how we work → #process]                                                                 │ ║
-║ │ Text: Ho Chi Minh City · GMT+7 · Plano · US Central                                                  │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Key facts · white ───────────────────────────────────────────────────────────────────────────────┐ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ H3: 24/7                     │ │ H3: 20+                      │ │ H3: 25+                        │ │ ║
-║ │ │ Text: Global coverage across │ │ Text: Technology stacks we   │ │ Text: Years of software        │ │ ║
-║ │ │   time zones                 │ │   work in                    │ │   leadership experience        │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
+║ ┌─ 2. XionTechs at a glance ───────────────────────────────────────────────────────────────────────────┐ ║
+║ │ Text: Coverage                                                                                       │ ║
+║ │ Text: 24/7                                                                                           │ ║
+║ │ Text: global coverage across time zones                                                              │ ║
+║ │ Text: HCMC · GMT+7 · Plano · US Central                                                              │ ║
+║ │ Text: Technology                                                                                     │ ║
+║ │ Text: 20+                                                                                            │ ║
+║ │ Text: technology stacks we work in                                                                   │ ║
+║ │ Text: Web · Mobile · AI · Cloud                                                                      │ ║
+║ │ Text: Leadership                                                                                     │ ║
+║ │ Text: 25+                                                                                            │ ║
+║ │ Text: years of software leadership experience                                                        │ ║
+║ │ Text: From idea to operation                                                                         │ ║
+║ │ Text: Industries                                                                                     │ ║
+║ │ Text: 4                                                                                              │ ║
+║ │ Text: industries we serve                                                                            │ ║
+║ │ Text: EdTech · Healthcare · Logistics · Private Equity                                               │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 3. Eight services, one team. · light blue, linen ───────────────────────────────────────────────────┐ ║
+║ ┌─ 3. Eight services, one team. · light blue · [sticky heading beside the cards in ENH-061 · light b… ─┐ ║
 ║ │ H2: Eight services, one team.                                                                        │ ║
 ║ │ Text: Pick one service or combine several. We shape the team around your product.                    │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ H3: Product Engineering      │ │ H3: AI-Driven Analytics      │ │ H3: Product Co-Creation        │ │ ║
-║ │ │ Text: Transform innovative   │ │ Text: Transform raw data     │ │ Text: Accelerate innovation by │ │ ║
-║ │ │   ideas into market-ready    │ │   into actionable            │ │   combining your domain        │ │ ║
-║ │ │   digital products with      │ │   intelligence using AI and  │ │   knowledge with our technical │ │ ║
-║ │ │   end-to-end engineering     │ │   advanced visualisation.    │ │   expertise.                   │ │ ║
-║ │ │   expertise.                 │ │ Text: AI/ML · Dashboards     │ │                                │ │ ║
-║ │ │ Text: Web · Mobile           │ │                              │ │                                │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐ ┌────────────────────────────────┐ │ ║
-║ │ │ H3: Staffing Service         │ │ H3: Custom App Development   │ │ H3: Low-code Solutions         │ │ ║
-║ │ │ Text: Access specialised     │ │ Text: Develop custom         │ │ Text: Ship tools and           │ │ ║
-║ │ │   technology talent when you │ │   solutions aligned with     │ │   automations faster on        │ │ ║
-║ │ │   need it, with flexible     │ │   your unique requirements.  │ │   leading low-code platforms.  │ │ ║
-║ │ │   options.                   │ │                              │ │ Text: Power Platform · Make ·  │ │ ║
-║ │ │                              │ │                              │ │   n8n · Retool · Bubble        │ │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘ └────────────────────────────────┘ │ ║
-║ │ ┌──────────────────────────────┐ ┌──────────────────────────────┐                                    │ ║
-║ │ │ H3: AI-Powered Solutions     │ │ H3: Cloud Computing          │                                    │ ║
-║ │ │ Text: Harness artificial     │ │ Text: Expert solutions on    │                                    │ ║
-║ │ │   intelligence to transform  │ │   Azure, AWS and GCP.        │                                    │ ║
-║ │ │   your operations.           │ │ Text: Azure · AWS · GCP      │                                    │ ║
-║ │ │ Text: Generative AI · AI/ML  │ │                              │                                    │ ║
-║ │ └──────────────────────────────┘ └──────────────────────────────┘                                    │ ║
+║ │ H3: Product Engineering                                                                              │ ║
+║ │ Text: Transform innovative ideas into market-ready digital products with end-to-end engineering      │ ║
+║ │   expertise.                                                                                         │ ║
+║ │ Text: Web · Mobile                                                                                   │ ║
+║ │ H3: AI-Driven Analytics                                                                              │ ║
+║ │ Text: Transform raw data into actionable intelligence using AI and advanced visualisation.           │ ║
+║ │ Text: AI/ML · Dashboards                                                                             │ ║
+║ │ H3: Product Co-Creation                                                                              │ ║
+║ │ Text: Accelerate innovation by combining your domain knowledge with our technical expertise.         │ ║
+║ │ H3: Staffing Service                                                                                 │ ║
+║ │ Text: Access specialised technology talent when you need it, with flexible options.                  │ ║
+║ │ H3: Custom App Development                                                                           │ ║
+║ │ Text: Develop custom solutions aligned with your unique requirements.                                │ ║
+║ │ H3: Low-code Solutions                                                                               │ ║
+║ │ Text: Ship tools and automations faster on leading low-code platforms.                               │ ║
+║ │ Text: Power Platform · Make · n8n · Retool · Bubble                                                  │ ║
+║ │ H3: AI-Powered Solutions                                                                             │ ║
+║ │ Text: Harness artificial intelligence to transform your operations.                                  │ ║
+║ │ Text: Generative AI · AI/ML                                                                          │ ║
+║ │ H3: Cloud Computing                                                                                  │ ║
+║ │ Text: Expert solutions on Azure, AWS and GCP.                                                        │ ║
+║ │ Text: Azure · AWS · GCP                                                                              │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 4. Three ways to work with us. · white ─────────────────────────────────────────────────────────────┐ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ H2: Three ways to work with us.               │ │ Text: Dedicated team · Engineers who work as   │ │ ║
-║ │ │ Text: Start the way that suits you, and       │ │   part of your team, in your process. Through  │ │ ║
-║ │ │   change as your product grows.               │ │   our Staffing Service.                        │ │ ║
-║ │ │                                               │ │ Text: End-to-end delivery · We own the project │ │ ║
-║ │ │                                               │ │   from discovery to deployment. Through        │ │ ║
-║ │ │                                               │ │   Product Engineering and Custom App           │ │ ║
-║ │ │                                               │ │   Development.                                 │ │ ║
-║ │ │                                               │ │ Text: Co-creation · Your domain knowledge and  │ │ ║
-║ │ │                                               │ │   our engineering, building the product        │ │ ║
-║ │ │                                               │ │   together. Through Product Co-Creation.       │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
-║ ┌─ 5. What can we help you achieve? · white · [new in ENH-048] ────────────────────────────────────────┐ ║
+║ ┌─ 4. What can we help you achieve? · white · [new in ENH-048 · more space above in ENH-072] ──────────┐ ║
 ║ │ H2: What can we help you achieve?                                                                    │ ║
 ║ │ Text: 01                                                                                             │ ║
 ║ │ H3: Build a new digital product                                                                      │ ║
@@ -592,7 +593,7 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 ║ │ Text: Use AI, analytics and automation to improve products, workflows and business decision-making.  │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 6. How we work. · blue gradient · [five steps in ENH-011 (full version)] ───────────────────────────┐ ║
+║ ┌─ 5. How we work. · blue gradient · [five steps in ENH-011 (full version) · on light blue in ENH-06… ─┐ ║
 ║ │ H2: How we work.                                                                                     │ ║
 ║ │ Text: Every step ends with something you can see, test and approve.                                  │ ║
 ║ │ [BUTTON: 01 · Discovery (tab)]                                                                       │ ║
@@ -667,18 +668,6 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 ║ │ • Ongoing support                                                                                    │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 7. Industries we serve. · light blue ───────────────────────────────────────────────────────────────┐ ║
-║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ H2: Industries we serve.                      │ │ H3: Working in your time zone                  │ │ ║
-║ │ │ Text: Education is where we go deepest, and   │ │ Text: Our teams in Ho Chi Minh City and Plano  │ │ ║
-║ │ │   the same engineering serves other           │ │   collaborate with clients in the USA, Europe  │ │ ║
-║ │ │   industries too.                             │ │   and Australia.                               │ │ ║
-║ │ │ Text: EdTech · Healthcare · Logistics ·       │ │ Tags: USA · Europe · Australia                 │ │ ║
-║ │ │   Private Equity                              │ │ Text: Ho Chi Minh City · GMT+7 · Plano · US    │ │ ║
-║ │ │                                               │ │   Central                                      │ │ ║
-║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
-║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
-║                                                                                                          ║
 ║ [FOOTER: see "Header and footer"]                                                                        ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 ```
@@ -687,7 +676,7 @@ Changes on this page: ENH-011 (the five-step How we work. replaces the 4-D proce
 
 `about.html` · page title: "About XionTechs | Get IT Done"
 
-Changes on this page: ENH-046 and ENH-049 to ENH-059 (a We’re XionTechs intro over pastel peaks, then the mountain story with newXion at the peak and no place name, core values, FAQ, two office cards with city drawings and icon rows, all on white after the intro); ENH-030 (the mountain story; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 then ENH-059 (email section on white, the navy footer follows); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-067 (soft light blue glows); ENH-046 and ENH-049 to ENH-059 (a We’re XionTechs intro over pastel peaks, then the mountain story with newXion at the peak and no place name, core values, FAQ, two office cards with city drawings and icon rows, all on white after the intro); ENH-030 (the mountain story; the old hero, key facts and "Two strengths, one team." are gone); ENH-031 (FAQ last slot asks for more questions); ENH-032 (the story grows on very large screens); ENH-036 then ENH-059 (email section on white, the navy footer follows); Batch 1 (no label above "Our core values."); ENH-011 (FAQ says five steps); ENH-016 (FAQ rebuilt), ENH-019 (FAQ background holds still); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ ABOUT PAGE ═════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -785,7 +774,7 @@ Changes on this page: ENH-046 and ENH-049 to ENH-059 (a We’re XionTechs intro 
 ║ │ │   Texas 75024, USA                            │ │   Phuong Street Dien Hong Ward, Ho Chi Minh    │ │ ║
 ║ │ │ Text: (+1) 469 322 9899                       │ │   City, Vietnam                                │ │ ║
 ║ │ │ Text: (+1) 469 439 9345                       │ │ Text: (+84) 908 107 552                        │ │ ║
-║ │ │ Text: vinni.tran@newxion.com                  │ │                                                │ │ ║
+║ │ │ Text: vinni.tran@newxion.com                  │ │ Text: vinni.tran@xiontechs.com                 │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
@@ -805,16 +794,15 @@ Changes on this page: ENH-046 and ENH-049 to ENH-059 (a We’re XionTechs intro 
 
 `news.html` · page title: "News | XionTechs"
 
-Changes on this page: ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-037 (audience filter and full-photo story cards); ENH-047 (two thin company posts removed); ENH-053 (one large lead story, then square cards three to a row); ENH-036 (email section blends in); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-063 and ENH-066 (Catch up with us; cards unfold one by one as they scroll in; a newsletter sign-up); ENH-007 (a story about an app shows the app name in its pill); ENH-034 (white with light blue throughout; filter buttons no longer turn into NaN; the section colours below are the no-JavaScript fallback); ENH-037 (audience filter and full-photo story cards); ENH-047 (two thin company posts removed); ENH-053 (one large lead story, then square cards three to a row); ENH-036 (email section blends in); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ NEWS PAGE ══════════════════════════════════════════════════════════════════════════════════════════════╗
 ║ [HEADER: see "Header and footer"]                                                                        ║
 ║                                                                                                          ║
-║ ┌─ 1. What we’re building, learning and sharing · light hero · [white and light blue in ENH-034 · re… ─┐ ║
-║ │ H1: What we’re building, learning and sharing                                                        │ ║
-║ │ Text: Browse stories by audience, with a clear date stamp and audience label shown on every story    │ ║
-║ │   card.                                                                                              │ ║
+║ ┌─ 1. Catch up with us · light hero · [white and light blue in ENH-034 · rebuilt in ENH-037 · newsro… ─┐ ║
+║ │ H1: Catch up with us                                                                                 │ ║
+║ │ Text: Stay informed with the latest news and announcements, fresh off the press.                     │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
 ║ ┌─ 2. All stories · white ─────────────────────────────────────────────────────────────────────────────┐ ║
@@ -834,11 +822,14 @@ Changes on this page: ENH-007 (a story about an app shows the app name in its pi
 ║ │ (more cards follow, from the news list)                                                              │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 3. See it working at your school. · white · [blended in ENH-036] ───────────────────────────────────┐ ║
+║ ┌─ 3. Subscribe to our newsletter. · white · [blended in ENH-036 · newsletter sign-up in ENH-066] ─────┐ ║
 ║ │ ┌───────────────────────────────────────────────┐ ┌────────────────────────────────────────────────┐ │ ║
-║ │ │ H2: See it working at your school.            │ │ [FIELD: Work email (email, required)]          │ │ ║
-║ │ │ Text: Leave your work email and we'll arrange │ │ placeholder: "name@school.edu.vn"              │ │ ║
-║ │ │   a walkthrough built around your school.     │ │ [BUTTON: Book a demo]                          │ │ ║
+║ │ │ H2: Subscribe to our newsletter.              │ │ [FIELD: Your email (email, required)]          │ │ ║
+║ │ │ Text: Get our latest news, product updates    │ │ placeholder: "name@example.com"                │ │ ║
+║ │ │   and stories from the team, straight to your │ │ [BUTTON: Subscribe]                            │ │ ║
+║ │ │   inbox.                                      │ │ [AFTER SENDING, replaces the form] You’re      │ │ ║
+║ │ │                                               │ │   subscribed. Look out for our next            │ │ ║
+║ │ │                                               │ │   newsletter.                                  │ │ ║
 ║ │ └───────────────────────────────────────────────┘ └────────────────────────────────────────────────┘ │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
@@ -850,7 +841,7 @@ Changes on this page: ENH-007 (a story about an app shows the app name in its pi
 
 `news-story.html` · page title: "How our team is putting agentic AI to work every day | XionTechs"
 
-Changes on this page: ENH-037 (an editorial article: label, date, headline, summary, wide photo); ENH-042 and ENH-044 (each story's own text, with subheadings, from the newXion newsroom); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-037 (an editorial article: label, date, headline, summary, wide photo); ENH-042 and ENH-044 (each story's own text, with subheadings, from the newXion newsroom); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ NEWS STORY PAGE ════════════════════════════════════════════════════════════════════════════════════════╗
@@ -891,7 +882,7 @@ Changes on this page: ENH-037 (an editorial article: label, date, headline, summ
 
 `careers.html` · page title: "Careers at XionTechs | Software Jobs in Ho Chi Minh City"
 
-Changes on this page: ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-041 (event reel, later replaced); ENH-049 and ENH-055 (Stay curious. Build what’s next. hero with the Growth Learning Model, Inside XionTechs tiles, five flip cards, Find your next challenge.; Why you’ll grow here removed); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-060 (light blue into white and amber, no navy band); ENH-035 (one pastel light-amber background, light hero; the section colours below are the no-JavaScript fallback); ENH-041 (event reel, later replaced); ENH-049 and ENH-055 (Stay curious. Build what’s next. hero with the Growth Learning Model, Inside XionTechs tiles, five flip cards, Find your next challenge.; Why you’ll grow here removed); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ CAREERS PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -911,7 +902,7 @@ Changes on this page: ENH-035 (one pastel light-amber background, light hero; th
 ║ │ Text: Growth Learning Model                                                                          │ ║
 ║ └──────────────────────────────────────────────────────────────────────────────────────────────────────┘ ║
 ║                                                                                                          ║
-║ ┌─ 2. Inside XionTechs. · [Inside XionTechs tiles in ENH-055] ─────────────────────────────────────────┐ ║
+║ ┌─ 2. Inside XionTechs. · [Inside XionTechs tiles in ENH-055 · on the light gradient in ENH-060] ──────┐ ║
 ║ │ H2: Inside XionTechs.                                                                                │ ║
 ║ │ Text: A look at the moments that shape life here: workshops, project starts, team days,              │ ║
 ║ │   celebrations, shared learning and the small moments in between.                                    │ ║
@@ -965,7 +956,7 @@ Changes on this page: ENH-035 (one pastel light-amber background, light hero; th
 
 `job.html` · page title: "[Placeholder] Job title | Careers at XionTechs"
 
-Changes on this page: ENH-026 (fits phone screens); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-026 (fits phone screens); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ JOB PAGE ═══════════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1023,7 +1014,7 @@ Changes on this page: ENH-026 (fits phone screens); site-wide rules only (Batch 
 
 `demo.html` · page title: "Book a Demo or Start a Project | XionTechs"
 
-Changes on this page: ENH-011 (checklist says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: ENH-011 (checklist says five steps); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ CONTACT PAGE ═══════════════════════════════════════════════════════════════════════════════════════════╗
@@ -1059,9 +1050,9 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 ║ │ │ │   Chi Minh City, Vietnam                  │ │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │ │ [LINK: (+84) 908 107 552 →                │ │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │ │   tel:+84908107552]                       │ │ │ │ [FIELD: School size (dropdown: Under 500   │ │ │ ║
-║ │ │ └───────────────────────────────────────────┘ │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
-║ │ │                                               │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
-║ │ │                                               │ │ │   Product demo tab only)]                  │ │ │ ║
+║ │ │ │ [LINK: vinni.tran@xiontechs.com →         │ │ │ │   students / 500 to 1,500 students / Over  │ │ │ ║
+║ │ │ │   mailto:vinni.tran@xiontechs.com]        │ │ │ │   1,500 students / Multiple campuses;      │ │ │ ║
+║ │ │ └───────────────────────────────────────────┘ │ │ │   Product demo tab only)]                  │ │ │ ║
 ║ │ │                                               │ │ └────────────────────────────────────────────┘ │ │ ║
 ║ │ │                                               │ │ ┌────────────────────────────────────────────┐ │ │ ║
 ║ │ │                                               │ │ │ [FIELD: Preferred date (date; Product demo │ │ │ ║
@@ -1107,7 +1098,7 @@ Changes on this page: ENH-011 (checklist says five steps); site-wide rules only 
 
 `privacy.html` · page title: "Privacy Policy | XionTechs"
 
-Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ PRIVACY POLICY PAGE ════════════════════════════════════════════════════════════════════════════════════╗
@@ -1154,7 +1145,7 @@ Changes on this page: site-wide rules only (Batch 1 readability; ENH-004 heading
 
 `404.html` · page title: "Page not found | XionTechs"
 
-Changes on this page: Batch 1 (no label above the heading); ENH-043 (You’ve wandered off the trail, with a trail map); ENH-052 (no underline in the heading); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon).
+Changes on this page: Batch 1 (no label above the heading); ENH-043 (You’ve wandered off the trail, with a trail map); ENH-052 (no underline in the heading); site-wide rules only (Batch 1 readability; ENH-004 heading-first reveal; ENH-006 and ENH-009 spacing; ENH-025 calmer type weights; ENH-038 to ENH-040 one page-title style, lighter display headings and the guideline's heading rhythm; ENH-043 to ENH-045 the footer ridgeline with a climber whose spot follows the page; ENH-051 the climber only climbs and email bands drop the small print; ENH-056 to ENH-058 the updated footer and the site icon; ENH-064 a bolder hiker as the climber; ENH-073 room above the footer climber on every page).
 
 ```text
 ╔═ NOT FOUND (404) PAGE ═══════════════════════════════════════════════════════════════════════════════════╗

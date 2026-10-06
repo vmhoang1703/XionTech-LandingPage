@@ -27,15 +27,15 @@
   </div>
 </div></header>`;
   const footer=`
-<footer class="site"><div class="ridge" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" focusable="false"><path class="ridge-fill" d="M0 120 L0 94 L110 82 L200 90 L300 72 L380 84 L470 66 L560 80 L650 60 L730 74 L800 52 L860 6 L920 56 L1000 46 L1090 68 L1180 58 L1270 78 L1360 64 L1440 74 L1440 120 Z"/><path class="ridge-line" d="M0 94 L110 82 L200 90 L300 72 L380 84 L470 66 L560 80 L650 60 L730 74 L800 52 L860 6 L920 56 L1000 46 L1090 68 L1180 58 L1270 78 L1360 64 L1440 74"/></svg><span class="ridge-climber"><svg viewBox="0 0 24 28" focusable="false"><rect class="rc-pack" x="6.6" y="8" width="4.6" height="6.6" rx="1.6" transform="rotate(14 9 11)"/><circle class="rc-head" cx="14" cy="4" r="2.5"/><path class="rc-body" d="M13 7.5 L11 15.5 M11 15.5 L8 21.5 L6.5 26 M11 15.5 L14.6 20.2 L15.6 26 M12.6 9.6 L17 12.6 M17 12.6 L19 26"/></svg></span></div><div class="wrap">
+<footer class="site"><div class="ridge" aria-hidden="true"><svg viewBox="0 0 1440 120" preserveAspectRatio="none" focusable="false"><path class="ridge-fill" d="M0 120 L0 94 L110 82 L200 90 L300 72 L380 84 L470 66 L560 80 L650 60 L730 74 L800 52 L860 6 L920 56 L1000 46 L1090 68 L1180 58 L1270 78 L1360 64 L1440 74 L1440 120 Z"/><path class="ridge-line" d="M0 94 L110 82 L200 90 L300 72 L380 84 L470 66 L560 80 L650 60 L730 74 L800 52 L860 6 L920 56 L1000 46 L1090 68 L1180 58 L1270 78 L1360 64 L1440 74"/></svg><span class="ridge-climber"><svg viewBox="0 0 24 30" focusable="false"><rect class="rc-pack" x="5.4" y="8.4" width="5.4" height="8" rx="2" transform="rotate(16 8.1 12.4)"/><circle class="rc-head" cx="14.6" cy="4.2" r="2.7"/><path class="rc-body" d="M13.4 7.8 L10.6 16.8 M12.8 10 L16.4 12.6 L19 10.4 M10.6 16.8 L15.2 20.6 L16 27.2 M10.6 16.8 L8.2 22.8 L5.4 27.4"/></svg></span></div><div class="wrap">
   <div class="fgrid">
     <div><a class="flogo" href="index.html"><img src="assets/logo.png" alt="XionTechs"></a>
       <p class="about" data-vi="Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp.">Education technology products and software delivery services for schools and businesses.</p></div>
     <div><h4 data-vi="Sản phẩm">Products</h4><ul><li><a href="products.html#sxp" data-vi="Cho nhà trường">For schools</a></li><li><a href="products.html#lxp" data-vi="Cho học sinh">For students</a></li><li><a href="products.html#pxp" data-vi="Cho phụ huynh">For parents</a></li></ul></div>
     <div><h4 data-vi="Dịch vụ">Services</h4><ul><li><a href="services.html#product-engineering">Product Engineering</a></li><li><a href="services.html#ai-analytics">AI-Driven Analytics</a></li><li><a href="services.html#staffing">Staffing Service</a></li><li><a href="services.html#low-code">Low-code Solutions</a></li><li><a href="services.html#cloud">Cloud Computing</a></li><li><a href="services.html#process" data-vi="Cách chúng tôi làm việc">How we work</a></li><li><a href="services.html" data-vi="Tất cả dịch vụ">All services</a></li></ul></div>
-    <div><h4 data-vi="Công ty">Company</h4><ul><li><a href="news.html" data-vi="Tin tức">News</a></li><li><a href="about.html" data-vi="Về chúng tôi">About</a></li><li><a href="careers.html" data-vi="Tuyển dụng">Careers</a></li></ul></div>
+    <div><h4 data-vi="Công ty">Company</h4><ul><li><a href="news.html" data-vi="Tin tức">News</a></li><li><a href="about.html" data-vi="Về chúng tôi">About us</a></li><li><a href="careers.html" data-vi="Tuyển dụng">Careers</a></li></ul></div>
     <div><h4 data-vi="Văn phòng">Offices</h4>
-      <address class="office"><b data-vi="Trung tâm Phát triển Việt Nam">Vietnam Delivery Center</b><span class="orow"><i class="ph ph-map-pin" aria-hidden="true"></i><span>Floor 15, B1 Building<br>279 Nguyen Tri Phuong Street<br>Dien Hong Ward, Ho Chi Minh City, Vietnam</span></span><span class="orow"><i class="ph ph-phone" aria-hidden="true"></i><span><a href="tel:+84908107552">(+84) 908 107 552</a></span></span></address>
+      <address class="office"><b data-vi="Trung tâm Phát triển Việt Nam">Vietnam Delivery Center</b><span class="orow"><i class="ph ph-map-pin" aria-hidden="true"></i><span>Floor 15, B1 Building<br>279 Nguyen Tri Phuong Street<br>Dien Hong Ward, Ho Chi Minh City, Vietnam</span></span><span class="orow"><i class="ph ph-phone" aria-hidden="true"></i><span><a href="tel:+84908107552">(+84) 908 107 552</a></span></span><span class="orow"><i class="ph ph-envelope-simple" aria-hidden="true"></i><span><a href="mailto:vinni.tran@xiontechs.com">vinni.tran@xiontechs.com</a></span></span></address>
       <address class="office"><b data-vi="Trung tâm Phát triển Hoa Kỳ">US Delivery Center</b><span class="orow"><i class="ph ph-map-pin" aria-hidden="true"></i><span>7950 Legacy Drive, Suite 400<br>Plano, Texas 75024, USA</span></span><span class="orow"><i class="ph ph-phone" aria-hidden="true"></i><span><a href="tel:+14693229899">(+1) 469 322 9899</a></span></span><span class="orow"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i><span><a href="https://wa.me/14694399345" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp (+1) 469 439 9345 (opens in a new tab)" data-vi-aria="WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)">(+1) 469 439 9345</a></span></span><span class="orow"><i class="ph ph-envelope-simple" aria-hidden="true"></i><span><a href="mailto:vinni.tran@newxion.com">vinni.tran@newxion.com</a></span></span></address></div>
   </div>
   <div class="fbot"><span>© 2026 XionTechs · <a href="privacy.html" data-vi="Chính sách bảo mật">Privacy policy</a></span><span class="tag">GET IT <b>DONE</b></span></div>
@@ -103,7 +103,16 @@
   const shape=()=>{if(!newsGrid)return;const vis=[...newsGrid.querySelectorAll('.scard')].filter(c=>c.style.display!=='none');
     const cols=getComputedStyle(newsGrid).gridTemplateColumns.split(' ').length,n=vis.length;
     newsGrid.querySelectorAll('.s-lead').forEach(c=>c.classList.remove('s-lead'));if(vis[0]&&(n===1||n-1>=cols))vis[0].classList.add('s-lead')};
-  shape();addEventListener('resize',()=>requestAnimationFrame(shape),{passive:true});document.querySelectorAll('[data-filter-for="newsGrid"] button').forEach(btn=>btn.addEventListener('click',()=>requestAnimationFrame(shape)));
+  // each story card unfolds from the top like a menu as it scrolls into view, one after another across its row; a filter change replays it
+  let pio=null;
+  const press=()=>{if(!newsGrid||reduce||!('IntersectionObserver' in window))return;if(pio)pio.disconnect();newsGrid.classList.add('press-wait');
+    const vis=[...newsGrid.querySelectorAll('.scard')].filter(c=>c.style.display!=='none'),cols=getComputedStyle(newsGrid).gridTemplateColumns.split(' ').length,lead=vis[0]&&vis[0].classList.contains('s-lead')?1:0;
+    vis.forEach(c=>c.classList.remove('shown','press-in'));
+    pio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const c=e.target;pio.unobserve(c);const k=vis.indexOf(c);
+      c.style.setProperty('--d',(k<lead?0:(k-lead)%cols)*260+'ms');c.classList.add('shown','press-in');const done=ev=>{if(ev.target!==c||ev.animationName!=='menuReveal')return;c.classList.remove('press-in');c.removeEventListener('animationend',done)};c.addEventListener('animationend',done)}),{threshold:.01});
+    vis.forEach(c=>pio.observe(c))};
+  shape();press();
+  addEventListener('resize',()=>requestAnimationFrame(shape),{passive:true});document.querySelectorAll('[data-filter-for="newsGrid"] button').forEach(btn=>btn.addEventListener('click',()=>requestAnimationFrame(()=>{shape();press()})));
   // story page: the header follows ?id= (the article body is the shared sample)
   const artTitle=document.querySelector('.art-hero h1');
   if(artTitle){const id=new URLSearchParams(location.search).get('id'),n=NEWS.find(s=>s.id===id)||NEWS[0];if(id&&n.id!==id)location.replace('news.html');
@@ -427,6 +436,16 @@
     addEventListener('load',()=>{const i=all.indexOf(document.getElementById(location.hash.slice(1)));if(i>=0)requestAnimationFrame(()=>scrollTo({top:restY(i),behavior:'auto'}))});
   }
 
+  /* ---------- Services: the Eight services panel starts a fixed gap below the hero panel, whatever the cards' height ---------- */
+  const svcHero=document.querySelector('.svc-hero'),svcCards=document.querySelector('.svc-metrics'),svcPanel=document.querySelector('.svc-panel');
+  if(svcHero&&svcCards&&svcPanel){const GAP=28,fitPanels=()=>{svcPanel.style.marginTop='';svcPanel.style.paddingTop='';svcCards.style.marginTop='';
+      // the cards sit centred across the gap, but never higher than the hero's bottom space allows
+      const ch=svcCards.getBoundingClientRect().height,room=parseFloat(getComputedStyle(svcHero).paddingBottom)-72;svcCards.style.marginTop=-Math.round(Math.min(ch/2-GAP/2,room))+'px';
+      const ov=Math.max(0,Math.round(svcCards.getBoundingClientRect().bottom-svcHero.getBoundingClientRect().bottom-GAP));
+      svcPanel.style.marginTop=-ov+'px';svcPanel.style.paddingTop=(ov+(innerWidth>640?140:96))+'px'};
+    fitPanels();addEventListener('resize',fitPanels,{passive:true});addEventListener('load',fitPanels);document.addEventListener('xt-lang',()=>requestAnimationFrame(fitPanels));
+    if('ResizeObserver' in window){let lastH=0;new ResizeObserver(es=>{const h=Math.round(es[0].contentRect.height);if(h!==lastH){lastH=h;requestAnimationFrame(fitPanels)}}).observe(svcCards)}if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitPanels)}
+
   /* ---------- Products, Services, News and Careers: one background colour flowing down the page ---------- */
   // Every section in <main> gets a phase from its place in the page, so a new section extends the flow on its own:
   // the first is white with amber dots, the middle ones warm up to bright amber, then ease from
@@ -457,22 +476,54 @@
       flowBg.style.height='0';const O=flowBg.getBoundingClientRect().top+scrollY,H=document.documentElement.scrollHeight-O;
       const list=[],add=(y,c)=>{y=Math.round(y-O);if(!list.length||y>list[list.length-1][0])list.push([y,c])},glows=[];
       const rise=secs.filter(s=>s.dataset.flowPhase==='rise'),rTop=rise.length?Y(rise[0]):0;
+      if(pal==='home'){
+        // home: one layer from the hero to the footer. The hero's navy carries on behind Our partners and Why XionTechs (white
+        // text); Work built with our partners starts at a normal blue behind its heading and lightens behind its cards, so
+        // How we approach sits on light blue (navy text); What we build eases to the soft blue the news starts with, and the
+        // news and contact form keep the colours they had (soft blue into amber), now drawn in the same layer so no edge shows.
+        const W=innerWidth>=980,R=W?420:220,dark=secs.filter(s=>s.dataset.flow==='night'),lastDark=dark[dark.length-1];
+        const news=document.querySelector('[aria-labelledby="news-h"]'),contact=document.getElementById('contact');
+        add(Y(secs[0]),'#0B1730');
+        const P=['#163663','#163663','#1A3C70'];
+        dark.forEach((s,k)=>{if(s!==lastDark)add(B(s),P[Math.min(k,P.length-1)])});
+        // the last dark section: blue behind its heading, then lightening behind its cards
+        if(lastDark){const head=lastDark.querySelector('.sec-head,.sec-head-row'),hb=head?B(head)+24:Y(lastDark)+260;
+        add(hb,'#24497F');add(B(lastDark)-40,'#BFD0E8')}
+        const after=secs.slice(lastDark?secs.indexOf(lastDark)+1:1).filter(s=>s!==news&&s!==contact);
+        after.forEach((s,k)=>{if(k===0)add(Y(s)+(B(s)-Y(s))*.3,'#DCE6F5');add(B(s),'#EEF2F9')});
+        if(news){add(B(news),'#F4F7FC')}
+        if(contact){const t=Y(contact),h=B(contact)-t;add(t+h*.22,'#FDF3D6');add(t+h*.55,'#FCE6A8');add(B(contact),'#FFD84A')}
+        secs.forEach((s,i)=>{if(i===0||s===news||s===contact)return;const t=Y(s),h=B(s)-t,isDark=s.dataset.flow==='night',l=i%2===1;
+          glows.push([l?6:94,t+h*.35,R,isDark?.16:.28,'255 192 0']);if(!isDark&&s!==after[after.length-1])glows.push([l?92:8,t+h*.6,R*.9,.6,'255 255 255'])});
+        glows.push([100,Y(secs[0]),Math.round((B(secs[0])-Y(secs[0]))*.9),.16,'255 192 0']);
+      }else
+      if(pal==='mesh'){
+        // mesh (Services): the hero and Eight services are rounded panels with their own colours; around and below them the
+        // page is a soft light blue that turns white at the end, with white and amber glows that stop before the white end.
+        const W=innerWidth>=980,R=W?400:210,last=secs[n-1],end=B(last),top=Y(secs[0]);
+        add(top,'#EEF2F9');
+        const out=document.getElementById('outcomes'),proc=document.getElementById('process');
+        if(out)add(Y(out),'#E6EEF9');if(proc)add(Y(proc)+(B(proc)-Y(proc))*.35,'#DCE6F5');
+        add(end-(end-top)*.08,'#F7F9FD');add(end,'#FFFFFF');
+        [out,proc].filter(Boolean).forEach((s,k)=>{const t=Y(s),h=B(s)-t,l=k%2===0;
+          glows.push([l?6:94,t+h*.3,R,.4,'255 192 0'],[l?92:8,t+h*.6,R*.9,.85,'255 255 255'])});
+      }else
       if(pal){
         // Every section after the hero, the email band included, shares one gradient, so nothing sits in its own box.
         // warm (Services): white into amber and back to a warm cream; nothing blue.
         // cool (News): white with light blue shading drifting through the whole page, hero included.
-        // pastel (Careers): white into light, soft amber shades and back, never full amber.
+        // pastel (Careers): light blue at the top, white through the middle, warm amber towards the footer.
         const first=secs[0],mid=secs.slice(1),a=mid.length?Y(mid[0]):B(first),z=mid.length?B(mid[mid.length-1]):a;
-        add(Y(first),C.white);add(B(first),pal==='cool'?'#F7FAFE':pal==='soft'?C.white:C.plat);
-        glows.push([14,Y(first)+(B(first)-Y(first))*.45,380,pal==='cool'?.07:.16,pal==='cool'?'63 102 160':'246 195 10']);
-        const path=pal==='soft'?[[0,C.white],[1,C.white]]:pal==='pastel'?[[0,'#FFFAEE'],[.25,'#FEF1CF'],[.5,'#FCE7B0'],[.75,'#FDF0CC'],[1,'#FFF7E2']]
+        add(Y(first),pal==='pastel'?'#DCE6F5':C.white);add(B(first),pal==='cool'?'#F7FAFE':pal==='soft'?C.white:pal==='pastel'?'#E8EFF9':C.plat);
+        glows.push([14,Y(first)+(B(first)-Y(first))*.45,380,pal==='cool'?.07:pal==='pastel'?.1:.16,pal==='cool'||pal==='pastel'?'63 102 160':'246 195 10']);
+        const path=pal==='soft'?[[0,C.white],[1,C.white]]:pal==='pastel'?[[0,'#E8EFF9'],[.28,'#F5F8FD'],[.45,'#FFFFFF'],[.7,'#FFF5D9'],[1,'#FFE7A3']]
           :pal==='warm'?[[0,C.plat],[.16,C.cream],[.36,C.sun],[.52,C.amber],[.7,C.sun],[.86,C.cream],[1,'#FFF3D0']]
           :[[0,'#F7FAFE'],[.22,'#EEF4FC'],[.45,'#E6EEF9'],[.68,'#F0F5FC'],[.86,'#E7EFF9'],[1,'#E1EAF7']];
         path.forEach(([f,c])=>add(a+(z-a)*f,c));
         if(pal==='cool'){for(let k=0;k<5;k++)glows.push([k%2?86:10,a+(z-a)*(.08+k*.21),460,.07,'63 102 160'])}
         // soft (Services): white, with large pale amber washes drifting in from alternate sides
         else if(pal==='soft'){for(let k=0;k<4;k++)glows.push([k%2?96:2,a+(z-a)*(.06+k*.28),620,.16,'246 195 10'])}
-        else glows.push([86,a+(z-a)*.3,360,pal==='pastel'?.08:.12,'246 195 10']);
+        else glows.push([86,a+(z-a)*(pal==='pastel'?.82:.3),360,pal==='pastel'?.1:.12,'246 195 10']);
       }else
       secs.forEach(s=>{const top=Y(s),bot=B(s),h=bot-top,ph=s.dataset.flowPhase;
         if(ph==='light'){add(top,C.white);add(bot,C.plat);glows.push([14,top+h*.45,380,.16])}
@@ -503,7 +554,8 @@
 
   /* ---------- Products: the tab bar and the card dividers turn navy where the background is amber ---------- */
   const audBar=document.querySelector('.aud-nav'),stackCards=[...document.querySelectorAll('.pstack .pcard')];
-  if(audBar&&flowBg){const tone=()=>{const r=audBar.getBoundingClientRect(),y=r.top+r.height/2+scrollY;audBar.classList.toggle('on-amber',onAmber(y));
+  if(audBar&&flowBg){const tone=()=>{const r=audBar.getBoundingClientRect(),y=r.top+r.height/2+scrollY,fr=flowBg.getBoundingClientRect();
+      audBar.style.backgroundImage='var(--flow-page)';audBar.style.backgroundSize=fr.width+'px '+fr.height+'px';audBar.style.backgroundPosition=(fr.left-r.left)+'px '+(fr.top-r.top)+'px';audBar.classList.toggle('on-amber',onAmber(y));
       // dark amber (#8A6700, luminance .15) only where it keeps 4.5:1; navy everywhere else
       audBar.classList.toggle('amber-ok',(lumAt(y)+.05)/(.151+.05)>=4.5);
       stackCards.forEach(c=>{const t=c.getBoundingClientRect().top+scrollY;c.classList.toggle('on-amber',onAmber(t))})};
@@ -572,10 +624,11 @@
   /* ---------- email capture (prototype: nothing is sent) ---------- */
   const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   document.querySelectorAll('.cap-form').forEach(f=>{const inp=f.querySelector('input[type=email]'),err=f.querySelector('.err');
+    if(inp&&err){if(!err.id)err.id='cap-err-'+Math.random().toString(36).slice(2,8);inp.setAttribute('aria-describedby',err.id)}
     f.addEventListener('submit',e=>{e.preventDefault();const v=inp.value.trim();
       if(!EMAIL.test(v)){err.hidden=false;inp.setAttribute('aria-invalid','true');inp.focus();return}
       err.hidden=true;inp.removeAttribute('aria-invalid');
-      if(f.dataset.mode==='demo'||f.dataset.mode==='project'){sess.set('xt3-demo-email',v);location.href='demo.html#'+(f.dataset.mode==='project'?'project':'form')}else{f.classList.add('done')}});
+      if(f.dataset.mode==='demo'||f.dataset.mode==='project'){sess.set('xt3-demo-email',v);location.href='demo.html#'+(f.dataset.mode==='project'?'project':'form')}else{f.classList.add('done');const ok=f.querySelector('.cap-ok');if(ok)ok.focus()}});
     inp.addEventListener('input',()=>{err.hidden=true;inp.removeAttribute('aria-invalid')})});
 
   /* ---------- demo / contact form ---------- */

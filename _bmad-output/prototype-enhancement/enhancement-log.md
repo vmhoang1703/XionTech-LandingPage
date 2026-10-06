@@ -59,10 +59,10 @@ directly, before this log existed.
 | ENH-043 | 2026-10-05 | Every page footer; 404; forms                                                 | Mountain touches: the footer sits on a ridgeline with the X on the peak; the 404 page is a lost-trail map; form success shows a flag going up and "Summit reached"                                                                                                                                | In PR    | Batch 1 (all pages)                   |
 | ENH-044 | 2026-10-05 | News stories; every page footer                                               | Newsroom stories get news-style titles and fuller articles; stories open straight away; the footer peak is taller and a climber walks up it as the reader scrolls                                                                                                                                 | In PR    | 4.1                                   |
 | ENH-045 | 2026-10-05 | News grid; every page footer                                                  | News stories in a bento grid of mixed shapes; the footer climber stands at a spot set by the page's place in the navigation and walks there from the previous page, replacing the X on the peak                                                                                                   | In PR    | Batch 1 (all pages)                   |
-| ENH-046 | 2026-10-05 | About                                                                         | Version A stays the base with an "Our mission." section above the mountain; newXion labels the X at the peak; Mount Zion becomes a caption under the picture; the full mountain shows with a light amber glow                                                                                     | In PR    | 4.1                                   |
+| ENH-046 | 2026-10-05 | About                                                                         | Version A stays the base with an "Our mission." section above the mountain; newXion labels the X at the peak; the place name becomes a caption under the picture; the full mountain shows with a light amber glow                                                                                     | In PR    | 4.1                                   |
 | ENH-047 | 2026-10-05 | News                                                                          | The two company posts with the least content (AI in Action, Year-End Town Hall) are removed                                                                                                                                                                                                       | In PR    | 4.1                                   |
 | ENH-048 | 2026-10-05 | Services                                                                      | A white page with pastel amber washes; "What can we help you achieve?" before How we work; the facts strip keeps three facts                                                                                                                                                                      | In PR    | 4.1                                   |
-| ENH-049 | 2026-10-05 | About intro and mountain; Products audience tabs; Careers                     | A Salesforce-style "We’re XionTechs" intro over pastel mountains; a transparent mountain picture with the Mount Zion caption above it; underlined audience tabs under "What we build."; "Find your next challenge."                                                                               | In PR    | 4.1                                   |
+| ENH-049 | 2026-10-05 | About intro and mountain; Products audience tabs; Careers                     | A Salesforce-style "We’re XionTechs" intro over pastel mountains; a transparent mountain picture with the place-name caption above it; underlined audience tabs under "What we build."; "Find your next challenge."                                                                               | In PR    | 4.1                                   |
 | ENH-050 | 2026-10-05 | Products tabs and A day at school; About                                      | Plain transparent audience tabs (amber selected text, no dots); the day title and description share a row; reached timeline dots show a flag; no mountain name or place on About; city drawings in the office cards; "ownership" in amber text                                                    | In PR    | 4.1                                   |
 | ENH-051 | 2026-10-05 | About drawings; Products tabs and timeline; footer climber; email bands; News | Country landmarks in the city drawings; rounder intro peaks; tabs and card dividers turn navy over amber; "Student learns"; the climber only climbs; no small print in email bands; big equal News cards                                                                                          | In PR    | Batch 1 (all pages)                   |
 | ENH-052 | 2026-10-05 | Products tabs; About office drawings; 404                                     | The selected tab is amber only where it reads, navy elsewhere, on a light frosted bar; Ben Thanh Market for Ho Chi Minh City and the Plano Balloon Festival for Plano; no underline on the 404 heading                                                                                            | In PR    | 4.1                                   |
@@ -73,6 +73,19 @@ directly, before this log existed.
 | ENH-057 | 2026-10-05 | Footer by audience; offices with icons; softer mountain glow | Footer Products grouped for schools, parents and students; Company cut to News, About, Careers; offices as Vietnam then US Delivery Center with icons; mountain glow toned down | In PR    | Batch 1 (all pages) |
 | ENH-058 | 2026-10-05 | Footer audiences; phone format; About office cards; About background options | Footer Products shows For schools / For students / For parents only; phones as (+1) / (+84); About office cards use icon rows; about-2.html compares three About backgrounds | In PR    | Batch 1 (all pages) |
 | ENH-059 | 2026-10-05 | About: white after the hero | Every About section after the hero on plain white (FAQ, offices and the email band no longer blue or navy); comparison page removed | In PR    | Batch 1 (About) |
+| ENH-060 | 2026-10-05 | Careers background | One light gradient from light blue (hero) through white to amber (above the footer); Inside XionTechs no longer a navy band; the hero glow fades into the page | Approved | 4.1 |
+| ENH-061 | 2026-10-05 | Services, eight services | The heading and description stay in place on the left while the eight service cards scroll on the right, two to a row | Approved | 4.1 |
+| ENH-062 | 2026-10-05 | Products audience tabs | Larger tabs with icons and more padding; the bar shows the page colour behind it | Approved | 4.1 |
+| ENH-063 | 2026-10-05 | News | "Catch up with us" with a new description; words rise in, "us" gets an amber marker, story cards unfold one by one as they scroll in (again on each filter) | Approved | 4.1 |
+| ENH-064 | 2026-10-05 | Footer, climber, Vietnam email; docs wording | "About us" in the footer; a bolder hiker with a backpack as the climber; vinni.tran@xiontechs.com for Vietnam; religious place names removed from the log and AI log | Approved | Batch 1 (all pages) |
+| ENH-065 | 2026-10-05 | Services background | Three ways section removed; navy into light blue and white with white and amber glows (top of page reworked again in ENH-069) | Approved | 4.1 |
+| ENH-066 | 2026-10-06 | News | No marker under "us"; the email section is a newsletter sign-up with an in-place thank-you | Approved | 4.1 |
+| ENH-067 | 2026-10-06 | Home, About, Careers backgrounds and spacing | Home: one soft background from Our partners to Latest from XionTechs, How we approach fading into it; About: soft light blue glows; Careers: more space under Find your next challenge | Approved | 4.1 |
+| ENH-069 | 2026-10-06 | Services top of page | Hero and Eight services as rounded panels; four cards across them (24/7, 20+, 25+, 4 industries) with a short note each; See how we work button and the separate facts and Industries sections removed | Approved | 4.1 |
+| ENH-070 | 2026-10-06 | Home background; Services cards, spacing and motion | Home: navy from the hero through Our partners and Why XionTechs (white text), easing into light blue, white and light amber; How we approach has no colour of its own. Services: cards are text and numbers only, a little wider; more room above Eight services; playful entrances | Approved | 4.1 |
+| ENH-071 | 2026-10-06 | Home background and How we approach; Services cards | Home: hero navy into Our partners, an even fall from darkest to light blue with no visible steps; news and contact keep their own colours; more room under How we approach, link over step 05. Services: cards without notes, one footer style | Approved | 4.1 |
+| ENH-072 | 2026-10-06 | Services panel gap and spacing; Home mountain divider and smoother blends | Services: 28px gap between the two panels with the cards centred across it, more room above What can we help you achieve? and below How we work. Home: a small mountain range before Our partners, the blue lightening through Work built with our partners, one seamless layer from What we build to the contact form | Approved | 4.1 |
+| ENH-073 | 2026-10-06 | Home spacing; footer clearance on every page | No mountain illustration; more space above and below Our partners; the last section of every page leaves room above the footer climber | Approved | Batch 1 (all pages) |
 
 ## ENH-001: Contact form on Home
 
@@ -91,7 +104,7 @@ directly, before this log existed.
     and get in touch with you." (The prototype's extra line "Prototype: nothing was sent." is not for
     production.)
 - **Rules:**
-  - The Mount Zion tag is the only link in the story. It is reached by keyboard, at least 44px tall, and says it opens in a new tab.
+  - The place tag is the only link in the story. It is reached by keyboard, at least 44px tall, and says it opens in a new tab.
   - Required: name, work email (a valid address) and the message.
   - Phone is optional. When filled, it has 7 to 15 digits, may start with +, and may use spaces, dots,
     dashes and brackets. Extensions ("ext 2") are not accepted.
@@ -714,22 +727,22 @@ directly, before this log existed.
 - **Why:** Amber asked on 2026-10-05 to bring the mountain story from `xiontechs-mountain-story.html` into the About page, without the thin frame lines around and between its parts. She then asked for it to be the page's hero, told on the left while the picture changes beside it (like the night-to-dawn reference), with the XionTech X mark at the summit. After seeing three short steps she chose two fuller ones, with the title kept at the top and highlighted, and no breadcrumb. Finally she asked for wording that does not mention God, faith or spiritual ideas while still letting readers look up the origin themselves, with the place referenced on the picture, and the title above both columns.
 - **What changed:** the navy hero ("Tech made simple. Solutions made powerful." and its description), the five key-fact figures, "Two strengths, one team." and the breadcrumb are removed. The page now opens with the story, held in place for about one extra screen of scrolling:
   - Top, centred above both columns: the title "Inspired by a mountain. United by purpose.", with "purpose" in the site's amber highlight. It stays while the chapters change.
-  - Left: chapter 01 The inspiration (the name comes from Zion, the ancient mountain city in Jerusalem, a place where people belong together and look towards a brighter future) with a Scroll cue, which gives way to chapter 02 The purpose (the pioneers who founded newXion), closing with "Our inspiration is a mountain. Our purpose is people." and "Vision · Community · Technology".
+  - Left: chapter 01 The inspiration (the name is inspired by a mountain, a place where people belong together and look towards a brighter future) with a Scroll cue, which gives way to chapter 02 The purpose (the pioneers who founded newXion), closing with "Our inspiration is a mountain. Our purpose is people." and "Vision · Community · Technology".
   - Right: the mountain, grey at first. When chapter 02 takes over, the colour climbs from the foot to the summit with an amber dot following the trail, and the X mark on the summit turns from grey to full colour. Two small dots under the picture show the chapter.
-  - Place tags on the picture, like a survey map, each with a short leader line and an amber point: "Mount Zion, Jerusalem, 31.77° N 35.23° E" beside the summit, a link that opens the Wikipedia page in a new tab so readers can look the place up; and "newXion, Founded in America" at the village on the slope, which appears with chapter 02.
+  - Place tags on the picture, like a survey map, each with a short leader line and an amber point: the mountain’s place name and coordinates beside the summit, a link that opens the reference page in a new tab so readers can look the place up; and "newXion, Founded in America" at the village on the slope, which appears with chapter 02.
 - **Rules:**
   - Chapter 02 takes over 40% of the way through the held scroll; scrolling back up returns to chapter 01 and climbs back down. There is no timer or autoplay.
   - Phones and portrait tablets stack the title, the picture and the chapter text, all held in place together. Short screens cannot fit that (phones under about 740px tall, and landscape phones of any width), so there nothing is held: the picture stays in view while both chapters scroll past it, and chapter 02 takes over once its heading is 60% of the way down the screen.
   - Both chapters are ordinary page text, read in order by screen readers; the picture is decorative.
   - With reduced motion the picture and text change without movement, and the dot is hidden. Without JavaScript nothing is held, both chapters show one after the other, and the whole mountain, X mark included, is in colour.
   - No frame lines and no eyebrow label. The picture's edges fade into the page so no box shows, and the colour's leading edge is soft.
-- **Content:** no mention of God, faith or spiritual ideas; the origin is given as a place (Mount Zion, with its coordinates) that readers can look up. Chapter 02 is the newXion story from the reference. All copy has Vietnamese.
+- **Content:** no mention of God, faith or spiritual ideas; the origin is given as a place, with its coordinates, that readers can look up. Chapter 02 is the newXion story from the reference. All copy has Vietnamese.
 - **After review (2026-10-05):**
   - Landscape phones wider than 800px used to get the held layout, which did not fit; they now scroll normally with the picture beside the text.
   - Short desktop windows tighten slightly so the held story fits in Vietnamese too.
   - The 40% switch point is measured from where the story starts to stick under the header (it was landing at about 47%).
   - A page opened or reloaded part-way down shows the right chapter straight away instead of replaying the climb.
-  - The Mount Zion tag underlines on keyboard focus as well as hover; the newXion tag clears the edge on 320px phones; the trail glow uses the brand amber.
+  - The place tag underlines on keyboard focus as well as hover; the newXion tag clears the edge on 320px phones; the trail glow uses the brand amber.
 - **Developer notes:** the picture is `assets/mountain-story.webp` (1536×1024, 177 KB), taken from the source file, which embedded the same image twice; it is used twice here too (grey base and colour layer). The X mark is `assets/x-mark.webp` (160×86, 8 KB), cut from `logo-square.png` with its white background removed.
 - **Open items:** none.
 
@@ -930,13 +943,13 @@ directly, before this log existed.
 
 ## ENH-046: About gains "Our mission", and the mountain shows in full
 
-- **Why:** Amber compared a second About version built from `xiontechs-about-page-recommendation.md` and chose to keep the current page (version A) as the base, with changes: an "Our mission" section above the mountain like the "What IBM does" section on IBM's About page, the newXion label on top of the X at the peak, the Mount Zion name and coordinates off the mountain itself, and the whole mountain visible (it was cut off at both sides) with a light amber glow around its outline. The version B page is removed.
+- **Why:** Amber compared a second About version built from `xiontechs-about-page-recommendation.md` and chose to keep the current page (version A) as the base, with changes: an "Our mission" section above the mountain like the "What IBM does" section on IBM's About page, the newXion label on top of the X at the peak, the place name and coordinates off the mountain itself, and the whole mountain visible (it was cut off at both sides) with a light amber glow around its outline. The version B page is removed.
 - **What changed:**
   - **Our mission.** (new first section, the page title; later restyled as a centred intro in ENH-049): the large title on the left and, on the right, the mission in large light type ("We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all."), one line on what the company does and where from, and links to Products and Services. The mission sentence is the one already used on the site.
   - **The mountain story** follows as the second section, unchanged in content (two chapters), with "Inspired by a mountain. United by purpose." now a section heading.
   - The picture shows the whole mountain edge to edge (only the outermost few percent fade into the page), with a soft amber glow traced from the mountain's own lines.
   - "newXion, Founded in America" sits on top of the X at the summit with a short line down to it (on phones it sits to the left of the X, where there is room). It still appears with chapter 02.
-  - "Mount Zion ↗ Jerusalem 31.77° N 35.23° E" is a caption under the picture, still linking to the Wikipedia page.
+  - The place name and coordinates are a caption under the picture, still linking to the reference page.
 - **Rules:** the held story still fits on screen at 1440×900, 1366×640, 375×812 and 375×667; all new copy has Vietnamese; the FAQ, core values, offices and email band stay on About.
 - **Developer notes:** the glow is `assets/mountain-glow.webp` (768×512, 29 KB), an amber, blurred trace of the picture's lines on a transparent background; the second chapter's label timing uses `data-late` on the section.
 - **Open items:** none.
@@ -965,7 +978,7 @@ directly, before this log existed.
 - **What changed:**
   - **About intro** (replaces the two-column "Our mission." layout from ENH-046): a centred "We’re XionTechs, technology built with ownership." (amber highlight on "ownership"), the mission sentence and where the company builds from in one paragraph, and links to Products and Services, over soft pastel-amber mountain shapes rising from both sides and curving into the next section.
   - **Mountain picture:** a transparent version (`assets/mountain-clear.webp`, 1200×800) replaces the paper-backed one, so no box or tint shows. The source drawing runs off both edges at the mountain's base, so the base now fades out over the outer 9% at each side instead of stopping in a hard line. The amber glow from ENH-046 stays.
-  - **Mount Zion ↗ Jerusalem 31.77° N 35.23° E** moves above the picture (removed in ENH-050).
+  - **The place-name caption** moves above the picture (removed in ENH-050).
   - **Products:** a visible "What we build." heading above the apps, and the audience switcher becomes three centred text tabs (School, Parents, Students, each with its colour dot) on a full-width line, with an amber underline under the active one. It still sticks under the header while the cards are on screen and follows the card being read.
   - **Careers:** the roles heading reads "Find your next challenge."
 - **Rules:** all new copy has Vietnamese; the held mountain story still fits on screen at 1440×900 and 375×812; tabs are 60px tall; nothing scrolls sideways.
@@ -973,12 +986,12 @@ directly, before this log existed.
 
 ## ENH-050: Plainer tabs, flags on the day, a neutral mountain, city drawings
 
-- **Why:** Amber asked on 2026-10-05 for the Products tab bar to have no scroll bar, a transparent background and no colour dots, with the selected tab's text in amber; for the "A day at school" description to sit on its title's line; for reached timeline dots to show a flag; for About not to name the mountain or Jerusalem (to keep away from religion and spirituality); for city illustrations in the two office cards; and for "ownership" in the About intro to be amber text without the underline.
+- **Why:** Amber asked on 2026-10-05 for the Products tab bar to have no scroll bar, a transparent background and no colour dots, with the selected tab's text in amber; for the "A day at school" description to sit on its title's line; for reached timeline dots to show a flag; for About not to name the mountain or its place (to keep away from religion and spirituality); for city illustrations in the two office cards; and for "ownership" in the About intro to be amber text without the underline.
 - **What changed:**
   - **Products tabs:** transparent bar (the cards show through), no colour dots, no scroll bar; the selected tab's text is a dark amber (#9A6C00, 4.6:1 on white) with the amber underline.
   - **A day at school:** title and description in two equal columns, vertically centred on one row; the description is a little smaller and wider (three lines instead of four).
   - **Timeline:** each step's dot shows a small navy flag once the step is reached (it appears with the amber fill).
-  - **About, mountain:** the "Mount Zion ↗ Jerusalem 31.77° N 35.23° E" caption and its Wikipedia link are removed, and chapter 01 now reads "Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future." Nothing on the page names the mountain or a place for it.
+  - **About, mountain:** the place-name caption and its Wikipedia link are removed, and chapter 01 now reads "Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future." Nothing on the page names the mountain or a place for it.
   - **About, offices:** each card opens with a small line drawing of its city in amber on the navy card (Plano: low-rise towers; Ho Chi Minh City: two landmark-style towers by the river).
   - **About intro:** "ownership" is amber text (#A87600, 3.9:1 on white, enough for large text) instead of the highlight underline.
 - **Rules:** flags and drawings are decorative and hidden from screen readers; with reduced motion the flag appears without moving; all copy has Vietnamese.
@@ -1083,3 +1096,154 @@ directly, before this log existed.
   - **about-2.html:** deleted.
 - **Developer notes:** About sections use `s-paper`; light-page city drawing colours in `css/site.css` (`.s-paper .office-card`).
 - **Open items:** none.
+
+## ENH-060: Careers on one light gradient
+
+- **Why:** Amber asked on 2026-10-05 for the Careers page to use a light gradient background that connects from section to section, running from the theme's light blue to white to amber.
+- **What changed:**
+  - Inside XionTechs is no longer a navy band; its heading and description turn navy on the light page, and the tiles keep their own colours.
+  - One continuous gradient: the theme's light blue in the hero (with a soft blue glow), easing to white through Inside XionTechs and the five cards, then warming to light amber behind Find your next challenge and into the footer ridge.
+  - The hero's glow fades out before the hero ends, so there is no edge between the hero and the next section.
+- **Developer notes:** `careers.html` (#life loses `data-flow="night"`); the pastel palette in `js/site.js`; `.inside` and the pastel hero glow mask in `css/site.css`.
+- **Open items:** none.
+
+## ENH-061: Services, a fixed heading beside scrolling service cards
+
+- **Why:** Amber asked on 2026-10-05 for the eight services to follow a reference layout where the section title and its description stay put while the cards on the right scroll, with no action on the cards or the section, on the same background.
+- **What changed:**
+  - "Eight services, one team." and its description sit on the left and stay in view (below the header) while the cards scroll past on the right.
+  - The eight cards are equal, two to a row: an amber icon and the service name, a dashed line, the description, and the technologies at the bottom where the service has them. No links, buttons or hover effects.
+  - On tablets and phones the heading sits above the cards and scrolls normally; phones show one card per row.
+  - Each card keeps its id, so footer links such as Product Engineering still land on it.
+- **Developer notes:** `.svc-split`, `.svc-stick`, `.svc-cards`, `.svc-card` in `css/site.css`.
+- **Open items:** none.
+
+## ENH-062: Products audience tabs, bigger and on the page colour
+
+- **Why:** Amber asked on 2026-10-05 for the audience tabs to be big, visible and easy to use like a reference product page, with the bar's background matching the section and more padding.
+- **What changed:**
+  - Each tab has an icon (building for School, people for Parents, graduation cap for Students), larger text (about 18 to 21px) and is 76px tall with wide padding; the bar has extra space above.
+  - The bar shows exactly the page colour behind it as it moves down the page (white, then amber, then light blue), instead of a lighter strip.
+  - The selected tab keeps its underline and readable text colour (amber or navy).
+  - On phones the icon sits above the label.
+- **Developer notes:** icons in `products.html`; the bar copies the page background in `js/site.js` (the `tone` handler).
+- **Open items:** none.
+
+## ENH-063: News, "Catch up with us" with playful motion
+
+- **Why:** Amber asked on 2026-10-05 for a fun animation on the News page, the title "Catch up with us" and the description "Stay informed with the latest news and announcements, fresh off the press."
+- **What changed:**
+  - New title and description (with Vietnamese).
+  - The title's words rise in one after another, then an amber marker sweeps under "us"; the description follows.
+  - Each story card unfolds slowly from the top like a menu opening (about 1.25 seconds) as it scrolls into view, one after another across its row about a quarter of a second apart (the lead story first), rather than all at once. Choosing a filter plays it again for the stories shown.
+  - With reduced motion, everything shows at once with no movement.
+- **Developer notes:** `.press-h`, `.press-mark`, `.press-in` in `css/site.css`; the `press` function in `js/site.js`.
+- **Open items:** none.
+
+## ENH-064: Footer "About us", a bolder climber, Vietnam email, docs wording
+
+- **Why:** Amber asked on 2026-10-05 for "About us" in the footer, a more visible climber (a hiker with a backpack, no rope), vinni.tran@xiontechs.com for the Vietnam location, and the religious place names removed.
+- **What changed:**
+  - **Footer:** Company shows "About us".
+  - **Climber:** a bolder hiker drawn in thick navy lines with an amber backpack, leaning into the climb, about a third bigger.
+  - **Vietnam email:** vinni.tran@xiontechs.com under Vietnam Delivery Center in the footer, on the Ho Chi Minh City card on About, and on the Demo page.
+  - **Docs:** the enhancement log and the AI log no longer name the religious place; earlier entries now say "the place name" (the names remain in older git history).
+- **Developer notes:** footer template and climber SVG in `js/site.js`; `.ridge-climber` and `.rc-*` in `css/site.css`.
+- **Open items:** none.
+
+## ENH-065: Services from dark navy to light blue and white, with white and amber glows
+
+- **Why:** Amber liked a reference where colours sweep and mix with white shades. After several trials she settled on dark navy at the top, lightening gradually while the eight services scroll past, light blue through How we work, white at the end of the page with no glows there, and asked to remove "Three ways to work with us" (2026-10-05 and 2026-10-06).
+- **What changed:**
+  - "Three ways to work with us." is removed.
+  - The page starts dark navy behind the hero and facts. Behind Eight services it lightens steadily from dark navy to a mid blue as the cards scroll by, turns light blue from What can we help you achieve? through How we work, and ends white behind Industries we serve.
+  - White and amber glows drift through the blue part of the page, alternating left and right (two per section, three in the long ones); the white end has none.
+  - Text is white on the dark part ("get IT done", "/7" and "+" in bright amber, no marker bar; the Eight services description fully white) and navy from What can we help you achieve? on; the change falls in the space between sections. The service cards stay white with navy text.
+  - Every piece of text was measured against the real background pixels at 1440, 768 and 375px: all pass WCAG AA.
+- **Developer notes:** palette `mesh` in the shared flow script (`js/site.js`) sets each section's text phase and places the colour stops and glows; accent and card overrides in `css/site.css`.
+- **Open items:** none.
+
+## ENH-066: News without the marker, and a newsletter sign-up
+
+- **Why:** Amber asked on 2026-10-06 to remove the highlight under the News title and to make the News email section a newsletter sign-up.
+- **What changed:**
+  - "Catch up with us" keeps its rising words but no longer has the amber marker under "us".
+  - The email section reads "Subscribe to our newsletter." with "Get our latest news, product updates and stories from the team, straight to your inbox.", a "Your email" field and a Subscribe button. Submitting shows "You’re subscribed. Look out for our next newsletter." in place (it no longer goes to the demo page).
+- **Developer notes:** `data-mode="newsletter"` on the News form uses the existing in-place success state (`.cap-ok`).
+- **Open items:** none.
+
+## ENH-067: Home sections share one background, light blue glows on About, room under Careers roles
+
+- **Why:** Amber asked on 2026-10-06 for the Home sections from Our partners to Latest from XionTechs to use colours that blend into one another, for some light blue glow on the About page, and for more bottom padding under Find your next challenge.
+- **What changed:**
+  - **Home:** superseded by ENH-070 (one flowing background from the navy hero into white and light amber).
+  - **About:** soft light blue glows on the white sections after the hero (mountain story, core values, FAQ, offices, email band), alternating left and right.
+  - **Careers:** Find your next challenge has about 96 to 144px of space below it before the footer ridge.
+  - Text contrast re-measured on Home and About against the real backgrounds: all visible text passes WCAG AA.
+- **Developer notes:** page-scoped rules at the end of `css/site.css` (`body[data-page="home"]`, `body[data-page="about"]`, `#roles`).
+- **Open items:** none.
+
+## ENH-069: Services hero and Eight services as panels, with metric cards across them
+
+- **Why:** Amber shared a reference on 2026-10-06 where the first and second sections are separate rounded panels and a row of metric cards sits across the join, each card with a big number, a short description and a status line. She asked for the three Services metrics and the industries to become those cards, and for the See how we work button to go.
+- **What changed:**
+  - **Hero:** a rounded dark navy panel, inset from the page edges, with soft amber and white glows and the existing thin amber lines; the See how we work button and the office clocks are removed from it (Start a project stays).
+  - **Four cards** sit across the bottom of the hero and the top of the next panel, each with a navy tag, a big number, a decorative trend line, a one-line label, a short note and a footer line:
+    - **24/7** global coverage across time zones; note on the Ho Chi Minh City and Plano hand-over; footer shows both offices' live local times. (Trend lines removed in ENH-070.)
+    - **20+** technology stacks we work in; note on web, mobile, AI/ML, low-code and cloud; footer "Web · Mobile · AI · Cloud".
+    - **25+** years of software leadership experience; note on the leaders guiding each engagement; footer "From idea to operation".
+    - **4** industries we serve (the final card); the EdTech note; footer pills for EdTech, Healthcare, Logistics and Private Equity.
+  - **Eight services:** a rounded light blue panel starting under the cards; heading and cards as before.
+  - The separate facts strip and the Industries we serve section are removed (their content now lives in the cards). The page around and below the panels is soft light blue turning white at the end, with white and amber glows on What can we help you achieve? and How we work.
+  - Four columns on desktop, two on tablets, one on phones. All text re-measured against the real background at 1440, 1024, 768 and 375px: WCAG AA throughout.
+- **Developer notes:** `.svc-hero`, `.svc-metrics`, `.metric*`, `.svc-panel` in `css/site.css`; the `mesh` palette in `js/site.js` now only colours the page around the panels. The trend lines are decorative (`aria-hidden`) and carry no data.
+- **Open items:** none.
+
+## ENH-070: Home flows from navy to white and amber; Services cards simplified, with playful motion
+
+- **Why:** Amber asked on 2026-10-06 for How we approach on Home to lose its own background and blend in, for Our partners to continue the hero's dark navy with white text, then for the page to ease gradually into white with a little light amber; on Services, for the metric cards to be text and numbers only and a little wider, for more space above the Eight services title (it was hidden behind the cards), and for fun animations on the page's sections.
+- **What changed:**
+  - **Home background:** one background drawn down the page. The hero keeps its navy; Our partners and Why XionTechs continue in navy with white text ("Get IT Done" in bright amber, partner logos on white tiles); between Why XionTechs and Work built with our partners it eases into light blue (in the gap, not under text), then to white through How we approach, with light amber warmth through What we build and the news, ending in the amber of the contact form. Soft amber and white glows alternate sides.
+  - **How we approach** has no background of its own; its heading, link and five steps turn navy on the light page (the numbered circles stay navy with amber rings).
+  - **Services cards:** the decorative trend lines are gone; each card is the tag, the number, its label, the note and the footer line. On desktop the row runs about 120px wider than the text column.
+  - **Eight services:** about 70px more space above the title, so it starts well clear of the cards on every screen size.
+  - **Services motion:** the four cards spring up one after another and their tag icons spin in; the service cards rise with a slight tilt (alternating left and right) and settle, then lift with a bouncing icon on hover; the four outcome cards slide in from alternating sides; a light sweeps once across "get IT done". With reduced motion, everything simply fades in.
+  - Text contrast re-measured on Home and Services at desktop, tablet and phone: all visible text passes WCAG AA (the only flags are hidden hover text and logos under the marquee's edge fade).
+- **Developer notes:** palette `home` in the shared flow script (`js/site.js`) with `data-flow="night"` on the hero, Our partners and Why XionTechs; light-page overrides for `.approach-lite`; Services motion rules at the end of `css/site.css`.
+- **Open items:** none.
+
+## ENH-071: Home blue fades evenly; news and contact unchanged; Services cards simplified
+
+- **Why:** Amber asked on 2026-10-06 for Our partners to use the hero's colour, for the rest to blend gradually from darkest blue to dark, normal and light blue with no hard shift or visible bands, for Latest from XionTechs and Have something you want to build? to keep their earlier blended colours, for more space under How we approach with its last step lined up under the See how we work link, and for the Services cards to drop their description blocks and follow one consistent pattern.
+- **What changed:**
+  - **Home background:** the hero and Our partners share the hero's navy; Why XionTechs deepens to dark blue, Work built with our partners to a normal blue and How we approach stays blue (white text throughout this part; the case study cards stay white with navy text). Below How we approach the blue eases into light blue across its bottom space and the top of What we build, reaching the soft blue the news section starts with. A very fine grain over the colour keeps the long fade free of visible steps.
+  - **Latest from XionTechs** and **Have something you want to build?** keep their own backgrounds from before (soft blue, then into amber), unchanged. (ENH-072 draws them in the shared layer, same colours.)
+  - **How we approach:** about 96 to 136px more space below; on screens wider than 900px the See how we work link sits directly above step 05 (same left edge).
+  - **Services cards:** the grey description blocks are removed. Every card is now tag, number, label and one footer line with an amber dot: live office times (HCMC and Plano), "Web · Mobile · AI · Cloud", "From idea to operation", and "EdTech · Healthcare · Logistics · Private Equity".
+  - Text contrast re-measured on Home (1440, 768, 375) and Services: all visible text passes WCAG AA.
+- **Developer notes:** `home` palette in `js/site.js` (sections with `data-flow-own` keep their own backgrounds; `data-flow="night"` from the hero to How we approach); grain layer on `.flow-bg[data-palette="home"]`; `.approach-lite .sec-head-row` grid in `css/site.css`.
+- **Open items:** none.
+
+## ENH-072: Services panels with a gap; Home mountain divider and smoother blends
+
+- **Why:** Amber asked on 2026-10-06 for a visible gap between the first and second Services sections as in her reference, more space above What can we help you achieve? and below How we work (the footer's mountain nearly touched it); on Home, for something to set Our partners apart from the hero's figures (more space or a cute mountain illustration), for the colour to start lightening within Work built with our partners, and for the remaining line between What we build and Latest from XionTechs to go.
+- **What changed:**
+  - **Services panels:** the light blue Eight services panel now starts 28px below the navy hero panel at every screen size, and the four cards sit centred across that gap (measured from the cards' real height, so it holds when text wraps or the language changes). The Eight services title starts about 140px below the cards (96px on phones).
+  - **Services spacing:** about 112 to 152px more space above What can we help you achieve? and 140 to 190px below How we work.
+  - **Home mountain divider:** added, then removed in ENH-073 (Amber found it childish).
+  - **Home colour:** Work built with our partners starts in blue behind its heading (white text) and lightens behind its case study cards, so How we approach now sits on light blue with navy text; What we build eases into the soft blue of the news. The news and contact form keep their colours (soft blue into amber) but are now drawn in the same layer as the rest, so there is no edge between What we build and Latest from XionTechs or between the news and the form.
+  - Text contrast re-measured on Home and Services at 1440, 768 and 375px: all visible text passes WCAG AA.
+- **Developer notes:** panel fitting script in `js/site.js` (`.svc-hero`, `.svc-metrics`, `.svc-panel`); `.peaks-divider` SVG in `index.html` with `.pk-*` styles; the `home` palette now paints every section, including news and contact.
+- **Open items:** none.
+
+## ENH-073: Home spacing and room above the footer climber
+
+- **Why:** Amber asked on 2026-10-06 to remove the mountain illustration (too childish), to separate Our partners from the hero figures and from Why XionTechs with more space instead, for the last content of every page to have enough bottom space that the footer climber never collides with it.
+- **What changed:**
+  - **Home:** the mountain illustration is removed. Our partners has about 112 to 152px above it and 96 to 136px below it.
+  - **Every page:** the last section before the footer has about 232 to 256px of bottom space (176px on phones), so the climber on the footer ridge, even at the summit on Careers, stays clear of the content. Measured on all 11 pages at 1440, 1024, 768 and 375px.
+  - **How we approach (Home):** re-measured: the See how we work link and step 05 share the same left edge at 1920, 1440, 1280 and 1024px.
+  - A Services fix found on the way: the outcome cards' slide-in no longer widens the page on phones before they appear.
+- **Developer notes:** `main>section:last-of-type` bottom padding in `css/site.css` (replaces the per-page rules for Careers roles and Services How we work).
+- **After review (ENH-060 to ENH-073):** News cards unfold left to right in each row from the first load, and the thank-you takes keyboard focus; Services cards lift on hover after appearing, reduced motion stops every entrance, a card opened from a footer link lands below the header, the panel gap refits after a language switch, the cards keep 72px under the hero button, and the page stacks plainly without JavaScript; Products deep links clear the bigger tab bar and Vietnamese tabs fit from 521px; the Home link-over-step-05 grid starts at 1025px; About step numbers and Home case numbers now pass AA on the new backgrounds; footer links and the newsletter field are 44px or taller; form errors are linked to their fields; leftover styles removed.
+- **Open items:** the SVG tab icon is on hold until Amber shares the right file (the PNG icons stay as they are).

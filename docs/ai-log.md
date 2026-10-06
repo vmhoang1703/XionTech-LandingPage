@@ -1090,8 +1090,8 @@ Template:
   mention of God, faith or spiritual ideas while still letting readers look the origin up themselves.
 - **Decision / result:** Approved by Amber after six rounds. The old navy hero, key facts and "Two strengths, one
   team." are gone. The story is held for about a screen of scrolling; chapter 02 takes over at 40%, the colour
-  climbs to the summit and the X turns full colour. The origin is a map-style tag on the picture, "Mount Zion,
-  Jerusalem, 31.77° N 35.23° E", linking to Wikipedia. The review found landscape phones getting a held layout
+  climbs to the summit and the X turns full colour. The origin is a map-style place tag on the picture with
+  its coordinates, linking out (removed later at Amber's request). The review found landscape phones getting a held layout
   that did not fit, a short Vietnamese desktop window overflowing by 7px, the switch point measured from the
   wrong line (about 47% instead of 40%), and a reload part-way down replaying the climb; all fixed and re-checked
   at ten window sizes.
@@ -1176,3 +1176,24 @@ Template:
   cyan tint from an overflowing colour calculation, the timeline dot first slid in from the centre, two review
   suggestions (restore the email privacy line and the footer Contact link) went against Amber's explicit requests
   and were not applied, and a review agent left a temporary script in the repo root that the lint caught.
+
+## 2026-10-06 — ENH-060 to ENH-073: flowing backgrounds, Services panels and cards, News motion, footer room
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5), `bmad-code-review` (Blind Hunter, Edge Case Hunter,
+  Verification Gap and Acceptance Auditor)
+- **Prompt / task:** Careers on a light blue to white to amber gradient; Services with a sticky Eight services heading,
+  a navy hero panel and a light blue panel with four metric cards across the gap, Three ways and Industries folded in,
+  a navy to light blue to white background with glows and playful entrances; bigger Products tabs; News "Catch up with
+  us" with cards that unfold as they scroll and a newsletter sign-up; Home on one background from the hero navy through
+  blue into white and amber; About light blue glows; footer "About us", a bolder climber, the Vietnam email, and room
+  above the climber on every page; religious place names removed from the docs.
+- **Decision / result:** Approved by Amber after many visual rounds (Services backgrounds tried as conic sweeps, curved
+  bands, solid shapes, a dark navy page and finally panels with metric cards; Home blends reworked until no edges or
+  bands showed). Every page's visible text was measured against the real rendered background for WCAG AA. Review fixes
+  before commit: News reveal order and newsletter focus, Services hover lift and reduced motion, deep links under the
+  header and tab bar, the panel gap after a language switch, no-JavaScript stacking, Vietnamese tab overflow, two
+  contrast misses on the new glows, 44px footer links and newsletter field, and form errors linked to their fields.
+- **AI got it wrong?** Yes: the first conic background focused on one point when Amber wanted curved bands, a solid
+  shape version looked like floating circles, a mountain divider read as childish, the Services title hid behind the
+  cards until the padding override was found, the first Home fade left a hard shift and visible banding, and a
+  wrong SVG icon was briefly wired in before Amber said it was the wrong file.
