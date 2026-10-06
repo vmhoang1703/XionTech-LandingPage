@@ -376,89 +376,6 @@
     map.forEach(s=>nio.observe(s));
     const ft=document.querySelector('footer.site');if(ft)new IntersectionObserver(es=>{if(es[0].isIntersecting)sub.forEach((a,i)=>a.classList.toggle('on',i===sub.length-1))}).observe(ft)}
 
-  /* ---------- Products: stacked app cards (desktop) and the audience pills ---------- */
-  const pstack=document.querySelector('.pstack');
-  if(pstack){
-    const all=[...pstack.children].filter(c=>c.classList.contains('pcard')),DESK=matchMedia('(min-width: 993px)');
-    const cols=c=>[...c.children].filter(x=>x.classList.contains('pcol'));
-    const clear=()=>all.forEach(c=>{c.style.top='';c.style.backgroundSize='';c.style.backgroundPosition='';c.classList.remove('parked');cols(c).forEach(x=>x.style.opacity='')});
-    // each card pins; the next one slides over it and fades it (stacking-cases spec). All reads happen first, then all writes.
-    let tops=[];
-    const update=()=>{const cards=all;if(!DESK.matches||!cards.length)return;
-      const stickyTop=parseFloat(getComputedStyle(pstack).getPropertyValue('--sticky-top'))||172,vh=innerHeight;
-      const fb=document.querySelector('.flow-bg'),fh=fb?fb.offsetHeight:0,fw=fb?fb.offsetWidth:0,fTop=fb?fb.getBoundingClientRect().top+scrollY:0;
-      // where each card parks: under the header, or bottom-aligned when it would not fit, so its last line is never cut off
-      tops=cards.map(c=>{const col=cols(c)[0],mt=col?col.offsetTop:0,ch=c.offsetHeight,t=stickyTop-mt;return t+ch>vh?Math.min(t,vh-ch-16):t});
-      const rects=cards.map(c=>c.getBoundingClientRect());
-      cards.forEach((c,i)=>{const r=rects[i];c.style.top=tops[i]+'px';c.classList.toggle('parked',i>0&&Math.abs(r.top-tops[i])<1);
-        // each card shows the slice of the page gradient that sits behind it
-        if(fh&&r.bottom>-50&&r.top<vh+50){c.style.backgroundSize=fw+'px '+fh+'px';c.style.backgroundPosition=(-Math.round(r.left+scrollX))+'px '+(-Math.round(r.top+scrollY-fTop))+'px'}
-        // the card fades out as the next one approaches and is gone before the next one passes the content line,
-        // so nothing of it shows above the new card (opacity only, so it stays reachable by keyboard and screen readers)
-        const nx=rects[i+1];let k=1;
-        if(nx){k=(nx.top-stickyTop)/(vh*.4);k=Math.max(0,Math.min(1,k))}
-        cols(c).forEach(x=>x.style.opacity=k)})};
-    let tick=false;const soon=()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{update();tick=false})};
-    addEventListener('scroll',soon,{passive:true});
-    let rt=0;addEventListener('resize',()=>{cancelAnimationFrame(rt);rt=requestAnimationFrame(()=>{clear();update()})},{passive:true});
-    let crossed=false,schedule=()=>{};DESK.addEventListener('change',()=>{clear();update();crossed=true;schedule()});
-    addEventListener('load',update);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(update);
-    if('ResizeObserver' in window){const ro=new ResizeObserver(soon);all.forEach(c=>ro.observe(c))}
-    update();
-    // one-shot screenshot reveal
-    const seen=c=>c.classList.add('is-visible');
-    if('IntersectionObserver' in window){const vio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){seen(e.target);vio.unobserve(e.target)}}),{threshold:.2});all.forEach(c=>vio.observe(c))}
-    else all.forEach(seen);
-    // audience pills: a pill jumps to its audience's first card (parked, ready to read); the pill of the audience
-    // being read highlights itself
-    const pills=[...document.querySelectorAll('.aud-nav [data-aud]')];
-    const restY=i=>{const c=all[i];if(!DESK.matches)return c.getBoundingClientRect().top+scrollY-148;
-      let y=pstack.getBoundingClientRect().top+scrollY;for(let j=0;j<i;j++)y+=all[j].offsetHeight+parseFloat(getComputedStyle(pstack).rowGap||0);
-      return y-(tops[i]||0)};
-    // the card being read: the front-most card whose top has passed the middle of the screen and that is still on screen
-    const front=()=>{let k=-1;
-      all.forEach((c,i)=>{const r=c.getBoundingClientRect();if(r.bottom>innerHeight*.3&&r.top<innerHeight*.5)k=i});
-      // once the section after the cards reaches the middle of the screen, no card is being read
-      const sec=pstack.closest('section');if(sec&&sec.getBoundingClientRect().bottom<innerHeight*.5)k=-1;return k};
-    const mark=()=>{if(!all.length)return;const k=front();
-      const aud=k<0?null:all[k].dataset.aud;
-      pills.forEach(a=>{a.dataset.aud===aud?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')})};
-    // any link to an app card (the pills and the hero diagram) lands on the card parked and ready to read
-    document.addEventListener('click',e=>{if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
-      const l=e.target.closest('a[href^="#"]');if(!l)return;const card=document.getElementById(l.getAttribute('href').slice(1)),i=all.indexOf(card);if(i<0)return;
-      e.preventDefault();scrollTo({top:restY(i),behavior:reduce?'auto':'smooth'});history.replaceState(null,'',l.getAttribute('href'));
-      card.setAttribute('tabindex','-1');card.focus({preventScroll:true})});
-    // tabbing into a covered card brings it back to the front
-    all.forEach((c,i)=>c.addEventListener('focusin',e=>{if(e.target===c||!DESK.matches)return;const o=parseFloat(cols(c)[0].style.opacity||'1');if(o<1)scrollTo({top:restY(i),behavior:'auto'})}));
-    let mtick=false;addEventListener('scroll',()=>{if(mtick)return;mtick=true;requestAnimationFrame(()=>{mark();mtick=false})},{passive:true});
-    addEventListener('resize',mark,{passive:true});mark();
-    // resizing across the desktop breakpoint keeps the reader on the card they were reading: the card is noted only
-    // while scrolling (never mid-resize), and once the resize settles the page returns to it in the new layout
-    const layoutW=()=>document.documentElement.clientWidth;
-    let readK=-1,readTop=0,anchor=null,resizing=false,settle=0,lastW=layoutW(),widened=false;
-    const noteK=()=>{if(resizing)return;const k=front();readK=k;readTop=k>=0?all[k].getBoundingClientRect().top:0;
-      // away from the cards, the reader's place is kept as the section at mid-screen and how far down the screen it sits
-      anchor=null;if(k<0){const el=[...document.querySelectorAll('main > section, footer')].find(s=>s.getBoundingClientRect().bottom>innerHeight*.5);if(el)anchor=[el,el.getBoundingClientRect().top/innerHeight]}};
-    let nt=false;addEventListener('scroll',()=>{if(nt)return;nt=true;requestAnimationFrame(()=>{noteK();nt=false})},{passive:true});noteK();
-    schedule=()=>{const deskAtStart=DESK.matches;resizing=true;const w=layoutW();if(w!==lastW){if(!DESK.matches)widened=true;lastW=w}clearTimeout(settle);settle=setTimeout(()=>{const k=readK;
-      const an=anchor;
-      // away from the cards on desktop, the card stack above changes height with the window, so any resize restores the section
-      try{if(((crossed||widened)&&(k>=0||an))||(k<0&&an&&deskAtStart&&DESK.matches)){clear();update();const h=root.style.scrollBehavior;root.style.scrollBehavior='auto';scrollTo(0,k>=0?(crossed?restY(k):scrollY+all[k].getBoundingClientRect().top-readTop):scrollY+an[0].getBoundingClientRect().top-an[1]*innerHeight);root.style.scrollBehavior=h;update();mark()}}
-      finally{crossed=false;widened=false;resizing=false;noteK()}},250)};
-    addEventListener('resize',schedule,{passive:true});
-    addEventListener('load',()=>{const i=all.indexOf(document.getElementById(location.hash.slice(1)));if(i>=0)requestAnimationFrame(()=>scrollTo({top:restY(i),behavior:'auto'}))});
-  }
-
-  /* ---------- Services: the Eight services panel starts a fixed gap below the hero panel, whatever the cards' height ---------- */
-  const svcHero=document.querySelector('.svc-hero'),svcCards=document.querySelector('.svc-metrics'),svcPanel=document.querySelector('.svc-panel');
-  if(svcHero&&svcCards&&svcPanel){const GAP=28,fitPanels=()=>{svcPanel.style.marginTop='';svcPanel.style.paddingTop='';svcCards.style.marginTop='';
-      // the cards sit centred across the gap, but never higher than the hero's bottom space allows
-      const ch=svcCards.getBoundingClientRect().height,room=parseFloat(getComputedStyle(svcHero).paddingBottom)-72;svcCards.style.marginTop=-Math.round(Math.min(ch/2-GAP/2,room))+'px';
-      const ov=Math.max(0,Math.round(svcCards.getBoundingClientRect().bottom-svcHero.getBoundingClientRect().bottom-GAP));
-      svcPanel.style.marginTop=-ov+'px';svcPanel.style.paddingTop=(ov+(innerWidth>640?140:96))+'px'};
-    fitPanels();addEventListener('resize',fitPanels,{passive:true});addEventListener('load',fitPanels);document.addEventListener('xt-lang',()=>requestAnimationFrame(fitPanels));
-    if('ResizeObserver' in window){let lastH=0;new ResizeObserver(es=>{const h=Math.round(es[0].contentRect.height);if(h!==lastH){lastH=h;requestAnimationFrame(fitPanels)}}).observe(svcCards)}if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitPanels)}
-
   /* ---------- Products, Services, News and Careers: one background colour flowing down the page ---------- */
   // Every section in <main> gets a phase from its place in the page, so a new section extends the flow on its own:
   // the first is white with amber dots, the middle ones warm up to bright amber, then ease from
@@ -575,15 +492,6 @@
     if('ResizeObserver' in window)new ResizeObserver(later).observe(document.querySelector('main'));
     measure();
   }
-
-  /* ---------- Products: the tab bar and the card dividers turn navy where the background is amber ---------- */
-  const audBar=document.querySelector('.aud-nav'),stackCards=[...document.querySelectorAll('.pstack .pcard')];
-  if(audBar&&flowBg){const tone=()=>{const r=audBar.getBoundingClientRect(),y=r.top+r.height/2+scrollY,fr=flowBg.getBoundingClientRect();
-      audBar.style.backgroundImage='var(--flow-page)';audBar.style.backgroundSize=fr.width+'px '+fr.height+'px';audBar.style.backgroundPosition=(fr.left-r.left)+'px '+(fr.top-r.top)+'px';audBar.classList.toggle('on-amber',onAmber(y));
-      // dark amber (#8A6700, luminance .15) only where it keeps 4.5:1; navy everywhere else
-      audBar.classList.toggle('amber-ok',(lumAt(y)+.05)/(.151+.05)>=4.5);
-      stackCards.forEach(c=>{const t=c.getBoundingClientRect().top+scrollY;c.classList.toggle('on-amber',onAmber(t))})};
-    let tq=false;addEventListener('scroll',()=>{if(tq)return;tq=true;requestAnimationFrame(()=>{tone();tq=false})},{passive:true});addEventListener('resize',tone,{passive:true});tone()}
 
   /* ---------- Products: A day at school, played once as the reader arrives ---------- */
   // Step 1 lights up, the rail fills to step 2, step 2 lights up, and so on to step 5, then it stops. It only

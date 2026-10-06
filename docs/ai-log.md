@@ -1241,3 +1241,11 @@ Template:
 - **What the AI did:** First restored the earlier stacked cards; after the screenshot, rebuilt them as showcase cards (title top left, square expand icon, screenshot centred) with a dialog per app for tagline, audience, buttons and features. Feature descriptions are [Placeholder].
 - **Decision / result:** Products shows four showcase cards; details open over the page and close with X, Esc or a click outside, returning focus to the card.
 - **AI got it wrong?** Yes: "previous version of the card" was read as the old stacked card until Amber shared the reference. A clean-up step also dropped the phone sizing rule; caught in the headless screenshot and restored.
+
+## 2026-10-06 — Prototype clean-up: unused styles and scripts (ENH-090, #66)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "Remove those unused styles; update the design system file if needed."
+- **What the AI did:** Checked every class against all pages and scripts, removed 133 unused CSS rules with a parser (not by hand), cut three dead script blocks, and updated design-system.html (no audience tabs or metric card; the Products showcase card with a sample detail view).
+- **Decision / result:** Proved "no visible change" by screenshotting all 11 pages before and after at two widths and comparing pixels.
+- **AI got it wrong?** No. The scan also found the Services metric cards unused (removed in #61), so they were included.
