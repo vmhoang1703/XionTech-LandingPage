@@ -1249,3 +1249,11 @@ Template:
 - **What the AI did:** Checked every class against all pages and scripts, removed 133 unused CSS rules with a parser (not by hand), cut three dead script blocks, and updated design-system.html (no audience tabs or metric card; the Products showcase card with a sample detail view).
 - **Decision / result:** Proved "no visible change" by screenshotting all 11 pages before and after at two widths and comparing pixels.
 - **AI got it wrong?** No. The scan also found the Services metric cards unused (removed in #61), so they were included.
+
+## 2026-10-07 — Prototype: presenter device toggle (ENH-091)
+
+- **Who / tool:** Amber Do / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "The AI Tutor prototype has a Phone / Tablet / Desktop toggle; I want that in our prototype", then "bring it to the top as a navigation bar" and "toggle in the middle".
+- **What the AI did:** Added a presenter bar above the header on every page (hidden on small and touch screens) and a device.html page that frames any page at 390px or 820px, follows navigation inside the frame and returns to Desktop.
+- **Decision / result:** Tablet uses 820px (iPad portrait) rather than the AI Tutor's 1180px, so the site's tablet layout shows. Prototype changes are no longer logged as GitHub issues; the ENH log is the record.
+- **AI got it wrong?** Yes: it logged the change as a GitHub issue (#68) out of habit; Amber said changes are no longer issues, so it was closed and the rule saved. The first version was a floating pill at the bottom right; moved to a top bar per the reference.

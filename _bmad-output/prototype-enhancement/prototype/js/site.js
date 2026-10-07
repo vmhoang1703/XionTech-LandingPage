@@ -45,6 +45,18 @@
   if(hs)hs.outerHTML=header;
   if(fs)fs.outerHTML=footer;
 
+  /* ---------- presenter device toggle (ENH-091): show any page in a phone or tablet frame on device.html.
+     Presenter-only: hidden on small and touch screens. Inside the frame the page reports where it is. ---------- */
+  const here=()=>(location.pathname.split('/').pop()||'index.html')+location.hash;
+  if(window.self!==window.top){const tell=()=>{try{parent.postMessage({xtDevice:here(),lang:root.lang},'*')}catch(e){}};
+    addEventListener('load',tell);addEventListener('hashchange',tell);document.addEventListener('xt-lang',tell)}
+  else if(page!=='device'){
+    const b=(d,ic,en,vi)=>'<button type="button" data-device="'+d+'" aria-pressed="'+(d==='desktop')+'" title="'+en+'" aria-label="'+en+'" data-vi-aria="'+vi+'"><i class="ph '+ic+'" aria-hidden="true"></i></button>';
+    const bar='<div class="demobar"><span class="demobar-label" data-vi="Chế độ trình bày">Presenter view</span><div class="devbar" role="group" aria-label="Preview this page on a device" data-vi-aria="Xem trang này trên thiết bị">'+b('phone','ph-device-mobile','Phone','Điện thoại')+b('tablet','ph-device-tablet','Tablet','Máy tính bảng')+b('desktop','ph-desktop','Desktop','Máy tính')+'</div></div>';
+    const hd=document.querySelector('header.nav');if(hd)hd.insertAdjacentHTML('beforebegin',bar);else document.body.insertAdjacentHTML('afterbegin',bar);
+    document.querySelector('.devbar').addEventListener('click',e=>{const t=e.target.closest('[data-device]');if(!t||t.dataset.device==='desktop')return;
+      location.href='device.html?d='+t.dataset.device+'&p='+encodeURIComponent(here())})}
+
   const toastEl=document.getElementById('toast');let tt;
   const toast=m=>{toastEl.textContent=m;toastEl.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('on'),2600)};
 

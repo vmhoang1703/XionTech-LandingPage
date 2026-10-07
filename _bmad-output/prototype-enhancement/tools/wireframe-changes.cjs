@@ -118,6 +118,7 @@ module.exports = {
 | Products page | Stacked app cards (seven apps) | Four showcase cards (Parent Hub, Staff Hub, IoT, AI Tutor): tagline as the title, a square expand icon that opens the app's detail view on the same page, screenshot centred | ENH-087, ENH-089 |
 | Process | Five-step How we work | The original 4-D process with QA inside Development | ENH-087 |
 | App names | PXP, SXP, LXP | Parent Hub and Staff Hub (P-Hub, S-Hub); no Learner Hub | ENH-086, ENH-087 |
+| Presenter bar | None | A thin bar above the header (presenter screens only): Phone, Tablet and Desktop buttons in the middle open the page in a 390px or 820px device frame (device.html) | ENH-091 |
 | Footer climber | Stays at the highest page reached | Walks one step up on each page, summit on Careers | ENH-077 |
 | Home, last section | Amber "See it working at your school." email band (Book a demo) | Amber contact form "Have something you want to build?"; example phone number as placeholder; quiet button | ENH-001, ENH-010 |`,
 };
