@@ -103,6 +103,7 @@ directly, before this log existed.
 | ENH-088 | 2026-10-06 | GitHub #62 | Home: the 4-D section is titled How we approach with a short 4-D description; the separate How we approach section is removed | In PR    | 4.1 |
 | ENH-089 | 2026-10-06 | GitHub #64 | Products: the four apps become showcase cards (title top left, square expand icon top right, screenshot centred); the expand icon that opens a product detail view on the same page | In PR    | 4.1 |
 | ENH-090 | 2026-10-06 | GitHub #66 | Clean-up: styles and scripts no page uses any more are removed; the design system shows the Products showcase card instead of the audience tabs and metric card | In PR    | 4.1 |
+| ENH-091 | 2026-10-07 | Amber (as in the AI Tutor prototype) | Presenter bar above the header: Phone, Tablet and Desktop buttons show any page in a phone or tablet frame | In PR    | 4.1 |
 
 ## ENH-001: Contact form on Home
 
@@ -1457,6 +1458,18 @@ directly, before this log existed.
   - **Design system:** the audience tabs and the metric card are gone; the Products showcase card is shown with its expand icon, which opens a sample detail view; the cards-across-an-edge pattern now describes Home (two cards across the hero edge), and the motion and elevation notes no longer mention metric cards.
   - **No visible change:** every page was screenshotted before and after at 1440 and 375px and the images match (2 anti-aliased pixels differ on Home at 375px); no errors, no sideways scroll.
 - **Developer notes:** only css/site.css, js/site.js and design-system.html change. The implementation specs are not changed.
+- **Open items:** none.
+
+## ENH-091: Presenter device toggle (Phone, Tablet, Desktop)
+
+- **Why:** like the AI Tutor prototype, presenters need to show how any page looks on a phone or a tablet without resizing the browser.
+- **What changed:**
+  - **Toggle:** a thin white presenter bar sits above the header on every page, as in the AI Tutor prototype: "Presenter view" on the left and three square icon buttons for Phone, Tablet and Desktop in the middle (the chosen one outlined in navy). It scrolls away with the page; the header stays sticky.
+  - **Device view:** Phone or Tablet opens device.html, which keeps the same bar on top and shows the page in a frame: Phone 390px wide with rounded corners, Tablet 820px (iPad). The page reflows to that width, links keep working inside the frame, and the control and the address follow the page. Desktop returns to the full page.
+  - **Presenter-only:** the control is hidden on screens under 1024px, on touch devices and in print; it never shows inside the frame.
+  - English and Vietnamese labels follow the page language; 44px buttons with pressed states for screen readers.
+  - Checked at 1440px: no errors; phone frame 390px, tablet 820px, navigation inside the frame and the way back to Desktop work; hidden at 375px.
+- **Developer notes:** device.html (only accepts prototype page names); the toggle at the top of js/site.js after the footer; `.demobar` / `.devbar` at the end of css/site.css. A presenter tool for the prototype, not a feature of the live site. The implementation specs are not changed.
 - **Open items:** none.
 
 ## Withdrawn: ENH-076, ENH-078 to ENH-084 (and the climber-only scope of ENH-077)

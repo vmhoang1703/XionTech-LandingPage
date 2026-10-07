@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Device preview | XionTechs</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1"></script>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="stylesheet" href="css/site.css">
+<style>
+  /* Presenter view (ENH-091): the page inside reflows to the chosen device width. */
+  html,body{height:100%}
+    body.device-page{margin:0;min-height:100%;display:flex;flex-direction:column;background:var(--mist);font-family:var(--f-body)}
+  .device-stage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 20px}
+  .device-cap{margin:0;font-size:.85rem;color:var(--ink-muted)}
+  .device-cap b{color:var(--ink);font-weight:500}
+  .device-frame{flex:1;min-height:0;display:flex;background:var(--ink);border:12px solid var(--ink);box-shadow:0 30px 60px -30px rgb(11 23 48 / .55);transition:width .35s var(--ease),border-radius .35s var(--ease)}
+  .device-frame iframe{flex:1;width:100%;height:100%;border:0;background:var(--white);border-radius:inherit}
+  .device-frame[data-device="phone"]{width:414px;max-height:844px;border-radius:48px}
+  .device-frame[data-device="tablet"]{width:844px;max-height:1180px;border-radius:28px}
+  @media (prefers-reduced-motion:reduce){.device-frame{transition:none}}
+</style>
+</head>
+<body class="device-page" data-page="device">
+<div class="demobar"><span class="demobar-label" data-vi="Chế độ trình bày">Presenter view</span>
+  <div class="devbar" role="group" aria-label="Preview this page on a device" data-vi-aria="Xem trang này trên thiết bị">
+    <button type="button" data-device="phone" aria-pressed="false" title="Phone" aria-label="Phone" data-vi-aria="Điện thoại"><i class="ph ph-device-mobile" aria-hidden="true"></i></button>
+    <button type="button" data-device="tablet" aria-pressed="false" title="Tablet" aria-label="Tablet" data-vi-aria="Máy tính bảng"><i class="ph ph-device-tablet" aria-hidden="true"></i></button>
+    <button type="button" data-device="desktop" aria-pressed="false" title="Desktop" aria-label="Desktop" data-vi-aria="Máy tính"><i class="ph ph-desktop" aria-hidden="true"></i></button>
+  </div>
+</div>
+<main class="device-stage">
+<p class="device-cap"><span data-vi="Đang xem:">Showing:</span> <b id="deviceSize"></b></p>
+<div class="device-frame" id="deviceFrame">
+  <iframe id="deviceView" title="Website preview" data-vi-title="Xem trước trang web"></iframe>
+</div>
+</main>
+<script>
+(function(){
+  const q=new URLSearchParams(location.search),frame=document.getElementById('deviceFrame'),view=document.getElementById('deviceView'),size=document.getElementById('deviceSize');
+  // only pages of this prototype, never another address
+  const safe=p=>/^[a-z0-9-]+\.html(#[\w-]*)?$/i.test(p||'')?p:'index.html';
+  let page=safe(q.get('p')),device=q.get('d')==='tablet'?'tablet':'phone';
+  let lang='en';try{lang=localStorage.getItem('xt3-lang')==='vi'?'vi':'en'}catch(e){}
+  const SIZE={phone:{en:'Phone · 390 px',vi:'Điện thoại · 390 px'},tablet:{en:'Tablet · 820 px',vi:'Máy tính bảng · 820 px'}};
+  const texts=[...document.querySelectorAll('[data-vi]')].map(el=>[el,el.textContent,el.dataset.vi]);
+  const btns=[...document.querySelectorAll('[data-device]')].map(b=>[b,b.getAttribute('aria-label'),b.dataset.viAria]);
+  const paint=()=>{btns.forEach(([b,en,vi])=>{const t=lang==='vi'?vi:en;b.setAttribute('aria-label',t);b.title=t});document.documentElement.lang=lang;texts.forEach(([el,en,vi])=>el.textContent=lang==='vi'?vi:en);
+    const bar=document.querySelector('.devbar');bar.setAttribute('aria-label',lang==='vi'?bar.dataset.viAria:'Preview this page on a device');
+    view.title=lang==='vi'?view.dataset.viTitle:'Website preview';size.textContent=SIZE[device][lang]};
+  const show=()=>{frame.dataset.device=device;document.querySelectorAll('[data-device]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.device===device)));
+    history.replaceState(null,'','device.html?d='+device+'&p='+encodeURIComponent(page));paint()};
+  document.querySelector('.devbar').addEventListener('click',e=>{const b=e.target.closest('[data-device]');if(!b)return;
+    if(b.dataset.device==='desktop'){location.href=page;return}device=b.dataset.device;show()});
+  // the page inside reports where it is and which language it shows
+  addEventListener('message',e=>{if(e.source!==view.contentWindow||!e.data||!e.data.xtDevice)return;
+    page=safe(e.data.xtDevice);if(e.data.lang==='vi'||e.data.lang==='en')lang=e.data.lang;show()});
+  view.src=page;show();
+})();
+</script>
+</body>
+</html>
