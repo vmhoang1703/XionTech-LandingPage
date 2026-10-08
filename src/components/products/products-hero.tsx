@@ -1,46 +1,52 @@
-import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { Fragment } from "react";
 import { productsHero } from "@/content/products";
+import { EcoMotion } from "./eco-motion";
 
-// Server Component. Reuses the Home hero's device frames (.home-devices and
-// friends in globals.css) so the two pages stay identical until Story 4.4.
+// Server Component (E-A5 CAP-1), ported from the prototype products.html:
+// "Built apart. Better together." with the four apps around the X tile.
+// Only the glows and their Pause motion button are a client island.
 export function ProductsHero() {
-  const { breadcrumbLabel, breadcrumbHome, breadcrumbCurrent } = productsHero;
-  const { title, lede, cta, devices } = productsHero;
+  const { titleLines, lede, diagramLabel, hub, diagram } = productsHero;
 
   return (
-    <section className="hero-amber page-hero" aria-labelledby="products-h1">
-      <div className="wrap split">
-        <div>
-          <nav className="crumbs" aria-label={breadcrumbLabel}>
-            <Link href="/">{breadcrumbHome}</Link>
-            <span>/</span>
-            <span>{breadcrumbCurrent}</span>
-          </nav>
+    <section className="eco-hero surface-paper" aria-labelledby="products-h1">
+      <EcoMotion />
+      <div className="wrap eco-grid">
+        <div className="eco-copy">
           <h1 id="products-h1">
-            {title.lead}
-            <span className="hl">{title.highlight}</span>
-            {title.tail}
+            {titleLines.map((line, index) => (
+              <Fragment key={line}>
+                {index > 0 && <br />}
+                {line}
+              </Fragment>
+            ))}
           </h1>
-          <p className="lede mt-4.5 mb-8">{lede}</p>
-          <Link href={cta.href} className="btn btn-navy">
-            {cta.label}
-            <ArrowRightIcon aria-hidden="true" />
-          </Link>
+          <p className="lede">{lede}</p>
         </div>
-
-        <div className="home-devices">
-          <div className="home-device-tablet">
-            <div className="home-media">
-              <span>{devices.tablet}</span>
-            </div>
-          </div>
-          <div className="home-device-phone">
-            <span className="home-notch" aria-hidden="true" />
-            <div className="home-media">
-              <span>{devices.phone}</span>
-            </div>
-          </div>
+        <div className="eco-diagram" role="group" aria-label={diagramLabel}>
+          <svg
+            className="eco-lines"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <line x1="20" y1="22" x2="80" y2="78" />
+            <line x1="80" y1="22" x2="20" y2="78" />
+          </svg>
+          <span className="eco-hub" aria-hidden="true">
+            {hub}
+          </span>
+          {diagram.map(({ app, eyebrow, corner }) => (
+            <a
+              key={app.id}
+              className={`eco-card eco-${corner}`}
+              href={`#${app.anchor}`}
+            >
+              <small>{eyebrow}</small>
+              <b>{app.shortName}</b>
+            </a>
+          ))}
         </div>
       </div>
     </section>
