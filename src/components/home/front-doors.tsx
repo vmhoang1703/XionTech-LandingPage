@@ -1,12 +1,7 @@
-import { ArrowRightIcon, CpuIcon } from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { homeDoors } from "@/content/home";
-
-const BADGE_CLASS = {
-  "P-Hub": "b-pxp",
-  "S-Hub": "b-sxp",
-  IoT: "b-iot",
-} as const;
+import { AppBadge } from "./app-badge";
 
 function Go() {
   return (
@@ -39,17 +34,8 @@ export function FrontDoors() {
         <Link href={products.href} className="door door-products">
           <div className="top">
             <div className="chips">
-              {products.badges.map((badge) => (
-                <span key={badge} className={`badge ${BADGE_CLASS[badge]}`}>
-                  {badge === "IoT" ? (
-                    <>
-                      <CpuIcon aria-hidden="true" />
-                      <span className="sr-only">{badge}</span>
-                    </>
-                  ) : (
-                    badge
-                  )}
-                </span>
+              {products.badges.map((app) => (
+                <AppBadge key={app.id} app={app} />
               ))}
             </div>
             <Go />

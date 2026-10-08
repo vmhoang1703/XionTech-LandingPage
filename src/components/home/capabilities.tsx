@@ -2,7 +2,6 @@ import {
   ArrowRightIcon,
   BriefcaseIcon,
   ClockIcon,
-  CpuIcon,
   GraduationCapIcon,
   HeartbeatIcon,
   TruckIcon,
@@ -12,13 +11,8 @@ import Link from "next/link";
 import { LiveClock } from "@/components/sections/live-clock";
 import { homeCapabilities } from "@/content/home";
 import { hcmc, plano } from "@/content/offices";
+import { AppBadge } from "./app-badge";
 import { MoreIndustries } from "./more-industries";
-
-const BADGE_CLASS = {
-  "P-Hub": "b-pxp",
-  "S-Hub": "b-sxp",
-  IoT: "b-iot",
-} as const;
 
 const INDUSTRY_ICON: Record<
   (typeof homeCapabilities.industries.more)[number],
@@ -49,17 +43,8 @@ export function Capabilities() {
             <p>{products.line}</p>
             <span className="w-apps">
               {products.apps.map((app) => (
-                <span key={app.badge} className="w-app">
-                  <span className={`badge ${BADGE_CLASS[app.badge]}`}>
-                    {app.badge === "IoT" ? (
-                      <>
-                        <CpuIcon aria-hidden="true" />
-                        <span className="sr-only">{app.badge}</span>
-                      </>
-                    ) : (
-                      app.badge
-                    )}
-                  </span>
+                <span key={app.app.id} className="w-app">
+                  <AppBadge app={app.app} />
                   <small>{app.caption}</small>
                 </span>
               ))}

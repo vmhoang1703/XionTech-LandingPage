@@ -1,6 +1,13 @@
 // Home page copy. Kept out of the components so it can be translated later.
 
 import type { Stat } from "@/components/sections/stats-band";
+import { appById } from "@/content/apps";
+
+// App names and badges come from apps.ts (E-A2), the one source for them.
+const parentHub = appById("parent-hub");
+const staffHub = appById("staff-hub");
+const iot = appById("iot");
+const aiTutor = appById("ai-tutor");
 
 export const homeHero = {
   title: {
@@ -34,10 +41,15 @@ export const homeDoors = {
   label: "What we do",
   products: {
     href: "/products",
-    badges: ["P-Hub", "S-Hub", "IoT"] as const,
+    badges: [parentHub, staffHub, iot],
     title: "Products for schools",
     line: "Connected apps for parents, students, teachers, leaders and school staff.",
-    chips: ["Parent Hub", "Staff Hub", "IoT", "AI Tutor"],
+    chips: [
+      parentHub.shortName,
+      staffHub.shortName,
+      iot.shortName,
+      aiTutor.shortName,
+    ],
   },
   services: {
     href: "/services",
@@ -64,10 +76,10 @@ export const homeCapabilities = {
     title: "Products for schools",
     line: "Connected apps for parents, students, teachers, leaders and school staff, designed as one ecosystem.",
     apps: [
-      { badge: "P-Hub", caption: "Parents" },
-      { badge: "S-Hub", caption: "Staff" },
-      { badge: "IoT", caption: "Facilities" },
-    ] as const,
+      { app: parentHub, caption: "Parents" },
+      { app: staffHub, caption: "Staff" },
+      { app: iot, caption: "Facilities" },
+    ],
     link: "Explore products",
   },
   delivery: {
