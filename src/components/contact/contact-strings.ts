@@ -1,4 +1,5 @@
 import { SERVICES } from "@/components/layout/nav-data";
+import { APPS, appById } from "@/content/apps";
 import { CONTACT_ERRORS } from "@/lib/contact/contact-rules";
 
 const DETAILS_CONSENT = "We only use your details to respond to this request.";
@@ -70,8 +71,11 @@ export const CONTACT_STRINGS = {
     },
   },
   errors: CONTACT_ERRORS,
-  productPills: ["Parent Hub", "Staff Hub", "IoT"],
-  defaultProduct: "Parent Hub",
+  // The Demo form offers every app except AI Tutor (prototype demo.html).
+  productPills: APPS.filter((app) => app.id !== "ai-tutor").map(
+    (app) => app.shortName,
+  ),
+  defaultProduct: appById("parent-hub").shortName,
   schoolSizes: [
     "Under 500 students",
     "500 to 1,500 students",

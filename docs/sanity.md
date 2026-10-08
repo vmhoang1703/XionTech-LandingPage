@@ -64,7 +64,7 @@ The app field stores `parent-hub`, `staff-hub`, `iot` or `ai-tutor`. The titles 
 
 Old posts may still hold the old values. The site maps them when it reads them: PXP becomes `parent-hub`, SXP becomes `staff-hub`, IoT becomes `iot`. LXP shows no app.
 
-After this change merges, the lead deploys the Studio from an up-to-date `develop`. Then the lead opens each product post that still has PXP, LXP, SXP or IoT and picks the app again. Until the Studio is deployed, it shows the old value as "not in the list".
+After this change merges, the lead deploys the Studio from an up-to-date `develop`. The new Studio shows an old value (PXP, LXP, SXP or IoT) as not in the list, so the lead opens each product post that still has one and picks the app again.
 
 Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home. The first test post, "[Placeholder] First news post test 1" (no slug or date), was deleted on 2026-10-04.
 
