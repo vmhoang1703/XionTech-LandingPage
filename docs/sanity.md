@@ -58,13 +58,17 @@ After the deploy for Story 3.7 (decision A9), each news post needs:
 
 - a real English title (posts are real and use only confirmed facts; a `[Placeholder]` post would show on Home with no sample note);
 - a **slug** (Generate) and a **Published at** date (the Studio now requires both, and the category);
-- a **category**, and the **app** for a Product story.
+- an **audience** (E-A6; it was the category), and the **app** when the story is about one.
 
 The app field stores `parent-hub`, `staff-hub`, `iot` or `ai-tutor`. The titles in the list are Parent Hub, Staff Hub, IoT and AI Tutor.
 
 Old posts may still hold the old values. The site maps them when it reads them: PXP becomes `parent-hub`, SXP becomes `staff-hub`, IoT becomes `iot`. LXP shows no app: such a post keeps only its "Product" tag and has no app button.
 
 After this change merges, the lead deploys the Studio from an up-to-date `develop`. The new Studio shows an old value (PXP, LXP, SXP or IoT) as not in the list, so the lead opens each product post that still has one and picks the app again (for an LXP post, pick another app or none). To list them, run `cd studio && npx sanity documents query '*[_type == "post" && app in ["PXP", "LXP", "SXP", "IoT"]]{_id, "title": title.en, app}'`.
+
+**E-A6 (News by audience).** The `category` field is now the post's **audience**: Schools, Students, Parents or Company (stored as `schools`, `students`, `parents`, `company`). The **app** field always shows. A post also has an optional **Photo** (`image`) and **Alt text** (`alt`); the Studio requires alt text once a photo is set, and the story page shows the photo only with alt text. The site maps old values when it reads them: `team` becomes Company; `product` becomes Parents for Parent Hub, Students for AI Tutor, and Schools for any other app. Any other value shows no pill and appears only under All.
+
+After E-A6 merges, the lead deploys the Studio, then opens each post whose category is still `product` or `team` (the Studio shows it as not in the list) and picks the audience again. To list them, run `cd studio && npx sanity documents query '*[_type == "post" && category in ["product", "team"]]{_id, "title": title.en, category, app}'`. Photos: upload only photos with a known source (the newsroom photos in `_bmad-output/prototype-enhancement/prototype/assets/news/` once their source is confirmed), never the mock stories' Unsplash photos, and write the alt text.
 
 Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home. The first test post, "[Placeholder] First news post test 1" (no slug or date), was deleted on 2026-10-04.
 
@@ -88,7 +92,7 @@ Open the Studio at https://xiontech-landing.sanity.studio and sign in. The site 
 ### Publish a story
 
 1. Open **News posts** and create a post.
-2. Fill the English title, the slug (use Generate), the Published at date and the category. Add the app for a Product story.
+2. Fill the English title, the slug (use Generate), the Published at date and the audience. Add the app if the story is about one, and a photo with its alt text if you have one.
 3. Click Publish.
 
 A post shows on the site only with an English title, a slug and a date. It then shows on `/news` and on Home.
