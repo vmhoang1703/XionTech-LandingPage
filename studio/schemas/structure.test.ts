@@ -55,17 +55,19 @@ describe("studio structure", () => {
     expect(doc(item).documentId).toBe("careersPhotos");
   });
 
-  it("opens products as four fixed documents", () => {
+  it("opens products as three fixed documents, no LXP", () => {
     const products = build().items[1];
     const list = products.child as { items: Node[] };
     expect(
       list.items.map((i) => [i.title, doc(i).schemaType, doc(i).documentId]),
     ).toEqual([
-      ["PXP", "product", "product-pxp"],
-      ["LXP", "product", "product-lxp"],
-      ["SXP", "product", "product-sxp"],
+      ["Parent Hub", "product", "product-pxp"],
+      ["Staff Hub", "product", "product-sxp"],
       ["IoT", "product", "product-iot"],
     ]);
+    expect(list.items.map((i) => doc(i).documentId)).not.toContain(
+      "product-lxp",
+    );
   });
 
   it("removes create from the singleton types", () => {

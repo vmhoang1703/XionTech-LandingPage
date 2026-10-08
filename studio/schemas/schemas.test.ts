@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from "vitest";
+import { APPS } from "../../src/content/apps";
 import { careersPhotos } from "./careers-photos";
 import { job } from "./job";
 import { post } from "./post";
@@ -127,18 +128,18 @@ describe("studio schemas", () => {
     expect(required).toHaveBeenCalledTimes(1);
   });
 
-  it("gives a post an app field with four apps, hidden unless Product", () => {
+  it("gives a post an app field with the four app ids, hidden unless Product", () => {
     const app = findField(post, "app") as Field & {
       options?: { list?: { title: string; value: string }[] };
       hidden?: (ctx: { document?: { category?: string } }) => boolean;
     };
     expect(app.type).toBe("string");
-    expect(app.options?.list?.map((o) => o.value)).toEqual([
-      "PXP",
-      "LXP",
-      "SXP",
-      "IoT",
-    ]);
+    expect(app.options?.list?.map((o) => o.value)).toEqual(
+      APPS.map((a) => a.id),
+    );
+    expect(app.options?.list?.map((o) => o.title)).toEqual(
+      APPS.map((a) => a.shortName),
+    );
     expect(app.hidden).toBeTypeOf("function");
     expect(app.hidden?.({ document: { category: "product" } })).toBe(false);
     expect(app.hidden?.({ document: { category: "team" } })).toBe(true);
