@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import Home from "./page";
+import Home, { metadata } from "./page";
 
 // jsdom has no WebGL; the silk falls back to the static glow.
 vi.mock("@/components/home/silk-shader", async (importOriginal) => ({
@@ -39,13 +39,31 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),
 }));
 
+// Top-level sections in page order, named by their labelling heading.
+function sectionNames(container: HTMLElement) {
+  return Array.from(container.querySelectorAll("section"))
+    .filter((section) => !section.parentElement?.closest("section"))
+    .map((section) => {
+      const id = section.getAttribute("aria-labelledby") ?? "";
+      return document.getElementById(id)?.textContent;
+    });
+}
+
 describe("Home page", () => {
+  it("sets the page title", () => {
+    expect(metadata.title).toBe(
+      "XionTech | School Platforms & Software Outsourcing in Vietnam",
+    );
+  });
+
   it("opens with the Home hero as the only H1", () => {
     render(<Home />);
 
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings).toHaveLength(1);
-    expect(headings[0].textContent).toBe("Every school community, connected.");
+    expect(headings[0].textContent).toBe(
+      "School apps and software teams that get IT done.",
+    );
   });
 
   it("leaves the main landmark to the root layout", () => {
@@ -53,65 +71,54 @@ describe("Home page", () => {
 
     expect(screen.queryByRole("main")).toBeNull();
   });
-  it("puts the two front doors directly after the hero", () => {
+
+  it("orders hero, Capabilities, core values, How we approach, news, capture band", () => {
     const { container } = render(<Home />);
 
-    const [hero, doors] = Array.from(container.children);
-    expect(hero.getAttribute("aria-labelledby")).toBe("home-hero-title");
-    expect(doors.getAttribute("aria-label")).toBe("What we do");
+    expect(sectionNames(container)).toEqual([
+      "School apps and software teams that get IT done.",
+      "Capabilities.",
+      "Our core values.",
+      "How we approach.",
+      "Latest from XionTech.",
+      "See it working at your school.",
+    ]);
   });
-  it("shows the 4-D process on the navy band after the services", () => {
+
+  it("puts Capabilities, values and the process on one flowing surface, not news or capture", () => {
     render(<Home />);
 
-    const band = screen.getByRole("region", {
-      name: "From your request to launch, in four steps.",
-    });
-    expect(band.textContent).toContain("How we work");
+    const flow = screen
+      .getByRole("region", { name: "Capabilities." })
+      .closest(".home-flow");
+    expect(flow).not.toBeNull();
     expect(
-      screen.getByRole("list", { name: "4-D process" }).closest("section"),
-    ).toBe(band);
+      flow?.contains(screen.getByRole("region", { name: "Our core values." })),
+    ).toBe(true);
+    expect(
+      flow?.contains(screen.getByRole("region", { name: "How we approach." })),
+    ).toBe(true);
+    const news = screen.getByRole("region", { name: "Latest from XionTech." });
+    expect(flow?.contains(news)).toBe(false);
+    expect(news.className).toContain("surface-mist");
   });
 
-  it("keeps the demo capture band last, after the hero", () => {
+  it("drops the app bento and the eight service cards", () => {
+    render(<Home />);
+
+    expect(
+      screen.queryByRole("heading", { name: "Eight services, one team." }),
+    ).toBeNull();
+    expect(document.querySelector(".bento, .svc-grid")).toBeNull();
+  });
+
+  it("keeps the demo capture band last", () => {
     const { container } = render(<Home />);
 
     const band = screen
       .getByRole("heading", { name: "See it working at your school." })
       .closest("section");
     expect(container.lastElementChild).toBe(band);
-    expect(container.firstElementChild?.getAttribute("aria-labelledby")).toBe(
-      "home-hero-title",
-    );
     expect(screen.getByRole("button", { name: "Book a demo" })).toBeDefined();
-  });
-
-  it("puts the news section between the 4-D band and the capture band", () => {
-    const { container } = render(<Home />);
-
-    const rhythm = Array.from(container.children)
-      .slice(1)
-      .map((section) =>
-        Array.from(section.classList).filter(
-          (name) => name.startsWith("surface-") || name === "linen",
-        ),
-      );
-    expect(rhythm).toEqual([
-      [],
-      ["surface-mist", "linen"],
-      ["surface-paper"],
-      ["surface-navy"],
-      ["surface-mist"],
-      ["surface-amber"],
-    ]);
-    const news = screen
-      .getByRole("heading", { name: "Latest from XionTech." })
-      .closest("section");
-    expect(news?.previousElementSibling?.getAttribute("aria-labelledby")).toBe(
-      screen
-        .getByRole("list", { name: "4-D process" })
-        .closest("section")
-        ?.getAttribute("aria-labelledby"),
-    );
-    expect(news?.nextElementSibling).toBe(container.lastElementChild);
   });
 });

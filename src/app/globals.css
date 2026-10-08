@@ -1234,8 +1234,7 @@
   }
 
   /*
-    Front doors (Story 3.4), ported from the prototype site.css. The product
-    badges and chips are shared with the app bento (Story 3.5).
+    Front doors (Story 3.4), ported from the prototype site.css.
   */
   .doors {
     position: relative;
@@ -1420,10 +1419,9 @@
   }
 
   /*
-    App bento and service cards (Story 3.5), ported from the prototype
-    site.css. Reuses the door badges, chips and .go arrow (3.4) and the empty
-    media frame (3.1). The spotlight pointer glow and the 4px card lift are
-    after demo, so the glass cards are static.
+    Section heads and service cards (Story 3.5), ported from the prototype
+    site.css. The spotlight pointer glow and the 4px card lift are after
+    demo, so the glass cards are static.
   */
   .sec-head {
     display: grid;
@@ -1468,213 +1466,6 @@
     border-radius: var(--radius-lg);
     background: var(--glass);
     backdrop-filter: blur(14px);
-  }
-
-  .bento {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-grid-gap);
-  }
-
-  .tile {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 300px;
-    padding: var(--spacing-card-padding);
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-  }
-
-  .tile .badge {
-    width: 52px;
-    height: 52px;
-  }
-
-  .tile h3 {
-    margin-top: 18px;
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  /* The heading link covers the whole tile: one link, one Tab stop. */
-  /* Covers the phone too, so a click anywhere on the PXP tile opens it. */
-  .tile h3 a::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    border-radius: var(--radius-lg);
-  }
-
-  .tile h3 a:focus-visible {
-    outline: none;
-  }
-
-  .tile h3 a:focus-visible::after {
-    outline: 2px solid var(--color-focus);
-    outline-offset: -4px;
-  }
-
-  .tile .full {
-    margin-top: 6px;
-    color: var(--color-muted);
-    font-family: var(--font-brand);
-    font-size: 0.64rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .tile p {
-    max-width: 40ch;
-    margin-top: 12px;
-    color: var(--color-muted);
-  }
-
-  .tile .chips {
-    margin-top: auto;
-    padding-top: 20px;
-  }
-
-  .tile .go {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid currentColor;
-    border-radius: var(--radius-full);
-    opacity: 0.45;
-    transition:
-      opacity 0.35s var(--ease-brand),
-      transform 0.35s var(--ease-brand);
-  }
-
-  @media (hover: hover) {
-    .tile:hover .go {
-      opacity: 1;
-      transform: rotate(-45deg);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .tile:hover .go {
-      transform: none;
-    }
-  }
-
-  .t-pxp {
-    border: 0;
-    background: linear-gradient(
-      155deg,
-      var(--color-amber-light),
-      var(--color-amber) 60%,
-      var(--color-amber-deep)
-    );
-  }
-
-  .t-pxp h3,
-  .t-pxp p,
-  .t-pxp .full,
-  .t-pxp .go {
-    color: var(--color-navy);
-  }
-
-  .t-pxp .chip {
-    border-color: color-mix(in srgb, var(--color-navy) 25%, transparent);
-    background: color-mix(in srgb, var(--color-white) 35%, transparent);
-    color: var(--color-navy);
-  }
-
-  .t-sxp {
-    border: 0;
-    background: linear-gradient(150deg, var(--color-navy), var(--color-ink));
-  }
-
-  .t-sxp h3,
-  .t-sxp .go {
-    color: var(--color-white);
-  }
-
-  .t-sxp p {
-    color: var(--color-on-navy-muted);
-  }
-
-  .t-sxp .full {
-    color: var(--color-amber-tint);
-  }
-
-  .t-sxp .chip {
-    border-color: color-mix(in srgb, var(--color-white) 20%, transparent);
-    background: color-mix(in srgb, var(--color-white) 6%, transparent);
-    color: var(--color-white);
-  }
-
-  .t-sxp h3 a:focus-visible::after {
-    outline-color: var(--color-focus-on-navy);
-  }
-
-  .t-iot {
-    padding: var(--spacing-card-padding-sm);
-  }
-
-  .t-iot h3 {
-    font-size: 1.3rem;
-  }
-
-  /* Rotated phone bleeding off the PXP tile; the empty frame is 3.1's. */
-  .mini-phone {
-    width: 210px;
-    aspect-ratio: 1170 / 2532;
-    margin: 30px auto -150px;
-    padding: 8px;
-    border-radius: 34px;
-    background: var(--color-ink);
-    box-shadow: var(--shadow-device);
-    transform: rotate(-7deg);
-  }
-
-  .mini-phone .home-media {
-    border-radius: 27px;
-    font-size: 0.58rem;
-  }
-
-  @media (width >= --theme(--breakpoint-sm)) {
-    .bento {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .t-pxp,
-    .t-sxp {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (width >= --theme(--breakpoint-md)) {
-    .bento {
-      grid-template-columns: repeat(12, 1fr);
-    }
-
-    .t-pxp {
-      grid-column: span 7;
-      grid-row: span 2;
-    }
-
-    .t-sxp {
-      grid-column: span 5;
-    }
-
-    .t-lxp {
-      grid-column: span 3;
-    }
-
-    .t-iot {
-      grid-column: span 2;
-    }
   }
 
   .svc-grid {
@@ -3441,6 +3232,7 @@ a.w-card:hover .w-link svg {
 }
 
 /* ---------- E-S1 Home: core values and How we approach ---------- */
+/* Both sit on the .home-flow surface below */
 .home-values,
 .home-process {
   background: transparent;
@@ -3467,5 +3259,39 @@ a.w-card:hover .w-link svg {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+  }
+}
+
+/*
+  ---------- E-S1 Home: flowing background (CAP-7) ----------
+  The hero keeps its navy down to the doors' middle (they hang 120px below
+  the hero box); Capabilities, values and the process share one light surface with no
+  edges between them. The hero stays above it so the doors' lower half is
+  painted and clickable. News and the capture band keep their own surfaces.
+*/
+.home-hero {
+  z-index: 1;
+}
+
+/* Light from the doors' middle down, behind the cards: the navy stops there */
+.home-hero .doors::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0;
+  z-index: -1;
+  background: #f4f6fa;
+}
+
+.home-flow {
+  background: linear-gradient(180deg, #f4f6fa, var(--color-page));
+}
+
+.home-flow > :first-child {
+  padding-top: calc(120px + var(--spacing-section));
+}
+
+@media (max-width: 640px) {
+  .home-flow > :first-child {
+    padding-top: calc(120px + var(--spacing-section-mobile));
   }
 }
