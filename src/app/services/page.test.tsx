@@ -236,14 +236,14 @@ describe("ServicesPage", () => {
     ).toEqual([
       "Workshops to understand your goals, users, risks and scope.",
       "User flows, interfaces and architecture agreed before code is written.",
-      "Agile sprints with regular demos, testing and open progress updates.",
+      "Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end.",
       "A safe release, monitoring and improvement after launch.",
     ]);
     expect(steps.map((s) => s.querySelector(".get span")?.textContent)).toEqual(
       [
         "A clear scope, estimate and delivery plan.",
         "A clickable prototype and technical design.",
-        "Working software every sprint.",
+        "Tested, working software every sprint.",
         "A live release with ongoing support.",
       ],
     );
