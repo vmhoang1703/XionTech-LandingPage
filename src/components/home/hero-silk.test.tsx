@@ -66,7 +66,8 @@ describe("HeroSilk", () => {
   it("renders an aria-hidden canvas", () => {
     const { canvas } = renderSilk();
 
-    expect(canvas.getAttribute("role")).toBe("presentation");
+    // An empty canvas has nothing for screen readers (no fallback, no role).
+    expect(canvas.childNodes).toHaveLength(0);
     expect(silk.resize).toHaveBeenCalled();
   });
 

@@ -70,7 +70,8 @@ describe("HeroArt", () => {
     const aurora = container.querySelector(".aurora");
     const canvas = container.querySelector("canvas.strands");
     expect(aurora?.getAttribute("aria-hidden")).toBe("true");
-    expect(canvas?.getAttribute("role")).toBe("presentation");
+    // An empty canvas has nothing for screen readers (no fallback, no role).
+    expect(canvas?.childNodes).toHaveLength(0);
     expect(container.querySelectorAll("[tabindex], a, button")).toHaveLength(0);
   });
 
