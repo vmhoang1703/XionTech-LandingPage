@@ -11,68 +11,65 @@ vi.mock("@/components/home/silk-shader", async (importOriginal) => ({
 function renderHero() {
   render(<HomeHero />);
   return screen.getByRole("region", {
-    name: "Every school community, connected.",
+    name: "School apps and software teams that get IT done.",
   });
 }
 
 describe("HomeHero", () => {
-  it("shows the label, the H1 with a highlighted 'connected' and the sub line", () => {
+  it("shows the H1 with a highlighted 'get IT done', the sub line and no label", () => {
     const hero = renderHero();
 
     expect(hero.className).toContain("hero-silk");
-    expect(
-      within(hero)
-        .getByText("EdTech products · Software services")
-        .classList.contains("label"),
-    ).toBe(true);
-    expect(
-      within(hero).getByText("EdTech products · Software services"),
-    ).toBeDefined();
+    expect(hero.querySelector(".label + h1")).toBeNull();
     const h1 = within(hero).getByRole("heading", { level: 1 });
     expect(h1.classList.contains("text-display-hero-fluid")).toBe(true);
-    expect(h1.textContent).toBe("Every school community, connected.");
-    expect(within(h1).getByText("connected").classList.contains("hl")).toBe(
+    expect(h1.textContent).toBe(
+      "School apps and software teams that get IT done.",
+    );
+    expect(within(h1).getByText("get IT done").classList.contains("hl")).toBe(
       true,
     );
     expect(
       within(hero).getByText(
-        "PXP for parents, LXP for learners, SXP for staff. And the engineering team behind them, ready to build yours.",
+        "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano.",
       ),
     ).toBeDefined();
   });
 
-  it("has exactly one CTA, Explore our products, linking to /products", () => {
+  it("has one Get in touch button linking to /demo", () => {
     const hero = renderHero();
 
-    const links = within(hero).getAllByRole("link");
-    expect(links).toHaveLength(1);
-    expect(links[0].textContent).toBe("Explore our products");
-    expect(links[0].getAttribute("href")).toBe("/products");
-    expect(links[0].className).toContain("btn btn-primary");
-    expect(links[0].querySelector("svg")?.getAttribute("aria-hidden")).toBe(
-      "true",
-    );
+    const cta = within(hero).getByRole("link", { name: "Get in touch" });
+    expect(cta.getAttribute("href")).toBe("/demo");
+    expect(cta.className).toContain("btn btn-primary");
+    expect(cta.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
     expect(within(hero).queryAllByRole("button")).toHaveLength(0);
   });
 
-  it("renders empty tablet and phone frames and never an image", () => {
+  it("has no device frames, no placeholder screens and no image", () => {
     const hero = renderHero();
 
-    expect(
-      hero.querySelector(".home-device-tablet .home-media"),
-    ).not.toBeNull();
-    expect(hero.querySelector(".home-device-phone .home-media")).not.toBeNull();
-    expect(hero.querySelector(".home-device-phone .home-notch")).not.toBeNull();
-
-    expect(within(hero).queryAllByRole("img")).toHaveLength(0);
+    expect(hero.querySelector(".home-devices")).toBeNull();
+    expect(hero.querySelector(".home-device-tablet")).toBeNull();
+    expect(hero.querySelector(".home-device-phone")).toBeNull();
+    expect(hero.querySelector(".home-media")).toBeNull();
     expect(hero.querySelector("img")).toBeNull();
-    expect(
-      within(hero).getByText("[Placeholder] Web app screenshot"),
-    ).toBeDefined();
-    expect(
-      within(hero).getByText("[Placeholder] Phone screenshot"),
-    ).toBeDefined();
+    expect(within(hero).queryByText(/\[Placeholder\]/)).toBeNull();
   });
+
+  it("holds the two front doors inside the hero, after the figures", () => {
+    const hero = renderHero();
+
+    const doors = within(hero).getByRole("region", { name: "What we do" });
+    expect(doors.parentElement?.closest("section")).toBe(hero);
+    const band = within(hero).getByRole("group", {
+      name: "Experience you can count on",
+    });
+    expect(
+      band.compareDocumentPosition(doors) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
   it("ends with the five confirmed figures", () => {
     const hero = renderHero();
 

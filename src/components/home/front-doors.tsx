@@ -3,9 +3,8 @@ import Link from "next/link";
 import { homeDoors } from "@/content/home";
 
 const BADGE_CLASS = {
-  PXP: "b-pxp",
-  LXP: "b-lxp",
-  SXP: "b-sxp",
+  "P-Hub": "b-pxp",
+  "S-Hub": "b-sxp",
   IoT: "b-iot",
 } as const;
 
@@ -29,7 +28,7 @@ function Chips({ items }: Readonly<{ items: string[] }>) {
   );
 }
 
-// Two doors directly under the Home hero, overlapping its bottom. Each door is
+// Two doors inside the Home hero, straddling its lower edge. Each door is
 // one link; badges and chips are plain text, so Tab stops once per door.
 export function FrontDoors() {
   const { label, products, services } = homeDoors;

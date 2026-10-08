@@ -28,18 +28,16 @@ describe("FrontDoors", () => {
       within(products).getByRole("heading", { name: "Products for schools" }),
     ).toBeDefined();
     for (const text of [
-      "PXP",
-      "LXP",
-      "SXP",
-      "IoT",
+      "P-Hub",
+      "S-Hub",
       "Connected apps for parents, students, teachers, leaders and school staff.",
-      "PXP · Parents",
-      "LXP · Students",
-      "SXP · Staff",
-      "IoT · Campus",
+      "Parent Hub",
+      "Staff Hub",
+      "AI Tutor",
     ]) {
       expect(within(products).getByText(text)).toBeDefined();
     }
+    expect(within(products).getAllByText("IoT")).toHaveLength(2);
   });
 
   it("shows the Services door with label, line and chips", () => {
@@ -88,7 +86,7 @@ describe("FrontDoors", () => {
       Array.from(products.querySelectorAll(".badge")).map((b) =>
         Array.from(b.classList).find((c) => c.startsWith("b-")),
       ),
-    ).toEqual(["b-pxp", "b-lxp", "b-sxp", "b-iot"]);
+    ).toEqual(["b-pxp", "b-sxp", "b-iot"]);
     expect(products.querySelectorAll(".chip")).toHaveLength(4);
     expect(services.querySelectorAll(".chip")).toHaveLength(6);
     expect(products.querySelector(".badge")?.parentElement?.className).toBe(

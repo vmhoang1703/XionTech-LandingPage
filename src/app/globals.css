@@ -3006,3 +3006,57 @@
     line-height: 1.2;
   }
 }
+
+/*
+  E-S1 Home. Unlayered on purpose: these Home-only overrides must beat the
+  shared StatsBand utilities and the .doors / .badge component rules.
+*/
+.home-hero .hl {
+  color: var(--color-amber-tint);
+}
+
+.home-hero .hl::after {
+  display: none;
+}
+
+/* The two doors straddle the hero's lower edge */
+.home-hero .doors {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: -120px;
+}
+
+.home-hero .door-products .badge {
+  width: auto;
+  min-width: 44px;
+  padding: 0 8px;
+}
+
+/* Figures: 5 in a row, 3 then 2 at 561-900px, 2 per row at 560px and below */
+@media (min-width: 901px) {
+  .home-stats ul {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 561px) and (max-width: 900px) {
+  .home-stats ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-stats li:nth-child(4) {
+    border-left-width: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-stats ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-stats li {
+    border-left-width: 0;
+    padding-left: 0;
+  }
+}
