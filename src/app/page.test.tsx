@@ -120,6 +120,10 @@ describe("Home page", () => {
       .closest("section");
     expect(container.lastElementChild).toBe(contact);
     expect(contact?.id).toBe("contact");
+    // The hero's Get in touch button lands on this section.
+    expect(
+      screen.getByRole("link", { name: "Get in touch" }).getAttribute("href"),
+    ).toBe(`#${contact?.id}`);
     expect(container.firstElementChild?.getAttribute("aria-labelledby")).toBe(
       "home-hero-title",
     );

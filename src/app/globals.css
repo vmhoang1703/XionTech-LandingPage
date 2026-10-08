@@ -4741,6 +4741,8 @@
 /* Closed: the "+3" button carries its own ring. Open: the button is
    hidden, so the ring moves to the widened container (as in the prototype). */
 .w-more-trigger:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
   border-radius: var(--radius-full);
 }
 
