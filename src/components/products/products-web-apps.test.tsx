@@ -1,22 +1,11 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { PLACEHOLDER_HREF, webAppLinks } from "@/content/product-links";
-import { productsIot, productsLxp, productsSxp } from "@/content/products";
+import { productsIot, productsSxp } from "@/content/products";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import {
-  IotSection,
-  LxpSection,
-  SxpSection,
-  UrlPill,
-} from "./products-web-apps";
+import { IotSection, SxpSection, UrlPill } from "./products-web-apps";
 
 const SECTIONS = [
-  {
-    id: "lxp",
-    Section: LxpSection,
-    copy: productsLxp,
-    surface: "surface-mist",
-  },
   {
     id: "sxp",
     Section: SxpSection,
@@ -90,21 +79,19 @@ describe.each(SECTIONS)("#$id section", ({ id, Section, copy, surface }) => {
 });
 
 describe("Section details", () => {
-  it("adds the linen texture to LXP and the grid to SXP", () => {
-    const lxp = render(<LxpSection />).container.querySelector("#lxp");
+  it("adds the grid to Staff Hub", () => {
     const sxp = render(<SxpSection />).container.querySelector("#sxp");
-    expect(lxp?.classList.contains("linen")).toBe(true);
     expect(sxp?.classList.contains("gridbg")).toBe(true);
   });
 
-  it("puts the SXP frame before its text in the markup, as PXP does, and uses the amber badge", () => {
+  it("puts the Staff Hub frame before its text in the markup, as PXP does, and uses the amber badge", () => {
     const { container } = render(<SxpSection />);
     const split = container.querySelector(".split-media-first");
     expect(split?.firstElementChild?.classList.contains("browser")).toBe(true);
     expect(split?.lastElementChild?.classList.contains("web-app-text")).toBe(
       true,
     );
-    expect(container.querySelector(".badge.b-pxp")?.textContent).toBe("SXP");
+    expect(container.querySelector(".badge.b-pxp")?.textContent).toBe("S-Hub");
   });
 
   it("names the IoT icon badge", () => {
@@ -131,7 +118,7 @@ describe("IoT section", () => {
 
 describe("Product copy", () => {
   it("uses the brand name XionTech, not XionTechs, in visible copy", () => {
-    const copy = JSON.stringify([productsLxp, productsSxp, productsIot]);
+    const copy = JSON.stringify([productsSxp, productsIot]);
     expect(copy).not.toMatch(/XionTechs/);
   });
 });

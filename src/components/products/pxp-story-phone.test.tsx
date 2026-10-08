@@ -49,7 +49,9 @@ describe("PxpStoryPhone", () => {
     render(<PxpStoryPhone />);
     const panels = shownPanels();
     expect(panels).toHaveLength(1);
-    expect(panels[0].textContent).toBe("[Placeholder] PXP Attendance screen");
+    expect(panels[0].textContent).toBe(
+      "[Placeholder] Parent Hub Attendance screen",
+    );
   });
 
   it("shows the Grades screen and hides the others when Grades is clicked", () => {
@@ -59,7 +61,9 @@ describe("PxpStoryPhone", () => {
     expect(tab("Attendance").getAttribute("aria-selected")).toBe("false");
     const panels = shownPanels();
     expect(panels).toHaveLength(1);
-    expect(panels[0].textContent).toBe("[Placeholder] PXP Grades screen");
+    expect(panels[0].textContent).toBe(
+      "[Placeholder] Parent Hub Grades screen",
+    );
     expect(panels[0].getAttribute("aria-labelledby")).toBe(tab("Grades").id);
   });
 
@@ -101,7 +105,7 @@ describe("PxpStoryPhone", () => {
       expect(tab(expected).getAttribute("aria-selected")).toBe("true");
       expect(tab(expected).tabIndex).toBe(0);
       expect(shownPanels()[0].textContent).toBe(
-        `[Placeholder] PXP ${expected} screen`,
+        `[Placeholder] Parent Hub ${expected} screen`,
       );
     }
   });

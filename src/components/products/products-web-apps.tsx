@@ -1,9 +1,5 @@
 import {
-  BookOpenIcon,
   ChalkboardTeacherIcon,
-  ChartDonutIcon,
-  ChatTeardropTextIcon,
-  ClipboardTextIcon,
   CpuIcon,
   DoorOpenIcon,
   GaugeIcon,
@@ -15,7 +11,7 @@ import {
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
 import { PLACEHOLDER_HREF, webAppLinks } from "@/content/product-links";
-import { productsIot, productsLxp, productsSxp } from "@/content/products";
+import { productsIot, productsSxp } from "@/content/products";
 
 type WebAppId = keyof typeof webAppLinks;
 type Feature<K extends string = string> = {
@@ -27,7 +23,7 @@ type Feature<K extends string = string> = {
 type FeatureId<T extends { features: readonly Feature[] }> =
   T["features"][number]["id"];
 
-// LXP, SXP and IoT sections of /products (Story 4.3), ported from the
+// Staff Hub and IoT sections of /products (Story 4.3), ported from the
 // prototype products.html. Server Components: nothing here needs state.
 
 // While a web address is the stand-in (decision A1) the pill is a disabled
@@ -123,41 +119,6 @@ function FeatureList<K extends string>({
   );
 }
 
-const LXP_ICONS: Record<FeatureId<typeof productsLxp>, Icon> = {
-  lessons: BookOpenIcon,
-  assignments: ClipboardTextIcon,
-  progress: ChartDonutIcon,
-  feedback: ChatTeardropTextIcon,
-};
-
-export function LxpSection() {
-  const { badge, title, lede, audience, features, media } = productsLxp;
-  return (
-    <section
-      id="lxp"
-      aria-labelledby="lxp-h"
-      className="products-anchor sec surface-mist linen"
-    >
-      <div className="wrap">
-        <div className="sec-head sec-head-center">
-          <span className="badge badge-lg b-lxp">{badge}</span>
-          <h2 id="lxp-h">{title}</h2>
-          <p className="lede">{lede}</p>
-          <Chips items={audience} />
-        </div>
-        <div className="web-app-wide">
-          <BrowserFrame app="lxp" media={media} />
-          <FeatureList
-            features={features}
-            icons={LXP_ICONS}
-            className="feature-list-4"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 const SXP_ICONS: Record<FeatureId<typeof productsSxp>, Icon> = {
   attendance: IdentificationCardIcon,
   classes: ChalkboardTeacherIcon,
@@ -173,12 +134,12 @@ export function SxpSection() {
       aria-labelledby="sxp-h"
       className="products-anchor sec surface-navy gridbg"
     >
-      {/* Frame first, as in the mockup and the PXP section; below md the
+      {/* Frame first, as in the mockup and the Parent Hub section; below md the
           text moves above it so a #sxp jump shows the heading. */}
       <div className="wrap split split-media-first">
         <BrowserFrame app="sxp" media={media} />
         <div className="web-app-text">
-          {/* Amber badge: the navy SXP badge would vanish on the navy surface */}
+          {/* Amber badge: the navy Staff Hub badge would vanish on the navy surface */}
           <span className="badge badge-lg b-pxp">{badge}</span>
           <h2 id="sxp-h">{title}</h2>
           <p className="lede">{lede}</p>

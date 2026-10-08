@@ -39,21 +39,19 @@ describe("Products page", () => {
     expect(container.querySelectorAll("img")).toHaveLength(0);
   });
 
-  it("has a sub-nav with PXP, LXP, SXP and IoT pills in order", () => {
+  it("has a sub-nav with Parent Hub, Staff Hub and IoT pills in order", () => {
     render(<ProductsPage />);
     const nav = screen.getByRole("navigation", {
       name: "Products on this page",
     });
     const links = within(nav).getAllByRole("link");
     expect(links.map((a) => a.textContent)).toEqual([
-      "PXP",
-      "LXP",
-      "SXP",
+      "Parent Hub",
+      "Staff Hub",
       "IoT",
     ]);
     expect(links.map((a) => a.getAttribute("href"))).toEqual([
       "#pxp",
-      "#lxp",
       "#sxp",
       "#iot",
     ]);
@@ -62,7 +60,7 @@ describe("Products page", () => {
 
   it("gives every sub-nav link a section with that id and a heading", () => {
     const { container } = render(<ProductsPage />);
-    for (const id of ["pxp", "lxp", "sxp", "iot"]) {
+    for (const id of ["pxp", "sxp", "iot"]) {
       const section = container.querySelector(`section#${id}`);
       expect(section?.classList.contains("products-anchor")).toBe(true);
       expect(
@@ -71,13 +69,14 @@ describe("Products page", () => {
     }
   });
 
-  it("renders PXP, LXP, SXP and IoT sections in order, LXP to IoT in full", () => {
+  it("renders the Parent Hub, Staff Hub and IoT sections in order, with no #lxp section", () => {
     const { container } = render(<ProductsPage />);
     const ids = [...container.querySelectorAll("section.products-anchor")].map(
       (section) => section.id,
     );
-    expect(ids).toEqual(["pxp", "lxp", "sxp", "iot"]);
-    for (const id of ["lxp", "sxp", "iot"]) {
+    expect(ids).toEqual(["pxp", "sxp", "iot"]);
+    expect(container.querySelector("#lxp")).toBeNull();
+    for (const id of ["sxp", "iot"]) {
       const section = container.querySelector(`section#${id}`);
       expect(section?.querySelector(".browser .bar-url")).not.toBeNull();
     }
@@ -89,7 +88,9 @@ describe("Products page", () => {
     expect(within(pxp).getByRole("heading", { level: 2 }).textContent).toBe(
       "The school day, in a parent's pocket.",
     );
-    const tablist = within(pxp).getByRole("tablist", { name: "PXP screens" });
+    const tablist = within(pxp).getByRole("tablist", {
+      name: "Parent Hub screens",
+    });
     expect(within(tablist).getAllByRole("tab")).toHaveLength(5);
   });
 

@@ -3056,12 +3056,6 @@
     }
   }
 
-  @media (width >= --theme(--breakpoint-lg)) {
-    .feature-list-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
   /* The frame comes first in the markup; below md it moves under the text */
   @media (width < --theme(--breakpoint-md)) {
     .split-media-first > .browser {

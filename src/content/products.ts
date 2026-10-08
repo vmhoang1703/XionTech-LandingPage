@@ -1,4 +1,16 @@
 // Products page copy. Kept out of the components so it can be translated later.
+// App names and badge text come from apps.ts.
+import { appById, type AppId } from "@/content/apps";
+
+function badgeText(id: AppId): string {
+  const { badge } = appById(id);
+  if (badge.kind !== "text") throw new Error(`App ${id} has no text badge`);
+  return badge.text;
+}
+
+const parentHub = appById("parent-hub");
+const staffHub = appById("staff-hub");
+const iot = appById("iot");
 
 export const productsHero = {
   breadcrumbLabel: "Breadcrumb",
@@ -9,7 +21,7 @@ export const productsHero = {
     highlight: "connected",
     tail: " school.",
   },
-  lede: "PXP, LXP, SXP and IoT share one source of truth, so every role sees the same school day.",
+  lede: `${parentHub.shortName}, ${staffHub.shortName}, ${iot.shortName} and ${appById("ai-tutor").shortName} share one source of truth, so every role sees the same school day.`,
   cta: { href: "/demo#form", label: "Book a demo" },
   // Real product screens arrive with Story 4.4 (after demo); until then the
   // device frames stay empty.
@@ -20,9 +32,8 @@ export const productsHero = {
 };
 
 export const productsMeta = {
-  title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTech",
-  description:
-    "PXP for parents, LXP for students, SXP for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech.",
+  title: `School Platforms: ${parentHub.shortName}, ${staffHub.shortName} & ${iot.shortName} | XionTech`,
+  description: `${parentHub.shortName} for parents, ${staffHub.shortName} for staff, teachers and leaders, and ${iot.fullName} for campuses. Connected school apps from XionTech.`,
 };
 
 export const productsSubnav = {
@@ -30,10 +41,9 @@ export const productsSubnav = {
   // The "Updates" pill to #updates is hidden on Demo day (decision T5);
   // Story 4.5 adds it back with the section.
   items: [
-    { id: "pxp", label: "PXP" },
-    { id: "lxp", label: "LXP" },
-    { id: "sxp", label: "SXP" },
-    { id: "iot", label: "IoT" },
+    { id: parentHub.anchor, label: parentHub.shortName },
+    { id: staffHub.anchor, label: staffHub.shortName },
+    { id: iot.anchor, label: iot.shortName },
   ],
 };
 
@@ -42,10 +52,10 @@ export const productsSubnav = {
 // The phone screens stay empty frames until real
 // screens arrive with Story 4.4 (after demo).
 export const pxpSection = {
-  badge: "PXP",
+  badge: badgeText("parent-hub"),
   heading: "The school day, in a parent's pocket.",
-  lede: "Parent eXperience Place keeps parents close to every school day, on [Placeholder] iOS and Android.",
-  tabsLabel: "PXP screens",
+  lede: `${parentHub.shortName} keeps parents close to every school day, on [Placeholder] iOS and Android.`,
+  tabsLabel: `${parentHub.shortName} screens`,
   screens: [
     { id: "attendance", label: "Attendance" },
     { id: "grades", label: "Grades" },
@@ -53,7 +63,8 @@ export const pxpSection = {
     { id: "payments", label: "Payments" },
     { id: "events", label: "Events" },
   ],
-  screenCaption: (label: string) => `[Placeholder] PXP ${label} screen`,
+  screenCaption: (label: string) =>
+    `[Placeholder] ${parentHub.shortName} ${label} screen`,
   features: [
     {
       id: "arrived",
@@ -83,28 +94,14 @@ export const pxpSection = {
   },
 } as const;
 
-// LXP, SXP and IoT sections (Story 4.3). Descriptions and feature lists were
+// Staff Hub and IoT sections (Story 4.3). Descriptions and feature lists were
 // confirmed by the business on 2026-09-28; the web addresses are in
 // product-links.ts. Real screens arrive with Story 4.4 (after demo); until
 // then each browser frame stays empty.
-export const productsLxp = {
-  badge: "LXP",
-  title: "A calm place to learn.",
-  lede: "Learner eXperience Place brings a student's lessons, assignments and progress into one place.",
-  audience: ["Students", "Web app"],
-  features: [
-    { id: "lessons", name: "Lessons", line: "Every material in one place." },
-    { id: "assignments", name: "Assignments", line: "Clear due dates." },
-    { id: "progress", name: "Progress", line: "Seen at a glance." },
-    { id: "feedback", name: "Feedback", line: "Comments from teachers." },
-  ],
-  media: "[Placeholder] LXP screenshot",
-} as const;
-
 export const productsSxp = {
-  badge: "SXP",
+  badge: badgeText("staff-hub"),
   title: "One workspace for the whole school.",
-  lede: "Staff eXperience Place gives staff, teachers and leaders their own views of the same data.",
+  lede: `${staffHub.shortName} gives staff, teachers and leaders their own views of the same data.`,
   audience: ["Staff", "Teachers", "Leaders"],
   features: [
     {
@@ -116,7 +113,7 @@ export const productsSxp = {
     {
       id: "communication",
       name: "Communication",
-      line: "Reach parents through PXP.",
+      line: `Reach parents through ${parentHub.shortName}.`,
     },
     {
       id: "dashboards",
@@ -124,15 +121,15 @@ export const productsSxp = {
       line: "What needs attention today.",
     },
   ],
-  media: "[Placeholder] SXP screenshot",
+  media: `[Placeholder] ${staffHub.shortName} screenshot`,
 } as const;
 
 // The prototype's IoT section has no audience chips; the audience comes from
 // the Products mega menu (School staff and facilities), as CAP-1 asks for one.
 export const productsIot = {
-  badgeLabel: "IoT",
+  badgeLabel: iot.shortName,
   title: "A campus you run from one screen.",
-  lede: "IoT Device Management lets school staff control classroom AV, lighting, climate and access across campus.",
+  lede: `${iot.fullName} lets school staff control classroom AV, lighting, climate and access across campus.`,
   audience: ["School staff", "Facilities"],
   features: [
     { id: "av", name: "Classroom AV", line: "Projectors, displays and sound." },

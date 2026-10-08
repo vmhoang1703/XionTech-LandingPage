@@ -4,7 +4,6 @@ import { PxpSection } from "@/components/products/pxp-section";
 import { ProductsSubnav } from "@/components/products/products-subnav";
 import {
   IotSection,
-  LxpSection,
   SxpSection,
 } from "@/components/products/products-web-apps";
 import { productsMeta } from "@/content/products";
@@ -20,7 +19,6 @@ export default function ProductsPage() {
       <ProductsHero />
       <ProductsSubnav />
       <PxpSection />
-      <LxpSection />
       <SxpSection />
       <IotSection />
     </>
