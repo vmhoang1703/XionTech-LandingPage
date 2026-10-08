@@ -26,3 +26,17 @@ First: finish PR #15 (1.5 footer) so it merges; Andy then mounts the footer in `
 Blockers: 5.4 (Tue 06/10) and 6.4 (Wed 07/10) need Andy's 2.4 (Sat 03/10). Andy waits on your 3.1 (Sat 03/10) for 3.7 (and through it 6.1, 6.2 and 6.3) and on PR #15 (footer) for the footer mount. Say in the team chat the same day if one slips.
 
 Home page order: If Andy's 3.7 lines (news, capture) are already in `src/app/page.tsx`, insert your section above them; keep them and keep the capture band last (FR-14, 3.7 CAP-4).
+
+## Prototype catch-up (2026-10-07)
+
+Plan, shared files and decisions: [`../enhancement-2026-10-07/README.md`](../enhancement-2026-10-07/README.md). Andy's E-A1 merges first. Tasks with the same order number run in parallel.
+
+| Order | Task | Spec | Depends on (soft: build with a fallback) |
+| --- | --- | --- | --- |
+| 3 | E-S1 Home | [`spec-enh-s1-home`](spec-enh-s1-home/SPEC.md) | E-A1; soft E-A2, E-A4 |
+| 3 | E-S4 Footer and offices | [`spec-enh-s4-footer-offices`](spec-enh-s4-footer-offices/SPEC.md) | E-A1 |
+| 3 | E-S5 404 trail page | [`spec-enh-s5-not-found`](spec-enh-s5-not-found/SPEC.md) | E-A1 |
+| 4 | E-S2 Services | [`spec-enh-s2-services`](spec-enh-s2-services/SPEC.md) | E-A1, E-S1 |
+| 4 | E-S3 About | [`spec-enh-s3-about`](spec-enh-s3-about/SPEC.md) | E-A1, E-S1, E-S4; soft E-A2, E-A4 |
+
+If you finish early, take Andy's E-A3 Header once E-A1 and E-A2 merge (decision Q14).
