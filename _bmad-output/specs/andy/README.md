@@ -33,3 +33,17 @@ spec folder. Plan source: "Demo-day plan" in `../../planning-artifacts/epics.md`
 Blockers for Sammy: 2.4 (Sat 03/10; 5.4 and 6.4 need it). Blockers for Andy: Sammy's 3.1 (Sat 03/10) for 3.7 (and through it 6.1, 6.2 and 6.3), and PR #15 (1.5 footer) for the footer mount and the footer checks in 1.7 and 2.1; if the footer is not mounted on `develop` on Sun 04/10, build 1.7 and 2.1 without those checks and add them in the mount PR. Say in the team chat the same day if one slips.
 
 **Load and cuts.** Sizes from `epics.md` give Andy about 9.5 developer-days and Sammy about 6.5, for about 4.5 days left. Wed 07/10 is overloaded. If behind, cut in this order: 6.3 (the lead edits in the Studio by hand); slim 7.3 and 7.4 to one axe run and one Lighthouse run; 6.6 without CV upload on Demo day; then use Thu 08/10 morning. The lead decides.
+
+## Prototype catch-up (2026-10-07)
+
+Plan, shared files and decisions: [`../enhancement-2026-10-07/README.md`](../enhancement-2026-10-07/README.md). E-A1 merges first and E-A2 second; tasks with the same order number run in parallel. Tier 1 load is about 25 h, more than the time left before the demo, so the cut is decision Q14 (default: E-A7 to Tier 2).
+
+| Order | Task | Spec | Depends on (soft: build with a fallback) |
+| --- | --- | --- | --- |
+| 1 | E-A1 Type, spacing, fonts, site icon | [`spec-enh-a1-type-spacing-icon`](spec-enh-a1-type-spacing-icon/SPEC.md) | none |
+| 2 | E-A2 App rename | [`spec-enh-a2-app-rename`](spec-enh-a2-app-rename/SPEC.md) | E-A1; Q1 |
+| 3 | E-A3 Header | [`spec-enh-a3-header`](spec-enh-a3-header/SPEC.md) | E-A1, E-A2 |
+| 3 | E-A4 Home contact form, bands, Summit success | [`spec-enh-a4-forms-bands`](spec-enh-a4-forms-bands/SPEC.md) | E-A1, E-A2; Q3 |
+| 3 | E-A5 Products | [`spec-enh-a5-products`](spec-enh-a5-products/SPEC.md) | E-A1, E-A2; soft E-A4 |
+| 3 | E-A6 News and story | [`spec-enh-a6-news-story`](spec-enh-a6-news-story/SPEC.md) | E-A1, E-A2; soft E-A4 |
+| 3 (Tier per Q14) | E-A7 Careers | [`spec-enh-a7-careers`](spec-enh-a7-careers/SPEC.md) | E-A1; soft E-A4; Q6, Q14 |

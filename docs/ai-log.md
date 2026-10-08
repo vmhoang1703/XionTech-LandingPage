@@ -1249,3 +1249,18 @@ Template:
 - **What the AI did:** Checked every class against all pages and scripts, removed 133 unused CSS rules with a parser (not by hand), cut three dead script blocks, and updated design-system.html (no audience tabs or metric card; the Products showcase card with a sample detail view).
 - **Decision / result:** Proved "no visible change" by screenshotting all 11 pages before and after at two widths and comparing pixels.
 - **AI got it wrong?** No. The scan also found the Services metric cards unused (removed in #61), so they were included.
+
+## 2026-10-08 — Prototype catch-up plan: 12 task specs for Sammy and Andy
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "Base on prototype-enhancement, compare the enhancements with our design, make an enhancement spec file, and share tasks for Sammy and Andy, correctly and understandably" (for `/bmad-build`); then "run review: does it match the enhancement plan?"
+- **What the AI did:** Four parallel agents compared the prototype (ENH-001 to ENH-090) with `develop` page by page. It wrote a plan (`_bmad-output/specs/enhancement-2026-10-07/README.md`) and 12 task specs (Andy E-A1 to E-A7, Sammy E-S1 to E-S5) with Tier 1 and Tier 2, merge order, shared files and 15 decisions with defaults. A four-lens `bmad-review` (adversarial, edge cases, structure, prose) then checked them against the log and the prototype, and a verification pass re-checked every fix.
+- **Decision / result:** Andy's Tier 1 load (about 25 h) does not fit the time left; the cut is decision Q14 for the lead. Unverified content (Careers model, AI Tutor copy, the new Vietnam email, the mountain picture) ships `[Placeholder]` or waits for a decision.
+- **AI got it wrong?** Yes, 12 times in the first draft, all caught by the review:
+  - It renamed the Products card ids, although the prototype keeps `#pxp` and `#sxp`.
+  - It set card titles to 500 instead of 400 and showed feature copy as fact, although ENH-089 marks it `[Placeholder]`.
+  - It put the X back on the footer peak (removed in ENH-045) and flipped the shared office order for About and Demo.
+  - It checked the industries against the wrong file and missed half the hero cards.
+  - It left smoke tests unnamed that the changes would break.
+
+  The verification pass then found that the Home colours had been copied from the wrong branch of the prototype script, and that the founding sentence was misquoted.
