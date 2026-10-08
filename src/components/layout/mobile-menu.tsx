@@ -124,7 +124,7 @@ export function MobileMenu() {
       <button
         ref={buttonRef}
         type="button"
-        className="border-navy/14 text-navy inline-flex h-10 items-center rounded-full border px-4 text-[0.9rem] leading-none font-semibold min-[1081px]:hidden"
+        className="border-navy/14 text-navy inline-flex h-10 items-center rounded-full border px-4 text-[0.9rem] leading-none font-medium min-[1081px]:hidden"
         aria-controls={MENU_ID}
         aria-expanded={open}
         onClick={() => setOpenedOn(open ? null : pathname)}

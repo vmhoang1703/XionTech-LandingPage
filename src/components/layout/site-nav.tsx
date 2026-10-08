@@ -30,7 +30,7 @@ const isMenu = (section: Section): section is MenuId =>
 const HOVER_CLOSE_DELAY_MS = 150;
 
 export const itemClass =
-  "inline-flex h-10 items-center rounded-full px-3.5 py-[9px] text-ui leading-none text-text transition-colors duration-[250ms] ease-[var(--ease-brand)] hover:bg-mist aria-expanded:bg-mist aria-[current=page]:rounded-none aria-[current=page]:font-bold aria-[current=page]:text-navy aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]";
+  "inline-flex h-10 items-center rounded-full px-3.5 py-[9px] text-ui leading-none text-text transition-colors duration-[250ms] ease-[var(--ease-brand)] hover:bg-mist aria-expanded:bg-mist aria-[current=page]:rounded-none aria-[current=page]:font-medium aria-[current=page]:text-navy aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]";
 
 // Prototype values with no design token.
 const panelClass =
@@ -51,7 +51,7 @@ function MegaFooterRow({
       <Link
         href={footer.link}
         onClick={onNavigate}
-        className="text-navy font-bold"
+        className="text-navy font-medium"
       >
         {footer.linkText}
       </Link>
@@ -216,7 +216,7 @@ export function SiteNav() {
               className={rowClass}
             >
               <span>
-                <span className="font-display text-title-sm text-heading block font-semibold">
+                <span className="font-display text-title-sm text-heading block font-medium">
                   {product.name}
                 </span>
                 <span className="text-muted block text-[0.84rem] leading-[1.45] font-normal">
@@ -251,7 +251,7 @@ export function SiteNav() {
               onClick={close}
               className={`${rowClass} items-center py-3`}
             >
-              <span className="font-display text-title-sm text-heading block font-semibold">
+              <span className="font-display text-title-sm text-heading block font-medium">
                 {service.name}
               </span>
             </Link>
