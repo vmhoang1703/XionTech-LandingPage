@@ -41,7 +41,7 @@ export const productsSubnav = {
   ],
 };
 
-// Story 4.2: the PXP section. Feature copy was confirmed by the business on
+// Story 4.2: the Parent Hub section (id pxp). Feature copy was confirmed by the business on
 // 2026-09-28 (EXPERIENCE.md); the platforms are not confirmed yet.
 // The phone screens stay empty frames until real
 // screens arrive with Story 4.4 (after demo).

@@ -119,7 +119,7 @@ function FeatureList<K extends string>({
   );
 }
 
-const SXP_ICONS: Record<FeatureId<typeof productsSxp>, Icon> = {
+const STAFF_HUB_ICONS: Record<FeatureId<typeof productsSxp>, Icon> = {
   attendance: IdentificationCardIcon,
   classes: ChalkboardTeacherIcon,
   communication: MegaphoneIcon,
@@ -144,7 +144,7 @@ export function SxpSection() {
           <h2 id="sxp-h">{title}</h2>
           <p className="lede">{lede}</p>
           <Chips items={audience} />
-          <FeatureList features={features} icons={SXP_ICONS} />
+          <FeatureList features={features} icons={STAFF_HUB_ICONS} />
         </div>
       </div>
     </section>

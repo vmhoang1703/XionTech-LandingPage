@@ -2,7 +2,7 @@
 // Icons are Phosphor icon names (strings), so this file has no React import.
 
 export type AppBadge =
-  { kind: "text"; text: string } | { kind: "icon"; icon: string };
+  { kind: "text"; text: string } | { kind: "icon"; icon: "Cpu" | "Sparkle" };
 
 export type App = {
   id: "parent-hub" | "staff-hub" | "iot" | "ai-tutor";

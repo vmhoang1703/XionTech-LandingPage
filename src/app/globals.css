@@ -2999,7 +2999,7 @@
   }
 
   /*
-    Products web app sections LXP, SXP, IoT (Story 4.3), ported from the
+    Products web app sections Staff Hub and IoT (Story 4.3), ported from the
     prototype site.css. Reuses the badges, chips, linen, grid, service cards
     and the empty media frame from Home.
   */
@@ -3063,7 +3063,7 @@
     }
   }
 
-  /* Items are li (LXP, SXP, IoT) or div (PXP, Story 4.2) */
+  /* Items are li (Staff Hub, IoT) or div (Parent Hub, Story 4.2) */
   .feature-list li,
   .feature-list > div {
     display: flex;

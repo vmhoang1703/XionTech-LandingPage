@@ -62,9 +62,9 @@ After the deploy for Story 3.7 (decision A9), each news post needs:
 
 The app field stores `parent-hub`, `staff-hub`, `iot` or `ai-tutor`. The titles in the list are Parent Hub, Staff Hub, IoT and AI Tutor.
 
-Old posts may still hold the old values. The site maps them when it reads them: PXP becomes `parent-hub`, SXP becomes `staff-hub`, IoT becomes `iot`. LXP shows no app.
+Old posts may still hold the old values. The site maps them when it reads them: PXP becomes `parent-hub`, SXP becomes `staff-hub`, IoT becomes `iot`. LXP shows no app: such a post keeps only its "Product" tag and has no app button.
 
-After this change merges, the lead deploys the Studio from an up-to-date `develop`. The new Studio shows an old value (PXP, LXP, SXP or IoT) as not in the list, so the lead opens each product post that still has one and picks the app again.
+After this change merges, the lead deploys the Studio from an up-to-date `develop`. The new Studio shows an old value (PXP, LXP, SXP or IoT) as not in the list, so the lead opens each product post that still has one and picks the app again (for an LXP post, pick another app or none). To list them, run `cd studio && npx sanity documents query '*[_type == "post" && app in ["PXP", "LXP", "SXP", "IoT"]]{_id, "title": title.en, app}'`.
 
 Home shows the 3 newest posts. A post without an English title, a slug or a date never shows on Home. The first test post, "[Placeholder] First news post test 1" (no slug or date), was deleted on 2026-10-04.
 
