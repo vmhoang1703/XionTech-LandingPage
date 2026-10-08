@@ -13,10 +13,9 @@ export const siteFooter = {
     {
       heading: "Products",
       links: [
-        { href: "/products#pxp", label: "PXP" },
-        { href: "/products#lxp", label: "LXP" },
-        { href: "/products#sxp", label: "SXP" },
-        { href: "/products#iot", label: "IoT Device Management" },
+        { href: "/products#sxp", label: "For schools" },
+        { href: "/products#ai-tutor", label: "For students" },
+        { href: "/products#pxp", label: "For parents" },
       ],
     },
     {
@@ -30,18 +29,16 @@ export const siteFooter = {
         { href: "/services#staffing", label: "Staffing Service" },
         { href: "/services#low-code", label: "Low-code Solutions" },
         { href: "/services#cloud", label: "Cloud Computing" },
+        { href: "/services#process", label: "How we work" },
         { href: "/services", label: "All services" },
       ],
     },
     {
       heading: "Company",
       links: [
-        { href: "/about", label: "About" },
-        { href: "/about#values", label: "Core values" },
-        { href: "/about#faq", label: "FAQ" },
         { href: "/news", label: "News" },
+        { href: "/about", label: "About us" },
         { href: "/careers", label: "Careers" },
-        { href: "/demo", label: "Contact" },
       ],
     },
   ] satisfies FooterColumn[],

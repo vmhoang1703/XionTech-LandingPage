@@ -34,12 +34,17 @@ describe("SiteFooter", () => {
     ).toBeDefined();
   });
 
-  it("lists the four products and hides Product updates on Demo day", () => {
-    expect(linkHrefs(column("Products"))).toEqual([
-      "/products#pxp",
-      "/products#lxp",
-      "/products#sxp",
-      "/products#iot",
+  it("groups products by audience and hides Product updates on Demo day", () => {
+    const products = column("Products");
+
+    expect(
+      within(products)
+        .getAllByRole("link")
+        .map((link) => [link.textContent, link.getAttribute("href")]),
+    ).toEqual([
+      ["For schools", "/products#sxp"],
+      ["For students", "/products#ai-tutor"],
+      ["For parents", "/products#pxp"],
     ]);
     expect(
       linkHrefs(screen.getByRole("contentinfo")).some((href) =>
@@ -48,7 +53,7 @@ describe("SiteFooter", () => {
     ).toBe(false);
   });
 
-  it("lists five services and All services", () => {
+  it("lists five services, How we work and All services", () => {
     const services = column("Services");
 
     expect(linkHrefs(services)).toEqual([
@@ -57,6 +62,7 @@ describe("SiteFooter", () => {
       "/services#staffing",
       "/services#low-code",
       "/services#cloud",
+      "/services#process",
       "/services",
     ]);
     expect(
@@ -65,13 +71,14 @@ describe("SiteFooter", () => {
   });
 
   it("lists the company links", () => {
-    expect(linkHrefs(column("Company"))).toEqual([
-      "/about",
-      "/about#values",
-      "/about#faq",
-      "/news",
-      "/careers",
-      "/demo",
+    const company = within(column("Company")).getAllByRole("link");
+
+    expect(
+      company.map((link) => [link.textContent, link.getAttribute("href")]),
+    ).toEqual([
+      ["News", "/news"],
+      ["About us", "/about"],
+      ["Careers", "/careers"],
     ]);
   });
 
@@ -137,7 +144,7 @@ describe("SiteFooter", () => {
     const textLinks = within(footer)
       .getAllByRole("link")
       .filter((link) => !link.querySelector("img"));
-    expect(textLinks.length).toBeGreaterThan(20);
+    expect(textLinks.length).toBeGreaterThan(15);
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
     }
