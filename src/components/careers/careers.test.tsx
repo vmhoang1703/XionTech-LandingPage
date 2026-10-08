@@ -4,19 +4,22 @@ import type { OpenRole } from "@/lib/careers/open-roles";
 import { undefinedClasses } from "@/test-utils/css-classes";
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
 
-import { Benefits } from "./benefits";
 import { CareersHero } from "./careers-hero";
-import { Culture } from "./culture";
+import { FlipCards } from "./flip-cards";
+import { Inside } from "./inside";
 import { LifeFrames } from "./life-frames";
 import { OpenRoles } from "./open-roles";
 
-// jsdom has no canvas: HeroArt skips the ribbon.
+// The growth ring reads reduced motion and watches the viewport.
 beforeEach(() => {
-  vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn(() => ({ matches: true })),
+  );
 });
 
 afterEach(() => {
-  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 const roles: OpenRole[] = [
@@ -31,67 +34,100 @@ const roles: OpenRole[] = [
 ];
 
 describe("CareersHero", () => {
-  it("shows the H1 with the highlight and breadcrumbs", () => {
+  it("shows the two-line H1, the lede and no breadcrumb", () => {
+    const { container } = render(<CareersHero />);
+
+    const h1 = screen.getByRole("heading", { level: 1 });
+    expect(h1.textContent).toBe("Stay curious.Build what’s next.");
+    expect(h1.querySelector("br")).not.toBeNull();
+    expect(container.querySelector(".lede")?.textContent).toMatch(
+      /^We’re building a team for people who learn fast/,
+    );
+    expect(screen.queryByRole("navigation")).toBeNull();
+    expect(container.querySelector(".hero-light.careers-hero")).not.toBeNull();
+  });
+
+  it("points Explore open roles to #roles and shows the growth ring", () => {
     const { container } = render(<CareersHero />);
 
     expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: "Build what schools use every day.",
-      }),
-    ).not.toBeNull();
-    expect(container.querySelector("h1 .hl")?.textContent).toBe("every day");
-    expect(
-      within(screen.getByRole("navigation", { name: "Breadcrumb" })).getByRole(
-        "link",
-        { name: "Home" },
-      ),
-    ).toHaveProperty("pathname", "/");
-  });
-
-  it("points the buttons to #roles and #life", () => {
-    render(<CareersHero />);
-
-    expect(
-      screen.getByRole("link", { name: "See open roles" }).getAttribute("href"),
-    ).toBe("#roles");
-    expect(
       screen
-        .getByRole("link", { name: "Life at XionTech" })
+        .getByRole("link", { name: "Explore open roles" })
         .getAttribute("href"),
-    ).toBe("#life");
+    ).toBe("#roles");
+    expect(container.querySelector(".ch-grid figure.cycle")).not.toBeNull();
   });
 });
 
-describe("Culture", () => {
-  it("shows the heading, three bullets and the placeholder photo frame", () => {
-    render(<Culture />);
+describe("Inside", () => {
+  it("shows #life with the heading and five tiles in the prototype order", () => {
+    const { container } = render(<Inside />);
 
+    expect(container.querySelector("section#life")).not.toBeNull();
     expect(
-      screen.getByRole("heading", {
-        level: 2,
-        name: "A culture that goes beyond employment.",
-      }),
+      screen.getByRole("heading", { level: 2, name: "Inside XionTech." }),
     ).not.toBeNull();
-    expect(screen.getAllByRole("listitem")).toHaveLength(3);
-    expect(screen.getByText("[Placeholder] Photo")).not.toBeNull();
-  });
-});
-
-describe("Benefits", () => {
-  it("shows the four benefit cards", () => {
-    render(<Benefits />);
-
     expect(
       screen
         .getAllByRole("heading", { level: 3 })
         .map((heading) => heading.textContent),
     ).toEqual([
-      "Innovative workspace",
-      "Growth opportunities",
-      "Engaging work",
-      "Meaningful impact",
+      "Workshops & experiments",
+      "Client visits",
+      "Town halls",
+      "Project kickoffs",
+      "[Placeholder] Celebration",
     ]);
+    expect(
+      [...container.querySelectorAll(".ins-card")].map(
+        (tile) => tile.className,
+      ),
+    ).toEqual([
+      "ins-card big",
+      "ins-card yellow",
+      "ins-card cream",
+      "ins-card cream",
+      "ins-card",
+    ]);
+    expect(screen.queryByRole("link")).toBeNull();
+  });
+});
+
+describe("FlipCards", () => {
+  it("shows the heading, the [Placeholder] note and five numbered flip buttons", () => {
+    render(<FlipCards />);
+
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Five things that shape the way we work.",
+      }),
+    ).not.toBeNull();
+    expect(
+      screen.getByText(
+        "[Placeholder] These five values are waiting for confirmation.",
+      ),
+    ).not.toBeNull();
+    const buttons = screen.getAllByRole("button");
+    expect(buttons).toHaveLength(5);
+    expect(
+      buttons.map((b) => b.querySelector(".flip-front .flip-num")?.textContent),
+    ).toEqual(["01", "02", "03", "04", "05"]);
+    expect(
+      buttons.map(
+        (b) => b.querySelector(".flip-front .flip-title")?.textContent,
+      ),
+    ).toEqual([
+      "Stay agile",
+      "Own the outcome",
+      "Innovate with purpose",
+      "Grow together",
+      "Get IT Done",
+    ]);
+    for (const button of buttons) {
+      expect(button.getAttribute("aria-pressed")).toBe("false");
+      expect(button.querySelector("svg.flip-ill")).not.toBeNull();
+    }
   });
 });
 
@@ -240,8 +276,8 @@ describe("Careers sections", () => {
     const { container } = render(
       <>
         <CareersHero />
-        <Culture />
-        <Benefits />
+        <Inside />
+        <FlipCards />
         <OpenRoles roles={roles} />
         <OpenRoles roles={[]} />
         <LifeFrames />

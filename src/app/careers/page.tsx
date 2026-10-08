@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Benefits } from "@/components/careers/benefits";
 import { CareersHero } from "@/components/careers/careers-hero";
-import { Culture } from "@/components/careers/culture";
-import { LifeFrames } from "@/components/careers/life-frames";
+import { FlipCards } from "@/components/careers/flip-cards";
+import { Inside } from "@/components/careers/inside";
 import { OpenRoles } from "@/components/careers/open-roles";
 import { careersMeta } from "@/content/careers";
-import { getLifePhotos } from "@/lib/careers/life-photos";
 import { getOpenRoles } from "@/lib/careers/open-roles";
 
 export const metadata: Metadata = {
@@ -13,16 +11,20 @@ export const metadata: Metadata = {
   description: careersMeta.description,
 };
 
+// E-A7: the hero's light blue runs on into `.careers-flow` (white, then light
+// amber), and the roles come last. The Life photo frames are off the page;
+// their Sanity code stays for later (Q15, deferred-work.md).
 export default async function CareersPage() {
-  const [roles, photos] = await Promise.all([getOpenRoles(), getLifePhotos()]);
+  const roles = await getOpenRoles();
 
   return (
     <>
       <CareersHero />
-      <Culture />
-      <Benefits />
-      <OpenRoles roles={roles} />
-      <LifeFrames photos={photos} />
+      <div className="careers-flow">
+        <Inside />
+        <FlipCards />
+        <OpenRoles roles={roles} />
+      </div>
     </>
   );
 }

@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { careersMeta } from "@/content/careers";
-import { getLifePhotos } from "@/lib/careers/life-photos";
 import { getOpenRoles } from "@/lib/careers/open-roles";
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
@@ -10,17 +9,18 @@ vi.mock("@/lib/careers/open-roles", async (importOriginal) => ({
   getOpenRoles: vi.fn(),
 }));
 
-vi.mock("@/lib/careers/life-photos", () => ({ getLifePhotos: vi.fn() }));
-
 import CareersPage, { metadata } from "./page";
 
-// jsdom has no canvas: HeroArt skips the ribbon.
+// The growth ring reads reduced motion and watches the viewport.
 beforeEach(() => {
-  vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn(() => ({ matches: true })),
+  );
 });
 
 afterEach(() => {
-  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
 async function renderPage() {
@@ -28,34 +28,44 @@ async function renderPage() {
 }
 
 describe("Careers page", () => {
-  it("renders the H1, #roles and #life", async () => {
+  it("renders the H1, #life and #roles", async () => {
     vi.mocked(getOpenRoles).mockResolvedValue([]);
     const { container } = await renderPage();
 
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: "Build what schools use every day.",
-      }),
-    ).not.toBeNull();
-    expect(container.querySelector("section#roles")).not.toBeNull();
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Stay curious.Build what’s next.",
+    );
     expect(container.querySelector("section#life")).not.toBeNull();
+    expect(container.querySelector("section#roles")).not.toBeNull();
   });
 
-  it("orders the sections as the mockup does", async () => {
+  it("orders the sections as the prototype does, roles last", async () => {
     vi.mocked(getOpenRoles).mockResolvedValue([]);
     const { container } = await renderPage();
 
     const labels = [...container.querySelectorAll("section")].map((s) =>
       s.getAttribute("aria-labelledby"),
     );
-    expect(labels).toEqual([
-      "careers-h1",
-      "cul-h",
-      "ben-h",
-      "roles-h",
-      "life-h",
-    ]);
+    expect(labels).toEqual(["careers-h1", "life-h", "cul-h", "roles-h"]);
+    expect(
+      container.querySelector(".careers-flow section:last-child")?.id,
+    ).toBe("roles");
+  });
+
+  it("drops the old culture, benefits and life photo sections", async () => {
+    vi.mocked(getOpenRoles).mockResolvedValue([]);
+    const { container } = await renderPage();
+
+    for (const gone of [
+      "Why you’ll grow here.",
+      "Why you'll grow here.",
+      "A culture that goes beyond employment.",
+      "Life at XionTech.",
+    ]) {
+      expect(screen.queryByRole("heading", { name: gone })).toBeNull();
+    }
+    expect(container.querySelector(".illo")).toBeNull();
+    expect(container.querySelector(".crumbs")).toBeNull();
   });
 
   it("passes the fetched roles to the open roles list", async () => {
@@ -67,27 +77,6 @@ describe("Careers page", () => {
     expect(
       screen.getByRole("link", { name: /QA Engineer/ }).getAttribute("href"),
     ).toBe("/careers/qa-engineer");
-  });
-
-  it("passes the fetched life photos to the life frames", async () => {
-    vi.mocked(getOpenRoles).mockResolvedValue([]);
-    vi.mocked(getLifePhotos).mockResolvedValue({
-      team: {
-        url: "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg",
-        alt: "The team",
-      },
-    });
-    await renderPage();
-
-    expect(screen.getByAltText("The team")).not.toBeNull();
-  });
-
-  it("keeps the placeholder frames when there are no photos", async () => {
-    vi.mocked(getOpenRoles).mockResolvedValue([]);
-    vi.mocked(getLifePhotos).mockResolvedValue(null);
-    await renderPage();
-
-    expect(screen.getByText("[Placeholder] Team photo")).not.toBeNull();
   });
 
   it("has no email capture band", async () => {
