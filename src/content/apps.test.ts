@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { APPS, appById, type AppId } from "./apps";
+import { APPS, appById, badgeLabel, type AppId } from "./apps";
 
 describe("APPS", () => {
   it("lists the four apps in order", () => {
@@ -60,5 +60,15 @@ describe("appById", () => {
 
   it("throws for an unknown id", () => {
     expect(() => appById("lxp" as AppId)).toThrow("Unknown app id: lxp");
+  });
+});
+
+describe("badgeLabel", () => {
+  it("returns the text of a text badge", () => {
+    expect(badgeLabel(appById("parent-hub"))).toBe("P-Hub");
+  });
+
+  it("returns the short name for an icon badge", () => {
+    expect(badgeLabel(appById("iot"))).toBe("IoT");
   });
 });

@@ -1,12 +1,6 @@
 // Products page copy. Kept out of the components so it can be translated later.
 // App names and badge text come from apps.ts.
-import { appById, type AppId } from "@/content/apps";
-
-function badgeText(id: AppId): string {
-  const { badge } = appById(id);
-  if (badge.kind !== "text") throw new Error(`App ${id} has no text badge`);
-  return badge.text;
-}
+import { appById, badgeLabel } from "@/content/apps";
 
 const parentHub = appById("parent-hub");
 const staffHub = appById("staff-hub");
@@ -52,7 +46,7 @@ export const productsSubnav = {
 // The phone screens stay empty frames until real
 // screens arrive with Story 4.4 (after demo).
 export const pxpSection = {
-  badge: badgeText("parent-hub"),
+  badge: badgeLabel(parentHub),
   heading: "The school day, in a parent's pocket.",
   lede: `${parentHub.shortName} keeps parents close to every school day, on [Placeholder] iOS and Android.`,
   tabsLabel: `${parentHub.shortName} screens`,
@@ -99,7 +93,7 @@ export const pxpSection = {
 // product-links.ts. Real screens arrive with Story 4.4 (after demo); until
 // then each browser frame stays empty.
 export const productsSxp = {
-  badge: badgeText("staff-hub"),
+  badge: badgeLabel(staffHub),
   title: "One workspace for the whole school.",
   lede: `${staffHub.shortName} gives staff, teachers and leaders their own views of the same data.`,
   audience: ["Staff", "Teachers", "Leaders"],

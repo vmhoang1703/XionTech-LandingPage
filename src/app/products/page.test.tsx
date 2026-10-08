@@ -94,6 +94,16 @@ describe("Products page", () => {
     expect(within(tablist).getAllByRole("tab")).toHaveLength(5);
   });
 
+  it("uses the new app names in the hero lede and the meta", () => {
+    expect(productsHero.lede).toBe(
+      "Parent Hub, Staff Hub, IoT and AI Tutor share one source of truth, so every role sees the same school day.",
+    );
+    expect(productsMeta.title).toBe(
+      "School Platforms: Parent Hub, Staff Hub & IoT | XionTech",
+    );
+    expect(productsMeta.description).not.toMatch(/PXP|LXP|SXP/);
+  });
+
   it("sets the page metadata", () => {
     expect(metadata.title).toBe(productsMeta.title);
     expect(metadata.description).toBe(productsMeta.description);

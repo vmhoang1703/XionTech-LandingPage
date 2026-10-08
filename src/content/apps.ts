@@ -53,6 +53,11 @@ export const APPS: readonly App[] = [
   },
 ];
 
+// The text a badge shows: its text, or the short name for an icon badge.
+export function badgeLabel(app: App): string {
+  return app.badge.kind === "text" ? app.badge.text : app.shortName;
+}
+
 export function appById(id: AppId): App {
   const app = APPS.find((a) => a.id === id);
   if (!app) throw new Error(`Unknown app id: ${id}`);
