@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
-import { CONTACT_ERRORS, LENGTH_ERROR } from "./contact-rules";
+import {
+  CONTACT_ERRORS,
+  LENGTH_ERROR,
+  MESSAGE_REQUIRED_ERROR,
+} from "./contact-rules";
 import { parseSubmission } from "./submission";
 
 // Midday UTC on 2026-10-10: the earliest local date on Earth is 2026-10-09.
@@ -28,6 +32,15 @@ const projectBody = {
   message: "",
   service: CONTACT_STRINGS.services[0],
   startTiming: CONTACT_STRINGS.startTimings[0],
+  website: "",
+};
+
+const generalBody = {
+  type: "general",
+  name: "Ana Tran",
+  email: "ana@sunrise.edu",
+  phone: "",
+  message: "Hello team",
   website: "",
 };
 
@@ -442,5 +455,54 @@ describe("parseSubmission time zones", () => {
     expect(
       parseSubmission({ ...demoBody, date: "2026-12-30" }, yearStart).ok,
     ).toBe(false);
+  });
+});
+
+describe("parseSubmission general", () => {
+  it("accepts a general message and keeps only the general fields", () => {
+    const body = {
+      ...generalBody,
+      phone: " (+1) 469 322 9899 ",
+      org: "Ignored Ltd",
+      role: "x",
+    };
+    expect(parseSubmission(body, NOW)).toEqual({
+      ok: true,
+      submission: {
+        type: "general",
+        name: "Ana Tran",
+        email: "ana@sunrise.edu",
+        phone: "(+1) 469 322 9899",
+        message: "Hello team",
+      },
+    });
+  });
+
+  it("accepts an empty phone and a missing phone", () => {
+    const result = parseSubmission(without(generalBody, "phone"), NOW);
+    expect(result).toMatchObject({
+      ok: true,
+      submission: { type: "general", phone: "" },
+    });
+  });
+
+  it("rejects phone 12 with the phone error", () => {
+    expect(parseSubmission({ ...generalBody, phone: "12" }, NOW)).toEqual({
+      ok: false,
+      errors: { phone: CONTACT_ERRORS.phone },
+    });
+  });
+
+  it("rejects a blank message with the required error", () => {
+    expect(parseSubmission({ ...generalBody, message: "  " }, NOW)).toEqual({
+      ok: false,
+      errors: { message: MESSAGE_REQUIRED_ERROR },
+    });
+  });
+
+  it("answers a bot without reading the fields", () => {
+    expect(
+      parseSubmission({ ...generalBody, website: "x", phone: "12" }, NOW),
+    ).toEqual({ ok: false, honeypot: true });
   });
 });

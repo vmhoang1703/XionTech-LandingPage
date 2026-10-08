@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { Ratelimit, type Duration } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { createTransport } from "nodemailer";
-import type { ContactSubmission } from "@/components/contact/contact-form";
+import type { ContactType } from "./contact-rules";
 import type { CaptureSubmission, ValidSubmission } from "./submission";
 
 export interface DeliveryConfig {
@@ -12,9 +12,10 @@ export interface DeliveryConfig {
   gmailAppPassword: string;
 }
 
-const SUBJECTS: Record<ContactSubmission["type"], string> = {
+const SUBJECTS: Record<ContactType, string> = {
   demo: "Product demo request",
   project: "Outsourcing project request",
+  general: "Contact message",
 };
 
 const CAPTURE_SUBJECTS: Record<CaptureSubmission["kind"], string> = {
@@ -135,6 +136,16 @@ function mailText(submission: ValidSubmission): string {
   if (submission.type === "capture") {
     return `Kind: ${submission.kind}\nEmail: ${submission.email}`;
   }
+  if (submission.type === "general") {
+    return [
+      `Name: ${submission.name}`,
+      `Email: ${submission.email}`,
+      `Phone: ${submission.phone}`,
+      "",
+      "Message:",
+      submission.message,
+    ].join("\n");
+  }
   const shared: [string, string][] = [
     ["Name", submission.name],
     ["Email", submission.email],
@@ -158,10 +169,15 @@ function mailText(submission: ValidSubmission): string {
   return [...fields, "", "Message:", submission.message].join("\n");
 }
 
-/** A capture subject names the kind only; the others end with the organisation. */
+/**
+ * A capture subject names the kind only; a general one ends with the name,
+ * the others with the organisation.
+ */
 function mailSubject(submission: ValidSubmission): string {
   if (submission.type === "capture") return CAPTURE_SUBJECTS[submission.kind];
-  return `${SUBJECTS[submission.type]}: ${submission.org.replaceAll(/[\r\n]/g, "")}`;
+  const detail =
+    submission.type === "general" ? submission.name : submission.org;
+  return `${SUBJECTS[submission.type]}: ${detail.replaceAll(/[\r\n]/g, "")}`;
 }
 
 function gmailTransport(config: DeliveryConfig) {
