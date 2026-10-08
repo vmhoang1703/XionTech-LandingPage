@@ -1,6 +1,9 @@
-export type ContactType = "demo" | "project";
+export type RequestKind = "demo" | "project";
 
-export type ContactField = "name" | "email" | "org" | "date" | "message";
+export type ContactType = RequestKind | "general";
+
+export type ContactField =
+  "name" | "email" | "org" | "phone" | "date" | "message";
 
 export type ContactValues = Record<ContactField, string>;
 
@@ -10,11 +13,17 @@ export const CONTACT_ERRORS: Record<ContactField, string> = {
   name: "Please enter your name.",
   email: "Please enter a valid email address.",
   org: "Please enter your organisation.",
+  phone: "Please enter a valid phone number, for example (+1) 469 322 9899.",
   date: "Please choose today or a later date.",
   message: "Please keep your message under 2,000 characters.",
 };
 
+export const MESSAGE_REQUIRED_ERROR =
+  "Please tell us a little about your project.";
+
 export const MESSAGE_MAX_LENGTH = 2000;
+
+export const PHONE_MAX_LENGTH = 25;
 
 export const TEXT_MAX_LENGTH = 200;
 
@@ -42,9 +51,22 @@ export function isValidEmail(value: string): boolean {
   return dot !== -1 && domain.length - dot - 1 >= 2;
 }
 
+const PHONE_FORMAT = /^\+?[0-9(][0-9\s().+-]{6,24}$/;
+
+// Empty is allowed. Otherwise: the allowed characters and 7 to 15 digits.
+export function isValidPhone(value: string): boolean {
+  const phone = value.trim();
+  if (!phone) return true;
+  if (!PHONE_FORMAT.test(phone)) return false;
+  const digits = phone.replaceAll(/\D/g, "").length;
+  return digits >= 7 && digits <= 15;
+}
+
 /**
  * Validate a contact request. `today` is a YYYY-MM-DD string in the
  * visitor's time zone. The date applies to the "demo" type only.
+ * The organisation is required for "demo" and "project"; the phone and a
+ * required message apply to "general".
  */
 export function validateContact(
   type: ContactType,
@@ -58,8 +80,13 @@ export function validateContact(
   if (!isValidEmail(email) || email.length > EMAIL_MAX_LENGTH) {
     errors.email = CONTACT_ERRORS.email;
   }
-  if (!values.org.trim()) errors.org = CONTACT_ERRORS.org;
-  else if (values.org.length > TEXT_MAX_LENGTH) errors.org = LENGTH_ERROR;
+  if (type !== "general") {
+    if (!values.org.trim()) errors.org = CONTACT_ERRORS.org;
+    else if (values.org.length > TEXT_MAX_LENGTH) errors.org = LENGTH_ERROR;
+  }
+  if (type === "general" && !isValidPhone(values.phone)) {
+    errors.phone = CONTACT_ERRORS.phone;
+  }
   if (
     type === "demo" &&
     values.date &&
@@ -70,6 +97,8 @@ export function validateContact(
   // Form posts send line breaks as CRLF; count each as one character.
   if (values.message.replaceAll("\r\n", "\n").length > MESSAGE_MAX_LENGTH) {
     errors.message = CONTACT_ERRORS.message;
+  } else if (type === "general" && !values.message.trim()) {
+    errors.message = MESSAGE_REQUIRED_ERROR;
   }
   return errors;
 }
