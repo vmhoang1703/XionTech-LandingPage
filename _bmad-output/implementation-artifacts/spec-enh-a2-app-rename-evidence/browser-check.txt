@@ -1,0 +1,33 @@
+## width 1280
+1 sub-nav pills: ["Parent Hub","Staff Hub","IoT"]; #lxp count 0
+2 #pxp h2 top 1002px; badge "P-Hub" 56x56 fits=true
+3 #sxp badge "S-Hub" fits=true; lede "Staff Hub gives staff, teachers and leaders their own views of the same data."
+4 /products#lxp scrollY 671
+  sideways scroll on /products: false
+5 Products menu rows: ["Parent Hub","Staff Hub","IoT Device Management","AI Tutor"]
+6 demo checkboxes: ["Parent Hub (checked)","Staff Hub","IoT"]
+7 role label: "Your role"
+7 project labels: ["Service","When do you want to start?"]
+8 hero items: ["A walkthrough of Parent Hub and Staff Hub using your school's scenarios.","Answers on setup, data and support.","For projects: a first Discovery conversation, the first of our four steps."]
+  sideways scroll on /demo: false
+## width 390
+1 sub-nav pills: ["Parent Hub","Staff Hub","IoT"]; #lxp count 0
+2 #pxp h2 top 266px; badge "P-Hub" 56x56 fits=true
+3 #sxp badge "S-Hub" fits=true; lede "Staff Hub gives staff, teachers and leaders their own views of the same data."
+4 /products#lxp scrollY 852
+  sideways scroll on /products: false
+6 demo checkboxes: ["Parent Hub (checked)","Staff Hub","IoT"]
+7 role label: "Your role"
+7 project labels: ["Service","When do you want to start?"]
+8 hero items: ["A walkthrough of Parent Hub and Staff Hub using your school's scenarios.","Answers on setup, data and support.","For projects: a first Discovery conversation, the first of our four steps."]
+  sideways scroll on /demo: false
+## fresh-page anchor checks
+width 1280 /products#pxp: scrollY 0; section top 808px, badge top 925px, h2 top 999px
+width 1280 /products#lxp: scrollY 0;
+width 390 /products#pxp: scrollY 852; section top 144px, badge top 192px, h2 top 266px
+width 390 /products#lxp: scrollY 0;
+## fresh-page anchor checks (networkidle)
+width 1280 /products#pxp: scrollY 671; section top 144px, badge top 261px, h2 top 335px
+width 1280 /products#lxp: scrollY 0;
+width 390 /products#pxp: scrollY 852; section top 144px, badge top 192px, h2 top 266px
+width 390 /products#lxp: scrollY 0;

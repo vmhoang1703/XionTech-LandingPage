@@ -1,0 +1,25 @@
+PASS title School Apps: Parent Hub, Staff Hub, IoT & AI Tutor | XionTech
+PASS dialog opens by Enter 
+PASS Tab stays inside (8 presses) 
+PASS page does not scroll behind hidden
+PASS Esc closes 
+PASS focus back on expand 
+PASS click inside box keeps open 
+PASS backdrop click closes 
+PASS focus back after backdrop 
+PASS X closes 
+PASS pause button visible 
+PASS pause 44px 44x44
+PASS pause stops glows off,off,paused
+PASS Home silk starts paused (or no WebGL) play buttons on home: 1
+PASS #pxp lands below header top=88
+PASS #sxp lands below header top=88
+PASS #iot lands below header top=88
+PASS #ai-tutor lands below header top=88
+PASS expand 44px 
+PASS no links in Parent Hub dialog 
+PASS 390px no sideways scroll scrollWidth=390
+PASS 320px no sideways scroll scrollWidth=320
+PASS no JS: 4 visible details, no expand, no toggle {"details":4,"expand":0,"toggle":0}
+PASS reduced motion starts paused 
+PASS no console errors 

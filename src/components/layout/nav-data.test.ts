@@ -1,11 +1,6 @@
 import { describe, it, expect } from "vitest";
-import {
-  currentSection,
-  LABELS,
-  NAV_LINKS,
-  PRODUCTS,
-  SERVICES,
-} from "./nav-data";
+import * as navData from "./nav-data";
+import { currentSection, LABELS, NAV_LINKS, SERVICES } from "./nav-data";
 
 describe("nav-data", () => {
   describe("currentSection", () => {
@@ -29,9 +24,16 @@ describe("nav-data", () => {
       expect(currentSection("/products")).toBe("products");
     });
 
-    it("maps / to empty string", () => {
-      expect(currentSection("/")).toBeNull();
+    it("maps exactly / to home", () => {
+      expect(currentSection("/")).toBe("home");
     });
+
+    it.each(["/home", "//", "/not-a-page"])(
+      "does not map %s to home",
+      (path) => {
+        expect(currentSection(path)).toBeNull();
+      },
+    );
 
     it("maps unknown paths to empty string", () => {
       expect(currentSection("/unknown")).toBeNull();
@@ -65,26 +67,6 @@ describe("nav-data", () => {
     });
   });
 
-  describe("PRODUCTS", () => {
-    it("has exactly 4 products", () => {
-      expect(PRODUCTS).toHaveLength(4);
-    });
-
-    it("has products in correct order", () => {
-      expect(PRODUCTS[0].anchor).toBe("pxp");
-      expect(PRODUCTS[1].anchor).toBe("lxp");
-      expect(PRODUCTS[2].anchor).toBe("sxp");
-      expect(PRODUCTS[3].anchor).toBe("iot");
-    });
-
-    it("has product names", () => {
-      expect(PRODUCTS[0].name).toBe("PXP");
-      expect(PRODUCTS[1].name).toBe("LXP");
-      expect(PRODUCTS[2].name).toBe("SXP");
-      expect(PRODUCTS[3].name).toBe("IoT Device Management");
-    });
-  });
-
   describe("SERVICES", () => {
     it("has exactly 8 services", () => {
       expect(SERVICES).toHaveLength(8);
@@ -106,8 +88,9 @@ describe("nav-data", () => {
   });
 
   describe("NAV_LINKS", () => {
-    it("lists the five top-level pages in header order", () => {
+    it("lists the six top-level pages in header order, Home first", () => {
       expect(NAV_LINKS.map((l) => [l.section, l.href, l.label])).toEqual([
+        ["home", "/", "Home"],
         ["products", "/products", "Products"],
         ["services", "/services", "Services"],
         ["news", "/news", "News"],
@@ -118,6 +101,13 @@ describe("nav-data", () => {
 
     it("labels the mobile menu button Menu", () => {
       expect(LABELS.menu).toBe("Menu");
+    });
+
+    it("has no Book a demo label and no mega-menu data", () => {
+      expect(LABELS).not.toHaveProperty("bookDemo");
+      expect(navData).not.toHaveProperty("PRODUCTS");
+      expect(navData).not.toHaveProperty("PRODUCTS_FOOTER");
+      expect(navData).not.toHaveProperty("SERVICES_FOOTER");
     });
   });
 });

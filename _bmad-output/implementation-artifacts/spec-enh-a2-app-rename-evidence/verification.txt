@@ -1,0 +1,145 @@
+### npm run lint && npm run typecheck && npx prettier --check src e2e studio
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+Checking formatting...
+All matched files use Prettier code style!
+exit 0
+### npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+
+
+ Test Files  78 passed (78)
+      Tests  1178 passed (1178)
+   Start at  14:28:54
+   Duration  79.55s (import 57%, environment 25%, tests 12%, setup 6%, transform 1%)
+
+    Isolate  78 workers spawned · ~5.43s startup each (spawn + environment, per file)
+             at least ~14.75s faster with isolate: false — reuses workers across files instead of one per file
+
+exit 0
+### npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 C:/XionTech/LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  78 passed (78)
+      Tests  1178 passed (1178)
+   Start at  14:30:23
+   Duration  80.57s (import 54%, environment 25%, tests 13%, setup 6%, transform 1%, worker 1%)
+
+    Isolate  78 workers spawned · ~4.84s startup each (spawn + environment, per file)
+             at least ~13.14s faster with isolate: false — reuses workers across files instead of one per file
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.72 |    98.19 |   99.47 |     100 |                   
+ ...onents/careers |     100 |    97.64 |     100 |     100 |                   
+  ...tion-form.tsx |     100 |    96.72 |     100 |     100 | 45,123            
+ ...onents/contact |   99.08 |    96.12 |   98.33 |     100 |                   
+  contact-form.tsx |   98.49 |    93.58 |   97.61 |     100 | ...26,189,219,404 
+ components/home   |    99.2 |    95.34 |   96.77 |     100 |                   
+  hero-silk.tsx    |   98.18 |       95 |   91.66 |     100 | 27                
+  silk-shader.ts   |     100 |     92.3 |     100 |     100 | 95                
+ components/layout |     100 |    97.93 |     100 |     100 |                   
+  mobile-menu.tsx  |     100 |    95.55 |     100 |     100 | 43,96             
+ ...nents/sections |     100 |       96 |     100 |     100 |                   
+  hero-art.tsx     |     100 |       90 |     100 |     100 | 36,65             
+ test-utils        |      96 |    85.71 |     100 |     100 |                   
+  css-classes.ts   |      96 |    85.71 |     100 |     100 | 50                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.72% ( 1442/1446 )
+Branches     : 98.19% ( 761/775 )
+Functions    : 99.47% ( 376/378 )
+Lines        : 100% ( 1311/1311 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/app/news/[slug]/page.tsx (100%)
+src/components/contact/contact-strings.ts (100%)
+src/components/layout/nav-data.ts (100%)
+src/content/apps.ts (100%)
+src/content/products.ts (100%)
+src/lib/news/latest-posts.ts (100%)
+src/lib/news/post-app.ts (100%)
+src/lib/news/post.ts (100%)
+-------------
+Total:   22 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 17 changed file(s) with branch coverage >= 80% vs origin/develop.
+exit 0
+### npm run build
+
+> xiontech-landing-page@0.1.0 build
+> next build
+
+▲ Next.js 16.3.6 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 58ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 30.3s
+  Running TypeScript ...
+  Finished TypeScript in 8.9s ...
+  Collecting page data using 19 workers ...
+  Generating static pages using 19 workers (0/16) ...
+  Generating static pages using 19 workers (4/16) 
+  Generating static pages using 19 workers (8/16) 
+  Generating static pages using 19 workers (12/16) 
+✓ Generating static pages using 19 workers (16/16) in 1751ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/careers/apply
+├ ƒ /api/careers/cv-upload
+├ ƒ /api/contact
+├ ƒ /api/revalidate
+├ ○ /apple-icon.png
+├ ○ /careers
+├ ƒ /careers/[slug]
+├ ○ /demo
+├ ○ /icon.png
+├ ○ /news
+├ ƒ /news/[slug]
+├ ○ /privacy
+├ ○ /products
+└ ○ /services
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+exit 0

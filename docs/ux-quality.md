@@ -3,7 +3,7 @@
 Matching Amber's mockup is the **floor**. The goal is the best experience the spec allows: the
 **ceiling**.
 
-**Status: optional until Demo day (2026-10-09).** On 2026-10-02 the lead decided that no story has
+**Status: optional until Demo day (2026-10-16).** On 2026-10-02 the lead decided that no story has
 to run these tools, to save time before the deadline: UI stories rely on the UX checks (looks and
 behaviour) written in the spec instead. Use the tools when they help, for example on a demo page.
 After Demo day the team decides whether the loop becomes part of the Definition of Done.

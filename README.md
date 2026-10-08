@@ -2,7 +2,7 @@
 
 New landing page / website for [XionTech](https://xiontechs.com/).
 
-Built for the XionTech internal AI build challenge (demo day: 2026-10-09).
+Built for the XionTech internal AI build challenge (demo day: 2026-10-16).
 
 ## Live URLs (Vercel)
 
@@ -42,7 +42,7 @@ cp scripts/sonar/sonar.env.example scripts/sonar/sonar.env
 git config core.hooksPath scripts/git-hooks   # last: every git push runs the Sonar gate (after Demo day)
 ```
 
-Until Demo day (2026-10-09) use `git config core.hooksPath scripts/git-hooks-demo` for the last
+Until Demo day (2026-10-16) use `git config core.hooksPath scripts/git-hooks-demo` for the last
 line instead: every push runs `npm run lint` (which includes SonarQube's JS/TS rules), and the
 full gate runs once a day on `develop` (`npm run sonar:gate:full`). See `CLAUDE.md` → Definition
 of Done.

@@ -190,6 +190,7 @@ const KEYBOARD_PAGES = [
   "/news",
   "/demo",
   "/about",
+  "/careers",
 ];
 
 test.describe("keyboard", { tag: "@a11y" }, () => {
@@ -223,15 +224,14 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.goto("/");
-    for (const id of ["mega-products", "mega-services", "mobile-menu"]) {
-      await expect(page.locator(`[id="${id}"]`)).toHaveAttribute("hidden", "");
-    }
+    await expect(page.locator('[id="mobile-menu"]')).toHaveAttribute(
+      "hidden",
+      "",
+    );
     await page.goto("/demo");
     await expect(page.locator('[role="tabpanel"][hidden]')).toHaveCount(1);
     await page.goto("/products");
-    await expect(
-      page.locator('[id^="pxp-panel-"][hidden]').first(),
-    ).toBeAttached();
+    await expect(page.locator("dialog.pdetail:not([open])")).toHaveCount(4);
   });
 
   test("390px: ring, closed mobile menu, Tab order, 24px targets", async ({

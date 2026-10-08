@@ -1,152 +1,130 @@
-// Products page copy. Kept out of the components so it can be translated later.
+// Products page copy (E-A5), from the prototype products.html. Kept out of the
+// components so it can be translated later. App names, badges and taglines
+// come from apps.ts.
+import { appById, type AppId } from "@/content/apps";
 
-export const productsHero = {
-  breadcrumbLabel: "Breadcrumb",
-  breadcrumbHome: "Home",
-  breadcrumbCurrent: "Products",
-  title: {
-    lead: "Four apps. One ",
-    highlight: "connected",
-    tail: " school.",
-  },
-  lede: "PXP, LXP, SXP and IoT share one source of truth, so every role sees the same school day.",
-  cta: { href: "/demo#form", label: "Book a demo" },
-  // Real product screens arrive with Story 4.4 (after demo); until then the
-  // device frames stay empty.
-  devices: {
-    tablet: "[Placeholder] Web app screenshot",
-    phone: "[Placeholder] Phone screenshot",
-  },
-};
+const [parentHub, staffHub, iot, aiTutor] = [
+  appById("parent-hub"),
+  appById("staff-hub"),
+  appById("iot"),
+  appById("ai-tutor"),
+];
 
 export const productsMeta = {
-  title: "School Platforms: PXP Parent App, LXP, SXP & IoT | XionTech",
-  description:
-    "PXP for parents, LXP for students, SXP for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech.",
+  title: `School Apps: ${parentHub.shortName}, ${staffHub.shortName}, ${iot.shortName} & ${aiTutor.shortName} | XionTech`,
+  description: `${parentHub.shortName} for parents, ${staffHub.shortName} for staff, teachers and leaders, and ${iot.fullName} for campuses. Connected school apps from XionTech.`,
 };
 
-export const productsSubnav = {
-  label: "Products on this page",
-  // The "Updates" pill to #updates is hidden on Demo day (decision T5);
-  // Story 4.5 adds it back with the section.
-  items: [
-    { id: "pxp", label: "PXP" },
-    { id: "lxp", label: "LXP" },
-    { id: "sxp", label: "SXP" },
-    { id: "iot", label: "IoT" },
+// CAP-1. Diagram cards in reading order: top row left to right, then the
+// bottom row (prototype order).
+export const productsHero = {
+  titleLines: ["Built apart.", "Better", "together."],
+  lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
+  diagramLabel: "The four apps share one platform",
+  hub: "X",
+  diagram: [
+    { app: parentHub, eyebrow: "Parent experience", corner: "tl" },
+    { app: aiTutor, eyebrow: "AI tutoring", corner: "tr" },
+    { app: staffHub, eyebrow: "Staff experience", corner: "bl" },
+    { app: iot, eyebrow: "Connected campus", corner: "br" },
   ],
-};
+  motion: { pause: "Pause motion", play: "Play motion" },
+} as const;
 
-// Story 4.2: the PXP section. Feature copy was confirmed by the business on
-// 2026-09-28 (EXPERIENCE.md); the platforms are not confirmed yet.
-// The phone screens stay empty frames until real
-// screens arrive with Story 4.4 (after demo).
-export const pxpSection = {
-  badge: "PXP",
-  heading: "The school day, in a parent's pocket.",
-  lede: "Parent eXperience Place keeps parents close to every school day, on [Placeholder] iOS and Android.",
-  tabsLabel: "PXP screens",
-  screens: [
-    { id: "attendance", label: "Attendance" },
-    { id: "grades", label: "Grades" },
-    { id: "messages", label: "Messages" },
-    { id: "payments", label: "Payments" },
-    { id: "events", label: "Events" },
-  ],
-  screenCaption: (label: string) => `[Placeholder] PXP ${label} screen`,
-  features: [
-    {
-      id: "arrived",
-      title: "Know they arrived",
-      body: "Alerts when your child reaches the gate.",
-    },
-    {
-      id: "progress",
-      title: "See progress early",
-      body: "Scores and comments as soon as published.",
-    },
-    {
-      id: "teachers",
-      title: "Talk to teachers",
-      body: "Two-way messages with teachers.",
-    },
-    {
-      id: "fees",
-      title: "Pay fees in a tap",
-      body: "Clear due dates and receipts.",
-    },
-  ],
+// CAP-2.
+export const productsShowcase = {
+  heading: "What we build.",
+  lede: "Four apps that connect parents, schools and students. Use the expand icon to see each app in detail.",
+  openLabel: (name: string) => `Open ${name} details`,
+  closeLabel: (name: string) => `Close ${name} details`,
+  screenshot: (name: string, media: "phone" | "browser") =>
+    `[Placeholder] ${name} ${media === "phone" ? "phone screenshot" : "screenshot"}`,
+  madeFor: "Made for",
+  featuresHeading: "Features",
+  viewPrototype: "[Placeholder] View prototype",
+  newTab: "(opens in a new tab)",
   stores: {
-    appStore: "[Placeholder] App Store",
-    googlePlay: "[Placeholder] Google Play",
-    newTab: " (opens in a new tab)",
+    appStore: { small: "[Placeholder] Download on the", name: "App Store" },
+    googlePlay: { small: "[Placeholder] Get it on", name: "Google Play" },
   },
-} as const;
+};
 
-// LXP, SXP and IoT sections (Story 4.3). Descriptions and feature lists were
-// confirmed by the business on 2026-09-28; the web addresses are in
-// product-links.ts. Real screens arrive with Story 4.4 (after demo); until
-// then each browser frame stays empty.
-export const productsLxp = {
-  badge: "LXP",
-  title: "A calm place to learn.",
-  lede: "Learner eXperience Place brings a student's lessons, assignments and progress into one place.",
-  audience: ["Students", "Web app"],
-  features: [
-    { id: "lessons", name: "Lessons", line: "Every material in one place." },
-    { id: "assignments", name: "Assignments", line: "Clear due dates." },
-    { id: "progress", name: "Progress", line: "Seen at a glance." },
-    { id: "feedback", name: "Feedback", line: "Comments from teachers." },
-  ],
-  media: "[Placeholder] LXP screenshot",
-} as const;
+// Feature descriptions are not confirmed yet (ENH-089).
+export const FEATURE_PLACEHOLDER =
+  "[Placeholder] One or two lines on how this works for the people who use it.";
 
-export const productsSxp = {
-  badge: "SXP",
-  title: "One workspace for the whole school.",
-  lede: "Staff eXperience Place gives staff, teachers and leaders their own views of the same data.",
-  audience: ["Staff", "Teachers", "Leaders"],
-  features: [
-    {
-      id: "attendance",
-      name: "Attendance and records",
-      line: "Updated in real time.",
-    },
-    { id: "classes", name: "Classes", line: "Classes, timetables and grades." },
-    {
-      id: "communication",
-      name: "Communication",
-      line: "Reach parents through PXP.",
-    },
-    {
-      id: "dashboards",
-      name: "Leader dashboards",
-      line: "What needs attention today.",
-    },
-  ],
-  media: "[Placeholder] SXP screenshot",
-} as const;
+export type Audience = "parents" | "school" | "students";
 
-// The prototype's IoT section has no audience chips; the audience comes from
-// the Products mega menu (School staff and facilities), as CAP-1 asks for one.
-export const productsIot = {
-  badgeLabel: "IoT",
-  title: "A campus you run from one screen.",
-  lede: "IoT Device Management lets school staff control classroom AV, lighting, climate and access across campus.",
-  audience: ["School staff", "Facilities"],
-  features: [
-    { id: "av", name: "Classroom AV", line: "Projectors, displays and sound." },
-    {
-      id: "climate",
-      name: "Lighting and climate",
-      line: "Scheduled around the timetable.",
-    },
-    {
-      id: "access",
-      name: "Access",
-      line: "Doors and zones, managed centrally.",
-    },
-    { id: "energy", name: "Energy", line: "See usage across the campus." },
-  ],
-  media: "[Placeholder] IoT screenshot",
-} as const;
+export type FeatureId =
+  | "gate"
+  | "scores"
+  | "messages"
+  | "fees"
+  | "attendance"
+  | "classes"
+  | "parents"
+  | "dashboards"
+  | "av"
+  | "climate"
+  | "doors"
+  | "energy"
+  | "diagnosis"
+  | "hints"
+  | "mastery";
+
+export type ProductDetail = {
+  audience: Audience;
+  madeFor: string;
+  media: "phone" | "browser";
+  features: readonly { id: FeatureId; title: string }[];
+};
+
+// CAP-3. Feature titles and "Made for" lines are copied from products.html.
+export const productDetails: Record<AppId, ProductDetail> = {
+  "parent-hub": {
+    audience: "parents",
+    madeFor: "Parents and families",
+    media: "phone",
+    features: [
+      { id: "gate", title: "Alerts when your child reaches the gate" },
+      { id: "scores", title: "Scores and comments as soon as published" },
+      { id: "messages", title: "Two-way messages with teachers" },
+      { id: "fees", title: "Fee payments with clear receipts" },
+    ],
+  },
+  "staff-hub": {
+    audience: "school",
+    madeFor: "Staff, teachers and school leaders",
+    media: "browser",
+    features: [
+      { id: "attendance", title: "Attendance and records in real time" },
+      { id: "classes", title: "Classes, timetables and grades" },
+      {
+        id: "parents",
+        title: `Messages to parents through ${parentHub.shortName}`,
+      },
+      { id: "dashboards", title: "Leader dashboards for today's priorities" },
+    ],
+  },
+  iot: {
+    audience: "school",
+    madeFor: "School operations and facilities teams",
+    media: "browser",
+    features: [
+      { id: "av", title: "Projectors, displays and sound" },
+      { id: "climate", title: "Lighting and climate on the timetable" },
+      { id: "doors", title: "Doors and zones managed centrally" },
+      { id: "energy", title: "Energy use across the campus" },
+    ],
+  },
+  "ai-tutor": {
+    audience: "students",
+    madeFor: "Students, with teachers alongside",
+    media: "browser",
+    features: [
+      { id: "diagnosis", title: "Skill-by-skill diagnosis" },
+      { id: "hints", title: "Step-by-step hints once you have tried" },
+      { id: "mastery", title: "Mastery only when you can do it alone" },
+    ],
+  },
+};

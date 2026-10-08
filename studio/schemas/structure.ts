@@ -5,9 +5,8 @@ import type { StructureResolver } from "sanity/structure";
 export const singletonTypes = ["careersPhotos", "product"];
 
 const products = [
-  { title: "PXP", id: "product-pxp" },
-  { title: "LXP", id: "product-lxp" },
-  { title: "SXP", id: "product-sxp" },
+  { title: "Parent Hub", id: "product-pxp" },
+  { title: "Staff Hub", id: "product-sxp" },
   { title: "IoT", id: "product-iot" },
 ];
 

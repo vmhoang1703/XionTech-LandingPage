@@ -40,10 +40,10 @@ export const post = {
       type: "string",
       options: {
         list: [
-          { title: "PXP", value: "PXP" },
-          { title: "LXP", value: "LXP" },
-          { title: "SXP", value: "SXP" },
-          { title: "IoT", value: "IoT" },
+          { title: "Parent Hub", value: "parent-hub" },
+          { title: "Staff Hub", value: "staff-hub" },
+          { title: "IoT", value: "iot" },
+          { title: "AI Tutor", value: "ai-tutor" },
         ],
       },
       hidden: ({ document }: { document?: { category?: string } }) =>

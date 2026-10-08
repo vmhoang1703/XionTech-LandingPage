@@ -284,6 +284,59 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-7-3-accessibility-checks.md`
   summary: Story 7.3 review (Minor): measure ring contrast on the page, not only in the token table; log or fail on axe `incomplete` contrast results; check every required field of each form, not one; scan menus and tabs in their open state and the form error state with axe; walk /careers, a story, a job page, /privacy and 404 by keyboard; document that `test:a11y` needs Chrome and clear `.next/cache/fetch-cache` before it (a `pretest:a11y` step); the date-field ring also shows on mouse focus (`:focus-within`).
   evidence: full review 2026-10-05 (medium points patched; these are Minor).
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a7-careers.md`
+  summary: Q15 — the Life photo frames left `/careers` in E-A7, but their Sanity code stays unrendered: `getLifePhotos` (`src/lib/careers/life-photos.ts`), the `careersPhotos` schema and singleton (`studio/schemas/careers-photos.ts`, `index.ts`, `structure.ts`), `LifeFrames` (`src/components/careers/life-frames.tsx`), `careersLife` in `src/content/careers.ts`, and the `careersPhotos` revalidate tag. Decide after the demo: reuse it (for example for real photos in the Inside XionTech tiles) or remove the code and the schema in one change.
+  evidence: Lead decision Q15 (plan default, 2026-10-08): keep the code and list it here.
+  Review note (2026-10-08): the kept code still has its tests in `careers.test.tsx` and its CSS (`.illo` frames) in `globals.css`; the `careersPhotos` revalidate tag still revalidates `/careers`; the Studio help text (`studio/schemas/careers-photos.ts`) still says the photos show in "Life at XionTech". Fix the help text, or remove it all, in the same change.
+
+## Deferred from: code review of spec-enh-a7-careers (2026-10-08)
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a7-careers.md`
+  summary: The Careers flip card's accessible name changes when it is pressed (front title, then the whole back text). The spec and prototype ask for this, but the ARIA toggle-button pattern prefers a stable name (title as the name, back text as a description).
+  evidence: maybe-false, medium if true. Settle it with NVDA or VoiceOver on `/careers`: flip a card and listen whether the change is clear.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a7-careers.md`
+  summary: E-A7 CAP-7 (job page has no sideways scroll from 320px to 1440px) is checked only by a hand-run browser walk; add a Playwright check (`scrollWidth <= clientWidth` at 320px on `/careers/<slug>`) when a browser e2e project runs per PR.
+  evidence: Verification-gap and acceptance layers, 2026-10-08. The walk passed at 320/360/390/768/1024/1280/1440px.
+
+## Deferred from: code review of spec-enh-a2-app-rename (2026-10-08)
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: The header Products menu row "AI Tutor" and a news post with app `ai-tutor` link to `/products#ai-tutor`, which has no section until E-A5 adds the AI Tutor card (`id="ai-tutor"`); E-A5 must add that id.
+  evidence: E-A2 review (edge-case, blind, verification-gap, acceptance layers). Today the link lands at the top of /products, no error. No AI Tutor post exists until the Studio is deployed.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: Home, About and the footer still say PXP, LXP and SXP, and the footer links `/products#lxp` (lands at the top of /products); Sammy's E-S1, E-S3 and E-S4 switch them to `src/content/apps.ts`.
+  evidence: E-A2 review; out of scope by the E-A2 spec (Sammy's files). Grep `PXP|SXP|LXP` in `src/content/home.ts`, `about.ts`, `site-footer.ts`, `src/components/home/`.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: The /products hero still says "Four apps. One connected school." and its lede names AI Tutor, but the page shows three app sections until E-A5 replaces the hero and adds the AI Tutor card.
+  evidence: E-A2 review (blind hunter). E-A5 CAP-1 replaces the hero with "Built apart. Better together."
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: After deploy, a browser tab still holding the old Demo page sends products ["PXP", ...] and gets a 400; reloading fixes it.
+  evidence: E-A2 review (edge-case hunter); low, only during the deploy window.
+
+## Deferred from: code review of spec-enh-a3-header (2026-10-08)
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: `scripts/ux/surfaces/header.json` still targets `#mega-products`, `#mega-services` and the Products/Services triggers, so `npm run ux:parity -- scripts/ux/surfaces/header.json --strict` checks parts that no longer exist; rewrite it for six plain links and the hamburger (UX-Q1 and UX-Q4 in `docs/ux-quality.md` become moot).
+  evidence: E-A3 review (edge-case, blind, acceptance layers). Optional tool until Demo day (AGENTS.md); outside the E-A3 file list.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: The `--z-index-mega-menu: 55` token in `src/app/globals.css` has no user after E-A3; remove it together with its line in `src/lib/design/contrast.test.ts`.
+  evidence: E-A3 review (all four layers). Low; `globals.css` is edited by parallel tasks today, so a one-line follow-up avoids conflicts.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: The comment at `src/content/products.ts:121-122` says the IoT audience comes from the Products mega menu, which E-A3 removed; reword it when E-A5 touches that file.
+  evidence: E-A3 review (edge-case, acceptance). Comment only; `products.ts` belongs to E-A5.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: Planning docs still describe the old header: `EXPERIENCE.md` (Mega menu; Book a demo first in the mobile menu at 640px and below), AC-NAV-2/AC-NAV-3 in the PRD and `epics.md`, and the example rows in `docs/ux-checks.md`. Amber owns them; update after the decision Q8 and the T11 change.
+  evidence: E-A3 review (blind hunter). Planning docs are Amber's (team roles); the fix edits other specs.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
+  summary: On /products under prefers-reduced-motion, "Play motion" saves the choice but the hero glows stay still, because the global reduced-motion rule (`animation: none !important` in the base layer) wins over any later rule.
+  evidence: E-A5 review (verification gap). Fix needs a design call: either hide the Pause/Play button under reduced motion, or move the glows to a JS animation like the Home silk.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
+  summary: The footer (`src/content/site-footer.ts`) and the Home app bento (`lxp` tile) still link `/products#lxp`, which has no card; they land at the top of /products.
+  evidence: E-A5 review (verification gap). Pre-existing since E-A2 removed the LXP section; Sammy's files. Point them at `#ai-tutor` or drop them.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
+  summary: E-A5 Tier 2 parts stay out: A day at school (ENH-015, ENH-023, ENH-050, ENH-051), Product updates (ENH-024, ENH-042) and the page-long background flow (ENH-022); also the hero glows do not pause when off screen.
+  evidence: Spec Non-goals (Q14); prototype site.js pauses the glows off screen (`is-off`), not ported.
 
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-s1-home.md`
   summary: The Home "+3" industries list renders open in the server HTML and collapses on hydration, a small below-the-fold layout shift on every load.

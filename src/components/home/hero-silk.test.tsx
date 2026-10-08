@@ -14,6 +14,7 @@ let reducedMotion = false;
 
 beforeEach(() => {
   reducedMotion = false;
+  localStorage.clear();
   silk = { draw: vi.fn(), resize: vi.fn() };
   vi.mocked(createSilk).mockReturnValue(silk);
   vi.stubGlobal(
@@ -123,6 +124,25 @@ describe("HeroSilk", () => {
 
     expect(screen.getByRole("button", { name: "Play motion" })).toBeDefined();
     expect(requestAnimationFrame).not.toHaveBeenCalled();
+  });
+
+  it("starts paused when the stored choice is off", () => {
+    localStorage.setItem("xt-motion", "off");
+    renderSilk();
+
+    expect(screen.getByRole("button", { name: "Play motion" })).toBeDefined();
+    expect(requestAnimationFrame).not.toHaveBeenCalled();
+  });
+
+  it("saves the choice on click", () => {
+    reducedMotion = true;
+    renderSilk();
+
+    fireEvent.click(screen.getByRole("button", { name: "Play motion" }));
+    expect(localStorage.getItem("xt-motion")).toBe("on");
+
+    fireEvent.click(screen.getByRole("button", { name: "Pause motion" }));
+    expect(localStorage.getItem("xt-motion")).toBe("off");
   });
 
   it("stops when the hero is off screen and resumes when back", () => {

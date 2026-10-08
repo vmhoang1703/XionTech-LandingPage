@@ -9,7 +9,7 @@ export function OpenRoles({ roles }: Readonly<{ roles: OpenRole[] }>) {
   const { heading, emptyText, applyLabel } = careersRoles;
 
   return (
-    <section id="roles" className="sec surface-paper" aria-labelledby="roles-h">
+    <section id="roles" className="sec" aria-labelledby="roles-h">
       <div className="wrap">
         <div className="sec-head">
           <h2 id="roles-h">{heading}</h2>

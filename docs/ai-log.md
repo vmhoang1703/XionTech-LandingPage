@@ -1265,6 +1265,54 @@ Template:
 
   The verification pass then found that the Home colours had been copied from the wrong branch of the prototype script, and that the founding sentence was misquoted.
 
+## 2026-10-08 — E-A1 calmer type, tighter spacing and the X site icon
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (one-shot route) and `bmad-code-review`
+- **Prompt (short):** "build all my spec enhancement (andy)", after the demo moved to 2026-10-16; the lead took every plan default (Q1, Q2, Q3, Q11, Q13, Q15) and asked for Tier 1 of all seven tasks, E-A1 first.
+- **What the AI did:** Changed the `@theme` weights, heading rhythm and section spacing to the prototype's values, mapped all 25 hard-coded bold rules to 400 (card titles) or 500 by reading the prototype rule for each selector, added the Next.js `icon.png`/`apple-icon.png`, and wrote a token test first. It measured nine routes at 1280px and 390px in a real browser.
+- **Decision / result:** Decision Q2 (prototype over `DESIGN.md`) is recorded in the DESIGN.md token test as an exact list of overridden tokens, so the other tokens still have to match `DESIGN.md`.
+- **AI got it wrong?** Yes, twice. In the date PR (#71) it ran `git add -A` and committed 6 MB of local Lighthouse reports; the one-layer review caught it before the push. In E-A1 the first override list skipped tokens that had not changed, and Unbounded still loaded an unused 700 weight; the four-layer review caught both.
+
+## 2026-10-08 — E-A7 Careers: growth ring, Inside XionTech, flip cards, roles last
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (one-shot route) and `bmad-code-review`
+- **Prompt (short):** "E-A7 Careers" from the enhancement plan, Tier 1, built in its own worktree on top of E-A1; lead decisions Q6 (unverified copy ships `[Placeholder]`) and Q15 (keep the Sanity life-photo code, list it in `deferred-work.md`).
+- **What the AI did:** Ported the prototype Careers page: a light hero with the Growth Learning Model (the dot travels once round the ring when 40% is in view, and stays on Curious with reduced motion), five Inside XionTech tiles, five flip cards as `<button aria-pressed>` with the hidden face `inert`, the roles last, and the prototype's pastel gradient in CSS instead of its scroll script. It wrote the UX checks table and the tests first, then checked all 19 rows in Chrome at widths from 320px to 1440px, including the job page.
+- **Decision / result:** "Culture" and "Why you'll grow here" are deleted. The life-photo code stays unrendered (Q15). The job form's "Summit reached." waits for E-A4.
+- **AI got it wrong?** Yes, four times:
+  - The hero glow override lost to the shared `.hero-light .aurora` rule, which comes later in the file. The first browser walk showed the amber default glow.
+  - The reduced-motion flip hid the back face with `visibility: hidden`. The repo's "CSS hides no content" test caught it. The base reduced-motion rule already gives an instant swap.
+  - It marked the five unconfirmed values with one section note instead of on each value. The four-layer review flagged this against the AGENTS.md placeholder rule.
+  - The review also found the H1 read "Stay curious.Build" with no space, and that `/careers` was missing from the keyboard a11y run.
+
+## 2026-10-08 — E-A2 one set of app names: Parent Hub, Staff Hub, IoT, AI Tutor
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (full route, one implementer and one task review per task) and `bmad-code-review`
+- **Prompt (short):** "/bmad-build spec-enh-a2-app-rename — rename PXP/SXP/LXP to Parent Hub, Staff Hub, IoT and AI Tutor with one `src/content/apps.ts`; Demo options; Sanity `post.app` values with a read-time mapping. Not one-shot."
+- **What the AI did:** Added `src/content/apps.ts` (names, badges, anchors `pxp`/`sxp`/`iot`/`ai-tutor`, taglines). Products, the header menu, the Demo form and the News tag read from it. The LXP section is gone, so `/products#lxp` lands at the top. The Demo form offers Parent Hub, Staff Hub and IoT, and the server refuses the old values. Sanity `post.app` now stores the app ids; the site maps old stored values (PXP, SXP, IoT) when it reads them, and LXP shows no app. Checked in Chrome at 1280px and 390px.
+- **Decision / result:** The menu's LXP row became AI Tutor, so the menu keeps four rows; its link lands at the top of /products until E-A5 adds the AI Tutor card (deferred-work.md). Sammy's Home, About and footer copy keeps the old names until his tasks import `apps.ts`. The lead deploys the Studio and re-picks the app on old posts after the merge (`docs/sanity.md`).
+- **AI got it wrong?** Yes, three times. The Products implementer added a `throw` that no test could reach, so diff coverage would have failed; the task review caught it. The Demo options were first typed as literal names instead of being read from `apps.ts`. The first Sanity note said the old value shows as "not in the list" before the Studio deploy, when it is after. The first browser check also measured the anchor before the page settled and reported a wrong scroll; a re-run after network idle gave the right numbers.
+
+## 2026-10-08 — E-A3 a simpler header: six plain links, no mega menus, no Book a demo
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (one-shot route) and `bmad-code-review`
+- **Prompt (short):** "E-A3 Header", Tier 1, after E-A1 and E-A2 merged; lead decisions Q8 (Book a demo leaves the header) and Q10 (no EN/VI switch before the demo).
+- **What the AI did:** Replaced the Products and Services mega menus with six plain links (Home, Products, Services, News, About, Careers) on the right. Home is current only on exactly `/`, so it is not marked on `/demo` or the 404. It removed Book a demo from the header and the mobile menu, the header border and the pill hover; the hover is now the 2px amber underline under the word, 30px apart. The mobile button is a 44px Phosphor list icon that turns into a cross, named "Menu". It wrote the UX checks and the tests first (18 failing), then checked all nine rows in Chrome at 1280px, 800px and 390px.
+- **Decision / result:** Decision T11 (hover-opened mega menus) no longer applies. Link weight stays at E-A1's 500 (the prototype's 450 was rejected there). The menu data for the four apps went with the mega menu; app names stay in `apps.ts`.
+- **AI got it wrong?** Yes, twice. It added `data-icon` attributes to the icons only so the tests could read them, which breaks the "no test-only code" rule; the four-layer review caught it. The review also found that nothing tested the `ml-auto` that keeps the Menu button on the right. Its first browser script also failed because "News" matched both the desktop and the mobile link.
+
+## 2026-10-08 — E-A5 Products: hero diagram, four showcase cards, detail dialogs
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (full route) and `bmad-code-review`
+- **Prompt (short):** "E-A5 Products", Tier 1 only, in its own worktree on top of E-A1, E-A2 and E-A7; lead decisions Q11 (the AI Tutor live address is not published, a disabled "View prototype" label) and Q14 (A day at school and Product updates stay Tier 2). The E-A2 review asked for the `#ai-tutor` card and an end to "Four apps" over three sections.
+- **What the AI did:** Ported the prototype Products page: the "Built apart. Better together." hero with the four app cards around the X tile and a Pause motion button that shares one stored setting (`xt-motion`) with the Home silk; "What we build." with four cards (`#pxp`, `#sxp`, `#iot`, `#ai-tutor`, names from `apps.ts`); one native `<dialog>` per app with `[Placeholder]` feature descriptions and disabled stand-in buttons. The old sub-nav and the three app sections went, with their tests and CSS. It wrote the UX checks table and the tests first, then checked the page in Chrome: keyboard dialog walk, all four anchors, 320px and 390px, JavaScript off and reduced motion.
+- **Decision / result:** Without JavaScript each card shows its features in a `<details>` inside `<noscript>`. The demo band keeps the current amber look until E-A4. Under reduced motion the glows stay still even after "Play motion", because the global reduced-motion rule wins (deferred-work.md).
+- **AI got it wrong?** Yes, four times:
+  - The first no-JS version hid content with CSS (`display: none`, `opacity: 0`) and used weight 600 on feature titles. The repo's "CSS hides no content" and type-scale tests caught both.
+  - The browser check found that Tab left the Staff Hub dialog for the browser toolbar. Native `showModal()` does not wrap Tab when the dialog holds only one control, so a small Tab wrap was added.
+  - The next fix showed the no-JS block until hydration and then hid it, a layout shift for every visitor. The four-layer review caught it, and the block moved into `<noscript>`.
+  - The per-task reviews were skipped after tasks 1-2 to save time (the controller implemented tasks 3-6 itself); the full review at the end still ran.
+
 ## 2026-10-08 — E-S1 Home matches the prototype (ENH-086 to ENH-088)
 
 - **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` full route

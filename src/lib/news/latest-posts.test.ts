@@ -101,8 +101,24 @@ describe("newsDate", () => {
 describe("categoryTag", () => {
   it("labels product with its app", () => {
     expect(categoryTag(post({ category: "product", app: "PXP" }))).toBe(
-      "Product · PXP",
+      "Product · Parent Hub",
     );
+  });
+
+  it("labels product with a new app id", () => {
+    expect(categoryTag(post({ category: "product", app: "staff-hub" }))).toBe(
+      "Product · Staff Hub",
+    );
+  });
+
+  it("labels product with the old IoT value", () => {
+    expect(categoryTag(post({ category: "product", app: "IoT" }))).toBe(
+      "Product · IoT",
+    );
+  });
+
+  it.each(["LXP", "CRM"])("drops the app %s from a product tag", (app) => {
+    expect(categoryTag(post({ category: "product", app }))).toBe("Product");
   });
 
   it("labels product without an app", () => {

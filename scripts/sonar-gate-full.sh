@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Daily local SonarQube gate until Demo day (2026-10-09). New code = everything
+# Daily local SonarQube gate until Demo day (2026-10-16). New code = everything
 # develop adds on top of main. Run it on an up-to-date, clean develop:
 #
 #   git switch develop && git pull && npm run sonar:gate:full
