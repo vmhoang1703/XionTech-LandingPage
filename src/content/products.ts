@@ -42,7 +42,7 @@ export const productsShowcase = {
   madeFor: "Made for",
   featuresHeading: "Features",
   viewPrototype: "[Placeholder] View prototype",
-  newTab: " (opens in a new tab)",
+  newTab: "(opens in a new tab)",
   stores: {
     appStore: { small: "[Placeholder] Download on the", name: "App Store" },
     googlePlay: { small: "[Placeholder] Get it on", name: "Google Play" },
