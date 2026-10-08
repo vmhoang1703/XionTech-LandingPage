@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { APPS, appById } from "@/content/apps";
 import {
   currentSection,
   LABELS,
@@ -70,18 +71,30 @@ describe("nav-data", () => {
       expect(PRODUCTS).toHaveLength(4);
     });
 
-    it("has products in correct order", () => {
-      expect(PRODUCTS[0].anchor).toBe("pxp");
-      expect(PRODUCTS[1].anchor).toBe("lxp");
-      expect(PRODUCTS[2].anchor).toBe("sxp");
-      expect(PRODUCTS[3].anchor).toBe("iot");
+    it("lists the apps in apps.ts order with their anchors", () => {
+      expect(PRODUCTS.map((p) => p.anchor)).toEqual(
+        APPS.map((app) => app.anchor),
+      );
     });
 
     it("has product names", () => {
-      expect(PRODUCTS[0].name).toBe("PXP");
-      expect(PRODUCTS[1].name).toBe("LXP");
-      expect(PRODUCTS[2].name).toBe("SXP");
-      expect(PRODUCTS[3].name).toBe("IoT Device Management");
+      expect(PRODUCTS.map((p) => p.name)).toEqual([
+        "Parent Hub",
+        "Staff Hub",
+        "IoT Device Management",
+        "AI Tutor",
+      ]);
+    });
+
+    it("does not use the old names in value lines", () => {
+      for (const p of PRODUCTS) {
+        expect(p.valueLine).not.toMatch(/eXperience|PXP|LXP|SXP/);
+      }
+    });
+
+    it("shows the AI Tutor row for students", () => {
+      expect(PRODUCTS[3].forLine).toBe("Students");
+      expect(PRODUCTS[3].valueLine).toBe(appById("ai-tutor").tagline);
     });
   });
 

@@ -3,6 +3,8 @@
  * Single source of truth for all navigation content (Story 1.2 translates from here).
  */
 
+import { APPS, appById, type AppId } from "@/content/apps";
+
 export interface Product {
   anchor: string;
   name: string;
@@ -50,35 +52,31 @@ export const LABELS: NavLabels = {
   menu: "Menu",
 };
 
-// Products (4 total, in order)
-export const PRODUCTS: Product[] = [
-  {
-    anchor: "pxp",
-    name: "PXP",
-    valueLine:
-      "Parent eXperience Place. The school day in every parent's pocket.",
+// Products (4 total, in apps.ts order). Names and anchors come from apps.ts.
+const PRODUCT_LINES: Record<AppId, { valueLine: string; forLine: string }> = {
+  "parent-hub": {
+    valueLine: "The school day in every parent's pocket.",
     forLine: "Parents",
   },
-  {
-    anchor: "lxp",
-    name: "LXP",
-    valueLine:
-      "Learner eXperience Place. Lessons, tasks and progress for students.",
-    forLine: "Students",
-  },
-  {
-    anchor: "sxp",
-    name: "SXP",
-    valueLine: "Staff eXperience Place. One workspace, role-based views.",
+  "staff-hub": {
+    valueLine: "One workspace, role-based views.",
     forLine: "Staff, Teachers, Leaders",
   },
-  {
-    anchor: "iot",
-    name: "IoT Device Management",
+  iot: {
     valueLine: "Control campus devices from one screen.",
     forLine: "School staff and facilities",
   },
-];
+  "ai-tutor": {
+    valueLine: appById("ai-tutor").tagline,
+    forLine: "Students",
+  },
+};
+
+export const PRODUCTS: Product[] = APPS.map((app) => ({
+  anchor: app.anchor,
+  name: app.fullName,
+  ...PRODUCT_LINES[app.id],
+}));
 
 // Services (8 total, in order)
 export const SERVICES: Service[] = [
