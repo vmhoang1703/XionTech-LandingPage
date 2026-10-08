@@ -327,3 +327,13 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
   summary: Planning docs still describe the old header: `EXPERIENCE.md` (Mega menu; Book a demo first in the mobile menu at 640px and below), AC-NAV-2/AC-NAV-3 in the PRD and `epics.md`, and the example rows in `docs/ux-checks.md`. Amber owns them; update after the decision Q8 and the T11 change.
   evidence: E-A3 review (blind hunter). Planning docs are Amber's (team roles); the fix edits other specs.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
+  summary: On /products under prefers-reduced-motion, "Play motion" saves the choice but the hero glows stay still, because the global reduced-motion rule (`animation: none !important` in the base layer) wins over any later rule.
+  evidence: E-A5 review (verification gap). Fix needs a design call: either hide the Pause/Play button under reduced motion, or move the glows to a JS animation like the Home silk.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
+  summary: The footer (`src/content/site-footer.ts`) and the Home app bento (`lxp` tile) still link `/products#lxp`, which has no card; they land at the top of /products.
+  evidence: E-A5 review (verification gap). Pre-existing since E-A2 removed the LXP section; Sammy's files. Point them at `#ai-tutor` or drop them.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
+  summary: E-A5 Tier 2 parts stay out: A day at school (ENH-015, ENH-023, ENH-050, ENH-051), Product updates (ENH-024, ENH-042) and the page-long background flow (ENH-022); also the hero glows do not pause when off screen.
+  evidence: Spec Non-goals (Q14); prototype site.js pauses the glows off screen (`is-off`), not ported.
