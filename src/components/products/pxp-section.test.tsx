@@ -16,7 +16,7 @@ describe("PxpSection", () => {
     expect(h2.id).toBe("pxp-h");
     expect(h2.textContent).toBe("The school day, in a parent's pocket.");
     expect(screen.getByText(pxpSection.lede)).toBeDefined();
-    expect(screen.getByText("PXP").classList.contains("b-pxp")).toBe(true);
+    expect(screen.getByText("P-Hub").classList.contains("b-pxp")).toBe(true);
   });
 
   it("keeps the phone before the text in the markup, as in the mockup", () => {
@@ -34,7 +34,7 @@ describe("PxpSection", () => {
     expect(screen.getAllByRole("tab")).toHaveLength(5);
   });
 
-  it("lists the four PXP features", () => {
+  it("lists the four Parent Hub features", () => {
     const { container } = render(<PxpSection />);
     const items = container.querySelectorAll(".feature-list > div");
     expect([...items].map((i) => i.querySelector("b")?.textContent)).toEqual([

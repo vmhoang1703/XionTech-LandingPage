@@ -297,3 +297,18 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a7-careers.md`
   summary: E-A7 CAP-7 (job page has no sideways scroll from 320px to 1440px) is checked only by a hand-run browser walk; add a Playwright check (`scrollWidth <= clientWidth` at 320px on `/careers/<slug>`) when a browser e2e project runs per PR.
   evidence: Verification-gap and acceptance layers, 2026-10-08. The walk passed at 320/360/390/768/1024/1280/1440px.
+
+## Deferred from: code review of spec-enh-a2-app-rename (2026-10-08)
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: The header Products menu row "AI Tutor" and a news post with app `ai-tutor` link to `/products#ai-tutor`, which has no section until E-A5 adds the AI Tutor card (`id="ai-tutor"`); E-A5 must add that id.
+  evidence: E-A2 review (edge-case, blind, verification-gap, acceptance layers). Today the link lands at the top of /products, no error. No AI Tutor post exists until the Studio is deployed.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: Home, About and the footer still say PXP, LXP and SXP, and the footer links `/products#lxp` (lands at the top of /products); Sammy's E-S1, E-S3 and E-S4 switch them to `src/content/apps.ts`.
+  evidence: E-A2 review; out of scope by the E-A2 spec (Sammy's files). Grep `PXP|SXP|LXP` in `src/content/home.ts`, `about.ts`, `site-footer.ts`, `src/components/home/`.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: The /products hero still says "Four apps. One connected school." and its lede names AI Tutor, but the page shows three app sections until E-A5 replaces the hero and adds the AI Tutor card.
+  evidence: E-A2 review (blind hunter). E-A5 CAP-1 replaces the hero with "Built apart. Better together."
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
+  summary: After deploy, a browser tab still holding the old Demo page sends products ["PXP", ...] and gets a 400; reloading fixes it.
+  evidence: E-A2 review (edge-case hunter); low, only during the deploy window.

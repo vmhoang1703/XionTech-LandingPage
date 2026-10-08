@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { HeroArt } from "@/components/sections/hero-art";
 import { newsMeta, newsStory } from "@/content/news";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
-import { getPost, productAnchor, type StoryBlock } from "@/lib/news/post";
+import { getPost, productLink, type StoryBlock } from "@/lib/news/post";
 
 type StoryProps = Readonly<PageProps<"/news/[slug]">>;
 
@@ -50,8 +50,7 @@ export default async function StoryPage({ params }: StoryProps) {
   const tag = categoryTag(story);
   // Only a Product story links to an app: Sanity keeps a hidden app value
   // when the editor changes the category (the tag ignores it too).
-  const product =
-    story.category === "product" ? productAnchor(story.app) : null;
+  const product = story.category === "product" ? productLink(story.app) : null;
   const { breadcrumbLabel, breadcrumbHome, breadcrumbNews, backToNews } =
     newsStory;
 
@@ -94,9 +93,9 @@ export default async function StoryPage({ params }: StoryProps) {
           <div className="home-media story-media" aria-hidden="true" />
           <StoryBody blocks={story.body ?? []} excerpt={story.excerpt} />
           <div className="mt-9 flex flex-wrap gap-3">
-            {product && story.app ? (
-              <Link className="btn btn-glass" href={product}>
-                <span>{newsStory.seeApp(story.app)}</span>
+            {product ? (
+              <Link className="btn btn-glass" href={product.href}>
+                <span>{newsStory.seeApp(product.label)}</span>
                 <ArrowRightIcon aria-hidden="true" />
               </Link>
             ) : null}

@@ -2999,7 +2999,7 @@
   }
 
   /*
-    Products web app sections LXP, SXP, IoT (Story 4.3), ported from the
+    Products web app sections Staff Hub and IoT (Story 4.3), ported from the
     prototype site.css. Reuses the badges, chips, linen, grid, service cards
     and the empty media frame from Home.
   */
@@ -3056,12 +3056,6 @@
     }
   }
 
-  @media (width >= --theme(--breakpoint-lg)) {
-    .feature-list-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
   /* The frame comes first in the markup; below md it moves under the text */
   @media (width < --theme(--breakpoint-md)) {
     .split-media-first > .browser {
@@ -3069,7 +3063,7 @@
     }
   }
 
-  /* Items are li (LXP, SXP, IoT) or div (PXP, Story 4.2) */
+  /* Items are li (Staff Hub, IoT) or div (Parent Hub, Story 4.2) */
   .feature-list li,
   .feature-list > div {
     display: flex;

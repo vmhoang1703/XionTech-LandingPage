@@ -30,11 +30,11 @@ afterEach(() => {
 
 const story: NewsStory = {
   slug: "pxp-day",
-  title: "PXP: the school day",
+  title: "Parent Hub: the school day",
   excerpt: "Alerts and payments in one app.",
   publishedAt: "2026-10-04T03:00:00.000Z",
   category: "product",
-  app: "PXP",
+  app: "parent-hub",
   body: [
     { style: "normal", text: "First paragraph." },
     { style: "h2", text: "A subheading" },
@@ -54,7 +54,7 @@ async function renderPage(found: NewsStory | null = story) {
 }
 
 describe("StoryPage", () => {
-  it("renders crumbs, H1, mono date and tag, the frame, the body, See PXP and Back to News, with no capture band", async () => {
+  it("renders crumbs, H1, mono date and tag, the frame, the body, See Parent Hub and Back to News, with no capture band", async () => {
     const { container } = await renderPage();
 
     const crumbs = screen.getByRole("navigation", { name: "Breadcrumb" });
@@ -75,7 +75,9 @@ describe("StoryPage", () => {
     const time = container.querySelector("time");
     expect(time?.getAttribute("datetime")).toBe(story.publishedAt);
     expect(time?.textContent).toBe("4 OCT 2026");
-    expect(screen.getByText("Product · PXP").className).toBe("cat product");
+    expect(screen.getByText("Product · Parent Hub").className).toBe(
+      "cat product",
+    );
     expect(
       container.querySelector(".story-media")?.getAttribute("aria-hidden"),
     ).toBe("true");
@@ -89,7 +91,7 @@ describe("StoryPage", () => {
     ).toBeTruthy();
 
     expect(
-      screen.getByRole("link", { name: "See PXP" }).getAttribute("href"),
+      screen.getByRole("link", { name: "See Parent Hub" }).getAttribute("href"),
     ).toBe("/products#pxp");
     expect(
       screen.getByRole("link", { name: "Back to News" }).getAttribute("href"),
@@ -107,7 +109,7 @@ describe("StoryPage", () => {
   });
 
   it("shows no product link when the category is not Product, even with an app left over", async () => {
-    await renderPage({ ...story, category: "company", app: "PXP" });
+    await renderPage({ ...story, category: "company", app: "parent-hub" });
 
     expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
     expect(screen.getByText("Company").className).toBe("cat");
@@ -159,7 +161,7 @@ describe("generateMetadata", () => {
   it("gives each story its own title and the excerpt as description", async () => {
     vi.mocked(getPost).mockResolvedValue(story);
     await expect(generateMetadata(props("pxp-day"))).resolves.toEqual({
-      title: "PXP: the school day | XionTech",
+      title: "Parent Hub: the school day | XionTech",
       description: "Alerts and payments in one app.",
     });
   });

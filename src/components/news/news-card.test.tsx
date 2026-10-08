@@ -7,7 +7,7 @@ vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
 
 const post: LatestPost = {
   slug: "pxp-launch",
-  title: "PXP launches",
+  title: "Parent Hub launches",
   excerpt: "A short summary.",
   publishedAt: "2026-09-18T03:00:00.000Z",
   category: "team",
@@ -23,10 +23,12 @@ describe("NewsCard", () => {
     expect(time?.textContent).toBe("18 SEP 2026");
     expect(screen.getByText("Team").className).toBe("cat");
     expect(
-      screen.getByRole("heading", { level: 3, name: "PXP launches" }),
+      screen.getByRole("heading", { level: 3, name: "Parent Hub launches" }),
     ).toBeTruthy();
     expect(screen.getByText("A short summary.")).toBeTruthy();
-    const link = screen.getByRole("link", { name: "Read story PXP launches" });
+    const link = screen.getByRole("link", {
+      name: "Read story Parent Hub launches",
+    });
     expect(link.getAttribute("href")).toBe("/news/pxp-launch");
     expect(container.querySelector("[aria-hidden='true']")).not.toBeNull();
   });
@@ -46,15 +48,19 @@ describe("NewsCard", () => {
 
     expect(
       screen
-        .getByRole("link", { name: "Read story PXP launches" })
+        .getByRole("link", { name: "Read story Parent Hub launches" })
         .getAttribute("href"),
     ).toBe("/news/a%2Fb%3Fc");
   });
 
   it("marks a product tag with the amber class", () => {
-    render(<NewsCard post={{ ...post, category: "product", app: "PXP" }} />);
+    render(
+      <NewsCard post={{ ...post, category: "product", app: "parent-hub" }} />,
+    );
 
-    expect(screen.getByText("Product · PXP").className).toBe("cat product");
+    expect(screen.getByText("Product · Parent Hub").className).toBe(
+      "cat product",
+    );
   });
 
   it("leaves out the tag and the excerpt when they are missing", () => {
