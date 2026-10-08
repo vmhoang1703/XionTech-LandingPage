@@ -9,7 +9,7 @@ const { sanityFetchMock, getAllPostsMock } = vi.hoisted(() => ({
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: sanityFetchMock }));
 vi.mock("./all-posts", () => ({ getAllPosts: getAllPostsMock }));
 
-import { getPost, productAnchor } from "./post";
+import { getPost, productLink } from "./post";
 
 const listed = [
   { slug: "a", title: "A", publishedAt: "2026-10-04" },
@@ -61,14 +61,29 @@ describe("getPost", () => {
   });
 });
 
-describe("productAnchor", () => {
-  it("maps each app to its Products section and leaves others out", () => {
-    expect(productAnchor("PXP")).toBe("/products#pxp");
-    expect(productAnchor("LXP")).toBe("/products#lxp");
-    expect(productAnchor("SXP")).toBe("/products#sxp");
-    expect(productAnchor("IoT")).toBe("/products#iot");
-    expect(productAnchor("CRM")).toBeNull();
-    expect(productAnchor(null)).toBeNull();
-    expect(productAnchor(undefined)).toBeNull();
+describe("productLink", () => {
+  it("links a new app id to its Products section", () => {
+    expect(productLink("staff-hub")).toEqual({
+      href: "/products#sxp",
+      label: "Staff Hub",
+    });
+  });
+
+  it("links an old value to the renamed app", () => {
+    expect(productLink("PXP")).toEqual({
+      href: "/products#pxp",
+      label: "Parent Hub",
+    });
+    expect(productLink("IoT")).toEqual({
+      href: "/products#iot",
+      label: "IoT",
+    });
+  });
+
+  it("gives no link for LXP, unknown, null or missing", () => {
+    expect(productLink("LXP")).toBeNull();
+    expect(productLink("CRM")).toBeNull();
+    expect(productLink(null)).toBeNull();
+    expect(productLink(undefined)).toBeNull();
   });
 });

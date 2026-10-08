@@ -1,4 +1,5 @@
 import { categoryLabels } from "@/content/news";
+import { postApp } from "@/lib/news/post-app";
 import { sanityFetch } from "@/lib/sanity/client";
 
 export type LatestPost = {
@@ -51,5 +52,6 @@ export function categoryTag({ category, app }: LatestPost): string | null {
       ? categoryLabels[category]
       : undefined;
   if (!label) return null;
-  return category === "product" && app ? `${label} · ${app}` : label;
+  const shown = category === "product" ? postApp(app) : null;
+  return shown ? `${label} · ${shown.shortName}` : label;
 }

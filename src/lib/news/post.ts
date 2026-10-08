@@ -1,5 +1,6 @@
 import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
+import { postApp } from "@/lib/news/post-app";
 import { sanityFetch } from "@/lib/sanity/client";
 
 export type StoryBlock = { style?: string | null; text?: string | null };
@@ -33,14 +34,12 @@ export async function getPost(slug: string): Promise<NewsStory | null> {
   });
 }
 
-const PRODUCT_ANCHORS = new Map([
-  ["PXP", "/products#pxp"],
-  ["LXP", "/products#lxp"],
-  ["SXP", "/products#sxp"],
-  ["IoT", "/products#iot"],
-]);
-
 /** The Products section of a story's app, or null when it has none. */
-export function productAnchor(app?: string | null): string | null {
-  return (app && PRODUCT_ANCHORS.get(app)) ?? null;
+export function productLink(
+  app?: string | null,
+): { href: string; label: string } | null {
+  const shown = postApp(app);
+  return shown
+    ? { href: `/products#${shown.anchor}`, label: shown.shortName }
+    : null;
 }

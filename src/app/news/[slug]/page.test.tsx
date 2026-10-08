@@ -75,7 +75,9 @@ describe("StoryPage", () => {
     const time = container.querySelector("time");
     expect(time?.getAttribute("datetime")).toBe(story.publishedAt);
     expect(time?.textContent).toBe("4 OCT 2026");
-    expect(screen.getByText("Product · PXP").className).toBe("cat product");
+    expect(screen.getByText("Product · Parent Hub").className).toBe(
+      "cat product",
+    );
     expect(
       container.querySelector(".story-media")?.getAttribute("aria-hidden"),
     ).toBe("true");
@@ -89,7 +91,7 @@ describe("StoryPage", () => {
     ).toBeTruthy();
 
     expect(
-      screen.getByRole("link", { name: "See PXP" }).getAttribute("href"),
+      screen.getByRole("link", { name: "See Parent Hub" }).getAttribute("href"),
     ).toBe("/products#pxp");
     expect(
       screen.getByRole("link", { name: "Back to News" }).getAttribute("href"),
