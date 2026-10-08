@@ -1,0 +1,15 @@
+news 1280 {"title":"News | XionTech","h1":"Catch up with us","sub":"Stay informed with the latest news and announcements, fresh off the press.","crumbs":0,"sample":"Stories from the newXion newsroom; those marked [Placeholder] are samples.","chips":["All:44","Schools:44","Students:44","Parents:44","Company:44"],"cols":"384px 384px 384px","cells":["-:384x384","-:384x384","-:384x384"],"pills":["Parents","Schools","Company"],"dates":["4 Oct 2026","4 Oct 2026","4 Oct 2026"],"band":"See it working at your school.","scrollW":1280}
+hover read opacity 1
+focus outline solid
+filter Schools {"pressed":["Schools"],"pills":["Schools"],"lead":1,"empty":null,"count":"Showing 1 story"}
+filter Students {"pressed":["Students"],"pills":[],"lead":0,"empty":"No stories are available in this category yet.","count":"Showing 0 stories"}
+after Show all focus All
+filter Parents {"pressed":["Parents"],"pills":["Parents"],"lead":1,"empty":null,"count":"Showing 1 story"}
+filter Company {"pressed":["Company"],"pills":["Company"],"lead":1,"empty":null,"count":"Showing 1 story"}
+after resize 900 cells ["s-lead","-","-"]
+news 900 {"title":"News | XionTech","h1":"Catch up with us","sub":"Stay informed with the latest news and announcements, fresh off the press.","crumbs":0,"sample":"Stories from the newXion newsroom; those marked [Placeholder] are samples.","chips":["All:44","Schools:44","Students:44","Parents:44","Company:44"],"cols":"416px 416px","cells":["s-lead:852x380","-:416x416","-:416x416"],"pills":["Parents","Schools","Company"],"dates":["4 Oct 2026","4 Oct 2026","4 Oct 2026"],"band":"See it working at your school.","scrollW":900}
+news 390 {"title":"News | XionTech","h1":"Catch up with us","sub":"Stay informed with the latest news and announcements, fresh off the press.","crumbs":0,"sample":"Stories from the newXion newsroom; those marked [Placeholder] are samples.","chips":["All:44","Schools:44","Students:44","Parents:44","Company:44"],"cols":"358px","cells":["s-lead:358x380","-:358x358","-:358x358"],"pills":["Parents","Schools","Company"],"dates":["4 Oct 2026","4 Oct 2026","4 Oct 2026"],"band":"See it working at your school.","scrollW":390}
+home 1280 {"h2":"Latest from XionTech.","lede":"Catch up with what our team is building and shipping.","seeAll":"top 71 left 1116","cards":3}
+home 390 {"h2":"Latest from XionTech.","lede":"Catch up with what our team is building and shipping.","seeAll":"top 118 left 16","cards":3}
+story 1280 200 {"back":"Back to News","pill":"Parents","date":"4 Oct 2026","h1":"PXP: the school day, in a parent's pocket","dek":"Arrival alerts, early progress, messages with teachers and f","img":null,"crumbs":0,"seeApp":1,"h2s":0,"sample":null,"band":0}
+story 390 200 {"back":"Back to News","pill":"Parents","date":"4 Oct 2026","h1":"PXP: the school day, in a parent's pocket","dek":"Arrival alerts, early progress, messages with teachers and f","img":null,"crumbs":0,"seeApp":1,"h2s":0,"sample":null,"band":0}

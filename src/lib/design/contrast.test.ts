@@ -508,8 +508,17 @@ describe("reduced motion", () => {
 
 // Rules allowed to hide content: the HTML `hidden` attribute (also on the
 // contact form tabpanels), and the skip link, which shows on keyboard focus
-// with no JavaScript.
-const MAY_HIDE = new Set(["[hidden]", ".fpanel[hidden]", ".skip"]);
+// with no JavaScript. The News story card (E-A6) swaps its aria-hidden "Read
+// story" for the pill and date on hover and focus with no JavaScript, and
+// always shows "Read story" on touch screens.
+const MAY_HIDE = new Set([
+  "[hidden]",
+  ".fpanel[hidden]",
+  ".skip",
+  ".scard-read",
+  ".scard:hover .scard-meta",
+  ".scard:focus-visible .scard-meta",
+]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],
   ["visibility", /^(?:hidden|collapse)\b/],
@@ -785,9 +794,13 @@ describe("contact form styles", () => {
     expect(rule.get("text-align")).toBe("center");
   });
 
-  it("draws the thank-you icon in navy, which passes the non-text 3:1 on the paper card", () => {
-    const rule = readRuleDeclarations(source, ".form-ok svg");
-    expect(rule.get("color")).toBe("var(--color-navy)");
+  it("draws the summit and its pole in navy, which passes the non-text 3:1 on the paper card", () => {
+    expect(readRuleDeclarations(source, ".sm-range").get("stroke")).toBe(
+      "var(--color-navy)",
+    );
+    expect(readRuleDeclarations(source, ".sm-pole").get("stroke")).toBe(
+      "var(--color-navy)",
+    );
     expect(contrastRatio(colors.navy, colors.paper)).toBeGreaterThanOrEqual(
       NON_TEXT,
     );

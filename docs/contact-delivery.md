@@ -69,7 +69,7 @@ The route runs these steps in order. It stops at the first one that fails.
 
 | Step | Check                                                                                                                                     | Answer                                   |
 | ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 1    | Body is not a JSON object, or `type` is not `demo`, `project` or `capture`                                                                | 400 `{ "error": "send" }`                |
+| 1    | Body is not a JSON object, or `type` is not `demo`, `project`, `capture` or `general`                                                     | 400 `{ "error": "send" }`                |
 | 2    | Honeypot field `website` is not empty                                                                                                     | 200 `{ "ok": true }`. Nothing else runs. |
 | 3    | Role is over 200 characters, or a select or products value is not an option in the form. For a capture: `kind` is not `demo` or `project` | 400 `{ "error": "send" }`                |
 | 4    | One of the five variables is not set                                                                                                      | 500 `{ "error": "send" }`                |
@@ -205,3 +205,13 @@ What would force a paid plan:
 - If Upstash refuses the calls, the route fails open. Mail still goes out, but the rate limit stops working until the limit resets or the plan changes.
 
 We did not check what Upstash does exactly at its limit. Check this before Demo day. The numbers can change, so read the Gmail and Upstash pricing pages again before Demo day.
+
+## General messages
+
+The Home contact form (`#contact`, `src/components/contact/home-contact.tsx`) posts to the same `POST /api/contact`. The body is `{ "type": "general", "name": "...", "email": "...", "phone": "...", "message": "...", "website": "" }`. The phone is optional.
+
+- The route runs the steps in the table above, except step 3: a general message has no role, select or product fields. `org`, `role`, `date` and any other field are ignored.
+- Field rules (the same in the browser and on the server): name required, at most 200 characters; a valid email; message required, at most 2,000 characters; phone empty, or 7 to 15 digits with an optional leading `+` and spaces, dots, dashes or brackets. A bad field gets 400 `{ "errors": { field: text } }`.
+- The honeypot, the config check and both rate limits are the same as for the other types.
+- The subject is "Contact message: <name>". CR and LF are removed from it.
+- The body has these lines: `Name`, `Email`, `Phone`, an empty line, `Message:` and the message. With no phone, the `Phone:` line is empty. Reply-To is the visitor's email.

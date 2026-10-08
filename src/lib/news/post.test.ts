@@ -9,7 +9,7 @@ const { sanityFetchMock, getAllPostsMock } = vi.hoisted(() => ({
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: sanityFetchMock }));
 vi.mock("./all-posts", () => ({ getAllPosts: getAllPostsMock }));
 
-import { getPost, productLink } from "./post";
+import { getPost } from "./post";
 
 const listed = [
   { slug: "a", title: "A", publishedAt: "2026-10-04" },
@@ -47,6 +47,8 @@ describe("getPost", () => {
       "publishedAt",
       "category",
       "app",
+      '"image": image.asset->url',
+      "alt",
       '"body": body.en[_type == "block"]',
       '"text": pt::text(@)',
       "style",
@@ -58,32 +60,5 @@ describe("getPost", () => {
   it("returns null when the story is gone between the list and the fetch", async () => {
     sanityFetchMock.mockResolvedValue(null);
     await expect(getPost("a")).resolves.toBeNull();
-  });
-});
-
-describe("productLink", () => {
-  it("links a new app id to its Products section", () => {
-    expect(productLink("staff-hub")).toEqual({
-      href: "/products#sxp",
-      label: "Staff Hub",
-    });
-  });
-
-  it("links an old value to the renamed app", () => {
-    expect(productLink("PXP")).toEqual({
-      href: "/products#pxp",
-      label: "Parent Hub",
-    });
-    expect(productLink("IoT")).toEqual({
-      href: "/products#iot",
-      label: "IoT",
-    });
-  });
-
-  it("gives no link for LXP, unknown, null or missing", () => {
-    expect(productLink("LXP")).toBeNull();
-    expect(productLink("CRM")).toBeNull();
-    expect(productLink(null)).toBeNull();
-    expect(productLink(undefined)).toBeNull();
   });
 });

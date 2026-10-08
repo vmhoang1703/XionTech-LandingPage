@@ -17,7 +17,7 @@ export default function ProductsPage() {
     <>
       <ProductsHero />
       <ProductShowcase />
-      <CaptureBand kind="demo" />
+      <CaptureBand kind="demo" look="navy" />
     </>
   );
 }

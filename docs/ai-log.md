@@ -1313,6 +1313,26 @@ Template:
   - The next fix showed the no-JS block until hydration and then hid it, a layout shift for every visitor. The four-layer review caught it, and the block moved into `<noscript>`.
   - The per-task reviews were skipped after tasks 1-2 to save time (the controller implemented tasks 3-6 itself); the full review at the end still ran.
 
+## 2026-10-08 — E-A6 News by audience, photo cards, Home news row and story page
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (full route, three tasks, one implementer and one task review each) and `bmad-code-review` (four layers, once)
+- **Prompt (short):** "/bmad-build spec-enh-a6-news-story — News audience filters (category to audience with a defined mapping; post.app always visible), full-photo cards with a lead story, Home news row, story page header and photo (Sanity post image + required alt). UI task: UX checks table before coding."
+- **What the AI did:** Added `postAudience` (Schools, Students, Parents, Company; `team` → Company, `product` follows its app). Ported the prototype's full-photo card (one link, pills on top, title on a dark fade, "Read story" on hover, focus and touch), the lead story rule (recalculated on filter change and resize, 3 columns without JavaScript), the "Catch up with us" hero, the sample note, the empty state, the Home row lede and "See all news" on the heading row, and the story page (Back to News, pill and date, summary, 440px photo only with alt text, sample note). Sanity `post` got `image` and `alt` (alt required with a photo); `app` always shows. Dates read "31 Jul 2026". Checked in Chrome at 1280, 900 and 390px.
+- **Decision / result:** No photo files in the repo: photos go into Sanity with a known source. News keeps the current demo band until E-A4's plain look merges. Old `product`/`team` posts are mapped when read; the lead re-picks them after the Studio deploy (`docs/sanity.md`). Card motion is Tier 2.
+- **AI got it wrong?** Yes, three times. The ported card dropped the story heading (the prototype uses a span), so screen-reader users lost heading navigation; the review caught it and the title is an h3 again. The schema turned on the image hotspot, but no code read it, so an editor's focal point would have done nothing; removed after review. The ported Home row could not hide its third card at tablet width like the prototype, because the repo's "CSS hides no content" test forbids it; it is listed in deferred-work.md for Amber.
+
+## 2026-10-08 — E-A4 Home contact form, plain email bands, "Summit reached."
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (full route, one implementer and one task review per task) and its five-layer review
+- **Prompt (short):** "/bmad-build spec-enh-a4-forms-bands", built in its own worktree on `develop` after E-A1, E-A2 and E-A7 merged; lead decisions Q3 (`/api/contact` gets a type `general`), Q4 (newsletter after the demo) and Q13 (keep the consent line).
+- **What the AI did:** Added the `general` type to the contact rules, the parser and the mail (name, email, optional phone, message; same honeypot and rate limits). Ported the prototype's `#contact` section as Home's last section, in place of the email band. Added the summit-and-flag success to the Home, Demo and job forms. Gave `CaptureBand` an optional `look` prop (`white`, `page`, `navy`; no look keeps the amber band); About uses white and News uses page. Checked it in Chrome on `next start` with `POST /api/contact` intercepted, so no mail was sent.
+- **Decision / result:** The prototype phone rule rejects its own placeholder "(+1) 469 322 9899", so `+` is also allowed inside the number; 7 to 15 digits still bound it. The navy look waits for E-A5 to be seen on a page.
+- **AI got it wrong?** Yes, four times:
+  - The e2e implementer added the new smoke check but left the old "See it working at your school." line, so smoke would have failed on Home. The controller caught it in the diff.
+  - Two CSS rules tripped the repo's "CSS hides no content" test: `display: none` on the plain band's rings and an `opacity: 0` first frame for the flag. The full suite caught them, not the per-task tests.
+  - The first phone rule allowed any whitespace, so a line break could split the mail line. The privacy text did not list the new phone field, and the Home honeypot had no test. The five-layer review caught all three.
+  - The second browser walk first ran against a stale server still holding port 3204 and reported a wrong "Sending..." state. A re-run on a fresh server gave the right result.
+
 ## 2026-10-08 — E-S1 Home matches the prototype (ENH-086 to ENH-088)
 
 - **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` full route

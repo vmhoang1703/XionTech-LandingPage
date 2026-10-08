@@ -72,7 +72,7 @@ describe("Home page", () => {
     expect(screen.queryByRole("main")).toBeNull();
   });
 
-  it("orders hero, Capabilities, core values, How we approach, news, capture band", () => {
+  it("orders hero, Capabilities, core values, How we approach, news, contact", () => {
     const { container } = render(<Home />);
 
     expect(sectionNames(container)).toEqual([
@@ -81,11 +81,11 @@ describe("Home page", () => {
       "Our core values.",
       "How we approach.",
       "Latest from XionTech.",
-      "See it working at your school.",
+      "Have something you want to build?",
     ]);
   });
 
-  it("puts Capabilities, values and the process on one flowing surface, not news or capture", () => {
+  it("puts Capabilities, values and the process on one flowing surface, not news or contact", () => {
     render(<Home />);
 
     const flow = screen
@@ -112,13 +112,34 @@ describe("Home page", () => {
     expect(document.querySelector(".bento, .svc-grid")).toBeNull();
   });
 
-  it("keeps the demo capture band last", () => {
+  it("ends with the contact section and no capture band", () => {
     const { container } = render(<Home />);
 
-    const band = screen
-      .getByRole("heading", { name: "See it working at your school." })
+    const contact = screen
+      .getByRole("heading", { name: "Have something you want to build?" })
       .closest("section");
-    expect(container.lastElementChild).toBe(band);
-    expect(screen.getByRole("button", { name: "Book a demo" })).toBeDefined();
+    expect(container.lastElementChild).toBe(contact);
+    expect(contact?.id).toBe("contact");
+    expect(container.firstElementChild?.getAttribute("aria-labelledby")).toBe(
+      "home-hero-title",
+    );
+    const hrefs = Array.from(contact?.querySelectorAll("a") ?? []).map((a) =>
+      a.getAttribute("href"),
+    );
+    expect(hrefs).toEqual(
+      expect.arrayContaining([
+        "mailto:vinni.tran@newxion.com",
+        "tel:+14693229899",
+        "tel:+84908107552",
+      ]),
+    );
+    expect(contact?.textContent).toContain("Plano +1 469 322 9899");
+    expect(contact?.textContent).toContain("Ho Chi Minh City +84 908 107 552");
+    expect(
+      screen.getByRole("button", { name: "Start the conversation" }),
+    ).toBeDefined();
+    expect(
+      screen.queryByRole("heading", { name: "See it working at your school." }),
+    ).toBeNull();
   });
 });

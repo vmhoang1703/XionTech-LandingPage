@@ -338,6 +338,34 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
   summary: E-A5 Tier 2 parts stay out: A day at school (ENH-015, ENH-023, ENH-050, ENH-051), Product updates (ENH-024, ENH-042) and the page-long background flow (ENH-022); also the hero glows do not pause when off screen.
   evidence: Spec Non-goals (Q14); prototype site.js pauses the glows off screen (`is-off`), not ported.
 
+## Deferred from: code review of spec-enh-a6-news-story (2026-10-08)
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
+  summary: News keeps the current demo `CaptureBand` look; switch it to E-A4's plain light blue look (CAP-8) in a follow-up once E-A4 merges.
+  evidence: Soft dependency on E-A4 (built in parallel); lead decision Q4.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
+  summary: Old Sanity posts with category `product` or `team` show as "not in the list" in the new Studio; the lead re-picks the audience after the Studio deploy (`docs/sanity.md`). The site maps them at read time until then.
+  evidence: Edge-case and blind layers; a content migration is not allowed in this build.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
+  summary: The photo projection (`"image": image.asset->url`) is tested only as query text; once a post has a photo, check the card and story photo on the preview, or add a recorded Sanity fixture.
+  evidence: medium, unverified live: no Sanity post has a photo yet (verification-gap layer).
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
+  summary: The News lead is decided for 3 columns on the server, so on phones and tablets the first card can change from lead to square after hydration (a small layout shift).
+  evidence: low; same as the prototype's JS; spec asks for the desktop layout without JavaScript.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
+  summary: The Home news row's third card sits alone on a second row at 641-1000px; the prototype hides it, but `contrast.test.ts` forbids `display: none` on content.
+  evidence: low; decide with Amber after the demo (hide by a rule the test allows, or keep).
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
+  summary: Post `alt` is a plain string, not `localized(...)` like title and excerpt; make it translatable with Story 1.2.
+  evidence: low; blind hunter.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
+  summary: Tier 2 (after the demo): card motion (cards unfold one by one on scroll and on each filter, reduced motion supported, ENH-063) and the rising hero words.
+  evidence: SPEC.md non-goals; lead decision (Tier 1 only).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a4-forms-bands.md`
+  summary: The Home contact form, the Demo form and the job form each carry their own copy of the field-error, live-region and focus code; a shared hook would stop them drifting apart.
+  evidence: E-A4 review (blind hunter); `home-contact-form.tsx`, `contact-form.tsx`, `job-application-form.tsx`. Low, after the demo.
+
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-s1-home.md`
   summary: The Home "+3" industries list renders open in the server HTML and collapses on hydration, a small below-the-fold layout shift on every load.
   evidence: `src/components/home/more-industries.tsx` sets `shown = !hydrated || …` so the list is readable without JavaScript (required by `src/lib/design/contrast.test.ts` and the spec's no-JS row); a `@media (scripting: none)` rule could open it without the flash but must avoid the hidden-content patterns that test rejects.

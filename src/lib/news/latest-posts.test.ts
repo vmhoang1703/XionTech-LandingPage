@@ -62,7 +62,8 @@ describe("getLatestPosts", () => {
     ]) {
       expect(projection).toContain(line);
     }
-    for (const field of ["publishedAt", "category", "app"]) {
+    expect(projection).toContain('"image": image.asset->url');
+    for (const field of ["publishedAt", "category", "app", "alt"]) {
       expect(projection).toMatch(
         new RegExp(String.raw`[,{]\s*${field}\s*[,}]`),
       );
@@ -89,48 +90,28 @@ describe("newsDate", () => {
     expect(newsDate("not a date")).toBe("");
   });
 
-  it("formats as day, upper-case month and year", () => {
-    expect(newsDate("2026-09-18T03:00:00Z")).toBe("18 SEP 2026");
+  it("formats as day, month and year, not in capitals", () => {
+    expect(newsDate("2026-07-31T03:00:00Z")).toBe("31 Jul 2026");
   });
 
   it("uses Ho Chi Minh time, not UTC", () => {
-    expect(newsDate("2026-09-17T20:00:00Z")).toBe("18 SEP 2026");
+    expect(newsDate("2026-09-17T20:00:00Z")).toBe("18 Sep 2026");
   });
 });
 
 describe("categoryTag", () => {
-  it("labels product with its app", () => {
-    expect(categoryTag(post({ category: "product", app: "PXP" }))).toBe(
-      "Product · Parent Hub",
-    );
-  });
-
-  it("labels product with a new app id", () => {
-    expect(categoryTag(post({ category: "product", app: "staff-hub" }))).toBe(
-      "Product · Staff Hub",
-    );
-  });
-
-  it("labels product with the old IoT value", () => {
-    expect(categoryTag(post({ category: "product", app: "IoT" }))).toBe(
-      "Product · IoT",
-    );
-  });
-
-  it.each(["LXP", "CRM"])("drops the app %s from a product tag", (app) => {
-    expect(categoryTag(post({ category: "product", app }))).toBe("Product");
-  });
-
-  it("labels product without an app", () => {
-    expect(categoryTag(post({ category: "product" }))).toBe("Product");
-  });
-
   it.each([
-    ["team", "Team"],
-    ["schools", "Schools"],
-    ["company", "Company"],
-  ])("labels %s as %s and ignores the app", (category, label) => {
-    expect(categoryTag(post({ category, app: "LXP" }))).toBe(label);
+    [{ category: "product", app: "PXP" }, "Parents"],
+    [{ category: "product", app: "ai-tutor" }, "Students"],
+    [{ category: "product", app: "staff-hub" }, "Schools"],
+    [{ category: "product" }, "Schools"],
+    [{ category: "team", app: "LXP" }, "Company"],
+    [{ category: "schools" }, "Schools"],
+    [{ category: "students" }, "Students"],
+    [{ category: "parents" }, "Parents"],
+    [{ category: "company" }, "Company"],
+  ])("labels %j as %s", (over, label) => {
+    expect(categoryTag(post(over))).toBe(label);
   });
 
   it("returns null for an unknown category", () => {

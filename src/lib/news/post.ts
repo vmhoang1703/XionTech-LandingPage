@@ -1,6 +1,5 @@
 import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
-import { postApp } from "@/lib/news/post-app";
 import { sanityFetch } from "@/lib/sanity/client";
 
 export type StoryBlock = { style?: string | null; text?: string | null };
@@ -16,6 +15,8 @@ const POST_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.
   publishedAt,
   category,
   app,
+  "image": image.asset->url,
+  alt,
   "body": body.en[_type == "block"] { style, "text": pt::text(@) }
 }`;
 
@@ -32,14 +33,4 @@ export async function getPost(slug: string): Promise<NewsStory | null> {
     params: { slug },
     tags: ["post"],
   });
-}
-
-/** The Products section of a story's app, or null when it has none. */
-export function productLink(
-  app?: string | null,
-): { href: string; label: string } | null {
-  const shown = postApp(app);
-  return shown
-    ? { href: `/products#${shown.anchor}`, label: shown.shortName }
-    : null;
 }

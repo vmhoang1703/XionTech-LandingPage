@@ -1,76 +1,175 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { Audience } from "@/lib/news/audience";
 import { NewsFilters, type FilterItem } from "./news-filters";
 
-const item = (slug: string, category: string | null): FilterItem => ({
+const item = (slug: string, audience: Audience | null): FilterItem => ({
   key: slug,
-  category,
-  node: <article>{slug}</article>,
+  category: audience,
+  node: <a href={`/news/${slug}`}>{slug}</a>,
 });
 
+// Newest first, as the page passes them.
 const items = [
-  item("p1", "product"),
-  item("t1", "team"),
-  item("t2", "team"),
+  item("p1", "parents"),
+  item("t1", "students"),
+  item("t2", "students"),
   item("c1", "company"),
   item("x1", null),
 ];
 
+// The viewport width the stubbed matchMedia answers for; listeners let a
+// test "resize" the window.
+let width = 1280;
+const listeners = new Set<() => void>();
+
+function resize(to: number) {
+  width = to;
+  act(() => {
+    for (const listener of listeners) listener();
+  });
+}
+
+beforeEach(() => {
+  width = 1280;
+  listeners.clear();
+  vi.stubGlobal("matchMedia", (query: string) => ({
+    matches: width <= Number(/(\d+)px/.exec(query)?.[1]),
+    addEventListener: (_: string, listener: () => void) =>
+      listeners.add(listener),
+    removeEventListener: (_: string, listener: () => void) =>
+      listeners.delete(listener),
+  }));
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
 const chip = (name: string) => screen.getByRole("button", { name });
-const shown = () => screen.queryAllByRole("article").map((a) => a.textContent);
+const shown = () =>
+  screen.queryAllByRole("link").map((card) => card.textContent);
+// The grid cells that hold the lead card.
+const leads = () =>
+  Array.from(document.querySelectorAll(".s-lead"), (cell) => cell.textContent);
+const cells = () => Array.from(document.querySelectorAll("#newsGrid > div"));
 const live = () => document.querySelector("[aria-live]");
+const EMPTY = "No stories are available in this category yet.";
 
 describe("NewsFilters", () => {
-  it("starts on All: every card, All pressed, the others not, the count in a polite live region", () => {
+  it("pressing Parents shows only parent stories, and the newest is the lead when it is the only one", () => {
+    render(
+      <NewsFilters
+        items={[
+          item("s1", "schools"),
+          item("p1", "parents"),
+          item("s2", "schools"),
+        ]}
+      />,
+    );
+    fireEvent.click(chip("Parents"));
+
+    expect(shown()).toEqual(["p1"]);
+    expect(leads()).toEqual(["p1"]);
+  });
+
+  it("starts on All: every card in the grid, All pressed, the others not, the count in a polite live region", () => {
     render(<NewsFilters items={items} />);
 
-    expect(screen.getByRole("group", { name: "Filter stories" })).toBeTruthy();
+    const group = screen.getByRole("group", {
+      name: "Filter stories by audience",
+    });
+    expect(group.className).toBe("filters");
+    expect(group.parentElement?.className).toBe("news-bar");
+    expect(
+      screen.getByText(
+        "Stories from the newXion newsroom; those marked [Placeholder] are samples.",
+      ).className,
+    ).toBe("sample");
+    expect(document.querySelector("#newsGrid")?.className).toBe("sgrid");
     expect(shown()).toEqual(["p1", "t1", "t2", "c1", "x1"]);
     expect(chip("All").getAttribute("aria-pressed")).toBe("true");
-    for (const name of ["Product", "Company", "Schools", "Team"]) {
+    for (const name of ["Schools", "Students", "Parents", "Company"]) {
       expect(chip(name).getAttribute("aria-pressed")).toBe("false");
       expect(chip(name).getAttribute("type")).toBe("button");
     }
     expect(live()?.getAttribute("aria-live")).toBe("polite");
     expect(live()?.className).toBe("sr-only");
     expect(live()?.textContent).toBe("Showing 5 stories");
-    expect(screen.queryByText("No stories in this category yet.")).toBeNull();
+    expect(screen.queryByText(EMPTY)).toBeNull();
   });
 
-  it("shows only Team cards when Team is pressed, and announces the plural count", () => {
+  it("at 3 columns makes the first card the lead when a full row of 3 follows", () => {
     render(<NewsFilters items={items} />);
-    fireEvent.click(chip("Team"));
+
+    expect(leads()).toEqual(["p1"]);
+    expect(cells()).toHaveLength(5);
+    expect(cells()[0].className).toBe("s-lead");
+    expect(cells()[1].className).toBe("");
+  });
+
+  it("makes no lead when the cards after it would not fill a row", () => {
+    render(<NewsFilters items={items.slice(0, 3)} />);
+
+    expect(leads()).toEqual([]);
+  });
+
+  it("recalculates the lead on resize: 2 columns at 900px, 1 column at 390px", () => {
+    render(<NewsFilters items={items.slice(0, 3)} />);
+    expect(leads()).toEqual([]);
+
+    resize(900);
+    expect(leads()).toEqual(["p1"]);
+
+    resize(390);
+    expect(leads()).toEqual(["p1"]);
+
+    resize(1280);
+    expect(leads()).toEqual([]);
+  });
+
+  it("stops listening for resizes once it is gone", () => {
+    const { unmount } = render(<NewsFilters items={items} />);
+    expect(listeners.size).toBeGreaterThan(0);
+
+    unmount();
+    expect(listeners.size).toBe(0);
+  });
+
+  it("shows only Students cards when Students is pressed, with no lead for two at 3 columns, and announces the plural count", () => {
+    render(<NewsFilters items={items} />);
+    fireEvent.click(chip("Students"));
 
     expect(shown()).toEqual(["t1", "t2"]);
-    expect(chip("Team").getAttribute("aria-pressed")).toBe("true");
+    expect(leads()).toEqual([]);
+    expect(chip("Students").getAttribute("aria-pressed")).toBe("true");
     expect(chip("All").getAttribute("aria-pressed")).toBe("false");
     expect(live()?.textContent).toBe("Showing 2 stories");
   });
 
   it("uses the singular for one story", () => {
     render(<NewsFilters items={items} />);
-    fireEvent.click(chip("Product"));
+    fireEvent.click(chip("Company"));
 
-    expect(shown()).toEqual(["p1"]);
+    expect(shown()).toEqual(["c1"]);
     expect(live()?.textContent).toBe("Showing 1 story");
   });
 
   it("does nothing when the active chip is pressed again", () => {
     render(<NewsFilters items={items} />);
-    fireEvent.click(chip("Team"));
-    fireEvent.click(chip("Team"));
+    fireEvent.click(chip("Students"));
+    fireEvent.click(chip("Students"));
 
     expect(shown()).toEqual(["t1", "t2"]);
-    expect(chip("Team").getAttribute("aria-pressed")).toBe("true");
+    expect(chip("Students").getAttribute("aria-pressed")).toBe("true");
   });
 
-  it("shows the empty panel for a category with no stories; Show all resets to All and focuses it", () => {
+  it("shows the empty panel for an audience with no stories; Show all resets to All and focuses it", () => {
     render(<NewsFilters items={items} />);
     fireEvent.click(chip("Schools"));
 
-    expect(shown()).toEqual([]);
-    expect(document.querySelector(".news-grid")).toBeNull();
-    expect(screen.getByText("No stories in this category yet.")).toBeTruthy();
+    expect(document.querySelector("#newsGrid")).toBeNull();
+    expect(screen.getByText(EMPTY)).toBeTruthy();
     expect(live()?.textContent).toBe("Showing 0 stories");
 
     fireEvent.click(chip("Show all"));
@@ -78,13 +177,13 @@ describe("NewsFilters", () => {
     expect(shown()).toEqual(["p1", "t1", "t2", "c1", "x1"]);
     expect(chip("All").getAttribute("aria-pressed")).toBe("true");
     expect(document.activeElement).toBe(chip("All"));
-    expect(screen.queryByText("No stories in this category yet.")).toBeNull();
+    expect(screen.queryByText(EMPTY)).toBeNull();
   });
 
   it("with no stories at all shows the empty text without Show all", () => {
     render(<NewsFilters items={[]} />);
 
-    expect(screen.getByText("No stories in this category yet.")).toBeTruthy();
+    expect(screen.getByText(EMPTY)).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Show all" })).toBeNull();
     expect(live()?.textContent).toBe("Showing 0 stories");
   });

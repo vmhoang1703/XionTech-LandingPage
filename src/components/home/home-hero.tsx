@@ -1,5 +1,4 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
 import { StatsBand } from "@/components/sections/stats-band";
 import { homeHero, homeStats } from "@/content/home";
 import { FrontDoors } from "./front-doors";
@@ -30,10 +29,12 @@ export function HomeHero() {
           {title.tail}
         </h1>
         <p className="text-body-lg mt-5.5 mb-8.5 max-w-[62ch]">{sub}</p>
-        <Link href={cta.href} className="btn btn-primary">
+        {/* A plain anchor: next/link does not scroll again when the hash is
+            already #contact, so a second click would do nothing. */}
+        <a href={cta.href} className="btn btn-primary">
           {cta.label}
           <ArrowRightIcon aria-hidden="true" />
-        </Link>
+        </a>
       </div>
       <div className="wrap home-stats mt-14 w-full md:mt-22">
         <StatsBand

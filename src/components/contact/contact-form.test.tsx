@@ -428,10 +428,12 @@ describe("ContactForm sending", () => {
     submit();
     await settle();
     const panel = screen.getByRole("status");
-    expect(panel.textContent).toContain("Thank you!");
+    expect(panel.textContent).toContain("Summit reached. Thank you!");
     expect(panel.textContent).toContain("We will be in touch soon.");
     expect(panel.textContent).not.toContain("Prototype");
-    expect(panel.querySelector("svg")).not.toBeNull();
+    const summit = panel.querySelector(".summit");
+    expect(summit?.getAttribute("aria-hidden")).toBe("true");
+    expect(summit?.querySelector("svg .sm-flag")).not.toBeNull();
     expect(document.getElementById("demoForm")).toBeNull();
     expect(screen.queryByRole("button", { name: /Send/ })).toBeNull();
     expect(screen.queryByRole("tablist")).toBeNull();

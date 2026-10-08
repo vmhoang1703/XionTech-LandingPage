@@ -37,11 +37,11 @@ describe("HomeHero", () => {
     ).toBeDefined();
   });
 
-  it("has one Get in touch button linking to /demo", () => {
+  it("has one Get in touch button linking to the contact section", () => {
     const hero = renderHero();
 
     const cta = within(hero).getByRole("link", { name: "Get in touch" });
-    expect(cta.getAttribute("href")).toBe("/demo");
+    expect(cta.getAttribute("href")).toBe("#contact");
     expect(cta.className).toContain("btn btn-primary");
     expect(cta.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
     expect(within(hero).queryAllByRole("button")).toHaveLength(0);

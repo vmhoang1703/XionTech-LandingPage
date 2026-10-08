@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   CONTACT_ERRORS,
   isValidEmail,
+  isValidPhone,
+  MESSAGE_REQUIRED_ERROR,
   validateContact,
   type ContactValues,
 } from "./contact-rules";
@@ -22,6 +24,7 @@ const valid: ContactValues = {
   name: "Ana Tran",
   email: "ana@gmail.com",
   org: "Sunrise School",
+  phone: "",
   date: "",
   message: "",
 };
@@ -131,5 +134,78 @@ describe("validateContact caps and date format", () => {
     expect(
       validateContact("project", { ...valid, date: "2026-12-5" }, TODAY),
     ).toEqual({});
+  });
+});
+
+describe("isValidPhone", () => {
+  it.each(["", "(+1) 469 322 9899", "+84 908.107-552", "1234567"])(
+    "accepts %j",
+    (phone) => {
+      expect(isValidPhone(phone)).toBe(true);
+    },
+  );
+
+  it.each([
+    "12",
+    "+1234567890123456",
+    "12345ab",
+    "123456",
+    "+",
+    "+1 469\n322 9899",
+    "+1 469\t322 9899",
+  ])("rejects %j", (phone) => {
+    expect(isValidPhone(phone)).toBe(false);
+  });
+});
+
+describe("validateContact general type", () => {
+  const general: ContactValues = {
+    ...valid,
+    org: "",
+    message: "Hello there",
+  };
+
+  it("needs no organisation and no phone", () => {
+    expect(validateContact("general", general, TODAY)).toEqual({});
+  });
+
+  it("rejects phone 12", () => {
+    expect(
+      validateContact("general", { ...general, phone: "12" }, TODAY),
+    ).toEqual({ phone: CONTACT_ERRORS.phone });
+  });
+
+  it("requires a message", () => {
+    expect(
+      validateContact("general", { ...general, message: "  " }, TODAY),
+    ).toEqual({ message: MESSAGE_REQUIRED_ERROR });
+  });
+
+  it("still limits the message length", () => {
+    expect(
+      validateContact(
+        "general",
+        { ...general, message: "a".repeat(2001) },
+        TODAY,
+      ),
+    ).toEqual({ message: CONTACT_ERRORS.message });
+  });
+
+  it("ignores the date", () => {
+    expect(
+      validateContact("general", { ...general, date: "2020-01-01" }, TODAY),
+    ).toEqual({});
+  });
+
+  it("keeps the organisation and an empty message optional for demo and project", () => {
+    expect(validateContact("demo", { ...valid, phone: "12" }, TODAY)).toEqual(
+      {},
+    );
+    expect(
+      validateContact("project", { ...valid, message: "" }, TODAY),
+    ).toEqual({});
+    expect(validateContact("demo", { ...valid, org: "" }, TODAY)).toEqual({
+      org: CONTACT_ERRORS.org,
+    });
   });
 });

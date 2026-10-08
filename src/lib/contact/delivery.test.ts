@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ContactSubmission } from "@/components/contact/contact-form";
+import type { GeneralSubmission } from "./submission";
 
 const {
   createTransportMock,
@@ -72,6 +73,14 @@ const PROJECT: ContactSubmission = {
   message: "",
   service: "Not sure yet",
   startTiming: "In 1 to 3 months",
+};
+
+const GENERAL: GeneralSubmission = {
+  type: "general",
+  name: "Cam Vo",
+  email: "cam@home.test",
+  phone: "+84 908.107-552",
+  message: "Line one\nLine two",
 };
 
 function stubEnv(): void {
@@ -428,6 +437,25 @@ describe("sendContactMail", () => {
     const mail = sentMail();
     expect(mail).not.toHaveProperty("html");
     expect(mail.text).toBe(`Kind: project\nEmail: ${EMAIL}`);
+  });
+
+  it("sends a general message with its own subject and fields", async () => {
+    await sendContactMail(CONFIG, GENERAL);
+
+    const mail = sentMail();
+    expect(mail.subject).toBe("Contact message: Cam Vo");
+    expect(mail.to).toBe(ENV.CONTACT_INBOX);
+    expect(mail.replyTo).toBe(GENERAL.email);
+    expect(mail.text).toBe(
+      "Name: Cam Vo\nEmail: cam@home.test\nPhone: +84 908.107-552\n\nMessage:\nLine one\nLine two",
+    );
+    expect(mail.text).not.toMatch(/organisation|service|role/i);
+  });
+
+  it("removes CR and LF from a general subject", async () => {
+    await sendContactMail(CONFIG, { ...GENERAL, name: "Cam\r\nBcc: x@y.test" });
+
+    expect(sentMail().subject).toBe("Contact message: CamBcc: x@y.test");
   });
 
   it("lets a send failure through so the route can answer 502", async () => {
