@@ -227,23 +227,18 @@ describe("ProductShowcase", () => {
     expect(document.querySelectorAll(".pdetail a[href]")).toHaveLength(0);
   });
 
-  it("keeps the features on the page without JavaScript, in a details fallback", () => {
-    render(<ProductShowcase />);
-    const fallback = card("ai-tutor").querySelector("details.pd-nojs");
-    expect(fallback?.querySelector("summary")?.textContent).toBe("Features");
-    expect(fallback?.querySelectorAll("li")).toHaveLength(3);
-  });
-
-  it("server-renders the fallback open to view and the expand button hidden", () => {
+  it("server-renders the features in a noscript details and the expand button hidden", () => {
     const html = renderToString(<ProductShowcase />);
-    expect(html).toMatch(/<details class="pd-nojs">/);
+    const fallbacks = html.match(
+      /<noscript><details class="pd-nojs"><summary>Features<\/summary>/g,
+    );
+    expect(fallbacks).toHaveLength(4);
     expect(html).toMatch(/<button[^>]*class="pc-expand"[^>]*hidden=""/);
   });
 
-  it("hides the fallback and shows the expand button once JavaScript runs", () => {
+  it("renders no fallback and shows the expand button once JavaScript runs", () => {
     render(<ProductShowcase />);
-    const fallback = card("ai-tutor").querySelector("details.pd-nojs");
-    expect(fallback?.hasAttribute("hidden")).toBe(true);
+    expect(card("ai-tutor").querySelector("details.pd-nojs")).toBeNull();
     const expand = card("ai-tutor").querySelector(".pc-expand");
     expect(expand?.hasAttribute("hidden")).toBe(false);
   });

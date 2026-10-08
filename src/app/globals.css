@@ -3579,7 +3579,7 @@
   }
 
   /* No JavaScript: the card shows its features in a details element
-     (it carries `hidden` once JavaScript runs). */
+     (inside noscript, so only without JavaScript). */
   .pd-nojs summary {
     min-height: 44px;
     color: var(--color-heading);

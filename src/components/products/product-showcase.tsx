@@ -29,7 +29,7 @@ import {
   type FeatureId,
   type ProductDetail as Detail,
 } from "@/content/products";
-import { NoJsFeatures, ProductDetail, ProductLink } from "./product-detail";
+import { ProductDetail, ProductLink } from "./product-detail";
 
 const S = productsShowcase;
 
@@ -208,9 +208,14 @@ function ShowcaseCard({ app }: Readonly<{ app: App }>) {
       <div className="ps-visual">
         <Media app={app} detail={detail} />
       </div>
-      <NoJsFeatures>
-        <Features detail={detail} />
-      </NoJsFeatures>
+      {/* Without JavaScript the dialog cannot open; React renders noscript
+          content only in the server HTML, so JS visitors never see it. */}
+      <noscript>
+        <details className="pd-nojs">
+          <summary>{S.featuresHeading}</summary>
+          <Features detail={detail} />
+        </details>
+      </noscript>
     </article>
   );
 }

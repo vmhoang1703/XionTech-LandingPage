@@ -38,18 +38,6 @@ export function ProductLink({
   );
 }
 
-// The features for a visitor without JavaScript, who cannot open the dialog.
-// Once JavaScript runs it carries `hidden`.
-export function NoJsFeatures({ children }: Readonly<{ children: ReactNode }>) {
-  const hydrated = useHydrated();
-  return (
-    <details className="pd-nojs" hidden={hydrated}>
-      <summary>{productsShowcase.featuresHeading}</summary>
-      {children}
-    </details>
-  );
-}
-
 // A click whose target is the dialog itself and whose point lies outside its
 // box landed on the backdrop. Clicks inside the box (padding too) and keyboard
 // clicks on controls never close it.

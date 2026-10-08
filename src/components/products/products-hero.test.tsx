@@ -38,7 +38,7 @@ describe("ProductsHero", () => {
     expect(container.querySelector(".btn")).toBeNull();
   });
 
-  it("links the four diagram cards to their showcase cards, clockwise from the top left", () => {
+  it("links the four diagram cards to their showcase cards, top row then bottom row", () => {
     render(<ProductsHero />);
     const diagram = screen.getByRole("group", {
       name: "The four apps share one platform",

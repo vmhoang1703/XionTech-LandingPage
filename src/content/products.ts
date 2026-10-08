@@ -1,7 +1,7 @@
 // Products page copy (E-A5), from the prototype products.html. Kept out of the
 // components so it can be translated later. App names, badges and taglines
 // come from apps.ts.
-import { APPS, appById, type AppId } from "@/content/apps";
+import { appById, type AppId } from "@/content/apps";
 
 const [parentHub, staffHub, iot, aiTutor] = [
   appById("parent-hub"),
@@ -15,7 +15,8 @@ export const productsMeta = {
   description: `${parentHub.shortName} for parents, ${staffHub.shortName} for staff, teachers and leaders, and ${iot.fullName} for campuses. Connected school apps from XionTech.`,
 };
 
-// CAP-1. The diagram places the cards clockwise from the top left.
+// CAP-1. Diagram cards in reading order: top row left to right, then the
+// bottom row (prototype order).
 export const productsHero = {
   titleLines: ["Built apart.", "Better", "together."],
   lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
@@ -34,7 +35,6 @@ export const productsHero = {
 export const productsShowcase = {
   heading: "What we build.",
   lede: "Four apps that connect parents, schools and students. Use the expand icon to see each app in detail.",
-  apps: APPS,
   openLabel: (name: string) => `Open ${name} details`,
   closeLabel: (name: string) => `Close ${name} details`,
   screenshot: (name: string, media: "phone" | "browser") =>
