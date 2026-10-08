@@ -299,6 +299,31 @@ const BUILD_TOKENS: Record<string, string> = {
 describe("globals.css @theme tokens", () => {
   const theme = readThemeVars(GLOBALS_CSS);
   const design = readDesignTokens(DESIGN_MD);
+  // E-A1 decision Q2: the prototype's weights, heading rhythm and section
+  // spacing override DESIGN.md until Amber updates it after the demo.
+  // src/app/type-scale.test.ts checks their new values.
+  const PROTOTYPE_OVERRIDES = new Set([
+    ...[
+      "display-hero",
+      "display-hero-mobile",
+      "headline",
+      "headline-mobile",
+    ].flatMap((name) =>
+      ["font-weight", "line-height", "letter-spacing"].map(
+        (prop) => `--text-${name}--${prop}`,
+      ),
+    ),
+    "--text-stat--font-weight",
+    "--text-title-lg--font-weight",
+    "--text-title-lg--line-height",
+    "--text-title-md--font-weight",
+    "--text-title-sm--font-weight",
+    "--text-button--font-weight",
+    "--text-button-sm--font-weight",
+    "--spacing-section",
+    "--spacing-section-mobile",
+    "--spacing-section-head-gap",
+  ]);
 
   it("reads every DESIGN.md token group", () => {
     expect([...design.keys()]).toEqual(
@@ -315,6 +340,7 @@ describe("globals.css @theme tokens", () => {
 
   it("holds every DESIGN.md token under its mapped name and value", () => {
     const problems = [...design]
+      .filter(([name]) => !PROTOTYPE_OVERRIDES.has(name))
       .filter(([name, value]) => {
         return theme.get(name)?.toLowerCase() !== value.toLowerCase();
       })
