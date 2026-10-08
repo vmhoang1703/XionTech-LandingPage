@@ -1264,3 +1264,11 @@ Template:
   - It left smoke tests unnamed that the changes would break.
 
   The verification pass then found that the Home colours had been copied from the wrong branch of the prototype script, and that the founding sentence was misquoted.
+
+## 2026-10-08 — E-A1 calmer type, tighter spacing and the X site icon
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (one-shot route) and `bmad-code-review`
+- **Prompt (short):** "build all my spec enhancement (andy)", after the demo moved to 2026-10-16; the lead took every plan default (Q1, Q2, Q3, Q11, Q13, Q15) and asked for Tier 1 of all seven tasks, E-A1 first.
+- **What the AI did:** Changed the `@theme` weights, heading rhythm and section spacing to the prototype's values, mapped all 25 hard-coded bold rules to 400 (card titles) or 500 by reading the prototype rule for each selector, added the Next.js `icon.png`/`apple-icon.png`, and wrote a token test first. It measured nine routes at 1280px and 390px in a real browser.
+- **Decision / result:** Decision Q2 (prototype over `DESIGN.md`) is recorded in the DESIGN.md token test as an exact list of overridden tokens, so the other tokens still have to match `DESIGN.md`.
+- **AI got it wrong?** Yes, twice. In the date PR (#71) it ran `git add -A` and committed 6 MB of local Lighthouse reports; the one-layer review caught it before the push. In E-A1 the first override list skipped tokens that had not changed, and Unbounded still loaded an unused 700 weight; the four-layer review caught both.

@@ -48,11 +48,11 @@ describe("E-A1 type and spacing tokens", () => {
   });
 
   it("leaves no hard-coded 700 weight; 600 only for inline bold", () => {
-    expect(css).not.toMatch(/font-weight:\s*700/);
+    expect(css).not.toMatch(/font-weight:\s*(700|800|900|bold)/);
     const sixHundred = [...css.matchAll(/([^{}]+)\{[^{}]*font-weight:\s*600/g)]
-      .map((match) => match[1].trim())
+      .map((match) => match[1].replace(/\s+/g, " ").trim())
       .filter((selector) => !selector.startsWith("--"));
-    expect(sixHundred).toEqual(["b,\n  strong"]);
+    expect(sixHundred).toEqual(["b, strong"]);
   });
 
   it("uses 64px sections (48px on phones) and a 24px section-head gap", () => {

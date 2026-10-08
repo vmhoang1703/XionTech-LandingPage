@@ -2,7 +2,7 @@
 title: 'E-A1 calmer type, tighter spacing and the site icon'
 type: 'feature'
 created: '2026-10-08'
-status: 'in-progress'
+status: 'done'
 route: 'oneshot'
 review_loop_iteration: 0
 context:
@@ -32,16 +32,35 @@ UX checks (`docs/ux-checks.md`), written before coding. Source P = prototype `si
 
 | # | Part | State / action | Input | Visible result | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Page H1 (all inner pages) | load | none | Unbounded 300, line height 1.04, letter spacing -0.04em | static | P142, P1290 | |
-| 2 | Home hero H1 | load | none | Unbounded 300, 1.04, -0.04em | static | P162 | |
-| 3 | Section H2 | load | none | weight 300, line height 1.06, -0.035em | static | P1099 | |
-| 4 | Card titles (services, news, values, offices, steps) | load | none | weight 400, line height 1.3, -0.02em | static | P1029, P1100 | |
-| 5 | Stats numbers | load | none | weight 400 | static | `.stat .n` | |
-| 6 | Buttons | load | none | weight 500 | static | `.btn` | |
-| 7 | Sections | load at 1280px / 390px | none | 64px / 48px top and bottom padding | static | P54, P527 | |
-| 8 | Section head | load | none | 20px between heading and description, 24px under the head | static | P55 | |
-| 9 | Header nav links | load, current page | mouse, keyboard | weight 500, current link 500 with amber underline | static | P1295-1296 | |
-| 10 | Mobile menu button | load at 390px | touch | weight 500 | static | ENH-025 | |
-| 11 | Browser tab | load any page | none | X-mark icon; `<link rel="icon">` and `<link rel="apple-touch-icon">` in `<head>`, no `/favicon.ico` link | static | ENH-056 | |
-| 12 | Anchored headings | `/products#…`, `/services#…` | link | heading lands fully visible below the header | scroll | AC-NAV-5 | |
-| 13 | All routes at 390px and 1280px | load | none | no overlap, no sideways scroll | static | Constraints | |
+| 1 | Page H1 (all inner pages) | load | none | Unbounded 300, line height 1.04, letter spacing -0.04em | static | P142, P1290 || yes: test + browser |
+| 2 | Home hero H1 | load | none | Unbounded 300, 1.04, -0.04em | static | P162 || yes: test + browser |
+| 3 | Section H2 | load | none | weight 300, line height 1.06, -0.035em | static | P1099 || yes: test + browser |
+| 4 | Card titles (services, news, values, offices, form success; steps at 400 and 1.3 only, as in the prototype) | load | none | weight 400, line height 1.3, -0.02em | static | P1029, P1100 || yes: test |
+| 5 | Stats numbers | load | none | weight 400 | static | `.stat .n` || yes: test |
+| 6 | Buttons | load | none | weight 500 | static | `.btn` || yes: test |
+| 7 | Sections | load at 1280px / 390px | none | 64px / 48px top and bottom padding | static | P54, P527 || yes: test + browser |
+| 8 | Section head | load | none | 20px between heading and description, 24px under the head | static | P55 || yes: test |
+| 9 | Header nav links | load, current page | mouse, keyboard | weight 500, current link 500 with amber underline | static | P1295-1296 || yes: by hand (screenshot) |
+| 10 | Mobile menu button | load at 390px | touch | weight 500 | static | ENH-025 || yes: by hand (screenshot) |
+| 11 | Browser tab | load any page | none | X-mark icon; `<link rel="icon">` and `<link rel="apple-touch-icon">` in `<head>`, no `/favicon.ico` link | static | ENH-056 || yes: smoke test + browser |
+| 12 | Anchored headings | `/products#…`, `/services#…` | link | heading lands fully visible below the header | scroll | AC-NAV-5 || yes: browser: /services#process top 188px, /products#iot 284px, header bottom 72px |
+| 13 | All routes at 390px and 1280px | load | none | no overlap, no sideways scroll | static | Constraints || yes: browser: 9 routes, no sideways scroll |
+
+Tests: `src/app/type-scale.test.ts` written first and seen failing (18 of 18, `npx vitest run src/app/type-scale.test.ts`), then passing. `src/lib/design/contrast.test.ts` lists the Q2 overrides by exact token name. Browser check on `next start` at 1280px and 390px for 9 routes (H1 300 / 1.04, section H2 300 / 1.06, sections 64px / 48px, icon links, no sideways scroll).
+
+Decisions: base `h3, h4` 500, `main h3` 1.3 and `b, strong` 600 follow the prototype's global rules (`site.css:1290-1294`, `1100`). Unbounded loads 300, 400, 500, 600 (700 dropped: nothing uses it). Mega-menu titles keep `font-medium` (500) as the spec says.
+
+## Review Triage Log
+
+Full `bmad-code-review`, 4 layers, 2026-10-08.
+
+- patch (medium): icon `<link>` tags only checked by file presence → `e2e/smoke.spec.ts` asserts `rel="icon"` `/icon.png`, `rel="apple-touch-icon"` `/apple-icon.png`, no `favicon.ico`.
+- patch (low): Unbounded 700 loaded but unused → removed.
+- patch (medium): DESIGN.md override regex also skipped unchanged tokens → exact list of changed names.
+- patch (low): 600 test depended on exact whitespace and missed `bold`/800/900 → normalised and widened.
+- patch (low): UX row 4 listed steps with -0.02em; the prototype gives `.step4 h3` none → row corrected.
+- false: global `h3/h4` 500, `main h3` 1.3 and `b` 600 are too broad → the prototype has exactly these rules.
+- false: Demo date not in AGENTS.md → PR #71 changes it.
+- rejected (spec): nav links 500 not 450, mega-menu titles 500 → the spec says 500.
+- false: page-hero and capture padding unchanged → not in the spec's scope.
+- false: UX table unchecked → checked above before the PR.
