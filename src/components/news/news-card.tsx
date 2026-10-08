@@ -61,11 +61,11 @@ export function NewsCard({ post }: Readonly<{ post: LatestPost }>) {
           </time>
         ) : null}
       </span>
-      <span className="scard-content">
-        <span id={`${id}-t`} className="scard-title">
+      <div className="scard-content">
+        <h3 id={`${id}-t`} className="scard-title">
           {post.title}
-        </span>
-      </span>
+        </h3>
+      </div>
       <span className="scard-read" aria-hidden="true">
         <span>{homeNews.readStory}</span>
         <ArrowRightIcon aria-hidden="true" />

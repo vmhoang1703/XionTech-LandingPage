@@ -56,7 +56,6 @@ export const post = {
       name: "image",
       title: "Photo",
       type: "image",
-      options: { hotspot: true },
     },
     {
       name: "alt",

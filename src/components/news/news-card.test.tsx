@@ -33,9 +33,12 @@ describe("NewsCard", () => {
     expect(time?.getAttribute("datetime")).toBe(post.publishedAt);
     expect(time?.className).toBe("scard-date");
     expect(screen.getByText("Schools").className).toBe("scard-pill");
-    expect(container.querySelector(".scard-title")?.textContent).toBe(
-      "Parent Hub launches",
-    );
+    const heading = screen.getByRole("heading", {
+      level: 3,
+      name: "Parent Hub launches",
+    });
+    expect(heading.className).toBe("scard-title");
+    expect(link.contains(heading)).toBe(true);
     // The excerpt stays on the story page.
     expect(screen.queryByText("A short summary.")).toBeNull();
   });

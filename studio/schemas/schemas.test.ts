@@ -145,12 +145,12 @@ describe("studio schemas", () => {
     expect(app.hidden).toBeUndefined();
   });
 
-  it("gives a post a photo with a hotspot and an alt text that is required once a photo is set", () => {
+  it("gives a post a photo (no hotspot: nothing reads it) and an alt text that is required once a photo is set", () => {
     const image = findField(post, "image") as Field & {
       options?: { hotspot?: boolean };
     };
     expect(image.type).toBe("image");
-    expect(image.options?.hotspot).toBe(true);
+    expect(image.options?.hotspot).toBeUndefined();
 
     const alt = findField(post, "alt") as Field & {
       validation?: (r: {
