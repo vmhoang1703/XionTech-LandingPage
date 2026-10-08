@@ -14,7 +14,7 @@ Sammy owns Home (except the news row and the contact form), Services, About, the
 404 page (his Story 1.7 before Plan C, decision P1). Andy owns the `globals.css` `@theme` tokens,
 fonts, the header, the forms and their API, Products, News, Careers and everything that reads Sanity.
 
-**Tier 1** goes into the demo on 2026-10-09. **Tier 2** is after the demo; each spec lists it under
+**Tier 1** goes into the demo on 2026-10-16. **Tier 2** is after the demo; each spec lists it under
 "Non-goals for this build". Sizes are Tier 1 hours for one developer with `bmad-build`.
 
 | Order | Task | Owner | Spec | Size | Hard dependencies (soft: fallback until merged) |
