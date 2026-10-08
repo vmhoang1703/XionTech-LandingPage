@@ -145,12 +145,17 @@ describe("isValidPhone", () => {
     },
   );
 
-  it.each(["12", "+1234567890123456", "12345ab", "123456", "+"])(
-    "rejects %j",
-    (phone) => {
-      expect(isValidPhone(phone)).toBe(false);
-    },
-  );
+  it.each([
+    "12",
+    "+1234567890123456",
+    "12345ab",
+    "123456",
+    "+",
+    "+1 469\n322 9899",
+    "+1 469\t322 9899",
+  ])("rejects %j", (phone) => {
+    expect(isValidPhone(phone)).toBe(false);
+  });
 });
 
 describe("validateContact general type", () => {

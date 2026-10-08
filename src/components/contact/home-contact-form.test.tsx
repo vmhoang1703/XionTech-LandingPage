@@ -175,3 +175,30 @@ describe("HomeContactForm", () => {
     },
   );
 });
+
+describe("HomeContactForm honeypot", () => {
+  const honeypot = () => {
+    const el = document.querySelector<HTMLInputElement>('[name="website"]');
+    if (!el) throw new Error("missing honeypot");
+    return el;
+  };
+
+  it("hides the website input from keyboard, screen readers and sight", () => {
+    render(<HomeContactForm />);
+    const input = honeypot();
+    expect(input.getAttribute("tabindex")).toBe("-1");
+    expect(input.getAttribute("aria-hidden")).toBe("true");
+    expect(input.getAttribute("autocomplete")).toBe("off");
+    expect(input.classList.contains("sr-only")).toBe(true);
+  });
+
+  it("sends what a bot typed into it", async () => {
+    fetchMock.mockReturnValueOnce(reply(200, { ok: true }));
+    render(<HomeContactForm />);
+    fillRequired();
+    fireEvent.change(honeypot(), { target: { value: "https://spam.example" } });
+    submit();
+    await settle();
+    expect(sentBody().website).toBe("https://spam.example");
+  });
+});

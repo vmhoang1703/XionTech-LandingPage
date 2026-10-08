@@ -210,6 +210,8 @@ We did not check what Upstash does exactly at its limit. Check this before Demo 
 
 The Home contact form (`#contact`, `src/components/contact/home-contact.tsx`) posts to the same `POST /api/contact`. The body is `{ "type": "general", "name": "...", "email": "...", "phone": "...", "message": "...", "website": "" }`. The phone is optional.
 
-- The route runs the same steps as in the table above. A bad field gets 400 `{ "errors": { field: text } }`. The honeypot, the config check and both rate limits are the same as for the other types.
+- The route runs the steps in the table above, except step 3: a general message has no role, select or product fields. `org`, `role`, `date` and any other field are ignored.
+- Field rules (the same in the browser and on the server): name required, at most 200 characters; a valid email; message required, at most 2,000 characters; phone empty, or 7 to 15 digits with an optional leading `+` and spaces, dots, dashes or brackets. A bad field gets 400 `{ "errors": { field: text } }`.
+- The honeypot, the config check and both rate limits are the same as for the other types.
 - The subject is "Contact message: <name>". CR and LF are removed from it.
-- The body has these lines: `Name`, `Email`, `Phone`, an empty line, `Message:` and the message. Reply-To is the visitor's email.
+- The body has these lines: `Name`, `Email`, `Phone`, an empty line, `Message:` and the message. With no phone, the `Phone:` line is empty. Reply-To is the visitor's email.

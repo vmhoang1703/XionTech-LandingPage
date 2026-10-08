@@ -51,7 +51,8 @@ export function isValidEmail(value: string): boolean {
   return dot !== -1 && domain.length - dot - 1 >= 2;
 }
 
-const PHONE_FORMAT = /^\+?[0-9(][0-9\s().+-]{6,24}$/;
+// Plain spaces only: a tab or line break would split the mail line.
+const PHONE_FORMAT = /^\+?[0-9(][0-9 ().+-]{6,24}$/;
 
 // Empty is allowed. Otherwise: the allowed characters and 7 to 15 digits.
 export function isValidPhone(value: string): boolean {

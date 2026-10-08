@@ -31,7 +31,7 @@ export const PRIVACY = {
       id: "privacy-collect",
       heading: "What we collect",
       paragraphs: [
-        "[Placeholder] Email, name, organisation, role and anything you send through our forms, including a CV if you apply for a job.",
+        "[Placeholder] Email, name, phone number, organisation, role and anything you send through our forms, including a CV if you apply for a job.",
         "[Placeholder] The email you type in the email capture band is sent to our company inbox like a form message. Your browser also keeps it in session storage only until the demo request page reads it.",
       ],
     },
