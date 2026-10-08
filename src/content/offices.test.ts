@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { offices } from "./offices";
+import { footerOffices, hcmc, offices, plano } from "./offices";
 
 describe("offices", () => {
   it("has two offices", () => {
@@ -45,6 +45,42 @@ describe("offices", () => {
     ]);
     expect(hcmc?.timeZone).toBe("Asia/Ho_Chi_Minh");
     expect(hcmc?.zoneLabel).toBe("GMT+7");
+  });
+
+  it("lists the footer offices Vietnam first, then US, with bracketed phones", () => {
+    expect(footerOffices.map((office) => office.id)).toEqual(["hcmc", "plano"]);
+    expect(footerOffices.map((office) => office.name)).toEqual([
+      "Vietnam Delivery Center",
+      "US Delivery Center",
+    ]);
+    expect(footerOffices[0].contacts).toEqual([
+      { href: "tel:+84908107552", label: "(+84) 908 107 552" },
+    ]);
+    expect(footerOffices[1].contacts).toEqual([
+      { href: "tel:+14693229899", label: "(+1) 469 322 9899" },
+      {
+        href: "https://wa.me/14694399345",
+        label: "WhatsApp (+1) 469 439 9345",
+        ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
+        external: true,
+      },
+      {
+        href: "mailto:vinni.tran@newxion.com",
+        label: "vinni.tran@newxion.com",
+      },
+    ]);
+    expect(footerOffices[0].addressLines).toEqual(hcmc.addressLines);
+    expect(footerOffices[1].addressLines).toEqual(plano.addressLines);
+  });
+
+  it("leaves the shared offices in Plano then HCMC order with the old labels", () => {
+    expect(offices.map((office) => office.id)).toEqual(["plano", "hcmc"]);
+    expect(offices.map((office) => office.name)).toEqual([
+      "Plano, Texas, USA",
+      "Ho Chi Minh City, Vietnam",
+    ]);
+    expect(offices[0].contacts[0].label).toBe("+1 469 322 9899");
+    expect(offices[1].contacts[0].label).toBe("+84 908 107 552");
   });
 
   it("marks only the WhatsApp contact as external", () => {

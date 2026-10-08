@@ -55,3 +55,36 @@ export const hcmc: Office = {
 };
 
 export const offices: Office[] = [plano, hcmc];
+
+// Footer-only view (prototype order and wording): delivery-center names and
+// bracketed phone numbers. `offices` above stays as About, Demo and Home read it.
+export type FooterOffice = Pick<Office, "id" | "name" | "addressLines"> & {
+  contacts: OfficeContact[];
+};
+
+export const footerOffices: FooterOffice[] = [
+  {
+    id: hcmc.id,
+    name: "Vietnam Delivery Center",
+    addressLines: hcmc.addressLines,
+    contacts: [{ href: "tel:+84908107552", label: "(+84) 908 107 552" }],
+  },
+  {
+    id: plano.id,
+    name: "US Delivery Center",
+    addressLines: plano.addressLines,
+    contacts: [
+      { href: "tel:+14693229899", label: "(+1) 469 322 9899" },
+      {
+        href: "https://wa.me/14694399345",
+        label: "WhatsApp (+1) 469 439 9345",
+        ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
+        external: true,
+      },
+      {
+        href: "mailto:vinni.tran@newxion.com",
+        label: "vinni.tran@newxion.com",
+      },
+    ],
+  },
+];
