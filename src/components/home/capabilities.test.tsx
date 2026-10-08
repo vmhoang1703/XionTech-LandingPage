@@ -86,6 +86,28 @@ describe("Capabilities", () => {
     expect(more?.classList.contains("open")).toBe(false);
   });
 
+  it("opens and closes with Enter from the keyboard, state following aria-expanded", () => {
+    const button = reveal();
+    const more = button.closest(".w-more");
+    button.focus();
+
+    // A browser turns Enter or Space on a button into a click.
+    fireEvent.keyDown(button, { key: "Enter" });
+    fireEvent.click(button);
+    expect(button.getAttribute("aria-expanded")).toBe("true");
+    expect(more?.classList.contains("open")).toBe(true);
+    expect(document.activeElement).toBe(button);
+
+    fireEvent.keyDown(button, { key: "Enter" });
+    fireEvent.click(button);
+    expect(button.getAttribute("aria-expanded")).toBe("false");
+    expect(more?.classList.contains("open")).toBe(false);
+  });
+
+  it("does not open the list on focus alone, so it matches aria-expanded", () => {
+    expect(globalsCss()).not.toMatch(/\.w-more:focus-within/);
+  });
+
   it("closes the list when focus leaves the reveal area", () => {
     const button = reveal();
     fireEvent.click(button);

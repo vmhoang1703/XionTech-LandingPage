@@ -3281,7 +3281,6 @@
 }
 
 .w-more:hover,
-.w-more:focus-within,
 .w-more.open {
   flex-basis: 430px;
   width: 430px;
@@ -3289,14 +3288,12 @@
 }
 
 .w-more:hover .w-more-trigger,
-.w-more:focus-within .w-more-trigger,
 .w-more.open .w-more-trigger {
   opacity: 0;
   transform: scale(0.72);
 }
 
 .w-more:hover .w-more-list,
-.w-more:focus-within .w-more-list,
 .w-more.open .w-more-list {
   opacity: 1;
   transform: none;
@@ -3411,7 +3408,6 @@ a.w-card:hover .w-link svg {
   }
 
   .w-more:hover,
-  .w-more:focus-within,
   .w-more.open {
     flex-basis: 100%;
     width: 100%;
@@ -3423,8 +3419,12 @@ a.w-card:hover .w-link svg {
     height: auto;
   }
 
+  /* The open list is in flow here; the hidden circle must not cover it. */
+  .w-more.open .w-more-trigger {
+    pointer-events: none;
+  }
+
   .w-more:hover .w-more-list,
-  .w-more:focus-within .w-more-list,
   .w-more.open .w-more-list {
     position: static;
   }
