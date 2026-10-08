@@ -1,23 +1,24 @@
 // Home page copy. Kept out of the components so it can be translated later.
 
 import type { Stat } from "@/components/sections/stats-band";
+import { appById } from "@/content/apps";
+
+// App names and badges come from apps.ts (E-A2), the one source for them.
+const parentHub = appById("parent-hub");
+const staffHub = appById("staff-hub");
+const iot = appById("iot");
+const aiTutor = appById("ai-tutor");
 
 export const homeHero = {
-  label: "EdTech products · Software services",
   title: {
-    lead: "Every school community, ",
-    highlight: "connected",
+    lead: "School apps and software teams that ",
+    highlight: "get IT done",
     tail: ".",
   },
-  sub: "PXP for parents, LXP for learners, SXP for staff. And the engineering team behind them, ready to build yours.",
+  sub: "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano.",
   motion: { pause: "Pause motion", play: "Play motion" },
-  cta: { href: "/products", label: "Explore our products" },
-  // Real product screens arrive with Story 4.4 (after demo); until then the
-  // device frames stay empty.
-  devices: {
-    tablet: "[Placeholder] Web app screenshot",
-    phone: "[Placeholder] Phone screenshot",
-  },
+  // The contact section on this page (E-A4).
+  cta: { href: "#contact", label: "Get in touch" },
 };
 
 // Figures confirmed by the business on 2026-09-28 (FR-12).
@@ -40,10 +41,15 @@ export const homeDoors = {
   label: "What we do",
   products: {
     href: "/products",
-    badges: ["PXP", "LXP", "SXP", "IoT"] as const,
+    badges: [parentHub, staffHub, iot],
     title: "Products for schools",
     line: "Connected apps for parents, students, teachers, leaders and school staff.",
-    chips: ["PXP · Parents", "LXP · Students", "SXP · Staff", "IoT · Campus"],
+    chips: [
+      parentHub.shortName,
+      staffHub.shortName,
+      iot.shortName,
+      aiTutor.shortName,
+    ],
   },
   services: {
     href: "/services",
@@ -61,96 +67,51 @@ export const homeDoors = {
   },
 };
 
-export const homeApps = {
-  title: "Four apps. One school day.",
-  lede: "Every role in the school gets its own app, all sharing one source of truth.",
-  // Mini phone stays an empty media frame until Story 4.4 supplies media.
-  phoneHint: "[Placeholder] PXP screen",
-  tiles: [
-    {
-      id: "pxp",
-      name: "PXP",
-      full: "Parent eXperience Place",
-      // Link name; its own string so it can be translated (prototype aria-label).
-      label: "PXP, Parent eXperience Place",
-      line: "Attendance, grades, messages and fees in every parent's pocket.",
-      chips: ["Parents", "iOS and Android"],
-    },
-    {
-      id: "sxp",
-      name: "SXP",
-      full: "Staff eXperience Place",
-      label: "SXP, Staff eXperience Place",
-      line: "One workspace with role-based views for staff, teachers and leaders.",
-      chips: ["Staff", "Teachers", "Leaders"],
-    },
-    {
-      id: "lxp",
-      name: "LXP",
-      full: "Learner eXperience Place",
-      label: "LXP, Learner eXperience Place",
-      line: "Lessons, assignments and progress in one calm space.",
-      chips: ["Students"],
-    },
-    {
-      id: "iot",
-      name: "IoT",
-      full: "Device management",
-      label: "IoT, Device management",
-      line: "Devices, lighting and climate, campus-wide.",
-      chips: [],
-    },
-  ],
-} as const;
-
-export const homeServices = {
-  title: "Eight ways we get IT done for you.",
-  lede: "The same team that builds PXP, LXP and SXP, working on your product.",
-  cards: [
-    {
-      id: "product-engineering",
-      name: "Product Engineering",
-      line: "Turn ideas into market-ready digital products.",
-    },
-    {
-      id: "ai-analytics",
-      name: "AI-Driven Analytics",
-      line: "Turn raw data into actionable intelligence.",
-    },
-    {
-      id: "co-creation",
-      name: "Product Co-Creation",
-      line: "Your domain knowledge, our technical expertise.",
-    },
-    {
-      id: "staffing",
-      name: "Staffing Service",
-      line: "Specialised technology talent, when you need it.",
-    },
-    {
-      id: "custom-apps",
-      name: "Custom App Development",
-      line: "Solutions built around your requirements.",
-    },
-    {
-      id: "low-code",
-      name: "Low-code Solutions",
-      line: "Power Platform, Make, n8n, Retool, Bubble.",
-    },
-    {
-      id: "ai-solutions",
-      name: "AI-Powered Solutions",
-      line: "Put artificial intelligence to work in your operations.",
-    },
-    {
-      id: "cloud",
-      name: "Cloud Computing",
-      line: "Azure, AWS and GCP expertise.",
-    },
-  ],
-} as const;
+export const homeCapabilities = {
+  title: "Capabilities.",
+  lede: "Why XionTech: the core capabilities behind every school app and every product we deliver.",
+  products: {
+    href: "/products",
+    label: "School platforms",
+    title: "Products for schools",
+    line: "Connected apps for parents, students, teachers, leaders and school staff, designed as one ecosystem.",
+    apps: [
+      { app: parentHub, caption: "Parents" },
+      { app: staffHub, caption: "Staff" },
+      { app: iot, caption: "Facilities" },
+    ],
+    link: "Explore products",
+  },
+  delivery: {
+    label: "Global delivery",
+    title: "Two offices, one working day.",
+    line: "Teams across time zones keep delivery moving with practical overlap.",
+  },
+  industries: {
+    label: "Domain expertise",
+    title: "Deep in education. Built to adapt.",
+    line: "Education is where we go deepest, while the same engineering capability supports other industries too.",
+    main: "Education",
+    // Confirmed on the About page (src/content/about.ts), not placeholders.
+    more: ["Healthcare", "Logistics", "Private Equity"] as const,
+    moreLabel: "+3 more industries: Healthcare, Logistics and Private Equity",
+  },
+  services: {
+    href: "/services",
+    label: "Software engineering",
+    title: "Your software delivery team",
+    line: "Dedicated teams and end-to-end delivery for companies building digital products.",
+    link: "Explore services",
+  },
+  motto: {
+    lead: "Get IT Done",
+    title: "Built with ownership.",
+    line: "Ownership of our commitments and pride in quality.",
+  },
+};
 
 export const homeProcess = {
-  label: "How we work",
-  title: "From your request to launch, in four steps.",
+  title: "How we approach.",
+  lede: "Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve.",
+  link: { href: "/services#process", label: "See how we work" },
 };

@@ -1,13 +1,7 @@
-import { ArrowRightIcon, CpuIcon } from "@phosphor-icons/react/ssr";
+import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { homeDoors } from "@/content/home";
-
-const BADGE_CLASS = {
-  PXP: "b-pxp",
-  LXP: "b-lxp",
-  SXP: "b-sxp",
-  IoT: "b-iot",
-} as const;
+import { HomeAppBadge } from "./home-app-badge";
 
 function Go() {
   return (
@@ -29,7 +23,7 @@ function Chips({ items }: Readonly<{ items: string[] }>) {
   );
 }
 
-// Two doors directly under the Home hero, overlapping its bottom. Each door is
+// Two doors inside the Home hero, straddling its lower edge. Each door is
 // one link; badges and chips are plain text, so Tab stops once per door.
 export function FrontDoors() {
   const { label, products, services } = homeDoors;
@@ -40,17 +34,8 @@ export function FrontDoors() {
         <Link href={products.href} className="door door-products">
           <div className="top">
             <div className="chips">
-              {products.badges.map((badge) => (
-                <span key={badge} className={`badge ${BADGE_CLASS[badge]}`}>
-                  {badge === "IoT" ? (
-                    <>
-                      <CpuIcon aria-hidden="true" />
-                      <span className="sr-only">{badge}</span>
-                    </>
-                  ) : (
-                    badge
-                  )}
-                </span>
+              {products.badges.map((app) => (
+                <HomeAppBadge key={app.id} app={app} />
               ))}
             </div>
             <Go />

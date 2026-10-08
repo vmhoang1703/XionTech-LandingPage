@@ -1426,8 +1426,7 @@
   }
 
   /*
-    Front doors (Story 3.4), ported from the prototype site.css. The product
-    badges and chips are shared with the app bento (Story 3.5).
+    Front doors (Story 3.4), ported from the prototype site.css.
   */
   .doors {
     position: relative;
@@ -1612,10 +1611,9 @@
   }
 
   /*
-    App bento and service cards (Story 3.5), ported from the prototype
-    site.css. Reuses the door badges, chips and .go arrow (3.4) and the empty
-    media frame (3.1). The spotlight pointer glow and the 4px card lift are
-    after demo, so the glass cards are static.
+    Section heads and service cards (Story 3.5), ported from the prototype
+    site.css. The spotlight pointer glow and the 4px card lift are after
+    demo, so the glass cards are static.
   */
   .sec-head {
     display: grid;
@@ -1660,213 +1658,6 @@
     border-radius: var(--radius-lg);
     background: var(--glass);
     backdrop-filter: blur(14px);
-  }
-
-  .bento {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-grid-gap);
-  }
-
-  .tile {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 300px;
-    padding: var(--spacing-card-padding);
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-  }
-
-  .tile .badge {
-    width: 52px;
-    height: 52px;
-  }
-
-  .tile h3 {
-    margin-top: 18px;
-    font-family: var(--font-display);
-    font-size: 1.7rem;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-  }
-
-  /* The heading link covers the whole tile: one link, one Tab stop. */
-  /* Covers the phone too, so a click anywhere on the PXP tile opens it. */
-  .tile h3 a::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    border-radius: var(--radius-lg);
-  }
-
-  .tile h3 a:focus-visible {
-    outline: none;
-  }
-
-  .tile h3 a:focus-visible::after {
-    outline: 2px solid var(--color-focus);
-    outline-offset: -4px;
-  }
-
-  .tile .full {
-    margin-top: 6px;
-    color: var(--color-muted);
-    font-family: var(--font-brand);
-    font-size: 0.64rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .tile p {
-    max-width: 40ch;
-    margin-top: 12px;
-    color: var(--color-muted);
-  }
-
-  .tile .chips {
-    margin-top: auto;
-    padding-top: 20px;
-  }
-
-  .tile .go {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid currentColor;
-    border-radius: var(--radius-full);
-    opacity: 0.45;
-    transition:
-      opacity 0.35s var(--ease-brand),
-      transform 0.35s var(--ease-brand);
-  }
-
-  @media (hover: hover) {
-    .tile:hover .go {
-      opacity: 1;
-      transform: rotate(-45deg);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .tile:hover .go {
-      transform: none;
-    }
-  }
-
-  .t-pxp {
-    border: 0;
-    background: linear-gradient(
-      155deg,
-      var(--color-amber-light),
-      var(--color-amber) 60%,
-      var(--color-amber-deep)
-    );
-  }
-
-  .t-pxp h3,
-  .t-pxp p,
-  .t-pxp .full,
-  .t-pxp .go {
-    color: var(--color-navy);
-  }
-
-  .t-pxp .chip {
-    border-color: color-mix(in srgb, var(--color-navy) 25%, transparent);
-    background: color-mix(in srgb, var(--color-white) 35%, transparent);
-    color: var(--color-navy);
-  }
-
-  .t-sxp {
-    border: 0;
-    background: linear-gradient(150deg, var(--color-navy), var(--color-ink));
-  }
-
-  .t-sxp h3,
-  .t-sxp .go {
-    color: var(--color-white);
-  }
-
-  .t-sxp p {
-    color: var(--color-on-navy-muted);
-  }
-
-  .t-sxp .full {
-    color: var(--color-amber-tint);
-  }
-
-  .t-sxp .chip {
-    border-color: color-mix(in srgb, var(--color-white) 20%, transparent);
-    background: color-mix(in srgb, var(--color-white) 6%, transparent);
-    color: var(--color-white);
-  }
-
-  .t-sxp h3 a:focus-visible::after {
-    outline-color: var(--color-focus-on-navy);
-  }
-
-  .t-iot {
-    padding: var(--spacing-card-padding-sm);
-  }
-
-  .t-iot h3 {
-    font-size: 1.3rem;
-  }
-
-  /* Rotated phone bleeding off the PXP tile; the empty frame is 3.1's. */
-  .mini-phone {
-    width: 210px;
-    aspect-ratio: 1170 / 2532;
-    margin: 30px auto -150px;
-    padding: 8px;
-    border-radius: 34px;
-    background: var(--color-ink);
-    box-shadow: var(--shadow-device);
-    transform: rotate(-7deg);
-  }
-
-  .mini-phone .home-media {
-    border-radius: 27px;
-    font-size: 0.58rem;
-  }
-
-  @media (width >= --theme(--breakpoint-sm)) {
-    .bento {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .t-pxp,
-    .t-sxp {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (width >= --theme(--breakpoint-md)) {
-    .bento {
-      grid-template-columns: repeat(12, 1fr);
-    }
-
-    .t-pxp {
-      grid-column: span 7;
-      grid-row: span 2;
-    }
-
-    .t-sxp {
-      grid-column: span 5;
-    }
-
-    .t-lxp {
-      grid-column: span 3;
-    }
-
-    .t-iot {
-      grid-column: span 2;
-    }
   }
 
   .svc-grid {
@@ -4648,5 +4439,511 @@
   :lang(vi) h1,
   :lang(vi) h2 {
     line-height: 1.2;
+  }
+}
+
+/*
+  E-S1 Home. Unlayered on purpose: these Home-only overrides must beat the
+  shared StatsBand utilities and the .doors / .badge component rules.
+*/
+.home-hero .hl {
+  color: var(--color-amber-tint);
+}
+
+.home-hero .hl::after {
+  content: none;
+}
+
+/* The two doors straddle the hero's lower edge */
+.home-hero .doors {
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: -120px;
+}
+
+/* The light door keeps the light-surface colours inside the navy hero */
+.home-hero .door-products {
+  --color-heading: var(--color-navy);
+  --color-text: var(--paper-text);
+  --color-muted: var(--paper-muted);
+  --color-border: var(--paper-border);
+}
+
+.home-hero .door-products .badge {
+  width: auto;
+  min-width: 44px;
+  padding: 0 8px;
+}
+
+/* Figures: 5 in a row, 3 then 2 at 561-900px, 2 per row at 560px and below */
+@media (min-width: 901px) {
+  .home-stats ul {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 561px) and (max-width: 900px) {
+  .home-stats ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-stats li:nth-child(4) {
+    border-left-width: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-stats ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- E-S1 Home: Capabilities (4 cards, "+3" reveal, motto) ---------- */
+.why2 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.w-card {
+  --w-heading: var(--color-navy);
+  --w-muted: var(--color-muted);
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 300px;
+  padding: 28px 30px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-navy) 8%, transparent);
+  border-radius: var(--radius-xl);
+  background: var(--color-paper);
+}
+
+.w-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.w-products {
+  --w-heading: var(--color-white);
+  --w-muted: var(--color-on-navy-muted);
+
+  grid-column: span 7;
+  border: 0;
+  background: linear-gradient(
+    150deg,
+    var(--color-navy-2),
+    var(--color-navy) 70%
+  );
+  color: var(--color-white);
+}
+
+.w-delivery {
+  grid-column: span 5;
+}
+
+.w-industries {
+  grid-column: span 7;
+}
+
+.w-services {
+  --w-muted: var(--color-on-amber-muted);
+
+  grid-column: span 5;
+  border: 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-amber-light),
+    var(--color-amber) 60%
+  );
+  color: var(--color-navy);
+}
+
+.w-services::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: -70px;
+  bottom: -110px;
+  width: 280px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 30%);
+  pointer-events: none;
+}
+
+.w-label {
+  color: var(--w-muted);
+  font-family: var(--font-brand);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.w-card h3 {
+  max-width: 16ch;
+  color: var(--w-heading);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.w-delivery h3,
+.w-industries h3 {
+  max-width: none;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+}
+
+.w-card p {
+  max-width: 46ch;
+  color: var(--w-muted);
+}
+
+.w-services p {
+  max-width: 34ch;
+}
+
+.w-apps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.w-app {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.w-app .badge {
+  width: 52px;
+  height: 52px;
+  box-shadow:
+    0 0 0 1.5px rgb(255 255 255 / 35%),
+    0 12px 24px -12px rgb(0 0 0 / 50%);
+}
+
+.w-app small {
+  color: var(--color-on-navy-muted);
+  font-size: var(--text-label);
+  letter-spacing: 0.06em;
+}
+
+.w-chips,
+.w-industry-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.w-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--color-paper);
+  color: var(--color-heading);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.w-chip.solid {
+  border-color: var(--color-navy);
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+.w-chip.revealed {
+  border-color: rgb(22 54 99 / 18%);
+  background: var(--color-white);
+  color: var(--color-navy);
+}
+
+/*
+  "+3": a mouse hover or a click swaps the circle for the other industries.
+  MoreIndustries sets .open and the list's hidden attribute; the server HTML
+  ships it open, so the industries show without JavaScript.
+*/
+.w-more {
+  position: relative;
+  display: block;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  transition:
+    flex-basis 0.5s var(--ease-brand),
+    width 0.5s var(--ease-brand);
+}
+
+.w-more-trigger {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: var(--color-white);
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition:
+    color 0.22s ease,
+    background-color 0.22s ease,
+    transform 0.36s var(--ease-brand);
+}
+
+.w-more-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  animation: w-more-in 0.4s var(--ease-brand) both;
+}
+
+@keyframes w-more-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-4px);
+  }
+}
+
+.w-more.open {
+  flex-basis: 430px;
+  width: 430px;
+  max-width: 100%;
+}
+
+/* The open trigger turns see-through but stays clickable, so a tap closes it */
+.w-more.open .w-more-trigger {
+  background: transparent;
+  color: transparent;
+  transform: scale(0.72);
+}
+
+/* Closed: the "+3" button carries its own ring. Open: the button is
+   hidden, so the ring moves to the widened container (as in the prototype). */
+.w-more-trigger:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-full);
+}
+
+.w-more.open .w-more-trigger:focus-visible {
+  outline: none;
+}
+
+.w-more.open:has(:focus-visible) {
+  outline: 2.5px solid var(--color-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-full);
+}
+
+.w-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  color: var(--w-heading);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.w-products .w-link,
+.w-services .w-link {
+  align-self: flex-end;
+}
+
+.w-link svg {
+  transition: transform 0.3s var(--ease-brand);
+}
+
+a.w-card {
+  transition:
+    transform 0.4s var(--ease-brand),
+    box-shadow 0.4s var(--ease-brand);
+}
+
+a.w-card:hover {
+  box-shadow: 0 26px 50px -30px rgb(11 23 48 / 55%);
+  transform: translateY(-3px);
+}
+
+a.w-card:hover .w-link svg {
+  transform: translateX(4px);
+}
+
+.w-motto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgb(22 54 99 / 14%);
+}
+
+.w-gid {
+  color: var(--color-amber-text);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.w-own {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 10px;
+  text-align: right;
+}
+
+.w-own-title {
+  color: var(--color-navy);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 400;
+}
+
+.w-own p {
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 900px) {
+  .w-products,
+  .w-services,
+  .w-delivery,
+  .w-industries {
+    grid-column: 1 / -1;
+  }
+
+  .w-motto {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .w-own {
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .w-card {
+    padding: 24px;
+  }
+
+  .w-more.open {
+    flex-basis: 100%;
+    width: 100%;
+    height: auto;
+  }
+
+  .w-more-list {
+    position: static;
+    flex-wrap: wrap;
+    height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.w-card,
+  a.w-card:hover,
+  a.w-card:hover .w-link svg {
+    transform: none;
+    transition: none;
+  }
+
+  .w-more,
+  .w-more-trigger {
+    transition:
+      color 0.15s linear,
+      background-color 0.15s linear;
+  }
+}
+
+/* ---------- E-S1 Home: core values and How we approach ---------- */
+/* Both sit on the .home-flow surface below */
+.home-values,
+.home-process {
+  background: transparent;
+}
+
+.sec-head-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.sec-head-row .sec-head {
+  margin-bottom: 0;
+}
+
+.sec-head-row > .link-arrow {
+  flex: none;
+}
+
+@media (max-width: 640px) {
+  .sec-head-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/*
+  ---------- E-S1 Home: flowing background (CAP-7) ----------
+  The hero keeps its navy down to the doors' middle (they hang 120px below
+  the hero box); Capabilities, values and the process share one light surface with no
+  edges between them. The hero stays above it so the doors' lower half is
+  painted and clickable. News and the capture band keep their own surfaces.
+*/
+.home-hero {
+  z-index: 1;
+}
+
+/* Light from the doors' middle down, behind the cards: the navy stops there */
+.home-hero .doors::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0;
+  z-index: -1;
+  background: #f4f6fa;
+}
+
+.home-flow {
+  background: linear-gradient(180deg, #f4f6fa, var(--color-page));
+}
+
+.home-flow > :first-child {
+  padding-top: calc(120px + var(--spacing-section));
+}
+
+@media (max-width: 640px) {
+  .home-flow > :first-child {
+    padding-top: calc(120px + var(--spacing-section-mobile));
   }
 }

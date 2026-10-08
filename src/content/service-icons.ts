@@ -9,12 +9,12 @@ import {
   UserPlusIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
-import type { homeServices } from "@/content/home";
+import type { servicesSection } from "@/content/services";
 
-export type ServiceId = (typeof homeServices.cards)[number]["id"];
+export type ServiceId = (typeof servicesSection.services)[number]["id"];
 
 // Icon and variant per service card, as in the prototype: two amber-tinted "feature"
-// cards and one navy card. Used by Home and Services pages.
+// cards and one navy card. Used by the Services page.
 export const serviceIcons: Record<
   ServiceId,
   { icon: Icon; variant?: "feature" | "navy" }

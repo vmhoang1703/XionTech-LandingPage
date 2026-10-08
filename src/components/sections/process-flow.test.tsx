@@ -66,10 +66,10 @@ describe("ProcessFlow", () => {
       .map((item) => item.textContent);
     expect(items).toEqual([
       "Your requestAn idea, a brief or a requirement.",
-      "01DiscoveryWe learn your goals, users and scope.You receiveA clear scope and delivery plan.",
-      "02DesignWe shape flows, interfaces and architecture.You receiveA clickable prototype and technical design.",
-      "03DevelopmentWe build in agile sprints with open updates.You receiveWorking software every sprint.",
-      "04DeploymentWe release, monitor and keep improving.You receiveA live release with ongoing support.",
+      "01DiscoveryWorkshops to understand your goals, users, risks and scope.You receiveA clear scope, estimate and delivery plan.",
+      "02DesignUser flows, interfaces and architecture agreed before code is written.You receiveA clickable prototype and technical design.",
+      "03DevelopmentAgile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end.You receiveTested, working software every sprint.",
+      "04DeploymentA safe release, monitoring and improvement after launch.You receiveA live release with ongoing support.",
       "LaunchAnd we keep growing it together.",
     ]);
   });

@@ -31,9 +31,10 @@ describe("no JavaScript", () => {
 
     expect(html).toMatch(/^<html lang="en"/);
     expect(html).toMatch(
-      /<h1[^>]*>Every school community, <span class="hl">connected<\/span>\.<\/h1>/,
+      /<h1[^>]*>School apps and software teams that <span class="hl">get IT done<\/span>\.<\/h1>/,
     );
-    expect(html).toContain("Explore our products");
+    expect(html).toContain("Get in touch");
+    expect(html).toContain("How we approach.");
     expect(html).toContain("Have something you want to build?");
     expect(html.indexOf("Latest from XionTech.")).toBeGreaterThan(-1);
     expect(html.indexOf("Latest from XionTech.")).toBeLessThan(

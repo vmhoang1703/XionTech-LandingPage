@@ -14,8 +14,8 @@ import {
   aboutOffices,
   aboutStats,
   aboutStory,
-  aboutValues,
 } from "@/content/about";
+import { aboutValues } from "@/content/values";
 
 export const metadata: Metadata = {
   title: aboutMeta.title,

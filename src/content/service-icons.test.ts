@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { homeServices } from "@/content/home";
+import { servicesSection } from "@/content/services";
 import { serviceIcons } from "./service-icons";
 
 describe("serviceIcons", () => {
   it("has all eight service ids mapped to an icon", () => {
-    const expectedIds = homeServices.cards.map((card) => card.id);
+    const expectedIds = servicesSection.services.map((service) => service.id);
 
     for (const id of expectedIds) {
       expect(serviceIcons[id]).toBeDefined();

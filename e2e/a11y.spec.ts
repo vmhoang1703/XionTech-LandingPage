@@ -247,6 +247,42 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
   });
 });
 
+test.describe("reflow", { tag: "@a11y" }, () => {
+  test("Home at 390px: no sideways scroll, stacked cards, two figures per row", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/");
+    const layout = await page.evaluate(() => {
+      const boxes = (selector: string) =>
+        [...document.querySelectorAll(selector)].map((el) => {
+          const { left, top } = el.getBoundingClientRect();
+          return { left: Math.round(left), top: Math.round(top) };
+        });
+      const columns = getComputedStyle(
+        document.querySelector(".home-stats ul") as Element,
+      ).gridTemplateColumns.split(" ").length;
+      return {
+        overflow: document.documentElement.scrollWidth - window.innerWidth,
+        columns,
+        cards: boxes(".w-card"),
+        doors: boxes(".door"),
+      };
+    });
+    const stacked = (items: { left: number; top: number }[]) =>
+      items.every(
+        (b, i) =>
+          b.left === items[0].left && (i === 0 || b.top > items[i - 1].top),
+      );
+    expect(layout.overflow, "no sideways scroll").toBeLessThanOrEqual(0);
+    expect(layout.columns, "figures per row").toBe(2);
+    expect(layout.cards, "Capabilities cards").toHaveLength(4);
+    expect(stacked(layout.cards), "Capabilities cards stack").toBe(true);
+    expect(layout.doors, "door cards").toHaveLength(2);
+    expect(stacked(layout.doors), "door cards stack").toBe(true);
+  });
+});
+
 /** Submit the form that holds `field` empty and check its error wiring. */
 async function expectErrorWiring(page: Page, fieldSelector: string) {
   const field = page.locator(fieldSelector).first();
@@ -284,5 +320,60 @@ test.describe("form errors", { tag: "@a11y" }, () => {
     const response = await page.goto(href);
     expect(response?.status(), `${href} answers 200`).toBe(200);
     await expectErrorWiring(page, "#a-name");
+  });
+});
+
+test.describe("Home hero doors and +3 reveal", { tag: "@a11y" }, () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test("doors straddle the hero and the +3 list opens and closes", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const join = await page.evaluate(() => {
+      const doors = document.querySelector(".home-hero .doors") as HTMLElement;
+      const grid = doors.querySelector(".doors-grid") as HTMLElement;
+      const box = doors.getBoundingClientRect();
+      const layerTop = Number.parseFloat(
+        getComputedStyle(doors, "::before").top,
+      );
+      return {
+        columns: getComputedStyle(grid)
+          .gridTemplateColumns.split(" ")
+          .filter(Boolean).length,
+        layerOffset: Math.abs(layerTop - box.height / 2),
+      };
+    });
+    expect(join.columns, "two doors side by side").toBe(2);
+    expect(
+      join.layerOffset,
+      "navy stops at the doors' middle",
+    ).toBeLessThanOrEqual(4);
+
+    for (const door of await page.locator(".home-hero .door").all()) {
+      await door.scrollIntoViewIfNeeded();
+      const hit = await door.evaluate((link) => {
+        const box = link.getBoundingClientRect();
+        const el = document.elementFromPoint(
+          box.left + box.width / 2,
+          box.top + box.height * 0.85,
+        );
+        return link.contains(el);
+      });
+      expect(hit, "the door's lower half is its own link").toBe(true);
+    }
+
+    const trigger = page.getByRole("button", { name: /^\+3 more industries/ });
+    const list = page.locator(".w-more-list");
+    await trigger.scrollIntoViewIfNeeded();
+    await trigger.click();
+    await expect(list).toBeVisible();
+    await trigger.click();
+    await expect(list).toBeHidden();
+    await trigger.click();
+    await expect(list).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(list).toBeHidden();
   });
 });

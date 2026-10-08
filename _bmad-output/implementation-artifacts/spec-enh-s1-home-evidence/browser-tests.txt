@@ -1,0 +1,7 @@
+
+Running 2 tests using 1 worker
+
+  ok 1 [a11y] › e2e\a11y.spec.ts:251:7 › reflow › Home at 390px: no sideways scroll, stacked cards, two figures per row @a11y (949ms)
+  ok 2 [a11y] › e2e\a11y.spec.ts:329:7 › Home hero doors and +3 reveal › doors straddle the hero and the +3 list opens and closes @a11y (3.0s)
+
+  2 passed (15.1s)

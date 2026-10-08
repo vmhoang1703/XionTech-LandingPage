@@ -1,21 +1,27 @@
-import { FrontDoors } from "@/components/home/front-doors";
+import type { Metadata } from "next";
+import { Capabilities } from "@/components/home/capabilities";
 import { HomeHero } from "@/components/home/home-hero";
 import { HomeProcess } from "@/components/home/home-process";
-import { ProductBento } from "@/components/home/product-bento";
-import { ServiceCards } from "@/components/home/service-cards";
+import { HomeValues } from "@/components/home/home-values";
 import { HomeContact } from "@/components/contact/home-contact";
 import { HomeNews } from "@/components/news/home-news";
 
-// Home sections from Sammy's stories above; Andy's contact section stays
-// last (E-A4 CAP-1).
+export const metadata: Metadata = {
+  title: "XionTech | School Platforms & Software Outsourcing in Vietnam",
+};
+
+// Home (E-S1): the hero with its doors, then Capabilities, core values and
+// the 4-D process on one flowing light surface. Andy's news row and contact
+// section keep their own surfaces and stay last (E-A4 CAP-1).
 export default function Home() {
   return (
     <>
       <HomeHero />
-      <FrontDoors />
-      <ProductBento />
-      <ServiceCards />
-      <HomeProcess />
+      <div className="home-flow">
+        <Capabilities />
+        <HomeValues />
+        <HomeProcess />
+      </div>
       <HomeNews />
       <HomeContact />
     </>

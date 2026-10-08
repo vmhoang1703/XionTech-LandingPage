@@ -22,18 +22,29 @@ afterEach(() => {
 });
 
 describe("HomeProcess", () => {
-  it("is a navy section with the grid texture, the label and the heading", () => {
+  it("is a light region named How we approach. with the 4-D lede", () => {
     render(<HomeProcess />);
 
-    const band = screen.getByRole("region", {
-      name: "From your request to launch, in four steps.",
-    });
-    for (const name of ["sec", "surface-navy", "gridbg"]) {
-      expect(band.classList.contains(name)).toBe(true);
-    }
-    const head = band.querySelector(".sec-head");
-    expect(head?.querySelector(".label")?.textContent).toBe("How we work");
-    expect(head?.querySelector("h2")?.id).toBe("process-title");
+    const region = screen.getByRole("region", { name: "How we approach." });
+    expect(region.classList.contains("sec")).toBe(true);
+    expect(region.classList.contains("surface-navy")).toBe(false);
+    expect(region.classList.contains("gridbg")).toBe(false);
+    expect(region.querySelector(".label")).toBeNull();
+    expect(region.querySelector("h2")?.textContent).toBe("How we approach.");
+    expect(region.querySelector(".lede")?.textContent).toContain(
+      "Our 4-D process (Discovery, Design, Development, Deployment)",
+    );
+  });
+
+  it("puts the See how we work link to /services#process on the heading row", () => {
+    render(<HomeProcess />);
+
+    const region = screen.getByRole("region", { name: "How we approach." });
+    const link = screen.getByRole("link", { name: "See how we work" });
+    expect(link.getAttribute("href")).toBe("/services#process");
+    expect(link.parentElement?.classList.contains("sec-head-row")).toBe(true);
+    expect(link.parentElement).toBe(region.querySelector(".sec-head-row"));
+    expect(region.querySelector(".sec-head-row .sec-head h2")).not.toBeNull();
   });
 
   it("uses only classes that globals.css defines", () => {

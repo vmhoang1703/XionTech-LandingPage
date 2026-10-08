@@ -1,0 +1,43 @@
+title: XionTech | School Platforms & Software Outsourcing in Vietnam
+section order: School apps and software teams that get IT done. > Capabilities. > Our core values. > How we approach. > Latest from XionTech. > See it working at your school.
+H1: "School apps and software teams that get IT done." | 1 H1 on page
+highlight: "get IT done" color rgb(255, 207, 6) | ::after content none
+label above H1: none
+device mockups: 0
+hero buttons: "Get in touch" -> /demo
+figures heading: Experience you can count on
+figures cols 1280: 5
+doors vs navy: doors 838–1188 | middle 1013 | light layer starts 1013 | navy ends at door middle: true
+doors grid 1280: 587px 587px (2 columns)
+doors lower half clickable: door-products true, door-services true
+products door: href /products | bg rgba(0, 0, 0, 0) | h2 color rgb(22, 54, 99) | badges P-Hub,S-Hub,IoT | chips Parent Hub,Staff Hub,IoT,AI Tutor
+services door: href /services | kicker "Outsourcing services" | chips Product Engineering,AI-Driven Analytics,Staffing,Low-code,Cloud,+3 more
+products door focus: not reached (A)
+capabilities: h2 "Capabilities." | lede "Why XionTech: the core capabilities behind every school app and every product we deliver." | cards Products for schools / Two offices, one working day. / Deep in education. Built to adapt. / Your software delivery team
+capabilities grid 1280: 689@561, 487@561, 689@899, 487@899
+clocks: GLOBAL DELIVERY Two offices, one working day. Teams across time zones keep delivery moving with practical overlap. Plano 04:06 HCMC 16:06
++3 before: aria-expanded false | name "+3 more industries: Healthcare, Logistics and Private Equity" | list visible false
++3 after click: aria-expanded true | list visible true | "Healthcare Logistics Private Equity"
++3 second click: aria-expanded false | list visible false
++3 Enter: aria-expanded true | focus on trigger true
++3 after Tab away: aria-expanded false | list visible false
++3 Space: aria-expanded true
++3 Escape: aria-expanded false | list visible false
+motto: Get IT Done Built with ownership. Ownership of our commitments and pride in quality.
+values: id "" | lede "What guides how we work." | Startup Spirit, Client Centricity, Integrity First, Innovation Driven, "Get IT Done" Attitude [feat], People-Centered Culture
+process: classes sec home-process | bg rgba(0, 0, 0, 0) | label none | lede "Our 4-D process (Discovery, Design, Development, Deployment)…"
+see how we work: "See how we work" -> /services#process | in .sec-head-row 1813–1934 | link 1909–1934 x 1072–1236 | right of heading block (ends 771): true | aligned to row bottom: true
+removed sections: bento 0 | svc-grid 0 | "Four apps" false | "Eight ways" false
+flow surfaces: linear-gradient(rgb(244, 246, 250), rgb(247, 249, 253)) | children bg rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)
+sideways scroll 1280: false
+figures cols 768: 3
+figures cols 390: 2
+doors cols 390: 1
+capabilities widths 390: 358, 358, 358, 358
+see how we work 390: below H2: true
+sideways scroll 390: false
++3 touch tap 1: aria-expanded true | list visible true
++3 touch tap 2: aria-expanded false | list visible false
+no-JS industries: list visible true | "Healthcare Logistics Private Equity" | clocks "GLOBAL DELIVERY Two offices, one working day. Teams across time zones keep delivery moving with practical overlap. Plano US Central HCMC GMT+7"
+/about values: 6 values
+/services process: h2 "From your request to launch, in four steps." | 03 "03DevelopmentAgile sprints with regular demos. Testing and quality assurance (QA"

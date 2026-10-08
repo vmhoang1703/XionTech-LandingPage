@@ -365,3 +365,11 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a4-forms-bands.md`
   summary: The Home contact form, the Demo form and the job form each carry their own copy of the field-error, live-region and focus code; a shared hook would stop them drifting apart.
   evidence: E-A4 review (blind hunter); `home-contact-form.tsx`, `contact-form.tsx`, `job-application-form.tsx`. Low, after the demo.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-s1-home.md`
+  summary: The Home "+3" industries list renders open in the server HTML and collapses on hydration, a small below-the-fold layout shift on every load.
+  evidence: `src/components/home/more-industries.tsx` sets `shown = !hydrated || …` so the list is readable without JavaScript (required by `src/lib/design/contrast.test.ts` and the spec's no-JS row); a `@media (scripting: none)` rule could open it without the flash but must avoid the hidden-content patterns that test rejects.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-s1-home.md`
+  summary: The Home "+3" list revealed by mouse hover alone cannot be dismissed with Escape when keyboard focus is elsewhere (WCAG 1.4.13 dismissible).
+  evidence: `src/components/home/more-industries.tsx` handles Escape on the reveal wrapper only; moving the pointer away still hides it. A document keydown listener while the list is shown would close the gap.
