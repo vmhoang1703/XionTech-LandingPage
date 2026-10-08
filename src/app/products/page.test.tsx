@@ -26,6 +26,8 @@ describe("Products page", () => {
     expect(sections[0].classList.contains("eco-hero")).toBe(true);
     expect(sections[1].id).toBe("apps");
     expect(sections[2].classList.contains("capture")).toBe(true);
+    // E-A5 CAP-5: the navy band from E-A4.
+    expect(sections[2].classList.contains("surface-navy")).toBe(true);
     expect(
       screen.getByRole("heading", {
         level: 2,

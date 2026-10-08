@@ -233,7 +233,10 @@ describe("JobApplicationForm sending", () => {
     submit();
     await settle();
     const panel = screen.getByRole("status");
-    expect(panel.textContent).toContain("Thank you!");
+    expect(panel.textContent).toContain("Summit reached. Thank you!");
+    const summit = panel.querySelector(".summit");
+    expect(summit?.getAttribute("aria-hidden")).toBe("true");
+    expect(summit?.querySelector("svg .sm-flag")).not.toBeNull();
     expect(panel.textContent).toContain("will be in touch if it's a match.");
     expect(panel.getAttribute("tabindex")).toBe("-1");
     expect(document.activeElement).toBe(panel);

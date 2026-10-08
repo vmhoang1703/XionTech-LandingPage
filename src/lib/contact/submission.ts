@@ -7,18 +7,28 @@ import {
   isValidEmail,
   validateContact,
   type ContactErrors,
-  type ContactType,
+  type RequestKind,
 } from "./contact-rules";
 
 /** The email band: which form the visitor goes to next, and their email. */
 export interface CaptureSubmission {
   type: "capture";
-  kind: ContactType;
+  kind: RequestKind;
   email: string;
 }
 
+/** The Home contact form: a message with an optional phone number. */
+export interface GeneralSubmission {
+  type: "general";
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 /** A request that passed every check and is ready to mail. */
-export type ValidSubmission = ContactSubmission | CaptureSubmission;
+export type ValidSubmission =
+  ContactSubmission | CaptureSubmission | GeneralSubmission;
 
 /**
  * `ok` with the values to send, `ok: false` with field errors in the client
@@ -116,6 +126,24 @@ function readCapture(raw: Record<string, unknown>): ParsedSubmission {
   return { ok: true, submission: { type: "capture", kind, email } };
 }
 
+/** The Home contact form's message; fields of other types are ignored. */
+function readGeneral(raw: Record<string, unknown>): ParsedSubmission {
+  const submission: GeneralSubmission = {
+    type: "general",
+    name: text(raw.name).trim(),
+    email: text(raw.email).trim(),
+    phone: text(raw.phone).trim(),
+    message: text(raw.message),
+  };
+  const errors = validateContact(
+    "general",
+    { ...submission, org: "", date: "" },
+    "",
+  );
+  if (Object.keys(errors).length > 0) return { ok: false, errors };
+  return { ok: true, submission };
+}
+
 /**
  * Check an untrusted request body with the rules of the form. Only the fields
  * of the chosen tab (or of the email band) are read. `serverToday` is the
@@ -128,9 +156,17 @@ export function parseSubmission(
   if (typeof body !== "object" || body === null) return bad();
   const raw = body as Record<string, unknown>;
   const { type } = raw;
-  if (type !== "demo" && type !== "project" && type !== "capture") return bad();
+  if (
+    type !== "demo" &&
+    type !== "project" &&
+    type !== "capture" &&
+    type !== "general"
+  ) {
+    return bad();
+  }
   if (raw.website) return { ok: false, honeypot: true };
   if (type === "capture") return readCapture(raw);
+  if (type === "general") return readGeneral(raw);
 
   // Role has no error slot in the form; its 200-character cap is an input
   // `maxLength`, so a longer value did not come from the form.
@@ -149,7 +185,11 @@ export function parseSubmission(
 
   const errors = validateContact(
     type,
-    { ...shared, date: submission.type === "demo" ? submission.date : "" },
+    {
+      ...shared,
+      phone: "",
+      date: submission.type === "demo" ? submission.date : "",
+    },
     earliestToday(serverToday),
   );
   if (Object.keys(errors).length > 0) return { ok: false, errors };

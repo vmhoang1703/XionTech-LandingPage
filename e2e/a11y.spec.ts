@@ -274,9 +274,9 @@ test.describe("form errors", { tag: "@a11y" }, () => {
     await expectErrorWiring(page, 'main form input[type="email"]');
   });
 
-  test("capture band on Home", async ({ page }) => {
+  test("contact form on Home", async ({ page }) => {
     await page.goto("/");
-    await expectErrorWiring(page, ".capture input[type=email]");
+    await expectErrorWiring(page, "#contact input[type=email]");
   });
 
   test("job application form", async ({ page }) => {

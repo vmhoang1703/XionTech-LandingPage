@@ -1,0 +1,24 @@
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/components/contact/capture-band.tsx (100%)
+src/components/contact/contact-form.tsx (100%)
+src/components/contact/home-contact-form.tsx (100%)
+src/components/contact/home-contact.tsx (100%)
+src/components/contact/post-submission.ts (100%)
+src/components/contact/summit-mark.tsx (100%)
+src/lib/contact/contact-rules.ts (100%)
+src/lib/contact/delivery.ts (100%)
+src/lib/contact/submission.ts (100%)
+-------------
+Total:   104 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 20 changed file(s) with branch coverage >= 80% vs origin/develop.

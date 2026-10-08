@@ -3,11 +3,11 @@ import { HomeHero } from "@/components/home/home-hero";
 import { HomeProcess } from "@/components/home/home-process";
 import { ProductBento } from "@/components/home/product-bento";
 import { ServiceCards } from "@/components/home/service-cards";
-import { CaptureBand } from "@/components/contact/capture-band";
+import { HomeContact } from "@/components/contact/home-contact";
 import { HomeNews } from "@/components/news/home-news";
 
-// Home sections from Sammy's stories above; Andy's demo capture band stays
-// last (FR-14, Story 3.7 CAP-4).
+// Home sections from Sammy's stories above; Andy's contact section stays
+// last (E-A4 CAP-1).
 export default function Home() {
   return (
     <>
@@ -17,7 +17,7 @@ export default function Home() {
       <ServiceCards />
       <HomeProcess />
       <HomeNews />
-      <CaptureBand kind="demo" />
+      <HomeContact />
     </>
   );
 }

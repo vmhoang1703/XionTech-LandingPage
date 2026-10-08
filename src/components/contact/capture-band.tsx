@@ -7,7 +7,7 @@ import {
   CONTACT_ERRORS,
   EMAIL_MAX_LENGTH,
   isValidEmail,
-  type ContactType,
+  type RequestKind,
 } from "@/lib/contact/contact-rules";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { CONTACT_STRINGS } from "./contact-strings";
@@ -16,10 +16,17 @@ import { postSubmission } from "./post-submission";
 const S = CONTACT_STRINGS.capture;
 const FORM = CONTACT_STRINGS.form;
 
-const DESTINATIONS: Record<ContactType, string> = {
+const DESTINATIONS: Record<RequestKind, string> = {
   demo: "/demo#form",
   project: "/demo#project",
 };
+
+/** Plain looks have no corner rings and an amber button (E-A4). */
+const LOOK_SURFACES = {
+  white: "surface-paper",
+  page: "hero-light",
+  navy: "surface-navy",
+} as const;
 
 const MESSAGES = {
   email: CONTACT_ERRORS.email,
@@ -40,9 +47,11 @@ function rememberEmail(email: string) {
 
 export function CaptureBand({
   kind,
+  look,
   copy: copyOverride,
 }: Readonly<{
-  kind: ContactType;
+  kind: RequestKind;
+  look?: keyof typeof LOOK_SURFACES;
   copy?: { heading: string; lede: string };
 }>) {
   const router = useRouter();
@@ -105,7 +114,14 @@ export function CaptureBand({
   }
 
   return (
-    <section className="capture surface-amber" aria-labelledby="cap-h">
+    <section
+      className={
+        look
+          ? `capture capture-plain ${LOOK_SURFACES[look]}`
+          : "capture surface-amber"
+      }
+      aria-labelledby="cap-h"
+    >
       <div className="wrap cap-grid">
         <div>
           <h2 id="cap-h">{copy.heading}</h2>
@@ -132,7 +148,7 @@ export function CaptureBand({
             />
             <button
               ref={submitRef}
-              className="btn btn-navy"
+              className={look ? "btn btn-primary" : "btn btn-navy"}
               type="submit"
               disabled={status === "sending"}
             >

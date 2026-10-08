@@ -1,0 +1,16 @@
+home last section id=contact; capture band present=false
+contact links: vinni.tran@newxion.com|mailto:vinni.tran@newxion.com|44px ; +1 469 322 9899|tel:+14693229899|44px ; +84 908 107 552|tel:+84908107552|44px
+phone placeholder: (+1) 469 322 9899
+button rest shadow=none; hover bg=rgb(240, 179, 0) shadow=none transform=none
+empty submit: invalid=name,email,message; focus=name; posts=0
+phone 12: true|Please enter a valid phone number, for example (+1) 469 322 9899.; posts=0
+sent: posts=1 body={"type":"general","name":"Walk Test","email":"walk@example.com","phone":"","message":"Hello from the walk.","website":""}
+success: "Summit reached. Thanks — we've received your message.Our team will review what you shared and get in touch with you." focused=true summit aria-hidden=true
+320px: scrollWidth=320 clientWidth=320
+reduced motion: flag animation-name=none
+normal motion: flag animation-name=flagUp
+/about band: {"cls":"capture capture-plain surface-paper","bg":"rgb(253, 253, 254) none","before":"none","btn":"btn btn-primary","consent":"We only use your email to arrange your demo. Privacy policy"}
+/about focus ring: rgb(22, 54, 99) 0px 0px 0px 3px
+/news band: {"cls":"capture capture-plain hero-light","bg":"rgb(247, 249, 253) none","before":"none","btn":"btn btn-primary","consent":"We only use your email to arrange your demo. Privacy policy"}
+/news focus ring: rgb(22, 54, 99) 0px 0px 0px 3px
+/demo success: "Summit reached. Thank you!We will be in touch soon."

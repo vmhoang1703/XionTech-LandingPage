@@ -79,6 +79,30 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+describe("CaptureBand look", () => {
+  const section = () => screen.getByRole("region").className;
+
+  it("keeps the amber band and the navy button when no look is given", () => {
+    render(<CaptureBand kind="demo" />);
+    expect(section()).toContain("surface-amber");
+    expect(section()).not.toContain("capture-plain");
+    expect(button().className).toBe("btn btn-navy");
+  });
+
+  it.each([
+    ["white", "surface-paper"],
+    ["page", "hero-light"],
+    ["navy", "surface-navy"],
+  ] as const)("look %s is plain, with a primary button", (look, surface) => {
+    render(<CaptureBand kind="demo" look={look} />);
+    expect(section()).toContain(surface);
+    expect(section()).toContain("capture-plain");
+    expect(section()).not.toContain("surface-amber");
+    expect(button().className).toBe("btn btn-primary");
+    expect(screen.getByRole("link", { name: "Privacy policy" })).toBeTruthy();
+  });
+});
+
 describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
   const band = BANDS[kind];
 

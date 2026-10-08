@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircleIcon, PaperPlaneTiltIcon } from "@phosphor-icons/react";
+import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import {
   useEffect,
@@ -16,30 +16,34 @@ import {
   TEXT_MAX_LENGTH,
   validateContact,
   type ContactErrors,
-  type ContactField,
-  type ContactType,
+  type RequestKind,
 } from "@/lib/contact/contact-rules";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { CONTACT_STRINGS } from "./contact-strings";
-import { FIELD_ORDER, postSubmission } from "./post-submission";
+import {
+  FIELD_ORDER,
+  postSubmission,
+  type DemoFormField,
+} from "./post-submission";
+import { SummitMark } from "./summit-mark";
 
 const S = CONTACT_STRINGS.form;
 
-const TYPES: readonly ContactType[] = ["demo", "project"];
-const TAB_LABELS: Record<ContactType, string> = {
+const TYPES: readonly RequestKind[] = ["demo", "project"];
+const TAB_LABELS: Record<RequestKind, string> = {
   demo: S.tabDemo,
   project: S.tabProject,
 };
 
 /** Fields in form order, so the first invalid one gets focus. */
-const FIELD_IDS: Record<ContactField, string> = {
+const FIELD_IDS: Record<DemoFormField, string> = {
   name: "f-name",
   email: "f-email",
   org: "f-org",
   date: "f-date",
   message: "f-msg",
 };
-const errorId = (field: ContactField) => `${FIELD_IDS[field]}-err`;
+const errorId = (field: DemoFormField) => `${FIELD_IDS[field]}-err`;
 
 interface SharedValues {
   name: string;
@@ -71,7 +75,7 @@ function localToday(): string {
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 }
 
-const typeFromHash = (hash: string): ContactType =>
+const typeFromHash = (hash: string): RequestKind =>
   hash === "#project" ? "project" : "demo";
 
 function text(data: FormData, key: string): string {
@@ -79,7 +83,7 @@ function text(data: FormData, key: string): string {
   return typeof value === "string" ? value : "";
 }
 
-function readValues(data: FormData, type: ContactType) {
+function readValues(data: FormData, type: RequestKind) {
   const shared: SharedValues = {
     name: text(data, "name").trim(),
     email: text(data, "email").trim(),
@@ -109,7 +113,7 @@ function readValues(data: FormData, type: ContactType) {
 
 function withoutError(
   errors: ContactErrors,
-  field: ContactField,
+  field: DemoFormField,
 ): ContactErrors {
   if (!errors[field]) return errors;
   const next = { ...errors };
@@ -139,7 +143,7 @@ export function ContactForm() {
   const hash = useSyncExternalStore(subscribeToHash, readHash, serverValue);
   const today = useSyncExternalStore(noSubscribe, localToday, serverValue);
   // A tab picked by the visitor holds until the hash changes again.
-  const [choice, setChoice] = useState<{ type: ContactType; hash: string }>();
+  const [choice, setChoice] = useState<{ type: RequestKind; hash: string }>();
   const type = choice?.hash === hash ? choice.type : typeFromHash(hash);
 
   const [errors, setErrors] = useState<ContactErrors>({});
@@ -185,7 +189,7 @@ export function ContactForm() {
     }
   }, [hash]);
 
-  function selectType(next: ContactType) {
+  function selectType(next: RequestKind) {
     if (next === type) return;
     setChoice({ type: next, hash });
     // The date is the only validated field on a single tab (Product demo).
@@ -230,7 +234,11 @@ export function ContactForm() {
     const values = readValues(data, type);
     const found = validateContact(
       type,
-      { ...values, date: values.type === "demo" ? values.date : "" },
+      {
+        ...values,
+        phone: "",
+        date: values.type === "demo" ? values.date : "",
+      },
       localToday(),
     );
     setFailure(null);
@@ -250,13 +258,13 @@ export function ContactForm() {
     else setFailure(result.kind);
   }
 
-  const invalidProps = (field: ContactField) =>
+  const invalidProps = (field: DemoFormField) =>
     errors[field]
       ? { "aria-invalid": true, "aria-describedby": errorId(field) }
       : {};
-  const fieldClass = (field: ContactField, extra = "") =>
+  const fieldClass = (field: DemoFormField, extra = "") =>
     ["field", extra, errors[field] ? "bad" : ""].filter(Boolean).join(" ");
-  const fieldError = (field: ContactField) =>
+  const fieldError = (field: DemoFormField) =>
     errors[field] ? (
       <span id={errorId(field)} className="err">
         {errors[field]}
@@ -268,7 +276,7 @@ export function ContactForm() {
       <>
         <h2>{S.heading}</h2>
         <div ref={panelRef} className="form-ok" role="status" tabIndex={-1}>
-          <CheckCircleIcon weight="fill" aria-hidden="true" />
+          <SummitMark />
           <h3>{S.successHeading}</h3>
           <p>{S.successText}</p>
         </div>

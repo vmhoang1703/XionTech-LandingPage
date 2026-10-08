@@ -70,6 +70,14 @@ const projectBody = {
   website: "",
 };
 
+const generalBody = {
+  type: "general",
+  ...VISITOR,
+  phone: "",
+  message: "Hello team",
+  website: "",
+};
+
 function post(body: unknown, ip: string = IP): Request {
   return new Request("http://localhost/api/contact", {
     method: "POST",
@@ -183,6 +191,38 @@ describe("POST /api/contact valid send", () => {
       to: ENV.CONTACT_INBOX,
       subject: "Outsourcing project request: Sunrise School",
     });
+  });
+
+  it("answers 200 and sends one mail to the inbox for a general message", async () => {
+    const response = await POST(post(generalBody));
+
+    expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
+    expect(sendMailMock).toHaveBeenCalledTimes(1);
+    expect(sendMailMock.mock.calls[0][0]).toMatchObject({
+      to: ENV.CONTACT_INBOX,
+      replyTo: VISITOR.email,
+      subject: "Contact message: Ana Tran",
+    });
+  });
+
+  it("answers 400 with a phone error for phone 12 and sends nothing", async () => {
+    const response = await POST(post({ ...generalBody, phone: "12" }));
+
+    expect(await answer(response)).toEqual({
+      status: 400,
+      body: { errors: { phone: CONTACT_ERRORS.phone } },
+    });
+    expectNothingSent();
+  });
+
+  it("answers 400 { error: send } for the type newsletter", async () => {
+    const response = await POST(post({ ...generalBody, type: "newsletter" }));
+
+    expect(await answer(response)).toEqual({
+      status: 400,
+      body: { error: "send" },
+    });
+    expectNothingSent();
   });
 
   it("checks the limits with hashes of the client IP and the email, not the raw values", async () => {

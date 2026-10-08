@@ -1066,6 +1066,29 @@
     color: inherit;
   }
 
+  /* E-A4 plain capture bands */
+  .capture-plain::before {
+    content: none;
+  }
+
+  .capture-plain .cap-row {
+    border: 0;
+    box-shadow: 0 16px 30px -18px rgb(22 54 99 / 0.35);
+  }
+
+  /* The row stays paper on every surface, so its text uses the paper tokens. */
+  .capture-plain .cap-row input {
+    color: var(--paper-text);
+  }
+
+  .capture-plain .cap-row:focus-within {
+    box-shadow: 0 0 0 3px var(--color-focus);
+  }
+
+  .capture-plain.surface-navy .cap-form .err {
+    color: var(--color-error-on-navy);
+  }
+
   @media (width <= --theme(--breakpoint-md)) {
     .cap-grid {
       grid-template-columns: 1fr;
@@ -1098,10 +1121,55 @@
     text-align: center;
   }
 
-  .form-ok svg {
+  /* E-A4 summit success: a flag goes up on the summit (prototype site.css:1280-1288). */
+  .summit {
+    width: 120px;
     margin-inline: auto;
-    font-size: 3rem;
-    color: var(--color-navy);
+  }
+
+  .summit svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .sm-range {
+    fill: none;
+    stroke: var(--color-navy);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+
+  .sm-pole {
+    stroke: var(--color-navy);
+    stroke-width: 2;
+  }
+
+  .sm-flag {
+    fill: var(--color-amber);
+    transform-box: fill-box;
+    transform-origin: left center;
+  }
+
+  .form-ok .sm-flag {
+    animation: flagUp 0.9s 0.2s var(--ease-brand) both;
+  }
+
+  /* No opacity 0 step: the flag stays visible even if the animation never runs. */
+  @keyframes flagUp {
+    from {
+      transform: translateY(14px) scaleX(0.2);
+    }
+
+    to {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .form-ok .sm-flag {
+      animation: none;
+    }
   }
 
   .form-ok h3 {
@@ -1113,6 +1181,111 @@
 
   .form-ok p {
     color: var(--color-muted);
+  }
+
+  /*
+    E-A4 Home contact (prototype site.css:572-592): the section picks up the
+    light grey of the news row above and warms into amber towards the footer.
+    The stop colours #fdf3d6 and #fce6a8 are the prototype's own values.
+  */
+  .sec.contact {
+    background: linear-gradient(
+      180deg,
+      var(--color-mist-end) 0%,
+      #fdf3d6 22%,
+      #fce6a8 55%,
+      var(--color-amber-light) 100%
+    );
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .contact-intro h2 {
+    max-width: 14ch;
+  }
+
+  .contact-intro .lede {
+    margin-top: 16px;
+  }
+
+  .contact-direct {
+    display: grid;
+    gap: 2px;
+    margin-top: 32px;
+    list-style: none;
+  }
+
+  .contact-direct li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--text-body-sm);
+    color: var(--color-text);
+  }
+
+  .contact-direct svg {
+    flex: none;
+    font-size: 1.2rem;
+    color: var(--color-navy);
+  }
+
+  .contact-direct a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--spacing-tap-target);
+    font-weight: 500;
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-card textarea {
+    height: auto;
+    min-height: 150px;
+  }
+
+  .field .opt {
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  .contact-card .form-submit {
+    margin-top: 24px;
+  }
+
+  /* Flat button: no glow, no lift */
+  .contact-card .form-submit,
+  .contact-card .form-submit:hover:not(:disabled),
+  .contact-card .form-submit:active {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .contact-card .form-submit:hover:not(:disabled) {
+    background: var(--color-amber-deep);
+  }
+
+  @media (width <= 900px) {
+    .contact-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+  }
+
+  /* At 320px the label is wider than the card: tighter padding, and wrap if still too wide */
+  @media (width < --theme(--breakpoint-sm)) {
+    .contact-card .form-submit {
+      max-width: 100%;
+      padding-inline: 18px;
+      white-space: normal;
+    }
   }
 
   /*
