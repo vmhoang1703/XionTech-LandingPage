@@ -247,6 +247,42 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
   });
 });
 
+test.describe("reflow", { tag: "@a11y" }, () => {
+  test("Home at 390px: no sideways scroll, stacked cards, two figures per row", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/");
+    const layout = await page.evaluate(() => {
+      const boxes = (selector: string) =>
+        [...document.querySelectorAll(selector)].map((el) => {
+          const { left, top } = el.getBoundingClientRect();
+          return { left: Math.round(left), top: Math.round(top) };
+        });
+      const columns = getComputedStyle(
+        document.querySelector(".home-stats ul") as Element,
+      ).gridTemplateColumns.split(" ").length;
+      return {
+        overflow: document.documentElement.scrollWidth - window.innerWidth,
+        columns,
+        cards: boxes(".w-card"),
+        doors: boxes(".door"),
+      };
+    });
+    const stacked = (items: { left: number; top: number }[]) =>
+      items.every(
+        (b, i) =>
+          b.left === items[0].left && (i === 0 || b.top > items[i - 1].top),
+      );
+    expect(layout.overflow, "no sideways scroll").toBeLessThanOrEqual(0);
+    expect(layout.columns, "figures per row").toBe(2);
+    expect(layout.cards, "Capabilities cards").toHaveLength(4);
+    expect(stacked(layout.cards), "Capabilities cards stack").toBe(true);
+    expect(layout.doors, "door cards").toHaveLength(2);
+    expect(stacked(layout.doors), "door cards stack").toBe(true);
+  });
+});
+
 /** Submit the form that holds `field` empty and check its error wiring. */
 async function expectErrorWiring(page: Page, fieldSelector: string) {
   const field = page.locator(fieldSelector).first();
