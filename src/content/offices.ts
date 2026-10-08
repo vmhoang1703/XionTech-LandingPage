@@ -62,7 +62,10 @@ export type FooterOffice = Pick<Office, "id" | "name" | "addressLines"> & {
   contacts: OfficeContact[];
 };
 
-const contactByPrefix = (office: Office, prefix: string): OfficeContact => {
+export const contactByPrefix = (
+  office: Office,
+  prefix: string,
+): OfficeContact => {
   const contact = office.contacts.find(({ href }) => href.startsWith(prefix));
   if (!contact) {
     throw new Error(`Office ${office.id} has no ${prefix} contact`);

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { footerOffices, hcmc, offices, plano } from "./offices";
+import {
+  contactByPrefix,
+  footerOffices,
+  hcmc,
+  offices,
+  plano,
+} from "./offices";
 
 describe("offices", () => {
   it("has two offices", () => {
@@ -90,5 +96,14 @@ describe("offices", () => {
     expect(external.map((contact) => contact.href)).toEqual([
       "https://wa.me/14694399345",
     ]);
+  });
+
+  it("finds a contact by href prefix and throws when there is none", () => {
+    expect(contactByPrefix(plano, "mailto:").label).toBe(
+      "vinni.tran@newxion.com",
+    );
+    expect(() => contactByPrefix(hcmc, "mailto:")).toThrow(
+      "Office hcmc has no mailto: contact",
+    );
   });
 });
