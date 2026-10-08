@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 
 type MoreIndustriesProps = {
@@ -26,25 +26,41 @@ export function MoreIndustries({
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const shown = !hydrated || open || hovered;
-  const close = () => {
-    setOpen(false);
-    setHovered(false);
-  };
+  const rootRef = useRef<HTMLSpanElement>(null);
+
+  // Native listeners on the wrapper: hover, Escape and focus leaving belong
+  // to the whole reveal, while the button stays the only interactive part.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const close = () => {
+      setOpen(false);
+      setHovered(false);
+    };
+    const enter = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") setHovered(true);
+    };
+    const leave = () => setHovered(false);
+    const focusOut = (event: FocusEvent) => {
+      if (!root.contains(event.relatedTarget as Node | null)) close();
+    };
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+    root.addEventListener("pointerenter", enter);
+    root.addEventListener("pointerleave", leave);
+    root.addEventListener("focusout", focusOut);
+    root.addEventListener("keydown", key);
+    return () => {
+      root.removeEventListener("pointerenter", enter);
+      root.removeEventListener("pointerleave", leave);
+      root.removeEventListener("focusout", focusOut);
+      root.removeEventListener("keydown", key);
+    };
+  }, []);
 
   return (
-    <span
-      className={shown ? "w-more open" : "w-more"}
-      onPointerEnter={(event) => {
-        if (event.pointerType === "mouse") setHovered(true);
-      }}
-      onPointerLeave={() => setHovered(false)}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) close();
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "Escape") close();
-      }}
-    >
+    <span ref={rootRef} className={shown ? "w-more open" : "w-more"}>
       <button
         type="button"
         className="w-more-trigger"

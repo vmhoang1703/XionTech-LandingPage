@@ -63,11 +63,7 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
   return (
     <>
       <div className="news-bar">
-        <div
-          className="filters"
-          role="group"
-          aria-label={newsPage.filtersLabel}
-        >
+        <fieldset className="filters" aria-label={newsPage.filtersLabel}>
           {FILTERS.map(({ id, label }) => (
             <button
               key={id}
@@ -79,7 +75,7 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
               {label}
             </button>
           ))}
-        </div>
+        </fieldset>
         <p className="sample">{newsPage.sampleNote}</p>
       </div>
       {shown.length > 0 ? (

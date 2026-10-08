@@ -70,7 +70,8 @@ describe("HeroArt", () => {
     const aurora = container.querySelector(".aurora");
     const canvas = container.querySelector("canvas.strands");
     expect(aurora?.getAttribute("aria-hidden")).toBe("true");
-    expect(canvas?.getAttribute("aria-hidden")).toBe("true");
+    // An empty canvas has nothing for screen readers (no fallback, no role).
+    expect(canvas?.childNodes).toHaveLength(0);
     expect(container.querySelectorAll("[tabindex], a, button")).toHaveLength(0);
   });
 
@@ -84,7 +85,7 @@ describe("HeroArt", () => {
     runFrame(6);
     expect(frames).toHaveLength(0);
     expect(draw.mock.calls.at(-1)?.[3]).toBe(9);
-    expect(draw.mock.calls.length).toBe(before + 1);
+    expect(draw.mock.calls).toHaveLength(before + 1);
   });
 
   it("draws one still frame under reduced motion", () => {

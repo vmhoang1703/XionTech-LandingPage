@@ -241,7 +241,7 @@ describe("AboutPage", () => {
   it("defines every class it uses in globals.css", () => {
     const { container } = render(<AboutPage />);
     // The stats band is Tailwind utilities, covered by its own tests.
-    container.querySelector('[role="group"][aria-labelledby]')?.remove();
+    container.querySelector("fieldset[aria-labelledby]")?.remove();
     expect(undefinedClasses(container, /^(mt-4|mt-5|mt-6|sr-only)$/)).toEqual(
       [],
     );
