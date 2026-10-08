@@ -3,6 +3,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { ContactForm } from "./contact-form";
 
+// The success panel is a polite live region that takes focus (Sonar S6819:
+// no role="status" on a block of headings and text).
+function successPanel(): HTMLElement {
+  const panel = document.querySelector<HTMLElement>(".form-ok");
+  if (!panel) throw new Error("no success panel");
+  expect(panel.getAttribute("aria-live")).toBe("polite");
+  return panel;
+}
+
 const tab = (name: string) => screen.getByRole("tab", { name });
 const selected = (name: string) => tab(name).getAttribute("aria-selected");
 const field = (id: string) => {
@@ -418,7 +427,7 @@ describe("ContactForm sending", () => {
     expect(button.textContent).toBe("Sending...");
     expect(button.querySelector("svg")).not.toBeNull();
     expect(screen.queryByRole("alert")).toBeNull();
-    expect(screen.queryByRole("status")).toBeNull();
+    expect(document.querySelector(".form-ok")).toBeNull();
   });
 
   it("replaces the form with the thank-you panel on 200", async () => {
@@ -427,7 +436,7 @@ describe("ContactForm sending", () => {
     fillRequired();
     submit();
     await settle();
-    const panel = screen.getByRole("status");
+    const panel = successPanel();
     expect(panel.textContent).toContain("Summit reached. Thank you!");
     expect(panel.textContent).toContain("We will be in touch soon.");
     expect(panel.textContent).not.toContain("Prototype");
@@ -518,7 +527,7 @@ describe("ContactForm sending", () => {
       expect(field("f-msg")).toHaveProperty("value", "Hello");
       expect(submitButton().hasAttribute("disabled")).toBe(false);
       expect(submitButton().textContent).toBe("Send request");
-      expect(screen.queryByRole("status")).toBeNull();
+      expect(document.querySelector(".form-ok")).toBeNull();
       expect(liveRegion().textContent).toBe("");
     },
   );
@@ -559,7 +568,7 @@ describe("ContactForm sending", () => {
     fillRequired();
     submit();
     await settle();
-    expect(screen.getByRole("status")).toBeTruthy();
+    expect(successPanel()).toBeTruthy();
     const { signal } = fetchMock.mock.calls[0][1];
     await act(async () => {
       vi.advanceTimersByTime(20_000);
@@ -574,7 +583,7 @@ describe("ContactForm sending", () => {
     submitButton().focus();
     submit();
     await settle();
-    const panel = screen.getByRole("status");
+    const panel = successPanel();
     expect(panel.getAttribute("tabindex")).toBe("-1");
     expect(document.activeElement).toBe(panel);
   });

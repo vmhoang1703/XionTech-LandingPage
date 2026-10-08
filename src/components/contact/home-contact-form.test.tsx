@@ -2,6 +2,15 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { HomeContactForm } from "./home-contact-form";
 
+// The success panel is a polite live region that takes focus (Sonar S6819:
+// no role="status" on a block of headings and text).
+function successPanel(): HTMLElement {
+  const panel = document.querySelector<HTMLElement>(".form-ok");
+  if (!panel) throw new Error("no success panel");
+  expect(panel.getAttribute("aria-live")).toBe("polite");
+  return panel;
+}
+
 const field = (id: string) => {
   const el = document.getElementById(id);
   if (!el) throw new Error(`missing #${id}`);
@@ -68,7 +77,7 @@ describe("HomeContactForm", () => {
       message: "We want a parent app.",
       website: "",
     });
-    const panel = screen.getByRole("status");
+    const panel = successPanel();
     expect(panel.textContent).toContain(
       "Summit reached. Thanks — we've received your message.",
     );

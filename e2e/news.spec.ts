@@ -45,7 +45,7 @@ test(
     expect(newsResponse.status()).toBe(200);
     const news = await newsResponse.text();
     const href = /href="(\/news\/[^"#?]+)"/.exec(news)?.[1];
-    test.skip(!href, "No published story in Sanity to open.");
+    expect(href, "a published story in Sanity to open").toBeTruthy();
 
     const response = await request.get(href ?? "");
     const html = await response.text();

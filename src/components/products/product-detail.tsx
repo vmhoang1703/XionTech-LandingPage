@@ -1,12 +1,7 @@
 "use client";
 
 import { ArrowsOutSimpleIcon, XIcon } from "@phosphor-icons/react";
-import {
-  useRef,
-  type KeyboardEvent,
-  type MouseEvent,
-  type ReactNode,
-} from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { PLACEHOLDER_HREF } from "@/content/product-links";
 import { productsShowcase, type Audience } from "@/content/products";
 import { useHydrated } from "./use-hydrated";
@@ -41,8 +36,7 @@ export function ProductLink({
 // A click whose target is the dialog itself and whose point lies outside its
 // box landed on the backdrop. Clicks inside the box (padding too) and keyboard
 // clicks on controls never close it.
-function onBackdropClick(event: MouseEvent<HTMLDialogElement>) {
-  const dialog = event.currentTarget;
+function onBackdropClick(dialog: HTMLDialogElement, event: MouseEvent) {
   if (event.target !== dialog) return;
   const box = dialog.getBoundingClientRect();
   const inside =
@@ -59,11 +53,9 @@ const FOCUSABLE =
 // A modal dialog makes the page inert, but Tab from its last control still
 // leaves for the browser's own toolbar. Wrap at both edges instead, so focus
 // stays on the dialog's controls (CAP-3).
-function keepTabInside(event: KeyboardEvent<HTMLDialogElement>) {
+function keepTabInside(dialog: HTMLDialogElement, event: KeyboardEvent) {
   if (event.key !== "Tab") return;
-  const items = [
-    ...event.currentTarget.querySelectorAll<HTMLElement>(FOCUSABLE),
-  ];
+  const items = [...dialog.querySelectorAll<HTMLElement>(FOCUSABLE)];
   const first = items[0];
   const last = items.at(-1);
   const edge = event.shiftKey ? first : last;
@@ -94,6 +86,21 @@ export function ProductDetail({
   const headingId = `${dialogId}-h`;
   const hydrated = useHydrated();
 
+  // Native listeners: the dialog element is interactive, but JSX handlers on
+  // it read as handlers on a static element to the a11y lint rules.
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const click = (event: MouseEvent) => onBackdropClick(dialog, event);
+    const key = (event: KeyboardEvent) => keepTabInside(dialog, event);
+    dialog.addEventListener("click", click);
+    dialog.addEventListener("keydown", key);
+    return () => {
+      dialog.removeEventListener("click", click);
+      dialog.removeEventListener("keydown", key);
+    };
+  }, []);
+
   return (
     <>
       <button
@@ -114,8 +121,6 @@ export function ProductDetail({
         className="pdetail"
         data-aud={audience}
         aria-labelledby={headingId}
-        onClick={onBackdropClick}
-        onKeyDown={keepTabInside}
         onClose={() => buttonRef.current?.focus()}
       >
         <div className="pd-inner">

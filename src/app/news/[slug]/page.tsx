@@ -27,11 +27,11 @@ export async function generateMetadata({
 function StoryBody({ blocks }: Readonly<{ blocks: StoryBlock[] }>) {
   return blocks
     .filter((block) => block.text?.trim())
-    .map((block, index) =>
+    .map((block) =>
       block.style?.startsWith("h") ? (
-        <h2 key={index}>{block.text}</h2>
+        <h2 key={block._key}>{block.text}</h2>
       ) : (
-        <p key={index}>{block.text}</p>
+        <p key={block._key}>{block.text}</p>
       ),
     );
 }

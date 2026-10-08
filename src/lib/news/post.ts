@@ -2,7 +2,11 @@ import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
 import { sanityFetch } from "@/lib/sanity/client";
 
-export type StoryBlock = { style?: string | null; text?: string | null };
+export type StoryBlock = {
+  _key: string;
+  style?: string | null;
+  text?: string | null;
+};
 
 export type NewsStory = LatestPost & { body?: StoryBlock[] | null };
 
@@ -17,7 +21,7 @@ const POST_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.
   app,
   "image": image.asset->url,
   alt,
-  "body": body.en[_type == "block"] { style, "text": pt::text(@) }
+  "body": body.en[_type == "block"] { _key, style, "text": pt::text(@) }
 }`;
 
 /**

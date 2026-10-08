@@ -81,7 +81,7 @@ export function HeroSilk() {
     <>
       <canvas
         ref={canvasRef}
-        aria-hidden="true"
+        role="presentation"
         hidden={!supported}
         className="absolute inset-0 -z-1 size-full"
       />

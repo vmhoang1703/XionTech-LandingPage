@@ -110,6 +110,6 @@ describe("Demo page", () => {
     expect(aurora.classList.contains("aurora")).toBe(true);
     expect(canvas.matches("canvas.strands")).toBe(true);
     expect(aurora.getAttribute("aria-hidden")).toBe("true");
-    expect(canvas.getAttribute("aria-hidden")).toBe("true");
+    expect(canvas.getAttribute("role")).toBe("presentation");
   });
 });

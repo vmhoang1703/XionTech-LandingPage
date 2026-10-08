@@ -66,7 +66,7 @@ describe("HeroSilk", () => {
   it("renders an aria-hidden canvas", () => {
     const { canvas } = renderSilk();
 
-    expect(canvas.getAttribute("aria-hidden")).toBe("true");
+    expect(canvas.getAttribute("role")).toBe("presentation");
     expect(silk.resize).toHaveBeenCalled();
   });
 

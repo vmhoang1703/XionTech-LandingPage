@@ -33,7 +33,7 @@ export function StatsBand({
     : "border-border mt-4.5 grid grid-cols-2 gap-y-7 border-t pt-6.5 sm:grid-cols-3 lg:grid-cols-5";
 
   return (
-    <div role="group" aria-labelledby={labelId}>
+    <fieldset aria-labelledby={labelId}>
       <h2 id={labelId} className={h2ClassName}>
         {label}
       </h2>
@@ -57,6 +57,6 @@ export function StatsBand({
           </li>
         ))}
       </ul>
-    </div>
+    </fieldset>
   );
 }

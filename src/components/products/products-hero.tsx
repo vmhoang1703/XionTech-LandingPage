@@ -23,7 +23,7 @@ export function ProductsHero() {
           </h1>
           <p className="lede">{lede}</p>
         </div>
-        <div className="eco-diagram" role="group" aria-label={diagramLabel}>
+        <fieldset className="eco-diagram" aria-label={diagramLabel}>
           <svg
             className="eco-lines"
             viewBox="0 0 100 100"
@@ -47,7 +47,7 @@ export function ProductsHero() {
               <b>{app.shortName}</b>
             </a>
           ))}
-        </div>
+        </fieldset>
       </div>
     </section>
   );
