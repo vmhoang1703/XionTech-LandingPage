@@ -1,16 +1,7 @@
 /**
- * Navigation data: labels, products, services, mega footers, and section detection.
+ * Navigation data: labels, services, header links and section detection.
  * Single source of truth for all navigation content (Story 1.2 translates from here).
  */
-
-import { APPS, appById, type AppId } from "@/content/apps";
-
-export interface Product {
-  anchor: string;
-  name: string;
-  valueLine: string;
-  forLine: string;
-}
 
 export interface Service {
   anchor: string;
@@ -18,12 +9,12 @@ export interface Service {
 }
 
 export interface NavLabels {
+  home: string;
   products: string;
   services: string;
   news: string;
   about: string;
   careers: string;
-  bookDemo: string;
   skipLink: string;
   mainNav: string;
   homeLink: string;
@@ -31,52 +22,20 @@ export interface NavLabels {
   menu: string;
 }
 
-export interface MegaFooter {
-  text: string;
-  link: string;
-  linkText: string;
-}
-
 // Navigation labels (for translation in Story 1.2)
 export const LABELS: NavLabels = {
+  home: "Home",
   products: "Products",
   services: "Services",
   news: "News",
   about: "About",
   careers: "Careers",
-  bookDemo: "Book a demo",
   skipLink: "Skip to content",
   mainNav: "Main",
   homeLink: "XionTech home",
   logoAlt: "XionTech, Get IT Done",
   menu: "Menu",
 };
-
-// Products (4 total, in apps.ts order). Names and anchors come from apps.ts.
-const PRODUCT_LINES: Record<AppId, { valueLine: string; forLine: string }> = {
-  "parent-hub": {
-    valueLine: "The school day in every parent's pocket.",
-    forLine: "Parents",
-  },
-  "staff-hub": {
-    valueLine: "One workspace, role-based views.",
-    forLine: "Staff, Teachers, Leaders",
-  },
-  iot: {
-    valueLine: "Control campus devices from one screen.",
-    forLine: "School staff and facilities",
-  },
-  "ai-tutor": {
-    valueLine: appById("ai-tutor").tagline,
-    forLine: "Students",
-  },
-};
-
-export const PRODUCTS: Product[] = APPS.map((app) => ({
-  anchor: app.anchor,
-  name: app.fullName,
-  ...PRODUCT_LINES[app.id],
-}));
 
 // Services (8 total, in order)
 export const SERVICES: Service[] = [
@@ -114,21 +73,8 @@ export const SERVICES: Service[] = [
   },
 ];
 
-// Products mega footer
-export const PRODUCTS_FOOTER: MegaFooter = {
-  text: "More products are on the way.",
-  link: "/products",
-  linkText: "All products",
-};
-
-// Services mega footer
-export const SERVICES_FOOTER: MegaFooter = {
-  text: "Our 4-D process: Discovery, Design, Development, Deployment.",
-  link: "/services#process",
-  linkText: "See the process",
-};
-
-export type Section = "products" | "services" | "news" | "about" | "careers";
+export type Section =
+  "home" | "products" | "services" | "news" | "about" | "careers";
 
 export interface NavLink {
   section: Section;
@@ -136,8 +82,9 @@ export interface NavLink {
   label: string;
 }
 
-// Top-level pages in header order (the mobile menu lists these as plain links).
+// Top-level pages in header order; the desktop nav and the mobile menu list them as plain links.
 export const NAV_LINKS: readonly NavLink[] = [
+  { section: "home", href: "/", label: LABELS.home },
   { section: "products", href: "/products", label: LABELS.products },
   { section: "services", href: "/services", label: LABELS.services },
   { section: "news", href: "/news", label: LABELS.news },
@@ -145,7 +92,7 @@ export const NAV_LINKS: readonly NavLink[] = [
   { section: "careers", href: "/careers", label: LABELS.careers },
 ];
 
-const SECTIONS: readonly Section[] = [
+const SECTIONS: readonly Exclude<Section, "home">[] = [
   "news",
   "careers",
   "about",
@@ -157,9 +104,13 @@ const SECTIONS: readonly Section[] = [
  * Determine the current section from a pathname.
  * A section matches its own path or a child path ("/news", "/news/x"),
  * not a path that only shares a prefix ("/newsletter"). Matching is case-sensitive.
- * Root, /demo and unknown paths return null.
+ * Home is only exactly "/" (a prefix match would mark it on every page, the 404 included).
+ * /demo and unknown paths return null.
  */
 export function currentSection(pathname: string): Section | null {
+  if (pathname === "/") {
+    return "home";
+  }
   return (
     SECTIONS.find(
       (section) =>

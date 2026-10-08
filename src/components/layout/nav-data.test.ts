@@ -1,12 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { APPS, appById } from "@/content/apps";
-import {
-  currentSection,
-  LABELS,
-  NAV_LINKS,
-  PRODUCTS,
-  SERVICES,
-} from "./nav-data";
+import * as navData from "./nav-data";
+import { currentSection, LABELS, NAV_LINKS, SERVICES } from "./nav-data";
 
 describe("nav-data", () => {
   describe("currentSection", () => {
@@ -30,9 +24,16 @@ describe("nav-data", () => {
       expect(currentSection("/products")).toBe("products");
     });
 
-    it("maps / to empty string", () => {
-      expect(currentSection("/")).toBeNull();
+    it("maps exactly / to home", () => {
+      expect(currentSection("/")).toBe("home");
     });
+
+    it.each(["/home", "//", "/not-a-page"])(
+      "does not map %s to home",
+      (path) => {
+        expect(currentSection(path)).toBeNull();
+      },
+    );
 
     it("maps unknown paths to empty string", () => {
       expect(currentSection("/unknown")).toBeNull();
@@ -66,38 +67,6 @@ describe("nav-data", () => {
     });
   });
 
-  describe("PRODUCTS", () => {
-    it("has exactly 4 products", () => {
-      expect(PRODUCTS).toHaveLength(4);
-    });
-
-    it("lists the apps in apps.ts order with their anchors", () => {
-      expect(PRODUCTS.map((p) => p.anchor)).toEqual(
-        APPS.map((app) => app.anchor),
-      );
-    });
-
-    it("has product names", () => {
-      expect(PRODUCTS.map((p) => p.name)).toEqual([
-        "Parent Hub",
-        "Staff Hub",
-        "IoT Device Management",
-        "AI Tutor",
-      ]);
-    });
-
-    it("does not use the old names in value lines", () => {
-      for (const p of PRODUCTS) {
-        expect(p.valueLine).not.toMatch(/eXperience|PXP|LXP|SXP/);
-      }
-    });
-
-    it("shows the AI Tutor row for students", () => {
-      expect(PRODUCTS[3].forLine).toBe("Students");
-      expect(PRODUCTS[3].valueLine).toBe(appById("ai-tutor").tagline);
-    });
-  });
-
   describe("SERVICES", () => {
     it("has exactly 8 services", () => {
       expect(SERVICES).toHaveLength(8);
@@ -119,8 +88,9 @@ describe("nav-data", () => {
   });
 
   describe("NAV_LINKS", () => {
-    it("lists the five top-level pages in header order", () => {
+    it("lists the six top-level pages in header order, Home first", () => {
       expect(NAV_LINKS.map((l) => [l.section, l.href, l.label])).toEqual([
+        ["home", "/", "Home"],
         ["products", "/products", "Products"],
         ["services", "/services", "Services"],
         ["news", "/news", "News"],
@@ -131,6 +101,13 @@ describe("nav-data", () => {
 
     it("labels the mobile menu button Menu", () => {
       expect(LABELS.menu).toBe("Menu");
+    });
+
+    it("has no Book a demo label and no mega-menu data", () => {
+      expect(LABELS).not.toHaveProperty("bookDemo");
+      expect(navData).not.toHaveProperty("PRODUCTS");
+      expect(navData).not.toHaveProperty("PRODUCTS_FOOTER");
+      expect(navData).not.toHaveProperty("SERVICES_FOOTER");
     });
   });
 });
