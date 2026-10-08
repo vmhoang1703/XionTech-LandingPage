@@ -1,4 +1,6 @@
+import { ListIcon, XIcon } from "@phosphor-icons/react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import Link from "next/link";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MobileMenu } from "./mobile-menu";
@@ -73,8 +75,19 @@ const menuButton = () => screen.getByRole("button", { name: "Menu" });
 const panel = () =>
   document.getElementById(menuButton().getAttribute("aria-controls") ?? "");
 const expanded = () => menuButton().getAttribute("aria-expanded");
-const icon = () =>
-  menuButton().querySelector("svg")?.getAttribute("data-icon") ?? null;
+// Which Phosphor icon the button shows, told apart by its drawing.
+const ICONS = {
+  list: renderToStaticMarkup(<ListIcon aria-hidden="true" />),
+  x: renderToStaticMarkup(<XIcon aria-hidden="true" />),
+};
+const icon = () => {
+  const svg = menuButton().querySelector("svg")?.outerHTML;
+  return (
+    (Object.keys(ICONS) as (keyof typeof ICONS)[]).find(
+      (name) => ICONS[name] === svg,
+    ) ?? null
+  );
+};
 const menuLinks = () =>
   [...(panel()?.querySelectorAll("a") ?? [])].filter(
     (a) => a.getClientRects().length > 0,
@@ -90,6 +103,8 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
     expect(menuButton().className).toContain("min-[1081px]:hidden");
     expect(menuButton().className).toContain("size-11");
+    // Below 1081px the nav is hidden, so this keeps the button at the right edge.
+    expect(menuButton().className).toContain("ml-auto");
     expect(menuButton().className).not.toContain("border");
     expect(expanded()).toBe("false");
     expect(panel()?.tagName).toBe("NAV");

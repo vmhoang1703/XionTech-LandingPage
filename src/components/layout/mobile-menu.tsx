@@ -116,11 +116,7 @@ export function MobileMenu() {
         aria-expanded={open}
         onClick={() => setOpenedOn(open ? null : pathname)}
       >
-        {open ? (
-          <XIcon aria-hidden="true" data-icon="x" />
-        ) : (
-          <ListIcon aria-hidden="true" data-icon="list" />
-        )}
+        {open ? <XIcon aria-hidden="true" /> : <ListIcon aria-hidden="true" />}
         <span className="sr-only">{LABELS.menu}</span>
       </button>
       <nav
