@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
 import { undefinedClasses } from "@/test-utils/css-classes";
@@ -12,7 +12,6 @@ vi.mock("@/components/contact/capture-band", () => ({
     <section data-testid={`capture-${kind}`} />
   ),
 }));
-vi.mock("@/components/sections/hero-art", () => ({ HeroArt: () => null }));
 
 const post = (n: number, category: string): LatestPost => ({
   slug: `story-${n}`,
@@ -31,6 +30,16 @@ async function renderPage(posts: LatestPost[]) {
 describe("NewsPage", () => {
   beforeEach(() => {
     vi.mocked(getAllPosts).mockReset();
+    // A 1280px window: the filter reads its column count from matchMedia.
+    vi.stubGlobal("matchMedia", () => ({
+      matches: false,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }));
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it("has its own title and description", () => {
@@ -38,49 +47,59 @@ describe("NewsPage", () => {
     expect(String(metadata.description)).toContain("products");
   });
 
-  it("renders the light hero, the chips, every story with the first as the feature, and the demo capture", async () => {
+  it("renders the hero with no breadcrumb, the filters with the sample note, every story as a card and the demo capture", async () => {
     const { container } = await renderPage([
       post(1, "product"),
       post(2, "team"),
       post(3, "company"),
+      post(4, "schools"),
     ]);
 
-    const hero = container.querySelector("section.hero-light.page-hero");
+    const flow = container.querySelector(".news-flow");
+    const hero = flow?.querySelector("section.hero-light.page-hero.nhead-sec");
     expect(hero?.getAttribute("aria-labelledby")).toBe("news-h1");
-    const crumbs = screen.getByRole("navigation", { name: "Breadcrumb" });
-    expect(crumbs.querySelector('a[href="/"]')?.textContent).toBe("Home");
-    expect(crumbs.textContent).toContain("News");
-    expect(crumbs.querySelectorAll("a")).toHaveLength(1);
+    expect(screen.queryByRole("navigation")).toBeNull();
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1.id).toBe("news-h1");
-    expect(h1.textContent).toBe("What we've been up to.");
-    expect(h1.querySelector(".hl")?.textContent).toBe("up to");
+    expect(h1.textContent).toBe("Catch up with us");
     expect(
       screen.getByText(
-        "Short stories about our products, schools, team and client work.",
+        "Stay informed with the latest news and announcements, fresh off the press.",
       ),
     ).toBeTruthy();
 
     const h2 = screen.getByRole("heading", { level: 2, name: "All stories" });
     expect(h2.className).toBe("sr-only");
-    expect(screen.getByRole("group", { name: "Filter stories" })).toBeTruthy();
-    const cards = container.querySelectorAll("article.ncard");
-    expect(cards).toHaveLength(3);
-    expect(cards[0].classList.contains("big")).toBe(true);
-    expect(cards[1].classList.contains("big")).toBe(false);
-    expect(cards[0].textContent).toContain("Story 1");
-    expect(screen.getByTestId("capture-demo")).toBeTruthy();
-    expect(screen.queryByText(/\[Placeholder\]|sample/i)).toBeNull();
+    expect(flow?.contains(h2)).toBe(true);
+    expect(
+      screen.getByRole("group", { name: "Filter stories by audience" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByText(
+        "Stories from the newXion newsroom; those marked [Placeholder] are samples.",
+      ),
+    ).toBeTruthy();
+    const cards = container.querySelectorAll("#newsGrid a.scard");
+    expect(cards).toHaveLength(4);
+    expect(cards[0].getAttribute("href")).toBe("/news/story-1");
+    // Rendered for 3 columns: the first is the lead, a full row follows.
+    expect(cards[0].parentElement?.className).toBe("s-lead");
+    expect(cards[1].parentElement?.className).toBe("");
+    const capture = screen.getByTestId("capture-demo");
+    expect(flow?.contains(capture)).toBe(false);
   });
 
-  it("passes each story's category to the filter, so a chip shows only its stories", async () => {
+  it("passes each story's audience to the filter, so a chip shows only its stories", async () => {
     await renderPage([post(1, "product"), post(2, "team"), post(3, "company")]);
 
-    fireEvent.click(screen.getByRole("button", { name: "Team" }));
+    fireEvent.click(screen.getByRole("button", { name: "Parents" }));
 
     expect(
-      screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent),
-    ).toEqual(["Story 2"]);
+      Array.from(
+        document.querySelectorAll(".scard-title"),
+        (t) => t.textContent,
+      ),
+    ).toEqual(["Story 1"]);
     expect(document.querySelector("[aria-live]")?.textContent).toBe(
       "Showing 1 story",
     );
@@ -93,7 +112,9 @@ describe("NewsPage", () => {
       const { container } = render(await NewsPage());
 
       expect(container.querySelector("article")).toBeNull();
-      expect(screen.getByText("No stories in this category yet.")).toBeTruthy();
+      expect(
+        screen.getByText("No stories are available in this category yet."),
+      ).toBeTruthy();
       expect(screen.queryByRole("button", { name: "Show all" })).toBeNull();
       expect(error).toHaveBeenCalledWith(
         expect.stringContaining("News page"),
@@ -109,8 +130,6 @@ describe("NewsPage", () => {
       post(1, "product"),
       post(2, "team"),
     ]);
-    expect(undefinedClasses(container, /^(sr-only|mt-4\.5|pt-14)$/)).toEqual(
-      [],
-    );
+    expect(undefinedClasses(container, /^sr-only$/)).toEqual([]);
   });
 });

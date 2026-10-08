@@ -22,25 +22,30 @@ async function loadPosts(): Promise<LatestPost[]> {
 
 export async function HomeNews() {
   const posts = await loadPosts();
-  const { heading, seeAll } = homeNews;
+  const { heading, lede, seeAll } = homeNews;
 
+  // E-A6 (prototype index.html news row): "See all news" sits on the heading
+  // row (under it at 640px and below), then up to three photo cards.
   return (
     <section className="sec surface-mist" aria-labelledby="news-h">
       <div className="wrap">
-        <div className="sec-head">
-          <h2 id="news-h">{heading}</h2>
+        <div className="sec-head-row">
+          <div className="sec-head">
+            <h2 id="news-h">{heading}</h2>
+            <p className="lede">{lede}</p>
+          </div>
+          <Link href={seeAll.href} className="link-arrow">
+            <span>{seeAll.label}</span>
+            <ArrowRightIcon aria-hidden="true" />
+          </Link>
         </div>
         {posts.length > 0 ? (
-          <div className="news-grid">
+          <div className="sgrid sgrid-row">
             {posts.map((post) => (
               <NewsCard key={post.slug} post={post} />
             ))}
           </div>
         ) : null}
-        <Link href={seeAll.href} className="link-arrow">
-          <span>{seeAll.label}</span>
-          <ArrowRightIcon aria-hidden="true" />
-        </Link>
       </div>
     </section>
   );

@@ -1,5 +1,10 @@
 import { localized } from "./localized";
 
+type AltContext = { document?: { image?: { asset?: unknown } } };
+type CustomRule = {
+  custom: (fn: (value: unknown, ctx: AltContext) => unknown) => unknown;
+};
+
 export const post = {
   name: "post",
   title: "News post",
@@ -22,14 +27,14 @@ export const post = {
     },
     {
       name: "category",
-      title: "Category",
+      title: "Audience",
       type: "string",
       options: {
         list: [
-          { title: "Product", value: "product" },
-          { title: "Company", value: "company" },
           { title: "Schools", value: "schools" },
-          { title: "Team", value: "team" },
+          { title: "Students", value: "students" },
+          { title: "Parents", value: "parents" },
+          { title: "Company", value: "company" },
         ],
       },
       validation: (rule: { required: () => unknown }) => rule.required(),
@@ -46,8 +51,25 @@ export const post = {
           { title: "AI Tutor", value: "ai-tutor" },
         ],
       },
-      hidden: ({ document }: { document?: { category?: string } }) =>
-        document?.category !== "product",
+    },
+    {
+      name: "image",
+      title: "Photo",
+      type: "image",
+    },
+    {
+      name: "alt",
+      title: "Alt text",
+      type: "string",
+      description: "Describe the photo for people who cannot see it.",
+      validation: (rule: CustomRule) =>
+        rule.custom((value, ctx) => {
+          const hasImage = Boolean(ctx.document?.image?.asset);
+          const hasAlt = typeof value === "string" && value.trim() !== "";
+          return !hasImage || hasAlt
+            ? true
+            : "Describe the photo for screen readers.";
+        }),
     },
     localized("excerpt", "Excerpt", "text"),
     localized("body", "Body", "array"),

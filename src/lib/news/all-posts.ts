@@ -9,7 +9,9 @@ const ALL_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && defined(t
   "excerpt": excerpt.en,
   publishedAt,
   category,
-  app
+  app,
+  "image": image.asset->url,
+  alt
 }`;
 
 export function getAllPosts(): Promise<LatestPost[]> {
