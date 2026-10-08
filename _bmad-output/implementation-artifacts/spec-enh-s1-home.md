@@ -2,7 +2,7 @@
 title: 'E-S1 Home matches the prototype'
 type: 'feature'
 created: '2026-10-08'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: 'c8cb49cd8a71bebd2924cfad013d52a8155e0745'

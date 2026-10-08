@@ -1264,3 +1264,24 @@ Template:
   - It left smoke tests unnamed that the changes would break.
 
   The verification pass then found that the Home colours had been copied from the wrong branch of the prototype script, and that the founding sentence was misquoted.
+
+## 2026-10-08 — E-S1 Home matches the prototype (ENH-086 to ENH-088)
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` full route
+- **Prompt (short):** "Do all the enhancements from Sammy with /bmad-build; branch off develop, pull the latest code." First task: E-S1 Home.
+- **What the AI did:** Wrote the build spec with a 23-line UX checks table, then had subagents build 7 tasks test-first, each reviewed. The changes:
+  - a new hero with "Get in touch" and the two cards across its edge;
+  - Capabilities with a "+3" industries reveal;
+  - core values moved to a shared module;
+  - a light "How we approach." 4-D section with one step copy shared with Services;
+  - the bento and service cards removed;
+  - one flowing background.
+
+  A five-layer review followed, then patches, a re-verify and an independent evidence audit.
+- **Decision / result:** All checks pass: 1148 unit tests, diff coverage 100%, 15 smoke tests, the build and 2 new browser tests. Two minor items are deferred: a small layout shift on hydration, and Escape on a hover-only reveal. Andy's E-A1, E-A2 and E-A4 were not merged, so app names are plain strings and "Get in touch" goes to `/demo` for now.
+- **AI got it wrong?** Yes:
+  - Moving the cards into the navy hero made the light card's text near-white on white. The integration task caught it.
+  - The first "+3" CSS opened on keyboard focus, so Enter could not close it.
+  - The fix for that made the button unclickable on phones.
+  - A later hover reveal kept the list open after a second click.
+  - Our own browser-check script measured the wrong elements, so its output contradicted the written evidence until the review caught it.
