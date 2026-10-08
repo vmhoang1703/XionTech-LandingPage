@@ -51,7 +51,7 @@ describe("SiteNav", () => {
     render(<SiteNav />);
     expect(expanded(productsTrigger())).toBe("false");
     expect(expanded(servicesTrigger())).toBe("false");
-    expect(screen.queryByRole("link", { name: /PXP/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Parent Hub/ })).toBeNull();
     expect(screen.queryByRole("link", { name: /Cloud Computing/ })).toBeNull();
     const panelId = productsTrigger().getAttribute("aria-controls") ?? "";
     expect(document.getElementById(panelId)?.hasAttribute("hidden")).toBe(true);
@@ -61,7 +61,7 @@ describe("SiteNav", () => {
     render(<SiteNav />);
     fireEvent.click(productsTrigger());
     expect(expanded(productsTrigger())).toBe("true");
-    expect(href(/PXP/)).toBe("/products#pxp");
+    expect(href(/Parent Hub/)).toBe("/products#pxp");
     expect(href(/IoT Device Management/)).toBe("/products#iot");
     expect(screen.getByText("Staff, Teachers, Leaders").textContent).toBe(
       "Staff, Teachers, Leaders",
@@ -83,7 +83,7 @@ describe("SiteNav", () => {
     fireEvent.click(productsTrigger());
     fireEvent.click(productsTrigger());
     expect(expanded(productsTrigger())).toBe("false");
-    expect(screen.queryByRole("link", { name: /PXP/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Parent Hub/ })).toBeNull();
   });
 
   it("switches from products to services", () => {
@@ -123,7 +123,7 @@ describe("SiteNav", () => {
     render(<SiteNav />);
     fireEvent.click(productsTrigger());
     fireEvent.blur(productsTrigger(), {
-      relatedTarget: screen.getByRole("link", { name: /PXP/ }),
+      relatedTarget: screen.getByRole("link", { name: /Parent Hub/ }),
     });
     expect(expanded(productsTrigger())).toBe("true");
   });
@@ -170,14 +170,14 @@ describe("SiteNav", () => {
   it("stays open on a pointer down inside the nav", () => {
     render(<SiteNav />);
     fireEvent.click(productsTrigger());
-    fireEvent.pointerDown(screen.getByRole("link", { name: /PXP/ }));
+    fireEvent.pointerDown(screen.getByRole("link", { name: /Parent Hub/ }));
     expect(expanded(productsTrigger())).toBe("true");
   });
 
   it("closes when a link inside the menu is activated", () => {
     render(<SiteNav />);
     fireEvent.click(productsTrigger());
-    const link = screen.getByRole("link", { name: /PXP/ });
+    const link = screen.getByRole("link", { name: /Parent Hub/ });
     link.addEventListener("click", (event) => event.preventDefault());
     fireEvent.click(link);
     expect(expanded(productsTrigger())).toBe("false");
@@ -200,7 +200,7 @@ describe("SiteNav", () => {
     mockPathname = "/";
     rerender(<SiteNav />);
     expect(expanded(productsTrigger())).toBe("false");
-    expect(screen.queryByRole("link", { name: /PXP/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Parent Hub/ })).toBeNull();
   });
 
   it.each([
@@ -327,7 +327,7 @@ describe("SiteNav pinned menus", () => {
   });
 
   it.each([
-    ["Products", productsTrigger, /PXP/],
+    ["Products", productsTrigger, /Parent Hub/],
     ["Services", servicesTrigger, /See the process/],
   ])(
     "pins a hover-opened %s menu once focus moves into it",

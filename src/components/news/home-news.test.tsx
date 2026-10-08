@@ -85,7 +85,7 @@ describe("HomeNews", () => {
   it("defines every class it uses in globals.css", async () => {
     const { container } = await renderNews([
       makePost(1),
-      { ...makePost(2), category: "product", app: "PXP" },
+      { ...makePost(2), category: "product", app: "parent-hub" },
     ]);
     expect(undefinedClasses(container, /^sr-only$/)).toEqual([]);
   });

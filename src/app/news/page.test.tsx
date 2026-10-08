@@ -20,7 +20,7 @@ const post = (n: number, category: string): LatestPost => ({
   excerpt: `Summary ${n}`,
   publishedAt: "2026-10-04T03:00:00.000Z",
   category,
-  app: category === "product" ? "PXP" : null,
+  app: category === "product" ? "parent-hub" : null,
 });
 
 async function renderPage(posts: LatestPost[]) {
