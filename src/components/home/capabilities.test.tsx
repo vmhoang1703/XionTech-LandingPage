@@ -108,6 +108,12 @@ describe("Capabilities", () => {
     expect(globalsCss()).not.toMatch(/\.w-more:focus-within/);
   });
 
+  it("keeps the open trigger clickable at every width so a tap can close it", () => {
+    expect(globalsCss()).not.toMatch(
+      /\.w-more\.open \.w-more-trigger\s*\{[^}]*pointer-events:\s*none/,
+    );
+  });
+
   it("closes the list when focus leaves the reveal area", () => {
     const button = reveal();
     fireEvent.click(button);
