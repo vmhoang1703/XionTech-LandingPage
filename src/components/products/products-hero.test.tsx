@@ -98,3 +98,19 @@ describe("ProductsHero", () => {
     expect(glows(container).getAttribute("aria-hidden")).toBe("true");
   });
 });
+
+describe("reduced motion and an explicit Play", () => {
+  it("lets the stored Play choice run the glows despite the global reset", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const css = readFileSync(
+      join(process.cwd(), "src/app/globals.css"),
+      "utf8",
+    );
+    const reset =
+      /@media \(prefers-reduced-motion: reduce\) \{\s*([^{]+)\{\s*animation: none !important;/.exec(
+        css,
+      );
+    expect(reset?.[1]).toContain(':not(.eco-bg[data-motion="on"] i)');
+  });
+});
