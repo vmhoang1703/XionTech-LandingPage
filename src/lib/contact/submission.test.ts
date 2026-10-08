@@ -13,7 +13,7 @@ const demoBody = {
   org: "Sunrise School",
   role: "Principal",
   message: "Hello",
-  products: ["PXP", "LXP"],
+  products: ["Parent Hub", "Staff Hub"],
   schoolSize: CONTACT_STRINGS.schoolSizes[0],
   date: "2026-10-20",
   website: "",
@@ -52,7 +52,7 @@ describe("parseSubmission valid bodies", () => {
         org: "Sunrise School",
         role: "Principal",
         message: "Hello",
-        products: ["PXP", "LXP"],
+        products: ["Parent Hub", "Staff Hub"],
         schoolSize: CONTACT_STRINGS.schoolSizes[0],
         date: "2026-10-20",
       },
@@ -238,13 +238,19 @@ describe("parseSubmission bad bodies", () => {
   });
 
   it("rejects products that are not in the list or not a list", () => {
-    for (const products of [["PXP", "ERP"], "PXP", [1], null]) {
+    for (const products of [
+      ["Parent Hub", "ERP"],
+      "Parent Hub",
+      ["PXP"],
+      [1],
+      null,
+    ]) {
       expect(parseSubmission({ ...demoBody, products }, NOW)).toEqual(BAD);
     }
   });
 
   it("rejects more products than there are options", () => {
-    const products = Array<string>(5).fill("PXP");
+    const products = Array<string>(4).fill("Parent Hub");
     expect(parseSubmission({ ...demoBody, products }, NOW)).toEqual(BAD);
   });
 

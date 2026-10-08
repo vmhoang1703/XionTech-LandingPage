@@ -10,7 +10,7 @@ const DETAILS_CONSENT = "We only use your details to respond to this request.";
 export const CONTACT_STRINGS = {
   metaTitle: "Book a Demo or Start a Project | XionTech",
   metaDescription:
-    "Book a demo of PXP, LXP and SXP for your school, or tell us about your software project. XionTech, Ho Chi Minh City and Plano.",
+    "Book a demo of Parent Hub and Staff Hub for your school, or tell us about your software project. XionTech, Ho Chi Minh City and Plano.",
   hero: {
     breadcrumbLabel: "Breadcrumb",
     breadcrumbHome: "Home",
@@ -19,9 +19,9 @@ export const CONTACT_STRINGS = {
     titleHighlight: "school",
     titleAfter: " or your project.",
     items: [
-      "A walkthrough of PXP, LXP and SXP using your school's scenarios.",
+      "A walkthrough of Parent Hub and Staff Hub using your school's scenarios.",
       "Answers on setup, data and support.",
-      "For projects: a first Discovery conversation in our 4-D process.",
+      "For projects: a first Discovery conversation, the first of our four steps.",
     ],
     officesLabel: "Our offices",
   },
@@ -33,13 +33,13 @@ export const CONTACT_STRINGS = {
     name: "Full name",
     email: "Work email",
     org: "School or company",
-    role: "Role",
+    role: "Your role",
     roleHelp: "For example: Principal, Head of IT",
     products: "Products of interest",
     schoolSize: "School size",
     date: "Preferred date",
     service: "Service",
-    startTiming: "Start timing",
+    startTiming: "When do you want to start?",
     message: "Message (optional)",
     submit: "Send request",
     sending: "Sending...",
@@ -70,8 +70,8 @@ export const CONTACT_STRINGS = {
     },
   },
   errors: CONTACT_ERRORS,
-  productPills: ["PXP", "LXP", "SXP", "IoT"],
-  defaultProduct: "PXP",
+  productPills: ["Parent Hub", "Staff Hub", "IoT"],
+  defaultProduct: "Parent Hub",
   schoolSizes: [
     "Under 500 students",
     "500 to 1,500 students",

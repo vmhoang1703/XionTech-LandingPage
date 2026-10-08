@@ -173,17 +173,27 @@ describe("ContactForm", () => {
     for (const id of ["f-name", "f-email", "f-org", "f-role", "f-msg"]) {
       expect(field(id).closest("[hidden]")).toBeNull();
     }
-    expect(screen.getByRole("checkbox", { name: "PXP" })).toHaveProperty(
+    expect(
+      screen.getAllByRole("checkbox").map((box) => box.getAttribute("value")),
+    ).toEqual(["Parent Hub", "Staff Hub", "IoT"]);
+    expect(screen.getByRole("checkbox", { name: "Parent Hub" })).toHaveProperty(
       "checked",
       true,
+    );
+    expect(screen.getByRole("checkbox", { name: "Staff Hub" })).toHaveProperty(
+      "checked",
+      false,
     );
     expect(screen.getByRole("checkbox", { name: "IoT" })).toHaveProperty(
       "checked",
       false,
     );
+    expect(screen.getByLabelText("Your role")).toBe(field("f-role"));
     expect(screen.getByRole("combobox", { name: "School size" })).toBeTruthy();
     expect(screen.queryByRole("combobox", { name: "Service" })).toBeNull();
-    expect(screen.queryByRole("combobox", { name: "Start timing" })).toBeNull();
+    expect(
+      screen.queryByRole("combobox", { name: "When do you want to start?" }),
+    ).toBeNull();
     expect(field("f-svc").closest("[hidden]")).not.toBeNull();
     expect(field("f-when").closest("[hidden]")).not.toBeNull();
   });
@@ -194,10 +204,12 @@ describe("ContactForm", () => {
     for (const id of ["f-size", "f-date"]) {
       expect(field(id).closest("[hidden]")).not.toBeNull();
     }
-    expect(screen.queryByRole("checkbox", { name: "PXP" })).toBeNull();
+    expect(screen.queryByRole("checkbox", { name: "Parent Hub" })).toBeNull();
     const service = screen.getByRole("combobox", { name: "Service" });
     expect(service.querySelectorAll("option")).toHaveLength(9);
-    expect(screen.getByRole("combobox", { name: "Start timing" })).toBeTruthy();
+    expect(
+      screen.getByRole("combobox", { name: "When do you want to start?" }),
+    ).toBeTruthy();
   });
 
   it("sets today as the earliest preferred date after mount", () => {
@@ -318,7 +330,7 @@ describe("ContactForm", () => {
     fill("f-email", " ana@gmail.com ");
     fill("f-org", "Saigon School  ");
     fill("f-role", "Principal");
-    fireEvent.click(screen.getByRole("checkbox", { name: "LXP" }));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Staff Hub" }));
     fill("f-date", localToday());
     fill("f-msg", "Hello");
     submit();
@@ -337,7 +349,7 @@ describe("ContactForm", () => {
       org: "Saigon School",
       role: "Principal",
       message: "Hello",
-      products: ["PXP", "LXP"],
+      products: ["Parent Hub", "Staff Hub"],
       schoolSize: "Under 500 students",
       date: localToday(),
       website: "",
