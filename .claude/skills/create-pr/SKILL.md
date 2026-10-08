@@ -147,7 +147,7 @@ git push -u origin <branch>
 ```
 
 The `pre-push` hook runs the local SonarQube gate (`CLAUDE.md` → "SonarQube —
-LOCAL ONLY"); until Demo day (2026-10-09) it runs `npm run lint` only and the
+LOCAL ONLY"); until Demo day (2026-10-16) it runs `npm run lint` only and the
 gate runs daily on `develop`. If it blocks, fix the findings and push again.
 Skip it only with the user's explicit OK, and say so in the PR.
 

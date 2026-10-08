@@ -19,7 +19,7 @@ Update it in the same PR whenever a decision changes.
 
 Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI build challenge.
 
-- **Demo day:** 2026-10-09 (10 min presentation + 5 min Q&A)
+- **Demo day:** 2026-10-16 (10 min presentation + 5 min Q&A; moved from 2026-10-09 on 2026-10-08)
 - **Team:** 3 people. Leader: Hoang Vu.
 - **Hand-in:** public URL (https://xion-tech-landing-page.vercel.app), full git history, this context
   file, `docs/ai-log.md`.
@@ -91,7 +91,7 @@ listed there.
 Before opening a PR: lint, typecheck, tests, diff coverage, smoke and build must pass, and the
 local Sonar gate must be green.
 
-**Until Demo day (2026-10-09) the Sonar gate runs daily, not per push.** Every clone uses the
+**Until Demo day (2026-10-16) the Sonar gate runs daily, not per push.** Every clone uses the
 lint-only hook: `git config core.hooksPath scripts/git-hooks-demo` (`npm run lint` includes
 SonarQube's JS/TS rules). Hoang Vu runs `npm run sonar:gate:full` on `develop` once a day and
 before the release PR; findings become fix PRs. After Demo day:
