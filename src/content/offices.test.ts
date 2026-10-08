@@ -60,7 +60,7 @@ describe("offices", () => {
       { href: "tel:+14693229899", label: "(+1) 469 322 9899" },
       {
         href: "https://wa.me/14694399345",
-        label: "WhatsApp (+1) 469 439 9345",
+        label: "(+1) 469 439 9345",
         ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
         external: true,
       },

@@ -62,29 +62,41 @@ export type FooterOffice = Pick<Office, "id" | "name" | "addressLines"> & {
   contacts: OfficeContact[];
 };
 
+const contactByPrefix = (office: Office, prefix: string): OfficeContact => {
+  const contact = office.contacts.find(({ href }) => href.startsWith(prefix));
+  if (!contact) {
+    throw new Error(`Office ${office.id} has no ${prefix} contact`);
+  }
+  return contact;
+};
+
 export const footerOffices: FooterOffice[] = [
   {
     id: hcmc.id,
     name: "Vietnam Delivery Center",
     addressLines: hcmc.addressLines,
-    contacts: [{ href: "tel:+84908107552", label: "(+84) 908 107 552" }],
+    contacts: [
+      {
+        href: contactByPrefix(hcmc, "tel:").href,
+        label: "(+84) 908 107 552",
+      },
+    ],
   },
   {
     id: plano.id,
     name: "US Delivery Center",
     addressLines: plano.addressLines,
     contacts: [
-      { href: "tel:+14693229899", label: "(+1) 469 322 9899" },
       {
-        href: "https://wa.me/14694399345",
-        label: "WhatsApp (+1) 469 439 9345",
+        href: contactByPrefix(plano, "tel:").href,
+        label: "(+1) 469 322 9899",
+      },
+      {
+        ...contactByPrefix(plano, "https://wa.me/"),
+        label: "(+1) 469 439 9345",
         ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
-        external: true,
       },
-      {
-        href: "mailto:vinni.tran@newxion.com",
-        label: "vinni.tran@newxion.com",
-      },
+      contactByPrefix(plano, "mailto:"),
     ],
   },
 ];
