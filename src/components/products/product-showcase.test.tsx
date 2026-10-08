@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { FEATURE_PLACEHOLDER } from "@/content/products";
-import { ProductLink } from "./product-detail";
+import { ProductDetail, ProductLink } from "./product-detail";
 import { ProductShowcase } from "./product-showcase";
 
 // jsdom has no showModal or close: stand-ins that set `open` and fire
@@ -22,6 +22,28 @@ beforeEach(() => {
 afterEach(() => {
   vi.restoreAllMocks();
 });
+
+// A dialog with three links, so one sits away from both edges.
+function ProductLinkDialogHarness() {
+  return (
+    <ProductDetail
+      dialogId="pd-test"
+      name="Test"
+      audience="school"
+      badge={null}
+    >
+      {["a", "b", "c"].map((path) => (
+        <ProductLink
+          key={path}
+          href={`https://example.com/${path}`}
+          className="btn"
+        >
+          {path}
+        </ProductLink>
+      ))}
+    </ProductDetail>
+  );
+}
 
 function card(id: string) {
   const el = document.getElementById(id);
@@ -139,6 +161,34 @@ describe("ProductShowcase", () => {
     dialog.removeAttribute("open");
     dialog.dispatchEvent(new Event("close"));
     expect(document.activeElement).toBe(button);
+  });
+
+  it("wraps Tab and Shift+Tab at the edges so focus stays in the dialog", () => {
+    render(<ProductShowcase />);
+    const { dialog } = openCard("sxp", "Staff Hub");
+    const close = within(dialog).getByRole("button", {
+      name: "Close Staff Hub details",
+    });
+    close.focus();
+
+    const tab = fireEvent.keyDown(dialog, { key: "Tab" });
+    expect(tab).toBe(false);
+    expect(document.activeElement).toBe(close);
+    const back = fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true });
+    expect(back).toBe(false);
+    expect(document.activeElement).toBe(close);
+  });
+
+  it("leaves Tab alone away from the edges and other keys alone", () => {
+    render(<ProductLinkDialogHarness />);
+    const dialog = document.querySelector("dialog") as HTMLDialogElement;
+    const middle = dialog.querySelectorAll("a")[1];
+    middle.focus();
+    expect(fireEvent.keyDown(dialog, { key: "Tab" })).toBe(true);
+    expect(fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true })).toBe(
+      true,
+    );
+    expect(fireEvent.keyDown(dialog, { key: "Enter" })).toBe(true);
   });
 
   it("closes on a click on the backdrop, not on a click inside the box", () => {

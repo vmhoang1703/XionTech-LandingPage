@@ -1,7 +1,12 @@
 "use client";
 
 import { ArrowsOutSimpleIcon, XIcon } from "@phosphor-icons/react";
-import { useRef, type MouseEvent, type ReactNode } from "react";
+import {
+  useRef,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import { PLACEHOLDER_HREF } from "@/content/product-links";
 import { productsShowcase, type Audience } from "@/content/products";
 import { useHydrated } from "./use-hydrated";
@@ -60,9 +65,28 @@ function onBackdropClick(event: MouseEvent<HTMLDialogElement>) {
   if (!inside) dialog.close();
 }
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]):not([hidden]), [tabindex]:not([tabindex="-1"])';
+
+// A modal dialog makes the page inert, but Tab from its last control still
+// leaves for the browser's own toolbar. Wrap at both edges instead, so focus
+// stays on the dialog's controls (CAP-3).
+function keepTabInside(event: KeyboardEvent<HTMLDialogElement>) {
+  if (event.key !== "Tab") return;
+  const items = [
+    ...event.currentTarget.querySelectorAll<HTMLElement>(FOCUSABLE),
+  ];
+  const first = items[0];
+  const last = items.at(-1);
+  const edge = event.shiftKey ? first : last;
+  if (!edge?.isSameNode(document.activeElement)) return;
+  event.preventDefault();
+  (event.shiftKey ? last : first)?.focus();
+}
+
 // Client island (E-A5 CAP-3): the card's expand button and its native modal
 // dialog. The dialog body is rendered on the server and passed in as children.
-// showModal() keeps Tab inside and closes on Esc; on close, focus goes back to
+// showModal() closes on Esc and keepTabInside wraps Tab; on close, focus goes back to
 // the expand button, which shows only once JavaScript runs.
 export function ProductDetail({
   dialogId,
@@ -95,7 +119,7 @@ export function ProductDetail({
       >
         <ArrowsOutSimpleIcon aria-hidden="true" />
       </button>
-      {/* Esc is handled by the native dialog; this only adds the backdrop click. */}
+      {/* Esc is native; these add the backdrop click and the Tab wrap. */}
       <dialog
         ref={dialogRef}
         id={dialogId}
@@ -103,6 +127,7 @@ export function ProductDetail({
         data-aud={audience}
         aria-labelledby={headingId}
         onClick={onBackdropClick}
+        onKeyDown={keepTabInside}
         onClose={() => buttonRef.current?.focus()}
       >
         <div className="pd-inner">
