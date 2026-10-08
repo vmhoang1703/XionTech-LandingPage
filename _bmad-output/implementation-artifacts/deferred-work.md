@@ -361,3 +361,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a6-news-story.md`
   summary: Tier 2 (after the demo): card motion (cards unfold one by one on scroll and on each filter, reduced motion supported, ENH-063) and the rising hero words.
   evidence: SPEC.md non-goals; lead decision (Tier 1 only).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a4-forms-bands.md`
+  summary: The Home contact form, the Demo form and the job form each carry their own copy of the field-error, live-region and focus code; a shared hook would stop them drifting apart.
+  evidence: E-A4 review (blind hunter); `home-contact-form.tsx`, `contact-form.tsx`, `job-application-form.tsx`. Low, after the demo.

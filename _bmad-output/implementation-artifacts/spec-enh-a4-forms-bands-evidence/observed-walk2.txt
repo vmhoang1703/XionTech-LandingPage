@@ -1,0 +1,9 @@
+900px: grid-template-columns=852px; intro top 5479, card top 5819
+1280px: grid-template-columns=511.188px 624.812px
+contact icons aria-hidden: true,true,true
+after typing in name: name aria-invalid=null; email aria-invalid=true
+sending: disabled=true label="Sending..."
+429: alert="You have sent several requests in a short time. Please try again in a few minutes." role=alert; focus on submit=true
+flag: flagUp 0.9s delay 0.2s iterations 1
+Enter on empty form: focus=name; live region="Please fix the following:Please enter your name.Please enter a valid email address.Please tell us a little about your project."
+privacy mentions phone number: true
