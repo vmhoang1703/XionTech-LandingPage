@@ -169,7 +169,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <CaptureBand kind="demo" copy={aboutCapture} />
+      <CaptureBand kind="demo" look="white" copy={aboutCapture} />
     </>
   );
 }

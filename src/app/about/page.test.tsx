@@ -61,9 +61,9 @@ describe("AboutPage", () => {
     expect(sections[4].id).toBe("faq");
     expect(sections[4].className).toBe("sec surface-paper");
     expect(sections[5].className).toBe("sec surface-navy gridbg");
-    expect(sections[6].className).toBe("capture surface-amber");
+    expect(sections[6].className).toBe("capture capture-plain surface-paper");
     expect(container.querySelectorAll(".surface-navy")).toHaveLength(1);
-    expect(container.querySelectorAll(".surface-amber")).toHaveLength(1);
+    expect(container.querySelectorAll(".surface-amber")).toHaveLength(0);
   });
 
   it("shows five figures, the fourth a placeholder, with no visible label", () => {
@@ -222,7 +222,7 @@ describe("AboutPage", () => {
       name: "See our apps in action.",
     });
     const capture = h2.closest("section");
-    expect(capture?.className).toBe("capture surface-amber");
+    expect(capture?.className).toBe("capture capture-plain surface-paper");
     expect(capture?.textContent).toContain(
       "arrange a walkthrough of PXP, LXP and SXP",
     );

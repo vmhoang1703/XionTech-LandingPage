@@ -1066,6 +1066,29 @@
     color: inherit;
   }
 
+  /* E-A4 plain capture bands */
+  .capture-plain::before {
+    display: none;
+  }
+
+  .capture-plain .cap-row {
+    border: 0;
+    box-shadow: 0 16px 30px -18px rgb(22 54 99 / 0.35);
+  }
+
+  /* The row stays paper on every surface, so its text uses the paper tokens. */
+  .capture-plain .cap-row input {
+    color: var(--paper-text);
+  }
+
+  .capture-plain .cap-row:focus-within {
+    box-shadow: 0 0 0 3px var(--color-focus);
+  }
+
+  .capture-plain.surface-navy .cap-form .err {
+    color: var(--color-error-on-navy);
+  }
+
   @media (width <= --theme(--breakpoint-md)) {
     .cap-grid {
       grid-template-columns: 1fr;

@@ -59,7 +59,7 @@ export default async function NewsPage() {
         </section>
       </div>
 
-      <CaptureBand kind="demo" />
+      <CaptureBand kind="demo" look="page" />
     </>
   );
 }
