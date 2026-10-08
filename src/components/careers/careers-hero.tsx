@@ -16,8 +16,7 @@ export function CareersHero() {
       <div className="wrap ch-grid">
         <div>
           <h1 id="careers-h1">
-            {title.first}
-            <br />
+            {title.first} <br />
             {title.second}
           </h1>
           <p className="lede mt-4.5 mb-8">{lede}</p>

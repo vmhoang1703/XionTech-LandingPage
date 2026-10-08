@@ -1272,3 +1272,15 @@ Template:
 - **What the AI did:** Changed the `@theme` weights, heading rhythm and section spacing to the prototype's values, mapped all 25 hard-coded bold rules to 400 (card titles) or 500 by reading the prototype rule for each selector, added the Next.js `icon.png`/`apple-icon.png`, and wrote a token test first. It measured nine routes at 1280px and 390px in a real browser.
 - **Decision / result:** Decision Q2 (prototype over `DESIGN.md`) is recorded in the DESIGN.md token test as an exact list of overridden tokens, so the other tokens still have to match `DESIGN.md`.
 - **AI got it wrong?** Yes, twice. In the date PR (#71) it ran `git add -A` and committed 6 MB of local Lighthouse reports; the one-layer review caught it before the push. In E-A1 the first override list skipped tokens that had not changed, and Unbounded still loaded an unused 700 weight; the four-layer review caught both.
+
+## 2026-10-08 — E-A7 Careers: growth ring, Inside XionTech, flip cards, roles last
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `bmad-build` (one-shot route) and `bmad-code-review`
+- **Prompt (short):** "E-A7 Careers" from the enhancement plan, Tier 1, built in its own worktree on top of E-A1; lead decisions Q6 (unverified copy ships `[Placeholder]`) and Q15 (keep the Sanity life-photo code, list it in `deferred-work.md`).
+- **What the AI did:** Ported the prototype Careers page: a light hero with the Growth Learning Model (the dot travels once round the ring when 40% is in view, and stays on Curious with reduced motion), five Inside XionTech tiles, five flip cards as `<button aria-pressed>` with the hidden face `inert`, the roles last, and the prototype's pastel gradient in CSS instead of its scroll script. It wrote the UX checks table and the tests first, then checked all 19 rows in Chrome at widths from 320px to 1440px, including the job page.
+- **Decision / result:** "Culture" and "Why you'll grow here" are deleted. The life-photo code stays unrendered (Q15). The job form's "Summit reached." waits for E-A4.
+- **AI got it wrong?** Yes, four times:
+  - The hero glow override lost to the shared `.hero-light .aurora` rule, which comes later in the file. The first browser walk showed the amber default glow.
+  - The reduced-motion flip hid the back face with `visibility: hidden`. The repo's "CSS hides no content" test caught it. The base reduced-motion rule already gives an instant swap.
+  - It marked the five unconfirmed values with one section note instead of on each value. The four-layer review flagged this against the AGENTS.md placeholder rule.
+  - The review also found the H1 read "Stay curious.Build" with no space, and that `/careers` was missing from the keyboard a11y run.

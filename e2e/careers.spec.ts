@@ -11,6 +11,11 @@ test(
     expect(html).toContain("Stay curious.");
     expect(html).toContain('id="life"');
     expect(html).toContain('id="roles"');
-    expect(html.indexOf('id="life"')).toBeLessThan(html.indexOf('id="roles"'));
+    expect(html.indexOf('id="life"')).toBeLessThan(
+      html.indexOf('id="culture"'),
+    );
+    expect(html.indexOf('id="culture"')).toBeLessThan(
+      html.indexOf('id="roles"'),
+    );
   },
 );

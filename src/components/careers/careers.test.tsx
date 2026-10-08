@@ -38,7 +38,7 @@ describe("CareersHero", () => {
     const { container } = render(<CareersHero />);
 
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe("Stay curious.Build what’s next.");
+    expect(h1.textContent).toBe("Stay curious. Build what’s next.");
     expect(h1.querySelector("br")).not.toBeNull();
     expect(container.querySelector(".lede")?.textContent).toMatch(
       /^We’re building a team for people who learn fast/,
@@ -94,7 +94,7 @@ describe("Inside", () => {
 });
 
 describe("FlipCards", () => {
-  it("shows the heading, the [Placeholder] note and five numbered flip buttons", () => {
+  it("shows the heading and five numbered flip buttons, each marked [Placeholder]", () => {
     render(<FlipCards />);
 
     expect(
@@ -102,11 +102,6 @@ describe("FlipCards", () => {
         level: 2,
         name: "Five things that shape the way we work.",
       }),
-    ).not.toBeNull();
-    expect(
-      screen.getByText(
-        "[Placeholder] These five values are waiting for confirmation.",
-      ),
     ).not.toBeNull();
     const buttons = screen.getAllByRole("button");
     expect(buttons).toHaveLength(5);
@@ -118,15 +113,18 @@ describe("FlipCards", () => {
         (b) => b.querySelector(".flip-front .flip-title")?.textContent,
       ),
     ).toEqual([
-      "Stay agile",
-      "Own the outcome",
-      "Innovate with purpose",
-      "Grow together",
-      "Get IT Done",
+      "[Placeholder] Stay agile",
+      "[Placeholder] Own the outcome",
+      "[Placeholder] Innovate with purpose",
+      "[Placeholder] Grow together",
+      "[Placeholder] Get IT Done",
     ]);
     for (const button of buttons) {
       expect(button.getAttribute("aria-pressed")).toBe("false");
       expect(button.querySelector("svg.flip-ill")).not.toBeNull();
+      expect(
+        button.querySelector(".flip-back .flip-title")?.textContent,
+      ).toMatch(/^\[Placeholder\] /);
     }
   });
 });

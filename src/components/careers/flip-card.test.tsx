@@ -30,11 +30,13 @@ describe("FlipCard", () => {
     expect(button.getAttribute("aria-pressed")).toBe("false");
     expect(button.classList.contains("flipped")).toBe(false);
     const { front, back } = faces(container);
-    expect(front?.textContent).toBe("01Stay agileFlip for details");
+    expect(front?.textContent).toBe(
+      "01[Placeholder] Stay agileFlip for details",
+    );
     expect(front?.hasAttribute("inert")).toBe(false);
     expect(back?.hasAttribute("inert")).toBe(true);
     expect(back?.textContent).toBe(
-      "01 · STAY AGILEMove without losing direction.Stay flexible and adapt when new information or a better answer changes the path.Flip back",
+      "01 · STAY AGILE[Placeholder] Move without losing direction.Stay flexible and adapt when new information or a better answer changes the path.Flip back",
     );
   });
 

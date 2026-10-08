@@ -287,3 +287,13 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a7-careers.md`
   summary: Q15 — the Life photo frames left `/careers` in E-A7, but their Sanity code stays unrendered: `getLifePhotos` (`src/lib/careers/life-photos.ts`), the `careersPhotos` schema and singleton (`studio/schemas/careers-photos.ts`, `index.ts`, `structure.ts`), `LifeFrames` (`src/components/careers/life-frames.tsx`), `careersLife` in `src/content/careers.ts`, and the `careersPhotos` revalidate tag. Decide after the demo: reuse it (for example for real photos in the Inside XionTech tiles) or remove the code and the schema in one change.
   evidence: Lead decision Q15 (plan default, 2026-10-08): keep the code and list it here.
+  Review note (2026-10-08): the kept code still has its tests in `careers.test.tsx` and its CSS (`.illo` frames) in `globals.css`; the `careersPhotos` revalidate tag still revalidates `/careers`; the Studio help text (`studio/schemas/careers-photos.ts`) still says the photos show in "Life at XionTech". Fix the help text, or remove it all, in the same change.
+
+## Deferred from: code review of spec-enh-a7-careers (2026-10-08)
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a7-careers.md`
+  summary: The Careers flip card's accessible name changes when it is pressed (front title, then the whole back text). The spec and prototype ask for this, but the ARIA toggle-button pattern prefers a stable name (title as the name, back text as a description).
+  evidence: maybe-false, medium if true. Settle it with NVDA or VoiceOver on `/careers`: flip a card and listen whether the change is clear.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a7-careers.md`
+  summary: E-A7 CAP-7 (job page has no sideways scroll from 320px to 1440px) is checked only by a hand-run browser walk; add a Playwright check (`scrollWidth <= clientWidth` at 320px on `/careers/<slug>`) when a browser e2e project runs per PR.
+  evidence: Verification-gap and acceptance layers, 2026-10-08. The walk passed at 320/360/390/768/1024/1280/1440px.

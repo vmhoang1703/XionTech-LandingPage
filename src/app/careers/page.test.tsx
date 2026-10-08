@@ -33,10 +33,16 @@ describe("Careers page", () => {
     const { container } = await renderPage();
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Stay curious.Build what’s next.",
+      "Stay curious. Build what’s next.",
     );
     expect(container.querySelector("section#life")).not.toBeNull();
     expect(container.querySelector("section#roles")).not.toBeNull();
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Find your next challenge.",
+      }),
+    ).not.toBeNull();
   });
 
   it("orders the sections as the prototype does, roles last", async () => {

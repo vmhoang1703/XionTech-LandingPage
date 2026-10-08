@@ -70,47 +70,46 @@ export const careersInside = {
 export type ValueIcon = "agile" | "outcome" | "innovate" | "together" | "done";
 
 // Q6: these five values differ from the six core values and are not yet
-// confirmed, so the section carries a [Placeholder] note.
+// confirmed, so each front and back title starts with [Placeholder].
 export const careersValues = {
   heading: "Five things that shape the way we work.",
   lede: "These are the behaviours we want people to experience from us every day. Flip a card to see what each one means in practice.",
-  note: "[Placeholder] These five values are waiting for confirmation.",
   frontHint: "Flip for details",
   backHint: "Flip back",
   cards: [
     {
       icon: "agile",
-      title: "Stay agile",
+      title: "[Placeholder] Stay agile",
       label: "STAY AGILE",
-      backTitle: "Move without losing direction.",
+      backTitle: "[Placeholder] Move without losing direction.",
       text: "Stay flexible and adapt when new information or a better answer changes the path.",
     },
     {
       icon: "outcome",
-      title: "Own the outcome",
+      title: "[Placeholder] Own the outcome",
       label: "OWNERSHIP",
-      backTitle: "Care beyond your task.",
+      backTitle: "[Placeholder] Care beyond your task.",
       text: "Raise issues early, protect quality and take responsibility for whether the work actually succeeds.",
     },
     {
       icon: "innovate",
-      title: "Innovate with purpose",
+      title: "[Placeholder] Innovate with purpose",
       label: "INNOVATE",
-      backTitle: "New is useful only when it helps.",
+      backTitle: "[Placeholder] New is useful only when it helps.",
       text: "Explore emerging technology when it improves the product, the user experience or the way we work.",
     },
     {
       icon: "together",
-      title: "Grow together",
+      title: "[Placeholder] Grow together",
       label: "GROW TOGETHER",
-      backTitle: "Make each other better.",
+      backTitle: "[Placeholder] Make each other better.",
       text: "Share what you know, give useful feedback and create space for teammates to stretch, contribute and grow.",
     },
     {
       icon: "done",
-      title: "Get IT Done",
+      title: "[Placeholder] Get IT Done",
       label: "GET IT DONE",
-      backTitle: "Turn possibility into something real.",
+      backTitle: "[Placeholder] Turn possibility into something real.",
       text: "Good ideas matter. Delivering useful, working outcomes is what gives them value.",
       accent: true,
     },

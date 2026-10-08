@@ -37,7 +37,7 @@ export function GrowthRing() {
     };
     const observer = new IntersectionObserver(
       (entries) => {
-        if (played || !entries[0].isIntersecting) return;
+        if (played || !entries.at(-1)?.isIntersecting) return;
         played = true;
         observer.disconnect();
         timer = window.setTimeout(() => next(1), FIRST_STEP_MS);
@@ -68,7 +68,7 @@ export function GrowthRing() {
             className={index === current ? "cycle-node current" : "cycle-node"}
             data-step={index + 1}
           >
-            <span className="stepno">{`0${index + 1}`}</span>
+            <span className="stepno">{String(index + 1).padStart(2, "0")}</span>
             <span>{step}</span>
           </div>
         ))}
