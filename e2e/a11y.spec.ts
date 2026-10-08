@@ -190,6 +190,7 @@ const KEYBOARD_PAGES = [
   "/news",
   "/demo",
   "/about",
+  "/careers",
 ];
 
 test.describe("keyboard", { tag: "@a11y" }, () => {

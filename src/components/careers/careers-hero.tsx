@@ -1,37 +1,31 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
-import { HeroArt } from "@/components/sections/hero-art";
 import { careersHero } from "@/content/careers";
+import { GrowthRing } from "./growth-ring";
 
-// Server Component. Amber page hero with two anchor buttons (CAP-1).
+// Server Component. Light hero beside the Growth Learning Model; no
+// breadcrumb (E-A7 CAP-1, prototype careers.html).
 export function CareersHero() {
-  const { breadcrumbLabel, breadcrumbHome, breadcrumbCurrent } = careersHero;
-  const { title, lede, primaryCta, secondaryCta } = careersHero;
+  const { title, lede, cta } = careersHero;
 
   return (
-    <section className="hero-amber page-hero" aria-labelledby="careers-h1">
-      <HeroArt tone="amber" />
-      <div className="wrap">
-        <nav className="crumbs" aria-label={breadcrumbLabel}>
-          <Link href="/">{breadcrumbHome}</Link>
-          <span>/</span>
-          <span>{breadcrumbCurrent}</span>
-        </nav>
-        <h1 id="careers-h1">
-          {title.lead}
-          <span className="hl">{title.highlight}</span>
-          {title.tail}
-        </h1>
-        <p className="lede mt-4.5 mb-8">{lede}</p>
-        <div className="flex flex-wrap gap-3">
-          <a className="btn btn-navy" href={primaryCta.href}>
-            {primaryCta.label}
+    <section
+      className="hero-light page-hero careers-hero"
+      aria-labelledby="careers-h1"
+    >
+      <div aria-hidden="true" className="aurora" />
+      <div className="wrap ch-grid">
+        <div>
+          <h1 id="careers-h1">
+            {title.first} <br />
+            {title.second}
+          </h1>
+          <p className="lede mt-4.5 mb-8">{lede}</p>
+          <a className="btn btn-primary" href={cta.href}>
+            {cta.label}
             <ArrowRightIcon aria-hidden="true" />
           </a>
-          <a className="btn btn-glass" href={secondaryCta.href}>
-            {secondaryCta.label}
-          </a>
         </div>
+        <GrowthRing />
       </div>
     </section>
   );

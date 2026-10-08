@@ -1,14 +1,3 @@
-import type { Icon } from "@phosphor-icons/react";
-import {
-  CpuIcon,
-  GraduationCapIcon,
-  HeartIcon,
-  RocketLaunchIcon,
-  SparkleIcon,
-  TargetIcon,
-  UsersThreeIcon,
-} from "@phosphor-icons/react/ssr";
-
 // Careers page copy. Kept out of the components so it can be translated later.
 
 export const careersMeta = {
@@ -18,77 +7,130 @@ export const careersMeta = {
 };
 
 export const careersHero = {
-  breadcrumbLabel: "Breadcrumb",
-  breadcrumbHome: "Home",
-  breadcrumbCurrent: "Careers",
-  title: {
-    lead: "Build what schools use ",
-    highlight: "every day",
-    tail: ".",
-  },
-  lede: "Join a people-centered team working with AI/ML, generative AI, cloud and agile delivery.",
-  primaryCta: { href: "#roles", label: "See open roles" },
-  secondaryCta: { href: "#life", label: "Life at XionTech" },
+  title: { first: "Stay curious.", second: "Build what’s next." },
+  lede: "We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task.",
+  cta: { href: "#roles", label: "Explore open roles" },
 };
 
-export const careersCulture = {
-  heading: "A culture that goes beyond employment.",
-  lede: "We cultivate a workplace where every team member feels valued, supported, and empowered. It's about belonging, collaboration, and shared success.",
-  bullets: [
-    {
-      icon: RocketLaunchIcon,
-      title: "Startup Spirit.",
-      text: "Agility, flexibility and a passion for innovation.",
-    },
-    {
-      icon: TargetIcon,
-      title: '"Get IT Done" Attitude.',
-      text: "Ownership of our commitments and pride in quality.",
-    },
-    {
-      icon: UsersThreeIcon,
-      title: "People-Centered Culture.",
-      text: "A place where everyone belongs.",
-    },
-  ] satisfies { icon: Icon; title: string; text: string }[],
-  photo: {
-    label: "[Placeholder] Photo",
-    hint: "A real photo of the team at work or at a company event.",
-  },
+// Q6: the model has no verified source yet, so its caption and name are
+// marked [Placeholder] until Amber confirms it.
+export const careersGrowth = {
+  caption: "[Placeholder] Growth Learning Model",
+  center: "Growth",
+  steps: ["Curious", "Learn", "Ask", "Grow", "Improve"],
 };
 
-export const careersBenefits = {
-  heading: "Why you'll grow here.",
-  items: [
+export type InsideTone = "navy" | "yellow" | "cream";
+
+export const careersInside = {
+  heading: "Inside XionTech.",
+  lede: "A look at the moments that shape life here: workshops, project starts, team days, celebrations, shared learning and the small moments in between.",
+  tiles: [
     {
-      icon: CpuIcon,
-      title: "Innovative workspace",
-      text: "Cutting-edge technologies to create transformative IT systems.",
+      tag: "Learn together",
+      title: "Workshops & experiments",
+      text: "Hands-on sessions where the team tries new tools, agentic workflows and better ways to work.",
+      tone: "navy",
+      big: true,
     },
     {
-      icon: GraduationCapIcon,
-      title: "Growth opportunities",
-      text: "Structured training, knowledge resources and role-specific onboarding.",
+      tag: "Build relationships",
+      title: "Client visits",
+      text: "Understand context directly and build stronger working relationships.",
+      tone: "yellow",
     },
     {
-      icon: SparkleIcon,
-      title: "Engaging work",
-      text: "Projects with AI/ML, generative AI, cloud computing and agile methods.",
+      tag: "Shared direction",
+      title: "Town halls",
+      text: "What changed, what matters now, and where we’re going next.",
+      tone: "cream",
     },
     {
-      icon: HeartIcon,
-      title: "Meaningful impact",
-      text: "Solutions that drive digital transformation, used by schools every day.",
+      tag: "Start together",
+      title: "Project kickoffs",
+      text: "New work starts with shared context, not a mysterious task list.",
+      tone: "cream",
     },
-  ] satisfies { icon: Icon; title: string; text: string }[],
+    // Q6: no verified source for this tile yet.
+    {
+      tag: "Celebrate progress",
+      title: "[Placeholder] Celebration",
+      text: "Because shipped work deserves more than a green status label.",
+      tone: "navy",
+    },
+  ] satisfies {
+    tag: string;
+    title: string;
+    text: string;
+    tone: InsideTone;
+    big?: boolean;
+  }[],
+};
+
+export type ValueIcon = "agile" | "outcome" | "innovate" | "together" | "done";
+
+// Q6: these five values differ from the six core values and are not yet
+// confirmed, so each front and back title starts with [Placeholder].
+export const careersValues = {
+  heading: "Five things that shape the way we work.",
+  lede: "These are the behaviours we want people to experience from us every day. Flip a card to see what each one means in practice.",
+  frontHint: "Flip for details",
+  backHint: "Flip back",
+  cards: [
+    {
+      icon: "agile",
+      title: "[Placeholder] Stay agile",
+      label: "STAY AGILE",
+      backTitle: "[Placeholder] Move without losing direction.",
+      text: "Stay flexible and adapt when new information or a better answer changes the path.",
+    },
+    {
+      icon: "outcome",
+      title: "[Placeholder] Own the outcome",
+      label: "OWNERSHIP",
+      backTitle: "[Placeholder] Care beyond your task.",
+      text: "Raise issues early, protect quality and take responsibility for whether the work actually succeeds.",
+    },
+    {
+      icon: "innovate",
+      title: "[Placeholder] Innovate with purpose",
+      label: "INNOVATE",
+      backTitle: "[Placeholder] New is useful only when it helps.",
+      text: "Explore emerging technology when it improves the product, the user experience or the way we work.",
+    },
+    {
+      icon: "together",
+      title: "[Placeholder] Grow together",
+      label: "GROW TOGETHER",
+      backTitle: "[Placeholder] Make each other better.",
+      text: "Share what you know, give useful feedback and create space for teammates to stretch, contribute and grow.",
+    },
+    {
+      icon: "done",
+      title: "[Placeholder] Get IT Done",
+      label: "GET IT DONE",
+      backTitle: "[Placeholder] Turn possibility into something real.",
+      text: "Good ideas matter. Delivering useful, working outcomes is what gives them value.",
+      accent: true,
+    },
+  ] satisfies {
+    icon: ValueIcon;
+    title: string;
+    label: string;
+    backTitle: string;
+    text: string;
+    accent?: boolean;
+  }[],
 };
 
 export const careersRoles = {
-  heading: "Open roles.",
+  heading: "Find your next challenge.",
   emptyText: "No open roles right now.",
   applyLabel: "View and apply",
 };
 
+// Q15: Life photo frames are off the page; the Sanity life-photo code and
+// this copy stay for later (deferred-work.md).
 export const careersLife = {
   heading: "Life at XionTech.",
   frames: [
