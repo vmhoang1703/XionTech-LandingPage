@@ -7,10 +7,10 @@ export const homeNews = {
 };
 
 export const categoryLabels: Record<string, string> = {
-  product: "Product",
-  company: "Company",
   schools: "Schools",
-  team: "Team",
+  students: "Students",
+  parents: "Parents",
+  company: "Company",
 };
 
 export const newsMeta = {
@@ -42,6 +42,5 @@ export const newsStory = {
   breadcrumbNews: "News",
   storyLabel: "Story",
   backToNews: { href: "/news", label: "Back to News" },
-  seeApp: (app: string) => `See ${app}`,
   metaTitle: (title: string) => `${title} | XionTech`,
 };

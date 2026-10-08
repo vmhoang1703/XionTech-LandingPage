@@ -10,7 +10,7 @@ const post: LatestPost = {
   title: "Parent Hub launches",
   excerpt: "A short summary.",
   publishedAt: "2026-09-18T03:00:00.000Z",
-  category: "team",
+  category: "company",
   app: null,
 };
 
@@ -20,8 +20,8 @@ describe("NewsCard", () => {
 
     const time = container.querySelector("time");
     expect(time?.getAttribute("datetime")).toBe(post.publishedAt);
-    expect(time?.textContent).toBe("18 SEP 2026");
-    expect(screen.getByText("Team").className).toBe("cat");
+    expect(time?.textContent).toBe("18 Sep 2026");
+    expect(screen.getByText("Company").className).toBe("cat");
     expect(
       screen.getByRole("heading", { level: 3, name: "Parent Hub launches" }),
     ).toBeTruthy();
@@ -53,14 +53,12 @@ describe("NewsCard", () => {
     ).toBe("/news/a%2Fb%3Fc");
   });
 
-  it("marks a product tag with the amber class", () => {
+  it("tags a product story with its audience", () => {
     render(
       <NewsCard post={{ ...post, category: "product", app: "parent-hub" }} />,
     );
 
-    expect(screen.getByText("Product · Parent Hub").className).toBe(
-      "cat product",
-    );
+    expect(screen.getByText("Parents").className).toBe("cat");
   });
 
   it("leaves out the tag and the excerpt when they are missing", () => {

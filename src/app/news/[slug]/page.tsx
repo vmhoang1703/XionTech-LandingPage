@@ -1,11 +1,11 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import { ArrowLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HeroArt } from "@/components/sections/hero-art";
 import { newsMeta, newsStory } from "@/content/news";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
-import { getPost, productLink, type StoryBlock } from "@/lib/news/post";
+import { getPost, type StoryBlock } from "@/lib/news/post";
 
 type StoryProps = Readonly<PageProps<"/news/[slug]">>;
 
@@ -48,9 +48,6 @@ export default async function StoryPage({ params }: StoryProps) {
   if (!story) notFound();
 
   const tag = categoryTag(story);
-  // Only a Product story links to an app: Sanity keeps a hidden app value
-  // when the editor changes the category (the tag ignores it too).
-  const product = story.category === "product" ? productLink(story.app) : null;
   const { breadcrumbLabel, breadcrumbHome, breadcrumbNews, backToNews } =
     newsStory;
 
@@ -74,13 +71,7 @@ export default async function StoryPage({ params }: StoryProps) {
             <time dateTime={story.publishedAt}>
               {newsDate(story.publishedAt)}
             </time>
-            {tag ? (
-              <span
-                className={story.category === "product" ? "cat product" : "cat"}
-              >
-                {tag}
-              </span>
-            ) : null}
+            {tag ? <span className="cat">{tag}</span> : null}
           </div>
         </div>
       </section>
@@ -93,12 +84,6 @@ export default async function StoryPage({ params }: StoryProps) {
           <div className="home-media story-media" aria-hidden="true" />
           <StoryBody blocks={story.body ?? []} excerpt={story.excerpt} />
           <div className="mt-9 flex flex-wrap gap-3">
-            {product ? (
-              <Link className="btn btn-glass" href={product.href}>
-                <span>{newsStory.seeApp(product.label)}</span>
-                <ArrowRightIcon aria-hidden="true" />
-              </Link>
-            ) : null}
             <Link className="btn btn-glass" href={backToNews.href}>
               <ArrowLeftIcon aria-hidden="true" />
               <span>{backToNews.label}</span>

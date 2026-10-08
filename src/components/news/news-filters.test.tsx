@@ -9,9 +9,9 @@ const item = (slug: string, category: string | null): FilterItem => ({
 });
 
 const items = [
-  item("p1", "product"),
-  item("t1", "team"),
-  item("t2", "team"),
+  item("p1", "parents"),
+  item("t1", "students"),
+  item("t2", "students"),
   item("c1", "company"),
   item("x1", null),
 ];
@@ -27,7 +27,7 @@ describe("NewsFilters", () => {
     expect(screen.getByRole("group", { name: "Filter stories" })).toBeTruthy();
     expect(shown()).toEqual(["p1", "t1", "t2", "c1", "x1"]);
     expect(chip("All").getAttribute("aria-pressed")).toBe("true");
-    for (const name of ["Product", "Company", "Schools", "Team"]) {
+    for (const name of ["Schools", "Students", "Parents", "Company"]) {
       expect(chip(name).getAttribute("aria-pressed")).toBe("false");
       expect(chip(name).getAttribute("type")).toBe("button");
     }
@@ -37,19 +37,19 @@ describe("NewsFilters", () => {
     expect(screen.queryByText("No stories in this category yet.")).toBeNull();
   });
 
-  it("shows only Team cards when Team is pressed, and announces the plural count", () => {
+  it("shows only Students cards when Students is pressed, and announces the plural count", () => {
     render(<NewsFilters items={items} />);
-    fireEvent.click(chip("Team"));
+    fireEvent.click(chip("Students"));
 
     expect(shown()).toEqual(["t1", "t2"]);
-    expect(chip("Team").getAttribute("aria-pressed")).toBe("true");
+    expect(chip("Students").getAttribute("aria-pressed")).toBe("true");
     expect(chip("All").getAttribute("aria-pressed")).toBe("false");
     expect(live()?.textContent).toBe("Showing 2 stories");
   });
 
   it("uses the singular for one story", () => {
     render(<NewsFilters items={items} />);
-    fireEvent.click(chip("Product"));
+    fireEvent.click(chip("Parents"));
 
     expect(shown()).toEqual(["p1"]);
     expect(live()?.textContent).toBe("Showing 1 story");
@@ -57,11 +57,11 @@ describe("NewsFilters", () => {
 
   it("does nothing when the active chip is pressed again", () => {
     render(<NewsFilters items={items} />);
-    fireEvent.click(chip("Team"));
-    fireEvent.click(chip("Team"));
+    fireEvent.click(chip("Students"));
+    fireEvent.click(chip("Students"));
 
     expect(shown()).toEqual(["t1", "t2"]);
-    expect(chip("Team").getAttribute("aria-pressed")).toBe("true");
+    expect(chip("Students").getAttribute("aria-pressed")).toBe("true");
   });
 
   it("shows the empty panel for a category with no stories; Show all resets to All and focuses it", () => {

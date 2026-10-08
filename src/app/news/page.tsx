@@ -6,6 +6,7 @@ import { NewsFilters } from "@/components/news/news-filters";
 import { HeroArt } from "@/components/sections/hero-art";
 import { newsMeta, newsPage } from "@/content/news";
 import { getAllPosts } from "@/lib/news/all-posts";
+import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
 
 export const metadata: Metadata = {
@@ -57,7 +58,7 @@ export default async function NewsPage() {
           <NewsFilters
             items={posts.map((post, index) => ({
               key: post.slug,
-              category: post.category,
+              category: postAudience(post),
               node: <NewsCard post={post} feature={index === 0} />,
             }))}
           />

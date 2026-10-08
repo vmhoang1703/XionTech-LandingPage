@@ -76,11 +76,11 @@ describe("NewsPage", () => {
   it("passes each story's category to the filter, so a chip shows only its stories", async () => {
     await renderPage([post(1, "product"), post(2, "team"), post(3, "company")]);
 
-    fireEvent.click(screen.getByRole("button", { name: "Team" }));
+    fireEvent.click(screen.getByRole("button", { name: "Parents" }));
 
     expect(
       screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent),
-    ).toEqual(["Story 2"]);
+    ).toEqual(["Story 1"]);
     expect(document.querySelector("[aria-live]")?.textContent).toBe(
       "Showing 1 story",
     );

@@ -33,6 +33,8 @@ describe("getAllPosts", () => {
       "publishedAt",
       "category",
       "app",
+      '"image": image.asset->url',
+      "alt",
     ]) {
       expect(query).toContain(field);
     }

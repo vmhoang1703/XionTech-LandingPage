@@ -51,6 +51,8 @@ describe("studio schemas", () => {
         "publishedAt",
         "excerpt",
         "body",
+        "image",
+        "alt",
       ]),
     );
     const jobNames = job.fields.map((f) => f.name);
@@ -114,10 +116,10 @@ describe("studio schemas", () => {
     };
     expect(category.type).toBe("string");
     expect(category.options?.list?.map((o) => o.value)).toEqual([
-      "product",
-      "company",
       "schools",
-      "team",
+      "students",
+      "parents",
+      "company",
     ]);
     const required = vi.fn().mockReturnValue("required-rule");
     expect(
@@ -128,10 +130,10 @@ describe("studio schemas", () => {
     expect(required).toHaveBeenCalledTimes(1);
   });
 
-  it("gives a post an app field with the four app ids, hidden unless Product", () => {
+  it("gives a post an app field with the four app ids, always shown", () => {
     const app = findField(post, "app") as Field & {
       options?: { list?: { title: string; value: string }[] };
-      hidden?: (ctx: { document?: { category?: string } }) => boolean;
+      hidden?: unknown;
     };
     expect(app.type).toBe("string");
     expect(app.options?.list?.map((o) => o.value)).toEqual(
@@ -140,11 +142,38 @@ describe("studio schemas", () => {
     expect(app.options?.list?.map((o) => o.title)).toEqual(
       APPS.map((a) => a.shortName),
     );
-    expect(app.hidden).toBeTypeOf("function");
-    expect(app.hidden?.({ document: { category: "product" } })).toBe(false);
-    expect(app.hidden?.({ document: { category: "team" } })).toBe(true);
-    expect(app.hidden?.({ document: {} })).toBe(true);
-    expect(app.hidden?.({})).toBe(true);
+    expect(app.hidden).toBeUndefined();
+  });
+
+  it("gives a post a photo with a hotspot and an alt text that is required once a photo is set", () => {
+    const image = findField(post, "image") as Field & {
+      options?: { hotspot?: boolean };
+    };
+    expect(image.type).toBe("image");
+    expect(image.options?.hotspot).toBe(true);
+
+    const alt = findField(post, "alt") as Field & {
+      validation?: (r: {
+        custom: (fn: (v: unknown, c: unknown) => unknown) => unknown;
+      }) => unknown;
+    };
+    const check = (value: unknown, document: unknown) => {
+      let result: unknown;
+      alt.validation?.({
+        custom: (fn) => (result = fn(value, { document })),
+      });
+      return result;
+    };
+    const withImage = { image: { asset: { _ref: "image-1" } } };
+    expect(check("A classroom", withImage)).toBe(true);
+    expect(check("  ", withImage)).toBe(
+      "Describe the photo for screen readers.",
+    );
+    expect(check(undefined, withImage)).toBe(
+      "Describe the photo for screen readers.",
+    );
+    expect(check(undefined, {})).toBe(true);
+    expect(check(undefined, undefined)).toBe(true);
   });
 
   it("has a job closed flag that starts false", () => {

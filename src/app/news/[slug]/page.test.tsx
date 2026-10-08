@@ -74,10 +74,8 @@ describe("StoryPage", () => {
     );
     const time = container.querySelector("time");
     expect(time?.getAttribute("datetime")).toBe(story.publishedAt);
-    expect(time?.textContent).toBe("4 OCT 2026");
-    expect(screen.getByText("Product · Parent Hub").className).toBe(
-      "cat product",
-    );
+    expect(time?.textContent).toBe("4 Oct 2026");
+    expect(screen.getByText("Parents").className).toBe("cat");
     expect(
       container.querySelector(".story-media")?.getAttribute("aria-hidden"),
     ).toBe("true");
@@ -90,9 +88,7 @@ describe("StoryPage", () => {
       screen.getByRole("heading", { level: 2, name: "A subheading" }),
     ).toBeTruthy();
 
-    expect(
-      screen.getByRole("link", { name: "See Parent Hub" }).getAttribute("href"),
-    ).toBe("/products#pxp");
+    expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
     expect(
       screen.getByRole("link", { name: "Back to News" }).getAttribute("href"),
     ).toBe("/news");
