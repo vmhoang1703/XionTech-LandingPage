@@ -242,6 +242,7 @@ describe("parseSubmission bad bodies", () => {
       ["Parent Hub", "ERP"],
       "Parent Hub",
       ["PXP"],
+      ["AI Tutor"],
       [1],
       null,
     ]) {
