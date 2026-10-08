@@ -2357,25 +2357,7 @@
     gap: 20px;
   }
 
-  /* News cards (Story 3.7), ported from the prototype site.css. Static: no glow or lift until after demo. */
-  .ncard {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-bottom: 26px;
-  }
-
-  .ncard > :not(.frame) {
-    margin-inline: 24px;
-  }
-
-  .ncard .frame {
-    height: auto;
-    margin-bottom: 14px;
-    aspect-ratio: 16 / 10;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  }
-
+  /* Story page meta row (Story 6.2) */
   .meta {
     display: flex;
     align-items: center;
@@ -2394,29 +2376,6 @@
     font-size: 0.58rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-  }
-
-  .cat.product {
-    background: var(--color-amber);
-  }
-
-  .ncard h3 {
-    font-family: var(--font-display);
-    font-size: 1.08rem;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-  }
-
-  .ncard p {
-    color: var(--color-muted);
-    font-size: 0.93rem;
-  }
-
-  .ncard .link-arrow {
-    margin-top: auto;
-    padding-top: 8px;
-    font-size: 0.9rem;
   }
 
   .news-grid + .link-arrow {
@@ -2447,47 +2406,30 @@
     border-radius: var(--radius-lg);
   }
 
-  /* News page (Story 6.1), ported from the prototype site.css. The first card is a wide feature. */
-  .ncard.big {
-    grid-column: span 2;
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    /* meta, title, excerpt, link; the frame spans all four rows */
-    grid-template-rows: auto auto auto 1fr;
-    padding-block: 0 26px;
-  }
-
-  .ncard.big .frame {
-    grid-row: 1 / -1;
-    min-height: 320px;
-    margin-bottom: 0;
-    aspect-ratio: auto;
-    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-  }
-
-  .ncard.big .meta {
-    margin-top: 26px;
-  }
-
-  .ncard.big h3 {
-    font-size: 1.5rem;
-  }
-
+  /* News page filters (Story 6.1, E-A6) */
   .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 32px;
   }
 
   .filters button {
-    min-height: 36px;
-    padding: 8px 16px;
+    min-height: var(--spacing-tap-target);
+    padding: 0 18px;
     border: 1px solid var(--color-field-border);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     color: var(--color-muted);
-    font-size: 0.86rem;
+    font-size: var(--text-body-sm);
     font-weight: 500;
+    transition:
+      background 0.25s,
+      color 0.25s,
+      border-color 0.25s;
+  }
+
+  .filters button:hover {
+    border-color: var(--color-heading);
+    color: var(--color-heading);
   }
 
   .filters button[aria-pressed="true"] {
@@ -2513,25 +2455,397 @@
     font-style: italic;
   }
 
+  /* E-A6 News (prototype news.html, site.css "News" blocks; ENH-037, ENH-053) */
+  /* White with light blue shading through the whole page, hero included (site.js "cool") */
+  .news-flow {
+    background:
+      radial-gradient(
+        460px circle at 10% 18%,
+        rgb(63 102 160 / 0.07),
+        transparent 70%
+      ),
+      radial-gradient(
+        460px circle at 86% 46%,
+        rgb(63 102 160 / 0.07),
+        transparent 70%
+      ),
+      radial-gradient(
+        460px circle at 10% 80%,
+        rgb(63 102 160 / 0.07),
+        transparent 70%
+      ),
+      linear-gradient(
+        180deg,
+        var(--color-white),
+        #f7fafe 14%,
+        #eef4fc 30%,
+        #e6eef9 50%,
+        #f0f5fc 70%,
+        #e7eff9 86%,
+        #e1eaf7
+      );
+  }
+
+  .news-flow .hero-light {
+    background: transparent;
+  }
+
+  .nhead-sec {
+    padding-block: 56px 0;
+  }
+
+  .nhead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 52px;
+  }
+
+  .nhead h1 {
+    max-width: none;
+    margin: 0;
+  }
+
+  .nhead p {
+    max-width: 380px;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  .nlist {
+    padding-top: 48px;
+  }
+
+  .news-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  /* Full-photo story cards: the whole card is the link */
+  .sgrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-grid-gap);
+  }
+
+  .scard {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    min-height: 340px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #dce4ed;
+    box-shadow: 0 14px 40px rgb(11 33 71 / 0.08);
+    color: var(--color-white);
+    text-decoration: none;
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.45s ease;
+  }
+
+  .scard img,
+  .scard .home-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .scard img {
+    object-fit: cover;
+    object-position: center 30%;
+    transition:
+      transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1),
+      filter 0.45s ease;
+  }
+
+  /* Darker at the top too, so the date stays readable on bright photos */
+  .scard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      rgb(7 25 54 / 0.2) 0%,
+      rgb(7 25 54 / 0.04) 22%,
+      rgb(7 25 54 / 0.18) 42%,
+      rgb(7 25 54 / 0.62) 64%,
+      rgb(7 25 54 / 0.9) 100%
+    );
+    transition: background 0.45s ease;
+  }
+
+  .scard-meta {
+    position: absolute;
+    inset-inline: 22px;
+    top: 22px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition:
+      opacity 0.3s ease,
+      transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .scard-pill,
+  .scard-date {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--text-label);
+  }
+
+  .scard-pill {
+    background: rgb(255 255 255 / 0.92);
+    box-shadow: 0 6px 18px rgb(11 33 71 / 0.08);
+    color: var(--color-navy);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .scard-pill.company {
+    background: rgb(255 242 189 / 0.95);
+  }
+
+  .scard-date {
+    background: rgb(7 25 54 / 0.7);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+
+  .scard-content {
+    position: absolute;
+    inset-inline: 28px;
+    bottom: 28px;
+    z-index: 3;
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .scard-title {
+    display: block;
+    max-width: 92%;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+    font-weight: 400;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .scard-read {
+    position: absolute;
+    left: 28px;
+    bottom: 26px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.35s ease,
+      transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .scard-read svg {
+    font-size: 1.25rem;
+    transition: transform 0.35s ease;
+  }
+
+  /* Hover, and the same for keyboard focus */
+  .scard:hover,
+  .scard:focus-visible {
+    transform: translateY(-5px);
+    box-shadow: 0 28px 64px rgb(11 33 71 / 0.14);
+  }
+
+  .scard:focus-visible {
+    outline: 3px solid var(--color-navy);
+    outline-offset: 3px;
+  }
+
+  .scard:hover img,
+  .scard:focus-visible img {
+    transform: scale(1.05);
+    filter: brightness(0.74);
+  }
+
+  .scard:hover::before,
+  .scard:focus-visible::before {
+    background: linear-gradient(
+      180deg,
+      rgb(7 25 54 / 0.14) 5%,
+      rgb(7 25 54 / 0.2) 42%,
+      rgb(7 25 54 / 0.9) 100%
+    );
+  }
+
+  .scard:hover .scard-content,
+  .scard:focus-visible .scard-content {
+    transform: translateY(-48px);
+  }
+
+  .scard:hover .scard-read,
+  .scard:focus-visible .scard-read {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scard:hover .scard-read svg,
+  .scard:focus-visible .scard-read svg {
+    transform: translateX(5px);
+  }
+
+  .scard:hover .scard-meta,
+  .scard:focus-visible .scard-meta {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  /* Touch screens have no hover, so "Read story" always shows there */
+  @media (hover: none) {
+    .scard-content {
+      transform: translateY(-48px);
+    }
+
+    .scard-read {
+      opacity: 1;
+      transform: none;
+    }
+
+    .scard::before {
+      background: linear-gradient(
+        180deg,
+        rgb(7 25 54 / 0.2) 0%,
+        rgb(7 25 54 / 0.08) 20%,
+        rgb(7 25 54 / 0.58) 38%,
+        rgb(7 25 54 / 0.86) 56%,
+        rgb(7 25 54 / 0.94) 100%
+      );
+    }
+  }
+
+  /* News: one large lead story, then square cards three to a row. NewsFilters
+     sets the lead cell; its column count follows these breakpoints. */
+  #newsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  #newsGrid .scard {
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+  }
+
+  #newsGrid .s-lead {
+    grid-column: 1 / -1;
+  }
+
+  #newsGrid .s-lead .scard {
+    min-height: clamp(380px, 40vw, 520px);
+    aspect-ratio: auto;
+  }
+
+  #newsGrid .scard-title {
+    font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  }
+
+  #newsGrid .s-lead .scard-title {
+    max-width: min(92%, 26ch);
+    font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+  }
+
+  #newsGrid :not(.s-lead) > .scard::before {
+    background: linear-gradient(
+      180deg,
+      rgb(7 25 54 / 0.2) 0%,
+      rgb(7 25 54 / 0.1) 16%,
+      rgb(7 25 54 / 0.5) 40%,
+      rgb(7 25 54 / 0.85) 66%,
+      rgb(7 25 54 / 0.94) 100%
+    );
+  }
+
+  @media (width <= 900px) {
+    .nhead {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .sgrid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .scard {
+      min-height: 380px;
+    }
+
+    #newsGrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (width <= 560px) {
+    #newsGrid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #newsGrid .s-lead .scard {
+      min-height: 380px;
+    }
+  }
+
+  @media (width <= 520px) {
+    .nhead-sec {
+      padding-top: 40px;
+    }
+
+    .scard {
+      min-height: 340px;
+    }
+
+    .scard-content {
+      inset-inline: 22px;
+    }
+
+    .scard-read {
+      left: 22px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scard,
+    .scard img,
+    .scard-content,
+    .scard-read,
+    .scard-meta {
+      transition: none;
+    }
+
+    .scard:hover,
+    .scard:focus-visible,
+    .scard:hover img,
+    .scard:focus-visible img {
+      transform: none;
+    }
+  }
+
   @media (width <= 900px) {
     .news-grid {
       grid-template-columns: 1fr 1fr;
-    }
-
-    .ncard.big {
-      grid-column: 1 / -1;
-      grid-template-columns: 1fr;
-    }
-
-    .ncard.big .frame {
-      grid-row: auto;
-      min-height: 240px;
-      margin-bottom: 14px;
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    }
-
-    .ncard.big .meta {
-      margin-top: 0;
     }
   }
 
@@ -2554,7 +2868,6 @@
     }
 
     .role:hover .link-arrow svg,
-    .ncard .link-arrow:hover svg,
     .sec-head ~ .link-arrow:hover svg {
       transform: translateX(4px);
     }
@@ -2568,7 +2881,6 @@
 
     .role:hover,
     .role:hover .link-arrow svg,
-    .ncard .link-arrow:hover svg,
     .sec-head ~ .link-arrow:hover svg {
       transform: none;
     }

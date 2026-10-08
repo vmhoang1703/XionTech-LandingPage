@@ -40,7 +40,7 @@ describe("HomeNews", () => {
       screen.getByRole("heading", { level: 2, name: "Latest from XionTech." }),
     ).toBeTruthy();
     expect(screen.queryByText(/\[Placeholder\]|sample/i)).toBeNull();
-    expect(container.querySelectorAll("article")).toHaveLength(3);
+    expect(container.querySelectorAll(".scard")).toHaveLength(3);
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
     ).toBe("/news");
@@ -49,14 +49,14 @@ describe("HomeNews", () => {
   it("shows only the stories it has, with no empty slots", async () => {
     const { container } = await renderNews([makePost(1)]);
 
-    expect(container.querySelectorAll("article")).toHaveLength(1);
+    expect(container.querySelectorAll(".scard")).toHaveLength(1);
   });
 
   it("hides the grid with no stories but keeps the heading and link", async () => {
     const { container } = await renderNews([]);
 
     expect(container.querySelector(".news-grid")).toBeNull();
-    expect(container.querySelector("article")).toBeNull();
+    expect(container.querySelector(".scard")).toBeNull();
     expect(screen.queryByText(/^\[Placeholder\]/)).toBeNull();
     expect(
       screen.getByRole("heading", { level: 2, name: "Latest from XionTech." }),

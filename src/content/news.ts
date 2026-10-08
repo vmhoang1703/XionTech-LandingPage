@@ -19,18 +19,17 @@ export const newsMeta = {
     "Short stories about XionTech's products, schools, team and client work.",
 };
 
-// News page copy (Story 6.1). The count strings stay here so they can be
+// News page copy (Story 6.1, E-A6). The count strings stay here so they can be
 // translated later (Story 1.2).
 export const newsPage = {
-  breadcrumbLabel: "Breadcrumb",
-  breadcrumbHome: "Home",
-  breadcrumbCurrent: "News",
-  title: { lead: "What we've been ", highlight: "up to", tail: "." },
-  lede: "Short stories about our products, schools, team and client work.",
+  title: "Catch up with us",
+  sub: "Stay informed with the latest news and announcements, fresh off the press.",
   storiesHeading: "All stories",
-  filtersLabel: "Filter stories",
+  filtersLabel: "Filter stories by audience",
+  sampleNote:
+    "Stories from the newXion newsroom; those marked [Placeholder] are samples.",
   allFilter: { id: "all", label: "All" },
-  empty: "No stories in this category yet.",
+  empty: "No stories are available in this category yet.",
   showAll: "Show all",
   count: (n: number) => (n === 1 ? "Showing 1 story" : `Showing ${n} stories`),
 };
