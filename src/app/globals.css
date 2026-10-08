@@ -205,7 +205,6 @@
   --z-index-content: 0;
   --z-index-subnav: 40;
   --z-index-header: 50;
-  --z-index-mega-menu: 55;
   --z-index-mobile-menu: 60;
   --z-index-toast: 100;
   --z-index-skip-link: 200;
@@ -314,7 +313,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *,
+    /* A visitor who pressed Play motion on Products chose the glows. */
+    *:not(.eco-bg[data-motion="on"] i),
     *::before,
     *::after {
       animation: none !important;

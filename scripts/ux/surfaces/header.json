@@ -27,14 +27,24 @@
       "dev": "header nav"
     },
     {
-      "name": "products-trigger",
-      "proto": "nav.menu .dd:nth-of-type(1) > button",
-      "dev": "header nav > div:nth-of-type(1) > button"
+      "name": "skip-link",
+      "proto": "a.skip",
+      "dev": "a.skip"
     },
     {
-      "name": "services-trigger",
-      "proto": "nav.menu .dd:nth-of-type(2) > button",
-      "dev": "header nav > div:nth-of-type(2) > button"
+      "name": "home-link",
+      "proto": "nav.menu > a[href='index.html']",
+      "dev": "header nav > a[href='/']"
+    },
+    {
+      "name": "products-link",
+      "proto": "nav.menu > a[href='products.html']",
+      "dev": "header nav > a[href='/products']"
+    },
+    {
+      "name": "services-link",
+      "proto": "nav.menu > a[href='services.html']",
+      "dev": "header nav > a[href='/services']"
     },
     {
       "name": "news-link",
@@ -42,96 +52,17 @@
       "dev": "header nav > a[href='/news']"
     },
     {
-      "name": "book-demo",
-      "proto": "header .head-cta",
-      "dev": "header a[href='/demo#form']"
+      "name": "about-link",
+      "proto": "nav.menu > a[href='about.html']",
+      "dev": "header nav > a[href='/about']"
     },
     {
-      "name": "skip-link",
-      "proto": "a.skip",
-      "dev": "a.skip"
-    },
-    {
-      "name": "mega-products",
-      "proto": "nav.menu .dd:nth-of-type(1) .mega",
-      "dev": "#mega-products"
-    },
-    {
-      "name": "mega-item",
-      "proto": "nav.menu .dd:nth-of-type(1) .mega > a:first-child",
-      "dev": "#mega-products > a:first-child"
-    },
-    {
-      "name": "mega-name",
-      "proto": "nav.menu .dd:nth-of-type(1) .mega > a:first-child strong",
-      "dev": "#mega-products > a:first-child > span > span:nth-child(1)"
-    },
-    {
-      "name": "mega-value",
-      "proto": "nav.menu .dd:nth-of-type(1) .mega > a:first-child small:not(.for)",
-      "dev": "#mega-products > a:first-child > span > span:nth-child(2)"
-    },
-    {
-      "name": "mega-for",
-      "proto": "nav.menu .dd:nth-of-type(1) .mega > a:first-child small.for",
-      "dev": "#mega-products > a:first-child > span > span:nth-child(3)"
-    },
-    {
-      "name": "mega-footer",
-      "proto": "nav.menu .dd:nth-of-type(1) .mega .foot",
-      "dev": "#mega-products > div:last-child"
-    },
-    {
-      "name": "mega-services",
-      "proto": "nav.menu .dd:nth-of-type(2) .mega",
-      "dev": "#mega-services"
+      "name": "careers-link",
+      "proto": "nav.menu > a[href='careers.html']",
+      "dev": "header nav > a[href='/careers']"
     }
   ],
   "states": [
-    {
-      "name": "products-open",
-      "minWidth": 1081,
-      "proto": [
-        {
-          "click": "nav.menu .dd:nth-of-type(1) > button"
-        },
-        {
-          "wait": 400
-        }
-      ],
-      "dev": [
-        {
-          "click": "header nav > div:nth-of-type(1) > button"
-        }
-      ],
-      "elements": [
-        "products-trigger",
-        "mega-products",
-        "mega-item",
-        "mega-name",
-        "mega-value",
-        "mega-for",
-        "mega-footer"
-      ]
-    },
-    {
-      "name": "services-open",
-      "minWidth": 1081,
-      "proto": [
-        {
-          "click": "nav.menu .dd:nth-of-type(2) > button"
-        },
-        {
-          "wait": 400
-        }
-      ],
-      "dev": [
-        {
-          "click": "header nav > div:nth-of-type(2) > button"
-        }
-      ],
-      "elements": ["services-trigger", "mega-services"]
-    },
     {
       "name": "skip-focus",
       "proto": [
@@ -166,249 +97,80 @@
         }
       ],
       "elements": ["news-link"]
-    },
-    {
-      "name": "keyboard-open",
-      "minWidth": 1081,
-      "proto": [
-        {
-          "focus": "nav.menu .dd:nth-of-type(1) > button"
-        },
-        {
-          "press": "Enter"
-        },
-        {
-          "wait": 400
-        },
-        {
-          "press": "Tab"
-        }
-      ],
-      "dev": [
-        {
-          "focus": "header nav > div:nth-of-type(1) > button"
-        },
-        {
-          "press": "Enter"
-        },
-        {
-          "press": "Tab"
-        }
-      ],
-      "elements": ["products-trigger", "mega-products", "mega-item"]
-    },
-    {
-      "name": "row-hover",
-      "minWidth": 1081,
-      "proto": [
-        {
-          "click": "nav.menu .dd:nth-of-type(1) > button"
-        },
-        {
-          "wait": 400
-        },
-        {
-          "hover": "nav.menu .dd:nth-of-type(1) .mega > a:first-child"
-        },
-        {
-          "wait": 300
-        }
-      ],
-      "dev": [
-        {
-          "click": "header nav > div:nth-of-type(1) > button"
-        },
-        {
-          "hover": "#mega-products > a:first-child"
-        },
-        {
-          "wait": 300
-        }
-      ],
-      "elements": ["mega-item"]
-    },
-    {
-      "name": "footer-hover",
-      "minWidth": 1081,
-      "proto": [
-        {
-          "click": "nav.menu .dd:nth-of-type(1) > button"
-        },
-        {
-          "wait": 400
-        },
-        {
-          "hover": "nav.menu .dd:nth-of-type(1) .mega .foot a"
-        },
-        {
-          "wait": 300
-        }
-      ],
-      "dev": [
-        {
-          "click": "header nav > div:nth-of-type(1) > button"
-        },
-        {
-          "hover": "#mega-products > div:last-child a"
-        },
-        {
-          "wait": 300
-        }
-      ],
-      "elements": ["mega-footer"]
     }
   ],
   "intended": [
-    {
-      "element": "mega-services",
-      "prop": "height",
-      "note": "EXPERIENCE.md: mega menus are text only; the prototype service rows carry 40px icon tiles"
-    },
     {
       "element": "skip-link",
       "prop": "borderRadius",
       "note": "SPEC 1.3 CAP-5: amber pill (prototype 10px)"
     },
     {
-      "element": "book-demo",
-      "prop": "x",
-      "note": "DESIGN.md: tools sit on the right; below 1080px the prototype puts them after the logo (UX-Q4, Amber to confirm)",
-      "pending": true
-    },
-    {
-      "element": "header",
-      "prop": "borderBottom",
-      "note": "DESIGN.md border token is 12% navy, prototype 10% (UX-Q3, Amber to confirm)",
-      "pending": true
-    },
-    {
-      "element": "mega-name",
-      "prop": "fontSize",
-      "note": "DESIGN.md title-sm is 1rem, prototype 0.92rem, DESIGN also says 1.08rem (UX-Q1, Amber decides)",
-      "pending": true
-    },
-    {
-      "element": "mega-name",
-      "prop": "lineHeight",
-      "note": "follows title-sm (UX-Q1)",
-      "pending": true
-    },
-    {
-      "element": "mega-name",
-      "prop": "height",
-      "note": "follows title-sm (UX-Q1)",
-      "pending": true
-    },
-    {
-      "element": "mega-value",
-      "prop": "y",
-      "note": "moves with the mega-name height (UX-Q1)",
-      "pending": true
-    },
-    {
-      "element": "mega-for",
+      "element": "home-link",
       "prop": "fontWeight",
-      "note": "DESIGN.md label-sm is 500 / 0.14em, prototype 400 / 0.12em (UX-Q2, Amber decides)",
-      "pending": true
+      "note": "E-A3 spec: all header links 500 (E-A1 weights), prototype 450"
     },
     {
-      "element": "mega-for",
-      "prop": "letterSpacing",
-      "note": "follows label-sm (UX-Q2)",
-      "pending": true
+      "element": "products-link",
+      "prop": "fontWeight",
+      "note": "E-A3 spec: all header links 500 (E-A1 weights), prototype 450"
     },
     {
-      "element": "mega-for",
-      "prop": "lineHeight",
-      "note": "follows label-sm (UX-Q2)",
-      "pending": true
+      "element": "services-link",
+      "prop": "fontWeight",
+      "note": "E-A3 spec: all header links 500 (E-A1 weights), prototype 450"
     },
     {
-      "element": "mega-for",
-      "prop": "y",
-      "note": "moves with the mega-name and mega-value heights (UX-Q1)",
-      "pending": true
+      "element": "news-link",
+      "prop": "fontWeight",
+      "note": "E-A3 spec: all header links 500 (E-A1 weights), prototype 450"
     },
     {
-      "element": "mega-footer",
-      "prop": "gap",
-      "note": "flex gap keeps the text and link apart on a narrow panel; no visible change at 660px"
+      "element": "about-link",
+      "prop": "fontWeight",
+      "note": "E-A3 spec: all header links 500 (E-A1 weights), prototype 450"
     },
     {
-      "element": "book-demo",
-      "prop": "lineHeight",
-      "note": "DESIGN.md typography.button line-height (shared .btn from Story 1.1); text moves about 1px"
+      "element": "careers-link",
+      "prop": "fontWeight",
+      "note": "E-A3 spec: all header links 500 (E-A1 weights), prototype 450"
     },
     {
-      "element": "mega-products",
-      "prop": "height",
-      "note": "follows the mega-name and mega-for sizes (UX-Q1, UX-Q2)",
-      "pending": true
+      "element": "nav",
+      "prop": "x",
+      "note": "decision Q10: no EN/VI switch before the demo, so the links sit further right"
     },
     {
-      "element": "mega-item",
-      "prop": "height",
-      "note": "follows the mega-name and mega-for sizes (UX-Q1, UX-Q2)",
-      "pending": true
+      "element": "home-link",
+      "prop": "x",
+      "note": "decision Q10: no EN/VI switch before the demo, so the links sit further right"
     },
     {
-      "element": "mega-footer",
-      "prop": "y",
-      "note": "moves with the row heights (UX-Q1, UX-Q2)",
-      "pending": true
+      "element": "products-link",
+      "prop": "x",
+      "note": "decision Q10: no EN/VI switch before the demo, so the links sit further right"
     },
     {
-      "element": "mega-item",
-      "prop": "backgroundColor",
-      "note": "enhance: a keyboard-focused row shows the hover fill (the prototype shows only the ring); Amber to approve with critic P3",
-      "pending": true
+      "element": "services-link",
+      "prop": "x",
+      "note": "decision Q10: no EN/VI switch before the demo, so the links sit further right"
     },
     {
-      "element": "products-menu",
-      "prop": "click-then-leave",
-      "pending": true,
-      "note": "enhance: a menu the visitor chose (click, keyboard, focus inside) stays open when the mouse leaves; the prototype closes it, which can drop keyboard focus into a hidden panel. Lead/Amber to confirm"
+      "element": "news-link",
+      "prop": "x",
+      "note": "decision Q10: no EN/VI switch before the demo, so the links sit further right"
     },
     {
-      "element": "services-menu",
-      "prop": "click-then-leave",
-      "pending": true,
-      "note": "enhance: a menu the visitor chose (click, keyboard, focus inside) stays open when the mouse leaves; the prototype closes it, which can drop keyboard focus into a hidden panel. Lead/Amber to confirm"
+      "element": "about-link",
+      "prop": "x",
+      "note": "decision Q10: no EN/VI switch before the demo, so the links sit further right"
+    },
+    {
+      "element": "careers-link",
+      "prop": "x",
+      "note": "decision Q10: no EN/VI switch before the demo, so the links sit further right"
     }
   ],
   "shotWidths": [360, 390, 768, 1024, 1081, 1280, 1440, 1920],
-  "probes": [
-    {
-      "name": "products-menu",
-      "minWidth": 1081,
-      "trigger": {
-        "proto": "nav.menu .dd:nth-of-type(1) > button",
-        "dev": "header nav > div:nth-of-type(1) > button"
-      },
-      "hover": {
-        "proto": "nav.menu .dd:nth-of-type(1)",
-        "dev": "header nav > div:nth-of-type(1)"
-      },
-      "observe": {
-        "proto": "nav.menu .dd:nth-of-type(1) .mega",
-        "dev": "#mega-products"
-      }
-    },
-    {
-      "name": "services-menu",
-      "minWidth": 1081,
-      "trigger": {
-        "proto": "nav.menu .dd:nth-of-type(2) > button",
-        "dev": "header nav > div:nth-of-type(2) > button"
-      },
-      "hover": {
-        "proto": "nav.menu .dd:nth-of-type(2)",
-        "dev": "header nav > div:nth-of-type(2)"
-      },
-      "observe": {
-        "proto": "nav.menu .dd:nth-of-type(2) .mega",
-        "dev": "#mega-services"
-      }
-    }
-  ]
+  "probes": []
 }
