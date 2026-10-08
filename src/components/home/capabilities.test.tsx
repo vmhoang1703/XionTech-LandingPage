@@ -135,6 +135,49 @@ describe("Capabilities", () => {
     expect(button.getAttribute("aria-expanded")).toBe("true");
   });
 
+  it("shows the three industries in the server HTML, before JavaScript runs", () => {
+    const host = document.createElement("div");
+    host.innerHTML = renderToString(<Capabilities />);
+
+    const list = host.querySelector(".w-more-list");
+    expect(list?.hasAttribute("hidden")).toBe(false);
+    expect(list?.closest(".w-more")?.classList.contains("open")).toBe(true);
+    for (const name of INDUSTRIES) expect(list?.textContent).toContain(name);
+  });
+
+  it("hides the list once hydrated until it is opened", () => {
+    const button = reveal();
+    const list = button.closest(".w-more")?.querySelector(".w-more-list");
+
+    expect(list?.hasAttribute("hidden")).toBe(true);
+    fireEvent.click(button);
+    expect(list?.hasAttribute("hidden")).toBe(false);
+  });
+
+  it("shows the list while a mouse hovers, without changing aria-expanded", () => {
+    const button = reveal();
+    const more = button.closest(".w-more") as HTMLElement;
+    const list = more.querySelector(".w-more-list");
+
+    fireEvent.pointerEnter(more, { pointerType: "mouse" });
+    expect(list?.hasAttribute("hidden")).toBe(false);
+    expect(more.classList.contains("open")).toBe(true);
+    expect(button.getAttribute("aria-expanded")).toBe("false");
+
+    fireEvent.pointerLeave(more, { pointerType: "mouse" });
+    expect(list?.hasAttribute("hidden")).toBe(true);
+  });
+
+  it("ignores touch pointer enter; a tap opens through the click", () => {
+    const button = reveal();
+    const more = button.closest(".w-more") as HTMLElement;
+
+    fireEvent.pointerEnter(more, { pointerType: "touch" });
+    expect(more.querySelector(".w-more-list")?.hasAttribute("hidden")).toBe(
+      true,
+    );
+  });
+
   it("ends with the motto", () => {
     render(<Capabilities />);
 

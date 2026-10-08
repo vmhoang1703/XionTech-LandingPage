@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 
 type MoreIndustriesProps = {
@@ -8,18 +8,31 @@ type MoreIndustriesProps = {
   children: ReactNode;
 };
 
-// The "+3" reveal. The industries are in the server HTML, so they are
-// readable without JavaScript (the button's name lists them too); CSS opens
-// them on hover or focus, and this state opens them on click, tap or key.
+const noSubscribe = () => () => {};
+
+// The "+3" reveal. The server HTML shows the industries, so they are readable
+// without JavaScript (the button's name lists them too). Once hydrated, the
+// list is hidden until a mouse hovers or a click, tap or key opens it.
 export function MoreIndustries({
   label,
   children,
 }: Readonly<MoreIndustriesProps>) {
+  const hydrated = useSyncExternalStore(
+    noSubscribe,
+    () => true,
+    () => false,
+  );
   const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const shown = !hydrated || open || hovered;
 
   return (
     <span
-      className={open ? "w-more open" : "w-more"}
+      className={shown ? "w-more open" : "w-more"}
+      onPointerEnter={(event) => {
+        if (event.pointerType === "mouse") setHovered(true);
+      }}
+      onPointerLeave={() => setHovered(false)}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
@@ -33,7 +46,7 @@ export function MoreIndustries({
       >
         +3
       </button>
-      <span className="w-more-list" aria-hidden="true">
+      <span className="w-more-list" aria-hidden="true" hidden={!shown}>
         {children}
       </span>
     </span>

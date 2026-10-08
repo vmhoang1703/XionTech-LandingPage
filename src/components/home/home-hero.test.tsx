@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { globalsCss } from "@/test-utils/css-classes";
 import { HomeHero } from "./home-hero";
 
 // jsdom has no WebGL; the silk falls back to the static glow.
@@ -99,5 +100,16 @@ describe("HomeHero", () => {
     const glow = hero.querySelector(".silk-fallback");
     expect(glow?.getAttribute("aria-hidden")).toBe("true");
     expect(hero.firstElementChild).toBe(glow);
+  });
+
+  it("gives the light Products door the light-surface colours inside the navy hero", () => {
+    const rule = /\.home-hero \.door-products\s*\{([^}]*)\}/.exec(
+      globalsCss(),
+    )?.[1];
+
+    expect(rule).toMatch(/--color-heading:\s*var\(--color-navy\)/);
+    expect(rule).toMatch(/--color-text:\s*var\(--paper-text\)/);
+    expect(rule).toMatch(/--color-muted:\s*var\(--paper-muted\)/);
+    expect(rule).toMatch(/--color-border:\s*var\(--paper-border\)/);
   });
 });

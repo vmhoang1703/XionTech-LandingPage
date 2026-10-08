@@ -2807,7 +2807,7 @@
 }
 
 .home-hero .hl::after {
-  display: none;
+  content: none;
 }
 
 /* The two doors straddle the hero's lower edge */
@@ -2815,6 +2815,14 @@
   width: 100%;
   margin-top: 40px;
   margin-bottom: -120px;
+}
+
+/* The light door keeps the light-surface colours inside the navy hero */
+.home-hero .door-products {
+  --color-heading: var(--color-navy);
+  --color-text: var(--paper-text);
+  --color-muted: var(--paper-muted);
+  --color-border: var(--paper-border);
 }
 
 .home-hero .door-products .badge {
@@ -3027,7 +3035,11 @@
   color: var(--color-navy);
 }
 
-/* "+3": hover, focus or a click swaps the circle for the other industries */
+/*
+  "+3": a mouse hover or a click swaps the circle for the other industries.
+  MoreIndustries sets .open and the list's hidden attribute; the server HTML
+  ships it open, so the industries show without JavaScript.
+*/
 .w-more {
   position: relative;
   display: block;
@@ -3051,7 +3063,8 @@
   font-size: 0.78rem;
   font-weight: 500;
   transition:
-    opacity 0.22s ease,
+    color 0.22s ease,
+    background-color 0.22s ease,
     transform 0.36s var(--ease-brand);
 }
 
@@ -3063,31 +3076,27 @@
   align-items: center;
   gap: 8px;
   height: 38px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-4px);
-  transition:
-    opacity 0.26s ease 0.08s,
-    transform 0.4s var(--ease-brand);
+  animation: w-more-in 0.4s var(--ease-brand) both;
 }
 
-.w-more:hover,
+@keyframes w-more-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-4px);
+  }
+}
+
 .w-more.open {
   flex-basis: 430px;
   width: 430px;
   max-width: 100%;
 }
 
-.w-more:hover .w-more-trigger,
+/* The open trigger turns see-through but stays clickable, so a tap closes it */
 .w-more.open .w-more-trigger {
-  opacity: 0;
+  background: transparent;
+  color: transparent;
   transform: scale(0.72);
-}
-
-.w-more:hover .w-more-list,
-.w-more.open .w-more-list {
-  opacity: 1;
-  transform: none;
 }
 
 .w-more-trigger:focus-visible {
@@ -3198,7 +3207,6 @@ a.w-card:hover .w-link svg {
     padding: 24px;
   }
 
-  .w-more:hover,
   .w-more.open {
     flex-basis: 100%;
     width: 100%;
@@ -3206,13 +3214,9 @@ a.w-card:hover .w-link svg {
   }
 
   .w-more-list {
+    position: static;
     flex-wrap: wrap;
     height: auto;
-  }
-
-  .w-more:hover .w-more-list,
-  .w-more.open .w-more-list {
-    position: static;
   }
 }
 
@@ -3225,9 +3229,10 @@ a.w-card:hover .w-link svg {
   }
 
   .w-more,
-  .w-more-trigger,
-  .w-more-list {
-    transition: opacity 0.15s linear;
+  .w-more-trigger {
+    transition:
+      color 0.15s linear,
+      background-color 0.15s linear;
   }
 }
 
