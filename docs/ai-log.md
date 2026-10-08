@@ -1278,6 +1278,7 @@ Template:
   - one flowing background.
 
   A five-layer review followed, then patches, a re-verify and an independent evidence audit.
+
 - **Decision / result:** All checks pass: 1148 unit tests, diff coverage 100%, 15 smoke tests, the build and 2 new browser tests. Two minor items are deferred: a small layout shift on hydration, and Escape on a hover-only reveal. Andy's E-A1, E-A2 and E-A4 were not merged, so app names are plain strings and "Get in touch" goes to `/demo` for now.
 - **AI got it wrong?** Yes:
   - Moving the cards into the navy hero made the light card's text near-white on white. The integration task caught it.
