@@ -1,16 +1,16 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { appById } from "@/content/apps";
-import { AppBadge } from "./app-badge";
+import { HomeAppBadge } from "./home-app-badge";
 
 function badgeOf(id: Parameters<typeof appById>[0]) {
-  const { container } = render(<AppBadge app={appById(id)} />);
+  const { container } = render(<HomeAppBadge app={appById(id)} />);
   const badge = container.querySelector(".badge");
   if (!badge) throw new Error("no badge rendered");
   return badge;
 }
 
-describe("AppBadge", () => {
+describe("HomeAppBadge", () => {
   it("shows a text badge with its app's colour class", () => {
     const badge = badgeOf("parent-hub");
     expect(badge.textContent).toBe("P-Hub");

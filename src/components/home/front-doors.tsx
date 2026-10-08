@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { homeDoors } from "@/content/home";
-import { AppBadge } from "./app-badge";
+import { HomeAppBadge } from "./home-app-badge";
 
 function Go() {
   return (
@@ -35,7 +35,7 @@ export function FrontDoors() {
           <div className="top">
             <div className="chips">
               {products.badges.map((app) => (
-                <AppBadge key={app.id} app={app} />
+                <HomeAppBadge key={app.id} app={app} />
               ))}
             </div>
             <Go />

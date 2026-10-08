@@ -48,6 +48,25 @@ describe("Capabilities", () => {
     ).toBe("/services");
   });
 
+  it("shows the three school apps with their badges and captions in order", () => {
+    const { container } = render(<Capabilities />);
+    const apps = Array.from(container.querySelectorAll(".w-products .w-app"));
+    expect(
+      apps.map((a) =>
+        Array.from(a.querySelector(".badge")?.classList ?? []).find((c) =>
+          c.startsWith("b-"),
+        ),
+      ),
+    ).toEqual(["b-pxp", "b-sxp", "b-iot"]);
+    expect(apps.map((a) => a.querySelector("small")?.textContent)).toEqual([
+      "Parents",
+      "Staff",
+      "Facilities",
+    ]);
+    expect(apps[0].querySelector(".badge")?.textContent).toBe("P-Hub");
+    expect(apps[2].querySelector(".badge .sr-only")?.textContent).toBe("IoT");
+  });
+
   it("shows both offices: zone label in the server HTML, then the time", () => {
     const html = renderToString(<Capabilities />);
     expect(html).toContain("US Central");

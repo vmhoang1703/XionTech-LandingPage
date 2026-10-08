@@ -126,6 +126,8 @@ stay as they are.
 
 ## Implementation Notes
 
+- 2026-10-08, after the PR prep merge of `develop` (E-A1, E-A2, E-A3, E-A5, E-A7 merged): the Boundaries line "App names as plain strings (E-A2 not merged)" no longer applies. Home's doors and Capabilities card now read Parent Hub, Staff Hub and IoT from `src/content/apps.ts` through one `HomeAppBadge` (`src/components/home/home-app-badge.tsx`); the rendered text is unchanged. "Get in touch" still links to `/demo` because E-A4 is not merged. The follow-up (131 changed lines) had its own full review: security clean; fixes applied for the component name clash, a complete badge-class map, a typed icon map, and tests pinning the Capabilities badges/captions and the door chip order.
+
 ## Spec Change Log
 
 ## Review Triage Log

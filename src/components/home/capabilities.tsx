@@ -11,7 +11,7 @@ import Link from "next/link";
 import { LiveClock } from "@/components/sections/live-clock";
 import { homeCapabilities } from "@/content/home";
 import { hcmc, plano } from "@/content/offices";
-import { AppBadge } from "./app-badge";
+import { HomeAppBadge } from "./home-app-badge";
 import { MoreIndustries } from "./more-industries";
 
 const INDUSTRY_ICON: Record<
@@ -44,7 +44,7 @@ export function Capabilities() {
             <span className="w-apps">
               {products.apps.map((app) => (
                 <span key={app.app.id} className="w-app">
-                  <AppBadge app={app.app} />
+                  <HomeAppBadge app={app.app} />
                   <small>{app.caption}</small>
                 </span>
               ))}

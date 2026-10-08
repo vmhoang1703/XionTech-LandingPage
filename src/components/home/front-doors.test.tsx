@@ -87,7 +87,9 @@ describe("FrontDoors", () => {
         Array.from(b.classList).find((c) => c.startsWith("b-")),
       ),
     ).toEqual(["b-pxp", "b-sxp", "b-iot"]);
-    expect(products.querySelectorAll(".chip")).toHaveLength(4);
+    expect(
+      Array.from(products.querySelectorAll(".chip"), (c) => c.textContent),
+    ).toEqual(["Parent Hub", "Staff Hub", "IoT", "AI Tutor"]);
     expect(services.querySelectorAll(".chip")).toHaveLength(6);
     expect(products.querySelector(".badge")?.parentElement?.className).toBe(
       "chips",
