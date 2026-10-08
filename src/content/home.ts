@@ -55,6 +55,49 @@ export const homeDoors = {
   },
 };
 
+export const homeCapabilities = {
+  title: "Capabilities.",
+  lede: "Why XionTech: the core capabilities behind every school app and every product we deliver.",
+  products: {
+    href: "/products",
+    label: "School platforms",
+    title: "Products for schools",
+    line: "Connected apps for parents, students, teachers, leaders and school staff, designed as one ecosystem.",
+    apps: [
+      { badge: "P-Hub", caption: "Parents" },
+      { badge: "S-Hub", caption: "Staff" },
+      { badge: "IoT", caption: "Facilities" },
+    ] as const,
+    link: "Explore products",
+  },
+  delivery: {
+    label: "Global delivery",
+    title: "Two offices, one working day.",
+    line: "Teams across time zones keep delivery moving with practical overlap.",
+  },
+  industries: {
+    label: "Domain expertise",
+    title: "Deep in education. Built to adapt.",
+    line: "Education is where we go deepest, while the same engineering capability supports other industries too.",
+    main: "Education",
+    // Confirmed on the About page (src/content/about.ts), not placeholders.
+    more: ["Healthcare", "Logistics", "Private Equity"] as const,
+    moreLabel: "3 more industries: Healthcare, Logistics and Private Equity",
+  },
+  services: {
+    href: "/services",
+    label: "Software engineering",
+    title: "Your software delivery team",
+    line: "Dedicated teams and end-to-end delivery for companies building digital products.",
+    link: "Explore services",
+  },
+  motto: {
+    lead: "Get IT Done",
+    title: "Built with ownership.",
+    line: "Ownership of our commitments and pride in quality.",
+  },
+};
+
 export const homeApps = {
   title: "Four apps. One school day.",
   lede: "Every role in the school gets its own app, all sharing one source of truth.",
