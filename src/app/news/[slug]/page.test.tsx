@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { newsMeta } from "@/content/news";
 import { getPost, type NewsStory } from "@/lib/news/post";
 import { undefinedClasses } from "@/test-utils/css-classes";
@@ -18,15 +18,11 @@ vi.mock("next/navigation", () => ({
 import { notFound } from "next/navigation";
 import StoryPage, { generateMetadata } from "./page";
 
-// jsdom has no canvas: HeroArt skips the ribbon.
-beforeEach(() => {
-  vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
-});
-
 afterEach(() => {
-  vi.restoreAllMocks();
   vi.clearAllMocks();
 });
+
+const PHOTO = "https://cdn.sanity.io/images/1khn3hf4/production/abc.jpg";
 
 const story: NewsStory = {
   slug: "pxp-day",
@@ -53,87 +49,118 @@ async function renderPage(found: NewsStory | null = story) {
   return render(await StoryPage(props(found?.slug ?? "x")));
 }
 
+const bodyParagraphs = (container: HTMLElement) =>
+  Array.from(
+    container.querySelectorAll(".art-body > p:not(.sample)"),
+    (p) => p.textContent,
+  );
+
 describe("StoryPage", () => {
-  it("renders crumbs, H1, mono date and tag, the frame, the body, See Parent Hub and Back to News, with no capture band", async () => {
+  it("shows the photo with its alt inside .art-img, and no breadcrumb", async () => {
+    const { container } = await renderPage({
+      ...story,
+      image: PHOTO,
+      alt: "Parents at the school gate",
+    });
+
+    const img = screen.getByRole("img", { name: "Parents at the school gate" });
+    expect(img.closest(".art-img")).not.toBeNull();
+    expect(img.getAttribute("src")).toBe(`${PHOTO}?w=1800&auto=format`);
+    expect(screen.queryByRole("navigation")).toBeNull();
+    expect(container.querySelector(".crumbs")).toBeNull();
+  });
+
+  it.each([
+    ["no image", { image: null, alt: "Parents" }],
+    ["an image with no alt", { image: PHOTO, alt: "  " }],
+  ])("shows no photo block for %s", async (_, fields) => {
+    const { container } = await renderPage({ ...story, ...fields });
+
+    expect(container.querySelector(".art-img")).toBeNull();
+    expect(container.querySelector("img")).toBeNull();
+  });
+
+  it("renders Back to News, pill and date, H1, summary and body, with no See-app link and no capture band", async () => {
     const { container } = await renderPage();
 
-    const crumbs = screen.getByRole("navigation", { name: "Breadcrumb" });
-    const links = [...crumbs.querySelectorAll("a")].map((a) => [
-      a.textContent,
-      a.getAttribute("href"),
-    ]);
-    expect(links).toEqual([
-      ["Home", "/"],
-      ["News", "/news"],
-    ]);
-    expect(crumbs.querySelector('[aria-current="page"]')?.textContent).toBe(
-      story.title,
-    );
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      story.title,
-    );
+    const hero = container.querySelector(".art-hero");
+    const back = screen.getByRole("link", { name: "Back to News" });
+    expect(back.getAttribute("href")).toBe("/news");
+    expect(back.className).toBe("art-back");
+    expect(hero?.firstElementChild?.firstElementChild).toBe(back);
+
+    expect(screen.getByText("Parents").className).toBe("art-pill");
     const time = container.querySelector("time");
+    expect(time?.className).toBe("art-date");
     expect(time?.getAttribute("datetime")).toBe(story.publishedAt);
     expect(time?.textContent).toBe("4 Oct 2026");
-    expect(screen.getByText("Parents").className).toBe("cat");
-    expect(
-      container.querySelector(".story-media")?.getAttribute("aria-hidden"),
-    ).toBe("true");
 
-    const paragraphs = [...container.querySelectorAll(".story-body > p")].map(
-      (p) => p.textContent,
+    const h1 = screen.getByRole("heading", { level: 1 });
+    expect(h1.textContent).toBe(story.title);
+    expect(h1.id).toBe("story-h1");
+    expect(container.querySelector(".art-dek")?.textContent).toBe(
+      story.excerpt,
     );
-    expect(paragraphs).toEqual(["First paragraph.", "Second paragraph."]);
+
+    expect(bodyParagraphs(container)).toEqual([
+      "First paragraph.",
+      "Second paragraph.",
+    ]);
     expect(
       screen.getByRole("heading", { level: 2, name: "A subheading" }),
     ).toBeTruthy();
 
+    expect(screen.getAllByRole("link")).toHaveLength(1);
     expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
-    expect(
-      screen.getByRole("link", { name: "Back to News" }).getAttribute("href"),
-    ).toBe("/news");
+    expect(container.querySelector(".sample")).toBeNull();
     expect(container.querySelector("#cap-h")).toBeNull();
     expect(vi.mocked(getPost)).toHaveBeenCalledWith("pxp-day");
   });
 
-  it("shows only Back to News for a story with no product", async () => {
+  it("shows the Company pill for a company story", async () => {
     await renderPage({ ...story, category: "company", app: null });
 
-    expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
-    expect(screen.getByText("Company").className).toBe("cat");
-    expect(screen.getByRole("link", { name: "Back to News" })).toBeTruthy();
+    expect(screen.getByText("Company").className).toBe("art-pill");
   });
 
-  it("shows no product link when the category is not Product, even with an app left over", async () => {
-    await renderPage({ ...story, category: "company", app: "parent-hub" });
-
-    expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
-    expect(screen.getByText("Company").className).toBe("cat");
-  });
-
-  it("shows the excerpt when the story has no body text", async () => {
+  it("leaves out the pill, date and summary when the story has none", async () => {
     const { container } = await renderPage({
       ...story,
       category: null,
-      app: null,
-      body: [
-        { style: "normal", text: "" },
-        { style: "normal", text: "  " },
-      ],
+      publishedAt: "not a date",
+      excerpt: "  ",
     });
 
-    expect(container.querySelector(".cat")).toBeNull();
-    const paragraphs = [...container.querySelectorAll(".story-body > p")].map(
-      (p) => p.textContent,
-    );
-    expect(paragraphs).toEqual([story.excerpt]);
+    expect(container.querySelector(".art-pill")).toBeNull();
+    expect(container.querySelector("time")).toBeNull();
+    expect(container.querySelector(".art-dek")).toBeNull();
   });
 
-  it.each([null, "  "])(
-    "renders no body paragraph when there is no body and the excerpt is %j",
-    async (excerpt) => {
-      const { container } = await renderPage({ ...story, excerpt, body: null });
-      expect(container.querySelectorAll(".story-body > p")).toHaveLength(0);
+  it("shows the sample note under the body of a [Placeholder] story", async () => {
+    const { container } = await renderPage({
+      ...story,
+      title: "[Placeholder] Making the school day easier",
+    });
+
+    const note = container.querySelector(".art-body > .sample");
+    expect(note?.textContent).toBe(
+      "[Placeholder] Sample story to show the layout. Replace with a real story before launch.",
+    );
+    expect(note?.previousElementSibling?.textContent).toBe("Second paragraph.");
+  });
+
+  it.each([
+    ["is null", null],
+    ["has only empty blocks", [{ style: "normal", text: " " }]],
+  ])(
+    "renders no body paragraph when the body %s (the summary is above)",
+    async (_, body) => {
+      const { container } = await renderPage({ ...story, body });
+
+      expect(bodyParagraphs(container)).toEqual([]);
+      expect(container.querySelector(".art-dek")?.textContent).toBe(
+        story.excerpt,
+      );
     },
   );
 
@@ -143,13 +170,13 @@ describe("StoryPage", () => {
   });
 
   it("defines every class it uses in globals.css", async () => {
-    const { container } = await renderPage();
-    expect(
-      undefinedClasses(
-        container,
-        /^(sr-only|pb-12|pt-10|mt-4\.5|mt-9|flex|flex-wrap|gap-3)$/,
-      ),
-    ).toEqual([]);
+    const { container } = await renderPage({
+      ...story,
+      title: "[Placeholder] A sample",
+      image: PHOTO,
+      alt: "Parents at the school gate",
+    });
+    expect(undefinedClasses(container, /^sr-only$/)).toEqual([]);
   });
 });
 

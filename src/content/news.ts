@@ -2,6 +2,7 @@
 
 export const homeNews = {
   heading: "Latest from XionTech.",
+  lede: "Catch up with what our team is building and shipping.",
   seeAll: { href: "/news", label: "See all news" },
   readStory: "Read story",
 };
@@ -34,12 +35,11 @@ export const newsPage = {
   count: (n: number) => (n === 1 ? "Showing 1 story" : `Showing ${n} stories`),
 };
 
-// Story page copy (Story 6.2).
+// Story page copy (Story 6.2, E-A6).
 export const newsStory = {
-  breadcrumbLabel: "Breadcrumb",
-  breadcrumbHome: "Home",
-  breadcrumbNews: "News",
   storyLabel: "Story",
+  sampleNote:
+    "[Placeholder] Sample story to show the layout. Replace with a real story before launch.",
   backToNews: { href: "/news", label: "Back to News" },
   metaTitle: (title: string) => `${title} | XionTech`,
 };

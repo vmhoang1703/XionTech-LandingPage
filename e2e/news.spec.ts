@@ -38,7 +38,7 @@ test(
 );
 
 test(
-  "the first story on the News page answers 200 with its own H1",
+  "the first story on the News page answers 200 with its header, Back to News and no breadcrumb",
   { tag: "@smoke" },
   async ({ request }) => {
     const newsResponse = await request.get("/news");
@@ -52,6 +52,9 @@ test(
 
     expect(response.status()).toBe(200);
     expect(html).toContain('id="story-h1"');
+    expect(html).toContain('class="art-back"');
     expect(html).toContain("Back to News");
+    expect(html).toContain('class="art-body"');
+    expect(html).not.toContain('aria-label="Breadcrumb"');
   },
 );

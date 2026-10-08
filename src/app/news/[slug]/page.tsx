@@ -1,8 +1,8 @@
 import { ArrowLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { HeroArt } from "@/components/sections/hero-art";
 import { newsMeta, newsStory } from "@/content/news";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
 import { getPost, type StoryBlock } from "@/lib/news/post";
@@ -21,74 +21,78 @@ export async function generateMetadata({
 }
 
 /**
- * A block styled as a heading shows as an H2; empty blocks are left out. With
- * no body text at all the excerpt stands in; only a story with neither is blank.
+ * A block styled as a heading shows as an H2; empty blocks are left out. The
+ * excerpt is the summary in the header, so it is not repeated here.
  */
-function StoryBody({
-  blocks,
-  excerpt,
-}: Readonly<{ blocks: StoryBlock[]; excerpt?: string | null }>) {
-  const filled = blocks.filter((block) => block.text?.trim());
-  if (filled.length === 0) {
-    return excerpt?.trim() ? [<p key="excerpt">{excerpt}</p>] : [];
-  }
-  return filled.map((block, index) =>
-    block.style?.startsWith("h") ? (
-      <h2 key={index}>{block.text}</h2>
-    ) : (
-      <p key={index}>{block.text}</p>
-    ),
-  );
+function StoryBody({ blocks }: Readonly<{ blocks: StoryBlock[] }>) {
+  return blocks
+    .filter((block) => block.text?.trim())
+    .map((block, index) =>
+      block.style?.startsWith("h") ? (
+        <h2 key={index}>{block.text}</h2>
+      ) : (
+        <p key={index}>{block.text}</p>
+      ),
+    );
 }
 
-// Story 6.2. No loading.tsx here: streaming would turn the 404 into a 200.
-// No capture band on a story page (FR-33 exception).
+// Story 6.2, E-A6 (prototype news-story.html). No loading.tsx here: streaming
+// would turn the 404 into a 200. No capture band on a story page (FR-33
+// exception), no breadcrumb and no "See {app}" button (lead, 2026-10-08).
 export default async function StoryPage({ params }: StoryProps) {
   const story = await getPost((await params).slug);
   if (!story) notFound();
 
   const tag = categoryTag(story);
-  const { breadcrumbLabel, breadcrumbHome, breadcrumbNews, backToNews } =
-    newsStory;
+  const date = newsDate(story.publishedAt);
+  const alt = story.alt?.trim();
+  const { backToNews, storyLabel, sampleNote } = newsStory;
 
   return (
     <>
       <section
-        className="hero-light page-hero pb-12"
+        className="hero-light page-hero art-hero"
         aria-labelledby="story-h1"
       >
-        <HeroArt tone="light" />
-        <div className="wrap story-body">
-          <nav className="crumbs" aria-label={breadcrumbLabel}>
-            <Link href="/">{breadcrumbHome}</Link>
-            <span>/</span>
-            <Link href={backToNews.href}>{breadcrumbNews}</Link>
-            <span>/</span>
-            <span aria-current="page">{story.title}</span>
-          </nav>
-          <h1 id="story-h1">{story.title}</h1>
-          <div className="meta mt-4.5">
-            <time dateTime={story.publishedAt}>
-              {newsDate(story.publishedAt)}
-            </time>
-            {tag ? <span className="cat">{tag}</span> : null}
+        <div className="wrap">
+          <Link className="art-back" href={backToNews.href}>
+            <ArrowLeftIcon aria-hidden="true" />
+            <span>{backToNews.label}</span>
+          </Link>
+          <div className="art-meta">
+            {tag ? <span className="art-pill">{tag}</span> : null}
+            {date ? (
+              <time className="art-date" dateTime={story.publishedAt}>
+                {date}
+              </time>
+            ) : null}
           </div>
+          <h1 id="story-h1">{story.title}</h1>
+          {story.excerpt?.trim() ? (
+            <p className="art-dek">{story.excerpt}</p>
+          ) : null}
+          {story.image && alt ? (
+            <div className="art-img">
+              <Image
+                src={`${story.image}?w=1800&auto=format`}
+                alt={alt}
+                width={1800}
+                height={1200}
+                unoptimized
+              />
+            </div>
+          ) : null}
         </div>
       </section>
 
-      <section
-        className="sec surface-paper pt-10"
-        aria-label={newsStory.storyLabel}
-      >
-        <div className="wrap story-body">
-          <div className="home-media story-media" aria-hidden="true" />
-          <StoryBody blocks={story.body ?? []} excerpt={story.excerpt} />
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link className="btn btn-glass" href={backToNews.href}>
-              <ArrowLeftIcon aria-hidden="true" />
-              <span>{backToNews.label}</span>
-            </Link>
-          </div>
+      <section className="sec surface-paper art-sec" aria-label={storyLabel}>
+        <div className="wrap">
+          <article className="art-body">
+            <StoryBody blocks={story.body ?? []} />
+            {story.title.startsWith("[Placeholder]") ? (
+              <p className="sample">{sampleNote}</p>
+            ) : null}
+          </article>
         </div>
       </section>
     </>

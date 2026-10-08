@@ -30,20 +30,32 @@ describe("HomeNews", () => {
     vi.mocked(getLatestPosts).mockReset();
   });
 
-  it("shows three cards and the links, with no sample note (the posts are real)", async () => {
+  it("shows the heading, lede and See all news on one row, then three cards, with no sample note (the posts are real)", async () => {
     const { container } = await renderNews([1, 2, 3].map(makePost));
 
     const section = container.querySelector("section");
     expect(section?.className).toBe("sec surface-mist");
     expect(section?.getAttribute("aria-labelledby")).toBe("news-h");
+    const row = container.querySelector(".sec-head-row");
+    expect(Array.from(row?.children ?? [], (child) => child.className)).toEqual(
+      ["sec-head", "link-arrow"],
+    );
+    const heading = screen.getByRole("heading", {
+      level: 2,
+      name: "Latest from XionTech.",
+    });
+    expect(heading.closest(".sec-head-row")).toBe(row);
     expect(
-      screen.getByRole("heading", { level: 2, name: "Latest from XionTech." }),
-    ).toBeTruthy();
+      screen.getByText("Catch up with what our team is building and shipping.")
+        .className,
+    ).toBe("lede");
+    const seeAll = screen.getByRole("link", { name: "See all news" });
+    expect(seeAll.getAttribute("href")).toBe("/news");
+    expect(seeAll.parentElement).toBe(row);
     expect(screen.queryByText(/\[Placeholder\]|sample/i)).toBeNull();
-    expect(container.querySelectorAll(".scard")).toHaveLength(3);
-    expect(
-      screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
-    ).toBe("/news");
+    const grid = container.querySelector(".sgrid");
+    expect(grid?.className).toBe("sgrid sgrid-row");
+    expect(grid?.querySelectorAll(":scope > .scard")).toHaveLength(3);
   });
 
   it("shows only the stories it has, with no empty slots", async () => {
@@ -55,7 +67,7 @@ describe("HomeNews", () => {
   it("hides the grid with no stories but keeps the heading and link", async () => {
     const { container } = await renderNews([]);
 
-    expect(container.querySelector(".news-grid")).toBeNull();
+    expect(container.querySelector(".sgrid")).toBeNull();
     expect(container.querySelector(".scard")).toBeNull();
     expect(screen.queryByText(/^\[Placeholder\]/)).toBeNull();
     expect(
@@ -71,7 +83,7 @@ describe("HomeNews", () => {
     vi.mocked(getLatestPosts).mockRejectedValue(new Error("Sanity down"));
     const { container } = render(await HomeNews());
 
-    expect(container.querySelector(".news-grid")).toBeNull();
+    expect(container.querySelector(".sgrid")).toBeNull();
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
     ).toBe("/news");
