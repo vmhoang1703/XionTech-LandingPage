@@ -16,6 +16,9 @@ test(
       /<link rel="apple-touch-icon" href="\/apple-icon\.png[^"]*"/,
     );
     expect(html).not.toContain("favicon.ico");
+    // E-A4: the last Home section is the contact form.
+    expect(html).toContain('id="contact"');
+    expect(html).toContain("Have something you want to build?");
   },
 );
 
