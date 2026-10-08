@@ -22,12 +22,10 @@ describe("SiteHeader", () => {
     expect(home.contains(logo)).toBe(true);
   });
 
-  it("links Book a demo to the demo form", () => {
+  it("has no Book a demo link and no bottom border", () => {
     render(<SiteHeader />);
-    const demo = screen.getByRole("link", { name: "Book a demo" });
-    expect(demo.getAttribute("href")).toBe("/demo#form");
-    expect(demo.className).toContain("btn-primary");
-    expect(demo.className).toContain("btn-sm");
+    expect(screen.queryByRole("link", { name: "Book a demo" })).toBeNull();
+    expect(screen.getByRole("banner").className).not.toMatch(/border/);
   });
 
   it("renders the primary nav inside a header", () => {
@@ -36,15 +34,20 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("navigation", { name: "Main" })).toBeTruthy();
   });
 
-  it("puts the Menu button after Book a demo in the header", () => {
+  it("puts the main nav after the logo and the Menu button last", () => {
     render(<SiteHeader />);
     const header = screen.getByRole("banner");
+    const logo = screen.getByRole("link", { name: "XionTech home" });
+    const nav = screen.getAllByRole("navigation", { name: "Main" })[0];
     const menu = screen.getByRole("button", { name: "Menu" });
-    const demo = screen.getByRole("link", { name: "Book a demo" });
     expect(header.contains(menu)).toBe(true);
     expect(menu.getAttribute("aria-expanded")).toBe("false");
     expect(
-      demo.compareDocumentPosition(menu) & Node.DOCUMENT_POSITION_FOLLOWING,
+      logo.compareDocumentPosition(nav) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
+    expect(
+      nav.compareDocumentPosition(menu) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(nav.className).toContain("ml-auto");
   });
 });

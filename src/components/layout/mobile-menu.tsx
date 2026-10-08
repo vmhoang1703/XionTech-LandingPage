@@ -1,5 +1,6 @@
 "use client";
 
+import { ListIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -13,8 +14,8 @@ const DESKTOP_QUERY = "(min-width: 1081px)";
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-// While open, focus cycles through the header bar controls (logo, Book a demo above 640px,
-// later the EN/VI switch, Menu) and the open panel (EXPERIENCE.md "Mobile menu").
+// While open, focus cycles through the header bar controls (logo, Menu, later the EN/VI
+// switch) and the open panel (EXPERIENCE.md "Mobile menu").
 // Elements hidden by CSS at this width (the desktop nav) have no boxes and are skipped.
 function trapTargets(scope: ParentNode) {
   return [...scope.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
@@ -66,8 +67,7 @@ export function MobileMenu() {
     };
     // Any link closes the menu (CAP-8), also one to the current page (the logo on
     // Home), which changes no pathname. A clicked panel link to this page hides with
-    // the panel, so focus moves on: to the #part it names (the form on /demo), or to
-    // Menu when it names none.
+    // the panel, so focus moves to Menu.
     const onClick = (event: MouseEvent) => {
       const link =
         event.target instanceof Element
@@ -77,27 +77,12 @@ export function MobileMenu() {
         return;
       }
       setOpenedOn(null);
-      // Panel links are the app's own (NAV_LINKS and /demo#form), so they parse.
+      // Panel links are the app's own (NAV_LINKS), so they parse.
       if (
-        !(link instanceof HTMLAnchorElement) ||
-        !document.getElementById(MENU_ID)?.contains(link)
+        link instanceof HTMLAnchorElement &&
+        document.getElementById(MENU_ID)?.contains(link) &&
+        new URL(link.href).pathname === pathname
       ) {
-        return;
-      }
-      const url = new URL(link.href);
-      if (url.pathname !== pathname) {
-        return;
-      }
-      const target = url.hash
-        ? document.getElementById(url.hash.slice(1))
-        : null;
-      if (target) {
-        // Like the skip link's #main: focusable from script, not a Tab stop.
-        if (!target.hasAttribute("tabindex")) {
-          target.setAttribute("tabindex", "-1");
-        }
-        target.focus({ preventScroll: true });
-      } else {
         buttonRef.current?.focus();
       }
     };
@@ -124,12 +109,19 @@ export function MobileMenu() {
       <button
         ref={buttonRef}
         type="button"
-        className="border-navy/14 text-navy inline-flex h-10 items-center rounded-full border px-4 text-[0.9rem] leading-none font-medium min-[1081px]:hidden"
+        // Prototype ENH-002: a 44px hamburger icon, a cross while open, underlined on hover
+        // and while open like the nav links.
+        className="text-navy ml-auto inline-flex size-11 items-center justify-center text-2xl transition-[box-shadow] duration-[250ms] ease-[var(--ease-brand)] hover:shadow-[inset_0_-2px_0_var(--color-amber)] aria-expanded:shadow-[inset_0_-2px_0_var(--color-amber)] min-[1081px]:hidden"
         aria-controls={MENU_ID}
         aria-expanded={open}
         onClick={() => setOpenedOn(open ? null : pathname)}
       >
-        {LABELS.menu}
+        {open ? (
+          <XIcon aria-hidden="true" data-icon="x" />
+        ) : (
+          <ListIcon aria-hidden="true" data-icon="list" />
+        )}
+        <span className="sr-only">{LABELS.menu}</span>
       </button>
       <nav
         id={MENU_ID}
@@ -137,18 +129,11 @@ export function MobileMenu() {
         hidden={!open}
         className="border-border bg-paper absolute inset-x-0 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-height))] flex-col items-stretch gap-0.5 overflow-auto border-b px-6 pt-4 pb-6"
       >
-        {/* 640px and below: max-[641px] is (width < 641px) in Tailwind v4. */}
-        <Link
-          href="/demo#form"
-          className="btn btn-primary mb-2.5 hidden justify-center max-[641px]:inline-flex"
-        >
-          {LABELS.bookDemo}
-        </Link>
         {NAV_LINKS.map((item) => (
           <Link
             key={item.section}
             href={item.href}
-            className={itemClass}
+            className={`${itemClass} px-3.5`}
             aria-current={section === item.section ? "page" : undefined}
           >
             {item.label}

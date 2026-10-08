@@ -59,15 +59,11 @@ afterEach(() => {
   document.documentElement.style.overflow = "";
 });
 
-// Stand-in header with the real breakpoint classes: logo, Book a demo (hidden at
-// 640px and below), then the menu. The real SiteHeader is tested further down.
+// Stand-in header: the logo, then the menu. The real SiteHeader is tested further down.
 function Header() {
   return (
     <header>
       <Link href="/">logo</Link>
-      <Link href="/demo#form" className="max-[641px]:hidden">
-        Book a demo
-      </Link>
       <MobileMenu />
     </header>
   );
@@ -77,6 +73,8 @@ const menuButton = () => screen.getByRole("button", { name: "Menu" });
 const panel = () =>
   document.getElementById(menuButton().getAttribute("aria-controls") ?? "");
 const expanded = () => menuButton().getAttribute("aria-expanded");
+const icon = () =>
+  menuButton().querySelector("svg")?.getAttribute("data-icon") ?? null;
 const menuLinks = () =>
   [...(panel()?.querySelectorAll("a") ?? [])].filter(
     (a) => a.getClientRects().length > 0,
@@ -85,12 +83,14 @@ const tab = (shiftKey = false) =>
   fireEvent.keyDown(document, { key: "Tab", shiftKey });
 
 describe("MobileMenu", () => {
-  it("renders a closed Menu pill that controls the panel", () => {
+  it("renders a closed 44px list icon named Menu that controls the panel", () => {
     render(<Header />);
     expect(menuButton().textContent).toBe("Menu");
+    expect(menuButton().querySelector(".sr-only")?.textContent).toBe("Menu");
+    expect(icon()).toBe("list");
     expect(menuButton().className).toContain("min-[1081px]:hidden");
-    expect(menuButton().className).toContain("h-10");
-    expect(menuButton().className).toContain("rounded-full");
+    expect(menuButton().className).toContain("size-11");
+    expect(menuButton().className).not.toContain("border");
     expect(expanded()).toBe("false");
     expect(panel()?.tagName).toBe("NAV");
     expect(panel()?.hasAttribute("hidden")).toBe(true);
@@ -103,7 +103,7 @@ describe("MobileMenu", () => {
     expect(document.documentElement.style.overflow).toBe("");
   });
 
-  it("opens on click and lists the five pages", () => {
+  it("opens on click and lists the six pages, Home first", () => {
     render(<Header />);
     fireEvent.click(menuButton());
     expect(expanded()).toBe("true");
@@ -114,7 +114,7 @@ describe("MobileMenu", () => {
       a.getAttribute("href"),
     ]);
     expect(hrefs).toEqual([
-      ["Book a demo", "/demo#form"],
+      ["Home", "/"],
       ["Products", "/products"],
       ["Services", "/services"],
       ["News", "/news"],
@@ -131,27 +131,37 @@ describe("MobileMenu", () => {
     expect(panel()?.hasAttribute("hidden")).toBe(true);
   });
 
-  it("shows Book a demo first, in button style, at 640px and below", () => {
-    width = 640;
+  it("shows a cross while open and the list icon again when closed", () => {
     render(<Header />);
     fireEvent.click(menuButton());
-    const first = menuLinks()[0];
-    expect(first.textContent).toBe("Book a demo");
-    expect(first.getAttribute("href")).toBe("/demo#form");
-    expect(first.className).toContain("btn-primary");
+    expect(icon()).toBe("x");
+    expect(menuButton().textContent).toBe("Menu");
+    fireEvent.click(menuButton());
+    expect(icon()).toBe("list");
   });
 
-  it("leaves Book a demo out of the menu between 641px and 1080px", () => {
-    width = 641;
+  it("has no Book a demo link at any width", () => {
+    for (const w of [390, 640, 800]) {
+      width = w;
+      const { unmount } = render(<Header />);
+      fireEvent.click(menuButton());
+      expect(menuLinks().map((a) => a.textContent)).toEqual([
+        "Home",
+        "Products",
+        "Services",
+        "News",
+        "About",
+        "Careers",
+      ]);
+      unmount();
+    }
+  });
+
+  it("marks Home current on / only", () => {
     render(<Header />);
     fireEvent.click(menuButton());
-    expect(menuLinks().map((a) => a.textContent)).toEqual([
-      "Products",
-      "Services",
-      "News",
-      "About",
-      "Careers",
-    ]);
+    const current = menuLinks().filter((a) => a.hasAttribute("aria-current"));
+    expect(current.map((a) => a.textContent)).toEqual(["Home"]);
   });
 
   it("marks the current section", () => {
@@ -163,6 +173,9 @@ describe("MobileMenu", () => {
     ).toBe("page");
     expect(
       screen.getByRole("link", { name: "About" }).hasAttribute("aria-current"),
+    ).toBe(false);
+    expect(
+      screen.getByRole("link", { name: "Home" }).hasAttribute("aria-current"),
     ).toBe(false);
   });
 
@@ -252,7 +265,7 @@ describe("MobileMenu", () => {
     });
   });
 
-  it("includes the header Book a demo in the trap at 800px", () => {
+  it("traps Tab between the logo and the last item at 800px", () => {
     width = 800;
     render(<Header />);
     fireEvent.click(menuButton());
@@ -261,11 +274,6 @@ describe("MobileMenu", () => {
     expect(document.activeElement?.textContent).toBe("logo");
     tab(true);
     expect(document.activeElement?.textContent).toBe("Careers");
-    // The header Book a demo is the only "Book a demo" a browser shows at 800px.
-    const shownDemo = screen
-      .getAllByRole("link", { name: "Book a demo" })
-      .filter((a) => a.getClientRects().length > 0);
-    expect(shownDemo.map((a) => a.closest("nav"))).toEqual([null]);
   });
 
   it("closes when a menu link is activated", () => {
@@ -345,26 +353,6 @@ describe("MobileMenu", () => {
     expect(document.activeElement).toBe(logo);
   });
 
-  it("moves focus to the target of a menu link to a part of this page (#form on /demo)", () => {
-    mockPathname = "/demo";
-    render(
-      <>
-        <Header />
-        <section id="form">form</section>
-      </>,
-    );
-    fireEvent.click(menuButton());
-    const demo = panel()?.querySelector('a[href="/demo#form"]');
-    if (!(demo instanceof HTMLElement)) throw new Error("no /demo#form link");
-    demo.addEventListener("click", (event) => event.preventDefault());
-    demo.focus();
-    fireEvent.click(demo);
-    expect(expanded()).toBe("false");
-    const form = document.getElementById("form");
-    expect(document.activeElement).toBe(form);
-    expect(form?.getAttribute("tabindex")).toBe("-1");
-  });
-
   it("closes on any link click, also a modifier click or a new-tab link (CAP-8 as written)", () => {
     render(
       <header>
@@ -412,22 +400,6 @@ describe("MobileMenu", () => {
       expect(document.activeElement).toBe(home());
       expect(tab(true)).toBe(false);
       expect(document.activeElement).toBe(menuCareers());
-    });
-
-    it("keeps the header Book a demo in the trap at 800px", () => {
-      width = 800;
-      render(<SiteHeader />);
-      fireEvent.click(menuButton());
-      const demo = screen
-        .getAllByRole("link", { name: "Book a demo" })
-        .find((a) => a.getClientRects().length > 0);
-      expect(demo?.closest("nav")).toBeNull();
-      // Inside the trap and not at its start, so Shift+Tab moves on normally.
-      demo?.focus();
-      expect(tab(true)).toBe(true);
-      menuCareers().focus();
-      expect(tab()).toBe(false);
-      expect(document.activeElement).toBe(home());
     });
   });
 });
