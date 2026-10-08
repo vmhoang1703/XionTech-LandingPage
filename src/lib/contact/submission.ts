@@ -185,7 +185,11 @@ export function parseSubmission(
 
   const errors = validateContact(
     type,
-    { ...shared, date: submission.type === "demo" ? submission.date : "" },
+    {
+      ...shared,
+      phone: "",
+      date: submission.type === "demo" ? submission.date : "",
+    },
     earliestToday(serverToday),
   );
   if (Object.keys(errors).length > 0) return { ok: false, errors };
