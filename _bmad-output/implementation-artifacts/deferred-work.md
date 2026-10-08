@@ -284,3 +284,11 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-7-3-accessibility-checks.md`
   summary: Story 7.3 review (Minor): measure ring contrast on the page, not only in the token table; log or fail on axe `incomplete` contrast results; check every required field of each form, not one; scan menus and tabs in their open state and the form error state with axe; walk /careers, a story, a job page, /privacy and 404 by keyboard; document that `test:a11y` needs Chrome and clear `.next/cache/fetch-cache` before it (a `pretest:a11y` step); the date-field ring also shows on mouse focus (`:focus-within`).
   evidence: full review 2026-10-05 (medium points patched; these are Minor).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-s1-home.md`
+  summary: The Home "+3" industries list renders open in the server HTML and collapses on hydration, a small below-the-fold layout shift on every load.
+  evidence: `src/components/home/more-industries.tsx` sets `shown = !hydrated || …` so the list is readable without JavaScript (required by `src/lib/design/contrast.test.ts` and the spec's no-JS row); a `@media (scripting: none)` rule could open it without the flash but must avoid the hidden-content patterns that test rejects.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-s1-home.md`
+  summary: The Home "+3" list revealed by mouse hover alone cannot be dismissed with Escape when keyboard focus is elsewhere (WCAG 1.4.13 dismissible).
+  evidence: `src/components/home/more-industries.tsx` handles Escape on the reveal wrapper only; moving the pointer away still hides it. A document keydown listener while the list is shown would close the gap.

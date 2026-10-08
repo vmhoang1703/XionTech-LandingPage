@@ -67,3 +67,25 @@ Acceptance: evidence — spec-enh-s1-home-evidence/home-390-industries-tapped.pn
 Acceptance: evidence — spec-enh-s1-home-evidence/home-nojs-industries.png — 32336 bytes — sha256 3497ff8b3c62 — JavaScript off: industries visible (same pixels as the opened state)
 Acceptance: evidence — spec-enh-s1-home-evidence/observed.md — 2920 bytes — sha256 cb6ae9f6257e — per-surface observations
 Acceptance: manual — walk / at 1280 and 390 on a production build (next start -p 3005, Chrome) — observed: every UX line as in observed.md; mouse second click leaves the list shown while hovering, touch second tap hides it; /about shows 6 values; /services keeps its title with the new 03 copy
+Task 6: fix round 2/5 (step-04 review patches: +3 click/focus-out/Escape clear the hover reveal, typed icon map, "+3" in the accessible name, browser test for doors and reveal, stronger hero/values tests, redundant reset removed)
+Task 6: review — pass — 0 critical, 0 important, 1 minor; 0 of 8 patch findings open
+Task 6: minor — src/components/home/more-industries.tsx Escape only with focus inside the reveal (deferred)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm test — exit 0 — Test Files 75 passed (75), Tests 1148 passed (1148)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100%; C1 ok: 38 changed file(s) with branch coverage >= 80%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed
+Acceptance: verification — npm run build — exit 0 — Generating static pages (15/15)
+Acceptance: evidence — spec-enh-s1-home-evidence/verification.txt — 7240 bytes — sha256 634130e549aa — transcript of the five declared commands after the review patches, all exit 0
+Acceptance: evidence — spec-enh-s1-home-evidence/browser-tests.txt — 342 bytes — sha256 016c75c47d12 — npx playwright test --project=a11y -g "Home at 390px|doors straddle": 2 passed
+Acceptance: evidence — spec-enh-s1-home-evidence/walk-output.txt — 3535 bytes — sha256 e77022986891 — walk.mjs on the patched production build: every UX line
+Acceptance: evidence — spec-enh-s1-home-evidence/walk.mjs — 12546 bytes — sha256 6f5e541f50d5 — the walk script that produced the screenshots and walk-output.txt
+Acceptance: evidence — spec-enh-s1-home-evidence/home-1280-top.png — 325780 bytes — sha256 f726f328cd01 — hero at 1280
+Acceptance: evidence — spec-enh-s1-home-evidence/home-1280-doors-edge.png — 277674 bytes — sha256 e579b5c649c8 — doors side by side, navy ends at their middle, light card readable
+Acceptance: evidence — spec-enh-s1-home-evidence/home-1280-industries-open.png — 32336 bytes — sha256 3497ff8b3c62 — +3 opened by click
+Acceptance: evidence — spec-enh-s1-home-evidence/home-1280-process-head.png — 63086 bytes — sha256 152292030ca9 — How we approach. with See how we work at the right of the heading row
+Acceptance: evidence — spec-enh-s1-home-evidence/home-1280-full.png — 1440290 bytes — sha256 fab3cbb7651d — whole Home at 1280
+Acceptance: evidence — spec-enh-s1-home-evidence/home-390-full.png — 1164532 bytes — sha256 8f05065553e6 — whole Home at 390
+Acceptance: evidence — spec-enh-s1-home-evidence/home-390-industries-tapped.png — 30490 bytes — sha256 9944dd103b81 — +3 opened by a real touch tap (hasTouch context)
+Acceptance: evidence — spec-enh-s1-home-evidence/home-nojs-industries.png — 32336 bytes — sha256 3497ff8b3c62 — JavaScript off: industries visible
+Acceptance: evidence — spec-enh-s1-home-evidence/observed.md — 3191 bytes — sha256 64b702666238 — per-surface observations matching walk-output.txt
+Acceptance: manual — walk / at 1280, 768 and 390 (touch context) on the patched production build (next start -p 3005, Chrome) — observed: light layer starts at 1013 = door middle; doors 2 columns, lower halves hit their links; +3 hides on second click, Tab away, Escape and second touch tap; See how we work right of the heading block, aligned to the row bottom; /about 6 values; /services title kept with new 03 copy

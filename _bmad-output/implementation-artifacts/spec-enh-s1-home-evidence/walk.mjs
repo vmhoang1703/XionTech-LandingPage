@@ -38,9 +38,18 @@ log("figures heading", (await stats.locator("h2, .label, p").first().textContent
 log("figures cols 1280", await cols(stats.locator("ul")));
 const heroBox = await rect(hero);
 const doors = hero.locator(".doors");
+const doorsGrid = hero.locator(".doors-grid");
 const doorBox = await rect(doors);
-log("doors vs hero", `doors ${Math.round(doorBox.top)}–${Math.round(doorBox.bottom)} | hero bottom ${Math.round(heroBox.bottom)} | navy ends at door middle: ${Math.abs(heroBox.bottom - (doorBox.top + doorBox.bottom) / 2) < 40}`);
-log("doors cols 1280", await cols(doors));
+// The navy ends where the light ::before layer on .doors starts (inset 50% 0 0).
+const lightTop = await doors.evaluate((d) => d.getBoundingClientRect().top + scrollY + parseFloat(getComputedStyle(d, "::before").top));
+const doorMid = (doorBox.top + doorBox.bottom) / 2;
+log("doors vs navy", `doors ${Math.round(doorBox.top)}–${Math.round(doorBox.bottom)} | middle ${Math.round(doorMid)} | light layer starts ${Math.round(lightTop)} | navy ends at door middle: ${Math.abs(lightTop - doorMid) <= 4}`);
+log("doors grid 1280", `${await doorsGrid.evaluate((g) => getComputedStyle(g).gridTemplateColumns)} (${await cols(doorsGrid)} columns)`);
+await doorsGrid.scrollIntoViewIfNeeded();
+log("doors lower half clickable", await hero.locator(".door").evaluateAll((ds) => ds.map((d) => { d.scrollIntoView({ block: "center" }); const r = d.getBoundingClientRect(); const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height * 0.85); return `${d.className.split(" ")[1]} ${d.contains(hit)}`; }).join(", ")));
+await page.screenshot({ path: `${OUT}/home-1280-doors-edge.png`, fullPage: true, clip: { x: 0, y: Math.round(doorBox.top) - 80, width: 1280, height: 520 } });
+await page.evaluate(() => scrollTo(0, 0));
+await sleep(300);
 const light = hero.locator(".door-products");
 log("products door", await light.evaluate((d) => `href ${d.getAttribute("href")} | bg ${getComputedStyle(d).backgroundColor} | h2 color ${getComputedStyle(d.querySelector("h2")).color} | badges ${[...d.querySelectorAll(".badge")].map((b) => b.textContent.trim() || "icon").join(",")} | chips ${[...d.querySelectorAll(".chip")].map((c) => c.textContent.trim()).join(",")}`));
 const dark = hero.locator(".door-services");
@@ -76,6 +85,9 @@ await trigger.focus();
 await page.keyboard.press("Space");
 await sleep(300);
 log("+3 Space", `aria-expanded ${await trigger.getAttribute("aria-expanded")}`);
+await page.keyboard.press("Escape");
+await sleep(300);
+log("+3 Escape", `aria-expanded ${await trigger.getAttribute("aria-expanded")} | list visible ${await list.isVisible()}`);
 log("motto", (await caps.locator(".w-motto").innerText()).replace(/\s+/g, " "));
 
 const values = page.locator('section:has(h2:text-is("Our core values."))');
@@ -83,7 +95,9 @@ log("values", await values.evaluate((s) => `id "${s.id}" | lede "${s.querySelect
 const proc = page.locator('section:has(h2:text-is("How we approach."))');
 log("process", await proc.evaluate((s) => `classes ${s.className} | bg ${getComputedStyle(s).backgroundColor} | label ${s.querySelector(".label") ? "present" : "none"} | lede "${s.querySelector(".lede")?.textContent.trim().slice(0, 60)}…"`));
 const link = proc.locator("a.link-arrow");
-log("see how we work", await link.evaluate((a) => { const h = a.closest("section").querySelector("h2").getBoundingClientRect(); const r = a.getBoundingClientRect(); return `"${a.textContent.trim()}" -> ${a.getAttribute("href")} | same row as H2: ${r.top < h.bottom && r.bottom > h.top}`; }));
+log("see how we work", await link.evaluate((a) => { const row = a.closest(".sec-head-row").getBoundingClientRect(); const h = a.closest("section").querySelector(".sec-head").getBoundingClientRect(); const r = a.getBoundingClientRect(); return `"${a.textContent.trim()}" -> ${a.getAttribute("href")} | in .sec-head-row ${Math.round(row.top)}–${Math.round(row.bottom)} | link ${Math.round(r.top)}–${Math.round(r.bottom)} x ${Math.round(r.left)}–${Math.round(r.right)} | right of heading block (ends ${Math.round(h.right)}): ${r.left >= h.right} | aligned to row bottom: ${Math.abs(r.bottom - row.bottom) <= 2}`; }));
+const rowTop = await proc.locator(".sec-head-row").evaluate((r) => r.getBoundingClientRect().top + scrollY);
+await page.screenshot({ path: `${OUT}/home-1280-process-head.png`, fullPage: true, clip: { x: 0, y: Math.round(rowTop) - 40, width: 1280, height: 260 } });
 log("removed sections", `bento ${await page.locator(".bento").count()} | svc-grid ${await page.locator(".svc-grid").count()} | "Four apps" ${(await page.content()).includes("Four apps. One school day")} | "Eight ways" ${(await page.content()).includes("Eight ways we get IT done")}`);
 log("flow surfaces", await page.locator(".home-flow").evaluate((f) => `${getComputedStyle(f).backgroundImage.slice(0, 90)} | children bg ${[...f.children].map((c) => getComputedStyle(c).backgroundColor).join(", ")}`));
 log("sideways scroll 1280", await page.evaluate(() => document.documentElement.scrollWidth > innerWidth));
@@ -102,16 +116,22 @@ await context.close();
   log("capabilities widths 390", await page.locator(".w-card").evaluateAll((cs) => cs.map((c) => Math.round(c.getBoundingClientRect().width)).join(", ")));
   const link = page.locator('section:has(h2:text-is("How we approach.")) a.link-arrow');
   log("see how we work 390", await link.evaluate((a) => { const h = a.closest("section").querySelector("h2").getBoundingClientRect(); return `below H2: ${a.getBoundingClientRect().top >= h.bottom - 2}`; }));
-  const t = page.locator(".w-more-trigger");
-  await t.tap?.().catch(() => {});
-  await t.click();
-  await sleep(400);
-  log("+3 tap 390", `aria-expanded ${await t.getAttribute("aria-expanded")} | list visible ${await page.locator(".w-more-list").isVisible()}`);
-  await t.click();
-  await sleep(400);
-  log("+3 second tap 390", `aria-expanded ${await t.getAttribute("aria-expanded")} | list visible ${await page.locator(".w-more-list").isVisible()}`);
   log("sideways scroll 390", await page.evaluate(() => document.documentElement.scrollWidth > innerWidth));
   await page.screenshot({ path: `${OUT}/home-390-full.png`, fullPage: true });
+  await context.close(); }
+
+// ---- 390px touch device: real taps
+{ const { page, context } = await open(390, { hasTouch: true, isMobile: true });
+  const t = page.locator(".w-more-trigger");
+  const l = page.locator(".w-more-list");
+  await t.scrollIntoViewIfNeeded();
+  await t.tap();
+  await sleep(400);
+  log("+3 touch tap 1", `aria-expanded ${await t.getAttribute("aria-expanded")} | list visible ${await l.isVisible()}`);
+  await page.locator(".w-industries").screenshot({ path: `${OUT}/home-390-industries-tapped.png` });
+  await t.tap();
+  await sleep(400);
+  log("+3 touch tap 2", `aria-expanded ${await t.getAttribute("aria-expanded")} | list visible ${await l.isVisible()}`);
   await context.close(); }
 
 // ---- no JavaScript

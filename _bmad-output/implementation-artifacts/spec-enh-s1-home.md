@@ -2,7 +2,7 @@
 title: 'E-S1 Home matches the prototype'
 type: 'feature'
 created: '2026-10-08'
-status: 'in-progress'
+status: 'in-review'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: 'c8cb49cd8a71bebd2924cfad013d52a8155e0745'
@@ -112,7 +112,7 @@ stay as they are.
 | Capabilities | Load at 1280px | — | "Capabilities." + lede; four cards in two rows (7+5 columns) | Static | CAP-3, `site.css:658-665` |  ✅ walk (689 + 487px rows); `capabilities.test.tsx` |
 | Capabilities | Load at 900px and below | — | One card per row | Static | `site.css:718-729` |  ✅ walk (358px at 390); `a11y.spec.ts` reflow |
 | Global delivery | Load with JS | — | Plano and HCMC chips show live times; without JS "US Central" and "GMT+7" | Ticks each minute | CAP-3, Story 5.1 |  ✅ walk (live times; no-JS zone labels); `capabilities.test.tsx` |
-| "+3" button | Click, then click again | Mouse, touch, pen | Healthcare, Logistics, Private Equity appear, then hide; `aria-expanded` follows | Instant | CAP-3, `site.js:218-222` |  ✅ walk: touch and pen tap twice hide it; mouse: hides when the pointer leaves (hover reveal, as in the prototype); `capabilities.test.tsx` |
+| "+3" button | Click, then click again | Mouse, touch, pen | Healthcare, Logistics, Private Equity appear, then hide; `aria-expanded` follows | Instant | CAP-3, `site.js:218-222` |  ✅ walk (mouse second click and touch second tap hide it); `capabilities.test.tsx`; `a11y.spec.ts` doors/+3 |
 | "+3" button | Enter or Space | Keyboard | Same as click; focus stays on the button | Instant | CAP-3 |  ✅ walk; `capabilities.test.tsx` |
 | "+3" button | Focus leaves the reveal area | Keyboard | List closes | Instant | `site.js:218-222` |  ✅ `capabilities.test.tsx` (focus-out) |
 | "+3" button | No JavaScript | — | Industries readable in the HTML; button name lists them | Static | CAP-3 |  ✅ walk (JS off); `capabilities.test.tsx`; `e2e/home-hero.spec.ts` |
@@ -129,6 +129,43 @@ stay as they are.
 ## Spec Change Log
 
 ## Review Triage Log
+
+| # | Source | Finding | Verdict | Evidence | Route |
+| --- | --- | --- | --- | --- | --- |
+| 1 | acceptance, edge, blind, verification-gap, Task 6 minor | `more-industries.tsx`: with a mouse hovering, a second click and focus-out flip `aria-expanded` but the list stays shown | medium | `shown = !hydrated \|\| open \|\| hovered`; walk printed "second click: aria-expanded false \| list visible true"; matrix says "click again hides", "focus leaves → closes" | patch |
+| 2 | edge | No Escape to dismiss the revealed list | medium | No key handler in `more-industries.tsx`; hover-revealed content must be dismissible (WCAG 1.4.13) | patch |
+| 3 | edge | Pen hover does not reveal the list (`pointerType` mouse only) | false | Spec UX line gives pen the click path; pen click toggles | reject |
+| 4 | edge | `INDUSTRY_ICON` typed `Record<string, Icon>` lets a new industry render an undefined component | low | Content is static today, but the fix is a direct type correction | patch |
+| 5 | edge | Hard-coded 120px overhang can drift from card height | maybe-false | Prototype uses the same fixed 120px; walk shows the join correct at 1280 and 390; would only be low | reject |
+| 6 | edge | Light `::before` on `.doors` is wrap-width, leaving navy strips at the sides | false | `home-1280-doors-edge.png` shows the light surface full width below the card middle (the flow wrapper continues it) | reject |
+| 7 | acceptance, edge, verification-gap, blind | Walk output contradicts `observed.md` (doors 1 column, navy middle false, link not on row) | medium | Walk measured `.doors` instead of the grid, the hero box instead of the `::before` light layer, and overlap with the H2 only; screenshots show the page is right | patch (walk + Re-verify) |
+| 8 | verification-gap | No browser test for the hero/doors join and the reveal visibility | medium | Only CSS-text and class assertions; jsdom cannot see layering | patch (Playwright `@a11y` test) |
+| 9 | verification-gap | `observed.md` claims touch taps but the 390 walk context had no `hasTouch` | medium | `open(390)` had no `hasTouch`; the touch result came from a separate probe | patch (walk) |
+| 10 | Task 4 minor | Button name "3 more industries…" lacks visible "+3" | low | WCAG 2.5.3 label in name; direct string correction | patch |
+| 11 | Task 3 minor | "No label" test only catches `.label + h1` | low | Direct test correction | patch |
+| 12 | Task 3 minor | Redundant `padding-left: 0` at ≤560px | low | `sm:` utilities start at 640px; deletion | patch |
+| 13 | Task 5 minor | Heading id asserted only as not About's | low | Direct test correction | patch |
+| 14 | Task 6 minor | Server-open list collapses on hydration (layout shift) | low | Below the fold at every width; the fix (`@media (scripting: none)`) adds complexity and must satisfy `contrast.test.ts` | defer |
+| 15 | Task 4 minor | `.w-more:hover` sticky on touch at ≤640px | maybe-false | Real touch taps hide on the second tap in the walk; would only be low | reject |
+| 16 | Task 1 minor, blind | Services title duplicates the old Home string | low | E-S2 replaces the Services title; no user-facing harm | reject |
+| 17 | Task 2 minor, blind | `aboutValues`/`AboutValue` names and `homeValuesHeading` duplicate About's label/title | low | E-S3 removes About's values section and can rename; no user-facing harm | reject |
+| 18 | Task 2 minor | `homeValuesHeading` untested | false | `home-values.test.tsx` asserts the region "Our core values." and lede | reject |
+| 19 | Task 5 minor | Transparent background pending the wrapper | false | Task 6 added `.home-flow`; walk shows sections transparent on one gradient | reject |
+| 20 | Task 7 minor | "How we approach." checked as a raw-HTML substring | low | Presence check for no-JS HTML; unit tests assert the heading role | reject |
+| 21 | blind | "Get in touch" goes to `/demo` | false | Frozen intent: fallback until E-A4 adds `#contact` | reject |
+| 22 | blind | AI Tutor chip and new process/motto copy have no source | false | Frozen intent: copy verbatim from the approved prototype (ENH-086/087) | reject |
+| 23 | blind | Services lost "open progress updates" | false | Frozen intent: one long step copy shared by Home and Services | reject |
+| 24 | blind | Capabilities copy quality (bare noun, fragments) | false | Verbatim prototype copy (frozen) | reject |
+| 25 | blind | Product names elsewhere still PXP/LXP/SXP | false | Out of this intent: E-A2 renames site-wide | reject |
+| 26 | blind | Identical PNG hashes for no-JS and opened state | false | Both captures show the same rendered state (list open, same card); separate runs, recomputed by the auditor | reject |
+| 27 | blind | Absolute paths in the ledger | false | Ledger contract requires the absolute spec path in its identity line; same as earlier specs | reject |
+| 28 | blind | 3 MB of PNG evidence committed | low | Same practice as Stories 5.1–6.4; reviewers use them | reject |
+| 29 | blind | No `docs/ai-log.md` entry | low | Project hand-in rule; added before the PR | patch (docs, at PR) |
+| 30 | blind | No EXPERIENCE.md / ux-checks.md updates | false | Prototype README: UX specs are not edited for prototype changes; the log is the hand-off | reject |
+| 31 | blind | No 768px screenshot | low | Walk measured 3 columns at 768; not required | reject |
+| 32 | edge | Services step 03 receive line also changed | false | Intended: Services takes the shared long copy | reject |
+| 33 | security | Clean | — | No sources, sinks, secrets or dependency changes | — |
+| 34 | patch re-review | Escape works only with focus inside the reveal; a hover-only reveal with focus elsewhere is not dismissible by Escape | low | Moving the pointer away dismisses it; a document-level key listener adds complexity; prototype behaves the same | defer |
 
 ## Design Notes
 
@@ -160,34 +197,37 @@ Process copy moves into `processFlow` once so Home and Services cannot drift:
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-08.
+Captured after the step-04 review patches on 2026-10-08 (the step-03 set is history in the ledger).
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
-- `npm test` -- exit 0 -- Test Files 75 passed (75), Tests 1145 passed (1145)
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100%; C1 ok: 33 changed file(s) with branch coverage >= 80%
+- `npm test` -- exit 0 -- Test Files 75 passed (75), Tests 1148 passed (1148)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100%; C1 ok: 38 changed file(s) with branch coverage >= 80%
 - `npm run test:smoke` -- exit 0 -- 15 passed
 - `npm run build` -- exit 0 -- Generating static pages (15/15)
-- `npx playwright test --project=a11y -g "Home at 390px"` (added for the Narrow screen matrix row) -- exit 0 -- 1 passed
+- `npx playwright test --project=a11y -g "Home at 390px|doors straddle"` -- exit 0 -- 2 passed
 
 **Observed**
 
-- Every UX line on `/` at 1280px, 768px and 390px, with JavaScript off, and by real touch taps -- production build on :3005 in Chrome, [observed.md](spec-enh-s1-home-evidence/observed.md), [walk-output.txt](spec-enh-s1-home-evidence/walk-output.txt)
+- Every UX line on `/` at 1280px, 768px and 390px, in a touch context, and with JavaScript off -- production build on :3005 in Chrome, [observed.md](spec-enh-s1-home-evidence/observed.md), [walk-output.txt](spec-enh-s1-home-evidence/walk-output.txt)
+- Navy ends at the cards' middle (light layer starts at 1013, the doors' middle); both cards' lower halves hit their links -- same walk and the `doors straddle` browser test
+- "+3" hides on a second mouse click, Tab away, Escape and a second touch tap -- same walk and the browser test
 - `/about` still shows six values; `/services` keeps its process title with the new step 03 copy -- same walk
 
 **Artifacts**
 
 - [verification.txt](spec-enh-s1-home-evidence/verification.txt) -- transcript of the five commands
-- [home-1280-doors-edge.png](spec-enh-s1-home-evidence/home-1280-doors-edge.png) -- doors across the hero edge, navy ends at their middle
+- [browser-tests.txt](spec-enh-s1-home-evidence/browser-tests.txt) -- the two Home browser tests
+- [walk.mjs](spec-enh-s1-home-evidence/walk.mjs) -- the walk that produced every screenshot below
+- [home-1280-doors-edge.png](spec-enh-s1-home-evidence/home-1280-doors-edge.png) -- doors across the hero edge
 - [home-1280-industries-open.png](spec-enh-s1-home-evidence/home-1280-industries-open.png) -- "+3" opened by click
-- [home-1280-process-head.png](spec-enh-s1-home-evidence/home-1280-process-head.png) -- "How we approach." with the link on the heading row
+- [home-1280-process-head.png](spec-enh-s1-home-evidence/home-1280-process-head.png) -- "How we approach." heading row
 - [home-390-industries-tapped.png](spec-enh-s1-home-evidence/home-390-industries-tapped.png) -- "+3" opened by a touch tap
 - [home-nojs-industries.png](spec-enh-s1-home-evidence/home-nojs-industries.png) -- industries visible without JavaScript
-- [home-1280-full.png](spec-enh-s1-home-evidence/home-1280-full.png), [home-390-full.png](spec-enh-s1-home-evidence/home-390-full.png), [home-1280-top.png](spec-enh-s1-home-evidence/home-1280-top.png) -- whole page and hero
+- [home-1280-top.png](spec-enh-s1-home-evidence/home-1280-top.png), [home-1280-full.png](spec-enh-s1-home-evidence/home-1280-full.png), [home-390-full.png](spec-enh-s1-home-evidence/home-390-full.png) -- hero and whole page
 - Byte counts and SHA-256 prefixes are in the ledger `spec-enh-s1-home-progress.md`.
 
 **Not captured**
 
-- Andy's parts of Home (news row, capture band, header "Book a demo") were not checked; they are unchanged by this spec.
-
+- Andy's parts of Home (news row, capture band, header "Book a demo") were not checked; this spec does not change them.

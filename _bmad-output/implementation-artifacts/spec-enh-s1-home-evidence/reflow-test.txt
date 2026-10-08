@@ -1,6 +1,0 @@
-
-Running 1 test using 1 worker
-
-  ok 1 [a11y] › e2e\a11y.spec.ts:251:7 › reflow › Home at 390px: no sideways scroll, stacked cards, two figures per row @a11y (1.1s)
-
-  1 passed (13.5s)

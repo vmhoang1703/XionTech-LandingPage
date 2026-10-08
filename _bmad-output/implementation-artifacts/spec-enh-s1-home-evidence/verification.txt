@@ -26,13 +26,12 @@ All matched files use Prettier code style!
 
 
  Test Files  75 passed (75)
-      Tests  1145 passed (1145)
-   Start at  15:48:53
-   Duration  67.89s (import 52%, environment 25%, tests 15%, setup 6%, transform 2%)
+      Tests  1148 passed (1148)
+   Start at  16:01:53
+   Duration  59.90s (import 60%, environment 20%, tests 14%, setup 5%, transform 2%)
 
-Environment  jsdom was created 75 times · 167.65s total, 25% of tracked time
-             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
-             learn more: https://vitest.dev/guide/improving-performance#test-environments
+    Isolate  75 workers spawned · ~1.95s startup each (spawn + environment, per file)
+             at least ~11.37s faster with isolate: false — reuses workers across files instead of one per file
 
 ===== exit 0
 ===== $ npm run test:coverage && npm run coverage:diff
@@ -46,23 +45,23 @@ Environment  jsdom was created 75 times · 167.65s total, 25% of tracked time
 
 
  Test Files  75 passed (75)
-      Tests  1145 passed (1145)
-   Start at  15:50:02
-   Duration  70.24s (import 53%, tests 21%, environment 19%, setup 5%, transform 1%, worker 1%)
+      Tests  1148 passed (1148)
+   Start at  16:02:56
+   Duration  71.94s (import 55%, tests 20%, environment 18%, setup 5%, transform 1%, worker 1%)
 
-    Isolate  75 workers spawned · ~2.14s startup each (spawn + environment, per file)
-             at least ~12.43s faster with isolate: false — reuses workers across files instead of one per file
+    Isolate  75 workers spawned · ~2.04s startup each (spawn + environment, per file)
+             at least ~11.88s faster with isolate: false — reuses workers across files instead of one per file
 
 [34m % [39m[2mCoverage report from [22m[33mv8[39m
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   99.72 |    98.18 |   99.47 |     100 |                   
+All files          |   99.72 |    98.19 |   99.47 |     100 |                   
  ...onents/careers |     100 |    97.64 |     100 |     100 |                   
   ...tion-form.tsx |     100 |    96.72 |     100 |     100 | 45,123            
  ...onents/contact |   99.07 |    96.12 |   98.27 |     100 |                   
   contact-form.tsx |   98.49 |    93.58 |   97.61 |     100 | ...26,189,219,404 
- components/home   |    99.3 |    95.83 |    97.5 |     100 |                   
+ components/home   |   99.32 |       96 |   97.61 |     100 |                   
   hero-silk.tsx    |   98.18 |       95 |   91.66 |     100 | 27                
   silk-shader.ts   |     100 |     92.3 |     100 |     100 | 95                
  components/layout |     100 |    97.93 |     100 |     100 |                   
@@ -74,10 +73,10 @@ All files          |   99.72 |    98.18 |   99.47 |     100 |
 -------------------|---------|----------|---------|---------|-------------------
 
 =============================== Coverage summary ===============================
-Statements   : 99.72% ( 1441/1445 )
-Branches     : 98.18% ( 759/773 )
-Functions    : 99.47% ( 377/379 )
-Lines        : 100% ( 1312/1312 )
+Statements   : 99.72% ( 1447/1451 )
+Branches     : 98.19% ( 761/775 )
+Functions    : 99.47% ( 379/381 )
+Lines        : 100% ( 1317/1317 )
 ================================================================================
 
 > xiontech-landing-page@0.1.0 coverage:diff
@@ -96,12 +95,12 @@ src/components/home/more-industries.tsx (100%)
 src/content/home.ts (100%)
 src/content/values.ts (100%)
 -------------
-Total:   28 lines
+Total:   33 lines
 Missing: 0 lines
 Coverage: 100%
 -------------
 
-C1 ok: 33 changed file(s) with branch coverage >= 80% vs origin/develop.
+C1 ok: 38 changed file(s) with branch coverage >= 80% vs origin/develop.
 ===== exit 0
 ===== $ npm run test:smoke
 
@@ -111,23 +110,23 @@ C1 ok: 33 changed file(s) with branch coverage >= 80% vs origin/develop.
 
 Running 15 tests using 6 workers
 
-  ok  2 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, the open roles and the life sections @smoke (115ms)
-  ok  1 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (135ms)
-  ok  3 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (142ms)
-  ok  4 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its H1, the filter chips and the demo capture @smoke (123ms)
-  ok  7 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (259ms)
-  ok  8 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with its H1, the four pills and no Updates link @smoke (281ms)
-  ok  6 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the Not found copy and no capture band @smoke (324ms)
-  ok  9 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the zone labels, the H1, the eight service anchors, #process and the project capture in the HTML without JavaScript @smoke (291ms)
-  ok 10 [smoke] › e2e\news.spec.ts:17:5 › unknown story slug answers 404 with the Not found page @smoke (283ms)
-  ok 11 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (69ms)
-  ok  5 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (409ms)
-  ok 13 [smoke] › e2e\smoke.spec.ts:15:5 › demo page responds 200 with send request button @smoke (37ms)
-  ok 14 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (145ms)
-  ok 15 [smoke] › e2e\smoke.spec.ts:26:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (142ms)
-  ok 12 [smoke] › e2e\news.spec.ts:30:5 › the first story on the News page answers 200 with its own H1 @smoke (226ms)
+  ok  1 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, the open roles and the life sections @smoke (98ms)
+  ok  5 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (38ms)
+  ok  4 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (207ms)
+  ok  8 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with its H1, the four pills and no Updates link @smoke (175ms)
+  ok  7 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the Not found copy and no capture band @smoke (172ms)
+  ok  6 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its H1, the filter chips and the demo capture @smoke (210ms)
+  ok  3 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (286ms)
+  ok  2 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (301ms)
+  ok 10 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (39ms)
+  ok  9 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the zone labels, the H1, the eight service anchors, #process and the project capture in the HTML without JavaScript @smoke (63ms)
+  ok 12 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (147ms)
+  ok 13 [smoke] › e2e\smoke.spec.ts:15:5 › demo page responds 200 with send request button @smoke (135ms)
+  ok 11 [smoke] › e2e\news.spec.ts:17:5 › unknown story slug answers 404 with the Not found page @smoke (173ms)
+  ok 14 [smoke] › e2e\smoke.spec.ts:26:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (30ms)
+  ok 15 [smoke] › e2e\news.spec.ts:30:5 › the first story on the News page answers 200 with its own H1 @smoke (78ms)
 
-  15 passed (17.2s)
+  15 passed (13.9s)
 ===== exit 0
 ===== $ npm run build
 
@@ -136,18 +135,18 @@ Running 15 tests using 6 workers
 
 ▲ Next.js 16.3.6 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 29ms
+✓ Running next.config.ts took 27ms
 
   Creating an optimized production build ...
-✓ Compiled successfully in 2.5s
+✓ Compiled successfully in 2.0s
   Running TypeScript ...
-  Finished TypeScript in 2.9s ...
+  Finished TypeScript in 2.6s ...
   Collecting page data using 11 workers ...
   Generating static pages using 11 workers (0/15) ...
   Generating static pages using 11 workers (3/15) 
   Generating static pages using 11 workers (7/15) 
   Generating static pages using 11 workers (11/15) 
-✓ Generating static pages using 11 workers (15/15) in 676ms
+✓ Generating static pages using 11 workers (15/15) in 606ms
   Finalizing page optimization ...
 
 Route (app)
