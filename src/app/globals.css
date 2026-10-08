@@ -1068,7 +1068,7 @@
 
   /* E-A4 plain capture bands */
   .capture-plain::before {
-    display: none;
+    content: none;
   }
 
   .capture-plain .cap-row {
@@ -1155,15 +1155,14 @@
     animation: flagUp 0.9s 0.2s var(--ease-brand) both;
   }
 
+  /* No opacity 0 step: the flag stays visible even if the animation never runs. */
   @keyframes flagUp {
     from {
       transform: translateY(14px) scaleX(0.2);
-      opacity: 0;
     }
 
     to {
       transform: none;
-      opacity: 1;
     }
   }
 

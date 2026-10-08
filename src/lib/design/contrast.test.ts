@@ -794,9 +794,13 @@ describe("contact form styles", () => {
     expect(rule.get("text-align")).toBe("center");
   });
 
-  it("draws the thank-you icon in navy, which passes the non-text 3:1 on the paper card", () => {
-    const rule = readRuleDeclarations(source, ".form-ok svg");
-    expect(rule.get("color")).toBe("var(--color-navy)");
+  it("draws the summit and its pole in navy, which passes the non-text 3:1 on the paper card", () => {
+    expect(readRuleDeclarations(source, ".sm-range").get("stroke")).toBe(
+      "var(--color-navy)",
+    );
+    expect(readRuleDeclarations(source, ".sm-pole").get("stroke")).toBe(
+      "var(--color-navy)",
+    );
     expect(contrastRatio(colors.navy, colors.paper)).toBeGreaterThanOrEqual(
       NON_TEXT,
     );
