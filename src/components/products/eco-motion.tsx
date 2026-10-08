@@ -1,23 +1,24 @@
 "use client";
 
 import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { productsHero } from "@/content/products";
 import {
   readMotionPaused,
   saveMotionPaused,
 } from "@/lib/motion/motion-preference";
+import { useHydrated } from "./use-hydrated";
 
 // Client island for the Products hero: the drifting glows and the Pause
 // motion button. The choice is shared with the Home silk (one stored key).
 // Before hydration, and with no JavaScript, the button is not rendered and
 // the glows follow CSS alone (still under reduced motion).
 export function EcoMotion() {
-  const [paused, setPaused] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    setPaused(readMotionPaused());
-  }, []);
+  // Storage and matchMedia are read only in the browser.
+  const hydrated = useHydrated();
+  // This visit's click; until then the stored choice decides.
+  const [choice, setChoice] = useState<boolean | null>(null);
+  const paused = hydrated ? (choice ?? readMotionPaused()) : null;
 
   let motion: "on" | "off" | undefined;
   if (paused !== null) motion = paused ? "off" : "on";
@@ -37,7 +38,7 @@ export function EcoMotion() {
           className="eco-toggle"
           onClick={() => {
             saveMotionPaused(!paused);
-            setPaused(!paused);
+            setChoice(!paused);
           }}
         >
           {paused ? (

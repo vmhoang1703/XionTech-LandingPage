@@ -4,6 +4,7 @@ import { ArrowsOutSimpleIcon, XIcon } from "@phosphor-icons/react";
 import { useRef, type MouseEvent, type ReactNode } from "react";
 import { PLACEHOLDER_HREF } from "@/content/product-links";
 import { productsShowcase, type Audience } from "@/content/products";
+import { useHydrated } from "./use-hydrated";
 
 // While an address is the stand-in (decision A6) the control is a disabled
 // label, so a click goes nowhere; a real address becomes a link that opens a
@@ -32,6 +33,18 @@ export function ProductLink({
   );
 }
 
+// The features for a visitor without JavaScript, who cannot open the dialog.
+// Once JavaScript runs it carries `hidden`.
+export function NoJsFeatures({ children }: Readonly<{ children: ReactNode }>) {
+  const hydrated = useHydrated();
+  return (
+    <details className="pd-nojs" hidden={hydrated}>
+      <summary>{productsShowcase.featuresHeading}</summary>
+      {children}
+    </details>
+  );
+}
+
 // A click whose target is the dialog itself and whose point lies outside its
 // box landed on the backdrop. Clicks inside the box (padding too) and keyboard
 // clicks on controls never close it.
@@ -50,7 +63,7 @@ function onBackdropClick(event: MouseEvent<HTMLDialogElement>) {
 // Client island (E-A5 CAP-3): the card's expand button and its native modal
 // dialog. The dialog body is rendered on the server and passed in as children.
 // showModal() keeps Tab inside and closes on Esc; on close, focus goes back to
-// the expand button.
+// the expand button, which shows only once JavaScript runs.
 export function ProductDetail({
   dialogId,
   name,
@@ -67,6 +80,7 @@ export function ProductDetail({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const headingId = `${dialogId}-h`;
+  const hydrated = useHydrated();
 
   return (
     <>
@@ -74,6 +88,7 @@ export function ProductDetail({
         ref={buttonRef}
         type="button"
         className="pc-expand"
+        hidden={!hydrated}
         aria-haspopup="dialog"
         aria-label={productsShowcase.openLabel(name)}
         onClick={() => dialogRef.current?.showModal()}
@@ -81,7 +96,6 @@ export function ProductDetail({
         <ArrowsOutSimpleIcon aria-hidden="true" />
       </button>
       {/* Esc is handled by the native dialog; this only adds the backdrop click. */}
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <dialog
         ref={dialogRef}
         id={dialogId}

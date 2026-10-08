@@ -29,7 +29,7 @@ import {
   type FeatureId,
   type ProductDetail as Detail,
 } from "@/content/products";
-import { ProductDetail, ProductLink } from "./product-detail";
+import { NoJsFeatures, ProductDetail, ProductLink } from "./product-detail";
 
 const S = productsShowcase;
 
@@ -208,11 +208,9 @@ function ShowcaseCard({ app }: Readonly<{ app: App }>) {
       <div className="ps-visual">
         <Media app={app} detail={detail} />
       </div>
-      {/* Shown only without JavaScript, when the expand button cannot work. */}
-      <details className="pd-nojs">
-        <summary>{S.featuresHeading}</summary>
+      <NoJsFeatures>
         <Features detail={detail} />
-      </details>
+      </NoJsFeatures>
     </article>
   );
 }

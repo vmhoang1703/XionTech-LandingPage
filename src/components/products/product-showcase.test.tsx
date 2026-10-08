@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { FEATURE_PLACEHOLDER } from "@/content/products";
 import { ProductLink } from "./product-detail";
@@ -181,6 +182,20 @@ describe("ProductShowcase", () => {
     const fallback = card("ai-tutor").querySelector("details.pd-nojs");
     expect(fallback?.querySelector("summary")?.textContent).toBe("Features");
     expect(fallback?.querySelectorAll("li")).toHaveLength(3);
+  });
+
+  it("server-renders the fallback open to view and the expand button hidden", () => {
+    const html = renderToString(<ProductShowcase />);
+    expect(html).toMatch(/<details class="pd-nojs">/);
+    expect(html).toMatch(/<button[^>]*class="pc-expand"[^>]*hidden=""/);
+  });
+
+  it("hides the fallback and shows the expand button once JavaScript runs", () => {
+    render(<ProductShowcase />);
+    const fallback = card("ai-tutor").querySelector("details.pd-nojs");
+    expect(fallback?.hasAttribute("hidden")).toBe(true);
+    const expand = card("ai-tutor").querySelector(".pc-expand");
+    expect(expand?.hasAttribute("hidden")).toBe(false);
   });
 });
 

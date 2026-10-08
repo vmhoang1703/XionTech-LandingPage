@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MOTION_KEY } from "@/lib/motion/motion-preference";
 import { ProductsHero } from "./products-hero";
@@ -84,6 +85,12 @@ describe("ProductsHero", () => {
     const { container } = render(<ProductsHero />);
     expect(glows(container).getAttribute("data-motion")).toBe("off");
     expect(screen.getByRole("button", { name: "Play motion" })).toBeDefined();
+  });
+
+  it("server-renders no Pause motion button and no motion state", () => {
+    const html = renderToString(<ProductsHero />);
+    expect(html).not.toContain("eco-toggle");
+    expect(html).not.toContain("data-motion");
   });
 
   it("hides the glows from assistive technology", () => {
