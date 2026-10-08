@@ -4,13 +4,16 @@ import type { ContactField } from "@/lib/contact/contact-rules";
 export type FieldErrors = Partial<Record<string, string>>;
 
 /** Fields in form order, so the first invalid one gets focus. */
-export const FIELD_ORDER: readonly ContactField[] = [
+export const FIELD_ORDER = [
   "name",
   "email",
   "org",
   "date",
   "message",
-];
+] as const satisfies readonly ContactField[];
+
+/** The Demo form's fields (no phone). */
+export type DemoFormField = (typeof FIELD_ORDER)[number];
 
 const CONTACT_ENDPOINT = "/api/contact";
 export const SEND_TIMEOUT_MS = 15_000;

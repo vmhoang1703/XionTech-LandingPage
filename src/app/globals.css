@@ -1098,10 +1098,56 @@
     text-align: center;
   }
 
-  .form-ok svg {
+  /* E-A4 summit success: a flag goes up on the summit (prototype site.css:1280-1288). */
+  .summit {
+    width: 120px;
     margin-inline: auto;
-    font-size: 3rem;
-    color: var(--color-navy);
+  }
+
+  .summit svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .sm-range {
+    fill: none;
+    stroke: var(--color-navy);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+
+  .sm-pole {
+    stroke: var(--color-navy);
+    stroke-width: 2;
+  }
+
+  .sm-flag {
+    fill: var(--color-amber);
+    transform-box: fill-box;
+    transform-origin: left center;
+  }
+
+  .form-ok .sm-flag {
+    animation: flagUp 0.9s 0.2s var(--ease-brand) both;
+  }
+
+  @keyframes flagUp {
+    from {
+      transform: translateY(14px) scaleX(0.2);
+      opacity: 0;
+    }
+
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .form-ok .sm-flag {
+      animation: none;
+    }
   }
 
   .form-ok h3 {

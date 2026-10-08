@@ -32,7 +32,7 @@ export const jobForm = {
   note: "Cover note (optional)",
   submit: "Send application",
   sending: "Sending...",
-  successHeading: "Thank you!",
+  successHeading: "Summit reached. Thank you!",
   successText:
     "We've received your application and will be in touch if it's a match.",
   sendError: "We could not send your application. Please try again.",

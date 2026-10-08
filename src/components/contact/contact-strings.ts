@@ -44,7 +44,7 @@ export const CONTACT_STRINGS = {
     message: "Message (optional)",
     submit: "Send request",
     sending: "Sending...",
-    successHeading: "Thank you!",
+    successHeading: "Summit reached. Thank you!",
     successText: "We will be in touch soon.",
     sendError: "We could not send your request. Please try again.",
     rateError:

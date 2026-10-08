@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircleIcon, PaperPlaneTiltIcon } from "@phosphor-icons/react";
+import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import { uploadPresigned } from "@vercel/blob/client";
 import Link from "next/link";
 import {
@@ -11,6 +11,7 @@ import {
   type SubmitEvent,
 } from "react";
 import { postSubmission } from "@/components/contact/post-submission";
+import { SummitMark } from "@/components/contact/summit-mark";
 import { jobForm } from "@/content/job";
 import {
   CV_TYPES,
@@ -204,7 +205,7 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
       <>
         <h2>{jobForm.heading}</h2>
         <div ref={panelRef} className="form-ok" role="status" tabIndex={-1}>
-          <CheckCircleIcon weight="fill" aria-hidden="true" />
+          <SummitMark />
           <h3>{jobForm.successHeading}</h3>
           <p>{jobForm.successText}</p>
         </div>
