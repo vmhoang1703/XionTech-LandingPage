@@ -4,6 +4,10 @@ import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { homeHero } from "@/content/home";
 import {
+  readMotionPaused,
+  saveMotionPaused,
+} from "@/lib/motion/motion-preference";
+import {
   createSilk,
   SILK_START_TIME,
   SILK_TIME_SCALE,
@@ -29,7 +33,7 @@ export function HeroSilk() {
     silkRef.current = silk;
     silk.resize();
     setSupported(true);
-    setPaused(matchMedia("(prefers-reduced-motion: reduce)").matches);
+    setPaused(readMotionPaused());
 
     const resizer = new ResizeObserver(() => silk.resize());
     resizer.observe(canvas);
@@ -84,7 +88,10 @@ export function HeroSilk() {
       {supported ? (
         <button
           type="button"
-          onClick={() => setPaused((value) => !value)}
+          onClick={() => {
+            saveMotionPaused(!paused);
+            setPaused(!paused);
+          }}
           className="group bg-ink/50 absolute top-4 right-4 z-10 inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/30 px-2 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6"
         >
           {paused ? (
