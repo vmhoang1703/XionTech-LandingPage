@@ -6,8 +6,8 @@ import {
   aboutOffices,
   aboutStats,
   aboutStory,
-  aboutValues,
 } from "@/content/about";
+import { aboutValues } from "@/content/values";
 import { describe, expect, it } from "vitest";
 
 describe("About content", () => {
