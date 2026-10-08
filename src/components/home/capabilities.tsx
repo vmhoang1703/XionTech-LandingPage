@@ -20,7 +20,10 @@ const BADGE_CLASS = {
   IoT: "b-iot",
 } as const;
 
-const INDUSTRY_ICON: Record<string, Icon> = {
+const INDUSTRY_ICON: Record<
+  (typeof homeCapabilities.industries.more)[number],
+  Icon
+> = {
   Healthcare: HeartbeatIcon,
   Logistics: TruckIcon,
   "Private Equity": BriefcaseIcon,

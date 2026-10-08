@@ -12,7 +12,8 @@ const noSubscribe = () => () => {};
 
 // The "+3" reveal. The server HTML shows the industries, so they are readable
 // without JavaScript (the button's name lists them too). Once hydrated, the
-// list is hidden until a mouse hovers or a click, tap or key opens it.
+// list is hidden until a mouse hovers or a click, tap or key opens it;
+// Escape or focus leaving closes it.
 export function MoreIndustries({
   label,
   children,
@@ -25,6 +26,10 @@ export function MoreIndustries({
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const shown = !hydrated || open || hovered;
+  const close = () => {
+    setOpen(false);
+    setHovered(false);
+  };
 
   return (
     <span
@@ -34,7 +39,10 @@ export function MoreIndustries({
       }}
       onPointerLeave={() => setHovered(false)}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        if (!event.currentTarget.contains(event.relatedTarget)) close();
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") close();
       }}
     >
       <button
@@ -42,7 +50,11 @@ export function MoreIndustries({
         className="w-more-trigger"
         aria-expanded={open}
         aria-label={label}
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => {
+          // A click decides alone; the next pointer enter may re-arm hover.
+          setHovered(false);
+          setOpen((current) => !current);
+        }}
       >
         +3
       </button>

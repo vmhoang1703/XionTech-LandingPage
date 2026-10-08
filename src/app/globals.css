@@ -2853,11 +2853,6 @@
   .home-stats ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .home-stats li {
-    border-left-width: 0;
-    padding-left: 0;
-  }
 }
 
 /* ---------- E-S1 Home: Capabilities (4 cards, "+3" reveal, motto) ---------- */

@@ -322,3 +322,58 @@ test.describe("form errors", { tag: "@a11y" }, () => {
     await expectErrorWiring(page, "#a-name");
   });
 });
+
+test.describe("Home hero doors and +3 reveal", { tag: "@a11y" }, () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+
+  test("doors straddle the hero and the +3 list opens and closes", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const join = await page.evaluate(() => {
+      const doors = document.querySelector(".home-hero .doors") as HTMLElement;
+      const grid = doors.querySelector(".doors-grid") as HTMLElement;
+      const box = doors.getBoundingClientRect();
+      const layerTop = Number.parseFloat(
+        getComputedStyle(doors, "::before").top,
+      );
+      return {
+        columns: getComputedStyle(grid)
+          .gridTemplateColumns.split(" ")
+          .filter(Boolean).length,
+        layerOffset: Math.abs(layerTop - box.height / 2),
+      };
+    });
+    expect(join.columns, "two doors side by side").toBe(2);
+    expect(
+      join.layerOffset,
+      "navy stops at the doors' middle",
+    ).toBeLessThanOrEqual(4);
+
+    for (const door of await page.locator(".home-hero .door").all()) {
+      await door.scrollIntoViewIfNeeded();
+      const hit = await door.evaluate((link) => {
+        const box = link.getBoundingClientRect();
+        const el = document.elementFromPoint(
+          box.left + box.width / 2,
+          box.top + box.height * 0.85,
+        );
+        return link.contains(el);
+      });
+      expect(hit, "the door's lower half is its own link").toBe(true);
+    }
+
+    const trigger = page.getByRole("button", { name: /^\+3 more industries/ });
+    const list = page.locator(".w-more-list");
+    await trigger.scrollIntoViewIfNeeded();
+    await trigger.click();
+    await expect(list).toBeVisible();
+    await trigger.click();
+    await expect(list).toBeHidden();
+    await trigger.click();
+    await expect(list).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(list).toBeHidden();
+  });
+});

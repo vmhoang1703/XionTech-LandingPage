@@ -82,7 +82,7 @@ export const homeCapabilities = {
     main: "Education",
     // Confirmed on the About page (src/content/about.ts), not placeholders.
     more: ["Healthcare", "Logistics", "Private Equity"] as const,
-    moreLabel: "3 more industries: Healthcare, Logistics and Private Equity",
+    moreLabel: "+3 more industries: Healthcare, Logistics and Private Equity",
   },
   services: {
     href: "/services",

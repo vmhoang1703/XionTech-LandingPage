@@ -8,7 +8,7 @@ const INDUSTRIES = ["Healthcare", "Logistics", "Private Equity"];
 
 function reveal() {
   render(<Capabilities />);
-  return screen.getByRole("button", { name: /3 more industries/ });
+  return screen.getByRole("button", { name: /^\+3 more industries/ });
 }
 
 describe("Capabilities", () => {
@@ -69,7 +69,7 @@ describe("Capabilities", () => {
       expect(screen.getByText(name)).toBeDefined();
     }
     expect(button.getAttribute("aria-label")).toBe(
-      "3 more industries: Healthcare, Logistics and Private Equity",
+      "+3 more industries: Healthcare, Logistics and Private Equity",
     );
   });
 
@@ -166,6 +166,51 @@ describe("Capabilities", () => {
 
     fireEvent.pointerLeave(more, { pointerType: "mouse" });
     expect(list?.hasAttribute("hidden")).toBe(true);
+  });
+
+  it("hides the list on a second click while the mouse still hovers", () => {
+    const button = reveal();
+    const more = button.closest(".w-more") as HTMLElement;
+    const list = more.querySelector(".w-more-list");
+
+    fireEvent.pointerEnter(more, { pointerType: "mouse" });
+    fireEvent.click(button);
+    expect(list?.hasAttribute("hidden")).toBe(false);
+    fireEvent.click(button);
+
+    expect(button.getAttribute("aria-expanded")).toBe("false");
+    expect(list?.hasAttribute("hidden")).toBe(true);
+  });
+
+  it("closes a hover-revealed list when focus leaves the reveal area", () => {
+    const button = reveal();
+    const more = button.closest(".w-more") as HTMLElement;
+
+    fireEvent.pointerEnter(more, { pointerType: "mouse" });
+    fireEvent.blur(button, { relatedTarget: document.body });
+
+    expect(more.querySelector(".w-more-list")?.hasAttribute("hidden")).toBe(
+      true,
+    );
+  });
+
+  it("closes with Escape, whether opened by click or by hover", () => {
+    const button = reveal();
+    const more = button.closest(".w-more") as HTMLElement;
+    const list = more.querySelector(".w-more-list");
+
+    fireEvent.click(button);
+    fireEvent.keyDown(button, { key: "Escape" });
+    expect(button.getAttribute("aria-expanded")).toBe("false");
+    expect(list?.hasAttribute("hidden")).toBe(true);
+
+    fireEvent.pointerEnter(more, { pointerType: "mouse" });
+    fireEvent.keyDown(button, { key: "Escape" });
+    expect(list?.hasAttribute("hidden")).toBe(true);
+
+    fireEvent.click(button);
+    fireEvent.keyDown(button, { key: "Tab" });
+    expect(list?.hasAttribute("hidden")).toBe(false);
   });
 
   it("ignores touch pointer enter; a tap opens through the click", () => {

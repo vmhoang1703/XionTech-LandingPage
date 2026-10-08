@@ -13,7 +13,7 @@ describe("HomeValues", () => {
       "What guides how we work.",
     );
     expect(container.querySelector("#values")).toBeNull();
-    expect(region.querySelector("h2")?.id).not.toBe("about-values-h");
+    expect(region.querySelector("h2")?.id).toBe("home-values-h");
   });
 
   it("renders the six values with Get IT Done featured", () => {

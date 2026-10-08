@@ -21,8 +21,8 @@ describe("HomeHero", () => {
     const hero = renderHero();
 
     expect(hero.className).toContain("hero-silk");
-    expect(hero.querySelector(".label + h1")).toBeNull();
     const h1 = within(hero).getByRole("heading", { level: 1 });
+    expect(h1.parentElement?.querySelector(".label")).toBeNull();
     expect(h1.classList.contains("text-display-hero-fluid")).toBe(true);
     expect(h1.textContent).toBe(
       "School apps and software teams that get IT done.",
