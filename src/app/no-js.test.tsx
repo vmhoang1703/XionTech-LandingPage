@@ -34,10 +34,10 @@ describe("no JavaScript", () => {
       /<h1[^>]*>Every school community, <span class="hl">connected<\/span>\.<\/h1>/,
     );
     expect(html).toContain("Explore our products");
-    expect(html).toContain("See it working at your school.");
+    expect(html).toContain("Have something you want to build?");
     expect(html.indexOf("Latest from XionTech.")).toBeGreaterThan(-1);
     expect(html.indexOf("Latest from XionTech.")).toBeLessThan(
-      html.indexOf("See it working at your school."),
+      html.indexOf("Have something you want to build?"),
     );
     expect(html).toContain("<header");
     expect(html).toContain('<main id="main" tabindex="-1"');

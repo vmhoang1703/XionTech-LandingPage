@@ -53,6 +53,24 @@ export const CONTACT_STRINGS = {
     privacyLink: "Privacy policy",
     errorsHeading: "Please fix the following:",
   },
+  // Home #contact section (prototype index.html:241-268).
+  home: {
+    heading: "Have something you want to build?",
+    lede: "Tell us a little about yourself and what you're working on. Our team will get in touch to learn more.",
+    name: "Your name",
+    email: "Work email",
+    phone: "Phone number",
+    optional: "(optional)",
+    phonePlaceholder: "(+1) 469 322 9899",
+    message: "Tell us about your project",
+    messagePlaceholder:
+      "What are you looking to build? Tell us about your idea, existing product, team or challenge.",
+    submit: "Start the conversation",
+    consent: "We only use your details to reply to your message.",
+    successHeading: "Summit reached. Thanks — we've received your message.",
+    successText:
+      "Our team will review what you shared and get in touch with you.",
+  },
   capture: {
     emailLabel: "Work email",
     demo: {

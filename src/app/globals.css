@@ -1162,6 +1162,111 @@
   }
 
   /*
+    E-A4 Home contact (prototype site.css:572-592): the section picks up the
+    light grey of the news row above and warms into amber towards the footer.
+    The stop colours #fdf3d6 and #fce6a8 are the prototype's own values.
+  */
+  .sec.contact {
+    background: linear-gradient(
+      180deg,
+      var(--color-mist-end) 0%,
+      #fdf3d6 22%,
+      #fce6a8 55%,
+      var(--color-amber-light) 100%
+    );
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .contact-intro h2 {
+    max-width: 14ch;
+  }
+
+  .contact-intro .lede {
+    margin-top: 16px;
+  }
+
+  .contact-direct {
+    display: grid;
+    gap: 2px;
+    margin-top: 32px;
+    list-style: none;
+  }
+
+  .contact-direct li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--text-body-sm);
+    color: var(--color-text);
+  }
+
+  .contact-direct svg {
+    flex: none;
+    font-size: 1.2rem;
+    color: var(--color-navy);
+  }
+
+  .contact-direct a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--spacing-tap-target);
+    font-weight: 500;
+    color: var(--color-navy);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-card textarea {
+    height: auto;
+    min-height: 150px;
+  }
+
+  .field .opt {
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  .contact-card .form-submit {
+    margin-top: 24px;
+  }
+
+  /* Flat button: no glow, no lift */
+  .contact-card .form-submit,
+  .contact-card .form-submit:hover:not(:disabled),
+  .contact-card .form-submit:active {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .contact-card .form-submit:hover:not(:disabled) {
+    background: var(--color-amber-deep);
+  }
+
+  @media (width <= 900px) {
+    .contact-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+  }
+
+  /* At 320px the label is wider than the card: tighter padding, and wrap if still too wide */
+  @media (width < --theme(--breakpoint-sm)) {
+    .contact-card .form-submit {
+      max-width: 100%;
+      padding-inline: 18px;
+      white-space: normal;
+    }
+  }
+
+  /*
     Home hero (Story 3.1, Sammy). Ported from the prototype site.css:
     the static glow behind the silk, and the tablet and phone frames with an
     empty media frame until product media lands (Story 4.4). Sizes with no
