@@ -3439,3 +3439,33 @@ a.w-card:hover .w-link svg {
     transition: opacity 0.15s linear;
   }
 }
+
+/* ---------- E-S1 Home: core values and How we approach ---------- */
+.home-values,
+.home-process {
+  background: transparent;
+}
+
+.sec-head-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.sec-head-row .sec-head {
+  margin-bottom: 0;
+}
+
+.sec-head-row > .link-arrow {
+  flex: none;
+}
+
+@media (max-width: 640px) {
+  .sec-head-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

@@ -188,6 +188,7 @@ export const homeServices = {
 } as const;
 
 export const homeProcess = {
-  label: "How we work",
-  title: "From your request to launch, in four steps.",
+  title: "How we approach.",
+  lede: "Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve.",
+  link: { href: "/services#process", label: "See how we work" },
 };
