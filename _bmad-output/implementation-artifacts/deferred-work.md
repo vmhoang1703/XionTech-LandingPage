@@ -312,3 +312,18 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a2-app-rename.md`
   summary: After deploy, a browser tab still holding the old Demo page sends products ["PXP", ...] and gets a 400; reloading fixes it.
   evidence: E-A2 review (edge-case hunter); low, only during the deploy window.
+
+## Deferred from: code review of spec-enh-a3-header (2026-10-08)
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: `scripts/ux/surfaces/header.json` still targets `#mega-products`, `#mega-services` and the Products/Services triggers, so `npm run ux:parity -- scripts/ux/surfaces/header.json --strict` checks parts that no longer exist; rewrite it for six plain links and the hamburger (UX-Q1 and UX-Q4 in `docs/ux-quality.md` become moot).
+  evidence: E-A3 review (edge-case, blind, acceptance layers). Optional tool until Demo day (AGENTS.md); outside the E-A3 file list.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: The `--z-index-mega-menu: 55` token in `src/app/globals.css` has no user after E-A3; remove it together with its line in `src/lib/design/contrast.test.ts`.
+  evidence: E-A3 review (all four layers). Low; `globals.css` is edited by parallel tasks today, so a one-line follow-up avoids conflicts.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: The comment at `src/content/products.ts:121-122` says the IoT audience comes from the Products mega menu, which E-A3 removed; reword it when E-A5 touches that file.
+  evidence: E-A3 review (edge-case, acceptance). Comment only; `products.ts` belongs to E-A5.
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
+  summary: Planning docs still describe the old header: `EXPERIENCE.md` (Mega menu; Book a demo first in the mobile menu at 640px and below), AC-NAV-2/AC-NAV-3 in the PRD and `epics.md`, and the example rows in `docs/ux-checks.md`. Amber owns them; update after the decision Q8 and the T11 change.
+  evidence: E-A3 review (blind hunter). Planning docs are Amber's (team roles); the fix edits other specs.

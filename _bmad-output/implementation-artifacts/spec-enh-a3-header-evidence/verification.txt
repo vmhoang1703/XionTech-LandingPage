@@ -1,0 +1,32 @@
+## lint
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+exit 0
+## typecheck
+
+Generating route types...
+✓ Types generated successfully
+## prettier
+All matched files use Prettier code style!
+## test
+ Test Files  80 passed (80)
+      Tests  1159 passed (1159)
+## coverage
+      Tests  1159 passed (1159)
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/components/layout/nav-data.ts (100%)
+src/components/layout/site-nav.tsx (100%)
+-------------
+Total:   6 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 4 changed file(s) with branch coverage >= 80% vs origin/develop.
+## build
+✓ Compiled successfully in 10.8s
+✓ Generating static pages using 19 workers (16/16) in 3.1s
