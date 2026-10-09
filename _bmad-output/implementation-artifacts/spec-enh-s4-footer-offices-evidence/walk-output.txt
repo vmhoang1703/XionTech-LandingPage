@@ -1,0 +1,43 @@
+ridge 1280: height 120 | bottom at footer top true | aria-hidden true | figures on ridge 0
+ridge line: stroke rgb(255, 192, 0) opacity 0.55
+footer columns 1280: 5
+brand: Education technology products and software delivery services for schools and businesses.
+columns: Products | Services | Company | Offices
+Products links: For schools -> /products#sxp, For students -> /products#ai-tutor, For parents -> /products#pxp
+Services links: Product Engineering -> /services#product-engineering, AI-Driven Analytics -> /services#ai-analytics, Staffing Service -> /services#staffing, Low-code Solutions -> /services#low-code, Cloud Computing -> /services#cloud, How we work -> /services#process, All services -> /services
+Company links: News -> /news, About us -> /about, Careers -> /careers
+offices: [Vietnam Delivery Center] 2 icons | (+84) 908 107 552 (tel:+84908107552) || [US Delivery Center] 4 icons | (+1) 469 322 9899 (tel:+14693229899); (+1) 469 439 9345 (https://wa.me/14694399345, _blank, noopener noreferrer, name "WhatsApp (+1) 469 439 9345 (opens in a new tab)"); vinni.tran@newxion.com (mailto:vinni.tran@newxion.com)
+vietnam email shown: false
+bottom bar: © 2026 XionTech · Privacy policy | GET IT DONE
+phone link focus: outline solid 2px | height 24
+phone link hover: rgb(197, 208, 227) -> rgb(255, 255, 255)
+/ end: last content bottom 86 | ridge top 235 | clear true | room 232px | sideways false
+For parents lands: /products#pxp | card top 88 in view true
+For schools lands: /products#sxp | card top 88 in view true
+For students lands: /products#ai-tutor | card top 88 in view true
+How we work lands: #process | h2 top 188 visible true
+/ 1280: last content bottom 86 | ridge top 235 | clear true | room 232px | sideways false
+/about 1280: last content bottom 120 | ridge top 235 | clear true | room 232px | sideways false
+/careers 1280: last content bottom 58 | ridge top 234 | clear true | room 232px | sideways false
+/services 1280: last content bottom 122 | ridge top 234 | clear true | room 232px | sideways false
+/news 1280: last content bottom 122 | ridge top 234 | clear true | room 232px | sideways false
+/products 1280: last content bottom 123 | ridge top 235 | clear true | room 232px | sideways false
+/demo 1280: last content bottom 86 | ridge top 235 | clear true | room 232px | sideways false
+/privacy 1280: last content bottom 122 | ridge top 234 | clear true | room 232px | sideways false
+/no-such-page 1280: last content bottom 78 | ridge top 234 | clear true | room 232px | sideways false
+/ 390: last content bottom -642 | ridge top -513 | clear true | room 176px | sideways false
+/about 390: last content bottom -619 | ridge top -512 | clear true | room 176px | sideways false
+/careers 390: last content bottom -665 | ridge top -513 | clear true | room 176px | sideways false
+/services 390: last content bottom -619 | ridge top -513 | clear true | room 176px | sideways false
+/news 390: last content bottom -619 | ridge top -513 | clear true | room 176px | sideways false
+/products 390: last content bottom -619 | ridge top -513 | clear true | room 176px | sideways false
+/demo 390: last content bottom -642 | ridge top -513 | clear true | room 176px | sideways false
+/privacy 390: last content bottom -616 | ridge top -512 | clear true | room 176px | sideways false
+/no-such-page 390: last content bottom -634 | ridge top -513 | clear true | room 176px | sideways false
+footer columns 900: 2
+ridge 900: height 120 | bottom at footer top true | aria-hidden true | figures on ridge 0
+footer columns 390: 1
+ridge 390: height 72 | bottom at footer top true | aria-hidden true | figures on ridge 0
+/about offices: Two offices, serving the world. 21:27 Plano, Texas, USA 7950 Legacy Drive, Suite 400 Plano, Texas 75024, USA +1 469 322 9899 WhatsApp +1 469 439 9345 vinni.tran@newxion.com 09:27 Ho Chi Minh City, Vie
+/demo offices: Plano, Texas, USA 7950 Legacy Drive, Suite 400 Plano, Texas 75024, USA +1 469 322 9899 Wha || Ho Chi Minh City, Vietnam VIETNAM DELIVERY CENTER Floor 15, B1 Building 279 Nguyen Tri Phu || Vietnam Delivery Center Floor 15, B1 Building 279 Nguyen Tri Phuong Street Dien Hong Ward, || US Delivery Center 7950 Legacy Drive, Suite 400 Plano, Texas 75024, USA (+1) 469 322 9899 
+/ contact: Plano +1 469 322 9899 Ho Chi Minh City +84 908 107 552 

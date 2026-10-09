@@ -30,3 +30,19 @@ Task 4: fix round 1/5 (instant scroll; both rects read in one evaluate)
 Task 4: review — pass — 0 critical, 0 important, 0 minor; 0 of 1 open (re-review after fix round 1)
 Task 4: minor — e2e/a11y.spec.ts takes the last link in main > :last-child; trailing non-link content is not checked
 Task 4: complete (commits cc1156e..17f954d, diff verified)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm test — exit 0 — Test Files 83 passed (83), Tests 1237 passed (1237)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100%; C1 ok: 3 changed file(s) with branch coverage >= 80%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed
+Acceptance: verification — npm run build — exit 0 — compiled successfully
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 30 passed
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/verification.txt — 12033 bytes — sha256 fb4e88026396 — transcript of the six declared commands, all exit 0
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/walk.mjs — 7547 bytes — sha256 ada46e5d8ad2 — the walk that produced walk-output.txt and the screenshots
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/walk-output.txt — 4297 bytes — sha256 906457f717b5 — walk output on the production build: every UX line, nine routes at 1280 and 390
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/footer-1280.png — 136794 bytes — sha256 608efb71a55e — ridge above the footer under the Home contact section
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/footer-1280-full.png — 85689 bytes — sha256 367a7f96c3ff — footer at 1280: five columns, offices with icons
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/footer-390.png — 86716 bytes — sha256 8658e833a49a — footer at 390: one column, 72px ridge
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/careers-end-1280.png — 144825 bytes — sha256 29d39037641c — Careers roles end above the ridge at 1280
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/careers-end-390.png — 60661 bytes — sha256 5149b7665014 — Careers roles end above the ridge at 390
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/observed.md — 2240 bytes — sha256 c0550027b432 — per-surface observations
+Acceptance: manual — walk nine routes at 1280 and 390 plus the footer at 900 on a production build (next start -p 3005, Chrome) — observed: ridge 120/72px, columns 5/2/1, every link target, Vietnam first with icons, no Vietnam email, every page's last content above the ridge, About/Demo/Home contact unchanged

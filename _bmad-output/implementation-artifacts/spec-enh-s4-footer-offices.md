@@ -94,21 +94,21 @@ labels so About, Demo and Home are unchanged.
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Ridge | Load at 1280px | — | Navy ridge with an amber line above the footer, peak right of centre, 120px high, nothing on the peak | Static | CAP-4, ENH-043, ENH-045 | |
-| Ridge | Load at 390px | — | Ridge 72px high, no sideways scroll | Static | CAP-4, `site.css` ≤640 | |
-| Last section | Scroll to the end of `/`, `/about`, `/careers`, `/services` | — | The last content ends above the ridge; room 232–256px (176px on phones) | Static | CAP-4, ENH-073 | |
-| Footer grid | Load at 1280 / 900 / 390px | — | Five columns / two columns / one column | Static | `site.css:456-492` | |
-| Brand column | Load | — | Logo and "Education technology products and software delivery services for schools and businesses." | Static | CAP-1 | |
-| Products links | Activate each | Mouse, keyboard | For schools → `/products#sxp`, For students → `#ai-tutor`, For parents → `#pxp`; each lands on its card | Instant | CAP-1 | |
-| Services links | Activate | Mouse, keyboard | Five services land on their cards; How we work → `#process`; All services → `/services` | Instant | CAP-1 | |
-| Company links | Load | — | News, About us, Careers only | Static | CAP-1, ENH-057, ENH-064 | |
-| Offices | Load | — | "Vietnam Delivery Center" first, then "US Delivery Center"; no city headings | Static | CAP-2, ENH-057 | |
-| Office rows | Load | — | Map pin, phone, WhatsApp, envelope icons beside their rows; phones "(+84) 908 107 552", "(+1) 469 322 9899" | Static | CAP-2, ENH-058 | |
-| Phone links | Hover, focus | Mouse, keyboard | Lighter text on hover; visible focus ring; target at least 24px | Instant | EXPERIENCE.md "Footer", decision T9 | |
-| WhatsApp | Activate | Mouse, keyboard | Opens wa.me in a new tab; name ends "(opens in a new tab)" | Instant | CAP-2, decision A6 | |
-| Vietnam email | Load | — | Not shown | Static | Q7 | |
-| Bottom bar | Load | — | "© 2026 XionTech · Privacy policy" and "GET IT DONE" | Static | CAP-5 | |
-| Other pages | Load `/about`, `/demo`, `/` | — | Office names, phones and order unchanged | Static | Boundaries | |
+| Ridge | Load at 1280px | — | Navy ridge with an amber line above the footer, peak right of centre, 120px high, nothing on the peak | Static | CAP-4, ENH-043, ENH-045 |  ✅ walk (120px, nothing on the peak); `site-footer.test.tsx` |
+| Ridge | Load at 390px | — | Ridge 72px high, no sideways scroll | Static | CAP-4, `site.css` ≤640 |  ✅ walk (72px, no sideways scroll); `a11y.spec.ts` footer ridge |
+| Last section | Scroll to the end of `/`, `/about`, `/careers`, `/services` | — | The last content ends above the ridge; room 232–256px (176px on phones) | Static | CAP-4, ENH-073 |  ✅ walk (nine routes, 232px / 176px); `a11y.spec.ts` footer ridge |
+| Footer grid | Load at 1280 / 900 / 390px | — | Five columns / two columns / one column | Static | `site.css:456-492` |  ✅ walk (5 / 2 / 1) |
+| Brand column | Load | — | Logo and "Education technology products and software delivery services for schools and businesses." | Static | CAP-1 |  ✅ walk; `site-footer.test.tsx` |
+| Products links | Activate each | Mouse, keyboard | For schools → `/products#sxp`, For students → `#ai-tutor`, For parents → `#pxp`; each lands on its card | Instant | CAP-1 |  ✅ walk (cards land at 88px); `site-footer.test.tsx` |
+| Services links | Activate | Mouse, keyboard | Five services land on their cards; How we work → `#process`; All services → `/services` | Instant | CAP-1 |  ✅ walk (How we work heading visible); `site-footer.test.tsx`, `services.test.ts` |
+| Company links | Load | — | News, About us, Careers only | Static | CAP-1, ENH-057, ENH-064 |  ✅ walk; `site-footer.test.tsx` |
+| Offices | Load | — | "Vietnam Delivery Center" first, then "US Delivery Center"; no city headings | Static | CAP-2, ENH-057 |  ✅ walk; `site-footer.test.tsx`, `offices.test.ts` |
+| Office rows | Load | — | Map pin, phone, WhatsApp, envelope icons beside their rows; phones "(+84) 908 107 552", "(+1) 469 322 9899" | Static | CAP-2, ENH-058 |  ✅ walk (icons per row); `site-footer.test.tsx` |
+| Phone links | Hover, focus | Mouse, keyboard | Lighter text on hover; visible focus ring; target at least 24px | Instant | EXPERIENCE.md "Footer", decision T9 |  ✅ walk (2px ring, 24px, white on hover); `a11y.spec.ts` keyboard |
+| WhatsApp | Activate | Mouse, keyboard | Opens wa.me in a new tab; name ends "(opens in a new tab)" | Instant | CAP-2, decision A6 |  ✅ walk; `site-footer.test.tsx` |
+| Vietnam email | Load | — | Not shown | Static | Q7 |  ✅ walk; `site-footer.test.tsx` |
+| Bottom bar | Load | — | "© 2026 XionTech · Privacy policy" and "GET IT DONE" | Static | CAP-5 |  ✅ walk; `layout.test.tsx` |
+| Other pages | Load `/about`, `/demo`, `/` | — | Office names, phones and order unchanged | Static | Boundaries |  ✅ walk; `offices.test.ts`, `demo/page.test.tsx`, `page.test.tsx` |
 
 ## Implementation Notes
 
@@ -128,3 +128,32 @@ labels so About, Demo and Home are unchanged.
 
 **Manual checks (if no CLI):**
 - Walk `/`, `/about`, `/careers`, `/services` and a 404 at 1280px and 390px on a production build (`npx next start -p 3005`, Chrome) and check every UX line.
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-09, after `develop` (856a35e) was merged in.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
+- `npm test` -- exit 0 -- Test Files 83 passed (83), Tests 1237 passed (1237)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100%; C1 ok: 3 changed file(s) with branch coverage >= 80%
+- `npm run test:smoke` -- exit 0 -- 15 passed
+- `npm run build` -- exit 0 -- compiled successfully
+- `npx playwright test --project=a11y` -- exit 0 -- 30 passed
+
+**Observed**
+
+- Every UX line on nine routes at 1280px and 390px and the footer at 900px -- production build on :3005 in Chrome, [observed.md](spec-enh-s4-footer-offices-evidence/observed.md), [walk-output.txt](spec-enh-s4-footer-offices-evidence/walk-output.txt)
+
+**Artifacts**
+
+- [verification.txt](spec-enh-s4-footer-offices-evidence/verification.txt) -- transcript of the six commands
+- [walk.mjs](spec-enh-s4-footer-offices-evidence/walk.mjs) -- the walk that produced the output and screenshots
+- [footer-1280.png](spec-enh-s4-footer-offices-evidence/footer-1280.png), [footer-1280-full.png](spec-enh-s4-footer-offices-evidence/footer-1280-full.png), [footer-390.png](spec-enh-s4-footer-offices-evidence/footer-390.png) -- ridge and footer
+- [careers-end-1280.png](spec-enh-s4-footer-offices-evidence/careers-end-1280.png), [careers-end-390.png](spec-enh-s4-footer-offices-evidence/careers-end-390.png) -- the wrapper page ends above the ridge
+- Byte counts and SHA-256 prefixes are in the ledger `spec-enh-s4-footer-offices-progress.md`.
+
+**Not captured**
+
+- Nothing.
