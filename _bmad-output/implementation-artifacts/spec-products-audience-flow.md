@@ -95,7 +95,7 @@ context:
   - red: `page.test.tsx` -- order `#flow` → `#apps` → navy capture band.
 - [x] `e2e/products.spec.ts` -- smoke: H1 and 4 anchors; a canvas or the fallback is present; scrolling to the Student chapter marks it active; reduced-motion context: no camera tween, all chapters visible.
 
-- [ ] `src/components/products/flow/campus-scene.ts`, `campus-canvas.tsx`, `globals.css` -- rich pass (review decision): overview camera at an angle that zooms toward each place so the whole campus stays readable; soft shadows and a warm key light; trees and benches from primitives; path segments that light toward the active place; per-place details (staff-room windows glow, floating phone at the gate, classroom desks, rooftop vents) and drifting clouds, animated only while running; none of it moves when paused or under reduced motion.
+- [x] `src/components/products/flow/campus-scene.ts`, `campus-canvas.tsx`, `globals.css` -- rich pass (review decision): overview camera at an angle that zooms toward each place so the whole campus stays readable; soft shadows and a warm key light; trees and benches from primitives; path segments that light toward the active place; per-place details (staff-room windows glow, floating phone at the gate, classroom desks, rooftop vents) and drifting clouds, animated only while running; none of it moves when paused or under reduced motion.
   - red: `campus-scene.test.ts` -- every place's camera target keeps the other places inside the view (distance above a floor); the scene has trees, benches, clouds and one detail group per place; `campus-canvas.test.tsx` -- details and clouds do not advance while paused.
 
 **Acceptance Criteria:**

@@ -79,3 +79,15 @@ Acceptance: evidence — spec-products-audience-flow-evidence/flow-1024.png — 
 Acceptance: evidence — spec-products-audience-flow-evidence/flow-390.png — 62239 bytes — sha256 9b2df7a7bc9c — flow-390.png
 Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-no-webgl.png — 119583 bytes — sha256 c4797bb3f78f — flow-1280-no-webgl.png
 Acceptance: verification — npx playwright test e2e/products.spec.ts --project=a11y — exit 0 — 5 passed (16.2s); deep-link and dialog tests now tagged @a11y so they run (matrix DEEP_LINK)
+Task 8: dispatched (model opus, base c27d33b, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t8-report.md)
+Task 8: fix round 1/5 (rooftop and wing cameras from the plaza side, raycast occlusion test, projected z check; spark kept on same place; small details and clouds cast no shadow, shadows off below 640px)
+Task 8: red — npx vitest run src/components/products/flow — scene 12 failed (camera distance 9.49 under floor 14, no trees, details, shadows, path lighting, tick); canvas 6 failed
+Task 8: green — npx vitest run src/components/products src/app/products src/lib/design — 239 passed
+Task 8: review — fail — 0 critical, 1 important (rooftop chapter hides staff room and lit path), 5 minor
+Task 8: minor — campus-scene.ts:154-458 buildCampus ~300 lines in one function
+Task 8: minor — campus-scene.ts:161 navy-soft used as a solid fill (DESIGN.md:367 limits it to gradients)
+Task 8: minor — globals.css:3525-3532 desktop stage made square (unasked; UX Width row to re-measure)
+Task 8: review — pass — re-review of e2c4a39: 0 of 3 findings open; 247 passed
+Task 8: minor — campus-canvas.tsx:176 shadows decided once at load (innerWidth)
+Task 8: minor — campus-scene.ts:271 staff-room side windows face away from the new camera
+Task 8: complete (commits c27d33b..e2c4a39, diff verified)
