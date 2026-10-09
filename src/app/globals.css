@@ -1668,78 +1668,6 @@
     backdrop-filter: blur(14px);
   }
 
-  .svc-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  @media (width >= --theme(--breakpoint-sm)) {
-    .svc-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (width >= --theme(--breakpoint-lg)) {
-    .svc-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .svc {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-height: 210px;
-    padding: var(--spacing-card-padding-sm);
-  }
-
-  .svc .ic {
-    display: grid;
-    place-items: center;
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
-    background: var(--color-mist);
-    color: var(--color-heading);
-    font-size: 1.4rem;
-  }
-
-  .svc h3 {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-  }
-
-  .svc p {
-    color: var(--color-muted);
-    font-size: 0.9rem;
-  }
-
-  .svc.feature {
-    background:
-      linear-gradient(
-        150deg,
-        color-mix(in srgb, var(--color-amber) 22%, transparent),
-        transparent 65%
-      ),
-      var(--glass);
-  }
-
-  .svc.navy {
-    --color-heading: var(--color-white);
-    --color-muted: var(--color-on-navy-muted);
-    border: 0;
-    background: linear-gradient(150deg, var(--color-navy), var(--color-ink));
-  }
-
-  .svc.navy .ic {
-    background: color-mix(in srgb, var(--color-white) 10%, transparent);
-    color: var(--color-amber-tint);
-  }
-
   /* E-A7 Careers (prototype careers.html, site.css "Careers" blocks; ENH-035, ENH-055, ENH-060) */
   /* One light gradient: light blue in the hero, white in the middle, light amber at the end (site.js "pastel") */
   .careers-hero {
@@ -3147,20 +3075,6 @@
       linear-gradient(160deg, var(--color-mist), var(--color-white));
   }
 
-  .surface-navy .step4 .art {
-    background:
-      radial-gradient(
-        60% 80% at 50% 110%,
-        color-mix(in srgb, var(--color-amber) 35%, transparent),
-        transparent 70%
-      ),
-      linear-gradient(
-        160deg,
-        color-mix(in srgb, var(--color-white) 8%, transparent),
-        color-mix(in srgb, var(--color-white) 2%, transparent)
-      );
-  }
-
   .step4 .art .main {
     display: grid;
     place-items: center;
@@ -3229,10 +3143,6 @@
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.08em;
-  }
-
-  .surface-navy .step4 .num {
-    color: var(--color-amber-tint);
   }
 
   .step4 h3 {
@@ -4228,38 +4138,9 @@
     gap: 12px;
   }
 
-  .clock-strip {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 22px;
-  }
-
-  .clock-strip > span {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    color: var(--color-text);
-    font-size: 0.88rem;
-  }
-
-  .clock-strip b {
-    color: var(--color-heading);
-    font-family: var(--font-mono);
-  }
-
-  .svc .tags {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    color: var(--color-muted);
-    margin-top: auto;
-  }
-
   /* Service card anchors (Story 5.2), the 4-D process (Story 5.4), About (Story 6.4) */
-  .svc[id],
+  .svc-card[id],
+  #outcomes,
   #process,
   #values,
   #faq {
@@ -5017,5 +4898,224 @@ main > :last-child {
 @media (max-width: 640px) {
   main > :last-child {
     padding-bottom: 176px;
+  }
+}
+
+/*
+  ---------- E-S2 Services (prototype services.html, site.css 1435-1446, 1480-1486, 1582-1621) ----------
+  Unlayered on purpose, like E-S1: these Services-only rules must beat the shared
+  .page-hero, .sec, .step4 and .flow rules.
+*/
+.svc-flow {
+  background: linear-gradient(
+    180deg,
+    var(--color-mist) 0%,
+    #e6eef9 38%,
+    #dce6f5 72%,
+    #f7f9fd 92%,
+    #fff 100%
+  );
+}
+
+.svc-hero,
+.svc-panel {
+  margin-inline: clamp(10px, 2vw, 28px);
+  border-radius: 28px;
+}
+
+.svc-hero {
+  margin-top: 12px;
+  overflow: hidden;
+  padding-bottom: clamp(56px, 6vw, 88px);
+  background:
+    radial-gradient(42% 60% at 94% 8%, rgb(255 192 0 / 0.34), transparent 70%),
+    radial-gradient(
+      36% 55% at 2% 96%,
+      rgb(255 255 255 / 0.12),
+      transparent 70%
+    ),
+    radial-gradient(
+      30% 45% at 62% 108%,
+      rgb(255 216 74 / 0.22),
+      transparent 70%
+    ),
+    linear-gradient(
+      160deg,
+      var(--color-ink),
+      var(--color-navy) 62%,
+      var(--color-navy-glow)
+    );
+}
+
+.svc-hero .hl {
+  color: var(--color-amber-tint);
+}
+
+.svc-hero .hl::after {
+  content: none;
+}
+
+.svc-panel {
+  margin-top: 28px;
+  padding-top: clamp(64px, 7vw, 96px);
+  overflow-x: clip;
+  background:
+    radial-gradient(
+      38% 34% at 98% 30%,
+      rgb(255 216 74 / 0.32),
+      transparent 70%
+    ),
+    radial-gradient(34% 30% at 0% 78%, rgb(255 255 255 / 0.8), transparent 70%),
+    linear-gradient(180deg, #dce6f5, #e8eef8 55%, #dce6f5);
+}
+
+.svc-split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.svc-stick {
+  position: sticky;
+  top: calc(var(--spacing-header-height) + 48px);
+  margin-bottom: 0;
+}
+
+.svc-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border: 1px solid rgb(22 54 99 / 0.16);
+  border-radius: 20px;
+  background: var(--color-white);
+}
+
+.svc-card-h {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed rgb(22 54 99 / 0.18);
+}
+
+.svc-card-h svg {
+  flex: 0 0 auto;
+  width: 1.7rem;
+  height: 1.7rem;
+  color: var(--color-amber-text);
+}
+
+.svc-card h3 {
+  margin: 0;
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.svc-card p {
+  margin: 20px 0 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.svc-card .svc-card-tags {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 0.86rem;
+}
+
+.svc-card p:not(.svc-card-tags) {
+  margin-bottom: 20px;
+}
+
+.svc-outcomes {
+  padding-top: clamp(112px, 10vw, 152px);
+}
+
+.outcomes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  list-style: none;
+}
+
+.outcome {
+  padding: 28px 28px 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: rgb(255 255 255 / 0.75);
+}
+
+.oc-num {
+  display: block;
+  color: var(--color-heading);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.outcome h3 {
+  margin: 26px 0 10px;
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.outcome p {
+  max-width: 52ch;
+  color: var(--color-muted);
+}
+
+/* The 4-D process band (prototype .d4) takes the page text colour */
+.d4 {
+  color: var(--color-text);
+}
+
+/* The 4-D process on the light background: white step cards and white dots */
+#process .step4,
+#process .flow .node .dot {
+  background: var(--color-white);
+}
+
+#process .flow .node.end .dot {
+  background: linear-gradient(
+    135deg,
+    var(--color-amber-light),
+    var(--color-amber)
+  );
+}
+
+@media (width <= 980px) {
+  .svc-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .svc-stick {
+    position: static;
+  }
+}
+
+@media (width <= 760px) {
+  .outcomes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .svc-cards {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

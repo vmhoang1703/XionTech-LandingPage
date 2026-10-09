@@ -449,9 +449,87 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
       }) => {
         await page.setViewportSize(viewport);
         const href = await firstLink(page, listPath, prefix);
+        // Skipped when no story or role link can be read from the list (for
+        // example none is published in Sanity): there is no page to measure.
         test.skip(href === null, `${listPath} has no ${prefix} link to open`);
         await expectClearsRidge(page, href ?? listPath);
       });
     }
   }
+});
+
+test.describe("services layout", { tag: "@a11y" }, () => {
+  const box = (page: Page, selector: string, index = 0) =>
+    page
+      .locator(selector)
+      .nth(index)
+      .evaluate((el) => {
+        const { top, bottom } = el.getBoundingClientRect();
+        return { top, bottom };
+      });
+
+  test("sticky heading at 1280, stacked at 980, one column at 640, anchor clears the header", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/services");
+    await page
+      .locator(".svc-card")
+      .nth(5)
+      .evaluate((el) => el.scrollIntoView({ behavior: "instant" }));
+    const stick = await box(page, ".svc-stick");
+    const bar = await box(page, "header");
+    expect(stick.top, "heading stays below the header").toBeGreaterThanOrEqual(
+      bar.bottom,
+    );
+    expect(stick.bottom).toBeLessThanOrEqual(800);
+
+    await page.setViewportSize({ width: 980, height: 800 });
+    await page.goto("/services");
+    const position = await page
+      .locator(".svc-stick")
+      .evaluate((el) => getComputedStyle(el).position);
+    expect(position).toBe("static");
+    expect((await box(page, ".svc-stick")).bottom).toBeLessThanOrEqual(
+      (await box(page, ".svc-card")).top,
+    );
+
+    await page.setViewportSize({ width: 640, height: 800 });
+    await page.goto("/services");
+    expect((await box(page, ".svc-card", 1)).top).toBeGreaterThan(
+      (await box(page, ".svc-card", 0)).top,
+    );
+
+    await page.setViewportSize({ width: 1280, height: 800 });
+    for (const [hash, heading] of [
+      ["cloud", "#cloud h3"],
+      ["outcomes", "#outcomes h2"],
+    ]) {
+      // Start each anchor from the top of a fresh load, so the scroll gate
+      // below cannot pass on the previous anchor's position.
+      await page.goto("/services");
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+      await page.goto(`/services#${hash}`);
+      await expect
+        .poll(() => page.evaluate(() => window.scrollY))
+        .toBeGreaterThan(0);
+      // Settled once three readings in a row match (smooth scrolling).
+      const readings: number[] = [];
+      await expect
+        .poll(async () => {
+          readings.push(await page.evaluate(() => window.scrollY));
+          const lastThree = readings.slice(-3);
+          return lastThree.length === 3 && new Set(lastThree).size === 1;
+        })
+        .toBe(true);
+      const target = await box(page, heading);
+      const header = await box(page, "header");
+      expect(target.top, `#${hash} clears the header`).toBeGreaterThanOrEqual(
+        header.bottom,
+      );
+      expect(target.bottom, `#${hash} is fully visible`).toBeLessThanOrEqual(
+        await page.evaluate(() => window.innerHeight),
+      );
+    }
+  });
 });

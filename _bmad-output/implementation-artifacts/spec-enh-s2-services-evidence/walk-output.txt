@@ -1,0 +1,21 @@
+title: Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech
+sections: Software teams that get IT done. > Eight services, one team. > outcomes > process
+hero: radius 28px | inset left 26 right 26 | bg radial-gradient(42% 60% at 94% 8%, rgba(255, 192, 0, 0.34), … | aurora 0 | crumbs 0
+H1: Software teams that get IT done. | hl get IT done
+lede: Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones.
+buttons: Start a project -> /demo#project
+removed: clocks 0 | stats 0 | capture 0 | 4-D button 0
+panel gap: 28px | panel radius 28px | panel bg radial-gradient(38% 34% at 98% 30%, rgba(255, 216,…
+cards: 8 | classes svc-card | product-engineering,ai-analytics,co-creation,staffing,custom-apps,low-code,ai-solutions,cloud
+card parts: head: DIV.svc-card-h (1 icon + Product Engineering) border-bottom dashed | bg rgb(255, 255, 255)
+cards per row 1280: 2
+sticky: position sticky top 120 | heading visible true
+outcomes: What can we help you achieve? | 01Build a new digital productMove from d / 02Extend your teamAdd specialised techno / 03Modernise an existing platformImprove  / 04Apply AI where it creates valueUse AI, | cols 2
+process: label 0 | h2 "Our 4-D process: from your request to launch." | bg rgba(0, 0, 0, 0) | h2 colour rgb(22, 54, 99) | step card bg rgb(255, 255, 255) | revealed on
+sideways 1280: false
+layout 980: stick static above cards true | cards per row 2 | outcomes cols 2 | sideways false
+layout 640: stick static above cards true | cards per row 1 | outcomes cols 1 | sideways false
+layout 390: stick static above cards true | cards per row 1 | outcomes cols 1 | sideways false
+#cloud lands: heading 118-142 under header 72 visible true
+#process lands: heading 152-247 under header 72 visible true
+Start a project: /demo#project | selected tab "Outsourcing project"

@@ -12,31 +12,9 @@ describe("serviceIcons", () => {
     }
   });
 
-  it("has product-engineering with feature variant", () => {
-    expect(serviceIcons["product-engineering"].variant).toBe("feature");
-  });
-
-  it("has cloud with feature variant", () => {
-    expect(serviceIcons.cloud.variant).toBe("feature");
-  });
-
-  it("has ai-solutions with navy variant", () => {
-    expect(serviceIcons["ai-solutions"].variant).toBe("navy");
-  });
-
-  it("has no variant for the other five services", () => {
-    const noVariantIds = [
-      "ai-analytics",
-      "co-creation",
-      "staffing",
-      "custom-apps",
-      "low-code",
-    ];
-
-    for (const id of noVariantIds) {
-      expect(
-        serviceIcons[id as keyof typeof serviceIcons].variant,
-      ).toBeUndefined();
+  it("carries only an icon per service, no card variant", () => {
+    for (const entry of Object.values(serviceIcons)) {
+      expect(Object.keys(entry)).toEqual(["icon"]);
     }
   });
 });

@@ -1380,3 +1380,27 @@ Template:
   - The first footer data re-typed the phone links and showed "WhatsApp" as visible text.
   - A lookup helper left an untested throw, which would have failed the coverage gate.
   - The first page-end test measured only the last link on two pages. The review widened it to the lowest visible content on six pages, including a news story and a job page that had never been checked.
+
+## 2026-10-09 — E-S2 Services matches the prototype (ENH-048, ENH-061, ENH-065, ENH-069 to ENH-072, ENH-087)
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` one-shot route
+- **Prompt (short):** "Continue; when done, create the PR and merge it yourself."
+- **What the AI did:** Took the one-shot route (page sections and static content only) and built the page with one implementer subagent:
+  - a rounded navy hero panel;
+  - a light blue Eight services panel with a sticky heading beside plain cards;
+  - "What can we help you achieve?";
+  - the 4-D process on light.
+
+  Then it ran the full five-layer review, two fix rounds each reviewed again, and a walk on a production build.
+
+- **Decision / result:** The clocks, stats, second button and email band are gone, as in the prototype. Every card id and `#process` are kept for the footer and header links. Checks:
+  - 1234 unit tests;
+  - diff coverage 100%;
+  - 15 smoke tests;
+  - the build;
+  - 39 accessibility browser tests, including a new Services layout test.
+- **AI got it wrong?** Yes:
+  - The first page left `#outcomes` out of the anchor offset list.
+  - The first browser test could pass before the smooth scroll started, and on its second anchor it began already scrolled.
+  - A test comment claimed a skip happens "only" when there is no content.
+  - Our verification run also collided with the implementer's own Playwright build ("Another next build process is already running"), so it was re-run on its own.
