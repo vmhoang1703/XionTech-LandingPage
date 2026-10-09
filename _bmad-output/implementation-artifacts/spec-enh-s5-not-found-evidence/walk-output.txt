@@ -1,0 +1,13 @@
+status: 404
+title: Page not found | XionTech
+robots: noindex, noindex
+H1: "You’ve wandered off the trail." | hl 0 | label 0
+lede: The page you were looking for isn’t here. Follow the trail back home, or pick a path below.
+buttons: Go to Home -> / (primary), Products -> /products (glass), Services -> /services (glass), News -> /news (glass)
+focus ring: solid 2px
+hero art: 0
+map 1280: aria-hidden true | beside copy true | width 513 | You are here 834-936 size 16px; Home 1110-1158 size 16px | X at 1042,211 | trail anim trail-walk | ring anim here-pulse ring stroke-opacity 0.0183954 | sideways false
+map 860: aria-hidden true | beside copy false | width 420 | You are here 158-241 size 16px; Home 383-423 size 16px | X at 328,436 | trail anim trail-walk | ring anim here-pulse ring stroke-opacity 0.0413439 | sideways false
+map 390: aria-hidden true | beside copy false | width 358 | You are here 94-200 size 24px; Home 286-337 size 24px | X at 239,549 | trail anim trail-walk | ring anim here-pulse ring stroke-opacity 0.0453931 | sideways false
+map 1280 reduced: aria-hidden true | beside copy true | width 513 | You are here 834-936 size 16px; Home 1110-1158 size 16px | X at 1042,211 | trail anim none | ring anim none ring stroke-opacity 0 | sideways false
+Go to Home: /

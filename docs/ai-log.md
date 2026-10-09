@@ -1429,3 +1429,21 @@ Template:
   - Three new section ids were missing from the anchor offset rule.
   - The first Safari-marker fix (`font-size: 0`) still left a flex gap.
   - Two verification runs collided with the implementer's own build or held port, and were re-run cleanly.
+
+## 2026-10-09 — E-S5 the 404 page is a lost trail (ENH-043, ENH-052)
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` one-shot route
+- **Prompt (short):** "Continue; when done, create the PR and merge it yourself."
+- **What the AI did:**
+  - Built the 404 page test-first: "You’ve wandered off the trail.", the prototype lede, Go to Home plus Products, Services and News, and a decorative trail map from "You are here" to the X at "Home".
+  - Ran the full five-layer review and a walk at four widths, including reduced motion.
+  - With this page, ENH-043 (footer ridge, Summit form state, 404 trail) is fully built and marked Built.
+- **Decision / result:** The ring fades `stroke-opacity`, not `opacity`, because the project's no-JS test rejects `opacity: 0` hiding rules; it looks the same for a stroke-only ring. Checks:
+  - 1245 unit tests;
+  - diff coverage 100%;
+  - 15 smoke tests;
+  - the build;
+  - 41 accessibility browser tests.
+- **AI got it wrong?** Yes:
+  - The first port left the static "here" ring visible under reduced motion; the prototype hides it.
+  - The job page's own 404 smoke test still expected the old copy, which the similar-check caught before the PR.

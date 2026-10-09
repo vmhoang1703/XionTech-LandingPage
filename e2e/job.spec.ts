@@ -8,7 +8,7 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    expect(html).toContain("that page");
+    expect(html).toContain("You’ve wandered off the trail.");
   },
 );
 
