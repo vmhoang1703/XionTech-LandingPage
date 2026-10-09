@@ -15,22 +15,6 @@ export const productsMeta = {
   description: `${parentHub.shortName} for parents, ${staffHub.shortName} for staff, teachers and leaders, and ${iot.fullName} for campuses. Connected school apps from XionTech.`,
 };
 
-// CAP-1. Diagram cards in reading order: top row left to right, then the
-// bottom row (prototype order).
-export const productsHero = {
-  titleLines: ["Built apart.", "Better", "together."],
-  lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
-  diagramLabel: "The four apps share one platform",
-  hub: "X",
-  diagram: [
-    { app: parentHub, eyebrow: "Parent experience", corner: "tl" },
-    { app: aiTutor, eyebrow: "AI tutoring", corner: "tr" },
-    { app: staffHub, eyebrow: "Staff experience", corner: "bl" },
-    { app: iot, eyebrow: "Connected campus", corner: "br" },
-  ],
-  motion: { pause: "Pause motion", play: "Play motion" },
-} as const;
-
 // CAP-2.
 export const productsShowcase = {
   heading: "What we build.",
@@ -128,3 +112,43 @@ export const productDetails: Record<AppId, ProductDetail> = {
     ],
   },
 };
+
+export type FlowPlace = "gate" | "staff-room" | "classroom" | "rooftop";
+
+// The audience flow: one chapter per person in a school, in reading order.
+// `place` is where the camera goes on the 3D campus. Names, "Made for"
+// lines, taglines and step titles are the app and feature copy above.
+const chapter = (
+  id: "parent" | "staff" | "student" | "campus",
+  audience: string,
+  app: AppId,
+  place: FlowPlace,
+) => {
+  const { madeFor, features } = productDetails[app];
+  return {
+    id,
+    audience,
+    app: appById(app),
+    madeFor,
+    tagline: appById(app).tagline,
+    place,
+    steps: features.map(({ id: stepId, title }) => ({
+      id: stepId,
+      title,
+      description: FEATURE_PLACEHOLDER,
+    })),
+  };
+};
+
+export const audienceFlow = {
+  intro: {
+    title: "Built apart. Better together.",
+    lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
+  },
+  chapters: [
+    chapter("parent", "Parent", "parent-hub", "gate"),
+    chapter("staff", "Teacher and staff", "staff-hub", "staff-room"),
+    chapter("student", "Student", "ai-tutor", "classroom"),
+    chapter("campus", "Campus", "iot", "rooftop"),
+  ],
+} as const;
