@@ -393,16 +393,20 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
         await page.setViewportSize(viewport);
         await page.goto(path);
         await page.evaluate(() =>
-          window.scrollTo(0, document.body.scrollHeight),
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "instant",
+          }),
         );
         const last = page.locator("main > :last-child a:visible").last();
         await expect(last, `${path} ends with a link`).toBeVisible();
-        const lastBottom = await last.evaluate(
-          (el) => el.getBoundingClientRect().bottom,
-        );
-        const ridgeTop = await page
-          .locator("[data-ridge]")
-          .evaluate((el) => el.getBoundingClientRect().top);
+        // One evaluate: both rects come from the same moment.
+        const { lastBottom, ridgeTop } = await last.evaluate((el) => ({
+          lastBottom: el.getBoundingClientRect().bottom,
+          ridgeTop: (
+            document.querySelector("[data-ridge]") as HTMLElement
+          ).getBoundingClientRect().top,
+        }));
         expect(
           lastBottom,
           `${path}: last link ends above the ridge`,
