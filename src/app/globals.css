@@ -5410,3 +5410,122 @@ main > :last-child {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* E-S5 404: the lost-trail map (prototype site.css 1265-1288, ENH-043) */
+.trail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+
+.trail-map {
+  position: relative;
+  margin: 0;
+}
+
+.trail-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  mask-image: radial-gradient(
+    ellipse 95% 95% at 52% 45%,
+    #000 70%,
+    transparent 100%
+  );
+}
+
+.tm-range {
+  fill: rgb(255 255 255 / 0.05);
+}
+
+.tm-ridge {
+  fill: none;
+  stroke: rgb(170 195 235 / 0.55);
+  stroke-width: 2;
+}
+
+.tm-contour {
+  fill: none;
+  stroke: rgb(170 195 235 / 0.18);
+  stroke-width: 1.5;
+}
+
+.tm-trail {
+  fill: none;
+  stroke: var(--color-amber);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 2 10;
+  animation: trail-walk 2.4s linear infinite;
+}
+
+.tm-here {
+  fill: var(--color-amber);
+}
+
+.tm-here-ring {
+  fill: none;
+  stroke: var(--color-amber);
+  stroke-width: 2;
+  transform-origin: 88px 318px;
+  animation: here-pulse 2s var(--ease-brand) infinite;
+}
+
+.tm-label {
+  font-family: var(--font-body);
+  font-size: 16px;
+  fill: var(--color-on-navy-text);
+}
+
+.tm-x {
+  position: absolute;
+  left: 68.75%;
+  top: 20.5%;
+  width: 13%;
+  height: auto;
+  transform: translate(-50%, -100%);
+}
+
+@keyframes trail-walk {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+@keyframes here-pulse {
+  /* stroke-opacity: the ring is a stroke only; it is decoration, not content */
+  from {
+    transform: scale(1);
+    stroke-opacity: 0.8;
+  }
+
+  to {
+    transform: scale(3);
+    stroke-opacity: 0;
+  }
+}
+
+@media (width <= 860px) {
+  .trail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .trail-map {
+    max-width: 420px;
+  }
+}
+
+@media (width <= 600px) {
+  .tm-label {
+    font-size: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tm-trail,
+  .tm-here-ring {
+    animation: none;
+  }
+}
