@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
+import { servicesOutcomes } from "@/content/services";
 import ServicesPage, { metadata } from "./page";
 
 vi.mock("next/navigation", () => ({
@@ -153,6 +154,14 @@ describe("ServicesPage", () => {
     const items = Array.from(
       section?.querySelectorAll("ol.outcomes > li") ?? [],
     );
+    expect(within(section as HTMLElement).getByRole("list")).toBe(
+      section?.querySelector("ol.outcomes"),
+    );
+    for (const num of Array.from(section?.querySelectorAll(".oc-num") ?? [])) {
+      expect(num.getAttribute("aria-hidden")).toBe("true");
+    }
+    const ids = servicesOutcomes.items.map((item) => item.id);
+    expect(new Set(ids).size).toBe(ids.length);
     expect(items.map((li) => li.querySelector(".oc-num")?.textContent)).toEqual(
       ["01", "02", "03", "04"],
     );

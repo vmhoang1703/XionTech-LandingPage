@@ -476,7 +476,10 @@ test.describe("services layout", { tag: "@a11y" }, () => {
       .nth(5)
       .evaluate((el) => el.scrollIntoView({ behavior: "instant" }));
     const stick = await box(page, ".svc-stick");
-    expect(stick.top, "heading stays in view").toBeGreaterThanOrEqual(0);
+    const bar = await box(page, "header");
+    expect(stick.top, "heading stays below the header").toBeGreaterThanOrEqual(
+      bar.bottom,
+    );
     expect(stick.bottom).toBeLessThanOrEqual(800);
 
     await page.setViewportSize({ width: 980, height: 800 });
@@ -496,18 +499,31 @@ test.describe("services layout", { tag: "@a11y" }, () => {
     );
 
     await page.setViewportSize({ width: 1280, height: 800 });
-    await page.goto("/services#cloud");
-    let last = -1;
-    await expect
-      .poll(async () => {
-        const y = await page.evaluate(() => window.scrollY);
-        const settled = y === last;
-        last = y;
-        return settled;
-      })
-      .toBe(true);
-    const heading = await box(page, "#cloud h3");
-    const header = await box(page, "header");
-    expect(heading.top).toBeGreaterThanOrEqual(header.bottom);
+    for (const [hash, heading] of [
+      ["cloud", "#cloud h3"],
+      ["outcomes", "#outcomes h2"],
+    ]) {
+      await page.goto(`/services#${hash}`);
+      await expect
+        .poll(() => page.evaluate(() => window.scrollY))
+        .toBeGreaterThan(0);
+      let last = -1;
+      await expect
+        .poll(async () => {
+          const y = await page.evaluate(() => window.scrollY);
+          const settled = y === last;
+          last = y;
+          return settled;
+        })
+        .toBe(true);
+      const target = await box(page, heading);
+      const header = await box(page, "header");
+      expect(target.top, `#${hash} clears the header`).toBeGreaterThanOrEqual(
+        header.bottom,
+      );
+      expect(target.bottom, `#${hash} is fully visible`).toBeLessThanOrEqual(
+        await page.evaluate(() => window.innerHeight),
+      );
+    }
   });
 });

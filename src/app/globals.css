@@ -5079,7 +5079,7 @@ main > :last-child {
   color: var(--color-muted);
 }
 
-/* The 4-D process keeps the light text tokens (prototype .d4) */
+/* The 4-D process band (prototype .d4) takes the page text colour */
 .d4 {
   color: var(--color-text);
 }
