@@ -4,7 +4,7 @@ import { useScroll } from "motion/react";
 import { renderToString } from "react-dom/server";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { audienceFlow, FEATURE_PLACEHOLDER } from "@/content/products";
-import { undefinedClasses } from "@/test-utils/css-classes";
+import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import { AudienceFlow } from "./audience-flow";
 import { chapterAt } from "./campus-scene";
 import { activeChapter } from "./flow-progress";
@@ -133,6 +133,29 @@ describe("AudienceFlow", () => {
 
     act(() => scrollYProgress.set(1));
     expect(states()).toEqual(["false", "false", "false", "true"]);
+  });
+});
+
+// The declarations of the rule whose selector list holds `selector`.
+function ruleFor(selector: string) {
+  const css = globalsCss().replaceAll(/\/\*[\s\S]*?\*\//g, "");
+  const rule = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].find(([, list]) =>
+    list.split(",").some((s) => s.replaceAll(/\s+/g, " ").trim() === selector),
+  );
+  return rule?.[2].replaceAll(/\s+/g, " ").trim();
+}
+
+describe("chapters as a plain list", () => {
+  it("dims the inactive chapters only once JavaScript marks them", () => {
+    expect(ruleFor('.flow-chapter[data-active="false"]')).toBe("opacity: 0.8;");
+  });
+
+  it("stops dimming while the visitor has paused the motion", () => {
+    expect(
+      ruleFor(
+        '.flow-body:has(.flow-canvas[data-paused="true"]) .flow-chapter[data-active="false"]',
+      ),
+    ).toBe("opacity: 1;");
   });
 });
 

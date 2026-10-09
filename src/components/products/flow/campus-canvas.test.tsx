@@ -121,10 +121,18 @@ function lastDraw() {
   return { scene, camera, beacon };
 }
 
+// Resolves once the scene is ready and its first effect has run: a still
+// frame drawn (paused) or the render loop started (playing). The button
+// commits before those passive effects flush.
 async function renderReady(progress = 0) {
   const view = render(<CampusCanvas progress={progress} />);
   intersect(true);
   await screen.findByRole("button");
+  await waitFor(() => {
+    const drawn = renderer.render.mock.calls.length;
+    const looping = vi.mocked(requestAnimationFrame).mock.calls.length;
+    expect(drawn + looping).toBeGreaterThan(0);
+  });
   return view;
 }
 
@@ -190,6 +198,32 @@ describe("CampusCanvas", () => {
     expect(camera.position.equals(classroom.position)).toBe(true);
     expect(beacon.position.x).toBe(classroom.lookAt.x);
     expect(beacon.position.z).toBe(classroom.lookAt.z);
+  });
+
+  it("marks the host paused only while the ready scene is paused", async () => {
+    const { container } = render(<CampusCanvas progress={0} />);
+    const host = container.querySelector(".flow-canvas");
+    expect(host?.hasAttribute("data-paused")).toBe(false);
+
+    intersect(true);
+    const button = await screen.findByRole("button", { name: "Pause motion" });
+    expect(host?.hasAttribute("data-paused")).toBe(false);
+
+    fireEvent.click(button);
+    expect(host?.getAttribute("data-paused")).toBe("true");
+    fireEvent.click(button);
+    expect(host?.hasAttribute("data-paused")).toBe(false);
+  });
+
+  it("marks the host paused when the scene loads paused, not before", async () => {
+    localStorage.setItem("xt-motion", "off");
+    const { container } = render(<CampusCanvas progress={0} />);
+    const host = container.querySelector(".flow-canvas");
+    expect(host?.hasAttribute("data-paused")).toBe(false);
+
+    intersect(true);
+    await screen.findByRole("button", { name: "Play motion" });
+    expect(host?.getAttribute("data-paused")).toBe("true");
   });
 
   it("the toggle saves the preference and stops or starts the loop", async () => {

@@ -248,7 +248,11 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
   const { pause, play } = audienceFlow.motion;
 
   return (
-    <div ref={hostRef} className="flow-canvas">
+    <div
+      ref={hostRef}
+      className="flow-canvas"
+      data-paused={ready && paused ? "true" : undefined}
+    >
       <canvas
         ref={canvasRef}
         aria-hidden="true"

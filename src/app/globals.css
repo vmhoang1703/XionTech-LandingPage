@@ -3766,6 +3766,12 @@
     opacity: 0.8;
   }
 
+  /* Paused by the visitor: the chapters read as a plain list. */
+  .flow-body:has(.flow-canvas[data-paused="true"])
+    .flow-chapter[data-active="false"] {
+    opacity: 1;
+  }
+
   .flow-chapter h2 {
     margin: 0;
   }
