@@ -92,7 +92,7 @@ context:
   - red: `audience-flow.test.tsx` -- one H1; 4 chapters in order, each linking to its card anchor; all steps visible without JS; only defined classes.
 - [x] `src/app/products/page.tsx`, `page.test.tsx`, remove the hero files, update `globals.css` and `contrast.test.ts` -- new order; eco CSS gone; flow CSS added.
   - red: `page.test.tsx` -- order `#flow` → `#apps` → navy capture band.
-- [ ] `e2e/products.spec.ts` -- smoke: H1 and 4 anchors; a canvas or the fallback is present; scrolling to the Student chapter marks it active; reduced-motion context: no camera tween, all chapters visible.
+- [x] `e2e/products.spec.ts` -- smoke: H1 and 4 anchors; a canvas or the fallback is present; scrolling to the Student chapter marks it active; reduced-motion context: no camera tween, all chapters visible.
 
 **Acceptance Criteria:**
 - Given a 1280px viewport, when the visitor scrolls from the intro to the Campus chapter, then the active chapter, the camera place and the sky change in that order, with no layout shift (CLS < 0.1).

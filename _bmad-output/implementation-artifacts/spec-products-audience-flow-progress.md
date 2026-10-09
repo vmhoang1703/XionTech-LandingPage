@@ -47,3 +47,12 @@ Task 6: review — pass — 0 critical, 0 important, 2 minor
 Task 6: minor — src/app/globals.css:3571 .pshow:target navy border is the only card restyle, untested
 Task 6: minor — src/app/products/page.test.tsx:70 toggle test only checks the class exists; old "no button link or breadcrumb" assert dropped; SVG fallback letterboxed on tall desktop stage
 Task 6: complete (commits b8be119..e48e90f, diff verified)
+Task 7: dispatched (model sonnet, base ec26070, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t7-report.md)
+Task 7: red — npx playwright test --project=a11y — /products keyboard 24px target failed: .flow-link 20px tall (new flow e2e also fails with reduced motion switched off)
+Task 7: fix round 1/5 (.flow-link inline-flex min-height 24px)
+Task 7: green — npx playwright test --project=a11y — 43 passed, 1 failed (/ .w-more-trigger contrast, untouched home page, passes alone 11/11); npm run test:smoke 15 passed
+Task 7: review — pass — 0 critical, 0 important, 3 minor (warning resolved: browser tests tagged @a11y because the smoke project has no browser)
+Task 7: minor — e2e/products.spec.ts:83-91,121 rAF counter is page-wide and has no positive control
+Task 7: minor — e2e/products.spec.ts:112-117 fixed waitForTimeout sleeps (1.5s)
+Task 7: minor — e2e/products.spec.ts:101-107 reduced-motion test requires WebGL; keyboard dialog and #ai-tutor tests are untagged (pre-existing)
+Task 7: complete (commits ec26070..9402474, diff verified)
