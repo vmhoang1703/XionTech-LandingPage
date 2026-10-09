@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import { aboutValues } from "@/content/values";
+import { aboutValues, homeValuesHeading } from "@/content/values";
 import { HomeValues } from "./home-values";
 
 describe("HomeValues", () => {
@@ -44,5 +44,12 @@ describe("HomeValues", () => {
     const { container } = render(<HomeValues />);
 
     expect(undefinedClasses(container)).toEqual([]);
+  });
+
+  it("never writes the brand as XionTechs", () => {
+    const { container } = render(<HomeValues />);
+
+    expect(container.textContent).not.toContain("XionTechs");
+    expect(JSON.stringify(homeValuesHeading)).not.toContain("XionTechs");
   });
 });

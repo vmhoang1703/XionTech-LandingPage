@@ -1,7 +1,7 @@
 import { aboutValues, homeValuesHeading } from "@/content/values";
 
-// Home core values: same six values as About, with the Home heading. No
-// id="values" here; that anchor belongs to About.
+// Home core values, with the Home heading. No id="values": the About page no
+// longer has that anchor either.
 export function HomeValues() {
   return (
     <section aria-labelledby="home-values-h" className="sec home-values">

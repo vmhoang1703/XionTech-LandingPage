@@ -584,4 +584,62 @@ test.describe("about layout", { tag: "@a11y" }, () => {
       .evaluate((el) => el.getBoundingClientRect().bottom);
     expect(bottom, "FAQ heading is fully visible").toBeLessThanOrEqual(800);
   });
+
+  test("offices sit at opposite edges at 1280 and stack at 390; FAQ rows open by keyboard", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/about");
+    const offices = await page.evaluate(() => {
+      const grid = document.querySelector("#offices .offices");
+      const wrap = document.querySelector("#offices .wrap");
+      const cards = [...document.querySelectorAll("#offices .office-card")];
+      if (!grid || !wrap || cards.length !== 2) throw new Error("no offices");
+      const inner = (el: Element) => {
+        const { left, right } = el.getBoundingClientRect();
+        return { left, right };
+      };
+      const style = getComputedStyle(wrap);
+      const box = inner(wrap);
+      return {
+        columns: getComputedStyle(grid).gridTemplateColumns.split(" ").length,
+        wrapLeft: box.left + parseFloat(style.paddingLeft),
+        wrapRight: box.right - parseFloat(style.paddingRight),
+        first: inner(cards[0]),
+        second: inner(cards[1]),
+        firstName: cards[0].querySelector("h3")?.textContent,
+      };
+    });
+    expect(offices.columns).toBe(2);
+    expect(offices.firstName).toBe("Plano, Texas, USA");
+    expect(offices.first.left).toBeCloseTo(offices.wrapLeft, 0);
+    expect(offices.second.right).toBeCloseTo(offices.wrapRight, 0);
+
+    const markerAfter = (index: number) =>
+      page
+        .locator(".faq summary")
+        .nth(index)
+        .evaluate((el) => getComputedStyle(el, "::after").content);
+    expect(await markerAfter(0)).toBe('"+"');
+    await page.locator(".faq summary").nth(0).focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".faq details").nth(0)).toHaveAttribute(
+      "open",
+      "",
+    );
+    expect(await markerAfter(0)).toBe('"−"');
+    await page.locator(".faq summary").nth(1).focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".faq details[open]")).toHaveCount(2);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/about");
+    expect(
+      await page
+        .locator("#offices .offices")
+        .evaluate(
+          (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
+        ),
+    ).toBe(1);
+  });
 });

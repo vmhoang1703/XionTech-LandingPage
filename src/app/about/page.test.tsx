@@ -75,7 +75,7 @@ describe("AboutPage", () => {
       "story",
       "faq",
       "offices",
-      "",
+      "book",
     ]);
     expect(sections[1].className).toBe("sec surface-paper");
     expect(sections[2].className).toBe("sec surface-paper");
@@ -264,9 +264,9 @@ describe("AboutPage", () => {
     );
   });
 
-  it("#faq has a scroll-margin-top that uses --spacing-anchor-offset, #values is gone", () => {
+  it("the About anchors have a scroll-margin-top that uses --spacing-anchor-offset, #values is gone", () => {
     expect(globalsCss()).toMatch(
-      /#faq\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+      /#story,\s*#faq,\s*#offices,\s*#book\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
     expect(globalsCss()).not.toMatch(/#values\s*[,{]/);
   });

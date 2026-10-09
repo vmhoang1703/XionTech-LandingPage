@@ -4142,7 +4142,10 @@
   .svc-card[id],
   #outcomes,
   #process,
-  #faq {
+  #story,
+  #faq,
+  #offices,
+  #book {
     scroll-margin-top: calc(
       var(--spacing-anchor-offset) - var(--spacing-header-height)
     );
@@ -4232,6 +4235,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 96px;
+    align-items: start;
   }
 
   .faq details {
@@ -4251,6 +4255,11 @@
     font-weight: 400;
     line-height: 1.4;
     color: var(--color-heading);
+  }
+
+  /* Safari's disclosure triangle: the +/- below replaces it */
+  .faq summary::-webkit-details-marker {
+    font-size: 0;
   }
 
   .faq summary::after {
@@ -4297,6 +4306,7 @@
     font-weight: 400;
     line-height: 1.4;
     color: var(--color-heading);
+    text-decoration: none;
   }
 
   .faq-ask span {
@@ -4590,7 +4600,7 @@
       var(--color-paper);
   }
 
-  #offices + .capture {
+  #book {
     background:
       radial-gradient(
         34% 60% at 6% 50%,

@@ -18,12 +18,8 @@ type AboutValue = {
 };
 
 export const aboutValues: {
-  label: string;
-  title: string;
   items: AboutValue[];
 } = {
-  label: "Our core values",
-  title: "What guides how we work.",
   items: [
     {
       icon: RocketLaunchIcon,

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Fragment } from "react";
 import { CaptureBand } from "@/components/contact/capture-band";
-import { contactIcon } from "@/components/layout/site-footer";
+import { contactIcon } from "@/components/sections/contact-icon";
 import { LiveClock } from "@/components/sections/live-clock";
 import {
   aboutCapture,
@@ -37,30 +37,30 @@ export default function AboutPage() {
           focusable="false"
         >
           <defs>
-            <linearGradient id="ahA" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="about-peaks-a" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stopColor="#FCE7B0" />
               <stop offset="1" stopColor="#FFF8E6" />
             </linearGradient>
-            <linearGradient id="ahB" x1="0" y1="0" x2="0" y2="1">
+            <linearGradient id="about-peaks-b" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stopColor="#F8D98A" />
               <stop offset="1" stopColor="#FDF1D2" />
             </linearGradient>
           </defs>
           <path
-            fill="url(#ahA)"
+            fill="url(#about-peaks-a)"
             d="M0 360V214C30 190 66 160 84 154S132 172 146 168 226 84 240 76 270 78 284 92 318 132 330 134 392 108 408 108 444 140 470 160 532 196 560 360Z"
           />
           <path
-            fill="url(#ahA)"
+            fill="url(#about-peaks-a)"
             d="M880 360C910 300 938 246 958 236S1022 262 1040 256 1130 132 1146 124 1176 130 1194 146 1210 168 1226 162 1282 96 1300 92 1334 116 1364 136 1414 128 1440 128V360Z"
           />
           <path
-            fill="url(#ahB)"
+            fill="url(#about-peaks-b)"
             opacity=".7"
             d="M0 360V272C40 248 92 218 118 212S192 246 210 244 282 196 300 192 336 214 358 238 418 284 460 360Z"
           />
           <path
-            fill="url(#ahB)"
+            fill="url(#about-peaks-b)"
             opacity=".7"
             d="M1000 360C1036 318 1078 270 1100 262S1160 286 1180 286 1266 210 1288 204 1360 230 1440 258V360Z"
           />
@@ -199,7 +199,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <CaptureBand kind="demo" look="white" copy={aboutCapture} />
+      <CaptureBand id="book" kind="demo" look="white" copy={aboutCapture} />
     </>
   );
 }
