@@ -151,4 +151,5 @@ export const audienceFlow = {
     chapter("student", "Student", "ai-tutor", "classroom"),
     chapter("campus", "Campus", "iot", "rooftop"),
   ],
+  motion: { pause: "Pause motion", play: "Play motion" },
 } as const;
