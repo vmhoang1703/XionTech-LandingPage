@@ -384,3 +384,13 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-s3-about.md`
   summary: Safari's FAQ disclosure marker fix and the About layout checks are verified only in Chrome; the repo has no WebKit Playwright project and the `a11y` project is opt-in.
   evidence: `e2e/a11y.spec.ts` "about layout" runs in the Chrome-only `a11y` project (`playwright.config.ts`); check `/about` FAQ in Safari by hand before Demo day.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-products-audience-flow.md`
+  summary: Add an automated check that no page's first-load HTML references a chunk containing three.js (`WebGLRenderer`).
+  evidence: The audience-flow acceptance criterion was verified only by a manual grep of `.next`; a value import of `three` would pass every gate.
+- source_spec: `_bmad-output/implementation-artifacts/spec-products-audience-flow.md`
+  summary: The real-browser Products flow tests (scroll to active chapter, reduced motion, pause) run only in the optional `a11y` project, not in the smoke gate.
+  evidence: `playwright.config.ts` runs `@a11y` only in the `a11y` project, which is a pre-release run by convention.
+- source_spec: `_bmad-output/implementation-artifacts/spec-products-audience-flow.md`
+  summary: Home `/` axe `color-contrast` on `.w-more-trigger` fails on the first cold load of a full a11y run and passes alone.
+  evidence: Seen twice during the audience-flow build (Task 7); the home page is not touched by this change.

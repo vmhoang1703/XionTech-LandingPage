@@ -2,9 +2,9 @@
 title: 'Products page as an audience flow through a 3D campus'
 type: 'feature'
 created: '2026-10-09'
-status: 'in-progress'
+status: 'in-review'
 route: 'dispatch'
-review_loop_iteration: 0
+review_loop_iteration: 1
 baseline_commit: '17707ca36cf5b88e15671161f19cfc46b5c5a9a2'
 context:
   - '{project-root}/AGENTS.md'
@@ -20,8 +20,9 @@ context:
 **Approach:** Replace the hero with a scroll-driven **audience flow** in four chapters, in this order: Parent (Parent Hub) → Teacher and staff (Staff Hub) → Student (AI Tutor) → Campus (IoT).
 - A sticky three.js **low-poly campus** sits beside the chapters.
 - As the visitor scrolls, the camera moves to each chapter's place on campus (gate, staff room, classroom, rooftop and plant room), the sky moves from morning to afternoon, and a beacon rises over the active place.
-- The four app cards and their dialogs stay below the flow, restyled, followed by the demo band.
+- The four app cards and their dialogs stay below the flow as they are (plus a highlight on the card a chapter link jumps to), followed by the demo band.
 - Decisions (Sammy, 2026-10-09): one flow per audience; low-poly campus; flow first, cards after; one PR.
+- Decisions at review (Sammy, 2026-10-09): **rich 3D pass** — an angled overview camera that zooms toward each place, soft shadows and warmer light, trees and benches, paths that light up toward the active place, and small animated details per place (staff-room windows glow, a floating phone at the gate, drifting clouds), all still on Pause or reduced motion; **cards kept as they are**.
 
 ## Boundaries & Constraints
 
@@ -94,6 +95,9 @@ context:
   - red: `page.test.tsx` -- order `#flow` → `#apps` → navy capture band.
 - [x] `e2e/products.spec.ts` -- smoke: H1 and 4 anchors; a canvas or the fallback is present; scrolling to the Student chapter marks it active; reduced-motion context: no camera tween, all chapters visible.
 
+- [ ] `src/components/products/flow/campus-scene.ts`, `campus-canvas.tsx`, `globals.css` -- rich pass (review decision): overview camera at an angle that zooms toward each place so the whole campus stays readable; soft shadows and a warm key light; trees and benches from primitives; path segments that light toward the active place; per-place details (staff-room windows glow, floating phone at the gate, classroom desks, rooftop vents) and drifting clouds, animated only while running; none of it moves when paused or under reduced motion.
+  - red: `campus-scene.test.ts` -- every place's camera target keeps the other places inside the view (distance above a floor); the scene has trees, benches, clouds and one detail group per place; `campus-canvas.test.tsx` -- details and clouds do not advance while paused.
+
 **Acceptance Criteria:**
 - Given a 1280px viewport, when the visitor scrolls from the intro to the Campus chapter, then the active chapter, the camera place and the sky change in that order, with no layout shift (CLS < 0.1).
 - Given 390px, when the page loads, then the canvas is sticky at the top, the chapters read below it, and there is no sideways scroll.
@@ -104,17 +108,17 @@ context:
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Intro | Load `/products` at 1280px | — | H1 "Built apart. Better together."; lede; campus at morning | Static | `products.ts` || ✅ walk 1280 (H1, lede, morning sky); `audience-flow.test.tsx` |
-| Chapters | Scroll down | Mouse wheel, touch, keyboard (Space, PgDn) | Active chapter marked; others dimmed to no less than 70%; native scroll, no jump | Follows scroll | Sammy 2026-10-09 || ✅ walk (active follows scroll, others 0.8, CLS 0); e2e Student active |
-| Camera | Chapter changes | Scroll | Camera glides to the chapter's place; beacon rises there | 900ms `--ease-brand` | Sammy 2026-10-09 || ✅ walk screenshots per chapter (camera at gate, staff room, classroom, rooftop); `campus-canvas.test.tsx` tween cancel. Framing too close (see review) |
-| Sky | Scroll top → bottom | Scroll | Morning → afternoon colour | Follows scroll | Sammy 2026-10-09 || ✅ walk (morning blue at intro → warm yellow at Campus) |
-| Chapter link | Activate "See {app} details" | Mouse, keyboard, touch | Scrolls to the card; heading below the header; focus ring visible | Smooth | Anchors || ✅ walk (focus ring 2px, #ai-tutor heading top 181); e2e deep link |
-| Pause | Activate | Mouse, keyboard, touch | Pulse and tweens stop; label "Play motion"; the choice persists on reload | Instant | EXPERIENCE.md motion rules || ✅ walk (Play motion, 0 rAF, persists after reload, chapters un-dim); unit tests |
-| Reduced motion | Load with reduced motion | — | Still frames, no tween; chapters as a plain list | Static | DESIGN.md:451 || ✅ walk (0 rAF, all chapters opacity 1); e2e reduced motion |
-| No WebGL | WebGL unavailable | — | SVG campus; no toggle; no error | Static | `hero-silk.tsx` pattern || ✅ walk `--disable-webgl` (SVG, no toggle, 0 errors); unit test |
-| Off screen | Scroll past `#flow` / hide tab | — | Rendering stops (no rAF) | Instant | EXPERIENCE.md || ✅ walk (0 rAF in 1s past #flow); unit tests |
-| Width | 1024px / 390px | — | Side-by-side / canvas sticky on top at 40dvh; no sideways scroll | Static | Spec || ✅ walk (1024 beside 456x708; 390 sticky 358x338, no sideways scroll) |
-| Cards | Open a card dialog | Mouse, keyboard | Unchanged dialog behaviour; restyled cards | Instant | `product-detail.tsx` || ✅ walk (dialog opens and closes); e2e keyboard dialog |
+| Intro | Load `/products` at 1280px | — | H1 "Built apart. Better together."; lede; campus at morning | Static | `products.ts` | ✅ walk 1280 (H1, lede, morning sky); `audience-flow.test.tsx` |
+| Chapters | Scroll down | Mouse wheel, touch, keyboard (Space, PgDn) | Active chapter marked; others dimmed to no less than 70%; native scroll, no jump | Follows scroll | Sammy 2026-10-09 | ✅ walk (active follows scroll, others 0.8, CLS 0); e2e Student active |
+| Camera | Chapter changes | Scroll | Camera glides to the chapter's place; beacon rises there | 900ms `--ease-brand` | Sammy 2026-10-09 | fail: framing too close and flat light (review); re-checked after Task 8 |
+| Sky | Scroll top → bottom | Scroll | Morning → afternoon colour | Follows scroll | Sammy 2026-10-09 | ✅ walk (morning blue at intro → warm yellow at Campus) |
+| Chapter link | Activate "See {app} details" | Mouse, keyboard, touch | Scrolls to the card; heading below the header; focus ring visible | Smooth | Anchors | ✅ walk (focus ring 2px, #ai-tutor heading top 181); e2e deep link |
+| Pause | Activate | Mouse, keyboard, touch | Pulse and tweens stop; label "Play motion"; the choice persists on reload | Instant | EXPERIENCE.md motion rules | ✅ walk (Play motion, 0 rAF, persists after reload, chapters un-dim); unit tests |
+| Reduced motion | Load with reduced motion | — | Still frames, no tween; chapters as a plain list | Static | DESIGN.md:451 | ✅ walk (0 rAF, all chapters opacity 1); e2e reduced motion |
+| No WebGL | WebGL unavailable | — | SVG campus; no toggle; no error | Static | `hero-silk.tsx` pattern | ✅ walk `--disable-webgl` (SVG, no toggle, 0 errors); unit test |
+| Off screen | Scroll past `#flow` / hide tab | — | Rendering stops (no rAF) | Instant | EXPERIENCE.md | ✅ walk (0 rAF in 1s past #flow); unit tests |
+| Width | 1024px / 390px | — | Side-by-side / canvas sticky on top at 40dvh; no sideways scroll | Static | Spec | ✅ walk (1024 beside 456x708; 390 sticky 358x338, no sideways scroll) |
+| Cards | Open a card dialog | Mouse, keyboard | Unchanged dialog behaviour; restyled cards | Instant | `product-detail.tsx` | ✅ walk (dialog opens and closes); e2e keyboard dialog |
 
 ## Design Notes
 
@@ -126,7 +130,44 @@ context:
 
 ## Spec Change Log
 
+- **Review loop 1 (2026-10-09).** Trigger: the acceptance auditor and the walk found the campus does not read as a campus (camera too close, flat light, little motion), and the "restyled" cards were not delivered. Sammy decided: rich 3D pass; cards kept as they are. Amended: Intent (decisions line, cards wording), new Task 8, Camera UX row set to `fail` until Task 8. Known-bad state avoided: shipping a 3D scene that shows one block per chapter. KEEP: Tasks 1-7 and their commits (content, scene API `buildCampus`/`placeTarget`/`skyAt`/`chapterAt`, canvas guards, pause and reduced-motion behaviour, flow markup, e2e); no revert.
+
 ## Review Triage Log
+
+| # | Finding | Verdict | Evidence / route |
+| --- | --- | --- | --- |
+| 1 | Campus framing too close, flat light, little motion (auditor, walk) | high | Screenshots chapter 3 and 4; intent renegotiated with Sammy; Task 8 |
+| 2 | Cards "restyled" not delivered (auditor) | medium | Only `.pshow:target`; Sammy: keep cards as they are; intent amended |
+| 3 | No "chapter dot" marks progress (auditor, blind) | medium | No dot in TSX or CSS; patch |
+| 4 | Pause un-dim not proven in a browser; walk read mid-fade (verification-gap, auditor) | medium | Only reduced-motion e2e checks opacity; patch: e2e Pause test |
+| 5 | UX table rows have 8 cells (auditor) | medium | `||` slip from the controller's script; fixed in the spec |
+| 6 | Camera row marked ✅ with a failure note (auditor) | medium | Row set to `fail` until Task 8 |
+| 7 | IO callbacks read `entries[0]` (edge) | low | Direct correction to the latest entry; patch |
+| 8 | Stage kept after `webglcontextlost` (edge, blind, task 4) | low | Dispose the stage on loss; patch |
+| 9 | `skyAt` clones a Color every frame (blind, task 4) | low | Copy into one Color; patch |
+| 10 | Weak lede and audience-label assertions (task 2) | low | Exact values; patch |
+| 11 | three.js chunk check is manual only (verification-gap) | medium | No automated bundle test; defer |
+| 12 | Real-browser flow tests run only in the optional `a11y` project (verification-gap) | low | Repo convention; defer |
+| 13 | Tab order vs visual order at ≥ 1024px (blind) | false | The Pause button sits above the first chapter (stage top 324px, chapter 414px); `@a11y` keyboard test passes |
+| 14 | Active chapter from equal quarters, not real heights (blind, edge) | low | Walk: centring each chapter marks it active; fix needs per-element tracking; rejected |
+| 15 | Mobile scroll line ignores the sticky stage (blind) | low | Walk at 390 marks the centred chapter; rejected |
+| 16 | Paused or reduced scene redraws per scroll (sky) (blind, edge) | low | Colour follows scroll, no movement; rejected |
+| 17 | Reduced motion with a stored "on" preference animates (edge) | false | Stored choice wins site-wide by design (`readMotionPaused`, hero-silk) |
+| 18 | No listener for reduced-motion or DPR changes at runtime (edge) | low | Rare; fix adds listeners; rejected |
+| 19 | Dimmed chapters' contrast untested (blind) | false | 0.8 over paper: #10223f about 8.6:1, navy about 7:1 (task 5 review) |
+| 20 | Amber in the scene breaks the amber-decor rule (blind) | false | `#ffc000` is amber, not amber-decor `#C99700`; the contrast test passes |
+| 21 | AGENTS.md stack table and ai-log not updated (blind) | medium | Agent-context file; updated in the PR bookkeeping, not as a code patch |
+| 22 | Machine paths and transcripts in the ledger and evidence (blind) | low | Same as every earlier story's evidence; rejected |
+| 23 | Old specs still mention the removed hero (blind) | false | History documents, not code |
+| 24 | Hidden canvas in the no-JS HTML (auditor) | low | Not painted, like hero-silk; rejected |
+| 25 | AC1 "in that order" vs continuous sky (auditor) | low | The sky follows scroll by the UX table; rejected |
+| 26 | Per-scroll re-render of FlowProgress (blind, task 5) | low | Bounded, children keep identity; rejected |
+| 27 | Duplicated chapter-index rule (blind, task 5) | low | A parity test pins it; rejected |
+| 28 | Audience labels are new strings (blind) | false | The labels come from the frozen Intent |
+| 29 | E2E fixed sleeps, page-wide rAF counter (blind, task 7) | low | Absence-of-frames check; rejected |
+| 30 | Fallback path keeps chapters dimmed (verification-gap, task 5) | low | 0.8 is above the 70% floor; rejected |
+| 31 | `@types/three` caret, `as const`, `appById` twice, `.pshow:target` untested, resume from stale place, `count` duplicates children (task minors) | low | Cosmetic or convention; rejected |
+| 32 | Security | — | Clean; runtime audit unchanged |
 
 ## Verification
 
