@@ -40,10 +40,13 @@ export const plano: Office = {
   zoneLabel: "US Central",
 };
 
+// One string for the Vietnam office tag (About, Demo) and its footer name.
+const VIETNAM_DELIVERY_CENTER = "Vietnam Delivery Center";
+
 export const hcmc: Office = {
   id: "hcmc",
   name: "Ho Chi Minh City, Vietnam",
-  tag: "Vietnam Delivery Center",
+  tag: VIETNAM_DELIVERY_CENTER,
   addressLines: [
     "Floor 15, B1 Building",
     "279 Nguyen Tri Phuong Street",
@@ -76,7 +79,7 @@ export const contactByPrefix = (
 export const footerOffices: FooterOffice[] = [
   {
     id: hcmc.id,
-    name: hcmc.tag ?? hcmc.name,
+    name: VIETNAM_DELIVERY_CENTER,
     addressLines: hcmc.addressLines,
     contacts: [
       {
