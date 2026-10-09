@@ -449,6 +449,8 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
       }) => {
         await page.setViewportSize(viewport);
         const href = await firstLink(page, listPath, prefix);
+        // Skipped only when Sanity has no published story or open role to
+        // open; the check cannot run without a page to measure.
         test.skip(href === null, `${listPath} has no ${prefix} link to open`);
         await expectClearsRidge(page, href ?? listPath);
       });
@@ -503,17 +505,21 @@ test.describe("services layout", { tag: "@a11y" }, () => {
       ["cloud", "#cloud h3"],
       ["outcomes", "#outcomes h2"],
     ]) {
+      // Start each anchor from the top of a fresh load, so the scroll gate
+      // below cannot pass on the previous anchor's position.
+      await page.goto("/services");
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
       await page.goto(`/services#${hash}`);
       await expect
         .poll(() => page.evaluate(() => window.scrollY))
         .toBeGreaterThan(0);
-      let last = -1;
+      // Settled once three readings in a row match (smooth scrolling).
+      const readings: number[] = [];
       await expect
         .poll(async () => {
-          const y = await page.evaluate(() => window.scrollY);
-          const settled = y === last;
-          last = y;
-          return settled;
+          readings.push(await page.evaluate(() => window.scrollY));
+          const lastThree = readings.slice(-3);
+          return lastThree.length === 3 && new Set(lastThree).size === 1;
         })
         .toBe(true);
       const target = await box(page, heading);
