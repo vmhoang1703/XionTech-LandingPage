@@ -133,7 +133,13 @@ export function HomeContactForm() {
 
   if (status === "sent") {
     return (
-      <div ref={panelRef} className="form-ok" role="status" tabIndex={-1}>
+      <div
+        ref={panelRef}
+        className="form-ok"
+        aria-live="polite"
+        aria-atomic="true"
+        tabIndex={-1}
+      >
         <SummitMark />
         <h3>{S.successHeading}</h3>
         <p>{S.successText}</p>

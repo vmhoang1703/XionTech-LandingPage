@@ -204,7 +204,13 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
     return (
       <>
         <h2>{jobForm.heading}</h2>
-        <div ref={panelRef} className="form-ok" role="status" tabIndex={-1}>
+        <div
+          ref={panelRef}
+          className="form-ok"
+          aria-live="polite"
+          aria-atomic="true"
+          tabIndex={-1}
+        >
           <SummitMark />
           <h3>{jobForm.successHeading}</h3>
           <p>{jobForm.successText}</p>

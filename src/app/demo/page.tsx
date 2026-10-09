@@ -38,7 +38,7 @@ export default function DemoPage() {
               </li>
             ))}
           </ul>
-          <div className="offices" role="group" aria-label={hero.officesLabel}>
+          <fieldset className="offices" aria-label={hero.officesLabel}>
             {offices.map((office) => (
               <address className="office" key={office.id}>
                 <b>{office.name}</b>
@@ -67,7 +67,7 @@ export default function DemoPage() {
                 ))}
               </address>
             ))}
-          </div>
+          </fieldset>
         </div>
         <div id="form" className="form-card">
           <ContactForm />

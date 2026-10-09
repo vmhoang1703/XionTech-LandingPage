@@ -3,15 +3,15 @@ import { revalidateTag } from "next/cache";
 
 import type { SanityTag } from "@/lib/sanity/client";
 
-const ALLOWED_TYPES: readonly SanityTag[] = [
+const ALLOWED_TYPES: ReadonlySet<SanityTag> = new Set<SanityTag>([
   "post",
   "job",
   "careersPhotos",
   "product",
-];
+]);
 
 function isSanityTag(value: unknown): value is SanityTag {
-  return ALLOWED_TYPES.includes(value as SanityTag);
+  return ALLOWED_TYPES.has(value as SanityTag);
 }
 
 function readType(body: string): unknown {

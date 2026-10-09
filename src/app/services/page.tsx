@@ -54,9 +54,8 @@ export default function ServicesPage() {
               {secondaryCta.label}
             </a>
           </div>
-          <div
+          <fieldset
             className="clock-strip"
-            role="group"
             aria-label={servicesPage.clockStripLabel}
           >
             {servicesPage.clockCities.map(({ office, city }) => (
@@ -71,7 +70,7 @@ export default function ServicesPage() {
                 </b>
               </span>
             ))}
-          </div>
+          </fieldset>
         </div>
       </section>
       <section className="sec surface-paper">

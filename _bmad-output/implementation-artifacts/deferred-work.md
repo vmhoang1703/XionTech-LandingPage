@@ -318,9 +318,11 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
   summary: `scripts/ux/surfaces/header.json` still targets `#mega-products`, `#mega-services` and the Products/Services triggers, so `npm run ux:parity -- scripts/ux/surfaces/header.json --strict` checks parts that no longer exist; rewrite it for six plain links and the hamburger (UX-Q1 and UX-Q4 in `docs/ux-quality.md` become moot).
   evidence: E-A3 review (edge-case, blind, acceptance layers). Optional tool until Demo day (AGENTS.md); outside the E-A3 file list.
+  resolved: 2026-10-08 (fix/enh-deferred-andy) — the surface maps the six plain links, states skip-focus and hover-news; `ux:parity` runs, 15 look differences left (header background 0.78 vs 0.9, link radius) for a later pass.
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
   summary: The `--z-index-mega-menu: 55` token in `src/app/globals.css` has no user after E-A3; remove it together with its line in `src/lib/design/contrast.test.ts`.
   evidence: E-A3 review (all four layers). Low; `globals.css` is edited by parallel tasks today, so a one-line follow-up avoids conflicts.
+  resolved: 2026-10-08 (fix/enh-deferred-andy) — token and its contrast-test entry removed.
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a3-header.md`
   summary: The comment at `src/content/products.ts:121-122` says the IoT audience comes from the Products mega menu, which E-A3 removed; reword it when E-A5 touches that file.
   evidence: E-A3 review (edge-case, acceptance). Comment only; `products.ts` belongs to E-A5.
@@ -331,6 +333,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
   summary: On /products under prefers-reduced-motion, "Play motion" saves the choice but the hero glows stay still, because the global reduced-motion rule (`animation: none !important` in the base layer) wins over any later rule.
   evidence: E-A5 review (verification gap). Fix needs a design call: either hide the Pause/Play button under reduced motion, or move the glows to a JS animation like the Home silk.
+  resolved: 2026-10-08 (fix/enh-deferred-andy) — the reduced-motion reset skips `.eco-bg[data-motion="on"] i`, so an explicit Play runs the glows.
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-a5-products.md`
   summary: The footer (`src/content/site-footer.ts`) and the Home app bento (`lxp` tile) still link `/products#lxp`, which has no card; they land at the top of /products.
   evidence: E-A5 review (verification gap). Pre-existing since E-A2 removed the LXP section; Sammy's files. Point them at `#ai-tutor` or drop them.

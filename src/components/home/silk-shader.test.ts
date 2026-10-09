@@ -66,7 +66,7 @@ describe("createSilk", () => {
 
     const drawsAfterResize = calls.filter((c) => c === "drawArrays").length;
     silk?.draw(9);
-    expect(calls.filter((c) => c === "drawArrays").length).toBe(
+    expect(calls.filter((c) => c === "drawArrays")).toHaveLength(
       drawsAfterResize + 1,
     );
   });

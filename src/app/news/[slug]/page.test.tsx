@@ -32,10 +32,10 @@ const story: NewsStory = {
   category: "product",
   app: "parent-hub",
   body: [
-    { style: "normal", text: "First paragraph." },
-    { style: "h2", text: "A subheading" },
-    { style: "normal", text: "Second paragraph." },
-    { style: "normal", text: "" },
+    { _key: "k0", style: "normal", text: "First paragraph." },
+    { _key: "k1", style: "h2", text: "A subheading" },
+    { _key: "k2", style: "normal", text: "Second paragraph." },
+    { _key: "k3", style: "normal", text: "" },
   ],
 };
 
@@ -151,7 +151,7 @@ describe("StoryPage", () => {
 
   it.each([
     ["is null", null],
-    ["has only empty blocks", [{ style: "normal", text: " " }]],
+    ["has only empty blocks", [{ _key: "k9", style: "normal", text: " " }]],
   ])(
     "renders no body paragraph when the body %s (the summary is above)",
     async (_, body) => {

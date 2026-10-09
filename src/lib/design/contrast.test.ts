@@ -275,7 +275,6 @@ const BUILD_TOKENS: Record<string, string> = {
   "--z-index-content": "0",
   "--z-index-subnav": "40",
   "--z-index-header": "50",
-  "--z-index-mega-menu": "55",
   "--z-index-mobile-menu": "60",
   "--z-index-toast": "100",
   "--z-index-skip-link": "200",
@@ -493,7 +492,8 @@ describe("reduced motion", () => {
   const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
   const block = REDUCED_MOTION_BLOCK.exec(source)?.[1] ?? "";
 
-  it.each(["*", "*::before", "*::after"])(
+  // E-A5: only an explicit Play motion on the Products glows is exempt.
+  it.each(['*:not(.eco-bg[data-motion="on"] i)', "*::before", "*::after"])(
     "stops every animation and transition on %s",
     (selector) => {
       const rule = readRuleDeclarations(block, selector);

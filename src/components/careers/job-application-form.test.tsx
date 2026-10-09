@@ -3,6 +3,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CV_MAX_BYTES, JOB_ERRORS } from "@/lib/careers/application-rules";
 import { JobApplicationForm } from "./job-application-form";
 
+// The success panel is a polite live region that takes focus (Sonar S6819:
+// no role="status" on a block of headings and text).
+function successPanel(): HTMLElement {
+  const panel = document.querySelector<HTMLElement>(".form-ok");
+  if (!panel) throw new Error("no success panel");
+  expect(panel.getAttribute("aria-live")).toBe("polite");
+  return panel;
+}
+
 const uploadMock = vi.hoisted(() => vi.fn());
 vi.mock("@vercel/blob/client", () => ({ uploadPresigned: uploadMock }));
 
@@ -232,7 +241,7 @@ describe("JobApplicationForm sending", () => {
     fillValid();
     submit();
     await settle();
-    const panel = screen.getByRole("status");
+    const panel = successPanel();
     expect(panel.textContent).toContain("Summit reached. Thank you!");
     const summit = panel.querySelector(".summit");
     expect(summit?.getAttribute("aria-hidden")).toBe("true");
@@ -337,7 +346,7 @@ describe("JobApplicationForm failures", () => {
     submit();
     await settle();
     expect(uploadMock).toHaveBeenCalledTimes(2);
-    expect(screen.getByRole("status")).toBeTruthy();
+    expect(successPanel()).toBeTruthy();
   });
 
   it.each([
@@ -377,7 +386,7 @@ describe("JobApplicationForm failures", () => {
       expect(uploadMock).toHaveBeenCalledTimes(2);
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(sentBody(1).cv).toBe(PATHNAME);
-      expect(screen.getByRole("status")).toBeTruthy();
+      expect(successPanel()).toBeTruthy();
     },
   );
 

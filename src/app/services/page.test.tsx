@@ -96,7 +96,7 @@ describe("ServicesPage", () => {
   it("defines every class it uses in globals.css", () => {
     const { container } = render(<ServicesPage />);
     // The stats band is Tailwind utilities, covered by its own tests.
-    container.querySelector('[role="group"][aria-labelledby]')?.remove();
+    container.querySelector("fieldset[aria-labelledby]")?.remove();
     // The capture band's honeypot label uses the Tailwind sr-only utility.
     expect(undefinedClasses(container, /^(mt-5|pt-10|sr-only)$/)).toEqual([]);
   });

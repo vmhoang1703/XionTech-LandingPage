@@ -14,7 +14,7 @@ export function globalsCss() {
 }
 
 const escape = (text: string) =>
-  text.replaceAll(/[.*+?^${}()|[\]\/]/g, String.raw`\$&`);
+  text.replaceAll(/[.*+?^${}()|[\]/]/g, String.raw`\$&`);
 
 // True when `css` has a rule whose selector uses `.name` on its own, or
 // compounded only with classes in `alongside` (the element's other classes:

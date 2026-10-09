@@ -275,7 +275,13 @@ export function ContactForm() {
     return (
       <>
         <h2>{S.heading}</h2>
-        <div ref={panelRef} className="form-ok" role="status" tabIndex={-1}>
+        <div
+          ref={panelRef}
+          className="form-ok"
+          aria-live="polite"
+          aria-atomic="true"
+          tabIndex={-1}
+        >
           <SummitMark />
           <h3>{S.successHeading}</h3>
           <p>{S.successText}</p>
@@ -290,6 +296,7 @@ export function ContactForm() {
       <div
         className="ftabs"
         role="tablist"
+        tabIndex={-1}
         aria-label={S.tabsLabel}
         onKeyDown={onTabKeyDown}
       >

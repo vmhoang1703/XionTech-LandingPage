@@ -79,7 +79,7 @@ export function HeroArt({ tone }: Readonly<{ tone: StrandTone }>) {
   return (
     <>
       <div aria-hidden="true" className="aurora" />
-      <canvas ref={canvasRef} aria-hidden="true" className="strands" />
+      <canvas ref={canvasRef} className="strands" />
     </>
   );
 }
