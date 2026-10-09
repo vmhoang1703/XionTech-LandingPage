@@ -1447,3 +1447,14 @@ Template:
 - **AI got it wrong?** Yes:
   - The first port left the static "here" ring visible under reduced motion; the prototype hides it.
   - The job page's own 404 smoke test still expected the old copy, which the similar-check caught before the PR.
+
+## 2026-10-09 — Three.js reference skills for Claude Code
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "git clone https://github.com/pinkforest/threejs-playground.git could you add this skill into our repo", then "https://github.com/cloudai-x/threejs-skills can you check the install this skill".
+- **What the AI did:**
+  - Found that the first repo does not exist, and reported that instead of guessing a replacement.
+  - Cloned `cloudai-x/threejs-skills` (commit `b1c6230`, MIT per its README) into the scratchpad and checked it before installing: Markdown only, no scripts, no commands for the agent, no prompt-injection text, no hidden characters; the only URLs are example decoder CDNs and `example.com`.
+  - Copied its ten `threejs-*` skills unchanged into `.claude/skills/` and ran a security review layer on the diff (clean).
+- **Decision / result:** The skills are reference only; three.js is not a project dependency. If a story adopts the CDN decoder examples, self-host the decoders from the `three` package instead.
+- **AI got it wrong?** No.
