@@ -449,8 +449,8 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
       }) => {
         await page.setViewportSize(viewport);
         const href = await firstLink(page, listPath, prefix);
-        // Skipped only when Sanity has no published story or open role to
-        // open; the check cannot run without a page to measure.
+        // Skipped when no story or role link can be read from the list (for
+        // example none is published in Sanity): there is no page to measure.
         test.skip(href === null, `${listPath} has no ${prefix} link to open`);
         await expectClearsRidge(page, href ?? listPath);
       });
