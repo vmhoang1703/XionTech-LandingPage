@@ -82,7 +82,7 @@ context:
 
 **Execution:**
 - [x] `package.json` -- add `three`, `@types/three` (dev) and `motion` -- the scene and the scroll progress.
-- [ ] `src/content/products.ts` -- `audienceFlow` intro and 4 chapters (id, audience label, app, madeFor, tagline, steps from features, campus `place`); drop `productsHero` -- one source for copy and scene targets.
+- [x] `src/content/products.ts` -- `audienceFlow` intro and 4 chapters (id, audience label, app, madeFor, tagline, steps from features, campus `place`); drop `productsHero` -- one source for copy and scene targets.
   - red: `src/content/products.test.ts` -- chapters in order parent, staff, student, campus; every step title equals a `productDetails` feature; no invented copy.
 - [ ] `src/components/products/flow/campus-scene.ts` -- pure three.js builder: `buildCampus()` returns a scene with gate, staff room, classroom, rooftop/plant room, ground and paths from primitives; `placeTarget(place)` gives camera position and look-at; `skyAt(progress)` gives the colour; `chapterAt(progress)` maps 0..1 to a chapter -- testable without a renderer.
   - red: `campus-scene.test.ts` -- `chapterAt` boundaries; each place has a distinct target; `skyAt(0)` and `skyAt(1)` differ; the built scene has 4 named places and one beacon.
