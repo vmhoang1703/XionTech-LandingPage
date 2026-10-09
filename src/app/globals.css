@@ -3521,11 +3521,14 @@
       align-items: start;
     }
 
+    /* Square, so the campus fills the view; never taller than the screen. */
     .flow-stage {
       grid-row: 1;
       grid-column: 2;
       top: calc(var(--spacing-header-height) + 32px);
-      height: calc(100dvh - var(--spacing-header-height) - 64px);
+      height: auto;
+      max-height: calc(100dvh - var(--spacing-header-height) - 64px);
+      aspect-ratio: 1;
     }
 
     .flow-chapters {

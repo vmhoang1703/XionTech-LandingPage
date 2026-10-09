@@ -36,6 +36,8 @@ type Stage = {
   scene: Scene;
   camera: PerspectiveCamera;
   beacon: Object3D;
+  focus: (place: FlowPlace) => void;
+  tick: (ms: number) => void;
   place: FlowPlace;
   start: number;
   from: Pose;
@@ -60,6 +62,7 @@ const clonePose = ({ position, lookAt, beacon }: Pose): Pose => ({
 function settle(stage: Stage, progress: number) {
   const { place } = stage.campus.chapterAt(progress);
   stage.place = place;
+  stage.focus(place);
   stage.start = -Infinity;
   stage.to = poseAt(stage.campus, place);
   stage.pose = clonePose(stage.to);
@@ -70,17 +73,25 @@ function aim(stage: Stage, progress: number, now: number) {
   const { place } = stage.campus.chapterAt(progress);
   if (place === stage.place) return;
   stage.place = place;
+  stage.focus(place);
   stage.start = now;
   stage.from = clonePose(stage.pose);
   stage.to = poseAt(stage.campus, place);
 }
 
+// Like lerpVectors, but lands exactly on `to` at t = 1 (no rounding error).
+const ease = (out: Vector3, from: Vector3, to: Vector3, t: number) =>
+  out
+    .subVectors(from, to)
+    .multiplyScalar(1 - t)
+    .add(to);
+
 function step(stage: Stage, now: number) {
   const t = easeBrand(Math.min(1, (now - stage.start) / TWEEN_MS));
   const { from, to, pose } = stage;
-  pose.position.lerpVectors(from.position, to.position, t);
-  pose.lookAt.lerpVectors(from.lookAt, to.lookAt, t);
-  pose.beacon.lerpVectors(from.beacon, to.beacon, t);
+  ease(pose.position, from.position, to.position, t);
+  ease(pose.lookAt, from.lookAt, to.lookAt, t);
+  ease(pose.beacon, from.beacon, to.beacon, t);
 }
 
 // `pulse` is the time for the idle beacon bob; 0 draws it at rest.
@@ -95,8 +106,11 @@ function draw(stage: Stage, progress: number, pulse: number) {
   stage.renderer.render(scene, camera);
 }
 
+// Instanced meshes free their instance buffers and the key light its shadow
+// map through the object's own dispose().
 function dispose(stage: Stage) {
   stage.scene.traverse((object) => {
+    object.dispose();
     const mesh = object as Partial<Mesh>;
     if (!mesh.isMesh) return;
     mesh.geometry?.dispose();
@@ -134,6 +148,7 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
       if (!stage || !width || !height) return;
       stage.renderer.setSize(width, height, false);
       stage.camera.aspect = width / height;
+      stage.camera.fov = stage.campus.viewFov(width / height);
       stage.camera.updateProjectionMatrix();
       setResizes((count) => count + 1);
     };
@@ -149,14 +164,20 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
         import("./campus-scene"),
       ]);
       if (unmounted) return;
-      const { scene, beacon } = campus.buildCampus();
+      const { scene, beacon, focus, tick } = campus.buildCampus();
       const renderer = new three.WebGLRenderer({
         canvas,
         context,
         antialias: true,
       });
       renderer.setPixelRatio(Math.min(devicePixelRatio, MAX_PIXEL_RATIO));
-      const camera = new three.PerspectiveCamera(40, 1, 0.1, 100);
+      renderer.shadowMap.enabled = true;
+      const camera = new three.PerspectiveCamera(
+        campus.CAMERA_FOV,
+        1,
+        0.1,
+        100,
+      );
       const pose = poseAt(campus, "gate");
       const stage: Stage = {
         campus,
@@ -164,6 +185,8 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
         scene,
         camera,
         beacon,
+        focus,
+        tick,
         place: "gate",
         start: -Infinity,
         from: pose,
@@ -225,7 +248,12 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
     const stage = stageRef.current;
     if (!running || !stage) return;
     let frame = 0;
+    // The details' own clock counts only running time, so after a pause
+    // they carry on from where they stopped.
+    let last: number | undefined;
     const loop = (now: number) => {
+      stage.tick(last === undefined ? 0 : now - last);
+      last = now;
       const progressNow = progressRef.current;
       aim(stage, progressNow, now);
       step(stage, now);

@@ -5,14 +5,29 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import type { Mesh, PerspectiveCamera, Scene } from "three";
+import type {
+  InstancedMesh,
+  Light,
+  Mesh,
+  MeshStandardMaterial,
+  Object3D,
+  PerspectiveCamera,
+  Scene,
+} from "three";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CampusCanvas } from "./campus-canvas";
-import { BEACON_NAME, placeTarget, skyAt } from "./campus-scene";
+import {
+  BEACON_NAME,
+  buildCampus,
+  placeTarget,
+  skyAt,
+  viewFov,
+} from "./campus-scene";
 
 // jsdom has no WebGL: the renderer is a fake, the rest of three.js is real.
 const { renderer, Renderer } = vi.hoisted(() => {
   const renderer = {
+    shadowMap: { enabled: false },
     setPixelRatio: vi.fn(),
     setSize: vi.fn(),
     render: vi.fn(),
@@ -89,7 +104,15 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
   Renderer.mockClear();
-  for (const fn of Object.values(renderer)) fn.mockReset();
+  renderer.shadowMap.enabled = false;
+  for (const fn of [
+    renderer.setPixelRatio,
+    renderer.setSize,
+    renderer.render,
+    renderer.dispose,
+  ]) {
+    fn.mockReset();
+  }
 });
 
 // Every connected observer sees the section: the loader (near the viewport)
@@ -119,6 +142,33 @@ function lastDraw() {
   const beacon = scene.getObjectByName(BEACON_NAME);
   if (!beacon) throw new Error("No beacon");
   return { scene, camera, beacon };
+}
+
+const places = ["gate", "staff-room", "classroom", "rooftop"];
+
+// Every transform and glow of the clouds and the places' details: equal
+// snapshots mean none of them moved.
+function details(scene: Object3D) {
+  const parts = [
+    scene.getObjectByName("clouds"),
+    ...places.map((p) => scene.getObjectByName(p)?.getObjectByName("details")),
+  ];
+  const state: number[] = [];
+  for (const part of parts) {
+    if (!part) throw new Error("Missing clouds or details");
+    part.traverse((o) => {
+      state.push(
+        ...o.position.toArray(),
+        ...o.quaternion.toArray(),
+        ...o.scale.toArray(),
+      );
+      const material = (o as Mesh).material as MeshStandardMaterial | undefined;
+      if (material?.emissiveIntensity !== undefined) {
+        state.push(material.emissiveIntensity);
+      }
+    });
+  }
+  return state;
 }
 
 // Resolves once the scene is ready and its first effect has run: a still
@@ -172,6 +222,7 @@ describe("CampusCanvas", () => {
     expect(canvas.getAttribute("aria-hidden")).toBe("true");
     expect(container.querySelector(".flow-fallback")).toBeNull();
     expect(renderer.setPixelRatio).toHaveBeenCalledWith(2);
+    expect(renderer.shadowMap.enabled).toBe(true);
   });
 
   it("starts paused under reduced motion: one still frame, no animation frame", async () => {
@@ -184,6 +235,7 @@ describe("CampusCanvas", () => {
     const { camera, scene } = lastDraw();
     expect(camera.position.equals(placeTarget("gate").position)).toBe(true);
     expect(scene.background).toEqual(skyAt(0));
+    expect(details(scene)).toEqual(details(buildCampus().scene));
   });
 
   it("while paused, a new chapter draws one still frame at its place", async () => {
@@ -268,6 +320,36 @@ describe("CampusCanvas", () => {
     expect(scene.background).toEqual(skyAt(0.9));
   });
 
+  it("moves the details and clouds while running, and holds them while paused", async () => {
+    const { rerender } = await renderReady();
+    act(() => frame(1000));
+    const { scene } = lastDraw();
+    const start = details(scene);
+    act(() => frame(1500));
+    const running = details(scene);
+    expect(running).not.toEqual(start);
+
+    fireEvent.click(screen.getByRole("button", { name: "Pause motion" }));
+    expect(details(scene)).toEqual(running);
+    rerender(<CampusCanvas progress={0.6} />);
+    expect(renderer.render.mock.lastCall?.[0]).toBe(scene);
+    expect(details(scene)).toEqual(running);
+  });
+
+  it("resumes the details where they stopped, with no jump", async () => {
+    await renderReady();
+    act(() => frame(1000));
+    act(() => frame(1016));
+    const { scene } = lastDraw();
+    const button = screen.getByRole("button", { name: "Pause motion" });
+    fireEvent.click(button);
+    const held = details(scene);
+
+    fireEvent.click(button);
+    act(() => frame(60_000));
+    expect(details(scene)).toEqual(held);
+  });
+
   it("cancels the running tween when a new chapter becomes active", async () => {
     const { rerender } = await renderReady();
     act(() => frame(1000));
@@ -350,6 +432,12 @@ describe("CampusCanvas", () => {
     act(() => resize());
     expect(renderer.setSize).toHaveBeenCalledWith(800, 400, false);
     expect(lastDraw().camera.aspect).toBe(2);
+    expect(lastDraw().camera.fov).toBe(viewFov(2));
+
+    vi.spyOn(canvas, "clientHeight", "get").mockReturnValue(1600);
+    act(() => resize());
+    expect(lastDraw().camera.fov).toBe(viewFov(0.5));
+    expect(viewFov(0.5)).toBeGreaterThan(viewFov(2));
   });
 
   it("disposes the scene and the renderer when unmounted", async () => {
@@ -358,11 +446,21 @@ describe("CampusCanvas", () => {
     const { scene } = lastDraw();
     const mesh = scene.getObjectByName(BEACON_NAME) as Mesh;
     const geometry = vi.spyOn(mesh.geometry, "dispose");
+    const trees = scene.getObjectByName("trees")?.children as InstancedMesh[];
+    const forest = trees.map((part) => vi.spyOn(part, "dispose"));
+    let key: Light | undefined;
+    scene.traverse((o) => {
+      if ((o as Light).isLight && o.castShadow) key = o as Light;
+    });
+    if (!key) throw new Error("No shadow-casting light");
+    const light = vi.spyOn(key, "dispose");
     const removeCanvas = vi.spyOn(canvasOf(container), "removeEventListener");
     const removeDocument = vi.spyOn(document, "removeEventListener");
 
     unmount();
     expect(geometry).toHaveBeenCalled();
+    for (const part of forest) expect(part).toHaveBeenCalled();
+    expect(light).toHaveBeenCalled();
     expect(renderer.dispose).toHaveBeenCalled();
     expect(removeCanvas).toHaveBeenCalledWith(
       "webglcontextlost",
