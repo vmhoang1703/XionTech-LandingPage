@@ -4259,7 +4259,7 @@
 
   /* Safari's disclosure triangle: the +/- below replaces it */
   .faq summary::-webkit-details-marker {
-    font-size: 0;
+    display: none;
   }
 
   .faq summary::after {

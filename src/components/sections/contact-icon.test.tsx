@@ -14,6 +14,6 @@ describe("contactIcon", () => {
   });
 
   it("throws for a contact link with no icon", () => {
-    expect(() => contactIcon("sms:+1555")).toThrow(/No footer icon/);
+    expect(() => contactIcon("sms:+1555")).toThrow(/No contact icon for link/);
   });
 });

@@ -554,35 +554,39 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     expect(await columns(page)).toBe(1);
 
     await page.setViewportSize({ width: 1280, height: 800 });
-    await page.goto("/about");
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-    await page.goto("/about#faq");
-    await expect
-      .poll(() => page.evaluate(() => window.scrollY))
-      .toBeGreaterThan(0);
-    // Settled once three readings in a row match (smooth scrolling).
-    const readings: number[] = [];
-    await expect
-      .poll(async () => {
-        readings.push(await page.evaluate(() => window.scrollY));
-        const lastThree = readings.slice(-3);
-        return lastThree.length === 3 && new Set(lastThree).size === 1;
-      })
-      .toBe(true);
-    const target = await page
-      .locator("#faq h2")
-      .evaluate((el) => el.getBoundingClientRect().top);
-    const header = await page
-      .locator("header")
-      .first()
-      .evaluate((el) => el.getBoundingClientRect().bottom);
-    expect(target, "FAQ heading clears the header").toBeGreaterThanOrEqual(
-      header,
-    );
-    const bottom = await page
-      .locator("#faq h2")
-      .evaluate((el) => el.getBoundingClientRect().bottom);
-    expect(bottom, "FAQ heading is fully visible").toBeLessThanOrEqual(800);
+    for (const id of ["faq", "book"]) {
+      await page.goto("/about");
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+      await page.goto(`/about#${id}`);
+      await expect
+        .poll(() => page.evaluate(() => window.scrollY))
+        .toBeGreaterThan(0);
+      // Settled once three readings in a row match (smooth scrolling).
+      const readings: number[] = [];
+      await expect
+        .poll(async () => {
+          readings.push(await page.evaluate(() => window.scrollY));
+          const lastThree = readings.slice(-3);
+          return lastThree.length === 3 && new Set(lastThree).size === 1;
+        })
+        .toBe(true);
+      const target = await page
+        .locator(`#${id} h2`)
+        .evaluate((el) => el.getBoundingClientRect().top);
+      const header = await page
+        .locator("header")
+        .first()
+        .evaluate((el) => el.getBoundingClientRect().bottom);
+      expect(target, `#${id} heading clears the header`).toBeGreaterThanOrEqual(
+        header,
+      );
+      const bottom = await page
+        .locator(`#${id} h2`)
+        .evaluate((el) => el.getBoundingClientRect().bottom);
+      expect(bottom, `#${id} heading is fully visible`).toBeLessThanOrEqual(
+        800,
+      );
+    }
   });
 
   test("offices sit at opposite edges at 1280 and stack at 390; FAQ rows open by keyboard", async ({
@@ -621,6 +625,8 @@ test.describe("about layout", { tag: "@a11y" }, () => {
         .nth(index)
         .evaluate((el) => getComputedStyle(el, "::after").content);
     expect(await markerAfter(0)).toBe('"+"');
+    const neighbour = page.locator(".faq details").nth(1);
+    const heightBefore = (await neighbour.boundingBox())?.height;
     await page.locator(".faq summary").nth(0).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator(".faq details").nth(0)).toHaveAttribute(
@@ -628,9 +634,18 @@ test.describe("about layout", { tag: "@a11y" }, () => {
       "",
     );
     expect(await markerAfter(0)).toBe('"−"');
-    await page.locator(".faq summary").nth(1).focus();
-    await page.keyboard.press("Enter");
+    // align-items: start, so the open answer does not stretch its neighbour
+    expect((await neighbour.boundingBox())?.height).toBe(heightBefore);
+    await page.locator(".faq summary").nth(2).focus();
+    await page.keyboard.press("Space");
     await expect(page.locator(".faq details[open]")).toHaveCount(2);
+    await page.locator(".faq summary").nth(0).focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".faq details").nth(0)).not.toHaveAttribute(
+      "open",
+      "",
+    );
+    expect(await markerAfter(0)).toBe('"+"');
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/about");

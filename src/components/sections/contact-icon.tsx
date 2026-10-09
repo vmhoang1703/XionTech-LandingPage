@@ -9,5 +9,5 @@ export function contactIcon(href: string): typeof PhoneIcon {
   if (href.startsWith("tel:")) return PhoneIcon;
   if (href.startsWith("https://wa.me/")) return WhatsappLogoIcon;
   if (href.startsWith("mailto:")) return EnvelopeSimpleIcon;
-  throw new Error(`No footer icon for contact link ${href}`);
+  throw new Error(`No contact icon for link ${href}`);
 }
