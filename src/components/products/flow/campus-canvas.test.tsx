@@ -225,6 +225,12 @@ describe("CampusCanvas", () => {
     expect(renderer.shadowMap.enabled).toBe(true);
   });
 
+  it("turns shadows off on a phone-width screen", async () => {
+    vi.stubGlobal("innerWidth", 390);
+    await renderReady();
+    expect(renderer.shadowMap.enabled).toBe(false);
+  });
+
   it("starts paused under reduced motion: one still frame, no animation frame", async () => {
     reducedMotion = true;
     await renderReady();
@@ -348,6 +354,25 @@ describe("CampusCanvas", () => {
     fireEvent.click(button);
     act(() => frame(60_000));
     expect(details(scene)).toEqual(held);
+  });
+
+  it("holds the spark where it was on Pause and carries it on after Play", async () => {
+    await renderReady();
+    act(() => frame(1000));
+    act(() => frame(1300));
+    const spark = lastDraw().scene.getObjectByName("spark");
+    const running = spark?.position.clone();
+    const button = screen.getByRole("button", { name: "Pause motion" });
+
+    fireEvent.click(button);
+    expect(renderer.render.mock.lastCall?.[0]).toBe(lastDraw().scene);
+    expect(spark?.position).toEqual(running);
+
+    fireEvent.click(button);
+    act(() => frame(5000));
+    expect(spark?.position).toEqual(running);
+    act(() => frame(5100));
+    expect(spark?.position).not.toEqual(running);
   });
 
   it("cancels the running tween when a new chapter becomes active", async () => {

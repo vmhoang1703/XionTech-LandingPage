@@ -27,6 +27,7 @@ const TWEEN_MS = 900;
 const easeBrand = cubicBezier(0.16, 1, 0.3, 1); // --ease-brand
 const BEACON_LIFT = 2.4;
 const MAX_PIXEL_RATIO = 2;
+const SHADOW_MIN_WIDTH = 640;
 
 type Pose = { position: Vector3; lookAt: Vector3; beacon: Vector3 };
 
@@ -171,7 +172,8 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
         antialias: true,
       });
       renderer.setPixelRatio(Math.min(devicePixelRatio, MAX_PIXEL_RATIO));
-      renderer.shadowMap.enabled = true;
+      // Shadows only from tablet width up; phones skip the shadow pass.
+      renderer.shadowMap.enabled = innerWidth >= SHADOW_MIN_WIDTH;
       const camera = new three.PerspectiveCamera(
         campus.CAMERA_FOV,
         1,

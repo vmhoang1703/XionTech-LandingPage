@@ -67,14 +67,14 @@ const PLACE_POSITIONS: Record<FlowPlace, Vec3> = {
   classroom: [4, 0, 0.5],
   rooftop: [0, 3.5, -4],
 };
-// The camera looks at each place from an angle and stands far enough back
-// that the other places stay in view: [azimuth from the front, elevation,
-// distance], in degrees and units.
+// The camera looks at each place from the plaza side, so its door and path
+// face the camera, and stands far enough back that the other places stay in
+// view: [azimuth from the front, elevation, distance], in degrees and units.
 const VIEWS: Record<FlowPlace, Vec3> = {
   gate: [6, 30, 18],
-  "staff-room": [-50, 42, 17],
-  classroom: [50, 42, 17],
-  rooftop: [140, 26, 19],
+  "staff-room": [45, 38, 22],
+  classroom: [-45, 38, 22],
+  rooftop: [40, 25, 24],
 };
 const LOOK_HEIGHT = 1;
 
@@ -413,9 +413,15 @@ export function buildCampus() {
     object.castShadow = true;
     object.receiveShadow = true;
   });
-  groundMesh.castShadow = false;
+  // Clouds and small details skip the shadow pass: cheaper on phones.
+  for (const part of [groundMesh, clouds, ...Object.values(details)]) {
+    part.traverse((object) => {
+      object.castShadow = false;
+    });
+  }
 
   let focused: FlowPlace = "gate";
+  segments[focused].material = litPath;
   let elapsed = 0;
   let sparkTime: number | undefined; // undefined: resting at the place
 
@@ -436,8 +442,10 @@ export function buildCampus() {
     spark.position.lerpVectors(HUB, PATH_ENDS[focused], along).setY(0.1);
   };
 
-  // Lights the path toward `place` and rests the spark at its end.
+  // Lights the path toward a new place and rests the spark at its end; the
+  // same place again leaves the spark where it is.
   const focus = (place: FlowPlace) => {
+    if (place === focused) return;
     segments[focused].material = path;
     focused = place;
     segments[place].material = litPath;
@@ -453,6 +461,6 @@ export function buildCampus() {
     pose();
   };
 
-  focus("gate");
+  pose();
   return { scene, beacon, focus, tick };
 }

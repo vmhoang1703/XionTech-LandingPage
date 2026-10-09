@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  Box3,
   type DirectionalLight,
   type InstancedMesh,
   type Light,
@@ -7,6 +8,8 @@ import {
   type MeshStandardMaterial,
   type Object3D,
   PerspectiveCamera,
+  Raycaster,
+  Vector3,
 } from "three";
 import { audienceFlow } from "@/content/products";
 import {
@@ -68,6 +71,8 @@ describe("placeTarget", () => {
         const onScreen = placeTarget(other).lookAt.project(camera);
         expect(Math.abs(onScreen.x)).toBeLessThan(0.9);
         expect(Math.abs(onScreen.y)).toBeLessThan(0.9);
+        // In front of the camera, not behind it.
+        expect(Math.abs(onScreen.z)).toBeLessThan(1);
       }
     }
   });
@@ -160,6 +165,18 @@ describe("buildCampus", () => {
     expect(named("ground")[0].receiveShadow).toBe(true);
   });
 
+  it("casts no shadows from the clouds or the small details", () => {
+    const parts = [
+      ...named("clouds"),
+      ...places.map((p) => named(p)[0].getObjectByName("details")),
+    ];
+    for (const part of parts) {
+      part?.traverse((o) => {
+        if ((o as Mesh).isMesh) expect(o.castShadow).toBe(false);
+      });
+    }
+  });
+
   it("points each camera target at its place on the campus", () => {
     for (const place of places) {
       const [object] = named(place);
@@ -194,6 +211,52 @@ const segments = (scene: Object3D) =>
 
 const glows = (mesh: Mesh) =>
   (mesh.material as MeshStandardMaterial).emissiveIntensity > 0;
+
+// The first thing the camera sees on the way to `point`, ignoring the sky
+// (clouds) and the beacon, which floats over the place on purpose.
+function firstSeen(scene: Object3D, from: Vector3, point: Vector3) {
+  const solid = scene.children.filter(
+    (o) => o.name !== "clouds" && o.name !== BEACON_NAME,
+  );
+  const ray = new Raycaster(from, point.clone().sub(from).normalize());
+  return ray.intersectObjects(solid, true)[0]?.object;
+}
+
+const within = (object: Object3D | undefined, root: Object3D | undefined) => {
+  let node = object;
+  while (node && node !== root) node = node.parent ?? undefined;
+  return node !== undefined;
+};
+
+describe("readable campus", () => {
+  it.each(places)(
+    "from the %s camera, every place and the lit path stand clear",
+    (place) => {
+      const { scene, focus } = buildCampus();
+      focus(place);
+      scene.updateMatrixWorld(true);
+      const { position } = placeTarget(place);
+      for (const other of places) {
+        const group = scene.getObjectByName(other);
+        const body = new Box3().setFromObject(group?.children[0] ?? scene);
+        const top = body.getCenter(new Vector3()).setY(body.max.y - 0.05);
+        expect(
+          within(firstSeen(scene, position, top), group),
+          `${other} hidden`,
+        ).toBe(true);
+      }
+      const paths = scene.getObjectByName("paths");
+      const spark = scene.getObjectByName("spark");
+      const segment = scene.getObjectByName(`path-${place}`);
+      for (const point of [spark?.position, segment?.position]) {
+        expect(
+          within(firstSeen(scene, position, point ?? position), paths),
+          "path hidden",
+        ).toBe(true);
+      }
+    },
+  );
+});
 
 describe("focus", () => {
   it("lights only the path toward the focused place", () => {
@@ -230,6 +293,18 @@ describe("focus", () => {
     tick(300);
     expect(spark.position.equals(end)).toBe(false);
     expect(spark.position.y).toBe(end.y);
+  });
+
+  it("leaves the spark where it is when the place does not change", () => {
+    const { scene, focus, tick } = buildCampus();
+    const spark = scene.getObjectByName("spark");
+    focus("classroom");
+    tick(300);
+    const running = spark?.position.clone();
+    focus("classroom");
+    expect(spark?.position).toEqual(running);
+    tick(100);
+    expect(spark?.position).not.toEqual(running);
   });
 });
 
