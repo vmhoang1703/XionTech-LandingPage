@@ -380,3 +380,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-s4-footer-offices.md`
   summary: The footer-ridge e2e checks for a news story and a job page skip (not fail) when `/news` or `/careers` lists no link.
   evidence: `e2e/a11y.spec.ts` footer ridge tests use `test.skip` when no story or role link exists; both ran and passed on 2026-10-09, but an empty Sanity list would hide the check.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-s3-about.md`
+  summary: Safari's FAQ disclosure marker fix and the About layout checks are verified only in Chrome; the repo has no WebKit Playwright project and the `a11y` project is opt-in.
+  evidence: `e2e/a11y.spec.ts` "about layout" runs in the Chrome-only `a11y` project (`playwright.config.ts`); check `/about` FAQ in Safari by hand before Demo day.
