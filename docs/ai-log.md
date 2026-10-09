@@ -1354,3 +1354,29 @@ Template:
   - The fix for that made the button unclickable on phones.
   - A later hover reveal kept the list open after a second click.
   - Our own browser-check script measured the wrong elements, so its output contradicted the written evidence until the review caught it.
+
+## 2026-10-09 — E-S4 footer and offices match the prototype (ENH-043, ENH-056 to ENH-058, ENH-064, ENH-073)
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` full route
+- **Prompt (short):** "Continue; when done, create the PR and merge it yourself, don't wait."
+- **What the AI did:** Wrote the build spec with 15 UX lines and built four tasks test-first:
+  - footer-only office data;
+  - the prototype footer columns (audience links, How we work, Company cut to three);
+  - office rows with icons and the mountain ridge;
+  - room above the ridge on every page.
+
+  A five-layer review followed, then patches, a re-verify and an independent evidence audit.
+
+- **Decision / result:** The shared office data keeps its order and labels, so About, Demo and Home are unchanged; the footer has its own Vietnam-first view with bracketed phones. The Vietnam email stays hidden until the business confirms it (Q7). The dead `#lxp` footer link is gone.
+
+  Checks:
+  - 1240 unit tests;
+  - diff coverage 100%;
+  - 15 smoke tests;
+  - the build;
+  - 38 accessibility browser tests, including ridge clearance on six routes at two widths.
+
+- **AI got it wrong?** Yes:
+  - The first footer data re-typed the phone links and showed "WhatsApp" as visible text.
+  - A lookup helper left an untested throw, which would have failed the coverage gate.
+  - The first page-end test measured only the last link on two pages. The review widened it to the lowest visible content on six pages, including a news story and a job page that had never been checked.

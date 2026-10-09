@@ -1,6 +1,12 @@
+import {
+  EnvelopeSimpleIcon,
+  MapPinIcon,
+  PhoneIcon,
+  WhatsappLogoIcon,
+} from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
-import { offices } from "@/content/offices";
+import { footerOffices } from "@/content/offices";
 import { siteFooter } from "@/content/site-footer";
 
 // Colour, font and breakpoint classes come from the Story 1.1 @theme tokens
@@ -9,11 +15,37 @@ const headingClass = "font-brand text-label-sm mb-4 text-amber-tint uppercase";
 const linkClass =
   "text-body-sm text-on-navy-muted inline-flex min-h-6 items-center hover:text-white";
 
+const iconClass = "text-amber-tint shrink-0";
+
+// Icon for a contact row, chosen from the link scheme.
+export function contactIcon(href: string): typeof PhoneIcon {
+  if (href.startsWith("tel:")) return PhoneIcon;
+  if (href.startsWith("https://wa.me/")) return WhatsappLogoIcon;
+  if (href.startsWith("mailto:")) return EnvelopeSimpleIcon;
+  throw new Error(`No footer icon for contact link ${href}`);
+}
+
 export function SiteFooter() {
   return (
-    <footer className="bg-ink text-on-navy-muted pt-18 pb-9 [--color-focus:var(--color-focus-on-navy)]">
+    <footer className="bg-ink text-on-navy-muted relative pt-18 pb-9 [--color-focus:var(--color-focus-on-navy)]">
+      <div className="footer-ridge" data-ridge="" aria-hidden="true">
+        <svg
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          focusable="false"
+        >
+          <path
+            className="footer-ridge-fill"
+            d="M0 120 L0 94 L110 82 L200 90 L300 72 L380 84 L470 66 L560 80 L650 60 L730 74 L800 52 L860 6 L920 56 L1000 46 L1090 68 L1180 58 L1270 78 L1360 64 L1440 74 L1440 120 Z"
+          />
+          <path
+            className="footer-ridge-line"
+            d="M0 94 L110 82 L200 90 L300 72 L380 84 L470 66 L560 80 L650 60 L730 74 L800 52 L860 6 L920 56 L1000 46 L1090 68 L1180 58 L1270 78 L1360 64 L1440 74"
+          />
+        </svg>
+      </div>
       <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto">
-        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 md:grid-cols-[1.3fr_repeat(4,1fr)]">
+        <div className="footer-grid">
           <div>
             <Link
               href="/"
@@ -47,35 +79,51 @@ export function SiteFooter() {
 
           <div>
             <h2 className={headingClass}>{siteFooter.officesHeading}</h2>
-            {offices.map((office) => (
+            {footerOffices.map((office) => (
               <address
                 key={office.id}
-                className="text-body-sm not-italic [&+&]:mt-4"
+                className="text-body-sm not-italic [&+&]:mt-5"
               >
-                <b className="block text-white">{office.name}</b>
-                {office.tag ? (
-                  <small className="font-brand text-label-sm mt-0.5 mb-1.5 block uppercase opacity-75">
-                    {office.tag}
-                  </small>
-                ) : null}
-                {office.addressLines.map((line) => (
-                  <span key={line} className="block">
-                    {line}
+                <b className="mb-1.5 block text-white">{office.name}</b>
+                <span className="mt-1.5 flex items-start gap-2.5">
+                  <MapPinIcon
+                    aria-hidden="true"
+                    className={`${iconClass} mt-0.75`}
+                    size={16}
+                  />
+                  <span>
+                    {office.addressLines.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
                   </span>
-                ))}
-                {office.contacts.map((contact) => (
-                  <a
-                    key={contact.href}
-                    href={contact.href}
-                    aria-label={contact.ariaLabel}
-                    {...(contact.external
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                    className="flex min-h-6 items-center [overflow-wrap:anywhere] hover:text-white"
-                  >
-                    {contact.label}
-                  </a>
-                ))}
+                </span>
+                {office.contacts.map((contact) => {
+                  const ContactIcon = contactIcon(contact.href);
+                  return (
+                    <span
+                      key={contact.href}
+                      className="flex items-center gap-2.5"
+                    >
+                      <ContactIcon
+                        aria-hidden="true"
+                        className={iconClass}
+                        size={16}
+                      />
+                      <a
+                        href={contact.href}
+                        aria-label={contact.ariaLabel}
+                        {...(contact.external
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        className="inline-flex min-h-6 items-center [overflow-wrap:anywhere] hover:text-white"
+                      >
+                        {contact.label}
+                      </a>
+                    </span>
+                  );
+                })}
               </address>
             ))}
           </div>

@@ -377,3 +377,81 @@ test.describe("Home hero doors and +3 reveal", { tag: "@a11y" }, () => {
     await expect(list).toBeHidden();
   });
 });
+
+// E-S4: the footer's ridge is drawn over the bottom of <main>; the room on
+// the last element keeps the last content above it.
+test.describe("footer ridge", { tag: "@a11y" }, () => {
+  const VIEWPORTS = [
+    { width: 1280, height: 800 },
+    { width: 390, height: 844 },
+  ];
+  /** The first link on `listPath` into `prefix`, or null when there is none. */
+  async function firstLink(page: Page, listPath: string, prefix: string) {
+    await page.goto(listPath);
+    return page
+      .locator(`main a[href^="${prefix}"]`)
+      .first()
+      .getAttribute("href", { timeout: 5000 })
+      .catch(() => null);
+  }
+
+  async function expectClearsRidge(page: Page, path: string) {
+    await page.goto(path);
+    await page.evaluate(() =>
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" }),
+    );
+    // One evaluate: all rects come from the same moment.
+    const { contentBottom, ridgeTop } = await page.evaluate(() => {
+      const last = document.querySelector("main > :last-child");
+      let bottom = 0;
+      // Page coordinates: on phones the footer is taller than the screen.
+      for (const el of last?.querySelectorAll("*") ?? []) {
+        if (!(el instanceof HTMLElement || el instanceof SVGElement)) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) continue;
+        if (getComputedStyle(el).visibility === "hidden") continue;
+        bottom = Math.max(bottom, rect.bottom + window.scrollY);
+      }
+      const ridge = document.querySelector("[data-ridge]");
+      return {
+        contentBottom: bottom,
+        ridgeTop: (ridge?.getBoundingClientRect().top ?? 0) + window.scrollY,
+      };
+    });
+    expect(contentBottom, `${path}: has content`).toBeGreaterThan(0);
+    expect(contentBottom, `${path}: content ends above the ridge`).toBeLessThan(
+      ridgeTop,
+    );
+    const overflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+    );
+    expect(overflow, `${path}: no sideways scroll`).toBeLessThanOrEqual(0);
+  }
+
+  for (const viewport of VIEWPORTS) {
+    for (const path of ["/", "/careers", "/about", "/privacy"]) {
+      test(`${path} at ${viewport.width}px: content clears the ridge`, async ({
+        page,
+      }) => {
+        await page.setViewportSize(viewport);
+        await expectClearsRidge(page, path);
+      });
+    }
+
+    for (const [name, listPath, prefix] of [
+      ["news story", "/news", "/news/"],
+      ["job page", "/careers", "/careers/"],
+    ]) {
+      test(`${name} at ${viewport.width}px: content clears the ridge`, async ({
+        page,
+      }) => {
+        await page.setViewportSize(viewport);
+        const href = await firstLink(page, listPath, prefix);
+        test.skip(href === null, `${listPath} has no ${prefix} link to open`);
+        await expectClearsRidge(page, href ?? listPath);
+      });
+    }
+  }
+});
