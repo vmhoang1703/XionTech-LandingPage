@@ -321,8 +321,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    /* A visitor who pressed Play motion on Products chose the glows. */
-    *:not(.eco-bg[data-motion="on"] i),
+    *,
     *::before,
     *::after {
       animation: none !important;
@@ -3362,347 +3361,6 @@
     font-size: 0.7rem;
   }
 
-  /* Hero: Built apart. Better together. */
-  .eco-hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding-block: 72px 88px;
-    background: linear-gradient(
-      180deg,
-      var(--color-white) 0%,
-      var(--color-page) 50%,
-      var(--color-mist) 100%
-    );
-  }
-
-  .eco-bg {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-    mask-image: linear-gradient(180deg, #000 55%, transparent);
-  }
-
-  .eco-bg i {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(32px);
-    will-change: transform;
-  }
-
-  .eco-bg .g1 {
-    top: -100px;
-    left: -110px;
-    width: 380px;
-    height: 380px;
-    background: var(--color-amber);
-    opacity: 0.3;
-    animation: eco-drift-1 34s ease-in-out infinite alternate;
-  }
-
-  .eco-bg .g2 {
-    right: -170px;
-    bottom: -170px;
-    width: 460px;
-    height: 460px;
-    background: var(--color-navy);
-    opacity: 0.2;
-    animation: eco-drift-2 34s ease-in-out infinite alternate;
-  }
-
-  .eco-bg .g3 {
-    top: 14%;
-    right: 34%;
-    width: 280px;
-    height: 280px;
-    background: var(--color-white);
-    opacity: 0.55;
-    animation: eco-drift-3 38s ease-in-out infinite alternate;
-  }
-
-  .eco-bg .sheen {
-    inset: -20%;
-    border-radius: 0;
-    filter: none;
-    background: linear-gradient(
-      115deg,
-      transparent 38%,
-      color-mix(in srgb, var(--color-white) 14%, transparent) 48%,
-      transparent 58%
-    );
-    animation: eco-sheen 18s linear infinite;
-  }
-
-  /* Pause motion: the glows rest where they are */
-  .eco-bg[data-motion="off"] i {
-    animation-play-state: paused;
-  }
-
-  @keyframes eco-drift-1 {
-    33% {
-      transform: translate3d(30vw, 12vh, 0) scale(1.08);
-    }
-    66% {
-      transform: translate3d(14vw, 38vh, 0) scale(0.95);
-    }
-    100% {
-      transform: translate3d(-2vw, 22vh, 0) scale(1.04);
-    }
-  }
-
-  @keyframes eco-drift-2 {
-    33% {
-      transform: translate3d(-24vw, -10vh, 0) scale(1.06);
-    }
-    66% {
-      transform: translate3d(-38vw, -34vh, 0) scale(0.96);
-    }
-    100% {
-      transform: translate3d(-10vw, -26vh, 0) scale(1.02);
-    }
-  }
-
-  @keyframes eco-drift-3 {
-    33% {
-      transform: translate3d(-18vw, 20vh, 0) scale(1.1);
-    }
-    66% {
-      transform: translate3d(10vw, 30vh, 0) scale(0.92);
-    }
-    100% {
-      transform: translate3d(16vw, 4vh, 0) scale(1.05);
-    }
-  }
-
-  @keyframes eco-sheen {
-    from {
-      transform: translateX(-35%);
-    }
-    to {
-      transform: translateX(35%);
-    }
-  }
-
-  /* Solid navy so it reads on the light hero (ENH-018); the label slides
-     out beside the icon with opacity and transform only */
-  .eco-toggle {
-    position: absolute;
-    top: 16px;
-    right: 24px;
-    z-index: 3;
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-full);
-    background: var(--color-navy);
-    color: var(--color-white);
-    opacity: 0.9;
-    transition: opacity 0.3s var(--ease-brand);
-  }
-
-  .eco-toggle:hover,
-  .eco-toggle:focus-visible {
-    opacity: 1;
-  }
-
-  .eco-toggle span {
-    position: absolute;
-    top: 50%;
-    right: calc(100% + 8px);
-    padding: 6px 12px;
-    border-radius: var(--radius-full);
-    background: var(--color-navy);
-    font-size: var(--text-body-sm);
-    font-weight: 500;
-    white-space: nowrap;
-    pointer-events: none;
-    clip-path: inset(0 0 0 100%);
-    transform: translate(6px, -50%);
-    transition:
-      clip-path 0.3s var(--ease-brand),
-      transform 0.3s var(--ease-brand);
-  }
-
-  .eco-toggle:hover span,
-  .eco-toggle:focus-visible span {
-    clip-path: inset(0);
-    transform: translate(0, -50%);
-  }
-
-  .eco-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.05fr;
-    gap: 48px;
-    align-items: center;
-  }
-
-  .eco-copy h1 {
-    margin: 0;
-    color: var(--color-navy);
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4.4vw, 3.6rem);
-    font-weight: 300;
-    line-height: 1.04;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-  }
-
-  .eco-copy .lede {
-    max-width: 44ch;
-    margin-top: 24px;
-  }
-
-  .eco-diagram {
-    position: relative;
-    justify-self: end;
-    width: 100%;
-    max-width: 540px;
-    aspect-ratio: 1.05 / 1;
-  }
-
-  .eco-lines {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .eco-lines line {
-    stroke: var(--color-navy);
-    stroke-opacity: 0.45;
-    stroke-width: 1.2;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .eco-hub {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: grid;
-    place-items: center;
-    width: 32%;
-    aspect-ratio: 1;
-    border-radius: 28px;
-    background: linear-gradient(145deg, var(--color-white), var(--color-paper));
-    color: var(--color-navy);
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 3.6vw, 3rem);
-    font-weight: 400;
-    transform: translate(-50%, -50%);
-    box-shadow:
-      0 0 0 10px color-mix(in srgb, var(--color-white) 60%, transparent),
-      0 30px 60px -20px color-mix(in srgb, var(--color-navy) 45%, transparent),
-      0 0 90px color-mix(in srgb, var(--color-amber) 45%, transparent);
-  }
-
-  .eco-card {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 33%;
-    aspect-ratio: 1.33 / 1;
-    padding: 16px 18px;
-    border: 1px solid color-mix(in srgb, var(--color-white) 16%, transparent);
-    border-radius: 18px;
-    background: linear-gradient(160deg, var(--color-navy-2), var(--color-navy));
-    color: var(--color-white);
-    box-shadow: 0 24px 40px -22px
-      color-mix(in srgb, var(--color-ink) 60%, transparent);
-    transition:
-      transform 0.35s var(--ease-brand),
-      box-shadow 0.35s var(--ease-brand);
-  }
-
-  .eco-card small {
-    color: var(--color-on-navy-muted);
-    font-size: var(--text-body-sm);
-  }
-
-  .eco-card b {
-    font-size: clamp(1.15rem, 2.1vw, 1.75rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
-  }
-
-  .eco-card:hover,
-  .eco-card:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: 0 30px 50px -22px
-      color-mix(in srgb, var(--color-ink) 70%, transparent);
-  }
-
-  .eco-card:focus-visible {
-    outline: 2px solid var(--color-navy);
-    outline-offset: 4px;
-  }
-
-  .eco-tl {
-    top: 0;
-    left: 0;
-  }
-
-  .eco-tr {
-    top: 0;
-    right: 0;
-  }
-
-  .eco-bl {
-    bottom: 0;
-    left: 0;
-  }
-
-  .eco-br {
-    right: 0;
-    bottom: 0;
-  }
-
-  @media (width < --theme(--breakpoint-md)) {
-    .eco-grid {
-      grid-template-columns: 1fr;
-      gap: 36px;
-    }
-
-    .eco-diagram {
-      justify-self: center;
-    }
-  }
-
-  @media (width <= --theme(--breakpoint-sm)) {
-    .eco-hero {
-      padding-block: 88px 64px;
-    }
-
-    .eco-toggle {
-      right: 16px;
-    }
-
-    .eco-card {
-      padding: 12px 14px;
-      border-radius: 14px;
-    }
-
-    .eco-hub {
-      border-radius: 20px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .eco-card:hover,
-    .eco-card:focus-visible {
-      transform: none;
-    }
-
-    .eco-toggle span {
-      clip-path: inset(0);
-      transform: translate(0, -50%);
-    }
-  }
-
   /* Products flow */
   /* The audience flow: intro, chapters and the sticky campus. Chapters dim
      only once JavaScript sets data-active; without it they all read fully. */
@@ -3809,6 +3467,50 @@
     text-underline-offset: 4px;
   }
 
+  /* The campus fills the sticky stage. The still SVG stands in until WebGL is
+     ready, and for good without it; the canvas keeps [hidden] until then. */
+  .flow-canvas {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--color-ice);
+  }
+
+  .flow-scene,
+  .flow-fallback {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Solid navy so it reads on every sky colour; the global ring shows on focus. */
+  .flow-toggle {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    padding-inline: 12px;
+    border-radius: var(--radius-full);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    transition: background-color 0.3s var(--ease-brand);
+  }
+
+  .flow-toggle:hover {
+    background: var(--color-navy-2);
+  }
+
+  .flow-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
   @media (width >= 1024px) {
     .flow-body {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3863,6 +3565,11 @@
     scroll-margin-top: calc(
       var(--spacing-anchor-offset) - var(--spacing-header-height)
     );
+  }
+
+  /* Reached from a flow chapter's link: the navy edge of the active chapter. */
+  .pshow:target {
+    border-color: var(--color-navy);
   }
 
   .pshow[data-aud="parents"],

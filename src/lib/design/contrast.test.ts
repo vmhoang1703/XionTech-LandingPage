@@ -492,8 +492,7 @@ describe("reduced motion", () => {
   const source = GLOBALS_CSS.replace(/\/\*[\s\S]*?\*\//g, "");
   const block = REDUCED_MOTION_BLOCK.exec(source)?.[1] ?? "";
 
-  // E-A5: only an explicit Play motion on the Products glows is exempt.
-  it.each(['*:not(.eco-bg[data-motion="on"] i)', "*::before", "*::after"])(
+  it.each(["*", "*::before", "*::after"])(
     "stops every animation and transition on %s",
     (selector) => {
       const rule = readRuleDeclarations(block, selector);
