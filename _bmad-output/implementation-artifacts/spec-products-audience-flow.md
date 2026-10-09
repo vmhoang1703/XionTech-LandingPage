@@ -104,17 +104,17 @@ context:
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Intro | Load `/products` at 1280px | — | H1 "Built apart. Better together."; lede; campus at morning | Static | `products.ts` |  |
-| Chapters | Scroll down | Mouse wheel, touch, keyboard (Space, PgDn) | Active chapter marked; others dimmed to no less than 70%; native scroll, no jump | Follows scroll | Sammy 2026-10-09 |  |
-| Camera | Chapter changes | Scroll | Camera glides to the chapter's place; beacon rises there | 900ms `--ease-brand` | Sammy 2026-10-09 |  |
-| Sky | Scroll top → bottom | Scroll | Morning → afternoon colour | Follows scroll | Sammy 2026-10-09 |  |
-| Chapter link | Activate "See {app} details" | Mouse, keyboard, touch | Scrolls to the card; heading below the header; focus ring visible | Smooth | Anchors |  |
-| Pause | Activate | Mouse, keyboard, touch | Pulse and tweens stop; label "Play motion"; the choice persists on reload | Instant | EXPERIENCE.md motion rules |  |
-| Reduced motion | Load with reduced motion | — | Still frames, no tween; chapters as a plain list | Static | DESIGN.md:451 |  |
-| No WebGL | WebGL unavailable | — | SVG campus; no toggle; no error | Static | `hero-silk.tsx` pattern |  |
-| Off screen | Scroll past `#flow` / hide tab | — | Rendering stops (no rAF) | Instant | EXPERIENCE.md |  |
-| Width | 1024px / 390px | — | Side-by-side / canvas sticky on top at 40dvh; no sideways scroll | Static | Spec |  |
-| Cards | Open a card dialog | Mouse, keyboard | Unchanged dialog behaviour; restyled cards | Instant | `product-detail.tsx` |  |
+| Intro | Load `/products` at 1280px | — | H1 "Built apart. Better together."; lede; campus at morning | Static | `products.ts` || ✅ walk 1280 (H1, lede, morning sky); `audience-flow.test.tsx` |
+| Chapters | Scroll down | Mouse wheel, touch, keyboard (Space, PgDn) | Active chapter marked; others dimmed to no less than 70%; native scroll, no jump | Follows scroll | Sammy 2026-10-09 || ✅ walk (active follows scroll, others 0.8, CLS 0); e2e Student active |
+| Camera | Chapter changes | Scroll | Camera glides to the chapter's place; beacon rises there | 900ms `--ease-brand` | Sammy 2026-10-09 || ✅ walk screenshots per chapter (camera at gate, staff room, classroom, rooftop); `campus-canvas.test.tsx` tween cancel. Framing too close (see review) |
+| Sky | Scroll top → bottom | Scroll | Morning → afternoon colour | Follows scroll | Sammy 2026-10-09 || ✅ walk (morning blue at intro → warm yellow at Campus) |
+| Chapter link | Activate "See {app} details" | Mouse, keyboard, touch | Scrolls to the card; heading below the header; focus ring visible | Smooth | Anchors || ✅ walk (focus ring 2px, #ai-tutor heading top 181); e2e deep link |
+| Pause | Activate | Mouse, keyboard, touch | Pulse and tweens stop; label "Play motion"; the choice persists on reload | Instant | EXPERIENCE.md motion rules || ✅ walk (Play motion, 0 rAF, persists after reload, chapters un-dim); unit tests |
+| Reduced motion | Load with reduced motion | — | Still frames, no tween; chapters as a plain list | Static | DESIGN.md:451 || ✅ walk (0 rAF, all chapters opacity 1); e2e reduced motion |
+| No WebGL | WebGL unavailable | — | SVG campus; no toggle; no error | Static | `hero-silk.tsx` pattern || ✅ walk `--disable-webgl` (SVG, no toggle, 0 errors); unit test |
+| Off screen | Scroll past `#flow` / hide tab | — | Rendering stops (no rAF) | Instant | EXPERIENCE.md || ✅ walk (0 rAF in 1s past #flow); unit tests |
+| Width | 1024px / 390px | — | Side-by-side / canvas sticky on top at 40dvh; no sideways scroll | Static | Spec || ✅ walk (1024 beside 456x708; 390 sticky 358x338, no sideways scroll) |
+| Cards | Open a card dialog | Mouse, keyboard | Unchanged dialog behaviour; restyled cards | Instant | `product-detail.tsx` || ✅ walk (dialog opens and closes); e2e keyboard dialog |
 
 ## Design Notes
 
@@ -137,3 +137,39 @@ context:
 - `npm run test:smoke` -- expected: all pass
 - `npm run build` -- expected: success; three.js only in the `/products` chunks
 - `npx playwright test --project=a11y` -- expected: all pass
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-09.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- eslint, tsc and prettier clean
+- `npm test` -- exit 0 -- Test Files 87 passed (87); Tests 1307 passed (1307)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 226 lines, Missing 0, Coverage 100%; `products/flow` branches 93.75%
+- `npm run test:smoke` -- exit 0 -- 15 passed (17.9s)
+- `npm run build` -- exit 0 -- `/products` static; no page HTML references a chunk containing `WebGLRenderer`
+- `npx playwright test --project=a11y` -- exit 0 -- 44 passed (1.1m)
+- `npx playwright test e2e/products.spec.ts --project=a11y` -- exit 0 -- 5 passed, after tagging the deep-link and dialog tests `@a11y`
+
+**Observed**
+
+- Walk on a production build (`next start -p 3005`, Chrome), `walk-output.txt`:
+  - The active chapter follows scroll: Parent → Teacher and staff → Student → Campus. Inactive chapters are at 0.8 opacity, CLS is 0.
+  - Off-screen: 0 animation frames in 1s.
+  - Pause shows "Play motion", draws 0 frames, survives a reload and un-dims the chapters. Reduced motion: every chapter at opacity 1, 0 frames.
+  - `--disable-webgl` shows the SVG campus, no toggle and 0 page errors.
+  - At 1024 the canvas sits beside the chapters (456x708). At 390 it is sticky on top (358x338) with no sideways scroll.
+  - The chapter link shows a 2px focus ring and lands on `#ai-tutor` with the heading 181px from the top. The card dialog opens and closes.
+- Visual quality, from the screenshots: the camera is too close (the classroom and rooftop fill the frame with one block), the lighting is flat, and the campus does not read as a campus. Motion is only the camera glide and the beacon. Passed to review.
+
+**Artifacts**
+
+- [verification.txt](spec-products-audience-flow-evidence/verification.txt) -- command transcripts
+- [walk.mjs](spec-products-audience-flow-evidence/walk.mjs), [walk-output.txt](spec-products-audience-flow-evidence/walk-output.txt) -- the walk and its output
+- `flow-1280-intro.png`, `flow-1280-chapter-1..4.png`, `flow-1280-reduced.png`, `flow-1024.png`, `flow-390.png`, `flow-1280-no-webgl.png` -- screenshots (hashes in the ledger)
+
+**Not captured**
+
+- Safari and Firefox (Chrome channel only). Real mobile GPU performance.
+

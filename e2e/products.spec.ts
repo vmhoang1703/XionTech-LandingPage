@@ -22,37 +22,41 @@ test(
   },
 );
 
-test("a showcase card opens its dialog by keyboard, keeps Tab inside, and Esc returns focus", async ({
-  page,
-}) => {
-  await page.goto("/products");
-  const expand = page.getByRole("button", { name: "Open Staff Hub details" });
-  await expand.focus();
-  await page.keyboard.press("Enter");
-  const dialog = page.getByRole("dialog", { name: "Staff Hub" });
-  await expect(dialog).toBeVisible();
-  for (let i = 0; i < 6; i++) {
-    await page.keyboard.press("Tab");
-    const inside = await dialog.evaluate((d) =>
-      d.contains(document.activeElement),
-    );
-    expect(inside, `Tab ${i + 1} stays in the dialog`).toBe(true);
-  }
-  await page.keyboard.press("Escape");
-  await expect(dialog).toBeHidden();
-  await expect(expand).toBeFocused();
-});
+test(
+  "a showcase card opens its dialog by keyboard, keeps Tab inside, and Esc returns focus",
+  { tag: "@a11y" },
+  async ({ page }) => {
+    await page.goto("/products");
+    const expand = page.getByRole("button", { name: "Open Staff Hub details" });
+    await expand.focus();
+    await page.keyboard.press("Enter");
+    const dialog = page.getByRole("dialog", { name: "Staff Hub" });
+    await expect(dialog).toBeVisible();
+    for (let i = 0; i < 6; i++) {
+      await page.keyboard.press("Tab");
+      const inside = await dialog.evaluate((d) =>
+        d.contains(document.activeElement),
+      );
+      expect(inside, `Tab ${i + 1} stays in the dialog`).toBe(true);
+    }
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(expand).toBeFocused();
+  },
+);
 
-test("/products#ai-tutor lands on the AI Tutor card below the header", async ({
-  page,
-}) => {
-  await page.goto("/products#ai-tutor");
-  await expect(page.locator("#ai-tutor-h")).toBeInViewport();
-  const top = await page
-    .locator("#ai-tutor")
-    .evaluate((el) => el.getBoundingClientRect().top);
-  expect(top).toBeGreaterThanOrEqual(60);
-});
+test(
+  "/products#ai-tutor lands on the AI Tutor card below the header",
+  { tag: "@a11y" },
+  async ({ page }) => {
+    await page.goto("/products#ai-tutor");
+    await expect(page.locator("#ai-tutor-h")).toBeInViewport();
+    const top = await page
+      .locator("#ai-tutor")
+      .evaluate((el) => el.getBoundingClientRect().top);
+    expect(top).toBeGreaterThanOrEqual(60);
+  },
+);
 
 const CHAPTER_ANCHORS = ["pxp", "sxp", "ai-tutor", "iot"];
 

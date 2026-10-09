@@ -56,3 +56,26 @@ Task 7: minor — e2e/products.spec.ts:83-91,121 rAF counter is page-wide and ha
 Task 7: minor — e2e/products.spec.ts:112-117 fixed waitForTimeout sleeps (1.5s)
 Task 7: minor — e2e/products.spec.ts:101-107 reduced-motion test requires WebGL; keyboard dialog and #ai-tutor tests are untagged (pre-existing)
 Task 7: complete (commits ec26070..9402474, diff verified)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — eslint, tsc, prettier clean
+Acceptance: verification — npm test — exit 0 — Test Files 87 passed (87); Tests 1307 passed (1307)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total 226 lines, Missing 0, Coverage 100%; products/flow branches 93.75%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed (17.9s)
+Acceptance: verification — npm run build — exit 0 — ○ /products static; no page HTML references a chunk containing WebGLRenderer
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 44 passed (1.1m)
+Acceptance: manual — walk 1280 scroll — observed: active chapter follows scroll Parent→Teacher and staff→Student→Campus, inactive at 0.8, CLS 0.0000, off-screen 0 rAF in 1s
+Acceptance: manual — walk pause/reduced/no-webgl — observed: Pause → "Play motion", data-paused true, 0 rAF in 1s, persists after reload; reduced motion all chapters opacity 1, 0 rAF; --disable-webgl shows SVG fallback, no toggle, 0 page errors
+Acceptance: manual — walk widths and links — observed: 1024 canvas 456x708 beside; 390 canvas 358x338 sticky top, no sideways scroll; #ai-tutor link focus ring solid 2px, heading top 181; dialog opens and closes
+Acceptance: manual — visual quality — observed: camera too close (classroom and rooftop fill the frame with one block), flat lighting, campus does not read as a campus; motion limited to camera glide and beacon
+Acceptance: evidence — spec-products-audience-flow-evidence/verification.txt — 13886 bytes — sha256 8abb6fe0ccfb — verification.txt
+Acceptance: evidence — spec-products-audience-flow-evidence/walk.mjs — 7444 bytes — sha256 0b927567b3d1 — walk.mjs
+Acceptance: evidence — spec-products-audience-flow-evidence/walk-output.txt — 3035 bytes — sha256 d4c94f09ec46 — walk-output.txt
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-intro.png — 126879 bytes — sha256 8fbf43a2cc4d — flow-1280-intro.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-1.png — 126749 bytes — sha256 012fe31ba0a4 — flow-1280-chapter-1.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-2.png — 117944 bytes — sha256 37393e8a4978 — flow-1280-chapter-2.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-3.png — 109879 bytes — sha256 1aa961d06702 — flow-1280-chapter-3.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-4.png — 117165 bytes — sha256 5dc0dbc0156f — flow-1280-chapter-4.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-reduced.png — 110269 bytes — sha256 c954a38e9788 — flow-1280-reduced.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1024.png — 104048 bytes — sha256 b32ecd023084 — flow-1024.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-390.png — 62239 bytes — sha256 9b2df7a7bc9c — flow-390.png
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-no-webgl.png — 119583 bytes — sha256 c4797bb3f78f — flow-1280-no-webgl.png
+Acceptance: verification — npx playwright test e2e/products.spec.ts --project=a11y — exit 0 — 5 passed (16.2s); deep-link and dialog tests now tagged @a11y so they run (matrix DEEP_LINK)
