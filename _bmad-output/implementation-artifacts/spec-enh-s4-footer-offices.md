@@ -5,6 +5,7 @@ created: '2026-10-08'
 status: 'in-progress'
 route: 'dispatch'
 review_loop_iteration: 0
+baseline_commit: '504e2b66076e044eb209d2fa7728a8838fe709dd'
 context:
   - '{project-root}/AGENTS.md'
   - '{project-root}/docs/ux-checks.md'
@@ -75,13 +76,13 @@ labels so About, Demo and Home are unchanged.
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/content/offices.ts` -- add footer-only data without changing existing fields: delivery-center names ("Vietnam Delivery Center", "US Delivery Center"), a bracketed phone display ("(+84) 908 107 552", "(+1) 469 322 9899", "(+1) 469 439 9345"), and a `footerOffices` order `[hcmc, plano]` -- About, Demo and Home stay unchanged
+- [x] `src/content/offices.ts` -- add footer-only data without changing existing fields: delivery-center names ("Vietnam Delivery Center", "US Delivery Center"), a bracketed phone display ("(+84) 908 107 552", "(+1) 469 322 9899", "(+1) 469 439 9345"), and a `footerOffices` order `[hcmc, plano]` -- About, Demo and Home stay unchanged
   - red: `src/content/offices.test.ts` -- `footerOffices` is Vietnam then US with the bracketed phones, while `offices` is still Plano then HCMC with the old labels
-- [ ] `src/content/site-footer.ts`, `src/content/services.test.ts` -- prototype columns and links; services test accepts `#process` -- no dead `#lxp`
+- [x] `src/content/site-footer.ts`, `src/content/services.test.ts` -- prototype columns and links; services test accepts `#process` -- no dead `#lxp`
   - red: `src/components/layout/site-footer.test.tsx` -- Products links For schools, For students, For parents to `#sxp`, `#ai-tutor`, `#pxp`; Company is News, About us, Careers
-- [ ] `src/components/layout/site-footer.tsx`, `globals.css` -- render the columns, the office rows with icons from `footerOffices`, the ridge SVG; port the footer grid and row CSS in a `/* E-S4 Footer */` block
+- [x] `src/components/layout/site-footer.tsx`, `globals.css` -- render the columns, the office rows with icons from `footerOffices`, the ridge SVG; port the footer grid and row CSS in a `/* E-S4 Footer */` block
   - red: `src/components/layout/site-footer.test.tsx` -- offices render Vietnam Delivery Center before US Delivery Center with icon rows and "(+84) 908 107 552"; an `aria-hidden` ridge SVG is present; no Vietnam email
-- [ ] `globals.css`, `e2e/a11y.spec.ts` -- bottom room on `main > :last-child` (176px at ≤640px) and a browser test that the ridge does not cover the last content on `/` and `/careers` at 1280 and 390, with no sideways scroll -- every page clears the ridge
+- [x] `globals.css`, `e2e/a11y.spec.ts` -- bottom room on `main > :last-child` (176px at ≤640px) and a browser test that the ridge does not cover the last content on `/` and `/careers` at 1280 and 390, with no sideways scroll -- every page clears the ridge
   - red: `e2e/a11y.spec.ts` -- on `/careers` at 1280 the last role link's bottom sits above the ridge's top
 
 **Acceptance Criteria:**
