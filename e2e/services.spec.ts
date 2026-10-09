@@ -8,7 +8,9 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(200);
-    expect(html).toContain("<title>Software Outsourcing Vietnam");
+    expect(html).toContain(
+      "<title>Software Outsourcing Vietnam | Product Engineering, AI, Low-code &amp; Cloud | XionTech</title>",
+    );
     // H1 is present in server-rendered HTML
     expect(html).toContain("Software teams that");
     expect(html).toContain("get IT done");
@@ -29,7 +31,7 @@ test(
       html.indexOf('<section id="process"'),
     );
     expect(html).toContain("Our 4-D process: from your request to launch.");
-    expect(html).not.toContain("GMT+7");
-    expect(html).not.toContain("Tell us what you&#x27;re building.");
+    expect(html).not.toContain('class="clock-strip');
+    expect(html).not.toContain('class="capture');
   },
 );

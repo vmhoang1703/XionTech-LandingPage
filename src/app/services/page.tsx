@@ -77,10 +77,10 @@ export default function ServicesPage() {
           <div className="sec-head">
             <h2 id="services-outcomes-h">{servicesOutcomes.title}</h2>
           </div>
-          <ol className="outcomes">
+          <ol className="outcomes" role="list">
             {servicesOutcomes.items.map((item, index) => (
-              <li key={item.title} className="outcome">
-                <span className="oc-num">
+              <li key={item.id} className="outcome">
+                <span className="oc-num" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3>{item.title}</h3>

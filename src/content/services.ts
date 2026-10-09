@@ -85,27 +85,31 @@ export const servicesOutcomes = {
   title: "What can we help you achieve?",
   items: [
     {
+      id: "build",
       title: "Build a new digital product",
       description:
         "Move from discovery and UX into engineering, testing and launch with one delivery team.",
     },
     {
+      id: "extend",
       title: "Extend your team",
       description:
         "Add specialised technology talent when your internal team needs more capacity or specific skills.",
     },
     {
+      id: "modernise",
       title: "Modernise an existing platform",
       description:
         "Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works.",
     },
     {
+      id: "apply-ai",
       title: "Apply AI where it creates value",
       description:
         "Use AI, analytics and automation to improve products, workflows and business decision-making.",
     },
   ],
-};
+} as const;
 
 export const servicesProcess: {
   title: string;

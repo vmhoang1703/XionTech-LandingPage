@@ -3075,20 +3075,6 @@
       linear-gradient(160deg, var(--color-mist), var(--color-white));
   }
 
-  .surface-navy .step4 .art {
-    background:
-      radial-gradient(
-        60% 80% at 50% 110%,
-        color-mix(in srgb, var(--color-amber) 35%, transparent),
-        transparent 70%
-      ),
-      linear-gradient(
-        160deg,
-        color-mix(in srgb, var(--color-white) 8%, transparent),
-        color-mix(in srgb, var(--color-white) 2%, transparent)
-      );
-  }
-
   .step4 .art .main {
     display: grid;
     place-items: center;
@@ -3157,10 +3143,6 @@
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.08em;
-  }
-
-  .surface-navy .step4 .num {
-    color: var(--color-amber-tint);
   }
 
   .step4 h3 {
@@ -4158,6 +4140,7 @@
 
   /* Service card anchors (Story 5.2), the 4-D process (Story 5.4), About (Story 6.4) */
   .svc-card[id],
+  #outcomes,
   #process,
   #values,
   #faq {
@@ -4926,7 +4909,7 @@ main > :last-child {
 .svc-flow {
   background: linear-gradient(
     180deg,
-    #eef2f9 0%,
+    var(--color-mist) 0%,
     #e6eef9 38%,
     #dce6f5 72%,
     #f7f9fd 92%,
@@ -4956,7 +4939,12 @@ main > :last-child {
       rgb(255 216 74 / 0.22),
       transparent 70%
     ),
-    linear-gradient(160deg, #0b1730, #163663 62%, #1e4178);
+    linear-gradient(
+      160deg,
+      var(--color-ink),
+      var(--color-navy) 62%,
+      var(--color-navy-glow)
+    );
 }
 
 .svc-hero .hl {
@@ -4990,7 +4978,7 @@ main > :last-child {
 
 .svc-stick {
   position: sticky;
-  top: 120px;
+  top: calc(var(--spacing-header-height) + 48px);
   margin-bottom: 0;
 }
 
@@ -5093,9 +5081,7 @@ main > :last-child {
 
 /* The 4-D process keeps the light text tokens (prototype .d4) */
 .d4 {
-  --color-heading: #163663;
-  --color-text: #10223f;
-  --color-muted: #4a5b78;
+  color: var(--color-text);
 }
 
 /* The 4-D process on the light background: white step cards and white dots */

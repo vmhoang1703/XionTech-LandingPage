@@ -109,7 +109,7 @@ describe("Home page", () => {
     expect(
       screen.queryByRole("heading", { name: "Eight services, one team." }),
     ).toBeNull();
-    expect(document.querySelector(".bento, .svc-grid")).toBeNull();
+    expect(document.querySelector(".bento, .svc-cards")).toBeNull();
   });
 
   it("ends with the contact section and no capture band", () => {

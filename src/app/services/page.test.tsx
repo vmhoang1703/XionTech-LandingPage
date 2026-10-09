@@ -177,10 +177,13 @@ describe("ServicesPage", () => {
   it("styles the split, the sticky heading and the breakpoints of the prototype", () => {
     const css = globalsCss();
     expect(css).toMatch(
-      /\.svc-stick\s*\{[^}]*position:\s*sticky[^}]*top:\s*120px/,
+      /\.svc-stick\s*\{[^}]*position:\s*sticky[^}]*top:\s*calc\(var\(--spacing-header-height\) \+ 48px\)/,
     );
-    expect(css).toMatch(/@media \(width <= 980px\)/);
-    expect(css).toMatch(/@media \(width <= 760px\)/);
+    expect(css).toMatch(/@media \(width <= 980px\)\s*\{\s*\.svc-split/);
+    expect(css).toMatch(/@media \(width <= 760px\)\s*\{\s*\.outcomes/);
+    expect(css).toMatch(
+      /@media \(width <= 640px\)\s*\{\s*\.svc-cards\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/,
+    );
     expect(css).not.toMatch(/\.clock-strip/);
     expect(css).not.toMatch(/\.svc-grid/);
   });
@@ -188,7 +191,7 @@ describe("ServicesPage", () => {
   it(".svc-card[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
     const css = globalsCss();
     expect(css).toMatch(
-      /\.svc-card\[id\]\s*,\s*#process(\s*,\s*#[\w-]+)*\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+      /\.svc-card\[id\]\s*,\s*#outcomes\s*,\s*#process(\s*,\s*#[\w-]+)*\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
   });
 

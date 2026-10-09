@@ -455,3 +455,59 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
     }
   }
 });
+
+test.describe("services layout", { tag: "@a11y" }, () => {
+  const box = (page: Page, selector: string, index = 0) =>
+    page
+      .locator(selector)
+      .nth(index)
+      .evaluate((el) => {
+        const { top, bottom } = el.getBoundingClientRect();
+        return { top, bottom };
+      });
+
+  test("sticky heading at 1280, stacked at 980, one column at 640, anchor clears the header", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/services");
+    await page
+      .locator(".svc-card")
+      .nth(5)
+      .evaluate((el) => el.scrollIntoView({ behavior: "instant" }));
+    const stick = await box(page, ".svc-stick");
+    expect(stick.top, "heading stays in view").toBeGreaterThanOrEqual(0);
+    expect(stick.bottom).toBeLessThanOrEqual(800);
+
+    await page.setViewportSize({ width: 980, height: 800 });
+    await page.goto("/services");
+    const position = await page
+      .locator(".svc-stick")
+      .evaluate((el) => getComputedStyle(el).position);
+    expect(position).toBe("static");
+    expect((await box(page, ".svc-stick")).bottom).toBeLessThanOrEqual(
+      (await box(page, ".svc-card")).top,
+    );
+
+    await page.setViewportSize({ width: 640, height: 800 });
+    await page.goto("/services");
+    expect((await box(page, ".svc-card", 1)).top).toBeGreaterThan(
+      (await box(page, ".svc-card", 0)).top,
+    );
+
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/services#cloud");
+    let last = -1;
+    await expect
+      .poll(async () => {
+        const y = await page.evaluate(() => window.scrollY);
+        const settled = y === last;
+        last = y;
+        return settled;
+      })
+      .toBe(true);
+    const heading = await box(page, "#cloud h3");
+    const header = await box(page, "header");
+    expect(heading.top).toBeGreaterThanOrEqual(header.bottom);
+  });
+});
