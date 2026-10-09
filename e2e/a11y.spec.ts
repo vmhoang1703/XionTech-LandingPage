@@ -377,3 +377,43 @@ test.describe("Home hero doors and +3 reveal", { tag: "@a11y" }, () => {
     await expect(list).toBeHidden();
   });
 });
+
+// E-S4: the footer's ridge is drawn over the bottom of <main>; the room on
+// the last element keeps the last content above it.
+test.describe("footer ridge", { tag: "@a11y" }, () => {
+  const VIEWPORTS = [
+    { width: 1280, height: 800 },
+    { width: 390, height: 844 },
+  ];
+  for (const path of ["/", "/careers"]) {
+    for (const viewport of VIEWPORTS) {
+      test(`${path} at ${viewport.width}px: last content clears the ridge`, async ({
+        page,
+      }) => {
+        await page.setViewportSize(viewport);
+        await page.goto(path);
+        await page.evaluate(() =>
+          window.scrollTo(0, document.body.scrollHeight),
+        );
+        const last = page.locator("main > :last-child a:visible").last();
+        await expect(last, `${path} ends with a link`).toBeVisible();
+        const lastBottom = await last.evaluate(
+          (el) => el.getBoundingClientRect().bottom,
+        );
+        const ridgeTop = await page
+          .locator("[data-ridge]")
+          .evaluate((el) => el.getBoundingClientRect().top);
+        expect(
+          lastBottom,
+          `${path}: last link ends above the ridge`,
+        ).toBeLessThan(ridgeTop);
+        const overflow = await page.evaluate(
+          () =>
+            document.documentElement.scrollWidth -
+            document.documentElement.clientWidth,
+        );
+        expect(overflow, `${path}: no sideways scroll`).toBeLessThanOrEqual(0);
+      });
+    }
+  }
+});

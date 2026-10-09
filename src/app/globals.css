@@ -5000,3 +5000,14 @@ a.w-card:hover .w-link svg {
     height: 72px;
   }
 }
+
+/* Room above the footer so the ridge never covers the last content. */
+main > :last-child {
+  padding-bottom: clamp(232px, 17vw, 256px);
+}
+
+@media (max-width: 640px) {
+  main > :last-child {
+    padding-bottom: 176px;
+  }
+}
