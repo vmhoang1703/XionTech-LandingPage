@@ -2,7 +2,7 @@
 title: 'E-S4 Footer and office facts match the prototype'
 type: 'feature'
 created: '2026-10-08'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: '504e2b66076e044eb209d2fa7728a8838fe709dd'
