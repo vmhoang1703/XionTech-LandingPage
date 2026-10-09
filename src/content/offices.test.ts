@@ -106,4 +106,16 @@ describe("offices", () => {
       "Office hcmc has no mailto: contact",
     );
   });
+
+  it("footer contact labels show the digits the link dials", () => {
+    const digits = (text: string) => text.replace(/\D/g, "");
+    const dialled = footerOffices
+      .flatMap((office) => office.contacts)
+      .filter(({ href }) => !href.startsWith("mailto:"));
+
+    expect(dialled).toHaveLength(3);
+    for (const { href, label } of dialled) {
+      expect(digits(label)).toBe(digits(href.replace("https://wa.me/", "")));
+    }
+  });
 });

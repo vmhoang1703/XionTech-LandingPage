@@ -18,10 +18,11 @@ const linkClass =
 const iconClass = "text-amber-tint shrink-0";
 
 // Icon for a contact row, chosen from the link scheme.
-function contactIcon(href: string): typeof PhoneIcon {
-  if (href.startsWith("mailto:")) return EnvelopeSimpleIcon;
+export function contactIcon(href: string): typeof PhoneIcon {
+  if (href.startsWith("tel:")) return PhoneIcon;
   if (href.startsWith("https://wa.me/")) return WhatsappLogoIcon;
-  return PhoneIcon;
+  if (href.startsWith("mailto:")) return EnvelopeSimpleIcon;
+  throw new Error(`No footer icon for contact link ${href}`);
 }
 
 export function SiteFooter() {

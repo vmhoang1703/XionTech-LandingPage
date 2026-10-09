@@ -76,7 +76,7 @@ export const contactByPrefix = (
 export const footerOffices: FooterOffice[] = [
   {
     id: hcmc.id,
-    name: "Vietnam Delivery Center",
+    name: hcmc.tag ?? hcmc.name,
     addressLines: hcmc.addressLines,
     contacts: [
       {

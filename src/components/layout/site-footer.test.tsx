@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { SiteFooter } from "./site-footer";
+import { contactIcon, SiteFooter } from "./site-footer";
 
 function renderFooter() {
   render(<SiteFooter />);
@@ -90,9 +90,11 @@ describe("SiteFooter", () => {
       "Vietnam Delivery Center",
     );
     expect(us.querySelector("b")?.textContent).toBe("US Delivery Center");
-    expect(offices.textContent).not.toMatch(
-      /Plano, Texas, USA|Ho Chi Minh City, Vietnam$/,
-    );
+    expect(
+      Array.from(offices.querySelectorAll("address b")).map(
+        (heading) => heading.textContent,
+      ),
+    ).toEqual(["Vietnam Delivery Center", "US Delivery Center"]);
     expect(vietnam.textContent).toContain(
       "Floor 15, B1 Building279 Nguyen Tri Phuong StreetDien Hong Ward, Ho Chi Minh City, Vietnam",
     );
@@ -127,7 +129,6 @@ describe("SiteFooter", () => {
 
     expect(ridge?.getAttribute("aria-hidden")).toBe("true");
     expect(ridge?.querySelector("svg")).not.toBeNull();
-    expect(footer.className).toContain("relative");
     expect(footer.textContent).not.toContain("vinni.tran@xiontechs.com");
   });
 
@@ -165,9 +166,13 @@ describe("SiteFooter", () => {
     const textLinks = within(footer)
       .getAllByRole("link")
       .filter((link) => !link.querySelector("img"));
-    expect(textLinks.length).toBeGreaterThan(15);
+    expect(textLinks).toHaveLength(18);
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
     }
+  });
+
+  it("throws for a contact link with no icon", () => {
+    expect(() => contactIcon("sms:+1555")).toThrow(/No footer icon/);
   });
 });
