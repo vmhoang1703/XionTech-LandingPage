@@ -1404,3 +1404,28 @@ Template:
   - The first browser test could pass before the smooth scroll started, and on its second anchor it began already scrolled.
   - A test comment claimed a skip happens "only" when there is no content.
   - Our verification run also collided with the implementer's own Playwright build ("Another next build process is already running"), so it was re-run on its own.
+
+## 2026-10-09 — E-S3 About matches the prototype (ENH-016, ENH-030, ENH-031, ENH-046, ENH-049 to ENH-059, ENH-067)
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` one-shot route
+- **Prompt (short):** "Continue; when done, create the PR and merge it yourself."
+- **What the AI did:** Built the About page with one implementer subagent:
+  - "We're XionTech, technology built with ownership." over pastel peaks;
+  - the two mountain chapters, without the picture (its licence is unconfirmed, Q5);
+  - a two-column "Your question, we answer" FAQ with "Ask us directly";
+  - white office cards with icon rows and bracketed phones;
+  - the white Book a demo band.
+
+  Then it ran the full five-layer review, two fix rounds each reviewed again, and a walk on a production build.
+
+- **Decision / result:** The founding sentence and the security answer stay `[Placeholder]` (Q12, Q9), and the Vietnam email stays hidden (Q7). The shared office data is unchanged, so Demo and Home are unaffected. Checks:
+  - 1243 unit tests;
+  - diff coverage 100%;
+  - 15 smoke tests;
+  - the build;
+  - 41 accessibility browser tests.
+- **AI got it wrong?** Yes:
+  - The band the spec calls `#book` had no id.
+  - Three new section ids were missing from the anchor offset rule.
+  - The first Safari-marker fix (`font-size: 0`) still left a flex gap.
+  - Two verification runs collided with the implementer's own build or held port, and were re-run cleanly.

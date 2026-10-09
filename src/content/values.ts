@@ -8,7 +8,7 @@ import {
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
 
-// Core values: shared by Home and About (About until E-S3 removes its copy).
+// Core values, shown on Home (the About page dropped them in E-S3).
 
 type AboutValue = {
   icon: Icon;
@@ -18,12 +18,8 @@ type AboutValue = {
 };
 
 export const aboutValues: {
-  label: string;
-  title: string;
   items: AboutValue[];
 } = {
-  label: "Our core values",
-  title: "What guides how we work.",
   items: [
     {
       icon: RocketLaunchIcon,

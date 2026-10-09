@@ -49,10 +49,12 @@ export function CaptureBand({
   kind,
   look,
   copy: copyOverride,
+  id,
 }: Readonly<{
   kind: RequestKind;
   look?: keyof typeof LOOK_SURFACES;
   copy?: { heading: string; lede: string };
+  id?: string;
 }>) {
   const router = useRouter();
   const copy = copyOverride
@@ -115,6 +117,7 @@ export function CaptureBand({
 
   return (
     <section
+      id={id}
       className={
         look
           ? `capture capture-plain ${LOOK_SURFACES[look]}`

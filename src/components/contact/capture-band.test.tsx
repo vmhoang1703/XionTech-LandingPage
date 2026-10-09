@@ -80,6 +80,14 @@ afterEach(() => {
 });
 
 describe("CaptureBand look", () => {
+  it("puts the optional id on the section, and none by default", () => {
+    const { container, rerender } = render(<CaptureBand kind="demo" />);
+    expect(container.querySelector("section")?.hasAttribute("id")).toBe(false);
+
+    rerender(<CaptureBand kind="demo" id="book" />);
+    expect(container.querySelector("section")?.id).toBe("book");
+  });
+
   const section = () => screen.getByRole("region").className;
 
   it("keeps the amber band and the navy button when no look is given", () => {

@@ -1,11 +1,7 @@
-import {
-  EnvelopeSimpleIcon,
-  MapPinIcon,
-  PhoneIcon,
-  WhatsappLogoIcon,
-} from "@phosphor-icons/react/ssr";
+import { MapPinIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
+import { contactIcon } from "@/components/sections/contact-icon";
 import { footerOffices } from "@/content/offices";
 import { siteFooter } from "@/content/site-footer";
 
@@ -16,14 +12,6 @@ const linkClass =
   "text-body-sm text-on-navy-muted inline-flex min-h-6 items-center hover:text-white";
 
 const iconClass = "text-amber-tint shrink-0";
-
-// Icon for a contact row, chosen from the link scheme.
-export function contactIcon(href: string): typeof PhoneIcon {
-  if (href.startsWith("tel:")) return PhoneIcon;
-  if (href.startsWith("https://wa.me/")) return WhatsappLogoIcon;
-  if (href.startsWith("mailto:")) return EnvelopeSimpleIcon;
-  throw new Error(`No footer icon for contact link ${href}`);
-}
 
 export function SiteFooter() {
   return (

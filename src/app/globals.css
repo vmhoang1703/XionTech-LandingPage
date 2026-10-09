@@ -4142,8 +4142,10 @@
   .svc-card[id],
   #outcomes,
   #process,
-  #values,
-  #faq {
+  #story,
+  #faq,
+  #offices,
+  #book {
     scroll-margin-top: calc(
       var(--spacing-anchor-offset) - var(--spacing-header-height)
     );
@@ -4215,29 +4217,39 @@
     }
   }
 
+  /* About FAQ (E-S3, prototype site.css 419-440): two columns of hairline rows, native details */
+  .faq-head {
+    margin-bottom: 40px;
+  }
+
+  .faq-head h2 {
+    max-width: 22ch;
+  }
+
+  .faq-head .lede {
+    margin-top: 16px;
+    max-width: 60ch;
+  }
+
   .faq {
     display: grid;
-    gap: 12px;
-    max-width: 880px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 96px;
+    align-items: start;
   }
 
   .faq details {
-    border: 1px solid var(--color-border);
-    border-radius: 18px;
-    background: var(--color-paper);
-    transition: box-shadow 0.3s var(--ease-brand);
-  }
-
-  .faq details[open] {
-    box-shadow: 0 20px 40px -30px
-      color-mix(in srgb, var(--color-navy) 18%, transparent);
+    border-top: 1px solid var(--color-border);
   }
 
   .faq summary {
     list-style: none;
     cursor: pointer;
-    position: relative;
-    padding: 20px 60px 20px 22px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 0 12px;
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 400;
@@ -4245,78 +4257,357 @@
     color: var(--color-heading);
   }
 
+  /* Safari's disclosure triangle: the +/- below replaces it */
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
   .faq summary::after {
     content: "+";
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--color-mist);
+    flex: 0 0 auto;
+    width: 16px;
+    text-align: center;
     font-family: var(--font-body);
-    font-size: 1.1rem;
+    font-size: var(--text-body-lg);
+    line-height: 1.4;
+    color: var(--color-muted);
   }
 
   .faq details[open] summary::after {
     content: "\2212";
   }
 
+  .faq summary:hover {
+    color: var(--color-navy);
+  }
+
   .faq summary:focus-visible {
     outline-offset: -3px;
-    border-radius: 18px;
+    border-radius: var(--radius-xs);
   }
 
   .faq p {
-    max-width: 70ch;
-    padding: 0 22px 22px;
+    max-width: 46ch;
+    padding: 0 40px 24px 0;
     color: var(--color-muted);
   }
 
+  /* The slot after the last question invites the rest (ENH-031) */
+  .faq-ask {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 44px;
+    padding: 22px 0 12px;
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--color-heading);
+    text-decoration: none;
+  }
+
+  .faq-ask span {
+    text-decoration: underline;
+    text-decoration-color: var(--color-amber);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+  }
+
+  .faq-ask svg {
+    flex: 0 0 auto;
+    width: 16px;
+    margin-top: 3px;
+    color: var(--color-muted);
+    transition: transform 0.3s var(--ease-brand);
+  }
+
+  .faq-ask:hover svg,
+  .faq-ask:focus-visible svg {
+    transform: translateX(4px);
+    color: var(--color-heading);
+  }
+
+  @media (width <= 760px) {
+    .faq {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+    }
+
+    .faq-head {
+      margin-bottom: 28px;
+    }
+  }
+
+  /* About offices (E-S3, prototype site.css 360-364, 469-477, 484-485) */
   .office-card {
     display: grid;
-    gap: 10px;
-    padding: 30px;
+    gap: 6px;
+    align-content: start;
+    padding: 22px 24px;
   }
 
   .office-card .clock {
     font-family: var(--font-mono);
-    font-size: 2rem;
+    font-size: 1.6rem;
     letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
     color: var(--color-heading);
   }
 
   .office-card h3 {
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: var(--text-title-md);
     font-weight: 400;
     letter-spacing: -0.02em;
   }
 
-  .office-card address,
-  .office-card p {
-    color: var(--color-muted);
-    font-size: 0.93rem;
+  .office-card address {
     font-style: normal;
   }
 
+  .orow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 2px;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .orow:has(a) {
+    align-items: center;
+  }
+
+  .orow svg {
+    flex: 0 0 auto;
+    margin-top: 3px;
+    font-size: 1.05rem;
+    color: var(--color-amber-text);
+  }
+
+  .orow:has(a) svg {
+    margin-top: 0;
+  }
+
+  .orow a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+    color: var(--color-heading);
+  }
+
+  .orow a:hover {
+    color: var(--color-link);
+  }
+
   /*
-    About offices: two cards side by side above md, as in the prototype. The
-    shared .offices rule stays one column (its base rule comes after its own
-    md query), so /demo is unchanged; only a grid of office cards widens.
+    Two cards at opposite edges above md, one column below. The shared
+    .offices rule (/demo) stays one column, so only a grid of office cards
+    changes.
   */
   .offices:has(> .office-card) {
-    gap: 18px;
+    gap: 40px;
     margin-top: 0;
   }
 
   @media (width > --theme(--breakpoint-md)) {
     .offices:has(> .office-card) {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 400px));
+      justify-content: space-between;
     }
+  }
+
+  /* About intro (E-S3, prototype site.css 1116-1123, 1136): a centred statement over pastel peaks */
+  .about-hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 104px 0 200px;
+    text-align: center;
+    background: linear-gradient(
+      180deg,
+      var(--color-paper) 0%,
+      var(--color-paper) 45%,
+      #fff9ec 100%
+    );
+  }
+
+  .ah-peaks {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: clamp(180px, 26vw, 360px);
+  }
+
+  .ah-ground {
+    fill: var(--color-paper);
+  }
+
+  .ah-inner {
+    max-width: 980px;
+  }
+
+  .about-hero h1 {
+    margin: 0 auto;
+    font-size: clamp(2.2rem, 4.8vw, 4rem);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  /* Dark amber text on white, no underline (ENH-050) */
+  .ah-accent {
+    color: #a87600;
+  }
+
+  .ah-text {
+    max-width: 62ch;
+    margin: 28px auto 0;
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .ah-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 32px;
+    margin-top: 28px;
+  }
+
+  @media (width <= 640px) {
+    .about-hero {
+      padding: 64px 0 150px;
+    }
+  }
+
+  /*
+    About mountain story (E-S3), the prototype's no-JS layout (site.css
+    1307-1319, 1363-1385): both chapters stacked, no picture, no held scroll.
+  */
+  .mtn-h {
+    margin: 0 auto clamp(20px, 4vh, 40px);
+    font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .mtn-story {
+    display: grid;
+    gap: 40px;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .mtn-title {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 0;
+    font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  /* #735500 keeps the number readable on the light glows (prototype review fix) */
+  .mtn-num {
+    font-size: 0.8em;
+    color: #735500;
+  }
+
+  .mtn-text {
+    max-width: 46ch;
+    margin: 16px 0 0;
+    font-size: var(--text-body-lg);
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .mtn-close {
+    display: grid;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .mtn-close p {
+    margin: 0;
+  }
+
+  .mtn-close strong {
+    font-weight: 500;
+    color: var(--color-heading);
+  }
+
+  @media (width <= 800px) {
+    .mtn-h {
+      font-size: clamp(1.6rem, 7.4vw, 2.1rem);
+    }
+
+    .mtn-title {
+      font-size: 1.3rem;
+    }
+  }
+
+  /* About background: white with soft light blue glows on alternating sides (ENH-067, site.css 1473-1477) */
+  #story {
+    background:
+      radial-gradient(
+        40% 32% at 0% 70%,
+        rgb(201 213 230 / 0.55),
+        transparent 70%
+      ),
+      radial-gradient(
+        34% 26% at 100% 30%,
+        rgb(220 230 245 / 0.7),
+        transparent 70%
+      ),
+      var(--color-paper);
+  }
+
+  #faq {
+    background:
+      radial-gradient(
+        36% 50% at 0% 35%,
+        rgb(201 213 230 / 0.5),
+        transparent 72%
+      ),
+      var(--color-paper);
+  }
+
+  #offices {
+    background:
+      radial-gradient(
+        36% 50% at 100% 55%,
+        rgb(201 213 230 / 0.5),
+        transparent 72%
+      ),
+      var(--color-paper);
+  }
+
+  #book {
+    background:
+      radial-gradient(
+        34% 60% at 6% 50%,
+        rgb(220 230 245 / 0.65),
+        transparent 72%
+      ),
+      var(--color-paper);
   }
 }
 

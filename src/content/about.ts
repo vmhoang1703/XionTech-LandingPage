@@ -1,66 +1,62 @@
-import { homeStats } from "@/content/home";
-import { offices } from "@/content/offices";
-import type { Stat } from "@/components/sections/stats-band";
+import { aboutOfficeView } from "@/content/offices";
 
-// About page copy. Kept out of the components so it can be translated later.
+// About page copy (prototype about.html). Kept out of the components so it can
+// be translated later.
 
 export const aboutMeta = {
-  title: "About | XionTech",
+  title: "About XionTech | Get IT Done",
   description:
     "XionTech is an education technology company and software partner, with offices in Ho Chi Minh City and Plano serving clients in the USA, Europe and Australia.",
 };
 
 export const aboutHero = {
-  breadcrumbLabel: "Breadcrumb",
-  breadcrumbHome: "Home",
-  breadcrumbCurrent: "About",
   title: {
-    lead: "Tech made simple. ",
-    highlight: "Solutions made powerful",
+    lead: "We’re XionTech,",
+    middle: "technology built with ",
+    accent: "ownership",
     tail: ".",
   },
-  lede: "We are an education technology company and software partner. We build our own school platforms and deliver digital products for clients around the world.",
-};
-
-// Figures 1, 2, 3 and 5 are the confirmed Home figures (FR-12). The fourth,
-// "4 school products ready to demo", is not confirmed (decision A2).
-const [years, coverage, stacks, , officeCount] = homeStats.stats;
-
-export const aboutStats: { label: string; stats: Stat[] } = {
-  label: "Key facts",
-  stats: [
-    years,
-    coverage,
-    stacks,
-    {
-      value: "4",
-      caption: "School products ready to demo",
-      placeholder: true,
-    },
-    officeCount,
+  text: "We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world.",
+  links: [
+    { href: "/products", label: "Explore our products" },
+    { href: "/services", label: "Explore our services" },
   ],
 };
 
 export const aboutStory = {
-  photoLabel: "[Placeholder] Photo",
-  photoHint: "Real team photo at the Ho Chi Minh City office (no AI imagery).",
-  title: "Two strengths, one team.",
-  lede: "We build PXP, LXP, SXP and IoT Device Management for schools. The same team delivers software for companies in education, healthcare, logistics and private equity.",
-  checks: [
-    "We understand education from the inside, because we run products for schools.",
-    "Led by more than 25 years of leadership experience in software.",
-    "Offices in Ho Chi Minh City and Plano, serving clients in the USA, Europe and Australia.",
+  title: {
+    lead: "Inspired by a mountain.",
+    middle: "United by ",
+    highlight: "purpose",
+    tail: ".",
+  },
+  chapters: [
+    {
+      number: "01",
+      title: "The inspiration",
+      text: "Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future.",
+    },
+    {
+      number: "02",
+      title: "The purpose",
+      // The founding sentence is a placeholder until the business confirms it (Q12).
+      text: "[Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all.",
+    },
   ],
+  closing: {
+    line: "Our inspiration is a mountain. Our purpose is people.",
+    tags: "Vision · Community · Technology",
+  },
 };
 
 export const aboutFaq = {
-  title: "Frequently asked questions.",
+  title: "Your question, we answer",
   lede: "Straight answers about our products, our services and how we work.",
   items: [
     {
       question: "What does XionTech do?",
       answer:
-        "We build our own school platforms (PXP, LXP, SXP and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing.",
+        "We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing.",
     },
     {
       question: "Which industries do you work with?",
@@ -68,7 +64,7 @@ export const aboutFaq = {
         "EdTech is our core. We also serve Healthcare, Logistics and Private Equity.",
     },
     {
-      question: "How can our school try PXP, LXP or SXP?",
+      question: "How can our school try Parent Hub or Staff Hub?",
       answer:
         "Book a demo. We walk you through the apps using scenarios from your own school.",
     },
@@ -80,7 +76,7 @@ export const aboutFaq = {
     {
       question: "When do you shape the solution to our needs?",
       answer:
-        "From the start. Discovery, the first step of our 4-D process, sets your goals, users and scope before design begins.",
+        "From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins.",
     },
     {
       question: "What results can we expect?",
@@ -103,15 +99,19 @@ export const aboutFaq = {
         "We track speed, quality, product impact and team autonomy, and share them openly with you.",
     },
   ],
+  ask: {
+    label: "Still have a question? Ask us directly",
+    href: "/#contact",
+  },
 };
 
 export const aboutOffices = {
   title: "Two offices, serving the world.",
-  // Plano first, then Ho Chi Minh City (the shared `offices` order).
-  offices,
+  // Plano first, then Ho Chi Minh City.
+  offices: aboutOfficeView,
 };
 
 export const aboutCapture = {
   heading: "See our apps in action.",
-  lede: "Leave your work email and we'll arrange a walkthrough of PXP, LXP and SXP.",
+  lede: "Leave your work email and we'll arrange a walkthrough of Parent Hub and Staff Hub.",
 };

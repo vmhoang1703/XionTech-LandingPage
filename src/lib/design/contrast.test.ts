@@ -510,7 +510,9 @@ describe("reduced motion", () => {
 // contact form tabpanels), and the skip link, which shows on keyboard focus
 // with no JavaScript. The News story card (E-A6) swaps its aria-hidden "Read
 // story" for the pill and date on hover and focus with no JavaScript, and
-// always shows "Read story" on touch screens.
+// always shows "Read story" on touch screens. The About FAQ (E-S3) hides
+// Safari's disclosure triangle, a purely decorative user-agent marker: the
+// question text and the +/- stay visible.
 const MAY_HIDE = new Set([
   "[hidden]",
   ".fpanel[hidden]",
@@ -518,6 +520,7 @@ const MAY_HIDE = new Set([
   ".scard-read",
   ".scard:hover .scard-meta",
   ".scard:focus-visible .scard-meta",
+  ".faq summary::-webkit-details-marker",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],

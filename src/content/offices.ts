@@ -59,8 +59,8 @@ export const hcmc: Office = {
 
 export const offices: Office[] = [plano, hcmc];
 
-// Footer-only view (prototype order and wording): delivery-center names and
-// bracketed phone numbers. `offices` above stays as About, Demo and Home read it.
+// Footer and About views (prototype order and wording): delivery-center names
+// and bracketed phone numbers. `offices` above stays as Demo and Home read it.
 export type FooterOffice = Pick<Office, "id" | "name" | "addressLines"> & {
   contacts: OfficeContact[];
 };
@@ -76,33 +76,46 @@ export const contactByPrefix = (
   return contact;
 };
 
+const US_DELIVERY_CENTER = "US Delivery Center";
+
+const planoBracketed: OfficeContact[] = [
+  {
+    href: contactByPrefix(plano, "tel:").href,
+    label: "(+1) 469 322 9899",
+  },
+  {
+    ...contactByPrefix(plano, "https://wa.me/"),
+    label: "(+1) 469 439 9345",
+    ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
+  },
+  contactByPrefix(plano, "mailto:"),
+];
+
+const hcmcBracketed: OfficeContact[] = [
+  {
+    href: contactByPrefix(hcmc, "tel:").href,
+    label: "(+84) 908 107 552",
+  },
+];
+
 export const footerOffices: FooterOffice[] = [
   {
     id: hcmc.id,
     name: VIETNAM_DELIVERY_CENTER,
     addressLines: hcmc.addressLines,
-    contacts: [
-      {
-        href: contactByPrefix(hcmc, "tel:").href,
-        label: "(+84) 908 107 552",
-      },
-    ],
+    contacts: hcmcBracketed,
   },
   {
     id: plano.id,
-    name: "US Delivery Center",
+    name: US_DELIVERY_CENTER,
     addressLines: plano.addressLines,
-    contacts: [
-      {
-        href: contactByPrefix(plano, "tel:").href,
-        label: "(+1) 469 322 9899",
-      },
-      {
-        ...contactByPrefix(plano, "https://wa.me/"),
-        label: "(+1) 469 439 9345",
-        ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
-      },
-      contactByPrefix(plano, "mailto:"),
-    ],
+    contacts: planoBracketed,
   },
+];
+
+// About view: Plano first, with delivery-center tags, bracketed phones and no
+// Vietnam email (decision Q7).
+export const aboutOfficeView: Office[] = [
+  { ...plano, tag: US_DELIVERY_CENTER, contacts: planoBracketed },
+  { ...hcmc, contacts: hcmcBracketed },
 ];

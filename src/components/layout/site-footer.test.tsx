@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { contactIcon, SiteFooter } from "./site-footer";
+import { SiteFooter } from "./site-footer";
 
 function renderFooter() {
   render(<SiteFooter />);
@@ -170,9 +170,5 @@ describe("SiteFooter", () => {
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
     }
-  });
-
-  it("throws for a contact link with no icon", () => {
-    expect(() => contactIcon("sms:+1555")).toThrow(/No footer icon/);
   });
 });
