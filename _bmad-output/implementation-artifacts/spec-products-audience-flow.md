@@ -90,7 +90,7 @@ context:
   - red: `campus-canvas.test.tsx` -- without WebGL it shows the fallback and no toggle; paused means no animation frame is requested; the toggle saves the preference.
 - [x] `src/components/products/flow/audience-flow.tsx` -- server section `#flow`: intro (H1, lede), `ol` of chapters (`h2` audience, app name, madeFor, steps as `h3` + description, "See {app} details" link to its anchor) and the sticky canvas slot; a client `flow-progress.tsx` uses Motion `useScroll` to set `data-active` on the chapter and the scene progress.
   - red: `audience-flow.test.tsx` -- one H1; 4 chapters in order, each linking to its card anchor; all steps visible without JS; only defined classes.
-- [ ] `src/app/products/page.tsx`, `page.test.tsx`, remove the hero files, update `globals.css` and `contrast.test.ts` -- new order; eco CSS gone; flow CSS added.
+- [x] `src/app/products/page.tsx`, `page.test.tsx`, remove the hero files, update `globals.css` and `contrast.test.ts` -- new order; eco CSS gone; flow CSS added.
   - red: `page.test.tsx` -- order `#flow` → `#apps` → navy capture band.
 - [ ] `e2e/products.spec.ts` -- smoke: H1 and 4 anchors; a canvas or the fallback is present; scrolling to the Student chapter marks it active; reduced-motion context: no camera tween, all chapters visible.
 

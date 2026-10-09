@@ -40,3 +40,10 @@ Task 5: minor — audience-flow.tsx:17 / flow-progress.tsx:370 count duplicates 
 Task 5: review — pass — re-review of c11252f: 0 of 2 findings open
 Task 5: minor — after webgl fallback (context lost) inactive chapters still dim with no motion control
 Task 5: complete (commits 61caceb..c11252f, diff verified)
+Task 6: dispatched (model opus, base b8be119, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t6-report.md)
+Task 6: red — npx vitest run src/app/products/page.test.tsx — expected '' to be 'flow' (old hero first)
+Task 6: green — npm test — 87 files, 1307 passed; lint, typecheck, format:check clean
+Task 6: review — pass — 0 critical, 0 important, 2 minor
+Task 6: minor — src/app/globals.css:3571 .pshow:target navy border is the only card restyle, untested
+Task 6: minor — src/app/products/page.test.tsx:70 toggle test only checks the class exists; old "no button link or breadcrumb" assert dropped; SVG fallback letterboxed on tall desktop stage
+Task 6: complete (commits b8be119..e48e90f, diff verified)
