@@ -376,3 +376,7 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-enh-s1-home.md`
   summary: The Home "+3" list revealed by mouse hover alone cannot be dismissed with Escape when keyboard focus is elsewhere (WCAG 1.4.13 dismissible).
   evidence: `src/components/home/more-industries.tsx` handles Escape on the reveal wrapper only; moving the pointer away still hides it. A document keydown listener while the list is shown would close the gap.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-enh-s4-footer-offices.md`
+  summary: The footer-ridge e2e checks for a news story and a job page skip (not fail) when `/news` or `/careers` lists no link.
+  evidence: `e2e/a11y.spec.ts` footer ridge tests use `test.skip` when no story or role link exists; both ran and passed on 2026-10-09, but an empty Sanity list would hide the check.

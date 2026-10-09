@@ -46,3 +46,21 @@ Acceptance: evidence — spec-enh-s4-footer-offices-evidence/careers-end-1280.pn
 Acceptance: evidence — spec-enh-s4-footer-offices-evidence/careers-end-390.png — 60661 bytes — sha256 5149b7665014 — Careers roles end above the ridge at 390
 Acceptance: evidence — spec-enh-s4-footer-offices-evidence/observed.md — 2240 bytes — sha256 c0550027b432 — per-surface observations
 Acceptance: manual — walk nine routes at 1280 and 390 plus the footer at 900 on a production build (next start -p 3005, Chrome) — observed: ridge 120/72px, columns 5/2/1, every link target, Vietnam first with icons, no Vietnam email, every page's last content above the ridge, About/Demo/Home contact unchanged
+Task 3: fix round 1/5 (step-04 review patches: product anchors test, phone digits test, hcmc.tag reuse, explicit icon picker, exact footer assertions, e2e max-bottom on six routes)
+Task 3: review — pass — 0 critical, 0 important, 2 minor; 0 of 5 open (patch re-review); controller patch e83d868 removed the untestable fallback
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — All matched files use Prettier code style!
+Acceptance: verification — npm test — exit 0 — Test Files 83 passed (83), Tests 1240 passed (1240)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100%; C1 ok: 3 changed file(s) with branch coverage >= 80%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed
+Acceptance: verification — npm run build — exit 0 — compiled successfully
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 38 passed (footer ridge on six routes at 1280 and 390 included)
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/verification.txt — 12559 bytes — sha256 f67466f126c1 — transcript of the six declared commands after the review patches, all exit 0
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/walk.mjs — 7547 bytes — sha256 ada46e5d8ad2 — the walk that produced walk-output.txt and the screenshots
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/walk-output.txt — 4297 bytes — sha256 4dc77e087049 — walk on the patched production build: every UX line, nine routes at 1280 and 390
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/footer-1280.png — 136794 bytes — sha256 608efb71a55e — ridge above the footer under the Home contact section
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/footer-1280-full.png — 85689 bytes — sha256 367a7f96c3ff — footer at 1280: five columns, offices with icons
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/footer-390.png — 86710 bytes — sha256 ff88054e030d — footer at 390: one column, 72px ridge
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/careers-end-1280.png — 138957 bytes — sha256 27678f1675f8 — Careers roles end above the ridge at 1280
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/careers-end-390.png — 60661 bytes — sha256 5149b7665014 — Careers roles end above the ridge at 390
+Acceptance: evidence — spec-enh-s4-footer-offices-evidence/observed.md — 2240 bytes — sha256 c0550027b432 — per-surface observations
+Acceptance: manual — walk nine routes at 1280 and 390 plus the footer at 900 on the patched production build (next start -p 3005, Chrome) — observed: ridge 120/72px, columns 5/2/1, product links land on their cards at 88px, How we work heading visible, Vietnam Delivery Center then US Delivery Center with icons, no Vietnam email, all 19 page-end checks clear the ridge, About/Demo offices unchanged

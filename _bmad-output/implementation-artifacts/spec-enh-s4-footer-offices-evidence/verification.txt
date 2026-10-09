@@ -26,11 +26,11 @@ All matched files use Prettier code style!
 
 
  Test Files  83 passed (83)
-      Tests  1237 passed (1237)
-   Start at  09:22:22
-   Duration  128.06s (import 67%, environment 26%, tests 4%, setup 3%, transform 1%)
+      Tests  1240 passed (1240)
+   Start at  09:35:16
+   Duration  56.64s (import 54%, environment 25%, tests 14%, setup 5%, transform 1%)
 
-Environment  jsdom was created 83 times · 344.51s total, 26% of tracked time
+Environment  jsdom was created 83 times · 144.79s total, 25% of tracked time
              create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
              learn more: https://vitest.dev/guide/improving-performance#test-environments
 
@@ -46,12 +46,12 @@ Environment  jsdom was created 83 times · 344.51s total, 26% of tracked time
 
 
  Test Files  83 passed (83)
-      Tests  1237 passed (1237)
-   Start at  09:24:32
-   Duration  67.60s (import 51%, environment 23%, tests 18%, setup 6%, worker 1%, transform 1%)
+      Tests  1240 passed (1240)
+   Start at  09:36:13
+   Duration  64.53s (import 51%, environment 23%, tests 18%, setup 6%, worker 1%, transform 1%)
 
-    Isolate  83 workers spawned · ~2.21s startup each (spawn + environment, per file)
-             at least ~14.47s faster with isolate: false — reuses workers across files instead of one per file
+    Isolate  83 workers spawned · ~2.11s startup each (spawn + environment, per file)
+             at least ~13.81s faster with isolate: false — reuses workers across files instead of one per file
 
 [34m % [39m[2mCoverage report from [22m[33mv8[39m
 -------------------|---------|----------|---------|---------|-------------------
@@ -67,7 +67,7 @@ All files          |   99.57 |    98.05 |   99.27 |     100 |
   hero-silk.tsx    |   98.18 |       95 |    90.9 |     100 | 31                
   ...ndustries.tsx |    97.5 |     92.3 |     100 |     100 | 35                
   silk-shader.ts   |     100 |     92.3 |     100 |     100 | 95                
- components/layout |     100 |    98.14 |     100 |     100 |                   
+ components/layout |     100 |    98.21 |     100 |     100 |                   
   mobile-menu.tsx  |     100 |     97.5 |     100 |     100 | 44                
  components/news   |   97.56 |      100 |   93.33 |     100 |                   
   news-filters.tsx |   96.42 |      100 |    90.9 |     100 |                   
@@ -80,10 +80,10 @@ All files          |   99.57 |    98.05 |   99.27 |     100 |
 -------------------|---------|----------|---------|---------|-------------------
 
 =============================== Coverage summary ===============================
-Statements   : 99.57% ( 1621/1628 )
-Branches     : 98.05% ( 857/874 )
+Statements   : 99.57% ( 1624/1631 )
+Branches     : 98.05% ( 859/876 )
 Functions    : 99.27% ( 410/413 )
-Lines        : 100% ( 1453/1453 )
+Lines        : 100% ( 1455/1455 )
 ================================================================================
 
 > xiontech-landing-page@0.1.0 coverage:diff
@@ -96,7 +96,7 @@ Diff: origin/develop...HEAD, staged and unstaged changes
 src/components/layout/site-footer.tsx (100%)
 src/content/offices.ts (100%)
 -------------
-Total:   13 lines
+Total:   15 lines
 Missing: 0 lines
 Coverage: 100%
 -------------
@@ -111,23 +111,23 @@ C1 ok: 3 changed file(s) with branch coverage >= 80% vs origin/develop.
 
 Running 15 tests using 6 workers
 
-  ✓   1 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, Inside XionTech and the open roles @smoke (111ms)
-  ✓   2 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (112ms)
-  ✓   7 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (39ms)
-  ✓   3 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the Not found copy and no capture band @smoke (110ms)
-  ✓   4 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (116ms)
-  ✓  10 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (145ms)
-  ✓   8 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with its H1, the four cards and no Updates link @smoke (210ms)
-  ✓   9 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the zone labels, the H1, the eight service anchors, #process and the project capture in the HTML without JavaScript @smoke (180ms)
-  ✓  11 [smoke] › e2e\smoke.spec.ts:24:5 › demo page responds 200 with send request button @smoke (39ms)
-  ✓   6 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its hero, the audience filters, the sample note and the demo capture @smoke (299ms)
-  ✓   5 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (314ms)
-  ✓  12 [smoke] › e2e\smoke.spec.ts:35:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (67ms)
-  ✓  14 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (140ms)
-  ✓  13 [smoke] › e2e\news.spec.ts:27:5 › unknown story slug answers 404 with the Not found page @smoke (177ms)
-  ✓  15 [smoke] › e2e\news.spec.ts:40:5 › the first story on the News page answers 200 with its header, Back to News and no breadcrumb @smoke (829ms)
+  ✓   1 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (115ms)
+  ✓   2 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (241ms)
+  ✓   7 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (163ms)
+  ✓   5 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the Not found copy and no capture band @smoke (234ms)
+  ✓   3 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (278ms)
+  ✓   4 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, Inside XionTech and the open roles @smoke (258ms)
+  ✓   6 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its hero, the audience filters, the sample note and the demo capture @smoke (220ms)
+  ✓   8 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with its H1, the four cards and no Updates link @smoke (67ms)
+  ✓   9 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the zone labels, the H1, the eight service anchors, #process and the project capture in the HTML without JavaScript @smoke (66ms)
+  ✓  10 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (203ms)
+  ✓  11 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (221ms)
+  ✓  12 [smoke] › e2e\news.spec.ts:27:5 › unknown story slug answers 404 with the Not found page @smoke (238ms)
+  ✓  13 [smoke] › e2e\smoke.spec.ts:24:5 › demo page responds 200 with send request button @smoke (60ms)
+  ✓  15 [smoke] › e2e\smoke.spec.ts:35:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (60ms)
+  ✓  14 [smoke] › e2e\news.spec.ts:40:5 › the first story on the News page answers 200 with its header, Back to News and no breadcrumb @smoke (170ms)
 
-  15 passed (14.7s)
+  15 passed (14.1s)
 ===== exit 0
 ===== $ npm run build
 
@@ -136,18 +136,18 @@ Running 15 tests using 6 workers
 
 ▲ Next.js 16.3.6 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 21ms
+✓ Running next.config.ts took 26ms
 
   Creating an optimized production build ...
-✓ Compiled successfully in 1868ms
+✓ Compiled successfully in 1908ms
   Running TypeScript ...
-  Finished TypeScript in 2.5s ...
+  Finished TypeScript in 3.3s ...
   Collecting page data using 11 workers ...
   Generating static pages using 11 workers (0/16) ...
   Generating static pages using 11 workers (4/16) 
   Generating static pages using 11 workers (8/16) 
   Generating static pages using 11 workers (12/16) 
-✓ Generating static pages using 11 workers (16/16) in 611ms
+✓ Generating static pages using 11 workers (16/16) in 639ms
   Finalizing page optimization ...
 
 Route (app)
@@ -176,50 +176,46 @@ Route (app)
 ===== exit 0
 ===== $ npx playwright test --project=a11y
 
-Running 30 tests using 1 worker
+Running 38 tests using 1 worker
 
   ✓   1 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /: axe, one H1, alt text, no nesting @a11y (2.1s)
   ✓   2 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /products: axe, one H1, alt text, no nesting @a11y (1.3s)
   ✓   3 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /services: axe, one H1, alt text, no nesting @a11y (1.3s)
   ✓   4 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /news: axe, one H1, alt text, no nesting @a11y (1.3s)
-[WebServer] ⨯ Error: The destination stream closed early.
-[WebServer]     at ignore-listed frames {
-[WebServer]   digest: '901798381'
-[WebServer] }
-[WebServer] ⨯ Error: The destination stream closed early.
-[WebServer]     at ignore-listed frames {
-[WebServer]   digest: '901798381'
-[WebServer] }
-[WebServer] ⨯ Error: The destination stream closed early.
-[WebServer]     at ignore-listed frames {
-[WebServer]   digest: '901798381'
-[WebServer] }
-  ✓   5 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /about: axe, one H1, alt text, no nesting @a11y (1.4s)
+  ✓   5 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /about: axe, one H1, alt text, no nesting @a11y (1.5s)
   ✓   6 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /careers: axe, one H1, alt text, no nesting @a11y (1.2s)
   ✓   7 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /demo: axe, one H1, alt text, no nesting @a11y (1.4s)
-  ✓   8 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /privacy: axe, one H1, alt text, no nesting @a11y (1.0s)
+  ✓   8 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /privacy: axe, one H1, alt text, no nesting @a11y (993ms)
   ✓   9 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /no-such-page: axe, one H1, alt text, no nesting @a11y (1.1s)
-  ✓  10 [a11y] › e2e\a11y.spec.ts:69:7 › every page type › one news story: axe, one H1, alt text, no nesting @a11y (1.2s)
-  ✓  11 [a11y] › e2e\a11y.spec.ts:75:7 › every page type › one job page: axe, one H1, alt text, no nesting @a11y (1.4s)
-  ✓  12 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /: ring, closed parts, Tab order, 24px targets @a11y (1.6s)
-  ✓  13 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /products: ring, closed parts, Tab order, 24px targets @a11y (842ms)
-  ✓  14 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /services: ring, closed parts, Tab order, 24px targets @a11y (873ms)
-  ✓  15 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /news: ring, closed parts, Tab order, 24px targets @a11y (792ms)
-  ✓  16 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /demo: ring, closed parts, Tab order, 24px targets @a11y (1.1s)
-  ✓  17 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /about: ring, closed parts, Tab order, 24px targets @a11y (860ms)
-  ✓  18 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /careers: ring, closed parts, Tab order, 24px targets @a11y (647ms)
+  ✓  10 [a11y] › e2e\a11y.spec.ts:69:7 › every page type › one news story: axe, one H1, alt text, no nesting @a11y (1.1s)
+  ✓  11 [a11y] › e2e\a11y.spec.ts:75:7 › every page type › one job page: axe, one H1, alt text, no nesting @a11y (1.3s)
+  ✓  12 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /: ring, closed parts, Tab order, 24px targets @a11y (1.2s)
+  ✓  13 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /products: ring, closed parts, Tab order, 24px targets @a11y (846ms)
+  ✓  14 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /services: ring, closed parts, Tab order, 24px targets @a11y (805ms)
+  ✓  15 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /news: ring, closed parts, Tab order, 24px targets @a11y (788ms)
+  ✓  16 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /demo: ring, closed parts, Tab order, 24px targets @a11y (1.0s)
+  ✓  17 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /about: ring, closed parts, Tab order, 24px targets @a11y (821ms)
+  ✓  18 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /careers: ring, closed parts, Tab order, 24px targets @a11y (681ms)
   ✓  19 [a11y] › e2e\a11y.spec.ts:206:7 › keyboard › Tab stops reach paper, mist, amber and navy surfaces @a11y (4.0s)
-  ✓  20 [a11y] › e2e\a11y.spec.ts:223:7 › keyboard › closed parts exist and are hidden, so Tab cannot reach them @a11y (873ms)
-  ✓  21 [a11y] › e2e\a11y.spec.ts:237:7 › keyboard › 390px: ring, closed mobile menu, Tab order, 24px targets @a11y (1.2s)
-  ✓  22 [a11y] › e2e\a11y.spec.ts:251:7 › reflow › Home at 390px: no sideways scroll, stacked cards, two figures per row @a11y (503ms)
-  ✓  23 [a11y] › e2e\a11y.spec.ts:308:7 › form errors › contact form on /demo @a11y (626ms)
-  ✓  24 [a11y] › e2e\a11y.spec.ts:313:7 › form errors › contact form on Home @a11y (726ms)
-  ✓  25 [a11y] › e2e\a11y.spec.ts:318:7 › form errors › job application form @a11y (695ms)
+  ✓  20 [a11y] › e2e\a11y.spec.ts:223:7 › keyboard › closed parts exist and are hidden, so Tab cannot reach them @a11y (878ms)
+  ✓  21 [a11y] › e2e\a11y.spec.ts:237:7 › keyboard › 390px: ring, closed mobile menu, Tab order, 24px targets @a11y (1.3s)
+  ✓  22 [a11y] › e2e\a11y.spec.ts:251:7 › reflow › Home at 390px: no sideways scroll, stacked cards, two figures per row @a11y (453ms)
+  ✓  23 [a11y] › e2e\a11y.spec.ts:308:7 › form errors › contact form on /demo @a11y (606ms)
+  ✓  24 [a11y] › e2e\a11y.spec.ts:313:7 › form errors › contact form on Home @a11y (720ms)
+  ✓  25 [a11y] › e2e\a11y.spec.ts:318:7 › form errors › job application form @a11y (644ms)
   ✓  26 [a11y] › e2e\a11y.spec.ts:329:7 › Home hero doors and +3 reveal › doors straddle the hero and the +3 list opens and closes @a11y (2.7s)
-  ✓  27 [a11y] › e2e\a11y.spec.ts:390:11 › footer ridge › / at 1280px: last content clears the ridge @a11y (571ms)
-  ✓  28 [a11y] › e2e\a11y.spec.ts:390:11 › footer ridge › / at 390px: last content clears the ridge @a11y (598ms)
-  ✓  29 [a11y] › e2e\a11y.spec.ts:390:11 › footer ridge › /careers at 1280px: last content clears the ridge @a11y (516ms)
-  ✓  30 [a11y] › e2e\a11y.spec.ts:390:11 › footer ridge › /careers at 390px: last content clears the ridge @a11y (488ms)
+  ✓  27 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 1280px: content clears the ridge @a11y (521ms)
+  ✓  28 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 1280px: content clears the ridge @a11y (386ms)
+  ✓  29 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 1280px: content clears the ridge @a11y (551ms)
+  ✓  30 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 1280px: content clears the ridge @a11y (393ms)
+  ✓  31 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 1280px: content clears the ridge @a11y (561ms)
+  ✓  32 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 1280px: content clears the ridge @a11y (575ms)
+  ✓  33 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 390px: content clears the ridge @a11y (555ms)
+  ✓  34 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 390px: content clears the ridge @a11y (411ms)
+  ✓  35 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 390px: content clears the ridge @a11y (503ms)
+  ✓  36 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 390px: content clears the ridge @a11y (373ms)
+  ✓  37 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 390px: content clears the ridge @a11y (546ms)
+  ✓  38 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 390px: content clears the ridge @a11y (543ms)
 
-  30 passed (45.3s)
+  38 passed (49.8s)
 ===== exit 0

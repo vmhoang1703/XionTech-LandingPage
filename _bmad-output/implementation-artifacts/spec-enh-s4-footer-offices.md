@@ -2,7 +2,7 @@
 title: 'E-S4 Footer and office facts match the prototype'
 type: 'feature'
 created: '2026-10-08'
-status: 'in-progress'
+status: 'in-review'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: '504e2b66076e044eb209d2fa7728a8838fe709dd'
@@ -116,6 +116,32 @@ labels so About, Demo and Home are unchanged.
 
 ## Review Triage Log
 
+| # | Source | Finding | Verdict | Evidence | Route |
+| --- | --- | --- | --- | --- | --- |
+| 1 | verification-gap, edge, blind | No test ties footer `/products#` links to the Products card anchors | medium | `site-footer.test.tsx` compares the footer to its own literals; product tests ignore the footer | patch |
+| 2 | edge, blind | Footer phone labels can drift from the number they dial | low | Labels are typed; hrefs come from `plano`/`hcmc`; a digits test is a direct guard | patch |
+| 3 | blind | "Vietnam Delivery Center" typed twice (hcmc `tag` and footer `name`) | low | Same string in two places; reuse `hcmc.tag` | patch |
+| 4 | edge | Contact icon picker falls back to the phone icon for an unknown href | low | Silent wrong icon for a future `sms:` or other link; explicit prefixes plus a throw | patch |
+| 5 | verification-gap, blind, edge, Task 3 minor | `not.toMatch(/…Vietnam$/)` second branch can never fire | low | The `$` anchor binds only the Vietnam branch; assert the `<b>` headings exactly | patch |
+| 6 | blind, Task 3 minor | Test pins the Tailwind class `relative` | low | Source-wording check; the e2e observes the ridge position | patch |
+| 7 | blind, edge, Task 2 minor | Link count `> 15` is loose (18 links) | low | A dropped link passes; assert the exact count | patch |
+| 8 | verification-gap, edge, blind, Task 4 minor | Bottom-room e2e measures only the last link and only `/` and `/careers`; story and job pages unverified | medium | `main > :last-child a:visible`; spec matrix names story and job pages, the walk did not visit them | patch |
+| 9 | acceptance, edge, verification-gap | ENH-088 set Built in this PR | false | The user approved marking ENH-088 Built in this branch's first commit (S1 merged in #78); the PR says so | reject |
+| 10 | blind | The footer no longer links to the contact form | false | Plan decision Q8: Home's Get in touch and About's link lead to `/#contact`; Services keeps "Start a project" | reject |
+| 11 | blind | Ridge has no z-index or overflow guard | false | `preserveAspectRatio="none"` scales to the width; the walk shows no sideways scroll on nine routes at 1280 and 390 | reject |
+| 12 | blind | 640/641px boundary mismatch between grid and ridge rules | low | Fractional widths only; no visible defect at the boundary in the walk | reject |
+| 13 | blind, edge | `contactByPrefix` throws at module load | false | Loud failure on bad static data is the intended guard; it is tested | reject |
+| 14 | edge | Bottom room replaces the last section's own bottom padding | low | No last section on any route has more than 232px of its own bottom padding; the room is the larger value | reject |
+| 15 | edge | `services.test.ts` filters `#process` instead of asserting it | low | `#process` is a page section id covered by `e2e/services.spec.ts`; the walk lands on it | reject |
+| 16 | blind, verification-gap | `[WebServer] … stream closed early` lines in the a11y transcript | false | Playwright web-server log noise when a test aborts a request; all 30 tests passed | reject |
+| 17 | blind | `walk.mjs` only logs, no assertions | low | It is the evidence walk; assertions live in the unit and e2e tests | reject |
+| 18 | blind | No `docs/ai-log.md` entry | low | Project hand-in rule; added before the PR | patch (docs, at PR) |
+| 19 | blind | Keyboard input on footer links not exercised by the walk | low | The a11y keyboard suite tabs every page and checks rings and 24px targets | reject |
+| 20 | acceptance | Bottom bar and unchanged pages rest on existing tests | false | `npm test` (1237 passed) runs `layout.test.tsx`, `demo/page.test.tsx`, `app/page.test.tsx`, which assert them | reject |
+| 21 | security | Clean | — | No sources, sinks, secrets or dependency changes | — |
+| 22 | patch re-review | `hcmc.tag ?? hcmc.name` fallback branch is untestable | low | Replaced by one `VIETNAM_DELIVERY_CENTER` constant used by the tag and the footer name (controller patch e83d868) | patch |
+| 23 | patch re-review | News-story and job-page ridge checks skip silently when `/news` or `/careers` has no link | low | Both ran and passed (12 of 12); data can legitimately be empty, so a skip is the honest outcome | defer |
+
 ## Verification
 
 **Commands:**
@@ -131,16 +157,16 @@ labels so About, Demo and Home are unchanged.
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-09, after `develop` (856a35e) was merged in.
+Captured after the step-04 review patches on 2026-10-09 (the step-03 set is history in the ledger).
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- All matched files use Prettier code style!
-- `npm test` -- exit 0 -- Test Files 83 passed (83), Tests 1237 passed (1237)
+- `npm test` -- exit 0 -- Test Files 83 passed (83), Tests 1240 passed (1240)
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100%; C1 ok: 3 changed file(s) with branch coverage >= 80%
 - `npm run test:smoke` -- exit 0 -- 15 passed
 - `npm run build` -- exit 0 -- compiled successfully
-- `npx playwright test --project=a11y` -- exit 0 -- 30 passed
+- `npx playwright test --project=a11y` -- exit 0 -- 38 passed (footer ridge on `/`, `/careers`, `/about`, `/privacy`, a news story and a job page at 1280 and 390)
 
 **Observed**
 

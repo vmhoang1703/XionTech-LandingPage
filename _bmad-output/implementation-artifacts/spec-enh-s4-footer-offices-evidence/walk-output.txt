@@ -38,6 +38,6 @@ footer columns 900: 2
 ridge 900: height 120 | bottom at footer top true | aria-hidden true | figures on ridge 0
 footer columns 390: 1
 ridge 390: height 72 | bottom at footer top true | aria-hidden true | figures on ridge 0
-/about offices: Two offices, serving the world. 21:27 Plano, Texas, USA 7950 Legacy Drive, Suite 400 Plano, Texas 75024, USA +1 469 322 9899 WhatsApp +1 469 439 9345 vinni.tran@newxion.com 09:27 Ho Chi Minh City, Vie
+/about offices: Two offices, serving the world. 21:39 Plano, Texas, USA 7950 Legacy Drive, Suite 400 Plano, Texas 75024, USA +1 469 322 9899 WhatsApp +1 469 439 9345 vinni.tran@newxion.com 09:39 Ho Chi Minh City, Vie
 /demo offices: Plano, Texas, USA 7950 Legacy Drive, Suite 400 Plano, Texas 75024, USA +1 469 322 9899 Wha || Ho Chi Minh City, Vietnam VIETNAM DELIVERY CENTER Floor 15, B1 Building 279 Nguyen Tri Phu || Vietnam Delivery Center Floor 15, B1 Building 279 Nguyen Tri Phuong Street Dien Hong Ward, || US Delivery Center 7950 Legacy Drive, Suite 400 Plano, Texas 75024, USA (+1) 469 322 9899 
 / contact: Plano +1 469 322 9899 Ho Chi Minh City +84 908 107 552 
