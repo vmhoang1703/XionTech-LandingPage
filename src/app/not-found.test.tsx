@@ -82,7 +82,7 @@ describe("NotFound page", () => {
     ).toEqual([]);
     const css = globalsCss();
     expect(css).toMatch(
-      /@media \(prefers-reduced-motion: reduce\)\s*\{[^}]*\.tm-trail[^}]*\{[^}]*animation: none/,
+      /@media \(prefers-reduced-motion: reduce\)\s*\{\s*\.tm-trail,\s*\.tm-here-ring\s*\{\s*animation: none;\s*\}\s*\/\*[^*]*\*\/\s*\.tm-here-ring\s*\{\s*stroke-opacity: 0;/,
     );
   });
 });

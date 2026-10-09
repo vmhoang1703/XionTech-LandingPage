@@ -5429,6 +5429,11 @@ main > :last-child {
   width: 100%;
   height: auto;
   overflow: visible;
+  -webkit-mask-image: radial-gradient(
+    ellipse 95% 95% at 52% 45%,
+    #000 70%,
+    transparent 100%
+  );
   mask-image: radial-gradient(
     ellipse 95% 95% at 52% 45%,
     #000 70%,
@@ -5469,7 +5474,8 @@ main > :last-child {
   fill: none;
   stroke: var(--color-amber);
   stroke-width: 2;
-  transform-origin: 88px 318px;
+  transform-box: fill-box;
+  transform-origin: center;
   animation: here-pulse 2s var(--ease-brand) infinite;
 }
 
@@ -5485,6 +5491,7 @@ main > :last-child {
   top: 20.5%;
   width: 13%;
   height: auto;
+  /* left/top: the trail's end (330, 74) in the 480 x 360 viewBox */
   transform: translate(-50%, -100%);
 }
 
@@ -5527,5 +5534,10 @@ main > :last-child {
   .tm-trail,
   .tm-here-ring {
     animation: none;
+  }
+
+  /* The prototype hides the still ring; it is decoration over the dot */
+  .tm-here-ring {
+    stroke-opacity: 0;
   }
 }
