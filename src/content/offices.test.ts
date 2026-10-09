@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  aboutOfficeView,
   contactByPrefix,
   footerOffices,
   hcmc,
@@ -110,6 +111,48 @@ describe("offices", () => {
   it("footer contact labels show the digits the link dials", () => {
     const digits = (text: string) => text.replace(/\D/g, "");
     const dialled = footerOffices
+      .flatMap((office) => office.contacts)
+      .filter(({ href }) => !href.startsWith("mailto:"));
+
+    expect(dialled).toHaveLength(3);
+    for (const { href, label } of dialled) {
+      expect(digits(label)).toBe(digits(href.replace("https://wa.me/", "")));
+    }
+  });
+
+  it("lists the About offices Plano first with delivery-center tags and bracketed phones", () => {
+    expect(aboutOfficeView.map((office) => office.id)).toEqual([
+      "plano",
+      "hcmc",
+    ]);
+    expect(aboutOfficeView.map((office) => office.tag)).toEqual([
+      "US Delivery Center",
+      "Vietnam Delivery Center",
+    ]);
+    expect(aboutOfficeView.map((office) => office.name)).toEqual([
+      "Plano, Texas, USA",
+      "Ho Chi Minh City, Vietnam",
+    ]);
+    expect(aboutOfficeView[0].contacts.map(({ label }) => label)).toEqual([
+      "(+1) 469 322 9899",
+      "(+1) 469 439 9345",
+      "vinni.tran@newxion.com",
+    ]);
+    expect(aboutOfficeView[0].contacts[1]).toMatchObject({
+      href: "https://wa.me/14694399345",
+      ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
+      external: true,
+    });
+    expect(aboutOfficeView[1].contacts).toEqual([
+      { href: "tel:+84908107552", label: "(+84) 908 107 552" },
+    ]);
+    expect(aboutOfficeView[0].timeZone).toBe(plano.timeZone);
+    expect(aboutOfficeView[1].zoneLabel).toBe(hcmc.zoneLabel);
+  });
+
+  it("About contact labels show the digits the link dials", () => {
+    const digits = (text: string) => text.replace(/\D/g, "");
+    const dialled = aboutOfficeView
       .flatMap((office) => office.contacts)
       .filter(({ href }) => !href.startsWith("mailto:"));
 

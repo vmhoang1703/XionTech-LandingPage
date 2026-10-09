@@ -22,6 +22,18 @@ describe("HomeValues", () => {
     expect(container.querySelectorAll(".value")).toHaveLength(
       aboutValues.items.length,
     );
+    expect(
+      Array.from(container.querySelectorAll(".value h3")).map(
+        (h3) => h3.textContent,
+      ),
+    ).toEqual([
+      "Startup Spirit",
+      "Client Centricity",
+      "Integrity First",
+      "Innovation Driven",
+      '"Get IT Done" Attitude',
+      "People-Centered Culture",
+    ]);
     expect(container.querySelectorAll(".value.feat")).toHaveLength(1);
     expect(container.querySelector(".value.feat h3")?.textContent).toBe(
       '"Get IT Done" Attitude',

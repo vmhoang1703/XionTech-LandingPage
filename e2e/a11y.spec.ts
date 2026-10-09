@@ -533,3 +533,55 @@ test.describe("services layout", { tag: "@a11y" }, () => {
     }
   });
 });
+
+test.describe("about layout", { tag: "@a11y" }, () => {
+  const columns = (page: Page) =>
+    page
+      .locator(".faq")
+      .evaluate(
+        (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
+      );
+
+  test("FAQ in two columns at 1280 and one at 760, /about#faq lands under the header", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/about");
+    expect(await columns(page)).toBe(2);
+
+    await page.setViewportSize({ width: 760, height: 800 });
+    await page.goto("/about");
+    expect(await columns(page)).toBe(1);
+
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/about");
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+    await page.goto("/about#faq");
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(0);
+    // Settled once three readings in a row match (smooth scrolling).
+    const readings: number[] = [];
+    await expect
+      .poll(async () => {
+        readings.push(await page.evaluate(() => window.scrollY));
+        const lastThree = readings.slice(-3);
+        return lastThree.length === 3 && new Set(lastThree).size === 1;
+      })
+      .toBe(true);
+    const target = await page
+      .locator("#faq h2")
+      .evaluate((el) => el.getBoundingClientRect().top);
+    const header = await page
+      .locator("header")
+      .first()
+      .evaluate((el) => el.getBoundingClientRect().bottom);
+    expect(target, "FAQ heading clears the header").toBeGreaterThanOrEqual(
+      header,
+    );
+    const bottom = await page
+      .locator("#faq h2")
+      .evaluate((el) => el.getBoundingClientRect().bottom);
+    expect(bottom, "FAQ heading is fully visible").toBeLessThanOrEqual(800);
+  });
+});

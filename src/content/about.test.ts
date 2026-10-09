@@ -4,10 +4,8 @@ import {
   aboutHero,
   aboutMeta,
   aboutOffices,
-  aboutStats,
   aboutStory,
 } from "@/content/about";
-import { aboutValues } from "@/content/values";
 import { describe, expect, it } from "vitest";
 
 describe("About content", () => {
@@ -23,51 +21,58 @@ describe("About content", () => {
     }
   });
 
-  it("has six values in order, and only Get IT Done is featured", () => {
-    expect(aboutValues.items.map((value) => value.title)).toEqual([
-      "Startup Spirit",
-      "Client Centricity",
-      "Integrity First",
-      "Innovation Driven",
-      '"Get IT Done" Attitude',
-      "People-Centered Culture",
-    ]);
-    const featured = aboutValues.items.filter((value) => value.featured);
-    expect(featured.map((value) => value.title)).toEqual([
-      '"Get IT Done" Attitude',
-    ]);
-    for (const value of aboutValues.items) expect(value.icon).toBeDefined();
+  it("uses the prototype wording for FAQ questions 1, 3 and 5", () => {
+    expect(aboutFaq.items[0].question).toBe("What does XionTech do?");
+    expect(aboutFaq.items[0].answer).toContain(
+      "(Parent Hub, Staff Hub and IoT Device Management)",
+    );
+    expect(aboutFaq.items[2].question).toBe(
+      "How can our school try Parent Hub or Staff Hub?",
+    );
+    expect(aboutFaq.items[4].answer).toContain(
+      "Discovery, the first of our four steps,",
+    );
   });
 
-  it("has five stats, the fourth is 4 and a placeholder", () => {
-    expect(aboutStats.stats).toHaveLength(5);
-    expect(aboutStats.stats[3]).toMatchObject({
-      value: "4",
-      caption: "School products ready to demo",
-      placeholder: true,
+  it("has the FAQ heading, lede and the ask-us link to the Home contact", () => {
+    expect(aboutFaq.title).toBe("Your question, we answer");
+    expect(aboutFaq.ask).toEqual({
+      label: "Still have a question? Ask us directly",
+      href: "/#contact",
     });
-    expect(aboutStats.stats.filter((stat) => stat.placeholder)).toHaveLength(1);
   });
 
-  it("has three story check items", () => {
-    expect(aboutStory.checks).toHaveLength(3);
+  it("has two story chapters, the founding sentence a placeholder", () => {
+    expect(aboutStory.chapters.map((chapter) => chapter.number)).toEqual([
+      "01",
+      "02",
+    ]);
+    expect(aboutStory.chapters[1].text).toMatch(
+      /^\[Placeholder\] Inspired by this vision, a group of pioneers established newXion in America\./,
+    );
+    expect(aboutStory.chapters[0].text.startsWith("[Placeholder]")).toBe(false);
+  });
+
+  it("links the intro to Products and Services", () => {
+    expect(aboutHero.links.map((link) => link.href)).toEqual([
+      "/products",
+      "/services",
+    ]);
+  });
+
+  it("has the new page title", () => {
+    expect(aboutMeta.title).toBe("About XionTech | Get IT Done");
   });
 
   it("says XionTech, never XionTechs", () => {
     const everything = JSON.stringify({
       aboutMeta,
       aboutHero,
-      aboutStats,
       aboutStory,
-      aboutValues: aboutValues.items.map(({ title, text }) => ({
-        title,
-        text,
-      })),
       aboutFaq,
       aboutOffices,
       aboutCapture,
     });
     expect(everything).not.toMatch(/XionTechs/);
-    expect(aboutFaq.items[0].question).toBe("What does XionTech do?");
   });
 });
