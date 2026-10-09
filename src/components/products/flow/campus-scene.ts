@@ -44,8 +44,9 @@ export function chapterAt(progress: number): FlowChapter {
 const MORNING = new Color("#dce6f5");
 const AFTERNOON = new Color("#ffe27a");
 
-export function skyAt(progress: number): Color {
-  return MORNING.clone().lerp(AFTERNOON, clamp01(progress));
+// Writes into `target` when given, so a render loop allocates nothing.
+export function skyAt(progress: number, target = new Color()): Color {
+  return target.copy(MORNING).lerp(AFTERNOON, clamp01(progress));
 }
 
 // The camera's field of view, in degrees, across the shorter side of the

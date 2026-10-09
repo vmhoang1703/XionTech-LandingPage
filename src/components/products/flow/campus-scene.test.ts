@@ -106,6 +106,12 @@ describe("skyAt", () => {
     expect(skyAt(-1).getHex()).toBe(skyAt(0).getHex());
     expect(skyAt(2).getHex()).toBe(skyAt(1).getHex());
   });
+
+  it("writes into a given colour instead of making a new one", () => {
+    const target = skyAt(0);
+    expect(skyAt(0.6, target)).toBe(target);
+    expect(target.getHex()).toBe(skyAt(0.6).getHex());
+  });
 });
 
 describe("buildCampus", () => {

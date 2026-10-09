@@ -3407,6 +3407,7 @@
   }
 
   .flow-chapter {
+    position: relative;
     padding-left: 20px;
     border-left: 2px solid
       color-mix(in srgb, var(--color-navy) 15%, transparent);
@@ -3418,6 +3419,24 @@
 
   .flow-chapter[data-active="true"] {
     border-left-color: var(--color-navy);
+  }
+
+  /* The chapter dot on the rule: an outline, filled for the active chapter. */
+  .flow-chapter::before {
+    content: "";
+    position: absolute;
+    top: 0.5em;
+    left: -7px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-navy);
+    border-radius: var(--radius-full);
+    background: var(--color-paper);
+    transition: background-color 0.4s var(--ease-brand);
+  }
+
+  .flow-chapter[data-active="true"]::before {
+    background: var(--color-navy);
   }
 
   .flow-chapter[data-active="false"] {
@@ -3543,6 +3562,10 @@
   @media (prefers-reduced-motion: reduce) {
     .flow-chapter[data-active="false"] {
       opacity: 1;
+    }
+
+    .flow-chapter[data-active="true"]::before {
+      background: var(--color-paper);
     }
   }
 

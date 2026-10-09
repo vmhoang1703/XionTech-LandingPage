@@ -9,7 +9,9 @@ import {
 describe("audienceFlow", () => {
   it("has the H1 and a lede", () => {
     expect(audienceFlow.intro.title).toBe("Built apart. Better together.");
-    expect(audienceFlow.intro.lede).not.toBe("");
+    expect(audienceFlow.intro.lede).toBe(
+      "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
+    );
   });
 
   it("lists the chapters in order parent, staff, student, campus", () => {
@@ -27,6 +29,15 @@ describe("audienceFlow", () => {
     ]);
   });
 
+  it("names the four audiences", () => {
+    expect(audienceFlow.chapters.map((c) => c.audience)).toEqual([
+      "Parent",
+      "Teacher and staff",
+      "Student",
+      "Campus",
+    ]);
+  });
+
   it("gives each chapter its own campus place", () => {
     const places = audienceFlow.chapters.map((c) => c.place);
     expect(places).toEqual(["gate", "staff-room", "classroom", "rooftop"]);
@@ -40,7 +51,6 @@ describe("audienceFlow", () => {
       expect(chapter.app).toBe(APPS.find((a) => a.id === chapter.app.id));
       expect(chapter.tagline).toBe(chapter.app.tagline);
       expect(chapter.madeFor).toBe(detail.madeFor);
-      expect(chapter.audience).not.toBe("");
     },
   );
 

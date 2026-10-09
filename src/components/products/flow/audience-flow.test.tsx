@@ -159,6 +159,29 @@ describe("chapters as a plain list", () => {
   });
 });
 
+describe("chapter dot", () => {
+  it("draws an outlined dot on each chapter's rule, with no JavaScript needed", () => {
+    const dot = ruleFor(".flow-chapter::before");
+    expect(dot).toContain('content: "";');
+    expect(dot).toContain("border: 2px solid var(--color-navy);");
+    expect(dot).toContain("background: var(--color-paper);");
+    expect(dot).not.toMatch(/display: none|opacity: 0|visibility: hidden/);
+  });
+
+  it("fills the dot of the active chapter", () => {
+    expect(ruleFor('.flow-chapter[data-active="true"]::before')).toBe(
+      "background: var(--color-navy);",
+    );
+  });
+
+  it("keeps every dot a plain outline under reduced motion", () => {
+    const css = globalsCss().replaceAll(/\s+/g, " ");
+    expect(css).toMatch(
+      /@media \(prefers-reduced-motion: reduce\) \{[^@]*\.flow-chapter\[data-active="true"\]::before \{ background: var\(--color-paper\); \}/,
+    );
+  });
+});
+
 describe("activeChapter", () => {
   it.each([-0.2, 0, 0.1, 0.2499, 0.25, 0.4, 0.5, 0.74, 0.75, 0.99, 1, 1.3])(
     "agrees with chapterAt at %s",

@@ -4,6 +4,7 @@ import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
 import { cubicBezier } from "motion";
 import { useEffect, useRef, useState } from "react";
 import type {
+  Color,
   Mesh,
   Object3D,
   PerspectiveCamera,
@@ -37,6 +38,7 @@ type Stage = {
   scene: Scene;
   camera: PerspectiveCamera;
   beacon: Object3D;
+  sky: Color;
   focus: (place: FlowPlace) => void;
   tick: (ms: number) => void;
   place: FlowPlace;
@@ -103,7 +105,7 @@ function draw(stage: Stage, progress: number, pulse: number) {
   beacon.position.copy(pose.beacon);
   beacon.position.y += Math.sin(pulse / 400) * 0.15;
   beacon.rotation.y = pulse / 1000;
-  scene.background = stage.campus.skyAt(progress);
+  scene.background = stage.campus.skyAt(progress, stage.sky);
   stage.renderer.render(scene, camera);
 }
 
@@ -187,6 +189,7 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
         scene,
         camera,
         beacon,
+        sky: new three.Color(),
         focus,
         tick,
         place: "gate",
@@ -204,7 +207,7 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
 
     const loader = new IntersectionObserver(
       (entries) => {
-        if (!entries[0].isIntersecting) return;
+        if (!entries.some((entry) => entry.isIntersecting)) return;
         loader.disconnect();
         load().catch((error: unknown) => {
           console.warn("CampusCanvas: the 3D campus could not start.", error);
@@ -214,8 +217,9 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
       { rootMargin: "50% 0px" },
     );
     loader.observe(host);
+    // A batch can hold several entries; the latest one is the current state.
     const viewer = new IntersectionObserver((entries) =>
-      setInView(entries[0].isIntersecting),
+      setInView(entries.at(-1)?.isIntersecting === true),
     );
     viewer.observe(host);
     const resizer = new ResizeObserver(resize);
@@ -241,6 +245,14 @@ export function CampusCanvas({ progress }: Readonly<{ progress: number }>) {
       stageRef.current = null;
     };
   }, []);
+
+  // A lost context or a failed start: free the scene and the renderer now,
+  // after the render loop has stopped, not at unmount.
+  useEffect(() => {
+    if (status !== "fallback" || !stageRef.current) return;
+    dispose(stageRef.current);
+    stageRef.current = null;
+  }, [status]);
 
   const showing = status === "ready" && inView && pageVisible;
   const running = showing && !paused;

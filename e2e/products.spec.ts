@@ -105,6 +105,34 @@ test.describe("audience flow", { tag: "@a11y" }, () => {
     }
   });
 
+  test("Pause un-dims the other chapters, and the choice survives a reload", async ({
+    page,
+  }) => {
+    await page.goto("/products");
+    const inactive = page.locator('#flow .flow-chapter[data-active="false"]');
+    const allFull = async () => {
+      await expect(inactive).toHaveCount(3);
+      for (const chapter of await inactive.all()) {
+        await expect(chapter).toHaveCSS("opacity", "1");
+      }
+    };
+
+    await expect(inactive.first()).toHaveCSS("opacity", "0.8");
+    await page.getByRole("button", { name: "Pause motion" }).click();
+    await allFull();
+
+    await page.reload();
+    const play = page.getByRole("button", { name: "Play motion" });
+    await expect(play).toBeVisible();
+    await allFull();
+
+    await play.click();
+    await expect(
+      page.getByRole("button", { name: "Pause motion" }),
+    ).toBeVisible();
+    await expect(inactive.first()).toHaveCSS("opacity", "0.8");
+  });
+
   test.describe("reduced motion", () => {
     test.use({ reducedMotion: "reduce" });
 

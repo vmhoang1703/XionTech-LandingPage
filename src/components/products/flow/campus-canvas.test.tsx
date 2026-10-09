@@ -427,6 +427,62 @@ describe("CampusCanvas", () => {
     expect(container.querySelector(".flow-fallback")).not.toBeNull();
   });
 
+  it("frees the scene and the renderer as soon as the context is lost", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const { container, unmount } = await renderReady();
+    act(() => frame(0));
+    const beacon = lastDraw().beacon as Mesh;
+    const geometry = vi.spyOn(beacon.geometry, "dispose");
+
+    act(() => {
+      canvasOf(container).dispatchEvent(new Event("webglcontextlost"));
+    });
+    expect(geometry).toHaveBeenCalledOnce();
+    expect(renderer.dispose).toHaveBeenCalledOnce();
+
+    unmount();
+    expect(renderer.dispose).toHaveBeenCalledOnce();
+  });
+
+  it("follows the latest entry when an observer reports a batch", async () => {
+    render(<CampusCanvas progress={0} />);
+    const [loader, viewer] = FakeObserver.all;
+    const batch = (...seen: boolean[]) =>
+      seen.map(
+        (isIntersecting) => ({ isIntersecting }) as IntersectionObserverEntry,
+      );
+
+    act(() => {
+      loader.callback(
+        batch(false, true),
+        loader as unknown as IntersectionObserver,
+      );
+      viewer.callback(
+        batch(false, true),
+        viewer as unknown as IntersectionObserver,
+      );
+    });
+    await screen.findByRole("button");
+    await waitFor(() => expect(requestAnimationFrame).toHaveBeenCalled());
+
+    act(() => {
+      viewer.callback(
+        batch(true, false),
+        viewer as unknown as IntersectionObserver,
+      );
+    });
+    expect(cancelAnimationFrame).toHaveBeenCalled();
+  });
+
+  it("reuses one sky colour from frame to frame", async () => {
+    await renderReady();
+    act(() => frame(1000));
+    const sky = lastDraw().scene.background;
+    act(() => frame(1016));
+    expect(lastDraw().scene.background).toBe(sky);
+    expect(sky).toEqual(skyAt(0));
+  });
+
   it("falls back to the still campus when three.js fails to start", async () => {
     const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const error = new Error("No renderer");
