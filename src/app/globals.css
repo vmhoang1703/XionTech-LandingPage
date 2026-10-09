@@ -3703,6 +3703,135 @@
     }
   }
 
+  /* Products flow */
+  /* The audience flow: intro, chapters and the sticky campus. Chapters dim
+     only once JavaScript sets data-active; without it they all read fully. */
+  .flow-intro {
+    max-width: 52rem;
+    margin-bottom: 48px;
+  }
+
+  .flow-intro h1 {
+    margin: 0;
+    color: var(--color-navy);
+    font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .flow-intro .lede {
+    margin-top: 24px;
+  }
+
+  .flow-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  /* Below 1024px the campus sticks to the top and the chapters pass under. */
+  .flow-stage {
+    position: sticky;
+    top: var(--spacing-header-height);
+    z-index: 1;
+    height: 40dvh;
+    background: var(--color-paper);
+  }
+
+  .flow-chapters {
+    display: grid;
+    gap: 48px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow-chapter {
+    padding-left: 20px;
+    border-left: 2px solid
+      color-mix(in srgb, var(--color-navy) 15%, transparent);
+    color: var(--color-text);
+    transition:
+      opacity 0.4s var(--ease-brand),
+      border-color 0.4s var(--ease-brand);
+  }
+
+  .flow-chapter[data-active="true"] {
+    border-left-color: var(--color-navy);
+  }
+
+  .flow-chapter[data-active="false"] {
+    opacity: 0.8;
+  }
+
+  .flow-chapter h2 {
+    margin: 0;
+  }
+
+  .flow-chapter > p {
+    margin-top: 8px;
+  }
+
+  .flow-app {
+    color: var(--color-navy);
+    font-weight: 500;
+  }
+
+  .flow-steps {
+    display: grid;
+    gap: 16px;
+    margin: 24px 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow-steps h3 {
+    margin: 0;
+    font-size: var(--text-body-lg);
+  }
+
+  .flow-steps p {
+    margin-top: 4px;
+  }
+
+  .flow-link {
+    color: var(--color-navy);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (width >= 1024px) {
+    .flow-body {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 64px;
+      align-items: start;
+    }
+
+    .flow-stage {
+      grid-row: 1;
+      grid-column: 2;
+      top: calc(var(--spacing-header-height) + 32px);
+      height: calc(100dvh - var(--spacing-header-height) - 64px);
+    }
+
+    .flow-chapters {
+      grid-row: 1;
+      grid-column: 1;
+      gap: 25dvh;
+      padding-block: 10dvh;
+    }
+  }
+
+  /* Reduced motion: the chapters read as a plain list. */
+  @media (prefers-reduced-motion: reduce) {
+    .flow-chapter[data-active="false"] {
+      opacity: 1;
+    }
+  }
+
   /* Showcase cards: What we build. */
   .pshows {
     display: grid;

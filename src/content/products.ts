@@ -151,5 +151,6 @@ export const audienceFlow = {
     chapter("student", "Student", "ai-tutor", "classroom"),
     chapter("campus", "Campus", "iot", "rooftop"),
   ],
+  detailsLink: (name: string) => `See ${name} details`,
   motion: { pause: "Pause motion", play: "Play motion" },
 } as const;
