@@ -19,3 +19,13 @@ Task 3: review — pass — 0 critical, 0 important, 2 minor
 Task 3: minor — src/components/products/flow/campus-scene.ts:131 clamp01(NaN) gives NaN, chapterAt(NaN) undefined (not reachable via Motion useScroll)
 Task 3: minor — src/components/products/flow/campus-scene.ts:237 hall position hard-coded to match PLACE_POSITIONS.rooftop
 Task 3: complete (commits 8fa6fce..b51b1a7, diff verified)
+Task 4: dispatched (model opus, base e283dad, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t4-report.md)
+Task 4: red — npx vitest run src/components/products/flow/campus-canvas.test.tsx — 14 of 15 failed against a return-null stub
+Task 4: green — npx vitest run src/components/products/flow/campus-canvas.test.tsx — 15 passed; 100% lines, 93% branches
+Task 4: review — pass — 0 critical, 0 important, 5 minor (warnings resolved: hidden SSR canvas counts as no visible canvas, as in hero-silk; paused sky redraw on scroll fits "still frame per chapter")
+Task 4: minor — campus-canvas.tsx:200-205 stage kept in memory after webglcontextlost, no webglcontextrestored recovery
+Task 4: minor — campus-canvas.tsx:132-139 setSize clears buffer; paused redraw lands a frame later (possible blank flash on mobile resize); first draw at 300x150
+Task 4: minor — campus-canvas.tsx:94 skyAt clones a Color every frame
+Task 4: minor — campus-canvas.tsx:118 pageVisible starts true instead of !document.hidden
+Task 4: minor — campus-canvas.test.tsx:265-274 tab-hidden test does not assert no new rAF or resume
+Task 4: complete (commits e283dad..e2b54fa, diff verified)
