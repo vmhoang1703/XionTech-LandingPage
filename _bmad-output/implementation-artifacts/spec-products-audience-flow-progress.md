@@ -29,3 +29,14 @@ Task 4: minor — campus-canvas.tsx:94 skyAt clones a Color every frame
 Task 4: minor — campus-canvas.tsx:118 pageVisible starts true instead of !document.hidden
 Task 4: minor — campus-canvas.test.tsx:265-274 tab-hidden test does not assert no new rAF or resume
 Task 4: complete (commits e283dad..e2b54fa, diff verified)
+Task 5: dispatched (model opus, base 61caceb, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t5-report.md)
+Task 5: fix round 1/5 (paused un-dims chapters via data-paused + :has rule; renderReady waits for first frame; 15/15 runs)
+Task 5: red — npx vitest run src/components/products/flow/audience-flow.test.tsx — 17 of 22 failed against null/zero stubs; class check failed on flow-intro, flow-body and 6 more before CSS
+Task 5: green — npx vitest run src/components/products/flow/audience-flow.test.tsx — 22 passed
+Task 5: review — fail — 0 critical, 1 important (paused chapters stay dimmed), 3 minor; controller adds confirmed flaky renderReady
+Task 5: minor — flow-progress.tsx:29/:394 useMotionValueEvent re-renders FlowProgress each scroll frame (bounded)
+Task 5: minor — flow-progress.tsx:363-366 duplicates chapterAt index rule (test pins agreement)
+Task 5: minor — audience-flow.tsx:17 / flow-progress.tsx:370 count duplicates children count
+Task 5: review — pass — re-review of c11252f: 0 of 2 findings open
+Task 5: minor — after webgl fallback (context lost) inactive chapters still dim with no motion control
+Task 5: complete (commits 61caceb..c11252f, diff verified)
