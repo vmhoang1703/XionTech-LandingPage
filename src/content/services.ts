@@ -1,19 +1,15 @@
-import { hcmc, plano } from "@/content/offices";
 import { processFlow, type ProcessFlowContent } from "@/content/process";
-import { homeStats } from "@/content/home";
 
 // Services page copy. Kept out of the components so it can be translated later.
 
 export const servicesMeta = {
-  title: "Services | XionTech",
+  title:
+    "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech",
   description:
     "Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones.",
 };
 
 export const servicesPage = {
-  breadcrumbLabel: "Breadcrumb",
-  breadcrumbHome: "Home",
-  breadcrumbCurrent: "Services",
   title: {
     lead: "Software teams that ",
     highlight: "get IT done",
@@ -24,21 +20,6 @@ export const servicesPage = {
     href: "/demo#project",
     label: "Start a project",
   },
-  secondaryCta: {
-    href: "#process",
-    label: "See our 4-D process",
-  },
-  clockStripLabel: "Office local times",
-  // Strip order: Ho Chi Minh City first.
-  clockCities: [
-    { office: hcmc, city: "Ho Chi Minh City" },
-    { office: plano, city: "Plano" },
-  ],
-};
-
-export const servicesStats = {
-  ariaLabel: "Key facts",
-  stats: homeStats.stats,
 };
 
 export const servicesSection = {
@@ -100,14 +81,38 @@ export const servicesSection = {
   ],
 } as const;
 
+export const servicesOutcomes = {
+  title: "What can we help you achieve?",
+  items: [
+    {
+      title: "Build a new digital product",
+      description:
+        "Move from discovery and UX into engineering, testing and launch with one delivery team.",
+    },
+    {
+      title: "Extend your team",
+      description:
+        "Add specialised technology talent when your internal team needs more capacity or specific skills.",
+    },
+    {
+      title: "Modernise an existing platform",
+      description:
+        "Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works.",
+    },
+    {
+      title: "Apply AI where it creates value",
+      description:
+        "Use AI, analytics and automation to improve products, workflows and business decision-making.",
+    },
+  ],
+};
+
 export const servicesProcess: {
-  label: string;
   title: string;
   lede: string;
   flow: ProcessFlowContent;
 } = {
-  label: "Our 4-D process",
-  title: "From your request to launch, in four steps.",
+  title: "Our 4-D process: from your request to launch.",
   lede: "Every step ends with something you can see, test and approve.",
   flow: processFlow,
 };

@@ -1,22 +1,18 @@
 import { expect, test } from "@playwright/test";
 
 test(
-  "services page responds 200 with the zone labels, the H1, the eight service anchors, #process and the project capture in the HTML without JavaScript",
+  "services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript",
   { tag: "@smoke" },
   async ({ request }) => {
     const response = await request.get("/services");
     const html = await response.text();
 
     expect(response.status()).toBe(200);
-    // CAP-2: zone labels server-rendered without JavaScript
-    expect(html).toContain("Ho Chi Minh City");
-    expect(html).toContain("GMT+7");
-    expect(html).toContain("Plano");
-    expect(html).toContain("US Central");
+    expect(html).toContain("<title>Software Outsourcing Vietnam");
     // H1 is present in server-rendered HTML
     expect(html).toContain("Software teams that");
     expect(html).toContain("get IT done");
-    // Story 5.2: eight service card IDs and section title, anchors exist without JavaScript
+    // Eight service card IDs and section title, anchors exist without JavaScript
     expect(html).toContain('<article id="product-engineering"');
     expect(html).toContain('<article id="ai-analytics"');
     expect(html).toContain('<article id="co-creation"');
@@ -26,13 +22,14 @@ test(
     expect(html).toContain('<article id="ai-solutions"');
     expect(html).toContain('<article id="cloud"');
     expect(html).toContain("Eight services, one team.");
-    // Story 5.4: the 4-D band target and the project capture
-    expect(html).toContain('href="#process"');
+    // E-S2: outcomes, then the process with the prototype heading; no clocks, no email band
+    expect(html).toContain("What can we help you achieve?");
     expect(html).toContain('<section id="process"');
-    expect(html.indexOf('<section id="process"')).toBeLessThan(
-      html.indexOf("Tell us what you&#x27;re building."),
+    expect(html.indexOf('<section id="outcomes"')).toBeLessThan(
+      html.indexOf('<section id="process"'),
     );
-    expect(html).toContain("From your request to launch, in four steps.");
-    expect(html).toContain("Tell us what you&#x27;re building.");
+    expect(html).toContain("Our 4-D process: from your request to launch.");
+    expect(html).not.toContain("GMT+7");
+    expect(html).not.toContain("Tell us what you&#x27;re building.");
   },
 );
