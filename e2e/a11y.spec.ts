@@ -542,7 +542,7 @@ test.describe("about layout", { tag: "@a11y" }, () => {
         (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
       );
 
-  test("FAQ in two columns at 1280 and one at 760, /about#faq lands under the header", async ({
+  test("FAQ in two columns at 1280 and one at 760, /about#faq and /about#book land under the header", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -626,7 +626,8 @@ test.describe("about layout", { tag: "@a11y" }, () => {
         .evaluate((el) => getComputedStyle(el, "::after").content);
     expect(await markerAfter(0)).toBe('"+"');
     const neighbour = page.locator(".faq details").nth(1);
-    const heightBefore = (await neighbour.boundingBox())?.height;
+    const heightBefore = (await neighbour.boundingBox())?.height ?? 0;
+    expect(heightBefore, "the neighbour row was measured").toBeGreaterThan(0);
     await page.locator(".faq summary").nth(0).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator(".faq details").nth(0)).toHaveAttribute(
@@ -638,6 +639,10 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     expect((await neighbour.boundingBox())?.height).toBe(heightBefore);
     await page.locator(".faq summary").nth(2).focus();
     await page.keyboard.press("Space");
+    await expect(page.locator(".faq details").nth(2)).toHaveAttribute(
+      "open",
+      "",
+    );
     await expect(page.locator(".faq details[open]")).toHaveCount(2);
     await page.locator(".faq summary").nth(0).focus();
     await page.keyboard.press("Enter");
@@ -646,6 +651,9 @@ test.describe("about layout", { tag: "@a11y" }, () => {
       "",
     );
     expect(await markerAfter(0)).toBe('"+"');
+    // Closing one row leaves the other open.
+    await expect(page.locator(".faq details[open]")).toHaveCount(1);
+    expect(await markerAfter(2)).toBe('"−"');
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/about");
