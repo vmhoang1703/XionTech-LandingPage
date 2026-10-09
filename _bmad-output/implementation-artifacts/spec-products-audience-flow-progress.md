@@ -12,3 +12,10 @@ Task 2: review — pass — 0 critical, 0 important, 2 minor
 Task 2: minor — src/content/products.ts:154 as const does not narrow chapters (chapter() results widened)
 Task 2: minor — src/content/products.ts:131,133 appById(app) called twice; products.test.ts:18,49 weak non-empty asserts for lede and audience labels
 Task 2: complete (commits 8f9e8d6..2018e9d, diff verified)
+Task 3: dispatched (model opus, base 8fa6fce, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/t3-report.md)
+Task 3: red — npx vitest run src/components/products/flow/campus-scene.test.ts — 13 of 16 failed against a wrong-value stub
+Task 3: green — npx vitest run src/components/products/flow/campus-scene.test.ts — 16 passed, campus-scene.ts 100% covered
+Task 3: review — pass — 0 critical, 0 important, 2 minor
+Task 3: minor — src/components/products/flow/campus-scene.ts:131 clamp01(NaN) gives NaN, chapterAt(NaN) undefined (not reachable via Motion useScroll)
+Task 3: minor — src/components/products/flow/campus-scene.ts:237 hall position hard-coded to match PLACE_POSITIONS.rooftop
+Task 3: complete (commits 8fa6fce..b51b1a7, diff verified)
