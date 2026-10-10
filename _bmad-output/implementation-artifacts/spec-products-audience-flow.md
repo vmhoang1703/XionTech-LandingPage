@@ -2,7 +2,7 @@
 title: 'Products page as an audience flow through a 3D campus'
 type: 'feature'
 created: '2026-10-09'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 1
 baseline_commit: '17707ca36cf5b88e15671161f19cfc46b5c5a9a2'
