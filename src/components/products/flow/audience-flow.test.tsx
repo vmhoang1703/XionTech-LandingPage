@@ -169,6 +169,42 @@ describe("chapter link", () => {
     expect(scroll).toHaveBeenCalledWith();
   });
 
+  it.each([
+    { ctrlKey: true },
+    { metaKey: true },
+    { shiftKey: true },
+    { altKey: true },
+    { button: 1 },
+  ])("leaves a new-tab or new-window click alone (%o)", (init) => {
+    const frame = vi.fn();
+    vi.stubGlobal("requestAnimationFrame", frame);
+    render(<AudienceFlow />);
+    fireEvent.click(
+      screen.getByRole("link", { name: "See AI Tutor details" }),
+      init,
+    );
+    expect(frame).not.toHaveBeenCalled();
+  });
+
+  it("keeps one pending frame and cancels it on unmount", () => {
+    vi.stubGlobal(
+      "requestAnimationFrame",
+      vi.fn(() => 7),
+    );
+    const cancel = vi.fn();
+    vi.stubGlobal("cancelAnimationFrame", cancel);
+    const { unmount } = render(<AudienceFlow />);
+    const link = screen.getByRole("link", { name: "See AI Tutor details" });
+
+    fireEvent.click(link);
+    expect(cancel).not.toHaveBeenCalledWith(7);
+    fireEvent.click(link);
+    expect(cancel).toHaveBeenCalledWith(7);
+    cancel.mockClear();
+    unmount();
+    expect(cancel).toHaveBeenCalledWith(7);
+  });
+
   it("leaves clicks elsewhere in the chapters alone", () => {
     const frame = vi.fn();
     vi.stubGlobal("requestAnimationFrame", frame);

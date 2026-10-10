@@ -22,25 +22,13 @@ export function activeChapter(progress: number, count: number): number {
   return Math.min(count - 1, Math.floor(clamped * count));
 }
 
-// Chrome can let a still-running focus scroll (Tab to an off-screen chapter
-// link, then Enter at once) win over the jump to the link's card, so the
-// jump stops short. Scrolling to the card again on the next frame lands it;
-// scrollIntoView() keeps the CSS scroll-behavior, so reduced motion jumps.
-function landOnCard(event: MouseEvent<HTMLOListElement>) {
-  const link = (event.target as Element).closest<HTMLAnchorElement>(
-    "a.flow-link",
-  );
-  if (!link) return;
-  const card = link.hash.slice(1);
-  requestAnimationFrame(() => document.getElementById(card)?.scrollIntoView());
-}
-
 // `count` is the number of chapters passed in as `children` (the list items).
 export function FlowProgress({
   count,
   children,
 }: Readonly<{ count: number; children: ReactNode }>) {
   const listRef = useRef<HTMLOListElement>(null);
+  const landing = useRef(0);
   const { scrollYProgress } = useScroll({
     target: listRef,
     offset: ["start center", "end center"],
@@ -57,6 +45,28 @@ export function FlowProgress({
         item.dataset.active = String(index === active);
       });
   }, [active]);
+
+  useEffect(() => () => cancelAnimationFrame(landing.current), []);
+
+  // Chrome can let a still-running focus scroll (Tab to an off-screen chapter
+  // link, then Enter at once) win over the jump to the link's card, so the
+  // jump stops short. Scrolling to the card again on the next frame lands it;
+  // scrollIntoView() keeps the CSS scroll-behavior, so reduced motion jumps.
+  // Clicks that open a new tab or window leave this page where it is.
+  const landOnCard = (event: MouseEvent<HTMLOListElement>) => {
+    const { button, metaKey, ctrlKey, shiftKey, altKey } = event;
+    if (event.defaultPrevented || button !== 0) return;
+    if (metaKey || ctrlKey || shiftKey || altKey) return;
+    const link = (event.target as Element).closest<HTMLAnchorElement>(
+      "a.flow-link",
+    );
+    if (!link) return;
+    const card = link.hash.slice(1);
+    cancelAnimationFrame(landing.current);
+    landing.current = requestAnimationFrame(() =>
+      document.getElementById(card)?.scrollIntoView(),
+    );
+  };
 
   return (
     <div className="flow-body">
