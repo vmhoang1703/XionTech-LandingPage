@@ -1447,3 +1447,17 @@ Template:
 - **AI got it wrong?** Yes:
   - The first port left the static "here" ring visible under reduced motion; the prototype hides it.
   - The job page's own 404 smoke test still expected the old copy, which the similar-check caught before the PR.
+
+## 2026-10-10 — UI/UX enhancement stage starts: Impeccable, font speed, XT silk
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` skill (`audit`, `init`, `optimize`, `animate`)
+- **Prompt (short):** "I want silk animation should be related to XT ... feel free to reach out to clarify." Answers: silk folds into XT, follow the XT logo without text, loop.
+- **What the AI did:**
+  - Installed the Impeccable skill for the team (#90), wrote `PRODUCT.md` from a three-question interview (#91).
+  - Measured Home before optimising: trimmed font preloads (#92, #93), Home LCP about 4.9 s -> 4.0 s on a local build.
+  - Home hero silk: every 12 s the cloth folds into the XT mark (amber swoosh, navy X and T strokes as distance fields in the shader), holds 3 s, melts back. The mark sits in the measured free space right of the copy, never behind text; screens without room keep plain waves.
+- **Decision / result:** Reduced motion keeps the silk paused on the formed mark, so the brand still shows without movement. Phones show no mark (the copy fills the width).
+- **AI got it wrong?** Yes:
+  - The audit blamed the Products blob animation; measuring showed it was GPU-composited and cheap.
+  - Deferring the silk's WebGL start to idle made blocking time worse (about 540 -> 830 ms) and was reverted.
+  - The first XT render looked like thick plastic letters and covered the stats text; thinner strokes and the measured area fixed both.

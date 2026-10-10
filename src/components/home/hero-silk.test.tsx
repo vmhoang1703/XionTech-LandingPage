@@ -213,3 +213,54 @@ describe("HeroSilk", () => {
     }
   });
 });
+
+describe("HeroSilk XT mark area", () => {
+  function box(left: number, top: number, right: number, bottom: number) {
+    return { left, top, right, bottom } as DOMRect;
+  }
+
+  // Renders the silk inside a hero like home-hero.tsx and returns the
+  // measure callback HeroSilk hands to createSilk.
+  function measureIn(copyRight: number, withStats = true) {
+    const { container } = render(
+      <section>
+        <HeroSilk />
+        <div className="wrap">
+          <h1>Title</h1>
+          <p>Copy</p>
+        </div>
+        {withStats ? <div className="home-stats" /> : null}
+      </section>,
+    );
+    const rects = new Map<Element | null, DOMRect>([
+      [container.querySelector("canvas"), box(0, 100, 1280, 1050)],
+      [container.querySelector("h1"), box(44, 216, 942, 323)],
+      [container.querySelector("p"), box(44, 340, copyRight, 431)],
+      [container.querySelector(".home-stats"), box(44, 600, 1236, 800)],
+    ]);
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
+      function (this: Element) {
+        return rects.get(this) ?? box(0, 0, 0, 0);
+      },
+    );
+    const measure = vi.mocked(createSilk).mock.calls[0][1];
+    if (!measure) throw new Error("No measure callback");
+    return measure;
+  }
+
+  it("centres the mark right of the copy, between headline and stats", () => {
+    const area = measureIn(795)();
+    expect(area).not.toBeNull();
+    expect(area?.x).toBe((819 + 1240) / 2);
+    expect(area?.y).toBe((339 + 584) / 2 - 100);
+    expect(area?.size).toBe(Math.min((1240 - 819) / 2.1, 245 / 1.05, 240));
+  });
+
+  it("gives no mark when the free space is too narrow (phones)", () => {
+    expect(measureIn(1100)()).toBeNull();
+  });
+
+  it("gives no mark when the hero has no stats row", () => {
+    expect(measureIn(795, false)()).toBeNull();
+  });
+});
