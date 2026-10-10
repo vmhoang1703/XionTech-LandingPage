@@ -91,3 +91,27 @@ Task 8: review — pass — re-review of e2c4a39: 0 of 3 findings open; 247 pass
 Task 8: minor — campus-canvas.tsx:176 shadows decided once at load (innerWidth)
 Task 8: minor — campus-scene.ts:271 staff-room side windows face away from the new camera
 Task 8: complete (commits c27d33b..e2c4a39, diff verified)
+Acceptance: verification — patches 5f5340a: review patches re-review pass (0 of 6 open); walk found chapter link stops short after a prior scroll; fixed 55d93cc (re-scroll on next frame) and 1935b2e (skip modified clicks, cancel pending frame); both re-reviews pass
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — clean
+Acceptance: verification — npm test — exit 0 — Test Files 87 passed (87); Tests 1345 passed (1345)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total 404 lines, Missing 0, Coverage 100%; products/flow branches 96.47%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed (20.9s)
+Acceptance: verification — npm run build — exit 0 — ○ /products static
+Acceptance: verification — npx playwright test --project=a11y — exit 1 — 47 passed, 1 failed: / color-contrast .w-more-trigger (known home flake, deferred; home not touched)
+Acceptance: verification — npx playwright test --project=a11y --grep "every page type" — exit 0 — 11 passed (26.3s)
+Acceptance: verification — npx playwright test e2e/products.spec.ts --project=a11y — exit 0 — 7 passed (33.8s)
+Acceptance: manual — final walk 1280 — observed: chapters follow scroll, CLS 0.0000, off-screen 0 rAF, chapter link lands #ai-tutor heading top 181, dialog opens and closes
+Acceptance: manual — final walk pause/reduced/no-webgl — observed: Pause → Play motion, 0 rAF, persists after reload, chapters fade to 1; reduced 0 rAF all at 1; no WebGL SVG fallback, no toggle, 0 errors
+Acceptance: manual — final walk widths and look — observed: 1280 stage 564x564, 1024 456x456, 390 358x338 sticky, no sideways scroll; campus reads as a campus at every chapter with active place lit; chapter dot filled on the active chapter
+Acceptance: evidence — spec-products-audience-flow-evidence/verification.txt — 18577 bytes — sha256 46d8f71e54e4 — verification.txt (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/walk.mjs — 7524 bytes — sha256 2eb96d358ca5 — walk.mjs (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/walk-output.txt — 3035 bytes — sha256 2aa3972cd9e4 — walk-output.txt (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-intro.png — 157394 bytes — sha256 7a7f9b6cba16 — flow-1280-intro.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-1.png — 157557 bytes — sha256 320666c9b6e6 — flow-1280-chapter-1.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-2.png — 168520 bytes — sha256 7926b313235b — flow-1280-chapter-2.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-3.png — 160620 bytes — sha256 938f967beeea — flow-1280-chapter-3.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-chapter-4.png — 161036 bytes — sha256 a5a3f302bcde — flow-1280-chapter-4.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-reduced.png — 162222 bytes — sha256 a18a223c367f — flow-1280-reduced.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1024.png — 140721 bytes — sha256 aaa46ee23911 — flow-1024.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-390.png — 78857 bytes — sha256 2d84dfb52739 — flow-390.png (final)
+Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-no-webgl.png — 120194 bytes — sha256 183026fa0608 — flow-1280-no-webgl.png (final)

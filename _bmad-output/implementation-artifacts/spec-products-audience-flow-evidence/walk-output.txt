@@ -1,31 +1,31 @@
 status: 200
 H1: Built apart. Better together.
 lede: A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.
-intro 1280: {"chapters":"Parent=true@1, Teacher and staff=false@0.8, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"564x764","fallback":0,"toggle":"Pause motion 36px","sideways":false}
-shot: flow-1280-intro.png stage 672,324 564x764
-chapter 1 1280: {"chapters":"Parent=true@1, Teacher and staff=false@0.8, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"564x764","fallback":0,"toggle":"Pause motion 36px","sideways":false}
-shot: flow-1280-chapter-1.png stage 672,320 564x764
-chapter 2 1280: {"chapters":"Parent=false@0.8, Teacher and staff=true@1, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"564x764","fallback":0,"toggle":"Pause motion 36px","sideways":false}
-shot: flow-1280-chapter-2.png stage 672,104 564x764
-chapter 3 1280: {"chapters":"Parent=false@0.8, Teacher and staff=false@0.8, Student=true@1, Campus=false@0.8","paused":"-","canvas":"564x764","fallback":0,"toggle":"Pause motion 36px","sideways":false}
-shot: flow-1280-chapter-3.png stage 672,104 564x764
-chapter 4 1280: {"chapters":"Parent=false@0.8, Teacher and staff=false@0.8, Student=false@0.8, Campus=true@1","paused":"-","canvas":"564x764","fallback":0,"toggle":"Pause motion 36px","sideways":false}
-shot: flow-1280-chapter-4.png stage 672,104 564x764
+intro 1280: {"chapters":"Parent=true@1, Teacher and staff=false@0.8, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"564x564","fallback":0,"toggle":"Pause motion 36px","sideways":false}
+shot: flow-1280-intro.png stage 672,324 564x564
+chapter 1 1280: {"chapters":"Parent=true@1, Teacher and staff=false@0.8, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"564x564","fallback":0,"toggle":"Pause motion 36px","sideways":false}
+shot: flow-1280-chapter-1.png stage 672,320 564x564
+chapter 2 1280: {"chapters":"Parent=false@0.8, Teacher and staff=true@1, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"564x564","fallback":0,"toggle":"Pause motion 36px","sideways":false}
+shot: flow-1280-chapter-2.png stage 672,104 564x564
+chapter 3 1280: {"chapters":"Parent=false@0.8, Teacher and staff=false@0.8, Student=true@1, Campus=false@0.8","paused":"-","canvas":"564x564","fallback":0,"toggle":"Pause motion 36px","sideways":false}
+shot: flow-1280-chapter-3.png stage 672,104 564x564
+chapter 4 1280: {"chapters":"Parent=false@0.8, Teacher and staff=false@0.8, Student=false@0.8, Campus=true@1","paused":"-","canvas":"564x564","fallback":0,"toggle":"Pause motion 36px","sideways":false}
+shot: flow-1280-chapter-4.png stage 672,104 564x564
 CLS: 0.0000
 off-screen rAF in 1s: 0
 link focus ring: solid 2px
 after link: #ai-tutor heading top 181
 dialog open: true
 dialog closed: true
-after pause: {"chapters":"Parent=true@1, Teacher and staff=false@0.828551, Student=false@0.828551, Campus=false@0.828551","paused":"true","canvas":"564x764","fallback":0,"toggle":"Play motion 36px","sideways":false}
+after pause: {"chapters":"Parent=true@1, Teacher and staff=false@0.849077, Student=false@0.849077, Campus=false@0.849077","paused":"true","canvas":"564x564","fallback":0,"toggle":"Play motion 36px","sideways":false}
 paused rAF in 1s: 0
-after reload: {"chapters":"Parent=true@1, Teacher and staff=false@0.966987, Student=false@0.966987, Campus=false@0.966987","paused":"true","canvas":"564x764","fallback":0,"toggle":"Play motion 36px","sideways":false}
-reduced chapter 3: {"chapters":"Parent=false@1, Teacher and staff=false@1, Student=true@1, Campus=false@1","paused":"true","canvas":"564x764","fallback":0,"toggle":"Play motion 36px","sideways":false}
+after reload: {"chapters":"Parent=true@1, Teacher and staff=false@0.999205, Student=false@0.999205, Campus=false@0.999205","paused":"true","canvas":"564x564","fallback":0,"toggle":"Play motion 36px","sideways":false}
+reduced chapter 3: {"chapters":"Parent=false@1, Teacher and staff=false@1, Student=true@1, Campus=false@1","paused":"true","canvas":"564x564","fallback":0,"toggle":"Play motion 36px","sideways":false}
 reduced rAF in 1s: 0
-shot: flow-1280-reduced.png stage 672,104 564x764
-width 1024: {"chapters":"Parent=false@0.8, Teacher and staff=true@1, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"456x708","fallback":0,"toggle":"Pause motion 36px","sideways":false}
-shot: flow-1024.png stage 544,104 456x708
+shot: flow-1280-reduced.png stage 672,104 564x564
+width 1024: {"chapters":"Parent=false@0.8, Teacher and staff=true@1, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"456x456","fallback":0,"toggle":"Pause motion 36px","sideways":false}
+shot: flow-1024.png stage 544,104 456x456
 width 390: {"chapters":"Parent=false@0.8, Teacher and staff=true@1, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"358x338","fallback":0,"toggle":"Pause motion 36px","sideways":false}
 shot: flow-390.png stage 16,72 358x338
 no webgl: {"chapters":"Parent=true@1, Teacher and staff=false@0.8, Student=false@0.8, Campus=false@0.8","paused":"-","canvas":"hidden","fallback":1,"toggle":"none","sideways":false} errors 0
-shot: flow-1280-no-webgl.png stage 672,320 564x764
+shot: flow-1280-no-webgl.png stage 672,320 564x564

@@ -1447,3 +1447,25 @@ Template:
 - **AI got it wrong?** Yes:
   - The first port left the static "here" ring visible under reduced motion; the prototype hides it.
   - The job page's own 404 smoke test still expected the old copy, which the similar-check caught before the PR.
+
+## 2026-10-10 — Products page as an audience flow through a 3D campus
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` dispatch route with `ui-ux-pro-max` and the three.js reference skills
+- **Prompt (short):** "Redesign the Product page as a user flow with a lot of animation; use ui-ux-pro-max and threejs."
+- **What the AI did:**
+  - Asked four design questions first. Sammy chose: one flow per audience, a low-poly campus, the flow before the app cards, and one PR.
+  - Built the audience flow test-first in eight tasks, each with its own implementer and task review: Parent → Teacher and staff → Student → Campus, with a sticky three.js campus whose camera, sky, beacon and lit path follow the scroll.
+  - Kept Motion as the animation library because the stack already names it, and did not use GSAP, which ui-ux-pro-max had suggested. Also did not use the skill's indigo and Comic Neue palette, which clashes with DESIGN.md.
+  - Ran the five-layer review and a walk on a production build at four widths, with reduced motion and with WebGL turned off.
+- **Decision / result:** At review Sammy chose a rich 3D pass and kept the app cards unchanged. three.js only loads when the flow nears the screen. Pause and reduced motion stop all movement, and without WebGL a still SVG campus shows. Checks:
+  - 1345 unit tests;
+  - diff coverage 100%;
+  - 15 smoke tests;
+  - the build;
+  - the products e2e (7).
+- **AI got it wrong?** Yes:
+  - The first campus put the camera so close that one block filled the frame. The walk screenshots caught it, and Sammy asked for the rich pass.
+  - Pausing at first left the chapters dimmed.
+  - The chapter links were 20px tall, under the 24px target size.
+  - A chapter link could stop short of its card after the visitor had scrolled, because Chrome's focus scroll won. It was found only by the final walk.
+  - The controller's own script put an extra `|` in every UX-checks row, the same slip as before.

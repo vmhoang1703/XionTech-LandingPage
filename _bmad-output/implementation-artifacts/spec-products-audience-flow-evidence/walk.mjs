@@ -101,6 +101,7 @@ const browser = await chromium.launch({ channel: "chrome" });
   await page.locator('#flow a[href="#ai-tutor"]').focus();
   log("link focus ring", await page.evaluate(() => { const s = getComputedStyle(document.activeElement); return `${s.outlineStyle} ${s.outlineWidth}`; }));
   await page.keyboard.press("Enter");
+  await sleep(400); // smooth scroll starts a few frames after the hash changes
   await settle(page);
   log("after link", `${new URL(page.url()).hash} heading top ${Math.round(await page.evaluate(() => document.querySelector("#ai-tutor-h").getBoundingClientRect().top))}`);
   // Card dialog unchanged.

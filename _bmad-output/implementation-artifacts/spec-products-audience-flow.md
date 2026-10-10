@@ -110,14 +110,14 @@ context:
 | --- | --- | --- | --- | --- | --- | --- |
 | Intro | Load `/products` at 1280px | — | H1 "Built apart. Better together."; lede; campus at morning | Static | `products.ts` | ✅ walk 1280 (H1, lede, morning sky); `audience-flow.test.tsx` |
 | Chapters | Scroll down | Mouse wheel, touch, keyboard (Space, PgDn) | Active chapter marked; others dimmed to no less than 70%; native scroll, no jump | Follows scroll | Sammy 2026-10-09 | ✅ walk (active follows scroll, others 0.8, CLS 0); e2e Student active |
-| Camera | Chapter changes | Scroll | Camera glides to the chapter's place; beacon rises there | 900ms `--ease-brand` | Sammy 2026-10-09 | fail: framing too close and flat light (review); re-checked after Task 8 |
+| Camera | Chapter changes | Scroll | Camera glides to the chapter's place; beacon rises there | 900ms `--ease-brand` | Sammy 2026-10-09 | ✅ walk screenshots per chapter: angled overview zooms toward gate, staff room, classroom, rooftop; whole campus readable; raycast occlusion test |
 | Sky | Scroll top → bottom | Scroll | Morning → afternoon colour | Follows scroll | Sammy 2026-10-09 | ✅ walk (morning blue at intro → warm yellow at Campus) |
-| Chapter link | Activate "See {app} details" | Mouse, keyboard, touch | Scrolls to the card; heading below the header; focus ring visible | Smooth | Anchors | ✅ walk (focus ring 2px, #ai-tutor heading top 181); e2e deep link |
-| Pause | Activate | Mouse, keyboard, touch | Pulse and tweens stop; label "Play motion"; the choice persists on reload | Instant | EXPERIENCE.md motion rules | ✅ walk (Play motion, 0 rAF, persists after reload, chapters un-dim); unit tests |
+| Chapter link | Activate "See {app} details" | Mouse, keyboard, touch | Scrolls to the card; heading below the header; focus ring visible | Smooth | Anchors | ✅ walk (focus ring 2px, heading top 181 after a prior scroll); e2e repro and deep link |
+| Pause | Activate | Mouse, keyboard, touch | Pulse and tweens stop; label "Play motion"; the choice persists on reload | Instant | EXPERIENCE.md motion rules | ✅ walk (Play motion, 0 rAF, persists after reload); e2e Pause un-dim at opacity 1 |
 | Reduced motion | Load with reduced motion | — | Still frames, no tween; chapters as a plain list | Static | DESIGN.md:451 | ✅ walk (0 rAF, all chapters opacity 1); e2e reduced motion |
 | No WebGL | WebGL unavailable | — | SVG campus; no toggle; no error | Static | `hero-silk.tsx` pattern | ✅ walk `--disable-webgl` (SVG, no toggle, 0 errors); unit test |
 | Off screen | Scroll past `#flow` / hide tab | — | Rendering stops (no rAF) | Instant | EXPERIENCE.md | ✅ walk (0 rAF in 1s past #flow); unit tests |
-| Width | 1024px / 390px | — | Side-by-side / canvas sticky on top at 40dvh; no sideways scroll | Static | Spec | ✅ walk (1024 beside 456x708; 390 sticky 358x338, no sideways scroll) |
+| Width | 1024px / 390px | — | Side-by-side / canvas sticky on top at 40dvh; no sideways scroll | Static | Spec | ✅ walk (1280 stage 564x564 and 1024 456x456 beside; 390 sticky 358x338; no sideways scroll) |
 | Cards | Open a card dialog | Mouse, keyboard | Unchanged dialog behaviour; restyled cards | Instant | `product-detail.tsx` | ✅ walk (dialog opens and closes); e2e keyboard dialog |
 
 ## Design Notes
@@ -140,7 +140,7 @@ context:
 | 2 | Cards "restyled" not delivered (auditor) | medium | Only `.pshow:target`; Sammy: keep cards as they are; intent amended |
 | 3 | No "chapter dot" marks progress (auditor, blind) | medium | No dot in TSX or CSS; patch |
 | 4 | Pause un-dim not proven in a browser; walk read mid-fade (verification-gap, auditor) | medium | Only reduced-motion e2e checks opacity; patch: e2e Pause test |
-| 5 | UX table rows have 8 cells (auditor) | medium | `||` slip from the controller's script; fixed in the spec |
+| 5 | UX table rows have 8 cells (auditor) | medium | Double-pipe slip from the controller's script; fixed in the spec |
 | 6 | Camera row marked ✅ with a failure note (auditor) | medium | Row set to `fail` until Task 8 |
 | 7 | IO callbacks read `entries[0]` (edge) | low | Direct correction to the latest entry; patch |
 | 8 | Stage kept after `webglcontextlost` (edge, blind, task 4) | low | Dispose the stage on loss; patch |
@@ -168,6 +168,9 @@ context:
 | 30 | Fallback path keeps chapters dimmed (verification-gap, task 5) | low | 0.8 is above the 70% floor; rejected |
 | 31 | `@types/three` caret, `as const`, `appById` twice, `.pshow:target` untested, resume from stale place, `count` duplicates children (task minors) | low | Cosmetic or convention; rejected |
 | 32 | Security | — | Clean; runtime audit unchanged |
+| 33 | Chapter link stops at the focus-centring scroll after a prior scroll (controller walk) | high | Repro scrollY 2073 vs 4298; Chrome smooth focus scroll wins; patch 55d93cc re-scrolls on the next frame, e2e repro |
+| 34 | Re-scroll also ran on modified clicks; frame not cancelled (re-review) | medium | Patch 1935b2e skips modified and non-primary clicks, cancels the pending frame |
+| 35 | Home `/` `.w-more-trigger` contrast flake in the full a11y run (verification) | low | Home untouched; passes alone 11/11; already deferred |
 
 ## Verification
 
@@ -181,36 +184,35 @@ context:
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-09.
+Captured after the review patches on 2026-10-10.
 
 **Commands**
 
-- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- eslint, tsc and prettier clean
-- `npm test` -- exit 0 -- Test Files 87 passed (87); Tests 1307 passed (1307)
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 226 lines, Missing 0, Coverage 100%; `products/flow` branches 93.75%
-- `npm run test:smoke` -- exit 0 -- 15 passed (17.9s)
-- `npm run build` -- exit 0 -- `/products` static; no page HTML references a chunk containing `WebGLRenderer`
-- `npx playwright test --project=a11y` -- exit 0 -- 44 passed (1.1m)
-- `npx playwright test e2e/products.spec.ts --project=a11y` -- exit 0 -- 5 passed, after tagging the deep-link and dialog tests `@a11y`
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
+- `npm test` -- exit 0 -- Test Files 87 passed (87); Tests 1345 passed (1345)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 404 lines, Missing 0, Coverage 100%; `products/flow` branches 96.47%
+- `npm run test:smoke` -- exit 0 -- 15 passed (20.9s)
+- `npm run build` -- exit 0 -- `/products` static
+- `npx playwright test --project=a11y` -- exit 1 -- 47 passed, 1 failed: `/` color-contrast `.w-more-trigger` (known Home flake, deferred; Home untouched)
+- `npx playwright test --project=a11y --grep "every page type"` -- exit 0 -- 11 passed
+- `npx playwright test e2e/products.spec.ts --project=a11y` -- exit 0 -- 7 passed
 
 **Observed**
 
 - Walk on a production build (`next start -p 3005`, Chrome), `walk-output.txt`:
-  - The active chapter follows scroll: Parent → Teacher and staff → Student → Campus. Inactive chapters are at 0.8 opacity, CLS is 0.
-  - Off-screen: 0 animation frames in 1s.
-  - Pause shows "Play motion", draws 0 frames, survives a reload and un-dims the chapters. Reduced motion: every chapter at opacity 1, 0 frames.
-  - `--disable-webgl` shows the SVG campus, no toggle and 0 page errors.
-  - At 1024 the canvas sits beside the chapters (456x708). At 390 it is sticky on top (358x338) with no sideways scroll.
-  - The chapter link shows a 2px focus ring and lands on `#ai-tutor` with the heading 181px from the top. The card dialog opens and closes.
-- Visual quality, from the screenshots: the camera is too close (the classroom and rooftop fill the frame with one block), the lighting is flat, and the campus does not read as a campus. Motion is only the camera glide and the beacon. Passed to review.
+  - The active chapter follows scroll, CLS is 0, and the loop draws no frames off screen.
+  - Pause, a reload and reduced motion all give 0 frames and full-strength chapters.
+  - Without WebGL the SVG campus shows, with no errors.
+  - Stage size: 564x564 at 1280, 456x456 at 1024, 358x338 sticky at 390.
+  - The chapter link lands with the heading 181px from the top after a prior scroll, and the dialog works.
+- Look: the campus reads as a small school at every chapter. The angled overview zooms toward the active place, whose path and spark light up. The chapter dot fills on the active chapter.
 
 **Artifacts**
 
 - [verification.txt](spec-products-audience-flow-evidence/verification.txt) -- command transcripts
 - [walk.mjs](spec-products-audience-flow-evidence/walk.mjs), [walk-output.txt](spec-products-audience-flow-evidence/walk-output.txt) -- the walk and its output
-- `flow-1280-intro.png`, `flow-1280-chapter-1..4.png`, `flow-1280-reduced.png`, `flow-1024.png`, `flow-390.png`, `flow-1280-no-webgl.png` -- screenshots (hashes in the ledger)
+- `flow-1280-intro.png`, `flow-1280-chapter-1..4.png`, `flow-1280-reduced.png`, `flow-1024.png`, `flow-390.png`, `flow-1280-no-webgl.png` -- screenshots (hashes in the ledger, rows marked "final")
 
 **Not captured**
 
 - Safari and Firefox (Chrome channel only). Real mobile GPU performance.
-
