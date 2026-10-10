@@ -1,8 +1,8 @@
-import { act, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { motionValue } from "motion";
 import { useScroll } from "motion/react";
 import { renderToString } from "react-dom/server";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { audienceFlow, FEATURE_PLACEHOLDER } from "@/content/products";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import { AudienceFlow } from "./audience-flow";
@@ -133,6 +133,48 @@ describe("AudienceFlow", () => {
 
     act(() => scrollYProgress.set(1));
     expect(states()).toEqual(["false", "false", "false", "true"]);
+  });
+});
+
+// Chrome can let a still-running focus scroll (Tab or focus() to an off-screen
+// link, then Enter at once) win over the jump to the card; the flow scrolls
+// to the card again on the next frame.
+describe("chapter link", () => {
+  afterEach(() => {
+    document.getElementById("ai-tutor")?.remove();
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it("scrolls to its card again on the next frame, keeping the CSS scroll behaviour", () => {
+    const card = document.createElement("article");
+    card.id = "ai-tutor";
+    document.body.append(card);
+    const scroll = vi.fn();
+    card.scrollIntoView = scroll;
+    let next: FrameRequestCallback = () => undefined;
+    vi.stubGlobal(
+      "requestAnimationFrame",
+      vi.fn((callback: FrameRequestCallback) => {
+        next = callback;
+        return 1;
+      }),
+    );
+    render(<AudienceFlow />);
+
+    fireEvent.click(screen.getByRole("link", { name: "See AI Tutor details" }));
+    expect(scroll).not.toHaveBeenCalled();
+    next(0);
+    expect(scroll).toHaveBeenCalledOnce();
+    expect(scroll).toHaveBeenCalledWith();
+  });
+
+  it("leaves clicks elsewhere in the chapters alone", () => {
+    const frame = vi.fn();
+    vi.stubGlobal("requestAnimationFrame", frame);
+    render(<AudienceFlow />);
+    fireEvent.click(screen.getByRole("heading", { level: 2, name: "Student" }));
+    expect(frame).not.toHaveBeenCalled();
   });
 });
 

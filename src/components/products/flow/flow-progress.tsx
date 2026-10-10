@@ -1,7 +1,13 @@
 "use client";
 
 import { useMotionValueEvent, useScroll } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
 import { CampusCanvas } from "./campus-canvas";
 
 // Client island for the audience flow: Motion's useScroll turns the scroll
@@ -14,6 +20,19 @@ import { CampusCanvas } from "./campus-canvas";
 export function activeChapter(progress: number, count: number): number {
   const clamped = Math.min(1, Math.max(0, progress));
   return Math.min(count - 1, Math.floor(clamped * count));
+}
+
+// Chrome can let a still-running focus scroll (Tab to an off-screen chapter
+// link, then Enter at once) win over the jump to the link's card, so the
+// jump stops short. Scrolling to the card again on the next frame lands it;
+// scrollIntoView() keeps the CSS scroll-behavior, so reduced motion jumps.
+function landOnCard(event: MouseEvent<HTMLOListElement>) {
+  const link = (event.target as Element).closest<HTMLAnchorElement>(
+    "a.flow-link",
+  );
+  if (!link) return;
+  const card = link.hash.slice(1);
+  requestAnimationFrame(() => document.getElementById(card)?.scrollIntoView());
 }
 
 // `count` is the number of chapters passed in as `children` (the list items).
@@ -44,7 +63,7 @@ export function FlowProgress({
       <div className="flow-stage">
         <CampusCanvas progress={progress} />
       </div>
-      <ol ref={listRef} className="flow-chapters">
+      <ol ref={listRef} className="flow-chapters" onClick={landOnCard}>
         {children}
       </ol>
     </div>

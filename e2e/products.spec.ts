@@ -105,6 +105,29 @@ test.describe("audience flow", { tag: "@a11y" }, () => {
     }
   });
 
+  // Focusing an off-screen link starts Chrome's smooth focus scroll; Enter
+  // straight after can lose the jump to the card to it. The race does not
+  // always lose, so the steps run three times.
+  test("a chapter link activated while its focus scroll runs still lands on the card", async ({
+    page,
+  }) => {
+    for (let round = 0; round < 3; round++) {
+      await page.goto("/products");
+      await page.waitForTimeout(1500);
+      await page.evaluate(() => {
+        const apps = document.querySelector<HTMLElement>("#apps");
+        scrollTo({ top: (apps?.offsetTop ?? 0) + 600, behavior: "instant" });
+      });
+      await page.waitForTimeout(800);
+      await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+      await page.waitForTimeout(800);
+
+      await page.locator('#flow a[href="#ai-tutor"]').focus();
+      await page.keyboard.press("Enter");
+      await expect(page.locator("#ai-tutor-h")).toBeInViewport();
+    }
+  });
+
   test("Pause un-dims the other chapters, and the choice survives a reload", async ({
     page,
   }) => {
