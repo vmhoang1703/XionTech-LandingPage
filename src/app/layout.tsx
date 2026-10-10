@@ -21,12 +21,14 @@ const lexendExa = Lexend_Exa({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600"],
   display: "swap",
+  // Logo-style labels only, never the hero text: load on use, not preload.
+  preload: false,
 });
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -36,6 +38,8 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500"],
   display: "swap",
+  // Small code-style labels below the fold: load on use, not preload.
+  preload: false,
 });
 
 export const metadata: Metadata = {
