@@ -1447,3 +1447,21 @@ Template:
 - **AI got it wrong?** Yes:
   - The first port left the static "here" ring visible under reduced motion; the prototype hides it.
   - The job page's own 404 smoke test still expected the old copy, which the similar-check caught before the PR.
+
+## 2026-10-10 — UI/UX enhancement stage starts: Impeccable, font speed, the hero's story
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` skill (`audit`, `init`, `optimize`, `animate`)
+- **Prompt (short):** "I want silk animation should be related to XT ... feel free to reach out to clarify." Then, over about ten rounds of feedback (in Vietnamese): the gold lines must gradually form XT; follow the logo without text; show the globe and the four offices; everything must mean something; "make it so anyone understands at once"; no captions, visualise it instead.
+- **What the AI did:**
+  - Installed the Impeccable skill for the team (#90), wrote `PRODUCT.md` from a three-question interview (#91).
+  - Measured Home before optimising: trimmed font preloads (#92, #93), Home LCP about 4.9 s -> 4.0 s on a local build.
+  - Rebuilt the Home hero as a two-column layout with a stage on the right, and a story drawn in points of light on a 2D canvas over the silk (`globe-mark.ts`): (1) follow the sun: a globe with real day and night shows both head offices; as Plano's day ends a torch flies to Ho Chi Minh City, which wakes with Da Nang and Ha Noi; (2) climb together: the globe sets below a horizon, the light climbs both slopes of the mountain (the name's inspiration, as on the About page) and the amber check-mark is ticked off from the summit: the X; (3) the logos of the stacks the team builds with stack up into the T. Three progress dots under the stage jump between scenes; the scene leans slightly towards a mouse.
+  - Land mask (Natural Earth via world-atlas) and 13 tech logos (Simple Icons, CC0) are generated data in `hero-data.ts`.
+- **Decision / result:** Every scene had to read without words, so each meaning became a familiar picture (sunset handover, a climb to a summit, a tick, a stack). On load the silk runs alone, then sparks gather into XT. Reduced motion and a saved Pause rest on the finished mark. Phones keep the silk only (no stage) until after Demo day. 60 fps on this laptop, 52 fps with the CPU slowed 4x; Lighthouse mobile unchanged within noise (64-77).
+- **AI got it wrong?** Yes, many times, and the lead said so:
+  - The audit blamed the Products blob animation; measuring showed it was GPU-composited and cheap.
+  - Deferring the silk's WebGL start to idle made blocking time worse (about 540 -> 830 ms) and was reverted.
+  - Five XT concepts were rejected before the story landed: silk folding into plastic-looking letters, contour lines, ribbons, dust -> mountain -> tech icons, and a captioned version ("adding captions shows the visual is hard to read").
+  - The AI guessed "silk lines" meant thin threads twice before asking; one direct question would have saved two rounds.
+  - It first labelled Da Nang and Ha Noi as offices although the site lists two; the lead confirmed four real locations, Ho Chi Minh City and Plano being the head offices.
+  - A negative pulse radius threw inside the frame loop and froze the animation; the scene-jump time landed a hair before its scene; the progress dots came before the copy in Tab order. All caught and fixed before the PR.

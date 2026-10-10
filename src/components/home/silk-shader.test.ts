@@ -70,4 +70,13 @@ describe("createSilk", () => {
       drawsAfterResize + 1,
     );
   });
+
+  it("sets the gold threads' strength on each frame (full by default)", () => {
+    const { gl, calls } = fakeGl();
+    const silk = createSilk(canvasWith(gl));
+    const before = calls.filter((c) => c === "uniform1f").length;
+    silk?.draw(9, 0.25);
+    silk?.draw(9);
+    expect(calls.filter((c) => c === "uniform1f")).toHaveLength(before + 4);
+  });
 });

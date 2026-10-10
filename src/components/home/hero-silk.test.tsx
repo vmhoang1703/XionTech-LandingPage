@@ -1,7 +1,20 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  createGlobeMark,
+  GLOBE_RADIUS,
+  type GlobeMark,
+  MARK_WIDTH,
+  SCENE_REST_TIME,
+  sceneJumpTime,
+} from "./globe-mark";
 import { HeroSilk } from "./hero-silk";
 import { createSilk, type Silk } from "./silk-shader";
+
+vi.mock("./globe-mark", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("./globe-mark")>()),
+  createGlobeMark: vi.fn(),
+}));
 
 vi.mock("./silk-shader", async (importOriginal) => ({
   ...(await importOriginal<typeof import("./silk-shader")>()),
@@ -10,6 +23,7 @@ vi.mock("./silk-shader", async (importOriginal) => ({
 
 let intersect: (visible: boolean) => void = () => undefined;
 let silk: Silk;
+let globe: GlobeMark;
 let reducedMotion = false;
 
 beforeEach(() => {
@@ -17,6 +31,8 @@ beforeEach(() => {
   localStorage.clear();
   silk = { draw: vi.fn(), resize: vi.fn() };
   vi.mocked(createSilk).mockReturnValue(silk);
+  globe = { draw: vi.fn(() => 1), resize: vi.fn(), setPointer: vi.fn() };
+  vi.mocked(createGlobeMark).mockReturnValue(globe);
   vi.stubGlobal(
     "matchMedia",
     vi.fn(() => ({ matches: reducedMotion })),
@@ -53,6 +69,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
   vi.mocked(createSilk).mockReset();
+  vi.mocked(createGlobeMark).mockReset();
 });
 
 function renderSilk() {
@@ -116,7 +133,12 @@ describe("HeroSilk", () => {
     renderSilk();
 
     act(() => frame(50));
-    expect(silk.draw).toHaveBeenLastCalledWith(8 + 0.05 * 0.35);
+    // The scene shows, so the silk's gold threads are quieted.
+    expect(silk.draw).toHaveBeenLastCalledWith(
+      8 + 0.05 * 0.35,
+      expect.closeTo(0.1),
+    );
+    expect(globe.draw).toHaveBeenLastCalledWith(8 + 0.05 * 0.35);
   });
 
   it("starts paused when the visitor prefers reduced motion", () => {
@@ -211,5 +233,94 @@ describe("HeroSilk", () => {
     for (const name of ["h-9", "min-w-9", "px-2", "justify-center"]) {
       expect(button.classList.contains(name)).toBe(true);
     }
+  });
+});
+
+describe("HeroSilk scene", () => {
+  const box = (left: number, top: number, width: number, height: number) =>
+    ({
+      left,
+      top,
+      width,
+      height,
+      right: left + width,
+      bottom: top + height,
+    }) as DOMRect;
+
+  // Renders the silk inside a hero with a stage box like home-hero.tsx.
+  function renderInHero(stage = box(700, 150, 600, 500)) {
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
+      function (this: Element) {
+        return this.classList.contains("hero-stage")
+          ? stage
+          : box(0, 72, 1440, 950);
+      },
+    );
+    const view = render(
+      <section>
+        <HeroSilk />
+        <div className="hero-stage" />
+      </section>,
+    );
+    const hero = view.container.querySelector("section");
+    if (!hero) throw new Error("No hero");
+    return { ...view, hero };
+  }
+
+  it("draws the globe and the mark in the stage, sized to fit both", () => {
+    renderInHero();
+    const size = Math.min(600 / MARK_WIDTH, 500 / (2 * GLOBE_RADIUS));
+    expect(globe.resize).toHaveBeenLastCalledWith({ x: 1000, y: 328, size });
+  });
+
+  it("leaves the scene out when the stage is too small or missing", () => {
+    renderInHero(box(700, 150, 120, 100));
+    expect(globe.resize).toHaveBeenLastCalledWith(null);
+    expect(screen.queryByRole("group")).toBeNull();
+  });
+
+  it("shows three scene dots under the stage and jumps on click", () => {
+    renderInHero();
+    const dots = screen.getAllByRole("button", { name: /^Scene/ });
+    expect(dots).toHaveLength(3);
+    expect(dots[2].getAttribute("aria-current")).toBe("step");
+    // Inside the stage, so the dots come after the copy in Tab order.
+    const group = screen.getByRole("group", { name: "Animation scenes" });
+    expect(group.parentElement?.classList.contains("hero-stage")).toBe(true);
+
+    fireEvent.click(dots[0]);
+    expect(globe.draw).toHaveBeenLastCalledWith(sceneJumpTime(0, 8));
+    expect(dots[0].getAttribute("aria-current")).toBe("step");
+    expect(dots[2].getAttribute("aria-current")).toBeNull();
+  });
+
+  it("leans the scene towards a fine pointer and back when it leaves", () => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({ matches: query === "(pointer: fine)" })),
+    );
+    const { hero } = renderInHero();
+    fireEvent(
+      hero,
+      new MouseEvent("pointermove", { clientX: 1440, clientY: 72 }),
+    );
+    expect(globe.setPointer).toHaveBeenLastCalledWith(1, -1);
+    fireEvent(hero, new MouseEvent("pointerleave"));
+    expect(globe.setPointer).toHaveBeenLastCalledWith(0, 0);
+  });
+
+  it("does not follow a coarse pointer (touch)", () => {
+    const { hero } = renderInHero();
+    fireEvent(
+      hero,
+      new MouseEvent("pointermove", { clientX: 10, clientY: 90 }),
+    );
+    expect(globe.setPointer).not.toHaveBeenCalled();
+  });
+
+  it("rests on the finished mark when it starts paused", () => {
+    localStorage.setItem("xt-motion", "off");
+    renderInHero();
+    expect(globe.draw).toHaveBeenCalledWith(SCENE_REST_TIME);
   });
 });

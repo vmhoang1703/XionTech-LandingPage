@@ -5,7 +5,7 @@
 const VERTEX = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
 
 const FRAGMENT = `precision highp float;
-uniform vec2 r;uniform float t;uniform vec3 bg,base,fold,sheen,thread;
+uniform vec2 r;uniform float t,a;uniform vec3 bg,base,fold,sheen,thread;
 float h(vec2 p){float v=0.;
  v+=sin(p.x*1.4+t*.30+sin(p.y*1.2+t*.18)*1.6)*.55;
  v+=sin(p.y*2.1-t*.24+sin(p.x*.9-t*.12)*1.3)*.33;
@@ -17,8 +17,8 @@ void main(){
  float dx=(h(p+vec2(e,0.))-h(p-vec2(e,0.)))/(2.*e);float dy=(h(p+vec2(0.,e))-h(p-vec2(0.,e)))/(2.*e);
  vec3 n=normalize(vec3(-dx,-dy,1.35));vec3 L=normalize(vec3(-.45,.55,.7));
  float diff=clamp(dot(n,L),0.,1.);float spec=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),28.);
- vec3 col=mix(fold,base,smoothstep(.25,.95,diff));col+=sheen*spec*.55;
- float th=abs(sin(hc*7.5+p.x*.35));th=1.-smoothstep(0.,.045,th);col=mix(col,thread,th*(.35+.4*diff));
+ vec3 col=mix(fold,base,smoothstep(.25,.95,diff));col+=sheen*spec*.55*(.3+.7*a);
+ float th=abs(sin(hc*7.5+p.x*.35));th=1.-smoothstep(0.,.045,th);col=mix(col,thread,th*(.35+.4*diff)*a);
  float m=smoothstep(.30,.95,uv.x+uv.y*.10+hc*.07);m=max(m,smoothstep(.55,0.,uv.y)*smoothstep(.15,.7,uv.x)*.9);
  gl_FragColor=vec4(mix(bg,col,m),1.);}`;
 
@@ -35,7 +35,10 @@ export const SILK_TIME_SCALE = 0.35;
 export const SILK_START_TIME = 8;
 
 export type Silk = {
-  draw: (time: number) => void;
+  // threads: 1 = amber threads and sheen at full strength, 0 = threads hidden,
+  // sheen dimmed (while the particle shapes show,
+  // the gold is all in them).
+  draw: (time: number, threads?: number) => void;
   resize: () => void;
 };
 
@@ -82,12 +85,16 @@ export function createSilk(canvas: HTMLCanvasElement): Silk | null {
     gl.uniform3fv(uniform(name), toRgb(hex));
   }
   const timeUniform = uniform("t");
+  const threadUniform = uniform("a");
   const sizeUniform = uniform("r");
   let lastTime = SILK_START_TIME;
+  let lastThreads = 1;
 
-  const draw = (time: number) => {
+  const draw = (time: number, threads = 1) => {
     lastTime = time;
+    lastThreads = threads;
     gl.uniform1f(timeUniform, time);
+    gl.uniform1f(threadUniform, threads);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
 
@@ -97,7 +104,7 @@ export function createSilk(canvas: HTMLCanvasElement): Silk | null {
     canvas.height = canvas.clientHeight * ratio;
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform2f(sizeUniform, canvas.width, canvas.height);
-    draw(lastTime);
+    draw(lastTime, lastThreads);
   };
 
   return { draw, resize };
