@@ -77,7 +77,7 @@ export default function ServicesPage() {
           <div className="sec-head">
             <h2 id="services-outcomes-h">{servicesOutcomes.title}</h2>
           </div>
-          <ol className="outcomes" role="list">
+          <ol className="outcomes">
             {servicesOutcomes.items.map((item, index) => (
               <li key={item.id} className="outcome">
                 <span className="oc-num" aria-hidden="true">
