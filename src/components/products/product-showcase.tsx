@@ -226,7 +226,7 @@ export function ProductShowcase() {
   return (
     <section id="apps" className="sec surface-paper" aria-labelledby="apps-h">
       <div className="wrap">
-        <div className="sec-head">
+        <div className="sec-head" data-reveal="">
           <h2 id="apps-h">{S.heading}</h2>
           <p className="lede">{S.lede}</p>
         </div>

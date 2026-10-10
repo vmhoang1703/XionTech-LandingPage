@@ -8,11 +8,11 @@ export function Inside() {
   return (
     <section id="life" className="sec" aria-labelledby="life-h">
       <div className="wrap">
-        <div className="sec-head ins-head">
+        <div className="sec-head ins-head" data-reveal="">
           <h2 id="life-h">{heading}</h2>
           <p className="lede">{lede}</p>
         </div>
-        <div className="ins-grid">
+        <div className="ins-grid" data-reveal="">
           {tiles.map(({ tag, title, text, tone, big }) => (
             <article
               key={title}

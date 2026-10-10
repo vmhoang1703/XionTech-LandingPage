@@ -1465,3 +1465,16 @@ Template:
   - The AI guessed "silk lines" meant thin threads twice before asking; one direct question would have saved two rounds.
   - It first labelled Da Nang and Ha Noi as offices although the site lists two; the lead confirmed four real locations, Ho Chi Minh City and Plano being the head offices.
   - A negative pulse radius threw inside the frame loop and froze the animation; the scene-jump time landed a hair before its scene; the progress dots came before the copy in Tab order. All caught and fixed before the PR.
+
+## 2026-10-10 — One scroll reveal for every page
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable animate`
+- **Prompt (short):** "Enhance animation on homepage across all sections for smoothly when user scroll the page", then mid-build: "apply for all page".
+- **What the AI did:**
+  - Wrote the brief with the lead first: one shared motion style, reuse the reveals we already have, CSS and IntersectionObserver only, `transform`/`opacity` only, a reduced-motion path, content visible without JavaScript, the hero globe untouched.
+  - Built one small client script, `ScrollReveal`, in the root layout. It runs again after each navigation. The direct children of any `[data-reveal]` group rise 18px and fade in over 0.7 s with the brand curve, the same as the existing 4-D flow steps. Items that come into view together start 70 ms apart, with a cap of 280 ms.
+  - Marked groups on Home, About, Services, Products, Careers and the footer. News filters, the 4-D flow, the flip cards' own flip and the long-read pages keep their own behaviour.
+- **Decision / result:** Only items the script marks "wait" (below the screen at load) are hidden, so server HTML, items already on screen and items added later (a filtered list) always show. A browser walk of 8 pages, at 1440px and 390px, plus a Home -> About link: every item ends visible and layout shift is 0. Reduced motion and no JavaScript hide nothing. It uses `translate`, not `transform`, so card hover lifts still work.
+- **AI got it wrong?** Yes:
+  - The first version hid every child of an armed group. Adding the News filter's new cards to such a group would have left them invisible; the "apply to all pages" request exposed it, and the script now hides only what it marked.
+  - The project's no-JS guard test flagged the two new hiding rules; they are allow-listed with the reason, because both apply only after the script runs.

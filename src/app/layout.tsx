@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { ScrollReveal } from "@/components/sections/scroll-reveal";
 import "./globals.css";
 
 const unbounded = Unbounded({
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <ScrollReveal />
       </body>
     </html>
   );

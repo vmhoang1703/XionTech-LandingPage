@@ -12,6 +12,11 @@ vi.mock("next/font/google", () => ({
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
 
+// The scroll reveal reads matchMedia, which jsdom lacks; it has its own tests.
+vi.mock("@/components/sections/scroll-reveal", () => ({
+  ScrollReveal: () => null,
+}));
+
 const { default: RootLayout, metadata } = await import("./layout");
 const { siteFooter } = await import("@/content/site-footer");
 

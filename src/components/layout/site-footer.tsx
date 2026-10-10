@@ -33,7 +33,7 @@ export function SiteFooter() {
         </svg>
       </div>
       <div className="max-w-page px-gutter-mobile sm:px-gutter mx-auto">
-        <div className="footer-grid">
+        <div className="footer-grid" data-reveal="">
           <div>
             <Link
               href="/"

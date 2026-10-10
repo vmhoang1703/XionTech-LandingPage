@@ -6,11 +6,11 @@ export function HomeValues() {
   return (
     <section aria-labelledby="home-values-h" className="sec home-values">
       <div className="wrap">
-        <div className="sec-head">
+        <div className="sec-head" data-reveal="">
           <h2 id="home-values-h">{homeValuesHeading.title}</h2>
           <p className="lede">{homeValuesHeading.lede}</p>
         </div>
-        <div className="values">
+        <div className="values" data-reveal="">
           {aboutValues.items.map(
             ({ icon: ValueIcon, title, text, featured }) => (
               <div key={title} className={featured ? "value feat" : "value"}>
