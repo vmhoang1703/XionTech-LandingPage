@@ -12,10 +12,10 @@ export function LifeFrames({
   return (
     <section id="life" className="sec surface-mist" aria-labelledby="life-h">
       <div className="wrap">
-        <div className="sec-head">
+        <div className="sec-head" data-reveal="">
           <h2 id="life-h">{heading}</h2>
         </div>
-        <div className="news-grid">
+        <div className="news-grid" data-reveal="">
           {frames.map(({ slot, placeholder }) => {
             const photo = photos?.[slot];
             if (!photo?.url || !photo.alt?.trim()) {

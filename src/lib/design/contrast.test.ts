@@ -512,7 +512,9 @@ describe("reduced motion", () => {
 // story" for the pill and date on hover and focus with no JavaScript, and
 // always shows "Read story" on touch screens. The About FAQ (E-S3) hides
 // Safari's disclosure triangle, a purely decorative user-agent marker: the
-// question text and the +/- stay visible.
+// question text and the +/- stay visible. The shared scroll reveal hides only
+// items its script marked "wait" and starts its rise (`from`) only on items
+// the script marked "play", so with no JavaScript neither ever applies.
 const MAY_HIDE = new Set([
   "[hidden]",
   ".fpanel[hidden]",
@@ -521,6 +523,8 @@ const MAY_HIDE = new Set([
   ".scard:hover .scard-meta",
   ".scard:focus-visible .scard-meta",
   ".faq summary::-webkit-details-marker",
+  '[data-reveal] > [data-shown="wait"]',
+  "from",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],

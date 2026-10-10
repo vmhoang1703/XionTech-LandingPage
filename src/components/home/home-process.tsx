@@ -12,7 +12,7 @@ export function HomeProcess() {
   return (
     <section aria-labelledby="process-title" className="sec home-process">
       <div className="wrap">
-        <div className="sec-head-row">
+        <div className="sec-head-row" data-reveal="">
           <div className="sec-head">
             <h2 id="process-title">{title}</h2>
             <p className="lede">{lede}</p>

@@ -32,11 +32,11 @@ export function Capabilities() {
   return (
     <section aria-labelledby="capabilities-title" className="sec">
       <div className="wrap">
-        <div className="sec-head">
+        <div className="sec-head" data-reveal="">
           <h2 id="capabilities-title">{title}</h2>
           <p className="lede">{lede}</p>
         </div>
-        <div className="why2">
+        <div className="why2" data-reveal="">
           <Link href={products.href} className="w-card w-products">
             <span className="w-label">{products.label}</span>
             <h3>{products.title}</h3>
@@ -116,7 +116,7 @@ export function Capabilities() {
             </span>
           </Link>
         </div>
-        <div className="w-motto">
+        <div className="w-motto" data-reveal="">
           <p className="w-gid">{motto.lead}</p>
           <div className="w-own">
             <p className="w-own-title">{motto.title}</p>

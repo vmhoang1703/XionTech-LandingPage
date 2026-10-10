@@ -2941,6 +2941,45 @@
     z-index: 1;
   }
 
+  /* Scroll reveal (ScrollReveal): the direct children of a [data-reveal]
+     group rise in as they come into view. Same rise, length and curve as the
+     4-D flow steps. It uses `translate`, not `transform`, so hover lifts on
+     cards still work. Only items the script marked "wait" are hidden; focus,
+     print and reduced motion show them at once. */
+  [data-reveal] > [data-shown="wait"] {
+    opacity: 0;
+    translate: 0 18px;
+  }
+
+  [data-reveal] > [data-shown="play"] {
+    animation: reveal-rise 0.7s var(--ease-brand) var(--reveal-delay, 0ms) both;
+  }
+
+  [data-reveal] > [data-shown]:focus-within {
+    opacity: 1;
+    translate: none;
+    animation: none;
+  }
+
+  @keyframes reveal-rise {
+    from {
+      opacity: 0;
+      translate: 0 18px;
+    }
+
+    to {
+      opacity: 1;
+      translate: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce), print {
+    [data-reveal] > [data-shown] {
+      opacity: 1;
+      translate: none;
+    }
+  }
+
   .flow {
     position: relative;
     display: grid;

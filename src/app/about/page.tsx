@@ -98,7 +98,7 @@ export default function AboutPage() {
             <span className="hl">{story.highlight}</span>
             {story.tail}
           </h2>
-          <div className="mtn-story">
+          <div className="mtn-story" data-reveal="">
             {chapters.map(({ number, title: name, text: body }) => (
               <article key={number}>
                 <h3 className="mtn-title">
@@ -121,12 +121,12 @@ export default function AboutPage() {
         className="sec surface-paper"
         aria-labelledby="about-faq-h"
       >
-        <div className="wrap faq-head">
+        <div className="wrap faq-head" data-reveal="">
           <h2 id="about-faq-h">{aboutFaq.title}</h2>
           <p className="lede">{aboutFaq.lede}</p>
         </div>
         <div className="wrap">
-          <div className="faq">
+          <div className="faq" data-reveal="">
             {aboutFaq.items.map(({ question, answer }) => (
               <details key={question}>
                 <summary>{question}</summary>
@@ -149,7 +149,7 @@ export default function AboutPage() {
           <div className="sec-head">
             <h2 id="about-offices-h">{aboutOffices.title}</h2>
           </div>
-          <div className="offices">
+          <div className="offices" data-reveal="">
             {aboutOffices.offices.map((office) => (
               <div key={office.id} className="spot office-card">
                 <span className="clock">

@@ -49,7 +49,7 @@ export default function ServicesPage() {
             <h2 id="services-all-h">{servicesSection.title}</h2>
             <p className="lede">{servicesSection.lede}</p>
           </div>
-          <div className="svc-cards">
+          <div className="svc-cards" data-reveal="">
             {servicesSection.services.map((service) => {
               const { icon: ServiceIcon } = serviceIcons[service.id];
               return (
@@ -74,10 +74,10 @@ export default function ServicesPage() {
         aria-labelledby="services-outcomes-h"
       >
         <div className="wrap">
-          <div className="sec-head">
+          <div className="sec-head" data-reveal="">
             <h2 id="services-outcomes-h">{servicesOutcomes.title}</h2>
           </div>
-          <ol className="outcomes">
+          <ol className="outcomes" data-reveal="">
             {servicesOutcomes.items.map((item, index) => (
               <li key={item.id} className="outcome">
                 <span className="oc-num" aria-hidden="true">
@@ -96,7 +96,7 @@ export default function ServicesPage() {
         aria-labelledby="services-process-h"
       >
         <div className="wrap">
-          <div className="sec-head">
+          <div className="sec-head" data-reveal="">
             <h2 id="services-process-h">{servicesProcess.title}</h2>
             <p className="lede">{servicesProcess.lede}</p>
           </div>

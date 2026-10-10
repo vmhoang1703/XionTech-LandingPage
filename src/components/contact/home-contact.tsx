@@ -22,7 +22,7 @@ export function HomeContact() {
       id="contact"
       aria-labelledby="contact-h"
     >
-      <div className="wrap contact-grid">
+      <div className="wrap contact-grid" data-reveal="">
         <div className="contact-intro">
           <h2 id="contact-h">{S.heading}</h2>
           <p className="lede">{S.lede}</p>

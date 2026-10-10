@@ -125,7 +125,7 @@ export function CaptureBand({
       }
       aria-labelledby="cap-h"
     >
-      <div className="wrap cap-grid">
+      <div className="wrap cap-grid" data-reveal="">
         <div>
           <h2 id="cap-h">{copy.heading}</h2>
           <p className="lede">{copy.lede}</p>
