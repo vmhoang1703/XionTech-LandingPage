@@ -1,14 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  createSilk,
-  SILK_START_TIME,
-  SILK_TIME_SCALE,
-  xtAmount,
-} from "./silk-shader";
+import { createSilk } from "./silk-shader";
 
 function fakeGl(linked = true, shaders = true) {
   const calls: string[] = [];
-  const args: unknown[][] = [];
   const gl = new Proxy(
     {
       VERTEX_SHADER: 1,
@@ -25,15 +19,14 @@ function fakeGl(linked = true, shaders = true) {
     {
       get(target, key: string) {
         if (key in target) return target[key];
-        return (...rest: unknown[]) => {
+        return () => {
           calls.push(key);
-          args.push([key, ...rest]);
           return {};
         };
       },
     },
   );
-  return { gl, calls, args };
+  return { gl, calls };
 }
 
 function canvasWith(context: unknown) {
@@ -77,55 +70,13 @@ describe("createSilk", () => {
       drawsAfterResize + 1,
     );
   });
-});
 
-// Real seconds -> shader time, from the hold at SILK_START_TIME.
-const at = (seconds: number) => SILK_START_TIME + seconds * SILK_TIME_SCALE;
-
-describe("xtAmount", () => {
-  it("shows the full XT mark at the start time (paused silk rests on it)", () => {
-    expect(xtAmount(SILK_START_TIME)).toBe(1);
-  });
-
-  it("melts back to plain waves, then folds into XT again every 12 s", () => {
-    expect(xtAmount(at(1.5))).toBe(1);
-    expect(xtAmount(at(2.5))).toBeGreaterThan(0);
-    expect(xtAmount(at(2.5))).toBeLessThan(1);
-    expect(xtAmount(at(5))).toBe(0);
-    expect(xtAmount(at(-4))).toBe(0);
-    expect(xtAmount(at(12))).toBeCloseTo(1);
-  });
-});
-
-describe("createSilk XT mark", () => {
-  const xtValues = (args: unknown[][]) =>
-    args.filter(([name]) => name === "uniform1f").map(([, , value]) => value);
-
-  it("keeps plain waves when there is no room for the mark", () => {
-    const { gl, args } = fakeGl();
-    createSilk(canvasWith(gl))?.draw(SILK_START_TIME);
-    expect(xtValues(args)).toContain(0);
-    expect(xtValues(args)).not.toContain(1);
-  });
-
-  it("places the mark in GL pixels (y from the bottom) when there is room", () => {
-    const { gl, args } = fakeGl();
-    const silk = createSilk(canvasWith(gl), () => ({
-      x: 300,
-      y: 50,
-      size: 120,
-    }));
-    silk?.resize();
-    silk?.draw(SILK_START_TIME);
-    const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-    const centres = args.filter(([name]) => name === "uniform2f");
-    expect(centres).toContainEqual([
-      "uniform2f",
-      expect.anything(),
-      300 * ratio,
-      200 * ratio - 50 * ratio,
-    ]);
-    expect(xtValues(args)).toContain(120 * ratio);
-    expect(xtValues(args)).toContain(1);
+  it("sets the gold threads' strength on each frame (full by default)", () => {
+    const { gl, calls } = fakeGl();
+    const silk = createSilk(canvasWith(gl));
+    const before = calls.filter((c) => c === "uniform1f").length;
+    silk?.draw(9, 0.25);
+    silk?.draw(9);
+    expect(calls.filter((c) => c === "uniform1f")).toHaveLength(before + 4);
   });
 });
