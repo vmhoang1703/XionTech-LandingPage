@@ -115,3 +115,5 @@ Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-reduced.
 Acceptance: evidence — spec-products-audience-flow-evidence/flow-1024.png — 140721 bytes — sha256 aaa46ee23911 — flow-1024.png (final)
 Acceptance: evidence — spec-products-audience-flow-evidence/flow-390.png — 78857 bytes — sha256 2d84dfb52739 — flow-390.png (final)
 Acceptance: evidence — spec-products-audience-flow-evidence/flow-1280-no-webgl.png — 120194 bytes — sha256 183026fa0608 — flow-1280-no-webgl.png (final)
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 48 passed (1.5m) (re-capture after the audit)
+Acceptance: evidence — spec-products-audience-flow-evidence/verification.txt — 24879 bytes — sha256 10ce2ec6f538 — verification.txt (final, with a11y re-capture)

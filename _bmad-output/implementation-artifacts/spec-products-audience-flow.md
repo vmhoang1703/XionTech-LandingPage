@@ -193,7 +193,7 @@ Captured after the review patches on 2026-10-10.
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 404 lines, Missing 0, Coverage 100%; `products/flow` branches 96.47%
 - `npm run test:smoke` -- exit 0 -- 15 passed (20.9s)
 - `npm run build` -- exit 0 -- `/products` static
-- `npx playwright test --project=a11y` -- exit 1 -- 47 passed, 1 failed: `/` color-contrast `.w-more-trigger` (known Home flake, deferred; Home untouched)
+- `npx playwright test --project=a11y` -- exit 0 -- 48 passed (re-capture; the first run had 47 passed and 1 failed on the known Home `.w-more-trigger` flake, deferred)
 - `npx playwright test --project=a11y --grep "every page type"` -- exit 0 -- 11 passed
 - `npx playwright test e2e/products.spec.ts --project=a11y` -- exit 0 -- 7 passed
 
