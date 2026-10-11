@@ -22,12 +22,12 @@ afterEach(() => {
 });
 
 describe("HomeProcess", () => {
-  it("is a light region named How we work. with the 4-D lede", () => {
+  it("is the navy band named How we work. with the 4-D lede", () => {
     render(<HomeProcess />);
 
     const region = screen.getByRole("region", { name: "How we work." });
     expect(region.classList.contains("sec")).toBe(true);
-    expect(region.classList.contains("surface-navy")).toBe(false);
+    expect(region.classList.contains("surface-navy")).toBe(true);
     expect(region.classList.contains("gridbg")).toBe(false);
     expect(region.querySelector(".label")).toBeNull();
     expect(region.querySelector("h2")?.textContent).toBe("How we work.");

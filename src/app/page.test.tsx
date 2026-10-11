@@ -118,13 +118,28 @@ describe("Home page", () => {
     expect(document.querySelector(".bento, .svc-cards")).toBeNull();
   });
 
+  it("puts everything below the hero on one colour field, with How we work as the navy moment", () => {
+    const { container } = render(<Home />);
+
+    const scene = container.querySelector(".home-scene");
+    expect(container.firstElementChild?.nextElementSibling).toBe(scene);
+    expect(scene?.querySelector("#home-outcomes-h")).not.toBeNull();
+    expect(scene?.lastElementChild?.id).toBe("contact");
+    const navy = Array.from(
+      container.querySelectorAll(".home-flow > .surface-navy"),
+    ).map((section) => section.querySelector("h2")?.textContent);
+    expect(navy).toEqual(["How we work."]);
+  });
+
   it("ends with the contact section and no capture band", () => {
     const { container } = render(<Home />);
 
     const contact = screen
       .getByRole("heading", { name: "Have something you want to build?" })
       .closest("section");
-    expect(container.lastElementChild).toBe(contact);
+    const scene = container.querySelector(".home-scene");
+    expect(container.lastElementChild).toBe(scene);
+    expect(scene?.lastElementChild).toBe(contact);
     expect(contact?.id).toBe("contact");
     // The hero's Get in touch button lands on this section.
     expect(

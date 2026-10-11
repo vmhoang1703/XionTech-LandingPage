@@ -1199,7 +1199,7 @@
   .sec.contact {
     background: linear-gradient(
       180deg,
-      var(--color-mist-end) 0%,
+      var(--contact-top, var(--color-mist-end)) 0%,
       #fdf3d6 22%,
       #fce6a8 55%,
       var(--color-amber-light) 100%
@@ -5114,8 +5114,7 @@
 
 /* ---------- E-S1 Home: core values and How we work ---------- */
 /* Both sit on the .home-flow surface below */
-.home-values,
-.home-process {
+.home-values {
   background: transparent;
 }
 
@@ -5160,7 +5159,7 @@
   position: absolute;
   inset: 50% 0 0;
   z-index: -1;
-  background: #f4f6fa;
+  background: var(--color-page);
 }
 
 /* ---------- Home: What can we help you achieve? (lead, 2026-10-11) ---------- */
@@ -5361,6 +5360,223 @@
   background: linear-gradient(180deg, #f4f6fa, var(--color-page));
 }
 
+/* ---------- Home scene: one light colour with a moving colour field (lead, 2026-10-11) ---------- */
+/*
+  Below the hero, Home is one light colour (--color-page) with a soft amber
+  and blue colour field (HomeScene): a sticky layer, one screen tall and
+  taking no space, so it stays behind the content as you scroll; overflow:
+  clip keeps it off the hero and the footer. Each blob floats on its own and,
+  with scroll-driven animations, travels across the page as you scroll:
+  amber down the right, blue up the left, so they rarely meet. They stay
+  soft enough for every text colour: muted text is 4.64:1 or more where they
+  are strongest, with amber painted over blue (blue over amber would be
+  4.38:1, so blue comes first). Small amber text sits on navy or on cards. CSS only, so the field shows with
+  no JavaScript; reduced motion and a saved Pause (data-paused) hold it
+  still. Contact keeps its warm surface with a see-through top, so the field
+  flows into it. "How we work" is the one navy moment (below).
+*/
+.home-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--color-page);
+}
+
+/* Under the hero doors the field fades in from the page colour, so it meets
+   the doors' light strip with no edge. */
+.home-scene::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: 280px;
+  background: linear-gradient(var(--color-page), transparent);
+  pointer-events: none;
+}
+
+.scene-bg {
+  position: sticky;
+  top: 0;
+  z-index: -1;
+  height: 100lvh;
+  margin-bottom: -100lvh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-scene .home-flow,
+.home-scene .surface-mist {
+  background: none;
+}
+
+.home-scene .sec.contact {
+  --contact-top: transparent;
+}
+
+.scene-blob {
+  position: absolute;
+  width: 62vmax;
+  height: 62vmax;
+  border-radius: var(--radius-full);
+  animation: blob-float 18s ease-in-out infinite alternate;
+}
+
+.scene-blob-amber {
+  top: -16vmax;
+  right: -18vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-amber-light) 55%, transparent),
+    transparent
+  );
+}
+
+.scene-blob-blue {
+  bottom: -22vmax;
+  left: -20vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, #8fb6ef 45%, transparent),
+    transparent
+  );
+  animation-duration: 22s;
+  animation-delay: -6s;
+}
+
+.scene-blob-warm {
+  right: 20vw;
+  bottom: -14vmax;
+  width: 40vmax;
+  height: 40vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-amber) 22%, transparent),
+    transparent
+  );
+  animation-duration: 16s;
+  animation-delay: -11s;
+}
+
+@keyframes blob-float {
+  to {
+    transform: translate(5vw, -4vh) scale(1.15);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .scene-blob-amber {
+    animation:
+      blob-float 18s ease-in-out infinite alternate,
+      amber-travel linear both;
+    animation-timeline: auto, scroll(root);
+  }
+
+  .scene-blob-blue {
+    animation:
+      blob-float 22s ease-in-out -6s infinite alternate,
+      blue-travel linear both;
+    animation-timeline: auto, scroll(root);
+  }
+
+  .scene-blob-warm {
+    animation:
+      blob-float 16s ease-in-out -11s infinite alternate,
+      warm-travel linear both;
+    animation-timeline: auto, scroll(root);
+  }
+}
+
+@keyframes amber-travel {
+  to {
+    translate: -24vw 62vh;
+  }
+}
+
+@keyframes blue-travel {
+  to {
+    translate: 26vw -58vh;
+  }
+}
+
+@keyframes warm-travel {
+  to {
+    translate: -46vw -34vh;
+  }
+}
+
+.home-scene[data-paused] .scene-blob {
+  animation: none;
+}
+
+/* ---------- Home: How we work, the one navy moment (lead, 2026-10-11) ---------- */
+/* A rounded navy panel (surface-navy) on the light page, like the Services
+   panels, with a soft amber light that crosses it as it passes through the
+   screen (scroll-driven; still where missing). On navy the 4-D steps take
+   dark art and an amber number. */
+.home-process {
+  isolation: isolate;
+  overflow: hidden;
+  margin-inline: clamp(10px, 2vw, 28px);
+  border-radius: 28px;
+}
+
+.home-process::before {
+  content: "";
+  position: absolute;
+  inset: -10% -20%;
+  z-index: -1;
+  background: radial-gradient(
+    35% 45% at 50% 35%,
+    color-mix(in srgb, var(--color-amber) 18%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+@supports (animation-timeline: view()) {
+  .home-process::before {
+    animation: band-light linear both;
+    animation-timeline: view();
+  }
+}
+
+@keyframes band-light {
+  from {
+    translate: -30% 0;
+  }
+
+  to {
+    translate: 30% 0;
+  }
+}
+
+.home-process .step4 .art {
+  background:
+    radial-gradient(
+      60% 80% at 50% 110%,
+      color-mix(in srgb, var(--color-amber) 30%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(160deg, rgb(255 255 255 / 7%), transparent);
+}
+
+.home-process .step4 .art .main {
+  background: linear-gradient(
+    135deg,
+    var(--color-navy-soft),
+    var(--color-navy)
+  );
+  box-shadow:
+    0 16px 30px -12px rgb(0 0 0 / 60%),
+    inset 0 0 0 1px rgb(255 255 255 / 14%);
+}
+
+.home-process .step4 .num {
+  color: var(--color-amber);
+}
+
 .home-flow > :first-child {
   padding-top: calc(120px + var(--spacing-section));
 }
@@ -5424,13 +5640,17 @@
   }
 }
 
-/* Room above the footer so the ridge never covers the last content. */
-main > :last-child {
+/* Room above the footer so the ridge never covers the last content. On Home
+   the room goes on the last section inside the scene (Contact), so its own
+   amber, not the scene, sits behind the ridge. */
+main > :last-child:not(.home-scene),
+main > .home-scene:last-child > :last-child {
   padding-bottom: clamp(232px, 17vw, 256px);
 }
 
 @media (max-width: 640px) {
-  main > :last-child {
+  main > :last-child:not(.home-scene),
+  main > .home-scene:last-child > :last-child {
     padding-bottom: 176px;
   }
 }
