@@ -37,7 +37,7 @@ mouse and the press, without moving any content and with a still version for red
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Hero 25+ and 20+ | On screen at load | Load | Count from 0 to the final number; the "+" never moves | 1.6 s after 0.2 s, soft ease-out | Lead 2026-10-11 | Yes (browser: 0 → 25 and 0 → 20, end pixels match) |
+| Hero 25+ and 20+ | On screen at load | Load | Count from 0 to the final number; the "+" never moves | 1.6 s after 0.2 s, soft ease-out | Lead 2026-10-11 | Yes (browser: 0 → 25 and 0 → 20; the end looks the same as the plain number in screenshots) |
 | Hero 25+ and 20+ | Below the screen at load (phone) | Scroll: wheel, touch, keyboard | Count starts as the figure rises into view | 1.6 s, with the 0.7 s rise | Lead 2026-10-11 | Yes (browser 390px: "wait", then "play" on scroll) |
 | 24/7, 8, 2 | Any | Any | No count | None | Lead ("only the key numbers") | Yes (unit and browser: two `.count-up` only) |
 | All figures | Reduced motion, or saved Pause | OS setting, hero Pause button | Final number at once | None | NFR-2, PRODUCT.md | Yes (browser: no `::after`, `data-count="off"`) |
