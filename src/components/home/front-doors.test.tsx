@@ -20,6 +20,14 @@ describe("FrontDoors", () => {
     ).toEqual(["/products", "/services"]);
   });
 
+  it("gives both doors the pointer glow", () => {
+    render(<FrontDoors />);
+
+    for (const link of screen.getAllByRole("link")) {
+      expect(link.dataset.glow).toBe("");
+    }
+  });
+
   it("shows the Products door with badges, line and chips", () => {
     const products = door(/Products for schools/);
 

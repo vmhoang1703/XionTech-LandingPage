@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { CountUp } from "./count-up";
 
 export type Stat = {
   value: string;
@@ -6,6 +7,8 @@ export type Stat = {
   caption: string;
   // Unconfirmed figures are shown with a [Placeholder] caption (decision A2).
   placeholder?: boolean;
+  // Counts up from 0 when shown; only for the key figures (lead, 2026-10-11).
+  count?: boolean;
 };
 
 type StatsBandProps = {
@@ -17,8 +20,8 @@ type StatsBandProps = {
   hideLabel?: boolean;
 };
 
-// Shared stats band: Home hero (3.3), Services (5.2) and About (6.4) pass
-// their own figures. Final values render on load; the count-up is after demo.
+// Shared stats band (Home hero, 3.3): the page passes its own figures. The
+// figures rise in with the scroll reveal, and those marked `count` count up.
 export function StatsBand({
   label,
   stats,
@@ -37,14 +40,14 @@ export function StatsBand({
       <h2 id={labelId} className={h2ClassName}>
         {label}
       </h2>
-      <ul className={ulClassName}>
+      <ul className={ulClassName} data-reveal="">
         {stats.map((stat) => (
           <li
             key={stat.caption}
             className="sm:border-border py-2 sm:border-l sm:px-6.5 sm:first:border-l-0 sm:first:pl-0"
           >
             <p className="font-display text-stat-fluid text-heading">
-              {stat.value}
+              {stat.count ? <CountUp value={stat.value} /> : stat.value}
               {stat.suffix ? (
                 <span className={suffixClass}>{stat.suffix}</span>
               ) : null}

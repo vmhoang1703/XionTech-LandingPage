@@ -1,13 +1,13 @@
 import {
   ArrowRightIcon,
   BriefcaseIcon,
-  ClockIcon,
   GraduationCapIcon,
   HeartbeatIcon,
   TruckIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
 import Link from "next/link";
+import { DaylightIcon } from "@/components/sections/daylight-icon";
 import { LiveClock } from "@/components/sections/live-clock";
 import { homeCapabilities } from "@/content/home";
 import { hcmc, plano } from "@/content/offices";
@@ -61,7 +61,7 @@ export function Capabilities() {
             <p>{delivery.line}</p>
             <span className="w-chips">
               <span className="w-chip">
-                <ClockIcon aria-hidden="true" />
+                <DaylightIcon timeZone={plano.timeZone} />
                 Plano{" "}
                 <b>
                   <LiveClock
@@ -71,7 +71,7 @@ export function Capabilities() {
                 </b>
               </span>
               <span className="w-chip">
-                <ClockIcon aria-hidden="true" />
+                <DaylightIcon timeZone={hcmc.timeZone} />
                 <abbr title="Ho Chi Minh City">HCMC</abbr>{" "}
                 <b>
                   <LiveClock

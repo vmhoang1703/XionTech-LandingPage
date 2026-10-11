@@ -1469,7 +1469,14 @@
     overflow: hidden;
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-card);
-    transition: transform 0.5s var(--ease-brand);
+    transition:
+      transform 0.5s var(--ease-brand),
+      scale 0.2s var(--ease-brand);
+  }
+
+  /* Press: mouse and touch */
+  .door:active {
+    scale: 0.98;
   }
 
   .door h2 {
@@ -2980,6 +2987,94 @@
     }
   }
 
+  /* Count-up (CountUp): with motion allowed, the real number keeps its place
+     with transparent glyphs (screen readers and search still read it) and
+     ::after draws --count over it, from the same start in the same box, so
+     nothing moves (aligned right, the growing count moved its start: a layout
+     shift). On screen at load it counts at first paint, with no script. The
+     script holds a figure below the screen at 0 ("wait") and plays it in view
+     ("play"); "off" is a saved Pause. Reduced motion and print show the plain
+     number. --count is registered at the top level (@property). The count
+     uses a softer ease-out than --ease-brand, which would jump most of the
+     way at once and hide the counting. */
+  @media screen and (prefers-reduced-motion: no-preference) {
+    .count-up:not([data-count="off"]) {
+      --count: var(--to);
+      position: relative;
+      display: inline-block;
+      font-variant-numeric: tabular-nums;
+      -webkit-text-fill-color: transparent;
+      counter-reset: count var(--count);
+    }
+
+    .count-up:not([data-count="off"])::after {
+      content: counter(count);
+      position: absolute;
+      inset: 0;
+      -webkit-text-fill-color: currentcolor;
+    }
+
+    /* The drawn count is not read out: the real number already is. */
+    @supports (content: "" / "") {
+      .count-up:not([data-count="off"])::after {
+        content: counter(count) / "";
+      }
+    }
+
+    .count-up:not([data-count]) {
+      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.2s both;
+    }
+
+    .count-up[data-count="wait"] {
+      --count: 0;
+    }
+
+    .count-up[data-count="play"] {
+      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) both;
+    }
+  }
+
+  @keyframes count-up {
+    from {
+      --count: 0;
+    }
+  }
+
+  /* Pointer glow (PointerGlow): a card with [data-glow] shows a soft amber
+     light under a mouse or pen. The script sets --glow-x and --glow-y; the
+     light moves with translate and fades with opacity, under the card's
+     content. The card needs position and overflow: hidden (the doors have
+     both). Touch screens and reduced motion: no light. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    [data-glow] {
+      isolation: isolate;
+    }
+
+    [data-glow]::after {
+      content: "";
+      position: absolute;
+      top: -160px;
+      left: -160px;
+      z-index: -1;
+      width: 320px;
+      height: 320px;
+      border-radius: var(--radius-full);
+      background: radial-gradient(
+        closest-side,
+        color-mix(in srgb, var(--color-amber) 30%, transparent),
+        transparent
+      );
+      opacity: 0;
+      translate: var(--glow-x, 0) var(--glow-y, 0);
+      transition: opacity 0.4s var(--ease-brand);
+      pointer-events: none;
+    }
+
+    [data-glow]:hover::after {
+      opacity: 1;
+    }
+  }
+
   .flow {
     position: relative;
     display: grid;
@@ -3024,7 +3119,9 @@
       var(--color-amber)
     );
     transform-origin: left;
-    transition: transform 2.4s var(--ease-brand);
+    transition:
+      transform 2.4s var(--ease-brand),
+      translate 0.5s var(--ease-brand);
   }
 
   .flow[data-phase="armed"] .track i {
@@ -3229,10 +3326,11 @@
       grid-template-rows: repeat(3, auto) 1fr auto;
     }
 
+    /* Clipped, so the fill can draw back to a hovered step (below) */
     .flow .track {
       width: auto;
       height: 3px;
-      overflow: visible;
+      overflow: hidden;
       clip-path: none;
     }
 
@@ -3254,6 +3352,68 @@
       row-gap: 0;
     }
   }
+
+  /* Hover a step: its art opens a little, and from 1080px the amber track
+     draws back to the step's centre. --at is the step's place (1 to 4); the
+     centre comes from the grid: the 128px start node, the gaps and four equal
+     columns. The track's own width is 100%. */
+  @media (hover: hover) {
+    .step4 .art .main,
+    .step4 .art .orb {
+      transition: translate 0.4s var(--ease-brand);
+    }
+
+    .step4:hover .art .main {
+      translate: 0 -4px;
+    }
+
+    .step4:hover .art .o1 {
+      translate: -4px -3px;
+    }
+
+    .step4:hover .art .o2 {
+      translate: 4px -3px;
+    }
+
+    .step4:hover .art .o3 {
+      translate: -3px 4px;
+    }
+  }
+
+  @media (hover: hover) and (width >= --theme(--breakpoint-lg)) {
+    .flow:has(> .step4:nth-child(3):hover) {
+      --at: 1;
+    }
+
+    .flow:has(> .step4:nth-child(4):hover) {
+      --at: 2;
+    }
+
+    .flow:has(> .step4:nth-child(5):hover) {
+      --at: 3;
+    }
+
+    .flow:has(> .step4:nth-child(6):hover) {
+      --at: 4;
+    }
+
+    .flow:has(> .step4:hover) .track i {
+      translate: calc(
+          128px + var(--spacing-grid-gap) + (var(--at) - 0.5) *
+            (100% - 256px - 5 * var(--spacing-grid-gap)) / 4 + (var(--at) - 1) *
+            var(--spacing-grid-gap) - 100%
+        )
+        0;
+    }
+  }
+}
+
+/* The count-up's number (CountUp, "Count-up" above): an integer, so CSS can
+   animate it and a counter can show it. Registered at the top level. */
+@property --count {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
 }
 
 @layer components {
@@ -4881,6 +5041,19 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Office chips: the sun or moon (DaylightIcon) turns in once it is known */
+.w-chip .daylight {
+  animation: daylight-in 0.5s var(--ease-brand) both;
+}
+
+@keyframes daylight-in {
+  from {
+    opacity: 0;
+    rotate: -60deg;
+    scale: 0.6;
+  }
+}
+
 .w-chip.solid {
   border-color: var(--color-navy);
   background: var(--color-navy);
@@ -4997,7 +5170,12 @@
 a.w-card {
   transition:
     transform 0.4s var(--ease-brand),
-    box-shadow 0.4s var(--ease-brand);
+    box-shadow 0.4s var(--ease-brand),
+    scale 0.2s var(--ease-brand);
+}
+
+a.w-card:active {
+  scale: 0.98;
 }
 
 a.w-card:hover {
