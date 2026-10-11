@@ -1,17 +1,14 @@
 import {
-  ArrowRightIcon,
   BriefcaseIcon,
   GraduationCapIcon,
   HeartbeatIcon,
   TruckIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
-import Link from "next/link";
 import { DaylightIcon } from "@/components/sections/daylight-icon";
 import { LiveClock } from "@/components/sections/live-clock";
 import { homeCapabilities } from "@/content/home";
 import { hcmc, plano } from "@/content/offices";
-import { HomeAppBadge } from "./home-app-badge";
 import { MoreIndustries } from "./more-industries";
 
 const INDUSTRY_ICON: Record<
@@ -23,11 +20,11 @@ const INDUSTRY_ICON: Record<
   "Private Equity": BriefcaseIcon,
 };
 
-// Home Capabilities: four cards in a 7+5 / 7+5 grid, then the motto. Server
-// Component; only the "+3" reveal and the live clocks are client parts.
+// Home "Why XionTech.": Global delivery and Domain expertise in a 5+7 row,
+// then the motto. Server Component; only the "+3" reveal, the live clocks and
+// their sun or moon are client parts.
 export function Capabilities() {
-  const { title, lede, products, delivery, industries, services, motto } =
-    homeCapabilities;
+  const { title, lede, delivery, industries, motto } = homeCapabilities;
 
   return (
     <section aria-labelledby="capabilities-title" className="sec">
@@ -37,24 +34,6 @@ export function Capabilities() {
           <p className="lede">{lede}</p>
         </div>
         <div className="why2" data-reveal="">
-          <Link href={products.href} className="w-card w-products">
-            <span className="w-label">{products.label}</span>
-            <h3>{products.title}</h3>
-            <p>{products.line}</p>
-            <span className="w-apps">
-              {products.apps.map((app) => (
-                <span key={app.app.id} className="w-app">
-                  <HomeAppBadge app={app.app} />
-                  <small>{app.caption}</small>
-                </span>
-              ))}
-            </span>
-            <span className="w-link">
-              {products.link}
-              <ArrowRightIcon aria-hidden="true" />
-            </span>
-          </Link>
-
           <article className="w-card w-delivery">
             <span className="w-label">{delivery.label}</span>
             <h3>{delivery.title}</h3>
@@ -105,16 +84,6 @@ export function Capabilities() {
               </MoreIndustries>
             </span>
           </article>
-
-          <Link href={services.href} className="w-card w-services">
-            <span className="w-label">{services.label}</span>
-            <h3>{services.title}</h3>
-            <p>{services.line}</p>
-            <span className="w-link">
-              {services.link}
-              <ArrowRightIcon aria-hidden="true" />
-            </span>
-          </Link>
         </div>
         <div className="w-motto" data-reveal="">
           <p className="w-gid">{motto.lead}</p>

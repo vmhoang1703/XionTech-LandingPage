@@ -1494,3 +1494,16 @@ Template:
   - Right-aligned digits moved their start as the number grew, which Chrome reported as a tiny layout shift (0.0002). The count is now drawn from the number's start, and the shift is 0.
   - The AI ran `git stash` to compare with `develop`, though a comparison needed a new build anyway; it restored the changes at once.
   - Its own inline review found that the count read only the first observer entry; after a fast scroll the first entry can be out of date and leave the figure at 0. It now reads the latest one, with a test.
+
+## 2026-10-11 — Home tells one story: outcomes, apps, answers (PR 2 of 3)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "I will let you enhance for the content and try to make them in pieces and ensure to engage to the client/customers", then "keep values with one short line, go".
+- **What the AI did:**
+  - New order on one light surface: What can we help you achieve? (the four Services outcomes, "Start a project" to the contact form), One connected school. (each app with who it is for and two real features, one link per app), Why XionTech. (Capabilities without the two cards that repeated the hero doors), How we work., Our core values., Your questions, answered. (four About answers), then News and Contact.
+  - Values became flip cards: the front shows the title and one short line, written from the full value; the back shows the full value. It reuses the Careers flip card through a new shared `FlipToggle`.
+  - The About FAQ markup moved into a shared `FaqList`; FAQ items got ids, so Home picks four by id. Styles for the removed cards and the old values grid were deleted.
+- **Decision / result:** Every new line comes from Services, Products or About; AI Tutor's tagline is still a placeholder, so the app cards show "Made for" and features instead. A browser check at 1440px, 900px and 390px: the nine sections are in order, nothing is hidden, no horizontal scroll, no flip card cuts its text at 8 widths, layout shift 0. Without JavaScript every value's short line, the four answers and the four apps show.
+- **AI got it wrong?** Yes:
+  - The plan said the full value text "stays on About", but About has had no values since E-S3, so one short line alone would have deleted the values from the site. The AI found it while building, kept the lead's one short line on the front and moved the full text to the back of each card.
+  - The first value cards left a large empty gap between the icon and the title; the front now reads top down and the cards are shorter on wide screens.
