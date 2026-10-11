@@ -1523,3 +1523,18 @@ Template:
   - The shared "room above the footer" rule (`main > :last-child`) moved onto the new scene wrapper, leaving 245px of see-through space under Contact. The rule now targets the last section inside the scene.
   - The build spec was written after the first code, not before, as the Definition of Done asks.
   - The a11y suite then caught two test issues: axe ran while the 4-D steps were mid-fade (4.22:1 at 91% opacity), so axe now checks every page at rest (reduced motion); and the ridge test measured the scene wrapper, so it now uses the same selector as the CSS rule.
+
+## 2026-10-11 — The lead rejects the tone version; previews lead to a colour field and a navy moment
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "I dont like this version. It does not match to my ideas and at overall, it is not enough to say wow", then "yes, make screenshots of 1 and 2", "what you prefer ... for our website?" and "Go with Option 2 + one navy moment in How we work".
+- **What the AI did:**
+  - Named its own mistake: the lead had asked for one background colour over the whole page with motion you can see; the AI had built three pale tones that barely change.
+  - Built previews on the real page before any code: CSS injected in the browser, five screenshots and a scroll video per option (navy all the way; one light colour with a moving colour field), shown side by side.
+  - Recommended option 2 for the whole website (every other page is light below its navy hero; schools trust light pages; AGENTS.md says enhance Amber's design, not replace it; projectors wash out dark pages; less risk before Demo day), and the lead added one navy moment.
+  - Rebuilt PR 3: a CSS-only colour field (three soft blobs that float and travel with the scroll) on one light colour, and "How we work" as a rounded navy panel with a moving amber light.
+- **Decision / result:** Browser check at 1440px and 390px: layout shift 0, no sideways scroll, page height unchanged. Muted text is 4.64:1 or more on the field; small amber text sits on navy or on cards.
+- **AI got it wrong?** Yes:
+  - It picked the safest reading of "option C" from a one-line description, and the lead rejected the result. Saved as a working rule: show a quick visual of a design direction before building it.
+  - The first previews showed no colour at all: the page's `body` background covered the layer, and React removed an extra node added to `body` before hydration. Both were fixed before the lead saw them.
+  - Painting blue over amber put muted text at 4.38:1 where they overlap; amber is now painted over blue (4.82:1).

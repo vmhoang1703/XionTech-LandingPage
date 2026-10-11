@@ -118,23 +118,17 @@ describe("Home page", () => {
     expect(document.querySelector(".bento, .svc-cards")).toBeNull();
   });
 
-  it("changes the background tone before Why XionTech and the values", () => {
+  it("puts everything below the hero on one colour field, with How we work as the navy moment", () => {
     const { container } = render(<Home />);
 
-    const marks = Array.from(
-      container.querySelectorAll<HTMLElement>("[data-tone]"),
-    );
-    expect(marks.map((mark) => mark.dataset.tone)).toEqual(["blue", "mist"]);
-    expect(
-      marks.map((mark) => {
-        const id = mark.nextElementSibling?.getAttribute("aria-labelledby");
-        return document.getElementById(id ?? "")?.textContent;
-      }),
-    ).toEqual(["Why XionTech.", "Our core values."]);
-    // The scene runs from the first story section to the end of Contact.
     const scene = container.querySelector(".home-scene");
+    expect(container.firstElementChild?.nextElementSibling).toBe(scene);
     expect(scene?.querySelector("#home-outcomes-h")).not.toBeNull();
     expect(scene?.lastElementChild?.id).toBe("contact");
+    const navy = Array.from(
+      container.querySelectorAll(".home-flow > .surface-navy"),
+    ).map((section) => section.querySelector("h2")?.textContent);
+    expect(navy).toEqual(["How we work."]);
   });
 
   it("ends with the contact section and no capture band", () => {
