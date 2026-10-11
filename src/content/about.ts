@@ -49,51 +49,61 @@ export const aboutStory = {
   },
 };
 
+// Each answer has an id, so Home can pick some (homeFaq in home.ts).
 export const aboutFaq = {
   title: "Your question, we answer",
   lede: "Straight answers about our products, our services and how we work.",
   items: [
     {
+      id: "what",
       question: "What does XionTech do?",
       answer:
         "We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing.",
     },
     {
+      id: "industries",
       question: "Which industries do you work with?",
       answer:
         "EdTech is our core. We also serve Healthcare, Logistics and Private Equity.",
     },
     {
+      id: "try-apps",
       question: "How can our school try Parent Hub or Staff Hub?",
       answer:
         "Book a demo. We walk you through the apps using scenarios from your own school.",
     },
     {
+      id: "time-zones",
       question: "How do you work across time zones?",
       answer:
         "Our teams in Ho Chi Minh City and Plano cover USA, Europe and Australia time zones, with shared tools for real-time updates.",
     },
     {
+      id: "shape",
       question: "When do you shape the solution to our needs?",
       answer:
         "From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins.",
     },
     {
+      id: "results",
       question: "What results can we expect?",
       answer:
         "Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth.",
     },
     {
+      id: "security",
       question: "How do you keep our data secure?",
       answer:
         "[Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning.",
     },
     {
+      id: "feedback",
       question: "How do we give feedback during a project?",
       answer:
         "Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through.",
     },
     {
+      id: "value",
       question: "How do you measure and show value?",
       answer:
         "We track speed, quality, product impact and team autonomy, and share them openly with you.",

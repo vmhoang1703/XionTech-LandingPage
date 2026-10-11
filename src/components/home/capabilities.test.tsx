@@ -12,13 +12,13 @@ function reveal() {
 }
 
 describe("Capabilities", () => {
-  it("names the section, with a lede and four cards", () => {
+  it("is Why XionTech., with a lede and the two cards", () => {
     render(<Capabilities />);
 
-    const region = screen.getByRole("region", { name: "Capabilities." });
+    const region = screen.getByRole("region", { name: "Why XionTech." });
     expect(
       within(region).getByText(
-        "Why XionTech: the core capabilities behind every school app and every product we deliver.",
+        "The capabilities behind every school app and every product we deliver.",
       ),
     ).toBeDefined();
     expect(
@@ -26,45 +26,17 @@ describe("Capabilities", () => {
         .getAllByRole("heading", { level: 3 })
         .map((h) => h.textContent),
     ).toEqual([
-      "Products for schools",
       "Two offices, one working day.",
       "Deep in education. Built to adapt.",
-      "Your software delivery team",
     ]);
   });
 
-  it("links the Products and Services cards", () => {
+  it("drops the products and services cards: the doors and app cards link there", () => {
     render(<Capabilities />);
 
-    expect(
-      screen
-        .getByRole("link", { name: /Products for schools/ })
-        .getAttribute("href"),
-    ).toBe("/products");
-    expect(
-      screen
-        .getByRole("link", { name: /Your software delivery team/ })
-        .getAttribute("href"),
-    ).toBe("/services");
-  });
-
-  it("shows the three school apps with their badges and captions in order", () => {
-    const { container } = render(<Capabilities />);
-    const apps = Array.from(container.querySelectorAll(".w-products .w-app"));
-    expect(
-      apps.map((a) =>
-        Array.from(a.querySelector(".badge")?.classList ?? []).find((c) =>
-          c.startsWith("b-"),
-        ),
-      ),
-    ).toEqual(["b-pxp", "b-sxp", "b-iot"]);
-    expect(apps.map((a) => a.querySelector("small")?.textContent)).toEqual([
-      "Parents",
-      "Staff",
-      "Facilities",
-    ]);
-    expect(apps[0].querySelector(".badge")?.textContent).toBe("P-Hub");
-    expect(apps[2].querySelector(".badge .sr-only")?.textContent).toBe("IoT");
+    const region = screen.getByRole("region", { name: "Why XionTech." });
+    expect(within(region).queryAllByRole("link")).toEqual([]);
+    expect(region.querySelector(".badge")).toBeNull();
   });
 
   it("shows both offices: zone label in the server HTML, then the time", () => {

@@ -130,7 +130,7 @@ describe("FrontDoors", () => {
       undefinedClasses(container, /^(flex|flex-wrap|gap-\d+|sr-only)$/),
     ).toEqual([]);
     expect(globalsCss()).toMatch(
-      /prefers-reduced-motion: reduce\)\s*\{\s*\.door:hover,\s*\.door:hover \.go\s*\{\s*transform: none;/,
+      /prefers-reduced-motion: reduce\)\s*\{\s*\.door:hover,\s*\.door:hover \.go,[^{]*\{\s*transform: none;/,
     );
   });
 });

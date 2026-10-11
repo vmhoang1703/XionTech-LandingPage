@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { CaptureBand } from "@/components/contact/capture-band";
 import { contactIcon } from "@/components/sections/contact-icon";
+import { FaqList } from "@/components/sections/faq-list";
 import { LiveClock } from "@/components/sections/live-clock";
 import {
   aboutCapture,
@@ -126,18 +127,7 @@ export default function AboutPage() {
           <p className="lede">{aboutFaq.lede}</p>
         </div>
         <div className="wrap">
-          <div className="faq" data-reveal="">
-            {aboutFaq.items.map(({ question, answer }) => (
-              <details key={question}>
-                <summary>{question}</summary>
-                <p>{answer}</p>
-              </details>
-            ))}
-            <Link className="faq-ask" href={aboutFaq.ask.href}>
-              <span>{aboutFaq.ask.label}</span>
-              <ArrowRightIcon aria-hidden="true" />
-            </Link>
-          </div>
+          <FaqList items={aboutFaq.items} link={aboutFaq.ask} />
         </div>
       </section>
       <section

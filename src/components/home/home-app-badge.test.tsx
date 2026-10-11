@@ -26,9 +26,9 @@ describe("HomeAppBadge", () => {
     expect(badge.querySelector(".sr-only")?.textContent).toBe("IoT");
   });
 
-  it("leaves out the colour class for an app Home has none for", () => {
+  it("gives AI Tutor its own colour class, for the Home app cards", () => {
     const badge = badgeOf("ai-tutor");
-    expect(badge.className).toBe("badge");
+    expect(badge.className).toBe("badge b-ait");
     expect(badge.querySelector("svg")).not.toBeNull();
     expect(badge.querySelector(".sr-only")?.textContent).toBe("AI Tutor");
   });

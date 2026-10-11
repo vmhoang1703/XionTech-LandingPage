@@ -1474,8 +1474,9 @@
       scale 0.2s var(--ease-brand);
   }
 
-  /* Press: mouse and touch */
-  .door:active {
+  /* Press: mouse and touch (the Home app cards too) */
+  .door:active,
+  .app-card:active {
     scale: 0.98;
   }
 
@@ -1497,7 +1498,8 @@
     justify-content: space-between;
   }
 
-  .door .go {
+  .door .go,
+  .app-card .go {
     display: grid;
     place-items: center;
     width: 46px;
@@ -1512,11 +1514,13 @@
 
   /* Pointer effects only on hover-capable devices (EXPERIENCE.md) */
   @media (hover: hover) {
-    .door:hover {
+    .door:hover,
+    .app-card:hover {
       transform: translateY(-4px);
     }
 
-    .door:hover .go {
+    .door:hover .go,
+    .app-card:hover .go {
       opacity: 1;
       transform: rotate(-45deg);
     }
@@ -1524,7 +1528,9 @@
 
   @media (prefers-reduced-motion: reduce) {
     .door:hover,
-    .door:hover .go {
+    .door:hover .go,
+    .app-card:hover,
+    .app-card:hover .go {
       transform: none;
     }
   }
@@ -1594,6 +1600,16 @@
     border: 1px solid var(--color-border);
     background: var(--color-mist);
     color: var(--color-navy);
+    font-size: 1.2rem;
+  }
+
+  .b-ait {
+    background: linear-gradient(
+      135deg,
+      var(--color-navy-soft),
+      var(--color-navy)
+    );
+    color: var(--color-white);
     font-size: 1.2rem;
   }
 
@@ -4350,72 +4366,6 @@
     );
   }
 
-  /* About page (Story 6.4), ported from the prototype site.css */
-  .values {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid var(--color-border);
-    border-left: 1px solid var(--color-border);
-  }
-
-  .value {
-    position: relative;
-    padding: 34px 30px;
-    border-right: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-    transition: background 0.4s var(--ease-brand);
-  }
-
-  .value:not(.feat):hover {
-    background: var(--color-mist);
-  }
-
-  .value svg {
-    font-size: 1.8rem;
-    color: var(--color-heading);
-  }
-
-  .value h3 {
-    margin: 16px 0 8px;
-    font-family: var(--font-display);
-    font-size: 1.12rem;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-  }
-
-  .value p {
-    color: var(--color-muted);
-    font-size: 0.96rem;
-  }
-
-  .value.feat {
-    background: linear-gradient(
-      155deg,
-      var(--color-amber-light),
-      var(--color-amber) 60%,
-      var(--color-amber-deep)
-    );
-  }
-
-  .value.feat svg,
-  .value.feat h3,
-  .value.feat p {
-    color: var(--color-navy);
-  }
-
-  @media (width <= --theme(--breakpoint-md)) {
-    .values {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  @media (width <= --theme(--breakpoint-sm)) {
-    .values {
-      grid-template-columns: 1fr;
-    }
-  }
-
   /* About FAQ (E-S3, prototype site.css 419-440): two columns of hairline rows, native details */
   .faq-head {
     margin-bottom: 40px;
@@ -4878,7 +4828,7 @@
   }
 }
 
-/* ---------- E-S1 Home: Capabilities (4 cards, "+3" reveal, motto) ---------- */
+/* ---------- E-S1 Home: Why XionTech (2 cards, "+3" reveal, motto) ---------- */
 .why2 {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -4908,52 +4858,12 @@
   z-index: 1;
 }
 
-.w-products {
-  --w-heading: var(--color-white);
-  --w-muted: var(--color-on-navy-muted);
-
-  grid-column: span 7;
-  border: 0;
-  background: linear-gradient(
-    150deg,
-    var(--color-navy-2),
-    var(--color-navy) 70%
-  );
-  color: var(--color-white);
-}
-
 .w-delivery {
   grid-column: span 5;
 }
 
 .w-industries {
   grid-column: span 7;
-}
-
-.w-services {
-  --w-muted: var(--color-on-amber-muted);
-
-  grid-column: span 5;
-  border: 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-amber-light),
-    var(--color-amber) 60%
-  );
-  color: var(--color-navy);
-}
-
-.w-services::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  right: -70px;
-  bottom: -110px;
-  width: 280px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 30%);
-  pointer-events: none;
 }
 
 .w-label {
@@ -4985,36 +4895,6 @@
 .w-card p {
   max-width: 46ch;
   color: var(--w-muted);
-}
-
-.w-services p {
-  max-width: 34ch;
-}
-
-.w-apps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.w-app {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-}
-
-.w-app .badge {
-  width: 52px;
-  height: 52px;
-  box-shadow:
-    0 0 0 1.5px rgb(255 255 255 / 35%),
-    0 12px 24px -12px rgb(0 0 0 / 50%);
-}
-
-.w-app small {
-  color: var(--color-on-navy-muted);
-  font-size: var(--text-label);
-  letter-spacing: 0.06em;
 }
 
 .w-chips,
@@ -5148,45 +5028,6 @@
   border-radius: var(--radius-full);
 }
 
-.w-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  color: var(--w-heading);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.w-products .w-link,
-.w-services .w-link {
-  align-self: flex-end;
-}
-
-.w-link svg {
-  transition: transform 0.3s var(--ease-brand);
-}
-
-a.w-card {
-  transition:
-    transform 0.4s var(--ease-brand),
-    box-shadow 0.4s var(--ease-brand),
-    scale 0.2s var(--ease-brand);
-}
-
-a.w-card:active {
-  scale: 0.98;
-}
-
-a.w-card:hover {
-  box-shadow: 0 26px 50px -30px rgb(11 23 48 / 55%);
-  transform: translateY(-3px);
-}
-
-a.w-card:hover .w-link svg {
-  transform: translateX(4px);
-}
-
 .w-motto {
   display: flex;
   align-items: center;
@@ -5228,8 +5069,6 @@ a.w-card:hover .w-link svg {
 }
 
 @media (max-width: 900px) {
-  .w-products,
-  .w-services,
   .w-delivery,
   .w-industries {
     grid-column: 1 / -1;
@@ -5265,13 +5104,6 @@ a.w-card:hover .w-link svg {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  a.w-card,
-  a.w-card:hover,
-  a.w-card:hover .w-link svg {
-    transform: none;
-    transition: none;
-  }
-
   .w-more,
   .w-more-trigger {
     transition:
@@ -5280,7 +5112,7 @@ a.w-card:hover .w-link svg {
   }
 }
 
-/* ---------- E-S1 Home: core values and How we approach ---------- */
+/* ---------- E-S1 Home: core values and How we work ---------- */
 /* Both sit on the .home-flow surface below */
 .home-values,
 .home-process {
@@ -5329,6 +5161,200 @@ a.w-card:hover .w-link svg {
   inset: 50% 0 0;
   z-index: -1;
   background: #f4f6fa;
+}
+
+/* ---------- Home: What can we help you achieve? (lead, 2026-10-11) ---------- */
+/* The Services split layout: sticky heading and next steps, outcome rows */
+.goal-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 28px;
+}
+
+.goal-list {
+  border-top: 1px solid var(--color-border);
+  list-style: none;
+}
+
+.goal-list li {
+  padding: 26px 0 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.goal-list h3 {
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.goal-list p {
+  max-width: 56ch;
+  margin-top: 10px;
+  color: var(--color-muted);
+}
+
+/* ---------- Home: One connected school (lead, 2026-10-11) ---------- */
+/* One link card per app. From 1080px a dashed amber line runs behind the
+   cards at the badges' centre and shows in the gaps, as the 4-D track does.
+   Press, arrow and lift: the door rules. */
+.app-cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  list-style: none;
+}
+
+/* Card top padding 28px + half the 44px badge, less half the line */
+.app-cards::before {
+  content: "";
+  position: absolute;
+  top: 49px;
+  right: 0;
+  left: 0;
+  border-top: 2px dashed color-mix(in srgb, var(--color-amber) 60%, transparent);
+}
+
+.app-cards > li {
+  position: relative;
+  display: flex;
+}
+
+.app-card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 26px 26px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  color: var(--color-heading);
+  transition:
+    transform 0.5s var(--ease-brand),
+    scale 0.2s var(--ease-brand);
+}
+
+.app-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.app-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.app-for {
+  color: var(--color-muted);
+  font-size: var(--text-body-sm);
+}
+
+.app-feats {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px dashed var(--color-border);
+  color: var(--color-text);
+  font-size: var(--text-body-sm);
+  line-height: 1.45;
+  list-style: none;
+}
+
+.app-feats li {
+  display: flex;
+  gap: 10px;
+}
+
+.app-feats li::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  margin-top: 0.5em;
+  border-radius: var(--radius-full);
+  background: var(--color-amber);
+}
+
+@media (max-width: 1079px) {
+  .app-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-cards::before {
+    content: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Home: core values as flip cards (lead, 2026-10-11) ---------- */
+/* Six Careers flip cards in three columns: icon, title and short line on
+   the front, the full value on the back. */
+.home-values .flip-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.flip-icon {
+  font-size: 2rem;
+}
+
+/* The front reads top down: icon, then title and short line; the hint stays
+   at the bottom. Above 1180px the cards are wide enough for a shorter card. */
+.home-values .flip-front {
+  justify-content: flex-start;
+  gap: 18px;
+}
+
+.home-values .flip-front .flip-hint {
+  margin-top: auto;
+}
+
+@media (width > 1180px) {
+  .home-values .flip-card,
+  .home-values .flip-inner {
+    min-height: 264px;
+  }
+}
+
+.flip-front .flip-text {
+  margin-top: 8px;
+}
+
+/* The featured value's gold front keeps its short line readable */
+.flip-card.accent .flip-front .flip-text {
+  color: var(--color-on-amber-muted);
+}
+
+@media (width <= 820px) {
+  .home-values .flip-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 520px) {
+  .home-values .flip-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .home-flow {
