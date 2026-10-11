@@ -62,6 +62,16 @@ describe("CountUp", () => {
     expect(disconnect).toHaveBeenCalled();
   });
 
+  it("follows the latest entry when several arrive at once", () => {
+    const { figure } = mount();
+    callback([{ isIntersecting: false }]);
+    callback([{ isIntersecting: true }, { isIntersecting: false }]);
+    expect(figure.dataset.count).toBe("wait");
+    expect(disconnect).not.toHaveBeenCalled();
+    callback([{ isIntersecting: false }, { isIntersecting: true }]);
+    expect(figure.dataset.count).toBe("play");
+  });
+
   it("leaves a figure on screen at load to the CSS count", () => {
     const { figure } = mount();
     callback([{ isIntersecting: true }]);

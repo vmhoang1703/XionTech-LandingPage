@@ -23,8 +23,9 @@ export function CountUp({ value }: Readonly<{ value: string }>) {
       return;
     }
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
+      (entries) => {
+        // A fast scroll can deliver several entries at once: the last is now.
+        if (!entries.at(-1)?.isIntersecting) {
           figure.dataset.count = "wait";
           return;
         }

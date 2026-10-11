@@ -1493,3 +1493,4 @@ Template:
   - The count first used the brand curve, which jumped to 22 almost at once; it now uses a softer ease-out over 1.6 s.
   - Right-aligned digits moved their start as the number grew, which Chrome reported as a tiny layout shift (0.0002). The count is now drawn from the number's start, and the shift is 0.
   - The AI ran `git stash` to compare with `develop`, though a comparison needed a new build anyway; it restored the changes at once.
+  - Its own inline review found that the count read only the first observer entry; after a fast scroll the first entry can be out of date and leave the figure at 0. It now reads the latest one, with a test.
