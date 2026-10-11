@@ -118,13 +118,34 @@ describe("Home page", () => {
     expect(document.querySelector(".bento, .svc-cards")).toBeNull();
   });
 
+  it("changes the background tone before Why XionTech and the values", () => {
+    const { container } = render(<Home />);
+
+    const marks = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-tone]"),
+    );
+    expect(marks.map((mark) => mark.dataset.tone)).toEqual(["blue", "mist"]);
+    expect(
+      marks.map((mark) => {
+        const id = mark.nextElementSibling?.getAttribute("aria-labelledby");
+        return document.getElementById(id ?? "")?.textContent;
+      }),
+    ).toEqual(["Why XionTech.", "Our core values."]);
+    // The scene runs from the first story section to the end of Contact.
+    const scene = container.querySelector(".home-scene");
+    expect(scene?.querySelector("#home-outcomes-h")).not.toBeNull();
+    expect(scene?.lastElementChild?.id).toBe("contact");
+  });
+
   it("ends with the contact section and no capture band", () => {
     const { container } = render(<Home />);
 
     const contact = screen
       .getByRole("heading", { name: "Have something you want to build?" })
       .closest("section");
-    expect(container.lastElementChild).toBe(contact);
+    const scene = container.querySelector(".home-scene");
+    expect(container.lastElementChild).toBe(scene);
+    expect(scene?.lastElementChild).toBe(contact);
     expect(contact?.id).toBe("contact");
     // The hero's Get in touch button lands on this section.
     expect(

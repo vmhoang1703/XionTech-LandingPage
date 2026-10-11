@@ -1199,7 +1199,7 @@
   .sec.contact {
     background: linear-gradient(
       180deg,
-      var(--color-mist-end) 0%,
+      var(--contact-top, var(--color-mist-end)) 0%,
       #fdf3d6 22%,
       #fce6a8 55%,
       var(--color-amber-light) 100%
@@ -5361,6 +5361,122 @@
   background: linear-gradient(180deg, #f4f6fa, var(--color-page));
 }
 
+/* ---------- Home scene: one background that changes tone (lead, 2026-10-11) ---------- */
+/*
+  Below the hero, HomeScene shows one layer that stays on screen (sticky,
+  one screen tall, taking no space) with the tone of the part of the story at
+  the middle of the screen: paper, blue, then mist. Tones fade in 0.8s; two
+  soft brand glows drift up as the page scrolls. overflow: clip keeps the
+  layer inside the scene, so the hero and the footer keep their navy. Contact
+  keeps its own warm surface, its top made see-through (--contact-top) so the
+  scene flows into it with no seam, and its amber still meets the footer
+  ridge (a scene-wide warm tone, pinned to the screen, left the ridge on pale
+  cream). The tones start from the sections' own colours and
+  are light enough for every text colour (blue is door-tint, not ice: the
+  amber step numbers need 4.5:1). With no JavaScript, reduced motion or a
+  saved Pause there is no scene, and each section keeps its own still
+  background.
+*/
+.home-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.scene-bg {
+  position: sticky;
+  top: 0;
+  z-index: -1;
+  display: none;
+  height: 100lvh;
+  margin-bottom: -100lvh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-scene[data-scene] > .scene-bg {
+  display: block;
+}
+
+.home-scene[data-scene] .home-flow,
+.home-scene[data-scene] .surface-mist {
+  background: none;
+}
+
+.home-scene[data-scene] .sec.contact {
+  --contact-top: transparent;
+}
+
+.scene-tone {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-brand);
+}
+
+.scene-paper {
+  background: linear-gradient(180deg, #f4f6fa, var(--color-page));
+}
+
+.scene-blue {
+  background: linear-gradient(
+    180deg,
+    var(--color-door-tint),
+    var(--color-mist)
+  );
+}
+
+.scene-mist {
+  background: linear-gradient(180deg, var(--color-mist), var(--color-mist-end));
+}
+
+.home-scene[data-scene="paper"] .scene-paper,
+.home-scene[data-scene="blue"] .scene-blue,
+.home-scene[data-scene="mist"] .scene-mist {
+  opacity: 1;
+}
+
+.scene-glow {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: var(--radius-full);
+}
+
+.scene-glow-amber {
+  top: -30vmax;
+  right: -25vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-amber) 14%, transparent),
+    transparent
+  );
+}
+
+.scene-glow-blue {
+  bottom: -30vmax;
+  left: -25vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-navy-soft) 10%, transparent),
+    transparent
+  );
+}
+
+/* The glows drift up a little over the whole page (scroll-driven animations) */
+@supports (animation-timeline: scroll()) {
+  .scene-glow {
+    animation: scene-drift linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes scene-drift {
+  to {
+    translate: 0 -20vh;
+  }
+}
+
 .home-flow > :first-child {
   padding-top: calc(120px + var(--spacing-section));
 }
@@ -5424,13 +5540,17 @@
   }
 }
 
-/* Room above the footer so the ridge never covers the last content. */
-main > :last-child {
+/* Room above the footer so the ridge never covers the last content. On Home
+   the room goes on the last section inside the scene (Contact), so its own
+   amber, not the scene, sits behind the ridge. */
+main > :last-child:not(.home-scene),
+main > .home-scene:last-child > :last-child {
   padding-bottom: clamp(232px, 17vw, 256px);
 }
 
 @media (max-width: 640px) {
-  main > :last-child {
+  main > :last-child:not(.home-scene),
+  main > .home-scene:last-child > :last-child {
     padding-bottom: 176px;
   }
 }

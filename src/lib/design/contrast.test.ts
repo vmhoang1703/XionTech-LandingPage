@@ -515,7 +515,9 @@ describe("reduced motion", () => {
 // question text and the +/- stay visible. The shared scroll reveal hides only
 // items its script marked "wait" and starts its rise (`from`) only on items
 // the script marked "play", so with no JavaScript neither ever applies. The
-// pointer glow is an empty decorative light that shows on hover.
+// pointer glow is an empty decorative light that shows on hover. The Home
+// scene is an empty decorative layer: hidden until its script runs, while the
+// sections keep their own backgrounds, and its tones fade in one at a time.
 const MAY_HIDE = new Set([
   "[hidden]",
   ".fpanel[hidden]",
@@ -527,6 +529,8 @@ const MAY_HIDE = new Set([
   '[data-reveal] > [data-shown="wait"]',
   "from",
   "[data-glow]::after",
+  ".scene-bg",
+  ".scene-tone",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],

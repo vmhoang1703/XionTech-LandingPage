@@ -1507,3 +1507,19 @@ Template:
 - **AI got it wrong?** Yes:
   - The plan said the full value text "stays on About", but About has had no values since E-S3, so one short line alone would have deleted the values from the site. The AI found it while building, kept the lead's one short line on the front and moved the full text to the back of each card.
   - The first value cards left a large empty gap between the icon and the title; the front now reads top down and the cards are shorter on wide screens.
+
+## 2026-10-11 — Home: one background that changes tone as you scroll (PR 3 of 3)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** Andy's idea: "cover the whole homepage with one background colour to look more modern ... animation at the background when scrolling"; he chose option C (the colour changes section by section), then "go".
+- **What the AI did:**
+  - `HomeScene` wraps everything below the hero. A decorative layer, sticky and one screen tall but taking no space, shows the tone of the part of the story at the middle of the screen: paper, then blue at Why XionTech., then mist at the values. Tones fade in 0.8 s; two soft brand glows drift up with the page scroll (CSS scroll-driven animation where supported). Contact keeps its warm surface, its top made see-through so the scene flows into it.
+  - Chose the colours by contrast first: the bluer `ice` token would drop the amber step numbers to 4.15:1, so the blue stage uses `door-tint` (4.56:1).
+  - Off under reduced motion, a saved Pause and with no JavaScript: the sections keep their own still backgrounds, as before.
+- **Decision / result:** Browser check at 1440px and 390px: tones in order, layout shift 0, no sideways scroll, page height unchanged (7,151px desktop, 13,683px phone), the footer ridge on Contact's amber, no line where News meets Contact.
+- **AI got it wrong?** Yes, four times, all caught in the browser before the PR:
+  - A scene-wide warm tone at Contact was pinned to the screen, so its amber end never reached the footer ridge, which sat on pale cream.
+  - Moving Contact out of the scene fixed that but left a visible line where the scene met Contact's opaque top. Contact's first gradient stop now turns see-through instead.
+  - The shared "room above the footer" rule (`main > :last-child`) moved onto the new scene wrapper, leaving 245px of see-through space under Contact. The rule now targets the last section inside the scene.
+  - The build spec was written after the first code, not before, as the Definition of Done asks.
+  - The a11y suite then caught two test issues: axe ran while the 4-D steps were mid-fade (4.22:1 at 91% opacity), so axe now checks every page at rest (reduced motion); and the ridge test measured the scene wrapper, so it now uses the same selector as the CSS rule.
