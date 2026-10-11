@@ -9,8 +9,9 @@ import { readMotionPaused } from "@/lib/motion/motion-preference";
 const STAGGER_MS = 70;
 const MAX_STAGGER = 4;
 
-// An item starts once its top is 10% above the bottom of the screen.
-const ROOT_MARGIN = "0px 0px -10% 0px";
+// An item starts once its top is 10% above the bottom of the screen (the
+// count-up starts at the same line).
+export const ROOT_MARGIN = "0px 0px -10% 0px";
 
 // Plays the shared scroll reveal on every page: the direct children of every
 // [data-reveal] group rise in once, as they come into view (globals.css,

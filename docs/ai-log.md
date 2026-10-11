@@ -1478,3 +1478,18 @@ Template:
 - **AI got it wrong?** Yes:
   - The first version hid every child of an armed group. Adding the News filter's new cards to such a group would have left them invisible; the "apply to all pages" request exposed it, and the script now hides only what it marked.
   - The project's no-JS guard test flagged the two new hiding rules; they are allow-listed with the reason, because both apply only after the script runs.
+
+## 2026-10-11 — Home: brainstorm with the lead, then count-up and card effects (PR 1 of 3)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable critique`, then `/impeccable animate` rules
+- **Prompt (short):** "I want to continue the UI/UX/animation and content at Home page", then "you should still work with me to improve homepage to collect my idea and brainstorm with me". Andy's ideas (in Vietnamese): count up only the meaningful numbers, hover and click motion on cards, more and better-linked content from the other pages, one background that changes as you scroll.
+- **What the AI did:**
+  - Ran a critique of Home first (detector 0 findings; score 22/32), then switched to brainstorming when Andy asked for it: three questions, his answers, options for each idea, and a written plan (`_bmad-output/implementation-artifacts/plan-home-enhance.md`) in three PRs.
+  - PR 1: the 25+ and 20+ figures count up. CSS animates a registered `<integer>` (`@property --count`) and a counter draws it over the real number, so the number is in the HTML, the width never changes and a figure on screen at load counts with no script. A small script holds figures below the screen at 0 and plays them in view.
+  - Doors and Capabilities link cards press in; the doors get a soft amber light under the mouse (`data-glow`, one page-wide listener); hovering a 4-D step draws the amber track back to that step's centre (an exact `calc()` from the grid); office chips show a sun or a moon from the real local hour.
+- **Decision / result:** Browser check at 1440px and 390px: the count runs 0 to 25 and 0 to 20, the 4-D track stops on the step centre to the pixel, layout shift 0. Reduced motion, a saved Pause and no JavaScript all show the plain number. Services and About have no number band since E-S2 and E-S3, so the count is on Home only.
+- **AI got it wrong?** Yes:
+  - The first answer to "what next" was a menu of fixes from the critique; Andy wanted to brainstorm his own ideas first. Saved as a working rule for design sessions.
+  - The count first used the brand curve, which jumped to 22 almost at once; it now uses a softer ease-out over 1.6 s.
+  - Right-aligned digits moved their start as the number grew, which Chrome reported as a tiny layout shift (0.0002). The count is now drawn from the number's start, and the shift is 0.
+  - The AI ran `git stash` to compare with `develop`, though a comparison needed a new build anyway; it restored the changes at once.

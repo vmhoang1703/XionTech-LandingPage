@@ -514,7 +514,8 @@ describe("reduced motion", () => {
 // Safari's disclosure triangle, a purely decorative user-agent marker: the
 // question text and the +/- stay visible. The shared scroll reveal hides only
 // items its script marked "wait" and starts its rise (`from`) only on items
-// the script marked "play", so with no JavaScript neither ever applies.
+// the script marked "play", so with no JavaScript neither ever applies. The
+// pointer glow is an empty decorative light that shows on hover.
 const MAY_HIDE = new Set([
   "[hidden]",
   ".fpanel[hidden]",
@@ -525,6 +526,7 @@ const MAY_HIDE = new Set([
   ".faq summary::-webkit-details-marker",
   '[data-reveal] > [data-shown="wait"]',
   "from",
+  "[data-glow]::after",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],

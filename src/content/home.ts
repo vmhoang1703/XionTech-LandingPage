@@ -31,7 +31,8 @@ export const homeHero = {
   cta: { href: "#contact", label: "Get in touch" },
 };
 
-// Figures confirmed by the business on 2026-09-28 (FR-12).
+// Figures confirmed by the business on 2026-09-28 (FR-12). Only the two key
+// figures count up (lead, 2026-10-11).
 export const homeStats: { label: string; stats: Stat[] } = {
   label: "Experience you can count on",
   stats: [
@@ -39,9 +40,15 @@ export const homeStats: { label: string; stats: Stat[] } = {
       value: "25",
       suffix: "+",
       caption: "Years of leadership experience in software",
+      count: true,
     },
     { value: "24", suffix: "/7", caption: "Global coverage across time zones" },
-    { value: "20", suffix: "+", caption: "Technology stacks we work in" },
+    {
+      value: "20",
+      suffix: "+",
+      caption: "Technology stacks we work in",
+      count: true,
+    },
     { value: "8", caption: "Service offerings, from idea to operation" },
     { value: "2", caption: "Offices: Ho Chi Minh City and Plano" },
   ],

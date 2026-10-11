@@ -24,14 +24,15 @@ function Chips({ items }: Readonly<{ items: string[] }>) {
 }
 
 // Two doors inside the Home hero, straddling its lower edge. Each door is
-// one link; badges and chips are plain text, so Tab stops once per door.
+// one link; badges and chips are plain text, so Tab stops once per door. Both
+// show the pointer glow (data-glow) on a mouse or pen.
 export function FrontDoors() {
   const { label, products, services } = homeDoors;
 
   return (
     <section aria-label={label} className="doors">
       <div className="wrap doors-grid">
-        <Link href={products.href} className="door door-products">
+        <Link href={products.href} className="door door-products" data-glow="">
           <div className="top">
             <div className="chips">
               {products.badges.map((app) => (
@@ -45,7 +46,11 @@ export function FrontDoors() {
           <Chips items={products.chips} />
         </Link>
 
-        <Link href={services.href} className="door door-services surface-navy">
+        <Link
+          href={services.href}
+          className="door door-services surface-navy"
+          data-glow=""
+        >
           <div className="top">
             <span className="label">{services.label}</span>
             <Go />
