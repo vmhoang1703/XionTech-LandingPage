@@ -3794,6 +3794,10 @@
 
   .rm-stop[data-in] .rm-card {
     clip-path: inset(-60px);
+    transition:
+      clip-path 400ms var(--ease-brand),
+      transform 400ms var(--ease-brand);
+    transition-delay: 200ms;
   }
 
   /* A focused card is shown whole, with its focus ring. */
@@ -3805,13 +3809,6 @@
   .rm-stop[data-in] .rm-pin {
     transition: scale var(--transition-duration-menu) var(--ease-brand);
     transition-delay: 80ms;
-  }
-
-  .rm-stop[data-in] .rm-card {
-    transition:
-      clip-path 400ms var(--ease-brand),
-      transform 400ms var(--ease-brand);
-    transition-delay: 200ms;
   }
 
   /* Narrow: each bend draws top to bottom as its stop scrolls in. The clip
@@ -3853,6 +3850,21 @@
       top: calc(var(--spacing-anchor-offset) / var(--rm-k));
       width: 1400px;
       zoom: var(--rm-k);
+    }
+
+    /* The focus ring keeps its full 2px, and the title button its 24px
+       target, in the zoomed stage. The extra padding is taken back by the
+       margin, so the layout does not move. */
+    .rm[data-tour="on"] .rm-open {
+      --rm-pad: max(2px, calc((24px / var(--rm-k) - 1.1rem * 1.2) / 2));
+
+      margin-block: calc(-1 * var(--rm-pad));
+      padding-block: var(--rm-pad);
+    }
+
+    .rm[data-tour="on"] .rm-stage :focus-visible,
+    .rm[data-tour="on"] .rm-card:has(.rm-open:focus-visible) {
+      outline-width: calc(2px / var(--rm-k));
     }
 
     /* A step's anchor sits where its stop is active (mid-step). */

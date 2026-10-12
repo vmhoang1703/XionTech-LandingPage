@@ -627,6 +627,13 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(rule('.rm[data-tour="on"] .rm-draw')).toMatch(
       /transition: stroke-dashoffset 400ms var\(--ease-brand\)/,
     );
+    // Zoomed, the focus ring keeps 2px and the title button a 24px target.
+    expect(
+      tour.find((r) => r.selector.includes(".rm-stage :focus-visible"))?.body,
+    ).toMatch(/outline-width: calc\(2px \/ var\(--rm-k\)\)/);
+    expect(rule('.rm[data-tour="on"] .rm-open')).toMatch(
+      /24px \/ var\(--rm-k\)/,
+    );
     // The active card: border, shadow and transform only.
     const card = rule(
       '.rm[data-tour="on"] .rm-stop[data-active="true"] .rm-card',
