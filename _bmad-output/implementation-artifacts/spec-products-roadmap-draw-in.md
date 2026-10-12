@@ -74,7 +74,7 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] Cleanup -- delete the unused exploration files, their CSS blocks, the unused content keys, and the `three`/`@types/three`/`motion` dependencies; restore the `AGENTS.md` rows; replace weight 700 in the roadmap and dialog CSS with the type-scale weights.
+- [x] Cleanup -- delete the unused exploration files, their CSS blocks, the unused content keys, and the `three`/`@types/three`/`motion` dependencies; restore the `AGENTS.md` rows; replace weight 700 in the roadmap and dialog CSS with the type-scale weights.
   - red: `src/app/type-scale.test.ts` -- currently fails on weight 700 (the existing failing test is the red).
 - [ ] `src/content/products.test.ts` -- tests for `dayRoad` (6 stops in order; times and copy as in the prototype; IoT stop uses IoT's feature title and tagline, no time) and `journeyBoard` (every stop has a lane; lane apps match `apps.ts`; the last stop is "all").
   - red: `src/content/products.test.ts` -- a lane check over every stop id, observed failing against a deliberately missing lane before adding the real assertion set.
