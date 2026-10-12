@@ -23,7 +23,7 @@ export const homeHero = {
     highlight: "Get IT done",
     tail: ".",
   },
-  sub: "Connected school and campus solutions, software products and dedicated teams, from a team that leads the way in AI-assisted development.",
+  sub: "Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development.",
   motion: { pause: "Pause motion", play: "Play motion" },
   // The contact section on this page (E-A4).
   cta: { href: "#contact", label: "Get in touch" },

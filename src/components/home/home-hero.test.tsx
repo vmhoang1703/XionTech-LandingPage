@@ -39,7 +39,7 @@ describe("HomeHero", () => {
     expect(beats).toEqual(["Build smarter.", "Ship faster."]);
     expect(
       within(hero).getByText(
-        "Connected school and campus solutions, software products and dedicated teams, from a team that leads the way in AI-assisted development.",
+        "Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development.",
       ),
     ).toBeDefined();
   });
