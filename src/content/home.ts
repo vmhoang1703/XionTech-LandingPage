@@ -83,10 +83,10 @@ export const homeDoors = {
   },
 };
 
-// "Why XionTechs." (was Capabilities): the products and services cards left,
+// "Why XionTech." (was Capabilities): the products and services cards left,
 // because the two doors above already say the same (lead, 2026-10-11).
 export const homeCapabilities = {
-  title: "Why XionTechs.",
+  title: "Why XionTech.",
   lede: "The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI.",
   delivery: {
     label: "Global delivery",

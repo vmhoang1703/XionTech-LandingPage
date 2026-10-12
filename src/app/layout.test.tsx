@@ -90,7 +90,7 @@ describe("RootLayout", () => {
   });
 
   it("sets the site title and description", () => {
-    expect(metadata.title).toBe("XionTechs");
+    expect(metadata.title).toBe("XionTech");
     expect(metadata.description).toMatch(/IT services/);
   });
 });

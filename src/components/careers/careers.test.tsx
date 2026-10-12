@@ -65,7 +65,7 @@ describe("Inside", () => {
 
     expect(container.querySelector("section#life")).not.toBeNull();
     expect(
-      screen.getByRole("heading", { level: 2, name: "Inside XionTechs." }),
+      screen.getByRole("heading", { level: 2, name: "Inside XionTech." }),
     ).not.toBeNull();
     expect(
       screen
@@ -177,7 +177,7 @@ describe("LifeFrames", () => {
 
     expect(container.querySelector("section#life")).not.toBeNull();
     expect(
-      screen.getByRole("heading", { level: 2, name: "Life at XionTechs." }),
+      screen.getByRole("heading", { level: 2, name: "Life at XionTech." }),
     ).not.toBeNull();
     for (const caption of [
       "[Placeholder] Team photo",

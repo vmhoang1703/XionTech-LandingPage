@@ -20,7 +20,7 @@ const INDUSTRY_ICON: Record<
   "Private Equity": BriefcaseIcon,
 };
 
-// Home "Why XionTechs.": Global delivery and Domain expertise in a 5+7 row,
+// Home "Why XionTech.": Global delivery and Domain expertise in a 5+7 row,
 // then the motto. Server Component; only the "+3" reveal, the live clocks and
 // their sun or moon are client parts.
 export function Capabilities() {

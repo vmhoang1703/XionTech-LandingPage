@@ -25,7 +25,7 @@ describe("SiteFooter", () => {
   it("shows the logo linking home and the blurb", () => {
     const footer = renderFooter();
 
-    const logo = within(footer).getByRole("img", { name: "XionTechs" });
+    const logo = within(footer).getByRole("img", { name: "XionTech" });
     expect(logo.closest("a")?.getAttribute("href")).toBe("/");
     expect(
       within(footer).getByText(
@@ -155,7 +155,7 @@ describe("SiteFooter", () => {
   it("shows the bottom bar with copyright, privacy link and the GET IT DONE tag", () => {
     const footer = renderFooter();
 
-    expect(within(footer).getByText(/© 2026 XionTechs\b/)).toBeDefined();
+    expect(within(footer).getByText(/© 2026 XionTech\b/)).toBeDefined();
     expect(
       within(footer)
         .getByRole("link", { name: "Privacy policy" })

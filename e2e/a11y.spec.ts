@@ -281,8 +281,8 @@ test.describe("reflow", { tag: "@a11y" }, () => {
       );
     expect(layout.overflow, "no sideways scroll").toBeLessThanOrEqual(0);
     expect(layout.columns, "figures per row").toBe(2);
-    expect(layout.cards, "Why XionTechs cards").toHaveLength(2);
-    expect(stacked(layout.cards), "Why XionTechs cards stack").toBe(true);
+    expect(layout.cards, "Why XionTech cards").toHaveLength(2);
+    expect(stacked(layout.cards), "Why XionTech cards stack").toBe(true);
     expect(layout.apps, "app cards").toHaveLength(4);
     expect(stacked(layout.apps), "app cards stack").toBe(true);
     expect(layout.doors, "door cards").toHaveLength(2);

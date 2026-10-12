@@ -1621,6 +1621,7 @@ Template:
 - **What the AI did:** Proposed the exact changes first and asked whether Ha Noi and Da Nang have addresses to show (the lead said "go": names only). Changed "XionTech" to "XionTechs" in every page text, title, alt text and label (41 files with their tests) and flipped the three tests that guarded the old rule; the Home stat became "4 · Locations: HQs in Plano and Ho Chi Minh City"; "Two headquarters" on Home and About; "Also in Ha Noi and Da Nang." under the two headquarters cards on About, the Demo page and the footer; the brand rule in AGENTS.md.
 - **Decision / result:** Tests 1333 pass; the five Home stats still show on load at 1280x720.
 - **AI got it wrong?** Yes, twice, both caught by tests: the bulk rename also changed a folder name in a test path (`ux-XionTech-LandingPage-…`), and the footer line was first inserted inside the list of phone numbers, so it showed under every contact.
+- **Then:** "XionTech does not have 's' at the end. My bad". The brand part of #104 was reverted the same evening by restoring every file #104 touched to its state before #104, then re-applying only the location changes, and the old rule went back into AGENTS.md (with a note). A diff against the pre-#104 state shows only the 12 location files changed.
 
 ## 2026-10-10 — Products page as an audience flow through a 3D campus
 

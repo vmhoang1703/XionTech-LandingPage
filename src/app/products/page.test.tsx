@@ -98,9 +98,9 @@ describe("Products page", () => {
 
   it("sets the page metadata", () => {
     expect(metadata.title).toBe(
-      "School Apps: Parent Hub, Staff Hub, IoT & AI Tutor | XionTechs",
+      "School Apps: Parent Hub, Staff Hub, IoT & AI Tutor | XionTech",
     );
     expect(metadata.description).toBe(productsMeta.description);
-    expect(productsMeta.description).not.toMatch(/PXP|LXP|SXP|XionTech(?!s)/);
+    expect(productsMeta.description).not.toMatch(/PXP|LXP|SXP|XionTechs/);
   });
 });

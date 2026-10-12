@@ -43,7 +43,7 @@ describe("NewsPage", () => {
   });
 
   it("has its own title and description", () => {
-    expect(metadata.title).toBe("News | XionTechs");
+    expect(metadata.title).toBe("News | XionTech");
     expect(String(metadata.description)).toContain("products");
   });
 
