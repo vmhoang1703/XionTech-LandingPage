@@ -88,7 +88,7 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/content/products.ts` -- replace `audienceFlow` with `journeyMap` (hub "XionTech", places parent-hub, staff-hub, ai-tutor, iot with name, tagline, badge and anchor from `apps.ts`, open label, mobile list heading, Pause/Play labels).
+- [x] `src/content/products.ts` -- replace `audienceFlow` with `journeyMap` (hub "XionTech", places parent-hub, staff-hub, ai-tutor, iot with name, tagline, badge and anchor from `apps.ts`, open label, mobile list heading, Pause/Play labels).
   - red: `src/content/products.test.ts` -- places in order with copy equal to `apps.ts`; open label "Open {app} details".
 - [ ] `src/components/products/map/journey-scene.ts` -- pure three.js builder: `buildJourney()` returns hub and 4 islands (named by app id, each with props), dashed roads hub→island with travelling dots, lights; `ISO_VIEW` fixed isometric camera that frames all islands for an aspect; `islandAnchor(id)` world point for the button; `tick(dt)` moves dots and bob; `lift(id | null, instant)`.
   - red: `journey-scene.test.ts` -- 4 islands plus hub named; 4 roads each from hub to its island; every anchor projects inside the view for aspects 1 and 0.6; `tick` advances dots; `lift` raises only the chosen island.
