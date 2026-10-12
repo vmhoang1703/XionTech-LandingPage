@@ -1,27 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { APPS } from "@/content/apps";
-import {
-  audienceFlow,
-  FEATURE_PLACEHOLDER,
-  productDetails,
-} from "@/content/products";
+import { appById } from "@/content/apps";
+import { journeyMap } from "@/content/products";
 
-describe("audienceFlow", () => {
+describe("journeyMap", () => {
   it("has the H1 and a lede", () => {
-    expect(audienceFlow.intro.title).toBe("Built apart. Better together.");
-    expect(audienceFlow.intro.lede).toBe(
+    expect(journeyMap.intro.title).toBe("Built apart. Better together.");
+    expect(journeyMap.intro.lede).toBe(
       "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
     );
   });
 
-  it("lists the chapters in order parent, staff, student, campus", () => {
-    expect(audienceFlow.chapters.map((c) => c.id)).toEqual([
-      "parent",
-      "staff",
-      "student",
-      "campus",
-    ]);
-    expect(audienceFlow.chapters.map((c) => c.app.id)).toEqual([
+  it("labels the hub XionTech", () => {
+    expect(journeyMap.hub).toBe("XionTech");
+  });
+
+  it("lists the places in order parent hub, staff hub, AI tutor, IoT", () => {
+    expect(journeyMap.places.map((p) => p.id)).toEqual([
       "parent-hub",
       "staff-hub",
       "ai-tutor",
@@ -29,41 +23,32 @@ describe("audienceFlow", () => {
     ]);
   });
 
-  it("names the four audiences", () => {
-    expect(audienceFlow.chapters.map((c) => c.audience)).toEqual([
-      "Parent",
-      "Teacher and staff",
-      "Student",
-      "Campus",
+  it.each(journeyMap.places)(
+    "takes $id name, tagline, badge and anchor from apps.ts",
+    (place) => {
+      const app = appById(place.id);
+      expect(place.name).toBe(app.shortName);
+      expect(place.tagline).toBe(app.tagline);
+      expect(place.badge).toBe(app.badge);
+      expect(place.anchor).toBe(app.anchor);
+    },
+  );
+
+  it("builds the open label as Open {app} details", () => {
+    expect(journeyMap.openLabel("Staff Hub")).toBe("Open Staff Hub details");
+    expect(journeyMap.places.map((p) => journeyMap.openLabel(p.name))).toEqual([
+      "Open Parent Hub details",
+      "Open Staff Hub details",
+      "Open AI Tutor details",
+      "Open IoT details",
     ]);
   });
 
-  it("gives each chapter its own campus place", () => {
-    const places = audienceFlow.chapters.map((c) => c.place);
-    expect(places).toEqual(["gate", "staff-room", "classroom", "rooftop"]);
-    expect(new Set(places).size).toBe(places.length);
+  it("has a real mobile list heading and the motion labels", () => {
+    expect(journeyMap.listHeading).toBe("Our apps");
+    expect(journeyMap.motion).toEqual({
+      pause: "Pause motion",
+      play: "Play motion",
+    });
   });
-
-  it.each(audienceFlow.chapters)(
-    "takes $id copy from apps.ts and productDetails",
-    (chapter) => {
-      const detail = productDetails[chapter.app.id];
-      expect(chapter.app).toBe(APPS.find((a) => a.id === chapter.app.id));
-      expect(chapter.tagline).toBe(chapter.app.tagline);
-      expect(chapter.madeFor).toBe(detail.madeFor);
-    },
-  );
-
-  it.each(audienceFlow.chapters)(
-    "makes every $id step a productDetails feature",
-    (chapter) => {
-      const features = productDetails[chapter.app.id].features;
-      expect(chapter.steps.map((s) => s.title)).toEqual(
-        features.map((f) => f.title),
-      );
-      for (const step of chapter.steps) {
-        expect(step.description).toBe(FEATURE_PLACEHOLDER);
-      }
-    },
-  );
 });

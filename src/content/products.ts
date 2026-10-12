@@ -113,44 +113,26 @@ export const productDetails: Record<AppId, ProductDetail> = {
   },
 };
 
-export type FlowPlace = "gate" | "staff-room" | "classroom" | "rooftop";
-
-// The audience flow: one chapter per person in a school, in reading order.
-// `place` is where the camera goes on the 3D campus. Names, "Made for"
-// lines, taglines and step titles are the app and feature copy above.
-const chapter = (
-  id: "parent" | "staff" | "student" | "campus",
-  audience: string,
-  app: AppId,
-  place: FlowPlace,
-) => {
-  const { madeFor, features } = productDetails[app];
-  return {
-    id,
-    audience,
-    app: appById(app),
-    madeFor,
-    tagline: appById(app).tagline,
-    place,
-    steps: features.map(({ id: stepId, title }) => ({
-      id: stepId,
-      title,
-      description: FEATURE_PLACEHOLDER,
-    })),
-  };
+// The journey map: the XionTech hub and one place per app, in tab order.
+// Names, taglines, badges and anchors come from apps.ts.
+const place = (id: AppId) => {
+  const { shortName, tagline, badge, anchor } = appById(id);
+  return { id, name: shortName, tagline, badge, anchor };
 };
 
-export const audienceFlow = {
+export const journeyMap = {
   intro: {
     title: "Built apart. Better together.",
     lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
   },
-  chapters: [
-    chapter("parent", "Parent", "parent-hub", "gate"),
-    chapter("staff", "Teacher and staff", "staff-hub", "staff-room"),
-    chapter("student", "Student", "ai-tutor", "classroom"),
-    chapter("campus", "Campus", "iot", "rooftop"),
+  hub: "XionTech",
+  places: [
+    place("parent-hub"),
+    place("staff-hub"),
+    place("ai-tutor"),
+    place("iot"),
   ],
-  detailsLink: (name: string) => `See ${name} details`,
+  openLabel: productsShowcase.openLabel,
+  listHeading: "Our apps",
   motion: { pause: "Pause motion", play: "Play motion" },
 } as const;
