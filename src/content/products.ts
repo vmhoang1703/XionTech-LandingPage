@@ -206,3 +206,29 @@ export const dayRoad = {
     },
   ] satisfies RoadStop[],
 } as const;
+
+// The journey board: who acts at each stop of the day. Each lane is a person
+// in the school and the app they use; the last stop belongs to everyone.
+export type LaneId = "student" | "staff" | "parent" | "campus";
+
+export const journeyBoard = {
+  hint: "Select a step to see the app behind it.",
+  timeLabel: "Time",
+  everyone: "Everyone",
+  details: "Details",
+  lanes: [
+    { id: "student", label: "Student", app: "ai-tutor" },
+    { id: "staff", label: "Teacher and staff", app: "staff-hub" },
+    { id: "parent", label: "Parent", app: "parent-hub" },
+    { id: "campus", label: "Campus", app: "iot" },
+  ] satisfies { id: LaneId; label: string; app: AppId }[],
+  // Lane per stop id; "all" spans every lane.
+  laneOf: {
+    arrive: "student",
+    attendance: "staff",
+    parent: "parent",
+    learn: "student",
+    campus: "campus",
+    connected: "all",
+  } as Record<string, LaneId | "all">,
+} as const;
