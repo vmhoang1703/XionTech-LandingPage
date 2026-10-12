@@ -32,7 +32,7 @@ context:
   - server HTML, no JS and reduced motion stay `static`, fully drawn;
   - a roadmap already 30% in view at load goes straight to `on`, with no replay;
   - otherwise it is `armed` until 30% visible, then `on`, once.
-- **Armed state:** dims, never hides. Cards and pins at opacity ≥ 0.35 and offset. The road is masked, not `display`/`visibility`/`opacity: 0` (`contrast.test.ts`).
+- **Armed state** (decision, Sammy 2026-10-12, after axe failed on dimmed text): waiting cards are wiped out of view with `clip-path` and offset, and wipe in from their side; pins pop by scale. No opacity on text, and never `display`/`visibility`/`opacity: 0` (`contrast.test.ts`). The road is masked. Everything stays fully visible without JS, under reduced motion and once revealed.
 - **Order:** the pins and cards appear in road order; each delay follows its position along the road.
 - **Reduced motion:** no movement at all (the global rule, plus `static`).
 - **Content and links unchanged:** the content, the cards, the modal, the anchors `#pxp`/`#sxp`/`#ai-tutor`/`#iot` and the narrow layout (one bend per card) stay as they are. The animation works on both layouts.

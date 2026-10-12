@@ -36,3 +36,4 @@ Task 5: review — pass — 0 critical, 0 important, 2 minor
 Task 5: minor — e2e/products.spec.ts:63 roadmap asserted by count, not toBeVisible; :72 expects armed before scroll at 1280x500 (possible race)
 Task 5: minor — road-map.tsx class rm-end-start has no CSS rule (excluded in page.test)
 Task 5: complete (commits 0aba122..d1935ed, diff verified)
+Task 4: fix round 3/5 (reveal by clip-path wipe and scale, no opacity: axe contrast passes; .rm-open 25px tall; rm-end-start removed; frozen intent renegotiated by Sammy: wipe, hidden until revealed)
