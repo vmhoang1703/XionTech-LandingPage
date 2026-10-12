@@ -70,7 +70,7 @@ context:
 **Execution:**
 - [x] Remove "What we build" -- page order, delete the showcase, app dialogs, opener, store links, the hand-over in the stop modal, the dead content keys and CSS; update `a11y.spec.ts:234` (no app dialogs), drop the showcase keyboard-dialog and hand-over e2e tests.
   - red: `src/app/products/page.test.tsx` -- sections are `#map` then the navy capture band, with no `#apps` and no `dialog.pdetail`; `road-stop-dialog.test.tsx` -- no "Open … details" button.
-- [ ] Anchors on the roadmap -- in `road-map.tsx`, each app stop carries its anchor (`pxp`, `sxp`, `ai-tutor`, `iot`) on a scroll target. On wide screens with the tour, that is a per-stop sentinel in the scroll track; otherwise it is the stop itself. Each has a `scroll-margin-top` that clears the header.
+- [x] Anchors on the roadmap -- in `road-map.tsx`, each app stop carries its anchor (`pxp`, `sxp`, `ai-tutor`, `iot`) on a scroll target. On wide screens with the tour, that is a per-stop sentinel in the scroll track; otherwise it is the stop itself. Each has a `scroll-margin-top` that clears the header.
   - red: `road-map.test.tsx` -- each footer anchor exists exactly once inside `#map` and belongs to the stop of that app.
 - [ ] Scroll tour (wide) -- replaces the timed draw-in on wide screens:
   - `data-tour="on"` is set by JS only, and not under reduced motion;
