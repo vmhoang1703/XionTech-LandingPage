@@ -63,26 +63,28 @@ describe("SiteNav", () => {
     expect(current()).toEqual(expected);
   });
 
-  it("shows only above 1080px, on the right, 30px apart", () => {
+  it("shows only above 1080px, in the middle of the pill, 4px apart", () => {
     render(<SiteNav />);
     const css = nav().className;
     expect(css).toContain("hidden");
     expect(css).toContain("min-[1081px]:flex");
-    expect(css).toContain("ml-auto");
-    expect(css).toContain("gap-[30px]");
+    expect(css).toContain("mx-auto");
+    expect(css).toContain("gap-1");
   });
 
-  it("styles links as words: no side padding, no pill, amber underline on hover and when current", () => {
+  it("styles links as small pills: light blue on hover, soft amber when current", () => {
     render(<SiteNav />);
     const css = links()[1].className;
     expect(css).toContain("h-11");
-    expect(css).not.toMatch(/(^|\s)p[xl]?-/);
-    expect(css).not.toContain("hover:bg-");
-    expect(css).not.toContain("rounded-full");
-    expect(css).toContain("hover:shadow-[inset_0_-2px_0_var(--color-amber)]");
+    expect(css).toContain("rounded-full");
+    expect(css).toContain("px-4");
+    expect(css).toContain("font-semibold");
     expect(css).toContain(
-      "aria-[current=page]:shadow-[inset_0_-2px_0_var(--color-amber)]",
+      "hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)]",
     );
-    expect(css).toContain("aria-[current=page]:font-medium");
+    expect(css).toContain(
+      "aria-[current=page]:bg-[color-mix(in_srgb,var(--color-amber-light)_38%,white)]",
+    );
+    expect(css).not.toContain("shadow");
   });
 });

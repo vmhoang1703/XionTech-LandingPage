@@ -109,9 +109,9 @@ export function MobileMenu() {
       <button
         ref={buttonRef}
         type="button"
-        // Prototype ENH-002: a 44px hamburger icon, a cross while open, underlined on hover
-        // and while open like the nav links.
-        className="text-navy ml-auto inline-flex size-11 items-center justify-center text-2xl transition-[box-shadow] duration-[250ms] ease-[var(--ease-brand)] hover:shadow-[inset_0_-2px_0_var(--color-amber)] aria-expanded:shadow-[inset_0_-2px_0_var(--color-amber)] min-[1081px]:hidden"
+        // A 44px round hamburger icon, a cross while open, light blue on hover and while
+        // open like the nav links.
+        className="text-navy inline-flex size-11 items-center justify-center rounded-full text-2xl transition-[background-color] duration-[250ms] ease-[var(--ease-brand)] hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-expanded:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] min-[1081px]:hidden"
         aria-controls={MENU_ID}
         aria-expanded={open}
         onClick={() => setOpenedOn(open ? null : pathname)}
@@ -123,13 +123,13 @@ export function MobileMenu() {
         id={MENU_ID}
         aria-label={LABELS.mainNav}
         hidden={!open}
-        className="border-border bg-paper absolute inset-x-0 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-height))] flex-col items-stretch gap-0.5 overflow-auto border-b px-6 pt-4 pb-6"
+        className="border-border bg-paper pointer-events-auto absolute inset-x-3 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-room))] flex-col items-stretch gap-0.5 overflow-auto rounded-[28px] border p-4 shadow-[0_24px_48px_-24px_rgb(11_23_48/0.35)]"
       >
         {NAV_LINKS.map((item) => (
           <Link
             key={item.section}
             href={item.href}
-            className={`${itemClass} px-3.5`}
+            className={itemClass}
             aria-current={section === item.section ? "page" : undefined}
           >
             {item.label}

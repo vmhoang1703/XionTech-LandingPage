@@ -226,8 +226,21 @@
 
 @layer base {
   html {
-    scroll-padding-top: var(--spacing-header-height);
+    scroll-padding-top: var(--spacing-header-room);
     scroll-behavior: smooth;
+  }
+
+  /* The header pill (--spacing-header-height tall above 1080px) floats in a strip
+     12px deep above and below it; the page runs under the strip, so anchors, sticky
+     parts and each first section clear the strip, not the pill. */
+  :root {
+    --spacing-header-room: calc(var(--spacing-header-height) + 24px);
+  }
+
+  @media (max-width: 1080px) {
+    :root {
+      --spacing-header-room: 80px;
+    }
   }
 
   :root {
@@ -439,6 +452,11 @@
     background: var(--color-ink);
   }
 
+  /* Room for the header pill, which floats over the hero. */
+  .home-hero {
+    padding-top: var(--spacing-header-room);
+  }
+
   .hero-light {
     background: var(--color-page);
   }
@@ -602,7 +620,12 @@
 
   /* Page hero and breadcrumbs */
   .page-hero {
-    padding-block: var(--spacing-page-hero-top) var(--spacing-page-hero-bottom);
+    /* The header pill floats over each page's first section, so every hero adds the
+       header height to its top padding. */
+    padding-block: calc(
+        var(--spacing-header-room) + var(--spacing-page-hero-top)
+      )
+      var(--spacing-page-hero-bottom);
   }
 
   .page-hero h1 {
@@ -1694,7 +1717,7 @@
   /* E-A7 Careers (prototype careers.html, site.css "Careers" blocks; ENH-035, ENH-055, ENH-060) */
   /* The hero fades from light blue into the page colour, where the shared page scene takes over (lead, 2026-10-12) */
   .careers-hero {
-    padding-block: 72px 64px;
+    padding-block: calc(var(--spacing-header-room) + 72px) 64px;
     background: linear-gradient(180deg, var(--color-ice), var(--color-page));
   }
 
@@ -2315,7 +2338,7 @@
   /* E-A6 News (prototype news.html, site.css "News" blocks; ENH-037, ENH-053) */
   /* White with light blue shading through the whole page, hero included (site.js "cool") */
   .nhead-sec {
-    padding-block: 56px 0;
+    padding-block: calc(var(--spacing-header-room) + 56px) 0;
   }
 
   .nhead {
@@ -2631,7 +2654,7 @@
 
   /* Story page: an editorial article (prototype news-story.html) */
   .art-hero {
-    padding-block: 56px 24px;
+    padding-block: calc(var(--spacing-header-room) + 56px) 24px;
   }
 
   .art-back {
@@ -2775,7 +2798,7 @@
 
   @media (width <= 520px) {
     .nhead-sec {
-      padding-top: 40px;
+      padding-top: calc(var(--spacing-header-room) + 40px);
     }
 
     .scard {
@@ -3532,7 +3555,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-block: 72px 88px;
+    padding-block: calc(var(--spacing-header-room) + 72px) 88px;
     background: linear-gradient(180deg, var(--color-white), var(--color-page));
   }
 
@@ -3834,7 +3857,7 @@
 
   @media (width <= --theme(--breakpoint-sm)) {
     .eco-hero {
-      padding-block: 88px 64px;
+      padding-block: calc(var(--spacing-header-room) + 88px) 64px;
     }
 
     .eco-toggle {
@@ -3886,7 +3909,7 @@
       color-mix(in srgb, var(--color-mist) 70%, var(--color-white))
     );
     scroll-margin-top: calc(
-      var(--spacing-anchor-offset) - var(--spacing-header-height)
+      var(--spacing-anchor-offset) - var(--spacing-header-room)
     );
   }
 
@@ -4307,7 +4330,7 @@
   #offices,
   #book {
     scroll-margin-top: calc(
-      var(--spacing-anchor-offset) - var(--spacing-header-height)
+      var(--spacing-anchor-offset) - var(--spacing-header-room)
     );
   }
 
@@ -4522,7 +4545,7 @@
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    padding: 104px 0 200px;
+    padding: calc(var(--spacing-header-room) + 104px) 0 200px;
     text-align: center;
     background: linear-gradient(
       180deg,
@@ -4582,7 +4605,7 @@
 
   @media (width <= 640px) {
     .about-hero {
-      padding: 64px 0 150px;
+      padding: calc(var(--spacing-header-room) + 64px) 0 150px;
     }
   }
 
@@ -5816,7 +5839,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
 
 .svc-stick {
   position: sticky;
-  top: calc(var(--spacing-header-height) + 48px);
+  top: calc(var(--spacing-header-room) + 48px);
   margin-bottom: 0;
 }
 
