@@ -1,7 +1,7 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 test(
-  "products page responds 200 with the flow H1, the four chapter links, the four cards and no Updates link",
+  "products page responds 200 with the H1, the map, the four card anchors and no Updates link",
   { tag: "@smoke" },
   async ({ request }) => {
     const response = await request.get("/products");
@@ -9,11 +9,8 @@ test(
 
     expect(response.status()).toBe(200);
     expect(html).toContain("Built apart. Better together.");
-    expect(html).toContain('id="flow"');
-    // The still campus is in the HTML, so no-JS visitors see a picture too.
-    expect(html).toContain("flow-fallback");
+    expect(html).toContain('id="map"');
     for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
-      expect(html).toContain(`href="#${id}"`);
       expect(html).toContain(`id="${id}"`);
     }
     expect(html).not.toContain('href="#updates"');
@@ -58,16 +55,14 @@ test(
   },
 );
 
-const CHAPTER_ANCHORS = ["pxp", "sxp", "ai-tutor", "iot"];
+test.describe("school-day roadmap", { tag: "@a11y" }, () => {
+  test.use({ viewport: { width: 1280, height: 500 } });
 
-test.describe("audience flow", { tag: "@a11y" }, () => {
-  test.use({ viewport: { width: 1280, height: 900 } });
+  const roadmap = (page: Page) => page.locator("#map .rm");
+  const cards = (page: Page) => roadmap(page).locator(".rm-card");
 
-  test("one H1, four chapters in order, each linking to its card, and a canvas or the fallback", async ({
-    page,
-  }) => {
+  test("the roadmap shows the H1 and six cards", async ({ page }) => {
     await page.goto("/products");
-
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(
       page.getByRole("heading", {
@@ -75,132 +70,83 @@ test.describe("audience flow", { tag: "@a11y" }, () => {
         name: "Built apart. Better together.",
       }),
     ).toBeVisible();
-    const hrefs = await page
-      .locator("#flow .flow-chapter .flow-link")
-      .evaluateAll((links) => links.map((a) => a.getAttribute("href")));
-    expect(hrefs).toEqual(CHAPTER_ANCHORS.map((id) => `#${id}`));
-    await expect(
-      page.locator(
-        "#flow .flow-canvas canvas.flow-scene:not([hidden]), #flow .flow-canvas .flow-fallback",
-      ),
-    ).toHaveCount(1);
+    await expect(cards(page)).toHaveCount(6);
   });
 
-  test("scrolling to the Student chapter marks it active and no other", async ({
+  test("scrolling it into view plays the draw-in and leaves every card at full strength", async ({
     page,
   }) => {
     await page.goto("/products");
-    const chapters = page.locator("#flow .flow-chapter");
+    await expect(roadmap(page)).toHaveAttribute("data-reveal", "armed");
 
-    await expect(chapters.nth(0)).toHaveAttribute("data-active", "true");
-    await chapters
-      .nth(2)
-      .evaluate((el) =>
-        el.scrollIntoView({ block: "center", behavior: "instant" }),
-      );
+    await roadmap(page).evaluate((el) =>
+      el.scrollIntoView({ block: "center", behavior: "instant" }),
+    );
 
-    await expect(chapters.nth(2)).toHaveAttribute("data-active", "true");
-    for (const other of [0, 1, 3]) {
-      await expect(chapters.nth(other)).toHaveAttribute("data-active", "false");
+    await expect(roadmap(page)).toHaveAttribute("data-reveal", "on");
+    for (const card of await cards(page).all()) {
+      await expect(card).toHaveCSS("opacity", "1");
     }
-  });
-
-  // Focusing an off-screen link starts Chrome's smooth focus scroll; Enter
-  // straight after can lose the jump to the card to it. The race does not
-  // always lose, so the steps run three times.
-  test("a chapter link activated while its focus scroll runs still lands on the card", async ({
-    page,
-  }) => {
-    for (let round = 0; round < 3; round++) {
-      await page.goto("/products");
-      await page.waitForTimeout(1500);
-      await page.evaluate(() => {
-        const apps = document.querySelector<HTMLElement>("#apps");
-        scrollTo({ top: (apps?.offsetTop ?? 0) + 600, behavior: "instant" });
-      });
-      await page.waitForTimeout(800);
-      await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
-      await page.waitForTimeout(800);
-
-      await page.locator('#flow a[href="#ai-tutor"]').focus();
-      await page.keyboard.press("Enter");
-      await expect(page.locator("#ai-tutor-h")).toBeInViewport();
-    }
-  });
-
-  test("Pause un-dims the other chapters, and the choice survives a reload", async ({
-    page,
-  }) => {
-    await page.goto("/products");
-    const inactive = page.locator('#flow .flow-chapter[data-active="false"]');
-    const allFull = async () => {
-      await expect(inactive).toHaveCount(3);
-      for (const chapter of await inactive.all()) {
-        await expect(chapter).toHaveCSS("opacity", "1");
-      }
-    };
-
-    await expect(inactive.first()).toHaveCSS("opacity", "0.8");
-    await page.getByRole("button", { name: "Pause motion" }).click();
-    await allFull();
-
-    await page.reload();
-    const play = page.getByRole("button", { name: "Play motion" });
-    await expect(play).toBeVisible();
-    await allFull();
-
-    await play.click();
-    await expect(
-      page.getByRole("button", { name: "Pause motion" }),
-    ).toBeVisible();
-    await expect(inactive.first()).toHaveCSS("opacity", "0.8");
   });
 
   test.describe("reduced motion", () => {
     test.use({ reducedMotion: "reduce" });
 
-    test("the scene is paused with no frame loop and every chapter reads at full strength", async ({
-      page,
-    }) => {
-      await page.addInitScript(() => {
-        const win = window as unknown as { __flowFrames: number };
-        win.__flowFrames = 0;
-        const request = window.requestAnimationFrame.bind(window);
-        window.requestAnimationFrame = (callback) => {
-          win.__flowFrames += 1;
-          return request(callback);
-        };
-      });
+    test("shows the whole roadmap at once", async ({ page }) => {
       await page.goto("/products");
-      const chapters = page.locator("#flow .flow-chapter");
-
-      await chapters
-        .nth(2)
-        .evaluate((el) =>
-          el.scrollIntoView({ block: "center", behavior: "instant" }),
-        );
-      await expect(chapters.nth(2)).toHaveAttribute("data-active", "true");
-      await expect(page.locator("#flow .flow-canvas")).toHaveAttribute(
-        "data-paused",
-        "true",
-      );
-      await expect(
-        page.getByRole("button", { name: "Play motion" }),
-      ).toBeVisible();
-      for (let i = 0; i < 4; i++) {
-        await expect(chapters.nth(i)).toHaveCSS("opacity", "1");
+      await expect(roadmap(page)).toHaveAttribute("data-reveal", "static");
+      await expect(cards(page)).toHaveCount(6);
+      for (const card of await cards(page).all()) {
+        await expect(card).toHaveCSS("opacity", "1");
       }
-
-      // Let any scroll-driven frame settle, then no scene frame may follow.
-      await page.waitForTimeout(500);
-      const before = await page.evaluate(
-        () => (window as unknown as { __flowFrames: number }).__flowFrames,
-      );
-      await page.waitForTimeout(1000);
-      const after = await page.evaluate(
-        () => (window as unknown as { __flowFrames: number }).__flowFrames,
-      );
-      expect(after, "no animation frame while paused").toBe(before);
     });
+  });
+
+  test("a card opens the modal, Next moves, and Esc returns focus to the card", async ({
+    page,
+  }) => {
+    await page.goto("/products");
+    const first = page.getByRole("button", { name: "1. Student arrives" });
+    await first.scrollIntoViewIfNeeded();
+    await first.click();
+
+    const modal = page.locator("dialog.road-dialog");
+    await expect(modal).toBeVisible();
+    await expect(modal.getByRole("heading", { level: 2 })).toHaveText(
+      "Student arrives",
+    );
+
+    await modal.getByRole("button", { name: /Attendance recorded/ }).click();
+    await expect(modal.getByRole("heading", { level: 2 })).toHaveText(
+      "Attendance recorded",
+    );
+
+    await page.keyboard.press("Escape");
+    await expect(modal).toBeHidden();
+    // Focus goes back to the card that opened the modal (the first one).
+    await expect(first).toBeFocused();
+  });
+
+  test('"Open ... details" opens the app dialog', async ({ page }) => {
+    await page.goto("/products");
+    await page.getByRole("button", { name: "2. Attendance recorded" }).click();
+
+    const modal = page.locator("dialog.road-dialog");
+    await modal.getByRole("button", { name: "Open Staff Hub details" }).click();
+
+    await expect(modal).toBeHidden();
+    await expect(page.getByRole("dialog", { name: "Staff Hub" })).toBeVisible();
+  });
+
+  test("390px has no sideways scroll", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.goto("/products");
+    await expect(cards(page)).toHaveCount(6);
+    const overflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
   });
 });

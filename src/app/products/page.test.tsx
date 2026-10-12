@@ -1,27 +1,28 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { productsMeta } from "@/content/products";
-import {
-  definesClass,
-  globalsCss,
-  undefinedClasses,
-} from "@/test-utils/css-classes";
+import { undefinedClasses } from "@/test-utils/css-classes";
 import ProductsPage, { metadata } from "./page";
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),
 }));
 
-// jsdom has no observers: the campus stays on its still SVG fallback.
+// jsdom has no observers: the roadmap never leaves its armed phase.
 class NoObserver {
   observe() {}
+  unobserve() {}
   disconnect() {}
 }
 
 beforeEach(() => {
   vi.stubGlobal(
     "matchMedia",
-    vi.fn(() => ({ matches: false })),
+    vi.fn(() => ({
+      matches: false,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    })),
   );
   vi.stubGlobal("IntersectionObserver", NoObserver);
   vi.stubGlobal("ResizeObserver", NoObserver);
@@ -32,11 +33,11 @@ afterEach(() => {
 });
 
 describe("Products page", () => {
-  it("renders the audience flow, the showcase and the capture band in order", () => {
+  it("renders the roadmap, the showcase and the capture band in order", () => {
     const { container } = render(<ProductsPage />);
     const sections = [...container.querySelectorAll("section")];
     expect(sections).toHaveLength(3);
-    expect(sections[0].id).toBe("flow");
+    expect(sections[0].id).toBe("map");
     expect(sections[1].id).toBe("apps");
     expect(sections[2].classList.contains("capture")).toBe(true);
     // E-A5 CAP-5: the navy band from E-A4.
@@ -47,6 +48,21 @@ describe("Products page", () => {
         name: "See it working at your school.",
       }),
     ).toBeDefined();
+  });
+
+  it("opens with the H1 and a roadmap of six cards", () => {
+    const { container } = render(<ProductsPage />);
+    const map = container.querySelector("section#map");
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Built apart. Better together.",
+      }),
+    ).toBeDefined();
+    expect(container.querySelectorAll("h1")).toHaveLength(1);
+    expect(map?.querySelector("h1")).not.toBeNull();
+    const roadmap = map?.querySelector(".rm");
+    expect(roadmap?.querySelectorAll(".rm-card")).toHaveLength(6);
   });
 
   it("has the four card ids and no sub-nav, tab list, Updates link or LXP section", () => {
@@ -63,15 +79,13 @@ describe("Products page", () => {
 
   it("styles every class it uses", () => {
     const { container } = render(<ProductsPage />);
+    // rm-end-start is a marker: Start takes the plain .rm-end look.
     expect(
-      undefinedClasses(container, /^(sr-only|size-|mt-|-?z-|absolute)/),
+      undefinedClasses(
+        container,
+        /^(sr-only|size-|mt-|-?z-|absolute|rm-end-start$)/,
+      ),
     ).toEqual([]);
-  });
-
-  // jsdom has no WebGL, so the toggle never renders above; it shows once the
-  // campus is ready.
-  it("styles the campus Pause/Play toggle", () => {
-    expect(definesClass(globalsCss(), "flow-toggle")).toBe(true);
   });
 
   it("sets the page metadata", () => {
