@@ -144,10 +144,24 @@ function landHash(map: HTMLElement) {
   }
 }
 
+// The smallest zoom the tour accepts. Below it (a wide but short window)
+// the 11.5px text floor would grow the cards past the window (measured:
+// 0.68 overflows at 1280x660, 0.73 fits at 1280x700).
+const MIN_ZOOM = 0.72;
+// The stage pins at --spacing-anchor-offset (88px) and keeps 16px below it
+// (globals.css, .rm[data-tour="on"]).
+const STAGE_MARGIN = 88 + 16;
+
 // The tour zooms the stage with `zoom` and a tan(atan2()) ratio; without
 // them the stage would be an unscaled 1400px, so the roadmap stays static.
+// It also stays static when the stage would have to shrink below MIN_ZOOM.
 function canTour() {
+  const zoom = Math.min(
+    (innerWidth - 32) / W,
+    (innerHeight - STAGE_MARGIN) / H,
+  );
   return (
+    zoom >= MIN_ZOOM &&
     CSS.supports("zoom", "0.5") &&
     CSS.supports("width", "calc(1px * tan(atan2(1px, 2px)))")
   );
@@ -189,6 +203,12 @@ export function RoadMap() {
     setOpen(index);
     setSelected(index);
   };
+  // The tour leaves the selection alone while the modal is open (a wheel
+  // over its backdrop still scrolls the page).
+  const openRef = useRef(open);
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
   const [mode, setMode] = useState<Mode>("static");
   const tour = mode === "tour";
   const [active, setActive] = useState(0);
@@ -228,7 +248,7 @@ export function RoadMap() {
     if (!tour || !map) return;
     const stopFollowing = followScroll(map, (i) => {
       setActive(i);
-      setSelected(i);
+      if (openRef.current === null) setSelected(i);
     });
     landHash(map);
     // Two frames: the first paints the road at its stop, still.
@@ -238,6 +258,9 @@ export function RoadMap() {
     return () => {
       cancelAnimationFrame(frame);
       stopFollowing();
+      // Leaving the tour: no pin stays selected by it, the road stops moving.
+      setSelected(null);
+      setRoadMoving(false);
     };
   }, [tour]);
 

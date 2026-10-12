@@ -10,11 +10,12 @@ test(
     expect(response.status()).toBe(200);
     expect(html).toContain("Built apart. Better together.");
     expect(html).toContain('id="map"');
+    // Inside the roadmap: between the map section's start and its end.
+    const start = html.indexOf('id="map"');
+    const map = html.slice(start, html.indexOf("</section>", start));
     for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
-      // Inside the roadmap: after the map section opens.
-      expect(html.indexOf(`id="${id}"`)).toBeGreaterThan(
-        html.indexOf('id="map"'),
-      );
+      expect(map.split(`id="${id}"`)).toHaveLength(2);
+      expect(html.split(`id="${id}"`)).toHaveLength(2);
     }
     expect(html).not.toContain('href="#updates"');
     expect(html).not.toContain('id="lxp"');

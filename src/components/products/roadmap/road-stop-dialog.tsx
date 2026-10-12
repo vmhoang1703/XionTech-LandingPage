@@ -8,7 +8,7 @@ import { MapBadge } from "../map/map-badge";
 
 // The modal for one stop on the school-day road: the step in full, the app
 // at work there (its "Made for" line and features), and Previous/Next to walk
-// the road. "See all … details" hands over to the app's own dialog.
+// the road.
 
 type Props = Readonly<{
   index: number | null;

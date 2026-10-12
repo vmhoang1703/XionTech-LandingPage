@@ -3316,50 +3316,8 @@
 
   /*
     Products page (E-A5), ported from the prototype site.css "Products hero"
-    (ENH-014, ENH-018) and the showcase cards and detail view (ENH-089).
+    (ENH-014, ENH-018).
   */
-  .browser {
-    --color-focus: var(--color-navy);
-    overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--color-navy) 12%, transparent);
-    border-radius: var(--radius-browser);
-    background: var(--color-paper);
-    box-shadow: var(--shadow-card);
-  }
-
-  .browser .bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    height: 38px;
-    padding-inline: 14px;
-    border-bottom: 1px solid
-      color-mix(in srgb, var(--color-navy) 10%, transparent);
-    background: var(--color-mist);
-  }
-
-  .browser .bar i {
-    width: 10px;
-    height: 10px;
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--color-navy) 15%, transparent);
-  }
-
-  /* On a narrow card the address ends in an ellipsis, not a hard cut */
-  .browser .bar-url {
-    min-width: 0;
-    overflow: hidden;
-    line-height: 24px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-left: 12px;
-    padding-inline: 12px;
-    border-radius: var(--radius-full);
-    background: var(--color-paper);
-    color: var(--paper-muted);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-  }
 
   /* Products map */
   /* Heading and badge shared by the roadmap. */
@@ -3836,10 +3794,13 @@
      number). */
   @media screen and (min-width: 1100px) {
     .rm[data-tour="on"] {
-      --rm-k: min(
-        1,
-        tan(atan2(100vw - 32px, 1400px)),
-        tan(atan2(100svh - var(--spacing-anchor-offset) - 16px, 820px))
+      --rm-k: max(
+        0.72,
+        min(
+          1,
+          tan(atan2(100vw - 32px, 1400px)),
+          tan(atan2(100svh - var(--spacing-anchor-offset) - 16px, 820px))
+        )
       );
       --rm-step: 60svh;
       height: calc(820px * var(--rm-k) + 6 * var(--rm-step));

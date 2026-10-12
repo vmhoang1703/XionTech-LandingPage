@@ -52,6 +52,8 @@ beforeEach(() => {
     return frames.length;
   });
   vi.stubGlobal("cancelAnimationFrame", cancelFrame);
+  // A wide window (jsdom's own is 1024x768, under the 1100px breakpoint).
+  vi.stubGlobal("innerWidth", 1280);
   vi.stubGlobal(
     "matchMedia",
     vi.fn((query: string) => ({
@@ -577,6 +579,7 @@ describe("RoadMap scroll tour (wide)", () => {
     // A scroll within the same step keeps the clicked stop.
     scrollTo(3 * STEP + 200);
     expect(selected(container)).toEqual([1]);
+    act(() => (document.querySelector("dialog") as HTMLDialogElement).close());
     scrollTo(4 * STEP + 10);
     expect(selected(container)).toEqual([4]);
   });
@@ -657,8 +660,57 @@ describe("RoadMap scroll tour (wide)", () => {
     act(() => layoutChange?.());
     expect(roadmap(container).dataset.tour).toBeUndefined();
     expect(remove).toHaveBeenCalledWith("scroll", expect.any(Function));
+    expect(remove).toHaveBeenCalledWith("resize", expect.any(Function));
     scrollTo(4 * STEP + 10);
     expect(active(container)).toEqual([]);
+  });
+
+  it("clears the tour's selected pin and road motion on a layout switch", () => {
+    tourAt(2 * STEP + 10);
+    const { container } = render(<RoadMap />);
+    nextFrame();
+    nextFrame();
+    expect(selected(container)).toEqual([2]);
+    act(() => layoutChange?.());
+    expect(selected(container)).toEqual([]);
+    expect(roadmap(container).dataset.road).toBeUndefined();
+  });
+
+  it("follows a resize that moves the track", () => {
+    tourAt(STEP + 10);
+    const { container } = render(<RoadMap />);
+    expect(active(container)).toEqual([1]);
+    tourAt(3 * STEP + 10);
+    act(() => {
+      window.dispatchEvent(new Event("resize"));
+    });
+    expect(active(container)).toEqual([3]);
+  });
+
+  it("keeps the open stop selected while the modal is open", () => {
+    tourAt(STEP + 10);
+    const { container } = render(<RoadMap />);
+    fireEvent.click(
+      container.querySelectorAll<HTMLButtonElement>(".rm-open")[4],
+    );
+    const dialog = document.querySelector("dialog") as HTMLDialogElement;
+    // A wheel over the backdrop scrolls the page under the modal.
+    scrollTo(3 * STEP + 10);
+    expect(selected(container)).toEqual([4]);
+    expect(active(container)).toEqual([3]);
+    act(() => dialog.close());
+    expect(selected(container)).toEqual([4]);
+    scrollTo(STEP + 10);
+    expect(selected(container)).toEqual([1]);
+  });
+
+  it("stays static on a wide but short window, where the stage would be too small", () => {
+    vi.stubGlobal("innerHeight", 560);
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    expect(roadmap(container).dataset.tour).toBeUndefined();
+    expect(roadmap(container).dataset.reveal).toBe("static");
+    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(4);
   });
 
   it("does not run under reduced motion: static, nothing selected", () => {
@@ -706,6 +758,10 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(rule('.rm[data-tour="on"] .rm-draw')).not.toMatch(/transition/);
     expect(rule('.rm[data-tour="on"][data-road="moving"] .rm-draw')).toMatch(
       /transition: stroke-dashoffset 400ms var\(--ease-brand\)/,
+    );
+    // The zoom never drops below 0.72 (or to 0) on a short window.
+    expect(rule('.rm[data-tour="on"]')).toMatch(
+      /--rm-k: max\(\s*0\.72,\s*min\(/,
     );
     // Zoomed, functional text stays at --text-label (11.5px) or larger.
     for (const part of [

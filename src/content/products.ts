@@ -21,12 +21,6 @@ export const productsShowcase = {
   featuresHeading: "Features",
 };
 
-// Feature descriptions are not confirmed yet (ENH-089).
-export const FEATURE_PLACEHOLDER =
-  "[Placeholder] One or two lines on how this works for the people who use it.";
-
-export type Audience = "parents" | "school" | "students";
-
 export type FeatureId =
   | "gate"
   | "scores"
@@ -45,18 +39,14 @@ export type FeatureId =
   | "mastery";
 
 export type ProductDetail = {
-  audience: Audience;
   madeFor: string;
-  media: "phone" | "browser";
   features: readonly { id: FeatureId; title: string }[];
 };
 
 // CAP-3. Feature titles and "Made for" lines are copied from products.html.
 export const productDetails: Record<AppId, ProductDetail> = {
   "parent-hub": {
-    audience: "parents",
     madeFor: "Parents and families",
-    media: "phone",
     features: [
       { id: "gate", title: "Alerts when your child reaches the gate" },
       { id: "scores", title: "Scores and comments as soon as published" },
@@ -65,9 +55,7 @@ export const productDetails: Record<AppId, ProductDetail> = {
     ],
   },
   "staff-hub": {
-    audience: "school",
     madeFor: "Staff, teachers and school leaders",
-    media: "browser",
     features: [
       { id: "attendance", title: "Attendance and records in real time" },
       { id: "classes", title: "Classes, timetables and grades" },
@@ -79,9 +67,7 @@ export const productDetails: Record<AppId, ProductDetail> = {
     ],
   },
   iot: {
-    audience: "school",
     madeFor: "School operations and facilities teams",
-    media: "browser",
     features: [
       { id: "av", title: "Projectors, displays and sound" },
       { id: "climate", title: "Lighting and climate on the timetable" },
@@ -90,9 +76,7 @@ export const productDetails: Record<AppId, ProductDetail> = {
     ],
   },
   "ai-tutor": {
-    audience: "students",
     madeFor: "Students, with teachers alongside",
-    media: "browser",
     features: [
       { id: "diagnosis", title: "Skill-by-skill diagnosis" },
       { id: "hints", title: "Step-by-step hints once you have tried" },
