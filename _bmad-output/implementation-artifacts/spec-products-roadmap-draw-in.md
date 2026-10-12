@@ -2,9 +2,9 @@
 title: 'Products roadmap: draw-in animation and tests'
 type: 'feature'
 created: '2026-10-12'
-status: 'in-progress'
+status: 'in-review'
 route: 'dispatch'
-review_loop_iteration: 0
+review_loop_iteration: 1
 baseline_commit: '05715566d6b554837d9fd1ef04ee3cb6edd25e76'
 context:
   - '{project-root}/AGENTS.md'
@@ -32,6 +32,7 @@ context:
   - server HTML, no JS and reduced motion stay `static`, fully drawn;
   - a roadmap already 30% in view at load goes straight to `on`, with no replay;
   - otherwise it is `armed` until 30% visible, then `on`, once.
+  - **Phones** (decision, Sammy 2026-10-12, after the 30% rule got stuck on short screens): below 1100px each stop's bend, pin and card reveal as that stop scrolls in (25% of the stop), with short fixed delays; the roadmap stays `armed` while stops mark `data-in`.
 - **Armed state** (decision, Sammy 2026-10-12, after axe failed on dimmed text): waiting cards are wiped out of view with `clip-path` and offset, and wipe in from their side; pins pop by scale. No opacity on text, and never `display`/`visibility`/`opacity: 0` (`contrast.test.ts`). The road is masked. Everything stays fully visible without JS, under reduced motion and once revealed.
 - **Order:** the pins and cards appear in road order; each delay follows its position along the road.
 - **Reduced motion:** no movement at all (the global rule, plus `static`).
@@ -101,8 +102,8 @@ context:
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
 | Road | Scroll into view at 1280px | Mouse wheel, touch, keyboard | Road draws from Start to Finish | ~1.6s linear, so each pin pops as the road reaches it (pins and cards use `--ease-brand`) | Sammy 2026-10-12  | ✅ walk wide-400/1200/3000ms: road draws Start→Finish, pins pop as it reaches them |
-| Pins | Road reaches a pin | — | Pin pops in (scale and fade) | 300ms, delayed by road position | Sammy 2026-10-12  | ✅ walk screenshots; `road-map.test.tsx` delays in road order |
-| Cards | After its pin | — | Card slides in from its side (up for above, down for below) | 400ms after the pin | Sammy 2026-10-12  | ✅ walk: cards wipe in from their side (decision: wipe, not dim); 6 of 6 shown after; e2e scroll-in |
+| Pins | Road reaches a pin | — | Pin pops in (scale) | 300ms, delayed by road position | Sammy 2026-10-12  | ✅ walk screenshots; `road-map.test.tsx` delays in road order |
+| Cards | After its pin | — | Card wipes in from its side (up for above, down for below) with a 16px slide | 400ms wipe, starting 120ms after its pin | Sammy 2026-10-12  | ✅ walk: cards wipe in from their side (decision: wipe, not dim); 6 of 6 shown after; e2e scroll-in |
 | Already visible | Load with the roadmap in view | — | Shown complete, no replay | Instant | FlowReveal pattern  | ✅ walk: tall viewport at load → on; unit test |
 | Reduced motion | Load with reduced motion | — | Complete roadmap, nothing moves | Static | DESIGN.md:451  | ✅ walk: static, 6 of 6 shown; e2e reduced motion |
 | Narrow | 390px, scroll down | Touch | Bends, pins and cards reveal in order; no sideways scroll | Same timings | Spec  | ✅ walk 390: stops reveal as they scroll in; no sideways scroll; e2e 390 |
@@ -114,7 +115,30 @@ context:
 
 ## Spec Change Log
 
+- **Task 4 fix round 3 (2026-10-12).** Trigger: axe failed on dimmed (35%) waiting cards. Sammy decided: wipe, hidden until revealed. Amended: the Armed-state line and the Cards UX row. KEEP: static for no JS and reduced motion; the focused card is never clipped.
+- **Review (2026-10-12).** Trigger: the acceptance auditor found the phone reveal departs from the 30% phase rule. Sammy decided: per stop on phones. Amended: the Phases bullet. KEEP: one draw-in on wide screens.
+
 ## Review Triage Log
+
+| # | Finding | Verdict | Evidence / route |
+| --- | --- | --- | --- |
+| 1 | Partly visible (<30%) at hydration gets wiped then replays (edge) | medium | `useEffect` arms whenever under 30%; patch: any part in view → on |
+| 2 | First IO callback reveals below the threshold (edge) | medium | `isIntersecting` ignores the threshold; patch: check `intersectionRatio` |
+| 3 | Printing before scrolling prints an empty roadmap (edge) | medium | Armed clip and mask apply in print; patch: `@media print` shows all |
+| 4 | Layout switch replays the 1.6s draw (edge) | low | `showAll` sets `on`; patch: show at once |
+| 5 | No e2e that phone stops really appear, or that road and pins are painted (verification-gap) | medium | Only DOM counts at 390px; patch: e2e checks |
+| 6 | Stale "dimmed" comment; UX rows say fade / 400ms (blind, auditor) | low | Comment patched; UX rows corrected |
+| 7 | Phone reveal departs from the 30% rule (auditor) | medium | Sammy chose per stop; Phases bullet amended |
+| 8 | Frozen-intent wipe change approval (auditor) | — | Sammy answered in this session (AskUserQuestion, 2026-10-12); recorded in the Change Log |
+| 9 | Reduced motion toggled mid-visit still animates (edge) | false | The global `prefers-reduced-motion` rule sets `transition: none !important` live |
+| 10 | Pin delay by x share, not arc length (blind, auditor) | low | The auditor measured ≤ 20ms off; rejected |
+| 11 | No IntersectionObserver fallback (blind) | low | Every supported browser has IO; rejected |
+| 12 | Wide map taller than viewport/0.3 never reveals (edge) | low | Needs < 205px of viewport height on a ≥ 1100px-wide screen; rejected |
+| 13 | Duplicated FlowReveal phase logic (blind, task 4) | low | Possible Sonar CPD; deferred |
+| 14 | Faint seams where the phone bends join (walk) | low | Cosmetic; deferred |
+| 15 | AI log not updated (blind) | medium | Added in the bookkeeping |
+| 16 | Machine paths and evidence blobs; test stubs not restored; magic numbers (blind, minors) | low | Convention or polish; rejected |
+| 17 | Lock file consistency (security) | — | Controller grep: no three/motion entries; clean |
 
 ## Verification
 

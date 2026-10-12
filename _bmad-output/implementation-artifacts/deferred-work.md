@@ -394,3 +394,10 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-products-audience-flow.md`
   summary: Home `/` axe `color-contrast` on `.w-more-trigger` fails on the first cold load of a full a11y run and passes alone.
   evidence: Seen twice during the audience-flow build (Task 7); the home page is not touched by this change.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-products-roadmap-draw-in.md`
+  summary: Extract the shared reveal phase logic (FlowReveal and the roadmap draw-in) into one hook.
+  evidence: The roadmap's effect is a near copy of `flow-reveal.tsx`; the daily Sonar run may flag the duplication.
+- source_spec: `_bmad-output/implementation-artifacts/spec-products-roadmap-draw-in.md`
+  summary: Remove the faint light seams where the narrow roadmap bends join.
+  evidence: Seen in the 390px walk screenshots; cosmetic.
