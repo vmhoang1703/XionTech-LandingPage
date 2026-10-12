@@ -5312,12 +5312,11 @@
   taking no space, so it stays behind the content as you scroll; overflow:
   clip keeps it off the hero and the footer. Each blob floats on its own and,
   with scroll-driven animations, sweeps from side to side as you scroll, so
-  the colour moves with the reader (lead, 2026-10-12: stronger, more visible).
-  Amber carries the strength: it may reach 90%, while blue stays at 50%, the
-  most it can take. Muted text (#4a5b78) and the About numbers (#735500) stay
-  4.73:1 or more at the strongest point (blue alone); amber is painted over
-  blue, never under it. Small amber text (--color-amber-text) sits on cards
-  or navy only.
+  the colour moves with the reader. The colours stay soft (lead, 2026-10-12:
+  the stronger field was too strong): amber 32%, the warm blob 24%, blue 18%,
+  each fading out from its centre. Muted text (#4a5b78) and the About numbers
+  (#735500) stay 5.32:1 or more where all three meet. Small amber text
+  (--color-amber-text) sits on cards or navy only.
   Light section surfaces inside the scene turn see-through; navy ones stay.
   The page ends warm, amber behind the footer ridge (::after), and Home's
   Contact keeps its own warm surface with a see-through top. CSS only, so the
@@ -5399,7 +5398,7 @@
   right: -12vmax;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, var(--color-amber-light) 90%, transparent) 15%,
+    color-mix(in srgb, var(--color-amber-light) 32%, transparent),
     transparent
   );
 }
@@ -5409,7 +5408,7 @@
   left: -14vmax;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, #8fb6ef 50%, transparent) 15%,
+    color-mix(in srgb, #8fb6ef 18%, transparent),
     transparent
   );
   animation-duration: 20s;
@@ -5423,7 +5422,7 @@
   height: 40vmax;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, var(--color-amber-light) 70%, transparent) 15%,
+    color-mix(in srgb, var(--color-amber-light) 24%, transparent),
     transparent
   );
   animation-duration: 14s;
