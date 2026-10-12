@@ -145,9 +145,10 @@ function landHash(map: HTMLElement) {
 }
 
 // The smallest zoom the tour accepts. Below it (a wide but short window)
-// the 11.5px text floor would grow the cards past the window (measured:
-// 0.68 overflows at 1280x660, 0.73 fits at 1280x700). With the 96px header
-// room plus 16px, a window needs about 702px of height to tour.
+// the 11.5px text floor would grow the cards past the window (measured with
+// the earlier 104px margin: 0.68 overflowed, 0.73 fitted). With the 96px
+// header room plus 16px (STAGE_MARGIN), a window needs about 702px of height
+// to tour: 1280x700 stays static, 1280x720 tours.
 const MIN_ZOOM = 0.72;
 // The stage pins at --spacing-header-room (the 72px header pill plus its
 // 24px strip; the tour only runs above 1080px, where it is 96px) and keeps

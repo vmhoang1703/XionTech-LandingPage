@@ -484,7 +484,7 @@ describe("RoadMap scroll tour (wide)", () => {
   // 500px steps. `travel` is how far the page has scrolled past the pin.
   const STAGE = 700;
   const STEP = 500;
-  const PIN = 88;
+  const PIN = 96;
 
   function tourAt(travel: number) {
     vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
@@ -709,6 +709,17 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(roadmap(container).dataset.tour).toBeUndefined();
     expect(roadmap(container).dataset.reveal).toBe("static");
     expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(4);
+  });
+
+  it("needs about 702px of height: 700 stays static, 720 tours", () => {
+    vi.stubGlobal("innerHeight", 700);
+    tourAt(0);
+    const short = render(<RoadMap />);
+    expect(roadmap(short.container).dataset.tour).toBeUndefined();
+    short.unmount();
+    vi.stubGlobal("innerHeight", 720);
+    const tall = render(<RoadMap />);
+    expect(roadmap(tall.container).dataset.tour).toBe("on");
   });
 
   it("does not run under reduced motion: static, nothing selected", () => {
