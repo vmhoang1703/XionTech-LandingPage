@@ -404,7 +404,7 @@ describe("MobileMenu", () => {
   });
 
   describe("in the real site header", () => {
-    const home = () => screen.getByRole("link", { name: "XionTech home" });
+    const home = () => screen.getByRole("link", { name: "XionTechs home" });
     const menuCareers = () =>
       panel()?.querySelector('a[href="/careers"]') as HTMLElement;
 

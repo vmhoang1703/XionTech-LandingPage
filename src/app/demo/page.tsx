@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { HeroArt } from "@/components/sections/hero-art";
-import { offices } from "@/content/offices";
+import { offices, otherLocations } from "@/content/offices";
 
 export const metadata: Metadata = {
   title: CONTACT_STRINGS.metaTitle,
@@ -67,6 +67,7 @@ export default function DemoPage() {
                 ))}
               </address>
             ))}
+            <p className="office-more">{otherLocations}</p>
           </fieldset>
         </div>
         <div id="form" className="form-card">

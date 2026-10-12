@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test(
-  "careers page responds 200 with its H1, Inside XionTech and the open roles",
+  "careers page responds 200 with its H1, Inside XionTechs and the open roles",
   { tag: "@smoke" },
   async ({ request }) => {
     const response = await request.get("/careers");

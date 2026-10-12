@@ -21,7 +21,7 @@ afterEach(() => {
 
 describe("AboutPage", () => {
   it("has its own title and description", () => {
-    expect(metadata.title).toBe("About XionTech | Get IT Done");
+    expect(metadata.title).toBe("About XionTechs | Get IT Done");
     expect(String(metadata.description)).toContain("Plano");
   });
 
@@ -34,7 +34,7 @@ describe("AboutPage", () => {
     expect(h1s).toHaveLength(1);
     expect(h1s[0].id).toBe("about-h1");
     expect(h1s[0].textContent).toBe(
-      "We’re XionTech,technology built with ownership.",
+      "We’re XionTechs,technology built with ownership.",
     );
     expect(h1s[0].querySelector("br")).not.toBeNull();
     expect(h1s[0].querySelector(".ah-accent")?.textContent).toBe("ownership");
@@ -149,7 +149,7 @@ describe("AboutPage", () => {
       expect(item.querySelector(":scope > summary")?.textContent).toBeTruthy();
     }
     expect(items[0].querySelector("summary")?.textContent).toBe(
-      "What does XionTech do?",
+      "What does XionTechs do?",
     );
     const security = items.find(
       (item) =>
@@ -182,7 +182,7 @@ describe("AboutPage", () => {
     const section = container.querySelector("section#offices");
     const h2 = screen.getByRole("heading", {
       level: 2,
-      name: "Two offices, serving the world.",
+      name: "Two headquarters, four locations.",
     });
     expect(section?.getAttribute("aria-labelledby")).toBe(h2.id);
     const cards = Array.from(
@@ -258,10 +258,18 @@ describe("AboutPage", () => {
     );
   });
 
-  it("never writes the brand as XionTechs", () => {
+  it("writes the brand as XionTechs, never XionTech (lead, 2026-10-12)", () => {
     const html = renderToString(<AboutPage />);
 
-    expect(html).not.toContain("XionTechs");
+    expect(html).toContain("XionTechs");
+    expect(html).not.toMatch(/XionTech(?!s)/);
+  });
+
+  it("names the two headquarters and the other two locations", () => {
+    const html = renderToString(<AboutPage />);
+
+    expect(html).toContain("Two headquarters, four locations.");
+    expect(html).toContain("Also in Ha Noi and Da Nang.");
   });
 
   it("defines every class it uses in globals.css", () => {

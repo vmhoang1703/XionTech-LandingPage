@@ -67,7 +67,7 @@ describe("NotFound page", () => {
   });
 
   it("sets the Not found title and keeps the page out of search results", () => {
-    expect(metadata.title).toBe("Page not found | XionTech");
+    expect(metadata.title).toBe("Page not found | XionTechs");
     expect(metadata.robots).toEqual({ index: false });
   });
 

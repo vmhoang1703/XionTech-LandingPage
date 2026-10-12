@@ -9,7 +9,7 @@ test(
 
     expect(response.status()).toBe(200);
     expect(html).toContain(
-      "<title>Software Outsourcing Vietnam | Product Engineering, AI, Low-code &amp; Cloud | XionTech</title>",
+      "<title>Software Outsourcing Vietnam | Product Engineering, AI, Low-code &amp; Cloud | XionTechs</title>",
     );
     // H1 is present in server-rendered HTML
     expect(html).toContain("Software teams that");

@@ -79,10 +79,10 @@ describe("HomeValues", () => {
     expect(undefinedClasses(container)).toEqual([]);
   });
 
-  it("never writes the brand as XionTechs", () => {
+  it("never writes the brand as XionTech without the s (lead, 2026-10-12)", () => {
     const { container } = render(<HomeValues />);
 
-    expect(container.textContent).not.toContain("XionTechs");
-    expect(JSON.stringify(homeValuesHeading)).not.toContain("XionTechs");
+    expect(container.textContent).not.toMatch(/XionTech(?!s)/);
+    expect(JSON.stringify(homeValuesHeading)).not.toMatch(/XionTech(?!s)/);
   });
 });

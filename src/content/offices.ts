@@ -59,6 +59,10 @@ export const hcmc: Office = {
 
 export const offices: Office[] = [plano, hcmc];
 
+// The two headquarters above have full cards; the other two locations are
+// named only, as their addresses are not published (lead, 2026-10-12).
+export const otherLocations = "Also in Ha Noi and Da Nang.";
+
 // Footer and About views (prototype order and wording): delivery-center names
 // and bracketed phone numbers. `offices` above stays as Demo and Home read it.
 export type FooterOffice = Pick<Office, "id" | "name" | "addressLines"> & {

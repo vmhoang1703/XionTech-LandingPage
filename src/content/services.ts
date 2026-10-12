@@ -4,7 +4,7 @@ import { processFlow, type ProcessFlowContent } from "@/content/process";
 
 export const servicesMeta = {
   title:
-    "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech",
+    "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs",
   description:
     "Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones.",
 };

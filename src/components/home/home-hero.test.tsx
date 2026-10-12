@@ -93,7 +93,7 @@ describe("HomeHero", () => {
       "24/7Global coverage across time zones",
       "20+Technology stacks we work in",
       "8Service offerings, from idea to operation",
-      "2Offices: Ho Chi Minh City and Plano",
+      "4Locations: HQs in Plano and Ho Chi Minh City",
     ]);
   });
 
