@@ -5,18 +5,24 @@ import { dayRoad } from "@/content/products";
 import { globalsCss } from "@/test-utils/css-classes";
 import { RoadMap } from "./road-map";
 
-let intersect: (visible: boolean) => void = () => undefined;
+let intersect: (visible: boolean, target?: Element) => void = () => undefined;
 let observedThreshold: number | number[] | undefined;
+let observed: Element[] = [];
 const disconnect = vi.fn();
 let reducedMotion = false;
+let narrow = false;
 
 beforeEach(() => {
   reducedMotion = false;
+  narrow = false;
   observedThreshold = undefined;
+  observed = [];
   disconnect.mockClear();
   vi.stubGlobal(
     "matchMedia",
-    vi.fn(() => ({ matches: reducedMotion })),
+    vi.fn((query: string) => ({
+      matches: query.includes("reduce") ? reducedMotion : narrow,
+    })),
   );
   vi.stubGlobal(
     "IntersectionObserver",
@@ -26,13 +32,18 @@ beforeEach(() => {
         options?: IntersectionObserverInit,
       ) {
         observedThreshold = options?.threshold;
-        intersect = (visible) =>
+        intersect = (visible, target = observed[0]) =>
           callback(
-            [{ isIntersecting: visible } as IntersectionObserverEntry],
+            [{ isIntersecting: visible, target } as IntersectionObserverEntry],
             this as unknown as IntersectionObserver,
           );
       }
-      observe() {}
+      observe(target: Element) {
+        observed.push(target);
+      }
+      unobserve(target: Element) {
+        observed = observed.filter((el) => el !== target);
+      }
       disconnect = disconnect;
     },
   );
@@ -61,6 +72,25 @@ function mapAt(top: number, bottom: number) {
     height: bottom - top,
   } as DOMRect);
   vi.stubGlobal("innerHeight", 900);
+}
+
+// Narrow layout: the first stop is in view, the others below the fold.
+function stopsAt() {
+  vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
+    function (this: HTMLElement) {
+      const first = this.matches(".rm-stop[data-first]");
+      return (
+        first
+          ? { top: 100, bottom: 400, height: 300 }
+          : { top: 1000, bottom: 1300, height: 300 }
+      ) as DOMRect;
+    },
+  );
+  vi.stubGlobal("innerHeight", 844);
+}
+
+function stops(container: HTMLElement) {
+  return Array.from(container.querySelectorAll<HTMLElement>(".rm-stop"));
 }
 
 function roadmap(container: HTMLElement) {
@@ -121,6 +151,40 @@ describe("RoadMap draw-in", () => {
     expect(disconnect).toHaveBeenCalled();
   });
 
+  it("on narrow screens, reveals each stop as it reaches view", () => {
+    narrow = true;
+    stopsAt();
+    const { container } = render(<RoadMap />);
+    const [first, second, third] = stops(container);
+
+    expect(roadmap(container).dataset.reveal).toBe("armed");
+    expect(observedThreshold).toBe(0.25);
+    // The stop already in view at load is shown, not observed.
+    expect(first.dataset.in).toBe("true");
+    expect(observed).not.toContain(first);
+    expect(observed).toHaveLength(dayRoad.stops.length - 1);
+    expect(second.dataset.in).toBeUndefined();
+
+    act(() => intersect(false, second));
+    expect(second.dataset.in).toBeUndefined();
+
+    act(() => intersect(true, second));
+    expect(second.dataset.in).toBe("true");
+    expect(third.dataset.in).toBeUndefined();
+    expect(observed).not.toContain(second);
+
+    act(() => intersect(true, second));
+    expect(stops(container).filter((li) => li.dataset.in)).toHaveLength(2);
+  });
+
+  it("on narrow screens, disconnects on unmount", () => {
+    narrow = true;
+    stopsAt();
+    const { unmount } = render(<RoadMap />);
+    unmount();
+    expect(disconnect).toHaveBeenCalled();
+  });
+
   it("draws the wide road through a uniquely named mask", () => {
     const { container } = render(
       <>
@@ -138,6 +202,12 @@ describe("RoadMap draw-in", () => {
     expect(road?.closest("g")?.getAttribute("mask")).toBe(
       `url(#${masks[0].id})`,
     );
+    // The region reaches past the drawing so the road ends are not cut.
+    expect(Number(masks[0].getAttribute("x"))).toBeLessThan(-20);
+    expect(
+      Number(masks[0].getAttribute("x")) +
+        Number(masks[0].getAttribute("width")),
+    ).toBeGreaterThan(1420);
   });
 
   it("delays each stop by its place along the road", () => {
@@ -173,7 +243,7 @@ describe("RoadMap draw-in", () => {
     }
   });
 
-  it("dims and masks only under armed, and transitions only under on", () => {
+  it("dims and masks only under armed, and transitions only once shown", () => {
     const rules = roadmapRules();
     const hiding = rules.filter(({ body }) =>
       /opacity:|stroke-dashoffset: 1|clip-path: inset\([^;]*100%|(?<![\w-])(?:transform|scale):/.test(
@@ -186,9 +256,22 @@ describe("RoadMap draw-in", () => {
     expect(armed.length).toBeGreaterThanOrEqual(4);
     for (const { selector, body } of hiding) {
       if (selector.includes('[data-reveal="armed"]')) continue;
+      if (selector.includes(":has(.rm-open:focus-visible)")) continue;
       // Outside armed, only the decorative hills set an opacity.
       expect(`${selector} {${body}}`).toMatch(/^\.rm-hill/);
     }
+    // A stop that has scrolled in (narrow) is never dimmed again.
+    for (const { selector } of armed.filter(({ selector }) =>
+      /\.rm-(pin|card|seg)$/.test(selector),
+    )) {
+      expect(selector).toContain(":not([data-in])");
+    }
+    // A focused card shows its focus ring at full strength, even armed.
+    const focused = rules.find(({ selector }) =>
+      selector.includes(".rm-stop:has(.rm-open:focus-visible) .rm-card"),
+    );
+    expect(focused?.body).toMatch(/opacity: 1;/);
+    expect(focused?.body).toMatch(/transform: none;/);
     const dims = armed.flatMap(({ body }) =>
       Array.from(body.matchAll(/opacity:\s*([\d.]+)/g), (m) => Number(m[1])),
     );
@@ -197,7 +280,7 @@ describe("RoadMap draw-in", () => {
     const moving = rules.filter(({ body }) => /transition/.test(body));
     expect(moving.length).toBeGreaterThanOrEqual(4);
     for (const { selector } of moving) {
-      expect(selector).toContain('[data-reveal="on"]');
+      expect(selector).toMatch(/\[data-reveal="on"\]|\[data-in\]/);
     }
     const delayed = rules.filter(({ body }) => /var\(--delay\)/.test(body));
     expect(delayed.length).toBeGreaterThan(0);

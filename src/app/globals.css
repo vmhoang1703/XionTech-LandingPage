@@ -3775,14 +3775,16 @@
     }
   }
 
-  /* Roadmap draw-in. The road draws Start to Finish through a mask, each
-     pin pops in as the road reaches it (--delay) and its card follows. Only
-     "armed" dims and masks; only "on" moves. "static" (no JavaScript,
-     reduced motion) leaves everything as drawn above. */
+  /* Roadmap draw-in. Wide: the road draws Start to Finish through a mask,
+     each pin pops in as the road reaches it (--delay) and its card follows.
+     Narrow: each stop reveals on its own as it scrolls in ([data-in]). Only
+     "armed" dims and masks; only "on" or [data-in] moves. "static" (no
+     JavaScript, reduced motion) leaves everything as drawn above. */
   .rm-draw {
     fill: none;
     stroke: var(--color-white);
     stroke-width: 80;
+    stroke-linecap: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 0;
   }
@@ -3791,49 +3793,70 @@
     stroke-dashoffset: 1;
   }
 
-  .rm[data-reveal="armed"] .rm-pin {
+  .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-pin {
     opacity: 0.35;
     scale: 0.6;
   }
 
-  .rm[data-reveal="armed"] .rm-card {
+  .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-card {
     opacity: 0.35;
     transform: translateY(16px);
   }
 
-  .rm[data-reveal="armed"] .rm-stop[data-side="below"] .rm-card {
+  .rm[data-reveal="armed"] .rm-stop[data-side="below"]:not([data-in]) .rm-card {
     transform: translateY(-16px);
+  }
+
+  /* A focused card keeps its focus ring at full strength. */
+  .rm[data-reveal] .rm-stop:has(.rm-open:focus-visible) .rm-card {
+    opacity: 1;
+    transform: none;
   }
 
   .rm[data-reveal="on"] .rm-draw {
     transition: stroke-dashoffset var(--road) linear;
   }
 
-  .rm[data-reveal="on"] .rm-pin {
+  .rm[data-reveal="on"] .rm-pin,
+  .rm-stop[data-in] .rm-pin {
     transition:
       opacity var(--transition-duration-menu) var(--ease-brand),
       scale var(--transition-duration-menu) var(--ease-brand);
+  }
+
+  .rm[data-reveal="on"] .rm-card,
+  .rm-stop[data-in] .rm-card {
+    transition:
+      opacity 400ms var(--ease-brand),
+      transform 400ms var(--ease-brand);
+  }
+
+  .rm[data-reveal="on"] .rm-pin {
     transition-delay: var(--delay);
   }
 
   .rm[data-reveal="on"] .rm-card {
-    transition:
-      opacity 400ms var(--ease-brand),
-      transform 400ms var(--ease-brand);
     transition-delay: calc(var(--delay) + 120ms);
   }
 
-  /* Narrow: each bend draws top to bottom, reaching its pin at --delay. The
-     clip reaches past the box so the stroke ends are not cut. */
+  .rm-stop[data-in] .rm-pin {
+    transition-delay: 80ms;
+  }
+
+  .rm-stop[data-in] .rm-card {
+    transition-delay: 200ms;
+  }
+
+  /* Narrow: each bend draws top to bottom as its stop scrolls in. The clip
+     reaches past the box so the stroke ends are not cut. */
   @media (width < 1100px) {
-    .rm[data-reveal="armed"] .rm-seg {
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-seg {
       clip-path: inset(-20px -40px calc(100% + 20px) -40px);
     }
 
-    .rm[data-reveal="on"] .rm-seg {
+    .rm-stop[data-in] .rm-seg {
       clip-path: inset(-20px -40px);
       transition: clip-path 300ms linear;
-      transition-delay: calc(var(--delay) - 150ms);
     }
   }
 

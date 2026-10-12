@@ -27,12 +27,48 @@ type Phase = "static" | "armed" | "on";
 const REVEAL_AT = 0.3;
 const ROAD_SECONDS = 1.6;
 
+// Narrow screens stack the stops down a tall list that may never be 30% in
+// view (landscape phone, zoom), so each stop reveals on its own when a
+// quarter of it is in view.
+const NARROW = "(width < 1100px)";
+const STOP_AT = 0.25;
+
+// The share of an element inside the window, 0 to 1.
+function seenShare(el: Element) {
+  const { top, bottom, height } = el.getBoundingClientRect();
+  const seen = Math.min(bottom, window.innerHeight) - Math.max(top, 0);
+  return height > 0 ? seen / height : 0;
+}
+
+// Marks each stop shown once it is in view; stops already in view at load
+// are shown at once. Returns the cleanup.
+function revealStops(map: HTMLElement, show: (index: number) => void) {
+  const stops = Array.from(map.querySelectorAll(".rm-stop"));
+  const observer = new IntersectionObserver(
+    (entries, self) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        show(stops.indexOf(entry.target));
+        self.unobserve(entry.target);
+      }
+    },
+    { threshold: STOP_AT },
+  );
+  for (const [i, stop] of stops.entries()) {
+    if (seenShare(stop) >= STOP_AT) show(i);
+    else observer.observe(stop);
+  }
+  return () => observer.disconnect();
+}
+
 const STOPS = dayRoad.stops;
 const LAST = STOPS.length - 1;
 
 // The wide road's drawing space and its stops (peaks and troughs).
 const W = 1400;
 const H = 820;
+// The road runs past the drawing at both ends; the mask must reach it.
+const PAD = 100;
 const START = { x: -20, y: 430 };
 const FINISH = { x: 1420, y: 420 };
 const POINTS = STOPS.map((_, i) => ({
@@ -93,19 +129,24 @@ export function RoadMap() {
   const [open, setOpen] = useState<number | null>(null);
   const [phase, setPhase] = useState<Phase>("static");
   const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
   const mask = useId();
 
   useEffect(() => {
     const map = ref.current;
     if (!map || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const narrow = matchMedia(NARROW).matches;
     // Already 30% on screen at load: show it as is (no hide, no replay).
-    const { top, bottom, height } = map.getBoundingClientRect();
-    const seen = Math.min(bottom, window.innerHeight) - Math.max(top, 0);
-    if (height > 0 && seen >= REVEAL_AT * height) {
+    if (!narrow && seenShare(map) >= REVEAL_AT) {
       setPhase("on");
       return;
     }
     setPhase("armed");
+    if (narrow) {
+      return revealStops(map, (i) =>
+        setShown((prev) => (prev.has(i) ? prev : new Set(prev).add(i))),
+      );
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;
@@ -136,10 +177,10 @@ export function RoadMap() {
           <mask
             id={mask}
             maskUnits="userSpaceOnUse"
-            x="0"
-            y="0"
-            width={W}
-            height={H}
+            x={-PAD}
+            y={-PAD}
+            width={W + 2 * PAD}
+            height={H + 2 * PAD}
           >
             <path className="rm-draw" d={ROAD} pathLength="1" />
           </mask>
@@ -181,6 +222,7 @@ export function RoadMap() {
             key={stop.id}
             stop={stop}
             index={i}
+            shown={shown.has(i)}
             onOpen={() => setOpen(i)}
           />
         ))}
@@ -203,8 +245,14 @@ export function RoadMap() {
 function RoadCard({
   stop,
   index,
+  shown,
   onOpen,
-}: Readonly<{ stop: RoadStop; index: number; onOpen: () => void }>) {
+}: Readonly<{
+  stop: RoadStop;
+  index: number;
+  shown: boolean;
+  onOpen: () => void;
+}>) {
   const app = stop.app ? appById(stop.app) : null;
   const everyone = journeyBoard.laneOf[stop.id] === "all";
   const point = POINTS[index];
@@ -222,6 +270,7 @@ function RoadCard({
       data-first={index === 0 ? "true" : undefined}
       data-last={index === LAST ? "true" : undefined}
       data-everyone={everyone ? "true" : undefined}
+      data-in={shown ? "true" : undefined}
       style={place}
     >
       {/* The narrow road: one bend per stop, drawn beside the card. */}
