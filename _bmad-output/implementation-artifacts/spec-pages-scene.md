@@ -27,6 +27,13 @@ The AI's own review of round 1: the field was too faint, the page ends did not m
 - Services: the panel comes back, see-through (light blue 75% fading to 30%), so the field glows through it.
 - Not changed: the heroes (still all different). A shared hero system would replace Amber's designs; left as a question for the lead.
 
+## Round 3 (lead, 2026-10-12: "we need to make color more weak than current")
+
+The lead chose "C: soft" from three strengths shown side by side (now, about 60%, about 35%), and kept the yellow end above the footer and the sun as they are.
+
+- Softer field: amber 32%, the warm blob in amber-light 24%, blue 18%, each fading out from its centre (no full-colour core). Blob places, sizes and movement do not change.
+- Lowest contrast for text on the field: 5.32:1 (muted #4a5b78 and the About numbers #735500 where all three blobs meet). The warm end (4.96:1) is not changed.
+
 ## UX checks
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
@@ -39,8 +46,8 @@ The AI's own review of round 1: the field was too faint, the page ends did not m
 | Home | Whole page | Any | Unchanged (height 7,151px desktop) | n/a | PR #98 | Yes |
 | All pages | Reduced motion, saved Pause, no JavaScript | OS setting, hero Pause, browser setting | Field still; colours stay; CSS only | None | NFR-2 | Yes (global reset; unit tests) |
 | All pages | Load, scroll | Any | Layout shift 0; no sideways scroll | n/a | PRODUCT.md | Yes (0.0000 on 6 pages, 2 widths) |
-| Colour field (round 2) | Scroll | Wheel, touch, keyboard | Amber and blue clearly visible, sweeping side to side | Linked to scroll | Lead (round 2) | Yes (scroll videos; screenshots 1440 and 390) |
+| Colour field (round 3) | Scroll | Wheel, touch, keyboard | Amber and blue soft but visible, sweeping side to side | Linked to scroll | Lead (round 3) | Yes (scroll videos; screenshots 1440 and 390) |
 | Footer sun | Scroll to the end | Any | A sun rises behind the ridge peak, on every page; never over text | Linked to scroll | Lead (round 2) | Yes (screenshots; ridge e2e test) |
 | Products end | End of the page | Any | Rounded navy demo panel, then the warm end and the sun | n/a | Lead (round 2) | Yes (screenshot) |
 | Services panel | Below the hero | Any | Light-blue rounded panel, see-through to the field | n/a | E-S2, round 2 | Yes (screenshot) |
-| Text on the stronger field | Any | Any | 4.5:1 or more; lowest 4.73:1 | n/a | WCAG 2.2 AA | Yes (computed; axe at rest) |
+| Text on the field | Any | Any | 4.5:1 or more; lowest 5.32:1 on the field, 4.96:1 on the warm end | n/a | WCAG 2.2 AA | Yes (computed; axe at rest) |

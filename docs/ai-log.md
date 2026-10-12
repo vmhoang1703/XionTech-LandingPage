@@ -1563,3 +1563,11 @@ Template:
   - Left the heroes alone: a shared hero system would replace Amber's designs, so it is a question for the lead.
 - **Decision / result:** Browser check at 1440px and 390px on six pages: layout shift 0 (one run showed 0.0038 on About at 390px; a re-run gave 0), no sideways scroll, Home height unchanged. Smoke and a11y 56/56, axe included.
 - **AI got it wrong?** Yes, caught in screenshots before the lead saw them: the first sun was drawn in front of the ridge, not behind it (an absolutely positioned box paints over a non-positioned SVG; the SVG is now positioned), and it then sat too low, so only a thin edge showed above the peak.
+
+## 2026-10-12 — The page colours made softer
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "we need to make color more weak than current. The cussrent I see it is strong."
+- **What the AI did:** Showed three strengths side by side on the real build before changing code (now, about 60%, about 35%), at the same spots on Home and Services. Asked separately about the yellow end above the footer, because on Home it is the prototype's own Contact colour.
+- **Decision / result:** The lead chose the softest (amber 32%, warm 24%, blue 18%) and kept the yellow end and the sun. Text contrast on the field rises from 4.73:1 to 5.32:1 at the lowest point.
+- **AI got it wrong?** Yes: in round 2 it made the field much stronger on its own judgement ("too faint"), and the lead found it too strong after the merge. The colour strength is the lead's call; show it first.
