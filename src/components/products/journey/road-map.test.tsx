@@ -78,6 +78,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  vi.useRealTimers();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -158,19 +159,33 @@ describe("RoadMap draw-in", () => {
     expect(disconnect).toHaveBeenCalled();
   });
 
-  it("goes straight to on when already 30% in view at load", () => {
-    mapAt(100, 800);
-    const { container } = render(<RoadMap />);
-    expect(roadmap(container).dataset.reveal).toBe("on");
-    expect(observedThreshold).toBeUndefined();
-  });
-
-  it("goes straight to on when any part is in view at load, so nothing seen is wiped", () => {
+  it.each([
+    ["fully", 100, 800],
     // 50px of an 800px roadmap above the fold.
-    mapAt(850, 1650);
-    const { container } = render(<RoadMap />);
-    expect(roadmap(container).dataset.reveal).toBe("on");
-    expect(observedThreshold).toBeUndefined();
+    ["partly", 850, 1650],
+  ])(
+    "plays about 300ms after load when %s in view at load",
+    (_, top, bottom) => {
+      vi.useFakeTimers();
+      mapAt(top, bottom);
+      const { container } = render(<RoadMap />);
+      expect(roadmap(container).dataset.reveal).toBe("armed");
+      expect(observedThreshold).toBeUndefined();
+
+      act(() => vi.advanceTimersByTime(299));
+      expect(roadmap(container).dataset.reveal).toBe("armed");
+      act(() => vi.advanceTimersByTime(1));
+      expect(roadmap(container).dataset.reveal).toBe("on");
+    },
+  );
+
+  it("clears the load timer when unmounted before it plays", () => {
+    vi.useFakeTimers();
+    mapAt(100, 800);
+    const { unmount } = render(<RoadMap />);
+    expect(vi.getTimerCount()).toBe(1);
+    unmount();
+    expect(vi.getTimerCount()).toBe(0);
   });
 
   it("disconnects when unmounted before it is seen", () => {
@@ -181,6 +196,7 @@ describe("RoadMap draw-in", () => {
   });
 
   it("on narrow screens, reveals each stop as it reaches view", () => {
+    vi.useFakeTimers();
     narrow = true;
     stopsAt();
     const { container } = render(<RoadMap />);
@@ -188,7 +204,11 @@ describe("RoadMap draw-in", () => {
 
     expect(roadmap(container).dataset.reveal).toBe("armed");
     expect(observedThreshold).toBe(0.25);
-    // Stops already in view at load, even partly, are shown, not observed.
+    // Stops in view at load, even partly, play about 300ms after load and
+    // are not observed.
+    expect(first.dataset.in).toBeUndefined();
+    expect(second.dataset.in).toBeUndefined();
+    act(() => vi.advanceTimersByTime(300));
     expect(first.dataset.in).toBe("true");
     expect(second.dataset.in).toBe("true");
     expect(observed).not.toContain(first);

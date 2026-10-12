@@ -16,16 +16,18 @@ import { RoadStopDialog } from "../roadmap/road-stop-dialog";
 // across the section with the cards above and below its bends; narrow
 // screens wind the road down the left of the cards.
 //
-// The draw-in follows FlowReveal: server HTML and reduced motion stay
-// "static" (fully drawn); a roadmap any part of which is in view at load goes
-// straight to "on"; otherwise it is "armed" (cards wiped by clip-path, pins
-// scaled to 0, road masked) until 30% visible, then "on", once. The road
-// draws at a steady pace, so each stop's delay is the road's duration times
-// its share of the route.
+// The draw-in: server HTML and reduced motion stay "static" (fully drawn).
+// Otherwise the roadmap is "armed" (cards wiped by clip-path, pins scaled to
+// 0, road masked), then plays once ("on"): about 300ms after load when any
+// part of it is in view at load (most desktops), else when 30% visible. The
+// road draws at a steady pace, so each stop's delay is the road's duration
+// times its share of the route.
 
 type Phase = "static" | "armed" | "on";
 
 const REVEAL_AT = 0.3;
+// In view at load: play after this pause, so the draw-in is seen.
+const PLAY_AFTER_MS = 300;
 const ROAD_SECONDS = 1.6;
 
 // Narrow screens stack the stops down a tall list that may never be 30% in
@@ -43,8 +45,13 @@ function seenShare(el: Element) {
   return height > 0 ? seen / height : 0;
 }
 
-// Calls `show` once 30% of the roadmap is in view. Returns the cleanup.
+// Calls `show` shortly after load when the roadmap is in view, else once 30%
+// of it is in view. Returns the cleanup.
 function revealMap(map: HTMLElement, show: () => void) {
+  if (seenShare(map) > 0) {
+    const timer = setTimeout(show, PLAY_AFTER_MS);
+    return () => clearTimeout(timer);
+  }
   const observer = new IntersectionObserver(
     (entries) => {
       const [entry] = entries;
@@ -62,7 +69,7 @@ function revealMap(map: HTMLElement, show: () => void) {
 }
 
 // Marks each stop shown once it is in view; stops already in view at load
-// are shown at once. Returns the cleanup.
+// play shortly after load. Returns the cleanup.
 function revealStops(map: HTMLElement, show: (index: number) => void) {
   const stops = Array.from(map.querySelectorAll(".rm-stop"));
   const observer = new IntersectionObserver(
@@ -76,12 +83,18 @@ function revealStops(map: HTMLElement, show: (index: number) => void) {
     },
     { threshold: STOP_AT },
   );
+  const inView: number[] = [];
   for (const [i, stop] of stops.entries()) {
-    // Partly on screen at load: show it as is (no wipe, no replay).
-    if (seenShare(stop) > 0) show(i);
+    if (seenShare(stop) > 0) inView.push(i);
     else observer.observe(stop);
   }
-  return () => observer.disconnect();
+  const timer = setTimeout(() => {
+    for (const i of inView) show(i);
+  }, PLAY_AFTER_MS);
+  return () => {
+    clearTimeout(timer);
+    observer.disconnect();
+  };
 }
 
 const STOPS = dayRoad.stops;
@@ -160,11 +173,6 @@ export function RoadMap() {
     if (!map || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const layout = matchMedia(NARROW);
     const narrow = layout.matches;
-    // Any part already on screen at load: show it as is (no wipe, no replay).
-    if (!narrow && seenShare(map) > 0) {
-      setPhase("on");
-      return;
-    }
     setPhase("armed");
     const stop = narrow
       ? revealStops(map, (i) =>

@@ -84,6 +84,19 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     }
   };
 
+  // The draw-in has played: road drawn, every pin popped, every card open.
+  const expectPlayed = async (page: Page) => {
+    await expect(roadmap(page)).toHaveAttribute("data-reveal", "on");
+    await expect(roadmap(page).locator(".rm-draw")).toHaveCSS(
+      "stroke-dashoffset",
+      "0px",
+    );
+    for (const pin of await roadmap(page).locator(".rm-pin").all()) {
+      await expect(pin).toHaveCSS("scale", /^(1|none)$/);
+    }
+    await expectOpen(page);
+  };
+
   test("the roadmap shows the H1 and six cards", async ({ page }) => {
     await page.goto("/products");
     await expect(page.locator("h1")).toHaveCount(1);
@@ -110,15 +123,38 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       el.scrollIntoView({ block: "center", behavior: "instant" }),
     );
 
-    await expect(roadmap(page)).toHaveAttribute("data-reveal", "on");
-    await expect(roadmap(page).locator(".rm-draw")).toHaveCSS(
-      "stroke-dashoffset",
-      "0px",
-    );
-    for (const pin of await roadmap(page).locator(".rm-pin").all()) {
-      await expect(pin).toHaveCSS("scale", /^(1|none)$/);
-    }
-    await expectOpen(page);
+    await expectPlayed(page);
+  });
+
+  test.describe("desktop", () => {
+    test.use({ viewport: { width: 1280, height: 900 } });
+
+    test("a roadmap in view at load plays without a scroll", async ({
+      page,
+    }) => {
+      // The road's draw transition only runs if it played, not if it was
+      // shown as is.
+      await page.addInitScript(() => {
+        Object.assign(window, { roadDrawn: false });
+        document.addEventListener(
+          "transitionend",
+          (event) => {
+            if (event.propertyName === "stroke-dashoffset") {
+              Object.assign(window, { roadDrawn: true });
+            }
+          },
+          true,
+        );
+      });
+      await page.goto("/products");
+      await expect(cards(page).first()).toBeInViewport();
+      await expect
+        .poll(() =>
+          page.evaluate(() => "roadDrawn" in window && window.roadDrawn),
+        )
+        .toBe(true);
+      await expectPlayed(page);
+    });
   });
 
   test.describe("phone", () => {
