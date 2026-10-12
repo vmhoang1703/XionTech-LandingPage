@@ -1551,3 +1551,15 @@ Template:
   - Removed the per-page gradients it replaces (`.svc-flow`, the Services panel, `.careers-flow`, `.news-flow`); each light hero now ends in the page colour.
 - **Decision / result:** Browser check at 1440px and 390px on Home and the five pages: layout shift 0, no sideways scroll, no hidden reveals, Home height unchanged (7,151px). The lead did not answer the navy question, so About, Careers and News stay light.
 - **AI got it wrong?** Yes, in the preview, before the lead saw it: the scene's fade-in covered the News heading (it sits inside the scene), and the field dropped the warm amber ending that Careers had. Both were fixed in the preview and in the build. The build spec was written after the code; the preview stood in for it.
+
+## 2026-10-12 — The AI reviews its own page backgrounds and makes them stronger
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "Can you review by yourself and give me the feeling?", then "continue to review and enhance the design which you feel not good".
+- **What the AI did:**
+  - Gave an honest review of its own PR #99: consistent but calm, not "wow"; the colour too faint; page ends not matching (Products navy, others warm); an empty amber band above the footer; Services flatter without its panel; heroes all different.
+  - Computed the contrast budget before changing colour: amber can reach 90–100% and stay above 4.9:1 for muted text, blue only about 50%, so amber carries the strength. Lowest now 4.73:1.
+  - Made the field stronger and made it sweep side to side as you scroll; added a sun that rises behind the footer ridge's peak on every page, tying the ending to the mountain story on About; turned the Products navy band into an inset panel so it ends warm too; brought back the Services panel, see-through.
+  - Left the heroes alone: a shared hero system would replace Amber's designs, so it is a question for the lead.
+- **Decision / result:** Browser check at 1440px and 390px on six pages: layout shift 0 (one run showed 0.0038 on About at 390px; a re-run gave 0), no sideways scroll, Home height unchanged. Smoke and a11y 56/56, axe included.
+- **AI got it wrong?** Yes, caught in screenshots before the lead saw them: the first sun was drawn in front of the ridge, not behind it (an absolutely positioned box paints over a non-positioned SVG; the SVG is now positioned), and it then sat too low, so only a thin edge showed above the peak.
