@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   Box3,
+  type DirectionalLight,
   type InstancedMesh,
+  type Material,
   Matrix4,
   type Mesh,
   type Object3D,
@@ -105,9 +107,7 @@ describe("buildJourney", () => {
       flat(instanceAt(dots, i)).distanceTo(hub),
     );
     expect(dots.count).toBeGreaterThanOrEqual(ids.length);
-    // Outwards, except a dot that wrapped back to the hub this tick.
-    const outwards = after.filter((d, i) => d > before[i]);
-    expect(outwards.length).toBeGreaterThanOrEqual(dots.count - ids.length);
+    after.forEach((d, i) => expect(d).toBeGreaterThan(before[i]));
   });
 
   it("ignores a tick of zero or less", () => {
@@ -117,6 +117,12 @@ describe("buildJourney", () => {
     tick(0);
     tick(-50);
     expect(instanceAt(dots, 0).distanceTo(before)).toBe(0);
+  });
+
+  it("holds every island and the hub at the same height at rest", () => {
+    const { hub, islands } = buildJourney();
+    expect(hub.position.y).toBe(0);
+    for (const id of ids) expect(islands[id].position.y).toBe(0);
   });
 
   it("bobs the islands as time runs", () => {
@@ -141,6 +147,19 @@ describe("buildJourney", () => {
     ids.forEach((id, i) => expect(islands[id].position.y).toBe(rest[i]));
   });
 
+  it("puts trees with trunks on the islands, so they lift with them", () => {
+    const { scene, islands, lift } = buildJourney();
+    for (const id of ids) {
+      const tree = islands[id].getObjectByName("tree") as Object3D;
+      expect(tree.parent).not.toBe(scene);
+      expect(meshesIn(tree).length).toBeGreaterThanOrEqual(2);
+    }
+    const tree = islands.iot.getObjectByName("tree") as Object3D;
+    const rest = worldOf(tree).y;
+    lift("iot", true);
+    expect(worldOf(tree).y).toBeGreaterThan(rest + 0.3);
+  });
+
   it("eases a lift in over ticks when not instant", () => {
     const { islands, lift, tick } = buildJourney();
     const start = islands.iot.position.y;
@@ -157,12 +176,23 @@ describe("buildJourney", () => {
     expect(full).toBeCloseTo(instant, 5);
   });
 
-  it("disposes every geometry and material once", () => {
-    const { scene, dispose } = buildJourney();
-    const geometry = meshesIn(scene)[0].geometry;
-    const spy = vi.spyOn(geometry, "dispose");
+  it("disposes every object, geometry and material once", () => {
+    const { scene, islands, dispose } = buildJourney();
+    const shared = meshesIn(islands["parent-hub"])[0];
+    expect(shared.geometry).toBe(meshesIn(islands.iot)[0].geometry);
+    const dots = scene.getObjectByName("dots") as InstancedMesh;
+    const sun = scene.children.find(
+      (child) => (child as DirectionalLight).isDirectionalLight,
+    ) as DirectionalLight;
+    const spies = [
+      vi.spyOn(shared.geometry, "dispose"),
+      vi.spyOn(shared.material as Material, "dispose"),
+      vi.spyOn(dots, "dispose"),
+      vi.spyOn(scene.getObjectByName("road-iot") as InstancedMesh, "dispose"),
+      vi.spyOn(sun, "dispose"),
+    ];
     dispose();
-    expect(spy).toHaveBeenCalledTimes(1);
+    for (const spy of spies) expect(spy).toHaveBeenCalledTimes(1);
   });
 });
 

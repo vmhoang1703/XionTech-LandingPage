@@ -315,6 +315,17 @@ export function buildJourney() {
     iot: iotProps,
   };
 
+  // A low-poly tree on each island's free corner, a child of the island so it
+  // bobs and lifts with it.
+  const TREES: Record<PlaceId, Vec3> = {
+    "parent-hub": [-1.3, 0, 1.3],
+    "staff-hub": [-1.4, 0, 1.3],
+    "ai-tutor": [-1.4, 0, 1.3],
+    iot: [1.3, 0, -1.3],
+  };
+  const trunk = new CylinderGeometry(0.08, 0.11, 0.5, 5);
+  const crown = new IcosahedronGeometry(0.5, 0);
+
   const islands = {} as Record<PlaceId, Group>;
   for (const { id } of journeyMap.places) {
     const island = platform(islandBase, islandTop, ice);
@@ -322,34 +333,21 @@ export function buildJourney() {
     island.position.set(...SPOTS[id]);
     props[id].name = "props";
     island.add(props[id]);
+    const tree = new Group();
+    tree.name = "tree";
+    tree.add(mesh(trunk, navy, [0, 0.25, 0]));
+    const top = mesh(crown, soft, [0, 0.85, 0]);
+    top.scale.set(1, 1.3, 1);
+    tree.add(top);
+    tree.position.set(...TREES[id]);
+    island.add(tree);
     islands[id] = island;
     scene.add(island);
   }
 
-  // A few low-poly trees on the islands' free corners.
-  const treeSpots: Vec3[] = [
-    [-REACH - 1.3, 0, 1.3],
-    [-1.4, 0, -REACH + 1.3],
-    [-1.4, 0, REACH + 1.3],
-    [REACH + 1.3, 0, -1.3],
-  ];
-  const crowns = new InstancedMesh(
-    new IcosahedronGeometry(0.5, 0),
-    soft,
-    treeSpots.length,
-  );
-  crowns.name = "trees";
   const placing = new Matrix4();
   const upright = new Quaternion();
-  const tall = new Vector3(1, 1.3, 1);
   const same = new Vector3(1, 1, 1);
-  treeSpots.forEach(([x, , z], i) => {
-    crowns.setMatrixAt(
-      i,
-      placing.compose(new Vector3(x, 0.65, z), upright, tall),
-    );
-  });
-  scene.add(crowns);
 
   // Dashed roads from the hub's edge to each island's edge; dots run along
   // them outwards.
@@ -405,23 +403,28 @@ export function buildJourney() {
     if (object.name.startsWith("road-")) object.castShadow = false;
   });
 
-  let elapsed = 0;
-  let lifted: PlaceId | null = null;
+  // Flat arrays so the per-frame loops allocate nothing.
+  const placeIds: PlaceId[] = journeyMap.places.map(({ id }) => id);
+  const islandList = placeIds.map((id) => islands[id]);
   // How far each island is lifted, 0..1, eased toward `lifted`.
-  const raised = {} as Record<PlaceId, number>;
-  for (const { id } of journeyMap.places) raised[id] = 0;
+  const raised = placeIds.map(() => 0);
+  let lifted = -1;
+  let elapsed = 0;
   const dotAt = new Vector3();
 
-  // Sets every animated part for the time the scene has run.
+  // Sets every animated part for the time the scene has run. Each island bobs
+  // at its own pace, all starting level, so a still frame has no bob.
   const pose = () => {
-    journeyMap.places.forEach(({ id }, i) => {
-      const bob = Math.sin((elapsed / BOB_MS + i / 4) * Math.PI * 2) * BOB;
-      const eased = 1 - (1 - raised[id]) ** 3;
-      islands[id].position.y = bob + eased * LIFT;
-    });
+    for (let i = 0; i < islandList.length; i++) {
+      const pace = BOB_MS * (1 + i * 0.17);
+      const bob = Math.sin((elapsed / pace) * Math.PI * 2) * BOB;
+      const eased = 1 - (1 - raised[i]) ** 3;
+      islandList[i].position.y = bob + eased * LIFT;
+    }
     hub.position.y = Math.sin((elapsed / BOB_MS) * Math.PI * 2) * BOB * 0.5;
     spark.rotation.y = elapsed / 600;
-    roads.forEach(({ start, end }, r) => {
+    for (let r = 0; r < roads.length; r++) {
+      const { start, end } = roads[r];
       for (let d = 0; d < DOTS_PER_ROAD; d++) {
         const along = (elapsed / DOT_MS + d / DOTS_PER_ROAD) % 1;
         dotAt.lerpVectors(start, end, along).setY(0.18);
@@ -430,7 +433,7 @@ export function buildJourney() {
           placing.compose(dotAt, upright, same),
         );
       }
-    });
+    }
     dots.instanceMatrix.needsUpdate = true;
   };
 
@@ -439,12 +442,11 @@ export function buildJourney() {
     if (ms <= 0) return;
     elapsed += ms;
     const step = ms / LIFT_MS;
-    for (const { id } of journeyMap.places) {
-      const goal = id === lifted ? 1 : 0;
-      raised[id] =
-        goal > raised[id]
-          ? Math.min(goal, raised[id] + step)
-          : Math.max(goal, raised[id] - step);
+    for (let i = 0; i < raised.length; i++) {
+      raised[i] =
+        i === lifted
+          ? Math.min(1, raised[i] + step)
+          : Math.max(0, raised[i] - step);
     }
     pose();
   };
@@ -452,18 +454,18 @@ export function buildJourney() {
   // Lifts one island (null: none); `instant` skips the ease, for reduced
   // motion and pause.
   const lift = (id: PlaceId | null, instant: boolean) => {
-    lifted = id;
+    lifted = id === null ? -1 : placeIds.indexOf(id);
     if (!instant) return;
-    for (const { id: other } of journeyMap.places) {
-      raised[other] = other === id ? 1 : 0;
-    }
+    for (let i = 0; i < raised.length; i++) raised[i] = i === lifted ? 1 : 0;
     pose();
   };
 
-  // Frees every geometry and material the scene holds, each once.
+  // Frees every object (instanced buffers, the shadow map) and every
+  // geometry and material the scene holds, each once.
   const dispose = () => {
     const owned = new Set<BufferGeometry | Material>();
     scene.traverse((object) => {
+      object.dispose();
       const { geometry, material: mat } = object as Mesh;
       if (geometry) owned.add(geometry);
       for (const one of [mat].flat()) if (one) owned.add(one);
