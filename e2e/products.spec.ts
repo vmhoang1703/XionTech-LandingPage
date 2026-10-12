@@ -117,11 +117,15 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
           (el.getBoundingClientRect().height -
             stageEl.getBoundingClientRect().height) /
           6,
-        pin: Number.parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--spacing-anchor-offset",
-          ),
-        ),
+        // The stage pins at --spacing-header-room (a calc, so measure it).
+        pin: (() => {
+          const probe = document.createElement("div");
+          probe.style.height = "var(--spacing-header-room)";
+          document.body.append(probe);
+          const room = probe.getBoundingClientRect().height;
+          probe.remove();
+          return room;
+        })(),
       };
     });
     const scrollToStep = (i: number) =>
@@ -165,11 +169,15 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       return {
         top: rect.top + window.scrollY,
         step: (rect.height - stageEl.getBoundingClientRect().height) / 6,
-        pin: Number.parseFloat(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--spacing-anchor-offset",
-          ),
-        ),
+        // The stage pins at --spacing-header-room (a calc, so measure it).
+        pin: (() => {
+          const probe = document.createElement("div");
+          probe.style.height = "var(--spacing-header-room)";
+          document.body.append(probe);
+          const room = probe.getBoundingClientRect().height;
+          probe.remove();
+          return room;
+        })(),
       };
     });
   const scrollTo = (page: Page, y: number) =>
@@ -330,10 +338,24 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.goto("/products");
-    await page
+    const link = page
       .getByRole("contentinfo")
-      .getByRole("link", { name: "For schools" })
-      .click();
+      .getByRole("link", { name: "For schools" });
+    // The footer reveals as it scrolls in (shared scroll reveal): bring the
+    // link into view and let it settle before clicking.
+    await link.scrollIntoViewIfNeeded();
+    await expect(link).toBeInViewport({ ratio: 1 });
+    let last = "";
+    await expect
+      .poll(async () => {
+        const box = JSON.stringify(await link.boundingBox());
+        const still = box === last;
+        last = box;
+        return still;
+      })
+      .toBe(true);
+    await link.click();
+    await expect(page).toHaveURL(/#sxp$/);
     const stop = roadmap(page).locator(".rm-stop").nth(1);
     const card = stop.locator(".rm-card");
     await expect.poll(() => cardInView(card)).toBe(true);

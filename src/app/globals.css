@@ -3642,6 +3642,7 @@
      the header. */
   .rm-stop[id],
   .rm-step {
+    /* 16px below the header room, where the tour stage pins. */
     scroll-margin-top: calc(
       var(--spacing-anchor-offset) - var(--spacing-header-height)
     );
@@ -3995,7 +3996,7 @@
         min(
           1,
           tan(atan2(100vw - 32px, 1400px)),
-          tan(atan2(100svh - var(--spacing-anchor-offset) - 16px, 820px))
+          tan(atan2(100svh - var(--spacing-header-room) - 16px, 820px))
         )
       );
       --rm-step: 60svh;
@@ -4006,7 +4007,7 @@
        back so the stage sticks right below the header. */
     .rm[data-tour="on"] .rm-stage {
       position: sticky;
-      top: calc(var(--spacing-anchor-offset) / var(--rm-k));
+      top: calc(var(--spacing-header-room) / var(--rm-k));
       width: 1400px;
       zoom: var(--rm-k);
     }

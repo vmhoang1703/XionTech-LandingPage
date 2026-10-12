@@ -749,7 +749,7 @@ describe("RoadMap scroll tour (wide)", () => {
     const rule = (selector: string) =>
       tour.find((r) => r.selector === selector)?.body ?? "";
     expect(rule('.rm[data-tour="on"] .rm-stage')).toMatch(
-      /position: sticky;[\s\S]*top: calc\(var\(--spacing-anchor-offset\) \/ var\(--rm-k\)\)/,
+      /position: sticky;[\s\S]*top: calc\(var\(--spacing-header-room\) \/ var\(--rm-k\)\)/,
     );
     expect(rule('.rm[data-tour="on"] .rm-draw')).toMatch(
       /stroke-dashoffset: calc\(1 - var\(--share\)\)/,

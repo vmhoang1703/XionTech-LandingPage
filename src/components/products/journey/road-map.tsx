@@ -148,9 +148,10 @@ function landHash(map: HTMLElement) {
 // the 11.5px text floor would grow the cards past the window (measured:
 // 0.68 overflows at 1280x660, 0.73 fits at 1280x700).
 const MIN_ZOOM = 0.72;
-// The stage pins at --spacing-anchor-offset (88px) and keeps 16px below it
-// (globals.css, .rm[data-tour="on"]).
-const STAGE_MARGIN = 88 + 16;
+// The stage pins at --spacing-header-room (the 72px header pill plus its
+// 24px strip; the tour only runs above 1080px, where it is 96px) and keeps
+// 16px below it (globals.css, .rm[data-tour="on"]).
+const STAGE_MARGIN = 96 + 16;
 
 // The tour zooms the stage with `zoom` and a tan(atan2()) ratio; without
 // them the stage would be an unscaled 1400px, so the roadmap stays static.
