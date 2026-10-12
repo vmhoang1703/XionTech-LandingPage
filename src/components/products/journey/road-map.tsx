@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ArrowRightIcon,
-  FlagCheckeredIcon,
-  FlagIcon,
-} from "@phosphor-icons/react";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { APPS, appById } from "@/content/apps";
 import { dayRoad, journeyBoard, type RoadStop } from "@/content/products";
@@ -163,6 +159,12 @@ function who(stop: RoadStop) {
 
 export function RoadMap() {
   const [open, setOpen] = useState<number | null>(null);
+  // The stop last opened: its pin stays highlighted after the modal closes.
+  const [selected, setSelected] = useState<number | null>(null);
+  const choose = (index: number) => {
+    setOpen(index);
+    setSelected(index);
+  };
   const [phase, setPhase] = useState<Phase>("static");
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
@@ -244,11 +246,6 @@ export function RoadMap() {
         </g>
       </svg>
 
-      <p className="rm-end">
-        <FlagIcon aria-hidden="true" weight="fill" />
-        {dayRoad.start}
-      </p>
-
       <ol className="rm-stops">
         {STOPS.map((stop, i) => (
           <RoadCard
@@ -256,19 +253,15 @@ export function RoadMap() {
             stop={stop}
             index={i}
             shown={shown.has(i)}
-            onOpen={() => setOpen(i)}
+            selected={selected === i}
+            onOpen={() => choose(i)}
           />
         ))}
       </ol>
 
-      <p className="rm-end rm-end-finish">
-        <FlagCheckeredIcon aria-hidden="true" weight="fill" />
-        {dayRoad.finish}
-      </p>
-
       <RoadStopDialog
         index={open}
-        onMove={setOpen}
+        onMove={choose}
         onClose={() => setOpen(null)}
       />
     </div>
@@ -279,11 +272,13 @@ function RoadCard({
   stop,
   index,
   shown,
+  selected,
   onOpen,
 }: Readonly<{
   stop: RoadStop;
   index: number;
   shown: boolean;
+  selected: boolean;
   onOpen: () => void;
 }>) {
   const app = stop.app ? appById(stop.app) : null;
@@ -304,6 +299,7 @@ function RoadCard({
       data-last={index === LAST ? "true" : undefined}
       data-everyone={everyone ? "true" : undefined}
       data-in={shown ? "true" : undefined}
+      data-selected={selected ? "true" : undefined}
       style={place}
     >
       {/* The narrow road: one bend per stop, drawn beside the card. */}

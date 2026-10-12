@@ -3471,29 +3471,6 @@
     fill: var(--color-navy);
   }
 
-  .rm-end {
-    position: relative;
-    left: 40px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin: 0;
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-    background: var(--color-navy);
-    color: var(--color-white);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    translate: -50% 0;
-  }
-
-  .rm-end svg {
-    width: 14px;
-    height: 14px;
-  }
-
   .rm-stops {
     margin: 0;
     padding: 0;
@@ -3541,7 +3518,8 @@
     left: 67px;
   }
 
-  .rm-stop[data-everyone="true"] .rm-pin {
+  /* The stop last opened keeps its pin highlighted. */
+  .rm-stop[data-selected="true"] .rm-pin {
     background: var(--color-amber);
   }
 
@@ -3714,19 +3692,6 @@
     .rm-road .rm-line {
       stroke-width: 3;
       stroke-dasharray: 16 16;
-    }
-
-    .rm-end {
-      position: absolute;
-      top: calc(430 / 820 * 100%);
-      left: 8px;
-      translate: 0 -50%;
-    }
-
-    .rm-end-finish {
-      top: calc(420 / 820 * 100%);
-      right: 8px;
-      left: auto;
     }
 
     .rm-stops {

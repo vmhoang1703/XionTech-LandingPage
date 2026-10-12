@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { dayRoad } from "@/content/products";
@@ -390,5 +390,54 @@ describe("RoadMap draw-in", () => {
     expect(print).toMatch(/\.rm-draw \{\s*stroke-dashoffset: 0;/);
     expect(print).toMatch(/\.rm-pin \{\s*scale: 1;/);
     expect(print).toMatch(/\.rm-card \{\s*clip-path: none;\s*transform: none;/);
+  });
+});
+
+describe("RoadMap selection", () => {
+  const selected = (container: HTMLElement) =>
+    stops(container)
+      .map((stop, i) => (stop.dataset.selected === "true" ? i : -1))
+      .filter((i) => i >= 0);
+
+  it("has no Start or Finish badge on the road", () => {
+    const { container } = render(<RoadMap />);
+    expect(container.querySelector(".rm-end")).toBeNull();
+    expect(container.textContent).not.toContain(dayRoad.start);
+    expect(container.textContent).not.toContain(dayRoad.finish);
+  });
+
+  it("highlights no pin until a card is clicked, then only that one", () => {
+    const { container } = render(<RoadMap />);
+    expect(selected(container)).toEqual([]);
+    const cards = container.querySelectorAll<HTMLButtonElement>(".rm-open");
+    fireEvent.click(cards[2]);
+    expect(selected(container)).toEqual([2]);
+  });
+
+  it("moves the highlight with the modal and keeps it after closing", () => {
+    const { container } = render(<RoadMap />);
+    fireEvent.click(
+      container.querySelectorAll<HTMLButtonElement>(".rm-open")[2],
+    );
+    const dialog = document.querySelector("dialog") as HTMLDialogElement;
+    fireEvent.click(
+      within(dialog).getByRole("button", {
+        name: new RegExp(dayRoad.stops[3].title),
+      }),
+    );
+    expect(selected(container)).toEqual([3]);
+    act(() => dialog.close());
+    expect(selected(container)).toEqual([3]);
+  });
+
+  it("colours only the selected pin amber", () => {
+    const rules = roadmapRules();
+    const amberPins = rules.filter(
+      (r) => r.selector.includes(".rm-pin") && /--color-amber\)/.test(r.body),
+    );
+    expect(amberPins.map((r) => r.selector)).toEqual([
+      '.rm-stop[data-selected="true"] .rm-pin',
+    ]);
+    expect(rules.some((r) => r.selector.includes(".rm-end"))).toBe(false);
   });
 });
