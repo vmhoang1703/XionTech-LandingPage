@@ -30,7 +30,7 @@ context:
 **Always:**
 - **Phases:** the reveal follows the `FlowReveal` pattern (`src/components/sections/flow-reveal.tsx`):
   - server HTML, no JS and reduced motion stay `static`, fully drawn;
-  - a roadmap already 30% in view at load goes straight to `on`, with no replay;
+  - a roadmap already in view at load plays the draw-in about 0.3s after load (decision, Sammy 2026-10-12: at common desktop sizes the roadmap is 33–70% in view at load, so "no replay" meant desktop never animated);
   - otherwise it is `armed` until 30% visible, then `on`, once.
   - **Phones** (decision, Sammy 2026-10-12, after the 30% rule got stuck on short screens): below 1100px each stop's bend, pin and card reveal as that stop scrolls in (25% of the stop), with short fixed delays; the roadmap stays `armed` while stops mark `data-in`.
 - **Armed state** (decision, Sammy 2026-10-12, after axe failed on dimmed text): waiting cards are wiped out of view with `clip-path` and offset, and wipe in from their side; pins pop by scale. No opacity on text, and never `display`/`visibility`/`opacity: 0` (`contrast.test.ts`). The road is masked. Everything stays fully visible without JS, under reduced motion and once revealed.
@@ -46,7 +46,7 @@ context:
 | Scenario | Input / State | Expected Output / Behavior | Error Handling |
 |---|---|---|---|
 | HAPPY_PATH | Scroll the roadmap into view | Road draws Start→Finish, pins then cards appear in order, all visible by ~2.5s | N/A |
-| ALREADY_VISIBLE | Roadmap ≥30% in view at load | Shown fully at once, no replay | N/A |
+| ALREADY_VISIBLE | Roadmap in view at load | Draw-in plays about 0.3s after load (phones: stops in view play the same way) | N/A |
 | REDUCED | `prefers-reduced-motion: reduce` | Static and fully drawn, no animation | N/A |
 | NO_JS | JavaScript off | Static and fully drawn | N/A |
 | NARROW | Width < 1100px | Bends, pins and cards reveal in order down the page | N/A |
@@ -104,7 +104,7 @@ context:
 | Road | Scroll into view at 1280px | Mouse wheel, touch, keyboard | Road draws from Start to Finish | ~1.6s linear, so each pin pops as the road reaches it (pins and cards use `--ease-brand`) | Sammy 2026-10-12  | ✅ walk wide-400/1200/3000ms: road draws Start→Finish, pins pop as it reaches them |
 | Pins | Road reaches a pin | — | Pin pops in (scale) | 300ms, delayed by road position | Sammy 2026-10-12  | ✅ walk screenshots; `road-map.test.tsx` delays in road order |
 | Cards | After its pin | — | Card wipes in from its side (up for above, down for below) with a 16px slide | 400ms wipe, starting 120ms after its pin | Sammy 2026-10-12  | ✅ walk: cards wipe in from their side (decision: wipe, not dim); 6 of 6 shown after; e2e scroll-in |
-| Already visible | Load with the roadmap in view | — | Shown complete, no replay | Instant | FlowReveal pattern  | ✅ walk: tall viewport at load → on; unit test |
+| Already visible | Load with the roadmap in view | — | Draw-in plays right after load | ~0.3s after load | Sammy 2026-10-12 |  |
 | Reduced motion | Load with reduced motion | — | Complete roadmap, nothing moves | Static | DESIGN.md:451  | ✅ walk: static, 6 of 6 shown; e2e reduced motion |
 | Narrow | 390px, scroll down | Touch | Bends, pins and cards reveal in order; no sideways scroll | Same timings | Spec  | ✅ walk 390: stops reveal as they scroll in; no sideways scroll; e2e 390 |
 | Card | Hover, focus, activate | Mouse, keyboard, touch | Border and shadow on hover; focus ring; the modal opens | Instant | Quick dev  | ✅ e2e and walk: modal opens; focus ring (focused card never clipped); 25px title button |
@@ -116,6 +116,7 @@ context:
 ## Spec Change Log
 
 - **Task 4 fix round 3 (2026-10-12).** Trigger: axe failed on dimmed (35%) waiting cards. Sammy decided: wipe, hidden until revealed. Amended: the Armed-state line and the Cards UX row. KEEP: static for no JS and reduced motion; the focused card is never clipped.
+- **Re-verify (2026-10-12).** Trigger: the walk found desktop never animates (the roadmap is 33–70% in view at load). Sammy decided: play the draw-in on load. Amended: the Phases bullet, the ALREADY_VISIBLE row, the Already-visible UX row.
 - **Review (2026-10-12).** Trigger: the acceptance auditor found the phone reveal departs from the 30% phase rule. Sammy decided: per stop on phones. Amended: the Phases bullet. KEEP: one draw-in on wide screens.
 
 ## Review Triage Log
