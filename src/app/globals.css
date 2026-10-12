@@ -3521,6 +3521,8 @@
   /* The stop last opened keeps its pin highlighted. */
   .rm-stop[data-selected="true"] .rm-pin {
     background: var(--color-amber);
+    /* A halo, so the selection does not rest on colour alone. */
+    box-shadow: 0 0 0 6px rgb(255 192 0 / 0.35);
   }
 
   .rm-card {
@@ -3723,6 +3725,12 @@
       height: 44px;
       font-size: 1rem;
       box-shadow: 0 6px 16px rgb(22 54 99 / 0.25);
+    }
+
+    .rm-stop[data-bend][data-selected="true"] .rm-pin {
+      box-shadow:
+        0 0 0 6px rgb(255 192 0 / 0.35),
+        0 6px 16px rgb(22 54 99 / 0.25);
     }
 
     .rm-card {
