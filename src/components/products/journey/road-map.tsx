@@ -40,6 +40,20 @@ function seenShare(el: Element) {
   return height > 0 ? seen / height : 0;
 }
 
+// Calls `show` once 30% of the roadmap is in view. Returns the cleanup.
+function revealMap(map: HTMLElement, show: () => void) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (!entries[0].isIntersecting) return;
+      show();
+      observer.disconnect();
+    },
+    { threshold: REVEAL_AT },
+  );
+  observer.observe(map);
+  return () => observer.disconnect();
+}
+
 // Marks each stop shown once it is in view; stops already in view at load
 // are shown at once. Returns the cleanup.
 function revealStops(map: HTMLElement, show: (index: number) => void) {
@@ -135,28 +149,29 @@ export function RoadMap() {
   useEffect(() => {
     const map = ref.current;
     if (!map || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const narrow = matchMedia(NARROW).matches;
+    const layout = matchMedia(NARROW);
+    const narrow = layout.matches;
     // Already 30% on screen at load: show it as is (no hide, no replay).
     if (!narrow && seenShare(map) >= REVEAL_AT) {
       setPhase("on");
       return;
     }
     setPhase("armed");
-    if (narrow) {
-      return revealStops(map, (i) =>
-        setShown((prev) => (prev.has(i) ? prev : new Set(prev).add(i))),
-      );
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
-        setPhase("on");
-        observer.disconnect();
-      },
-      { threshold: REVEAL_AT },
-    );
-    observer.observe(map);
-    return () => observer.disconnect();
+    // A resize or rotation across the breakpoint mid-reveal: show it all.
+    const showAll = () => {
+      setPhase("on");
+      setShown(new Set(STOPS.keys()));
+    };
+    layout.addEventListener("change", showAll);
+    const stop = narrow
+      ? revealStops(map, (i) =>
+          setShown((prev) => (prev.has(i) ? prev : new Set(prev).add(i))),
+        )
+      : revealMap(map, () => setPhase("on"));
+    return () => {
+      layout.removeEventListener("change", showAll);
+      stop();
+    };
   }, []);
 
   return (

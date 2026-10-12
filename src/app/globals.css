@@ -3784,9 +3784,14 @@
     fill: none;
     stroke: var(--color-white);
     stroke-width: 80;
-    stroke-linecap: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 0;
+  }
+
+  /* Round ends reach the road's own round caps; never while hidden, where a
+     cap would paint a dot at the start. */
+  .rm:not([data-reveal="armed"]) .rm-draw {
+    stroke-linecap: round;
   }
 
   .rm[data-reveal="armed"] .rm-draw {

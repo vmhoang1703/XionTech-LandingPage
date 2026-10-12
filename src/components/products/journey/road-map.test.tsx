@@ -11,6 +11,8 @@ let observed: Element[] = [];
 const disconnect = vi.fn();
 let reducedMotion = false;
 let narrow = false;
+let layoutChange: (() => void) | undefined;
+const removeListener = vi.fn();
 
 beforeEach(() => {
   reducedMotion = false;
@@ -18,10 +20,16 @@ beforeEach(() => {
   observedThreshold = undefined;
   observed = [];
   disconnect.mockClear();
+  layoutChange = undefined;
+  removeListener.mockClear();
   vi.stubGlobal(
     "matchMedia",
     vi.fn((query: string) => ({
       matches: query.includes("reduce") ? reducedMotion : narrow,
+      addEventListener: (_: string, listener: () => void) => {
+        layoutChange = listener;
+      },
+      removeEventListener: removeListener,
     })),
   );
   vi.stubGlobal(
@@ -177,6 +185,20 @@ describe("RoadMap draw-in", () => {
     expect(stops(container).filter((li) => li.dataset.in)).toHaveLength(2);
   });
 
+  it("shows everything when the layout switches while armed", () => {
+    narrow = true;
+    stopsAt();
+    const { container, unmount } = render(<RoadMap />);
+    expect(roadmap(container).dataset.reveal).toBe("armed");
+
+    act(() => layoutChange?.());
+    expect(roadmap(container).dataset.reveal).toBe("on");
+    expect(stops(container).every((li) => li.dataset.in === "true")).toBe(true);
+
+    unmount();
+    expect(removeListener).toHaveBeenCalledWith("change", layoutChange);
+  });
+
   it("on narrow screens, disconnects on unmount", () => {
     narrow = true;
     stopsAt();
@@ -266,6 +288,15 @@ describe("RoadMap draw-in", () => {
     )) {
       expect(selector).toContain(":not([data-in])");
     }
+    // No round cap on the hidden road, or it paints a dot at the start.
+    const capped = rules.filter(({ body }) => /stroke-linecap/.test(body));
+    const drawCaps = capped.filter(({ selector }) =>
+      /\.rm-draw$/.test(selector),
+    );
+    expect(drawCaps).toHaveLength(1);
+    expect(drawCaps[0].selector).toBe(
+      '.rm:not([data-reveal="armed"]) .rm-draw',
+    );
     // A focused card shows its focus ring at full strength, even armed.
     const focused = rules.find(({ selector }) =>
       selector.includes(".rm-stop:has(.rm-open:focus-visible) .rm-card"),
