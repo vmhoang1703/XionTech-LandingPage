@@ -18,7 +18,7 @@ Decisions, from mocks on the real build: the slogan goes into the T (the lead's 
 | Stats band | Load, 1280x720, 1366x768, 1440x900, 1536x864, 1920x1080 | Any | All 5 figures and captions on the first screen, no scroll | n/a | Lead (above the fold) | Yes (browser; 1280x720 ends at 699px) |
 | Stats band | Load, phone 390x844 | Any | "Experience you can count on" peeks at the bottom | n/a | Lead (laptop and up) | Yes (title at 631px) |
 | First screen | Load, 1080px and up | Any | Copy and animation centred, stats at the bottom; heading clears the pill | n/a | Spec | Yes (screenshots 1280x720, 1440x900) |
-| XT animation, intro | Load | None | The X forms; GET IT DONE writes itself up the T's stem in amber dots, bottom first | ~1 s, done by 4.2 s | Lead (B, smaller) | Yes (unit tests; frames at fixed times) |
+| XT animation, intro | Load | None | The X forms; GET IT DONE writes itself up the T's stem in amber dots, bottom first | ~1 s, done by 3.2 s (lead: 1 s sooner) | Lead (B, smaller) | Yes (unit tests; frames at fixed times) |
 | XT animation, scene 3 | Loop | None | Amber dots gather around the T, then write GET IT DONE up the stem again | ~1.8 s | Lead | Yes (unit tests; frames) |
 | XT animation, rest | After writing | None | Slogan reads upward inside the white-dot stem; dots twinkle in the sheen | Loop | Lead | Yes (frames) |
 | Scene dots | Any | Any | None shown; the only hero button is Pause/Play | n/a | Lead | Yes (unit test) |

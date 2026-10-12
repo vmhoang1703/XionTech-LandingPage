@@ -48,12 +48,12 @@ const near = (a: { x: number; y: number }, b: { x: number; y: number }) =>
 describe("timeline", () => {
   it("runs an intro, then a 20 s loop", () => {
     expect(loopPhase(atSec(1))).toBe(-1);
-    expect(loopPhase(at(0))).toBeCloseTo(0);
+    expect(loopPhase(at(0.001))).toBeCloseTo(0);
     expect(loopPhase(at(3, 2))).toBeCloseTo(3);
   });
 
   it("shows nothing for the first moment, only the silk", () => {
-    expect(sceneAmount(frameAt(atSec(0.5)))).toBe(0);
+    expect(sceneAmount(frameAt(atSec(0.1)))).toBe(0);
     expect(sceneAmount(frame(0))).toBe(1);
   });
 
@@ -274,7 +274,7 @@ describe("slogan", () => {
     // The bottom is written before the top.
     const first = scene.slogan.find((d) => d.along === 0);
     const top = scene.slogan.find((d) => d.along === 1);
-    const writing = frameAt(atSec(2.9));
+    const writing = frameAt(atSec(1.9));
     expect(first && sloganAt(first, writing).alpha).toBeGreaterThan(0.5);
     expect(top && sloganAt(top, writing).alpha).toBe(0);
   });
@@ -388,8 +388,8 @@ describe("createGlobeMark", () => {
     );
     mark?.setPointer(5, -5);
     const times = [
-      atSec(0.5),
-      atSec(3),
+      atSec(0.1),
+      atSec(2),
       ...[1, 3, 5, 7.3, 9, 9.9, 10.2, 11, 12, 13.2, 14.3, 16.5, 19].map((p) =>
         at(p),
       ),

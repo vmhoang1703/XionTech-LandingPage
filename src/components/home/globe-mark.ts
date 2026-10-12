@@ -26,8 +26,9 @@ export type MarkArea = { x: number; y: number; size: number } | null;
 type Point = { x: number; y: number };
 
 // ---- Timing (seconds) --------------------------------------------------------
-const INTRO_START = 1.2; // silk alone until then
-const INTRO_END = 4.2; // the mark has formed
+// The mark starts forming soon after load (lead, 2026-10-12: 1 s sooner).
+const INTRO_START = 0.2; // silk alone until then
+const INTRO_END = 3.2; // the mark has formed
 const CYCLE = 20; // the loop after the intro
 const OPEN = [2.2, 4.4]; // mark -> globe
 const SUNSET = [5.4, 8.6]; // day moves from Plano to Vietnam
