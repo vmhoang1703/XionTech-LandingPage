@@ -475,14 +475,12 @@ describe("RoadMap anchors", () => {
     );
     expect(anchored).toHaveLength(1);
     expect(anchored[0].selector).toContain(".rm-step");
-    expect(anchored[0].body).toMatch(
-      /scroll-margin-top:[^;]*--spacing-anchor-offset/,
-    );
+    expect(anchored[0].body).toMatch(/scroll-margin-top: 16px/);
   });
 });
 
 describe("RoadMap scroll tour (wide)", () => {
-  // The stage is 700px tall and pins 88px from the top; the track adds six
+  // The stage is 700px tall and pins below the header; the track adds six
   // 500px steps. `travel` is how far the page has scrolled past the pin.
   const STAGE = 700;
   const STEP = 500;

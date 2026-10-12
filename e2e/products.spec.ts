@@ -348,7 +348,9 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     let last = "";
     await expect
       .poll(async () => {
-        const box = JSON.stringify(await link.boundingBox());
+        const rect = await link.boundingBox();
+        if (!rect) return false;
+        const box = JSON.stringify(rect);
         const still = box === last;
         last = box;
         return still;

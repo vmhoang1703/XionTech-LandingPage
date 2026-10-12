@@ -3642,10 +3642,9 @@
      the header. */
   .rm-stop[id],
   .rm-step {
-    /* 16px below the header room, where the tour stage pins. */
-    scroll-margin-top: calc(
-      var(--spacing-anchor-offset) - var(--spacing-header-height)
-    );
+    /* 16px below the header room (html scroll-padding), where the tour
+       stage pins. */
+    scroll-margin-top: 16px;
   }
 
   .rm-seg {
