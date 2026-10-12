@@ -740,7 +740,7 @@ describe("T9: focus ring and skip link pill", () => {
 
   it("html reserves scroll-padding-top for the sticky header", () => {
     const rule = readRuleDeclarations(source, "html");
-    expect(rule.get("scroll-padding-top")).toBe("var(--spacing-header-height)");
+    expect(rule.get("scroll-padding-top")).toBe("var(--spacing-header-room)");
   });
 
   it("enabled buttons show the hand cursor (Tailwind v4 resets it to the arrow)", () => {

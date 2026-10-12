@@ -103,8 +103,9 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
     expect(menuButton().className).toContain("min-[1081px]:hidden");
     expect(menuButton().className).toContain("size-11");
-    // Below 1081px the nav is hidden, so this keeps the button at the right edge.
-    expect(menuButton().className).toContain("ml-auto");
+    // Round like the nav links; Book a demo keeps it at the right edge.
+    expect(menuButton().className).toContain("rounded-full");
+    expect(menuButton().className).not.toContain("ml-auto");
     expect(menuButton().className).not.toContain("border");
     expect(expanded()).toBe("false");
     expect(panel()?.tagName).toBe("NAV");

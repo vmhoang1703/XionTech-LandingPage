@@ -1571,3 +1571,14 @@ Template:
 - **What the AI did:** Showed three strengths side by side on the real build before changing code (now, about 60%, about 35%), at the same spots on Home and Services. Asked separately about the yellow end above the footer, because on Home it is the prototype's own Contact colour.
 - **Decision / result:** The lead chose the softest (amber 32%, warm 24%, blue 18%) and kept the yellow end and the sun. Text contrast on the field rises from 4.73:1 to 5.32:1 at the lowest point.
 - **AI got it wrong?** Yes: in round 2 it made the field much stronger on its own judgement ("too faint"), and the lead found it too strong after the merge. The colour strength is the lead's call; show it first.
+
+## 2026-10-12 — The header as a floating pill (busplanner.com style)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "I want to move on redisgning/enhancing UI/UX for header followed this style: https://busplanner.com/. You can see to know the style I want and suggest new design for our website"
+- **What the AI did:**
+  - Took screenshots of the reference (top, scrolled, menu open, phone) and named its parts: a floating white pill, dots between links, chevrons, an amber "Book a Demo" pill, a glass menu panel.
+  - Showed two rounds of mocks on our real build before coding, and asked the lead to pick parts instead of building everything. The lead kept the pill and the button, dropped the dots, chevrons and panels, and chose one white pill everywhere over a navy-glass version.
+  - Built it: the pill floats over each page's first section (each adds the header strip to its top padding), the strip lets clicks through, links are small pills, "Book a demo" goes to `/demo`, and the phone menu is a rounded card.
+- **Decision / result:** Browser check on 11 pages at 1440 and 1081, 6 at 390 and 2 at 320: nothing overflows, every heading clears the pill by 50px or more, layout shift 0. The UX docs still say "no Book a demo button in the header"; the PR flags it for Amber.
+- **AI got it wrong?** Yes, caught before the lead saw them: the first build squeezed the logo out of shape on phones (the image shrank to fit) and overflowed at 320px; and changing the `header-height` token to 96px broke the DESIGN.md token test, so the pill now keeps the 72px token and a separate value holds the strip. It also found that an old header test had a hidden backspace character in its regex, so that check could never fail.
