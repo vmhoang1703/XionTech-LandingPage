@@ -3,7 +3,7 @@ import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MOTION_KEY } from "@/lib/motion/motion-preference";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import { HomeScene } from "./home-scene";
+import { PageScene } from "./page-scene";
 
 // No reduced motion: readMotionPaused reads matchMedia, which jsdom lacks.
 beforeEach(() => {
@@ -20,19 +20,19 @@ afterEach(() => {
 
 const mount = () =>
   render(
-    <HomeScene>
+    <PageScene>
       <section>Story</section>
-    </HomeScene>,
+    </PageScene>,
   );
 
-describe("HomeScene", () => {
+describe("PageScene", () => {
   it("draws the colour field in the server HTML, before the content", () => {
     const html = renderToString(
-      <HomeScene>
+      <PageScene>
         <section>Story</section>
-      </HomeScene>,
+      </PageScene>,
     );
-    expect(html).toContain('class="home-scene"');
+    expect(html).toContain('class="page-scene scene-fade"');
     expect(html.indexOf('class="scene-bg"')).toBeLessThan(
       html.indexOf("<section>"),
     );
@@ -41,7 +41,7 @@ describe("HomeScene", () => {
   it("is three soft blobs, hidden from screen readers, behind the children", () => {
     const { container } = mount();
 
-    const scene = container.querySelector(".home-scene") as HTMLElement;
+    const scene = container.querySelector(".page-scene") as HTMLElement;
     const layer = scene.firstElementChild as HTMLElement;
     expect(layer.className).toBe("scene-bg");
     expect(layer.getAttribute("aria-hidden")).toBe("true");
@@ -56,14 +56,23 @@ describe("HomeScene", () => {
 
   it("keeps moving unless a Pause was saved", () => {
     const { container } = mount();
-    const scene = container.querySelector(".home-scene") as HTMLElement;
+    const scene = container.querySelector(".page-scene") as HTMLElement;
     expect(scene.dataset.paused).toBeUndefined();
+  });
+
+  it("leaves out the fade-in when the page heading sits inside the scene", () => {
+    const { container } = render(
+      <PageScene fade={false}>
+        <section>Story</section>
+      </PageScene>,
+    );
+    expect(container.firstElementChild?.className).toBe("page-scene");
   });
 
   it("holds the field still after a saved Pause", () => {
     localStorage.setItem(MOTION_KEY, "off");
     const { container } = mount();
-    const scene = container.querySelector(".home-scene") as HTMLElement;
+    const scene = container.querySelector(".page-scene") as HTMLElement;
     expect(scene.dataset.paused).toBe("");
   });
 });

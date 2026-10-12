@@ -1538,3 +1538,16 @@ Template:
   - It picked the safest reading of "option C" from a one-line description, and the lead rejected the result. Saved as a working rule: show a quick visual of a design direction before building it.
   - The first previews showed no colour at all: the page's `body` background covered the layer, and React removed an extra node added to `body` before hydration. Both were fixed before the lead saw them.
   - Painting blue over amber put muted text at 4.38:1 where they overlap; amber is now painted over blue (4.82:1).
+
+## 2026-10-12 — The Home background on every main page
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "I also wnat to apply home tones for other pages at which are needed to applied to make website consistent", then "go" after a preview.
+- **What the AI did:**
+  - Showed a preview first, as the lead asked after PR #98: the real build with the scene added in the browser, now-and-new screenshots and a scroll video for Services, About, Careers, Products and News.
+  - Proposed which pages: the five main pages get the field below their own hero; reading pages (one news story, one job, Privacy, the Demo form) stay still, because moving colour behind long text is harder to read.
+  - Moved `HomeScene` to a shared `PageScene` (`sections/page-scene.tsx`, class `page-scene`), with a `fade` option for News, whose heading sits inside the scene. Light surfaces inside the scene turn see-through; navy ones stay.
+  - Added a warm end to the scene: amber light behind the footer ridge on every page, like Home's Contact and the old Careers ending. Lowest text contrast on it is 4.96:1 (muted text on amber-light).
+  - Removed the per-page gradients it replaces (`.svc-flow`, the Services panel, `.careers-flow`, `.news-flow`); each light hero now ends in the page colour.
+- **Decision / result:** Browser check at 1440px and 390px on Home and the five pages: layout shift 0, no sideways scroll, no hidden reveals, Home height unchanged (7,151px). The lead did not answer the navy question, so About, Careers and News stay light.
+- **AI got it wrong?** Yes, in the preview, before the lead saw it: the scene's fade-in covered the News heading (it sits inside the scene), and the field dropped the warm amber ending that Careers had. Both were fixed in the preview and in the build. The build spec was written after the code; the preview stood in for it.

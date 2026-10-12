@@ -412,7 +412,7 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
       // The element that holds the room above the footer (globals.css):
       // main's last child, or on Home the last section inside the scene.
       const last = document.querySelector(
-        "main > :last-child:not(.home-scene), main > .home-scene:last-child > :last-child",
+        "main > :last-child:not(.page-scene), main > .page-scene:last-child > :last-child",
       );
       let bottom = 0;
       // Page coordinates: on phones the footer is taller than the screen.
