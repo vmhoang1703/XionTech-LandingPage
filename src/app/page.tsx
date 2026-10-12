@@ -11,11 +11,11 @@ import { HomeNews } from "@/components/news/home-news";
 import { PageScene } from "@/components/sections/page-scene";
 
 export const metadata: Metadata = {
-  title: "XionTechs | School Platforms & Software Outsourcing in Vietnam",
+  title: "XionTech | School Platforms & Software Outsourcing in Vietnam",
 };
 
 // Home (E-S1): the hero with its doors, then one story on one flowing light
-// surface: what we help you achieve, the apps, why XionTechs, how we work, our
+// surface: what we help you achieve, the apps, why XionTech, how we work, our
 // values and four answers (lead, 2026-10-11). Andy's news row and contact
 // section stay last (E-A4 CAP-1). Below the hero, PageScene gives the page
 // one light colour with a moving amber and blue colour field; How we work is

@@ -1,7 +1,7 @@
 // Home "latest news" copy. Kept out of the components so it can be translated later.
 
 export const homeNews = {
-  heading: "Latest from XionTechs.",
+  heading: "Latest from XionTech.",
   lede: "Catch up with what our team is building and shipping.",
   seeAll: { href: "/news", label: "See all news" },
   readStory: "Read story",
@@ -15,9 +15,9 @@ export const categoryLabels: Record<string, string> = {
 };
 
 export const newsMeta = {
-  title: "News | XionTechs",
+  title: "News | XionTech",
   description:
-    "Short stories about XionTechs' products, schools, team and client work.",
+    "Short stories about XionTech's products, schools, team and client work.",
 };
 
 // News page copy (Story 6.1, E-A6). The count strings stay here so they can be
@@ -41,5 +41,5 @@ export const newsStory = {
   sampleNote:
     "[Placeholder] Sample story to show the layout. Replace with a real story before launch.",
   backToNews: { href: "/news", label: "Back to News" },
-  metaTitle: (title: string) => `${title} | XionTechs`,
+  metaTitle: (title: string) => `${title} | XionTech`,
 };

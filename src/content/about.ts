@@ -4,14 +4,14 @@ import { aboutOfficeView, otherLocations } from "@/content/offices";
 // be translated later.
 
 export const aboutMeta = {
-  title: "About XionTechs | Get IT Done",
+  title: "About XionTech | Get IT Done",
   description:
-    "XionTechs is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia.",
+    "XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia.",
 };
 
 export const aboutHero = {
   title: {
-    lead: "We’re XionTechs,",
+    lead: "We’re XionTech,",
     middle: "technology built with ",
     accent: "ownership",
     tail: ".",
@@ -56,7 +56,7 @@ export const aboutFaq = {
   items: [
     {
       id: "what",
-      question: "What does XionTechs do?",
+      question: "What does XionTech do?",
       answer:
         "We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing.",
     },

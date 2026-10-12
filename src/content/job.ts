@@ -1,9 +1,9 @@
 // Job page copy. Kept out of the components so it can be translated later.
 
 export const jobMeta = {
-  title: "Open role | Careers at XionTechs",
+  title: "Open role | Careers at XionTech",
   description:
-    "Read the role and apply with your CV. XionTechs, Ho Chi Minh City.",
+    "Read the role and apply with your CV. XionTech, Ho Chi Minh City.",
 };
 
 export const jobHero = {

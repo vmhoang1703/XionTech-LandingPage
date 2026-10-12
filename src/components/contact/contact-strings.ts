@@ -9,9 +9,9 @@ const DETAILS_CONSENT = "We only use your details to respond to this request.";
  * can be translated later. Service and product names stay in English.
  */
 export const CONTACT_STRINGS = {
-  metaTitle: "Book a Demo or Start a Project | XionTechs",
+  metaTitle: "Book a Demo or Start a Project | XionTech",
   metaDescription:
-    "Book a demo of Parent Hub and Staff Hub for your school, or tell us about your software project. XionTechs, Ho Chi Minh City and Plano.",
+    "Book a demo of Parent Hub and Staff Hub for your school, or tell us about your software project. XionTech, Ho Chi Minh City and Plano.",
   hero: {
     breadcrumbLabel: "Breadcrumb",
     breadcrumbHome: "Home",

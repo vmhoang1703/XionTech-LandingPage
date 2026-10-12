@@ -17,7 +17,7 @@ test(
     expect(html).toContain("Your software delivery team");
     expect(html).toContain("What can we help you achieve?");
     expect(html).toContain("One connected school.");
-    expect(html).toContain("Why XionTechs.");
+    expect(html).toContain("Why XionTech.");
     expect(html).toContain("How we work.");
     expect(html).toContain("Our core values.");
     expect(html).toContain("Your questions, answered.");

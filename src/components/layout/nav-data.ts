@@ -33,8 +33,8 @@ export const LABELS: NavLabels = {
   careers: "Careers",
   skipLink: "Skip to content",
   mainNav: "Main",
-  homeLink: "XionTechs home",
-  logoAlt: "XionTechs, Get IT Done",
+  homeLink: "XionTech home",
+  logoAlt: "XionTech, Get IT Done",
   menu: "Menu",
   demo: "Book a demo",
 };

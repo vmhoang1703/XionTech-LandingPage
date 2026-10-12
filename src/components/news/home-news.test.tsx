@@ -42,7 +42,7 @@ describe("HomeNews", () => {
     );
     const heading = screen.getByRole("heading", {
       level: 2,
-      name: "Latest from XionTechs.",
+      name: "Latest from XionTech.",
     });
     expect(heading.closest(".sec-head-row")).toBe(row);
     expect(
@@ -71,7 +71,7 @@ describe("HomeNews", () => {
     expect(container.querySelector(".scard")).toBeNull();
     expect(screen.queryByText(/^\[Placeholder\]/)).toBeNull();
     expect(
-      screen.getByRole("heading", { level: 2, name: "Latest from XionTechs." }),
+      screen.getByRole("heading", { level: 2, name: "Latest from XionTech." }),
     ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
