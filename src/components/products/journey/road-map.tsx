@@ -33,6 +33,8 @@ const ROAD_SECONDS = 1.6;
 // quarter of it is in view.
 const NARROW = "(width < 1100px)";
 const STOP_AT = 0.25;
+// Tolerance for a threshold crossing reported a hair under the threshold.
+const SLACK = 0.01;
 
 // The share of an element inside the window, 0 to 1.
 function seenShare(el: Element) {
@@ -46,8 +48,10 @@ function revealMap(map: HTMLElement, show: () => void) {
   const observer = new IntersectionObserver(
     (entries) => {
       const [entry] = entries;
-      // The first callback fires at any overlap: check the share too.
-      if (!entry.isIntersecting || entry.intersectionRatio < REVEAL_AT) return;
+      // The first callback fires at any overlap: check the share too. SLACK
+      // absorbs a crossing reported a hair under the threshold (0.2999).
+      if (!entry.isIntersecting || entry.intersectionRatio < REVEAL_AT - SLACK)
+        return;
       show();
       observer.disconnect();
     },
@@ -64,7 +68,7 @@ function revealStops(map: HTMLElement, show: (index: number) => void) {
   const observer = new IntersectionObserver(
     (entries, self) => {
       for (const entry of entries) {
-        if (!entry.isIntersecting || entry.intersectionRatio < STOP_AT)
+        if (!entry.isIntersecting || entry.intersectionRatio < STOP_AT - SLACK)
           continue;
         show(stops.indexOf(entry.target));
         self.unobserve(entry.target);
