@@ -8,7 +8,7 @@ export const careersMeta = {
 
 export const careersHero = {
   title: { first: "Stay curious.", second: "Build what’s next." },
-  lede: "We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task.",
+  lede: "We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI.",
   cta: { href: "#roles", label: "Explore open roles" },
 };
 

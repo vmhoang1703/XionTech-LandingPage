@@ -218,7 +218,7 @@ describe("ServicesPage", () => {
     expect(head?.className).toBe("sec-head");
     expect(head?.querySelector(".label")).toBeNull();
     expect(head?.querySelector("p.lede")?.textContent).toBe(
-      "Every step ends with something you can see, test and approve.",
+      "Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it.",
     );
     expect(container.querySelectorAll("section.surface-navy")).toHaveLength(0);
   });

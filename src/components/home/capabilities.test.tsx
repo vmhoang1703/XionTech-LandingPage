@@ -18,7 +18,7 @@ describe("Capabilities", () => {
     const region = screen.getByRole("region", { name: "Why XionTech." });
     expect(
       within(region).getByText(
-        "The capabilities behind every school app and every product we deliver.",
+        "The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI.",
       ),
     ).toBeDefined();
     expect(

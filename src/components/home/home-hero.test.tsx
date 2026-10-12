@@ -37,7 +37,7 @@ describe("HomeHero", () => {
     );
     expect(
       within(hero).getByText(
-        "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano.",
+        "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano. We pioneer AI across our development process, so we work smarter and deliver faster.",
       ),
     ).toBeDefined();
   });
