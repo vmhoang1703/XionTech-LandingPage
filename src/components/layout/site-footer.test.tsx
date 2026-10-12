@@ -132,6 +132,17 @@ describe("SiteFooter", () => {
     expect(footer.textContent).not.toContain("vinni.tran@xiontechs.com");
   });
 
+  it("draws the sun behind the ridge, before the mountain in paint order", () => {
+    const ridge = renderFooter().querySelector("[data-ridge]");
+
+    expect(Array.from(ridge?.children ?? []).map((el) => el.tagName)).toEqual([
+      "SPAN",
+      "svg",
+    ]);
+    expect(ridge?.firstElementChild?.className).toBe("ridge-sun");
+    expect(ridge?.firstElementChild?.textContent).toBe("");
+  });
+
   it("has no head office label, no Da Nang office and only two offices", () => {
     const footer = renderFooter();
 

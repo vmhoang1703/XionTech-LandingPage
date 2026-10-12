@@ -72,7 +72,7 @@ describe("ServicesPage", () => {
     expect(undefinedClasses(container, /^(mt-5)$/)).toEqual([]);
   });
 
-  it("puts the services in a light panel with the heading beside the cards", () => {
+  it("puts the services right below the hero with the heading beside the cards", () => {
     const { container } = render(<ServicesPage />);
 
     const h2 = screen.getByRole("heading", {
@@ -82,8 +82,8 @@ describe("ServicesPage", () => {
     const panel = h2.closest("section");
     expect(panel?.className).toBe("sec svc-panel");
     expect(panel?.getAttribute("aria-labelledby")).toBe(h2.id);
-    expect(panel?.previousElementSibling?.classList.contains("svc-hero")).toBe(
-      true,
+    expect(panel?.parentElement?.previousElementSibling?.classList).toContain(
+      "svc-hero",
     );
     const stick = h2.parentElement;
     expect(stick?.className).toBe("sec-head svc-stick");
@@ -254,15 +254,15 @@ describe("ServicesPage", () => {
     expect(flow.querySelector(".node.end b")?.textContent).toBe("Launch");
   });
 
-  it("ends on the process inside one flowing background, with white step cards", () => {
+  it("ends on the process inside the page scene, with white step cards", () => {
     const { container } = render(<ServicesPage />);
 
-    const wrapper = container.querySelector(".svc-flow");
-    expect(wrapper?.lastElementChild?.id).toBe("process");
-    expect(container.lastElementChild).toBe(wrapper);
+    const scene = container.querySelector(".page-scene");
+    expect(scene?.lastElementChild?.id).toBe("process");
+    expect(container.lastElementChild).toBe(scene);
+    expect(container.firstElementChild?.classList).toContain("svc-hero");
     expect(container.querySelectorAll(".hero-navy")).toHaveLength(1);
     const css = globalsCss();
-    expect(css).toMatch(/\.svc-flow\s*\{[^}]*linear-gradient/);
     expect(css).toMatch(
       /#process \.step4[^{]*\{[^}]*background:\s*var\(--color-white\)/,
     );

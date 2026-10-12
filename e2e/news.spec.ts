@@ -11,7 +11,7 @@ test(
     expect(html).toContain("<title>News | XionTech</title>");
     expect(html).toContain('id="news-h1"');
     expect(html).toContain("Catch up with us");
-    expect(html).toContain('class="news-flow"');
+    expect(html).toContain('class="page-scene"');
     expect(html).not.toContain('aria-label="Breadcrumb"');
     expect(html).toContain('aria-label="Filter stories by audience"');
     for (const chip of ["All", "Schools", "Students", "Parents", "Company"]) {

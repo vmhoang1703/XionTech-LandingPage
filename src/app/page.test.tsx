@@ -121,7 +121,7 @@ describe("Home page", () => {
   it("puts everything below the hero on one colour field, with How we work as the navy moment", () => {
     const { container } = render(<Home />);
 
-    const scene = container.querySelector(".home-scene");
+    const scene = container.querySelector(".page-scene");
     expect(container.firstElementChild?.nextElementSibling).toBe(scene);
     expect(scene?.querySelector("#home-outcomes-h")).not.toBeNull();
     expect(scene?.lastElementChild?.id).toBe("contact");
@@ -137,7 +137,7 @@ describe("Home page", () => {
     const contact = screen
       .getByRole("heading", { name: "Have something you want to build?" })
       .closest("section");
-    const scene = container.querySelector(".home-scene");
+    const scene = container.querySelector(".page-scene");
     expect(container.lastElementChild).toBe(scene);
     expect(scene?.lastElementChild).toBe(contact);
     expect(contact?.id).toBe("contact");

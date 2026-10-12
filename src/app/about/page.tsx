@@ -6,6 +6,7 @@ import { CaptureBand } from "@/components/contact/capture-band";
 import { contactIcon } from "@/components/sections/contact-icon";
 import { FaqList } from "@/components/sections/faq-list";
 import { LiveClock } from "@/components/sections/live-clock";
+import { PageScene } from "@/components/sections/page-scene";
 import {
   aboutCapture,
   aboutFaq,
@@ -21,8 +22,9 @@ export const metadata: Metadata = {
 };
 
 // E-S3 (prototype about.html): the intro over pastel peaks, the mountain story
-// (static, no picture), the FAQ at #faq, the offices and the demo capture, all
-// on white. Only the clocks and the capture form are client parts.
+// (static, no picture), the FAQ at #faq, the offices and the demo capture, on
+// the shared page scene below the hero (lead, 2026-10-12). Only the clocks,
+// the capture form and the scene are client parts.
 export default function AboutPage() {
   const { title, text, links } = aboutHero;
   const { title: story, chapters, closing } = aboutStory;
@@ -86,110 +88,115 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section
-        id="story"
-        className="sec surface-paper"
-        aria-labelledby="about-story-h"
-      >
-        <div className="wrap">
-          <h2 id="about-story-h" className="mtn-h">
-            {story.lead}
-            <br />
-            {story.middle}
-            <span className="hl">{story.highlight}</span>
-            {story.tail}
-          </h2>
-          <div className="mtn-story" data-reveal="">
-            {chapters.map(({ number, title: name, text: body }) => (
-              <article key={number}>
-                <h3 className="mtn-title">
-                  <span className="mtn-num">{number}</span> {name}
-                </h3>
-                <p className="mtn-text">{body}</p>
-              </article>
-            ))}
-            <div className="mtn-close">
-              <p>
-                <strong>{closing.line}</strong>
-              </p>
-              <p>{closing.tags}</p>
+      <PageScene>
+        <section
+          id="story"
+          className="sec surface-paper"
+          aria-labelledby="about-story-h"
+        >
+          <div className="wrap">
+            <h2 id="about-story-h" className="mtn-h">
+              {story.lead}
+              <br />
+              {story.middle}
+              <span className="hl">{story.highlight}</span>
+              {story.tail}
+            </h2>
+            <div className="mtn-story" data-reveal="">
+              {chapters.map(({ number, title: name, text: body }) => (
+                <article key={number}>
+                  <h3 className="mtn-title">
+                    <span className="mtn-num">{number}</span> {name}
+                  </h3>
+                  <p className="mtn-text">{body}</p>
+                </article>
+              ))}
+              <div className="mtn-close">
+                <p>
+                  <strong>{closing.line}</strong>
+                </p>
+                <p>{closing.tags}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      <section
-        id="faq"
-        className="sec surface-paper"
-        aria-labelledby="about-faq-h"
-      >
-        <div className="wrap faq-head" data-reveal="">
-          <h2 id="about-faq-h">{aboutFaq.title}</h2>
-          <p className="lede">{aboutFaq.lede}</p>
-        </div>
-        <div className="wrap">
-          <FaqList items={aboutFaq.items} link={aboutFaq.ask} />
-        </div>
-      </section>
-      <section
-        id="offices"
-        className="sec surface-paper"
-        aria-labelledby="about-offices-h"
-      >
-        <div className="wrap">
-          <div className="sec-head">
-            <h2 id="about-offices-h">{aboutOffices.title}</h2>
+        </section>
+        <section
+          id="faq"
+          className="sec surface-paper"
+          aria-labelledby="about-faq-h"
+        >
+          <div className="wrap faq-head" data-reveal="">
+            <h2 id="about-faq-h">{aboutFaq.title}</h2>
+            <p className="lede">{aboutFaq.lede}</p>
           </div>
-          <div className="offices" data-reveal="">
-            {aboutOffices.offices.map((office) => (
-              <div key={office.id} className="spot office-card">
-                <span className="clock">
-                  <LiveClock
-                    timeZone={office.timeZone}
-                    zoneLabel={office.zoneLabel}
-                  />
-                </span>
-                <h3>{office.name}</h3>
-                {office.tag ? (
-                  <small className="office-tag">{office.tag}</small>
-                ) : null}
-                <address>
-                  <span className="orow">
-                    <MapPinIcon aria-hidden="true" />
-                    <span>
-                      {office.addressLines.map((line, index) => (
-                        <Fragment key={line}>
-                          {index > 0 ? <br /> : null}
-                          {line}
-                        </Fragment>
-                      ))}
-                    </span>
+          <div className="wrap">
+            <FaqList items={aboutFaq.items} link={aboutFaq.ask} />
+          </div>
+        </section>
+        <section
+          id="offices"
+          className="sec surface-paper"
+          aria-labelledby="about-offices-h"
+        >
+          <div className="wrap">
+            <div className="sec-head">
+              <h2 id="about-offices-h">{aboutOffices.title}</h2>
+            </div>
+            <div className="offices" data-reveal="">
+              {aboutOffices.offices.map((office) => (
+                <div key={office.id} className="spot office-card">
+                  <span className="clock">
+                    <LiveClock
+                      timeZone={office.timeZone}
+                      zoneLabel={office.zoneLabel}
+                    />
                   </span>
-                  {office.contacts.map((contact) => {
-                    const ContactIcon = contactIcon(contact.href);
-                    return (
-                      <span key={contact.href} className="orow">
-                        <ContactIcon aria-hidden="true" />
-                        <span>
-                          <a
-                            href={contact.href}
-                            aria-label={contact.ariaLabel}
-                            {...(contact.external
-                              ? { target: "_blank", rel: "noopener noreferrer" }
-                              : {})}
-                          >
-                            {contact.label}
-                          </a>
-                        </span>
+                  <h3>{office.name}</h3>
+                  {office.tag ? (
+                    <small className="office-tag">{office.tag}</small>
+                  ) : null}
+                  <address>
+                    <span className="orow">
+                      <MapPinIcon aria-hidden="true" />
+                      <span>
+                        {office.addressLines.map((line, index) => (
+                          <Fragment key={line}>
+                            {index > 0 ? <br /> : null}
+                            {line}
+                          </Fragment>
+                        ))}
                       </span>
-                    );
-                  })}
-                </address>
-              </div>
-            ))}
+                    </span>
+                    {office.contacts.map((contact) => {
+                      const ContactIcon = contactIcon(contact.href);
+                      return (
+                        <span key={contact.href} className="orow">
+                          <ContactIcon aria-hidden="true" />
+                          <span>
+                            <a
+                              href={contact.href}
+                              aria-label={contact.ariaLabel}
+                              {...(contact.external
+                                ? {
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                  }
+                                : {})}
+                            >
+                              {contact.label}
+                            </a>
+                          </span>
+                        </span>
+                      );
+                    })}
+                  </address>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-      <CaptureBand id="book" kind="demo" look="white" copy={aboutCapture} />
+        </section>
+        <CaptureBand id="book" kind="demo" look="white" copy={aboutCapture} />
+      </PageScene>
     </>
   );
 }

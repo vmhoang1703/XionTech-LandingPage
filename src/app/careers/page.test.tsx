@@ -53,9 +53,9 @@ describe("Careers page", () => {
       s.getAttribute("aria-labelledby"),
     );
     expect(labels).toEqual(["careers-h1", "life-h", "cul-h", "roles-h"]);
-    expect(
-      container.querySelector(".careers-flow section:last-child")?.id,
-    ).toBe("roles");
+    expect(container.querySelector(".page-scene section:last-child")?.id).toBe(
+      "roles",
+    );
   });
 
   it("drops the old culture, benefits and life photo sections", async () => {
