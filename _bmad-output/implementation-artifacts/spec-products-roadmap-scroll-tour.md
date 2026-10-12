@@ -2,9 +2,9 @@
 title: 'Products: roadmap scroll tour; What we build removed'
 type: 'feature'
 created: '2026-10-12'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
-review_loop_iteration: 0
+review_loop_iteration: 1
 baseline_commit: 'b9cd7d97c9ca2f7304b13b0828db73c65fc23b47'
 context:
   - '{project-root}/AGENTS.md'
@@ -114,7 +114,23 @@ context:
 
 ## Spec Change Log
 
+- **Task 3 (2026-10-12).** Deep links scroll smoothly through the stops on the way (Chrome's fragment scroll); the end state is exact. The Deep-link UX row's timing was set to "smooth". The tour starts only when the stage fits at a zoom of at least 0.72 (measured); shorter wide windows get the static roadmap. Card text has a floor of 11.5px (DESIGN.md:537) under the zoom.
+
 ## Review Triage Log
+
+| # | Finding | Verdict | Evidence / route |
+| --- | --- | --- | --- |
+| 1 | Scroll behind an open modal moved the selected pin (edge, blind) | medium | Patched: selection frozen while the modal is open |
+| 2 | Static after a layout switch kept an amber pin (edge) | low | Patched: selection and road motion cleared when leaving the tour |
+| 3 | Short wide windows: zoom tiny or ≤ 0, cards overflow (edge) | medium | Patched: tour only at zoom ≥ 0.72, CSS clamp; 1280×600 static |
+| 4 | Dead showcase leftovers: FEATURE_PLACEHOLDER, audience/media, .browser CSS, stale comments (auditor, edge) | medium | Patched |
+| 5 | Smoke anchors checked by order only (auditor, blind) | low | Patched: bounded to the #map section, exactly once |
+| 6 | Resize listener untested (verification-gap) | low | Patched: resize test and removal assertion |
+| 7 | Stop 1 auto-selected when the tour starts (blind) | false | Spec: the active stop takes the selected style |
+| 8 | Reduced motion toggled mid-visit, reload scroll restoration, no rAF throttle, CSS 6× duplication, no aria for active (blind, edge) | low | Rejected: rare or cosmetic; content stays readable |
+| 9 | Deep links pass through stops (task 3) | low | Accepted; UX row updated |
+| 10 | Height threshold checked only at load and breakpoint (re-review) | low | Bounded by the CSS clamp; rejected |
+| 11 | Security | — | Clean |
 
 ## Verification
 
@@ -128,13 +144,13 @@ context:
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-12.
+Captured after the review patches on 2026-10-12.
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
-- `npm test` -- exit 0 -- Test Files 86 passed (86); Tests 1282 passed (1282)
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 156 lines, Missing 0, Coverage 100%; `products/journey` branches 98.83%
+- `npm test` -- exit 0 -- Test Files 86 passed (86); Tests 1286 passed (1286)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 164 lines, Missing 0, Coverage 100%; `products/journey` branches 98.87%
 - `npm run test:smoke` -- exit 0 -- 15 passed
 - `npm run build` -- exit 0 -- success
 - `npx playwright test --project=a11y` -- exit 0 -- 57 passed
@@ -150,7 +166,7 @@ Captured at the end of step-03 on 2026-10-12.
 **Artifacts**
 
 - [verification.txt](spec-products-roadmap-scroll-tour-evidence/verification.txt), [walk.mjs](spec-products-roadmap-scroll-tour-evidence/walk.mjs), [walk-output.txt](spec-products-roadmap-scroll-tour-evidence/walk-output.txt)
-- `tour-step-1.png`, `tour-step-3.png`, `tour-step-6.png`, `after-tour.png`, `deeplink-sxp.png`, `reduced.png`, `phone.png` (hashes in the ledger)
+- `tour-step-1.png`, `tour-step-3.png`, `tour-step-6.png`, `after-tour.png`, `deeplink-sxp.png`, `reduced.png`, `phone.png` (hashes in the ledger, rows marked "final")
 
 **Not captured**
 

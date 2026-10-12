@@ -27,12 +27,12 @@ $ npm test
 
 
  Test Files  86 passed (86)
-      Tests  1282 passed (1282)
-   Start at  12:59:44
-   Duration  51.13s (import 55%, environment 25%, tests 13%, setup 5%, transform 1%)
+      Tests  1286 passed (1286)
+   Start at  13:15:45
+   Duration  52.01s (import 56%, environment 24%, tests 13%, setup 5%, transform 1%)
 
-    Isolate  86 workers spawned · ~1.77s startup each (spawn + environment, per file)
-             at least ~12.08s faster with isolate: false — reuses workers across files instead of one per file
+    Isolate  86 workers spawned · ~1.78s startup each (spawn + environment, per file)
+             at least ~12.12s faster with isolate: false — reuses workers across files instead of one per file
 
 exit 0
 
@@ -47,18 +47,18 @@ $ npm run test:coverage && npm run coverage:diff
 
 
  Test Files  86 passed (86)
-      Tests  1282 passed (1282)
-   Start at  13:00:36
-   Duration  59.38s (import 51%, environment 23%, tests 17%, setup 5%, worker 1%, transform 1%)
+      Tests  1286 passed (1286)
+   Start at  13:16:38
+   Duration  61.87s (import 51%, environment 23%, tests 18%, setup 6%, worker 1%, transform 1%)
 
-    Isolate  86 workers spawned · ~1.88s startup each (spawn + environment, per file)
-             at least ~12.80s faster with isolate: false — reuses workers across files instead of one per file
+    Isolate  86 workers spawned · ~1.95s startup each (spawn + environment, per file)
+             at least ~13.27s faster with isolate: false — reuses workers across files instead of one per file
 
 [34m % [39m[2mCoverage report from [22m[33mv8[39m
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   99.59 |    98.01 |   99.29 |     100 |                   
+All files          |   99.59 |    98.01 |    99.3 |     100 |                   
  app/about         |     100 |    83.33 |     100 |     100 |                   
   page.tsx         |     100 |    83.33 |     100 |     100 | 162               
  ...onents/careers |     100 |    98.13 |     100 |     100 |                   
@@ -74,8 +74,8 @@ All files          |   99.59 |    98.01 |   99.29 |     100 |
   mobile-menu.tsx  |     100 |     97.5 |     100 |     100 | 44                
  components/news   |   97.56 |      100 |   93.33 |     100 |                   
   news-filters.tsx |   96.42 |      100 |    90.9 |     100 |                   
- ...oducts/journey |     100 |    98.83 |     100 |     100 |                   
-  road-map.tsx     |     100 |    98.83 |     100 |     100 | 181               
+ ...oducts/journey |     100 |    98.87 |     100 |     100 |                   
+  road-map.tsx     |     100 |    98.87 |     100 |     100 | 195               
  ...oducts/roadmap |   96.55 |    97.36 |     100 |     100 |                   
   ...op-dialog.tsx |   96.55 |    97.36 |     100 |     100 | 26                
  ...nents/sections |     100 |    96.42 |     100 |     100 |                   
@@ -85,10 +85,10 @@ All files          |   99.59 |    98.01 |   99.29 |     100 |
 -------------------|---------|----------|---------|---------|-------------------
 
 =============================== Coverage summary ===============================
-Statements   : 99.59% ( 1711/1718 )
-Branches     : 98.01% ( 937/956 )
-Functions    : 99.29% ( 425/428 )
-Lines        : 100% ( 1534/1534 )
+Statements   : 99.59% ( 1719/1726 )
+Branches     : 98.01% ( 940/959 )
+Functions    : 99.3% ( 426/429 )
+Lines        : 100% ( 1541/1541 )
 ================================================================================
 
 > xiontech-landing-page@0.1.0 coverage:diff
@@ -104,7 +104,7 @@ src/components/products/map/map-badge.tsx (100%)
 src/components/products/roadmap/road-stop-dialog.tsx (100%)
 src/content/products.ts (100%)
 -------------
-Total:   156 lines
+Total:   164 lines
 Missing: 0 lines
 Coverage: 100%
 -------------
@@ -120,23 +120,23 @@ $ npm run test:smoke
 
 Running 15 tests using 6 workers
 
-  ok  1 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (150ms)
-  ok  2 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, Inside XionTech and the open roles @smoke (142ms)
-  ok  3 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (170ms)
-  ok  4 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the lost-trail copy and no capture band @smoke (278ms)
-  ok  7 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (154ms)
-  ok  8 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with the H1, the map, the four card anchors and no Updates link @smoke (128ms)
-  ok  9 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript @smoke (134ms)
-  ok  6 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its hero, the audience filters, the sample note and the demo capture @smoke (214ms)
-  ok  5 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (303ms)
-  ok 10 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (43ms)
-  ok 12 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (101ms)
-  ok 13 [smoke] › e2e\smoke.spec.ts:24:5 › demo page responds 200 with send request button @smoke (134ms)
-  ok 11 [smoke] › e2e\news.spec.ts:27:5 › unknown story slug answers 404 with the Not found page @smoke (154ms)
-  ok 14 [smoke] › e2e\smoke.spec.ts:35:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (29ms)
-  ok 15 [smoke] › e2e\news.spec.ts:40:5 › the first story on the News page answers 200 with its header, Back to News and no breadcrumb @smoke (59ms)
+  ok  1 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (145ms)
+  ok  4 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (246ms)
+  ok  7 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (164ms)
+  ok  5 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, Inside XionTech and the open roles @smoke (249ms)
+  ok  6 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the lost-trail copy and no capture band @smoke (239ms)
+  ok  2 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (339ms)
+  ok  3 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its hero, the audience filters, the sample note and the demo capture @smoke (303ms)
+  ok  9 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with the H1, the map, the four card anchors and no Updates link @smoke (70ms)
+  ok  8 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript @smoke (73ms)
+  ok 10 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (169ms)
+  ok 11 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (187ms)
+  ok 12 [smoke] › e2e\news.spec.ts:27:5 › unknown story slug answers 404 with the Not found page @smoke (190ms)
+  ok 13 [smoke] › e2e\smoke.spec.ts:24:5 › demo page responds 200 with send request button @smoke (56ms)
+  ok 15 [smoke] › e2e\smoke.spec.ts:35:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (15ms)
+  ok 14 [smoke] › e2e\news.spec.ts:40:5 › the first story on the News page answers 200 with its header, Back to News and no breadcrumb @smoke (90ms)
 
-  15 passed (11.8s)
+  15 passed (13.9s)
 exit 0
 
 $ npm run build
@@ -146,18 +146,18 @@ $ npm run build
 
 ▲ Next.js 16.3.6 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 19ms
+✓ Running next.config.ts took 20ms
 
   Creating an optimized production build ...
-✓ Compiled successfully in 1811ms
+✓ Compiled successfully in 1914ms
   Running TypeScript ...
-  Finished TypeScript in 2.3s ...
+  Finished TypeScript in 2.4s ...
   Collecting page data using 11 workers ...
   Generating static pages using 11 workers (0/16) ...
   Generating static pages using 11 workers (4/16) 
   Generating static pages using 11 workers (8/16) 
   Generating static pages using 11 workers (12/16) 
-✓ Generating static pages using 11 workers (16/16) in 570ms
+✓ Generating static pages using 11 workers (16/16) in 565ms
   Finalizing page optimization ...
 
 Route (app)
@@ -189,63 +189,63 @@ $ npx playwright test --project=a11y
 
 Running 57 tests using 2 workers
 
-  ok  1 [a11y] › e2e\products.spec.ts:35:9 › deep links to an app › /products#sxp makes stop 2 active with its card in view below the header @a11y (1.7s)
-  ok  3 [a11y] › e2e\products.spec.ts:35:9 › deep links to an app › /products#pxp makes stop 3 active with its card in view below the header @a11y (1.3s)
-  ok  2 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /: axe, one H1, alt text, no nesting @a11y (3.2s)
-  ok  4 [a11y] › e2e\products.spec.ts:35:9 › deep links to an app › /products#ai-tutor makes stop 4 active with its card in view below the header @a11y (1.7s)
+  ok  1 [a11y] › e2e\products.spec.ts:36:9 › deep links to an app › /products#sxp makes stop 2 active with its card in view below the header @a11y (1.5s)
+  ok  3 [a11y] › e2e\products.spec.ts:36:9 › deep links to an app › /products#pxp makes stop 3 active with its card in view below the header @a11y (1.0s)
+  ok  2 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /: axe, one H1, alt text, no nesting @a11y (3.4s)
+  ok  4 [a11y] › e2e\products.spec.ts:36:9 › deep links to an app › /products#ai-tutor makes stop 4 active with its card in view below the header @a11y (1.3s)
   ok  5 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /products: axe, one H1, alt text, no nesting @a11y (1.8s)
-  ok  6 [a11y] › e2e\products.spec.ts:35:9 › deep links to an app › /products#iot makes stop 5 active with its card in view below the header @a11y (1.6s)
-  ok  7 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /services: axe, one H1, alt text, no nesting @a11y (1.6s)
-  ok  8 [a11y] › e2e\products.spec.ts:89:7 › school-day roadmap › the roadmap shows the H1 and six cards @a11y (732ms)
-  ok 10 [a11y] › e2e\products.spec.ts:103:7 › school-day roadmap › scrolling walks the tour stop by stop, pinned, then the demo band follows @a11y (1.2s)
-  ok  9 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /news: axe, one H1, alt text, no nesting @a11y (1.8s)
-  ok 11 [a11y] › e2e\products.spec.ts:191:7 › school-day roadmap › each stop becomes active exactly once, in order, and back again @a11y (1.5s)
-  ok 12 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /about: axe, one H1, alt text, no nesting @a11y (1.7s)
-  ok 13 [a11y] › e2e\products.spec.ts:235:9 › school-day roadmap › 1280x800: the whole stage stays inside the window below the header @a11y (1.1s)
-  ok 14 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /careers: axe, one H1, alt text, no nesting @a11y (2.1s)
-  ok 15 [a11y] › e2e\products.spec.ts:235:9 › school-day roadmap › 1920x1080: the whole stage stays inside the window below the header @a11y (1.4s)
-  ok 17 [a11y] › e2e\products.spec.ts:277:7 › school-day roadmap › walking the tour shifts the layout by less than 0.1 @a11y (1.1s)
-  ok 16 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /demo: axe, one H1, alt text, no nesting @a11y (2.0s)
-  ok 18 [a11y] › e2e\products.spec.ts:306:7 › school-day roadmap › Tab reaches the six cards in road order @a11y (999ms)
-  ok 19 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /privacy: axe, one H1, alt text, no nesting @a11y (1.6s)
-  ok 20 [a11y] › e2e\products.spec.ts:328:7 › school-day roadmap › the footer link For schools lands on Staff Hub with its card whole @a11y (1.5s)
-  ok 21 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /no-such-page: axe, one H1, alt text, no nesting @a11y (1.3s)
-  ok 22 [a11y] › e2e\products.spec.ts:345:9 › school-day roadmap › phone › each stop appears as it scrolls into view @a11y (1.8s)
-  ok 24 [a11y] › e2e\products.spec.ts:366:9 › school-day roadmap › reduced motion › shows the whole roadmap at once @a11y (814ms)
-  ok 23 [a11y] › e2e\a11y.spec.ts:69:7 › every page type › one news story: axe, one H1, alt text, no nesting @a11y (1.6s)
-  ok 25 [a11y] › e2e\products.spec.ts:381:7 › school-day roadmap › a card opens the modal, Next moves, and Esc returns focus to the card @a11y (1.4s)
-  ok 27 [a11y] › e2e\products.spec.ts:406:7 › school-day roadmap › 390px has no sideways scroll @a11y (728ms)
-  ok 26 [a11y] › e2e\a11y.spec.ts:75:7 › every page type › one job page: axe, one H1, alt text, no nesting @a11y (2.0s)
+  ok  6 [a11y] › e2e\products.spec.ts:36:9 › deep links to an app › /products#iot makes stop 5 active with its card in view below the header @a11y (1.6s)
+  ok  8 [a11y] › e2e\products.spec.ts:90:7 › school-day roadmap › the roadmap shows the H1 and six cards @a11y (861ms)
+  ok  7 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /services: axe, one H1, alt text, no nesting @a11y (1.8s)
+  ok  9 [a11y] › e2e\products.spec.ts:104:7 › school-day roadmap › scrolling walks the tour stop by stop, pinned, then the demo band follows @a11y (1.1s)
+  ok 10 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /news: axe, one H1, alt text, no nesting @a11y (1.9s)
+  ok 11 [a11y] › e2e\products.spec.ts:192:7 › school-day roadmap › each stop becomes active exactly once, in order, and back again @a11y (1.7s)
+  ok 13 [a11y] › e2e\products.spec.ts:236:9 › school-day roadmap › 1280x800: the whole stage stays inside the window below the header @a11y (1.0s)
+  ok 12 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /about: axe, one H1, alt text, no nesting @a11y (2.0s)
+  ok 14 [a11y] › e2e\products.spec.ts:236:9 › school-day roadmap › 1920x1080: the whole stage stays inside the window below the header @a11y (1.4s)
+  ok 15 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /careers: axe, one H1, alt text, no nesting @a11y (2.0s)
+  ok 16 [a11y] › e2e\products.spec.ts:278:7 › school-day roadmap › walking the tour shifts the layout by less than 0.1 @a11y (1.6s)
+  ok 18 [a11y] › e2e\products.spec.ts:307:7 › school-day roadmap › Tab reaches the six cards in road order @a11y (910ms)
+  ok 17 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /demo: axe, one H1, alt text, no nesting @a11y (2.0s)
+  ok 19 [a11y] › e2e\products.spec.ts:329:7 › school-day roadmap › the footer link For schools lands on Staff Hub with its card whole @a11y (1.6s)
+  ok 20 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /privacy: axe, one H1, alt text, no nesting @a11y (1.6s)
+  ok 21 [a11y] › e2e\products.spec.ts:346:9 › school-day roadmap › phone › each stop appears as it scrolls into view @a11y (1.8s)
+  ok 22 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /no-such-page: axe, one H1, alt text, no nesting @a11y (1.4s)
+  ok 23 [a11y] › e2e\products.spec.ts:367:9 › school-day roadmap › reduced motion › shows the whole roadmap at once @a11y (921ms)
+  ok 24 [a11y] › e2e\a11y.spec.ts:69:7 › every page type › one news story: axe, one H1, alt text, no nesting @a11y (1.7s)
+  ok 25 [a11y] › e2e\products.spec.ts:382:7 › school-day roadmap › a card opens the modal, Next moves, and Esc returns focus to the card @a11y (1.8s)
+  ok 27 [a11y] › e2e\products.spec.ts:407:7 › school-day roadmap › 390px has no sideways scroll @a11y (737ms)
+  ok 26 [a11y] › e2e\a11y.spec.ts:75:7 › every page type › one job page: axe, one H1, alt text, no nesting @a11y (1.8s)
   ok 28 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /: ring, closed parts, Tab order, 24px targets @a11y (1.2s)
-  ok 29 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /products: ring, closed parts, Tab order, 24px targets @a11y (745ms)
-  ok 30 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /services: ring, closed parts, Tab order, 24px targets @a11y (567ms)
-  ok 31 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /news: ring, closed parts, Tab order, 24px targets @a11y (755ms)
-  ok 32 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /demo: ring, closed parts, Tab order, 24px targets @a11y (940ms)
-  ok 33 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /about: ring, closed parts, Tab order, 24px targets @a11y (709ms)
-  ok 34 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /careers: ring, closed parts, Tab order, 24px targets @a11y (612ms)
-  ok 35 [a11y] › e2e\a11y.spec.ts:206:7 › keyboard › Tab stops reach paper, mist, amber and navy surfaces @a11y (3.8s)
-  ok 36 [a11y] › e2e\a11y.spec.ts:223:7 › keyboard › closed parts exist and are hidden, so Tab cannot reach them @a11y (843ms)
-  ok 37 [a11y] › e2e\a11y.spec.ts:237:7 › keyboard › 390px: ring, closed mobile menu, Tab order, 24px targets @a11y (1.3s)
-  ok 38 [a11y] › e2e\a11y.spec.ts:251:7 › reflow › Home at 390px: no sideways scroll, stacked cards, two figures per row @a11y (454ms)
-  ok 39 [a11y] › e2e\a11y.spec.ts:308:7 › form errors › contact form on /demo @a11y (531ms)
-  ok 40 [a11y] › e2e\a11y.spec.ts:313:7 › form errors › contact form on Home @a11y (682ms)
-  ok 41 [a11y] › e2e\a11y.spec.ts:318:7 › form errors › job application form @a11y (615ms)
+  ok 29 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /products: ring, closed parts, Tab order, 24px targets @a11y (715ms)
+  ok 30 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /services: ring, closed parts, Tab order, 24px targets @a11y (557ms)
+  ok 31 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /news: ring, closed parts, Tab order, 24px targets @a11y (692ms)
+  ok 32 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /demo: ring, closed parts, Tab order, 24px targets @a11y (972ms)
+  ok 33 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /about: ring, closed parts, Tab order, 24px targets @a11y (701ms)
+  ok 34 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /careers: ring, closed parts, Tab order, 24px targets @a11y (610ms)
+  ok 35 [a11y] › e2e\a11y.spec.ts:206:7 › keyboard › Tab stops reach paper, mist, amber and navy surfaces @a11y (3.3s)
+  ok 36 [a11y] › e2e\a11y.spec.ts:223:7 › keyboard › closed parts exist and are hidden, so Tab cannot reach them @a11y (811ms)
+  ok 37 [a11y] › e2e\a11y.spec.ts:237:7 › keyboard › 390px: ring, closed mobile menu, Tab order, 24px targets @a11y (1.0s)
+  ok 38 [a11y] › e2e\a11y.spec.ts:251:7 › reflow › Home at 390px: no sideways scroll, stacked cards, two figures per row @a11y (451ms)
+  ok 39 [a11y] › e2e\a11y.spec.ts:308:7 › form errors › contact form on /demo @a11y (562ms)
+  ok 40 [a11y] › e2e\a11y.spec.ts:313:7 › form errors › contact form on Home @a11y (705ms)
+  ok 41 [a11y] › e2e\a11y.spec.ts:318:7 › form errors › job application form @a11y (633ms)
   ok 42 [a11y] › e2e\a11y.spec.ts:329:7 › Home hero doors and +3 reveal › doors straddle the hero and the +3 list opens and closes @a11y (2.7s)
-  ok 43 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 1280px: content clears the ridge @a11y (508ms)
-  ok 44 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 1280px: content clears the ridge @a11y (342ms)
-  ok 45 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 1280px: content clears the ridge @a11y (433ms)
-  ok 46 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 1280px: content clears the ridge @a11y (348ms)
-  ok 47 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 1280px: content clears the ridge @a11y (540ms)
-  ok 48 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 1280px: content clears the ridge @a11y (570ms)
-  ok 49 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 390px: content clears the ridge @a11y (563ms)
-  ok 50 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 390px: content clears the ridge @a11y (383ms)
-  ok 51 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 390px: content clears the ridge @a11y (449ms)
-  ok 52 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 390px: content clears the ridge @a11y (386ms)
-  ok 53 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 390px: content clears the ridge @a11y (540ms)
-  ok 54 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 390px: content clears the ridge @a11y (481ms)
-  ok 55 [a11y] › e2e\a11y.spec.ts:471:7 › services layout › sticky heading at 1280, stacked at 980, one column at 640, anchor clears the header @a11y (6.9s)
-  ok 56 [a11y] › e2e\a11y.spec.ts:545:7 › about layout › FAQ in two columns at 1280 and one at 760, /about#faq and /about#book land under the header @a11y (6.9s)
-  ok 57 [a11y] › e2e\a11y.spec.ts:592:7 › about layout › offices sit at opposite edges at 1280 and stack at 390; FAQ rows open by keyboard @a11y (650ms)
+  ok 43 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 1280px: content clears the ridge @a11y (479ms)
+  ok 44 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 1280px: content clears the ridge @a11y (348ms)
+  ok 45 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 1280px: content clears the ridge @a11y (483ms)
+  ok 46 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 1280px: content clears the ridge @a11y (441ms)
+  ok 47 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 1280px: content clears the ridge @a11y (753ms)
+  ok 48 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 1280px: content clears the ridge @a11y (721ms)
+  ok 49 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 390px: content clears the ridge @a11y (559ms)
+  ok 50 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 390px: content clears the ridge @a11y (368ms)
+  ok 51 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 390px: content clears the ridge @a11y (450ms)
+  ok 52 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 390px: content clears the ridge @a11y (360ms)
+  ok 53 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 390px: content clears the ridge @a11y (563ms)
+  ok 54 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 390px: content clears the ridge @a11y (530ms)
+  ok 55 [a11y] › e2e\a11y.spec.ts:471:7 › services layout › sticky heading at 1280, stacked at 980, one column at 640, anchor clears the header @a11y (7.1s)
+  ok 56 [a11y] › e2e\a11y.spec.ts:545:7 › about layout › FAQ in two columns at 1280 and one at 760, /about#faq and /about#book land under the header @a11y (7.0s)
+  ok 57 [a11y] › e2e\a11y.spec.ts:592:7 › about layout › offices sit at opposite edges at 1280 and stack at 390; FAQ rows open by keyboard @a11y (667ms)
 
   57 passed (1.1m)
 exit 0

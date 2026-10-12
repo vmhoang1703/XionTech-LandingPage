@@ -1498,3 +1498,28 @@ Template:
   - Copying the "already visible → no replay" rule meant desktop never saw the animation; the final walk caught it.
   - The 3D tour first crashed on a negative frame time.
 - **Follow-up (2026-10-12):** Sammy asked to remove the road's Start/Finish badges and to highlight the pin of the stop he clicks. The review noticed the highlight was colour only, so it got a halo, and that a desktop pin shadow rule would have hidden that halo at 1100px and wider.
+
+## 2026-10-12 — Products roadmap becomes a scroll tour; "What we build" removed
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` dispatch route
+- **Prompt (short):** "Remove all of What we build on the Product page; can we scroll to go through the roadmap?"
+- **What the AI did:**
+  - Asked two questions first. Sammy chose: the roadmap takes over the app anchors, and a pinned scroll tour.
+  - Removed the showcase, the app dialogs and their code. Moved `#pxp`, `#sxp`, `#ai-tutor` and `#iot` onto the roadmap stops.
+  - Built the tour on wide screens: the roadmap stays under the header while plain scrolling moves stop by stop. The road draws to the active stop and its pin turns amber. Phones keep the per-stop reveal.
+  - Four tasks with task reviews, the five-layer review, and a walk on a production build.
+- **Decision / result:**
+  - The stage zooms to fit the window, but card text keeps DESIGN.md's 11.5px floor.
+  - The tour starts only when the stage fits at a zoom of at least 0.72; shorter windows get the static roadmap.
+  - Checks:
+    - 1286 unit tests;
+    - diff coverage 100%;
+    - 15 smoke tests;
+    - the build;
+    - 57 accessibility browser tests.
+- **AI got it wrong?** Yes:
+  - The first zoom shrank labels to about 10px.
+  - A `%` in the URL hash would have crashed the page.
+  - The road ran backwards once at load.
+  - Scrolling behind an open modal moved the selected pin.
+  - The first anchor pass left `#pxp` and `#iot` landing under the header.
