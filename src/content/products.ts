@@ -136,3 +136,63 @@ export const journeyMap = {
   listHeading: "Our apps",
   motion: { pause: "Pause motion", play: "Play motion" },
 } as const;
+
+// The school-day roadmap: one student's day from arrival to the end of the
+// day, as stations on a road. Times, titles and text are the prototype's
+// "A day at school" copy (products.html); the IoT stop uses IoT's own
+// feature title and tagline, and has no time because the prototype gives none.
+export type RoadStop = {
+  id: string;
+  time?: string;
+  title: string;
+  text: string;
+  app?: AppId;
+};
+
+export const dayRoad = {
+  heading: "A day at school.",
+  lede: "Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step.",
+  start: "Start",
+  finish: "Finish",
+  stops: [
+    {
+      id: "arrive",
+      time: "07:45",
+      title: "Student arrives",
+      text: "The student arrives on campus.",
+    },
+    {
+      id: "attendance",
+      time: "08:00",
+      title: "Attendance recorded",
+      text: "A teacher marks the student's attendance in Staff Hub.",
+      app: "staff-hub",
+    },
+    {
+      id: "parent",
+      time: "08:01",
+      title: "Parent updated",
+      text: "Parent Hub notifies parents that the student is at school.",
+      app: "parent-hub",
+    },
+    {
+      id: "learn",
+      time: "09:30",
+      title: "Student learns",
+      text: "Students practise and ask questions with the AI Tutor.",
+      app: "ai-tutor",
+    },
+    {
+      id: "campus",
+      title: productDetails.iot.features[1].title,
+      text: iot.tagline,
+      app: "iot",
+    },
+    {
+      id: "connected",
+      time: "15:30",
+      title: "Day stays connected",
+      text: "Notifications and school information stay connected across the system.",
+    },
+  ] satisfies RoadStop[],
+} as const;

@@ -3585,6 +3585,402 @@
     }
   }
 
+  /* Products roadmap */
+  /* One school day as a 3D road. The stop cards are a plain timeline until
+     the scene is ready on a wide screen; then they sit over their stations. */
+  .road-h {
+    margin: 56px 0 0;
+    color: var(--color-navy);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+  }
+
+  .road-lede {
+    max-width: 60ch;
+    margin: 12px 0 0;
+  }
+
+  /* The road breaks out of the page column: nearly the full window. */
+  .road {
+    position: relative;
+    left: 50%;
+    width: min(1680px, calc(100vw - 32px));
+    margin-top: 32px;
+    translate: -50% 0;
+  }
+
+  .road-stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--color-white), var(--color-ice));
+    overflow: hidden;
+  }
+
+  .road-scene,
+  .road-still {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .road-still-path {
+    fill: none;
+    stroke: var(--color-navy);
+    stroke-width: 26;
+    stroke-linecap: round;
+  }
+
+  .road-still-line {
+    fill: none;
+    stroke: var(--color-amber-pale);
+    stroke-width: 2;
+    stroke-dasharray: 8 10;
+  }
+
+  .road-still-stop {
+    fill: var(--color-white);
+    stroke: var(--color-navy);
+    stroke-width: 4;
+  }
+
+  .road-end {
+    position: absolute;
+    top: 50%;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .road-end-start {
+    left: 16px;
+  }
+
+  .road-end-finish {
+    right: 16px;
+  }
+
+  .road-toggle {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    padding-inline: 12px;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .road-toggle svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* The timeline: stacked cards joined by a line. */
+  .road-stops {
+    display: grid;
+    gap: 16px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+
+  .road-stop {
+    position: relative;
+    padding: 14px 16px 14px 56px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    box-shadow: 0 6px 18px rgb(22 54 99 / 0.1);
+    transition:
+      transform 200ms var(--ease-brand),
+      border-color 200ms var(--ease-brand);
+  }
+
+  .road-stop[data-active="true"] {
+    border-color: var(--color-navy);
+  }
+
+  .road-step {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-full);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .road-stop[data-active="true"] .road-step {
+    background: var(--color-amber);
+    color: var(--color-navy);
+  }
+
+  .road-time {
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .road-stop h3 {
+    margin: 2px 0 0;
+    color: var(--color-navy);
+    font-size: 1rem;
+    line-height: 1.25;
+  }
+
+  .road-stop p {
+    margin: 4px 0 0;
+    color: var(--color-text);
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .road-app {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 2px 10px 2px 2px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-full);
+    color: var(--color-navy);
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+
+  /* The title button covers the whole card, so a click anywhere opens it. */
+  .road-open {
+    border: 0;
+    padding: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+  }
+
+  .road-open::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .road-stop:hover {
+    border-color: var(--color-navy);
+  }
+
+  .road-stop:has(.road-open:focus-visible) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
+  /* Wide screens with the scene ready: the cards float over the stations. */
+  .road[data-placed="true"] .road-stops {
+    position: absolute;
+    inset: 0;
+    display: block;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .road[data-placed="true"] .road-stop {
+    position: absolute;
+    width: clamp(200px, 15vw, 250px);
+    padding: 10px 12px 10px 48px;
+    transform: translate(-50%, calc(-100% - 6px));
+    pointer-events: auto;
+  }
+
+  .road[data-placed="true"] .road-stop[data-row="near"] {
+    transform: translate(-50%, 70px);
+  }
+
+  .road[data-placed="true"] .road-stop[data-active="true"] {
+    transform: translate(-50%, calc(-100% - 12px));
+  }
+
+  .road[data-placed="true"] .road-stop[data-row="near"][data-active="true"] {
+    transform: translate(-50%, 64px);
+  }
+
+  .road[data-placed="true"] .road-step {
+    top: 10px;
+    left: 10px;
+  }
+
+  @media (min-width: 960px) {
+    .road-stage {
+      aspect-ratio: 21 / 9;
+    }
+  }
+
+  /* The stop modal. */
+  .road-dialog {
+    width: min(560px, calc(100vw - 32px));
+    max-height: calc(100dvh - 48px);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    color: var(--color-text);
+    box-shadow: 0 24px 60px rgb(22 54 99 / 0.25);
+  }
+
+  .road-dialog::backdrop {
+    background: rgb(16 34 63 / 0.55);
+  }
+
+  .road-dialog-body {
+    padding: 24px;
+  }
+
+  .road-dialog-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .road-dialog-step {
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .road-dialog-close {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    color: var(--color-navy);
+  }
+
+  .road-dialog h2 {
+    margin: 12px 0 0;
+    color: var(--color-navy);
+    font-size: 1.6rem;
+    line-height: 1.15;
+  }
+
+  .road-dialog-text {
+    margin: 8px 0 0;
+  }
+
+  .road-dialog-app {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    background: var(--color-mist);
+  }
+
+  .road-dialog-app-h {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .road-dialog-app h3 {
+    margin: 0;
+    color: var(--color-navy);
+    font-size: 1.1rem;
+  }
+
+  .road-dialog-app h4 {
+    margin: 12px 0 4px;
+    color: var(--color-navy);
+    font-size: 0.85rem;
+  }
+
+  .road-dialog-app p,
+  .road-dialog-app li {
+    margin: 2px 0 0;
+    font-size: 0.9rem;
+  }
+
+  .road-dialog-app ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .road-dialog-more {
+    margin-top: 16px;
+  }
+
+  .road-dialog-apps {
+    display: grid;
+    gap: 8px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .road-dialog-apps button {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    color: var(--color-text);
+    text-align: left;
+  }
+
+  .road-dialog-apps button:hover {
+    border-color: var(--color-navy);
+  }
+
+  .road-dialog-apps strong {
+    display: block;
+    color: var(--color-navy);
+  }
+
+  .road-dialog-apps span span {
+    font-size: 0.85rem;
+  }
+
+  .road-dialog-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .road-dialog-nav button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .road-stop {
+      transition: none;
+    }
+  }
+
   /* Showcase cards: What we build. */
   .pshows {
     display: grid;
