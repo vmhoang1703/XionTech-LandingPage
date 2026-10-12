@@ -82,7 +82,7 @@ context:
   - red: `road-stop-dialog.test.tsx` -- the backdrop click outside the box closes the dialog (write it against a broken coordinate check first).
 - [x] `src/components/products/journey/road-map.tsx` + `globals.css` -- the draw-in: phases on `.rm` (`data-reveal`), a mask path drawing the wide road (pathLength 1, dashoffset), per-stop `--delay` from road position; the narrow bends reveal top to bottom with clip-path; the armed CSS only under `[data-reveal="armed"]`; transitions only under `[data-reveal="on"]`.
   - red: `src/components/products/journey/road-map.test.tsx` -- static without JS and under reduced motion; armed then on after 30% intersection; already visible at load → on; delays increase in road order; six cards, each opens the modal; CSS rules hide nothing without the attribute.
-- [ ] `src/app/products/page.test.tsx`, `e2e/products.spec.ts` -- page order `#map` → `#apps` → navy band; only defined classes. E2E (`@a11y` and `@smoke` as before):
+- [x] `src/app/products/page.test.tsx`, `e2e/products.spec.ts` -- page order `#map` → `#apps` → navy band; only defined classes. E2E (`@a11y` and `@smoke` as before):
   - roadmap visible with 6 cards;
   - scroll-in plays and everything is visible after it;
   - reduced motion shows everything at once;
