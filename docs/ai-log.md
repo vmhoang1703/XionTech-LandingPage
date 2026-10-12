@@ -1497,3 +1497,4 @@ Template:
   - One observer over the tall phone list could never fire on short screens.
   - Copying the "already visible → no replay" rule meant desktop never saw the animation; the final walk caught it.
   - The 3D tour first crashed on a negative frame time.
+- **Follow-up (2026-10-12):** Sammy asked to remove the road's Start/Finish badges and to highlight the pin of the stop he clicks. The review noticed the highlight was colour only, so it got a halo, and that a desktop pin shadow rule would have hidden that halo at 1100px and wider.

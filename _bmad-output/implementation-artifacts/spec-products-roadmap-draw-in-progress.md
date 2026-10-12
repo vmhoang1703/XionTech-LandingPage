@@ -86,3 +86,8 @@ Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-1.pn
 Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-2.png — 91443 bytes — sha256 bae7c009d426 — narrow-step-2.png (final)
 Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-3.png — 85181 bytes — sha256 df71edb549e8 — narrow-step-3.png (final)
 Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-4.png — 86881 bytes — sha256 0a1b7f2b9b6a — narrow-step-4.png (final)
+Follow-up: Sammy 2026-10-12 — remove Start/Finish badges, highlight the opened stop (commits 80e6745, bb2ade7)
+Follow-up: red — npx vitest run src/components/products/journey/road-map.test.tsx — 4 new selection tests failed before the change
+Follow-up: green — npx vitest run src/components/products/journey src/app/products — 24 passed
+Follow-up: review — full five layers (120 changed lines): security clean, verification-gap none, edge/blind/auditor → halo for non-colour cue (patched), spec and UX row updated; deep-link selection rejected (by design)
+Acceptance: verification — lint/typecheck/format, npm test (1287 passed), coverage:diff (141 lines, 100%), test:smoke (15), a11y (51) — all exit 0 (before the halo); after the halo: journey, design, type-scale, products tests 192 passed

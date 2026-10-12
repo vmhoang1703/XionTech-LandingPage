@@ -110,10 +110,13 @@ context:
 | Card | Hover, focus, activate | Mouse, keyboard, touch | Border and shadow on hover; focus ring; the modal opens | Instant | Quick dev  | ✅ e2e and walk: modal opens; focus ring (focused card never clipped); 25px title button |
 | Modal | Next, Previous, Esc, backdrop | Mouse, keyboard | Moves along the road; closes; focus back on the card | Instant | `road-stop-dialog.tsx`  | ✅ walk: Next, Esc, focus back on the card; `road-stop-dialog.test.tsx` |
 | App hand-over | "Open … details" | Mouse, keyboard | The app's dialog opens | Instant | `product-detail.tsx`  | ✅ walk: #pd-sxp opens; e2e hand-over |
+| Selected stop | Click a card; Next/Previous in the modal; close | Mouse, keyboard, touch | That stop's pin turns amber with a halo; it follows Next/Previous and stays after closing; no Start/Finish badges on the road | Instant | Sammy 2026-10-12 follow-up | ✅ `road-map.test.tsx` RoadMap selection; dev-server check (pin 3 amber with halo after close) |
 
 ## Implementation Notes
 
 ## Spec Change Log
+
+- **Follow-up (2026-10-12).** Sammy asked to remove the road's Start/Finish badges and to highlight the pin of the stop he opens. Done: badges removed (the draw still runs Start→Finish, unlabelled); the opened stop's pin is amber with a halo, follows Next/Previous and stays after closing; the finale's pin is no longer always amber. Full five-layer review (120 lines): security clean, no verification gap; halo added so the selection is not colour-only.
 
 - **Task 4 fix round 3 (2026-10-12).** Trigger: axe failed on dimmed (35%) waiting cards. Sammy decided: wipe, hidden until revealed. Amended: the Armed-state line and the Cards UX row. KEEP: static for no JS and reduced motion; the focused card is never clipped.
 - **Re-verify (2026-10-12).** Trigger: the walk found desktop never animates (the roadmap is 33–70% in view at load). Sammy decided: play the draw-in on load. Amended: the Phases bullet, the ALREADY_VISIBLE row, the Already-visible UX row.
