@@ -33,15 +33,16 @@ afterEach(() => {
 });
 
 describe("Products page", () => {
-  it("renders the roadmap, the showcase and the capture band in order", () => {
+  it("renders the roadmap, then the capture band, with no app showcase", () => {
     const { container } = render(<ProductsPage />);
     const sections = [...container.querySelectorAll("section")];
-    expect(sections).toHaveLength(3);
+    expect(sections).toHaveLength(2);
     expect(sections[0].id).toBe("map");
-    expect(sections[1].id).toBe("apps");
-    expect(sections[2].classList.contains("capture")).toBe(true);
+    expect(sections[1].classList.contains("capture")).toBe(true);
     // E-A5 CAP-5: the navy band from E-A4.
-    expect(sections[2].classList.contains("surface-navy")).toBe(true);
+    expect(sections[1].classList.contains("surface-navy")).toBe(true);
+    expect(container.querySelector("#apps")).toBeNull();
+    expect(container.querySelector("dialog.pdetail")).toBeNull();
     expect(
       screen.getByRole("heading", {
         level: 2,
@@ -65,11 +66,8 @@ describe("Products page", () => {
     expect(roadmap?.querySelectorAll(".rm-card")).toHaveLength(6);
   });
 
-  it("has the four card ids and no sub-nav, tab list, Updates link or LXP section", () => {
+  it("has no sub-nav, tab list, Updates link or LXP section", () => {
     const { container } = render(<ProductsPage />);
-    for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
-      expect(container.querySelector(`article#${id}`)).not.toBeNull();
-    }
     expect(container.querySelector(".subnav")).toBeNull();
     expect(screen.queryByRole("tablist")).toBeNull();
     expect(container.querySelector('a[href="#updates"]')).toBeNull();

@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { APPS, appById, type AppId } from "@/content/apps";
 import { dayRoad, productDetails, productsShowcase } from "@/content/products";
 import { MapBadge } from "../map/map-badge";
-import { openAppDialog } from "../map/open-app-dialog";
 
 // The modal for one stop on the school-day road: the step in full, the app
 // at work there (its "Made for" line and features), and Previous/Next to walk
@@ -71,12 +70,8 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
           <h2 id="road-dialog-h">{stop.title}</h2>
           <p className="road-dialog-text">{stop.text}</p>
 
-          {stop.app ? (
-            <StopApp id={stop.app} onLeave={() => ref.current?.close()} />
-          ) : null}
-          {!stop.app && index === LAST ? (
-            <AllApps onLeave={() => ref.current?.close()} />
-          ) : null}
+          {stop.app ? <StopApp id={stop.app} /> : null}
+          {!stop.app && index === LAST ? <AllApps /> : null}
 
           <div className="road-dialog-nav">
             <button
@@ -104,16 +99,8 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
   );
 }
 
-type Leave = Readonly<{ onLeave: () => void }>;
-
-// Hands over to an app's own dialog, giving it the button as its opener.
-function handOver(anchor: string, opener: HTMLElement, onLeave: () => void) {
-  onLeave();
-  openAppDialog(anchor, opener);
-}
-
 // The app at work at this stop: name, tagline, "Made for" and features.
-function StopApp({ id, onLeave }: Readonly<{ id: AppId }> & Leave) {
+function StopApp({ id }: Readonly<{ id: AppId }>) {
   const app = appById(id);
   const detail = productDetails[id];
   return (
@@ -134,36 +121,21 @@ function StopApp({ id, onLeave }: Readonly<{ id: AppId }> & Leave) {
           <li key={feature.id}>{feature.title}</li>
         ))}
       </ul>
-      <button
-        type="button"
-        className="btn btn-primary road-dialog-more"
-        onClick={(event) => handOver(app.anchor, event.currentTarget, onLeave)}
-      >
-        {productsShowcase.openLabel(app.shortName)}
-        <ArrowRightIcon aria-hidden="true" />
-      </button>
     </section>
   );
 }
 
 // The last stop: every app that kept the day connected.
-function AllApps({ onLeave }: Leave) {
+function AllApps() {
   return (
     <ul className="road-dialog-apps">
       {APPS.map((one) => (
         <li key={one.id}>
-          <button
-            type="button"
-            onClick={(event) =>
-              handOver(one.anchor, event.currentTarget, onLeave)
-            }
-          >
-            <MapBadge badge={one.badge} />
-            <span>
-              <strong>{one.shortName}</strong>
-              <span>{one.tagline}</span>
-            </span>
-          </button>
+          <MapBadge badge={one.badge} />
+          <span>
+            <strong>{one.shortName}</strong>
+            <span>{one.tagline}</span>
+          </span>
         </li>
       ))}
     </ul>

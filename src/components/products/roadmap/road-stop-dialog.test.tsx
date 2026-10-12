@@ -148,40 +148,21 @@ describe("RoadStopDialog", () => {
     expect(screen.queryByRole("list")).toBeNull();
   });
 
-  it("hands over to the app dialog from the open-details button", () => {
-    const appDialog = document.createElement("dialog");
-    appDialog.id = "pd-sxp";
-    document.body.append(appDialog);
-    const { dialog, onClose } = setup(1);
-
-    fireEvent.click(button(productsShowcase.openLabel("Staff Hub")));
-
-    expect(dialog.open).toBe(false);
-    expect(onClose).toHaveBeenCalledTimes(1);
-    expect(appDialog.open).toBe(true);
+  it("has no open-details button on an app stop", () => {
+    setup(1);
+    expect(screen.queryByRole("button", { name: /details/i })).toBeNull();
   });
 
-  it("lists all four apps on the last stop and hands over from each", () => {
-    for (const app of APPS) {
-      const appDialog = document.createElement("dialog");
-      appDialog.id = `pd-${app.anchor}`;
-      document.body.append(appDialog);
-    }
+  it("lists all four apps on the last stop as plain chips, not buttons", () => {
     const { dialog } = setup(LAST);
 
-    const buttons = within(
-      dialog.querySelector(".road-dialog-apps") as HTMLElement,
-    ).getAllByRole("button");
-    expect(buttons).toHaveLength(4);
+    const list = dialog.querySelector(".road-dialog-apps") as HTMLElement;
+    const items = within(list).getAllByRole("listitem");
+    expect(items).toHaveLength(4);
+    expect(within(list).queryAllByRole("button")).toHaveLength(0);
     for (const [i, app] of APPS.entries()) {
-      expect(buttons[i].textContent).toContain(app.shortName);
-      expect(buttons[i].textContent).toContain(app.tagline);
+      expect(items[i].textContent).toContain(app.shortName);
+      expect(items[i].textContent).toContain(app.tagline);
     }
-
-    fireEvent.click(buttons[2]);
-    expect(dialog.open).toBe(false);
-    expect((document.getElementById("pd-iot") as HTMLDialogElement).open).toBe(
-      true,
-    );
   });
 });

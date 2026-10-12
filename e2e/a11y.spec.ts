@@ -231,7 +231,7 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
     await page.goto("/demo");
     await expect(page.locator('[role="tabpanel"][hidden]')).toHaveCount(1);
     await page.goto("/products");
-    await expect(page.locator("dialog.pdetail:not([open])")).toHaveCount(4);
+    await expect(page.locator("dialog.pdetail")).toHaveCount(0);
   });
 
   test("390px: ring, closed mobile menu, Tab order, 24px targets", async ({

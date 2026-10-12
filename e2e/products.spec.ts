@@ -20,29 +20,6 @@ test(
 );
 
 test(
-  "a showcase card opens its dialog by keyboard, keeps Tab inside, and Esc returns focus",
-  { tag: "@a11y" },
-  async ({ page }) => {
-    await page.goto("/products");
-    const expand = page.getByRole("button", { name: "Open Staff Hub details" });
-    await expand.focus();
-    await page.keyboard.press("Enter");
-    const dialog = page.getByRole("dialog", { name: "Staff Hub" });
-    await expect(dialog).toBeVisible();
-    for (let i = 0; i < 6; i++) {
-      await page.keyboard.press("Tab");
-      const inside = await dialog.evaluate((d) =>
-        d.contains(document.activeElement),
-      );
-      expect(inside, `Tab ${i + 1} stays in the dialog`).toBe(true);
-    }
-    await page.keyboard.press("Escape");
-    await expect(dialog).toBeHidden();
-    await expect(expand).toBeFocused();
-  },
-);
-
-test(
   "/products#ai-tutor lands on the AI Tutor card below the header",
   { tag: "@a11y" },
   async ({ page }) => {
@@ -207,17 +184,6 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     await expect(modal).toBeHidden();
     // Focus goes back to the card that opened the modal (the first one).
     await expect(first).toBeFocused();
-  });
-
-  test('"Open ... details" opens the app dialog', async ({ page }) => {
-    await page.goto("/products");
-    await page.getByRole("button", { name: "2. Attendance recorded" }).click();
-
-    const modal = page.locator("dialog.road-dialog");
-    await modal.getByRole("button", { name: "Open Staff Hub details" }).click();
-
-    await expect(modal).toBeHidden();
-    await expect(page.getByRole("dialog", { name: "Staff Hub" })).toBeVisible();
   });
 
   test("390px has no sideways scroll", async ({ page }) => {

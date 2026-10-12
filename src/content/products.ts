@@ -17,20 +17,8 @@ export const productsMeta = {
 
 // CAP-2.
 export const productsShowcase = {
-  heading: "What we build.",
-  lede: "Four apps that connect parents, schools and students. Use the expand icon to see each app in detail.",
-  openLabel: (name: string) => `Open ${name} details`,
-  closeLabel: (name: string) => `Close ${name} details`,
-  screenshot: (name: string, media: "phone" | "browser") =>
-    `[Placeholder] ${name} ${media === "phone" ? "phone screenshot" : "screenshot"}`,
   madeFor: "Made for",
   featuresHeading: "Features",
-  viewPrototype: "[Placeholder] View prototype",
-  newTab: "(opens in a new tab)",
-  stores: {
-    appStore: { small: "[Placeholder] Download on the", name: "App Store" },
-    googlePlay: { small: "[Placeholder] Get it on", name: "Google Play" },
-  },
 };
 
 // Feature descriptions are not confirmed yet (ENH-089).
