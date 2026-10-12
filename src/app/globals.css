@@ -3597,9 +3597,12 @@
   }
 
   /* The title button covers the whole card. */
+  /* 2px more above and below for a 24px target, taken back by the margin
+     so the layout does not move. */
   .rm-open {
+    margin-block: -2px;
     border: 0;
-    padding: 0;
+    padding: 2px 0;
     background: none;
     color: inherit;
     font: inherit;
@@ -3778,8 +3781,9 @@
   /* Roadmap draw-in. Wide: the road draws Start to Finish through a mask,
      each pin pops in as the road reaches it (--delay) and its card follows.
      Narrow: each stop reveals on its own as it scrolls in ([data-in]). Only
-     "armed" dims and masks; only "on" or [data-in] moves. "static" (no
-     JavaScript, reduced motion) leaves everything as drawn above. */
+     "armed" masks and clips, never by opacity, so text keeps its contrast;
+     only "on" or [data-in] moves. "static" (no JavaScript, reduced motion)
+     leaves everything as drawn above. */
   .rm-draw {
     fill: none;
     stroke: var(--color-white);
@@ -3799,22 +3803,30 @@
   }
 
   .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-pin {
-    opacity: 0.35;
-    scale: 0.6;
+    scale: 0;
   }
 
+  /* Cards wipe in from the side they come from: up from below the road
+     for the cards above it, down for the cards below. The open clip reaches
+     past the card so its shadow and focus ring show. */
   .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-card {
-    opacity: 0.35;
+    clip-path: inset(calc(100% + 60px) -60px -60px -60px);
     transform: translateY(16px);
   }
 
   .rm[data-reveal="armed"] .rm-stop[data-side="below"]:not([data-in]) .rm-card {
+    clip-path: inset(-60px -60px calc(100% + 60px) -60px);
     transform: translateY(-16px);
   }
 
-  /* A focused card keeps its focus ring at full strength. */
+  .rm[data-reveal="on"] .rm-card,
+  .rm-stop[data-in] .rm-card {
+    clip-path: inset(-60px);
+  }
+
+  /* A focused card is shown whole, with its focus ring. */
   .rm[data-reveal] .rm-stop:has(.rm-open:focus-visible) .rm-card {
-    opacity: 1;
+    clip-path: none;
     transform: none;
   }
 
@@ -3824,15 +3836,13 @@
 
   .rm[data-reveal="on"] .rm-pin,
   .rm-stop[data-in] .rm-pin {
-    transition:
-      opacity var(--transition-duration-menu) var(--ease-brand),
-      scale var(--transition-duration-menu) var(--ease-brand);
+    transition: scale var(--transition-duration-menu) var(--ease-brand);
   }
 
   .rm[data-reveal="on"] .rm-card,
   .rm-stop[data-in] .rm-card {
     transition:
-      opacity 400ms var(--ease-brand),
+      clip-path 400ms var(--ease-brand),
       transform 400ms var(--ease-brand);
   }
 

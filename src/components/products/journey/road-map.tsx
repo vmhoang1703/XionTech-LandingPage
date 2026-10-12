@@ -226,7 +226,7 @@ export function RoadMap() {
         </g>
       </svg>
 
-      <p className="rm-end rm-end-start">
+      <p className="rm-end">
         <FlagIcon aria-hidden="true" weight="fill" />
         {dayRoad.start}
       </p>

@@ -265,29 +265,48 @@ describe("RoadMap draw-in", () => {
     }
   });
 
-  it("dims and masks only under armed, and transitions only once shown", () => {
+  it("hides only under armed, never by opacity, and moves only once shown", () => {
     const rules = roadmapRules();
-    const hiding = rules.filter(({ body }) =>
-      /opacity:|stroke-dashoffset: 1|clip-path: inset\([^;]*100%|(?<![\w-])(?:transform|scale):/.test(
-        body,
-      ),
+    // Text keeps full contrast: only the decorative hills set an opacity.
+    for (const { selector } of rules.filter(({ body }) =>
+      /(?<![\w-])opacity:/.test(body),
+    )) {
+      expect(selector).toMatch(/^\.rm-hill/);
+    }
+    const drawIn = rules.filter(({ selector }) =>
+      /\[data-reveal|\[data-in\]/.test(selector),
     );
-    const armed = hiding.filter(({ selector }) =>
+    const hiding = drawIn.filter(({ body }) =>
+      /stroke-dashoffset: 1;|clip-path: inset\([^;]*100%|scale: 0;/.test(body),
+    );
+    expect(hiding.length).toBeGreaterThanOrEqual(5);
+    for (const { selector } of hiding) {
+      expect(selector).toContain('[data-reveal="armed"]');
+    }
+    const armed = drawIn.filter(({ selector }) =>
       selector.includes('[data-reveal="armed"]'),
     );
-    expect(armed.length).toBeGreaterThanOrEqual(4);
-    for (const { selector, body } of hiding) {
-      if (selector.includes('[data-reveal="armed"]')) continue;
-      if (selector.includes(":has(.rm-open:focus-visible)")) continue;
-      // Outside armed, only the decorative hills set an opacity.
-      expect(`${selector} {${body}}`).toMatch(/^\.rm-hill/);
-    }
-    // A stop that has scrolled in (narrow) is never dimmed again.
+    // A stop that has scrolled in (narrow) is never hidden again.
     for (const { selector } of armed.filter(({ selector }) =>
       /\.rm-(pin|card|seg)$/.test(selector),
     )) {
       expect(selector).toContain(":not([data-in])");
     }
+    // Cards wipe in from the side they come from; pins pop from nothing.
+    const card = (side: string) =>
+      armed.find(
+        ({ selector }) =>
+          selector.includes(side) && /\.rm-card$/.test(selector),
+      )?.body;
+    expect(card(":not([data-in]) .rm-card")).toMatch(
+      /clip-path: inset\(calc\(100% \+ \d+px\)/,
+    );
+    expect(card('[data-side="below"]')).toMatch(
+      /clip-path: inset\(-?\d+px -?\d+px calc\(100% \+ \d+px\)/,
+    );
+    expect(
+      armed.find(({ selector }) => /\.rm-pin$/.test(selector))?.body,
+    ).toMatch(/scale: 0;/);
     // No round cap on the hidden road, or it paints a dot at the start.
     const capped = rules.filter(({ body }) => /stroke-linecap/.test(body));
     const drawCaps = capped.filter(({ selector }) =>
@@ -297,17 +316,12 @@ describe("RoadMap draw-in", () => {
     expect(drawCaps[0].selector).toBe(
       '.rm:not([data-reveal="armed"]) .rm-draw',
     );
-    // A focused card shows its focus ring at full strength, even armed.
+    // A focused card is shown whole with its focus ring, even armed.
     const focused = rules.find(({ selector }) =>
       selector.includes(".rm-stop:has(.rm-open:focus-visible) .rm-card"),
     );
-    expect(focused?.body).toMatch(/opacity: 1;/);
+    expect(focused?.body).toMatch(/clip-path: none;/);
     expect(focused?.body).toMatch(/transform: none;/);
-    const dims = armed.flatMap(({ body }) =>
-      Array.from(body.matchAll(/opacity:\s*([\d.]+)/g), (m) => Number(m[1])),
-    );
-    expect(dims.length).toBeGreaterThanOrEqual(2);
-    for (const opacity of dims) expect(opacity).toBeGreaterThanOrEqual(0.35);
     const moving = rules.filter(({ body }) => /transition/.test(body));
     expect(moving.length).toBeGreaterThanOrEqual(4);
     for (const { selector } of moving) {

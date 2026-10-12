@@ -79,12 +79,8 @@ describe("Products page", () => {
 
   it("styles every class it uses", () => {
     const { container } = render(<ProductsPage />);
-    // rm-end-start is a marker: Start takes the plain .rm-end look.
     expect(
-      undefinedClasses(
-        container,
-        /^(sr-only|size-|mt-|-?z-|absolute|rm-end-start$)/,
-      ),
+      undefinedClasses(container, /^(sr-only|size-|mt-|-?z-|absolute)/),
     ).toEqual([]);
   });
 
