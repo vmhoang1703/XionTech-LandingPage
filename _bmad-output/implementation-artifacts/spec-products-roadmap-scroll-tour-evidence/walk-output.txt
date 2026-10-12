@@ -1,0 +1,28 @@
+track: top 507 height 3576
+step 1: {"tour":"on","active":1,"selected":1,"stageTop":88,"fits":true,"sideways":false}
+step 2: {"tour":"on","active":2,"selected":2,"stageTop":88,"fits":true,"sideways":false}
+step 3: {"tour":"on","active":3,"selected":3,"stageTop":88,"fits":true,"sideways":false}
+step 4: {"tour":"on","active":4,"selected":4,"stageTop":88,"fits":true,"sideways":false}
+step 5: {"tour":"on","active":5,"selected":5,"stageTop":88,"fits":true,"sideways":false}
+step 6: {"tour":"on","active":6,"selected":6,"stageTop":88,"fits":true,"sideways":false}
+past the roadmap: demo band in view true | stage stuck -796
+scrolled back to step 3: {"tour":"on","active":3,"selected":3,"stageTop":88,"fits":true,"sideways":false}
+CLS: 0.0001
+modal: true | Attendance recorded | details button 0
+selected after click: 2
+after Esc focus: 2. Attendance recorded
+What we build: #apps 0 | app dialogs 0
+fit 1440x900: {"tour":"on","active":1,"selected":1,"stageTop":88,"fits":true,"sideways":false}
+fit 1920x1080: {"tour":"on","active":1,"selected":1,"stageTop":88,"fits":true,"sideways":false}
+fit 1366x768: {"tour":"on","active":1,"selected":1,"stageTop":88,"fits":true,"sideways":false}
+#sxp: active stop 2 | card fully visible true
+#pxp: active stop 3 | card fully visible true
+#ai-tutor: active stop 4 | card fully visible true
+#iot: active stop 5 | card fully visible true
+reduced: {"tour":"-","active":0,"selected":0,"stageTop":507,"fits":false,"sideways":false}
+phone at load: {"tour":"-","active":0,"selected":0,"stageTop":603,"fits":false,"sideways":false} | in in - - - -
+phone scrolled to 600: in in in in - -
+phone scrolled to 1100: in in in in in in
+phone scrolled to 1600: in in in in in in
+phone scrolled to 2100: in in in in in in
+phone sideways: false

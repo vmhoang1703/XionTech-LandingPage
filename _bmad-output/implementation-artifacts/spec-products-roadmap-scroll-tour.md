@@ -2,7 +2,7 @@
 title: 'Products: roadmap scroll tour; What we build removed'
 type: 'feature'
 created: '2026-10-12'
-status: 'in-progress'
+status: 'in-review'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: 'b9cd7d97c9ca2f7304b13b0828db73c65fc23b47'
@@ -98,17 +98,17 @@ context:
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Pin | Scroll into the roadmap at 1280×800 | Mouse wheel, touch, keyboard (Space, PgDn, arrows) | Roadmap sticks below the header; stop 1 is active | Follows scroll | Sammy 2026-10-12 |  |
-| Advance | Keep scrolling | Same | Stops 2→6 become active in turn; road draws up to the active stop; the active pin is amber with its halo; the active card is emphasised | Road ~400ms `--ease-brand` per step | Sammy 2026-10-12 |  |
-| Back | Scroll up | Same | Active stop and road step back | Same | Spec |  |
-| Exit | Past stop 6 | Same | Roadmap releases; the demo band follows | Native | Sammy 2026-10-12 |  |
-| Fit | 1280×800, 1440×900, 1920×1080 | — | Whole stage inside the viewport below the header; no sideways scroll | Static | Spec |  |
-| Deep link | `/products#sxp`, `#ai-tutor` | Link | That stop active; its card fully visible below the header | Smooth native scroll; stops pass by on the way | Footer links |  |
-| Card | Click mid-tour | Mouse, keyboard, touch | The modal opens; that stop is selected; Esc returns focus | Instant | `road-stop-dialog.tsx` |  |
-| Modal | Last stop and app stops | Mouse, keyboard | No "Open … details" button; the app chips are not links | Instant | Sammy 2026-10-12 |  |
-| Reduced motion | Load with reduced motion | — | Static, complete roadmap; no pinning; no selected pin | Static | DESIGN.md:451 |  |
-| Narrow | 390px | Touch | Per-stop reveal as before; no pinning; no sideways scroll | As before | Spec |  |
-| Page | Load `/products` | — | The roadmap, then the navy demo band; no "What we build" | Static | Sammy 2026-10-12 |  |
+| Pin | Scroll into the roadmap at 1280×800 | Mouse wheel, touch, keyboard (Space, PgDn, arrows) | Roadmap sticks below the header; stop 1 is active | Follows scroll | Sammy 2026-10-12  | ✅ walk: stage top 88 at every step; e2e pinned |
+| Advance | Keep scrolling | Same | Stops 2→6 become active in turn; road draws up to the active stop; the active pin is amber with its halo; the active card is emphasised | Road ~400ms `--ease-brand` per step | Sammy 2026-10-12  | ✅ walk steps 1-6 active and selected in order; screenshots tour-step-1/3/6; e2e once-in-order |
+| Back | Scroll up | Same | Active stop and road step back | Same | Spec  | ✅ walk: back to step 3; e2e steps back |
+| Exit | Past stop 6 | Same | Roadmap releases; the demo band follows | Native | Sammy 2026-10-12  | ✅ walk: demo band in view past the roadmap (after-tour.png) |
+| Fit | 1280×800, 1440×900, 1920×1080 | — | Whole stage inside the viewport below the header; no sideways scroll | Static | Spec  | ✅ walk fits at 1280x800, 1366x768, 1440x900, 1920x1080; e2e fit; text floor 11.5px |
+| Deep link | `/products#sxp`, `#ai-tutor` | Link | That stop active; its card fully visible below the header | Smooth native scroll; stops pass by on the way | Footer links  | ✅ walk #sxp→2, #pxp→3, #ai-tutor→4, #iot→5, cards fully visible; e2e footer link |
+| Card | Click mid-tour | Mouse, keyboard, touch | The modal opens; that stop is selected; Esc returns focus | Instant | `road-stop-dialog.tsx`  | ✅ walk: modal opens, stop selected, Esc returns focus |
+| Modal | Last stop and app stops | Mouse, keyboard | No "Open … details" button; the app chips are not links | Instant | Sammy 2026-10-12  | ✅ walk: no details button; `road-stop-dialog.test.tsx` |
+| Reduced motion | Load with reduced motion | — | Static, complete roadmap; no pinning; no selected pin | Static | DESIGN.md:451  | ✅ walk: no tour, nothing active or selected; e2e |
+| Narrow | 390px | Touch | Per-stop reveal as before; no pinning; no sideways scroll | As before | Spec  | ✅ walk 390: stops reveal as scrolled, no sideways scroll; e2e |
+| Page | Load `/products` | — | The roadmap, then the navy demo band; no "What we build" | Static | Sammy 2026-10-12  | ✅ walk: #apps 0, app dialogs 0; `page.test.tsx` |
 
 ## Implementation Notes
 
@@ -125,3 +125,34 @@ context:
 - `npm run test:smoke` -- expected: all pass
 - `npm run build` -- expected: success
 - `npx playwright test --project=a11y` -- expected: all pass
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-12.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
+- `npm test` -- exit 0 -- Test Files 86 passed (86); Tests 1282 passed (1282)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 156 lines, Missing 0, Coverage 100%; `products/journey` branches 98.83%
+- `npm run test:smoke` -- exit 0 -- 15 passed
+- `npm run build` -- exit 0 -- success
+- `npx playwright test --project=a11y` -- exit 0 -- 57 passed
+
+**Observed**
+
+- Walk on a production build (`next start -p 3005`, Chrome), `walk-output.txt`:
+  - 1280×800: steps 1–6 active and selected in order with the stage pinned at 88px, fitting with no sideways scroll. The demo band follows, scrolling back restores the step, and CLS is 0.0001.
+  - A card opens its modal with no details button, the stop is selected, and Esc returns focus. "What we build" is gone.
+  - The stage fits at 1366×768, 1440×900 and 1920×1080. Deep links `#sxp`, `#pxp`, `#ai-tutor` and `#iot` land on stops 2–5, each card fully visible.
+  - Reduced motion: no tour. 390px: stops reveal as scrolled, with no sideways scroll.
+
+**Artifacts**
+
+- [verification.txt](spec-products-roadmap-scroll-tour-evidence/verification.txt), [walk.mjs](spec-products-roadmap-scroll-tour-evidence/walk.mjs), [walk-output.txt](spec-products-roadmap-scroll-tour-evidence/walk-output.txt)
+- `tour-step-1.png`, `tour-step-3.png`, `tour-step-6.png`, `after-tour.png`, `deeplink-sxp.png`, `reduced.png`, `phone.png` (hashes in the ledger)
+
+**Not captured**
+
+- Safari and Firefox (Chrome channel only).
+

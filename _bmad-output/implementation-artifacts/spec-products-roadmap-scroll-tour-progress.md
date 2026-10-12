@@ -27,3 +27,23 @@ Task 4: green — vitest src/app/products 6; products e2e 16; smoke 15; a11y spe
 Task 4: review — pass — 0 critical, 0 important, 3 minor
 Task 4: minor — e2e/products.spec.ts:15-17 smoke "inside the roadmap" checks order only; helpers duplicate inline logic; step-order and CLS reads timing-sensitive
 Task 4: complete (commits 6364afe..b16f392, diff verified)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — clean
+Acceptance: verification — npm test — exit 0 — Test Files 86 passed (86); Tests 1282 passed (1282)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total 156 lines, Missing 0, Coverage 100%; products/journey branches 98.83%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed
+Acceptance: verification — npm run build — exit 0 — success
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 57 passed (1.1m)
+Acceptance: manual — tour 1280x800 — observed: steps 1-6 active and selected in order, stage top 88 throughout, fits, no sideways scroll; past the roadmap the demo band is in view; scrolling back to step 3 restores 3; CLS 0.0001
+Acceptance: manual — modal and removal — observed: card 2 opens "Attendance recorded", no details button, selected 2, Esc returns focus; #apps 0, app dialogs 0
+Acceptance: manual — fit and deep links — observed: fits at 1440x900, 1920x1080, 1366x768; #sxp→2, #pxp→3, #ai-tutor→4, #iot→5, each card fully visible
+Acceptance: manual — reduced and phone — observed: reduced motion no tour, nothing active or selected; 390px no tour, stops reveal as scrolled (all six by 1100), no sideways scroll
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/verification.txt — 15629 bytes — sha256 d887b74164d9 — verification.txt
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/walk.mjs — 6754 bytes — sha256 02271870c2fe — walk.mjs
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/walk-output.txt — 1761 bytes — sha256 0ddca7801c89 — walk-output.txt
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/tour-step-1.png — 155759 bytes — sha256 14f938d2ac6a — tour-step-1.png
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/tour-step-3.png — 169623 bytes — sha256 d3e46bb0be13 — tour-step-3.png
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/tour-step-6.png — 183702 bytes — sha256 05a414f2c726 — tour-step-6.png
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/after-tour.png — 236558 bytes — sha256 2a332fb2ec20 — after-tour.png
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/deeplink-sxp.png — 164301 bytes — sha256 3fa7e7700605 — deeplink-sxp.png
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/reduced.png — 196793 bytes — sha256 657a2223da70 — reduced.png
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/phone.png — 103545 bytes — sha256 d592e63b3c79 — phone.png
