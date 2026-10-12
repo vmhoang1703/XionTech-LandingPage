@@ -67,3 +67,22 @@ Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/after-tour.p
 Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/deeplink-sxp.png — 164449 bytes — sha256 5376a6756594 — deeplink-sxp.png (final)
 Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/reduced.png — 196793 bytes — sha256 657a2223da70 — reduced.png (final)
 Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/phone.png — 103545 bytes — sha256 d592e63b3c79 — phone.png (final)
+Merge: develop merged twice (d5d5d16, 83dc107); conflicts resolved (page.tsx inside PageScene, showcase stays deleted, CSS kept ours, AI log both, home.ts lede from journeyMap)
+Follow-up: develop's floating header pill — tour pins at --spacing-header-room (96px); commits 38787d9, 610273d, e8409bf; five review layers (security clean; edge, blind, gap, auditor → comment, null-safe settle, literal 16px margin, 700/720 boundary test verified red on the old margin)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — clean
+Acceptance: verification — npm test — exit 0 — Test Files 95 passed (95); Tests 1375 passed (1375)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total 164 lines, Missing 0, Coverage 100%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed
+Acceptance: verification — npm run build — exit 0 — success
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 57 passed (1.8m)
+Acceptance: manual — walk after merge — observed: steps 1-6 active and selected in order, stage top 96 under the header pill, fits at 1280x800, 1366x768, 1440x900, 1920x1080, no sideways scroll, CLS 0.0001; #sxp→2, #pxp→3, #ai-tutor→4, #iot→5 cards fully visible; reduced static; phone no sideways scroll
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/verification.txt — 15916 bytes — sha256 ebf2191b96e1 — verification.txt (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/walk.mjs — 6754 bytes — sha256 02271870c2fe — walk.mjs (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/walk-output.txt — 1762 bytes — sha256 a9c77480d154 — walk-output.txt (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/tour-step-1.png — 430109 bytes — sha256 70589ee39e98 — tour-step-1.png (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/tour-step-3.png — 431716 bytes — sha256 b49adf04aff2 — tour-step-3.png (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/tour-step-6.png — 403484 bytes — sha256 e1bbdd1c756c — tour-step-6.png (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/after-tour.png — 277935 bytes — sha256 c944d3104395 — after-tour.png (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/deeplink-sxp.png — 419956 bytes — sha256 10205310b1bb — deeplink-sxp.png (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/reduced.png — 443356 bytes — sha256 1fa7b26551ad — reduced.png (final, after merge)
+Acceptance: evidence — spec-products-roadmap-scroll-tour-evidence/phone.png — 118787 bytes — sha256 0528393f2ca0 — phone.png (final, after merge)

@@ -98,7 +98,7 @@ context:
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Pin | Scroll into the roadmap at 1280×800 | Mouse wheel, touch, keyboard (Space, PgDn, arrows) | Roadmap sticks below the header; stop 1 is active | Follows scroll | Sammy 2026-10-12  | ✅ walk: stage top 88 at every step; e2e pinned |
+| Pin | Scroll into the roadmap at 1280×800 | Mouse wheel, touch, keyboard (Space, PgDn, arrows) | Roadmap sticks below the header; stop 1 is active | Follows scroll | Sammy 2026-10-12  | ✅ walk: stage top 96 (header room) at every step; e2e pinned |
 | Advance | Keep scrolling | Same | Stops 2→6 become active in turn; road draws up to the active stop; the active pin is amber with its halo; the active card is emphasised | Road ~400ms `--ease-brand` per step | Sammy 2026-10-12  | ✅ walk steps 1-6 active and selected in order; screenshots tour-step-1/3/6; e2e once-in-order |
 | Back | Scroll up | Same | Active stop and road step back | Same | Spec  | ✅ walk: back to step 3; e2e steps back |
 | Exit | Past stop 6 | Same | Roadmap releases; the demo band follows | Native | Sammy 2026-10-12  | ✅ walk: demo band in view past the roadmap (after-tour.png) |
@@ -113,6 +113,8 @@ context:
 ## Implementation Notes
 
 ## Spec Change Log
+
+- **After merging develop (2026-10-13).** Develop's floating header pill needs `--spacing-header-room` (96px): the stage pins there and fits below it (JS cutoff about 702px tall); anchors keep 16px below the room. Five review layers; a 700/720 boundary test guards the cutoff.
 
 - **Task 3 (2026-10-12).** Deep links scroll smoothly through the stops on the way (Chrome's fragment scroll); the end state is exact. The Deep-link UX row's timing was set to "smooth". The tour starts only when the stage fits at a zoom of at least 0.72 (measured); shorter wide windows get the static roadmap. Card text has a floor of 11.5px (DESIGN.md:537) under the zoom.
 
@@ -144,12 +146,12 @@ context:
 
 ## Acceptance Evidence
 
-Captured after the review patches on 2026-10-12.
+Captured after merging develop (floating header pill) on 2026-10-13.
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
-- `npm test` -- exit 0 -- Test Files 86 passed (86); Tests 1286 passed (1286)
+- `npm test` -- exit 0 -- Test Files 95 passed (95); Tests 1375 passed (1375)
 - `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 164 lines, Missing 0, Coverage 100%; `products/journey` branches 98.87%
 - `npm run test:smoke` -- exit 0 -- 15 passed
 - `npm run build` -- exit 0 -- success
@@ -158,7 +160,7 @@ Captured after the review patches on 2026-10-12.
 **Observed**
 
 - Walk on a production build (`next start -p 3005`, Chrome), `walk-output.txt`:
-  - 1280×800: steps 1–6 active and selected in order with the stage pinned at 88px, fitting with no sideways scroll. The demo band follows, scrolling back restores the step, and CLS is 0.0001.
+  - 1280×800: steps 1–6 active and selected in order with the stage pinned at 96px (below the header pill), fitting with no sideways scroll. The demo band follows, scrolling back restores the step, and CLS is 0.0001.
   - A card opens its modal with no details button, the stop is selected, and Esc returns focus. "What we build" is gone.
   - The stage fits at 1366×768, 1440×900 and 1920×1080. Deep links `#sxp`, `#pxp`, `#ai-tutor` and `#iot` land on stops 2–5, each card fully visible.
   - Reduced motion: no tour. 390px: stops reveal as scrolled, with no sideways scroll.
@@ -166,7 +168,7 @@ Captured after the review patches on 2026-10-12.
 **Artifacts**
 
 - [verification.txt](spec-products-roadmap-scroll-tour-evidence/verification.txt), [walk.mjs](spec-products-roadmap-scroll-tour-evidence/walk.mjs), [walk-output.txt](spec-products-roadmap-scroll-tour-evidence/walk-output.txt)
-- `tour-step-1.png`, `tour-step-3.png`, `tour-step-6.png`, `after-tour.png`, `deeplink-sxp.png`, `reduced.png`, `phone.png` (hashes in the ledger, rows marked "final")
+- `tour-step-1.png`, `tour-step-3.png`, `tour-step-6.png`, `after-tour.png`, `deeplink-sxp.png`, `reduced.png`, `phone.png` (hashes in the ledger, rows marked "final, after merge")
 
 **Not captured**
 

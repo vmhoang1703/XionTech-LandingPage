@@ -1697,3 +1697,4 @@ Template:
   - The road ran backwards once at load.
   - Scrolling behind an open modal moved the selected pin.
   - The first anchor pass left `#pxp` and `#iot` landing under the header.
+- **Follow-up (2026-10-13), merging develop:** develop's floating header pill moved the header bottom to 96px, so the pinned roadmap slid under it. The tour now pins at `--spacing-header-room`. The AI first copied develop's anchor formula onto the tour's step anchors as well; that dropped deep links 16px short of their stop, and the e2e caught it. The footer-link test also had to wait for develop's new footer scroll reveal to settle before clicking.
