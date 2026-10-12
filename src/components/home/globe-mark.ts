@@ -3,8 +3,9 @@
 // no captions. Times are shader time (silk-shader.ts), so Pause stops both
 // layers.
 //
-// On load the silk runs alone, then sparks gather into the XionTech mark.
-// Then three scenes loop:
+// On load the silk runs alone, then sparks gather into the globe (lead,
+// 2026-10-12: the globe first, not the mark), and the story joins the loop
+// there. Three scenes loop:
 //   1. Follow the sun: the mark opens into a globe showing both head offices.
 //      Day sweeps from Plano to Vietnam; as Plano's day ends, a torch of light
 //      flies to Ho Chi Minh City, which wakes with Da Nang and Ha Noi: one
@@ -26,9 +27,9 @@ export type MarkArea = { x: number; y: number; size: number } | null;
 type Point = { x: number; y: number };
 
 // ---- Timing (seconds) --------------------------------------------------------
-// The mark starts forming soon after load (lead, 2026-10-12: 1 s sooner).
+// The globe starts forming soon after load (lead, 2026-10-12: 1 s sooner).
 const INTRO_START = 0.2; // silk alone until then
-const INTRO_END = 3.2; // the mark has formed
+const INTRO_END = 3.2; // the globe has formed
 const CYCLE = 20; // the loop after the intro
 const OPEN = [2.2, 4.4]; // mark -> globe
 const SUNSET = [5.4, 8.6]; // day moves from Plano to Vietnam
@@ -42,9 +43,15 @@ const SLOGAN_IN = 13.9; // the slogan's dots appear around the T
 const WRITE = 14.6; // ...and write GET IT DONE up its stem
 const FILL = 16.2; // light settles behind the slogan and along the thin line
 const FLIGHT = 1.6;
-// The first moment the mark has fully formed: a paused silk (reduced
-// motion) starts here, so it rests on the finished mark.
-export const SCENE_REST_TIME = SILK_START_TIME + INTRO_END * SILK_TIME_SCALE;
+// Where the intro joins the loop: the globe fully open, every dot landed
+// (the last one leaves the mark at OPEN[0] + 0.8 and flies for FLIGHT).
+const LOOP_ENTRY = OPEN[0] + 0.8 + FLIGHT + 0.2;
+
+// The first time the mark rests, fully formed with its slogan (the start of
+// the first full loop): a paused silk (reduced motion) starts here, so it
+// rests on the finished mark.
+export const SCENE_REST_TIME =
+  SILK_START_TIME + (INTRO_END + CYCLE - LOOP_ENTRY) * SILK_TIME_SCALE;
 
 function smoothstep(edge0: number, edge1: number, x: number) {
   const v = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);
@@ -62,11 +69,12 @@ const window01 = (phase: number, [from, to]: number[], fade = 0.5) =>
 export const seconds = (time: number) =>
   (time - SILK_START_TIME) / SILK_TIME_SCALE;
 
-// Seconds into the loop, or -1 during the intro.
+// Seconds into the loop, or -1 during the intro; the intro joins the loop
+// at LOOP_ENTRY, with the globe showing.
 export function loopPhase(time: number): number {
   const sec = seconds(time) - INTRO_END;
   if (sec < 0) return -1;
-  return sec % CYCLE;
+  return (sec + LOOP_ENTRY) % CYCLE;
 }
 
 // ---- One moment of the whole scene -------------------------------------------
@@ -87,22 +95,25 @@ export type Frame = {
 
 export function frameAt(time: number): Frame {
   const phase = loopPhase(time);
+  const sec = seconds(time);
+  // The intro shows the globe as the loop has it where the intro joins it.
+  const at = phase < 0 ? LOOP_ENTRY : phase;
   // The sun is over Plano's side at first, then over Vietnam's.
-  const azimuth = mix(1.05, -1.05, smoothstep(SUNSET[0], SUNSET[1], phase));
+  const azimuth = mix(1.05, -1.05, smoothstep(SUNSET[0], SUNSET[1], at));
   const up = 0.3;
   return {
-    sec: seconds(time),
+    sec,
     phase,
-    facing: mix(FACING[0], FACING[1], smoothstep(OPEN[0], LEAVE, phase)),
+    facing: mix(FACING[0], FACING[1], smoothstep(OPEN[0], LEAVE, at)),
     sun: [
       Math.sin(azimuth) * Math.cos(up),
       -Math.sin(up),
       Math.cos(azimuth) * Math.cos(up),
     ],
-    sink: smoothstep(SINK[0], SINK[1], phase),
+    sink: smoothstep(SINK[0], SINK[1], at),
     globe:
       phase < 0
-        ? 0
+        ? smoothstep(INTRO_START + 0.6, INTRO_START + 2.2, sec)
         : smoothstep(OPEN[0], OPEN[1], phase) *
           (1 - smoothstep(SINK[1] - 0.4, SINK[1] + 0.6, phase)),
   };
@@ -141,7 +152,7 @@ export function summitFlash(f: Frame): number {
 
 // How settled the mark is (its light sweeps and pulses only at rest).
 export function restAmount(f: Frame): number {
-  if (f.phase < 0) return smoothstep(INTRO_END - 0.6, INTRO_END, f.sec);
+  if (f.phase < 0) return 0; // the globe forms first: no mark yet
   if (f.phase < OPEN[1])
     return 1 - smoothstep(OPEN[0] - 0.2, OPEN[0] + 0.3, f.phase);
   return smoothstep(FILL + 1.2, FILL + 2, f.phase);
@@ -580,12 +591,13 @@ function blend(from: DotFrame, to: DotFrame, at: Point, t: number): DotFrame {
   };
 }
 
+// On load: the sparks gather straight onto the globe.
 function intro(dot: Dot, f: Frame): DotFrame {
   const start = INTRO_START + dot.delay * 1.1;
   const t = smoothstep(start, start + FLIGHT, f.sec);
-  const rest = resting(dot, f.sec);
+  const globe = onGlobe(dot, f);
   const spark = { ...dot.spark, alpha: 0, amber: 0.6, scale: 0.6, depth: 0 };
-  return blend(spark, rest, curve(dot.spark, { x: 0, y: 0 }, rest, t), t);
+  return blend(spark, globe, curve(dot.spark, { x: 0, y: 0 }, globe, t), t);
 }
 
 // Scene 2, the mountain: down to the nearer foot, then up the slope to its
@@ -673,18 +685,14 @@ export function dotAt(dot: Dot, f: Frame): DotFrame {
 
 export type SloganFrame = Point & { alpha: number; scale: number };
 
-// A dot of the slogan: written up the stem at the end of the intro, leaving
-// with the mark, then gathering from the cloud around the T and writing
-// GET IT DONE again from the bottom up; at rest it twinkles in the sheen.
+// A dot of the slogan: hidden while the globe forms on load; at rest in the
+// mark, leaving with it, then gathering from the cloud around the T and
+// writing GET IT DONE from the bottom up; at rest it twinkles in the sheen.
 export function sloganAt(dot: SloganDot, f: Frame): SloganFrame {
   const twinkle = 0.85 + 0.15 * Math.sin(f.sec * 2.1 + dot.seed * 3);
   const shine = sheen(dot.cell, f.sec);
   const { cell } = dot;
-  if (f.phase < 0) {
-    const start = INTRO_START + 1.4 + dot.along;
-    const t = smoothstep(start, start + 0.35, f.sec);
-    return { ...cell, alpha: t * twinkle, scale: mix(2, 1, t) };
-  }
+  if (f.phase < 0) return { ...cell, alpha: 0, scale: 1 };
   if (f.phase < OPEN[0]) {
     return { ...cell, alpha: twinkle + 0.4 * shine, scale: 1 + 0.5 * shine };
   }

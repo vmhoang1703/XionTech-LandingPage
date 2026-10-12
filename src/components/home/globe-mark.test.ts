@@ -50,6 +50,8 @@ describe("timeline", () => {
     expect(loopPhase(atSec(1))).toBe(-1);
     expect(loopPhase(at(0.001))).toBeCloseTo(0);
     expect(loopPhase(at(3, 2))).toBeCloseTo(3);
+    // The intro joins the loop with the globe open, not at its start.
+    expect(loopPhase(atSec(3.3))).toBeCloseTo(4.9);
   });
 
   it("shows nothing for the first moment, only the silk", () => {
@@ -59,7 +61,10 @@ describe("timeline", () => {
 
   it("rests on the finished mark at SCENE_REST_TIME", () => {
     expect(restAmount(frameAt(SCENE_REST_TIME))).toBe(1);
-    expect(restAmount(frameAt(atSec(INTRO - 1)))).toBe(0);
+    // No mark during the intro: the globe forms first.
+    expect(restAmount(frameAt(atSec(2.5)))).toBe(0);
+    // The mark first rests at the start of the first full loop.
+    expect(INTRO).toBeCloseTo(18.4);
     expect(restAmount(frame(1))).toBe(1);
     expect(restAmount(frame(3.5))).toBe(0);
     expect(restAmount(frame(8))).toBe(0);
@@ -73,8 +78,18 @@ describe("globe", () => {
     expect(frame(9).sun[0]).toBeLessThan(-0.5);
   });
 
+  it("forms the globe first on load, as the loop has it where the intro joins", () => {
+    expect(frameAt(atSec(0.5)).globe).toBe(0);
+    expect(frameAt(atSec(1.5)).globe).toBeGreaterThan(0);
+    const formed = frameAt(atSec(3.1));
+    const joined = frameAt(atSec(3.25));
+    expect(formed.globe).toBe(1);
+    expect(joined.globe).toBe(1);
+    expect(formed.facing).toBeCloseTo(joined.facing, 0);
+    expect(formed.sun[0]).toBeCloseTo(joined.sun[0], 2);
+  });
+
   it("shows the globe in scene 1 and sets it below the horizon after", () => {
-    expect(frameAt(atSec(1)).globe).toBe(0);
     expect(frame(6).globe).toBeCloseTo(1);
     expect(frame(9).sink).toBe(0);
     expect(frame(11.5).sink).toBe(1);
@@ -196,6 +211,16 @@ describe("dots", () => {
     expect(dot.alpha).toBe(0);
   });
 
+  it("gather onto the globe on load and carry on into the loop with no jump", () => {
+    for (const dot of scene.land.slice(0, 400)) {
+      const landed = dotAt(dot, frameAt(atSec(3.1)));
+      expect(Math.hypot(landed.x, landed.y)).toBeLessThanOrEqual(
+        GLOBE_RADIUS + 1e-9,
+      );
+      expect(near(landed, dotAt(dot, frameAt(atSec(3.25))))).toBeLessThan(0.01);
+    }
+  });
+
   it("rest in the mark, the stem glowing faintly behind the logos", () => {
     const rest = frameAt(SCENE_REST_TIME);
     for (const dot of scene.land.slice(0, 400)) {
@@ -266,17 +291,25 @@ describe("dots", () => {
 describe("slogan", () => {
   const dot = scene.slogan[60];
 
-  it("is written up the stem during the intro", () => {
-    expect(sloganAt(dot, frameAt(atSec(0))).alpha).toBe(0);
+  it("hides while the globe forms on load and rests in the mark later", () => {
+    for (const sec of [0, 1.5, 3.1]) {
+      expect(sloganAt(dot, frameAt(atSec(sec))).alpha).toBe(0);
+    }
+    // ...and the first loop picks up with it hidden too.
+    expect(sloganAt(dot, frameAt(atSec(3.3))).alpha).toBe(0);
     const rest = sloganAt(dot, frameAt(SCENE_REST_TIME));
     expect(rest.alpha).toBeGreaterThan(0.6);
     expect(near(rest, dot.cell)).toBeLessThan(0.001);
-    // The bottom is written before the top.
+  });
+
+  it("is written from the bottom up", () => {
     const first = scene.slogan.find((d) => d.along === 0);
     const top = scene.slogan.find((d) => d.along === 1);
-    const writing = frameAt(atSec(1.9));
-    expect(first && sloganAt(first, writing).alpha).toBeGreaterThan(0.5);
-    expect(top && sloganAt(top, writing).alpha).toBe(0);
+    const writing = frame(15.5);
+    expect(first && near(sloganAt(first, writing), first.cell)).toBeLessThan(
+      0.001,
+    );
+    expect(top && near(sloganAt(top, writing), top.cell)).toBeGreaterThan(0.01);
   });
 
   it("leaves with the mark and stays hidden through the globe", () => {
