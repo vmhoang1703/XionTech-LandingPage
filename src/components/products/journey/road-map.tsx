@@ -292,6 +292,8 @@ function RoadCard({
   } as CSSProperties;
   return (
     <li
+      // The app's anchor (#sxp, …): footer links and deep links land here.
+      id={app?.anchor}
       className="rm-stop"
       data-side={index % 2 === 0 ? "above" : "below"}
       data-bend={index % 2 === 0 ? "left" : "right"}

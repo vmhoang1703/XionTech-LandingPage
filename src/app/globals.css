@@ -3483,6 +3483,13 @@
     grid-template-columns: 80px minmax(0, 1fr);
   }
 
+  /* An app stop is its app's anchor (#sxp, …): land clear of the header. */
+  .rm-stop[id] {
+    scroll-margin-top: calc(
+      var(--spacing-anchor-offset) - var(--spacing-header-height)
+    );
+  }
+
   .rm-seg {
     grid-column: 1;
     grid-row: 1;

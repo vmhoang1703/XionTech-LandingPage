@@ -20,15 +20,24 @@ test(
 );
 
 test(
-  "/products#ai-tutor lands on the AI Tutor card below the header",
+  "/products#ai-tutor lands on the AI Tutor stop with its card in view below the header",
   { tag: "@a11y" },
   async ({ page }) => {
     await page.goto("/products#ai-tutor");
-    await expect(page.locator("#ai-tutor-h")).toBeInViewport();
-    const top = await page
-      .locator("#ai-tutor")
-      .evaluate((el) => el.getBoundingClientRect().top);
-    expect(top).toBeGreaterThanOrEqual(60);
+    const card = page.locator("#map .rm-stop#ai-tutor .rm-card");
+    await expect(card).toContainText("Student learns");
+    // Smooth scroll: wait until the card sits whole between the header and
+    // the bottom of the window.
+    await expect
+      .poll(() =>
+        card.evaluate((el) => {
+          const box = el.getBoundingClientRect();
+          const header = document.querySelector("header");
+          const below = header ? header.getBoundingClientRect().bottom : 0;
+          return box.top >= below && box.bottom <= window.innerHeight;
+        }),
+      )
+      .toBe(true);
   },
 );
 

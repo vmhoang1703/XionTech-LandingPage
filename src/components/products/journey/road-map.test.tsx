@@ -1,7 +1,9 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { APPS } from "@/content/apps";
 import { dayRoad } from "@/content/products";
+import { siteFooter } from "@/content/site-footer";
 import { globalsCss } from "@/test-utils/css-classes";
 import { RoadMap } from "./road-map";
 
@@ -439,5 +441,41 @@ describe("RoadMap selection", () => {
       '.rm-stop[data-selected="true"] .rm-pin',
     ]);
     expect(rules.some((r) => r.selector.includes(".rm-end"))).toBe(false);
+  });
+});
+
+describe("RoadMap anchors", () => {
+  const footerAnchors = siteFooter.columns
+    .flatMap((column) => column.links)
+    .filter((link) => link.href.startsWith("/products#"))
+    .map((link) => link.href.replace("/products#", ""));
+
+  it("puts each app anchor once inside #map, on the stop of that app", () => {
+    const { container } = render(
+      <section id="map">
+        <RoadMap />
+      </section>,
+    );
+    const map = container.querySelector("#map") as HTMLElement;
+    expect(footerAnchors.length).toBeGreaterThan(0);
+    for (const anchor of [...footerAnchors, ...APPS.map((a) => a.anchor)]) {
+      const targets = container.querySelectorAll(`[id="${anchor}"]`);
+      expect(targets, anchor).toHaveLength(1);
+      expect(map.contains(targets[0]), anchor).toBe(true);
+      const stop = targets[0].closest(".rm-stop");
+      const index = stops(container).indexOf(stop as HTMLElement);
+      const app = APPS.find((a) => a.anchor === anchor);
+      expect(dayRoad.stops[index]?.app, anchor).toBe(app?.id);
+    }
+  });
+
+  it("clears the header when a stop is the scroll target", () => {
+    const anchored = roadmapRules().filter((r) =>
+      r.selector.split(",").some((s) => s.trim() === ".rm-stop[id]"),
+    );
+    expect(anchored).toHaveLength(1);
+    expect(anchored[0].body).toMatch(
+      /scroll-margin-top:[^;]*--spacing-anchor-offset/,
+    );
   });
 });
