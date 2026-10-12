@@ -21,3 +21,9 @@ Task 3: review — fail — 0 critical, 2 important (URIError on stray % in hash
 Task 3: review — pass — re-review of 476d488: 5 of 5 closed; vitest 221, e2e products+a11y 51
 Task 3: minor — deep links scroll smoothly through stops (accepted; UX row timing set to smooth); cards look bulkier on short windows due to the text floor
 Task 3: complete (commits 37ced04..476d488, diff verified)
+Task 4: dispatched (model sonnet, base 6364afe, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/s4-report.md)
+Task 4: red — npx playwright test e2e/products.spec.ts --project=a11y — 10 tour tests failed with data-tour disabled (restored)
+Task 4: green — vitest src/app/products 6; products e2e 16; smoke 15; a11y spec 56 passed, 1 failed (/ .w-more-trigger known Home flake)
+Task 4: review — pass — 0 critical, 0 important, 3 minor
+Task 4: minor — e2e/products.spec.ts:15-17 smoke "inside the roadmap" checks order only; helpers duplicate inline logic; step-order and CLS reads timing-sensitive
+Task 4: complete (commits 6364afe..b16f392, diff verified)

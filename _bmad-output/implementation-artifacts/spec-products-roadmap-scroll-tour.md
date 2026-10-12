@@ -79,7 +79,7 @@ context:
   - a click still selects;
   - phones keep the per-stop reveal.
   - red: `road-map.test.tsx` -- server HTML is static with no track height; reduced motion stays static; scrolling a step sets the active and selected stop and the road share; scrolling back goes back; a click selects; no CSS hides content without the attribute.
-- [ ] Tests -- update `page.test.tsx` and `e2e/products.spec.ts`:
+- [x] Tests -- update `page.test.tsx` and `e2e/products.spec.ts`:
   - smoke: the H1, `id="map"`, and the four anchors inside the roadmap;
   - `@a11y`:
     - at 1280×800, scrolling makes stops 1→6 active in turn, the roadmap stays pinned (same top while active), and then the demo band follows;
