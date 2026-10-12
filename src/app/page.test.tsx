@@ -62,7 +62,7 @@ describe("Home page", () => {
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings).toHaveLength(1);
     expect(headings[0].textContent).toBe(
-      "School apps and software teams that get IT done.",
+      "Build smarter. Ship faster. Get IT done.",
     );
   });
 
@@ -76,7 +76,7 @@ describe("Home page", () => {
     const { container } = render(<Home />);
 
     expect(sectionNames(container)).toEqual([
-      "School apps and software teams that get IT done.",
+      "Build smarter. Ship faster. Get IT done.",
       "What can we help you achieve?",
       "One connected school.",
       "Why XionTech.",

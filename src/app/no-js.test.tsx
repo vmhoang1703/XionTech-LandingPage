@@ -31,7 +31,7 @@ describe("no JavaScript", () => {
 
     expect(html).toMatch(/^<html lang="en"/);
     expect(html).toMatch(
-      /<h1[^>]*>School apps and software teams that <span class="hl">get IT done<\/span>\.<\/h1>/,
+      /<h1[^>]*><span class="block">Build smarter\.<\/span> <span class="block">Ship faster\.<\/span> <span class="hl">Get IT done<\/span>\.<\/h1>/,
     );
     expect(html).toContain("Get in touch");
     expect(html).toContain("How we work.");

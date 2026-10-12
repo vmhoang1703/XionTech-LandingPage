@@ -17,12 +17,13 @@ const iot = appById("iot");
 const aiTutor = appById("ai-tutor");
 
 export const homeHero = {
+  // Three short beats, one a line, ending on the slogan (lead, 2026-10-12).
   title: {
-    lead: "School apps and software teams that ",
-    highlight: "get IT done",
+    lines: ["Build smarter.", "Ship faster."],
+    highlight: "Get IT done",
     tail: ".",
   },
-  sub: "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano.",
+  sub: "Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development.",
   motion: { pause: "Pause motion", play: "Play motion" },
   // The contact section on this page (E-A4).
   cta: { href: "#contact", label: "Get in touch" },
@@ -85,7 +86,7 @@ export const homeDoors = {
 // because the two doors above already say the same (lead, 2026-10-11).
 export const homeCapabilities = {
   title: "Why XionTech.",
-  lede: "The capabilities behind every school app and every product we deliver.",
+  lede: "The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI.",
   delivery: {
     label: "Global delivery",
     title: "Two offices, one working day.",
@@ -109,7 +110,7 @@ export const homeCapabilities = {
 
 export const homeProcess = {
   title: "How we work.",
-  lede: "Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve.",
+  lede: "Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve. AI runs through every step, and we keep improving how we use it.",
   link: { href: "/services#process", label: "See the full process" },
 };
 

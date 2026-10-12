@@ -17,27 +17,29 @@ vi.mock("@/components/sections/count-up", () => ({
 function renderHero() {
   render(<HomeHero />);
   return screen.getByRole("region", {
-    name: "School apps and software teams that get IT done.",
+    name: "Build smarter. Ship faster. Get IT done.",
   });
 }
 
 describe("HomeHero", () => {
-  it("shows the H1 with a highlighted 'get IT done', the sub line and no label", () => {
+  it("shows the H1, one beat a line, with a highlighted 'Get IT done', the sub line and no label", () => {
     const hero = renderHero();
 
     expect(hero.className).toContain("hero-silk");
     const h1 = within(hero).getByRole("heading", { level: 1 });
     expect(h1.parentElement?.querySelector(".label")).toBeNull();
     expect(h1.classList.contains("text-display-hero-fluid")).toBe(true);
-    expect(h1.textContent).toBe(
-      "School apps and software teams that get IT done.",
-    );
-    expect(within(h1).getByText("get IT done").classList.contains("hl")).toBe(
+    expect(h1.textContent).toBe("Build smarter. Ship faster. Get IT done.");
+    expect(within(h1).getByText("Get IT done").classList.contains("hl")).toBe(
       true,
     );
+    const beats = [...h1.querySelectorAll(".block")].map(
+      (el) => el.textContent,
+    );
+    expect(beats).toEqual(["Build smarter.", "Ship faster."]);
     expect(
       within(hero).getByText(
-        "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano.",
+        "Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development.",
       ),
     ).toBeDefined();
   });
