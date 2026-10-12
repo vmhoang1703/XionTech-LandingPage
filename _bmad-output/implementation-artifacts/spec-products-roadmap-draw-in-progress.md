@@ -37,3 +37,27 @@ Task 5: minor — e2e/products.spec.ts:63 roadmap asserted by count, not toBeVis
 Task 5: minor — road-map.tsx class rm-end-start has no CSS rule (excluded in page.test)
 Task 5: complete (commits 0aba122..d1935ed, diff verified)
 Task 4: fix round 3/5 (reveal by clip-path wipe and scale, no opacity: axe contrast passes; .rm-open 25px tall; rm-end-start removed; frozen intent renegotiated by Sammy: wipe, hidden until revealed)
+Task 5: fix round 1/5 (e2e checks the wipe opens via elementFromPoint; toBeVisible; armed asserted before scroll at 1280x400)
+Task 4: review — pass — re-review of d82d84c with 05f748d: 4 of 4 closed, 2 minor (stacked comments on .rm-open; armed pin scale 0 — confirm with live axe)
+Task 5: review — pass — included in the round-3 re-review
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — clean
+Acceptance: verification — npm test — exit 0 — Test Files 88 passed (88); Tests 1280 passed (1280)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total 127 lines, Missing 0, Coverage 100%; products/journey branches 97.91%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed (11.6s)
+Acceptance: verification — npm run build — exit 0 — ○ /products static
+Acceptance: verification — npx playwright test --project=a11y — exit 1 — 48 passed, 1 failed: / color-contrast .w-more-trigger (known Home flake, deferred)
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 49 passed (1.2m) (re-capture)
+Acceptance: manual — wide walk — observed: armed at load, on after scroll-in, 6 of 6 cards shown after the draw, CLS 0.0000; card opens modal, Next → Attendance recorded, Esc closes with focus on "1. Student arrives"; hand-over opens #pd-sxp
+Acceptance: manual — load states — observed: tall viewport at load → on (no replay); reduced motion → static, 6 of 6 shown
+Acceptance: manual — narrow walk 390 — observed: armed at load with no stop shown, stops mark in as they scroll in (1-2, then 3-5, then 6); no sideways scroll; faint light seams where the narrow bends join
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/verification.txt — 22138 bytes — sha256 cb8cbde0c49d — verification.txt
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/walk.mjs — 5208 bytes — sha256 6893227adb70 — walk.mjs
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/walk-output.txt — 553 bytes — sha256 f1732b1f8e13 — walk-output.txt
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/wide-400ms.png — 66798 bytes — sha256 bd5533a2c606 — wide-400ms.png
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/wide-1200ms.png — 139383 bytes — sha256 0453cb48b9e0 — wide-1200ms.png
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/wide-3000ms.png — 168822 bytes — sha256 cbc8c2c1501a — wide-3000ms.png
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/reduced.png — 207291 bytes — sha256 b1e8a143b951 — reduced.png
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-1.png — 84465 bytes — sha256 7acbf4a4e7dd — narrow-step-1.png
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-2.png — 91443 bytes — sha256 bae7c009d426 — narrow-step-2.png
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-3.png — 85181 bytes — sha256 df71edb549e8 — narrow-step-3.png
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-4.png — 86881 bytes — sha256 0a1b7f2b9b6a — narrow-step-4.png

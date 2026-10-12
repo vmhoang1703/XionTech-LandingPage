@@ -1,0 +1,19 @@
+wide at load: armed
+wide +400ms: on
+wide +1200ms: on
+wide +3000ms: on
+wide cards shown after the draw: 6 of 6
+wide CLS: 0.0000
+modal open: true
+modal title: Student arrives
+after Next: Attendance recorded
+after Esc: open false | focus on "1. Student arrives"
+hand-over: road modal false | #pd-sxp true
+tall viewport at load: on
+reduced: static | shown 6 of 6
+narrow at load: armed | in - - - - -
+narrow step 1: in in - - - -
+narrow step 2: in in in in in -
+narrow step 3: in in in in in in
+narrow step 4: in in in in in in
+narrow sideways scroll: false

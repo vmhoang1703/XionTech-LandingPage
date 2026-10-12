@@ -100,15 +100,15 @@ context:
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Road | Scroll into view at 1280px | Mouse wheel, touch, keyboard | Road draws from Start to Finish | ~1.6s linear, so each pin pops as the road reaches it (pins and cards use `--ease-brand`) | Sammy 2026-10-12 |  |
-| Pins | Road reaches a pin | — | Pin pops in (scale and fade) | 300ms, delayed by road position | Sammy 2026-10-12 |  |
-| Cards | After its pin | — | Card slides in from its side (up for above, down for below) | 400ms after the pin | Sammy 2026-10-12 |  |
-| Already visible | Load with the roadmap in view | — | Shown complete, no replay | Instant | FlowReveal pattern |  |
-| Reduced motion | Load with reduced motion | — | Complete roadmap, nothing moves | Static | DESIGN.md:451 |  |
-| Narrow | 390px, scroll down | Touch | Bends, pins and cards reveal in order; no sideways scroll | Same timings | Spec |  |
-| Card | Hover, focus, activate | Mouse, keyboard, touch | Border and shadow on hover; focus ring; the modal opens | Instant | Quick dev |  |
-| Modal | Next, Previous, Esc, backdrop | Mouse, keyboard | Moves along the road; closes; focus back on the card | Instant | `road-stop-dialog.tsx` |  |
-| App hand-over | "Open … details" | Mouse, keyboard | The app's dialog opens | Instant | `product-detail.tsx` |  |
+| Road | Scroll into view at 1280px | Mouse wheel, touch, keyboard | Road draws from Start to Finish | ~1.6s linear, so each pin pops as the road reaches it (pins and cards use `--ease-brand`) | Sammy 2026-10-12  | ✅ walk wide-400/1200/3000ms: road draws Start→Finish, pins pop as it reaches them |
+| Pins | Road reaches a pin | — | Pin pops in (scale and fade) | 300ms, delayed by road position | Sammy 2026-10-12  | ✅ walk screenshots; `road-map.test.tsx` delays in road order |
+| Cards | After its pin | — | Card slides in from its side (up for above, down for below) | 400ms after the pin | Sammy 2026-10-12  | ✅ walk: cards wipe in from their side (decision: wipe, not dim); 6 of 6 shown after; e2e scroll-in |
+| Already visible | Load with the roadmap in view | — | Shown complete, no replay | Instant | FlowReveal pattern  | ✅ walk: tall viewport at load → on; unit test |
+| Reduced motion | Load with reduced motion | — | Complete roadmap, nothing moves | Static | DESIGN.md:451  | ✅ walk: static, 6 of 6 shown; e2e reduced motion |
+| Narrow | 390px, scroll down | Touch | Bends, pins and cards reveal in order; no sideways scroll | Same timings | Spec  | ✅ walk 390: stops reveal as they scroll in; no sideways scroll; e2e 390 |
+| Card | Hover, focus, activate | Mouse, keyboard, touch | Border and shadow on hover; focus ring; the modal opens | Instant | Quick dev  | ✅ e2e and walk: modal opens; focus ring (focused card never clipped); 25px title button |
+| Modal | Next, Previous, Esc, backdrop | Mouse, keyboard | Moves along the road; closes; focus back on the card | Instant | `road-stop-dialog.tsx`  | ✅ walk: Next, Esc, focus back on the card; `road-stop-dialog.test.tsx` |
+| App hand-over | "Open … details" | Mouse, keyboard | The app's dialog opens | Instant | `product-detail.tsx`  | ✅ walk: #pd-sxp opens; e2e hand-over |
 
 ## Implementation Notes
 
@@ -125,3 +125,35 @@ context:
 - `npm run test:smoke` -- expected: all pass
 - `npm run build` -- expected: success
 - `npx playwright test --project=a11y` -- expected: all pass
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-12.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
+- `npm test` -- exit 0 -- Test Files 88 passed (88); Tests 1280 passed (1280)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 127 lines, Missing 0, Coverage 100%; `products/journey` branches 97.91%
+- `npm run test:smoke` -- exit 0 -- 15 passed
+- `npm run build` -- exit 0 -- `/products` static
+- `npx playwright test --project=a11y` -- exit 0 -- 49 passed (re-capture; the first run had 48 passed and 1 failed on the known Home `.w-more-trigger` flake)
+
+**Observed**
+
+- Walk on a production build (`next start -p 3005`, Chrome), `walk-output.txt`:
+  - Wide: armed at load, on after scroll-in, all 6 cards shown after the draw, CLS 0.
+  - The modal opens, Next moves, and Esc returns focus to the card. The hand-over opens `#pd-sxp`.
+  - Already in view at load → on. Reduced motion → static, all shown.
+  - At 390px the stops reveal as they scroll in, with no sideways scroll.
+- A cosmetic note: faint light seams where the narrow bends join.
+
+**Artifacts**
+
+- [verification.txt](spec-products-roadmap-draw-in-evidence/verification.txt), [walk.mjs](spec-products-roadmap-draw-in-evidence/walk.mjs), [walk-output.txt](spec-products-roadmap-draw-in-evidence/walk-output.txt)
+- `wide-400ms.png`, `wide-1200ms.png`, `wide-3000ms.png`, `reduced.png`, `narrow-step-1..4.png` (hashes in the ledger)
+
+**Not captured**
+
+- Safari and Firefox (Chrome channel only).
+
