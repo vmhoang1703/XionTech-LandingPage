@@ -1,4 +1,4 @@
-wide at load: armed
+wide at load: on
 wide +400ms: on
 wide +1200ms: on
 wide +3000ms: on
@@ -9,9 +9,11 @@ modal title: Student arrives
 after Next: Attendance recorded
 after Esc: open false | focus on "1. Student arrives"
 hand-over: road modal false | #pd-sxp true
-tall viewport at load: on
+1280x900 in view, +350ms after load: on | road dashoffset 0.979083px
+1280x900 in view, +900ms after load: on | road dashoffset 0.578332px
+1280x900 in view, +2600ms after load: on | road dashoffset 0px
 reduced: static | shown 6 of 6
-narrow at load: armed | in - - - - -
+narrow at load: armed | in in - - - -
 narrow step 1: in in - - - -
 narrow step 2: in in in in in -
 narrow step 3: in in in in in in

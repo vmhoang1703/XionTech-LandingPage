@@ -61,3 +61,28 @@ Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-1.pn
 Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-2.png — 91443 bytes — sha256 bae7c009d426 — narrow-step-2.png
 Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-3.png — 85181 bytes — sha256 df71edb549e8 — narrow-step-3.png
 Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-4.png — 86881 bytes — sha256 0a1b7f2b9b6a — narrow-step-4.png
+Task 4: review — pass — patches dac59b3 re-review: 6 of 6 closed; minor threshold epsilon applied by controller (eb79455, 14 journey tests pass)
+Task 4: review — pass — play-on-load 221fbf2 re-review: 1 of 1 closed, 2 minor (brief hydration flash before the draw, by Sammy's decision; empty narrow timer)
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — clean
+Acceptance: verification — npm test — exit 0 — Test Files 88 passed (88); Tests 1283 passed (1283)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Total 137 lines, Missing 0, Coverage 100%; products/journey branches 98%
+Acceptance: verification — npm run test:smoke — exit 0 — 15 passed (12.2s)
+Acceptance: verification — npm run build — exit 0 — success
+Acceptance: verification — npx playwright test --project=a11y — exit 0 — 51 passed (1.1m)
+Acceptance: manual — final walk desktop load — observed: 1280x900 in view at load plays the draw-in: road dashoffset 0.98 (+350ms) → 0.58 (+900ms) → 0 (+2.6s)
+Acceptance: manual — final walk wide/modal — observed: 6 of 6 cards shown after the draw, CLS 0.0000; modal Next → Attendance recorded, Esc returns focus to "1. Student arrives"; hand-over opens #pd-sxp
+Acceptance: manual — final walk reduced/narrow — observed: reduced motion static, 6 of 6 shown; 390px stops mark in as they scroll in (in-view stops play after load), no sideways scroll
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/verification.txt — 14866 bytes — sha256 423c19cfda75 — verification.txt (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/walk.mjs — 5592 bytes — sha256 4dfe4e55a7b9 — walk.mjs (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/walk-output.txt — 726 bytes — sha256 a5afbe5c6cf7 — walk-output.txt (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/load-350ms.png — 86201 bytes — sha256 6bb07cd518e4 — load-350ms.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/load-900ms.png — 116246 bytes — sha256 b8dd89b7db8e — load-900ms.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/load-2600ms.png — 165248 bytes — sha256 b6d347e41396 — load-2600ms.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/wide-400ms.png — 113788 bytes — sha256 c0f1b3be22ee — wide-400ms.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/wide-1200ms.png — 171310 bytes — sha256 32ffdc95ffb6 — wide-1200ms.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/wide-3000ms.png — 168822 bytes — sha256 cbc8c2c1501a — wide-3000ms.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/reduced.png — 207291 bytes — sha256 b1e8a143b951 — reduced.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-1.png — 84465 bytes — sha256 7acbf4a4e7dd — narrow-step-1.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-2.png — 91443 bytes — sha256 bae7c009d426 — narrow-step-2.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-3.png — 85181 bytes — sha256 df71edb549e8 — narrow-step-3.png (final)
+Acceptance: evidence — spec-products-roadmap-draw-in-evidence/narrow-step-4.png — 86881 bytes — sha256 0a1b7f2b9b6a — narrow-step-4.png (final)

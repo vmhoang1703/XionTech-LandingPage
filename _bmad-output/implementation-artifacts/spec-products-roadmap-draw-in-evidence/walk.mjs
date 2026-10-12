@@ -63,12 +63,20 @@ const browser = await chromium.launch({ channel: "chrome" });
   await context.close();
 }
 
-// 2. Already in view at load: shown at once, no replay.
+// 2. In view at load (desktop): the draw-in plays right after load.
 {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 2200 } });
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   await page.goto(`${BASE}/products`, { waitUntil: "load" });
-  await sleep(400);
-  log("tall viewport at load", await page.locator(".rm").getAttribute("data-reveal"));
+  const road = () =>
+    page.evaluate(() => {
+      const draw = document.querySelector(".rm-draw");
+      return `${document.querySelector(".rm").dataset.reveal} | road dashoffset ${draw ? getComputedStyle(draw).strokeDashoffset : "-"}`;
+    });
+  for (const at of [350, 900, 2600]) {
+    await sleep(at === 350 ? 350 : at === 900 ? 550 : 1700);
+    log(`1280x900 in view, +${at}ms after load`, await road());
+    await page.screenshot({ path: `${OUT}/load-${at}ms.png` });
+  }
   await page.close();
 }
 

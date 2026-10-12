@@ -2,7 +2,7 @@
 title: 'Products roadmap: draw-in animation and tests'
 type: 'feature'
 created: '2026-10-12'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 1
 baseline_commit: '05715566d6b554837d9fd1ef04ee3cb6edd25e76'
@@ -104,7 +104,7 @@ context:
 | Road | Scroll into view at 1280px | Mouse wheel, touch, keyboard | Road draws from Start to Finish | ~1.6s linear, so each pin pops as the road reaches it (pins and cards use `--ease-brand`) | Sammy 2026-10-12  | ✅ walk wide-400/1200/3000ms: road draws Start→Finish, pins pop as it reaches them |
 | Pins | Road reaches a pin | — | Pin pops in (scale) | 300ms, delayed by road position | Sammy 2026-10-12  | ✅ walk screenshots; `road-map.test.tsx` delays in road order |
 | Cards | After its pin | — | Card wipes in from its side (up for above, down for below) with a 16px slide | 400ms wipe, starting 120ms after its pin | Sammy 2026-10-12  | ✅ walk: cards wipe in from their side (decision: wipe, not dim); 6 of 6 shown after; e2e scroll-in |
-| Already visible | Load with the roadmap in view | — | Draw-in plays right after load | ~0.3s after load | Sammy 2026-10-12 |  |
+| Already visible | Load with the roadmap in view | — | Draw-in plays right after load | ~0.3s after load | Sammy 2026-10-12 | ✅ walk 1280x900: draw plays after load (dashoffset 0.98 → 0.58 → 0); e2e plays without scroll |
 | Reduced motion | Load with reduced motion | — | Complete roadmap, nothing moves | Static | DESIGN.md:451  | ✅ walk: static, 6 of 6 shown; e2e reduced motion |
 | Narrow | 390px, scroll down | Touch | Bends, pins and cards reveal in order; no sideways scroll | Same timings | Spec  | ✅ walk 390: stops reveal as they scroll in; no sideways scroll; e2e 390 |
 | Card | Hover, focus, activate | Mouse, keyboard, touch | Border and shadow on hover; focus ring; the modal opens | Instant | Quick dev  | ✅ e2e and walk: modal opens; focus ring (focused card never clipped); 25px title button |
@@ -153,32 +153,31 @@ context:
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-12.
+Captured after the review patches on 2026-10-12.
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
-- `npm test` -- exit 0 -- Test Files 88 passed (88); Tests 1280 passed (1280)
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 127 lines, Missing 0, Coverage 100%; `products/journey` branches 97.91%
+- `npm test` -- exit 0 -- Test Files 88 passed (88); Tests 1283 passed (1283)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Total 137 lines, Missing 0, Coverage 100%; `products/journey` branches 98%
 - `npm run test:smoke` -- exit 0 -- 15 passed
-- `npm run build` -- exit 0 -- `/products` static
-- `npx playwright test --project=a11y` -- exit 0 -- 49 passed (re-capture; the first run had 48 passed and 1 failed on the known Home `.w-more-trigger` flake)
+- `npm run build` -- exit 0 -- success
+- `npx playwright test --project=a11y` -- exit 0 -- 51 passed
 
 **Observed**
 
 - Walk on a production build (`next start -p 3005`, Chrome), `walk-output.txt`:
-  - Wide: armed at load, on after scroll-in, all 6 cards shown after the draw, CLS 0.
+  - Desktop in view at load plays the draw-in: the road's dashoffset goes 0.98 at +350ms, 0.58 at +900ms and 0 at +2.6s.
+  - Scrolled in from below: all 6 cards shown after the draw, CLS 0.
   - The modal opens, Next moves, and Esc returns focus to the card. The hand-over opens `#pd-sxp`.
-  - Already in view at load → on. Reduced motion → static, all shown.
-  - At 390px the stops reveal as they scroll in, with no sideways scroll.
-- A cosmetic note: faint light seams where the narrow bends join.
+  - Reduced motion is static with everything shown. At 390px the stops reveal as they scroll in, with no sideways scroll.
+- Known trade-off (Sammy's play-on-load decision): the server HTML shows the finished roadmap, so on desktop it appears briefly, clears at hydration, then draws in about 0.3s later.
 
 **Artifacts**
 
 - [verification.txt](spec-products-roadmap-draw-in-evidence/verification.txt), [walk.mjs](spec-products-roadmap-draw-in-evidence/walk.mjs), [walk-output.txt](spec-products-roadmap-draw-in-evidence/walk-output.txt)
-- `wide-400ms.png`, `wide-1200ms.png`, `wide-3000ms.png`, `reduced.png`, `narrow-step-1..4.png` (hashes in the ledger)
+- `load-350ms.png`, `load-900ms.png`, `load-2600ms.png`, `wide-400ms.png`, `wide-1200ms.png`, `wide-3000ms.png`, `reduced.png`, `narrow-step-1..4.png` (hashes in the ledger, rows marked "final")
 
 **Not captured**
 
 - Safari and Firefox (Chrome channel only).
-

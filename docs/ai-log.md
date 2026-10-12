@@ -1469,3 +1469,31 @@ Template:
   - The chapter links were 20px tall, under the 24px target size.
   - A chapter link could stop short of its card after the visitor had scrolled, because Chrome's focus scroll won. It was found only by the final walk.
   - The controller's own script put an extra `|` in every UX-checks row, the same slip as before.
+
+## 2026-10-12 — Products roadmap: from 3D explorations to a 2D road with a draw-in
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), quick-dev explorations, then `/bmad-build` dispatch route with `ui-ux-pro-max`
+- **Prompt (short):** "Redesign the Product page as a user journey" → "a roadmap with 2D but the road not straight" → "now add animation, do all testing like before".
+- **What the AI did:**
+  - Quick-dev explorations on their own branches: a clickable 3D island map, a fully 3D guided tour, a lanes grid. Sammy chose a 2D winding road with a card per stop. All copy is the prototype's "A day at school".
+  - Then a full `/bmad-build`:
+    - removed the unused 3D code and the `three` and `motion` dependencies;
+    - tested the roadmap, the stop modal and the content;
+    - added a once-only draw-in: the road draws from Start to Finish, pins pop, cards wipe in;
+    - five-layer review and a walk on a production build.
+- **Decision / result:** Three of Sammy's decisions changed the approved spec during the build:
+  - waiting cards wipe in rather than dim, because axe failed on dimmed text;
+  - phones reveal stop by stop;
+  - the draw-in plays on load, because desktop never animated.
+  - Checks:
+    - 1283 unit tests;
+    - diff coverage 100%;
+    - 15 smoke tests;
+    - the build;
+    - 51 accessibility browser tests.
+- **AI got it wrong?** Yes:
+  - The quick-dev CSS used weight 700, which the type-scale test forbids.
+  - The first reveal dimmed text to 35%, which axe failed.
+  - One observer over the tall phone list could never fire on short screens.
+  - Copying the "already visible → no replay" rule meant desktop never saw the animation; the final walk caught it.
+  - The 3D tour first crashed on a negative frame time.
