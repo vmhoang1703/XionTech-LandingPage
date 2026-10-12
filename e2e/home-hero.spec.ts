@@ -8,7 +8,9 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(200);
-    expect(html).toContain("get IT done");
+    expect(html).toContain("Build smarter.");
+    expect(html).toContain("Ship faster.");
+    expect(html).toContain("Get IT done");
     expect(html).toContain("Get in touch");
     expect(html).toContain("Experience you can count on");
     expect(html).toContain("Products for schools");

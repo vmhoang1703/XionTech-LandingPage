@@ -1,4 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import { Fragment } from "react";
 import { StatsBand } from "@/components/sections/stats-band";
 import { homeHero, homeStats } from "@/content/home";
 import { FrontDoors } from "./front-doors";
@@ -31,7 +32,13 @@ export function HomeHero() {
               id="home-hero-title"
               className="font-display text-display-hero-fluid max-w-[20ch]"
             >
-              {title.lead}
+              {/* The space sits between the lines, so the heading's name
+                  reads "Build smarter. Ship faster. Get IT done." */}
+              {title.lines.map((line) => (
+                <Fragment key={line}>
+                  <span className="block">{line}</span>{" "}
+                </Fragment>
+              ))}
               <span className="hl">{title.highlight}</span>
               {title.tail}
             </h1>

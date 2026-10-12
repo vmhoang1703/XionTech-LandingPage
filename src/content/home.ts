@@ -17,12 +17,13 @@ const iot = appById("iot");
 const aiTutor = appById("ai-tutor");
 
 export const homeHero = {
+  // Three short beats, one a line, ending on the slogan (lead, 2026-10-12).
   title: {
-    lead: "School apps and software teams that ",
-    highlight: "get IT done",
+    lines: ["Build smarter.", "Ship faster."],
+    highlight: "Get IT done",
     tail: ".",
   },
-  sub: "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano. We pioneer AI across our development process, so we work smarter and deliver faster.",
+  sub: "Connected school and campus solutions, software products and dedicated teams, powered by AI across our development process.",
   motion: { pause: "Pause motion", play: "Play motion" },
   // The contact section on this page (E-A4).
   cta: { href: "#contact", label: "Get in touch" },
