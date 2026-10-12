@@ -4796,6 +4796,37 @@
   }
 }
 
+/*
+  Above the fold (lead, 2026-10-12): from 1080px the hero's first screen holds
+  the copy, the animation and "Experience you can count on", with the stats at
+  its bottom; it is one screen tall (at most 880px below the header). The
+  animation's box gives up height on short screens (the scene scales to fit
+  it), and the stats band is tighter, so all five figures show on load at
+  1280x720 and up.
+*/
+@media (min-width: 1080px) {
+  .hero-fold {
+    min-height: min(calc(100svh - var(--spacing-header-room)), 880px);
+  }
+
+  .home-hero .hero-stage {
+    max-height: calc(100svh - var(--spacing-header-room) - 220px);
+  }
+
+  .home-stats ul {
+    margin-top: 12px;
+    padding-top: 16px;
+  }
+
+  .home-stats li {
+    padding-block: 4px;
+  }
+
+  .home-stats li > p:first-child {
+    font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  }
+}
+
 /* ---------- E-S1 Home: Why XionTech (2 cards, "+3" reveal, motto) ---------- */
 .why2 {
   display: grid;

@@ -2,7 +2,6 @@
 
 import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { homeHero } from "@/content/home";
 import {
   readMotionPaused,
@@ -16,13 +15,10 @@ import {
 } from "./silk-shader";
 import {
   createGlobeMark,
-  frameAt,
   GLOBE_RADIUS,
   MARK_WIDTH,
   type MarkArea,
   SCENE_REST_TIME,
-  sceneIndex,
-  sceneJumpTime,
 } from "./globe-mark";
 
 // The globe and the XT mark form in the hero's .hero-stage box (the right
@@ -58,13 +54,6 @@ export function HeroSilk() {
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
-  // The scene showing (0..2); the ref keeps paint from re-rendering React
-  // on every frame.
-  const sceneRef = useRef(2);
-  const [scene, setScene] = useState(2);
-  // The stage, when the scene has room in it: the progress dots render
-  // inside it, so they follow the copy in reading (and Tab) order.
-  const [stage, setStage] = useState<Element | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -77,21 +66,10 @@ export function HeroSilk() {
     const paint = (time: number) => {
       const shown = globe?.draw(time) ?? 0;
       silk.draw(time, 1 - 0.9 * shown);
-      const now = sceneIndex(frameAt(time));
-      if (now !== sceneRef.current) {
-        sceneRef.current = now;
-        setScene(now);
-      }
     };
     const layout = () => {
       silk.resize();
-      const area = globe ? measureMark(canvas) : null;
-      globe?.resize(area);
-      setStage(
-        area
-          ? (canvas.parentElement?.querySelector(".hero-stage") ?? null)
-          : null,
-      );
+      globe?.resize(globe ? measureMark(canvas) : null);
       paint(timeRef.current);
     };
     paintRef.current = paint;
@@ -165,11 +143,6 @@ export function HeroSilk() {
 
   const label = paused ? homeHero.motion.play : homeHero.motion.pause;
 
-  const showScene = (index: number) => {
-    timeRef.current = sceneJumpTime(index, timeRef.current);
-    paintRef.current?.(timeRef.current);
-  };
-
   return (
     <>
       <canvas
@@ -183,29 +156,6 @@ export function HeroSilk() {
         hidden={!supported}
         className="pointer-events-none absolute inset-0 -z-1 size-full"
       />
-      {supported && stage
-        ? createPortal(
-            <fieldset className="absolute top-full left-1/2 mt-2.5 flex -translate-x-1/2">
-              <legend className="sr-only">{homeHero.scenes.label}</legend>
-              {homeHero.scenes.items.map((name, index) => (
-                <button
-                  key={name}
-                  type="button"
-                  aria-label={name}
-                  aria-current={scene === index ? "step" : undefined}
-                  onClick={() => showScene(index)}
-                  className="group grid size-6 place-items-center rounded-full"
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`block size-1.5 rounded-full transition-[transform,background-color] duration-300 motion-reduce:transition-none ${scene === index ? "bg-amber scale-150" : "bg-white/45 group-hover:bg-white/80"}`}
-                  />
-                </button>
-              ))}
-            </fieldset>,
-            stage,
-          )
-        : null}
       {supported ? (
         <button
           type="button"
@@ -213,7 +163,7 @@ export function HeroSilk() {
             saveMotionPaused(!paused);
             setPaused(!paused);
           }}
-          className="group bg-ink/50 absolute top-4 right-4 z-10 inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/30 px-2 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6"
+          className="group bg-ink/50 absolute top-[calc(var(--spacing-header-room)+12px)] right-4 z-10 inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/30 px-2 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6"
         >
           {paused ? (
             <PlayIcon aria-hidden="true" weight="fill" className="size-4" />

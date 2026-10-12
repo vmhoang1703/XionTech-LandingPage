@@ -24,16 +24,6 @@ export const homeHero = {
   },
   sub: "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano.",
   motion: { pause: "Pause motion", play: "Play motion" },
-  // The hero animation's three scenes, named for the progress dots under it
-  // (lead, 2026-10-10).
-  scenes: {
-    label: "Animation scenes",
-    items: [
-      "Scene 1: one team, around the clock",
-      "Scene 2: climbing together",
-      "Scene 3: built on technology",
-    ],
-  },
   // The contact section on this page (E-A4).
   cta: { href: "#contact", label: "Get in touch" },
 };

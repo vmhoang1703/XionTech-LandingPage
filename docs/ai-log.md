@@ -1582,3 +1582,14 @@ Template:
   - Built it: the pill floats over each page's first section (each adds the header strip to its top padding), the strip lets clicks through, links are small pills, "Book a demo" goes to `/demo`, and the phone menu is a rounded card.
 - **Decision / result:** Browser check on 11 pages at 1440 and 1081, 6 at 390 and 2 at 320: nothing overflows, every heading clears the pill by 50px or more, layout shift 0. The UX docs still say "no Book a demo button in the header"; the PR flags it for Amber.
 - **AI got it wrong?** Yes, caught before the lead saw them: the first build squeezed the logo out of shape on phones (the image shrank to fit) and overflowed at 320px; and changing the `header-height` token to 96px broke the DESIGN.md token test, so the pill now keeps the 72px token and a separate value holds the strip. It also found that an old header test had a hidden backspace character in its regex, so that check could never fail.
+
+## 2026-10-12 — Home hero: the slogan in the T, stats above the fold
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** replace the T's tech logos with white dots like the X and yellow dots that show "Get IT Done"; put "Experience you can count on" on the first screen ("above the fold"); remove the 3 scene dots. "If you are not clear anything. Please clarify with me".
+- **What the AI did:**
+  - Filmed the animation's frames to see what "XT" is (an amber and white X; a T of tech logos), then asked where the slogan goes. The lead's answer, "Slogan into the T mark", led to two rounds of still mocks on a real frame: three layouts the lead rejected ("I dont like any"), then three different ideas, of which the lead chose "letters are the stem", smaller.
+  - Built it as a 5 x 7 dot font in the canvas scene, so it needs no web font and is testable without a browser; the slogan writes itself up the stem at the end of the intro and again in scene 3.
+  - Made the first screen one screen tall from 1080px, with the stats at its bottom and the animation's box giving up height on short screens; measured at five laptop sizes.
+- **Decision / result:** All five figures show on load from 1280x720 up; phones keep the old layout (the lead chose laptop and up). Tests 1329 pass, diff coverage 100%, smoke and a11y 56/56.
+- **AI got it wrong?** Yes: its first question offered places for the words (under, beside, morphing) when the lead meant inside the T; its first three mocks were all small letters in a boxed column and none was liked. In the build, a test guessed the number of dots per letter wrong (125, not 138), and the first browser frames were taken at the wrong moments because the headless browser's animation clock runs slower than real time (fixed with Playwright's fake clock). It also found that the hero's Pause button sat under the new header pill (#101) and moved it.
