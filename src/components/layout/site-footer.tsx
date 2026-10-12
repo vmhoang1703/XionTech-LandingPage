@@ -17,6 +17,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-ink text-on-navy-muted relative pt-18 pb-9 [--color-focus:var(--color-focus-on-navy)]">
       <div className="footer-ridge" data-ridge="" aria-hidden="true">
+        <span className="ridge-sun" />
         <svg
           viewBox="0 0 1440 120"
           preserveAspectRatio="none"

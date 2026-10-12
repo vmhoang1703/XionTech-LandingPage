@@ -5311,11 +5311,13 @@
   amber and blue colour field (PageScene): a sticky layer, one screen tall and
   taking no space, so it stays behind the content as you scroll; overflow:
   clip keeps it off the hero and the footer. Each blob floats on its own and,
-  with scroll-driven animations, travels across the page as you scroll:
-  amber down the right, blue up the left, so they rarely meet. They stay
-  soft enough for every text colour: muted text is 4.64:1 or more where they
-  are strongest, with amber painted over blue (blue over amber would be
-  4.38:1, so blue comes first). Small amber text sits on navy or on cards.
+  with scroll-driven animations, sweeps from side to side as you scroll, so
+  the colour moves with the reader (lead, 2026-10-12: stronger, more visible).
+  Amber carries the strength: it may reach 90%, while blue stays at 50%, the
+  most it can take. Muted text (#4a5b78) and the About numbers (#735500) stay
+  4.73:1 or more at the strongest point (blue alone); amber is painted over
+  blue, never under it. Small amber text (--color-amber-text) sits on cards
+  or navy only.
   Light section surfaces inside the scene turn see-through; navy ones stay.
   The page ends warm, amber behind the footer ridge (::after), and Home's
   Contact keeps its own warm surface with a see-through top. CSS only, so the
@@ -5389,89 +5391,123 @@
   width: 62vmax;
   height: 62vmax;
   border-radius: var(--radius-full);
-  animation: blob-float 18s ease-in-out infinite alternate;
+  animation: blob-float 16s ease-in-out infinite alternate;
 }
 
 .scene-blob-amber {
-  top: -16vmax;
-  right: -18vmax;
+  top: -10vmax;
+  right: -12vmax;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, var(--color-amber-light) 55%, transparent),
+    color-mix(in srgb, var(--color-amber-light) 90%, transparent) 15%,
     transparent
   );
 }
 
 .scene-blob-blue {
-  bottom: -22vmax;
-  left: -20vmax;
+  bottom: -14vmax;
+  left: -14vmax;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, #8fb6ef 45%, transparent),
+    color-mix(in srgb, #8fb6ef 50%, transparent) 15%,
     transparent
   );
-  animation-duration: 22s;
+  animation-duration: 20s;
   animation-delay: -6s;
 }
 
 .scene-blob-warm {
-  right: 20vw;
-  bottom: -14vmax;
+  right: 24vw;
+  bottom: -10vmax;
   width: 40vmax;
   height: 40vmax;
   background: radial-gradient(
     closest-side,
-    color-mix(in srgb, var(--color-amber) 22%, transparent),
+    color-mix(in srgb, var(--color-amber-light) 70%, transparent) 15%,
     transparent
   );
-  animation-duration: 16s;
+  animation-duration: 14s;
   animation-delay: -11s;
 }
 
 @keyframes blob-float {
   to {
-    transform: translate(5vw, -4vh) scale(1.15);
+    transform: translate(7vw, -6vh) scale(1.2);
   }
 }
 
 @supports (animation-timeline: scroll()) {
   .scene-blob-amber {
     animation:
-      blob-float 18s ease-in-out infinite alternate,
+      blob-float 16s ease-in-out infinite alternate,
       amber-travel linear both;
     animation-timeline: auto, scroll(root);
   }
 
   .scene-blob-blue {
     animation:
-      blob-float 22s ease-in-out -6s infinite alternate,
+      blob-float 20s ease-in-out -6s infinite alternate,
       blue-travel linear both;
     animation-timeline: auto, scroll(root);
   }
 
   .scene-blob-warm {
     animation:
-      blob-float 16s ease-in-out -11s infinite alternate,
+      blob-float 14s ease-in-out -11s infinite alternate,
       warm-travel linear both;
     animation-timeline: auto, scroll(root);
   }
 }
 
+/* Side to side as you scroll: amber from the top right, blue from the bottom
+   left, the warm blob along the bottom. */
 @keyframes amber-travel {
+  25% {
+    translate: -34vw 26vh;
+  }
+
+  50% {
+    translate: -6vw 52vh;
+  }
+
+  75% {
+    translate: -46vw 40vh;
+  }
+
   to {
-    translate: -24vw 62vh;
+    translate: -18vw 70vh;
   }
 }
 
 @keyframes blue-travel {
+  25% {
+    translate: 34vw -24vh;
+  }
+
+  50% {
+    translate: 8vw -56vh;
+  }
+
+  75% {
+    translate: 44vw -36vh;
+  }
+
   to {
-    translate: 26vw -58vh;
+    translate: 18vw -66vh;
   }
 }
 
 @keyframes warm-travel {
+  33% {
+    translate: -44vw -30vh;
+  }
+
+  66% {
+    translate: 6vw -58vh;
+  }
+
   to {
-    translate: -46vw -34vh;
+    translate: -52vw -24vh;
   }
 }
 
@@ -5586,6 +5622,8 @@
 }
 
 .footer-ridge svg {
+  /* Positioned, so the ridge paints over the sun behind it. */
+  position: relative;
   display: block;
   width: 100%;
   height: 100%;
@@ -5593,6 +5631,61 @@
 
 .footer-ridge-fill {
   fill: var(--color-ink);
+}
+
+/*
+  The sun behind the mountain (lead, 2026-10-12): every page ends with a
+  sunrise behind the ridge's peak (x 860 of 1440). The box is the clip, as
+  tall as the room above the footer allows (content clears 232px, 176px on
+  phones), so the glow never sits over text; the sun rises in it as the
+  footer scrolls into view (scroll-driven; still and up where missing, and
+  under reduced motion).
+*/
+.ridge-sun {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 220px;
+  overflow: hidden;
+  view-timeline: --ridge-sun block;
+}
+
+.ridge-sun::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 59.72%;
+  width: min(820px, 140vw);
+  height: 100%;
+  translate: -50% 0;
+  background:
+    radial-gradient(
+      circle 54px at 50% calc(100% - 124px),
+      #fffbea 0 34px,
+      #ffeeb0 44px,
+      rgb(255 228 140 / 0) 54px
+    ),
+    radial-gradient(
+      50% 100% at 50% 100%,
+      rgb(255 216 74 / 0.8),
+      rgb(255 216 74 / 0.32) 45%,
+      transparent 80%
+    );
+}
+
+@supports (animation-timeline: view()) {
+  .ridge-sun::before {
+    animation: sun-rise linear both;
+    animation-timeline: --ridge-sun;
+    animation-range: entry 0% cover 50%;
+  }
+}
+
+@keyframes sun-rise {
+  from {
+    translate: -50% 70%;
+  }
 }
 
 .footer-ridge-line {
@@ -5607,6 +5700,26 @@
   .footer-ridge {
     height: 72px;
   }
+
+  .ridge-sun {
+    height: 160px;
+  }
+
+  .ridge-sun::before {
+    background:
+      radial-gradient(
+        circle 36px at 50% calc(100% - 76px),
+        #fffbea 0 22px,
+        #ffeeb0 29px,
+        rgb(255 228 140 / 0) 36px
+      ),
+      radial-gradient(
+        50% 100% at 50% 100%,
+        rgb(255 216 74 / 0.8),
+        rgb(255 216 74 / 0.32) 45%,
+        transparent 80%
+      );
+  }
 }
 
 /* Room above the footer so the ridge never covers the last content. Inside a
@@ -5617,10 +5730,27 @@ main > .page-scene:last-child > :last-child {
   padding-bottom: clamp(232px, 17vw, 256px);
 }
 
+/* A navy band inside a page scene is a rounded panel, like the Services hero
+   and Home's How we work; its room goes below it, on the scene's warm end. */
+.page-scene > .capture.surface-navy {
+  margin-inline: clamp(10px, 2vw, 28px);
+  border-radius: 28px;
+}
+
+main > .page-scene:last-child > .surface-navy:last-child {
+  margin-bottom: clamp(232px, 17vw, 256px);
+  padding-bottom: var(--spacing-capture);
+}
+
 @media (max-width: 640px) {
   main > :last-child:not(.page-scene),
   main > .page-scene:last-child > :last-child {
     padding-bottom: 176px;
+  }
+
+  main > .page-scene:last-child > .surface-navy:last-child {
+    margin-bottom: 176px;
+    padding-bottom: var(--spacing-capture);
   }
 }
 
@@ -5663,10 +5793,19 @@ main > .page-scene:last-child > :last-child {
   content: none;
 }
 
+/* The services panel, see-through over the page scene: light blue at the
+   top, fading out, so the colour field glows through it. */
 .svc-panel {
+  margin-inline: clamp(10px, 2vw, 28px);
   margin-top: 28px;
   padding-top: clamp(64px, 7vw, 96px);
   overflow-x: clip;
+  border-radius: 28px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-ice) 75%, transparent),
+    color-mix(in srgb, var(--color-ice) 30%, transparent)
+  );
 }
 
 .svc-split {
