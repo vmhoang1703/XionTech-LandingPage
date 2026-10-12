@@ -334,8 +334,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    /* A visitor who pressed Play motion on Products chose the glows. */
-    *:not(.eco-bg[data-motion="on"] i),
+    *,
     *::before,
     *::after {
       animation: none !important;
@@ -3513,227 +3512,14 @@
 
   /*
     Products page (E-A5), ported from the prototype site.css "Products hero"
-    (ENH-014, ENH-018) and the showcase cards and detail view (ENH-089).
+    (ENH-014, ENH-018).
   */
-  .browser {
-    --color-focus: var(--color-navy);
-    overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--color-navy) 12%, transparent);
-    border-radius: var(--radius-browser);
-    background: var(--color-paper);
-    box-shadow: var(--shadow-card);
-  }
 
-  .browser .bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    height: 38px;
-    padding-inline: 14px;
-    border-bottom: 1px solid
-      color-mix(in srgb, var(--color-navy) 10%, transparent);
-    background: var(--color-mist);
-  }
-
-  .browser .bar i {
-    width: 10px;
-    height: 10px;
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--color-navy) 15%, transparent);
-  }
-
-  /* On a narrow card the address ends in an ellipsis, not a hard cut */
-  .browser .bar-url {
-    min-width: 0;
-    overflow: hidden;
-    line-height: 24px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-left: 12px;
-    padding-inline: 12px;
-    border-radius: var(--radius-full);
-    background: var(--color-paper);
-    color: var(--paper-muted);
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-  }
-
-  /* Hero: Built apart. Better together. */
-  .eco-hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding-block: calc(var(--spacing-header-room) + 72px) 88px;
-    background: linear-gradient(180deg, var(--color-white), var(--color-page));
-  }
-
-  .eco-bg {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none;
-    mask-image: linear-gradient(180deg, #000 55%, transparent);
-  }
-
-  .eco-bg i {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(32px);
-    will-change: transform;
-  }
-
-  .eco-bg .g1 {
-    top: -100px;
-    left: -110px;
-    width: 380px;
-    height: 380px;
-    background: var(--color-amber);
-    opacity: 0.3;
-    animation: eco-drift-1 34s ease-in-out infinite alternate;
-  }
-
-  .eco-bg .g2 {
-    right: -170px;
-    bottom: -170px;
-    width: 460px;
-    height: 460px;
-    background: var(--color-navy);
-    opacity: 0.2;
-    animation: eco-drift-2 34s ease-in-out infinite alternate;
-  }
-
-  .eco-bg .g3 {
-    top: 14%;
-    right: 34%;
-    width: 280px;
-    height: 280px;
-    background: var(--color-white);
-    opacity: 0.55;
-    animation: eco-drift-3 38s ease-in-out infinite alternate;
-  }
-
-  .eco-bg .sheen {
-    inset: -20%;
-    border-radius: 0;
-    filter: none;
-    background: linear-gradient(
-      115deg,
-      transparent 38%,
-      color-mix(in srgb, var(--color-white) 14%, transparent) 48%,
-      transparent 58%
-    );
-    animation: eco-sheen 18s linear infinite;
-  }
-
-  /* Pause motion: the glows rest where they are */
-  .eco-bg[data-motion="off"] i {
-    animation-play-state: paused;
-  }
-
-  @keyframes eco-drift-1 {
-    33% {
-      transform: translate3d(30vw, 12vh, 0) scale(1.08);
-    }
-    66% {
-      transform: translate3d(14vw, 38vh, 0) scale(0.95);
-    }
-    100% {
-      transform: translate3d(-2vw, 22vh, 0) scale(1.04);
-    }
-  }
-
-  @keyframes eco-drift-2 {
-    33% {
-      transform: translate3d(-24vw, -10vh, 0) scale(1.06);
-    }
-    66% {
-      transform: translate3d(-38vw, -34vh, 0) scale(0.96);
-    }
-    100% {
-      transform: translate3d(-10vw, -26vh, 0) scale(1.02);
-    }
-  }
-
-  @keyframes eco-drift-3 {
-    33% {
-      transform: translate3d(-18vw, 20vh, 0) scale(1.1);
-    }
-    66% {
-      transform: translate3d(10vw, 30vh, 0) scale(0.92);
-    }
-    100% {
-      transform: translate3d(16vw, 4vh, 0) scale(1.05);
-    }
-  }
-
-  @keyframes eco-sheen {
-    from {
-      transform: translateX(-35%);
-    }
-    to {
-      transform: translateX(35%);
-    }
-  }
-
-  /* Solid navy so it reads on the light hero (ENH-018); the label slides
-     out beside the icon with opacity and transform only */
-  .eco-toggle {
-    position: absolute;
-    top: 16px;
-    right: 24px;
-    z-index: 3;
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-full);
-    background: var(--color-navy);
-    color: var(--color-white);
-    opacity: 0.9;
-    transition: opacity 0.3s var(--ease-brand);
-  }
-
-  .eco-toggle:hover,
-  .eco-toggle:focus-visible {
-    opacity: 1;
-  }
-
-  .eco-toggle span {
-    position: absolute;
-    top: 50%;
-    right: calc(100% + 8px);
-    padding: 6px 12px;
-    border-radius: var(--radius-full);
-    background: var(--color-navy);
-    font-size: var(--text-body-sm);
-    font-weight: 500;
-    white-space: nowrap;
-    pointer-events: none;
-    clip-path: inset(0 0 0 100%);
-    transform: translate(6px, -50%);
-    transition:
-      clip-path 0.3s var(--ease-brand),
-      transform 0.3s var(--ease-brand);
-  }
-
-  .eco-toggle:hover span,
-  .eco-toggle:focus-visible span {
-    clip-path: inset(0);
-    transform: translate(0, -50%);
-  }
-
-  .eco-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.05fr;
-    gap: 48px;
-    align-items: center;
-  }
-
-  .eco-copy h1 {
+  /* Products map */
+  /* Heading and badge shared by the roadmap. */
+  .map-sec h1 {
     margin: 0;
     color: var(--color-navy);
-    font-family: var(--font-display);
     font-size: clamp(2.2rem, 4.4vw, 3.6rem);
     font-weight: 300;
     line-height: 1.04;
@@ -3741,581 +3527,708 @@
     text-wrap: balance;
   }
 
-  .eco-copy .lede {
-    max-width: 44ch;
+  .map-sec .lede {
+    max-width: 60ch;
     margin-top: 24px;
   }
 
-  .eco-diagram {
+  .map-badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 28px;
+    height: 28px;
+    padding-inline: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  /* Products roadmap (2D) */
+  /* The school day as a winding road. Narrow screens: the road bends down the
+     left of the cards, one bend per stop. From 1100px: one road across the
+     section, cards above and below its bends, walked through by the scroll
+     tour (see "Roadmap scroll tour" below). Narrow screens reveal stop by
+     stop. Static without JavaScript and under reduced motion. */
+  .rm-head {
+    max-width: 62ch;
+    margin-top: 64px;
+  }
+
+  .rm-head h2 {
+    margin: 0;
+    color: var(--color-navy);
+    font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+    line-height: 1.1;
+  }
+
+  .rm-head p {
+    margin: 12px 0 0;
+  }
+
+  .rm-head .rm-hint {
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .rm {
     position: relative;
-    justify-self: end;
-    width: 100%;
-    max-width: 540px;
-    aspect-ratio: 1.05 / 1;
+    margin-top: 32px;
   }
 
-  .eco-lines {
+  /* The wide road only shows from 1100px. */
+  .rm-road {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
   }
 
-  .eco-lines line {
+  .rm-road path,
+  .rm-seg path {
+    fill: none;
+  }
+
+  .rm-edge {
+    stroke: var(--color-ice);
+    stroke-width: 30;
+  }
+
+  .rm-asphalt {
     stroke: var(--color-navy);
-    stroke-opacity: 0.45;
-    stroke-width: 1.2;
-    vector-effect: non-scaling-stroke;
+    stroke-width: 22;
   }
 
-  .eco-hub {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: grid;
-    place-items: center;
-    width: 32%;
-    aspect-ratio: 1;
-    border-radius: 28px;
-    background: linear-gradient(145deg, var(--color-white), var(--color-paper));
-    color: var(--color-navy);
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 3.6vw, 3rem);
-    font-weight: 400;
-    transform: translate(-50%, -50%);
-    box-shadow:
-      0 0 0 10px color-mix(in srgb, var(--color-white) 60%, transparent),
-      0 30px 60px -20px color-mix(in srgb, var(--color-navy) 45%, transparent),
-      0 0 90px color-mix(in srgb, var(--color-amber) 45%, transparent);
+  .rm-line {
+    stroke: var(--color-amber-pale);
+    stroke-width: 2;
+    stroke-dasharray: 8 8;
   }
 
-  .eco-card {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 33%;
-    aspect-ratio: 1.33 / 1;
-    padding: 16px 18px;
-    border: 1px solid color-mix(in srgb, var(--color-white) 16%, transparent);
-    border-radius: 18px;
-    background: linear-gradient(160deg, var(--color-navy-2), var(--color-navy));
-    color: var(--color-white);
-    box-shadow: 0 24px 40px -22px
-      color-mix(in srgb, var(--color-ink) 60%, transparent);
-    transition:
-      transform 0.35s var(--ease-brand),
-      box-shadow 0.35s var(--ease-brand);
+  .rm-hill {
+    fill: var(--color-ice);
+    opacity: 0.6;
   }
 
-  .eco-card small {
-    color: var(--color-on-navy-muted);
-    font-size: var(--text-body-sm);
+  .rm-hill-soft {
+    fill: var(--color-mist);
+    opacity: 1;
   }
 
-  .eco-card b {
-    font-size: clamp(1.15rem, 2.1vw, 1.75rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
+  .rm-tree circle {
+    fill: var(--color-navy-2);
   }
 
-  .eco-card:hover,
-  .eco-card:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: 0 30px 50px -22px
-      color-mix(in srgb, var(--color-ink) 70%, transparent);
+  .rm-tree rect {
+    fill: var(--color-navy);
   }
 
-  .eco-card:focus-visible {
-    outline: 2px solid var(--color-navy);
-    outline-offset: 4px;
-  }
-
-  .eco-tl {
-    top: 0;
-    left: 0;
-  }
-
-  .eco-tr {
-    top: 0;
-    right: 0;
-  }
-
-  .eco-bl {
-    bottom: 0;
-    left: 0;
-  }
-
-  .eco-br {
-    right: 0;
-    bottom: 0;
-  }
-
-  @media (width < --theme(--breakpoint-md)) {
-    .eco-grid {
-      grid-template-columns: 1fr;
-      gap: 36px;
-    }
-
-    .eco-diagram {
-      justify-self: center;
-    }
-  }
-
-  @media (width <= --theme(--breakpoint-sm)) {
-    .eco-hero {
-      padding-block: calc(var(--spacing-header-room) + 88px) 64px;
-    }
-
-    .eco-toggle {
-      right: 16px;
-    }
-
-    .eco-card {
-      padding: 12px 14px;
-      border-radius: 14px;
-    }
-
-    .eco-hub {
-      border-radius: 20px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .eco-card:hover,
-    .eco-card:focus-visible {
-      transform: none;
-    }
-
-    .eco-toggle span {
-      clip-path: inset(0);
-      transform: translate(0, -50%);
-    }
-  }
-
-  /* Showcase cards: What we build. */
-  .pshows {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-  }
-
-  .pshow {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    min-height: 560px;
-    padding: clamp(24px, 3vw, 36px);
-    overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--color-navy) 12%, transparent);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(
-      180deg,
-      var(--color-white),
-      color-mix(in srgb, var(--color-mist) 70%, var(--color-white))
-    );
-    scroll-margin-top: calc(
-      var(--spacing-anchor-offset) - var(--spacing-header-room)
-    );
-  }
-
-  .pshow[data-aud="parents"],
-  .pdetail[data-aud="parents"] {
-    --aud-bg: var(--color-amber);
-    --aud-fg: var(--color-navy);
-    --aud-line: color-mix(in srgb, var(--color-navy) 30%, transparent);
-  }
-
-  .pshow[data-aud="school"],
-  .pdetail[data-aud="school"] {
-    --aud-bg: var(--color-navy);
-    --aud-fg: var(--color-white);
-    --aud-line: transparent;
-  }
-
-  .pshow[data-aud="students"],
-  .pdetail[data-aud="students"] {
-    --aud-bg: var(--color-white);
-    --aud-fg: var(--color-navy);
-    --aud-line: color-mix(in srgb, var(--color-navy) 35%, transparent);
-  }
-
-  .ps-head {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .pc-kick {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    color: var(--color-muted);
-    font-size: var(--text-body-sm);
-    font-weight: 500;
-  }
-
-  .ps-head .pc-kick {
-    margin-bottom: 12px;
-  }
-
-  .pc-kick .badge {
-    width: auto;
-    min-width: 44px;
-    padding-inline: 8px;
-    background: var(--aud-bg);
-    color: var(--aud-fg);
-    box-shadow: inset 0 0 0 1px var(--aud-line);
-  }
-
-  .pc-kick .badge svg {
-    font-size: 1.3rem;
-  }
-
-  .ps-name {
-    color: var(--color-muted);
-  }
-
-  .ps-title {
-    max-width: 22ch;
-    margin: 0;
-    color: var(--color-heading);
-    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
-    line-height: 1.25;
-  }
-
-  .pc-expand {
-    display: grid;
-    flex-shrink: 0;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    margin-left: auto;
-    border-radius: var(--radius-md);
-    background: var(--color-mist);
-    color: var(--color-navy);
-    font-size: 1.15rem;
-    transition:
-      background 0.2s,
-      color 0.2s;
-  }
-
-  .pc-expand:hover {
-    background: var(--color-navy);
-    color: var(--color-white);
-  }
-
-  .pc-expand:focus-visible,
-  .pd-close:focus-visible {
-    outline: 3px solid var(--color-amber);
-    outline-offset: 2px;
-  }
-
-  .ps-visual {
-    position: relative;
-    display: grid;
-    flex: 1;
-    place-items: center;
-    min-height: 320px;
-  }
-
-  .ps-visual .pmedia {
-    width: 82%;
-    max-width: 360px;
-  }
-
-  .ps-visual .pmedia.is-mobile {
-    width: 160px;
-    max-width: none;
-    height: 330px;
-    aspect-ratio: auto;
-  }
-
-  /* Screenshot frames: a browser for the web apps, a phone for Parent Hub */
-  .pmedia {
-    position: relative;
-    display: grid;
-    width: 100%;
-    aspect-ratio: 1.33 / 1;
-    place-items: center;
-  }
-
-  .pm-browser {
-    width: 100%;
-  }
-
-  .pm-slot {
-    aspect-ratio: 16 / 10;
-    height: auto;
-    border-radius: 0;
-  }
-
-  .pm-phone {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    padding: 8px;
-    aspect-ratio: 1170 / 2532;
-    border-radius: 30px;
-    background: var(--color-ink);
-    translate: -50% 0;
-    box-shadow: 0 30px 60px -24px
-      color-mix(in srgb, var(--color-ink) 60%, transparent);
-  }
-
-  .pm-phone .home-media {
-    border-radius: 22px;
-    font-size: 0.72rem;
-  }
-
-  .pm-notch {
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    z-index: 2;
-    width: 34%;
-    height: 14px;
-    border-radius: var(--radius-full);
-    background: var(--color-ink);
-    transform: translateX(-50%);
-  }
-
-  /* No JavaScript: the card shows its features in a details element
-     (inside noscript, so only without JavaScript). */
-  .pd-nojs summary {
-    min-height: 44px;
-    color: var(--color-heading);
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  /* Detail view: a native modal dialog */
-  .pdetail {
-    width: min(1120px, 100vw - 32px);
-    max-width: none;
-    max-height: calc(100dvh - 32px);
-    margin: auto;
-    padding: 0;
-    overflow: auto;
-    overscroll-behavior: contain;
-    border: 0;
-    border-radius: var(--radius-lg);
-    background: var(--color-white);
-    color: var(--color-text);
-    box-shadow: 0 40px 80px -24px rgb(11 23 48 / 0.45);
-  }
-
-  .pdetail::backdrop {
-    background: rgb(11 23 48 / 0.6);
-    backdrop-filter: blur(4px);
-  }
-
-  .pdetail[open] {
-    animation: pd-in 0.3s var(--ease-brand);
-  }
-
-  @keyframes pd-in {
-    from {
-      transform: translateY(12px) scale(0.98);
-    }
-  }
-
-  body:has(.pdetail[open]) {
-    overflow: hidden;
-  }
-
-  .pd-inner {
-    --pd-pad: clamp(20px, 4vw, 48px);
-    padding: 0 var(--pd-pad) var(--pd-pad);
-  }
-
-  .pd-top {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-inline: calc(-1 * var(--pd-pad));
-    padding: 16px var(--pd-pad);
-    border-bottom: 1px solid
-      color-mix(in srgb, var(--color-navy) 10%, transparent);
-    background: var(--color-white);
-  }
-
-  .pd-name {
-    margin: 0;
-    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
-  }
-
-  .pd-close {
-    display: grid;
-    flex-shrink: 0;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    margin-left: auto;
-    border-radius: var(--radius-full);
-    background: var(--color-mist);
-    color: var(--color-navy);
-    font-size: 1.3rem;
-  }
-
-  .pd-close:hover {
-    background: var(--color-navy);
-    color: var(--color-white);
-  }
-
-  .pd-intro {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: clamp(24px, 4vw, 48px);
-    align-items: center;
-    padding-block: clamp(24px, 4vw, 40px);
-  }
-
-  .pd-tag {
-    margin: 0 0 16px;
-    color: var(--color-heading);
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.2vw, 1.75rem);
-    line-height: 1.3;
-  }
-
-  .pd-who {
-    margin: 0 0 24px;
-    color: var(--color-muted);
-  }
-
-  .pd-label {
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .pd-cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .pd-media .pmedia.is-mobile {
-    height: 420px;
-    aspect-ratio: auto;
-  }
-
-  .pd-h {
-    margin: 0 0 16px;
-    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
-  }
-
-  .pd-feats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
+  .rm-stops {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .pd-nojs .pd-feats {
-    margin-top: 12px;
+  .rm-stop {
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
   }
 
-  .pd-feats li {
-    padding: 20px;
+  /* An app's anchor (#sxp, …), on its stop or its tour step: land clear of
+     the header. */
+  .rm-stop[id],
+  .rm-step {
+    /* 16px below the header room (html scroll-padding), where the tour
+       stage pins. */
+    scroll-margin-top: 16px;
+  }
+
+  .rm-seg {
+    grid-column: 1;
+    grid-row: 1;
+    width: 80px;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .rm-seg path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .rm-pin {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--color-navy);
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 500;
+    translate: -50% -50%;
+  }
+
+  .rm-stop[data-bend="right"] .rm-pin {
+    left: 67px;
+  }
+
+  /* The stop last opened keeps its pin highlighted. */
+  .rm-stop[data-selected="true"] .rm-pin {
+    background: var(--color-amber);
+    /* A halo, so the selection does not rest on colour alone. */
+    box-shadow: 0 0 0 6px rgb(255 192 0 / 0.35);
+  }
+
+  .rm-card {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1;
+    margin: 14px 0;
+    padding: 16px 18px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow:
+      0 1px 2px rgb(22 54 99 / 0.06),
+      0 10px 28px rgb(22 54 99 / 0.08);
+  }
+
+  .rm-card:hover {
+    border-color: var(--color-navy);
+    box-shadow: 0 14px 34px rgb(22 54 99 / 0.16);
+  }
+
+  .rm-card:has(.rm-open:focus-visible) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
+  .rm-kicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .rm-who {
+    margin-left: auto;
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    background: var(--color-mist);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+  }
+
+  /* The tour's --rm-pad (.rm-open) depends on this font-size and
+     line-height: change them together. */
+  .rm-title {
+    margin: 10px 0 0;
+    color: var(--color-navy);
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  /* The title button covers the whole card. */
+  /* 2px more above and below for a 24px target, taken back by the margin
+     so the layout does not move. */
+  .rm-open {
+    margin-block: -2px;
+    border: 0;
+    padding: 2px 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+  }
+
+  .rm-open::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .rm-text {
+    margin: 6px 0 0;
+    color: var(--color-text);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .rm-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .rm-app {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 12px 3px 3px;
+    border-radius: var(--radius-full);
+    background: var(--color-mist);
+    color: var(--color-navy);
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .rm-apps {
+    display: flex;
+    gap: 6px;
+  }
+
+  .rm-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    color: var(--color-navy);
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+
+  .rm-more svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* The finale belongs to everyone: an inverted navy card. */
+  .rm-stop[data-everyone="true"] .rm-card {
+    border-color: var(--color-navy);
+    background: var(--color-navy);
+  }
+
+  .rm-stop[data-everyone="true"] .rm-kicker,
+  .rm-stop[data-everyone="true"] .rm-title,
+  .rm-stop[data-everyone="true"] .rm-text,
+  .rm-stop[data-everyone="true"] .rm-more {
+    color: var(--color-white);
+  }
+
+  .rm-stop[data-everyone="true"] .rm-who {
+    background: rgb(255 255 255 / 0.16);
+  }
+
+  .rm-stop[data-everyone="true"] .map-badge {
+    background: var(--color-white);
+    color: var(--color-navy);
+  }
+
+  @media (min-width: 1100px) {
+    .rm-stage {
+      position: relative;
+      width: min(1400px, calc(100vw - 32px));
+      margin-left: 50%;
+      aspect-ratio: 1400 / 820;
+      translate: -50% 0;
+    }
+
+    .rm-road {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      clip-path: none;
+    }
+
+    .rm-road .rm-edge {
+      stroke-width: 62;
+      stroke-linecap: round;
+    }
+
+    .rm-road .rm-asphalt {
+      stroke-width: 48;
+      stroke-linecap: round;
+    }
+
+    .rm-road .rm-line {
+      stroke-width: 3;
+      stroke-dasharray: 16 16;
+    }
+
+    .rm-stops {
+      position: absolute;
+      inset: 0;
+    }
+
+    .rm-stop {
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
+      display: block;
+      width: 0;
+      height: 0;
+    }
+
+    .rm-seg {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .rm-stop[data-bend] .rm-pin {
+      top: 0;
+      left: 0;
+      width: 44px;
+      height: 44px;
+      font-size: 1rem;
+      box-shadow: 0 6px 16px rgb(22 54 99 / 0.25);
+    }
+
+    .rm-stop[data-bend][data-selected="true"] .rm-pin {
+      box-shadow:
+        0 0 0 6px rgb(255 192 0 / 0.35),
+        0 6px 16px rgb(22 54 99 / 0.25);
+    }
+
+    .rm-card {
+      position: absolute;
+      left: 0;
+      width: clamp(210px, 17vw, 250px);
+      margin: 0;
+      padding: 14px 16px;
+      translate: -50% calc(-100% - 38px);
+    }
+
+    .rm-stop[data-side="below"] .rm-card {
+      translate: -50% 38px;
+    }
+
+    .rm-text {
+      font-size: 0.85rem;
+    }
+  }
+
+  /* Roadmap reveal (narrow): each stop reveals on its own as it scrolls in
+     ([data-in]). Only "armed" clips and scales, never by opacity, so text
+     keeps its contrast; only [data-in] moves. "static" (no JavaScript,
+     reduced motion) leaves everything as drawn above. */
+  .rm-draw {
+    fill: none;
+    stroke: var(--color-white);
+    stroke-width: 80;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+
+  .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-pin {
+    scale: 0;
+  }
+
+  /* Cards wipe in from the side they come from: up from below the road
+     for the cards above it, down for the cards below. The open clip reaches
+     past the card so its shadow and focus ring show. */
+  .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-card {
+    clip-path: inset(calc(100% + 60px) -60px -60px -60px);
+    transform: translateY(16px);
+  }
+
+  .rm[data-reveal="armed"] .rm-stop[data-side="below"]:not([data-in]) .rm-card {
+    clip-path: inset(-60px -60px calc(100% + 60px) -60px);
+    transform: translateY(-16px);
+  }
+
+  .rm-stop[data-in] .rm-card {
+    clip-path: inset(-60px);
+    transition:
+      clip-path 400ms var(--ease-brand),
+      transform 400ms var(--ease-brand);
+    transition-delay: 200ms;
+  }
+
+  /* A focused card is shown whole, with its focus ring. */
+  .rm[data-reveal] .rm-stop:has(.rm-open:focus-visible) .rm-card {
+    clip-path: none;
+    transform: none;
+  }
+
+  .rm-stop[data-in] .rm-pin {
+    transition: scale var(--transition-duration-menu) var(--ease-brand);
+    transition-delay: 80ms;
+  }
+
+  /* Narrow: each bend draws top to bottom as its stop scrolls in. The clip
+     reaches past the box so the stroke ends are not cut. */
+  @media (width < 1100px) {
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-seg {
+      clip-path: inset(-20px -40px calc(100% + 20px) -40px);
+    }
+
+    .rm-stop[data-in] .rm-seg {
+      clip-path: inset(-20px -40px);
+      transition: clip-path 300ms linear;
+    }
+  }
+
+  /* Roadmap scroll tour (wide, with JavaScript, no reduced motion). The
+     stage sticks below the header over a track of one step per stop (6);
+     the active stop follows the scroll, the road is drawn up to it
+     (--share) and its card stands out. Screen only: print shows the whole
+     road. Nothing is hidden.
+     The stage is the 1400x820 drawing, cards included, zoomed by --rm-k to
+     fit the window below the header (tan(atan2(a, b)) is a / b as a
+     number). */
+  @media screen and (min-width: 1100px) {
+    .rm[data-tour="on"] {
+      --rm-k: max(
+        0.72,
+        min(
+          1,
+          tan(atan2(100vw - 32px, 1400px)),
+          tan(atan2(100svh - var(--spacing-header-room) - 16px, 820px))
+        )
+      );
+      --rm-step: 60svh;
+      height: calc(820px * var(--rm-k) + 6 * var(--rm-step));
+    }
+
+    /* Lengths on a zoomed element are zoomed too: the pin offset is divided
+       back so the stage sticks right below the header. */
+    .rm[data-tour="on"] .rm-stage {
+      position: sticky;
+      top: calc(var(--spacing-header-room) / var(--rm-k));
+      width: 1400px;
+      zoom: var(--rm-k);
+    }
+
+    /* The focus ring keeps its full 2px, and the title button its 24px
+       target, in the zoomed stage. The extra padding is taken back by the
+       margin, so the layout does not move. */
+    .rm[data-tour="on"] .rm-open {
+      --rm-pad: max(2px, calc((24px / var(--rm-k) - 1.1rem * 1.2) / 2));
+
+      margin-block: calc(-1 * var(--rm-pad));
+      padding-block: var(--rm-pad);
+    }
+
+    .rm[data-tour="on"] .rm-stage :focus-visible,
+    .rm[data-tour="on"] .rm-card:has(.rm-open:focus-visible) {
+      outline-width: calc(2px / var(--rm-k));
+    }
+
+    /* A step's anchor sits where its stop is active (mid-step). */
+    .rm[data-tour="on"] .rm-step {
+      position: absolute;
+      top: calc((var(--step) + 0.5) * var(--rm-step));
+      left: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .rm[data-tour="on"] .rm-draw {
+      stroke-dashoffset: calc(1 - var(--share));
+    }
+
+    /* From a frame after the tour starts, so the road snaps to stop 1. */
+    .rm[data-tour="on"][data-road="moving"] .rm-draw {
+      transition: stroke-dashoffset 400ms var(--ease-brand);
+    }
+
+    /* Functional text stays at --text-label (11.5px) or larger once the
+       stage is zoomed (DESIGN.md); cards grow a little on short windows. */
+    .rm[data-tour="on"] .rm-kicker {
+      font-size: max(0.8rem, calc(var(--text-label) / var(--rm-k)));
+    }
+
+    .rm[data-tour="on"] .rm-who {
+      font-size: max(0.75rem, calc(var(--text-label) / var(--rm-k)));
+    }
+
+    .rm[data-tour="on"] .rm-text,
+    .rm[data-tour="on"] .rm-app,
+    .rm[data-tour="on"] .rm-more {
+      font-size: max(0.85rem, calc(var(--text-label) / var(--rm-k)));
+    }
+
+    .rm[data-tour="on"] .map-badge {
+      font-size: max(0.7rem, calc(var(--text-label) / var(--rm-k)));
+    }
+
+    .rm[data-tour="on"] .rm-card {
+      width: 250px;
+      transition:
+        border-color 400ms var(--ease-brand),
+        box-shadow 400ms var(--ease-brand),
+        transform 400ms var(--ease-brand);
+    }
+
+    .rm[data-tour="on"] .rm-stop[data-active="true"] .rm-card {
+      border-color: var(--color-navy);
+      box-shadow: 0 18px 40px rgb(22 54 99 / 0.22);
+      transform: scale(1.04);
+    }
+  }
+
+  /* Print the whole roadmap, even one not yet scrolled into view. */
+  @media print {
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-pin {
+      scale: 1;
+    }
+
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-card,
+    .rm[data-reveal="armed"]
+      .rm-stop[data-side="below"]:not([data-in])
+      .rm-card {
+      clip-path: none;
+      transform: none;
+    }
+  }
+
+  @media print and (width < 1100px) {
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-seg {
+      clip-path: none;
+    }
+  }
+
+  /* The stop modal. */
+  .road-dialog {
+    width: min(560px, calc(100vw - 32px));
+    max-height: calc(100dvh - 48px);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    color: var(--color-text);
+    box-shadow: 0 24px 60px rgb(22 54 99 / 0.25);
+  }
+
+  .road-dialog::backdrop {
+    background: rgb(16 34 63 / 0.55);
+  }
+
+  .road-dialog-body {
+    padding: 24px;
+  }
+
+  .road-dialog-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .road-dialog-step {
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .road-dialog-close {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    color: var(--color-navy);
+  }
+
+  .road-dialog h2 {
+    margin: 12px 0 0;
+    color: var(--color-navy);
+    font-size: 1.6rem;
+    line-height: 1.15;
+  }
+
+  .road-dialog-text {
+    margin: 8px 0 0;
+  }
+
+  .road-dialog-app {
+    margin-top: 20px;
+    padding: 16px;
     border-radius: var(--radius-md);
     background: var(--color-mist);
   }
 
-  .pd-feats svg {
-    box-sizing: content-box;
-    width: 1.3rem;
-    height: 1.3rem;
-    margin-bottom: 12px;
-    padding: 11px;
-    border-radius: var(--radius-md);
-    background: var(--color-navy);
-    color: var(--color-amber);
+  .road-dialog-app-h {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
   }
 
-  .pd-feats h4 {
-    margin: 0 0 6px;
-    color: var(--color-heading);
-    font-size: var(--text-body);
-    font-weight: 500;
-  }
-
-  .pd-feats p {
+  .road-dialog-app h3 {
     margin: 0;
-    color: var(--color-muted);
-    font-size: var(--text-body-sm);
+    color: var(--color-navy);
+    font-size: 1.1rem;
   }
 
-  /* Store buttons (Parent Hub); stand-ins are disabled labels (A6) */
-  .store-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 52px;
-    padding: 6px 18px 6px 14px;
-    border-radius: 12px;
-    background: var(--color-ink);
-    color: var(--color-white);
+  .road-dialog-app h4 {
+    margin: 12px 0 4px;
+    color: var(--color-navy);
+    font-size: 0.85rem;
   }
 
-  .store-btn svg {
-    font-size: 1.7rem;
+  .road-dialog-app p,
+  .road-dialog-app li {
+    margin: 2px 0 0;
+    font-size: 0.9rem;
   }
 
-  .store-btn span {
+  .road-dialog-app ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .road-dialog-apps {
     display: grid;
-    line-height: 1.1;
+    gap: 8px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .store-btn small {
-    font-size: var(--text-label);
-    opacity: 0.85;
+  .road-dialog-apps li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    color: var(--color-text);
   }
 
-  .store-btn b {
-    font-size: var(--text-body-lg);
-    font-weight: 500;
-    letter-spacing: -0.01em;
+  .road-dialog-apps strong {
+    display: block;
+    color: var(--color-navy);
   }
 
-  .store-btn[aria-disabled="true"] {
-    opacity: 0.6;
-    cursor: not-allowed;
+  .road-dialog-apps span span {
+    font-size: 0.85rem;
   }
 
-  @media (width < 860px) {
-    .pshows {
-      grid-template-columns: 1fr;
-    }
-
-    .pshow {
-      min-height: 0;
-    }
-
-    .ps-visual {
-      min-height: 260px;
-    }
+  .road-dialog-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
   }
 
-  @media (width < 760px) {
-    .pd-intro {
-      grid-template-columns: 1fr;
-    }
-
-    .pd-media {
-      order: -1;
-    }
+  .road-dialog-nav button:disabled {
+    opacity: 0.5;
+    cursor: default;
   }
 
   /* Services hero (Story 5.1), ported from the prototype site.css. */

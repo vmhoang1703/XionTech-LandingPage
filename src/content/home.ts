@@ -3,7 +3,7 @@
 import type { Stat } from "@/components/sections/stats-band";
 import { aboutFaq } from "@/content/about";
 import { appById } from "@/content/apps";
-import { productDetails, productsHero } from "@/content/products";
+import { journeyMap, productDetails } from "@/content/products";
 import {
   servicesOutcomes,
   servicesPage,
@@ -131,7 +131,7 @@ export const homeOutcomes = {
 // placeholder, so the cards do not use taglines.
 export const homeApps = {
   title: "One connected school.",
-  lede: productsHero.lede,
+  lede: journeyMap.intro.lede,
   apps: [parentHub, staffHub, iot, aiTutor].map((app) => ({
     app,
     href: `/products#${app.anchor}`,

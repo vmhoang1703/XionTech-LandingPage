@@ -1622,3 +1622,80 @@ Template:
 - **Decision / result:** Tests 1333 pass; the five Home stats still show on load at 1280x720.
 - **AI got it wrong?** Yes, twice, both caught by tests: the bulk rename also changed a folder name in a test path (`ux-XionTech-LandingPage-…`), and the footer line was first inserted inside the list of phone numbers, so it showed under every contact.
 - **Then:** "XionTech does not have 's' at the end. My bad". The brand part of #104 was reverted the same evening by restoring every file #104 touched to its state before #104, then re-applying only the location changes, and the old rule went back into AGENTS.md (with a note). A diff against the pre-#104 state shows only the 12 location files changed.
+
+## 2026-10-10 — Products page as an audience flow through a 3D campus
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` dispatch route with `ui-ux-pro-max` and the three.js reference skills
+- **Prompt (short):** "Redesign the Product page as a user flow with a lot of animation; use ui-ux-pro-max and threejs."
+- **What the AI did:**
+  - Asked four design questions first. Sammy chose: one flow per audience, a low-poly campus, the flow before the app cards, and one PR.
+  - Built the audience flow test-first in eight tasks, each with its own implementer and task review: Parent → Teacher and staff → Student → Campus, with a sticky three.js campus whose camera, sky, beacon and lit path follow the scroll.
+  - Kept Motion as the animation library because the stack already names it, and did not use GSAP, which ui-ux-pro-max had suggested. Also did not use the skill's indigo and Comic Neue palette, which clashes with DESIGN.md.
+  - Ran the five-layer review and a walk on a production build at four widths, with reduced motion and with WebGL turned off.
+- **Decision / result:** At review Sammy chose a rich 3D pass and kept the app cards unchanged. three.js only loads when the flow nears the screen. Pause and reduced motion stop all movement, and without WebGL a still SVG campus shows. Checks:
+  - 1345 unit tests;
+  - diff coverage 100%;
+  - 15 smoke tests;
+  - the build;
+  - the products e2e (7).
+- **AI got it wrong?** Yes:
+  - The first campus put the camera so close that one block filled the frame. The walk screenshots caught it, and Sammy asked for the rich pass.
+  - Pausing at first left the chapters dimmed.
+  - The chapter links were 20px tall, under the 24px target size.
+  - A chapter link could stop short of its card after the visitor had scrolled, because Chrome's focus scroll won. It was found only by the final walk.
+  - The controller's own script put an extra `|` in every UX-checks row, the same slip as before.
+
+## 2026-10-12 — Products roadmap: from 3D explorations to a 2D road with a draw-in
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), quick-dev explorations, then `/bmad-build` dispatch route with `ui-ux-pro-max`
+- **Prompt (short):** "Redesign the Product page as a user journey" → "a roadmap with 2D but the road not straight" → "now add animation, do all testing like before".
+- **What the AI did:**
+  - Quick-dev explorations on their own branches: a clickable 3D island map, a fully 3D guided tour, a lanes grid. Sammy chose a 2D winding road with a card per stop. All copy is the prototype's "A day at school".
+  - Then a full `/bmad-build`:
+    - removed the unused 3D code and the `three` and `motion` dependencies;
+    - tested the roadmap, the stop modal and the content;
+    - added a once-only draw-in: the road draws from Start to Finish, pins pop, cards wipe in;
+    - five-layer review and a walk on a production build.
+- **Decision / result:** Three of Sammy's decisions changed the approved spec during the build:
+  - waiting cards wipe in rather than dim, because axe failed on dimmed text;
+  - phones reveal stop by stop;
+  - the draw-in plays on load, because desktop never animated.
+  - Checks:
+    - 1283 unit tests;
+    - diff coverage 100%;
+    - 15 smoke tests;
+    - the build;
+    - 51 accessibility browser tests.
+- **AI got it wrong?** Yes:
+  - The quick-dev CSS used weight 700, which the type-scale test forbids.
+  - The first reveal dimmed text to 35%, which axe failed.
+  - One observer over the tall phone list could never fire on short screens.
+  - Copying the "already visible → no replay" rule meant desktop never saw the animation; the final walk caught it.
+  - The 3D tour first crashed on a negative frame time.
+- **Follow-up (2026-10-12):** Sammy asked to remove the road's Start/Finish badges and to highlight the pin of the stop he clicks. The review noticed the highlight was colour only, so it got a halo, and that a desktop pin shadow rule would have hidden that halo at 1100px and wider.
+
+## 2026-10-12 — Products roadmap becomes a scroll tour; "What we build" removed
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` dispatch route
+- **Prompt (short):** "Remove all of What we build on the Product page; can we scroll to go through the roadmap?"
+- **What the AI did:**
+  - Asked two questions first. Sammy chose: the roadmap takes over the app anchors, and a pinned scroll tour.
+  - Removed the showcase, the app dialogs and their code. Moved `#pxp`, `#sxp`, `#ai-tutor` and `#iot` onto the roadmap stops.
+  - Built the tour on wide screens: the roadmap stays under the header while plain scrolling moves stop by stop. The road draws to the active stop and its pin turns amber. Phones keep the per-stop reveal.
+  - Four tasks with task reviews, the five-layer review, and a walk on a production build.
+- **Decision / result:**
+  - The stage zooms to fit the window, but card text keeps DESIGN.md's 11.5px floor.
+  - The tour starts only when the stage fits at a zoom of at least 0.72; shorter windows get the static roadmap.
+  - Checks:
+    - 1286 unit tests;
+    - diff coverage 100%;
+    - 15 smoke tests;
+    - the build;
+    - 57 accessibility browser tests.
+- **AI got it wrong?** Yes:
+  - The first zoom shrank labels to about 10px.
+  - A `%` in the URL hash would have crashed the page.
+  - The road ran backwards once at load.
+  - Scrolling behind an open modal moved the selected pin.
+  - The first anchor pass left `#pxp` and `#iot` landing under the header.
+- **Follow-up (2026-10-13), merging develop:** develop's floating header pill moved the header bottom to 96px, so the pinned roadmap slid under it. The tour now pins at `--spacing-header-room`. The AI first copied develop's anchor formula onto the tour's step anchors as well; that dropped deep links 16px short of their stop, and the e2e caught it. The footer-link test also had to wait for develop's new footer scroll reveal to settle before clicking.

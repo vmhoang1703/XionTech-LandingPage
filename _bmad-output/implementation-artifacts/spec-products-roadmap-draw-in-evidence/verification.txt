@@ -1,0 +1,249 @@
+$ npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+exit 0
+
+$ npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 D:/XionTech-LandingPage
+
+
+ Test Files  88 passed (88)
+      Tests  1283 passed (1283)
+   Start at  11:30:22
+   Duration  56.60s (import 55%, environment 25%, tests 13%, setup 5%, transform 1%)
+
+    Isolate  88 workers spawned · ~1.93s startup each (spawn + environment, per file)
+             at least ~13.53s faster with isolate: false — reuses workers across files instead of one per file
+
+exit 0
+
+$ npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 D:/XionTech-LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  88 passed (88)
+      Tests  1283 passed (1283)
+   Start at  11:31:19
+   Duration  68.99s (import 52%, environment 23%, tests 17%, setup 6%, worker 1%, transform 1%)
+
+    Isolate  88 workers spawned · ~2.11s startup each (spawn + environment, per file)
+             at least ~14.77s faster with isolate: false — reuses workers across files instead of one per file
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.54 |    97.89 |   99.33 |     100 |                   
+ app/about         |     100 |    83.33 |     100 |     100 |                   
+  page.tsx         |     100 |    83.33 |     100 |     100 | 162               
+ ...onents/careers |     100 |    98.13 |     100 |     100 |                   
+  ...tion-form.tsx |     100 |    96.72 |     100 |     100 | 46,124            
+ ...onents/contact |   99.33 |    95.88 |   98.85 |     100 |                   
+  contact-form.tsx |   98.49 |    93.58 |   97.61 |     100 | ...30,193,223,419 
+  ...tact-form.tsx |     100 |    94.59 |     100 |     100 | 40,82             
+ components/home   |   98.84 |       94 |   97.72 |     100 |                   
+  hero-silk.tsx    |   98.18 |       95 |    90.9 |     100 | 31                
+  ...ndustries.tsx |    97.5 |     92.3 |     100 |     100 | 35                
+  silk-shader.ts   |     100 |     92.3 |     100 |     100 | 95                
+ components/layout |     100 |       98 |     100 |     100 |                   
+  mobile-menu.tsx  |     100 |     97.5 |     100 |     100 | 44                
+ components/news   |   97.56 |      100 |   93.33 |     100 |                   
+  news-filters.tsx |   96.42 |      100 |    90.9 |     100 |                   
+ ...nents/products |   98.55 |    96.15 |     100 |     100 |                   
+  ...ct-detail.tsx |   97.61 |       95 |     100 |     100 | 93                
+ ...oducts/journey |     100 |       98 |     100 |     100 |                   
+  road-map.tsx     |     100 |       98 |     100 |     100 | 161               
+ ...oducts/roadmap |   97.14 |    97.36 |     100 |     100 |                   
+  ...op-dialog.tsx |   97.14 |    97.36 |     100 |     100 | 27                
+ ...nents/sections |     100 |    96.42 |     100 |     100 |                   
+  hero-art.tsx     |     100 |       90 |     100 |     100 | 36,65             
+ test-utils        |      96 |    85.71 |     100 |     100 |                   
+  css-classes.ts   |      96 |    85.71 |     100 |     100 | 50                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.54% ( 1767/1775 )
+Branches     : 97.89% ( 930/950 )
+Functions    : 99.33% ( 451/454 )
+Lines        : 100% ( 1583/1583 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/components/products/journey/journey-section.tsx (100%)
+src/components/products/journey/road-map.tsx (100%)
+src/components/products/map/map-badge.tsx (100%)
+src/components/products/map/open-app-dialog.ts (100%)
+src/components/products/roadmap/road-stop-dialog.tsx (100%)
+src/content/products.ts (100%)
+-------------
+Total:   137 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+C1 ok: 36 changed file(s) with branch coverage >= 80% vs origin/develop.
+exit 0
+
+$ npm run test:smoke
+
+> xiontech-landing-page@0.1.0 test:smoke
+> playwright test --project=smoke
+
+
+Running 15 tests using 6 workers
+
+  ok  1 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (122ms)
+  ok  2 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, Inside XionTech and the open roles @smoke (101ms)
+  ok  3 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (230ms)
+  ok  7 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (196ms)
+  ok  8 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with the H1, the map, the four card anchors and no Updates link @smoke (199ms)
+  ok  6 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the lost-trail copy and no capture band @smoke (296ms)
+  ok  4 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its hero, the audience filters, the sample note and the demo capture @smoke (312ms)
+  ok  9 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript @smoke (91ms)
+  ok  5 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (347ms)
+  ok 10 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (86ms)
+  ok 12 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (192ms)
+  ok 13 [smoke] › e2e\smoke.spec.ts:24:5 › demo page responds 200 with send request button @smoke (191ms)
+  ok 11 [smoke] › e2e\news.spec.ts:27:5 › unknown story slug answers 404 with the Not found page @smoke (249ms)
+  ok 14 [smoke] › e2e\smoke.spec.ts:35:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (32ms)
+  ok 15 [smoke] › e2e\news.spec.ts:40:5 › the first story on the News page answers 200 with its header, Back to News and no breadcrumb @smoke (68ms)
+
+  15 passed (12.2s)
+exit 0
+
+$ npm run build
+
+> xiontech-landing-page@0.1.0 build
+> next build
+
+▲ Next.js 16.3.6 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 25ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1924ms
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/16) ...
+  Generating static pages using 11 workers (4/16) 
+  Generating static pages using 11 workers (8/16) 
+  Generating static pages using 11 workers (12/16) 
+✓ Generating static pages using 11 workers (16/16) in 617ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/careers/apply
+├ ƒ /api/careers/cv-upload
+├ ƒ /api/contact
+├ ƒ /api/revalidate
+├ ○ /apple-icon.png
+├ ○ /careers
+├ ƒ /careers/[slug]
+├ ○ /demo
+├ ○ /icon.png
+├ ○ /news
+├ ƒ /news/[slug]
+├ ○ /privacy
+├ ○ /products
+└ ○ /services
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+exit 0
+
+$ npx playwright test --project=a11y
+
+Running 51 tests using 2 workers
+
+  ok  1 [a11y] › e2e\products.spec.ts:22:5 › a showcase card opens its dialog by keyboard, keeps Tab inside, and Esc returns focus @a11y (1.4s)
+  ok  3 [a11y] › e2e\products.spec.ts:45:5 › /products#ai-tutor lands on the AI Tutor card below the header @a11y (946ms)
+  ok  4 [a11y] › e2e\products.spec.ts:100:7 › school-day roadmap › the roadmap shows the H1 and six cards @a11y (787ms)
+  ok  2 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /: axe, one H1, alt text, no nesting @a11y (3.3s)
+  ok  6 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /products: axe, one H1, alt text, no nesting @a11y (2.1s)
+  ok  5 [a11y] › e2e\products.spec.ts:114:7 › school-day roadmap › scrolling it into view plays the draw-in and leaves every card open @a11y (3.0s)
+  ok  7 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /services: axe, one H1, alt text, no nesting @a11y (1.5s)
+  ok  9 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /news: axe, one H1, alt text, no nesting @a11y (1.7s)
+  ok  8 [a11y] › e2e\products.spec.ts:132:9 › school-day roadmap › desktop › a roadmap in view at load plays without a scroll @a11y (3.2s)
+  ok 10 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /about: axe, one H1, alt text, no nesting @a11y (1.6s)
+  ok 11 [a11y] › e2e\products.spec.ts:163:9 › school-day roadmap › phone › each stop appears as it scrolls into view @a11y (1.8s)
+  ok 12 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /careers: axe, one H1, alt text, no nesting @a11y (1.6s)
+  ok 13 [a11y] › e2e\products.spec.ts:179:9 › school-day roadmap › reduced motion › shows the whole roadmap at once @a11y (895ms)
+  ok 14 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /demo: axe, one H1, alt text, no nesting @a11y (2.0s)
+  ok 15 [a11y] › e2e\products.spec.ts:187:7 › school-day roadmap › a card opens the modal, Next moves, and Esc returns focus to the card @a11y (1.9s)
+  ok 16 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /privacy: axe, one H1, alt text, no nesting @a11y (1.6s)
+  ok 17 [a11y] › e2e\products.spec.ts:212:7 › school-day roadmap › "Open ... details" opens the app dialog @a11y (2.3s)
+  ok 18 [a11y] › e2e\a11y.spec.ts:64:9 › every page type › /no-such-page: axe, one H1, alt text, no nesting @a11y (1.6s)
+  ok 19 [a11y] › e2e\products.spec.ts:223:7 › school-day roadmap › 390px has no sideways scroll @a11y (674ms)
+  ok 20 [a11y] › e2e\a11y.spec.ts:69:7 › every page type › one news story: axe, one H1, alt text, no nesting @a11y (1.3s)
+  ok 21 [a11y] › e2e\a11y.spec.ts:75:7 › every page type › one job page: axe, one H1, alt text, no nesting @a11y (1.4s)
+  ok 22 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /: ring, closed parts, Tab order, 24px targets @a11y (1.2s)
+  ok 23 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /products: ring, closed parts, Tab order, 24px targets @a11y (687ms)
+  ok 24 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /services: ring, closed parts, Tab order, 24px targets @a11y (594ms)
+  ok 25 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /news: ring, closed parts, Tab order, 24px targets @a11y (732ms)
+  ok 26 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /demo: ring, closed parts, Tab order, 24px targets @a11y (954ms)
+  ok 27 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /about: ring, closed parts, Tab order, 24px targets @a11y (710ms)
+  ok 28 [a11y] › e2e\a11y.spec.ts:198:9 › keyboard › /careers: ring, closed parts, Tab order, 24px targets @a11y (627ms)
+  ok 29 [a11y] › e2e\a11y.spec.ts:206:7 › keyboard › Tab stops reach paper, mist, amber and navy surfaces @a11y (3.8s)
+  ok 30 [a11y] › e2e\a11y.spec.ts:223:7 › keyboard › closed parts exist and are hidden, so Tab cannot reach them @a11y (829ms)
+  ok 31 [a11y] › e2e\a11y.spec.ts:237:7 › keyboard › 390px: ring, closed mobile menu, Tab order, 24px targets @a11y (874ms)
+  ok 32 [a11y] › e2e\a11y.spec.ts:251:7 › reflow › Home at 390px: no sideways scroll, stacked cards, two figures per row @a11y (470ms)
+  ok 33 [a11y] › e2e\a11y.spec.ts:308:7 › form errors › contact form on /demo @a11y (572ms)
+  ok 34 [a11y] › e2e\a11y.spec.ts:313:7 › form errors › contact form on Home @a11y (680ms)
+  ok 35 [a11y] › e2e\a11y.spec.ts:318:7 › form errors › job application form @a11y (631ms)
+  ok 36 [a11y] › e2e\a11y.spec.ts:329:7 › Home hero doors and +3 reveal › doors straddle the hero and the +3 list opens and closes @a11y (2.6s)
+  ok 37 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 1280px: content clears the ridge @a11y (496ms)
+  ok 38 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 1280px: content clears the ridge @a11y (381ms)
+  ok 39 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 1280px: content clears the ridge @a11y (454ms)
+  ok 40 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 1280px: content clears the ridge @a11y (361ms)
+  ok 41 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 1280px: content clears the ridge @a11y (572ms)
+  ok 42 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 1280px: content clears the ridge @a11y (579ms)
+  ok 43 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › / at 390px: content clears the ridge @a11y (545ms)
+  ok 44 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /careers at 390px: content clears the ridge @a11y (464ms)
+  ok 45 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /about at 390px: content clears the ridge @a11y (465ms)
+  ok 46 [a11y] › e2e\a11y.spec.ts:435:11 › footer ridge › /privacy at 390px: content clears the ridge @a11y (363ms)
+  ok 47 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › news story at 390px: content clears the ridge @a11y (529ms)
+  ok 48 [a11y] › e2e\a11y.spec.ts:447:11 › footer ridge › job page at 390px: content clears the ridge @a11y (500ms)
+  ok 49 [a11y] › e2e\a11y.spec.ts:471:7 › services layout › sticky heading at 1280, stacked at 980, one column at 640, anchor clears the header @a11y (7.0s)
+  ok 50 [a11y] › e2e\a11y.spec.ts:545:7 › about layout › FAQ in two columns at 1280 and one at 760, /about#faq and /about#book land under the header @a11y (6.9s)
+  ok 51 [a11y] › e2e\a11y.spec.ts:592:7 › about layout › offices sit at opposite edges at 1280 and stack at 390; FAQ rows open by keyboard @a11y (1.0s)
+
+  51 passed (1.1m)
+exit 0
+
