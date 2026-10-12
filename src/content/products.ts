@@ -154,6 +154,16 @@ export const dayRoad = {
   lede: "Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step.",
   start: "Start",
   finish: "Finish",
+  // Tour controls over the 3D road.
+  tour: {
+    begin: "Start the day",
+    overview: "The whole day",
+    explore: "Explore this step",
+    previous: "Previous step",
+    next: "Next step",
+    controls: "Tour of the school day",
+    step: (n: number, total: number) => `Step ${n} of ${total}`,
+  },
   stops: [
     {
       id: "arrive",

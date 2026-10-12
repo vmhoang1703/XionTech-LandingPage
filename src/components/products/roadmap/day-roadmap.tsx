@@ -1,8 +1,7 @@
-import { dayRoad, journeyMap } from "@/content/products";
-import { RoadCanvas } from "./road-canvas";
+import { journeyMap } from "@/content/products";
+import { DayTour } from "./day-tour";
 
-// Products hero: one school day as a 3D road from Start to Finish. Each stop
-// with an app opens that app's detail dialog.
+// Products hero: one school day as a guided 3D tour from Start to Finish.
 export function DayRoadmap() {
   const { title, lede } = journeyMap.intro;
   return (
@@ -14,9 +13,7 @@ export function DayRoadmap() {
       <div className="wrap">
         <h1 id="map-h">{title}</h1>
         <p className="lede">{lede}</p>
-        <h2 className="road-h">{dayRoad.heading}</h2>
-        <p className="road-lede">{dayRoad.lede}</p>
-        <RoadCanvas />
+        <DayTour />
       </div>
     </section>
   );
