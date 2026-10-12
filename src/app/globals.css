@@ -3859,111 +3859,184 @@
     }
   }
 
-  /* Products journey board */
-  /* The school day as a user-journey map: lanes for the people in a school,
-     columns for the moments of the day. A vertical timeline on narrow
-     screens; the full board from 1200px. Static: no motion. */
-  .jb-head {
+  /* Products roadmap (2D) */
+  /* The school day as a winding road. Narrow screens: the road bends down the
+     left of the cards, one bend per stop. From 1100px: one road across the
+     section, cards above and below its bends. Static: no motion. */
+  .rm-head {
     max-width: 62ch;
     margin-top: 64px;
   }
 
-  .jb-head h2 {
+  .rm-head h2 {
     margin: 0;
     color: var(--color-navy);
     font-size: clamp(1.6rem, 2.8vw, 2.25rem);
     line-height: 1.1;
   }
 
-  .jb-head p {
+  .rm-head p {
     margin: 12px 0 0;
   }
 
-  .jb-head .jb-hint {
+  .rm-head .rm-hint {
     color: var(--color-navy);
     font-family: var(--font-mono);
     font-size: 0.8rem;
   }
 
-  .jb {
+  .rm {
     position: relative;
-    left: 50%;
-    width: min(1480px, calc(100vw - 32px));
     margin-top: 32px;
-    translate: -50% 0;
   }
 
-  .jb-grid {
-    position: relative;
-  }
-
-  /* The rails and lane labels only show on the wide board. */
-  .jb-deco {
+  /* The wide road only shows from 1100px. */
+  .rm-road {
     position: absolute;
     width: 1px;
     height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
-    white-space: nowrap;
   }
 
-  .jb-stops {
+  .rm-road path,
+  .rm-seg path {
+    fill: none;
+  }
+
+  .rm-edge {
+    stroke: var(--color-ice);
+    stroke-width: 30;
+  }
+
+  .rm-asphalt {
+    stroke: var(--color-navy);
+    stroke-width: 22;
+  }
+
+  .rm-line {
+    stroke: var(--color-amber-pale);
+    stroke-width: 2;
+    stroke-dasharray: 8 8;
+  }
+
+  .rm-hill {
+    fill: var(--color-ice);
+    opacity: 0.6;
+  }
+
+  .rm-hill-soft {
+    fill: var(--color-mist);
+    opacity: 1;
+  }
+
+  .rm-tree circle {
+    fill: var(--color-navy-2);
+  }
+
+  .rm-tree rect {
+    fill: var(--color-navy);
+  }
+
+  .rm-end {
     position: relative;
-    display: grid;
-    gap: 16px;
+    left: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     margin: 0;
-    padding: 0 0 0 36px;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    translate: -50% 0;
+  }
+
+  .rm-end svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .rm-stops {
+    margin: 0;
+    padding: 0;
     list-style: none;
   }
 
-  .jb-stops::before {
-    content: "";
-    position: absolute;
-    top: 16px;
-    bottom: 16px;
-    left: 11px;
-    width: 2px;
-    background: repeating-linear-gradient(
-      to bottom,
-      var(--color-navy) 0 6px,
-      transparent 6px 12px
-    );
+  .rm-stop {
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
   }
 
-  .jb-stop {
+  .rm-seg {
+    grid-column: 1;
+    grid-row: 1;
+    width: 80px;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .rm-seg path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .rm-pin {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--color-navy);
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 700;
+    translate: -50% -50%;
+  }
+
+  .rm-stop[data-bend="right"] .rm-pin {
+    left: 67px;
+  }
+
+  .rm-stop[data-everyone="true"] .rm-pin {
+    background: var(--color-amber);
+  }
+
+  .rm-card {
     position: relative;
-    padding: 18px 20px;
+    grid-column: 2;
+    grid-row: 1;
+    margin: 14px 0;
+    padding: 16px 18px;
     border: 1px solid var(--color-mist);
     border-radius: var(--radius-lg);
     background: var(--color-white);
     box-shadow:
       0 1px 2px rgb(22 54 99 / 0.06),
-      0 10px 28px rgb(22 54 99 / 0.07);
+      0 10px 28px rgb(22 54 99 / 0.08);
   }
 
-  .jb-stop::before {
-    content: "";
-    position: absolute;
-    top: 22px;
-    left: -32px;
-    width: 16px;
-    height: 16px;
-    border: 3px solid var(--color-navy);
-    border-radius: var(--radius-full);
-    background: var(--color-white);
-  }
-
-  .jb-stop:hover {
+  .rm-card:hover {
     border-color: var(--color-navy);
-    box-shadow: 0 14px 34px rgb(22 54 99 / 0.14);
+    box-shadow: 0 14px 34px rgb(22 54 99 / 0.16);
   }
 
-  .jb-stop:has(.jb-open:focus-visible) {
+  .rm-card:has(.rm-open:focus-visible) {
     outline: 2px solid var(--color-focus);
     outline-offset: 3px;
   }
 
-  .jb-kicker {
+  .rm-kicker {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -3971,37 +4044,27 @@
     color: var(--color-navy);
     font-family: var(--font-mono);
     font-size: 0.8rem;
+    font-weight: 600;
   }
 
-  .jb-num {
-    display: grid;
-    place-items: center;
-    width: 26px;
-    height: 26px;
-    border-radius: var(--radius-full);
-    background: var(--color-navy);
-    color: var(--color-white);
-  }
-
-  .jb-who {
+  .rm-who {
     margin-left: auto;
     padding: 2px 10px;
     border-radius: var(--radius-full);
     background: var(--color-mist);
     font-family: var(--font-body);
-    font-weight: 600;
     font-size: 0.75rem;
   }
 
-  .jb-title {
-    margin: 12px 0 0;
+  .rm-title {
+    margin: 10px 0 0;
     color: var(--color-navy);
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     line-height: 1.2;
   }
 
   /* The title button covers the whole card. */
-  .jb-open {
+  .rm-open {
     border: 0;
     padding: 0;
     background: none;
@@ -4010,28 +4073,29 @@
     text-align: left;
   }
 
-  .jb-open::after {
+  .rm-open::after {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
   }
 
-  .jb-text {
-    margin: 8px 0 0;
+  .rm-text {
+    margin: 6px 0 0;
     color: var(--color-text);
+    font-size: 0.92rem;
     line-height: 1.5;
   }
 
-  .jb-foot {
+  .rm-foot {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
-    margin-top: 16px;
+    margin-top: 14px;
   }
 
-  .jb-app {
+  .rm-app {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -4043,12 +4107,12 @@
     font-size: 0.85rem;
   }
 
-  .jb-apps {
+  .rm-apps {
     display: flex;
     gap: 6px;
   }
 
-  .jb-more {
+  .rm-more {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -4058,188 +4122,123 @@
     font-size: 0.85rem;
   }
 
-  .jb-more svg {
+  .rm-more svg {
     width: 16px;
     height: 16px;
   }
 
   /* The finale belongs to everyone: an inverted navy card. */
-  .jb-stop[data-everyone="true"] {
+  .rm-stop[data-everyone="true"] .rm-card {
     border-color: var(--color-navy);
     background: var(--color-navy);
   }
 
-  .jb-stop[data-everyone="true"] .jb-kicker,
-  .jb-stop[data-everyone="true"] .jb-title,
-  .jb-stop[data-everyone="true"] .jb-text,
-  .jb-stop[data-everyone="true"] .jb-more {
+  .rm-stop[data-everyone="true"] .rm-kicker,
+  .rm-stop[data-everyone="true"] .rm-title,
+  .rm-stop[data-everyone="true"] .rm-text,
+  .rm-stop[data-everyone="true"] .rm-more {
     color: var(--color-white);
   }
 
-  .jb-stop[data-everyone="true"] .jb-num {
-    background: var(--color-amber);
-    color: var(--color-navy);
-  }
-
-  .jb-stop[data-everyone="true"] .jb-who {
+  .rm-stop[data-everyone="true"] .rm-who {
     background: rgb(255 255 255 / 0.16);
   }
 
-  .jb-stop[data-everyone="true"] .map-badge {
+  .rm-stop[data-everyone="true"] .map-badge {
     background: var(--color-white);
     color: var(--color-navy);
   }
 
-  @media (min-width: 1200px) {
-    .jb-grid {
-      display: grid;
-      grid-template-columns: 210px repeat(6, minmax(0, 1fr));
-      grid-template-rows: 96px repeat(4, minmax(176px, auto));
-      column-gap: 14px;
+  @media (min-width: 1100px) {
+    .rm {
+      left: 50%;
+      width: min(1400px, calc(100vw - 32px));
+      aspect-ratio: 1400 / 820;
+      translate: -50% 0;
     }
 
-    /* The time rail along the top. */
-    .jb-grid::before {
-      content: "";
-      grid-column: 2 / -1;
-      grid-row: 1;
-      align-self: end;
-      height: 2px;
-      margin-bottom: 15px;
-      background: var(--color-navy);
-    }
-
-    .jb-deco {
-      position: static;
-      width: auto;
-      height: auto;
+    .rm-road {
+      inset: 0;
+      width: 100%;
+      height: 100%;
       overflow: visible;
       clip-path: none;
-      white-space: normal;
     }
 
-    .jb-stops {
-      display: contents;
+    .rm-road .rm-edge {
+      stroke-width: 62;
+      stroke-linecap: round;
     }
 
-    .jb-stops::before,
-    .jb-stop::before {
-      content: none;
+    .rm-road .rm-asphalt {
+      stroke-width: 48;
+      stroke-linecap: round;
     }
 
-    .jb-stop {
-      z-index: 1;
-      grid-column: var(--col);
-      grid-row: var(--row) / span var(--rows);
-      align-self: center;
-      margin: 14px 0;
-      padding: 16px;
+    .rm-road .rm-line {
+      stroke-width: 3;
+      stroke-dasharray: 16 16;
     }
 
-    .jb-stop[data-everyone="true"] {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-self: stretch;
+    .rm-end {
+      position: absolute;
+      top: calc(430 / 820 * 100%);
+      left: 8px;
+      translate: 0 -50%;
     }
 
-    .jb-corner {
-      grid-column: 1;
-      grid-row: 1;
-      align-self: end;
-      padding: 0 16px 8px;
-      color: var(--color-navy);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .rm-end-finish {
+      top: calc(420 / 820 * 100%);
+      right: 8px;
+      left: auto;
     }
 
-    .jb-tick {
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 6px;
-      grid-column: var(--col);
-      grid-row: 1;
-      padding-bottom: 8px;
+    .rm-stops {
+      position: absolute;
+      inset: 0;
     }
 
-    .jb-end {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 10px;
-      border-radius: var(--radius-full);
-      background: var(--color-navy);
-      color: var(--color-white);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .jb-end svg {
-      width: 12px;
-      height: 12px;
-    }
-
-    .jb-time {
-      min-height: 1.2em;
-      color: var(--color-navy);
-      font-family: var(--font-mono);
-      font-weight: 600;
-    }
-
-    .jb-dot {
-      width: 16px;
-      height: 16px;
-      border: 3px solid var(--color-navy);
-      border-radius: var(--radius-full);
-      background: var(--color-white);
-    }
-
-    .jb-lane {
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      grid-column: 1;
-      grid-row: var(--row);
-      padding: 0 16px;
-    }
-
-    .jb-lane strong {
+    .rm-stop {
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
       display: block;
-      color: var(--color-navy);
-      font-family: var(--font-display);
-      font-size: 0.95rem;
+      width: 0;
+      height: 0;
     }
 
-    .jb-lane span span {
-      font-size: 0.8rem;
+    .rm-seg {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
     }
 
-    .jb-stripe {
-      grid-column: 1 / -1;
-      grid-row: var(--row);
-      margin: 5px 0;
-      border-radius: var(--radius-lg);
-      background: rgb(238 242 249 / 0.75);
+    .rm-stop[data-bend] .rm-pin {
+      top: 0;
+      left: 0;
+      width: 44px;
+      height: 44px;
+      font-size: 1rem;
+      box-shadow: 0 6px 16px rgb(22 54 99 / 0.25);
     }
 
-    .jb-rail {
-      grid-column: var(--col);
-      grid-row: 2 / -1;
-      justify-self: center;
-      width: 2px;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgb(22 54 99 / 0.35) 0 6px,
-        transparent 6px 12px
-      );
+    .rm-card {
+      position: absolute;
+      left: 0;
+      width: clamp(210px, 17vw, 250px);
+      margin: 0;
+      padding: 14px 16px;
+      translate: -50% calc(-100% - 38px);
+    }
+
+    .rm-stop[data-side="below"] .rm-card {
+      translate: -50% 38px;
+    }
+
+    .rm-text {
+      font-size: 0.85rem;
     }
   }
 

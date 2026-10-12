@@ -1,7 +1,7 @@
 import { dayRoad, journeyBoard, journeyMap } from "@/content/products";
-import { JourneyBoard } from "./journey-board";
+import { RoadMap } from "./road-map";
 
-// Products hero: the page title, then the school day as a journey map.
+// Products hero: the page title, then the school day as a winding roadmap.
 export function JourneySection() {
   const { title, lede } = journeyMap.intro;
   return (
@@ -13,12 +13,12 @@ export function JourneySection() {
       <div className="wrap">
         <h1 id="map-h">{title}</h1>
         <p className="lede">{lede}</p>
-        <div className="jb-head">
+        <div className="rm-head">
           <h2>{dayRoad.heading}</h2>
           <p>{dayRoad.lede}</p>
-          <p className="jb-hint">{journeyBoard.hint}</p>
+          <p className="rm-hint">{journeyBoard.hint}</p>
         </div>
-        <JourneyBoard />
+        <RoadMap />
       </div>
     </section>
   );
