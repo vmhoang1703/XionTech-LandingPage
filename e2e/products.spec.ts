@@ -19,30 +19,43 @@ test(
   },
 );
 
-test(
-  "/products#ai-tutor lands on the AI Tutor stop with its card in view below the header",
-  { tag: "@a11y" },
-  async ({ page }) => {
-    await page.goto("/products#ai-tutor");
-    const card = page.locator("#map .rm-stop#ai-tutor .rm-card");
-    await expect(card).toContainText("Student learns");
-    // Smooth scroll: wait until the card sits whole between the header and
-    // the bottom of the window.
-    await expect
-      .poll(() =>
-        card.evaluate((el) => {
-          const box = el.getBoundingClientRect();
-          const header = document.querySelector("header");
-          const below = header ? header.getBoundingClientRect().bottom : 0;
-          return box.top >= below && box.bottom <= window.innerHeight;
-        }),
-      )
-      .toBe(true);
-  },
-);
+test.describe("deep links to an app", { tag: "@a11y" }, () => {
+  test.use({ viewport: { width: 1280, height: 800 } });
+
+  // Each app's anchor and the roadmap stop it lands on.
+  for (const [anchor, index, title] of [
+    ["sxp", 1, "Attendance recorded"],
+    ["pxp", 2, "Parent updated"],
+    ["ai-tutor", 3, "Student learns"],
+    ["iot", 4, null],
+  ] as const) {
+    test(`/products#${anchor} makes stop ${index + 1} active with its card in view below the header`, async ({
+      page,
+    }) => {
+      await page.goto(`/products#${anchor}`);
+      const stop = page.locator("#map .rm-stop").nth(index);
+      const card = stop.locator(".rm-card");
+      if (title) await expect(card).toContainText(title);
+      await expect(stop).toHaveAttribute("data-active", "true");
+      // Smooth scroll: wait until the card sits whole between the header and
+      // the bottom of the window.
+      await expect
+        .poll(() =>
+          card.evaluate((el) => {
+            const box = el.getBoundingClientRect();
+            const header = document.querySelector("header");
+            const below = header ? header.getBoundingClientRect().bottom : 0;
+            return box.top >= below && box.bottom <= window.innerHeight;
+          }),
+        )
+        .toBe(true);
+      await expect(stop).toHaveAttribute("data-active", "true");
+    });
+  }
+});
 
 test.describe("school-day roadmap", { tag: "@a11y" }, () => {
-  test.use({ viewport: { width: 1280, height: 400 } });
+  test.use({ viewport: { width: 1280, height: 800 } });
 
   const roadmap = (page: Page) => page.locator("#map .rm");
   const cards = (page: Page) => roadmap(page).locator(".rm-card");
@@ -70,19 +83,6 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     }
   };
 
-  // The draw-in has played: road drawn, every pin popped, every card open.
-  const expectPlayed = async (page: Page) => {
-    await expect(roadmap(page)).toHaveAttribute("data-reveal", "on");
-    await expect(roadmap(page).locator(".rm-draw")).toHaveCSS(
-      "stroke-dashoffset",
-      "0px",
-    );
-    for (const pin of await roadmap(page).locator(".rm-pin").all()) {
-      await expect(pin).toHaveCSS("scale", /^(1|none)$/);
-    }
-    await expectOpen(page);
-  };
-
   test("the roadmap shows the H1 and six cards", async ({ page }) => {
     await page.goto("/products");
     await expect(page.locator("h1")).toHaveCount(1);
@@ -97,50 +97,59 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     await expect(cards(page).first()).toBeVisible();
   });
 
-  test("scrolling it into view plays the draw-in and leaves every card open", async ({
+  test("scrolling walks the tour stop by stop, pinned, then the demo band follows", async ({
     page,
   }) => {
     await page.goto("/products");
-    // Scrolled to the top with the roadmap below the fold: waiting, not shown.
-    await expect(roadmap(page)).toHaveAttribute("data-reveal", "armed");
-    await expect(cards(page).first()).not.toBeInViewport();
-
-    await roadmap(page).evaluate((el) =>
-      el.scrollIntoView({ block: "center", behavior: "instant" }),
-    );
-
-    await expectPlayed(page);
-  });
-
-  test.describe("desktop", () => {
-    test.use({ viewport: { width: 1280, height: 900 } });
-
-    test("a roadmap in view at load plays without a scroll", async ({
-      page,
-    }) => {
-      // The road's draw transition only runs if it played, not if it was
-      // shown as is.
-      await page.addInitScript(() => {
-        Object.assign(window, { roadDrawn: false });
-        document.addEventListener(
-          "transitionend",
-          (event) => {
-            if (event.propertyName === "stroke-dashoffset") {
-              Object.assign(window, { roadDrawn: true });
-            }
-          },
-          true,
-        );
-      });
-      await page.goto("/products");
-      await expect(cards(page).first()).toBeInViewport();
-      await expect
-        .poll(() =>
-          page.evaluate(() => "roadDrawn" in window && window.roadDrawn),
-        )
-        .toBe(true);
-      await expectPlayed(page);
+    await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
+    const stage = roadmap(page).locator(".rm-stage");
+    const stops = roadmap(page).locator(".rm-stop");
+    // Where the track starts (page offset) and how long each step is.
+    const { top, step, pin } = await roadmap(page).evaluate((el) => {
+      const stageEl = el.querySelector(".rm-stage") as HTMLElement;
+      return {
+        top: el.getBoundingClientRect().top + window.scrollY,
+        step:
+          (el.getBoundingClientRect().height -
+            stageEl.getBoundingClientRect().height) /
+          6,
+        pin: Number.parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--spacing-anchor-offset",
+          ),
+        ),
+      };
     });
+    const scrollToStep = (i: number) =>
+      page.evaluate(
+        (y) => window.scrollTo({ top: y, behavior: "instant" }),
+        top - pin + (i + 0.5) * step,
+      );
+
+    for (let i = 0; i < 6; i += 1) {
+      await scrollToStep(i);
+      await expect(stops.nth(i)).toHaveAttribute("data-active", "true");
+      await expect(stops.nth(i)).toHaveAttribute("data-selected", "true");
+      await expect(roadmap(page).locator('[data-active="true"]')).toHaveCount(
+        1,
+      );
+      // Pinned: the stage stays at the same place below the header.
+      const stageTop = await stage.evaluate(
+        (el) => el.getBoundingClientRect().top,
+      );
+      expect(Math.round(stageTop)).toBe(Math.round(pin));
+    }
+
+    // Back up: the active stop steps back.
+    await scrollToStep(1);
+    await expect(stops.nth(1)).toHaveAttribute("data-active", "true");
+
+    // Past the last step the stage releases and the demo band follows.
+    await page.evaluate(
+      (y) => window.scrollTo({ top: y, behavior: "instant" }),
+      top - pin + 6 * step + 400,
+    );
+    await expect(page.locator("section.capture")).toBeInViewport();
   });
 
   test.describe("phone", () => {

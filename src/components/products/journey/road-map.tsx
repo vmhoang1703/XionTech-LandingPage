@@ -7,24 +7,22 @@ import { dayRoad, journeyBoard, type RoadStop } from "@/content/products";
 import { MapBadge } from "../map/map-badge";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
 
-// The school day as a 2D roadmap: a winding road from Start to Finish with a
-// pin per stop and the stop's card beside it. Wide screens draw one road
-// across the section with the cards above and below its bends; narrow
-// screens wind the road down the left of the cards.
+// The school day as a 2D roadmap: a winding road with a pin per stop and the
+// stop's card beside it. Wide screens draw one road across the section with
+// the cards above and below its bends; narrow screens wind the road down the
+// left of the cards.
 //
-// The draw-in: server HTML and reduced motion stay "static" (fully drawn).
-// Otherwise the roadmap is "armed" (cards wiped by clip-path, pins scaled to
-// 0, road masked), then plays once ("on"): about 300ms after load when any
-// part of it is in view at load (most desktops), else when 30% visible. The
-// road draws at a steady pace, so each stop's delay is the road's duration
-// times its share of the route.
+// Server HTML, reduced motion and a layout switch stay "static" (fully drawn,
+// nothing hidden). Wide screens with JavaScript run the scroll tour
+// (data-tour="on"): the stage sticks below the header over a track of one
+// step per stop; the stop whose step is in the window is active and
+// selected, and the road is drawn up to it. Narrow screens are "armed": each
+// stop reveals on its own as it scrolls in.
 
-type Phase = "static" | "armed" | "on";
+type Mode = "static" | "armed" | "tour";
 
-const REVEAL_AT = 0.3;
-// In view at load: play after this pause, so the draw-in is seen.
+// In view at load: play after this pause, so the reveal is seen.
 const PLAY_AFTER_MS = 300;
-const ROAD_SECONDS = 1.6;
 
 // Narrow screens stack the stops down a tall list that may never be 30% in
 // view (landscape phone, zoom), so each stop reveals on its own when a
@@ -39,29 +37,6 @@ function seenShare(el: Element) {
   const { top, bottom, height } = el.getBoundingClientRect();
   const seen = Math.min(bottom, window.innerHeight) - Math.max(top, 0);
   return height > 0 ? seen / height : 0;
-}
-
-// Calls `show` shortly after load when the roadmap is in view, else once 30%
-// of it is in view. Returns the cleanup.
-function revealMap(map: HTMLElement, show: () => void) {
-  if (seenShare(map) > 0) {
-    const timer = setTimeout(show, PLAY_AFTER_MS);
-    return () => clearTimeout(timer);
-  }
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const [entry] = entries;
-      // The first callback fires at any overlap: check the share too. SLACK
-      // absorbs a crossing reported a hair under the threshold (0.2999).
-      if (!entry.isIntersecting || entry.intersectionRatio < REVEAL_AT - SLACK)
-        return;
-      show();
-      observer.disconnect();
-    },
-    { threshold: REVEAL_AT },
-  );
-  observer.observe(map);
-  return () => observer.disconnect();
 }
 
 // Marks each stop shown once it is in view; stops already in view at load
@@ -123,10 +98,49 @@ function roadPath() {
 
 const ROAD = roadPath();
 
-// When the drawing road reaches a stop, in seconds.
-function delayOf(index: number) {
+// How much of the road leads up to a stop, 0 to 1.
+function shareOf(index: number) {
   const share = (POINTS[index].x - START.x) / (FINISH.x - START.x);
-  return `${Math.round(ROAD_SECONDS * share * 1000) / 1000}s`;
+  return Math.round(share * 10000) / 10000;
+}
+
+// The tour: the active stop is the step of the track the pinned stage has
+// travelled into (each stop an equal share). Calls `show` when it changes.
+// Native scroll only: this reads the scroll position, it never sets it.
+// Returns the cleanup.
+function followScroll(map: HTMLElement, show: (index: number) => void) {
+  const stage = map.querySelector(".rm-stage") as HTMLElement;
+  let last = -1;
+  const follow = () => {
+    const track = map.getBoundingClientRect();
+    const pinned = stage.getBoundingClientRect();
+    const length = track.height - pinned.height;
+    const travel = pinned.top - track.top;
+    const step = length > 0 ? Math.floor((travel / length) * STOPS.length) : 0;
+    const index = Math.min(LAST, Math.max(0, step));
+    if (index === last) return;
+    last = index;
+    show(index);
+  };
+  follow();
+  addEventListener("scroll", follow, { passive: true });
+  addEventListener("resize", follow);
+  return () => {
+    removeEventListener("scroll", follow);
+    removeEventListener("resize", follow);
+  };
+}
+
+// A deep link (/products#sxp) landed on the stop before the tour moved its
+// anchor onto a step of the track: land on the step instead. Smooth (the
+// page's scroll-behavior), so it takes over the browser's own smooth scroll to
+// the fragment; an instant jump is undone by it.
+function landHash(map: HTMLElement) {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const target = id ? document.getElementById(id) : null;
+  if (target && map.contains(target)) {
+    target.scrollIntoView();
+  }
 }
 
 // Trees in the open ground between the cards.
@@ -165,7 +179,9 @@ export function RoadMap() {
     setOpen(index);
     setSelected(index);
   };
-  const [phase, setPhase] = useState<Phase>("static");
+  const [mode, setMode] = useState<Mode>("static");
+  const tour = mode === "tour";
+  const [active, setActive] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
   const mask = useId();
@@ -174,18 +190,17 @@ export function RoadMap() {
     const map = ref.current;
     if (!map || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const layout = matchMedia(NARROW);
-    const narrow = layout.matches;
-    setPhase("armed");
-    const stop = narrow
+    setMode(layout.matches ? "armed" : "tour");
+    const stop = layout.matches
       ? revealStops(map, (i) =>
           setShown((prev) => (prev.has(i) ? prev : new Set(prev).add(i))),
         )
-      : revealMap(map, () => setPhase("on"));
-    // A resize or rotation across the breakpoint mid-reveal: show it all at
-    // once ("static": nothing hidden, nothing moves).
+      : () => undefined;
+    // A resize or rotation across the breakpoint: show it all at once
+    // ("static": nothing hidden, nothing moves, no tour).
     const showAll = () => {
       stop();
-      setPhase("static");
+      setMode("static");
     };
     layout.addEventListener("change", showAll);
     return () => {
@@ -194,70 +209,103 @@ export function RoadMap() {
     };
   }, []);
 
+  useEffect(() => {
+    const map = ref.current;
+    if (!tour || !map) return;
+    const stopFollowing = followScroll(map, (i) => {
+      setActive(i);
+      setSelected(i);
+    });
+    landHash(map);
+    return stopFollowing;
+  }, [tour]);
+
   return (
     <div
       ref={ref}
       className="rm"
-      data-reveal={phase}
-      style={{ "--road": `${ROAD_SECONDS}s` } as CSSProperties}
+      data-reveal={mode === "armed" ? "armed" : "static"}
+      data-tour={tour ? "on" : undefined}
+      style={
+        tour ? ({ "--share": shareOf(active) } as CSSProperties) : undefined
+      }
     >
-      <svg
-        className="rm-road"
-        viewBox={`0 0 ${W} ${H}`}
-        aria-hidden="true"
-        focusable="false"
-      >
-        <defs>
-          {/* Draws the road: a white stroke along it, revealed by dashoffset. */}
-          <mask
-            id={mask}
-            maskUnits="userSpaceOnUse"
-            x={-PAD}
-            y={-PAD}
-            width={W + 2 * PAD}
-            height={H + 2 * PAD}
-          >
-            <path className="rm-draw" d={ROAD} pathLength="1" />
-          </mask>
-        </defs>
-        <ellipse className="rm-hill" cx="260" cy="760" rx="420" ry="150" />
-        <ellipse className="rm-hill" cx="1080" cy="110" rx="460" ry="150" />
-        <ellipse
-          className="rm-hill rm-hill-soft"
-          cx="760"
-          cy="780"
-          rx="380"
-          ry="120"
-        />
-        {TREES.map(([x, y]) => (
-          <g
-            key={`${x}-${y}`}
-            className="rm-tree"
-            transform={`translate(${x} ${y})`}
-          >
-            <rect x="-3" y="10" width="6" height="16" rx="2" />
-            <circle r="18" />
-          </g>
-        ))}
-        <g mask={`url(#${mask})`}>
-          <path className="rm-edge" d={ROAD} />
-          <path className="rm-asphalt" d={ROAD} />
-          <path className="rm-line" d={ROAD} />
-        </g>
-      </svg>
+      {/* The tour's track: one step per stop. An app stop's step holds its
+          anchor, where that stop is active. */}
+      {tour
+        ? STOPS.map((stop, i) =>
+            stop.app ? (
+              <span
+                key={stop.id}
+                id={appById(stop.app).anchor}
+                className="rm-step"
+                style={{ "--step": i } as CSSProperties}
+              />
+            ) : null,
+          )
+        : null}
 
-      <ol className="rm-stops">
-        {STOPS.map((stop, i) => (
-          <RoadCard
-            key={stop.id}
-            stop={stop}
-            index={i}
-            shown={shown.has(i)}
-            selected={selected === i}
-            onOpen={() => choose(i)}
+      <div className="rm-stage">
+        <svg
+          className="rm-road"
+          viewBox={`0 0 ${W} ${H}`}
+          aria-hidden="true"
+          focusable="false"
+        >
+          <defs>
+            {/* Draws the road: a white stroke along it, revealed by dashoffset. */}
+            <mask
+              id={mask}
+              maskUnits="userSpaceOnUse"
+              x={-PAD}
+              y={-PAD}
+              width={W + 2 * PAD}
+              height={H + 2 * PAD}
+            >
+              <path className="rm-draw" d={ROAD} pathLength="1" />
+            </mask>
+          </defs>
+          <ellipse className="rm-hill" cx="260" cy="760" rx="420" ry="150" />
+          <ellipse className="rm-hill" cx="1080" cy="110" rx="460" ry="150" />
+          <ellipse
+            className="rm-hill rm-hill-soft"
+            cx="760"
+            cy="780"
+            rx="380"
+            ry="120"
           />
-        ))}
-      </ol>
+          {TREES.map(([x, y]) => (
+            <g
+              key={`${x}-${y}`}
+              className="rm-tree"
+              transform={`translate(${x} ${y})`}
+            >
+              <rect x="-3" y="10" width="6" height="16" rx="2" />
+              <circle r="18" />
+            </g>
+          ))}
+          <g mask={`url(#${mask})`}>
+            <path className="rm-edge" d={ROAD} />
+            <path className="rm-asphalt" d={ROAD} />
+            <path className="rm-line" d={ROAD} />
+          </g>
+        </svg>
+
+        <ol className="rm-stops">
+          {STOPS.map((stop, i) => (
+            <RoadCard
+              key={stop.id}
+              stop={stop}
+              index={i}
+              shown={shown.has(i)}
+              anchored={!tour}
+              active={tour && active === i}
+              selected={selected === i}
+              onOpen={() => choose(i)}
+            />
+          ))}
+        </ol>
+      </div>
 
       <RoadStopDialog
         index={open}
@@ -272,12 +320,16 @@ function RoadCard({
   stop,
   index,
   shown,
+  anchored,
+  active,
   selected,
   onOpen,
 }: Readonly<{
   stop: RoadStop;
   index: number;
   shown: boolean;
+  anchored: boolean;
+  active: boolean;
   selected: boolean;
   onOpen: () => void;
 }>) {
@@ -288,12 +340,11 @@ function RoadCard({
   const place = {
     "--x": `${(point.x / W) * 100}%`,
     "--y": `${(point.y / H) * 100}%`,
-    "--delay": delayOf(index),
   } as CSSProperties;
   return (
     <li
-      // The app's anchor (#sxp, …): footer links and deep links land here.
-      id={app?.anchor}
+      // The app's anchor (#sxp, …), unless the tour holds it on its step.
+      id={anchored ? app?.anchor : undefined}
       className="rm-stop"
       data-side={index % 2 === 0 ? "above" : "below"}
       data-bend={index % 2 === 0 ? "left" : "right"}
@@ -301,6 +352,7 @@ function RoadCard({
       data-last={index === LAST ? "true" : undefined}
       data-everyone={everyone ? "true" : undefined}
       data-in={shown ? "true" : undefined}
+      data-active={active ? "true" : undefined}
       data-selected={selected ? "true" : undefined}
       style={place}
     >

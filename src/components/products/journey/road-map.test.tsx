@@ -133,6 +133,10 @@ describe("RoadMap draw-in", () => {
   it("is static and fully drawn in the server HTML (no JavaScript)", () => {
     const html = renderToString(<RoadMap />);
     expect(html).toContain('data-reveal="static"');
+    // No tour: no track (steps) and no road share.
+    expect(html).not.toContain("data-tour");
+    expect(html).not.toContain("rm-step");
+    expect(html).not.toContain("--share");
   });
 
   it("stays static under reduced motion", () => {
@@ -140,61 +144,8 @@ describe("RoadMap draw-in", () => {
     mapAt(2000, 2800);
     const { container } = render(<RoadMap />);
     expect(roadmap(container).dataset.reveal).toBe("static");
+    expect(roadmap(container).dataset.tour).toBeUndefined();
     expect(observedThreshold).toBeUndefined();
-  });
-
-  it("arms below the fold and plays once when 30% visible", () => {
-    mapAt(2000, 2800);
-    const { container } = render(<RoadMap />);
-    expect(roadmap(container).dataset.reveal).toBe("armed");
-    expect(observedThreshold).toBe(0.3);
-
-    act(() => intersect(false));
-    expect(roadmap(container).dataset.reveal).toBe("armed");
-
-    // The first callback fires at any overlap; 10% is not enough.
-    act(() => intersect(true, undefined, 0.1));
-    expect(roadmap(container).dataset.reveal).toBe("armed");
-
-    act(() => intersect(true));
-    expect(roadmap(container).dataset.reveal).toBe("on");
-    expect(disconnect).toHaveBeenCalled();
-  });
-
-  it.each([
-    ["fully", 100, 800],
-    // 50px of an 800px roadmap above the fold.
-    ["partly", 850, 1650],
-  ])(
-    "plays about 300ms after load when %s in view at load",
-    (_, top, bottom) => {
-      vi.useFakeTimers();
-      mapAt(top, bottom);
-      const { container } = render(<RoadMap />);
-      expect(roadmap(container).dataset.reveal).toBe("armed");
-      expect(observedThreshold).toBeUndefined();
-
-      act(() => vi.advanceTimersByTime(299));
-      expect(roadmap(container).dataset.reveal).toBe("armed");
-      act(() => vi.advanceTimersByTime(1));
-      expect(roadmap(container).dataset.reveal).toBe("on");
-    },
-  );
-
-  it("clears the load timer when unmounted before it plays", () => {
-    vi.useFakeTimers();
-    mapAt(100, 800);
-    const { unmount } = render(<RoadMap />);
-    expect(vi.getTimerCount()).toBe(1);
-    unmount();
-    expect(vi.getTimerCount()).toBe(0);
-  });
-
-  it("disconnects when unmounted before it is seen", () => {
-    mapAt(2000, 2800);
-    const { unmount } = render(<RoadMap />);
-    unmount();
-    expect(disconnect).toHaveBeenCalled();
   });
 
   it("on narrow screens, reveals each stop as it reaches view", () => {
@@ -282,22 +233,6 @@ describe("RoadMap draw-in", () => {
     ).toBeGreaterThan(1420);
   });
 
-  it("delays each stop by its place along the road", () => {
-    const { container } = render(<RoadMap />);
-    expect(roadmap(container).style.getPropertyValue("--road")).toBe("1.6s");
-    const delays = Array.from(
-      container.querySelectorAll<HTMLElement>(".rm-stop"),
-      (li) => li.style.getPropertyValue("--delay"),
-    );
-    expect(delays).toHaveLength(dayRoad.stops.length);
-    const seconds = delays.map((d) => Number.parseFloat(d));
-    for (const [i, d] of delays.entries()) {
-      expect(d).toMatch(/^\d+(\.\d+)?s$/);
-      expect(seconds[i]).toBeGreaterThan(i === 0 ? 0 : seconds[i - 1]);
-      expect(seconds[i]).toBeLessThan(1.6);
-    }
-  });
-
   it("renders six cards, and each opens the stop modal", () => {
     render(<RoadMap />);
     const cards = screen
@@ -329,7 +264,7 @@ describe("RoadMap draw-in", () => {
     const hiding = drawIn.filter(({ body }) =>
       /stroke-dashoffset: 1;|clip-path: inset\([^;]*100%|scale: 0;/.test(body),
     );
-    expect(hiding.length).toBeGreaterThanOrEqual(5);
+    expect(hiding.length).toBeGreaterThanOrEqual(4);
     for (const { selector } of hiding) {
       expect(selector).toContain('[data-reveal="armed"]');
     }
@@ -357,15 +292,12 @@ describe("RoadMap draw-in", () => {
     expect(
       armed.find(({ selector }) => /\.rm-pin$/.test(selector))?.body,
     ).toMatch(/scale: 0;/);
-    // No round cap on the hidden road, or it paints a dot at the start.
-    const capped = rules.filter(({ body }) => /stroke-linecap/.test(body));
-    const drawCaps = capped.filter(({ selector }) =>
-      /\.rm-draw$/.test(selector),
-    );
-    expect(drawCaps).toHaveLength(1);
-    expect(drawCaps[0].selector).toBe(
-      '.rm:not([data-reveal="armed"]) .rm-draw',
-    );
+    // The wide road is drawn whole, or (tour) up to the active stop.
+    expect(
+      rules
+        .filter(({ selector }) => /\.rm-draw$/.test(selector))
+        .map(({ selector }) => selector),
+    ).toEqual([".rm-draw", '.rm[data-tour="on"] .rm-draw']);
     // A focused card is shown whole with its focus ring, even armed.
     const focused = rules.find(({ selector }) =>
       selector.includes(".rm-stop:has(.rm-open:focus-visible) .rm-card"),
@@ -375,13 +307,13 @@ describe("RoadMap draw-in", () => {
     const moving = rules.filter(({ body }) => /transition/.test(body));
     expect(moving.length).toBeGreaterThanOrEqual(4);
     for (const { selector } of moving) {
-      expect(selector).toMatch(/\[data-reveal="on"\]|\[data-in\]/);
+      expect(selector).toMatch(/\[data-tour="on"\]|\[data-in\]/);
     }
-    const delayed = rules.filter(({ body }) => /var\(--delay\)/.test(body));
-    expect(delayed.length).toBeGreaterThan(0);
-    for (const { selector } of delayed) {
-      expect(selector).toContain('[data-reveal="on"]');
-    }
+    // The timed wide draw-in is gone.
+    expect(rules.some(({ body }) => /--delay|--road\b/.test(body))).toBe(false);
+    expect(
+      rules.some(({ selector }) => selector.includes('[data-reveal="on"]')),
+    ).toBe(false);
   });
 
   it("prints the whole roadmap even before it is revealed", () => {
@@ -389,13 +321,19 @@ describe("RoadMap draw-in", () => {
     const start = css.indexOf("/* Products roadmap (2D) */");
     const block = css.slice(start, css.indexOf("/* The stop modal. */", start));
     const print = /@media print \{([\s\S]*?)\n {2}\}/.exec(block)?.[1] ?? "";
-    expect(print).toMatch(/\.rm-draw \{\s*stroke-dashoffset: 0;/);
+    // The road is never hidden: the tour's partial road is screen only.
+    expect(print).not.toMatch(/rm-draw|data-tour/);
     expect(print).toMatch(/\.rm-pin \{\s*scale: 1;/);
     expect(print).toMatch(/\.rm-card \{\s*clip-path: none;\s*transform: none;/);
   });
 });
 
 describe("RoadMap selection", () => {
+  // Narrow: no tour, so only a click selects.
+  beforeEach(() => {
+    narrow = true;
+  });
+
   const selected = (container: HTMLElement) =>
     stops(container)
       .map((stop, i) => (stop.dataset.selected === "true" ? i : -1))
@@ -445,37 +383,258 @@ describe("RoadMap selection", () => {
 });
 
 describe("RoadMap anchors", () => {
-  const footerAnchors = siteFooter.columns
-    .flatMap((column) => column.links)
-    .filter((link) => link.href.startsWith("/products#"))
-    .map((link) => link.href.replace("/products#", ""));
+  // The footer's /products#… links and every app's anchor, once each.
+  const anchors = new Set([
+    ...siteFooter.columns
+      .flatMap((column) => column.links)
+      .filter((link) => link.href.startsWith("/products#"))
+      .map((link) => link.href.replace("/products#", "")),
+    ...APPS.map((a) => a.anchor),
+  ]);
 
-  it("puts each app anchor once inside #map, on the stop of that app", () => {
-    const { container } = render(
-      <section id="map">
-        <RoadMap />
-      </section>,
-    );
-    const map = container.querySelector("#map") as HTMLElement;
-    expect(footerAnchors.length).toBeGreaterThan(0);
-    for (const anchor of [...footerAnchors, ...APPS.map((a) => a.anchor)]) {
-      const targets = container.querySelectorAll(`[id="${anchor}"]`);
-      expect(targets, anchor).toHaveLength(1);
-      expect(map.contains(targets[0]), anchor).toBe(true);
-      const stop = targets[0].closest(".rm-stop");
-      const index = stops(container).indexOf(stop as HTMLElement);
-      const app = APPS.find((a) => a.anchor === anchor);
-      expect(dayRoad.stops[index]?.app, anchor).toBe(app?.id);
-    }
+  // The stop an anchor belongs to: its stop, or (tour) its step's stop.
+  const stopOf = (container: HTMLElement, target: HTMLElement) => {
+    const step = target.style.getPropertyValue("--step");
+    return step === ""
+      ? stops(container).indexOf(target.closest(".rm-stop") as HTMLElement)
+      : Number(step);
+  };
+
+  it.each([
+    ["narrow", true, ".rm-stop"],
+    ["wide (tour)", false, ".rm-step"],
+  ])(
+    "%s: puts each app anchor once inside #map, for the stop of that app",
+    (_, isNarrow, holder) => {
+      narrow = isNarrow;
+      const { container } = render(
+        <section id="map">
+          <RoadMap />
+        </section>,
+      );
+      const map = container.querySelector("#map") as HTMLElement;
+      expect(anchors.size).toBe(APPS.length);
+      for (const anchor of anchors) {
+        const targets = container.querySelectorAll<HTMLElement>(
+          `[id="${anchor}"]`,
+        );
+        expect(targets, anchor).toHaveLength(1);
+        expect(map.contains(targets[0]), anchor).toBe(true);
+        expect(targets[0].matches(holder), anchor).toBe(true);
+        const index = stopOf(container, targets[0]);
+        const app = APPS.find((a) => a.anchor === anchor);
+        expect(index, anchor).toBeGreaterThanOrEqual(0);
+        expect(app, anchor).toBeDefined();
+        expect(dayRoad.stops[index].app, anchor).toBe(app?.id);
+      }
+    },
+  );
+
+  it("moves the anchors back onto the stops when the layout switches", () => {
+    const { container } = render(<RoadMap />);
+    expect(container.querySelectorAll(".rm-step[id]")).toHaveLength(4);
+    expect(container.querySelector(".rm-stop[id]")).toBeNull();
+    act(() => layoutChange?.());
+    expect(container.querySelector(".rm-step")).toBeNull();
+    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(4);
   });
 
-  it("clears the header when a stop is the scroll target", () => {
+  it("clears the header when a stop or a step is the scroll target", () => {
     const anchored = roadmapRules().filter((r) =>
       r.selector.split(",").some((s) => s.trim() === ".rm-stop[id]"),
     );
     expect(anchored).toHaveLength(1);
+    expect(anchored[0].selector).toContain(".rm-step");
     expect(anchored[0].body).toMatch(
       /scroll-margin-top:[^;]*--spacing-anchor-offset/,
     );
+  });
+});
+
+describe("RoadMap scroll tour (wide)", () => {
+  // The stage is 700px tall and pins 88px from the top; the track adds six
+  // 500px steps. `travel` is how far the page has scrolled past the pin.
+  const STAGE = 700;
+  const STEP = 500;
+  const PIN = 88;
+
+  function tourAt(travel: number) {
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
+      function (this: HTMLElement) {
+        const top = PIN - travel;
+        const height = STAGE + 6 * STEP;
+        if (this.classList.contains("rm-stage")) {
+          const pinned = Math.min(Math.max(PIN, top), top + height - STAGE);
+          return {
+            top: pinned,
+            bottom: pinned + STAGE,
+            height: STAGE,
+          } as DOMRect;
+        }
+        return { top, bottom: top + height, height } as DOMRect;
+      },
+    );
+  }
+
+  function scrollTo(travel: number) {
+    tourAt(travel);
+    act(() => {
+      window.dispatchEvent(new Event("scroll"));
+    });
+  }
+
+  const flagged = (container: HTMLElement, flag: "active" | "selected") =>
+    stops(container)
+      .map((stop, i) => (stop.dataset[flag] === "true" ? i : -1))
+      .filter((i) => i >= 0);
+  const active = (container: HTMLElement) => flagged(container, "active");
+  const selected = (container: HTMLElement) => flagged(container, "selected");
+  const share = (container: HTMLElement) =>
+    Number(roadmap(container).style.getPropertyValue("--share"));
+
+  afterEach(() => {
+    window.history.replaceState(null, "", "/");
+  });
+
+  it("turns on with JavaScript on wide screens: stop 1 active, nothing armed", () => {
+    tourAt(-400);
+    const { container } = render(<RoadMap />);
+    expect(roadmap(container).dataset.tour).toBe("on");
+    expect(roadmap(container).dataset.reveal).toBe("static");
+    expect(observedThreshold).toBeUndefined();
+    expect(container.querySelector(".rm-stage")).not.toBeNull();
+    expect(active(container)).toEqual([0]);
+    expect(selected(container)).toEqual([0]);
+    expect(share(container)).toBeGreaterThan(0);
+  });
+
+  it("steps through the stops as the page scrolls, and back", () => {
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    const shares: number[] = [];
+    for (let i = 0; i < 6; i += 1) {
+      scrollTo(i * STEP + STEP / 2);
+      expect(active(container)).toEqual([i]);
+      expect(selected(container)).toEqual([i]);
+      shares.push(share(container));
+    }
+    for (let i = 1; i < 6; i += 1) {
+      expect(shares[i]).toBeGreaterThan(shares[i - 1]);
+    }
+    expect(shares[5]).toBeLessThan(1);
+
+    // Past the last step the stage releases; stop 6 stays active.
+    scrollTo(6 * STEP + 900);
+    expect(active(container)).toEqual([5]);
+
+    // Scrolling back steps back, the road too.
+    scrollTo(STEP + 10);
+    expect(active(container)).toEqual([1]);
+    expect(selected(container)).toEqual([1]);
+    expect(share(container)).toBe(shares[1]);
+  });
+
+  it("a click selects mid-tour; the next step takes the selection", () => {
+    tourAt(3 * STEP + 10);
+    const { container } = render(<RoadMap />);
+    expect(active(container)).toEqual([3]);
+    fireEvent.click(
+      container.querySelectorAll<HTMLButtonElement>(".rm-open")[1],
+    );
+    expect(selected(container)).toEqual([1]);
+    expect(active(container)).toEqual([3]);
+    expect(document.querySelector("dialog")?.open).toBe(true);
+    // A scroll within the same step keeps the clicked stop.
+    scrollTo(3 * STEP + 200);
+    expect(selected(container)).toEqual([1]);
+    scrollTo(4 * STEP + 10);
+    expect(selected(container)).toEqual([4]);
+  });
+
+  it("lands a deep link on its step once the tour is on", () => {
+    const scrolled = vi.fn();
+    Element.prototype.scrollIntoView = scrolled;
+    window.history.replaceState(null, "", "#iot");
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    expect(scrolled).toHaveBeenCalledTimes(1);
+    const target = scrolled.mock.contexts[0] as Element;
+    expect(target).toBe(container.querySelector("#iot"));
+    expect(target.matches(".rm-step")).toBe(true);
+  });
+
+  it("leaves a hash outside the roadmap alone", () => {
+    const scrolled = vi.fn();
+    Element.prototype.scrollIntoView = scrolled;
+    window.history.replaceState(null, "", "#elsewhere");
+    tourAt(0);
+    render(<RoadMap />);
+    expect(scrolled).not.toHaveBeenCalled();
+  });
+
+  it("stops following the scroll on a layout switch", () => {
+    const remove = vi.spyOn(window, "removeEventListener");
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    act(() => layoutChange?.());
+    expect(roadmap(container).dataset.tour).toBeUndefined();
+    expect(remove).toHaveBeenCalledWith("scroll", expect.any(Function));
+    scrollTo(4 * STEP + 10);
+    expect(active(container)).toEqual([]);
+  });
+
+  it("does not run under reduced motion: static, nothing selected", () => {
+    reducedMotion = true;
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    scrollTo(3 * STEP + 10);
+    expect(roadmap(container).dataset.tour).toBeUndefined();
+    expect(container.querySelector(".rm-step")).toBeNull();
+    expect(active(container)).toEqual([]);
+    expect(selected(container)).toEqual([]);
+  });
+
+  it("styles the tour on wide screens only, and hides nothing with it", () => {
+    const css = globalsCss();
+    const start = css.indexOf("/* Products roadmap (2D) */");
+    const block = css.slice(start, css.indexOf("/* The stop modal. */", start));
+    const first = block.indexOf('.rm[data-tour="on"]');
+    expect(first).toBeGreaterThan(0);
+    // Every tour rule sits in the wide, screen-only block (not in print).
+    expect(block.lastIndexOf("@media", first)).toBe(
+      block.lastIndexOf("@media screen and (min-width: 1100px)", first),
+    );
+    expect(block.indexOf("@media", first)).toBeGreaterThan(
+      block.lastIndexOf('[data-tour="on"]'),
+    );
+    const tour = roadmapRules().filter(({ selector }) =>
+      selector.includes("[data-tour"),
+    );
+    expect(tour.length).toBeGreaterThanOrEqual(4);
+    for (const { body } of tour) {
+      expect(body).not.toMatch(
+        /opacity|visibility|display: none|scale: 0|clip-path/,
+      );
+    }
+    const rule = (selector: string) =>
+      tour.find((r) => r.selector === selector)?.body ?? "";
+    expect(rule('.rm[data-tour="on"] .rm-stage')).toMatch(
+      /position: sticky;[\s\S]*top: calc\(var\(--spacing-anchor-offset\) \/ var\(--rm-k\)\)/,
+    );
+    expect(rule('.rm[data-tour="on"] .rm-draw')).toMatch(
+      /stroke-dashoffset: calc\(1 - var\(--share\)\)/,
+    );
+    expect(rule('.rm[data-tour="on"] .rm-draw')).toMatch(
+      /transition: stroke-dashoffset 400ms var\(--ease-brand\)/,
+    );
+    // The active card: border, shadow and transform only.
+    const card = rule(
+      '.rm[data-tour="on"] .rm-stop[data-active="true"] .rm-card',
+    );
+    const props = Array.from(card.matchAll(/([\w-]+):/g), (m) => m[1]);
+    expect(props.length).toBeGreaterThan(0);
+    for (const prop of props) {
+      expect(prop).toMatch(/^(border-color|box-shadow|transform)$/);
+    }
   });
 });

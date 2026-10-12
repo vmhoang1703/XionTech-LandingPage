@@ -66,12 +66,12 @@ describe("Products page", () => {
     expect(roadmap?.querySelectorAll(".rm-card")).toHaveLength(6);
   });
 
-  it("puts the four app anchors on their roadmap stops", () => {
+  it("puts the four app anchors in the roadmap", () => {
     const { container } = render(<ProductsPage />);
     for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
       expect(container.querySelectorAll(`[id="${id}"]`)).toHaveLength(1);
       expect(
-        container.querySelector(`section#map .rm-stop[id="${id}"]`),
+        container.querySelector(`section#map .rm [id="${id}"]`),
       ).not.toBeNull();
     }
   });

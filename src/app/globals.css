@@ -3394,8 +3394,9 @@
   /* Products roadmap (2D) */
   /* The school day as a winding road. Narrow screens: the road bends down the
      left of the cards, one bend per stop. From 1100px: one road across the
-     section, cards above and below its bends. Draw-in on first view (see
-     "Roadmap draw-in" below); static without JavaScript. */
+     section, cards above and below its bends, walked through by the scroll
+     tour (see "Roadmap scroll tour" below). Narrow screens reveal stop by
+     stop. Static without JavaScript and under reduced motion. */
   .rm-head {
     max-width: 62ch;
     margin-top: 64px;
@@ -3483,8 +3484,10 @@
     grid-template-columns: 80px minmax(0, 1fr);
   }
 
-  /* An app stop is its app's anchor (#sxp, …): land clear of the header. */
-  .rm-stop[id] {
+  /* An app's anchor (#sxp, …), on its stop or its tour step: land clear of
+     the header. */
+  .rm-stop[id],
+  .rm-step {
     scroll-margin-top: calc(
       var(--spacing-anchor-offset) - var(--spacing-header-height)
     );
@@ -3673,9 +3676,10 @@
   }
 
   @media (min-width: 1100px) {
-    .rm {
-      left: 50%;
+    .rm-stage {
+      position: relative;
       width: min(1400px, calc(100vw - 32px));
+      margin-left: 50%;
       aspect-ratio: 1400 / 820;
       translate: -50% 0;
     }
@@ -3758,28 +3762,17 @@
     }
   }
 
-  /* Roadmap draw-in. Wide: the road draws Start to Finish through a mask,
-     each pin pops in as the road reaches it (--delay) and its card follows.
-     Narrow: each stop reveals on its own as it scrolls in ([data-in]). Only
-     "armed" masks and clips, never by opacity, so text keeps its contrast;
-     only "on" or [data-in] moves. "static" (no JavaScript, reduced motion)
-     leaves everything as drawn above. */
+  /* Roadmap reveal (narrow): each stop reveals on its own as it scrolls in
+     ([data-in]). Only "armed" clips and scales, never by opacity, so text
+     keeps its contrast; only [data-in] moves. "static" (no JavaScript,
+     reduced motion) leaves everything as drawn above. */
   .rm-draw {
     fill: none;
     stroke: var(--color-white);
     stroke-width: 80;
+    stroke-linecap: round;
     stroke-dasharray: 1;
     stroke-dashoffset: 0;
-  }
-
-  /* Round ends reach the road's own round caps; never while hidden, where a
-     cap would paint a dot at the start. */
-  .rm:not([data-reveal="armed"]) .rm-draw {
-    stroke-linecap: round;
-  }
-
-  .rm[data-reveal="armed"] .rm-draw {
-    stroke-dashoffset: 1;
   }
 
   .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-pin {
@@ -3799,7 +3792,6 @@
     transform: translateY(-16px);
   }
 
-  .rm[data-reveal="on"] .rm-card,
   .rm-stop[data-in] .rm-card {
     clip-path: inset(-60px);
   }
@@ -3810,35 +3802,15 @@
     transform: none;
   }
 
-  .rm[data-reveal="on"] .rm-draw {
-    transition: stroke-dashoffset var(--road) linear;
-  }
-
-  .rm[data-reveal="on"] .rm-pin,
   .rm-stop[data-in] .rm-pin {
     transition: scale var(--transition-duration-menu) var(--ease-brand);
-  }
-
-  .rm[data-reveal="on"] .rm-card,
-  .rm-stop[data-in] .rm-card {
-    transition:
-      clip-path 400ms var(--ease-brand),
-      transform 400ms var(--ease-brand);
-  }
-
-  .rm[data-reveal="on"] .rm-pin {
-    transition-delay: var(--delay);
-  }
-
-  .rm[data-reveal="on"] .rm-card {
-    transition-delay: calc(var(--delay) + 120ms);
-  }
-
-  .rm-stop[data-in] .rm-pin {
     transition-delay: 80ms;
   }
 
   .rm-stop[data-in] .rm-card {
+    transition:
+      clip-path 400ms var(--ease-brand),
+      transform 400ms var(--ease-brand);
     transition-delay: 200ms;
   }
 
@@ -3855,12 +3827,65 @@
     }
   }
 
-  /* Print the whole roadmap, even one not yet scrolled into view. */
-  @media print {
-    .rm[data-reveal="armed"] .rm-draw {
-      stroke-dashoffset: 0;
+  /* Roadmap scroll tour (wide, with JavaScript, no reduced motion). The
+     stage sticks below the header over a track of one step per stop (6);
+     the active stop follows the scroll, the road is drawn up to it
+     (--share) and its card stands out. Screen only: print shows the whole
+     road. Nothing is hidden.
+     The stage is the 1400x820 drawing, cards included, zoomed by --rm-k to
+     fit the window below the header (tan(atan2(a, b)) is a / b as a
+     number). */
+  @media screen and (min-width: 1100px) {
+    .rm[data-tour="on"] {
+      --rm-k: min(
+        1,
+        tan(atan2(100vw - 32px, 1400px)),
+        tan(atan2(100svh - var(--spacing-anchor-offset) - 16px, 820px))
+      );
+      --rm-step: 60svh;
+      height: calc(820px * var(--rm-k) + 6 * var(--rm-step));
     }
 
+    /* Lengths on a zoomed element are zoomed too: the pin offset is divided
+       back so the stage sticks right below the header. */
+    .rm[data-tour="on"] .rm-stage {
+      position: sticky;
+      top: calc(var(--spacing-anchor-offset) / var(--rm-k));
+      width: 1400px;
+      zoom: var(--rm-k);
+    }
+
+    /* A step's anchor sits where its stop is active (mid-step). */
+    .rm[data-tour="on"] .rm-step {
+      position: absolute;
+      top: calc((var(--step) + 0.5) * var(--rm-step));
+      left: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .rm[data-tour="on"] .rm-draw {
+      stroke-dashoffset: calc(1 - var(--share));
+      transition: stroke-dashoffset 400ms var(--ease-brand);
+    }
+
+    .rm[data-tour="on"] .rm-card {
+      width: 250px;
+      transition:
+        border-color 400ms var(--ease-brand),
+        box-shadow 400ms var(--ease-brand),
+        transform 400ms var(--ease-brand);
+    }
+
+    .rm[data-tour="on"] .rm-stop[data-active="true"] .rm-card {
+      border-color: var(--color-navy);
+      box-shadow: 0 18px 40px rgb(22 54 99 / 0.22);
+      transform: scale(1.04);
+    }
+  }
+
+  /* Print the whole roadmap, even one not yet scrolled into view. */
+  @media print {
     .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-pin {
       scale: 1;
     }
