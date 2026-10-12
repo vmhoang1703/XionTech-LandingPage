@@ -7,35 +7,41 @@ import {
 } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { PointerGlow } from "@/components/sections/pointer-glow";
+import { ScrollReveal } from "@/components/sections/scroll-reveal";
 import "./globals.css";
 
 const unbounded = Unbounded({
   variable: "--font-unbounded",
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
 const lexendExa = Lexend_Exa({
   variable: "--font-lexend-exa",
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
+  // Logo-style labels only, never the hero text: load on use, not preload.
+  preload: false,
 });
 
 const beVietnamPro = Be_Vietnam_Pro({
   variable: "--font-be-vietnam-pro",
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
+  // Small code-style labels below the fold: load on use, not preload.
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -59,6 +65,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <ScrollReveal />
+        <PointerGlow />
       </body>
     </html>
   );

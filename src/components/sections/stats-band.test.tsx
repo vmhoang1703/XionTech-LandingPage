@@ -1,6 +1,13 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { StatsBand, type Stat } from "./stats-band";
+
+// The count itself is tested in count-up.test.tsx.
+vi.mock("./count-up", () => ({
+  CountUp: ({ value }: { value: string }) => (
+    <span data-testid="count-up">{value}</span>
+  ),
+}));
 
 const STATS: Stat[] = [
   { value: "25", suffix: "+", caption: "Years of leadership" },
@@ -17,6 +24,20 @@ describe("StatsBand", () => {
       "25+Years of leadership",
       "8Service offerings",
     ]);
+  });
+
+  it("counts up only the figures marked count, in a reveal group", () => {
+    render(
+      <StatsBand
+        label="Experience"
+        tone="navy"
+        stats={[{ ...STATS[0], count: true }, STATS[1]]}
+      />,
+    );
+
+    expect(screen.getByTestId("count-up").textContent).toBe("25");
+    expect(screen.getAllByTestId("count-up")).toHaveLength(1);
+    expect(screen.getByRole("list").dataset.reveal).toBe("");
   });
 
   it("uses amber suffixes on navy and amber-text suffixes on light", () => {

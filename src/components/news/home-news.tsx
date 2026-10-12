@@ -29,7 +29,7 @@ export async function HomeNews() {
   return (
     <section className="sec surface-mist" aria-labelledby="news-h">
       <div className="wrap">
-        <div className="sec-head-row">
+        <div className="sec-head-row" data-reveal="">
           <div className="sec-head">
             <h2 id="news-h">{heading}</h2>
             <p className="lede">{lede}</p>
@@ -40,7 +40,7 @@ export async function HomeNews() {
           </Link>
         </div>
         {posts.length > 0 ? (
-          <div className="sgrid sgrid-row">
+          <div className="sgrid sgrid-row" data-reveal="">
             {posts.map((post) => (
               <NewsCard key={post.slug} post={post} />
             ))}

@@ -4,15 +4,19 @@ import { ProcessFlow } from "@/components/sections/process-flow";
 import { homeProcess } from "@/content/home";
 import { processFlow } from "@/content/process";
 
-// Home "How we approach." section: light surface, the shared 4-D process flow
-// and the link to Services on the heading row.
+// Home "How we work." section: the page's one navy moment, a rounded navy
+// panel (surface-navy) with a moving amber light, the shared 4-D process
+// flow and the link to Services on the heading row (lead, 2026-10-11).
 export function HomeProcess() {
   const { title, lede, link } = homeProcess;
 
   return (
-    <section aria-labelledby="process-title" className="sec home-process">
+    <section
+      aria-labelledby="process-title"
+      className="sec home-process surface-navy"
+    >
       <div className="wrap">
-        <div className="sec-head-row">
+        <div className="sec-head-row" data-reveal="">
           <div className="sec-head">
             <h2 id="process-title">{title}</h2>
             <p className="lede">{lede}</p>

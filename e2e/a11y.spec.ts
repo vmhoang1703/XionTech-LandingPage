@@ -34,6 +34,10 @@ const NESTED =
   "a a, a button, a input, a select, a textarea, button a, button button, button input";
 
 async function checkPage(page: Page, path: string, status = 200) {
+  // axe checks the page at rest: under reduced motion every element shows in
+  // its final state. Otherwise axe can catch a reveal mid-fade (the 4-D steps
+  // at 91% opacity read as 4.22:1 on Home). Motion has its own checks.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   const response = await page.goto(path);
   expect(response?.status(), `${path} answers ${status}`).toBe(status);
   const result = await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze();
@@ -266,6 +270,7 @@ test.describe("reflow", { tag: "@a11y" }, () => {
         overflow: document.documentElement.scrollWidth - window.innerWidth,
         columns,
         cards: boxes(".w-card"),
+        apps: boxes(".app-card"),
         doors: boxes(".door"),
       };
     });
@@ -276,8 +281,10 @@ test.describe("reflow", { tag: "@a11y" }, () => {
       );
     expect(layout.overflow, "no sideways scroll").toBeLessThanOrEqual(0);
     expect(layout.columns, "figures per row").toBe(2);
-    expect(layout.cards, "Capabilities cards").toHaveLength(4);
-    expect(stacked(layout.cards), "Capabilities cards stack").toBe(true);
+    expect(layout.cards, "Why XionTech cards").toHaveLength(2);
+    expect(stacked(layout.cards), "Why XionTech cards stack").toBe(true);
+    expect(layout.apps, "app cards").toHaveLength(4);
+    expect(stacked(layout.apps), "app cards stack").toBe(true);
     expect(layout.doors, "door cards").toHaveLength(2);
     expect(stacked(layout.doors), "door cards stack").toBe(true);
   });
@@ -402,7 +409,11 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
     );
     // One evaluate: all rects come from the same moment.
     const { contentBottom, ridgeTop } = await page.evaluate(() => {
-      const last = document.querySelector("main > :last-child");
+      // The element that holds the room above the footer (globals.css):
+      // main's last child, or on Home the last section inside the scene.
+      const last = document.querySelector(
+        "main > :last-child:not(.page-scene), main > .page-scene:last-child > :last-child",
+      );
       let bottom = 0;
       // Page coordinates: on phones the footer is taller than the screen.
       for (const el of last?.querySelectorAll("*") ?? []) {

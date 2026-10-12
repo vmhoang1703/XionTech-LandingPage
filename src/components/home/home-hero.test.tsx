@@ -9,6 +9,11 @@ vi.mock("@/components/home/silk-shader", async (importOriginal) => ({
   createSilk: () => null,
 }));
 
+// jsdom has no matchMedia; the count is tested in count-up.test.tsx.
+vi.mock("@/components/sections/count-up", () => ({
+  CountUp: ({ value }: { value: string }) => <>{value}</>,
+}));
+
 function renderHero() {
   render(<HomeHero />);
   return screen.getByRole("region", {

@@ -161,6 +161,22 @@ keyboard, touch, pen), one testable line each, with its source. Every interactiv
 write the winner; never pick silently. Before the PR, check every line and copy the table into the
 PR's "UX checks" section. Rules, template and example: `docs/ux-checks.md`.
 
+## UI/UX enhancement stage
+
+Hoang Vu and Sammy improve UI/UX, animation and 3D after the enhancement tasks (lead, 2026-10-10).
+
+- **Skill:** use `/impeccable <command> <target>` (`.claude/skills/impeccable/`) for UI/UX and animation
+  work. Do not use the `frontend-design` plugin in the same task; their rules conflict.
+- **Source of truth:** Amber's prototype and `DESIGN.md` set brand, colours and fonts. Enhance them;
+  do not replace them, even when the skill says "go bold".
+- **Motion:** every animation has a `prefers-reduced-motion` version. Animate only `transform` and
+  `opacity`.
+- **3D:** lazy-load it, show a still fallback on slow or small devices, and keep the Lighthouse
+  mobile performance score at 90 or higher.
+- **Content:** the `[Placeholder]` rule still applies. No invented stats, logos or testimonials.
+- **Approval:** Hoang Vu and Sammy decide; Amber's sign-off is not needed in this stage. The
+  Definition of Done in `CLAUDE.md` still applies.
+
 ## AI log
 
 Log every prompt or decision that mattered in `docs/ai-log.md`, **especially when the AI

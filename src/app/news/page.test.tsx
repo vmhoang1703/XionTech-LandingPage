@@ -55,7 +55,7 @@ describe("NewsPage", () => {
       post(4, "schools"),
     ]);
 
-    const flow = container.querySelector(".news-flow");
+    const flow = container.querySelector(".page-scene");
     const hero = flow?.querySelector("section.hero-light.page-hero.nhead-sec");
     expect(hero?.getAttribute("aria-labelledby")).toBe("news-h1");
     expect(screen.queryByRole("navigation")).toBeNull();
@@ -86,7 +86,8 @@ describe("NewsPage", () => {
     expect(cards[0].parentElement?.className).toBe("s-lead");
     expect(cards[1].parentElement?.className).toBe("");
     const capture = screen.getByTestId("capture-demo");
-    expect(flow?.contains(capture)).toBe(false);
+    expect(flow?.lastElementChild).toBe(capture);
+    expect(container.firstElementChild).toBe(flow);
   });
 
   it("passes each story's audience to the filter, so a chip shows only its stories", async () => {

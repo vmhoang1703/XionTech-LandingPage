@@ -1,6 +1,5 @@
-"use client";
-
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
+import { FlipToggle } from "@/components/sections/flip-toggle";
 import type { careersValues, ValueIcon } from "@/content/careers";
 
 type Card = (typeof careersValues.cards)[number];
@@ -48,9 +47,9 @@ const ICONS: Record<ValueIcon, ReactNode> = {
   ),
 };
 
-// One value as a flip card (E-A7 CAP-3): a toggle button that turns to its
-// meaning in practice on click, tap, Enter or Space. The face not on show is
-// inert, so a screen reader reads one face only.
+// One value as a flip card (E-A7 CAP-3): its number, drawing and title on the
+// front, its meaning in practice on the back. FlipToggle turns it over on
+// click, tap, Enter or Space and keeps the hidden face inert.
 export function FlipCard({
   card,
   num,
@@ -62,20 +61,11 @@ export function FlipCard({
   frontHint: string;
   backHint: string;
 }>) {
-  const [flipped, setFlipped] = useState(false);
-  const accent = "accent" in card && card.accent;
-
   return (
-    <button
-      type="button"
-      className={["flip-card", accent ? "accent" : "", flipped ? "flipped" : ""]
-        .filter(Boolean)
-        .join(" ")}
-      aria-pressed={flipped}
-      onClick={() => setFlipped((on) => !on)}
-    >
-      <span className="flip-inner">
-        <span className="flip-face flip-front" inert={flipped}>
+    <FlipToggle
+      accent={"accent" in card && card.accent}
+      front={
+        <>
           <span className="flip-num">{num}</span>
           <svg
             className="flip-ill"
@@ -87,16 +77,18 @@ export function FlipCard({
           </svg>
           <span className="flip-title">{card.title}</span>
           <span className="flip-hint">{frontHint}</span>
-        </span>
-        <span className="flip-face flip-back" inert={!flipped}>
+        </>
+      }
+      back={
+        <>
           <span className="flip-num">{`${num} · ${card.label}`}</span>
           <span>
             <span className="flip-title">{card.backTitle}</span>
             <span className="flip-text">{card.text}</span>
           </span>
           <span className="flip-hint">{backHint}</span>
-        </span>
-      </span>
-    </button>
+        </>
+      }
+    />
   );
 }

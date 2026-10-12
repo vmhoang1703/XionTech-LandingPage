@@ -34,7 +34,10 @@ describe("no JavaScript", () => {
       /<h1[^>]*>School apps and software teams that <span class="hl">get IT done<\/span>\.<\/h1>/,
     );
     expect(html).toContain("Get in touch");
-    expect(html).toContain("How we approach.");
+    expect(html).toContain("How we work.");
+    // Every value's short line and every Home answer render without a script.
+    expect(html).toContain("Agile, resilient and always improving.");
+    expect(html).toContain("How do you work across time zones?");
     expect(html).toContain("Have something you want to build?");
     expect(html.indexOf("Latest from XionTech.")).toBeGreaterThan(-1);
     expect(html.indexOf("Latest from XionTech.")).toBeLessThan(

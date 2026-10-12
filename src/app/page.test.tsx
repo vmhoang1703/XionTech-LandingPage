@@ -72,32 +72,38 @@ describe("Home page", () => {
     expect(screen.queryByRole("main")).toBeNull();
   });
 
-  it("orders hero, Capabilities, core values, How we approach, news, contact", () => {
+  it("tells one story: hero, outcomes, apps, why, process, values, answers, news, contact", () => {
     const { container } = render(<Home />);
 
     expect(sectionNames(container)).toEqual([
       "School apps and software teams that get IT done.",
-      "Capabilities.",
+      "What can we help you achieve?",
+      "One connected school.",
+      "Why XionTech.",
+      "How we work.",
       "Our core values.",
-      "How we approach.",
+      "Your questions, answered.",
       "Latest from XionTech.",
       "Have something you want to build?",
     ]);
   });
 
-  it("puts Capabilities, values and the process on one flowing surface, not news or contact", () => {
+  it("puts the story sections on one flowing surface, not news or contact", () => {
     render(<Home />);
 
     const flow = screen
-      .getByRole("region", { name: "Capabilities." })
+      .getByRole("region", { name: "What can we help you achieve?" })
       .closest(".home-flow");
     expect(flow).not.toBeNull();
-    expect(
-      flow?.contains(screen.getByRole("region", { name: "Our core values." })),
-    ).toBe(true);
-    expect(
-      flow?.contains(screen.getByRole("region", { name: "How we approach." })),
-    ).toBe(true);
+    for (const name of [
+      "One connected school.",
+      "Why XionTech.",
+      "How we work.",
+      "Our core values.",
+      "Your questions, answered.",
+    ]) {
+      expect(flow?.contains(screen.getByRole("region", { name }))).toBe(true);
+    }
     const news = screen.getByRole("region", { name: "Latest from XionTech." });
     expect(flow?.contains(news)).toBe(false);
     expect(news.className).toContain("surface-mist");
@@ -112,13 +118,28 @@ describe("Home page", () => {
     expect(document.querySelector(".bento, .svc-cards")).toBeNull();
   });
 
+  it("puts everything below the hero on one colour field, with How we work as the navy moment", () => {
+    const { container } = render(<Home />);
+
+    const scene = container.querySelector(".page-scene");
+    expect(container.firstElementChild?.nextElementSibling).toBe(scene);
+    expect(scene?.querySelector("#home-outcomes-h")).not.toBeNull();
+    expect(scene?.lastElementChild?.id).toBe("contact");
+    const navy = Array.from(
+      container.querySelectorAll(".home-flow > .surface-navy"),
+    ).map((section) => section.querySelector("h2")?.textContent);
+    expect(navy).toEqual(["How we work."]);
+  });
+
   it("ends with the contact section and no capture band", () => {
     const { container } = render(<Home />);
 
     const contact = screen
       .getByRole("heading", { name: "Have something you want to build?" })
       .closest("section");
-    expect(container.lastElementChild).toBe(contact);
+    const scene = container.querySelector(".page-scene");
+    expect(container.lastElementChild).toBe(scene);
+    expect(scene?.lastElementChild).toBe(contact);
     expect(contact?.id).toBe("contact");
     // The hero's Get in touch button lands on this section.
     expect(

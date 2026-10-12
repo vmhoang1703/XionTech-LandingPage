@@ -9,11 +9,11 @@ export function FlipCards() {
   return (
     <section id="culture" className="sec" aria-labelledby="cul-h">
       <div className="wrap">
-        <div className="sec-head">
+        <div className="sec-head" data-reveal="">
           <h2 id="cul-h">{heading}</h2>
           <p className="lede">{lede}</p>
         </div>
-        <div className="flip-cards">
+        <div className="flip-cards" data-reveal="">
           {cards.map((card, index) => (
             <FlipCard
               key={card.icon}

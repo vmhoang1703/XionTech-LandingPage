@@ -1198,7 +1198,7 @@
   .sec.contact {
     background: linear-gradient(
       180deg,
-      var(--color-mist-end) 0%,
+      var(--contact-top, var(--color-mist-end)) 0%,
       #fdf3d6 22%,
       #fce6a8 55%,
       var(--color-amber-light) 100%
@@ -1468,7 +1468,15 @@
     overflow: hidden;
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-card);
-    transition: transform 0.5s var(--ease-brand);
+    transition:
+      transform 0.5s var(--ease-brand),
+      scale 0.2s var(--ease-brand);
+  }
+
+  /* Press: mouse and touch (the Home app cards too) */
+  .door:active,
+  .app-card:active {
+    scale: 0.98;
   }
 
   .door h2 {
@@ -1489,7 +1497,8 @@
     justify-content: space-between;
   }
 
-  .door .go {
+  .door .go,
+  .app-card .go {
     display: grid;
     place-items: center;
     width: 46px;
@@ -1504,11 +1513,13 @@
 
   /* Pointer effects only on hover-capable devices (EXPERIENCE.md) */
   @media (hover: hover) {
-    .door:hover {
+    .door:hover,
+    .app-card:hover {
       transform: translateY(-4px);
     }
 
-    .door:hover .go {
+    .door:hover .go,
+    .app-card:hover .go {
       opacity: 1;
       transform: rotate(-45deg);
     }
@@ -1516,7 +1527,9 @@
 
   @media (prefers-reduced-motion: reduce) {
     .door:hover,
-    .door:hover .go {
+    .door:hover .go,
+    .app-card:hover,
+    .app-card:hover .go {
       transform: none;
     }
   }
@@ -1586,6 +1599,16 @@
     border: 1px solid var(--color-border);
     background: var(--color-mist);
     color: var(--color-navy);
+    font-size: 1.2rem;
+  }
+
+  .b-ait {
+    background: linear-gradient(
+      135deg,
+      var(--color-navy-soft),
+      var(--color-navy)
+    );
+    color: var(--color-white);
     font-size: 1.2rem;
   }
 
@@ -1668,10 +1691,10 @@
   }
 
   /* E-A7 Careers (prototype careers.html, site.css "Careers" blocks; ENH-035, ENH-055, ENH-060) */
-  /* One light gradient: light blue in the hero, white in the middle, light amber at the end (site.js "pastel") */
+  /* The hero fades from light blue into the page colour, where the shared page scene takes over (lead, 2026-10-12) */
   .careers-hero {
     padding-block: 72px 64px;
-    background: linear-gradient(180deg, var(--color-ice), #e8eff9);
+    background: linear-gradient(180deg, var(--color-ice), var(--color-page));
   }
 
   /* Beats the shared .hero-light .aurora rule further down */
@@ -1698,23 +1721,6 @@
         transparent 70%
       );
     mask-image: linear-gradient(180deg, #000 40%, transparent 92%);
-  }
-
-  .careers-flow {
-    background:
-      radial-gradient(
-        360px circle at 86% 82%,
-        rgb(246 195 10 / 0.1),
-        transparent 70%
-      ),
-      linear-gradient(
-        180deg,
-        #e8eff9,
-        #f5f8fd 28%,
-        var(--color-white) 45%,
-        #fff5d9 70%,
-        #ffe7a3
-      );
   }
 
   /* Hero: text beside the Growth Learning Model */
@@ -2307,39 +2313,6 @@
 
   /* E-A6 News (prototype news.html, site.css "News" blocks; ENH-037, ENH-053) */
   /* White with light blue shading through the whole page, hero included (site.js "cool") */
-  .news-flow {
-    background:
-      radial-gradient(
-        460px circle at 10% 18%,
-        rgb(63 102 160 / 0.07),
-        transparent 70%
-      ),
-      radial-gradient(
-        460px circle at 86% 46%,
-        rgb(63 102 160 / 0.07),
-        transparent 70%
-      ),
-      radial-gradient(
-        460px circle at 10% 80%,
-        rgb(63 102 160 / 0.07),
-        transparent 70%
-      ),
-      linear-gradient(
-        180deg,
-        var(--color-white),
-        #f7fafe 14%,
-        #eef4fc 30%,
-        #e6eef9 50%,
-        #f0f5fc 70%,
-        #e7eff9 86%,
-        #e1eaf7
-      );
-  }
-
-  .news-flow .hero-light {
-    background: transparent;
-  }
-
   .nhead-sec {
     padding-block: 56px 0;
   }
@@ -2940,6 +2913,133 @@
     z-index: 1;
   }
 
+  /* Scroll reveal (ScrollReveal): the direct children of a [data-reveal]
+     group rise in as they come into view. Same rise, length and curve as the
+     4-D flow steps. It uses `translate`, not `transform`, so hover lifts on
+     cards still work. Only items the script marked "wait" are hidden; focus,
+     print and reduced motion show them at once. */
+  [data-reveal] > [data-shown="wait"] {
+    opacity: 0;
+    translate: 0 18px;
+  }
+
+  [data-reveal] > [data-shown="play"] {
+    animation: reveal-rise 0.7s var(--ease-brand) var(--reveal-delay, 0ms) both;
+  }
+
+  [data-reveal] > [data-shown]:focus-within {
+    opacity: 1;
+    translate: none;
+    animation: none;
+  }
+
+  @keyframes reveal-rise {
+    from {
+      opacity: 0;
+      translate: 0 18px;
+    }
+
+    to {
+      opacity: 1;
+      translate: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce), print {
+    [data-reveal] > [data-shown] {
+      opacity: 1;
+      translate: none;
+    }
+  }
+
+  /* Count-up (CountUp): with motion allowed, the real number keeps its place
+     with transparent glyphs (screen readers and search still read it) and
+     ::after draws --count over it, from the same start in the same box, so
+     nothing moves (aligned right, the growing count moved its start: a layout
+     shift). On screen at load it counts at first paint, with no script. The
+     script holds a figure below the screen at 0 ("wait") and plays it in view
+     ("play"); "off" is a saved Pause. Reduced motion and print show the plain
+     number. --count is registered at the top level (@property). The count
+     uses a softer ease-out than --ease-brand, which would jump most of the
+     way at once and hide the counting. */
+  @media screen and (prefers-reduced-motion: no-preference) {
+    .count-up:not([data-count="off"]) {
+      --count: var(--to);
+      position: relative;
+      display: inline-block;
+      font-variant-numeric: tabular-nums;
+      -webkit-text-fill-color: transparent;
+      counter-reset: count var(--count);
+    }
+
+    .count-up:not([data-count="off"])::after {
+      content: counter(count);
+      position: absolute;
+      inset: 0;
+      -webkit-text-fill-color: currentcolor;
+    }
+
+    /* The drawn count is not read out: the real number already is. */
+    @supports (content: "" / "") {
+      .count-up:not([data-count="off"])::after {
+        content: counter(count) / "";
+      }
+    }
+
+    .count-up:not([data-count]) {
+      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.2s both;
+    }
+
+    .count-up[data-count="wait"] {
+      --count: 0;
+    }
+
+    .count-up[data-count="play"] {
+      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) both;
+    }
+  }
+
+  @keyframes count-up {
+    from {
+      --count: 0;
+    }
+  }
+
+  /* Pointer glow (PointerGlow): a card with [data-glow] shows a soft amber
+     light under a mouse or pen. The script sets --glow-x and --glow-y; the
+     light moves with translate and fades with opacity, under the card's
+     content. The card needs position and overflow: hidden (the doors have
+     both). Touch screens and reduced motion: no light. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    [data-glow] {
+      isolation: isolate;
+    }
+
+    [data-glow]::after {
+      content: "";
+      position: absolute;
+      top: -160px;
+      left: -160px;
+      z-index: -1;
+      width: 320px;
+      height: 320px;
+      border-radius: var(--radius-full);
+      background: radial-gradient(
+        closest-side,
+        color-mix(in srgb, var(--color-amber) 30%, transparent),
+        transparent
+      );
+      opacity: 0;
+      translate: var(--glow-x, 0) var(--glow-y, 0);
+      transition: opacity 0.4s var(--ease-brand);
+      pointer-events: none;
+    }
+
+    [data-glow]:hover::after {
+      opacity: 1;
+    }
+  }
+
   .flow {
     position: relative;
     display: grid;
@@ -2984,7 +3084,9 @@
       var(--color-amber)
     );
     transform-origin: left;
-    transition: transform 2.4s var(--ease-brand);
+    transition:
+      transform 2.4s var(--ease-brand),
+      translate 0.5s var(--ease-brand);
   }
 
   .flow[data-phase="armed"] .track i {
@@ -3189,10 +3291,11 @@
       grid-template-rows: repeat(3, auto) 1fr auto;
     }
 
+    /* Clipped, so the fill can draw back to a hovered step (below) */
     .flow .track {
       width: auto;
       height: 3px;
-      overflow: visible;
+      overflow: hidden;
       clip-path: none;
     }
 
@@ -3214,6 +3317,68 @@
       row-gap: 0;
     }
   }
+
+  /* Hover a step: its art opens a little, and from 1080px the amber track
+     draws back to the step's centre. --at is the step's place (1 to 4); the
+     centre comes from the grid: the 128px start node, the gaps and four equal
+     columns. The track's own width is 100%. */
+  @media (hover: hover) {
+    .step4 .art .main,
+    .step4 .art .orb {
+      transition: translate 0.4s var(--ease-brand);
+    }
+
+    .step4:hover .art .main {
+      translate: 0 -4px;
+    }
+
+    .step4:hover .art .o1 {
+      translate: -4px -3px;
+    }
+
+    .step4:hover .art .o2 {
+      translate: 4px -3px;
+    }
+
+    .step4:hover .art .o3 {
+      translate: -3px 4px;
+    }
+  }
+
+  @media (hover: hover) and (width >= --theme(--breakpoint-lg)) {
+    .flow:has(> .step4:nth-child(3):hover) {
+      --at: 1;
+    }
+
+    .flow:has(> .step4:nth-child(4):hover) {
+      --at: 2;
+    }
+
+    .flow:has(> .step4:nth-child(5):hover) {
+      --at: 3;
+    }
+
+    .flow:has(> .step4:nth-child(6):hover) {
+      --at: 4;
+    }
+
+    .flow:has(> .step4:hover) .track i {
+      translate: calc(
+          128px + var(--spacing-grid-gap) + (var(--at) - 0.5) *
+            (100% - 256px - 5 * var(--spacing-grid-gap)) / 4 + (var(--at) - 1) *
+            var(--spacing-grid-gap) - 100%
+        )
+        0;
+    }
+  }
+}
+
+/* The count-up's number (CountUp, "Count-up" above): an integer, so CSS can
+   animate it and a counter can show it. Registered at the top level. */
+@property --count {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
 }
 
 @layer components {
@@ -4059,72 +4224,6 @@
     );
   }
 
-  /* About page (Story 6.4), ported from the prototype site.css */
-  .values {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid var(--color-border);
-    border-left: 1px solid var(--color-border);
-  }
-
-  .value {
-    position: relative;
-    padding: 34px 30px;
-    border-right: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-    transition: background 0.4s var(--ease-brand);
-  }
-
-  .value:not(.feat):hover {
-    background: var(--color-mist);
-  }
-
-  .value svg {
-    font-size: 1.8rem;
-    color: var(--color-heading);
-  }
-
-  .value h3 {
-    margin: 16px 0 8px;
-    font-family: var(--font-display);
-    font-size: 1.12rem;
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-  }
-
-  .value p {
-    color: var(--color-muted);
-    font-size: 0.96rem;
-  }
-
-  .value.feat {
-    background: linear-gradient(
-      155deg,
-      var(--color-amber-light),
-      var(--color-amber) 60%,
-      var(--color-amber-deep)
-    );
-  }
-
-  .value.feat svg,
-  .value.feat h3,
-  .value.feat p {
-    color: var(--color-navy);
-  }
-
-  @media (width <= --theme(--breakpoint-md)) {
-    .values {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  @media (width <= --theme(--breakpoint-sm)) {
-    .values {
-      grid-template-columns: 1fr;
-    }
-  }
-
   /* About FAQ (E-S3, prototype site.css 419-440): two columns of hairline rows, native details */
   .faq-head {
     margin-bottom: 40px;
@@ -4357,7 +4456,7 @@
   }
 
   .ah-ground {
-    fill: var(--color-paper);
+    fill: var(--color-page);
   }
 
   .ah-inner {
@@ -4587,7 +4686,7 @@
   }
 }
 
-/* ---------- E-S1 Home: Capabilities (4 cards, "+3" reveal, motto) ---------- */
+/* ---------- E-S1 Home: Why XionTech (2 cards, "+3" reveal, motto) ---------- */
 .why2 {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -4617,52 +4716,12 @@
   z-index: 1;
 }
 
-.w-products {
-  --w-heading: var(--color-white);
-  --w-muted: var(--color-on-navy-muted);
-
-  grid-column: span 7;
-  border: 0;
-  background: linear-gradient(
-    150deg,
-    var(--color-navy-2),
-    var(--color-navy) 70%
-  );
-  color: var(--color-white);
-}
-
 .w-delivery {
   grid-column: span 5;
 }
 
 .w-industries {
   grid-column: span 7;
-}
-
-.w-services {
-  --w-muted: var(--color-on-amber-muted);
-
-  grid-column: span 5;
-  border: 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-amber-light),
-    var(--color-amber) 60%
-  );
-  color: var(--color-navy);
-}
-
-.w-services::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  right: -70px;
-  bottom: -110px;
-  width: 280px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 30%);
-  pointer-events: none;
 }
 
 .w-label {
@@ -4696,36 +4755,6 @@
   color: var(--w-muted);
 }
 
-.w-services p {
-  max-width: 34ch;
-}
-
-.w-apps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.w-app {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-}
-
-.w-app .badge {
-  width: 52px;
-  height: 52px;
-  box-shadow:
-    0 0 0 1.5px rgb(255 255 255 / 35%),
-    0 12px 24px -12px rgb(0 0 0 / 50%);
-}
-
-.w-app small {
-  color: var(--color-on-navy-muted);
-  font-size: var(--text-label);
-  letter-spacing: 0.06em;
-}
-
 .w-chips,
 .w-industry-row {
   display: flex;
@@ -4748,6 +4777,19 @@
   font-weight: 500;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+}
+
+/* Office chips: the sun or moon (DaylightIcon) turns in once it is known */
+.w-chip .daylight {
+  animation: daylight-in 0.5s var(--ease-brand) both;
+}
+
+@keyframes daylight-in {
+  from {
+    opacity: 0;
+    rotate: -60deg;
+    scale: 0.6;
+  }
 }
 
 .w-chip.solid {
@@ -4844,40 +4886,6 @@
   border-radius: var(--radius-full);
 }
 
-.w-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  color: var(--w-heading);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.w-products .w-link,
-.w-services .w-link {
-  align-self: flex-end;
-}
-
-.w-link svg {
-  transition: transform 0.3s var(--ease-brand);
-}
-
-a.w-card {
-  transition:
-    transform 0.4s var(--ease-brand),
-    box-shadow 0.4s var(--ease-brand);
-}
-
-a.w-card:hover {
-  box-shadow: 0 26px 50px -30px rgb(11 23 48 / 55%);
-  transform: translateY(-3px);
-}
-
-a.w-card:hover .w-link svg {
-  transform: translateX(4px);
-}
-
 .w-motto {
   display: flex;
   align-items: center;
@@ -4919,8 +4927,6 @@ a.w-card:hover .w-link svg {
 }
 
 @media (max-width: 900px) {
-  .w-products,
-  .w-services,
   .w-delivery,
   .w-industries {
     grid-column: 1 / -1;
@@ -4956,13 +4962,6 @@ a.w-card:hover .w-link svg {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  a.w-card,
-  a.w-card:hover,
-  a.w-card:hover .w-link svg {
-    transform: none;
-    transition: none;
-  }
-
   .w-more,
   .w-more-trigger {
     transition:
@@ -4971,10 +4970,9 @@ a.w-card:hover .w-link svg {
   }
 }
 
-/* ---------- E-S1 Home: core values and How we approach ---------- */
+/* ---------- E-S1 Home: core values and How we work ---------- */
 /* Both sit on the .home-flow surface below */
-.home-values,
-.home-process {
+.home-values {
   background: transparent;
 }
 
@@ -5019,11 +5017,481 @@ a.w-card:hover .w-link svg {
   position: absolute;
   inset: 50% 0 0;
   z-index: -1;
-  background: #f4f6fa;
+  background: var(--color-page);
+}
+
+/* ---------- Home: What can we help you achieve? (lead, 2026-10-11) ---------- */
+/* The Services split layout: sticky heading and next steps, outcome rows */
+.goal-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 28px;
+}
+
+.goal-list {
+  border-top: 1px solid var(--color-border);
+  list-style: none;
+}
+
+.goal-list li {
+  padding: 26px 0 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.goal-list h3 {
+  color: var(--color-heading);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.goal-list p {
+  max-width: 56ch;
+  margin-top: 10px;
+  color: var(--color-muted);
+}
+
+/* ---------- Home: One connected school (lead, 2026-10-11) ---------- */
+/* One link card per app. From 1080px a dashed amber line runs behind the
+   cards at the badges' centre and shows in the gaps, as the 4-D track does.
+   Press, arrow and lift: the door rules. */
+.app-cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  list-style: none;
+}
+
+/* Card top padding 28px + half the 44px badge, less half the line */
+.app-cards::before {
+  content: "";
+  position: absolute;
+  top: 49px;
+  right: 0;
+  left: 0;
+  border-top: 2px dashed color-mix(in srgb, var(--color-amber) 60%, transparent);
+}
+
+.app-cards > li {
+  position: relative;
+  display: flex;
+}
+
+.app-card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 26px 26px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-white);
+  box-shadow: var(--shadow-card);
+  color: var(--color-heading);
+  transition:
+    transform 0.5s var(--ease-brand),
+    scale 0.2s var(--ease-brand);
+}
+
+.app-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.app-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.app-for {
+  color: var(--color-muted);
+  font-size: var(--text-body-sm);
+}
+
+.app-feats {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px dashed var(--color-border);
+  color: var(--color-text);
+  font-size: var(--text-body-sm);
+  line-height: 1.45;
+  list-style: none;
+}
+
+.app-feats li {
+  display: flex;
+  gap: 10px;
+}
+
+.app-feats li::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  margin-top: 0.5em;
+  border-radius: var(--radius-full);
+  background: var(--color-amber);
+}
+
+@media (max-width: 1079px) {
+  .app-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-cards::before {
+    content: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Home: core values as flip cards (lead, 2026-10-11) ---------- */
+/* Six Careers flip cards in three columns: icon, title and short line on
+   the front, the full value on the back. */
+.home-values .flip-cards {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.flip-icon {
+  font-size: 2rem;
+}
+
+/* The front reads top down: icon, then title and short line; the hint stays
+   at the bottom. Above 1180px the cards are wide enough for a shorter card. */
+.home-values .flip-front {
+  justify-content: flex-start;
+  gap: 18px;
+}
+
+.home-values .flip-front .flip-hint {
+  margin-top: auto;
+}
+
+@media (width > 1180px) {
+  .home-values .flip-card,
+  .home-values .flip-inner {
+    min-height: 264px;
+  }
+}
+
+.flip-front .flip-text {
+  margin-top: 8px;
+}
+
+/* The featured value's gold front keeps its short line readable */
+.flip-card.accent .flip-front .flip-text {
+  color: var(--color-on-amber-muted);
+}
+
+@media (width <= 820px) {
+  .home-values .flip-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 520px) {
+  .home-values .flip-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .home-flow {
   background: linear-gradient(180deg, #f4f6fa, var(--color-page));
+}
+
+/* ---------- Page scene: one light colour with a moving colour field (lead, 2026-10-11; every page 2026-10-12) ---------- */
+/*
+  Below each page hero the site is one light colour (--color-page) with a soft
+  amber and blue colour field (PageScene): a sticky layer, one screen tall and
+  taking no space, so it stays behind the content as you scroll; overflow:
+  clip keeps it off the hero and the footer. Each blob floats on its own and,
+  with scroll-driven animations, sweeps from side to side as you scroll, so
+  the colour moves with the reader. The colours stay soft (lead, 2026-10-12:
+  the stronger field was too strong): amber 32%, the warm blob 24%, blue 18%,
+  each fading out from its centre. Muted text (#4a5b78) and the About numbers
+  (#735500) stay 5.32:1 or more where all three meet. Small amber text
+  (--color-amber-text) sits on cards or navy only.
+  Light section surfaces inside the scene turn see-through; navy ones stay.
+  The page ends warm, amber behind the footer ridge (::after), and Home's
+  Contact keeps its own warm surface with a see-through top. CSS only, so the
+  field shows with no JavaScript; reduced motion and a saved Pause
+  (data-paused) hold it still. On Home "How we work" is the one navy moment
+  (below).
+*/
+.page-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: var(--color-page);
+}
+
+/* Under a hero the field fades in from the page colour, so it meets the
+   hero's light edge with no line. */
+.scene-fade::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: 280px;
+  background: linear-gradient(var(--color-page), transparent);
+  pointer-events: none;
+}
+
+.scene-bg {
+  position: sticky;
+  top: 0;
+  z-index: -1;
+  height: 100lvh;
+  margin-bottom: -100lvh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Warm at the end: amber light behind the footer ridge, under the content. */
+.page-scene::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  height: 520px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    #fdf3d6 38%,
+    #fce6a8 72%,
+    var(--color-amber-light)
+  );
+  pointer-events: none;
+}
+
+.page-scene .home-flow,
+.page-scene .surface-paper,
+.page-scene .surface-mist,
+.page-scene .hero-light {
+  background: none;
+}
+
+.page-scene .sec.contact {
+  --contact-top: transparent;
+}
+
+.scene-blob {
+  position: absolute;
+  width: 62vmax;
+  height: 62vmax;
+  border-radius: var(--radius-full);
+  animation: blob-float 16s ease-in-out infinite alternate;
+}
+
+.scene-blob-amber {
+  top: -10vmax;
+  right: -12vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-amber-light) 32%, transparent),
+    transparent
+  );
+}
+
+.scene-blob-blue {
+  bottom: -14vmax;
+  left: -14vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, #8fb6ef 18%, transparent),
+    transparent
+  );
+  animation-duration: 20s;
+  animation-delay: -6s;
+}
+
+.scene-blob-warm {
+  right: 24vw;
+  bottom: -10vmax;
+  width: 40vmax;
+  height: 40vmax;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-amber-light) 24%, transparent),
+    transparent
+  );
+  animation-duration: 14s;
+  animation-delay: -11s;
+}
+
+@keyframes blob-float {
+  to {
+    transform: translate(7vw, -6vh) scale(1.2);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .scene-blob-amber {
+    animation:
+      blob-float 16s ease-in-out infinite alternate,
+      amber-travel linear both;
+    animation-timeline: auto, scroll(root);
+  }
+
+  .scene-blob-blue {
+    animation:
+      blob-float 20s ease-in-out -6s infinite alternate,
+      blue-travel linear both;
+    animation-timeline: auto, scroll(root);
+  }
+
+  .scene-blob-warm {
+    animation:
+      blob-float 14s ease-in-out -11s infinite alternate,
+      warm-travel linear both;
+    animation-timeline: auto, scroll(root);
+  }
+}
+
+/* Side to side as you scroll: amber from the top right, blue from the bottom
+   left, the warm blob along the bottom. */
+@keyframes amber-travel {
+  25% {
+    translate: -34vw 26vh;
+  }
+
+  50% {
+    translate: -6vw 52vh;
+  }
+
+  75% {
+    translate: -46vw 40vh;
+  }
+
+  to {
+    translate: -18vw 70vh;
+  }
+}
+
+@keyframes blue-travel {
+  25% {
+    translate: 34vw -24vh;
+  }
+
+  50% {
+    translate: 8vw -56vh;
+  }
+
+  75% {
+    translate: 44vw -36vh;
+  }
+
+  to {
+    translate: 18vw -66vh;
+  }
+}
+
+@keyframes warm-travel {
+  33% {
+    translate: -44vw -30vh;
+  }
+
+  66% {
+    translate: 6vw -58vh;
+  }
+
+  to {
+    translate: -52vw -24vh;
+  }
+}
+
+.page-scene[data-paused] .scene-blob {
+  animation: none;
+}
+
+/* ---------- Home: How we work, the one navy moment (lead, 2026-10-11) ---------- */
+/* A rounded navy panel (surface-navy) on the light page, like the Services
+   panels, with a soft amber light that crosses it as it passes through the
+   screen (scroll-driven; still where missing). On navy the 4-D steps take
+   dark art and an amber number. */
+.home-process {
+  isolation: isolate;
+  overflow: hidden;
+  margin-inline: clamp(10px, 2vw, 28px);
+  border-radius: 28px;
+}
+
+.home-process::before {
+  content: "";
+  position: absolute;
+  inset: -10% -20%;
+  z-index: -1;
+  background: radial-gradient(
+    35% 45% at 50% 35%,
+    color-mix(in srgb, var(--color-amber) 18%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+@supports (animation-timeline: view()) {
+  .home-process::before {
+    animation: band-light linear both;
+    animation-timeline: view();
+  }
+}
+
+@keyframes band-light {
+  from {
+    translate: -30% 0;
+  }
+
+  to {
+    translate: 30% 0;
+  }
+}
+
+.home-process .step4 .art {
+  background:
+    radial-gradient(
+      60% 80% at 50% 110%,
+      color-mix(in srgb, var(--color-amber) 30%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(160deg, rgb(255 255 255 / 7%), transparent);
+}
+
+.home-process .step4 .art .main {
+  background: linear-gradient(
+    135deg,
+    var(--color-navy-soft),
+    var(--color-navy)
+  );
+  box-shadow:
+    0 16px 30px -12px rgb(0 0 0 / 60%),
+    inset 0 0 0 1px rgb(255 255 255 / 14%);
+}
+
+.home-process .step4 .num {
+  color: var(--color-amber);
 }
 
 .home-flow > :first-child {
@@ -5066,6 +5534,8 @@ a.w-card:hover .w-link svg {
 }
 
 .footer-ridge svg {
+  /* Positioned, so the ridge paints over the sun behind it. */
+  position: relative;
   display: block;
   width: 100%;
   height: 100%;
@@ -5073,6 +5543,61 @@ a.w-card:hover .w-link svg {
 
 .footer-ridge-fill {
   fill: var(--color-ink);
+}
+
+/*
+  The sun behind the mountain (lead, 2026-10-12): every page ends with a
+  sunrise behind the ridge's peak (x 860 of 1440). The box is the clip, as
+  tall as the room above the footer allows (content clears 232px, 176px on
+  phones), so the glow never sits over text; the sun rises in it as the
+  footer scrolls into view (scroll-driven; still and up where missing, and
+  under reduced motion).
+*/
+.ridge-sun {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 220px;
+  overflow: hidden;
+  view-timeline: --ridge-sun block;
+}
+
+.ridge-sun::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 59.72%;
+  width: min(820px, 140vw);
+  height: 100%;
+  translate: -50% 0;
+  background:
+    radial-gradient(
+      circle 54px at 50% calc(100% - 124px),
+      #fffbea 0 34px,
+      #ffeeb0 44px,
+      rgb(255 228 140 / 0) 54px
+    ),
+    radial-gradient(
+      50% 100% at 50% 100%,
+      rgb(255 216 74 / 0.8),
+      rgb(255 216 74 / 0.32) 45%,
+      transparent 80%
+    );
+}
+
+@supports (animation-timeline: view()) {
+  .ridge-sun::before {
+    animation: sun-rise linear both;
+    animation-timeline: --ridge-sun;
+    animation-range: entry 0% cover 50%;
+  }
+}
+
+@keyframes sun-rise {
+  from {
+    translate: -50% 70%;
+  }
 }
 
 .footer-ridge-line {
@@ -5087,16 +5612,57 @@ a.w-card:hover .w-link svg {
   .footer-ridge {
     height: 72px;
   }
+
+  .ridge-sun {
+    height: 160px;
+  }
+
+  .ridge-sun::before {
+    background:
+      radial-gradient(
+        circle 36px at 50% calc(100% - 76px),
+        #fffbea 0 22px,
+        #ffeeb0 29px,
+        rgb(255 228 140 / 0) 36px
+      ),
+      radial-gradient(
+        50% 100% at 50% 100%,
+        rgb(255 216 74 / 0.8),
+        rgb(255 216 74 / 0.32) 45%,
+        transparent 80%
+      );
+  }
 }
 
-/* Room above the footer so the ridge never covers the last content. */
-main > :last-child {
+/* Room above the footer so the ridge never covers the last content. Inside a
+   page scene the room goes on its last section, so the scene's warm end (or
+   Home's Contact amber) sits behind the ridge. */
+main > :last-child:not(.page-scene),
+main > .page-scene:last-child > :last-child {
   padding-bottom: clamp(232px, 17vw, 256px);
 }
 
+/* A navy band inside a page scene is a rounded panel, like the Services hero
+   and Home's How we work; its room goes below it, on the scene's warm end. */
+.page-scene > .capture.surface-navy {
+  margin-inline: clamp(10px, 2vw, 28px);
+  border-radius: 28px;
+}
+
+main > .page-scene:last-child > .surface-navy:last-child {
+  margin-bottom: clamp(232px, 17vw, 256px);
+  padding-bottom: var(--spacing-capture);
+}
+
 @media (max-width: 640px) {
-  main > :last-child {
+  main > :last-child:not(.page-scene),
+  main > .page-scene:last-child > :last-child {
     padding-bottom: 176px;
+  }
+
+  main > .page-scene:last-child > .surface-navy:last-child {
+    margin-bottom: 176px;
+    padding-bottom: var(--spacing-capture);
   }
 }
 
@@ -5105,25 +5671,10 @@ main > :last-child {
   Unlayered on purpose, like E-S1: these Services-only rules must beat the shared
   .page-hero, .sec, .step4 and .flow rules.
 */
-.svc-flow {
-  background: linear-gradient(
-    180deg,
-    var(--color-mist) 0%,
-    #e6eef9 38%,
-    #dce6f5 72%,
-    #f7f9fd 92%,
-    #fff 100%
-  );
-}
-
-.svc-hero,
-.svc-panel {
-  margin-inline: clamp(10px, 2vw, 28px);
-  border-radius: 28px;
-}
-
 .svc-hero {
+  margin-inline: clamp(10px, 2vw, 28px);
   margin-top: 12px;
+  border-radius: 28px;
   overflow: hidden;
   padding-bottom: clamp(56px, 6vw, 88px);
   background:
@@ -5154,18 +5705,19 @@ main > :last-child {
   content: none;
 }
 
+/* The services panel, see-through over the page scene: light blue at the
+   top, fading out, so the colour field glows through it. */
 .svc-panel {
+  margin-inline: clamp(10px, 2vw, 28px);
   margin-top: 28px;
   padding-top: clamp(64px, 7vw, 96px);
   overflow-x: clip;
-  background:
-    radial-gradient(
-      38% 34% at 98% 30%,
-      rgb(255 216 74 / 0.32),
-      transparent 70%
-    ),
-    radial-gradient(34% 30% at 0% 78%, rgb(255 255 255 / 0.8), transparent 70%),
-    linear-gradient(180deg, #dce6f5, #e8eef8 55%, #dce6f5);
+  border-radius: 28px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-ice) 75%, transparent),
+    color-mix(in srgb, var(--color-ice) 30%, transparent)
+  );
 }
 
 .svc-split {

@@ -65,10 +65,15 @@ describe("AboutPage", () => {
     }
   });
 
-  it("lays the five sections in order on white, with no navy band", () => {
+  it("lays the five sections in order, all but the hero on the page scene, with no navy band", () => {
     const { container } = render(<AboutPage />);
 
-    const sections = Array.from(container.children);
+    const scene = container.querySelector(".page-scene");
+    expect(container.children).toHaveLength(2);
+    expect(container.lastElementChild).toBe(scene);
+    const sections = Array.from(
+      container.querySelectorAll("#mission, .page-scene > section"),
+    );
     expect(sections.map((s) => s.tagName)).toEqual(Array(5).fill("SECTION"));
     expect(sections.map((s) => s.id)).toEqual([
       "mission",
@@ -248,7 +253,9 @@ describe("AboutPage", () => {
     expect(capture?.querySelector('button[type="submit"]')?.textContent).toBe(
       "Book a demo",
     );
-    expect(container.lastElementChild).toBe(capture);
+    expect(container.querySelector(".page-scene")?.lastElementChild).toBe(
+      capture,
+    );
   });
 
   it("never writes the brand as XionTechs", () => {

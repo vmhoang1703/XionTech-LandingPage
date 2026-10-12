@@ -11,13 +11,13 @@ export function OpenRoles({ roles }: Readonly<{ roles: OpenRole[] }>) {
   return (
     <section id="roles" className="sec" aria-labelledby="roles-h">
       <div className="wrap">
-        <div className="sec-head">
+        <div className="sec-head" data-reveal="">
           <h2 id="roles-h">{heading}</h2>
         </div>
         {roles.length === 0 ? (
           <p className="roles-empty">{emptyText}</p>
         ) : (
-          <div className="roles">
+          <div className="roles" data-reveal="">
             {roles.map((role) => {
               const meta = roleMeta(role);
               return (

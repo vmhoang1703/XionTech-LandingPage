@@ -1448,6 +1448,130 @@ Template:
   - The first port left the static "here" ring visible under reduced motion; the prototype hides it.
   - The job page's own 404 smoke test still expected the old copy, which the similar-check caught before the PR.
 
+## 2026-10-10 — UI/UX enhancement stage starts: Impeccable, font speed, the hero's story
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` skill (`audit`, `init`, `optimize`, `animate`)
+- **Prompt (short):** "I want silk animation should be related to XT ... feel free to reach out to clarify." Then, over about ten rounds of feedback (in Vietnamese): the gold lines must gradually form XT; follow the logo without text; show the globe and the four offices; everything must mean something; "make it so anyone understands at once"; no captions, visualise it instead.
+- **What the AI did:**
+  - Installed the Impeccable skill for the team (#90), wrote `PRODUCT.md` from a three-question interview (#91).
+  - Measured Home before optimising: trimmed font preloads (#92, #93), Home LCP about 4.9 s -> 4.0 s on a local build.
+  - Rebuilt the Home hero as a two-column layout with a stage on the right, and a story drawn in points of light on a 2D canvas over the silk (`globe-mark.ts`): (1) follow the sun: a globe with real day and night shows both head offices; as Plano's day ends a torch flies to Ho Chi Minh City, which wakes with Da Nang and Ha Noi; (2) climb together: the globe sets below a horizon, the light climbs both slopes of the mountain (the name's inspiration, as on the About page) and the amber check-mark is ticked off from the summit: the X; (3) the logos of the stacks the team builds with stack up into the T. Three progress dots under the stage jump between scenes; the scene leans slightly towards a mouse.
+  - Land mask (Natural Earth via world-atlas) and 13 tech logos (Simple Icons, CC0) are generated data in `hero-data.ts`.
+- **Decision / result:** Every scene had to read without words, so each meaning became a familiar picture (sunset handover, a climb to a summit, a tick, a stack). On load the silk runs alone, then sparks gather into XT. Reduced motion and a saved Pause rest on the finished mark. Phones keep the silk only (no stage) until after Demo day. 60 fps on this laptop, 52 fps with the CPU slowed 4x; Lighthouse mobile unchanged within noise (64-77).
+- **AI got it wrong?** Yes, many times, and the lead said so:
+  - The audit blamed the Products blob animation; measuring showed it was GPU-composited and cheap.
+  - Deferring the silk's WebGL start to idle made blocking time worse (about 540 -> 830 ms) and was reverted.
+  - Five XT concepts were rejected before the story landed: silk folding into plastic-looking letters, contour lines, ribbons, dust -> mountain -> tech icons, and a captioned version ("adding captions shows the visual is hard to read").
+  - The AI guessed "silk lines" meant thin threads twice before asking; one direct question would have saved two rounds.
+  - It first labelled Da Nang and Ha Noi as offices although the site lists two; the lead confirmed four real locations, Ho Chi Minh City and Plano being the head offices.
+  - A negative pulse radius threw inside the frame loop and froze the animation; the scene-jump time landed a hair before its scene; the progress dots came before the copy in Tab order. All caught and fixed before the PR.
+
+## 2026-10-10 — One scroll reveal for every page
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable animate`
+- **Prompt (short):** "Enhance animation on homepage across all sections for smoothly when user scroll the page", then mid-build: "apply for all page".
+- **What the AI did:**
+  - Wrote the brief with the lead first: one shared motion style, reuse the reveals we already have, CSS and IntersectionObserver only, `transform`/`opacity` only, a reduced-motion path, content visible without JavaScript, the hero globe untouched.
+  - Built one small client script, `ScrollReveal`, in the root layout. It runs again after each navigation. The direct children of any `[data-reveal]` group rise 18px and fade in over 0.7 s with the brand curve, the same as the existing 4-D flow steps. Items that come into view together start 70 ms apart, with a cap of 280 ms.
+  - Marked groups on Home, About, Services, Products, Careers and the footer. News filters, the 4-D flow, the flip cards' own flip and the long-read pages keep their own behaviour.
+- **Decision / result:** Only items the script marks "wait" (below the screen at load) are hidden, so server HTML, items already on screen and items added later (a filtered list) always show. A browser walk of 8 pages, at 1440px and 390px, plus a Home -> About link: every item ends visible and layout shift is 0. Reduced motion and no JavaScript hide nothing. It uses `translate`, not `transform`, so card hover lifts still work.
+- **AI got it wrong?** Yes:
+  - The first version hid every child of an armed group. Adding the News filter's new cards to such a group would have left them invisible; the "apply to all pages" request exposed it, and the script now hides only what it marked.
+  - The project's no-JS guard test flagged the two new hiding rules; they are allow-listed with the reason, because both apply only after the script runs.
+
+## 2026-10-11 — Home: brainstorm with the lead, then count-up and card effects (PR 1 of 3)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable critique`, then `/impeccable animate` rules
+- **Prompt (short):** "I want to continue the UI/UX/animation and content at Home page", then "you should still work with me to improve homepage to collect my idea and brainstorm with me". Andy's ideas (in Vietnamese): count up only the meaningful numbers, hover and click motion on cards, more and better-linked content from the other pages, one background that changes as you scroll.
+- **What the AI did:**
+  - Ran a critique of Home first (detector 0 findings; score 22/32), then switched to brainstorming when Andy asked for it: three questions, his answers, options for each idea, and a written plan (`_bmad-output/implementation-artifacts/plan-home-enhance.md`) in three PRs.
+  - PR 1: the 25+ and 20+ figures count up. CSS animates a registered `<integer>` (`@property --count`) and a counter draws it over the real number, so the number is in the HTML, the width never changes and a figure on screen at load counts with no script. A small script holds figures below the screen at 0 and plays them in view.
+  - Doors and Capabilities link cards press in; the doors get a soft amber light under the mouse (`data-glow`, one page-wide listener); hovering a 4-D step draws the amber track back to that step's centre (an exact `calc()` from the grid); office chips show a sun or a moon from the real local hour.
+- **Decision / result:** Browser check at 1440px and 390px: the count runs 0 to 25 and 0 to 20, the 4-D track stops on the step centre to the pixel, layout shift 0. Reduced motion, a saved Pause and no JavaScript all show the plain number. Services and About have no number band since E-S2 and E-S3, so the count is on Home only.
+- **AI got it wrong?** Yes:
+  - The first answer to "what next" was a menu of fixes from the critique; Andy wanted to brainstorm his own ideas first. Saved as a working rule for design sessions.
+  - The count first used the brand curve, which jumped to 22 almost at once; it now uses a softer ease-out over 1.6 s.
+  - Right-aligned digits moved their start as the number grew, which Chrome reported as a tiny layout shift (0.0002). The count is now drawn from the number's start, and the shift is 0.
+  - The AI ran `git stash` to compare with `develop`, though a comparison needed a new build anyway; it restored the changes at once.
+  - Its own inline review found that the count read only the first observer entry; after a fast scroll the first entry can be out of date and leave the figure at 0. It now reads the latest one, with a test.
+
+## 2026-10-11 — Home tells one story: outcomes, apps, answers (PR 2 of 3)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "I will let you enhance for the content and try to make them in pieces and ensure to engage to the client/customers", then "keep values with one short line, go".
+- **What the AI did:**
+  - New order on one light surface: What can we help you achieve? (the four Services outcomes, "Start a project" to the contact form), One connected school. (each app with who it is for and two real features, one link per app), Why XionTech. (Capabilities without the two cards that repeated the hero doors), How we work., Our core values., Your questions, answered. (four About answers), then News and Contact.
+  - Values became flip cards: the front shows the title and one short line, written from the full value; the back shows the full value. It reuses the Careers flip card through a new shared `FlipToggle`.
+  - The About FAQ markup moved into a shared `FaqList`; FAQ items got ids, so Home picks four by id. Styles for the removed cards and the old values grid were deleted.
+- **Decision / result:** Every new line comes from Services, Products or About; AI Tutor's tagline is still a placeholder, so the app cards show "Made for" and features instead. A browser check at 1440px, 900px and 390px: the nine sections are in order, nothing is hidden, no horizontal scroll, no flip card cuts its text at 8 widths, layout shift 0. Without JavaScript every value's short line, the four answers and the four apps show.
+- **AI got it wrong?** Yes:
+  - The plan said the full value text "stays on About", but About has had no values since E-S3, so one short line alone would have deleted the values from the site. The AI found it while building, kept the lead's one short line on the front and moved the full text to the back of each card.
+  - The first value cards left a large empty gap between the icon and the title; the front now reads top down and the cards are shorter on wide screens.
+
+## 2026-10-11 — Home: one background that changes tone as you scroll (PR 3 of 3)
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** Andy's idea: "cover the whole homepage with one background colour to look more modern ... animation at the background when scrolling"; he chose option C (the colour changes section by section), then "go".
+- **What the AI did:**
+  - `HomeScene` wraps everything below the hero. A decorative layer, sticky and one screen tall but taking no space, shows the tone of the part of the story at the middle of the screen: paper, then blue at Why XionTech., then mist at the values. Tones fade in 0.8 s; two soft brand glows drift up with the page scroll (CSS scroll-driven animation where supported). Contact keeps its warm surface, its top made see-through so the scene flows into it.
+  - Chose the colours by contrast first: the bluer `ice` token would drop the amber step numbers to 4.15:1, so the blue stage uses `door-tint` (4.56:1).
+  - Off under reduced motion, a saved Pause and with no JavaScript: the sections keep their own still backgrounds, as before.
+- **Decision / result:** Browser check at 1440px and 390px: tones in order, layout shift 0, no sideways scroll, page height unchanged (7,151px desktop, 13,683px phone), the footer ridge on Contact's amber, no line where News meets Contact.
+- **AI got it wrong?** Yes, four times, all caught in the browser before the PR:
+  - A scene-wide warm tone at Contact was pinned to the screen, so its amber end never reached the footer ridge, which sat on pale cream.
+  - Moving Contact out of the scene fixed that but left a visible line where the scene met Contact's opaque top. Contact's first gradient stop now turns see-through instead.
+  - The shared "room above the footer" rule (`main > :last-child`) moved onto the new scene wrapper, leaving 245px of see-through space under Contact. The rule now targets the last section inside the scene.
+  - The build spec was written after the first code, not before, as the Definition of Done asks.
+  - The a11y suite then caught two test issues: axe ran while the 4-D steps were mid-fade (4.22:1 at 91% opacity), so axe now checks every page at rest (reduced motion); and the ridge test measured the scene wrapper, so it now uses the same selector as the CSS rule.
+
+## 2026-10-11 — The lead rejects the tone version; previews lead to a colour field and a navy moment
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "I dont like this version. It does not match to my ideas and at overall, it is not enough to say wow", then "yes, make screenshots of 1 and 2", "what you prefer ... for our website?" and "Go with Option 2 + one navy moment in How we work".
+- **What the AI did:**
+  - Named its own mistake: the lead had asked for one background colour over the whole page with motion you can see; the AI had built three pale tones that barely change.
+  - Built previews on the real page before any code: CSS injected in the browser, five screenshots and a scroll video per option (navy all the way; one light colour with a moving colour field), shown side by side.
+  - Recommended option 2 for the whole website (every other page is light below its navy hero; schools trust light pages; AGENTS.md says enhance Amber's design, not replace it; projectors wash out dark pages; less risk before Demo day), and the lead added one navy moment.
+  - Rebuilt PR 3: a CSS-only colour field (three soft blobs that float and travel with the scroll) on one light colour, and "How we work" as a rounded navy panel with a moving amber light.
+- **Decision / result:** Browser check at 1440px and 390px: layout shift 0, no sideways scroll, page height unchanged. Muted text is 4.64:1 or more on the field; small amber text sits on navy or on cards.
+- **AI got it wrong?** Yes:
+  - It picked the safest reading of "option C" from a one-line description, and the lead rejected the result. Saved as a working rule: show a quick visual of a design direction before building it.
+  - The first previews showed no colour at all: the page's `body` background covered the layer, and React removed an extra node added to `body` before hydration. Both were fixed before the lead saw them.
+  - Painting blue over amber put muted text at 4.38:1 where they overlap; amber is now painted over blue (4.82:1).
+
+## 2026-10-12 — The Home background on every main page
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "I also wnat to apply home tones for other pages at which are needed to applied to make website consistent", then "go" after a preview.
+- **What the AI did:**
+  - Showed a preview first, as the lead asked after PR #98: the real build with the scene added in the browser, now-and-new screenshots and a scroll video for Services, About, Careers, Products and News.
+  - Proposed which pages: the five main pages get the field below their own hero; reading pages (one news story, one job, Privacy, the Demo form) stay still, because moving colour behind long text is harder to read.
+  - Moved `HomeScene` to a shared `PageScene` (`sections/page-scene.tsx`, class `page-scene`), with a `fade` option for News, whose heading sits inside the scene. Light surfaces inside the scene turn see-through; navy ones stay.
+  - Added a warm end to the scene: amber light behind the footer ridge on every page, like Home's Contact and the old Careers ending. Lowest text contrast on it is 4.96:1 (muted text on amber-light).
+  - Removed the per-page gradients it replaces (`.svc-flow`, the Services panel, `.careers-flow`, `.news-flow`); each light hero now ends in the page colour.
+- **Decision / result:** Browser check at 1440px and 390px on Home and the five pages: layout shift 0, no sideways scroll, no hidden reveals, Home height unchanged (7,151px). The lead did not answer the navy question, so About, Careers and News stay light.
+- **AI got it wrong?** Yes, in the preview, before the lead saw it: the scene's fade-in covered the News heading (it sits inside the scene), and the field dropped the warm amber ending that Careers had. Both were fixed in the preview and in the build. The build spec was written after the code; the preview stood in for it.
+
+## 2026-10-12 — The AI reviews its own page backgrounds and makes them stronger
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable` rules
+- **Prompt (short):** "Can you review by yourself and give me the feeling?", then "continue to review and enhance the design which you feel not good".
+- **What the AI did:**
+  - Gave an honest review of its own PR #99: consistent but calm, not "wow"; the colour too faint; page ends not matching (Products navy, others warm); an empty amber band above the footer; Services flatter without its panel; heroes all different.
+  - Computed the contrast budget before changing colour: amber can reach 90–100% and stay above 4.9:1 for muted text, blue only about 50%, so amber carries the strength. Lowest now 4.73:1.
+  - Made the field stronger and made it sweep side to side as you scroll; added a sun that rises behind the footer ridge's peak on every page, tying the ending to the mountain story on About; turned the Products navy band into an inset panel so it ends warm too; brought back the Services panel, see-through.
+  - Left the heroes alone: a shared hero system would replace Amber's designs, so it is a question for the lead.
+- **Decision / result:** Browser check at 1440px and 390px on six pages: layout shift 0 (one run showed 0.0038 on About at 390px; a re-run gave 0), no sideways scroll, Home height unchanged. Smoke and a11y 56/56, axe included.
+- **AI got it wrong?** Yes, caught in screenshots before the lead saw them: the first sun was drawn in front of the ridge, not behind it (an absolutely positioned box paints over a non-positioned SVG; the SVG is now positioned), and it then sat too low, so only a thin edge showed above the peak.
+
+## 2026-10-12 — The page colours made softer
+
+- **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5)
+- **Prompt (short):** "we need to make color more weak than current. The cussrent I see it is strong."
+- **What the AI did:** Showed three strengths side by side on the real build before changing code (now, about 60%, about 35%), at the same spots on Home and Services. Asked separately about the yellow end above the footer, because on Home it is the prototype's own Contact colour.
+- **Decision / result:** The lead chose the softest (amber 32%, warm 24%, blue 18%) and kept the yellow end and the sun. Text contrast on the field rises from 4.73:1 to 5.32:1 at the lowest point.
+- **AI got it wrong?** Yes: in round 2 it made the field much stronger on its own judgement ("too faint"), and the lead found it too strong after the merge. The colour strength is the lead's call; show it first.
+
 ## 2026-10-10 — Products page as an audience flow through a 3D campus
 
 - **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Opus 5.5), `/bmad-build` dispatch route with `ui-ux-pro-max` and the three.js reference skills
