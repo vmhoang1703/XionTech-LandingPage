@@ -113,28 +113,11 @@ export const productDetails: Record<AppId, ProductDetail> = {
   },
 };
 
-// The journey map: the XionTech hub and one place per app, in tab order.
-// Names, taglines, badges and anchors come from apps.ts.
-const place = (id: AppId) => {
-  const { shortName, tagline, badge, anchor } = appById(id);
-  return { id, name: shortName, tagline, badge, anchor };
-};
-
 export const journeyMap = {
   intro: {
     title: "Built apart. Better together.",
     lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
   },
-  hub: "XionTech",
-  places: [
-    place("parent-hub"),
-    place("staff-hub"),
-    place("ai-tutor"),
-    place("iot"),
-  ],
-  openLabel: productsShowcase.openLabel,
-  listHeading: "Our apps",
-  motion: { pause: "Pause motion", play: "Play motion" },
 } as const;
 
 // The school-day roadmap: one student's day from arrival to the end of the
@@ -154,16 +137,6 @@ export const dayRoad = {
   lede: "Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step.",
   start: "Start",
   finish: "Finish",
-  // Tour controls over the 3D road.
-  tour: {
-    begin: "Start the day",
-    overview: "The whole day",
-    explore: "Explore this step",
-    previous: "Previous step",
-    next: "Next step",
-    controls: "Tour of the school day",
-    step: (n: number, total: number) => `Step ${n} of ${total}`,
-  },
   stops: [
     {
       id: "arrive",
@@ -213,7 +186,6 @@ export type LaneId = "student" | "staff" | "parent" | "campus";
 
 export const journeyBoard = {
   hint: "Select a step to see the app behind it.",
-  timeLabel: "Time",
   everyone: "Everyone",
   details: "Details",
   lanes: [
