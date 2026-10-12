@@ -5,16 +5,27 @@ import {
   FlagCheckeredIcon,
   FlagIcon,
 } from "@phosphor-icons/react";
-import { useState, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { APPS, appById } from "@/content/apps";
 import { dayRoad, journeyBoard, type RoadStop } from "@/content/products";
 import { MapBadge } from "../map/map-badge";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
 
 // The school day as a 2D roadmap: a winding road from Start to Finish with a
-// pin per stop and the stop's card beside it. Static: no motion. Wide
-// screens draw one road across the section with the cards above and below
-// its bends; narrow screens wind the road down the left of the cards.
+// pin per stop and the stop's card beside it. Wide screens draw one road
+// across the section with the cards above and below its bends; narrow
+// screens wind the road down the left of the cards.
+//
+// The draw-in follows FlowReveal: server HTML and reduced motion stay
+// "static" (fully drawn); a roadmap already 30% in view at load goes straight
+// to "on"; otherwise it is "armed" (dimmed, road masked) until 30% visible,
+// then "on", once. The road draws at a steady pace, so each stop's delay is
+// the road's duration times its share of the route.
+
+type Phase = "static" | "armed" | "on";
+
+const REVEAL_AT = 0.3;
+const ROAD_SECONDS = 1.6;
 
 const STOPS = dayRoad.stops;
 const LAST = STOPS.length - 1;
@@ -43,6 +54,12 @@ function roadPath() {
 }
 
 const ROAD = roadPath();
+
+// When the drawing road reaches a stop, in seconds.
+function delayOf(index: number) {
+  const share = (POINTS[index].x - START.x) / (FINISH.x - START.x);
+  return `${Math.round(ROAD_SECONDS * share * 1000) / 1000}s`;
+}
 
 // Trees in the open ground between the cards.
 const TREES = [
@@ -74,15 +91,59 @@ function who(stop: RoadStop) {
 
 export function RoadMap() {
   const [open, setOpen] = useState<number | null>(null);
+  const [phase, setPhase] = useState<Phase>("static");
+  const ref = useRef<HTMLDivElement>(null);
+  const mask = useId();
+
+  useEffect(() => {
+    const map = ref.current;
+    if (!map || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Already 30% on screen at load: show it as is (no hide, no replay).
+    const { top, bottom, height } = map.getBoundingClientRect();
+    const seen = Math.min(bottom, window.innerHeight) - Math.max(top, 0);
+    if (height > 0 && seen >= REVEAL_AT * height) {
+      setPhase("on");
+      return;
+    }
+    setPhase("armed");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        setPhase("on");
+        observer.disconnect();
+      },
+      { threshold: REVEAL_AT },
+    );
+    observer.observe(map);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="rm">
+    <div
+      ref={ref}
+      className="rm"
+      data-reveal={phase}
+      style={{ "--road": `${ROAD_SECONDS}s` } as CSSProperties}
+    >
       <svg
         className="rm-road"
         viewBox={`0 0 ${W} ${H}`}
         aria-hidden="true"
         focusable="false"
       >
+        <defs>
+          {/* Draws the road: a white stroke along it, revealed by dashoffset. */}
+          <mask
+            id={mask}
+            maskUnits="userSpaceOnUse"
+            x="0"
+            y="0"
+            width={W}
+            height={H}
+          >
+            <path className="rm-draw" d={ROAD} pathLength="1" />
+          </mask>
+        </defs>
         <ellipse className="rm-hill" cx="260" cy="760" rx="420" ry="150" />
         <ellipse className="rm-hill" cx="1080" cy="110" rx="460" ry="150" />
         <ellipse
@@ -102,9 +163,11 @@ export function RoadMap() {
             <circle r="18" />
           </g>
         ))}
-        <path className="rm-edge" d={ROAD} />
-        <path className="rm-asphalt" d={ROAD} />
-        <path className="rm-line" d={ROAD} />
+        <g mask={`url(#${mask})`}>
+          <path className="rm-edge" d={ROAD} />
+          <path className="rm-asphalt" d={ROAD} />
+          <path className="rm-line" d={ROAD} />
+        </g>
       </svg>
 
       <p className="rm-end rm-end-start">
@@ -149,6 +212,7 @@ function RoadCard({
   const place = {
     "--x": `${(point.x / W) * 100}%`,
     "--y": `${(point.y / H) * 100}%`,
+    "--delay": delayOf(index),
   } as CSSProperties;
   return (
     <li

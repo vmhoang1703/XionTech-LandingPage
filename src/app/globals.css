@@ -3394,7 +3394,8 @@
   /* Products roadmap (2D) */
   /* The school day as a winding road. Narrow screens: the road bends down the
      left of the cards, one bend per stop. From 1100px: one road across the
-     section, cards above and below its bends. Static: no motion. */
+     section, cards above and below its bends. Draw-in on first view (see
+     "Roadmap draw-in" below); static without JavaScript. */
   .rm-head {
     max-width: 62ch;
     margin-top: 64px;
@@ -3771,6 +3772,68 @@
 
     .rm-text {
       font-size: 0.85rem;
+    }
+  }
+
+  /* Roadmap draw-in. The road draws Start to Finish through a mask, each
+     pin pops in as the road reaches it (--delay) and its card follows. Only
+     "armed" dims and masks; only "on" moves. "static" (no JavaScript,
+     reduced motion) leaves everything as drawn above. */
+  .rm-draw {
+    fill: none;
+    stroke: var(--color-white);
+    stroke-width: 80;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+
+  .rm[data-reveal="armed"] .rm-draw {
+    stroke-dashoffset: 1;
+  }
+
+  .rm[data-reveal="armed"] .rm-pin {
+    opacity: 0.35;
+    scale: 0.6;
+  }
+
+  .rm[data-reveal="armed"] .rm-card {
+    opacity: 0.35;
+    transform: translateY(16px);
+  }
+
+  .rm[data-reveal="armed"] .rm-stop[data-side="below"] .rm-card {
+    transform: translateY(-16px);
+  }
+
+  .rm[data-reveal="on"] .rm-draw {
+    transition: stroke-dashoffset var(--road) linear;
+  }
+
+  .rm[data-reveal="on"] .rm-pin {
+    transition:
+      opacity var(--transition-duration-menu) var(--ease-brand),
+      scale var(--transition-duration-menu) var(--ease-brand);
+    transition-delay: var(--delay);
+  }
+
+  .rm[data-reveal="on"] .rm-card {
+    transition:
+      opacity 400ms var(--ease-brand),
+      transform 400ms var(--ease-brand);
+    transition-delay: calc(var(--delay) + 120ms);
+  }
+
+  /* Narrow: each bend draws top to bottom, reaching its pin at --delay. The
+     clip reaches past the box so the stroke ends are not cut. */
+  @media (width < 1100px) {
+    .rm[data-reveal="armed"] .rm-seg {
+      clip-path: inset(-20px -40px calc(100% + 20px) -40px);
+    }
+
+    .rm[data-reveal="on"] .rm-seg {
+      clip-path: inset(-20px -40px);
+      transition: clip-path 300ms linear;
+      transition-delay: calc(var(--delay) - 150ms);
     }
   }
 
