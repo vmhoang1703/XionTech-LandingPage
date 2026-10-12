@@ -30,7 +30,7 @@ afterEach(() => {
 vi.mock("@/components/news/home-news", () => ({
   HomeNews: () => (
     <section className="sec surface-mist" aria-labelledby="news-h">
-      <h2 id="news-h">Latest from XionTechs.</h2>
+      <h2 id="news-h">Latest from XionTech.</h2>
     </section>
   ),
 }));
@@ -52,7 +52,7 @@ function sectionNames(container: HTMLElement) {
 describe("Home page", () => {
   it("sets the page title", () => {
     expect(metadata.title).toBe(
-      "XionTechs | School Platforms & Software Outsourcing in Vietnam",
+      "XionTech | School Platforms & Software Outsourcing in Vietnam",
     );
   });
 
@@ -79,11 +79,11 @@ describe("Home page", () => {
       "Build smarter. Ship faster. Get IT done.",
       "What can we help you achieve?",
       "One connected school.",
-      "Why XionTechs.",
+      "Why XionTech.",
       "How we work.",
       "Our core values.",
       "Your questions, answered.",
-      "Latest from XionTechs.",
+      "Latest from XionTech.",
       "Have something you want to build?",
     ]);
   });
@@ -97,14 +97,14 @@ describe("Home page", () => {
     expect(flow).not.toBeNull();
     for (const name of [
       "One connected school.",
-      "Why XionTechs.",
+      "Why XionTech.",
       "How we work.",
       "Our core values.",
       "Your questions, answered.",
     ]) {
       expect(flow?.contains(screen.getByRole("region", { name }))).toBe(true);
     }
-    const news = screen.getByRole("region", { name: "Latest from XionTechs." });
+    const news = screen.getByRole("region", { name: "Latest from XionTech." });
     expect(flow?.contains(news)).toBe(false);
     expect(news.className).toContain("surface-mist");
   });

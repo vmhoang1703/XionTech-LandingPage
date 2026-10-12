@@ -184,7 +184,7 @@ describe("generateMetadata", () => {
   it("gives each story its own title and the excerpt as description", async () => {
     vi.mocked(getPost).mockResolvedValue(story);
     await expect(generateMetadata(props("pxp-day"))).resolves.toEqual({
-      title: "Parent Hub: the school day | XionTechs",
+      title: "Parent Hub: the school day | XionTech",
       description: "Alerts and payments in one app.",
     });
   });

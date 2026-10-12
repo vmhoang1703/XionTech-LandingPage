@@ -1,6 +1,6 @@
 import { careersInside } from "@/content/careers";
 
-// Server Component. Inside XionTechs: five text tiles, no links (E-A7 CAP-2).
+// Server Component. Inside XionTech: five text tiles, no links (E-A7 CAP-2).
 // Navy tiles use the base `.ins-card` look; the others add their tone.
 export function Inside() {
   const { heading, lede, tiles } = careersInside;
