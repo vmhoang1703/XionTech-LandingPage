@@ -13,3 +13,11 @@ Task 2: review — pass — 0 critical, 0 important, 2 minor
 Task 2: minor — road-map.test.tsx:108 duplicate anchor sources; :113-115 undefined === undefined loophole
 Task 2: minor — wide #pxp/#iot may land with the card under the header until task 3's sentinel (task 3 must check)
 Task 2: complete (commits f037f19..568c8aa, diff verified)
+Task 3: dispatched (model opus, base 37ced04, report C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/s3-report.md)
+Task 3: fix round 1/5 (hash not decoded; text floor 11.5px under zoom; road transition after two frames; CSS.supports fallback to static; title comment; scrollIntoView stub restored)
+Task 3: red — npx vitest run src/components/products/journey/road-map.test.tsx — 10 failed (tour missing)
+Task 3: green — vitest set 255 passed; test:smoke 15; e2e products 10; a11y 51 after the focus/target fix (6b138f0)
+Task 3: review — fail — 0 critical, 2 important (URIError on stray % in hash; zoomed text below 11.5px floor), 5 minor
+Task 3: review — pass — re-review of 476d488: 5 of 5 closed; vitest 221, e2e products+a11y 51
+Task 3: minor — deep links scroll smoothly through stops (accepted; UX row timing set to smooth); cards look bulkier on short windows due to the text floor
+Task 3: complete (commits 37ced04..476d488, diff verified)

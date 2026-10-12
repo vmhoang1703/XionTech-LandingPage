@@ -72,7 +72,7 @@ context:
   - red: `src/app/products/page.test.tsx` -- sections are `#map` then the navy capture band, with no `#apps` and no `dialog.pdetail`; `road-stop-dialog.test.tsx` -- no "Open … details" button.
 - [x] Anchors on the roadmap -- in `road-map.tsx`, each app stop carries its anchor (`pxp`, `sxp`, `ai-tutor`, `iot`) on a scroll target. On wide screens with the tour, that is a per-stop sentinel in the scroll track; otherwise it is the stop itself. Each has a `scroll-margin-top` that clears the header.
   - red: `road-map.test.tsx` -- each footer anchor exists exactly once inside `#map` and belongs to the stop of that app.
-- [ ] Scroll tour (wide) -- replaces the timed draw-in on wide screens:
+- [x] Scroll tour (wide) -- replaces the timed draw-in on wide screens:
   - `data-tour="on"` is set by JS only, and not under reduced motion;
   - a scroll track of six steps, with the stage sticky under the header and scaled to fit the viewport;
   - the active stop comes from scroll position (each step's share), sets the selected stop, draws the road to that stop's share (`.rm-draw` dashoffset), and emphasises its card;
@@ -103,7 +103,7 @@ context:
 | Back | Scroll up | Same | Active stop and road step back | Same | Spec |  |
 | Exit | Past stop 6 | Same | Roadmap releases; the demo band follows | Native | Sammy 2026-10-12 |  |
 | Fit | 1280×800, 1440×900, 1920×1080 | — | Whole stage inside the viewport below the header; no sideways scroll | Static | Spec |  |
-| Deep link | `/products#sxp`, `#ai-tutor` | Link | That stop active; its card fully visible below the header | Instant | Footer links |  |
+| Deep link | `/products#sxp`, `#ai-tutor` | Link | That stop active; its card fully visible below the header | Smooth native scroll; stops pass by on the way | Footer links |  |
 | Card | Click mid-tour | Mouse, keyboard, touch | The modal opens; that stop is selected; Esc returns focus | Instant | `road-stop-dialog.tsx` |  |
 | Modal | Last stop and app stops | Mouse, keyboard | No "Open … details" button; the app chips are not links | Instant | Sammy 2026-10-12 |  |
 | Reduced motion | Load with reduced motion | — | Static, complete roadmap; no pinning; no selected pin | Static | DESIGN.md:451 |  |
