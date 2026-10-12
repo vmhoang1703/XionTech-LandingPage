@@ -3361,15 +3361,10 @@
     font-size: 0.7rem;
   }
 
-  /* Products flow */
-  /* The audience flow: intro, chapters and the sticky campus. Chapters dim
-     only once JavaScript sets data-active; without it they all read fully. */
-  .flow-intro {
-    max-width: 52rem;
-    margin-bottom: 48px;
-  }
-
-  .flow-intro h1 {
+  /* Products map */
+  /* The journey map: an isometric three.js scene with one button per app laid
+     over its island. The still SVG map shows until WebGL is ready. */
+  .map-sec h1 {
     margin: 0;
     color: var(--color-navy);
     font-size: clamp(2.2rem, 4.4vw, 3.6rem);
@@ -3379,193 +3374,214 @@
     text-wrap: balance;
   }
 
-  .flow-intro .lede {
+  .map-sec .lede {
+    max-width: 60ch;
     margin-top: 24px;
   }
 
-  .flow-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-  }
-
-  /* Below 1024px the campus sticks to the top and the chapters pass under. */
-  .flow-stage {
-    position: sticky;
-    top: var(--spacing-header-height);
-    z-index: 1;
-    height: 40dvh;
-    background: var(--color-paper);
-  }
-
-  .flow-chapters {
-    display: grid;
-    gap: 48px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .flow-chapter {
+  .map-stage {
     position: relative;
-    padding-left: 20px;
-    border-left: 2px solid
-      color-mix(in srgb, var(--color-navy) 15%, transparent);
-    color: var(--color-text);
-    transition:
-      opacity 0.4s var(--ease-brand),
-      border-color 0.4s var(--ease-brand);
-  }
-
-  .flow-chapter[data-active="true"] {
-    border-left-color: var(--color-navy);
-  }
-
-  /* The chapter dot on the rule: an outline, filled for the active chapter. */
-  .flow-chapter::before {
-    content: "";
-    position: absolute;
-    top: 0.5em;
-    left: -7px;
-    width: 12px;
-    height: 12px;
-    border: 2px solid var(--color-navy);
-    border-radius: var(--radius-full);
-    background: var(--color-paper);
-    transition: background-color 0.4s var(--ease-brand);
-  }
-
-  .flow-chapter[data-active="true"]::before {
-    background: var(--color-navy);
-  }
-
-  .flow-chapter[data-active="false"] {
-    opacity: 0.8;
-  }
-
-  /* Paused by the visitor: the chapters read as a plain list. */
-  .flow-body:has(.flow-canvas[data-paused="true"])
-    .flow-chapter[data-active="false"] {
-    opacity: 1;
-  }
-
-  .flow-chapter h2 {
-    margin: 0;
-  }
-
-  .flow-chapter > p {
-    margin-top: 8px;
-  }
-
-  .flow-app {
-    color: var(--color-navy);
-    font-weight: 500;
-  }
-
-  .flow-steps {
-    display: grid;
-    gap: 16px;
-    margin: 24px 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .flow-steps h3 {
-    margin: 0;
-    font-size: var(--text-body-lg);
-  }
-
-  .flow-steps p {
-    margin-top: 4px;
-  }
-
-  .flow-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 24px;
-    color: var(--color-navy);
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
-  /* The campus fills the sticky stage. The still SVG stands in until WebGL is
-     ready, and for good without it; the canvas keeps [hidden] until then. */
-  .flow-canvas {
-    position: relative;
-    height: 100%;
-    overflow: hidden;
+    margin-top: 32px;
+    aspect-ratio: 3 / 2;
     border-radius: var(--radius-lg);
-    background: var(--color-ice);
+    background: linear-gradient(180deg, var(--color-ice), var(--color-mist));
+    overflow: hidden;
   }
 
-  .flow-scene,
-  .flow-fallback {
+  .map-scene,
+  .map-still {
     display: block;
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
   }
 
-  /* Solid navy so it reads on every sky colour; the global ring shows on focus. */
-  .flow-toggle {
+  .map-road {
+    stroke: var(--color-navy);
+    stroke-width: 3;
+    stroke-dasharray: 8 8;
+  }
+
+  .map-island {
+    fill: var(--color-white);
+    stroke: var(--color-navy);
+    stroke-width: 3;
+  }
+
+  .map-hub {
+    fill: var(--color-navy);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    text-anchor: middle;
+  }
+
+  .map-places {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    pointer-events: none;
+  }
+
+  /* Each card sits just above its island's anchor point. */
+  .map-place {
+    position: absolute;
+    width: max-content;
+    max-width: 200px;
+    transform: translate(-50%, calc(-100% - 8px));
+    padding: 8px 12px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    box-shadow: 0 6px 18px rgb(22 54 99 / 0.12);
+    pointer-events: auto;
+    transition:
+      transform 200ms var(--ease-brand),
+      box-shadow 200ms var(--ease-brand);
+  }
+
+  .map-place:hover,
+  .map-place:focus-within {
+    transform: translate(-50%, calc(-100% - 14px));
+    box-shadow: 0 10px 24px rgb(22 54 99 / 0.18);
+  }
+
+  /* The whole card is the button's hit area. */
+  .map-pin {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    border: 0;
+    background: none;
+    padding: 0;
+    color: var(--color-navy);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .map-pin::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .map-badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 28px;
+    height: 28px;
+    padding-inline: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .map-tagline {
+    margin: 2px 0 0;
+    color: var(--color-text);
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .map-toggle {
     position: absolute;
     top: 12px;
     right: 12px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     min-height: 36px;
     padding-inline: 12px;
+    border: 0;
     border-radius: var(--radius-full);
     background: var(--color-navy);
     color: var(--color-white);
-    font-size: var(--text-body-sm);
-    font-weight: 500;
-    transition: background-color 0.3s var(--ease-brand);
+    font-weight: 600;
+    font-size: 0.85rem;
   }
 
-  .flow-toggle:hover {
-    background: var(--color-navy-2);
+  .map-toggle svg {
+    width: 14px;
+    height: 14px;
   }
 
-  .flow-toggle svg {
-    width: 16px;
-    height: 16px;
+  .map-list {
+    margin-top: 24px;
   }
 
-  @media (width >= 1024px) {
-    .flow-body {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 64px;
-      align-items: start;
+  .map-list-h {
+    margin: 0 0 12px;
+    font-size: 1rem;
+  }
+
+  .map-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .map-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 6px 14px 6px 6px;
+    border: 1px solid var(--color-mist);
+    border-radius: var(--radius-full);
+    color: var(--color-navy);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .map-list a:hover {
+    border-color: var(--color-navy);
+  }
+
+  @media (max-width: 640px) {
+    .map-stage {
+      aspect-ratio: 1 / 1;
     }
 
-    /* Square, so the campus fills the view; never taller than the screen. */
-    .flow-stage {
-      grid-row: 1;
-      grid-column: 2;
-      top: calc(var(--spacing-header-height) + 32px);
-      height: auto;
-      max-height: calc(100dvh - var(--spacing-header-height) - 64px);
-      aspect-ratio: 1;
+    /* Phones: the cards keep the badge and name; the tagline stays for
+       screen readers and the app's dialog has the full story. */
+    .map-place {
+      padding: 2px 8px 2px 4px;
     }
 
-    .flow-chapters {
-      grid-row: 1;
-      grid-column: 1;
-      gap: 25dvh;
-      padding-block: 10dvh;
+    .map-pin {
+      font-size: 0.8rem;
+    }
+
+    .map-tagline {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .map-list ul {
+      flex-direction: column;
     }
   }
 
-  /* Reduced motion: the chapters read as a plain list. */
   @media (prefers-reduced-motion: reduce) {
-    .flow-chapter[data-active="false"] {
-      opacity: 1;
-    }
-
-    .flow-chapter[data-active="true"]::before {
-      background: var(--color-paper);
+    .map-place,
+    .map-place:hover,
+    .map-place:focus-within {
+      transition: none;
     }
   }
 

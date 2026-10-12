@@ -55,7 +55,7 @@ const HUB = 4.6; // side of the hub's top
 const SLAB = 1.1; // depth of an island below its top
 const TOP = 0.2; // the light top layer
 const BEVEL = 0.08;
-const ANCHOR_HEIGHT = 1; // the button's point, above the island's top
+const ANCHOR_HEIGHT = 2.8; // the button's point, above the island's props
 
 const LIFT = 0.6;
 const LIFT_MS = 200;
@@ -243,8 +243,9 @@ export function buildJourney() {
   hub.name = HUB_NAME;
   const hubProps = new Group();
   hubProps.name = "props";
-  hubProps.add(box([3.2, 0.45, 0.6], navy, [0, 0.35, 0], Math.PI / 4));
-  hubProps.add(box([3.2, 0.45, 0.6], amber, [0, 0.4, 0], -Math.PI / 4));
+  // Along the axes, so the isometric camera sees an X, not a plus.
+  hubProps.add(box([3.2, 0.45, 0.6], navy, [0, 0.35, 0], 0));
+  hubProps.add(box([3.2, 0.45, 0.6], amber, [0, 0.4, 0], Math.PI / 2));
   hubProps.add(
     mesh(new CylinderGeometry(0.5, 0.6, 0.2, 8), navy2, [0, 0.1, 0]),
   );
