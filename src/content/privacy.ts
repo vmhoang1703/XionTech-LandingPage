@@ -7,9 +7,9 @@ const RETENTION_DECIDED =
   "Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit.";
 
 export const PRIVACY = {
-  metaTitle: "Privacy Policy | XionTech",
+  metaTitle: "Privacy Policy | XionTechs",
   metaDescription:
-    "[Placeholder] How XionTech uses the personal data you share through our forms.",
+    "[Placeholder] How XionTechs uses the personal data you share through our forms.",
   breadcrumbLabel: "Breadcrumb",
   breadcrumbHome: "Home",
   breadcrumbCurrent: "Privacy policy",
@@ -24,7 +24,7 @@ export const PRIVACY = {
       id: "privacy-who",
       heading: "Who we are and how to reach us",
       paragraphs: [
-        "[Placeholder] The data controller (XionTech legal entity), its address and a contact for privacy requests.",
+        "[Placeholder] The data controller (XionTechs legal entity), its address and a contact for privacy requests.",
       ],
     },
     {

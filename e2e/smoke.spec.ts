@@ -7,7 +7,7 @@ test(
     const response = await request.get("/");
 
     expect(response.status()).toBe(200);
-    expect(await response.text()).toContain("XionTech");
+    expect(await response.text()).toContain("XionTechs");
     // E-A1: the X-mark icons come from the app/ metadata file convention.
     const html = await response.text();
     expect(html).toMatch(/<link rel="icon" href="\/icon\.png[^"]*"/);

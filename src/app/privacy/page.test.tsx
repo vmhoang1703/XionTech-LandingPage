@@ -83,7 +83,7 @@ describe("Privacy page", () => {
   });
 
   it("sets the metadata title and a placeholder description", () => {
-    expect(metadata.title).toBe("Privacy Policy | XionTech");
+    expect(metadata.title).toBe("Privacy Policy | XionTechs");
     expect(metadata.description).toMatch(/^\[Placeholder\]/);
   });
 });

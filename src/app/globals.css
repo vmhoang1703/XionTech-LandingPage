@@ -768,6 +768,14 @@
     color: var(--color-heading);
   }
 
+  /* The other two locations, named under the two headquarters (lead, 2026-10-12). */
+  .office-more {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
   .office-tag {
     display: block;
     margin-block: 2px 6px;

@@ -12,10 +12,10 @@ function reveal() {
 }
 
 describe("Capabilities", () => {
-  it("is Why XionTech., with a lede and the two cards", () => {
+  it("is Why XionTechs., with a lede and the two cards", () => {
     render(<Capabilities />);
 
-    const region = screen.getByRole("region", { name: "Why XionTech." });
+    const region = screen.getByRole("region", { name: "Why XionTechs." });
     expect(
       within(region).getByText(
         "The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI.",
@@ -26,7 +26,7 @@ describe("Capabilities", () => {
         .getAllByRole("heading", { level: 3 })
         .map((h) => h.textContent),
     ).toEqual([
-      "Two offices, one working day.",
+      "Two headquarters, one working day.",
       "Deep in education. Built to adapt.",
     ]);
   });
@@ -34,7 +34,7 @@ describe("Capabilities", () => {
   it("drops the products and services cards: the doors and app cards link there", () => {
     render(<Capabilities />);
 
-    const region = screen.getByRole("region", { name: "Why XionTech." });
+    const region = screen.getByRole("region", { name: "Why XionTechs." });
     expect(within(region).queryAllByRole("link")).toEqual([]);
     expect(region.querySelector(".badge")).toBeNull();
   });

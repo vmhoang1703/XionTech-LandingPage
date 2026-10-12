@@ -22,7 +22,7 @@ describe("About content", () => {
   });
 
   it("uses the prototype wording for FAQ questions 1, 3 and 5", () => {
-    expect(aboutFaq.items[0].question).toBe("What does XionTech do?");
+    expect(aboutFaq.items[0].question).toBe("What does XionTechs do?");
     expect(aboutFaq.items[0].answer).toContain(
       "(Parent Hub, Staff Hub and IoT Device Management)",
     );
@@ -61,10 +61,10 @@ describe("About content", () => {
   });
 
   it("has the new page title", () => {
-    expect(aboutMeta.title).toBe("About XionTech | Get IT Done");
+    expect(aboutMeta.title).toBe("About XionTechs | Get IT Done");
   });
 
-  it("says XionTech, never XionTechs", () => {
+  it("says XionTechs, never XionTech (lead, 2026-10-12)", () => {
     const everything = JSON.stringify({
       aboutMeta,
       aboutHero,
@@ -73,6 +73,7 @@ describe("About content", () => {
       aboutOffices,
       aboutCapture,
     });
-    expect(everything).not.toMatch(/XionTechs/);
+    expect(everything).toMatch(/XionTechs/);
+    expect(everything).not.toMatch(/XionTech(?!s)/);
   });
 });

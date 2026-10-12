@@ -45,7 +45,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "XionTech",
+  title: "XionTechs",
   description:
     "IT services and product engineering: AI, cloud, custom apps and low-code solutions.",
 };

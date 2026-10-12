@@ -141,6 +141,7 @@ export default function AboutPage() {
           <div className="wrap">
             <div className="sec-head">
               <h2 id="about-offices-h">{aboutOffices.title}</h2>
+              <p>{aboutOffices.more}</p>
             </div>
             <div className="offices" data-reveal="">
               {aboutOffices.offices.map((office) => (

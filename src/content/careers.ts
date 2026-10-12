@@ -1,9 +1,9 @@
 // Careers page copy. Kept out of the components so it can be translated later.
 
 export const careersMeta = {
-  title: "Careers at XionTech | Software Jobs in Ho Chi Minh City",
+  title: "Careers at XionTechs | Software Jobs in Ho Chi Minh City",
   description:
-    "Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture.",
+    "Join XionTechs in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture.",
 };
 
 export const careersHero = {
@@ -23,7 +23,7 @@ export const careersGrowth = {
 export type InsideTone = "navy" | "yellow" | "cream";
 
 export const careersInside = {
-  heading: "Inside XionTech.",
+  heading: "Inside XionTechs.",
   lede: "A look at the moments that shape life here: workshops, project starts, team days, celebrations, shared learning and the small moments in between.",
   tiles: [
     {
@@ -132,7 +132,7 @@ export const careersRoles = {
 // Q15: Life photo frames are off the page; the Sanity life-photo code and
 // this copy stay for later (deferred-work.md).
 export const careersLife = {
-  heading: "Life at XionTech.",
+  heading: "Life at XionTechs.",
   frames: [
     { slot: "team", placeholder: "[Placeholder] Team photo" },
     { slot: "office", placeholder: "[Placeholder] Office photo" },

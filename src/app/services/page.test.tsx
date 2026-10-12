@@ -30,7 +30,7 @@ afterEach(() => {
 describe("ServicesPage", () => {
   it("has the prototype title and its own description", () => {
     expect(metadata.title).toBe(
-      "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech",
+      "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs",
     );
     expect(String(metadata.description)).toContain("Ho Chi Minh City");
   });

@@ -16,9 +16,9 @@ describe("SiteHeader", () => {
 
   it("links the logo to the home page with its labels", () => {
     render(<SiteHeader />);
-    const home = screen.getByRole("link", { name: "XionTech home" });
+    const home = screen.getByRole("link", { name: "XionTechs home" });
     expect(home.getAttribute("href")).toBe("/");
-    const logo = screen.getByAltText("XionTech, Get IT Done");
+    const logo = screen.getByAltText("XionTechs, Get IT Done");
     expect(home.contains(logo)).toBe(true);
   });
 
@@ -55,7 +55,7 @@ describe("SiteHeader", () => {
   it("puts the main nav after the logo, then Book a demo, and the Menu button last", () => {
     render(<SiteHeader />);
     const header = screen.getByRole("banner");
-    const logo = screen.getByRole("link", { name: "XionTech home" });
+    const logo = screen.getByRole("link", { name: "XionTechs home" });
     const nav = screen.getAllByRole("navigation", { name: "Main" })[0];
     const menu = screen.getByRole("button", { name: "Menu" });
     const demo = screen.getByRole("link", { name: "Book a demo" });

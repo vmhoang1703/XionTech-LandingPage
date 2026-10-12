@@ -48,7 +48,8 @@ export const homeStats: { label: string; stats: Stat[] } = {
       count: true,
     },
     { value: "8", caption: "Service offerings, from idea to operation" },
-    { value: "2", caption: "Offices: Ho Chi Minh City and Plano" },
+    // Four locations, two of them headquarters (lead, 2026-10-12).
+    { value: "4", caption: "Locations: HQs in Plano and Ho Chi Minh City" },
   ],
 };
 
@@ -82,14 +83,14 @@ export const homeDoors = {
   },
 };
 
-// "Why XionTech." (was Capabilities): the products and services cards left,
+// "Why XionTechs." (was Capabilities): the products and services cards left,
 // because the two doors above already say the same (lead, 2026-10-11).
 export const homeCapabilities = {
-  title: "Why XionTech.",
+  title: "Why XionTechs.",
   lede: "The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI.",
   delivery: {
     label: "Global delivery",
-    title: "Two offices, one working day.",
+    title: "Two headquarters, one working day.",
     line: "Teams across time zones keep delivery moving with practical overlap.",
   },
   industries: {
