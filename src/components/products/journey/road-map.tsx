@@ -17,10 +17,11 @@ import { RoadStopDialog } from "../roadmap/road-stop-dialog";
 // screens wind the road down the left of the cards.
 //
 // The draw-in follows FlowReveal: server HTML and reduced motion stay
-// "static" (fully drawn); a roadmap already 30% in view at load goes straight
-// to "on"; otherwise it is "armed" (dimmed, road masked) until 30% visible,
-// then "on", once. The road draws at a steady pace, so each stop's delay is
-// the road's duration times its share of the route.
+// "static" (fully drawn); a roadmap any part of which is in view at load goes
+// straight to "on"; otherwise it is "armed" (cards wiped by clip-path, pins
+// scaled to 0, road masked) until 30% visible, then "on", once. The road
+// draws at a steady pace, so each stop's delay is the road's duration times
+// its share of the route.
 
 type Phase = "static" | "armed" | "on";
 
@@ -44,7 +45,9 @@ function seenShare(el: Element) {
 function revealMap(map: HTMLElement, show: () => void) {
   const observer = new IntersectionObserver(
     (entries) => {
-      if (!entries[0].isIntersecting) return;
+      const [entry] = entries;
+      // The first callback fires at any overlap: check the share too.
+      if (!entry.isIntersecting || entry.intersectionRatio < REVEAL_AT) return;
       show();
       observer.disconnect();
     },
@@ -61,7 +64,8 @@ function revealStops(map: HTMLElement, show: (index: number) => void) {
   const observer = new IntersectionObserver(
     (entries, self) => {
       for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
+        if (!entry.isIntersecting || entry.intersectionRatio < STOP_AT)
+          continue;
         show(stops.indexOf(entry.target));
         self.unobserve(entry.target);
       }
@@ -69,7 +73,8 @@ function revealStops(map: HTMLElement, show: (index: number) => void) {
     { threshold: STOP_AT },
   );
   for (const [i, stop] of stops.entries()) {
-    if (seenShare(stop) >= STOP_AT) show(i);
+    // Partly on screen at load: show it as is (no wipe, no replay).
+    if (seenShare(stop) > 0) show(i);
     else observer.observe(stop);
   }
   return () => observer.disconnect();
@@ -151,23 +156,24 @@ export function RoadMap() {
     if (!map || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const layout = matchMedia(NARROW);
     const narrow = layout.matches;
-    // Already 30% on screen at load: show it as is (no hide, no replay).
-    if (!narrow && seenShare(map) >= REVEAL_AT) {
+    // Any part already on screen at load: show it as is (no wipe, no replay).
+    if (!narrow && seenShare(map) > 0) {
       setPhase("on");
       return;
     }
     setPhase("armed");
-    // A resize or rotation across the breakpoint mid-reveal: show it all.
-    const showAll = () => {
-      setPhase("on");
-      setShown(new Set(STOPS.keys()));
-    };
-    layout.addEventListener("change", showAll);
     const stop = narrow
       ? revealStops(map, (i) =>
           setShown((prev) => (prev.has(i) ? prev : new Set(prev).add(i))),
         )
       : revealMap(map, () => setPhase("on"));
+    // A resize or rotation across the breakpoint mid-reveal: show it all at
+    // once ("static": nothing hidden, nothing moves).
+    const showAll = () => {
+      stop();
+      setPhase("static");
+    };
+    layout.addEventListener("change", showAll);
     return () => {
       layout.removeEventListener("change", showAll);
       stop();

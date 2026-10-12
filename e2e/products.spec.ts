@@ -111,7 +111,30 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     );
 
     await expect(roadmap(page)).toHaveAttribute("data-reveal", "on");
+    await expect(roadmap(page).locator(".rm-draw")).toHaveCSS(
+      "stroke-dashoffset",
+      "0px",
+    );
+    for (const pin of await roadmap(page).locator(".rm-pin").all()) {
+      await expect(pin).toHaveCSS("scale", /^(1|none)$/);
+    }
     await expectOpen(page);
+  });
+
+  test.describe("phone", () => {
+    test.use({ viewport: { width: 390, height: 800 } });
+
+    test("each stop appears as it scrolls into view", async ({ page }) => {
+      await page.goto("/products");
+      await expect(roadmap(page)).toHaveAttribute("data-reveal", "armed");
+      for (const stop of await roadmap(page).locator(".rm-stop").all()) {
+        await stop.evaluate((el) =>
+          el.scrollIntoView({ block: "center", behavior: "instant" }),
+        );
+        await expect(stop).toHaveAttribute("data-in", "true");
+      }
+      await expectOpen(page);
+    });
   });
 
   test.describe("reduced motion", () => {

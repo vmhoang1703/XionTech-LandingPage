@@ -5,7 +5,11 @@ import { dayRoad } from "@/content/products";
 import { globalsCss } from "@/test-utils/css-classes";
 import { RoadMap } from "./road-map";
 
-let intersect: (visible: boolean, target?: Element) => void = () => undefined;
+let intersect: (
+  visible: boolean,
+  target?: Element,
+  ratio?: number,
+) => void = () => undefined;
 let observedThreshold: number | number[] | undefined;
 let observed: Element[] = [];
 const disconnect = vi.fn();
@@ -40,9 +44,15 @@ beforeEach(() => {
         options?: IntersectionObserverInit,
       ) {
         observedThreshold = options?.threshold;
-        intersect = (visible, target = observed[0]) =>
+        intersect = (visible, target = observed[0], ratio = visible ? 1 : 0) =>
           callback(
-            [{ isIntersecting: visible, target } as IntersectionObserverEntry],
+            [
+              {
+                isIntersecting: visible,
+                intersectionRatio: ratio,
+                target,
+              } as IntersectionObserverEntry,
+            ],
             this as unknown as IntersectionObserver,
           );
       }
@@ -82,16 +92,15 @@ function mapAt(top: number, bottom: number) {
   vi.stubGlobal("innerHeight", 900);
 }
 
-// Narrow layout: the first stop is in view, the others below the fold.
+// Narrow layout in an 844px window: the first stop is in view, the second
+// peeks 14px above the fold, the others are below it.
 function stopsAt() {
+  const tops = [100, 830, 1200, 1600, 2000, 2400];
   vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
     function (this: HTMLElement) {
-      const first = this.matches(".rm-stop[data-first]");
-      return (
-        first
-          ? { top: 100, bottom: 400, height: 300 }
-          : { top: 1000, bottom: 1300, height: 300 }
-      ) as DOMRect;
+      const i = Array.from(this.parentElement?.children ?? []).indexOf(this);
+      const top = this.matches(".rm-stop") ? tops[i] : 100;
+      return { top, bottom: top + 300, height: 300 } as DOMRect;
     },
   );
   vi.stubGlobal("innerHeight", 844);
@@ -140,6 +149,10 @@ describe("RoadMap draw-in", () => {
     act(() => intersect(false));
     expect(roadmap(container).dataset.reveal).toBe("armed");
 
+    // The first callback fires at any overlap; 10% is not enough.
+    act(() => intersect(true, undefined, 0.1));
+    expect(roadmap(container).dataset.reveal).toBe("armed");
+
     act(() => intersect(true));
     expect(roadmap(container).dataset.reveal).toBe("on");
     expect(disconnect).toHaveBeenCalled();
@@ -147,6 +160,14 @@ describe("RoadMap draw-in", () => {
 
   it("goes straight to on when already 30% in view at load", () => {
     mapAt(100, 800);
+    const { container } = render(<RoadMap />);
+    expect(roadmap(container).dataset.reveal).toBe("on");
+    expect(observedThreshold).toBeUndefined();
+  });
+
+  it("goes straight to on when any part is in view at load, so nothing seen is wiped", () => {
+    // 50px of an 800px roadmap above the fold.
+    mapAt(850, 1650);
     const { container } = render(<RoadMap />);
     expect(roadmap(container).dataset.reveal).toBe("on");
     expect(observedThreshold).toBeUndefined();
@@ -163,26 +184,32 @@ describe("RoadMap draw-in", () => {
     narrow = true;
     stopsAt();
     const { container } = render(<RoadMap />);
-    const [first, second, third] = stops(container);
+    const [first, second, third, fourth] = stops(container);
 
     expect(roadmap(container).dataset.reveal).toBe("armed");
     expect(observedThreshold).toBe(0.25);
-    // The stop already in view at load is shown, not observed.
+    // Stops already in view at load, even partly, are shown, not observed.
     expect(first.dataset.in).toBe("true");
-    expect(observed).not.toContain(first);
-    expect(observed).toHaveLength(dayRoad.stops.length - 1);
-    expect(second.dataset.in).toBeUndefined();
-
-    act(() => intersect(false, second));
-    expect(second.dataset.in).toBeUndefined();
-
-    act(() => intersect(true, second));
     expect(second.dataset.in).toBe("true");
-    expect(third.dataset.in).toBeUndefined();
+    expect(observed).not.toContain(first);
     expect(observed).not.toContain(second);
+    expect(observed).toHaveLength(dayRoad.stops.length - 2);
+    expect(third.dataset.in).toBeUndefined();
 
-    act(() => intersect(true, second));
-    expect(stops(container).filter((li) => li.dataset.in)).toHaveLength(2);
+    act(() => intersect(false, third));
+    expect(third.dataset.in).toBeUndefined();
+
+    // Any overlap fires the first callback; 10% is under the threshold.
+    act(() => intersect(true, third, 0.1));
+    expect(third.dataset.in).toBeUndefined();
+
+    act(() => intersect(true, third));
+    expect(third.dataset.in).toBe("true");
+    expect(fourth.dataset.in).toBeUndefined();
+    expect(observed).not.toContain(third);
+
+    act(() => intersect(true, third));
+    expect(stops(container).filter((li) => li.dataset.in)).toHaveLength(3);
   });
 
   it("shows everything when the layout switches while armed", () => {
@@ -191,9 +218,10 @@ describe("RoadMap draw-in", () => {
     const { container, unmount } = render(<RoadMap />);
     expect(roadmap(container).dataset.reveal).toBe("armed");
 
+    // Shown at once (static: nothing hidden, nothing moves), no replay.
     act(() => layoutChange?.());
-    expect(roadmap(container).dataset.reveal).toBe("on");
-    expect(stops(container).every((li) => li.dataset.in === "true")).toBe(true);
+    expect(roadmap(container).dataset.reveal).toBe("static");
+    expect(disconnect).toHaveBeenCalled();
 
     unmount();
     expect(removeListener).toHaveBeenCalledWith("change", layoutChange);
@@ -332,5 +360,15 @@ describe("RoadMap draw-in", () => {
     for (const { selector } of delayed) {
       expect(selector).toContain('[data-reveal="on"]');
     }
+  });
+
+  it("prints the whole roadmap even before it is revealed", () => {
+    const css = globalsCss();
+    const start = css.indexOf("/* Products roadmap (2D) */");
+    const block = css.slice(start, css.indexOf("/* The stop modal. */", start));
+    const print = /@media print \{([\s\S]*?)\n {2}\}/.exec(block)?.[1] ?? "";
+    expect(print).toMatch(/\.rm-draw \{\s*stroke-dashoffset: 0;/);
+    expect(print).toMatch(/\.rm-pin \{\s*scale: 1;/);
+    expect(print).toMatch(/\.rm-card \{\s*clip-path: none;\s*transform: none;/);
   });
 });

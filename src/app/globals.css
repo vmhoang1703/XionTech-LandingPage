@@ -3875,6 +3875,31 @@
     }
   }
 
+  /* Print the whole roadmap, even one not yet scrolled into view. */
+  @media print {
+    .rm[data-reveal="armed"] .rm-draw {
+      stroke-dashoffset: 0;
+    }
+
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-pin {
+      scale: 1;
+    }
+
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-card,
+    .rm[data-reveal="armed"]
+      .rm-stop[data-side="below"]:not([data-in])
+      .rm-card {
+      clip-path: none;
+      transform: none;
+    }
+  }
+
+  @media print and (width < 1100px) {
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-seg {
+      clip-path: none;
+    }
+  }
+
   /* The stop modal. */
   .road-dialog {
     width: min(560px, calc(100vw - 32px));
