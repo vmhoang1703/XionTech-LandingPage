@@ -3579,6 +3579,8 @@
     font-size: 0.75rem;
   }
 
+  /* The tour's --rm-pad (.rm-open) depends on this font-size and
+     line-height: change them together. */
   .rm-title {
     margin: 10px 0 0;
     color: var(--color-navy);
@@ -3878,7 +3880,31 @@
 
     .rm[data-tour="on"] .rm-draw {
       stroke-dashoffset: calc(1 - var(--share));
+    }
+
+    /* From a frame after the tour starts, so the road snaps to stop 1. */
+    .rm[data-tour="on"][data-road="moving"] .rm-draw {
       transition: stroke-dashoffset 400ms var(--ease-brand);
+    }
+
+    /* Functional text stays at --text-label (11.5px) or larger once the
+       stage is zoomed (DESIGN.md); cards grow a little on short windows. */
+    .rm[data-tour="on"] .rm-kicker {
+      font-size: max(0.8rem, calc(var(--text-label) / var(--rm-k)));
+    }
+
+    .rm[data-tour="on"] .rm-who {
+      font-size: max(0.75rem, calc(var(--text-label) / var(--rm-k)));
+    }
+
+    .rm[data-tour="on"] .rm-text,
+    .rm[data-tour="on"] .rm-app,
+    .rm[data-tour="on"] .rm-more {
+      font-size: max(0.85rem, calc(var(--text-label) / var(--rm-k)));
+    }
+
+    .rm[data-tour="on"] .map-badge {
+      font-size: max(0.7rem, calc(var(--text-label) / var(--rm-k)));
     }
 
     .rm[data-tour="on"] .rm-card {

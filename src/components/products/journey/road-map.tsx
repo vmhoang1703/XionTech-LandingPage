@@ -134,13 +134,23 @@ function followScroll(map: HTMLElement, show: (index: number) => void) {
 // A deep link (/products#sxp) landed on the stop before the tour moved its
 // anchor onto a step of the track: land on the step instead. Smooth (the
 // page's scroll-behavior), so it takes over the browser's own smooth scroll to
-// the fragment; an instant jump is undone by it.
+// the fragment; an instant jump is undone by it. The anchors are plain
+// ASCII, so the hash is not decoded (a stray "%" would throw).
 function landHash(map: HTMLElement) {
-  const id = decodeURIComponent(location.hash.slice(1));
+  const id = location.hash.slice(1);
   const target = id ? document.getElementById(id) : null;
   if (target && map.contains(target)) {
     target.scrollIntoView();
   }
+}
+
+// The tour zooms the stage with `zoom` and a tan(atan2()) ratio; without
+// them the stage would be an unscaled 1400px, so the roadmap stays static.
+function canTour() {
+  return (
+    CSS.supports("zoom", "0.5") &&
+    CSS.supports("width", "calc(1px * tan(atan2(1px, 2px)))")
+  );
 }
 
 // Trees in the open ground between the cards.
@@ -182,6 +192,9 @@ export function RoadMap() {
   const [mode, setMode] = useState<Mode>("static");
   const tour = mode === "tour";
   const [active, setActive] = useState(0);
+  // The road moves (transition) only once the tour has painted it at its
+  // first stop, so it does not run back from the static full road.
+  const [roadMoving, setRoadMoving] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
   const mask = useId();
@@ -190,7 +203,8 @@ export function RoadMap() {
     const map = ref.current;
     if (!map || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const layout = matchMedia(NARROW);
-    setMode(layout.matches ? "armed" : "tour");
+    const wide: Mode = canTour() ? "tour" : "static";
+    setMode(layout.matches ? "armed" : wide);
     const stop = layout.matches
       ? revealStops(map, (i) =>
           setShown((prev) => (prev.has(i) ? prev : new Set(prev).add(i))),
@@ -217,7 +231,14 @@ export function RoadMap() {
       setSelected(i);
     });
     landHash(map);
-    return stopFollowing;
+    // Two frames: the first paints the road at its stop, still.
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => setRoadMoving(true));
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      stopFollowing();
+    };
   }, [tour]);
 
   return (
@@ -226,6 +247,7 @@ export function RoadMap() {
       className="rm"
       data-reveal={mode === "armed" ? "armed" : "static"}
       data-tour={tour ? "on" : undefined}
+      data-road={tour && roadMoving ? "moving" : undefined}
       style={
         tour ? ({ "--share": shareOf(active) } as CSSProperties) : undefined
       }

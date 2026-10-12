@@ -26,6 +26,10 @@ beforeEach(() => {
   );
   vi.stubGlobal("IntersectionObserver", NoObserver);
   vi.stubGlobal("ResizeObserver", NoObserver);
+  // jsdom has no CSS.supports or animation frames.
+  vi.stubGlobal("CSS", { supports: () => true });
+  vi.stubGlobal("requestAnimationFrame", () => 1);
+  vi.stubGlobal("cancelAnimationFrame", vi.fn());
 });
 
 afterEach(() => {

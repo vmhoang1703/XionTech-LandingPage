@@ -19,6 +19,18 @@ let reducedMotion = false;
 let narrow = false;
 let layoutChange: (() => void) | undefined;
 const removeListener = vi.fn();
+let cssSupports: (property: string) => boolean = () => true;
+let frames: FrameRequestCallback[] = [];
+const cancelFrame = vi.fn();
+
+// Runs the animation frames queued so far.
+function nextFrame() {
+  const queued = frames;
+  frames = [];
+  act(() => {
+    for (const frame of queued) frame(0);
+  });
+}
 
 beforeEach(() => {
   reducedMotion = false;
@@ -28,6 +40,18 @@ beforeEach(() => {
   disconnect.mockClear();
   layoutChange = undefined;
   removeListener.mockClear();
+  cssSupports = () => true;
+  frames = [];
+  cancelFrame.mockClear();
+  // jsdom has no CSS.supports and runs no animation frames.
+  vi.stubGlobal("CSS", {
+    supports: vi.fn((property: string) => cssSupports(property)),
+  });
+  vi.stubGlobal("requestAnimationFrame", (frame: FrameRequestCallback) => {
+    frames.push(frame);
+    return frames.length;
+  });
+  vi.stubGlobal("cancelAnimationFrame", cancelFrame);
   vi.stubGlobal(
     "matchMedia",
     vi.fn((query: string) => ({
@@ -297,7 +321,11 @@ describe("RoadMap draw-in", () => {
       rules
         .filter(({ selector }) => /\.rm-draw$/.test(selector))
         .map(({ selector }) => selector),
-    ).toEqual([".rm-draw", '.rm[data-tour="on"] .rm-draw']);
+    ).toEqual([
+      ".rm-draw",
+      '.rm[data-tour="on"] .rm-draw',
+      '.rm[data-tour="on"][data-road="moving"] .rm-draw',
+    ]);
     // A focused card is shown whole with its focus ring, even armed.
     const focused = rules.find(({ selector }) =>
       selector.includes(".rm-stop:has(.rm-open:focus-visible) .rm-card"),
@@ -494,6 +522,8 @@ describe("RoadMap scroll tour (wide)", () => {
 
   afterEach(() => {
     window.history.replaceState(null, "", "/");
+    // jsdom has no scrollIntoView; the deep-link tests add one.
+    Reflect.deleteProperty(Element.prototype, "scrollIntoView");
   });
 
   it("turns on with JavaScript on wide screens: stop 1 active, nothing armed", () => {
@@ -572,6 +602,54 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(scrolled).not.toHaveBeenCalled();
   });
 
+  it("ignores a hash that is not a valid URI (#100%)", () => {
+    const scrolled = vi.fn();
+    Element.prototype.scrollIntoView = scrolled;
+    window.history.replaceState(null, "", "#100%");
+    expect(location.hash).toBe("#100%");
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    expect(roadmap(container).dataset.tour).toBe("on");
+    expect(scrolled).not.toHaveBeenCalled();
+  });
+
+  it("snaps the road to stop 1, and moves it only from a frame later", () => {
+    tourAt(0);
+    const { container, unmount } = render(<RoadMap />);
+    expect(roadmap(container).dataset.tour).toBe("on");
+    expect(roadmap(container).dataset.road).toBeUndefined();
+    // One frame paints the road at stop 1 with no transition.
+    nextFrame();
+    expect(roadmap(container).dataset.road).toBeUndefined();
+    nextFrame();
+    expect(roadmap(container).dataset.road).toBe("moving");
+    unmount();
+  });
+
+  it("cancels the pending frame when unmounted first", () => {
+    tourAt(0);
+    const { unmount } = render(<RoadMap />);
+    unmount();
+    expect(cancelFrame).toHaveBeenCalled();
+  });
+
+  it("stays static where the browser cannot zoom the stage", () => {
+    // `zoom` works, tan(atan2()) does not: both are checked.
+    cssSupports = (property) => property === "zoom";
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    expect(CSS.supports).toHaveBeenCalledWith("zoom", "0.5");
+    expect(CSS.supports).toHaveBeenCalledWith(
+      "width",
+      "calc(1px * tan(atan2(1px, 2px)))",
+    );
+    expect(roadmap(container).dataset.tour).toBeUndefined();
+    expect(roadmap(container).dataset.reveal).toBe("static");
+    expect(container.querySelector(".rm-step")).toBeNull();
+    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(4);
+    expect(selected(container)).toEqual([]);
+  });
+
   it("stops following the scroll on a layout switch", () => {
     const remove = vi.spyOn(window, "removeEventListener");
     tourAt(0);
@@ -624,9 +702,27 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(rule('.rm[data-tour="on"] .rm-draw')).toMatch(
       /stroke-dashoffset: calc\(1 - var\(--share\)\)/,
     );
-    expect(rule('.rm[data-tour="on"] .rm-draw')).toMatch(
+    // The first tour frame snaps the road to stop 1; only then it moves.
+    expect(rule('.rm[data-tour="on"] .rm-draw')).not.toMatch(/transition/);
+    expect(rule('.rm[data-tour="on"][data-road="moving"] .rm-draw')).toMatch(
       /transition: stroke-dashoffset 400ms var\(--ease-brand\)/,
     );
+    // Zoomed, functional text stays at --text-label (11.5px) or larger.
+    for (const part of [
+      "rm-kicker",
+      "rm-who",
+      "rm-text",
+      "rm-app",
+      "rm-more",
+      "map-badge",
+    ]) {
+      const sized = tour.find((r) =>
+        r.selector.split(",").some((one) => one.trim().endsWith(`.${part}`)),
+      );
+      expect(sized?.body, part).toMatch(
+        /font-size: max\([\d.]+rem, calc\(var\(--text-label\) \/ var\(--rm-k\)\)\)/,
+      );
+    }
     // Zoomed, the focus ring keeps 2px and the title button a 24px target.
     expect(
       tour.find((r) => r.selector.includes(".rm-stage :focus-visible"))?.body,
