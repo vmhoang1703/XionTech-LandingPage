@@ -80,7 +80,7 @@ context:
   - red: `src/content/products.test.ts` -- a lane check over every stop id, observed failing against a deliberately missing lane before adding the real assertion set.
 - [x] `src/components/products/map/map-badge.test.tsx`, `open-app-dialog.test.ts`, `src/components/products/roadmap/road-stop-dialog.test.tsx` -- badge text/icon; the opener opens `dialog#pd-{anchor}` and returns focus on close, returns false without the dialog; the modal opens for an index, Previous/Next move, edge buttons are disabled, the close button and backdrop close it, the app section shows Made for and features, "Open … details" hands over to the app dialog, the last stop lists all four apps.
   - red: `road-stop-dialog.test.tsx` -- the backdrop click outside the box closes the dialog (write it against a broken coordinate check first).
-- [ ] `src/components/products/journey/road-map.tsx` + `globals.css` -- the draw-in: phases on `.rm` (`data-reveal`), a mask path drawing the wide road (pathLength 1, dashoffset), per-stop `--delay` from road position; the narrow bends reveal top to bottom with clip-path; the armed CSS only under `[data-reveal="armed"]`; transitions only under `[data-reveal="on"]`.
+- [x] `src/components/products/journey/road-map.tsx` + `globals.css` -- the draw-in: phases on `.rm` (`data-reveal`), a mask path drawing the wide road (pathLength 1, dashoffset), per-stop `--delay` from road position; the narrow bends reveal top to bottom with clip-path; the armed CSS only under `[data-reveal="armed"]`; transitions only under `[data-reveal="on"]`.
   - red: `src/components/products/journey/road-map.test.tsx` -- static without JS and under reduced motion; armed then on after 30% intersection; already visible at load → on; delays increase in road order; six cards, each opens the modal; CSS rules hide nothing without the attribute.
 - [ ] `src/app/products/page.test.tsx`, `e2e/products.spec.ts` -- page order `#map` → `#apps` → navy band; only defined classes. E2E (`@a11y` and `@smoke` as before):
   - roadmap visible with 6 cards;
@@ -100,7 +100,7 @@ context:
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | --- | --- | --- | --- | --- | --- | --- |
-| Road | Scroll into view at 1280px | Mouse wheel, touch, keyboard | Road draws from Start to Finish | ~1.6s `--ease-brand` | Sammy 2026-10-12 |  |
+| Road | Scroll into view at 1280px | Mouse wheel, touch, keyboard | Road draws from Start to Finish | ~1.6s linear, so each pin pops as the road reaches it (pins and cards use `--ease-brand`) | Sammy 2026-10-12 |  |
 | Pins | Road reaches a pin | — | Pin pops in (scale and fade) | 300ms, delayed by road position | Sammy 2026-10-12 |  |
 | Cards | After its pin | — | Card slides in from its side (up for above, down for below) | 400ms after the pin | Sammy 2026-10-12 |  |
 | Already visible | Load with the roadmap in view | — | Shown complete, no replay | Instant | FlowReveal pattern |  |
