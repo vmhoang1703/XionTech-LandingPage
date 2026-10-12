@@ -8,7 +8,7 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(200);
-    expect(html).toContain("<title>News | XionTech</title>");
+    expect(html).toContain("<title>News | XionTechs</title>");
     expect(html).toContain('id="news-h1"');
     expect(html).toContain("Catch up with us");
     expect(html).toContain('class="page-scene"');

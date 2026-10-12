@@ -25,7 +25,7 @@ describe("SiteFooter", () => {
   it("shows the logo linking home and the blurb", () => {
     const footer = renderFooter();
 
-    const logo = within(footer).getByRole("img", { name: "XionTech" });
+    const logo = within(footer).getByRole("img", { name: "XionTechs" });
     expect(logo.closest("a")?.getAttribute("href")).toBe("/");
     expect(
       within(footer).getByText(
@@ -143,18 +143,19 @@ describe("SiteFooter", () => {
     expect(ridge?.firstElementChild?.textContent).toBe("");
   });
 
-  it("has no head office label, no Da Nang office and only two offices", () => {
+  it("has two headquarters cards, then names the other two locations", () => {
     const footer = renderFooter();
 
     expect(footer.querySelectorAll("address")).toHaveLength(2);
     expect(footer.textContent).not.toMatch(/head office/i);
-    expect(footer.textContent).not.toMatch(/da nang/i);
+    const more = within(footer).getByText("Also in Ha Noi and Da Nang.");
+    expect(more.previousElementSibling?.tagName).toBe("ADDRESS");
   });
 
   it("shows the bottom bar with copyright, privacy link and the GET IT DONE tag", () => {
     const footer = renderFooter();
 
-    expect(within(footer).getByText(/© 2026 XionTech\b/)).toBeDefined();
+    expect(within(footer).getByText(/© 2026 XionTechs\b/)).toBeDefined();
     expect(
       within(footer)
         .getByRole("link", { name: "Privacy policy" })

@@ -20,6 +20,7 @@ export interface NavLabels {
   homeLink: string;
   logoAlt: string;
   menu: string;
+  demo: string;
 }
 
 // Navigation labels (for translation in Story 1.2)
@@ -32,9 +33,10 @@ export const LABELS: NavLabels = {
   careers: "Careers",
   skipLink: "Skip to content",
   mainNav: "Main",
-  homeLink: "XionTech home",
-  logoAlt: "XionTech, Get IT Done",
+  homeLink: "XionTechs home",
+  logoAlt: "XionTechs, Get IT Done",
   menu: "Menu",
+  demo: "Book a demo",
 };
 
 // Services (8 total, in order)

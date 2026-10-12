@@ -4,7 +4,7 @@ import { processFlow, type ProcessFlowContent } from "@/content/process";
 
 export const servicesMeta = {
   title:
-    "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech",
+    "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs",
   description:
     "Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones.",
 };
@@ -15,7 +15,7 @@ export const servicesPage = {
     highlight: "get IT done",
     tail: ".",
   },
-  lede: "Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones.",
+  lede: "Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver.",
   primaryCta: {
     href: "/demo#project",
     label: "Start a project",
@@ -117,6 +117,6 @@ export const servicesProcess: {
   flow: ProcessFlowContent;
 } = {
   title: "Our 4-D process: from your request to launch.",
-  lede: "Every step ends with something you can see, test and approve.",
+  lede: "Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it.",
   flow: processFlow,
 };

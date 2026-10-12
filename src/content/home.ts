@@ -17,23 +17,14 @@ const iot = appById("iot");
 const aiTutor = appById("ai-tutor");
 
 export const homeHero = {
+  // Three short beats, one a line, ending on the slogan (lead, 2026-10-12).
   title: {
-    lead: "School apps and software teams that ",
-    highlight: "get IT done",
+    lines: ["Build smarter.", "Ship faster."],
+    highlight: "Get IT done",
     tail: ".",
   },
-  sub: "XionTech is an education technology company and software partner. We build connected apps for schools (Parent Hub, Staff Hub and IoT) and deliver digital products for companies, from Ho Chi Minh City and Plano.",
+  sub: "Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development.",
   motion: { pause: "Pause motion", play: "Play motion" },
-  // The hero animation's three scenes, named for the progress dots under it
-  // (lead, 2026-10-10).
-  scenes: {
-    label: "Animation scenes",
-    items: [
-      "Scene 1: one team, around the clock",
-      "Scene 2: climbing together",
-      "Scene 3: built on technology",
-    ],
-  },
   // The contact section on this page (E-A4).
   cta: { href: "#contact", label: "Get in touch" },
 };
@@ -57,7 +48,8 @@ export const homeStats: { label: string; stats: Stat[] } = {
       count: true,
     },
     { value: "8", caption: "Service offerings, from idea to operation" },
-    { value: "2", caption: "Offices: Ho Chi Minh City and Plano" },
+    // Four locations, two of them headquarters (lead, 2026-10-12).
+    { value: "4", caption: "Locations: HQs in Plano and Ho Chi Minh City" },
   ],
 };
 
@@ -91,14 +83,14 @@ export const homeDoors = {
   },
 };
 
-// "Why XionTech." (was Capabilities): the products and services cards left,
+// "Why XionTechs." (was Capabilities): the products and services cards left,
 // because the two doors above already say the same (lead, 2026-10-11).
 export const homeCapabilities = {
-  title: "Why XionTech.",
-  lede: "The capabilities behind every school app and every product we deliver.",
+  title: "Why XionTechs.",
+  lede: "The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI.",
   delivery: {
     label: "Global delivery",
-    title: "Two offices, one working day.",
+    title: "Two headquarters, one working day.",
     line: "Teams across time zones keep delivery moving with practical overlap.",
   },
   industries: {
@@ -119,7 +111,7 @@ export const homeCapabilities = {
 
 export const homeProcess = {
   title: "How we work.",
-  lede: "Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve.",
+  lede: "Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve. AI runs through every step, and we keep improving how we use it.",
   link: { href: "/services#process", label: "See the full process" },
 };
 

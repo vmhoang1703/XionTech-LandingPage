@@ -8,14 +8,16 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(200);
-    expect(html).toContain("get IT done");
+    expect(html).toContain("Build smarter.");
+    expect(html).toContain("Ship faster.");
+    expect(html).toContain("Get IT done");
     expect(html).toContain("Get in touch");
     expect(html).toContain("Experience you can count on");
     expect(html).toContain("Products for schools");
     expect(html).toContain("Your software delivery team");
     expect(html).toContain("What can we help you achieve?");
     expect(html).toContain("One connected school.");
-    expect(html).toContain("Why XionTech.");
+    expect(html).toContain("Why XionTechs.");
     expect(html).toContain("How we work.");
     expect(html).toContain("Our core values.");
     expect(html).toContain("Your questions, answered.");

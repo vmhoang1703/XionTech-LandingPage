@@ -66,7 +66,7 @@ describe("Careers page", () => {
       "Why you’ll grow here.",
       "Why you'll grow here.",
       "A culture that goes beyond employment.",
-      "Life at XionTech.",
+      "Life at XionTechs.",
     ]) {
       expect(screen.queryByRole("heading", { name: gone })).toBeNull();
     }

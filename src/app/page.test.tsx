@@ -30,7 +30,7 @@ afterEach(() => {
 vi.mock("@/components/news/home-news", () => ({
   HomeNews: () => (
     <section className="sec surface-mist" aria-labelledby="news-h">
-      <h2 id="news-h">Latest from XionTech.</h2>
+      <h2 id="news-h">Latest from XionTechs.</h2>
     </section>
   ),
 }));
@@ -52,7 +52,7 @@ function sectionNames(container: HTMLElement) {
 describe("Home page", () => {
   it("sets the page title", () => {
     expect(metadata.title).toBe(
-      "XionTech | School Platforms & Software Outsourcing in Vietnam",
+      "XionTechs | School Platforms & Software Outsourcing in Vietnam",
     );
   });
 
@@ -62,7 +62,7 @@ describe("Home page", () => {
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings).toHaveLength(1);
     expect(headings[0].textContent).toBe(
-      "School apps and software teams that get IT done.",
+      "Build smarter. Ship faster. Get IT done.",
     );
   });
 
@@ -76,14 +76,14 @@ describe("Home page", () => {
     const { container } = render(<Home />);
 
     expect(sectionNames(container)).toEqual([
-      "School apps and software teams that get IT done.",
+      "Build smarter. Ship faster. Get IT done.",
       "What can we help you achieve?",
       "One connected school.",
-      "Why XionTech.",
+      "Why XionTechs.",
       "How we work.",
       "Our core values.",
       "Your questions, answered.",
-      "Latest from XionTech.",
+      "Latest from XionTechs.",
       "Have something you want to build?",
     ]);
   });
@@ -97,14 +97,14 @@ describe("Home page", () => {
     expect(flow).not.toBeNull();
     for (const name of [
       "One connected school.",
-      "Why XionTech.",
+      "Why XionTechs.",
       "How we work.",
       "Our core values.",
       "Your questions, answered.",
     ]) {
       expect(flow?.contains(screen.getByRole("region", { name }))).toBe(true);
     }
-    const news = screen.getByRole("region", { name: "Latest from XionTech." });
+    const news = screen.getByRole("region", { name: "Latest from XionTechs." });
     expect(flow?.contains(news)).toBe(false);
     expect(news.className).toContain("surface-mist");
   });

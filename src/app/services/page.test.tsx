@@ -30,7 +30,7 @@ afterEach(() => {
 describe("ServicesPage", () => {
   it("has the prototype title and its own description", () => {
     expect(metadata.title).toBe(
-      "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech",
+      "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTechs",
     );
     expect(String(metadata.description)).toContain("Ho Chi Minh City");
   });
@@ -186,7 +186,7 @@ describe("ServicesPage", () => {
   it("styles the split, the sticky heading and the breakpoints of the prototype", () => {
     const css = globalsCss();
     expect(css).toMatch(
-      /\.svc-stick\s*\{[^}]*position:\s*sticky[^}]*top:\s*calc\(var\(--spacing-header-height\) \+ 48px\)/,
+      /\.svc-stick\s*\{[^}]*position:\s*sticky[^}]*top:\s*calc\(var\(--spacing-header-room\) \+ 48px\)/,
     );
     expect(css).toMatch(/@media \(width <= 980px\)\s*\{\s*\.svc-split/);
     expect(css).toMatch(/@media \(width <= 760px\)\s*\{\s*\.outcomes/);
@@ -218,7 +218,7 @@ describe("ServicesPage", () => {
     expect(head?.className).toBe("sec-head");
     expect(head?.querySelector(".label")).toBeNull();
     expect(head?.querySelector("p.lede")?.textContent).toBe(
-      "Every step ends with something you can see, test and approve.",
+      "Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it.",
     );
     expect(container.querySelectorAll("section.surface-navy")).toHaveLength(0);
   });

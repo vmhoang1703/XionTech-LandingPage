@@ -226,8 +226,21 @@
 
 @layer base {
   html {
-    scroll-padding-top: var(--spacing-header-height);
+    scroll-padding-top: var(--spacing-header-room);
     scroll-behavior: smooth;
+  }
+
+  /* The header pill (--spacing-header-height tall above 1080px) floats in a strip
+     12px deep above and below it; the page runs under the strip, so anchors, sticky
+     parts and each first section clear the strip, not the pill. */
+  :root {
+    --spacing-header-room: calc(var(--spacing-header-height) + 24px);
+  }
+
+  @media (max-width: 1080px) {
+    :root {
+      --spacing-header-room: 80px;
+    }
   }
 
   :root {
@@ -438,6 +451,11 @@
     background: var(--color-ink);
   }
 
+  /* Room for the header pill, which floats over the hero. */
+  .home-hero {
+    padding-top: var(--spacing-header-room);
+  }
+
   .hero-light {
     background: var(--color-page);
   }
@@ -601,7 +619,12 @@
 
   /* Page hero and breadcrumbs */
   .page-hero {
-    padding-block: var(--spacing-page-hero-top) var(--spacing-page-hero-bottom);
+    /* The header pill floats over each page's first section, so every hero adds the
+       header height to its top padding. */
+    padding-block: calc(
+        var(--spacing-header-room) + var(--spacing-page-hero-top)
+      )
+      var(--spacing-page-hero-bottom);
   }
 
   .page-hero h1 {
@@ -742,6 +765,14 @@
 
   .office a:hover {
     color: var(--color-heading);
+  }
+
+  /* The other two locations, named under the two headquarters (lead, 2026-10-12). */
+  .office-more {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-muted);
   }
 
   .office-tag {
@@ -1693,7 +1724,7 @@
   /* E-A7 Careers (prototype careers.html, site.css "Careers" blocks; ENH-035, ENH-055, ENH-060) */
   /* The hero fades from light blue into the page colour, where the shared page scene takes over (lead, 2026-10-12) */
   .careers-hero {
-    padding-block: 72px 64px;
+    padding-block: calc(var(--spacing-header-room) + 72px) 64px;
     background: linear-gradient(180deg, var(--color-ice), var(--color-page));
   }
 
@@ -2314,7 +2345,7 @@
   /* E-A6 News (prototype news.html, site.css "News" blocks; ENH-037, ENH-053) */
   /* White with light blue shading through the whole page, hero included (site.js "cool") */
   .nhead-sec {
-    padding-block: 56px 0;
+    padding-block: calc(var(--spacing-header-room) + 56px) 0;
   }
 
   .nhead {
@@ -2630,7 +2661,7 @@
 
   /* Story page: an editorial article (prototype news-story.html) */
   .art-hero {
-    padding-block: 56px 24px;
+    padding-block: calc(var(--spacing-header-room) + 56px) 24px;
   }
 
   .art-back {
@@ -2774,7 +2805,7 @@
 
   @media (width <= 520px) {
     .nhead-sec {
-      padding-top: 40px;
+      padding-top: calc(var(--spacing-header-room) + 40px);
     }
 
     .scard {
@@ -4220,7 +4251,7 @@
   #offices,
   #book {
     scroll-margin-top: calc(
-      var(--spacing-anchor-offset) - var(--spacing-header-height)
+      var(--spacing-anchor-offset) - var(--spacing-header-room)
     );
   }
 
@@ -4435,7 +4466,7 @@
     position: relative;
     overflow: hidden;
     isolation: isolate;
-    padding: 104px 0 200px;
+    padding: calc(var(--spacing-header-room) + 104px) 0 200px;
     text-align: center;
     background: linear-gradient(
       180deg,
@@ -4495,7 +4526,7 @@
 
   @media (width <= 640px) {
     .about-hero {
-      padding: 64px 0 150px;
+      padding: calc(var(--spacing-header-room) + 64px) 0 150px;
     }
   }
 
@@ -4683,6 +4714,37 @@
 @media (max-width: 560px) {
   .home-stats ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/*
+  Above the fold (lead, 2026-10-12): from 1080px the hero's first screen holds
+  the copy, the animation and "Experience you can count on", with the stats at
+  its bottom; it is one screen tall (at most 880px below the header). The
+  animation's box gives up height on short screens (the scene scales to fit
+  it), and the stats band is tighter, so all five figures show on load at
+  1280x720 and up.
+*/
+@media (min-width: 1080px) {
+  .hero-fold {
+    min-height: min(calc(100svh - var(--spacing-header-room)), 880px);
+  }
+
+  .home-hero .hero-stage {
+    max-height: calc(100svh - var(--spacing-header-room) - 220px);
+  }
+
+  .home-stats ul {
+    margin-top: 12px;
+    padding-top: 16px;
+  }
+
+  .home-stats li {
+    padding-block: 4px;
+  }
+
+  .home-stats li > p:first-child {
+    font-size: clamp(1.75rem, 2.6vw, 2.5rem);
   }
 }
 
@@ -5729,7 +5791,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
 
 .svc-stick {
   position: sticky;
-  top: calc(var(--spacing-header-height) + 48px);
+  top: calc(var(--spacing-header-room) + 48px);
   margin-bottom: 0;
 }
 

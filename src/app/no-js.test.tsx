@@ -11,7 +11,7 @@ vi.mock("next/font/google", () => ({
 
 // An async Server Component cannot render to static markup here (Story 3.7).
 vi.mock("@/components/news/home-news", () => ({
-  HomeNews: () => <section>Latest from XionTech.</section>,
+  HomeNews: () => <section>Latest from XionTechs.</section>,
 }));
 
 vi.mock("next/navigation", () => ({
@@ -31,7 +31,7 @@ describe("no JavaScript", () => {
 
     expect(html).toMatch(/^<html lang="en"/);
     expect(html).toMatch(
-      /<h1[^>]*>School apps and software teams that <span class="hl">get IT done<\/span>\.<\/h1>/,
+      /<h1[^>]*><span class="block">Build smarter\.<\/span> <span class="block">Ship faster\.<\/span> <span class="hl">Get IT done<\/span>\.<\/h1>/,
     );
     expect(html).toContain("Get in touch");
     expect(html).toContain("How we work.");
@@ -39,8 +39,8 @@ describe("no JavaScript", () => {
     expect(html).toContain("Agile, resilient and always improving.");
     expect(html).toContain("How do you work across time zones?");
     expect(html).toContain("Have something you want to build?");
-    expect(html.indexOf("Latest from XionTech.")).toBeGreaterThan(-1);
-    expect(html.indexOf("Latest from XionTech.")).toBeLessThan(
+    expect(html.indexOf("Latest from XionTechs.")).toBeGreaterThan(-1);
+    expect(html.indexOf("Latest from XionTechs.")).toBeLessThan(
       html.indexOf("Have something you want to build?"),
     );
     expect(html).toContain("<header");

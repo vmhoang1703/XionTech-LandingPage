@@ -2,7 +2,7 @@ import { MapPinIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { contactIcon } from "@/components/sections/contact-icon";
-import { footerOffices } from "@/content/offices";
+import { footerOffices, otherLocations } from "@/content/offices";
 import { siteFooter } from "@/content/site-footer";
 
 // Colour, font and breakpoint classes come from the Story 1.1 @theme tokens
@@ -115,6 +115,7 @@ export function SiteFooter() {
                 })}
               </address>
             ))}
+            <p className="text-body-sm mt-5">{otherLocations}</p>
           </div>
         </div>
 

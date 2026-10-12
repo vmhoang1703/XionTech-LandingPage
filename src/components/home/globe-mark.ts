@@ -3,8 +3,9 @@
 // no captions. Times are shader time (silk-shader.ts), so Pause stops both
 // layers.
 //
-// On load the silk runs alone, then sparks gather into the XionTech mark.
-// Then three scenes loop:
+// On load the silk runs alone, then sparks gather into the globe (lead,
+// 2026-10-12: the globe first, not the mark), and the story joins the loop
+// there. Three scenes loop:
 //   1. Follow the sun: the mark opens into a globe showing both head offices.
 //      Day sweeps from Plano to Vietnam; as Plano's day ends, a torch of light
 //      flies to Ho Chi Minh City, which wakes with Da Nang and Ha Noi: one
@@ -13,9 +14,10 @@
 //      walks to the foot of a mountain (the name's inspiration, as on the
 //      About page), climbs both slopes to the peak; at the summit a flash,
 //      and the amber check-mark is ticked off from it: the X.
-//   3. Technology: the logos of the stacks the team builds with fly in and
-//      stack up into the T; the mark rests, light sweeping across it.
-import { LAND, LAND_COLUMNS, TECH_ICONS } from "./hero-data";
+//   3. Get IT done: the company's slogan writes itself up the T's stem in
+//      amber dots (lead, 2026-10-12); the mark rests, light sweeping across
+//      it.
+import { LAND, LAND_COLUMNS } from "./hero-data";
 import { SILK_START_TIME, SILK_TIME_SCALE } from "./silk-shader";
 
 // Where the scene forms, in CSS pixels from the canvas's top-left: its
@@ -25,8 +27,9 @@ export type MarkArea = { x: number; y: number; size: number } | null;
 type Point = { x: number; y: number };
 
 // ---- Timing (seconds) --------------------------------------------------------
-const INTRO_START = 1.2; // silk alone until then
-const INTRO_END = 4.2; // the mark has formed
+// The globe starts forming soon after load (lead, 2026-10-12: 1 s sooner).
+const INTRO_START = 0.2; // silk alone until then
+const INTRO_END = 3.2; // the globe has formed
 const CYCLE = 20; // the loop after the intro
 const OPEN = [2.2, 4.4]; // mark -> globe
 const SUNSET = [5.4, 8.6]; // day moves from Plano to Vietnam
@@ -36,16 +39,19 @@ const SINK = [9.6, 11.4]; // the globe sets below the horizon
 const CLIMB = 10.9; // the climb starts
 const SUMMIT = 13.1; // the climbers reach the top: flash
 const TICK = 13.3; // the check-mark is ticked off from the summit
-const ICONS_IN = 13.9; // the tech logos appear
-const STACK = 14.6; // ...and start stacking into the T
-const FILL = 16.2; // light settles behind the logos and along the thin line
+const SLOGAN_IN = 13.9; // the slogan's dots appear around the T
+const WRITE = 14.6; // ...and write GET IT DONE up its stem
+const FILL = 16.2; // light settles behind the slogan and along the thin line
 const FLIGHT = 1.6;
-// Where each scene starts in the loop; the progress dots jump here.
-export const SCENE_STARTS = [OPEN[0], LEAVE - 0.3, ICONS_IN - 0.3];
+// Where the intro joins the loop: the globe fully open, every dot landed
+// (the last one leaves the mark at OPEN[0] + 0.8 and flies for FLIGHT).
+const LOOP_ENTRY = OPEN[0] + 0.8 + FLIGHT + 0.2;
 
-// The first moment the mark has fully formed: a paused silk (reduced
-// motion) starts here, so it rests on the finished mark.
-export const SCENE_REST_TIME = SILK_START_TIME + INTRO_END * SILK_TIME_SCALE;
+// The first time the mark rests, fully formed with its slogan (the start of
+// the first full loop): a paused silk (reduced motion) starts here, so it
+// rests on the finished mark.
+export const SCENE_REST_TIME =
+  SILK_START_TIME + (INTRO_END + CYCLE - LOOP_ENTRY) * SILK_TIME_SCALE;
 
 function smoothstep(edge0: number, edge1: number, x: number) {
   const v = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);
@@ -63,11 +69,12 @@ const window01 = (phase: number, [from, to]: number[], fade = 0.5) =>
 export const seconds = (time: number) =>
   (time - SILK_START_TIME) / SILK_TIME_SCALE;
 
-// Seconds into the loop, or -1 during the intro.
+// Seconds into the loop, or -1 during the intro; the intro joins the loop
+// at LOOP_ENTRY, with the globe showing.
 export function loopPhase(time: number): number {
   const sec = seconds(time) - INTRO_END;
   if (sec < 0) return -1;
-  return sec % CYCLE;
+  return (sec + LOOP_ENTRY) % CYCLE;
 }
 
 // ---- One moment of the whole scene -------------------------------------------
@@ -88,40 +95,28 @@ export type Frame = {
 
 export function frameAt(time: number): Frame {
   const phase = loopPhase(time);
+  const sec = seconds(time);
+  // The intro shows the globe as the loop has it where the intro joins it.
+  const at = phase < 0 ? LOOP_ENTRY : phase;
   // The sun is over Plano's side at first, then over Vietnam's.
-  const azimuth = mix(1.05, -1.05, smoothstep(SUNSET[0], SUNSET[1], phase));
+  const azimuth = mix(1.05, -1.05, smoothstep(SUNSET[0], SUNSET[1], at));
   const up = 0.3;
   return {
-    sec: seconds(time),
+    sec,
     phase,
-    facing: mix(FACING[0], FACING[1], smoothstep(OPEN[0], LEAVE, phase)),
+    facing: mix(FACING[0], FACING[1], smoothstep(OPEN[0], LEAVE, at)),
     sun: [
       Math.sin(azimuth) * Math.cos(up),
       -Math.sin(up),
       Math.cos(azimuth) * Math.cos(up),
     ],
-    sink: smoothstep(SINK[0], SINK[1], phase),
+    sink: smoothstep(SINK[0], SINK[1], at),
     globe:
       phase < 0
-        ? 0
+        ? smoothstep(INTRO_START + 0.6, INTRO_START + 2.2, sec)
         : smoothstep(OPEN[0], OPEN[1], phase) *
           (1 - smoothstep(SINK[1] - 0.4, SINK[1] + 0.6, phase)),
   };
-}
-
-// Which scene is showing (0 = the globe, 1 = the mountain, 2 = the mark).
-export function sceneIndex(f: Frame): number {
-  const { phase } = f;
-  if (phase < SCENE_STARTS[0] || phase >= SCENE_STARTS[2]) return 2;
-  return phase >= SCENE_STARTS[1] ? 1 : 0;
-}
-
-// The shader time at which scene `index` starts, in the current loop.
-export function sceneJumpTime(index: number, time: number): number {
-  const loops = Math.max(0, Math.floor((seconds(time) - INTRO_END) / CYCLE));
-  // A hair past the start, so rounding cannot land in the scene before.
-  const sec = INTRO_END + loops * CYCLE + SCENE_STARTS[index] + 0.01;
-  return SILK_START_TIME + sec * SILK_TIME_SCALE;
 }
 
 // How much of the scene shows at all: 0 before the intro sparks.
@@ -157,7 +152,7 @@ export function summitFlash(f: Frame): number {
 
 // How settled the mark is (its light sweeps and pulses only at rest).
 export function restAmount(f: Frame): number {
-  if (f.phase < 0) return smoothstep(INTRO_END - 0.6, INTRO_END, f.sec);
+  if (f.phase < 0) return 0; // the globe forms first: no mark yet
   if (f.phase < OPEN[1])
     return 1 - smoothstep(OPEN[0] - 0.2, OPEN[0] + 0.3, f.phase);
   return smoothstep(FILL + 1.2, FILL + 2, f.phase);
@@ -287,7 +282,7 @@ export function torchAt(f: Frame, trail = 22) {
 // Stroke centres from logo-square.png: x, y and half-width in the 300 px
 // logo. The navy stroke is the mountain (left foot, summit, right foot); the
 // amber check-mark is ticked from its top-left; the T is the stem (bottom up,
-// widened to carry the tech logos) and its thin rising line.
+// widened to carry the slogan) and its thin rising line.
 type Trace = [x: number, y: number, halfWidth: number][];
 const AMBER: Trace[] = [
   [
@@ -392,22 +387,49 @@ function strokeFill(traces: Trace[], count: number, rand: () => number) {
   });
 }
 
-// ---- The T's tech logos -----------------------------------------------------------
-// Two logos a row, stacked from the bottom of the stem up; the last one sits
-// alone at the top.
-export const ICON_SIZE = 0.088; // mark units
-function iconSlots(count: number): Point[] {
-  const bottom = uy(146);
-  const step = (bottom - uy(64)) / Math.ceil(count / 2 - 1);
-  return Array.from({ length: count }, (_, i) => {
-    const row = Math.floor(i / 2);
-    const alone = i === count - 1 && count % 2 === 1;
-    const side = i % 2 === 0 ? -1 : 1;
-    return {
-      x: ux(219) + (alone ? 0 : side * ICON_SIZE * 0.58),
-      y: bottom - row * step,
-    };
-  });
+// ---- The T's slogan ---------------------------------------------------------------
+// GET IT DONE in amber dots reading up the stem, in place of the tech logos
+// (lead, 2026-10-12): a 5 x 7 dot font (I is 3 wide), the letters turned so
+// their tops face the X.
+const GLYPHS: Record<string, string[]> = {
+  G: [".###.", "#...#", "#....", "#.###", "#...#", "#...#", ".###."],
+  E: ["#####", "#....", "#....", "####.", "#....", "#....", "#####"],
+  T: ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "..#.."],
+  I: ["###", ".#.", ".#.", ".#.", ".#.", ".#.", "###"],
+  D: ["####.", "#...#", "#...#", "#...#", "#...#", "#...#", "####."],
+  O: [".###.", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+  N: ["#...#", "##..#", "#.#.#", "#.#.#", "#..##", "#...#", "#...#"],
+};
+export const SLOGAN = "GET IT DONE";
+export const SLOGAN_CELL = 0.008; // one dot's cell, in mark units
+const WORD_GAP = 3; // empty cells between words (1 between letters)
+
+// The slogan's dots, centred on the stem: x across it (row 0, the letters'
+// tops, on the left), y up it, and `along` 0..1 from the first column (at
+// the bottom) to the last.
+export function sloganCells(): (Point & { along: number })[] {
+  const cells: { column: number; row: number }[] = [];
+  let column = 0;
+  for (const char of SLOGAN) {
+    const glyph = GLYPHS[char];
+    if (!glyph) {
+      column += WORD_GAP - 1;
+      continue;
+    }
+    glyph.forEach((line, row) => {
+      [...line].forEach((mark, x) => {
+        if (mark === "#") cells.push({ column: column + x, row });
+      });
+    });
+    column += glyph[0].length + 1;
+  }
+  const last = column - 2; // the last letter's last column
+  const centre = { x: ux(219), y: uy(104) };
+  return cells.map(({ column: at, row }) => ({
+    x: centre.x + (row - 3) * SLOGAN_CELL,
+    y: centre.y + (last / 2 - at) * SLOGAN_CELL,
+    along: at / last,
+  }));
 }
 
 // ---- Scene ------------------------------------------------------------------
@@ -439,11 +461,11 @@ type Dot = {
   glow: boolean;
 };
 
-type Icon = { index: number; slot: Point; from: Point };
+type SloganDot = { cell: Point; along: number; seed: number; from: Point };
 
 export type Scene = {
   land: Dot[];
-  icons: Icon[];
+  slogan: SloganDot[];
   grid: { lat: number; lon: number }[][];
 };
 
@@ -471,14 +493,14 @@ export function buildScene(seed = 11): Scene {
       });
     });
   }
-  // The logos wait in a loose cloud around the T before they stack.
-  const slots = iconSlots(TECH_ICONS.length);
-  const icons = slots.map((slot, index) => {
-    const angle = -2.5 + (index / slots.length) * 4.2 + (rand() - 0.5) * 0.3;
+  // The slogan's dots wait in a loose cloud around the T before they write.
+  const slogan = sloganCells().map(({ along, ...cell }) => {
+    const angle = -2.5 + rand() * 4.2;
     const reach = 0.42 + rand() * 0.22;
     return {
-      index,
-      slot,
+      cell,
+      along,
+      seed: rand() * Math.PI * 2,
       from: {
         x: Math.min(0.86, ux(219) + Math.cos(angle) * reach),
         y: Math.sin(angle) * reach * 0.85,
@@ -497,7 +519,7 @@ export function buildScene(seed = 11): Scene {
       })),
     ),
   ];
-  return { land, icons, grid };
+  return { land, slogan, grid };
 }
 
 // ---- One dot, one moment ---------------------------------------------------
@@ -517,7 +539,7 @@ function sheen(p: Point, sec: number): number {
 }
 
 // Resting in the mark: light drifting along the stroke, softly twinkling;
-// the stem's light glows faintly behind the tech logos.
+// the stem's light glows faintly behind the slogan.
 function resting(dot: Dot, sec: number): DotFrame {
   const m = dot.mark;
   const flow = 0.016 * Math.sin(sec * 0.8 + dot.seed);
@@ -569,12 +591,13 @@ function blend(from: DotFrame, to: DotFrame, at: Point, t: number): DotFrame {
   };
 }
 
+// On load: the sparks gather straight onto the globe.
 function intro(dot: Dot, f: Frame): DotFrame {
   const start = INTRO_START + dot.delay * 1.1;
   const t = smoothstep(start, start + FLIGHT, f.sec);
-  const rest = resting(dot, f.sec);
+  const globe = onGlobe(dot, f);
   const spark = { ...dot.spark, alpha: 0, amber: 0.6, scale: 0.6, depth: 0 };
-  return blend(spark, rest, curve(dot.spark, { x: 0, y: 0 }, rest, t), t);
+  return blend(spark, globe, curve(dot.spark, { x: 0, y: 0 }, globe, t), t);
 }
 
 // Scene 2, the mountain: down to the nearer foot, then up the slope to its
@@ -626,7 +649,7 @@ function ticker(dot: Dot, f: Frame, from: DotFrame): DotFrame {
   return blend(summit, rest, mixPoint(SUMMIT_POINT, rest, t), t);
 }
 
-// Scene 3, behind the logos: the far side of the world waits out of sight,
+// Scene 3, behind the slogan: the far side of the world waits out of sight,
 // then glows up the stem and out along the thin line.
 function filler(dot: Dot, f: Frame, from: DotFrame): DotFrame {
   const m = dot.mark;
@@ -660,43 +683,43 @@ export function dotAt(dot: Dot, f: Frame): DotFrame {
   return filler(dot, f, globe);
 }
 
-export type IconFrame = Point & { alpha: number; scale: number };
+export type SloganFrame = Point & { alpha: number; scale: number };
 
-// A tech logo: in its slot at rest, leaving with the mark, then flying in
-// from the cloud around the T and stacking from the bottom up.
-export function iconAt(icon: Icon, f: Frame): IconFrame {
-  const bob = 0.004 * Math.sin(f.sec * 1.4 + icon.index);
-  const slot = { x: icon.slot.x, y: icon.slot.y + bob };
-  if (f.phase < 0) {
-    const start = INTRO_START + 0.9 + icon.index * 0.07;
-    const t = smoothstep(start, start + 0.7, f.sec);
-    return { ...slot, alpha: t, scale: mix(0.5, 1, t) };
+// A dot of the slogan: hidden while the globe forms on load; at rest in the
+// mark, leaving with it, then gathering from the cloud around the T and
+// writing GET IT DONE from the bottom up; at rest it twinkles in the sheen.
+export function sloganAt(dot: SloganDot, f: Frame): SloganFrame {
+  const twinkle = 0.85 + 0.15 * Math.sin(f.sec * 2.1 + dot.seed * 3);
+  const shine = sheen(dot.cell, f.sec);
+  const { cell } = dot;
+  if (f.phase < 0) return { ...cell, alpha: 0, scale: 1 };
+  if (f.phase < OPEN[0]) {
+    return { ...cell, alpha: twinkle + 0.4 * shine, scale: 1 + 0.5 * shine };
   }
-  if (f.phase < OPEN[0]) return { ...slot, alpha: 1, scale: 1 };
-  if (f.phase < ICONS_IN) {
+  if (f.phase < SLOGAN_IN) {
     const t = smoothstep(OPEN[0], OPEN[0] + 0.8, f.phase);
     return {
-      ...mixPoint(slot, icon.from, t),
-      alpha: 1 - t,
+      ...mixPoint(cell, dot.from, t),
+      alpha: (1 - t) * twinkle,
       scale: mix(1, 1.4, t),
     };
   }
-  const show = smoothstep(
-    ICONS_IN,
-    ICONS_IN + 0.5,
-    f.phase - icon.index * 0.05,
-  );
-  const start = STACK + icon.index * 0.13;
-  const t = smoothstep(start, start + 0.8, f.phase);
+  const show = smoothstep(SLOGAN_IN, SLOGAN_IN + 0.5, f.phase);
+  const start = WRITE + dot.along * 1.1;
+  const t = smoothstep(start, start + 0.7, f.phase);
   const float = {
-    x: icon.from.x + 0.015 * Math.sin(f.sec * 0.9 + icon.index),
-    y: icon.from.y + 0.015 * Math.cos(f.sec * 0.8 + icon.index),
+    x: dot.from.x + 0.015 * Math.sin(f.sec * 0.9 + dot.seed),
+    y: dot.from.y + 0.015 * Math.cos(f.sec * 0.8 + dot.seed),
   };
   const lift = {
-    x: (float.x + slot.x) / 2,
-    y: Math.min(float.y, slot.y) - 0.15,
+    x: (float.x + cell.x) / 2,
+    y: Math.min(float.y, cell.y) - 0.15,
   };
-  return { ...curve(float, lift, slot, t), alpha: show, scale: mix(1.7, 1, t) };
+  return {
+    ...curve(float, lift, cell, t),
+    alpha: show * mix(0.4, 1, t) * twinkle + 0.4 * shine * t,
+    scale: mix(1.6, 1, t) + 0.5 * shine * t,
+  };
 }
 
 // A pulse of light running up the T and out along its thin line, at rest.
@@ -733,7 +756,6 @@ export function createGlobeMark(canvas: HTMLCanvasElement): GlobeMark | null {
   // Built on the first frame that has room for the scene, so narrow screens
   // (no stage) never pay for it.
   let scene: Scene | null = null;
-  let iconPaths: Path2D[] = [];
   const font = getComputedStyle(canvas).fontFamily;
   let area: MarkArea = null;
   let ratio = 1;
@@ -916,21 +938,27 @@ export function createGlobeMark(canvas: HTMLCanvasElement): GlobeMark | null {
     }
   };
 
-  const drawIcons = (icons: Icon[], f: Frame, px: ToPixels, size: number) => {
-    const box = ICON_SIZE * size * ratio;
-    ctx.fillStyle = "rgb(226,236,252)";
-    for (const icon of icons) {
-      const frame = iconAt(icon, f);
-      if (frame.alpha <= 0.01) continue;
-      const [x, y] = px(frame, 0.6);
-      const s = (box * frame.scale) / 24;
-      ctx.save();
-      ctx.globalAlpha = frame.alpha;
-      ctx.translate(x - 12 * s, y - 12 * s);
-      ctx.scale(s, s);
-      ctx.fill(iconPaths[icon.index]);
-      ctx.restore();
+  // The slogan: amber dots, each with a faint halo, over the stem's light.
+  const drawSlogan = (
+    dots: SloganDot[],
+    f: Frame,
+    px: ToPixels,
+    size: number,
+    shown: number,
+  ) => {
+    const side = SLOGAN_CELL * size * ratio * 0.88;
+    ctx.fillStyle = GOLD;
+    for (const dot of dots) {
+      const d = sloganAt(dot, f);
+      const alpha = Math.min(1, d.alpha) * shown;
+      if (alpha < 0.02) continue;
+      const [x, y] = px(d, 0.6);
+      ctx.globalAlpha = alpha;
+      square(x, y, side * d.scale);
+      ctx.globalAlpha = alpha * 0.08;
+      square(x, y, side * d.scale * 3);
     }
+    ctx.globalAlpha = 1;
   };
 
   const drawOffices = (f: Frame, px: ToPixels, size: number) => {
@@ -960,10 +988,7 @@ export function createGlobeMark(canvas: HTMLCanvasElement): GlobeMark | null {
   const draw = (time: number) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!area) return 0;
-    if (!scene) {
-      scene = buildScene();
-      iconPaths = TECH_ICONS.map((icon) => new Path2D(icon.path));
-    }
+    scene ??= buildScene();
     const { x, y, size } = area;
     // Ease the view towards the pointer.
     look.x += (pointer.x - look.x) * 0.06;
@@ -979,10 +1004,10 @@ export function createGlobeMark(canvas: HTMLCanvasElement): GlobeMark | null {
     ctx.globalCompositeOperation = "lighter";
     drawGrid(scene.grid, f, px);
     drawDots(scene.land, f, px, shown);
+    drawSlogan(scene.slogan, f, px, size, shown);
     drawTorch(f, px, size);
     drawFlashes(f, px, size);
     ctx.globalCompositeOperation = "source-over";
-    drawIcons(scene.icons, f, px, size);
     drawOffices(f, px, size);
     return shown;
   };

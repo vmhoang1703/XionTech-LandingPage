@@ -1,17 +1,17 @@
-import { aboutOfficeView } from "@/content/offices";
+import { aboutOfficeView, otherLocations } from "@/content/offices";
 
 // About page copy (prototype about.html). Kept out of the components so it can
 // be translated later.
 
 export const aboutMeta = {
-  title: "About XionTech | Get IT Done",
+  title: "About XionTechs | Get IT Done",
   description:
-    "XionTech is an education technology company and software partner, with offices in Ho Chi Minh City and Plano serving clients in the USA, Europe and Australia.",
+    "XionTechs is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia.",
 };
 
 export const aboutHero = {
   title: {
-    lead: "We’re XionTech,",
+    lead: "We’re XionTechs,",
     middle: "technology built with ",
     accent: "ownership",
     tail: ".",
@@ -56,7 +56,7 @@ export const aboutFaq = {
   items: [
     {
       id: "what",
-      question: "What does XionTech do?",
+      question: "What does XionTechs do?",
       answer:
         "We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing.",
     },
@@ -76,7 +76,7 @@ export const aboutFaq = {
       id: "time-zones",
       question: "How do you work across time zones?",
       answer:
-        "Our teams in Ho Chi Minh City and Plano cover USA, Europe and Australia time zones, with shared tools for real-time updates.",
+        "Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates.",
     },
     {
       id: "shape",
@@ -116,7 +116,8 @@ export const aboutFaq = {
 };
 
 export const aboutOffices = {
-  title: "Two offices, serving the world.",
+  title: "Two headquarters, four locations.",
+  more: otherLocations,
   // Plano first, then Ho Chi Minh City.
   offices: aboutOfficeView,
 };
