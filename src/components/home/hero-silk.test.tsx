@@ -6,7 +6,6 @@ import {
   type GlobeMark,
   MARK_WIDTH,
   SCENE_REST_TIME,
-  sceneJumpTime,
 } from "./globe-mark";
 import { HeroSilk } from "./hero-silk";
 import { createSilk, type Silk } from "./silk-shader";
@@ -233,6 +232,10 @@ describe("HeroSilk", () => {
     for (const name of ["h-9", "min-w-9", "px-2", "justify-center"]) {
       expect(button.classList.contains(name)).toBe(true);
     }
+    // Below the header pill, which floats over the top of the hero.
+    expect(
+      button.classList.contains("top-[calc(var(--spacing-header-room)+12px)]"),
+    ).toBe(true);
   });
 });
 
@@ -279,19 +282,11 @@ describe("HeroSilk scene", () => {
     expect(screen.queryByRole("group")).toBeNull();
   });
 
-  it("shows three scene dots under the stage and jumps on click", () => {
+  it("shows no scene dots: the animation runs on its own (lead, 2026-10-12)", () => {
     renderInHero();
-    const dots = screen.getAllByRole("button", { name: /^Scene/ });
-    expect(dots).toHaveLength(3);
-    expect(dots[2].getAttribute("aria-current")).toBe("step");
-    // Inside the stage, so the dots come after the copy in Tab order.
-    const group = screen.getByRole("group", { name: "Animation scenes" });
-    expect(group.parentElement?.classList.contains("hero-stage")).toBe(true);
-
-    fireEvent.click(dots[0]);
-    expect(globe.draw).toHaveBeenLastCalledWith(sceneJumpTime(0, 8));
-    expect(dots[0].getAttribute("aria-current")).toBe("step");
-    expect(dots[2].getAttribute("aria-current")).toBeNull();
+    expect(screen.queryByRole("group")).toBeNull();
+    expect(screen.queryAllByRole("button", { name: /^Scene/ })).toHaveLength(0);
+    expect(screen.getAllByRole("button")).toHaveLength(1);
   });
 
   it("leans the scene towards a fine pointer and back when it leaves", () => {

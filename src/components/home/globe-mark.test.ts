@@ -7,8 +7,6 @@ import {
   frameAt,
   GLOBE_RADIUS,
   horizonAmount,
-  ICON_SIZE,
-  iconAt,
   isLand,
   loopPhase,
   MARK_WIDTH,
@@ -20,10 +18,10 @@ import {
   pulseAt,
   restAmount,
   SCENE_REST_TIME,
-  SCENE_STARTS,
   sceneAmount,
-  sceneIndex,
-  sceneJumpTime,
+  SLOGAN_CELL,
+  sloganAt,
+  sloganCells,
   seconds,
   summitFlash,
   torchAt,
@@ -57,31 +55,6 @@ describe("timeline", () => {
   it("shows nothing for the first moment, only the silk", () => {
     expect(sceneAmount(frameAt(atSec(0.5)))).toBe(0);
     expect(sceneAmount(frame(0))).toBe(1);
-  });
-
-  it("names the scene showing: globe, mountain, then the mark", () => {
-    expect(sceneIndex(frameAt(atSec(1)))).toBe(2);
-    expect(sceneIndex(frame(1))).toBe(2);
-    expect(sceneIndex(frame(SCENE_STARTS[0] + 0.1))).toBe(0);
-    expect(sceneIndex(frame(SCENE_STARTS[1] + 0.1))).toBe(1);
-    expect(sceneIndex(frame(SCENE_STARTS[2] + 0.1))).toBe(2);
-  });
-
-  it("jumps to the start of a scene in the current loop", () => {
-    for (const index of [0, 1, 2]) {
-      const time = sceneJumpTime(index, at(5, 2));
-      expect(loopPhase(time)).toBeCloseTo(SCENE_STARTS[index], 1);
-      expect(sceneIndex(frameAt(time))).toBe(index);
-      expect(seconds(time)).toBeCloseTo(
-        INTRO + 2 * CYCLE + SCENE_STARTS[index],
-        1,
-      );
-    }
-    // From the intro, it jumps into the first loop.
-    expect(seconds(sceneJumpTime(1, atSec(1)))).toBeCloseTo(
-      INTRO + SCENE_STARTS[1],
-      1,
-    );
   });
 
   it("rests on the finished mark at SCENE_REST_TIME", () => {
@@ -175,14 +148,41 @@ describe("scene", () => {
     expect(scene.grid).toHaveLength(17);
   });
 
-  it("stacks 13 tech logos in the T, two a row from the bottom up", () => {
-    const stem = (219 - 162) / 137;
-    expect(scene.icons).toHaveLength(13);
-    for (const icon of scene.icons) {
-      expect(Math.abs(icon.slot.x - stem)).toBeLessThanOrEqual(ICON_SIZE);
-    }
-    expect(scene.icons[0].slot.y).toBeGreaterThan(scene.icons[12].slot.y);
-    expect(scene.icons[12].slot.x).toBeCloseTo(stem);
+  it("writes GET IT DONE up the T's stem in dots, 7 cells tall", () => {
+    const stem = { x: (219 - 162) / 137, y: (104 - 106) / 137 };
+    const cells = sloganCells();
+    // G 17, E 18, T 11, I 11, T 11, D 18, O 16, N 18, E 18 dots.
+    expect(cells).toHaveLength(138);
+    expect(scene.slogan).toHaveLength(138);
+    const xs = cells.map((c) => c.x);
+    const ys = cells.map((c) => c.y);
+    // Across the stem: 7 rows centred on it, inside its 14 px half-width.
+    expect(Math.max(...xs) - Math.min(...xs)).toBeCloseTo(6 * SLOGAN_CELL);
+    expect((Math.max(...xs) + Math.min(...xs)) / 2).toBeCloseTo(stem.x);
+    expect(Math.max(...xs) - stem.x).toBeLessThan(14 / 137);
+    // Up the stem: 55 columns centred on its middle, inside its length.
+    expect(Math.max(...ys) - Math.min(...ys)).toBeCloseTo(54 * SLOGAN_CELL);
+    expect((Math.max(...ys) + Math.min(...ys)) / 2).toBeCloseTo(stem.y);
+    expect(Math.max(...ys)).toBeLessThan((156 - 106) / 137);
+    expect(Math.min(...ys)).toBeGreaterThan((52 - 106) / 137);
+  });
+
+  it("reads upward: the first letter at the bottom, letter tops on the left", () => {
+    const cells = sloganCells();
+    const first = cells.filter((c) => c.along === 0);
+    const last = cells.filter((c) => c.along === 1);
+    expect(Math.min(...first.map((c) => c.y))).toBeGreaterThan(
+      Math.max(...last.map((c) => c.y)),
+    );
+    // G's first column: rows 1 to 5 (its round left side), not 0 and 6.
+    expect(first).toHaveLength(5);
+    // The last E's last column: rows 0 and 6 only.
+    expect(last).toHaveLength(2);
+    // The T of GET: its top bar (row 0) is the leftmost row.
+    const tTop = cells.filter((c) => c.along > 0.2 && c.along < 0.3);
+    expect(Math.min(...tTop.map((c) => c.x))).toBeCloseTo(
+      Math.min(...cells.map((c) => c.x)),
+    );
   });
 
   it("fits the mark's width", () => {
@@ -263,30 +263,37 @@ describe("dots", () => {
   });
 });
 
-describe("tech logos", () => {
-  const icon = scene.icons[3];
+describe("slogan", () => {
+  const dot = scene.slogan[60];
 
-  it("fade in at their slots during the intro", () => {
-    expect(iconAt(icon, frameAt(atSec(0))).alpha).toBe(0);
-    const rest = iconAt(icon, frameAt(SCENE_REST_TIME));
-    expect(rest.alpha).toBe(1);
-    expect(near(rest, icon.slot)).toBeLessThan(0.01);
+  it("is written up the stem during the intro", () => {
+    expect(sloganAt(dot, frameAt(atSec(0))).alpha).toBe(0);
+    const rest = sloganAt(dot, frameAt(SCENE_REST_TIME));
+    expect(rest.alpha).toBeGreaterThan(0.6);
+    expect(near(rest, dot.cell)).toBeLessThan(0.001);
+    // The bottom is written before the top.
+    const first = scene.slogan.find((d) => d.along === 0);
+    const top = scene.slogan.find((d) => d.along === 1);
+    const writing = frameAt(atSec(2.9));
+    expect(first && sloganAt(first, writing).alpha).toBeGreaterThan(0.5);
+    expect(top && sloganAt(top, writing).alpha).toBe(0);
   });
 
-  it("leave with the mark and stay hidden through the globe", () => {
-    const leaving = iconAt(icon, frame(2.6));
+  it("leaves with the mark and stays hidden through the globe", () => {
+    const leaving = sloganAt(dot, frame(2.6));
     expect(leaving.alpha).toBeLessThan(1);
     expect(leaving.scale).toBeGreaterThan(1);
-    expect(iconAt(icon, frame(8)).alpha).toBe(0);
+    expect(sloganAt(dot, frame(8)).alpha).toBe(0);
   });
 
-  it("fly in large, then stack into their slots", () => {
-    const flying = iconAt(icon, frame(14.3));
-    expect(flying.alpha).toBeGreaterThan(0);
-    expect(flying.scale).toBeGreaterThan(1.5);
-    const stacked = iconAt(icon, frame(18));
-    expect(stacked.scale).toBe(1);
-    expect(near(stacked, icon.slot)).toBeLessThan(0.01);
+  it("gathers large around the T, then writes into its cell", () => {
+    const gathering = sloganAt(dot, frame(14.3));
+    expect(gathering.alpha).toBeGreaterThan(0);
+    expect(gathering.scale).toBeGreaterThan(1.5);
+    expect(near(gathering, dot.cell)).toBeGreaterThan(0.2);
+    const written = sloganAt(dot, frame(18));
+    expect(near(written, dot.cell)).toBeLessThan(0.001);
+    expect(written.alpha).toBeGreaterThan(0.6);
   });
 });
 
