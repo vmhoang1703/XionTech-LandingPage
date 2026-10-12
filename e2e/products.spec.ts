@@ -56,10 +56,33 @@ test(
 );
 
 test.describe("school-day roadmap", { tag: "@a11y" }, () => {
-  test.use({ viewport: { width: 1280, height: 500 } });
+  test.use({ viewport: { width: 1280, height: 400 } });
 
   const roadmap = (page: Page) => page.locator("#map .rm");
   const cards = (page: Page) => roadmap(page).locator(".rm-card");
+
+  // A wiped card still has full opacity, so ask the browser what is painted
+  // at the card's centre: the card (or a part of it) only once it is open.
+  const expectOpen = async (page: Page) => {
+    for (const card of await cards(page).all()) {
+      // elementFromPoint only sees the viewport.
+      await card.evaluate((el) =>
+        el.scrollIntoView({ block: "center", behavior: "instant" }),
+      );
+      await expect
+        .poll(() =>
+          card.evaluate((el) => {
+            const box = el.getBoundingClientRect();
+            const hit = document.elementFromPoint(
+              box.left + box.width / 2,
+              box.top + box.height / 2,
+            );
+            return !!hit && el.contains(hit);
+          }),
+        )
+        .toBe(true);
+    }
+  };
 
   test("the roadmap shows the H1 and six cards", async ({ page }) => {
     await page.goto("/products");
@@ -70,23 +93,25 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
         name: "Built apart. Better together.",
       }),
     ).toBeVisible();
+    await expect(roadmap(page)).toBeVisible();
     await expect(cards(page)).toHaveCount(6);
+    await expect(cards(page).first()).toBeVisible();
   });
 
-  test("scrolling it into view plays the draw-in and leaves every card at full strength", async ({
+  test("scrolling it into view plays the draw-in and leaves every card open", async ({
     page,
   }) => {
     await page.goto("/products");
+    // Scrolled to the top with the roadmap below the fold: waiting, not shown.
     await expect(roadmap(page)).toHaveAttribute("data-reveal", "armed");
+    await expect(cards(page).first()).not.toBeInViewport();
 
     await roadmap(page).evaluate((el) =>
       el.scrollIntoView({ block: "center", behavior: "instant" }),
     );
 
     await expect(roadmap(page)).toHaveAttribute("data-reveal", "on");
-    for (const card of await cards(page).all()) {
-      await expect(card).toHaveCSS("opacity", "1");
-    }
+    await expectOpen(page);
   });
 
   test.describe("reduced motion", () => {
@@ -96,9 +121,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       await page.goto("/products");
       await expect(roadmap(page)).toHaveAttribute("data-reveal", "static");
       await expect(cards(page)).toHaveCount(6);
-      for (const card of await cards(page).all()) {
-        await expect(card).toHaveCSS("opacity", "1");
-      }
+      await expectOpen(page);
     });
   });
 
