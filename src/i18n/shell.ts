@@ -134,10 +134,10 @@ const vi: ShellDictionary = {
   },
   notFound: {
     metaTitle: "[Placeholder] Page not found | XionTech",
-    title: "[Placeholder] You’ve wandered off the trail.",
-    lede: "[Placeholder] The page you were looking for isn’t here. Follow the trail back home, or pick a path below.",
-    primary: "[Placeholder] Go to Home",
-    here: "[Placeholder] You are here",
+    title: "Bạn đã đi lạc lối mòn.",
+    lede: "Trang bạn tìm không có ở đây. Hãy theo lối mòn về trang chủ, hoặc chọn một con đường bên dưới.",
+    primary: "Về trang chủ",
+    here: "Bạn đang ở đây",
   },
 };
 

@@ -24,7 +24,7 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    expect(html).toContain("[Placeholder] You’ve wandered off the trail.");
+    expect(html).toContain("Bạn đã đi lạc lối mòn.");
     expect(html.match(/<title>/g)).toHaveLength(1);
     expect(html.match(/<meta name="robots"/g)).toHaveLength(1);
   },

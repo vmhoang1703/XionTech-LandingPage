@@ -82,9 +82,7 @@ describe("NotFound page", () => {
     );
 
     expect(
-      screen
-        .getByRole("link", { name: "[Placeholder] Go to Home" })
-        .getAttribute("href"),
+      screen.getByRole("link", { name: "Về trang chủ" }).getAttribute("href"),
     ).toBe("/vi");
     expect(
       screen.getByRole("link", { name: "Sản phẩm" }).getAttribute("href"),
