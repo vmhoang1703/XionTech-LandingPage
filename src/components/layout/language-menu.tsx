@@ -216,7 +216,10 @@ export function LanguageMenu() {
       ref={rootRef}
       className="relative shrink-0"
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        // A null relatedTarget is a mouse press that does not focus (Safari, macOS
+        // Firefox) or a window blur; the outside-click handler covers the mouse.
+        const next = event.relatedTarget;
+        if (next && !event.currentTarget.contains(next)) setOpen(false);
       }}
     >
       <button

@@ -135,6 +135,19 @@ describe("LanguageMenu", () => {
     expect(document.activeElement).toBe(after);
   });
 
+  it("stays open on a blur with no new focus target", () => {
+    render(<LanguageMenu />);
+    openMenu();
+    fireEvent.blur(screen.getByRole("button", { name: /English/ }), {
+      relatedTarget: null,
+    });
+    expect(
+      screen
+        .getByRole("button", { name: /Language/ })
+        .getAttribute("aria-expanded"),
+    ).toBe("true");
+  });
+
   it("keeps each box of a checkbox group across a switch", () => {
     const group = () => (
       <form>
