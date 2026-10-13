@@ -27,7 +27,16 @@ interface SavedState {
 
 type Field = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
+// A checkbox group shares one name (the contact form's product pills), so each box is
+// keyed by name and value; a radio group keeps one key holding the checked value.
 function fieldKey(field: Field) {
+  if (
+    field instanceof HTMLInputElement &&
+    field.type === "checkbox" &&
+    field.name
+  ) {
+    return `${field.name}=${field.value}`;
+  }
   return field.name || field.id;
 }
 
@@ -126,9 +135,15 @@ function restoreScroll(top: number) {
   return stop;
 }
 
+// Off a locale path (the global 404, e.g. /fr/products) the chosen locale replaces a
+// two-letter first segment and is prefixed to anything else.
 function swapLocale(pathname: string, locale: Locale) {
-  const rest = pathname.split("/").slice(2).join("/");
-  return rest ? `/${locale}/${rest}` : `/${locale}`;
+  const segments = pathname.split("/").slice(1);
+  const rest = /^[a-z]{2}$/.test(segments[0] ?? "")
+    ? segments.slice(1)
+    : segments;
+  const tail = rest.join("/");
+  return tail ? `/${locale}/${tail}` : `/${locale}`;
 }
 
 function setLocaleCookie(locale: Locale) {
@@ -139,12 +154,15 @@ export function LanguageMenu() {
   const pathname = usePathname();
   const router = useRouter();
   const segment = pathname.split("/")[1];
-  const current: Locale = isLocale(segment) ? segment : DEFAULT_LOCALE;
-  const text = SHELL[current].language;
+  const current = isLocale(segment) ? segment : undefined;
+  const shown = current ?? DEFAULT_LOCALE;
+  const text = SHELL[shown].language;
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
+  // Choosing and Escape return focus to the button; an outside click or Tab away only
+  // closes, so focus stays where the visitor put it (AC-NAV-1).
   const close = () => {
     setOpen(false);
     buttonRef.current?.focus();
@@ -172,7 +190,7 @@ export function LanguageMenu() {
       if (event.key === "Escape") close();
     };
     const onClick = (event: MouseEvent) => {
-      if (!rootRef.current?.contains(event.target as Node)) close();
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
     };
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("click", onClick);
@@ -194,7 +212,13 @@ export function LanguageMenu() {
   };
 
   return (
-    <div ref={rootRef} className="relative shrink-0">
+    <div
+      ref={rootRef}
+      className="relative shrink-0"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
+    >
       <button
         ref={buttonRef}
         type="button"
@@ -204,7 +228,7 @@ export function LanguageMenu() {
         onClick={() => setOpen(!open)}
       >
         <span className="sr-only">{text.label}: </span>
-        {current.toUpperCase()}
+        {shown.toUpperCase()}
         <CaretDownIcon aria-hidden="true" />
       </button>
       <ul

@@ -97,13 +97,88 @@ describe("LanguageMenu", () => {
     expect(button.getAttribute("aria-expanded")).toBe("true");
   });
 
-  it("closes on an outside click and returns focus to the button", () => {
-    render(<LanguageMenu />);
+  it("closes on an outside click and leaves focus where the visitor clicked", () => {
+    render(
+      <>
+        <input aria-label="outside" />
+        <LanguageMenu />
+      </>,
+    );
     openMenu();
-    fireEvent.click(document.body);
+    const outside = screen.getByRole("textbox", { name: "outside" });
+    outside.focus();
+    fireEvent.click(outside);
     const button = screen.getByRole("button", { name: /Language/ });
     expect(button.getAttribute("aria-expanded")).toBe("false");
-    expect(document.activeElement).toBe(button);
+    expect(document.activeElement).toBe(outside);
+  });
+
+  it("closes when focus tabs out of the menu, without moving focus", () => {
+    render(
+      <>
+        <LanguageMenu />
+        <a href="#after">after</a>
+      </>,
+    );
+    openMenu();
+    const english = screen.getByRole("button", { name: /English/ });
+    const after = screen.getByRole("link", { name: "after" });
+    english.focus();
+    fireEvent.blur(english, {
+      relatedTarget: screen.getByRole("button", { name: /Tiếng Việt/ }),
+    });
+    const button = screen.getByRole("button", { name: /Language/ });
+    expect(button.getAttribute("aria-expanded")).toBe("true");
+    after.focus();
+    fireEvent.blur(english, { relatedTarget: after });
+    expect(button.getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(after);
+  });
+
+  it("keeps each box of a checkbox group across a switch", () => {
+    const group = () => (
+      <form>
+        <input type="checkbox" name="products" value="pxp" />
+        <input type="checkbox" name="products" value="sxp" />
+        <input type="checkbox" name="products" value="iot" />
+        <LanguageMenu />
+      </form>
+    );
+    const box = (value: string) =>
+      document.querySelector(`[value="${value}"]`) as HTMLInputElement;
+    const { unmount } = render(group());
+    box("pxp").checked = true;
+    box("iot").checked = true;
+    openMenu();
+    fireEvent.click(screen.getByRole("button", { name: /Tiếng Việt/ }));
+    unmount();
+    pathname = "/vi/demo";
+    const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    render(group());
+    expect([
+      box("pxp").checked,
+      box("sxp").checked,
+      box("iot").checked,
+    ]).toEqual([true, false, true]);
+    scrollTo.mockRestore();
+  });
+
+  it("off a locale path, replaces an unsupported two-letter segment", () => {
+    pathname = "/fr/products";
+    render(<LanguageMenu />);
+    openMenu();
+    const english = screen.getByRole("button", { name: /English/ });
+    expect(english.hasAttribute("aria-current")).toBe(false);
+    fireEvent.click(english);
+    expect(push).toHaveBeenCalledWith("/en/products", { scroll: false });
+  });
+
+  it("off a locale path, prefixes the locale without dropping a segment", () => {
+    pathname = "/products/x";
+    render(<LanguageMenu />);
+    openMenu();
+    fireEvent.click(screen.getByRole("button", { name: /Tiếng Việt/ }));
+    expect(push).toHaveBeenCalledWith("/vi/products/x", { scroll: false });
   });
 
   it("saves scroll and field values, and restores them on the new page", () => {
