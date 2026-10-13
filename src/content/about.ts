@@ -70,7 +70,7 @@ export const aboutFaq = {
       id: "try-apps",
       question: "How can our school try Parent Hub or Staff Hub?",
       answer:
-        "Book a demo. We walk you through the apps using scenarios from your own school.",
+        "Get in touch. We walk you through the apps using scenarios from your own school.",
     },
     {
       id: "time-zones",

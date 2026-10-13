@@ -532,7 +532,7 @@ describe("ContactForm sending", () => {
     },
   );
 
-  it("gives up after 15 seconds, keeps the values and shows the send error", async () => {
+  it("gives up after 32 seconds, keeps the values and shows the send error", async () => {
     vi.useFakeTimers();
     fetchMock.mockImplementation(
       (_url: string, init: RequestInit) =>
@@ -547,7 +547,7 @@ describe("ContactForm sending", () => {
     submit();
     await settle();
     await act(async () => {
-      vi.advanceTimersByTime(14_999);
+      vi.advanceTimersByTime(31_999);
     });
     expect(submitButton().textContent).toBe("Sending...");
     expect(screen.queryByRole("alert")).toBeNull();

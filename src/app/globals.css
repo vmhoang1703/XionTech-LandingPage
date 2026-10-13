@@ -6475,3 +6475,152 @@ main > .page-scene:last-child > .surface-navy:last-child {
     text-decoration: none;
   }
 }
+
+/* Apply bar (ApplyBar, lead 2026-10-13): on phones and tablets the job page
+   offers the form from a bar at the foot of the screen while the form is
+   still below it. From 900px the form sits beside the role text. */
+.apply-bar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: var(--z-index-header);
+  padding: 10px var(--spacing-gutter-mobile)
+    calc(10px + env(safe-area-inset-bottom));
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 -10px 30px -18px rgb(11 33 71 / 0.4);
+  backdrop-filter: blur(14px);
+  translate: 0 110%;
+  visibility: hidden;
+}
+
+.apply-bar[data-shown] {
+  translate: none;
+  visibility: visible;
+}
+
+.apply-bar .btn {
+  justify-content: center;
+  width: 100%;
+}
+
+/* Hidden only once it has slid away; shown at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .apply-bar {
+    transition:
+      translate 0.35s var(--ease-brand),
+      visibility 0s linear 0.35s;
+  }
+
+  .apply-bar[data-shown] {
+    transition: translate 0.35s var(--ease-brand);
+  }
+}
+
+@media (width >= 900px) {
+  .apply-bar {
+    display: none;
+  }
+}
+
+/* Header on scroll (HeaderScroll, lead 2026-10-13): below 1080px the pill
+   slides away while the visitor scrolls down and back when they scroll up. */
+@media (width < 1080px) {
+  header[data-hidden] {
+    translate: 0 -110%;
+  }
+}
+
+@media (width < 1080px) and (prefers-reduced-motion: no-preference) {
+  header[data-autohide] {
+    transition: translate 0.35s var(--ease-brand);
+  }
+}
+
+/* Press on touch screens (TouchPress, lead 2026-10-13): buttons and cards
+   press in a little more than with a mouse, so a tap shows it worked. */
+@media (hover: none) {
+  .btn:not(:disabled, [aria-disabled="true"]):active {
+    transform: scale(0.96);
+  }
+
+  .door:active,
+  .app-card:active,
+  .scard:active,
+  .flip-card:active {
+    scale: 0.96;
+  }
+
+  .scard {
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.45s ease,
+      scale 0.2s var(--ease-brand);
+  }
+
+  .flip-card {
+    transition: scale 0.2s var(--ease-brand);
+  }
+}
+
+/* FAQ (lead, 2026-10-13): the answer fades and slides in, and the + turns
+   into an x (rotated, not swapped), so an open row reads as open. */
+.faq details[open] summary::after {
+  content: "+";
+  rotate: 45deg;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq summary::after {
+    transition: rotate 0.3s var(--ease-brand);
+  }
+
+  .faq details[open] > p {
+    animation: faq-open 0.35s var(--ease-brand) both;
+  }
+}
+
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+}
+
+/* News filters on phones (lead, 2026-10-13): one row to swipe. */
+@media (width < 640px) {
+  .filters {
+    flex-wrap: nowrap;
+    min-inline-size: 0;
+    margin-inline: calc(var(--spacing-gutter-mobile) * -1);
+    padding: 4px var(--spacing-gutter-mobile);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filters button {
+    flex: 0 0 auto;
+  }
+}
+
+/* Phone menu (lead, 2026-10-13): Get in touch and both headquarters' phones
+   under the links. */
+.menu-contact {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.menu-contact .btn {
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.menu-contact a:not(.btn) {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  color: var(--color-muted);
+  font-size: var(--text-body-sm);
+}

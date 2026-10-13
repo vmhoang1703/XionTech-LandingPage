@@ -1,13 +1,21 @@
 "use client";
 
-import { ListIcon, XIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { currentSection, LABELS, NAV_LINKS } from "./nav-data";
+import { contactByPrefix, hcmc, plano } from "@/content/offices";
+import { CONTACT_HREF, currentSection, LABELS, NAV_LINKS } from "./nav-data";
 import { itemClass } from "./site-nav";
 
 const MENU_ID = "mobile-menu";
+
+// Under the links (lead, 2026-10-13): Get in touch and both headquarters'
+// phones, so contact is one tap away from any page.
+const MENU_PHONES = [
+  { city: "Plano", phone: contactByPrefix(plano, "tel:") },
+  { city: "Ho Chi Minh City", phone: contactByPrefix(hcmc, "tel:") },
+];
 // The menu is for 1080px and below (inclusive, as the prototype CSS); above it the desktop
 // nav shows, so growing past it closes the menu (decision T6).
 const DESKTOP_QUERY = "(min-width: 1081px)";
@@ -135,6 +143,21 @@ export function MobileMenu() {
             {item.label}
           </Link>
         ))}
+        <div className="menu-contact">
+          <Link
+            href={CONTACT_HREF}
+            className="btn btn-primary"
+            onClick={() => setOpenedOn(null)}
+          >
+            {LABELS.contact}
+            <ArrowRightIcon aria-hidden="true" />
+          </Link>
+          {MENU_PHONES.map(({ city, phone }) => (
+            <a key={city} href={phone.href}>
+              {city} {phone.label}
+            </a>
+          ))}
+        </div>
       </nav>
     </>
   );

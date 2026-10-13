@@ -20,7 +20,7 @@ export interface NavLabels {
   homeLink: string;
   logoAlt: string;
   menu: string;
-  demo: string;
+  contact: string;
 }
 
 // Navigation labels (for translation in Story 1.2)
@@ -36,8 +36,12 @@ export const LABELS: NavLabels = {
   homeLink: "XionTech home",
   logoAlt: "XionTech, Get IT Done",
   menu: "Menu",
-  demo: "Book a demo",
+  contact: "Get in touch",
 };
+
+// Every call to action goes to the Home Get in touch form; the Demo page is
+// kept but not linked (lead, 2026-10-13).
+export const CONTACT_HREF = "/#contact";
 
 // Services (8 total, in order)
 export const SERVICES: Service[] = [

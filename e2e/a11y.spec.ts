@@ -650,6 +650,12 @@ test.describe("about layout", { tag: "@a11y" }, () => {
         .locator(".faq summary")
         .nth(index)
         .evaluate((el) => getComputedStyle(el, "::after").content);
+
+    const markerTurn = (index: number) =>
+      page
+        .locator(".faq summary")
+        .nth(index)
+        .evaluate((el) => getComputedStyle(el, "::after").rotate);
     expect(await markerAfter(0)).toBe('"+"');
     const neighbour = page.locator(".faq details").nth(1);
     const heightBefore = (await neighbour.boundingBox())?.height ?? 0;
@@ -660,7 +666,9 @@ test.describe("about layout", { tag: "@a11y" }, () => {
       "open",
       "",
     );
-    expect(await markerAfter(0)).toBe('"−"');
+    // Open: the + turns into an x (lead, 2026-10-13).
+    expect(await markerAfter(0)).toBe('"+"');
+    await expect.poll(() => markerTurn(0)).toBe("45deg");
     // align-items: start, so the open answer does not stretch its neighbour
     expect((await neighbour.boundingBox())?.height).toBe(heightBefore);
     await page.locator(".faq summary").nth(2).focus();
@@ -679,7 +687,8 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     expect(await markerAfter(0)).toBe('"+"');
     // Closing one row leaves the other open.
     await expect(page.locator(".faq details[open]")).toHaveCount(1);
-    expect(await markerAfter(2)).toBe('"−"');
+    await expect.poll(() => markerTurn(2)).toBe("45deg");
+    await expect.poll(() => markerTurn(0)).toBe("none");
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/about");

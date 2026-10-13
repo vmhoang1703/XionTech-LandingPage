@@ -8,7 +8,11 @@ import {
 import { parseSubmission } from "@/lib/contact/submission";
 import { describeError, readBody } from "@/lib/http/route-helpers";
 
-export const maxDuration = 10;
+// Worst case: two rate-limit checks (3 s each), then the Gmail send (5 s per
+// step) and a cold start. At 10 s Vercel could stop a send that still went
+// out, the form said "could not send" and a retry hit the rate limit
+// (lead, 2026-10-13: "it gets worse").
+export const maxDuration = 30;
 
 const SEND_FAILED = { error: "send" } as const;
 

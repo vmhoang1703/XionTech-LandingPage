@@ -251,7 +251,7 @@ describe("AboutPage", () => {
       "arrange a walkthrough of Parent Hub and Staff Hub.",
     );
     expect(capture?.querySelector('button[type="submit"]')?.textContent).toBe(
-      "Book a demo",
+      "Get in touch",
     );
     expect(container.querySelector(".page-scene")?.lastElementChild).toBe(
       capture,

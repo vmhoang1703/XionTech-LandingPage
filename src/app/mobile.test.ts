@@ -189,3 +189,56 @@ describe("touch behaviour", () => {
     );
   });
 });
+
+// Round 4 picks (lead, 2026-10-13): 4C 5B 6B 7C 9B 10B.
+describe("behaviour and touch", () => {
+  const css = globalsCss();
+
+  it("shows the job Apply bar only below 900px, sliding in from the foot", () => {
+    expect(css).toMatch(
+      /\.apply-bar\s*\{[^}]*position:\s*fixed;[^}]*translate:\s*0 110%;/,
+    );
+    expect(css).toMatch(/\.apply-bar\[data-shown\]\s*\{\s*translate:\s*none;/);
+    expect(css).toMatch(
+      /@media \(width >= 900px\)\s*\{\s*\.apply-bar\s*\{\s*display:\s*none;/,
+    );
+  });
+
+  it("slides the header away below 1080px when the script marks it hidden", () => {
+    expect(css).toMatch(
+      /@media \(width < 1080px\)\s*\{\s*header\[data-hidden\]\s*\{\s*translate:\s*0 -110%;/,
+    );
+  });
+
+  it("presses buttons and cards in on touch screens", () => {
+    const touch = css.slice(css.indexOf("/* Press on touch screens"));
+    expect(touch).toMatch(
+      /\.btn:not\(:disabled, \[aria-disabled="true"\]\):active\s*\{\s*transform:\s*scale\(0\.96\);/,
+    );
+    expect(touch).toMatch(
+      /\.door:active,\s*\.app-card:active,\s*\.scard:active,\s*\.flip-card:active\s*\{\s*scale:\s*0\.96;/,
+    );
+  });
+
+  it("turns the FAQ + into an x and fades the answer in", () => {
+    expect(css).toMatch(
+      /\.faq details\[open\] summary::after\s*\{\s*content:\s*"\+";\s*rotate:\s*45deg;/,
+    );
+    expect(css).toMatch(
+      /\.faq details\[open\] > p\s*\{\s*animation:\s*faq-open/,
+    );
+  });
+
+  it("puts the news filters in one row to swipe on phones", () => {
+    const chips = css.slice(css.indexOf("/* News filters on phones"));
+    expect(chips).toMatch(
+      /\.filters\s*\{\s*flex-wrap:\s*nowrap;\s*min-inline-size:\s*0;/,
+    );
+  });
+
+  it("gives the phone menu's phone links 44px to tap", () => {
+    expect(css).toMatch(
+      /\.menu-contact a:not\(\.btn\)\s*\{[^}]*min-height:\s*44px;/,
+    );
+  });
+});

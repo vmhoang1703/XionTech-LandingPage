@@ -7,9 +7,12 @@ import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { HeroArt } from "@/components/sections/hero-art";
 import { offices, otherLocations } from "@/content/offices";
 
+// Kept but inactive (lead, 2026-10-13): nothing links here and search engines
+// leave it out; every call to action uses the Home Get in touch form.
 export const metadata: Metadata = {
   title: CONTACT_STRINGS.metaTitle,
   description: CONTACT_STRINGS.metaDescription,
+  robots: { index: false, follow: false },
 };
 
 const { hero } = CONTACT_STRINGS;

@@ -528,6 +528,8 @@ const MAY_HIDE = new Set([
   "[data-glow]::after",
   // Built by the SwipeRows script, so never there without JavaScript.
   ".swipe-dots",
+  // A shortcut to the job form below it; the form itself always shows.
+  ".apply-bar",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],

@@ -8,6 +8,8 @@ import {
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SwipeRows } from "@/components/sections/swipe-rows";
+import { TouchPress } from "@/components/sections/touch-press";
+import { PageFade } from "@/components/sections/page-fade";
 import { PointerGlow } from "@/components/sections/pointer-glow";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
 import "./globals.css";
@@ -73,6 +75,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ScrollReveal />
         <PointerGlow />
         <SwipeRows />
+        <TouchPress />
+        <PageFade />
       </body>
     </html>
   );
