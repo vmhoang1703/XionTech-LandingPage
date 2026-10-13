@@ -62,3 +62,49 @@ Desktop 1440 unchanged (Home 7,266). No sideways scroll at 320, 390, 768, 1440.
 | Resize across 640 and 1080 | Drag | Mouse | Layout switches, nothing cut off | Round 2 | Pending (by hand) |
 
 Home core values keep their original layout (lead, 2026-10-13): one a row on phones, two columns of 304px cards on tablets. Careers "Five things" uses the new layouts.
+
+## Round 3 (lead, 2026-10-13)
+
+Lead: the count jumps from 0 to 25; "Start a project" and "Explore services" sit in an ugly place; check
+every page. Claude measured and audited every page at 390 and 768, then rendered options on the real pages.
+Lead picked 1a D, 1b B, 2 B + animation, 3 C, 4 C, 5 B.
+
+- **Count-up (bug):** a phone draws a frame only every 250-600ms while the page loads, and the count ran
+  then, so it showed 0 → 6 → 12 or 0 → 15. Each figure now waits at 0 (`data-count="wait"`, server HTML)
+  until it is in view and the page has loaded and gone idle, then counts. Measured: every step 0 → 25
+  shows at 390 (CPU ×1 and ×4), 768 (×4) and 1440. No script: a `<noscript>` style shows the number.
+- **1a/1b Next steps:** below 980px they come after the four goals (`display: contents` on the heading
+  block, `order: 1`; DOM order unchanged). Phones: full-width button, link under it. Tablets: one row.
+  Desktop unchanged.
+- **2 Swipe dots:** `SwipeRows` (was `AutoSwipe`) puts one 28x44px dot button a card under each phone
+  swipe row. The amber pill slides to the card in front (`transform`); the other cards shrink to 0.94
+  (`scale`). A tap on a dot goes to its card and stops the auto swipe. Reduced motion or a saved Pause:
+  dots only, no auto swipe, no animation. The 4-D track and nodes are not counted.
+- **3 Services (phone):** one list card, a row a service. Deviation from the preview: the tags stay
+  (small, under the line); the preview hid them, but they are facts (Azure, AWS, GCP, the low-code
+  tools) and the no-JS content guard flags hidden content.
+- **4 Careers Inside XionTech (phone):** a mosaic, the big moment across, then pairs.
+- **5 Why XionTech (tablet 640-900px):** the two cards side by side, as tall as their content.
+
+| Page | 390 after round 2 | 390 after round 3 |
+| --- | --- | --- |
+| Services | 5,958 | 5,663 |
+| Careers | 4,762 | 4,182 |
+| Home | 9,434 (values swipe) | 10,525 (values back to the original) |
+
+### UX checks (round 3)
+
+| Part | State or action | Input | Expected (visible) | Source | Checked |
+| --- | --- | --- | --- | --- | --- |
+| Hero figures | Load | n/a | Count 0, 1, 2 … 25, every step shows | Lead | Yes (frame log, 390/768/1440, CPU ×4) |
+| Next steps (phone) | Load | n/a | After the goals: full-width "Start a project", "Explore services" centred under it | Pick 1a D | Yes (390) |
+| Next steps (tablet) | Load | n/a | After the goals, button and link in one row | Pick 1b B | Yes (768) |
+| Next steps (desktop) | Load | Mouse | Unchanged: beside the list, under the heading | Pick 1b B | Yes (1440) |
+| Swipe dots | Load | n/a | One dot a card (Apps 4, 4-D 4, stories 3, Careers 5), first amber | Pick 2 B | Yes (390) |
+| Swipe dots | Auto swipe or swipe | Touch | Amber pill slides to the card in front; that card full size, others smaller | Pick 2 B | Yes (390, scripted) |
+| Swipe dots | Tap a dot | Touch | Row goes to that card; auto swipe stops | Pick 2 B | Yes (unit test) |
+| Swipe dots | Reduced motion or Pause | n/a | Dots only, no auto swipe, no animation | Motion rule | Yes (unit test) |
+| Services (phone) | Load | n/a | One list card, eight rows, icon, name, line, tags | Pick 3 C | Yes (390) |
+| Inside XionTech (phone) | Load | n/a | First tile across, then two pairs | Pick 4 C | Yes (390) |
+| Why XionTech (tablet) | Load | n/a | Two cards side by side, no empty space | Pick 5 B | Yes (768) |
+

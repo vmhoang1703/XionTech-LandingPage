@@ -1729,3 +1729,11 @@ Template:
 - **AI got it wrong:** it started building its own picks without a preview. The lead asked "why you dont self-brainstorm and make preview with many options?" The AI had over-read an earlier "I am confused with all options" as "never show options". Fix: one preview page with 2-4 real-page options per problem and the AI's pick marked. The lead picked 1A 2D 3A 4C 5B.
 - **AI got it wrong (2):** the first swipe row for values gave card 1 a 0px column and 720px tall cards: a more specific `.home-values .flip-cards` rule still set the columns. Caught in screenshots, fixed by adding that selector.
 - **Result:** Home 12,264 → 9,434px on a phone, 10,376 → 9,156px on a tablet; desktop unchanged. Spec: `_bmad-output/implementation-artifacts/spec-mobile-compact.md`.
+
+## 2026-10-13 — Mobile round 3: count-up, next steps, swipe dots
+
+- **Prompt:** "I do not see animation count number by number … Start a project and Explore services … at ugly position … run UI/UX/animation/behavior at all pages." Then: "Nice to have the preview of options you suggest."
+- **What the AI did:** logged the drawn count on every animation frame at 390/768/1440, with the CPU slowed ×4. Cause: frames 250-600ms apart while the page loads, and the count ran then (0 → 15). Fix: wait until loaded and idle. Then it took screenshots of every page at 390 and 768, found five problems, and rendered 2-4 options each on the real pages with its pick marked. The lead picked 1a D, 1b B, 2 B + animation, 3 C, 4 C, 5 B.
+- **AI got it wrong:** the first swipe dots counted the 4-D track and nodes as cards (7 dots for 4 steps). It first tried to skip hidden children, but they are 1px wide, not `display: none`, so it skipped them by class.
+- **AI got it wrong (2):** the preview hid the Services tags on phones. The no-JS content test flagged it, and the tags are facts, so they stay.
+- **AI got it wrong (3):** the auto swipe from round 2 ran only on the first page; after a client-side navigation the new page's rows had no auto swipe. `SwipeRows` now runs again on each route, as `ScrollReveal` does.
