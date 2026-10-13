@@ -1702,7 +1702,7 @@ Template:
 
 ## 2026-10-13 — Story 1.2 (locale routing and language dropdown) built before Demo day
 
-- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Haiku 5.5), `/bmad-build` dispatch route
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Haiku 5.5 for planning, Claude Opus 5.5 for the build), `/bmad-build` dispatch route
 - **Prompt (short):** Build Story 1.2 now, before Demo day, with Vietnamese for the site shell.
 - **What the AI did:**
   - Wrote `spec-1-2-locale-routing-dropdown.md` from the PRD (FR-4, FR-5, AC-NAV-1) and Amber's prototype `data-vi` strings.
@@ -1711,7 +1711,9 @@ Template:
 - **Decision / result:**
   - The user decided on 2026-10-13 to build Story 1.2 before Demo day, overriding the 2026-09-29 "after demo" plan.
   - Scope: routing, cookie, language dropdown and EN/VI shell strings. Vietnamese covers the site shell only; page-body translation stays deferred (`deferred-work.md`, 2026-10-13).
-  - Until page copy is translated, a `/vi/` page shows the Vietnamese shell around the English page body, with `lang="en"` on `<main>`.
+  - Decision: until page copy is translated, a `/vi/` page will show the Vietnamese shell around the English page body, with `lang="en"` on `<main>`.
   - Shell strings missing from the prototype use `[Placeholder]` plus the English text. No invented Vietnamese.
-  - Hoang Vu still has to be told; the spec records this as a to-do.
-- **AI got it wrong?** no — the scope change is the user's decision. The open point is the lead's confirmation, which the AI could not make.
+  - Hoang Vu still has to be told. The lead's confirmation, which `epic-1-context.md` asks for, is still open; the spec records it as a to-do.
+- **AI got it wrong?** yes —
+  - (a) The first shell dictionary marked the Vietnamese 404 text `[Placeholder]`, although Amber's prototype `404.html` had real `data-vi` text. The controller caught it, and it was replaced with the prototype text.
+  - (b) Moving pages under `[locale]` left the 404 as a Client Component. A `notFound()` inside a page (an unknown news story or job) served Next's bare error shell, and unknown `/vi/` paths showed the English 404. The Playwright smoke test caught both; the 404 became a server component plus a `[...rest]` catch-all.
