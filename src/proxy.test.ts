@@ -27,6 +27,16 @@ describe("proxy", () => {
     expect(new URL(fr.headers.get("location") ?? "").pathname).toBe("/en");
   });
 
+  it("skips a language refused with q=0", () => {
+    const res = run("/", { "accept-language": "vi;q=0, en" });
+    expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
+  });
+
+  it("does not pick a language with an unparseable q", () => {
+    const res = run("/", { "accept-language": "vi;q=abc" });
+    expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
+  });
+
   it("uses the cookie over Accept-Language and keeps the query", () => {
     const res = run("/products?a=1", {
       cookie: "locale=vi",
@@ -63,5 +73,9 @@ describe("proxy", () => {
     expect(re.test("/api/contact")).toBe(false);
     expect(re.test("/_next/static/a.js")).toBe(false);
     expect(re.test("/icon.png")).toBe(false);
+    expect(re.test("/api")).toBe(false);
+    expect(re.test("/api/x")).toBe(false);
+    expect(re.test("/api-docs")).toBe(true);
+    expect(re.test("/_nextish")).toBe(true);
   });
 });
