@@ -37,7 +37,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
           <SiteNav locale={locale} />
           <Link
             href={localeHref(locale, "/demo")}
-            className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[420px]:px-3.5"
+            className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[420px]:px-3.5 max-[360px]:hidden"
           >
             {t.demo}
             <ArrowRightIcon aria-hidden="true" className="max-[420px]:hidden" />

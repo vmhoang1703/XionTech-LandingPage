@@ -107,6 +107,7 @@ describe("MobileMenu", () => {
     expect(expanded()).toBe("true");
     const links = menuLinks();
     expect(links.map((a) => a.textContent)).toEqual([
+      "[Placeholder] Book a demo",
       "Trang chủ",
       "Sản phẩm",
       "Dịch vụ",
@@ -115,6 +116,7 @@ describe("MobileMenu", () => {
       "Tuyển dụng",
     ]);
     expect(links.map((a) => a.getAttribute("href"))).toEqual([
+      "/vi/demo",
       "/vi",
       "/vi/products",
       "/vi/services",
@@ -148,7 +150,7 @@ describe("MobileMenu", () => {
     expect(document.documentElement.style.overflow).toBe("");
   });
 
-  it("opens on click and lists the six pages, Home first", () => {
+  it("opens on click and lists Book a demo first, then the six pages", () => {
     render(<Header />);
     fireEvent.click(menuButton());
     expect(expanded()).toBe("true");
@@ -159,6 +161,7 @@ describe("MobileMenu", () => {
       a.getAttribute("href"),
     ]);
     expect(hrefs).toEqual([
+      ["Book a demo", "/en/demo"],
       ["Home", "/en"],
       ["Products", "/en/products"],
       ["Services", "/en/services"],
@@ -185,12 +188,13 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
   });
 
-  it("has no Book a demo link at any width", () => {
+  it("offers Book a demo first at every width (the header hides it below 360px)", () => {
     for (const w of [390, 640, 800]) {
       width = w;
       const { unmount } = render(<Header />);
       fireEvent.click(menuButton());
       expect(menuLinks().map((a) => a.textContent)).toEqual([
+        "Book a demo",
         "Home",
         "Products",
         "Services",

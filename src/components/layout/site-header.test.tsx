@@ -30,6 +30,8 @@ describe("SiteHeader", () => {
     expect(demo.className).toContain("btn btn-primary btn-sm");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
+    // Below 360px it leaves the bar; the mobile menu offers it first instead.
+    expect(demo.className).toContain("max-[360px]:hidden");
     expect(demo.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
   });
 
