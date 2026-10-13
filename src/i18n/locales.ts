@@ -16,3 +16,5 @@ export function localeHref(locale: Locale, path: string): string {
   }
   return `/${locale}${path}`;
 }
+
+export const LOCALE_COOKIE = "locale";
