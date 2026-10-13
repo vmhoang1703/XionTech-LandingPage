@@ -1702,7 +1702,7 @@ Template:
 
 ## 2026-10-13 — Story 1.2 (locale routing and language dropdown) built before Demo day
 
-- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Haiku 5.5 for planning, Claude Opus 5.5 for the build), `/bmad-build` dispatch route
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code, `/bmad-build` dispatch route. Planning on Claude Haiku 5.5; build controller Claude Opus 5.5; task implementers and reviewers Claude Sonnet 5.5 (tasks 1, 2, 5, 6 and all reviews), Claude Opus 5.5 (tasks 3, 4), Claude Haiku 5.5 (task 7).
 - **Prompt (short):** Build Story 1.2 now, before Demo day, with Vietnamese for the site shell.
 - **What the AI did:**
   - Wrote `spec-1-2-locale-routing-dropdown.md` from the PRD (FR-4, FR-5, AC-NAV-1) and Amber's prototype `data-vi` strings.
@@ -1717,3 +1717,4 @@ Template:
 - **AI got it wrong?** yes —
   - (a) The first shell dictionary marked the Vietnamese 404 text `[Placeholder]`, although Amber's prototype `404.html` had real `data-vi` text. The controller caught it, and it was replaced with the prototype text.
   - (b) Moving pages under `[locale]` left the 404 as a Client Component. A `notFound()` inside a page (an unknown news story or job) served Next's bare error shell, and unknown `/vi/` paths showed the English 404. The Playwright smoke test caught both; the 404 became a server component plus a `[...rest]` catch-all.
+  - (c) The first browser walk reported that switching language lost the scroll position. A debug trace showed the test harness had caused the jump: Playwright's `click()` on the sticky header button scrolled the page before the switch, and the restore put back the value it was given. The e2e test now opens the menu with the keyboard.
