@@ -1714,3 +1714,10 @@ Template:
 - **AI got it wrong?** Yes:
   - Too many options: A/B/C/D, then B1/B2/B3. The lead was confused ("I am confused with all options you give, including the position"). One recommendation with reasons worked better.
   - The plan said the Products overlap was a phone and tablet bug; measuring desktop showed it on every width.
+- **Follow-up, steps 2–4 (same day, same branch and PR #107):**
+  - The lead said "go", then "This branch is used for responsive enhancement", so every step went on one branch.
+  - Step 2: below 1080px the XT mark sits behind the headline on the right and tells a short story with no globe (sparks gather into the mark, GET IT DONE writes up the T, then it rests). Desktop unchanged.
+  - Step 3: 44px tap targets on touch screens only; labels up to DESIGN.md's 11.5px floor.
+  - Step 4: flip cards as tall as their text, the 4-D process as a swipe row, the footer links in two columns. Home at 390px: 13,790 → 12,264px.
+  - Checks: 1390 unit tests; diff coverage 100%; smoke + a11y 72/72; build; screenshots at 320–1440.
+  - **AI got it wrong?** Yes: the preview showed value cards two a row, but only their fronts. With the real back text (up to 204 characters) two columns were no shorter and too narrow, so the AI kept one a row with auto height and said so. A test clock started before the page had loaded, so some screenshots came out blank; waiting for the Pause button fixed it. The audit's hover finding was overstated: the moving hover effects were already limited to mouse devices.

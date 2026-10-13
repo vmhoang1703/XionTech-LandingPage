@@ -4,6 +4,11 @@ Owner: Hoang Vu (lead). Audit by Claude Code on `develop` at `f4a3314` (live on
 https://xiontech-dev.vercel.app). Goal: everything we built for desktop in #96–#106 works and
 impresses on phones and tablets before Demo day (2026-10-16).
 
+**Status (2026-10-13):** steps 1–4 are built on one branch, PR #107 (lead: "This branch is used for
+responsive enhancement"). Step 2 became one design under 1080px: the XT mark behind the headline, no globe.
+Step 4 kept one value card a row (auto height). Step 5 (Lighthouse mobile, real phones) is still open. Specs:
+`spec-products-title-pill.md`, `spec-mobile-tablet.md`.
+
 ## How it was measured
 
 Headless Chrome (Playwright, touch and mobile emulation, DPR 1) on 10 pages: `/`, `/services`,
