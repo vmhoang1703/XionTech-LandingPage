@@ -2190,6 +2190,37 @@
     }
   }
 
+  /* Phones (lead, 2026-10-13): shorter cards. The faces stack in one grid cell
+     instead of sitting absolute, so each card is as tall as its longer face
+     (not a fixed 304px) and the back text is never cut off. */
+  @media (width <= 640px) {
+    .flip-cards {
+      gap: 10px;
+    }
+
+    .flip-card,
+    .flip-inner {
+      min-height: 0;
+    }
+
+    .flip-inner {
+      display: grid;
+    }
+
+    .flip-face {
+      position: relative;
+      inset: auto;
+      grid-area: 1 / 1;
+      padding: 16px;
+    }
+
+    .flip-ill {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  /* One card a row: two columns made the long titles and backs too narrow. */
   @media (width <= 520px) {
     .flip-cards {
       grid-template-columns: minmax(0, 1fr);
@@ -3313,6 +3344,27 @@
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  /* Phones (lead, 2026-10-13): the steps sit in a row you swipe through, the
+     next card peeking in, instead of four tall cards one under another. */
+  @media (width < --theme(--breakpoint-sm)) {
+    .flow {
+      grid-template-columns: none;
+      grid-auto-columns: 84%;
+      grid-auto-flow: column;
+      margin-inline: calc(var(--spacing-gutter-mobile) * -1);
+      padding: 4px var(--spacing-gutter-mobile) 12px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: var(--spacing-gutter-mobile);
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .flow > .step4 {
+      scroll-snap-align: start;
+    }
   }
 
   @media (width >= --theme(--breakpoint-sm)) {
@@ -5627,6 +5679,20 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.25rem;
+}
+
+/* Phones (lead, 2026-10-13): the link groups pair up in two columns; the
+   brand and the offices keep the full width. */
+@media (max-width: 640px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+
+  .footer-grid > :first-child,
+  .footer-grid > :last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (min-width: 641px) {
