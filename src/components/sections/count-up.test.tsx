@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { cleanup, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MOTION_KEY } from "@/lib/motion/motion-preference";
 import { CountUp } from "./count-up";
@@ -39,9 +39,13 @@ beforeEach(() => {
     },
   );
   stubMotion(false);
+  // Browsers that have requestIdleCallback have this too.
+  vi.stubGlobal("cancelIdleCallback", vi.fn());
 });
 
 afterEach(() => {
+  // Unmount while the stubs are still there: the cleanup cancels with them.
+  cleanup();
   vi.unstubAllGlobals();
 });
 
@@ -61,7 +65,7 @@ describe("CountUp", () => {
     expect(disconnect).not.toHaveBeenCalled();
   });
 
-  it("plays in view once the page has loaded and gone idle", () => {
+  it("plays in view once the page has a quiet moment", () => {
     let idle: IdleRequestCallback = () => {};
     vi.stubGlobal("requestIdleCallback", (next: IdleRequestCallback) => {
       idle = next;
@@ -75,22 +79,45 @@ describe("CountUp", () => {
     expect(figure.dataset.count).toBe("play");
   });
 
-  it("waits for the load event while the page is still loading", () => {
-    vi.useFakeTimers();
-    vi.stubGlobal("requestIdleCallback", undefined);
-    const state = vi
-      .spyOn(document, "readyState", "get")
-      .mockReturnValue("loading");
+  it("counts every number, one a frame at most, even when frames are late", () => {
+    let frames: FrameRequestCallback[] = [];
+    vi.stubGlobal("requestAnimationFrame", (next: FrameRequestCallback) => {
+      frames.push(next);
+      return frames.length;
+    });
+    vi.stubGlobal("requestIdleCallback", (next: IdleRequestCallback) => {
+      next({} as IdleDeadline);
+      return 1;
+    });
     const { figure } = mount();
     callback([{ isIntersecting: true }]);
-    vi.advanceTimersByTime(1000);
-    expect(figure.dataset.count).toBe("wait");
-    state.mockReturnValue("complete");
-    window.dispatchEvent(new Event("load"));
-    vi.advanceTimersByTime(200);
     expect(figure.dataset.count).toBe("play");
-    state.mockRestore();
-    vi.useRealTimers();
+    expect(figure.style.getPropertyValue("--count")).toBe("0");
+    const shown: string[] = [];
+    // A slow phone: 600ms between frames, so the eased count wants to jump.
+    for (let now = 0; frames.length > 0; now += 600) {
+      const next = frames;
+      frames = [];
+      for (const frame of next) frame(now);
+      shown.push(figure.style.getPropertyValue("--count"));
+    }
+    expect(shown).toEqual(
+      Array.from({ length: 26 }, (_, index) => String(index)),
+    );
+  });
+
+  it("cancels a count that is running when it unmounts", () => {
+    const cancelFrame = vi.fn();
+    vi.stubGlobal("requestAnimationFrame", () => 9);
+    vi.stubGlobal("cancelAnimationFrame", cancelFrame);
+    vi.stubGlobal("requestIdleCallback", (next: IdleRequestCallback) => {
+      next({} as IdleDeadline);
+      return 1;
+    });
+    const { view } = mount();
+    callback([{ isIntersecting: true }]);
+    view.unmount();
+    expect(cancelFrame).toHaveBeenCalledWith(9);
   });
 
   it("cancels a start that has not run when it unmounts", () => {

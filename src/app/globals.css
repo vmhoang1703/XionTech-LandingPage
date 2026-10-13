@@ -3018,11 +3018,11 @@
      with transparent glyphs (screen readers and search still read it) and
      ::after draws --count over it, from the same start in the same box, so
      nothing moves (aligned right, the growing count moved its start: a layout
-     shift). It is held at 0 ("wait") and plays ("play") once it is in view
-     and the page has settled, so every step shows; "off" is a saved Pause. Reduced motion and print show the plain
-     number. --count is registered at the top level (@property). The count
-     uses a softer ease-out than --ease-brand, which would jump most of the
-     way at once and hide the counting. */
+     shift). It is held at 0 ("wait"); once it is in view and the page has a
+     quiet moment, the script sets --count frame by frame ("play"), at most
+     one step a frame, so every number shows. A CSS animation of --count jumped
+     from 0 to 25 on phones (Safari did not redraw the counter while it ran).
+     "off" is a saved Pause. Reduced motion and print show the plain number. */
   @media screen and (prefers-reduced-motion: no-preference) {
     .count-up:not([data-count="off"]) {
       --count: var(--to);
@@ -3048,16 +3048,6 @@
     }
 
     .count-up[data-count="wait"] {
-      --count: 0;
-    }
-
-    .count-up[data-count="play"] {
-      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) both;
-    }
-  }
-
-  @keyframes count-up {
-    from {
       --count: 0;
     }
   }
@@ -3428,14 +3418,6 @@
         0;
     }
   }
-}
-
-/* The count-up's number (CountUp, "Count-up" above): an integer, so CSS can
-   animate it and a counter can show it. Registered at the top level. */
-@property --count {
-  syntax: "<integer>";
-  inherits: false;
-  initial-value: 0;
 }
 
 @layer components {
