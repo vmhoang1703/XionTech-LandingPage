@@ -526,6 +526,8 @@ const MAY_HIDE = new Set([
   '[data-reveal] > [data-shown="wait"]',
   "from",
   "[data-glow]::after",
+  // Built by the SwipeRows script, so never there without JavaScript.
+  ".swipe-dots",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],

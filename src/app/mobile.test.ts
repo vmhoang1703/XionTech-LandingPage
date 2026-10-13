@@ -79,12 +79,62 @@ describe("phone layouts", () => {
     expect(phone).toMatch(
       /#newsGrid \.s-lead \.scard\s*\{\s*min-height:\s*320px;/,
     );
-    expect(phone).toMatch(/\.svc-card\s*\{\s*padding:\s*20px;/);
+    expect(phone).toMatch(/\.svc-card\s*\{\s*padding:\s*16px 18px;/);
+    expect(phone).toMatch(
+      /\.svc-card \.svc-card-tags\s*\{\s*margin-top:\s*4px;\s*font-size:\s*0\.8rem;/,
+    );
     expect(phone).toMatch(/\.w-card\s*\{\s*min-height:\s*0;/);
   });
 
+  it("shows Inside XionTech as a mosaic on phones", () => {
+    const phone = mediaBody("(width < 640px)");
+    expect(phone).toMatch(
+      /\.ins-grid\s*\{\s*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);/,
+    );
+    expect(phone).toMatch(/\.ins-card\.big\s*\{\s*grid-column:\s*1 \/ -1;/);
+  });
+
+  it("puts dots under the swipe rows and shrinks the cards behind", () => {
+    const dots = css.slice(css.indexOf("/* Swipe dots"));
+    expect(dots).toMatch(
+      /\.swipe-dots::after\s*\{[^}]*transform:\s*translateX\(calc\(var\(--i, 0\) \* 28px\)\);/,
+    );
+    expect(dots).toMatch(
+      /\.swipe-dots button\s*\{[^}]*width:\s*28px;\s*height:\s*44px;/,
+    );
+    expect(dots).toMatch(
+      /\[data-swipe="move"\] > :not\(\[data-active\]\)\s*\{\s*scale:\s*0\.94;/,
+    );
+    expect(dots).toMatch(
+      /@media \(width >= 640px\)\s*\{\s*\.swipe-dots\s*\{\s*display:\s*none;/,
+    );
+  });
+
+  it("puts the next steps after the four goals below 980px", () => {
+    const goals = css.slice(
+      css.indexOf("/* What can we help you achieve? (lead, 2026-10-13)"),
+    );
+    expect(goals).toMatch(
+      /\.svc-split:has\(> \.goal-list\) > \.svc-stick\s*\{\s*display:\s*contents;/,
+    );
+    expect(goals).toMatch(/\.goal-ctas\s*\{\s*order:\s*1;/);
+    expect(goals).toMatch(
+      /@media \(width < 640px\)\s*\{\s*\.goal-ctas\s*\{\s*flex-direction:\s*column;\s*align-items:\s*stretch;/,
+    );
+  });
+
+  it("sets the Why XionTech cards side by side on tablets", () => {
+    const tablet = mediaBody("(640px <= width <= 900px)");
+    expect(tablet).toMatch(
+      /\.w-delivery,\s*\.w-industries\s*\{\s*grid-column:\s*span 6;/,
+    );
+    expect(tablet).toMatch(/\.w-card\s*\{\s*min-height:\s*0;/);
+  });
+
   it("shows the hero figures as number and label rows", () => {
-    const rows = css.slice(css.lastIndexOf("@media (width < 640px) {"));
+    const rows = css.slice(
+      css.indexOf("/* Phones (lead, 2026-10-13): the hero figures as rows"),
+    );
     expect(rows).toMatch(
       /\.home-stats ul\s*\{\s*grid-template-columns:\s*minmax\(0, 1fr\);/,
     );
