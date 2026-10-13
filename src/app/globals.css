@@ -2220,13 +2220,6 @@
     }
   }
 
-  /* One card a row: two columns made the long titles and backs too narrow. */
-  @media (width <= 520px) {
-    .flip-cards {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
   /* Careers open roles and life frames (Story 6.5), ported from the prototype site.css */
   .link-arrow {
     display: inline-flex;
@@ -3344,27 +3337,6 @@
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-  }
-
-  /* Phones (lead, 2026-10-13): the steps sit in a row you swipe through, the
-     next card peeking in, instead of four tall cards one under another. */
-  @media (width < --theme(--breakpoint-sm)) {
-    .flow {
-      grid-template-columns: none;
-      grid-auto-columns: 84%;
-      grid-auto-flow: column;
-      margin-inline: calc(var(--spacing-gutter-mobile) * -1);
-      padding: 4px var(--spacing-gutter-mobile) 12px;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-padding-inline: var(--spacing-gutter-mobile);
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-    }
-
-    .flow > .step4 {
-      scroll-snap-align: start;
-    }
   }
 
   @media (width >= --theme(--breakpoint-sm)) {
@@ -5378,12 +5350,6 @@
   }
 }
 
-@media (width <= 520px) {
-  .home-values .flip-cards {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 .home-flow {
   background: linear-gradient(180deg, #f4f6fa, var(--color-page));
 }
@@ -6183,5 +6149,186 @@ main > .page-scene:last-child > .surface-navy:last-child {
   /* The prototype hides the still ring; it is decoration over the dot */
   .tm-here-ring {
     stroke-opacity: 0;
+  }
+}
+
+/* ---------- Phones: shorter pages (lead, 2026-10-13) ---------- */
+/* Card sets sit in a row you swipe through, the next card peeking in, instead
+   of tall cards one under another: the 4-D process, the apps, the values and
+   the latest stories. */
+@media (width < 640px) {
+  .flow,
+  .app-cards,
+  .flip-cards,
+  .home-values .flip-cards,
+  .sgrid-row {
+    grid-template-columns: none;
+    grid-auto-columns: 84%;
+    grid-auto-flow: column;
+    margin-inline: calc(var(--spacing-gutter-mobile) * -1);
+    padding: 4px var(--spacing-gutter-mobile) 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: var(--spacing-gutter-mobile);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .flow > *,
+  .app-cards > *,
+  .flip-cards > *,
+  .sgrid-row > * {
+    scroll-snap-align: start;
+  }
+
+  /* Stories: the title and "Read story" need about 250px, not 340px or a
+     square; the lead story on the News page stays a little taller. */
+  .scard,
+  .sgrid-row .scard {
+    min-height: 250px;
+  }
+
+  #newsGrid .scard {
+    aspect-ratio: auto;
+  }
+
+  #newsGrid .s-lead .scard {
+    min-height: 320px;
+  }
+
+  /* Services: the same text in less padding. */
+  .svc-cards {
+    gap: 14px;
+  }
+
+  .svc-card {
+    padding: 20px;
+  }
+
+  .svc-card-h {
+    padding-bottom: 14px;
+  }
+
+  .svc-card p {
+    margin-top: 12px;
+  }
+
+  .svc-card p:not(.svc-card-tags) {
+    margin-bottom: 12px;
+  }
+
+  .svc-card .svc-card-tags {
+    padding-top: 0;
+  }
+
+  /* Why XionTech: no empty space under the chips. */
+  .w-card {
+    min-height: 0;
+  }
+
+  /* Footer: Company sits under Products, beside the longer Services list. */
+  .footer-grid > :nth-child(3) {
+    grid-row: span 2;
+  }
+}
+
+/* Phones (lead, 2026-10-13): the hero figures as rows, number then label, so
+   all five show with none left alone in a column. */
+@media (width < 640px) {
+  .home-stats ul {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  .home-stats li {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: center;
+    padding-block: 8px;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .home-stats li:first-child {
+    border-top: 0;
+  }
+
+  .home-stats li > p:first-child {
+    font-size: 1.75rem;
+  }
+
+  .home-stats li > p + p {
+    max-width: none;
+    margin-top: 0;
+  }
+}
+
+/* Tablets (lead, 2026-10-13): use the width. Flip cards are as tall as their
+   longer face, the values three across; the two doors side by side; three
+   stories a row; three footer link columns and the offices side by side. */
+@media (640px <= width < 1080px) {
+  .flip-card,
+  .flip-inner {
+    min-height: 0;
+  }
+
+  .flip-inner {
+    display: grid;
+  }
+
+  .flip-face {
+    position: relative;
+    inset: auto;
+    grid-area: 1 / 1;
+    padding: 18px;
+  }
+
+  .home-values .flip-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .doors-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .door {
+    padding: 24px;
+  }
+
+  .sgrid-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sgrid-row .scard {
+    min-height: 300px;
+  }
+
+  .sgrid-row .scard-content {
+    inset-inline: 18px;
+  }
+}
+
+@media (640px <= width <= 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-grid > :first-child,
+  .footer-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .footer-grid > :last-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
+
+  .footer-grid > :last-child > h2,
+  .footer-grid > :last-child > p {
+    grid-column: 1 / -1;
+  }
+
+  .footer-grid address {
+    margin-top: 0;
   }
 }
