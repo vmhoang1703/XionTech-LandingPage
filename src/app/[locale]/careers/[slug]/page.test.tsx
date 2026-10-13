@@ -58,14 +58,14 @@ describe("Job page", () => {
 
     await expect(renderPage("no-such-role")).rejects.toThrow("NEXT_NOT_FOUND");
     expect(notFound).toHaveBeenCalledTimes(1);
-    expect(getOpenRole).toHaveBeenCalledWith("no-such-role");
+    expect(getOpenRole).toHaveBeenCalledWith("no-such-role", "en");
   });
 
   it("renders the H1, crumbs and the application form", async () => {
     vi.mocked(getOpenRole).mockResolvedValue(role);
     await renderPage();
 
-    expect(getOpenRole).toHaveBeenCalledWith("qa-engineer");
+    expect(getOpenRole).toHaveBeenCalledWith("qa-engineer", "en");
     expect(
       screen.getByRole("heading", { level: 1, name: "QA Engineer" }),
     ).not.toBeNull();
@@ -92,5 +92,35 @@ describe("Job page", () => {
   it("sets the static page metadata", () => {
     expect(metadata.title).toBe(jobMeta.title);
     expect(metadata.description).toBe(jobMeta.description);
+  });
+});
+
+describe("Job page in Vietnamese", () => {
+  it("shows Vietnamese crumbs, headings and chips, and marks English role text", async () => {
+    vi.mocked(getOpenRole).mockResolvedValue({
+      ...role,
+      responsibilities: ["Write tests."],
+      lang: "en",
+      detailLang: "en",
+    });
+    const { container } = render(
+      await JobPage({
+        params: Promise.resolve({ locale: "vi", slug: "qa-engineer" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(getOpenRole).toHaveBeenCalledWith("qa-engineer", "vi");
+    const h1 = screen.getByRole("heading", { level: 1, name: "QA Engineer" });
+    expect(h1.getAttribute("lang")).toBe("en");
+    expect(
+      screen.getByRole("navigation", { name: "Đường dẫn" }).textContent,
+    ).toContain("Tuyển dụng");
+    expect(screen.getByText("Toàn thời gian")).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "Về vị trí này" })).toBeTruthy();
+    expect(screen.getByText("Test things.").getAttribute("lang")).toBe("en");
+    expect(container.querySelector(".list-check")?.getAttribute("lang")).toBe(
+      "en",
+    );
   });
 });

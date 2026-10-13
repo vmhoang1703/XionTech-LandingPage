@@ -57,8 +57,8 @@ describe("getLatestPosts", () => {
     );
     for (const line of [
       '"slug": slug.current',
-      '"title": title.en',
-      '"excerpt": excerpt.en',
+      '"title": coalesce(title[$locale], title.en)',
+      '"excerpt": coalesce(excerpt[$locale], excerpt.en)',
     ]) {
       expect(projection).toContain(line);
     }
@@ -97,6 +97,10 @@ describe("newsDate", () => {
   it("uses Ho Chi Minh time, not UTC", () => {
     expect(newsDate("2026-09-17T20:00:00Z")).toBe("18 Sep 2026");
   });
+
+  it("formats Vietnamese as day/month/year with leading zeros", () => {
+    expect(newsDate("2026-09-17T20:00:00Z", "vi")).toBe("18/09/2026");
+  });
 });
 
 describe("categoryTag", () => {
@@ -122,5 +126,27 @@ describe("categoryTag", () => {
   it("returns null for a missing category", () => {
     expect(categoryTag(post())).toBeNull();
     expect(categoryTag(post({ category: null }))).toBeNull();
+  });
+});
+
+describe("Vietnamese", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("fetches with the locale and falls back to English per post", async () => {
+    sanityFetchMock.mockResolvedValue([]);
+
+    await getLatestPosts("vi");
+
+    const { query, params } = sanityFetchMock.mock.calls[0][0];
+    expect(params).toEqual({ locale: "vi" });
+    expect(query).toContain(
+      '"lang": select(defined(title[$locale]) => $locale, "en")',
+    );
+  });
+
+  it("labels the audience in Vietnamese", () => {
+    expect(categoryTag(post({ category: "parents" }), "vi")).toBe("Phụ huynh");
   });
 });

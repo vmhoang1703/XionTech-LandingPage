@@ -1,7 +1,9 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import { LocaleLink } from "@/components/layout/locale-link";
-import { homeNews } from "@/content/news";
+import { homeNews, homeNewsVi } from "@/content/news";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { postAudience } from "@/lib/news/audience";
 import {
   categoryTag,
@@ -13,10 +15,13 @@ import {
 // `scard`): the whole card is one link, named by its title, date and audience.
 // The photo is decorative (the title names the link); with no photo the empty
 // frame shows instead. "Read story" shows on hover and focus, always on touch.
-export function NewsCard({ post }: Readonly<{ post: LatestPost }>) {
-  const tag = categoryTag(post);
+export function NewsCard({
+  post,
+  locale = "en",
+}: Readonly<{ post: LatestPost; locale?: Locale }>) {
+  const tag = categoryTag(post, locale);
   const id = `story-${encodeURIComponent(post.slug)}`;
-  const date = newsDate(post.publishedAt);
+  const date = newsDate(post.publishedAt, locale);
   const labelledBy = [`${id}-t`, date ? `${id}-d` : "", tag ? `${id}-a` : ""]
     .filter(Boolean)
     .join(" ");
@@ -62,12 +67,18 @@ export function NewsCard({ post }: Readonly<{ post: LatestPost }>) {
         ) : null}
       </span>
       <div className="scard-content">
-        <h3 id={`${id}-t`} className="scard-title">
+        <h3
+          id={`${id}-t`}
+          className="scard-title"
+          lang={post.lang ?? undefined}
+        >
           {post.title}
         </h3>
       </div>
       <span className="scard-read" aria-hidden="true">
-        <span>{homeNews.readStory}</span>
+        <span>
+          {pickLocale(locale, { en: homeNews, vi: homeNewsVi }).readStory}
+        </span>
         <ArrowRightIcon aria-hidden="true" />
       </span>
     </LocaleLink>

@@ -1,15 +1,22 @@
 import { localeMetadata } from "@/i18n/page-metadata";
 import { LocaleLink } from "@/components/layout/locale-link";
-import { PRIVACY } from "@/content/privacy";
+import { PRIVACY as PRIVACY_EN, PRIVACY_VI } from "@/content/privacy";
+import { pickLocale } from "@/i18n/content";
+import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
-  title: PRIVACY.metaTitle,
-  description: PRIVACY.metaDescription,
+  title: PRIVACY_EN.metaTitle,
+  description: PRIVACY_EN.metaDescription,
 });
 
 // Plain reading page: no capture band (FR-33 exception). The aurora hero
 // background and shared breadcrumbs come with Story 1.6, after demo.
-export default function PrivacyPage() {
+export default async function PrivacyPage({
+  params,
+}: Readonly<Pick<PageProps<"/[locale]/privacy">, "params">>) {
+  const { locale: param } = await params;
+  const locale = isLocale(param) ? param : "en";
+  const PRIVACY = pickLocale(locale, { en: PRIVACY_EN, vi: PRIVACY_VI });
   return (
     <>
       <section

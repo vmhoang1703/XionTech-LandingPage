@@ -38,7 +38,7 @@ export default async function Home({
           <HomeValues locale={locale} />
           <HomeFaq locale={locale} />
         </div>
-        <HomeNews />
+        <HomeNews locale={locale} />
         <HomeContact />
       </PageScene>
     </>

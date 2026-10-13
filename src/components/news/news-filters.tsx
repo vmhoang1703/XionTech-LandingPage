@@ -1,7 +1,14 @@
 "use client";
 
 import { useRef, useState, useSyncExternalStore, type ReactNode } from "react";
-import { categoryLabels, newsPage } from "@/content/news";
+import { useLocale } from "@/components/layout/locale-link";
+import {
+  categoryLabels,
+  categoryLabelsVi,
+  newsPage as newsPageEn,
+  newsPageVi,
+} from "@/content/news";
+import { pickLocale } from "@/i18n/content";
 import type { Audience } from "@/lib/news/audience";
 
 export type FilterItem = {
@@ -11,11 +18,6 @@ export type FilterItem = {
   /** The server-rendered news card. */
   node: ReactNode;
 };
-
-const FILTERS = [
-  newsPage.allFilter,
-  ...Object.entries(categoryLabels).map(([id, label]) => ({ id, label })),
-];
 
 // The grid's columns at each width; the same breakpoints as `#newsGrid` in
 // globals.css (3, then 2 at 900px, then 1 at 560px).
@@ -45,6 +47,16 @@ const serverColumns = () => 3;
 // (CAP-5). The first card shown is the full-width lead only when it is alone
 // or a full row of squares follows it (prototype site.js `shape()`).
 export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
+  const locale = useLocale();
+  const newsPage = pickLocale(locale, { en: newsPageEn, vi: newsPageVi });
+  const labels = pickLocale(locale, {
+    en: categoryLabels,
+    vi: categoryLabelsVi,
+  });
+  const filters = [
+    newsPage.allFilter,
+    ...Object.entries(labels).map(([id, label]) => ({ id, label })),
+  ];
   const [active, setActive] = useState(newsPage.allFilter.id);
   const allRef = useRef<HTMLButtonElement>(null);
   const cols = useSyncExternalStore(subscribe, columns, serverColumns);
@@ -64,7 +76,7 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
     <>
       <div className="news-bar">
         <fieldset className="filters" aria-label={newsPage.filtersLabel}>
-          {FILTERS.map(({ id, label }) => (
+          {filters.map(({ id, label }) => (
             <button
               key={id}
               ref={id === newsPage.allFilter.id ? allRef : undefined}

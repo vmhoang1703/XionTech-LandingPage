@@ -114,7 +114,7 @@ describe("StoryPage", () => {
     expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
     expect(container.querySelector(".sample")).toBeNull();
     expect(container.querySelector("#cap-h")).toBeNull();
-    expect(vi.mocked(getPost)).toHaveBeenCalledWith("pxp-day");
+    expect(vi.mocked(getPost)).toHaveBeenCalledWith("pxp-day", "en");
   });
 
   it("shows the Company pill for a company story", async () => {
@@ -198,5 +198,47 @@ describe("generateMetadata", () => {
   it("returns no metadata for an unknown slug (the Not found page sets its own)", async () => {
     vi.mocked(getPost).mockResolvedValue(null);
     await expect(generateMetadata(props("x"))).resolves.toEqual({});
+  });
+});
+
+describe("StoryPage in Vietnamese", () => {
+  it("shows Vietnamese chrome and date, and marks an English fallback", async () => {
+    vi.mocked(getPost).mockResolvedValue({
+      ...story,
+      lang: "en",
+      bodyLang: "en",
+    });
+    const { container } = render(
+      await StoryPage({
+        params: Promise.resolve({ locale: "vi", slug: "pxp-day" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(getPost).toHaveBeenCalledWith("pxp-day", "vi");
+    expect(screen.getByText("Quay lại Tin tức")).toBeTruthy();
+    expect(container.querySelector(".art-date")?.textContent).toBe(
+      "04/10/2026",
+    );
+    expect(container.querySelector(".art-pill")?.textContent).toBe("Phụ huynh");
+    expect(screen.getByRole("heading", { level: 1 }).getAttribute("lang")).toBe(
+      "en",
+    );
+    expect(container.querySelector(".art-dek")?.getAttribute("lang")).toBe(
+      "en",
+    );
+    expect(screen.getByText("First paragraph.").getAttribute("lang")).toBe(
+      "en",
+    );
+    expect(screen.getByText("A subheading").getAttribute("lang")).toBe("en");
+  });
+
+  it("fetches the metadata story in Vietnamese", async () => {
+    vi.mocked(getPost).mockResolvedValue(story);
+    await generateMetadata({
+      params: Promise.resolve({ locale: "vi", slug: "pxp-day" }),
+      searchParams: Promise.resolve({}),
+    });
+    expect(getPost).toHaveBeenCalledWith("pxp-day", "vi");
   });
 });

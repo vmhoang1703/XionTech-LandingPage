@@ -1,13 +1,19 @@
 import Image from "next/image";
-import { careersLife } from "@/content/careers";
+import { careersLife, careersLifeVi } from "@/content/careers";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import type { LifePhotos } from "@/lib/careers/life-photos";
 
 // Server Component. A slot with a photo (and alt text) shows it; an empty slot
 // keeps its [Placeholder] frame.
 export function LifeFrames({
   photos,
-}: Readonly<{ photos?: LifePhotos | null }>) {
-  const { heading, frames } = careersLife;
+  locale = "en",
+}: Readonly<{ photos?: LifePhotos | null; locale?: Locale }>) {
+  const { heading, frames } = pickLocale(locale, {
+    en: careersLife,
+    vi: careersLifeVi,
+  });
 
   return (
     <section id="life" className="sec surface-mist" aria-labelledby="life-h">

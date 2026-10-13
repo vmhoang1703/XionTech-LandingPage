@@ -1,5 +1,6 @@
 import { act, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { GrowthRing } from "./growth-ring";
 
 let reducedMotion = false;
@@ -136,5 +137,21 @@ describe("GrowthRing", () => {
     expect(disconnect).toHaveBeenCalled();
     expect(vi.getTimerCount()).toBe(0);
     expect(container.querySelector(".cycle")).toBeNull();
+  });
+});
+
+describe("GrowthRing in Vietnamese", () => {
+  it("names the model and its steps in Vietnamese", () => {
+    const { container } = render(
+      <LocaleProvider locale="vi">
+        <GrowthRing />
+      </LocaleProvider>,
+    );
+
+    expect(
+      container.querySelector("figure.cycle")?.getAttribute("aria-label"),
+    ).toBe(
+      "[Placeholder] Mô hình học hỏi để phát triển: Tò mò, Học hỏi, Đặt câu hỏi, Phát triển, Cải thiện",
+    );
   });
 });

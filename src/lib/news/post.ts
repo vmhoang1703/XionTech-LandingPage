@@ -1,5 +1,6 @@
 import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
+import type { Locale } from "@/i18n/locales";
 import { sanityFetch } from "@/lib/sanity/client";
 
 export type StoryBlock = {
@@ -8,20 +9,26 @@ export type StoryBlock = {
   text?: string | null;
 };
 
-export type NewsStory = LatestPost & { body?: StoryBlock[] | null };
+export type NewsStory = LatestPost & {
+  body?: StoryBlock[] | null;
+  /** The body's language: "en" when the locale's body is empty. */
+  bodyLang?: string | null;
+};
 
 // One story for its page (Story 6.2), with Home's filter. The body comes as
 // plain text per block (no links or images yet).
 const POST_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt) && slug.current == $slug][0] {
   "slug": slug.current,
-  "title": title.en,
-  "excerpt": excerpt.en,
+  "title": coalesce(title[$locale], title.en),
+  "excerpt": coalesce(excerpt[$locale], excerpt.en),
+  "lang": select(defined(title[$locale]) => $locale, "en"),
   publishedAt,
   category,
   app,
   "image": image.asset->url,
   alt,
-  "body": body.en[_type == "block"] { _key, style, "text": pt::text(@) }
+  "body": coalesce(body[$locale], body.en)[_type == "block"] { _key, style, "text": pt::text(@) },
+  "bodyLang": select(defined(body[$locale]) => $locale, "en")
 }`;
 
 /**
@@ -29,12 +36,15 @@ const POST_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.
  * post list first, so an unknown slug costs no Sanity request of its own
  * (reads skip the CDN, decision A11).
  */
-export async function getPost(slug: string): Promise<NewsStory | null> {
-  const listed = await getAllPosts();
+export async function getPost(
+  slug: string,
+  locale: Locale = "en",
+): Promise<NewsStory | null> {
+  const listed = await getAllPosts(locale);
   if (!listed.some((post) => post.slug === slug)) return null;
   return sanityFetch<NewsStory | null>({
     query: POST_QUERY,
-    params: { slug },
+    params: { slug, locale },
     tags: ["post"],
   });
 }

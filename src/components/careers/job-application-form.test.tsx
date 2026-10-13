@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CV_MAX_BYTES, JOB_ERRORS } from "@/lib/careers/application-rules";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { JobApplicationForm } from "./job-application-form";
 
 // The success panel is a polite live region that takes focus (Sonar S6819:
@@ -442,5 +443,19 @@ describe("JobApplicationForm failures", () => {
     submit();
     await settle();
     expect(uploadMock).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("JobApplicationForm in Vietnamese", () => {
+  it("labels the form in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <JobApplicationForm slug="role" />
+      </LocaleProvider>,
+    );
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(
+      "Ứng tuyển vị trí này",
+    );
+    expect(screen.getByRole("button", { name: "Gửi hồ sơ" })).toBeTruthy();
   });
 });

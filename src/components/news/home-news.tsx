@@ -1,6 +1,8 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
-import { homeNews } from "@/content/news";
+import { homeNews, homeNewsVi } from "@/content/news";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { getLatestPosts, type LatestPost } from "@/lib/news/latest-posts";
 import { NewsCard } from "./news-card";
 
@@ -8,9 +10,9 @@ import { NewsCard } from "./news-card";
 // With no stories the grid is left out. A failed fetch is
 // logged and shown as "no stories", so Sanity can never take Home (or the build
 // that prerenders it) down with it (lead, 2026-10-04).
-async function loadPosts(): Promise<LatestPost[]> {
+async function loadPosts(locale: Locale): Promise<LatestPost[]> {
   try {
-    return await getLatestPosts();
+    return await getLatestPosts(locale);
   } catch (error) {
     console.error(
       "Home news: could not load the latest posts from Sanity",
@@ -20,9 +22,14 @@ async function loadPosts(): Promise<LatestPost[]> {
   }
 }
 
-export async function HomeNews() {
-  const posts = await loadPosts();
-  const { heading, lede, seeAll } = homeNews;
+export async function HomeNews({
+  locale = "en",
+}: Readonly<{ locale?: Locale }>) {
+  const posts = await loadPosts(locale);
+  const { heading, lede, seeAll } = pickLocale(locale, {
+    en: homeNews,
+    vi: homeNewsVi,
+  });
 
   // E-A6 (prototype index.html news row): "See all news" sits on the heading
   // row (under it at 640px and below), then up to three photo cards.
@@ -42,7 +49,7 @@ export async function HomeNews() {
         {posts.length > 0 ? (
           <div className="sgrid sgrid-row" data-reveal="">
             {posts.map((post) => (
-              <NewsCard key={post.slug} post={post} />
+              <NewsCard key={post.slug} post={post} locale={locale} />
             ))}
           </div>
         ) : null}

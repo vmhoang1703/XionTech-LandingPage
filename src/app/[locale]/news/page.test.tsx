@@ -28,7 +28,7 @@ const post = (n: number, category: string): LatestPost => ({
 
 async function renderPage(posts: LatestPost[]) {
   vi.mocked(getAllPosts).mockResolvedValue(posts);
-  return render(await NewsPage());
+  return render(await NewsPage({ params: Promise.resolve({ locale: "en" }) }));
 }
 
 describe("NewsPage", () => {
@@ -114,7 +114,9 @@ describe("NewsPage", () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {});
     try {
       vi.mocked(getAllPosts).mockRejectedValue(new Error("Sanity down"));
-      const { container } = render(await NewsPage());
+      const { container } = render(
+        await NewsPage({ params: Promise.resolve({ locale: "en" }) }),
+      );
 
       expect(container.querySelector("article")).toBeNull();
       expect(
@@ -136,5 +138,31 @@ describe("NewsPage", () => {
       post(2, "team"),
     ]);
     expect(undefinedClasses(container, /^sr-only$/)).toEqual([]);
+  });
+});
+
+describe("NewsPage in Vietnamese", () => {
+  beforeEach(() => {
+    vi.mocked(getAllPosts).mockReset();
+    vi.stubGlobal("matchMedia", () => ({
+      matches: false,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }));
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("fetches in Vietnamese and shows the Vietnamese hero", async () => {
+    vi.mocked(getAllPosts).mockResolvedValue([post(1, "parents")]);
+    render(await NewsPage({ params: Promise.resolve({ locale: "vi" }) }));
+
+    expect(getAllPosts).toHaveBeenCalledWith("vi");
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Cập nhật cùng chúng tôi",
+    );
+    expect(screen.getByText("04/10/2026")).toBeTruthy();
   });
 });

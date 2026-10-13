@@ -28,7 +28,9 @@ afterEach(() => {
 });
 
 async function renderPage() {
-  return render(await CareersPage());
+  return render(
+    await CareersPage({ params: Promise.resolve({ locale: "en" }) }),
+  );
 }
 
 describe("Careers page", () => {
@@ -101,5 +103,36 @@ describe("Careers page", () => {
   it("sets the page metadata", () => {
     expect(metadata.title).toBe(careersMeta.title);
     expect(metadata.description).toBe(careersMeta.description);
+  });
+});
+
+describe("Careers page in Vietnamese", () => {
+  it("shows Vietnamese copy, role meta and marks an English role", async () => {
+    vi.mocked(getOpenRoles).mockResolvedValue([
+      {
+        slug: "qa",
+        title: "QA Engineer",
+        team: "QA",
+        type: "full-time",
+        lang: "en",
+      },
+    ]);
+    const { container } = render(
+      await CareersPage({ params: Promise.resolve({ locale: "vi" }) }),
+    );
+
+    expect(vi.mocked(getOpenRoles)).toHaveBeenCalledWith("vi");
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Luôn tò mò. Xây dựng điều tiếp theo.",
+    );
+    expect(
+      screen.getByText("Năm điều định hình cách chúng tôi làm việc."),
+    ).toBeTruthy();
+    expect(screen.getByText("Bên trong XionTech.")).toBeTruthy();
+    expect(screen.getByText("Xem và ứng tuyển")).toBeTruthy();
+    expect(screen.getByText("QA · Toàn thời gian")).toBeTruthy();
+    expect(container.querySelector(".role-main")?.getAttribute("lang")).toBe(
+      "en",
+    );
   });
 });

@@ -1,4 +1,6 @@
-import { categoryLabels } from "@/content/news";
+import { categoryLabels, categoryLabelsVi } from "@/content/news";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { postAudience } from "@/lib/news/audience";
 import { sanityFetch } from "@/lib/sanity/client";
 
@@ -11,12 +13,15 @@ export type LatestPost = {
   app?: string | null;
   image?: string | null;
   alt?: string | null;
+  /** The language of title and excerpt: "en" when the locale's text is empty. */
+  lang?: string | null;
 };
 
 const LATEST_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt)] | order(publishedAt desc)[0...3] {
   "slug": slug.current,
-  "title": title.en,
-  "excerpt": excerpt.en,
+  "title": coalesce(title[$locale], title.en),
+  "excerpt": coalesce(excerpt[$locale], excerpt.en),
+  "lang": select(defined(title[$locale]) => $locale, "en"),
   publishedAt,
   category,
   app,
@@ -24,33 +29,53 @@ const LATEST_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && define
   alt
 }`;
 
-const DATE_FORMAT = new Intl.DateTimeFormat("en-US", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  timeZone: "Asia/Ho_Chi_Minh",
-});
+// FR-26: "18 Sep 2026" in English (CSS sets the capitals), "18/09/2026" in Vietnamese.
+const DATE_FORMATS: Record<Locale, Intl.DateTimeFormat> = {
+  en: new Intl.DateTimeFormat("en-US", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "Asia/Ho_Chi_Minh",
+  }),
+  vi: new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    timeZone: "Asia/Ho_Chi_Minh",
+  }),
+};
 
-export function getLatestPosts(): Promise<LatestPost[]> {
+export function getLatestPosts(locale: Locale = "en"): Promise<LatestPost[]> {
   return sanityFetch<LatestPost[]>({
     query: LATEST_POSTS_QUERY,
+    params: { locale },
     tags: ["post"],
   });
 }
 
 // An unreadable date shows as no date, so one bad post cannot break Home.
-export function newsDate(iso: string): string {
+export function newsDate(iso: string, locale: Locale = "en"): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) {
     return "";
   }
   const parts = Object.fromEntries(
-    DATE_FORMAT.formatToParts(date).map(({ type, value }) => [type, value]),
+    DATE_FORMATS[locale]
+      .formatToParts(date)
+      .map(({ type, value }) => [type, value]),
   );
-  return `${parts.day} ${parts.month} ${parts.year}`;
+  return locale === "vi"
+    ? `${parts.day}/${parts.month}/${parts.year}`
+    : `${parts.day} ${parts.month} ${parts.year}`;
 }
 
-export function categoryTag(post: LatestPost): string | null {
+export function categoryTag(
+  post: LatestPost,
+  locale: Locale = "en",
+): string | null {
   const audience = postAudience(post);
-  return audience ? categoryLabels[audience] : null;
+  if (!audience) return null;
+  return pickLocale(locale, { en: categoryLabels, vi: categoryLabelsVi })[
+    audience
+  ];
 }

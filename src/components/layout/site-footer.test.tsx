@@ -202,3 +202,12 @@ describe("SiteFooter", () => {
     ).toBeDefined();
   });
 });
+
+describe("SiteFooter in Vietnamese", () => {
+  it("shows the Vietnamese offices note", () => {
+    render(<SiteFooter locale="vi" />);
+    expect(
+      screen.getByText("Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng."),
+    ).toBeTruthy();
+  });
+});

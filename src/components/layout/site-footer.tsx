@@ -2,8 +2,14 @@ import { MapPinIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { contactIcon } from "@/components/sections/contact-icon";
-import { footerOffices, otherLocations } from "@/content/offices";
+import {
+  footerOffices,
+  footerOfficesVi,
+  otherLocations,
+  otherLocationsVi,
+} from "@/content/offices";
 import { siteFooter } from "@/content/site-footer";
+import { pickLocale } from "@/i18n/content";
 import { localeHref, type Locale } from "@/i18n/locales";
 import { SHELL } from "@/i18n/shell";
 
@@ -17,6 +23,14 @@ const iconClass = "text-amber-tint shrink-0";
 
 export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
   const t = SHELL[locale];
+  const offices = pickLocale(locale, {
+    en: footerOffices,
+    vi: footerOfficesVi,
+  });
+  const others = pickLocale(locale, {
+    en: otherLocations,
+    vi: otherLocationsVi,
+  });
   return (
     <footer className="bg-ink text-on-navy-muted relative pt-18 pb-9 [--color-focus:var(--color-focus-on-navy)]">
       <div className="footer-ridge" data-ridge="" aria-hidden="true">
@@ -74,7 +88,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
 
           <div>
             <h2 className={headingClass}>{siteFooter.officesHeading(t)}</h2>
-            {footerOffices.map((office) => (
+            {offices.map((office) => (
               <address
                 key={office.id}
                 className="text-body-sm not-italic [&+&]:mt-5"
@@ -121,7 +135,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
                 })}
               </address>
             ))}
-            <p className="text-body-sm mt-5">{otherLocations}</p>
+            <p className="text-body-sm mt-5">{others}</p>
           </div>
         </div>
 

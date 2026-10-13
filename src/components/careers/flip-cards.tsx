@@ -1,10 +1,15 @@
-import { careersValues } from "@/content/careers";
+import { careersValues, careersValuesVi } from "@/content/careers";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { FlipCard } from "./flip-card";
 
 // Server Component. "Five things that shape the way we work." (E-A7 CAP-3).
 // The values are not yet confirmed (Q6), so each card title is [Placeholder].
-export function FlipCards() {
-  const { heading, lede, frontHint, backHint, cards } = careersValues;
+export function FlipCards({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { heading, lede, frontHint, backHint, cards } = pickLocale(locale, {
+    en: careersValues,
+    vi: careersValuesVi,
+  });
 
   return (
     <section id="culture" className="sec" aria-labelledby="cul-h">

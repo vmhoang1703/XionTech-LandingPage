@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Audience } from "@/lib/news/audience";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { NewsFilters, type FilterItem } from "./news-filters";
 
 const item = (slug: string, audience: Audience | null): FilterItem => ({
@@ -186,5 +187,23 @@ describe("NewsFilters", () => {
     expect(screen.getByText(EMPTY)).toBeTruthy();
     expect(screen.queryByRole("button", { name: "Show all" })).toBeNull();
     expect(live()?.textContent).toBe("Showing 0 stories");
+  });
+});
+
+describe("NewsFilters in Vietnamese", () => {
+  it("labels the chips, empty state and count in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <NewsFilters items={[item("p1", "parents")]} />
+      </LocaleProvider>,
+    );
+
+    expect(
+      screen.getAllByRole("button").map((button) => button.textContent),
+    ).toEqual(["Tất cả", "Trường học", "Học sinh", "Phụ huynh", "Công ty"]);
+    fireEvent.click(chip("Học sinh"));
+    expect(screen.getByText("Chưa có tin nào trong mục này.")).toBeTruthy();
+    expect(chip("Xem tất cả")).toBeTruthy();
+    expect(live()?.textContent).toBe("Đang hiển thị 0 tin");
   });
 });

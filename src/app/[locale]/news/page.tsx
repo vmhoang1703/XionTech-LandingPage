@@ -3,7 +3,9 @@ import { CaptureBand } from "@/components/contact/capture-band";
 import { NewsCard } from "@/components/news/news-card";
 import { NewsFilters } from "@/components/news/news-filters";
 import { PageScene } from "@/components/sections/page-scene";
-import { newsMeta, newsPage } from "@/content/news";
+import { newsMeta, newsPage, newsPageVi } from "@/content/news";
+import { pickLocale } from "@/i18n/content";
+import { isLocale, type Locale } from "@/i18n/locales";
 import { getAllPosts } from "@/lib/news/all-posts";
 import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
@@ -15,9 +17,9 @@ export const generateMetadata = localeMetadata({
 
 // A failed fetch is logged and shown as "no stories", as on Home, so Sanity
 // can never take the page (or the build that prerenders it) down.
-async function loadPosts(): Promise<LatestPost[]> {
+async function loadPosts(locale: Locale): Promise<LatestPost[]> {
   try {
-    return await getAllPosts();
+    return await getAllPosts(locale);
   } catch (error) {
     console.error("News page: could not load the posts from Sanity", error);
     return [];
@@ -28,9 +30,16 @@ async function loadPosts(): Promise<LatestPost[]> {
 // part. The hero, the stories and the demo band (Q4: no newsletter) share the
 // page scene from the top (lead, 2026-10-12); the heading sits inside it, so
 // the scene does not fade in.
-export default async function NewsPage() {
-  const posts = await loadPosts();
-  const { title, sub, storiesHeading } = newsPage;
+export default async function NewsPage({
+  params,
+}: Readonly<Pick<PageProps<"/[locale]/news">, "params">>) {
+  const { locale: param } = await params;
+  const locale = isLocale(param) ? param : "en";
+  const posts = await loadPosts(locale);
+  const { title, sub, storiesHeading } = pickLocale(locale, {
+    en: newsPage,
+    vi: newsPageVi,
+  });
 
   return (
     <PageScene fade={false}>
@@ -53,7 +62,7 @@ export default async function NewsPage() {
             items={posts.map((post) => ({
               key: post.slug,
               category: postAudience(post),
-              node: <NewsCard post={post} />,
+              node: <NewsCard post={post} locale={locale} />,
             }))}
           />
         </div>

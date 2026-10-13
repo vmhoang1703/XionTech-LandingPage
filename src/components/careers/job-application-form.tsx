@@ -2,7 +2,7 @@
 
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import { uploadPresigned } from "@vercel/blob/client";
-import { LocaleLink } from "@/components/layout/locale-link";
+import { LocaleLink, useLocale } from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -12,7 +12,8 @@ import {
 } from "react";
 import { postSubmission } from "@/components/contact/post-submission";
 import { SummitMark } from "@/components/contact/summit-mark";
-import { jobForm } from "@/content/job";
+import { jobForm as jobFormEn, jobFormVi } from "@/content/job";
+import { pickLocale } from "@/i18n/content";
 import {
   CV_TYPES,
   JOB_ERRORS,
@@ -79,6 +80,7 @@ async function uploadCv(file: File): Promise<string> {
 }
 
 export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
+  const jobForm = pickLocale(useLocale(), { en: jobFormEn, vi: jobFormVi });
   const [errors, setErrors] = useState<JobErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [failure, setFailure] = useState<"send" | "rate" | null>(null);

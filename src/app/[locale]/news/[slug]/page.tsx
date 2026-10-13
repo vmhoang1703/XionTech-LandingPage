@@ -4,7 +4,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { notFound } from "next/navigation";
-import { newsMeta, newsStory } from "@/content/news";
+import { newsMeta, newsStory, newsStoryVi } from "@/content/news";
+import { pickLocale } from "@/i18n/content";
+import { isLocale } from "@/i18n/locales";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
 import { getPost, type StoryBlock } from "@/lib/news/post";
 
@@ -14,7 +16,7 @@ export async function generateMetadata({
   params,
 }: StoryProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  const story = await getPost(slug);
+  const story = await getPost(slug, isLocale(locale) ? locale : "en");
   if (!story) return {};
   return forLocale(locale, {
     title: newsStory.metaTitle(story.title),
@@ -26,14 +28,21 @@ export async function generateMetadata({
  * A block styled as a heading shows as an H2; empty blocks are left out. The
  * excerpt is the summary in the header, so it is not repeated here.
  */
-function StoryBody({ blocks }: Readonly<{ blocks: StoryBlock[] }>) {
+function StoryBody({
+  blocks,
+  lang,
+}: Readonly<{ blocks: StoryBlock[]; lang?: string }>) {
   return blocks
     .filter((block) => block.text?.trim())
     .map((block) =>
       block.style?.startsWith("h") ? (
-        <h2 key={block._key}>{block.text}</h2>
+        <h2 key={block._key} lang={lang}>
+          {block.text}
+        </h2>
       ) : (
-        <p key={block._key}>{block.text}</p>
+        <p key={block._key} lang={lang}>
+          {block.text}
+        </p>
       ),
     );
 }
@@ -42,13 +51,19 @@ function StoryBody({ blocks }: Readonly<{ blocks: StoryBlock[] }>) {
 // would turn the 404 into a 200. No capture band on a story page (FR-33
 // exception), no breadcrumb and no "See {app}" button (lead, 2026-10-08).
 export default async function StoryPage({ params }: StoryProps) {
-  const story = await getPost((await params).slug);
+  const { locale: param, slug } = await params;
+  const locale = isLocale(param) ? param : "en";
+  const story = await getPost(slug, locale);
   if (!story) notFound();
 
-  const tag = categoryTag(story);
-  const date = newsDate(story.publishedAt);
+  const tag = categoryTag(story, locale);
+  const date = newsDate(story.publishedAt, locale);
+  const lang = story.lang ?? undefined;
   const alt = story.alt?.trim();
-  const { backToNews, storyLabel, sampleNote } = newsStory;
+  const { backToNews, storyLabel, sampleNote } = pickLocale(locale, {
+    en: newsStory,
+    vi: newsStoryVi,
+  });
 
   return (
     <>
@@ -69,9 +84,13 @@ export default async function StoryPage({ params }: StoryProps) {
               </time>
             ) : null}
           </div>
-          <h1 id="story-h1">{story.title}</h1>
+          <h1 id="story-h1" lang={lang}>
+            {story.title}
+          </h1>
           {story.excerpt?.trim() ? (
-            <p className="art-dek">{story.excerpt}</p>
+            <p className="art-dek" lang={lang}>
+              {story.excerpt}
+            </p>
           ) : null}
           {story.image && alt ? (
             <div className="art-img">
@@ -90,7 +109,10 @@ export default async function StoryPage({ params }: StoryProps) {
       <section className="sec surface-paper art-sec" aria-label={storyLabel}>
         <div className="wrap">
           <article className="art-body">
-            <StoryBody blocks={story.body ?? []} />
+            <StoryBody
+              blocks={story.body ?? []}
+              lang={story.bodyLang ?? undefined}
+            />
             {story.title.startsWith("[Placeholder]") ? (
               <p className="sample">{sampleNote}</p>
             ) : null}

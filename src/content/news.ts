@@ -43,3 +43,46 @@ export const newsStory = {
   backToNews: { href: "/news", label: "Back to News" },
   metaTitle: (title: string) => `${title} | XionTech`,
 };
+
+// Vietnamese. Prototype `data-vi` text where the English still matches, the
+// rest AI-translated for native review (src/i18n/vi-sources.json).
+export const homeNewsVi: typeof homeNews = {
+  heading: "Tin mới từ XionTech.",
+  lede: "Cập nhật những gì đội ngũ chúng tôi đang xây dựng và phát hành.",
+  seeAll: { href: homeNews.seeAll.href, label: "Xem tất cả tin tức" },
+  readStory: "Đọc tiếp",
+};
+
+export const categoryLabelsVi: typeof categoryLabels = {
+  schools: "Trường học",
+  students: "Học sinh",
+  parents: "Phụ huynh",
+  company: "Công ty",
+};
+
+export const newsMetaVi: typeof newsMeta = {
+  title: "Tin tức | XionTech",
+  description:
+    "Những câu chuyện ngắn về sản phẩm, trường học, đội ngũ và các dự án khách hàng của XionTech.",
+};
+
+export const newsPageVi: typeof newsPage = {
+  title: "Cập nhật cùng chúng tôi",
+  sub: "Luôn nắm bắt những tin tức và thông báo mới nhất, nóng hổi vừa ra lò.",
+  storiesHeading: "Tất cả tin",
+  filtersLabel: "Lọc tin theo đối tượng",
+  sampleNote:
+    "Tin từ phòng tin tức newXion; những tin có dấu [Placeholder] là tin mẫu.",
+  allFilter: { id: newsPage.allFilter.id, label: "Tất cả" },
+  empty: "Chưa có tin nào trong mục này.",
+  showAll: "Xem tất cả",
+  count: (n: number) => `Đang hiển thị ${n} tin`,
+};
+
+export const newsStoryVi: typeof newsStory = {
+  storyLabel: "Nội dung tin",
+  sampleNote:
+    "[Placeholder] Tin mẫu để minh họa bố cục. Thay bằng tin thật trước khi ra mắt.",
+  backToNews: { href: newsStory.backToNews.href, label: "Quay lại Tin tức" },
+  metaTitle: newsStory.metaTitle,
+};
