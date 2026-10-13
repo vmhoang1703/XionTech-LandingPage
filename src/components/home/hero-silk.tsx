@@ -168,7 +168,7 @@ export function HeroSilk() {
             saveMotionPaused(!paused);
             setPaused(!paused);
           }}
-          className="group bg-ink/50 absolute top-[calc(var(--spacing-header-room)+12px)] right-4 z-10 inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/30 px-2 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6"
+          className="group bg-ink/50 absolute top-[calc(var(--spacing-header-room)+12px)] right-4 z-10 inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/30 px-2 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6 pointer-coarse:h-11 pointer-coarse:min-w-11"
         >
           {paused ? (
             <PlayIcon aria-hidden="true" weight="fill" className="size-4" />

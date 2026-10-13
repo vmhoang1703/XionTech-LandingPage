@@ -20,7 +20,7 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label={LABELS.homeLink}
-            className="flex shrink-0 px-2 max-[1080px]:px-1"
+            className="flex min-h-11 shrink-0 items-center px-2 max-[1080px]:px-1"
           >
             <Image
               src="/logo.png"

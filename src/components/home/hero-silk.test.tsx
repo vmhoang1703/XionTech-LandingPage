@@ -106,6 +106,9 @@ describe("HeroSilk", () => {
 
     const button = screen.getByRole("button", { name: "Pause motion" });
     expect(button.getAttribute("aria-pressed")).toBeNull();
+    // 36px for a mouse, 44px on touch screens (PRODUCT.md).
+    expect(button.className).toContain("pointer-coarse:h-11");
+    expect(button.className).toContain("pointer-coarse:min-w-11");
     // Phosphor icons draw on a 256 grid.
     const pauseIcon = button.querySelector("svg");
     expect(pauseIcon?.getAttribute("viewBox")).toBe("0 0 256 256");

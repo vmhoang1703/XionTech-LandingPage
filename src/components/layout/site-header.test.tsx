@@ -17,6 +17,9 @@ describe("SiteHeader", () => {
   it("links the logo to the home page with its labels", () => {
     render(<SiteHeader />);
     const home = screen.getByRole("link", { name: "XionTech home" });
+    // 44px tall to tap (PRODUCT.md), the logo centred in it.
+    expect(home.className).toContain("min-h-11");
+    expect(home.className).toContain("items-center");
     expect(home.getAttribute("href")).toBe("/");
     const logo = screen.getByAltText("XionTech, Get IT Done");
     expect(home.contains(logo)).toBe(true);

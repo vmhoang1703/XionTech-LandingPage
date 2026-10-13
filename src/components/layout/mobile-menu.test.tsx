@@ -103,6 +103,8 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
     expect(menuButton().className).toContain("min-[1081px]:hidden");
     expect(menuButton().className).toContain("size-11");
+    // A 320px pill must not squeeze it below 44px (lead, 2026-10-13).
+    expect(menuButton().className).toContain("shrink-0");
     // Round like the nav links; Book a demo keeps it at the right edge.
     expect(menuButton().className).toContain("rounded-full");
     expect(menuButton().className).not.toContain("ml-auto");
