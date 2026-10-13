@@ -1699,3 +1699,19 @@ Template:
   - Scrolling behind an open modal moved the selected pin.
   - The first anchor pass left `#pxp` and `#iot` landing under the header.
 - **Follow-up (2026-10-13), merging develop:** develop's floating header pill moved the header bottom to 96px, so the pinned roadmap slid under it. The tour now pins at `--spacing-header-room`. The AI first copied develop's anchor formula onto the tour's step anchors as well; that dropped deep links 16px short of their stop, and the e2e caught it. The footer-link test also had to wait for develop's new footer scroll reveal to settle before clicking.
+
+## 2026-10-13 — Story 1.2 (locale routing and language dropdown) built before Demo day
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code (Claude Haiku 5.5), `/bmad-build` dispatch route
+- **Prompt (short):** Build Story 1.2 now, before Demo day, with Vietnamese for the site shell.
+- **What the AI did:**
+  - Wrote `spec-1-2-locale-routing-dropdown.md` from the PRD (FR-4, FR-5, AC-NAV-1) and Amber's prototype `data-vi` strings.
+  - Found that `epic-1-context.md` and `epics.md` still record the 2026-09-29 English-only Demo-day decision, and that the same file asks for the lead's confirmation and an entry here.
+  - Logged the change in `AGENTS.md` (project scope) and here.
+- **Decision / result:**
+  - The user decided on 2026-10-13 to build Story 1.2 before Demo day, overriding the 2026-09-29 "after demo" plan.
+  - Scope: routing, cookie, language dropdown and EN/VI shell strings. Vietnamese covers the site shell only; page-body translation stays deferred (`deferred-work.md`, 2026-10-13).
+  - Until page copy is translated, a `/vi/` page shows the Vietnamese shell around the English page body, with `lang="en"` on `<main>`.
+  - Shell strings missing from the prototype use `[Placeholder]` plus the English text. No invented Vietnamese.
+  - Hoang Vu still has to be told; the spec records this as a to-do.
+- **AI got it wrong?** no — the scope change is the user's decision. The open point is the lead's confirmation, which the AI could not make.
