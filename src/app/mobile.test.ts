@@ -53,15 +53,12 @@ describe("phone layouts", () => {
     expect(tablet).toMatch(
       /\.flip-face\s*\{\s*position:\s*relative;\s*inset:\s*auto;\s*grid-area:\s*1 \/ 1;/,
     );
-    expect(tablet).toMatch(
-      /\.home-values \.flip-cards\s*\{\s*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\);/,
-    );
   });
 
   it("puts the card sets in rows to swipe through", () => {
     const phone = mediaBody("(width < 640px)");
     const row =
-      /\.flow,\s*\.app-cards,\s*\.flip-cards,\s*\.home-values \.flip-cards,\s*\.sgrid-row\s*\{([^}]*)\}/.exec(
+      /\.flow,\s*\.app-cards,\s*\.flip-cards:not\(\.home-values \.flip-cards\),\s*\.sgrid-row\s*\{([^}]*)\}/.exec(
         phone,
       );
     expect(row?.[1]).toMatch(/grid-auto-flow:\s*column;/);
@@ -69,7 +66,7 @@ describe("phone layouts", () => {
     expect(row?.[1]).toMatch(/overflow-x:\s*auto;/);
     expect(row?.[1]).toMatch(/scroll-snap-type:\s*x mandatory;/);
     expect(phone).toMatch(
-      /\.flow > \*,\s*\.app-cards > \*,\s*\.flip-cards > \*,\s*\.sgrid-row > \*\s*\{\s*scroll-snap-align:\s*start;/,
+      /\.flow > \*,\s*\.app-cards > \*,\s*\.flip-cards:not\(\.home-values \.flip-cards\) > \*,\s*\.sgrid-row > \*\s*\{\s*scroll-snap-align:\s*start;/,
     );
   });
 
