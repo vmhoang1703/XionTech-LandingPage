@@ -47,6 +47,11 @@ export const aboutStory = {
     line: "Our inspiration is a mountain. Our purpose is people.",
     tags: "Vision · Community · Technology",
   },
+  // Under chapter 01 while the story is held; on the summit of the picture.
+  // Amber's tag also read "Founded in America": left out while the founding
+  // sentence is a placeholder (Q12).
+  cue: "Scroll",
+  tagName: "newXion",
 };
 
 // Each answer has an id, so Home can pick some (homeFaq in home.ts).

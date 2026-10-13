@@ -530,6 +530,25 @@ const MAY_HIDE = new Set([
   ".swipe-dots",
   // A shortcut to the job form below it; the form itself always shows.
   ".apply-bar",
+  // About mountain story: decoration (the Scroll cue, the light, the dots,
+  // the grey or lit X mark, the tag) and the held chapters, which hide only
+  // once the MountainStory script has armed the section.
+  ".mtn-cue",
+  ".mtn-beacon",
+  ".mtn-dots",
+  ".mtn-summit-lit",
+  ".mtn:not([data-armed]) .mtn-summit-grey",
+  ".mtn[data-top] .mtn-summit-grey",
+  ".mtn[data-top] .mtn-beacon",
+  ".mtn[data-armed]:not([data-late]) .mtn-tag",
+  ".mtn[data-armed] .mtn-ch:not([data-on]) > *",
+  ".mtn[data-armed] .mtn-dots",
+  ".mtn[data-armed] .mtn-cue",
+  ".mtn[data-armed] .mtn-beacon",
+  // News cards wait to unfold only once the NewsFilters script marks the grid.
+  "#newsGrid[data-unfold] > :not([data-in])",
+  // The Services hero shine copy: decoration, aria-hidden.
+  ".hl-shine",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],

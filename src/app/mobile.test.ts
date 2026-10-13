@@ -242,3 +242,60 @@ describe("behaviour and touch", () => {
     );
   });
 });
+
+// Amber's prototype motion (lead, 2026-10-13: 1B 3B 4B 5B).
+describe("prototype motion", () => {
+  const css = globalsCss();
+  const keyframes = (name: string) => {
+    const start = css.indexOf(`@keyframes ${name} {`);
+    expect(start, name).toBeGreaterThan(-1);
+    return css.slice(start, css.indexOf("\n}", start));
+  };
+
+  it.each([
+    "press-word",
+    "card-unfold",
+    "shine-window",
+    "shine-copy",
+    "icon-pop",
+    "w-up",
+    "w-pop",
+  ])(
+    "%s animates only transform, translate, rotate, scale and opacity",
+    (name) => {
+      const props = [...keyframes(name).matchAll(/^\s+([a-z-]+):/gm)].map(
+        (match) => match[1],
+      );
+      expect(props.length).toBeGreaterThan(0);
+      for (const prop of props) {
+        expect([
+          "transform",
+          "translate",
+          "rotate",
+          "scale",
+          "opacity",
+        ]).toContain(prop);
+      }
+    },
+  );
+
+  it("plays the icon pop for a mouse only, and every new motion has a reduced-motion version", () => {
+    expect(css).toMatch(
+      /@media \(hover: hover\) and \(prefers-reduced-motion: no-preference\)\s*\{\s*\.svc-card:hover \.svc-card-h svg\s*\{\s*animation:\s*icon-pop/,
+    );
+    for (const name of ["press-word", "shine-window", "w-up"]) {
+      const use = css.indexOf(`animation: ${name}`);
+      const block = css.lastIndexOf("@media", use);
+      expect(css.slice(block, use), name).toContain(
+        "prefers-reduced-motion: no-preference",
+      );
+    }
+  });
+
+  it("holds the mountain story only once the script arms it", () => {
+    expect(css).toMatch(
+      /\.mtn\[data-armed\] \.mtn-pin\s*\{\s*position:\s*sticky;/,
+    );
+    expect(css).toMatch(/\.mtn-rise\s*\{[^}]*overflow:\s*hidden;/);
+  });
+});

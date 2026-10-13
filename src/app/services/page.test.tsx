@@ -46,6 +46,11 @@ describe("ServicesPage", () => {
     expect(h1s[0].id).toBe("services-h1");
     expect(h1s[0].textContent).toBe("Software teams that get IT done.");
     expect(h1s[0].querySelector(".hl")?.textContent).toBe("get IT done");
+    // The shine (lead, 2026-10-13) draws its pale copy from data-text.
+    const shine = h1s[0].querySelector(".hl-shine");
+    expect(shine?.getAttribute("aria-hidden")).toBe("true");
+    expect(shine?.getAttribute("data-text")).toBe("get IT done");
+    expect(shine?.textContent).toBe("");
     expect(hero?.querySelector("p.lede")?.textContent).toContain(
       "Product engineering, AI, low-code and cloud delivery",
     );
