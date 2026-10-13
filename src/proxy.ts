@@ -31,8 +31,16 @@ function resolveLocale(request: NextRequest): Locale {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  // A first segment like "fr" is not rewritten: the [locale] route answers 404.
-  if (/^\/[a-z]{2}(\/|$)/.test(pathname)) return NextResponse.next();
+  const first = /^\/([a-z]{2})(\/|$)/.exec(pathname)?.[1];
+  if (isLocale(first)) return NextResponse.next();
+  // An unsupported locale ("/fr/products") matches the [locale] routes, so
+  // global-not-found never answers it and Next shows its bare 404. Rewriting to
+  // /en/fr/products lets the [...rest] catch-all serve the site's 404 (status 404).
+  if (first) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${DEFAULT_LOCALE}${pathname}`;
+    return NextResponse.rewrite(url);
+  }
   const url = request.nextUrl.clone();
   url.pathname = `/${resolveLocale(request)}${pathname === "/" ? "" : pathname}`;
   return NextResponse.redirect(url, 307);

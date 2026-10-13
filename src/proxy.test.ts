@@ -64,6 +64,9 @@ describe("proxy", () => {
   it("leaves an unknown locale to the 404 page", () => {
     const res = run("/fr/products");
     expect(res.headers.get("location")).toBeNull();
+    expect(
+      new URL(res.headers.get("x-middleware-rewrite") ?? "").pathname,
+    ).toBe("/en/fr/products");
   });
 
   it("matcher excludes api, _next and files with an extension", () => {
