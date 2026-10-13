@@ -1721,3 +1721,11 @@ Template:
   - Step 4: flip cards as tall as their text, the 4-D process as a swipe row, the footer links in two columns. Home at 390px: 13,790 → 12,264px.
   - Checks: 1390 unit tests; diff coverage 100%; smoke + a11y 72/72; build; screenshots at 320–1440.
   - **AI got it wrong?** Yes: the preview showed value cards two a row, but only their fronts. With the real back text (up to 204 characters) two columns were no shorter and too narrow, so the AI kept one a row with auto height and said so. A test clock started before the page had loaded, so some screenshots came out blank; waiting for the Pause button fixed it. The audit's hover finding was overstated: the moving hover effects were already limited to mouse devices.
+
+## 2026-10-13 — Mobile round 2: shorter pages (feat/mobile-compact)
+
+- **Prompt:** "Pages are too long, require excessive scrolling, and some interactions … are not convenient." Then: "one branch, one PR. Enhance until I feel good."
+- **What the AI did:** measured every section at 390 and 768, found the card sets (one tall card a row), the footer and the News cards were most of the height.
+- **AI got it wrong:** it started building its own picks without a preview. The lead asked "why you dont self-brainstorm and make preview with many options?" The AI had over-read an earlier "I am confused with all options" as "never show options". Fix: one preview page with 2-4 real-page options per problem and the AI's pick marked. The lead picked 1A 2D 3A 4C 5B.
+- **AI got it wrong (2):** the first swipe row for values gave card 1 a 0px column and 720px tall cards: a more specific `.home-values .flip-cards` rule still set the columns. Caught in screenshots, fixed by adding that selector.
+- **Result:** Home 12,264 → 9,434px on a phone, 10,376 → 9,156px on a tablet; desktop unchanged. Spec: `_bmad-output/implementation-artifacts/spec-mobile-compact.md`.
