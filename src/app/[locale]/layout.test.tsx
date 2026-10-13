@@ -116,6 +116,25 @@ describe("RootLayout", () => {
     expect(container.querySelectorAll("footer")).toHaveLength(1);
   });
 
+  async function renderMain(locale: string) {
+    const html = (await RootLayout({
+      children: <p>child</p>,
+      ...params(locale),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{
+      children: ReactElement<{ children: ReactElement[] }>;
+    }>;
+    const { container } = render(html.props.children.props.children);
+    return container.querySelector("main#main");
+  }
+
+  it("marks main as English on vi until the page copy is translated", async () => {
+    expect((await renderMain("vi"))?.getAttribute("lang")).toBe("en");
+  });
+
+  it("leaves main without a lang attribute on en", async () => {
+    expect((await renderMain("en"))?.hasAttribute("lang")).toBe(false);
+  });
+
   it("sets the site title and description per locale", async () => {
     const en = await generateMetadata(params("en") as LayoutProps<"/[locale]">);
     const vi = await generateMetadata(params("vi") as LayoutProps<"/[locale]">);

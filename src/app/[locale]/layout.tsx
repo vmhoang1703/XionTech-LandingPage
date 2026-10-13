@@ -56,7 +56,13 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col">
         <LocaleProvider locale={locale}>
           <SiteHeader locale={locale} />
-          <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
+          <main
+            id="main"
+            tabIndex={-1}
+            // Page copy is English until translated; the shell around it is not.
+            lang={locale === "vi" ? "en" : undefined}
+            className="flex flex-1 flex-col"
+          >
             {children}
           </main>
           <SiteFooter locale={locale} />
