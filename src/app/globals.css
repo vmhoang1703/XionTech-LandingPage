@@ -3516,6 +3516,12 @@
   */
 
   /* Products map */
+  /* The map is the page's first section, so like every page hero it adds the
+     header room: the floating pill no longer covers the H1 (lead, 2026-10-13). */
+  .map-sec {
+    padding-top: calc(var(--spacing-header-room) + var(--spacing-section));
+  }
+
   /* Heading and badge shared by the roadmap. */
   .map-sec h1 {
     margin: 0;
