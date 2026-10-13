@@ -3,7 +3,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import NewsPage, { metadata } from "./page";
+import NewsPage, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
 vi.mock("@/lib/news/all-posts", () => ({ getAllPosts: vi.fn() }));

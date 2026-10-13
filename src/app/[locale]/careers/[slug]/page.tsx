@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { localeMetadata } from "@/i18n/page-metadata";
 import { notFound } from "next/navigation";
 import { JobApplicationForm } from "@/components/careers/job-application-form";
 import { JobDetails } from "@/components/careers/job-details";
@@ -6,10 +6,10 @@ import { JobHero } from "@/components/careers/job-hero";
 import { jobMeta } from "@/content/job";
 import { getOpenRole } from "@/lib/careers/open-roles";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: jobMeta.title,
   description: jobMeta.description,
-};
+});
 
 // No loading.tsx here: streaming would turn the 404 into a 200.
 export default async function JobPage({

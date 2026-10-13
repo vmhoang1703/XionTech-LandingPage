@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import { localeMetadata } from "@/i18n/page-metadata";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { PRIVACY } from "@/content/privacy";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: PRIVACY.metaTitle,
   description: PRIVACY.metaDescription,
-};
+});
 
 // Plain reading page: no capture band (FR-33 exception). The aurora hero
 // background and shared breadcrumbs come with Story 1.6, after demo.

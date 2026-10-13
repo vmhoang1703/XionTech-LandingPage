@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { localeMetadata } from "@/i18n/page-metadata";
 import { Capabilities } from "@/components/home/capabilities";
 import { HomeApps } from "@/components/home/home-apps";
 import { HomeFaq } from "@/components/home/home-faq";
@@ -10,9 +10,9 @@ import { HomeContact } from "@/components/contact/home-contact";
 import { HomeNews } from "@/components/news/home-news";
 import { PageScene } from "@/components/sections/page-scene";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: "XionTech | School Platforms & Software Outsourcing in Vietnam",
-};
+});
 
 // Home (E-S1): the hero with its doors, then one story on one flowing light
 // surface: what we help you achieve, the apps, why XionTech, how we work, our

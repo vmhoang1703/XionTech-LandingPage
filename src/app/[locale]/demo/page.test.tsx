@@ -2,7 +2,11 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { offices } from "@/content/offices";
-import DemoPage, { metadata } from "./page";
+import DemoPage, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 // jsdom has no canvas: HeroArt skips the ribbon, the aurora is CSS.
 beforeEach(() => {

@@ -1,3 +1,4 @@
+import { forLocale } from "@/i18n/page-metadata";
 import { ArrowLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -12,12 +13,13 @@ type StoryProps = Readonly<PageProps<"/[locale]/news/[slug]">>;
 export async function generateMetadata({
   params,
 }: StoryProps): Promise<Metadata> {
-  const story = await getPost((await params).slug);
+  const { locale, slug } = await params;
+  const story = await getPost(slug);
   if (!story) return {};
-  return {
+  return forLocale(locale, {
     title: newsStory.metaTitle(story.title),
     description: story.excerpt ?? newsMeta.description,
-  };
+  });
 }
 
 /**

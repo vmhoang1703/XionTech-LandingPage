@@ -1,5 +1,5 @@
+import { localeMetadata } from "@/i18n/page-metadata";
 import { ArrowRightIcon, MapPinIcon } from "@phosphor-icons/react/ssr";
-import type { Metadata } from "next";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { Fragment } from "react";
 import { CaptureBand } from "@/components/contact/capture-band";
@@ -16,10 +16,10 @@ import {
   aboutStory,
 } from "@/content/about";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: aboutMeta.title,
   description: aboutMeta.description,
-};
+});
 
 // E-S3 (prototype about.html): the intro over pastel peaks, the mountain story
 // (static, no picture), the FAQ at #faq, the offices and the demo capture, on

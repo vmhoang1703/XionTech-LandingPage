@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { localeMetadata } from "@/i18n/page-metadata";
 import { CaptureBand } from "@/components/contact/capture-band";
 import { NewsCard } from "@/components/news/news-card";
 import { NewsFilters } from "@/components/news/news-filters";
@@ -8,10 +8,10 @@ import { getAllPosts } from "@/lib/news/all-posts";
 import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: newsMeta.title,
   description: newsMeta.description,
-};
+});
 
 // A failed fetch is logged and shown as "no stories", as on Home, so Sanity
 // can never take the page (or the build that prerenders it) down.

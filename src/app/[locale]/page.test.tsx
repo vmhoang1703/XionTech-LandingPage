@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import Home, { metadata } from "./page";
+import Home, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 // jsdom has no WebGL; the silk falls back to the static glow.
 vi.mock("@/components/home/silk-shader", async (importOriginal) => ({

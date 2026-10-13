@@ -16,7 +16,11 @@ vi.mock("next/navigation", () => ({
 }));
 
 import { notFound } from "next/navigation";
-import JobPage, { metadata } from "./page";
+import JobPage, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 // jsdom has no canvas: HeroArt skips the ribbon.
 beforeEach(() => {

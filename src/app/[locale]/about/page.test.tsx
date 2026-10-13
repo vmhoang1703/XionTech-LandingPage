@@ -2,7 +2,11 @@ import { render, screen } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
-import AboutPage, { metadata } from "./page";
+import AboutPage, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),
@@ -23,6 +27,14 @@ describe("AboutPage", () => {
   it("has its own title and description", () => {
     expect(metadata.title).toBe("About XionTech | Get IT Done");
     expect(String(metadata.description)).toContain("Plano");
+  });
+
+  it("marks the vi title and description as placeholder English", async () => {
+    const vi = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(vi.title).toBe("[Placeholder] About XionTech | Get IT Done");
+    expect(String(vi.description)).toMatch(/^\[Placeholder\] .*Plano/);
   });
 
   it("opens with the centred statement, the amber ownership and the peaks", () => {

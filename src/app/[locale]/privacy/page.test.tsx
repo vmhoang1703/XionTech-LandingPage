@@ -1,7 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { PRIVACY } from "@/content/privacy";
-import PrivacyPage, { metadata } from "./page";
+import PrivacyPage, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 const SECTION_HEADINGS = [
   "Who we are and how to reach us",

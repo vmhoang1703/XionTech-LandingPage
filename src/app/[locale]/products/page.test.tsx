@@ -2,7 +2,11 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { productsMeta } from "@/content/products";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import ProductsPage, { metadata } from "./page";
+import ProductsPage, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ push: vi.fn() }),

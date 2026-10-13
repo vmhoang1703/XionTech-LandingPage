@@ -1,5 +1,5 @@
+import { localeMetadata } from "@/i18n/page-metadata";
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import type { Metadata } from "next";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { PageScene } from "@/components/sections/page-scene";
 import { ProcessFlow } from "@/components/sections/process-flow";
@@ -12,10 +12,10 @@ import {
   servicesSection,
 } from "@/content/services";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: servicesMeta.title,
   description: servicesMeta.description,
-};
+});
 
 // E-S2 (prototype services.html): a navy hero panel, the eight services in a
 // sticky heading beside them, the outcomes and the 4-D process at #process.

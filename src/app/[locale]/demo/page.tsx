@@ -1,5 +1,5 @@
+import { localeMetadata } from "@/i18n/page-metadata";
 import { CheckCircleIcon } from "@phosphor-icons/react/ssr";
-import type { Metadata } from "next";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { Fragment } from "react";
 import { ContactForm } from "@/components/contact/contact-form";
@@ -7,10 +7,10 @@ import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { HeroArt } from "@/components/sections/hero-art";
 import { offices, otherLocations } from "@/content/offices";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: CONTACT_STRINGS.metaTitle,
   description: CONTACT_STRINGS.metaDescription,
-};
+});
 
 const { hero } = CONTACT_STRINGS;
 

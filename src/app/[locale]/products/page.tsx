@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { localeMetadata } from "@/i18n/page-metadata";
 import { CaptureBand } from "@/components/contact/capture-band";
 import { JourneySection } from "@/components/products/journey/journey-section";
 import { PageScene } from "@/components/sections/page-scene";
 import { productsMeta } from "@/content/products";
 
-export const metadata: Metadata = {
+export const generateMetadata = localeMetadata({
   title: productsMeta.title,
   description: productsMeta.description,
-};
+});
 
 // E-A5: on the shared page scene (lead, 2026-10-12) the school-day journey
 // map, then the navy demo capture band (its default demo copy is "See it

@@ -9,7 +9,11 @@ vi.mock("@/lib/careers/open-roles", async (importOriginal) => ({
   getOpenRoles: vi.fn(),
 }));
 
-import CareersPage, { metadata } from "./page";
+import CareersPage, { generateMetadata } from "./page";
+
+const metadata = await generateMetadata({
+  params: Promise.resolve({ locale: "en" }),
+});
 
 // The growth ring reads reduced motion and watches the viewport.
 beforeEach(() => {
