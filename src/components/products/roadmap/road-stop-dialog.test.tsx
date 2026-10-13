@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { APPS } from "@/content/apps";
+import { LocaleProvider } from "@/components/layout/locale-link";
+import { APPS, appTaglinesVi } from "@/content/apps";
 import { dayRoad, productDetails, productsShowcase } from "@/content/products";
 import { RoadStopDialog } from "./road-stop-dialog";
 
@@ -164,5 +165,33 @@ describe("RoadStopDialog", () => {
       expect(items[i].textContent).toContain(app.shortName);
       expect(items[i].textContent).toContain(app.tagline);
     }
+  });
+
+  it("speaks Vietnamese on vi: close, step, app details and taglines", () => {
+    const { container, rerender } = render(
+      <LocaleProvider locale="vi">
+        <RoadStopDialog index={1} onMove={vi.fn()} onClose={vi.fn()} />
+      </LocaleProvider>,
+    );
+    const dialog = container.querySelector("dialog") as HTMLDialogElement;
+
+    expect(button("Đóng")).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(
+      "Ghi nhận điểm danh",
+    );
+    expect(dialog.textContent).toContain(appTaglinesVi["staff-hub"]);
+    expect(dialog.textContent).toContain(
+      "Dành cho: Nhân viên, giáo viên và lãnh đạo nhà trường",
+    );
+    expect(screen.getByRole("heading", { name: "Tính năng" })).toBeTruthy();
+    expect(button("Học sinh đến trường")).toBeTruthy();
+
+    rerender(
+      <LocaleProvider locale="vi">
+        <RoadStopDialog index={LAST} onMove={vi.fn()} onClose={vi.fn()} />
+      </LocaleProvider>,
+    );
+    expect(dialog.textContent).toContain(appTaglinesVi.iot);
+    expect(button("Kết thúc").disabled).toBe(true);
   });
 });

@@ -3,7 +3,17 @@
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { APPS, appById } from "@/content/apps";
-import { dayRoad, journeyBoard, type RoadStop } from "@/content/products";
+import { useLocale } from "@/components/layout/locale-link";
+import {
+  dayRoad,
+  dayRoadVi,
+  journeyBoard,
+  journeyBoardVi,
+  type DayRoad,
+  type JourneyBoard,
+  type RoadStop,
+} from "@/content/products";
+import { pickLocale } from "@/i18n/content";
 import { MapBadge } from "../map/map-badge";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
 
@@ -192,13 +202,19 @@ const BEND = {
   right: "M40 0 C 76 30, 76 70, 40 100",
 };
 
-function who(stop: RoadStop) {
-  const lane = journeyBoard.laneOf[stop.id];
-  if (lane === "all") return journeyBoard.everyone;
-  return journeyBoard.lanes.find((l) => l.id === lane)?.label ?? "";
+function who(stop: RoadStop, board: JourneyBoard) {
+  const lane = board.laneOf[stop.id];
+  if (lane === "all") return board.everyone;
+  return board.lanes.find((l) => l.id === lane)?.label ?? "";
 }
 
 export function RoadMap() {
+  const locale = useLocale();
+  const { stops } = pickLocale<DayRoad>(locale, { en: dayRoad, vi: dayRoadVi });
+  const board = pickLocale<JourneyBoard>(locale, {
+    en: journeyBoard,
+    vi: journeyBoardVi,
+  });
   const [open, setOpen] = useState<number | null>(null);
   // The stop last opened: its pin stays highlighted after the modal closes.
   const [selected, setSelected] = useState<number | null>(null);
@@ -340,10 +356,11 @@ export function RoadMap() {
         </svg>
 
         <ol className="rm-stops">
-          {STOPS.map((stop, i) => (
+          {stops.map((stop, i) => (
             <RoadCard
               key={stop.id}
               stop={stop}
+              board={board}
               index={i}
               shown={shown.has(i)}
               anchored={!tour}
@@ -366,6 +383,7 @@ export function RoadMap() {
 
 function RoadCard({
   stop,
+  board,
   index,
   shown,
   anchored,
@@ -374,6 +392,7 @@ function RoadCard({
   onOpen,
 }: Readonly<{
   stop: RoadStop;
+  board: JourneyBoard;
   index: number;
   shown: boolean;
   anchored: boolean;
@@ -382,7 +401,7 @@ function RoadCard({
   onOpen: () => void;
 }>) {
   const app = stop.app ? appById(stop.app) : null;
-  const everyone = journeyBoard.laneOf[stop.id] === "all";
+  const everyone = board.laneOf[stop.id] === "all";
   const point = POINTS[index];
   const bend = index % 2 === 0 ? BEND.left : BEND.right;
   const place = {
@@ -423,7 +442,7 @@ function RoadCard({
       <div className="rm-card">
         <p className="rm-kicker">
           {stop.time ? <time dateTime={stop.time}>{stop.time}</time> : null}
-          <span className="rm-who">{who(stop)}</span>
+          <span className="rm-who">{who(stop, board)}</span>
         </p>
         <h3 className="rm-title">
           <button
@@ -452,7 +471,7 @@ function RoadCard({
             </span>
           ) : null}
           <span className="rm-more" aria-hidden="true">
-            {journeyBoard.details}
+            {board.details}
             <ArrowRightIcon />
           </span>
         </div>

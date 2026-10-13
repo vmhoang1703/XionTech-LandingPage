@@ -4,6 +4,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import AboutPage, { generateMetadata } from "./page";
 
+function aboutAt(locale: string) {
+  return AboutPage({ params: Promise.resolve({ locale }) });
+}
+
 const metadata = await generateMetadata({
   params: Promise.resolve({ locale: "en" }),
 });
@@ -37,8 +41,8 @@ describe("AboutPage", () => {
     expect(String(vi.description)).toMatch(/^\[Placeholder\] .*Plano/);
   });
 
-  it("opens with the centred statement, the amber ownership and the peaks", () => {
-    const { container } = render(<AboutPage />);
+  it("opens with the centred statement, the amber ownership and the peaks", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const intro = container.querySelector("section#mission.about-hero");
     expect(intro?.getAttribute("aria-labelledby")).toBe("about-h1");
@@ -62,8 +66,8 @@ describe("AboutPage", () => {
     expect(container.querySelector("nav")).toBeNull();
   });
 
-  it("links the intro to Products and Services", () => {
-    const { container } = render(<AboutPage />);
+  it("links the intro to Products and Services", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const links = Array.from(
       container.querySelectorAll("#mission .ah-links a.link-arrow"),
@@ -77,8 +81,8 @@ describe("AboutPage", () => {
     }
   });
 
-  it("lays the five sections in order, all but the hero on the page scene, with no navy band", () => {
-    const { container } = render(<AboutPage />);
+  it("lays the five sections in order, all but the hero on the page scene, with no navy band", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const scene = container.querySelector(".page-scene");
     expect(container.children).toHaveLength(2);
@@ -102,8 +106,8 @@ describe("AboutPage", () => {
     expect(container.querySelectorAll(".surface-amber")).toHaveLength(0);
   });
 
-  it("drops the stats, Two strengths and the values", () => {
-    const { container } = render(<AboutPage />);
+  it("drops the stats, Two strengths and the values", async () => {
+    const { container } = render(await aboutAt("en"));
 
     expect(container.querySelector("#values")).toBeNull();
     expect(container.querySelector("fieldset")).toBeNull();
@@ -113,8 +117,8 @@ describe("AboutPage", () => {
     expect(container.textContent).not.toContain("Key facts");
   });
 
-  it("tells the mountain story as two stacked chapters with no picture", () => {
-    const { container } = render(<AboutPage />);
+  it("tells the mountain story as two stacked chapters with no picture", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const h2 = screen.getByRole("heading", { level: 2, name: /Inspired by/ });
     const section = h2.closest("section");
@@ -142,8 +146,8 @@ describe("AboutPage", () => {
     expect(container.querySelectorAll("#story img")).toHaveLength(0);
   });
 
-  it("lists nine closed native questions at #faq in the new heading", () => {
-    const { container } = render(<AboutPage />);
+  it("lists nine closed native questions at #faq in the new heading", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const section = container.querySelector("section#faq");
     const h2 = screen.getByRole("heading", {
@@ -175,8 +179,8 @@ describe("AboutPage", () => {
     ).toBe(true);
   });
 
-  it("ends the FAQ grid with the ask-us-directly link to the Home contact", () => {
-    const { container } = render(<AboutPage />);
+  it("ends the FAQ grid with the ask-us-directly link to the Home contact", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const faq = container.querySelector(".faq");
     const ask = faq?.lastElementChild;
@@ -188,8 +192,8 @@ describe("AboutPage", () => {
     expect(faq?.children).toHaveLength(10);
   });
 
-  it("shows two white office cards, Plano first, with tag, icon rows and bracketed phones", () => {
-    const { container } = render(<AboutPage />);
+  it("shows two white office cards, Plano first, with tag, icon rows and bracketed phones", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const section = container.querySelector("section#offices");
     const h2 = screen.getByRole("heading", {
@@ -242,16 +246,16 @@ describe("AboutPage", () => {
     expect(cards[1].querySelector('a[href^="mailto:"]')).toBeNull();
   });
 
-  it("puts both zone labels in the server HTML, Plano first", () => {
-    const html = renderToString(<AboutPage />).replaceAll("<!-- -->", "");
+  it("puts both zone labels in the server HTML, Plano first", async () => {
+    const html = renderToString(await aboutAt("en")).replaceAll("<!-- -->", "");
 
     expect(html).toContain("US Central");
     expect(html).toContain("GMT+7");
     expect(html.indexOf("US Central")).toBeLessThan(html.indexOf("GMT+7"));
   });
 
-  it("ends with the demo capture band and the Parent Hub and Staff Hub lede", () => {
-    const { container } = render(<AboutPage />);
+  it("ends with the demo capture band and the Parent Hub and Staff Hub lede", async () => {
+    const { container } = render(await aboutAt("en"));
 
     const h2 = screen.getByRole("heading", {
       level: 2,
@@ -270,21 +274,21 @@ describe("AboutPage", () => {
     );
   });
 
-  it("names the two headquarters and the other two locations", () => {
-    const html = renderToString(<AboutPage />);
+  it("names the two headquarters and the other two locations", async () => {
+    const html = renderToString(await aboutAt("en"));
 
     expect(html).toContain("Two headquarters, four locations.");
     expect(html).toContain("Also in Ha Noi and Da Nang.");
   });
 
-  it("never writes the brand as XionTechs", () => {
-    const html = renderToString(<AboutPage />);
+  it("never writes the brand as XionTechs", async () => {
+    const html = renderToString(await aboutAt("en"));
 
     expect(html).not.toContain("XionTechs");
   });
 
-  it("defines every class it uses in globals.css", () => {
-    const { container } = render(<AboutPage />);
+  it("defines every class it uses in globals.css", async () => {
+    const { container } = render(await aboutAt("en"));
     expect(undefinedClasses(container, /^(mt-4|mt-5|mt-6|sr-only)$/)).toEqual(
       [],
     );
@@ -314,8 +318,8 @@ describe("AboutPage", () => {
     );
   });
 
-  it("names no people: no leadership section, no photos, no titles", () => {
-    const { container } = render(<AboutPage />);
+  it("names no people: no leadership section, no photos, no titles", async () => {
+    const { container } = render(await aboutAt("en"));
 
     expect(container.querySelectorAll("img")).toHaveLength(0);
     const headings = Array.from(container.querySelectorAll("h2, h3")).map(
@@ -334,5 +338,27 @@ describe("AboutPage", () => {
     expect(mailtos.map((a) => a.getAttribute("href"))).toEqual([
       "mailto:vinni.tran@newxion.com",
     ]);
+  });
+
+  it("renders Vietnamese copy, offices and FAQ on vi, product names in English", async () => {
+    const { container } = render(await aboutAt("vi"));
+
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Chúng tôi là XionTech,công nghệ của tinh thần làm chủ.",
+    );
+    expect(
+      screen.getByRole("heading", { name: "Bạn hỏi, chúng tôi trả lời" }),
+    ).toBeTruthy();
+    expect(container.textContent).toContain("Parent Hub");
+    expect(container.textContent).toContain("Trung tâm Phát triển Hoa Kỳ");
+    expect(container.textContent).toContain(
+      "Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng.",
+    );
+    expect(
+      container
+        .querySelector('a[href^="https://wa.me/"]')
+        ?.getAttribute("aria-label"),
+    ).toBe("WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)");
+    expect(container.textContent).not.toContain("Your question, we answer");
   });
 });

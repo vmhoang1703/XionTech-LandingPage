@@ -9,12 +9,19 @@ import { LiveClock } from "@/components/sections/live-clock";
 import { PageScene } from "@/components/sections/page-scene";
 import {
   aboutCapture,
+  aboutCaptureVi,
   aboutFaq,
+  aboutFaqVi,
   aboutHero,
+  aboutHeroVi,
   aboutMeta,
   aboutOffices,
+  aboutOfficesVi,
   aboutStory,
+  aboutStoryVi,
 } from "@/content/about";
+import { pickLocale } from "@/i18n/content";
+import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
   title: aboutMeta.title,
@@ -25,9 +32,23 @@ export const generateMetadata = localeMetadata({
 // (static, no picture), the FAQ at #faq, the offices and the demo capture, on
 // the shared page scene below the hero (lead, 2026-10-12). Only the clocks,
 // the capture form and the scene are client parts.
-export default function AboutPage() {
-  const { title, text, links } = aboutHero;
-  const { title: story, chapters, closing } = aboutStory;
+export default async function AboutPage({
+  params,
+}: Readonly<Pick<PageProps<"/[locale]/about">, "params">>) {
+  const { locale: param } = await params;
+  const locale = isLocale(param) ? param : "en";
+  const { title, text, links } = pickLocale(locale, {
+    en: aboutHero,
+    vi: aboutHeroVi,
+  });
+  const {
+    title: story,
+    chapters,
+    closing,
+  } = pickLocale(locale, { en: aboutStory, vi: aboutStoryVi });
+  const faq = pickLocale(locale, { en: aboutFaq, vi: aboutFaqVi });
+  const offices = pickLocale(locale, { en: aboutOffices, vi: aboutOfficesVi });
+  const capture = pickLocale(locale, { en: aboutCapture, vi: aboutCaptureVi });
 
   return (
     <>
@@ -126,11 +147,11 @@ export default function AboutPage() {
           aria-labelledby="about-faq-h"
         >
           <div className="wrap faq-head" data-reveal="">
-            <h2 id="about-faq-h">{aboutFaq.title}</h2>
-            <p className="lede">{aboutFaq.lede}</p>
+            <h2 id="about-faq-h">{faq.title}</h2>
+            <p className="lede">{faq.lede}</p>
           </div>
           <div className="wrap">
-            <FaqList items={aboutFaq.items} link={aboutFaq.ask} />
+            <FaqList items={faq.items} link={faq.ask} />
           </div>
         </section>
         <section
@@ -140,11 +161,11 @@ export default function AboutPage() {
         >
           <div className="wrap">
             <div className="sec-head">
-              <h2 id="about-offices-h">{aboutOffices.title}</h2>
-              <p>{aboutOffices.more}</p>
+              <h2 id="about-offices-h">{offices.title}</h2>
+              <p>{offices.more}</p>
             </div>
             <div className="offices" data-reveal="">
-              {aboutOffices.offices.map((office) => (
+              {offices.offices.map((office) => (
                 <div key={office.id} className="spot office-card">
                   <span className="clock">
                     <LiveClock
@@ -196,7 +217,7 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
-        <CaptureBand id="book" kind="demo" look="white" copy={aboutCapture} />
+        <CaptureBand id="book" kind="demo" look="white" copy={capture} />
       </PageScene>
     </>
   );

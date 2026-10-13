@@ -6,11 +6,17 @@ import { ProcessFlow } from "@/components/sections/process-flow";
 import { serviceIcons } from "@/content/service-icons";
 import {
   servicesMeta,
-  servicesOutcomes,
+  servicesOutcomes as servicesOutcomesEn,
+  servicesOutcomesVi,
   servicesPage,
-  servicesProcess,
-  servicesSection,
+  servicesPageVi,
+  servicesProcess as servicesProcessEn,
+  servicesProcessVi,
+  servicesSection as servicesSectionEn,
+  servicesSectionVi,
 } from "@/content/services";
+import { pickLocale } from "@/i18n/content";
+import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
   title: servicesMeta.title,
@@ -20,8 +26,27 @@ export const generateMetadata = localeMetadata({
 // E-S2 (prototype services.html): a navy hero panel, the eight services in a
 // sticky heading beside them, the outcomes and the 4-D process at #process.
 // Below the hero, the shared page scene (lead, 2026-10-12).
-export default function ServicesPage() {
-  const { title, lede, primaryCta } = servicesPage;
+export default async function ServicesPage({
+  params,
+}: Readonly<Pick<PageProps<"/[locale]/services">, "params">>) {
+  const { locale: param } = await params;
+  const locale = isLocale(param) ? param : "en";
+  const { title, lede, primaryCta } = pickLocale(locale, {
+    en: servicesPage,
+    vi: servicesPageVi,
+  });
+  const servicesSection = pickLocale(locale, {
+    en: servicesSectionEn,
+    vi: servicesSectionVi,
+  });
+  const servicesOutcomes = pickLocale(locale, {
+    en: servicesOutcomesEn,
+    vi: servicesOutcomesVi,
+  });
+  const servicesProcess = pickLocale(locale, {
+    en: servicesProcessEn,
+    vi: servicesProcessVi,
+  });
 
   return (
     <>
@@ -52,8 +77,10 @@ export default function ServicesPage() {
               <p className="lede">{servicesSection.lede}</p>
             </div>
             <div className="svc-cards" data-reveal="">
-              {servicesSection.services.map((service) => {
-                const { icon: ServiceIcon } = serviceIcons[service.id];
+              {servicesSection.services.map((service, index) => {
+                // Ids are shared; the English entry types them for the icons.
+                const { icon: ServiceIcon } =
+                  serviceIcons[servicesSectionEn.services[index].id];
                 return (
                   <article
                     key={service.id}

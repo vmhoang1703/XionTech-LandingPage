@@ -4,6 +4,10 @@ import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import { servicesOutcomes } from "@/content/services";
 import ServicesPage, { generateMetadata } from "./page";
 
+function servicesAt(locale: string) {
+  return ServicesPage({ params: Promise.resolve({ locale }) });
+}
+
 const metadata = await generateMetadata({
   params: Promise.resolve({ locale: "en" }),
 });
@@ -39,8 +43,8 @@ describe("ServicesPage", () => {
     expect(String(metadata.description)).toContain("Ho Chi Minh City");
   });
 
-  it("renders a navy hero panel with one H1, the highlight and the lede, no breadcrumb", () => {
-    const { container } = render(<ServicesPage />);
+  it("renders a navy hero panel with one H1, the highlight and the lede, no breadcrumb", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const hero = container.querySelector("section.hero-navy.svc-hero");
     expect(hero?.getAttribute("aria-labelledby")).toBe("services-h1");
@@ -55,8 +59,8 @@ describe("ServicesPage", () => {
     );
   });
 
-  it("has one call to action and none of the removed parts", () => {
-    const { container } = render(<ServicesPage />);
+  it("has one call to action and none of the removed parts", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const row = container.querySelector(".cta-row");
     const links = Array.from(row?.querySelectorAll("a") ?? []);
@@ -71,13 +75,13 @@ describe("ServicesPage", () => {
     expect(container.querySelector(".surface-amber")).toBeNull();
   });
 
-  it("defines every class it uses in globals.css", () => {
-    const { container } = render(<ServicesPage />);
+  it("defines every class it uses in globals.css", async () => {
+    const { container } = render(await servicesAt("en"));
     expect(undefinedClasses(container, /^(mt-5)$/)).toEqual([]);
   });
 
-  it("puts the services right below the hero with the heading beside the cards", () => {
-    const { container } = render(<ServicesPage />);
+  it("puts the services right below the hero with the heading beside the cards", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const h2 = screen.getByRole("heading", {
       level: 2,
@@ -97,8 +101,8 @@ describe("ServicesPage", () => {
     expect(container.querySelector(".svc-split > .svc-cards")).not.toBeNull();
   });
 
-  it("renders eight alike non-link cards with ids, icon and title in one row, copy and tags", () => {
-    const { container } = render(<ServicesPage />);
+  it("renders eight alike non-link cards with ids, icon and title in one row, copy and tags", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const cards = Array.from(
       container.querySelectorAll(".svc-cards > article"),
@@ -125,8 +129,8 @@ describe("ServicesPage", () => {
     }
   });
 
-  it("lists tags only where the prototype has them", () => {
-    const { container } = render(<ServicesPage />);
+  it("lists tags only where the prototype has them", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const tagsOf = (id: string) =>
       Array.from(
@@ -145,8 +149,8 @@ describe("ServicesPage", () => {
     }
   });
 
-  it("has the four outcomes, numbered, between the services and the process", () => {
-    const { container } = render(<ServicesPage />);
+  it("has the four outcomes, numbered, between the services and the process", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const h2 = screen.getByRole("heading", {
       level: 2,
@@ -208,8 +212,8 @@ describe("ServicesPage", () => {
     );
   });
 
-  it("places the 4-D process on a light band at #process, without a label", () => {
-    const { container } = render(<ServicesPage />);
+  it("places the 4-D process on a light band at #process, without a label", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const band = container.querySelector("section#process");
     expect(band?.className).toBe("sec d4");
@@ -227,8 +231,8 @@ describe("ServicesPage", () => {
     expect(container.querySelectorAll("section.surface-navy")).toHaveLength(0);
   });
 
-  it("passes the Services step copy to the shared 4-D flow", () => {
-    render(<ServicesPage />);
+  it("passes the Services step copy to the shared 4-D flow", async () => {
+    render(await servicesAt("en"));
 
     const flow = screen.getByRole("list", { name: "4-D process" });
     const steps = Array.from(flow.querySelectorAll("li.step4"));
@@ -258,8 +262,8 @@ describe("ServicesPage", () => {
     expect(flow.querySelector(".node.end b")?.textContent).toBe("Launch");
   });
 
-  it("ends on the process inside the page scene, with white step cards", () => {
-    const { container } = render(<ServicesPage />);
+  it("ends on the process inside the page scene, with white step cards", async () => {
+    const { container } = render(await servicesAt("en"));
 
     const scene = container.querySelector(".page-scene");
     expect(scene?.lastElementChild?.id).toBe("process");
@@ -277,5 +281,19 @@ describe("ServicesPage", () => {
     expect(css).toMatch(
       /#process\s*[,{][^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
+  });
+
+  it("renders Vietnamese copy on vi, with service names in English", async () => {
+    render(await servicesAt("vi"));
+
+    const h1 = screen.getByRole("heading", { level: 1 });
+    expect(h1.textContent).toBe("Đội ngũ phần mềm luôn hoàn thành cam kết.");
+    expect(
+      screen.getByRole("heading", { name: "Product Engineering" }),
+    ).toBeTruthy();
+    expect(
+      screen.queryByRole("heading", { name: "Eight services, one team." }),
+    ).toBeNull();
+    expect(screen.getByRole("heading", { name: "Khám phá" })).toBeTruthy();
   });
 });

@@ -2,7 +2,12 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { productsMeta } from "@/content/products";
 import { undefinedClasses } from "@/test-utils/css-classes";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import ProductsPage, { generateMetadata } from "./page";
+
+function productsAt(locale: "en" | "vi") {
+  return ProductsPage({ params: Promise.resolve({ locale }) });
+}
 
 const metadata = await generateMetadata({
   params: Promise.resolve({ locale: "en" }),
@@ -41,8 +46,8 @@ afterEach(() => {
 });
 
 describe("Products page", () => {
-  it("renders the roadmap, then the capture band, with no app showcase", () => {
-    const { container } = render(<ProductsPage />);
+  it("renders the roadmap, then the capture band, with no app showcase", async () => {
+    const { container } = render(await productsAt("en"));
     const sections = [...container.querySelectorAll("section")];
     expect(sections).toHaveLength(2);
     expect(sections[0].id).toBe("map");
@@ -59,8 +64,8 @@ describe("Products page", () => {
     ).toBeDefined();
   });
 
-  it("opens with the H1 and a roadmap of six cards", () => {
-    const { container } = render(<ProductsPage />);
+  it("opens with the H1 and a roadmap of six cards", async () => {
+    const { container } = render(await productsAt("en"));
     const map = container.querySelector("section#map");
     expect(
       screen.getByRole("heading", {
@@ -74,8 +79,8 @@ describe("Products page", () => {
     expect(roadmap?.querySelectorAll(".rm-card")).toHaveLength(6);
   });
 
-  it("puts the four app anchors in the roadmap", () => {
-    const { container } = render(<ProductsPage />);
+  it("puts the four app anchors in the roadmap", async () => {
+    const { container } = render(await productsAt("en"));
     for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
       expect(container.querySelectorAll(`[id="${id}"]`)).toHaveLength(1);
       expect(
@@ -84,8 +89,8 @@ describe("Products page", () => {
     }
   });
 
-  it("has no sub-nav, tab list, Updates link or LXP section", () => {
-    const { container } = render(<ProductsPage />);
+  it("has no sub-nav, tab list, Updates link or LXP section", async () => {
+    const { container } = render(await productsAt("en"));
     expect(container.querySelector(".subnav")).toBeNull();
     expect(screen.queryByRole("tablist")).toBeNull();
     expect(container.querySelector('a[href="#updates"]')).toBeNull();
@@ -93,8 +98,8 @@ describe("Products page", () => {
     expect(container.textContent).not.toContain("Four apps. One");
   });
 
-  it("styles every class it uses", () => {
-    const { container } = render(<ProductsPage />);
+  it("styles every class it uses", async () => {
+    const { container } = render(await productsAt("en"));
     expect(
       undefinedClasses(container, /^(sr-only|size-|mt-|-?z-|absolute)/),
     ).toEqual([]);
@@ -106,5 +111,25 @@ describe("Products page", () => {
     );
     expect(metadata.description).toBe(productsMeta.description);
     expect(productsMeta.description).not.toMatch(/PXP|LXP|SXP|XionTechs/);
+  });
+
+  it("renders the journey in Vietnamese on vi, app names in English", async () => {
+    const page = await productsAt("vi");
+    const { container } = render(
+      <LocaleProvider locale="vi">{page}</LocaleProvider>,
+    );
+
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Xây dựng riêng. Mạnh hơn khi kết nối.",
+    );
+    expect(
+      screen.getByRole("heading", { name: "Một ngày ở trường." }),
+    ).toBeTruthy();
+    expect(container.querySelector(".rm-title")?.textContent).toBe(
+      "1. Học sinh đến trường",
+    );
+    expect(container.textContent).toContain("Giáo viên và nhân viên");
+    expect(container.textContent).toContain("Staff Hub");
+    expect(container.textContent).not.toContain("A day at school.");
   });
 });

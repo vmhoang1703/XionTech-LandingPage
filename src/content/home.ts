@@ -2,13 +2,21 @@
 
 import type { Stat } from "@/components/sections/stats-band";
 import type { Localized } from "@/i18n/content";
-import { aboutFaq } from "@/content/about";
+import { aboutFaq, aboutFaqVi } from "@/content/about";
 import { appById } from "@/content/apps";
-import { journeyMap, productDetails } from "@/content/products";
+import {
+  journeyMap,
+  journeyMapVi,
+  productDetails,
+  productDetailsVi,
+} from "@/content/products";
 import {
   servicesOutcomes,
+  servicesOutcomesVi,
   servicesPage,
+  servicesPageVi,
   servicesSection,
+  servicesSectionVi,
 } from "@/content/services";
 
 // App names and badges come from apps.ts (E-A2), the one source for them.
@@ -200,10 +208,12 @@ export const homeOutcomes = {
   link: { href: "/services", label: "Explore services" },
 };
 
-// The outcomes, lede and "Start a project" come from services.ts; they follow
-// its Vietnamese dictionary once that module has one.
-export const homeOutcomesVi: typeof homeOutcomes = {
-  ...homeOutcomes,
+// The outcomes, lede and "Start a project" come from services.ts in Vietnamese.
+export const homeOutcomesVi: Localized<typeof homeOutcomes> = {
+  title: servicesOutcomesVi.title,
+  lede: servicesSectionVi.lede,
+  items: servicesOutcomesVi.items,
+  cta: { href: homeOutcomes.cta.href, label: servicesPageVi.primaryCta.label },
   link: { href: homeOutcomes.link.href, label: "Khám phá dịch vụ" },
 };
 
@@ -224,11 +234,17 @@ export const homeApps = {
   link: { href: "/products", label: "Explore products" },
 };
 
-// The lede, "made for" lines and features come from products.ts; they follow
-// its Vietnamese dictionary once that module has one.
+// The lede, "made for" lines and features come from products.ts in Vietnamese.
 export const homeAppsVi: typeof homeApps = {
-  ...homeApps,
   title: "Một ngôi trường kết nối.",
+  lede: journeyMapVi.intro.lede,
+  apps: homeApps.apps.map((card) => ({
+    ...card,
+    madeFor: productDetailsVi[card.app.id].madeFor,
+    features: productDetailsVi[card.app.id].features
+      .slice(0, 2)
+      .map((feature) => feature.title),
+  })),
   link: { href: homeApps.link.href, label: "Khám phá sản phẩm" },
 };
 
@@ -243,10 +259,10 @@ export const homeFaq = {
   link: { href: "/about#faq", label: "See all questions" },
 };
 
-// The lede and answers come from about.ts; they follow its Vietnamese
-// dictionary once that module has one.
+// The lede and answers come from about.ts in Vietnamese.
 export const homeFaqVi: typeof homeFaq = {
-  ...homeFaq,
   title: "Giải đáp thắc mắc của bạn.",
+  lede: aboutFaqVi.lede,
+  items: aboutFaqVi.items.filter((item) => HOME_FAQ_IDS.has(item.id)),
   link: { href: homeFaq.link.href, label: "Xem tất cả câu hỏi" },
 };

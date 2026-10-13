@@ -1,4 +1,9 @@
-import { processFlow, type ProcessFlowContent } from "@/content/process";
+import type { Localized } from "@/i18n/content";
+import {
+  processFlow,
+  processFlowVi,
+  type ProcessFlowContent,
+} from "@/content/process";
 
 // Services page copy. Kept out of the components so it can be translated later.
 
@@ -119,4 +124,103 @@ export const servicesProcess: {
   title: "Our 4-D process: from your request to launch.",
   lede: "Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it.",
   flow: processFlow,
+};
+
+// Vietnamese. Service names and tags stay English (2026-10-13); ids and the
+// process icons are shared with English.
+export const servicesMetaVi: typeof servicesMeta = {
+  title:
+    "Outsourcing phần mềm tại Việt Nam | Product Engineering, AI, Low-code & Cloud | XionTech",
+  description:
+    "Đội ngũ chuyên trách và phát triển phần mềm trọn gói từ TP. Hồ Chí Minh: phát triển sản phẩm, AI, low-code và cloud, theo múi giờ Mỹ, Châu Âu và Úc.",
+};
+
+export const servicesPageVi: typeof servicesPage = {
+  title: {
+    lead: "Đội ngũ phần mềm ",
+    highlight: "luôn hoàn thành cam kết",
+    tail: ".",
+  },
+  lede: "Phát triển sản phẩm, AI, low-code và cloud từ TP. Hồ Chí Minh, làm việc theo múi giờ Mỹ, Châu Âu và Úc. Chúng tôi làm việc thông minh hơn với AI và không ngừng đổi mới cách triển khai.",
+  primaryCta: { ...servicesPage.primaryCta, label: "Bắt đầu dự án" },
+};
+
+export const servicesSectionVi: Localized<typeof servicesSection> = {
+  title: "Tám dịch vụ, một đội ngũ.",
+  lede: "Chọn một dịch vụ hoặc kết hợp nhiều dịch vụ. Chúng tôi điều chỉnh theo sản phẩm của bạn.",
+  services: [
+    {
+      ...servicesSection.services[0],
+      description:
+        "Biến ý tưởng sáng tạo thành sản phẩm số sẵn sàng ra thị trường với năng lực kỹ thuật toàn diện.",
+    },
+    {
+      ...servicesSection.services[1],
+      description:
+        "Biến dữ liệu thô thành thông tin hữu ích bằng AI và trực quan hóa nâng cao.",
+    },
+    {
+      ...servicesSection.services[2],
+      description:
+        "Tăng tốc đổi mới bằng cách kết hợp chuyên môn của bạn với năng lực kỹ thuật của chúng tôi.",
+    },
+    {
+      ...servicesSection.services[3],
+      description:
+        "Tiếp cận nhân sự công nghệ chuyên sâu khi cần, với giải pháp linh hoạt.",
+    },
+    {
+      ...servicesSection.services[4],
+      description: "Phát triển giải pháp theo đúng yêu cầu riêng của bạn.",
+    },
+    {
+      ...servicesSection.services[5],
+      description:
+        "Ra mắt công cụ và tự động hóa nhanh hơn trên các nền tảng low-code hàng đầu.",
+    },
+    {
+      ...servicesSection.services[6],
+      description: "Khai thác trí tuệ nhân tạo để chuyển đổi vận hành.",
+    },
+    {
+      ...servicesSection.services[7],
+      description: "Giải pháp chuyên sâu trên Azure, AWS và GCP.",
+    },
+  ],
+};
+
+export const servicesOutcomesVi: Localized<typeof servicesOutcomes> = {
+  title: "Chúng tôi có thể giúp bạn đạt được điều gì?",
+  items: [
+    {
+      id: servicesOutcomes.items[0].id,
+      title: "Xây dựng sản phẩm số mới",
+      description:
+        "Đi từ khám phá và UX đến kỹ thuật, kiểm thử và ra mắt với một đội triển khai duy nhất.",
+    },
+    {
+      id: servicesOutcomes.items[1].id,
+      title: "Mở rộng đội ngũ",
+      description:
+        "Bổ sung nhân sự công nghệ chuyên sâu khi đội ngũ nội bộ cần thêm năng lực hoặc kỹ năng cụ thể.",
+    },
+    {
+      id: servicesOutcomes.items[2].id,
+      title: "Hiện đại hóa nền tảng hiện có",
+      description:
+        "Cải thiện ứng dụng, hạ tầng, triển khai cloud và quy trình kỹ thuật mà vẫn giữ vững những gì đang vận hành tốt.",
+    },
+    {
+      id: servicesOutcomes.items[3].id,
+      title: "Ứng dụng AI ở nơi tạo ra giá trị",
+      description:
+        "Dùng AI, phân tích dữ liệu và tự động hóa để cải thiện sản phẩm, quy trình và việc ra quyết định kinh doanh.",
+    },
+  ],
+};
+
+export const servicesProcessVi: typeof servicesProcess = {
+  title: "Quy trình 4-D: từ yêu cầu của bạn đến ngày ra mắt.",
+  lede: "Mỗi bước kết thúc bằng một kết quả bạn có thể xem, kiểm tra và phê duyệt. AI đồng hành trong mọi bước, và chúng tôi không ngừng cải thiện cách sử dụng AI.",
+  flow: processFlowVi,
 };

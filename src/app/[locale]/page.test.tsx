@@ -181,8 +181,7 @@ describe("Home page", () => {
 
     expect(sectionNames(container).slice(0, 7)).toEqual([
       "Xây dựng thông minh hơn. Phát hành nhanh hơn. Get IT done.",
-      // Outcomes copy follows services.ts, still English until translated.
-      "What can we help you achieve?",
+      "Chúng tôi có thể giúp bạn đạt được điều gì?",
       "Một ngôi trường kết nối.",
       "Vì sao chọn XionTech.",
       "Cách chúng tôi làm việc.",
@@ -198,6 +197,13 @@ describe("Home page", () => {
       screen.getByRole("button", { name: /Thêm 3 lĩnh vực/ }),
     ).toBeDefined();
     expect(screen.getByText("Quỹ đầu tư tư nhân")).toBeDefined();
+    // Outcomes, app cards and FAQ follow the services, products and about
+    // dictionaries.
+    expect(screen.getByText("Mở rộng đội ngũ")).toBeDefined();
+    expect(screen.getByText("Phụ huynh và gia đình")).toBeDefined();
+    expect(
+      screen.getByText("Các bạn làm việc qua nhiều múi giờ như thế nào?"),
+    ).toBeDefined();
   });
 
   it("falls back to English for an unknown locale", async () => {
