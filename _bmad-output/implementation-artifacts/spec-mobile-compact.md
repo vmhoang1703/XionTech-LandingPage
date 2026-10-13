@@ -108,3 +108,51 @@ Lead picked 1a D, 1b B, 2 B + animation, 3 C, 4 C, 5 B.
 | Inside XionTech (phone) | Load | n/a | First tile across, then two pairs | Pick 4 C | Yes (390) |
 | Why XionTech (tablet) | Load | n/a | Two cards side by side, no empty space | Pick 5 B | Yes (768) |
 
+## Round 4 (lead, 2026-10-13): behaviour, touch, one contact form
+
+Audit of behaviour on every page (menu, forms, FAQ, anchors, touch, speed). Fixed at once: 16px form
+fields (iPhone zoomed into 15.68px fields) and no tooltip underline on "HCMC" on touch screens.
+Lighthouse mobile, live develop: Home 71-75, Products 88 (rule: 90); the text paints only after the
+scripts run, so a focused speed pass is still open. Options shown on the real pages (videos for
+motion); lead picked 4C 5B 6B 7C 8B 9B 10B, then: "Inactive demo page. Keep, not delete but no
+navigation to demo page. Just use get in touch form. ... test behavior ... and test functional".
+
+- **Demo page inactive:** `/demo` kept, `robots: noindex`, no links. Header button "Get in touch"
+  (`CONTACT_HREF = "/#contact"`), Services "Start a project" and the capture bands lead to the Home
+  form. A capture band no longer sends: it keeps the email (`rememberCapturedEmail`) and the Home
+  form fills it in once (`fillCapturedEmail`, shared with the Demo form). About FAQ: "Book a demo." ->
+  "Get in touch.". The API still accepts the old `capture` type.
+- **Get in touch reliability:** `maxDuration` 10 -> 30 s on `/api/contact` (worst case: two 3 s
+  rate-limit checks, a 5 s-per-step Gmail send and a cold start), client timeout 15 -> 32 s, longer than
+  the route. Likely cause of "it gets worse": a slow send stopped at 10 s showed "could not send"
+  although the mail may have gone, and repeated tries hit the limit of 5 sends per IP and email in
+  10 minutes. Not confirmed from Vercel logs (no access here).
+- **4C** Apply bar on job pages below 900px, shown while the form is below the screen, inert and
+  invisible otherwise. **5B** header hides on scroll down below 1080px, back on scroll up, never near the
+  top, while the menu is open or with focus inside. **6B** press-in to 0.96 on touch screens, and a
+  passive `touchstart` listener so iPhone Safari applies `:active` at all. **7C** FAQ answer fades and
+  slides in; the + turns 45 degrees into an x. **8B** after a client navigation `main` fades up 14px in
+  0.45 s (Web Animations; never on the first load; off with reduced motion or Pause). **9B** news
+  filters in one swipe row on phones. **10B** phone menu: Get in touch and both HQ phone numbers.
+
+### UX checks (round 4)
+
+| Part | State or action | Input | Expected (visible) | Source | Checked |
+| --- | --- | --- | --- | --- | --- |
+| Get in touch form | Empty submit | Touch, mouse | Three field errors, focus on Your name, nothing sent | Lead | Yes (e2e 390 + 1280) |
+| Get in touch form | Valid submit | Touch, mouse | One request, values trimmed, "Sending..." and disabled, then the summit, focused | Lead | Yes (e2e) |
+| Get in touch form | Second press while sending | Mouse | No second request | Lead | Yes (e2e) |
+| Get in touch form | 429 / 502 / no network | n/a | Message, text kept, button focused; retry sends | Lead | Yes (e2e) |
+| Get in touch form | Server field error | n/a | Error at the field, field focused | Lead | Yes (e2e) |
+| Form fields | Tap | Touch | No zoom on iPhone (16px) | Audit | Yes (e2e computed size) |
+| Header button | Click on /about | Mouse | Home, form in view | Lead | Yes (e2e) |
+| Capture band | Email + Get in touch | Touch | Home form with the email filled in, nothing sent | Lead | Yes (e2e /news) |
+| Every main page | Load | n/a | No link to /demo | Lead | Yes (e2e) |
+| Phone menu | Open, tap Get in touch | Touch | Phones listed; menu closes; form in view | Pick 10B | Yes (e2e) |
+| Job page (phone) | Scroll | Touch | Apply bar while the form is below; gone at the form; tap jumps to the form | Pick 4C | Yes (390) |
+| Header (phone) | Scroll down / up | Touch | Hides / comes back | Pick 5B | Yes (390, unit tests) |
+| Buttons, cards (touch) | Press | Touch | Press in to 96% | Pick 6B | Partly (CSS and unit; real iPhone to do) |
+| FAQ | Open / close | Touch, keyboard | Answer fades in; + turns into x and back | Pick 7C | Yes (e2e, screenshot) |
+| Any link to a page | Click | Mouse, touch | New page fades up once | Pick 8B | Yes (390) |
+| News filters (phone) | Load, swipe | Touch | One row, no page sideways scroll | Pick 9B | Yes (390) |
+
