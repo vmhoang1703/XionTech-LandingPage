@@ -4,7 +4,7 @@ test(
   "home page serves the hero headline and CTA without JavaScript",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/");
+    const response = await request.get("/en");
     const html = await response.text();
 
     expect(response.status()).toBe(200);

@@ -4,7 +4,7 @@ test(
   "careers page responds 200 with its H1, Inside XionTech and the open roles",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/careers");
+    const response = await request.get("/en/careers");
     const html = await response.text();
 
     expect(response.status()).toBe(200);

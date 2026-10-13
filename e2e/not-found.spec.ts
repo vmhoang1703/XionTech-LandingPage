@@ -4,7 +4,7 @@ test(
   "unknown path answers 404 with the lost-trail copy and no capture band",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/does-not-exist");
+    const response = await request.get("/en/does-not-exist");
     const html = await response.text();
 
     expect(response.status()).toBe(404);
