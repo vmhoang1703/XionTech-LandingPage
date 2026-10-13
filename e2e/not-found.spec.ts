@@ -15,3 +15,17 @@ test(
     expect(html).not.toContain("See it working at your school.");
   },
 );
+
+test(
+  "unknown Vietnamese path answers 404 in Vietnamese with one title and one robots tag",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    const response = await request.get("/vi/does-not-exist");
+    const html = await response.text();
+
+    expect(response.status()).toBe(404);
+    expect(html).toContain("[Placeholder] You’ve wandered off the trail.");
+    expect(html.match(/<title>/g)).toHaveLength(1);
+    expect(html.match(/<meta name="robots"/g)).toHaveLength(1);
+  },
+);

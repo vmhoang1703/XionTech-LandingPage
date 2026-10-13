@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
+import { setRequestLocale } from "@/i18n/request-locale";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -33,7 +34,9 @@ async function resolveLocale(params: Promise<{ locale: string }>) {
 export async function generateMetadata({
   params,
 }: LayoutProps<"/[locale]">): Promise<Metadata> {
-  return META[await resolveLocale(params)];
+  const locale = await resolveLocale(params);
+  setRequestLocale(locale);
+  return META[locale];
 }
 
 export default async function RootLayout({
@@ -41,6 +44,7 @@ export default async function RootLayout({
   params,
 }: LayoutProps<"/[locale]">) {
   const locale = await resolveLocale(params);
+  setRequestLocale(locale);
   return (
     <html
       lang={locale}

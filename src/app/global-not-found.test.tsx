@@ -31,6 +31,7 @@ describe("GlobalNotFound", () => {
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
       "You’ve wandered off the trail.",
     );
+    expect(metadata.title).toBe("Page not found | XionTech");
     expect(metadata.robots).toEqual({ index: false });
   });
 });
