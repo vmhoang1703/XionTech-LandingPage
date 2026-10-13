@@ -17,12 +17,21 @@
 //   3. Get IT done: the company's slogan writes itself up the T's stem in
 //      amber dots (lead, 2026-10-12); the mark rests, light sweeping across
 //      it.
+// Phones and tablets (lead, 2026-10-13) tell a short story with no globe: the
+// sparks gather straight into the mark, the slogan writes up the T, and the
+// mark then rests for good, behind the headline.
 import { LAND, LAND_COLUMNS } from "./hero-data";
 import { SILK_START_TIME, SILK_TIME_SCALE } from "./silk-shader";
 
 // Where the scene forms, in CSS pixels from the canvas's top-left: its
-// centre and the mark's height. null = no room, nothing is drawn.
-export type MarkArea = { x: number; y: number; size: number } | null;
+// centre and the mark's height, and whether it is the short mark-only story
+// (phones and tablets). null = no room, nothing is drawn.
+export type MarkArea = {
+  x: number;
+  y: number;
+  size: number;
+  markOnly: boolean;
+} | null;
 
 type Point = { x: number; y: number };
 
@@ -46,6 +55,13 @@ const FLIGHT = 1.6;
 // Where the intro joins the loop: the globe fully open, every dot landed
 // (the last one leaves the mark at OPEN[0] + 0.8 and flies for FLIGHT).
 const LOOP_ENTRY = OPEN[0] + 0.8 + FLIGHT + 0.2;
+
+// The mark-only story: the slogan writes up the stem once the sparks have
+// gathered, and from MARK_END the mark rests for good, at a loop phase where
+// the full story rests too (before the mark opens into the globe).
+const MARK_WRITE = 2.6;
+export const MARK_END = MARK_WRITE + 1.1 + 0.7; // the last cell has landed
+const MARK_REST_PHASE = 1;
 
 // The first time the mark rests, fully formed with its slogan (the start of
 // the first full loop): a paused silk (reduced motion) starts here, so it
@@ -91,11 +107,14 @@ export type Frame = {
   sun: number[]; // x right, y down, z towards the viewer
   sink: number; // 0..1: the globe setting below the horizon
   globe: number; // 0..1: how much the globe shows
+  markOnly: boolean; // the short story with no globe (phones and tablets)
 };
 
-export function frameAt(time: number): Frame {
-  const phase = loopPhase(time);
+export function frameAt(time: number, markOnly = false): Frame {
   const sec = seconds(time);
+  // The mark-only story is an intro, then the mark at rest for good.
+  const markPhase = sec < MARK_END ? -1 : MARK_REST_PHASE;
+  const phase = markOnly ? markPhase : loopPhase(time);
   // The intro shows the globe as the loop has it where the intro joins it.
   const at = phase < 0 ? LOOP_ENTRY : phase;
   // The sun is over Plano's side at first, then over Vietnam's.
@@ -111,12 +130,17 @@ export function frameAt(time: number): Frame {
       Math.cos(azimuth) * Math.cos(up),
     ],
     sink: smoothstep(SINK[0], SINK[1], at),
-    globe:
-      phase < 0
-        ? smoothstep(INTRO_START + 0.6, INTRO_START + 2.2, sec)
-        : smoothstep(OPEN[0], OPEN[1], phase) *
-          (1 - smoothstep(SINK[1] - 0.4, SINK[1] + 0.6, phase)),
+    globe: markOnly ? 0 : globeAmount(phase, sec),
+    markOnly,
   };
+}
+
+function globeAmount(phase: number, sec: number): number {
+  if (phase < 0) return smoothstep(INTRO_START + 0.6, INTRO_START + 2.2, sec);
+  return (
+    smoothstep(OPEN[0], OPEN[1], phase) *
+    (1 - smoothstep(SINK[1] - 0.4, SINK[1] + 0.6, phase))
+  );
 }
 
 // How much of the scene shows at all: 0 before the intro sparks.
@@ -152,7 +176,11 @@ export function summitFlash(f: Frame): number {
 
 // How settled the mark is (its light sweeps and pulses only at rest).
 export function restAmount(f: Frame): number {
-  if (f.phase < 0) return 0; // the globe forms first: no mark yet
+  if (f.phase < 0) {
+    // The globe forms first: no mark yet; the mark-only story settles as its
+    // slogan lands.
+    return f.markOnly ? smoothstep(MARK_END - 0.8, MARK_END, f.sec) : 0;
+  }
   if (f.phase < OPEN[1])
     return 1 - smoothstep(OPEN[0] - 0.2, OPEN[0] + 0.3, f.phase);
   return smoothstep(FILL + 1.2, FILL + 2, f.phase);
@@ -591,13 +619,14 @@ function blend(from: DotFrame, to: DotFrame, at: Point, t: number): DotFrame {
   };
 }
 
-// On load: the sparks gather straight onto the globe.
+// On load: the sparks gather straight onto the globe, or into the mark in the
+// mark-only story.
 function intro(dot: Dot, f: Frame): DotFrame {
   const start = INTRO_START + dot.delay * 1.1;
   const t = smoothstep(start, start + FLIGHT, f.sec);
-  const globe = onGlobe(dot, f);
+  const to = f.markOnly ? resting(dot, f.sec) : onGlobe(dot, f);
   const spark = { ...dot.spark, alpha: 0, amber: 0.6, scale: 0.6, depth: 0 };
-  return blend(spark, globe, curve(dot.spark, { x: 0, y: 0 }, globe, t), t);
+  return blend(spark, to, curve(dot.spark, { x: 0, y: 0 }, to, t), t);
 }
 
 // Scene 2, the mountain: down to the nearer foot, then up the slope to its
@@ -688,11 +717,15 @@ export type SloganFrame = Point & { alpha: number; scale: number };
 // A dot of the slogan: hidden while the globe forms on load; at rest in the
 // mark, leaving with it, then gathering from the cloud around the T and
 // writing GET IT DONE from the bottom up; at rest it twinkles in the sheen.
+// The mark-only story writes it once on load.
 export function sloganAt(dot: SloganDot, f: Frame): SloganFrame {
   const twinkle = 0.85 + 0.15 * Math.sin(f.sec * 2.1 + dot.seed * 3);
   const shine = sheen(dot.cell, f.sec);
   const { cell } = dot;
-  if (f.phase < 0) return { ...cell, alpha: 0, scale: 1 };
+  if (f.phase < 0) {
+    if (!f.markOnly) return { ...cell, alpha: 0, scale: 1 };
+    return writing(dot, f, f.sec, MARK_WRITE - 0.7, MARK_WRITE);
+  }
   if (f.phase < OPEN[0]) {
     return { ...cell, alpha: twinkle + 0.4 * shine, scale: 1 + 0.5 * shine };
   }
@@ -704,9 +737,25 @@ export function sloganAt(dot: SloganDot, f: Frame): SloganFrame {
       scale: mix(1, 1.4, t),
     };
   }
-  const show = smoothstep(SLOGAN_IN, SLOGAN_IN + 0.5, f.phase);
-  const start = WRITE + dot.along * 1.1;
-  const t = smoothstep(start, start + 0.7, f.phase);
+  return writing(dot, f, f.phase, SLOGAN_IN, WRITE);
+}
+
+// Gathering from the cloud around the T, then writing up the stem from the
+// bottom: `clock`, `appear` and `write` are on one timeline (the loop phase,
+// or seconds for the mark-only story).
+function writing(
+  dot: SloganDot,
+  f: Frame,
+  clock: number,
+  appear: number,
+  write: number,
+): SloganFrame {
+  const twinkle = 0.85 + 0.15 * Math.sin(f.sec * 2.1 + dot.seed * 3);
+  const shine = sheen(dot.cell, f.sec);
+  const { cell } = dot;
+  const show = smoothstep(appear, appear + 0.5, clock);
+  const start = write + dot.along * 1.1;
+  const t = smoothstep(start, start + 0.7, clock);
   const float = {
     x: dot.from.x + 0.015 * Math.sin(f.sec * 0.9 + dot.seed),
     y: dot.from.y + 0.015 * Math.cos(f.sec * 0.8 + dot.seed),
@@ -997,7 +1046,7 @@ export function createGlobeMark(canvas: HTMLCanvasElement): GlobeMark | null {
       (x + (p.x + look.x * depth * PARALLAX) * size) * ratio,
       (y + (p.y + look.y * depth * PARALLAX) * size) * ratio,
     ];
-    const f = frameAt(time);
+    const f = frameAt(time, area.markOnly);
     const shown = sceneAmount(f);
     drawSphere(f, px, size);
     drawLand(f, px);

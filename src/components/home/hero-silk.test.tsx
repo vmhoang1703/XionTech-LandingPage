@@ -106,6 +106,9 @@ describe("HeroSilk", () => {
 
     const button = screen.getByRole("button", { name: "Pause motion" });
     expect(button.getAttribute("aria-pressed")).toBeNull();
+    // 36px for a mouse, 44px on touch screens (PRODUCT.md).
+    expect(button.className).toContain("pointer-coarse:h-11");
+    expect(button.className).toContain("pointer-coarse:min-w-11");
     // Phosphor icons draw on a 256 grid.
     const pauseIcon = button.querySelector("svg");
     expect(pauseIcon?.getAttribute("viewBox")).toBe("0 0 256 256");
@@ -273,7 +276,23 @@ describe("HeroSilk scene", () => {
   it("draws the globe and the mark in the stage, sized to fit both", () => {
     renderInHero();
     const size = Math.min(600 / MARK_WIDTH, 500 / (2 * GLOBE_RADIUS));
-    expect(globe.resize).toHaveBeenLastCalledWith({ x: 1000, y: 328, size });
+    expect(globe.resize).toHaveBeenLastCalledWith({
+      x: 1000,
+      y: 328,
+      size,
+      markOnly: false,
+    });
+  });
+
+  it("asks for the mark-only story below 1080px (lead, 2026-10-13)", () => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({ matches: query === "(width < 1080px)" })),
+    );
+    renderInHero();
+    expect(globe.resize).toHaveBeenLastCalledWith(
+      expect.objectContaining({ markOnly: true }),
+    );
   });
 
   it("leaves the scene out when the stage is too small or missing", () => {

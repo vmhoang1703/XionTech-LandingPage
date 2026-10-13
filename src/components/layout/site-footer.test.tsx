@@ -172,7 +172,7 @@ describe("SiteFooter", () => {
     );
   });
 
-  it("gives every text link a 24px minimum target", () => {
+  it("gives every text link a 24px minimum target, 44px on touch screens", () => {
     const footer = renderFooter();
 
     const textLinks = within(footer)
@@ -181,6 +181,12 @@ describe("SiteFooter", () => {
     expect(textLinks).toHaveLength(18);
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
+      expect(link.className).toContain("pointer-coarse:min-h-11");
     }
+    expect(
+      footer
+        .querySelector("ul.grid")
+        ?.classList.contains("pointer-coarse:gap-0"),
+    ).toBe(true);
   });
 });

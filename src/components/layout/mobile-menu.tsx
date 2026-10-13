@@ -111,7 +111,7 @@ export function MobileMenu() {
         type="button"
         // A 44px round hamburger icon, a cross while open, light blue on hover and while
         // open like the nav links.
-        className="text-navy inline-flex size-11 items-center justify-center rounded-full text-2xl transition-[background-color] duration-[250ms] ease-[var(--ease-brand)] hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-expanded:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] min-[1081px]:hidden"
+        className="text-navy inline-flex size-11 shrink-0 items-center justify-center rounded-full text-2xl transition-[background-color] duration-[250ms] ease-[var(--ease-brand)] hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-expanded:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] min-[1081px]:hidden"
         aria-controls={MENU_ID}
         aria-expanded={open}
         onClick={() => setOpenedOn(open ? null : pathname)}

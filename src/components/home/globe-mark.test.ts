@@ -9,6 +9,7 @@ import {
   horizonAmount,
   isLand,
   loopPhase,
+  MARK_END,
   MARK_WIDTH,
   mountainAmount,
   OFFICES,
@@ -354,6 +355,54 @@ describe("light", () => {
   });
 });
 
+describe("mark-only story (phones and tablets)", () => {
+  const markAt = (sec: number) => frameAt(atSec(sec), true);
+
+  it("has no globe: an intro, then the mark at rest for good", () => {
+    for (const sec of [0.5, 2, MARK_END - 0.01, MARK_END, 30, 300]) {
+      expect(markAt(sec).globe).toBe(0);
+      expect(markAt(sec).markOnly).toBe(true);
+    }
+    expect(markAt(MARK_END - 0.01).phase).toBe(-1);
+    // Float seconds land a hair early at MARK_END itself, so check just after.
+    const after = MARK_END + 0.001;
+    expect(markAt(after).phase).toBe(markAt(300).phase);
+    expect(restAmount(markAt(2))).toBe(0);
+    expect(restAmount(markAt(after))).toBe(1);
+    expect(restAmount(frameAt(SCENE_REST_TIME, true))).toBe(1);
+    // The full story is unchanged.
+    expect(frameAt(atSec(30)).markOnly).toBe(false);
+  });
+
+  it("gathers the sparks straight into the mark, with no jump when it rests", () => {
+    for (const dot of scene.land.slice(0, 400)) {
+      expect(dotAt(dot, markAt(0)).alpha).toBe(0);
+      const formed = dotAt(dot, markAt(MARK_END - 0.01));
+      expect(near(formed, dot.mark)).toBeLessThan(0.03);
+      expect(near(formed, dotAt(dot, markAt(MARK_END + 0.001)))).toBeLessThan(
+        0.01,
+      );
+    }
+  });
+
+  it("writes GET IT DONE up the stem once, bottom first, then rests in place", () => {
+    const first = scene.slogan.find((d) => d.along === 0);
+    const top = scene.slogan.find((d) => d.along === 1);
+    if (!first || !top) throw new Error("No slogan ends");
+    expect(sloganAt(first, markAt(0.5)).alpha).toBe(0);
+    const writing = markAt(3.4);
+    expect(near(sloganAt(first, writing), first.cell)).toBeLessThan(0.001);
+    expect(near(sloganAt(top, writing), top.cell)).toBeGreaterThan(0.01);
+    for (const dot of scene.slogan) {
+      const landed = sloganAt(dot, markAt(MARK_END - 0.001));
+      const rest = sloganAt(dot, markAt(MARK_END + 0.001));
+      expect(near(landed, rest)).toBeLessThan(0.001);
+      expect(Math.abs(landed.alpha - rest.alpha)).toBeLessThan(0.02);
+      expect(near(sloganAt(dot, markAt(60)), dot.cell)).toBeLessThan(0.001);
+    }
+  });
+});
+
 describe("createGlobeMark", () => {
   function fakeContext() {
     const calls: string[] = [];
@@ -415,7 +464,7 @@ describe("createGlobeMark", () => {
     const { ctx, calls } = fakeContext();
     const canvas = canvasWith(ctx);
     const mark = createGlobeMark(canvas);
-    mark?.resize({ x: 400, y: 300, size: 200 });
+    mark?.resize({ x: 400, y: 300, size: 200, markOnly: false });
     expect(canvas.width).toBe(
       800 * Math.min(window.devicePixelRatio || 1, 1.5),
     );
@@ -440,5 +489,19 @@ describe("createGlobeMark", () => {
     ]) {
       expect(calls).toContain(call);
     }
+  });
+
+  it("draws the mark-only story with no globe and no office names", () => {
+    const { ctx, calls } = fakeContext();
+    const mark = createGlobeMark(canvasWith(ctx));
+    mark?.resize({ x: 200, y: 150, size: 120, markOnly: true });
+    const shown = [0.1, 2, 3.4, MARK_END, 30].map((sec) =>
+      mark?.draw(atSec(sec)),
+    );
+    expect(shown[0]).toBe(0);
+    expect(shown.at(-1)).toBe(1);
+    expect(calls).toContain("fillRect");
+    expect(calls).not.toContain("fillText");
+    expect(calls).not.toContain("clip");
   });
 });
