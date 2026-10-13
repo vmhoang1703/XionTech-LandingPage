@@ -156,3 +156,45 @@ navigation to demo page. Just use get in touch form. ... test behavior ... and t
 | Any link to a page | Click | Mouse, touch | New page fades up once | Pick 8B | Yes (390) |
 | News filters (phone) | Load, swipe | Touch | One row, no page sideways scroll | Pick 9B | Yes (390) |
 
+## Round 5 (lead, 2026-10-13): Amber's prototype motion
+
+Lead: "check ... animation which are from Amber's latest prototype and we have not applied ... such as
+the mountain in Inspired by a mountain ... make preview for me before implementation". Claude compared
+the prototype's 26 keyframes and its scripted motion with development, recorded each missing one from
+the prototype (served locally) next to development, and marked a pick. Lead picked 1B 2A 3B 4B 5B.
+
+- **1B About mountain story:** the story holds for one more screen (`.mtn[data-armed]`, sticky pin,
+  190svh); chapter 01 then 02; a light walks Amber's climb path, the colour rises behind it and the X mark
+  lights on the summit; dots follow the chapter. Picture: `public/about/mountain-clear.webp` (336 KB) and
+  `mountain-glow.webp`; picking B lifts decision Q5 (licence unconfirmed). Ported with transform and
+  opacity only: the colour rises in a window that slides up while the picture inside slides down by as
+  much; the X mark lights by fading a colour copy in; the dots move a pill. Phones: picture above the
+  chapter; short screens: no hold, sticky picture. No script: both chapters, full colour. Reduced motion
+  or Pause: chapters jump, no light. The summit tag reads "newXion" only: Amber's "Founded in America"
+  repeats the placeholder founding line (Q12).
+- **2A** footer climber: not built.
+- **3B News:** the hero words rise one by one, then the line under them; story cards unfold row by row as
+  they arrive (0, 260, 520 ms across a row) and replay on a filter change. Amber unfolds with
+  `clip-path`; here the card drops in and stretches from its top edge (transform and opacity only).
+- **4B Services:** a light sweeps once across "get IT done" a second after load (a window slides across a
+  pale copy drawn from `data-text`, which slides back by as much; the heading text stays single); the card
+  icon pops on hover, mouse only.
+- **5B Home Why XionTech:** when a card arrives, its parts rise one after another and its chips pop.
+- Not brought over: partner logo strip (no client logos), the old Products showcase motion (the Products
+  page is the school-day tour, #106), the Careers reel (removed from the prototype by Amber, ENH-090).
+
+### UX checks (round 5)
+
+| Part | State or action | Input | Expected (visible) | Source | Checked |
+| --- | --- | --- | --- | --- | --- |
+| Mountain story (desktop) | Scroll into it | Mouse, touch | Holds; chapter 01, grey mountain, light at the foot | 1B | Yes (1280 screenshot) |
+| Mountain story | Scroll on | Mouse, touch | Chapter 02; the light climbs, colour rises, X mark lights, "newXion" tag, dot 2 | 1B | Yes (1280, 390 screenshots; unit) |
+| Mountain story | Scroll back up | Mouse, touch | Climbs back down to chapter 01 | 1B | Yes (unit) |
+| Mountain story (phone) | Scroll | Touch | Picture above the chapter, same climb | 1B | Yes (390) |
+| Mountain story | Reduced motion / Pause / no script | n/a | Jump, no light / both chapters in full colour | 1B | Yes (unit, CSS) |
+| News hero | Load | n/a | Words rise one by one, then the line | 3B | Yes (screenshot, unit) |
+| News stories | Scroll, change filter | Mouse, touch | Cards unfold row by row; replay on a filter | 3B | Yes (1280, unit) |
+| Services hero | Load | n/a | A light sweeps once over "get IT done"; heading text once | 4B | Yes (screenshot, unit) |
+| Services cards | Hover | Mouse | Icon pops | 4B | Yes (CSS test) |
+| Why XionTech | Scroll in | Mouse, touch | Card parts rise, chips pop | 5B | Yes (1280) |
+

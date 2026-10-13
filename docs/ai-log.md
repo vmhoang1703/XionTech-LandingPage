@@ -1746,3 +1746,11 @@ Template:
 - **AI got it wrong:** it moved the hero animation start to an idle moment to raise the speed score. The score went from 69 to 57-59, so it reverted that and reported the speed work as a separate pass instead of guessing on.
 - **AI got it wrong (2):** its first "press feedback" idea missed that the CSS already had pressed states; iPhone Safari simply never applied `:active` without a touch listener.
 - **Finding:** the contact route had `maxDuration = 10`, below its own worst case; raised to 30 s, the client waits 32 s. This is the likely reason repeated tests "got worse", but no log access confirmed it.
+
+## 2026-10-13 — Round 5: Amber's prototype motion
+
+- **Prompt:** "help me check that are there any animation which are from Amber's latest prototype and we have not applied in development, such as: animation about mountain in Inspired by a mountain ... Should make preview for me before implementation."
+- **What the AI did:** listed the prototype's keyframes and scripted motion, checked each against development and the specs (Q5 had left the mountain picture out; the climber was Tier 2), served the prototype locally and recorded each missing animation next to development, plus a mock of the climb on a self-drawn mountain. The lead picked 1B 2A 3B 4B 5B; the AI ported them.
+- **Rule kept:** the project allows only transform and opacity in motion. Amber's mountain (mask), card unfold (clip-path) and shine (text gradient) were rebuilt with moving windows and counter-moving copies so they look the same and still follow it.
+- **AI got it wrong:** the first shine put a second copy of "get IT done" in the heading, so the heading text read the words twice (screen readers skipped it, search would not). The copy now comes from `data-text` in CSS.
+- **Content kept honest:** Amber's summit tag also said "Founded in America"; that is the placeholder founding line (Q12), so the tag says "newXion" only.
