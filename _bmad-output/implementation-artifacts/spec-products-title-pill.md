@@ -21,7 +21,7 @@ H1 top 64px vs pill bottom 84px at 1080px and up, 48px vs 68px on phones and tab
 
 | Part | State or action | Input | Expected (visible) | Timing | Source | Checked |
 | ---- | --------------- | ----- | ------------------ | ------ | ------ | ------- |
-| Products H1 | Load, top of page | n/a | "Built apart. Better together." starts below the header pill, fully visible | n/a | Audit 2026-10-13 (P0) | |
-| Products H1 | Load at 320, 390, 768, 1024, 1280, 1440 | n/a | H1 top is at least 16px below the pill bottom at every width | n/a | Same | |
-| Roadmap tour | Scroll through the stops | Wheel, touch | The tour still moves stop to stop as before (e2e `products.spec.ts`) | As #106 | #106 | |
-| Other pages | Load | n/a | No change (only `.map-sec` is touched) | n/a | Scope | |
+| Products H1 | Load, top of page | n/a | "Built apart. Better together." starts below the header pill, fully visible | n/a | Audit 2026-10-13 (P0) | Yes (screenshot 390) |
+| Products H1 | Load at 320, 390, 768, 1024, 1280, 1440 | n/a | H1 top is at least 16px below the pill bottom at every width | n/a | Same | Yes (measured: 76px, 60px at 1080) |
+| Roadmap tour | Scroll through the stops | Wheel, touch | The tour still moves stop to stop as before (e2e `products.spec.ts`) | As #106 | #106 | Yes (smoke + a11y 72/72) |
+| Other pages | Load | n/a | No change (only `.map-sec` is touched) | n/a | Scope | Yes (diff) |
