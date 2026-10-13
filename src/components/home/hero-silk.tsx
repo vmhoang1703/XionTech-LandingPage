@@ -2,7 +2,9 @@
 
 import { PauseIcon, PlayIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
-import { homeHero } from "@/content/home";
+import { useLocale } from "@/components/layout/locale-link";
+import { homeHero, homeHeroVi } from "@/content/home";
+import { pickLocale } from "@/i18n/content";
 import {
   readMotionPaused,
   saveMotionPaused,
@@ -45,6 +47,7 @@ function measureMark(canvas: HTMLCanvasElement): MarkArea {
 // Until WebGL is confirmed the toggle is not rendered, so with no JavaScript,
 // no WebGL or a lost context the hero-silk static glow shows on its own.
 export function HeroSilk() {
+  const { motion } = pickLocale(useLocale(), { en: homeHero, vi: homeHeroVi });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const silkRef = useRef<Silk | null>(null);
   const particleCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -141,7 +144,7 @@ export function HeroSilk() {
     return () => cancelAnimationFrame(frame);
   }, [running]);
 
-  const label = paused ? homeHero.motion.play : homeHero.motion.pause;
+  const label = paused ? motion.play : motion.pause;
 
   return (
     <>

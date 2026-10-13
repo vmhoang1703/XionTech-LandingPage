@@ -1,14 +1,19 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { ProcessFlow } from "@/components/sections/process-flow";
-import { homeProcess } from "@/content/home";
-import { processFlow } from "@/content/process";
+import { homeProcess, homeProcessVi } from "@/content/home";
+import { processFlow, processFlowVi } from "@/content/process";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 
 // Home "How we work." section: the page's one navy moment, a rounded navy
 // panel (surface-navy) with a moving amber light, the shared 4-D process
 // flow and the link to Services on the heading row (lead, 2026-10-11).
-export function HomeProcess() {
-  const { title, lede, link } = homeProcess;
+export function HomeProcess({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { title, lede, link } = pickLocale(locale, {
+    en: homeProcess,
+    vi: homeProcessVi,
+  });
 
   return (
     <section
@@ -26,7 +31,9 @@ export function HomeProcess() {
             <ArrowRightIcon aria-hidden="true" />
           </LocaleLink>
         </div>
-        <ProcessFlow flow={processFlow} />
+        <ProcessFlow
+          flow={pickLocale(locale, { en: processFlow, vi: processFlowVi })}
+        />
       </div>
     </section>
   );

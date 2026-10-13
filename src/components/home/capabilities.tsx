@@ -7,7 +7,9 @@ import {
 import type { Icon } from "@phosphor-icons/react";
 import { DaylightIcon } from "@/components/sections/daylight-icon";
 import { LiveClock } from "@/components/sections/live-clock";
-import { homeCapabilities } from "@/content/home";
+import { homeCapabilities, homeCapabilitiesVi } from "@/content/home";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { hcmc, plano } from "@/content/offices";
 import { MoreIndustries } from "./more-industries";
 
@@ -23,8 +25,11 @@ const INDUSTRY_ICON: Record<
 // Home "Why XionTech.": Global delivery and Domain expertise in a 5+7 row,
 // then the motto. Server Component; only the "+3" reveal, the live clocks and
 // their sun or moon are client parts.
-export function Capabilities() {
-  const { title, lede, delivery, industries, motto } = homeCapabilities;
+export function Capabilities({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { title, lede, delivery, industries, motto } = pickLocale(locale, {
+    en: homeCapabilities,
+    vi: homeCapabilitiesVi,
+  });
 
   return (
     <section aria-labelledby="capabilities-title" className="sec">
@@ -72,8 +77,10 @@ export function Capabilities() {
                 {industries.main}
               </span>
               <MoreIndustries label={industries.moreLabel}>
-                {industries.more.map((name) => {
-                  const IndustryIcon = INDUSTRY_ICON[name];
+                {industries.more.map((name, index) => {
+                  // Icons are keyed by the English name.
+                  const IndustryIcon =
+                    INDUSTRY_ICON[homeCapabilities.industries.more[index]];
                   return (
                     <span key={name} className="w-chip revealed">
                       <IndustryIcon aria-hidden="true" />

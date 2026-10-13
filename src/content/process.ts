@@ -91,3 +91,45 @@ export const processFlow: ProcessFlowContent = {
     },
   ],
 };
+
+const STEPS_VI: Pick<ProcessStep, "title" | "line" | "receive">[] = [
+  {
+    title: "Khám phá",
+    line: "Workshop để hiểu mục tiêu, người dùng, rủi ro và phạm vi.",
+    receive: "Phạm vi rõ ràng, ước tính và kế hoạch triển khai.",
+  },
+  {
+    title: "Thiết kế",
+    line: "Luồng người dùng, giao diện và kiến trúc được thống nhất trước khi viết code.",
+    receive: "Bản mẫu có thể nhấp và thiết kế kỹ thuật.",
+  },
+  {
+    title: "Phát triển",
+    line: "Sprint Agile với demo thường xuyên. Kiểm thử và đảm bảo chất lượng (QA) diễn ra trong từng sprint, không phải ở cuối dự án.",
+    receive: "Phần mềm đã kiểm thử, chạy được sau mỗi sprint.",
+  },
+  {
+    title: "Triển khai",
+    line: "Phát hành an toàn, theo dõi và cải tiến sau khi ra mắt.",
+    receive: "Bản phát hành chính thức và hỗ trợ liên tục.",
+  },
+];
+
+export const processFlowVi: ProcessFlowContent = {
+  label: "Quy trình 4-D",
+  receiveLabel: "Bạn nhận được",
+  start: {
+    ...processFlow.start,
+    title: "Yêu cầu của bạn",
+    line: "Ý tưởng, bản mô tả hoặc yêu cầu.",
+  },
+  end: {
+    ...processFlow.end,
+    title: "Ra mắt",
+    line: "Và phát triển tiếp cùng nhau.",
+  },
+  steps: processFlow.steps.map((step, index) => ({
+    ...step,
+    ...STEPS_VI[index],
+  })),
+};

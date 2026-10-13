@@ -1,4 +1,5 @@
 import { localeMetadata } from "@/i18n/page-metadata";
+import { isLocale } from "@/i18n/locales";
 import { Capabilities } from "@/components/home/capabilities";
 import { HomeApps } from "@/components/home/home-apps";
 import { HomeFaq } from "@/components/home/home-faq";
@@ -20,18 +21,22 @@ export const generateMetadata = localeMetadata({
 // section stay last (E-A4 CAP-1). Below the hero, PageScene gives the page
 // one light colour with a moving amber and blue colour field; How we work is
 // the one navy moment, and Contact warms the end into amber above the footer.
-export default function Home() {
+export default async function Home({
+  params,
+}: Readonly<Pick<PageProps<"/[locale]">, "params">>) {
+  const { locale: param } = await params;
+  const locale = isLocale(param) ? param : "en";
   return (
     <>
-      <HomeHero />
+      <HomeHero locale={locale} />
       <PageScene>
         <div className="home-flow">
-          <HomeOutcomes />
-          <HomeApps />
-          <Capabilities />
-          <HomeProcess />
-          <HomeValues />
-          <HomeFaq />
+          <HomeOutcomes locale={locale} />
+          <HomeApps locale={locale} />
+          <Capabilities locale={locale} />
+          <HomeProcess locale={locale} />
+          <HomeValues locale={locale} />
+          <HomeFaq locale={locale} />
         </div>
         <HomeNews />
         <HomeContact />

@@ -2,6 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Home, { generateMetadata } from "./page";
 
+function homeAt(locale: string) {
+  return Home({ params: Promise.resolve({ locale }) });
+}
+
 const metadata = await generateMetadata({
   params: Promise.resolve({ locale: "en" }),
 });
@@ -60,8 +64,8 @@ describe("Home page", () => {
     );
   });
 
-  it("opens with the Home hero as the only H1", () => {
-    render(<Home />);
+  it("opens with the Home hero as the only H1", async () => {
+    render(await homeAt("en"));
 
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings).toHaveLength(1);
@@ -70,14 +74,14 @@ describe("Home page", () => {
     );
   });
 
-  it("leaves the main landmark to the root layout", () => {
-    render(<Home />);
+  it("leaves the main landmark to the root layout", async () => {
+    render(await homeAt("en"));
 
     expect(screen.queryByRole("main")).toBeNull();
   });
 
-  it("tells one story: hero, outcomes, apps, why, process, values, answers, news, contact", () => {
-    const { container } = render(<Home />);
+  it("tells one story: hero, outcomes, apps, why, process, values, answers, news, contact", async () => {
+    const { container } = render(await homeAt("en"));
 
     expect(sectionNames(container)).toEqual([
       "Build smarter. Ship faster. Get IT done.",
@@ -92,8 +96,8 @@ describe("Home page", () => {
     ]);
   });
 
-  it("puts the story sections on one flowing surface, not news or contact", () => {
-    render(<Home />);
+  it("puts the story sections on one flowing surface, not news or contact", async () => {
+    render(await homeAt("en"));
 
     const flow = screen
       .getByRole("region", { name: "What can we help you achieve?" })
@@ -113,8 +117,8 @@ describe("Home page", () => {
     expect(news.className).toContain("surface-mist");
   });
 
-  it("drops the app bento and the eight service cards", () => {
-    render(<Home />);
+  it("drops the app bento and the eight service cards", async () => {
+    render(await homeAt("en"));
 
     expect(
       screen.queryByRole("heading", { name: "Eight services, one team." }),
@@ -122,8 +126,8 @@ describe("Home page", () => {
     expect(document.querySelector(".bento, .svc-cards")).toBeNull();
   });
 
-  it("puts everything below the hero on one colour field, with How we work as the navy moment", () => {
-    const { container } = render(<Home />);
+  it("puts everything below the hero on one colour field, with How we work as the navy moment", async () => {
+    const { container } = render(await homeAt("en"));
 
     const scene = container.querySelector(".page-scene");
     expect(container.firstElementChild?.nextElementSibling).toBe(scene);
@@ -135,8 +139,8 @@ describe("Home page", () => {
     expect(navy).toEqual(["How we work."]);
   });
 
-  it("ends with the contact section and no capture band", () => {
-    const { container } = render(<Home />);
+  it("ends with the contact section and no capture band", async () => {
+    const { container } = render(await homeAt("en"));
 
     const contact = screen
       .getByRole("heading", { name: "Have something you want to build?" })
@@ -170,5 +174,37 @@ describe("Home page", () => {
     expect(
       screen.queryByRole("heading", { name: "See it working at your school." }),
     ).toBeNull();
+  });
+
+  it("renders every Home section in Vietnamese on vi", async () => {
+    const { container } = render(await homeAt("vi"));
+
+    expect(sectionNames(container).slice(0, 7)).toEqual([
+      "Xây dựng thông minh hơn. Phát hành nhanh hơn. Get IT done.",
+      // Outcomes copy follows services.ts, still English until translated.
+      "What can we help you achieve?",
+      "Một ngôi trường kết nối.",
+      "Vì sao chọn XionTech.",
+      "Cách chúng tôi làm việc.",
+      "Giá trị cốt lõi.",
+      "Giải đáp thắc mắc của bạn.",
+    ]);
+    expect(
+      screen.getByRole("link", { name: "Khám phá dịch vụ" }),
+    ).toBeDefined();
+    expect(screen.getAllByText("Lật để xem chi tiết")[0]).toBeDefined();
+    expect(screen.getAllByText("Bạn nhận được")[0]).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: /Thêm 3 lĩnh vực/ }),
+    ).toBeDefined();
+    expect(screen.getByText("Quỹ đầu tư tư nhân")).toBeDefined();
+  });
+
+  it("falls back to English for an unknown locale", async () => {
+    render(await homeAt("xx"));
+
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Build smarter. Ship faster. Get IT done.",
+    );
   });
 });

@@ -27,7 +27,7 @@ describe("no JavaScript", () => {
   it("server-renders all page content with no client script", async () => {
     const html = renderToStaticMarkup(
       await RootLayout({
-        children: <Home />,
+        children: await Home({ params: Promise.resolve({ locale: "en" }) }),
         params: Promise.resolve({ locale: "en" }),
       } as LayoutProps<"/[locale]">),
     );

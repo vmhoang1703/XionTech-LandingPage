@@ -1,6 +1,8 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
-import { homeDoors } from "@/content/home";
+import { homeDoors, homeDoorsVi } from "@/content/home";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { HomeAppBadge } from "./home-app-badge";
 
 function Go() {
@@ -26,8 +28,11 @@ function Chips({ items }: Readonly<{ items: string[] }>) {
 // Two doors inside the Home hero, straddling its lower edge. Each door is
 // one link; badges and chips are plain text, so Tab stops once per door. Both
 // show the pointer glow (data-glow) on a mouse or pen.
-export function FrontDoors() {
-  const { label, products, services } = homeDoors;
+export function FrontDoors({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { label, products, services } = pickLocale(locale, {
+    en: homeDoors,
+    vi: homeDoorsVi,
+  });
 
   return (
     <section aria-label={label} className="doors">

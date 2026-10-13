@@ -53,6 +53,16 @@ export const APPS: readonly App[] = [
   },
 ];
 
+// Taglines in Vietnamese. App names and badges stay English (2026-10-13).
+export const appTaglinesVi: Record<AppId, string> = {
+  "parent-hub":
+    "Giúp phụ huynh đồng hành cùng con mỗi ngày học, ngay trên điện thoại.",
+  "staff-hub":
+    "Một không gian làm việc để nhân viên, giáo viên và lãnh đạo dùng chung dữ liệu.",
+  iot: "Điều khiển thiết bị lớp học, ánh sáng, điều hòa và ra vào từ một màn hình.",
+  "ai-tutor": "[Placeholder] Tự giải bài mới. Không chỉ đọc lời giải.",
+};
+
 // The text a badge shows: its text, or the short name for an icon badge.
 export function badgeLabel(app: App): string {
   return app.badge.kind === "text" ? app.badge.text : app.shortName;
