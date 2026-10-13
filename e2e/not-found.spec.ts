@@ -9,6 +9,7 @@ test(
 
     expect(response.status()).toBe(404);
     expect(html).toContain("You’ve wandered off the trail.");
+    expect(html).toContain("<title>Page not found | XionTech</title>");
     expect(html).toContain("You are here");
     expect(html).not.toContain(">404<");
     expect(html).toContain("Go to Home");
@@ -26,6 +27,9 @@ test(
     expect(response.status()).toBe(404);
     expect(html).toContain("Bạn đã đi lạc lối mòn.");
     expect(html.match(/<title>/g)).toHaveLength(1);
+    expect(html).toContain(
+      "<title>[Placeholder] Page not found | XionTech</title>",
+    );
     expect(html.match(/<meta name="robots"/g)).toHaveLength(1);
   },
 );
@@ -37,5 +41,6 @@ test(
     const response = await request.get("/fr/products", { maxRedirects: 0 });
 
     expect(response.status()).toBe(404);
+    expect(await response.text()).toContain("You’ve wandered off the trail.");
   },
 );
