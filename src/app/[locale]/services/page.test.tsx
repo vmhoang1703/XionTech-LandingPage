@@ -296,4 +296,12 @@ describe("ServicesPage", () => {
     ).toBeNull();
     expect(screen.getByRole("heading", { name: "Khám phá" })).toBeTruthy();
   });
+
+  it("falls back to English for an unknown locale", async () => {
+    render(await servicesAt("xx"));
+
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Software teams that get IT done.",
+    );
+  });
 });

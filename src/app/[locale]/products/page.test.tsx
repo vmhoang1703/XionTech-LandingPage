@@ -5,7 +5,7 @@ import { undefinedClasses } from "@/test-utils/css-classes";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import ProductsPage, { generateMetadata } from "./page";
 
-function productsAt(locale: "en" | "vi") {
+function productsAt(locale: string) {
   return ProductsPage({ params: Promise.resolve({ locale }) });
 }
 
@@ -131,5 +131,13 @@ describe("Products page", () => {
     expect(container.textContent).toContain("Giáo viên và nhân viên");
     expect(container.textContent).toContain("Staff Hub");
     expect(container.textContent).not.toContain("A day at school.");
+  });
+
+  it("falls back to English for an unknown locale", async () => {
+    render(await productsAt("xx"));
+
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Built apart. Better together.",
+    );
   });
 });

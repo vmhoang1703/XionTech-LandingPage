@@ -361,4 +361,12 @@ describe("AboutPage", () => {
     ).toBe("WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)");
     expect(container.textContent).not.toContain("Your question, we answer");
   });
+
+  it("falls back to English for an unknown locale", async () => {
+    render(await aboutAt("xx"));
+
+    expect(
+      screen.getByRole("heading", { name: "Your question, we answer" }),
+    ).toBeTruthy();
+  });
 });
