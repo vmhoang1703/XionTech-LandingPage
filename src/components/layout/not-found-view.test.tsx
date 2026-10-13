@@ -89,6 +89,11 @@ describe("NotFound page", () => {
     ).toBe("/vi/products");
   });
 
+  it("marks its root with the page locale so it overrides the English main", () => {
+    const { container } = render(<NotFoundView locale="vi" />);
+    expect(container.querySelector("section")?.getAttribute("lang")).toBe("vi");
+  });
+
   it("uses only defined classes, and stops the trail motion under reduced motion", () => {
     const { container } = render(<NotFoundView locale="en" />);
 

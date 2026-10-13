@@ -14,6 +14,7 @@ export function NotFoundView({ locale }: Readonly<{ locale: Locale }>) {
 
   return (
     <section
+      lang={locale}
       aria-labelledby="not-found-title"
       className="hero-navy page-hero flex min-h-[70dvh] items-center"
     >
