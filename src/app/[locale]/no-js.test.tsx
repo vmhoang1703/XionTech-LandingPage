@@ -24,9 +24,12 @@ const { default: Home } = await import("./page");
 const { siteFooter } = await import("@/content/site-footer");
 
 describe("no JavaScript", () => {
-  it("server-renders all page content with no client script", () => {
+  it("server-renders all page content with no client script", async () => {
     const html = renderToStaticMarkup(
-      RootLayout({ children: <Home /> } as LayoutProps<"/">),
+      await RootLayout({
+        children: <Home />,
+        params: Promise.resolve({ locale: "en" }),
+      } as LayoutProps<"/[locale]">),
     );
 
     expect(html).toMatch(/^<html lang="en"/);

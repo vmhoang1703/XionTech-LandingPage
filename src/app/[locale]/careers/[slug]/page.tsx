@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 // No loading.tsx here: streaming would turn the 404 into a 200.
 export default async function JobPage({
   params,
-}: Readonly<PageProps<"/careers/[slug]">>) {
+}: Readonly<PageProps<"/[locale]/careers/[slug]">>) {
   const { slug } = await params;
   const role = await getOpenRole(slug);
   if (!role) notFound();

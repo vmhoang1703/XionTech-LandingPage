@@ -42,7 +42,7 @@ const role = {
 async function renderPage(slug = "qa-engineer") {
   return render(
     await JobPage({
-      params: Promise.resolve({ slug }),
+      params: Promise.resolve({ locale: "en", slug }),
       searchParams: Promise.resolve({}),
     }),
   );

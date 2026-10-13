@@ -40,7 +40,7 @@ const story: NewsStory = {
 };
 
 const props = (slug: string) => ({
-  params: Promise.resolve({ slug }),
+  params: Promise.resolve({ locale: "en", slug }),
   searchParams: Promise.resolve({}),
 });
 

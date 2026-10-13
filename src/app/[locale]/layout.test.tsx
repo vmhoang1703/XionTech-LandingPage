@@ -10,7 +10,12 @@ vi.mock("next/font/google", () => ({
   JetBrains_Mono: () => ({ variable: "font-jetbrains-mono" }),
 }));
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+  notFound: () => {
+    throw new Error("NEXT_NOT_FOUND");
+  },
+}));
 
 // The scroll reveal and the pointer glow read matchMedia, which jsdom lacks;
 // they have their own tests.
@@ -21,14 +26,32 @@ vi.mock("@/components/sections/pointer-glow", () => ({
   PointerGlow: () => null,
 }));
 
-const { default: RootLayout, metadata } = await import("./layout");
+const {
+  default: RootLayout,
+  generateMetadata,
+  generateStaticParams,
+} = await import("./layout");
 const { siteFooter } = await import("@/content/site-footer");
 
+function params(locale: string) {
+  return { params: Promise.resolve({ locale }) };
+}
+
 describe("RootLayout", () => {
-  it("renders an English html root with all four brand font variables", () => {
-    const html = RootLayout({
+  it("renders a Vietnamese html root on vi", async () => {
+    const html = (await RootLayout({
       children: <p>child</p>,
-    } as LayoutProps<"/">) as ReactElement<{
+      ...params("vi"),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{ lang: string }>;
+
+    expect(html.props.lang).toBe("vi");
+  });
+
+  it("renders an English html root with all four brand font variables", async () => {
+    const html = (await RootLayout({
+      children: <p>child</p>,
+      ...params("en"),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{
       lang: string;
       className: string;
     }>;
@@ -40,20 +63,22 @@ describe("RootLayout", () => {
     expect(html.props.className).toContain("font-jetbrains-mono");
   });
 
-  it("asks Next.js to keep route changes instant despite smooth scroll", () => {
-    const html = RootLayout({
+  it("asks Next.js to keep route changes instant despite smooth scroll", async () => {
+    const html = (await RootLayout({
       children: <p>child</p>,
-    } as LayoutProps<"/">) as ReactElement<{
+      ...params("en"),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{
       "data-scroll-behavior": string;
     }>;
 
     expect(html.props["data-scroll-behavior"]).toBe("smooth");
   });
 
-  it("renders the header before a focusable main#main that wraps the page", () => {
-    const html = RootLayout({
+  it("renders the header before a focusable main#main that wraps the page", async () => {
+    const html = (await RootLayout({
       children: <p>child</p>,
-    } as LayoutProps<"/">) as ReactElement<{
+      ...params("en"),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{
       children: ReactElement<{ children: ReactElement[] }>;
     }>;
     const { container } = render(html.props.children.props.children);
@@ -70,10 +95,11 @@ describe("RootLayout", () => {
     expect(container.querySelectorAll("main")).toHaveLength(1);
   });
 
-  it("renders the site footer after main#main, outside it", () => {
-    const html = RootLayout({
+  it("renders the site footer after main#main, outside it", async () => {
+    const html = (await RootLayout({
       children: <p>child</p>,
-    } as LayoutProps<"/">) as ReactElement<{
+      ...params("en"),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{
       children: ReactElement<{ children: ReactElement[] }>;
     }>;
     const { container } = render(html.props.children.props.children);
@@ -89,8 +115,25 @@ describe("RootLayout", () => {
     expect(container.querySelectorAll("footer")).toHaveLength(1);
   });
 
-  it("sets the site title and description", () => {
-    expect(metadata.title).toBe("XionTech");
-    expect(metadata.description).toMatch(/IT services/);
+  it("sets the site title and description per locale", async () => {
+    const en = await generateMetadata(params("en") as LayoutProps<"/[locale]">);
+    const vi = await generateMetadata(params("vi") as LayoutProps<"/[locale]">);
+    expect(en.title).toBe("XionTech");
+    expect(en.description).toMatch(/^IT services/);
+    expect(vi.title).toBe("XionTech");
+    expect(vi.description).toMatch(/^\[Placeholder\] IT services/);
+  });
+
+  it("prerenders en and vi only and 404s any other locale", async () => {
+    expect(generateStaticParams()).toEqual([
+      { locale: "en" },
+      { locale: "vi" },
+    ]);
+    await expect(
+      RootLayout({
+        children: <p>child</p>,
+        ...params("fr"),
+      } as LayoutProps<"/[locale]">),
+    ).rejects.toThrow("NEXT_NOT_FOUND");
   });
 });

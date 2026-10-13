@@ -7,7 +7,7 @@ import { newsMeta, newsStory } from "@/content/news";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
 import { getPost, type StoryBlock } from "@/lib/news/post";
 
-type StoryProps = Readonly<PageProps<"/news/[slug]">>;
+type StoryProps = Readonly<PageProps<"/[locale]/news/[slug]">>;
 
 export async function generateMetadata({
   params,

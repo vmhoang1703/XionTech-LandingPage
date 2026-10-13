@@ -6,6 +6,8 @@ import { getSanityConfig } from "./src/lib/sanity/config";
 getSanityConfig();
 
 const nextConfig: NextConfig = {
+  // Every page sits under [locale], so unmatched URLs need a global 404.
+  experimental: { globalNotFound: true },
   images: {
     remotePatterns: [
       {
