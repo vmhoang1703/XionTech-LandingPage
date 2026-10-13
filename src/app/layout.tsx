@@ -61,6 +61,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${unbounded.variable} ${lexendExa.variable} ${beVietnamPro.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {/* With no script, a count-up figure shows its number (count-up.tsx). */}
+        <noscript>
+          <style>{`.count-up[data-count="wait"] { --count: var(--to) !important; }`}</style>
+        </noscript>
         <SiteHeader />
         <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
           {children}

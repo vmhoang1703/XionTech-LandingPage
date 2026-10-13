@@ -53,30 +53,66 @@ describe("CountUp", () => {
     expect(options?.rootMargin).toBe("0px 0px -10% 0px");
   });
 
-  it("holds a figure below the screen at 0, then plays it in view, once", () => {
+  it("holds the figure at 0 until it is in view", () => {
     const { figure } = mount();
-    callback([{ isIntersecting: false }]);
     expect(figure.dataset.count).toBe("wait");
-    callback([{ isIntersecting: true }]);
-    expect(figure.dataset.count).toBe("play");
-    expect(disconnect).toHaveBeenCalled();
-  });
-
-  it("follows the latest entry when several arrive at once", () => {
-    const { figure } = mount();
     callback([{ isIntersecting: false }]);
-    callback([{ isIntersecting: true }, { isIntersecting: false }]);
     expect(figure.dataset.count).toBe("wait");
     expect(disconnect).not.toHaveBeenCalled();
+  });
+
+  it("plays in view once the page has loaded and gone idle", () => {
+    let idle: IdleRequestCallback = () => {};
+    vi.stubGlobal("requestIdleCallback", (next: IdleRequestCallback) => {
+      idle = next;
+      return 7;
+    });
+    const { figure } = mount();
     callback([{ isIntersecting: false }, { isIntersecting: true }]);
+    expect(disconnect).toHaveBeenCalled();
+    expect(figure.dataset.count).toBe("wait");
+    idle({} as IdleDeadline);
     expect(figure.dataset.count).toBe("play");
   });
 
-  it("leaves a figure on screen at load to the CSS count", () => {
+  it("waits for the load event while the page is still loading", () => {
+    vi.useFakeTimers();
+    vi.stubGlobal("requestIdleCallback", undefined);
+    const state = vi
+      .spyOn(document, "readyState", "get")
+      .mockReturnValue("loading");
     const { figure } = mount();
     callback([{ isIntersecting: true }]);
-    expect(figure.dataset.count).toBeUndefined();
-    expect(disconnect).toHaveBeenCalled();
+    vi.advanceTimersByTime(1000);
+    expect(figure.dataset.count).toBe("wait");
+    state.mockReturnValue("complete");
+    window.dispatchEvent(new Event("load"));
+    vi.advanceTimersByTime(200);
+    expect(figure.dataset.count).toBe("play");
+    state.mockRestore();
+    vi.useRealTimers();
+  });
+
+  it("cancels a start that has not run when it unmounts", () => {
+    const cancelIdle = vi.fn();
+    vi.stubGlobal("requestIdleCallback", () => 7);
+    vi.stubGlobal("cancelIdleCallback", cancelIdle);
+    const { view } = mount();
+    callback([{ isIntersecting: true }]);
+    view.unmount();
+    expect(cancelIdle).toHaveBeenCalledWith(7);
+  });
+
+  it("cancels the timer fallback when it unmounts", () => {
+    vi.useFakeTimers();
+    vi.stubGlobal("requestIdleCallback", undefined);
+    vi.stubGlobal("cancelIdleCallback", undefined);
+    const { view, figure } = mount();
+    callback([{ isIntersecting: true }]);
+    view.unmount();
+    vi.advanceTimersByTime(500);
+    expect(figure.dataset.count).toBe("wait");
+    vi.useRealTimers();
   });
 
   it("shows the plain number after a saved Pause", () => {
@@ -86,10 +122,10 @@ describe("CountUp", () => {
     expect(observe).not.toHaveBeenCalled();
   });
 
-  it("does nothing under reduced motion", () => {
+  it("does nothing under reduced motion (CSS shows the number)", () => {
     stubMotion(true);
     const { figure } = mount();
-    expect(figure.dataset.count).toBeUndefined();
+    expect(figure.dataset.count).toBe("wait");
     expect(observe).not.toHaveBeenCalled();
   });
 

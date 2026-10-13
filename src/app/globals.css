@@ -3018,9 +3018,8 @@
      with transparent glyphs (screen readers and search still read it) and
      ::after draws --count over it, from the same start in the same box, so
      nothing moves (aligned right, the growing count moved its start: a layout
-     shift). On screen at load it counts at first paint, with no script. The
-     script holds a figure below the screen at 0 ("wait") and plays it in view
-     ("play"); "off" is a saved Pause. Reduced motion and print show the plain
+     shift). It is held at 0 ("wait") and plays ("play") once it is in view
+     and the page has settled, so every step shows; "off" is a saved Pause. Reduced motion and print show the plain
      number. --count is registered at the top level (@property). The count
      uses a softer ease-out than --ease-brand, which would jump most of the
      way at once and hide the counting. */
@@ -3046,10 +3045,6 @@
       .count-up:not([data-count="off"])::after {
         content: counter(count) / "";
       }
-    }
-
-    .count-up:not([data-count]) {
-      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.2s both;
     }
 
     .count-up[data-count="wait"] {
