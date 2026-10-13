@@ -401,3 +401,39 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-products-roadmap-draw-in.md`
   summary: Remove the faint light seams where the narrow roadmap bends join.
   evidence: Seen in the 390px walk screenshots; cosmetic.
+
+- source_spec: none
+  summary: Vietnamese translations for every page's copy (all of src/content), split from Story 1.2 locale routing.
+  evidence: User chose Split on 2026-10-13; routing, cookie, dropdown and string-set plumbing ship first, with VI only for the shell; page copy needs a Vietnamese copy owner (open item).
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Language switch keeps typed form values (personal data) in sessionStorage until the next page reads them; add a short expiry and pagehide cleanup, and list it on the privacy page.
+  evidence: Security and edge review of Story 1.2: save()/takeSaved() in language-menu.tsx have no timestamp or cleanup.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Confirm the proxy's locale redirects are not cached by URL alone on Vercel (Vary on Cookie/Accept-Language).
+  evidence: Unverified: settle with curl -I on a Vercel preview for / and /products.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: /vi/* pages carry English bodies with no noindex or canonical until translated.
+  evidence: Blind review of Story 1.2; Story 7.1 owns hreflang and canonical.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Two forms on one page sharing a field name collide in the language-switch restore.
+  evidence: Edge review: fields keyed by name only (home capture band and contact form).
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Escape with both the mobile menu and the language list open fires both document handlers.
+  evidence: Edge review: two keydown listeners, no stopPropagation.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Language-switch scroll hold is lost under React StrictMode in next dev.
+  evidence: Task-4 review: the first mount consumes the saved state; production is exact.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: request-locale silently falls back to English when the layout did not set it.
+  evidence: Task-6 review: no test or log of the unset path.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Focus does not return to the language button after a switch when sessionStorage is blocked.
+  evidence: Task-4 review: early return before the focus call.
