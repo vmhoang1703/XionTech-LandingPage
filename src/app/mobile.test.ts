@@ -172,3 +172,20 @@ describe("phone layouts", () => {
     );
   });
 });
+
+// Touch fixes from the behaviour audit (lead, 2026-10-13).
+describe("touch behaviour", () => {
+  const css = globalsCss();
+
+  it("keeps form fields at 16px so iPhone Safari does not zoom in", () => {
+    expect(css).toMatch(
+      /\.field input,\s*\.field select,\s*\.field textarea\s*\{[^}]*font-size:\s*1rem;/,
+    );
+  });
+
+  it("drops the tooltip underline on HCMC on touch screens", () => {
+    expect(css).toMatch(
+      /@media \(hover: none\)\s*\{\s*\.w-chip abbr\s*\{\s*text-decoration:\s*none;/,
+    );
+  });
+});

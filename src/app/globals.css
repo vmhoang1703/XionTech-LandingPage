@@ -883,7 +883,8 @@
     border: 1.5px solid var(--color-field-border);
     border-radius: var(--radius-sm);
     background: var(--color-page);
-    font-size: 0.98rem;
+    /* 16px: iPhone Safari zooms the page into any field under 16px. */
+    font-size: 1rem;
     color: var(--color-text);
   }
 
@@ -6463,5 +6464,14 @@ main > .page-scene:last-child > .surface-navy:last-child {
   .w-card {
     min-height: 0;
     padding: 24px;
+  }
+}
+
+/* Touch screens (lead, 2026-10-13): no dotted underline on "HCMC". It
+   promises a tooltip that only a mouse can open; the card already says
+   where the two headquarters are. */
+@media (hover: none) {
+  .w-chip abbr {
+    text-decoration: none;
   }
 }

@@ -1,20 +1,9 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties } from "react";
+import { whenIdle } from "@/lib/idle/when-idle";
 import { readMotionPaused } from "@/lib/motion/motion-preference";
 import { ROOT_MARGIN } from "./scroll-reveal";
-
-// Runs `start` once the page has a quiet moment (at most 800ms later), so the
-// count does not start while the page is still busy starting up. Returns a
-// cancel function.
-function whenIdle(start: () => void) {
-  if (window.requestIdleCallback) {
-    const idle = window.requestIdleCallback(start, { timeout: 800 });
-    return () => window.cancelIdleCallback(idle);
-  }
-  const timer = window.setTimeout(start, 200);
-  return () => window.clearTimeout(timer);
-}
 
 const COUNT_MS = 1600;
 // Ease-out cubic: fast at first, settling on the number.
