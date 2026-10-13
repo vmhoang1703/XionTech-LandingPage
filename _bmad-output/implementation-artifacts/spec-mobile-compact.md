@@ -49,6 +49,9 @@ Desktop 1440 unchanged (Home 7,266). No sideways scroll at 320, 390, 768, 1440.
 | --- | --- | --- | --- | --- | --- |
 | Apps, values, stories, 4-D process (phone) | Load | n/a | One card wide (84%), next card peeks at the right | Pick 1A | Yes (screenshots 390) |
 | Same rows | Swipe | Touch | Snaps card by card; page does not scroll sideways | Pick 1A | Partly (scripted scroll; real finger swipe to do) |
+| Swipe rows (phone) | Row in view (60%) | none | Moves on one card every 3.5 s, back to the first after the last | Lead, 2026-10-13 | Yes (Chrome 390, Apps row) |
+| Swipe rows (phone) | First touch, wheel or key | Touch, key | Auto swipe stops for that row for good | Lead, 2026-10-13 | Yes |
+| Swipe rows | Reduced motion, or 640px and up | n/a | No auto swipe | Motion rule in AGENTS.md | Yes (unit test) |
 | Value cards in the row | Tap | Touch | Flips; back text fully visible; row height stays | Pick 1A | Yes (390) |
 | Hero figures (phone) | Load | n/a | Five rows, number left, label right, thin lines between | Pick 2D | Yes (390) |
 | Footer (phone) | Load | n/a | Products then Company in the left column, Services right | Pick 3A | Yes (390) |
@@ -57,3 +60,5 @@ Desktop 1440 unchanged (Home 7,266). No sideways scroll at 320, 390, 768, 1440.
 | News page (phone) | Load | n/a | Lead story 320px, others 250px, title and "Read story" fit | Round 2 | Yes (390) |
 | Every page | Load at 320-1440 | n/a | No sideways scroll; desktop unchanged | Round 2 | Yes |
 | Resize across 640 and 1080 | Drag | Mouse | Layout switches, nothing cut off | Round 2 | Pending (by hand) |
+
+Home core values keep their original layout (lead, 2026-10-13): one a row on phones, two columns of 304px cards on tablets. Careers "Five things" uses the new layouts.
