@@ -19,6 +19,17 @@ describe("shell dictionaries", () => {
   });
 
   it("keeps product and service names identical in en and vi", () => {
-    expect(SHELL.vi.names).toEqual(SHELL.en.names);
+    const names = [
+      "Product Engineering",
+      "AI-Driven Analytics",
+      "Product Co-Creation",
+      "Staffing Service",
+      "Custom App Development",
+      "Low-code Solutions",
+      "AI-Powered Solutions",
+      "Cloud Computing",
+    ];
+    expect(Object.values(SHELL.en.names)).toEqual(names);
+    expect(Object.values(SHELL.vi.names)).toEqual(names);
   });
 });

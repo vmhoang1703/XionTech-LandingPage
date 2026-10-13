@@ -33,6 +33,7 @@ const {
   generateStaticParams,
 } = await import("./layout");
 const { siteFooter } = await import("@/content/site-footer");
+const { LocaleLink } = await import("@/components/layout/locale-link");
 
 function params(locale: string) {
   return { params: Promise.resolve({ locale }) };
@@ -94,6 +95,19 @@ describe("RootLayout", () => {
       header!.compareDocumentPosition(main!) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
     expect(container.querySelectorAll("main")).toHaveLength(1);
+  });
+
+  it("gives client links below it the vi locale", async () => {
+    const html = (await RootLayout({
+      children: <LocaleLink href="/products">products</LocaleLink>,
+      ...params("vi"),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{
+      children: ReactElement<{ children: ReactElement[] }>;
+    }>;
+    const { getByRole } = render(html.props.children.props.children);
+    expect(getByRole("link", { name: "products" }).getAttribute("href")).toBe(
+      "/vi/products",
+    );
   });
 
   it("renders the site footer after main#main, outside it", async () => {

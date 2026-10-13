@@ -97,6 +97,34 @@ const tab = (shiftKey = false) =>
   fireEvent.keyDown(document, { key: "Tab", shiftKey });
 
 describe("MobileMenu", () => {
+  it("shows Vietnamese labels and /vi links on vi", () => {
+    render(
+      <header>
+        <MobileMenu locale="vi" />
+      </header>,
+    );
+    fireEvent.click(menuButton());
+    expect(expanded()).toBe("true");
+    const links = menuLinks();
+    expect(links.map((a) => a.textContent)).toEqual([
+      "Trang chủ",
+      "Sản phẩm",
+      "Dịch vụ",
+      "Tin tức",
+      "Về chúng tôi",
+      "Tuyển dụng",
+    ]);
+    expect(links.map((a) => a.getAttribute("href"))).toEqual([
+      "/vi",
+      "/vi/products",
+      "/vi/services",
+      "/vi/news",
+      "/vi/about",
+      "/vi/careers",
+    ]);
+    expect(panel()?.getAttribute("aria-label")).toBe("[Placeholder] Main");
+  });
+
   it("renders a closed 44px list icon named Menu that controls the panel", () => {
     render(<Header />);
     expect(menuButton().textContent).toBe("Menu");
