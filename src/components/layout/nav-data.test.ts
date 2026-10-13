@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import * as navData from "./nav-data";
-import { currentSection, LABELS, NAV_LINKS, SERVICES } from "./nav-data";
+import { currentSection, NAV_LINKS, SERVICES } from "./nav-data";
 
 describe("nav-data", () => {
   describe("currentSection", () => {
@@ -37,6 +37,15 @@ describe("nav-data", () => {
 
     it("maps unknown paths to empty string", () => {
       expect(currentSection("/unknown")).toBeNull();
+    });
+
+    it.each([
+      ["/en", "home"],
+      ["/vi", "home"],
+      ["/vi/news/x", "news"],
+      ["/en/products", "products"],
+    ])("ignores the locale prefix: %s is %s", (path, section) => {
+      expect(currentSection(path)).toBe(section);
     });
 
     it("maps /about to about (per spec I/O Matrix)", () => {
@@ -89,22 +98,17 @@ describe("nav-data", () => {
 
   describe("NAV_LINKS", () => {
     it("lists the six top-level pages in header order, Home first", () => {
-      expect(NAV_LINKS.map((l) => [l.section, l.href, l.label])).toEqual([
-        ["home", "/", "Home"],
-        ["products", "/products", "Products"],
-        ["services", "/services", "Services"],
-        ["news", "/news", "News"],
-        ["about", "/about", "About"],
-        ["careers", "/careers", "Careers"],
+      expect(NAV_LINKS.map((l) => [l.section, l.href])).toEqual([
+        ["home", "/"],
+        ["products", "/products"],
+        ["services", "/services"],
+        ["news", "/news"],
+        ["about", "/about"],
+        ["careers", "/careers"],
       ]);
     });
 
-    it("labels the mobile menu button Menu", () => {
-      expect(LABELS.menu).toBe("Menu");
-    });
-
-    it("has the Book a demo label and no mega-menu data", () => {
-      expect(LABELS.demo).toBe("Book a demo");
+    it("has no mega-menu data", () => {
       expect(navData).not.toHaveProperty("PRODUCTS");
       expect(navData).not.toHaveProperty("PRODUCTS_FOOTER");
       expect(navData).not.toHaveProperty("SERVICES_FOOTER");

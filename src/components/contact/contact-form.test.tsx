@@ -101,7 +101,7 @@ describe("ContactForm", () => {
   });
 
   it("selects Outsourcing project when the page loads with #project", () => {
-    history.replaceState(null, "", "/demo#project");
+    history.replaceState(null, "", "/en/demo#project");
     render(<ContactForm />);
     expect(selected("Outsourcing project")).toBe("true");
     expect(selected("Product demo")).toBe("false");
@@ -110,12 +110,12 @@ describe("ContactForm", () => {
   it("follows the hash when it changes after load", () => {
     render(<ContactForm />);
     act(() => {
-      history.replaceState(null, "", "/demo#project");
+      history.replaceState(null, "", "/en/demo#project");
       globalThis.dispatchEvent(new HashChangeEvent("hashchange"));
     });
     expect(selected("Outsourcing project")).toBe("true");
     act(() => {
-      history.replaceState(null, "", "/demo#form");
+      history.replaceState(null, "", "/en/demo#form");
       globalThis.dispatchEvent(new HashChangeEvent("hashchange"));
     });
     expect(selected("Product demo")).toBe("true");
@@ -131,7 +131,7 @@ describe("ContactForm", () => {
     render(<ContactForm />);
     fireEvent.click(tab("Outsourcing project"));
     act(() => {
-      history.replaceState(null, "", "/demo#form");
+      history.replaceState(null, "", "/en/demo#form");
       globalThis.dispatchEvent(new HashChangeEvent("hashchange"));
     });
     expect(selected("Product demo")).toBe("true");
@@ -208,7 +208,7 @@ describe("ContactForm", () => {
   });
 
   it("hides the Product demo fields on the Outsourcing tab", () => {
-    history.replaceState(null, "", "/demo#project");
+    history.replaceState(null, "", "/en/demo#project");
     render(<ContactForm />);
     for (const id of ["f-size", "f-date"]) {
       expect(field(id).closest("[hidden]")).not.toBeNull();
@@ -375,7 +375,7 @@ describe("ContactForm", () => {
     ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "Privacy policy" }).getAttribute("href"),
-    ).toBe("/privacy");
+    ).toBe("/en/privacy");
   });
 
   it("limits name, work email, school and role to the server lengths", () => {
@@ -690,7 +690,7 @@ describe("ContactForm capture prefill", () => {
     );
     expect(scrollIntoView).not.toHaveBeenCalled();
     unmount();
-    history.replaceState(null, "", "/demo#project");
+    history.replaceState(null, "", "/en/demo#project");
     render(
       <div id="form">
         <ContactForm />

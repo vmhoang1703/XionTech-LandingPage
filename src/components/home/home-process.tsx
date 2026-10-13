@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { ProcessFlow } from "@/components/sections/process-flow";
 import { homeProcess } from "@/content/home";
 import { processFlow } from "@/content/process";
@@ -21,10 +21,10 @@ export function HomeProcess() {
             <h2 id="process-title">{title}</h2>
             <p className="lede">{lede}</p>
           </div>
-          <Link href={link.href} className="link-arrow">
+          <LocaleLink href={link.href} className="link-arrow">
             <span>{link.label}</span>
             <ArrowRightIcon aria-hidden="true" />
-          </Link>
+          </LocaleLink>
         </div>
         <ProcessFlow flow={processFlow} />
       </div>

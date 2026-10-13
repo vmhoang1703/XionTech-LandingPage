@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { PageScene } from "@/components/sections/page-scene";
 import { ProcessFlow } from "@/components/sections/process-flow";
 import { serviceIcons } from "@/content/service-icons";
@@ -37,10 +37,10 @@ export default function ServicesPage() {
           </h1>
           <p className="lede mt-5">{lede}</p>
           <div className="cta-row">
-            <Link className="btn btn-primary" href={primaryCta.href}>
+            <LocaleLink className="btn btn-primary" href={primaryCta.href}>
               {primaryCta.label}
               <ArrowRightIcon aria-hidden="true" />
-            </Link>
+            </LocaleLink>
           </div>
         </div>
       </section>

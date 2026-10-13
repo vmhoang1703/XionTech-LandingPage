@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRightIcon } from "@phosphor-icons/react";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -232,7 +232,7 @@ export function HomeContactForm() {
         <ArrowRightIcon aria-hidden="true" />
       </button>
       <p className="consent">
-        {S.consent} <Link href="/privacy">{F.privacyLink}</Link>
+        {S.consent} <LocaleLink href="/privacy">{F.privacyLink}</LocaleLink>
       </p>
       <div className="sr-only" aria-live="polite">
         {announcement.messages.length > 0 && (

@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { homeNews } from "@/content/news";
 import { getLatestPosts, type LatestPost } from "@/lib/news/latest-posts";
 import { NewsCard } from "./news-card";
@@ -34,10 +34,10 @@ export async function HomeNews() {
             <h2 id="news-h">{heading}</h2>
             <p className="lede">{lede}</p>
           </div>
-          <Link href={seeAll.href} className="link-arrow">
+          <LocaleLink href={seeAll.href} className="link-arrow">
             <span>{seeAll.label}</span>
             <ArrowRightIcon aria-hidden="true" />
-          </Link>
+          </LocaleLink>
         </div>
         {posts.length > 0 ? (
           <div className="sgrid sgrid-row" data-reveal="">

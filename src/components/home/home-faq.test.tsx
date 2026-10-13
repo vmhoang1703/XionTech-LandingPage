@@ -44,7 +44,7 @@ describe("HomeFaq", () => {
       screen
         .getByRole("link", { name: "See all questions" })
         .getAttribute("href"),
-    ).toBe("/about#faq");
+    ).toBe("/en/about#faq");
     expect(undefinedClasses(container)).toEqual([]);
   });
 });

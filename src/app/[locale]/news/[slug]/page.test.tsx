@@ -85,7 +85,7 @@ describe("StoryPage", () => {
 
     const hero = container.querySelector(".art-hero");
     const back = screen.getByRole("link", { name: "Back to News" });
-    expect(back.getAttribute("href")).toBe("/news");
+    expect(back.getAttribute("href")).toBe("/en/news");
     expect(back.className).toBe("art-back");
     expect(hero?.firstElementChild?.firstElementChild).toBe(back);
 

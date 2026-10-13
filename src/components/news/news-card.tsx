@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { homeNews } from "@/content/news";
 import { postAudience } from "@/lib/news/audience";
 import {
@@ -22,7 +22,7 @@ export function NewsCard({ post }: Readonly<{ post: LatestPost }>) {
     .join(" ");
 
   return (
-    <Link
+    <LocaleLink
       href={`/news/${encodeURIComponent(post.slug)}`}
       className="scard"
       aria-labelledby={labelledBy}
@@ -70,6 +70,6 @@ export function NewsCard({ post }: Readonly<{ post: LatestPost }>) {
         <span>{homeNews.readStory}</span>
         <ArrowRightIcon aria-hidden="true" />
       </span>
-    </Link>
+    </LocaleLink>
   );
 }

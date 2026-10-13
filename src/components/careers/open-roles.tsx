@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { careersRoles } from "@/content/careers";
 import { type OpenRole, roleMeta } from "@/lib/careers/open-roles";
 
@@ -21,7 +21,7 @@ export function OpenRoles({ roles }: Readonly<{ roles: OpenRole[] }>) {
             {roles.map((role) => {
               const meta = roleMeta(role);
               return (
-                <Link
+                <LocaleLink
                   key={role.slug}
                   href={`/careers/${role.slug}`}
                   className="spot role"
@@ -34,7 +34,7 @@ export function OpenRoles({ roles }: Readonly<{ roles: OpenRole[] }>) {
                     <span>{applyLabel}</span>
                     <ArrowRightIcon aria-hidden="true" />
                   </span>
-                </Link>
+                </LocaleLink>
               );
             })}
           </div>

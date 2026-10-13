@@ -1,6 +1,6 @@
 import { ArrowRightIcon, MapPinIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { Fragment } from "react";
 import { CaptureBand } from "@/components/contact/capture-band";
 import { contactIcon } from "@/components/sections/contact-icon";
@@ -80,10 +80,10 @@ export default function AboutPage() {
           <p className="ah-text">{text}</p>
           <div className="ah-links">
             {links.map(({ href, label }) => (
-              <Link key={href} className="link-arrow" href={href}>
+              <LocaleLink key={href} className="link-arrow" href={href}>
                 {label}
                 <ArrowRightIcon aria-hidden="true" />
-              </Link>
+              </LocaleLink>
             ))}
           </div>
         </div>

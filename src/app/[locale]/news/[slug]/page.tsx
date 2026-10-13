@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { notFound } from "next/navigation";
 import { newsMeta, newsStory } from "@/content/news";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
@@ -55,10 +55,10 @@ export default async function StoryPage({ params }: StoryProps) {
         aria-labelledby="story-h1"
       >
         <div className="wrap">
-          <Link className="art-back" href={backToNews.href}>
+          <LocaleLink className="art-back" href={backToNews.href}>
             <ArrowLeftIcon aria-hidden="true" />
             <span>{backToNews.label}</span>
-          </Link>
+          </LocaleLink>
           <div className="art-meta">
             {tag ? <span className="art-pill">{tag}</span> : null}
             {date ? (

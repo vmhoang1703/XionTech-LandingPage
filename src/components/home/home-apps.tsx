@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { homeApps } from "@/content/home";
 import { HomeAppBadge } from "./home-app-badge";
 
@@ -17,15 +17,15 @@ export function HomeApps() {
             <h2 id="home-apps-h">{title}</h2>
             <p className="lede">{lede}</p>
           </div>
-          <Link href={link.href} className="link-arrow">
+          <LocaleLink href={link.href} className="link-arrow">
             <span>{link.label}</span>
             <ArrowRightIcon aria-hidden="true" />
-          </Link>
+          </LocaleLink>
         </div>
         <ul className="app-cards" data-reveal="">
           {apps.map(({ app, href, madeFor, features }) => (
             <li key={app.id}>
-              <Link href={href} className="app-card" data-glow="">
+              <LocaleLink href={href} className="app-card" data-glow="">
                 <span className="app-card-top">
                   <HomeAppBadge app={app} />
                   <span className="go">
@@ -39,7 +39,7 @@ export function HomeApps() {
                     <li key={feature}>{feature}</li>
                   ))}
                 </ul>
-              </Link>
+              </LocaleLink>
             </li>
           ))}
         </ul>

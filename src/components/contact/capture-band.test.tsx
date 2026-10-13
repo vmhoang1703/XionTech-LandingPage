@@ -19,7 +19,7 @@ const BANDS = {
     placeholder: "name@school.edu.vn",
     button: "Book a demo",
     consent: "We only use your email to arrange your demo.",
-    destination: "/demo#form",
+    destination: "/en/demo#form",
   },
   project: {
     heading: "Tell us what you're building.",
@@ -27,7 +27,7 @@ const BANDS = {
     placeholder: "name@company.com",
     button: "Start a project",
     consent: "We only use your details to respond to this request.",
-    destination: "/demo#project",
+    destination: "/en/demo#project",
   },
 } as const;
 
@@ -130,7 +130,7 @@ describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
     expect(screen.queryByRole("dialog")).toBeNull();
     const consent = screen.getByText(band.consent);
     const link = screen.getByRole("link", { name: "Privacy policy" });
-    expect(link.getAttribute("href")).toBe("/privacy");
+    expect(link.getAttribute("href")).toBe("/en/privacy");
     expect(consent.parentElement?.contains(link)).toBe(true);
   });
 

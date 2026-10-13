@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { PointerGlow } from "@/components/sections/pointer-glow";
@@ -49,11 +50,13 @@ export default async function RootLayout({
       className={`${fontVariables} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <SiteHeader />
-        <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
-          {children}
-        </main>
-        <SiteFooter />
+        <LocaleProvider locale={locale}>
+          <SiteHeader locale={locale} />
+          <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
+            {children}
+          </main>
+          <SiteFooter locale={locale} />
+        </LocaleProvider>
         <ScrollReveal />
         <PointerGlow />
       </body>

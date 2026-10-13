@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { homeOutcomes } from "@/content/home";
 
 // Home "What can we help you achieve?": the four Services outcomes beside a
@@ -21,10 +21,10 @@ export function HomeOutcomes() {
               {cta.label}
               <ArrowRightIcon aria-hidden="true" />
             </a>
-            <Link href={link.href} className="link-arrow">
+            <LocaleLink href={link.href} className="link-arrow">
               <span>{link.label}</span>
               <ArrowRightIcon aria-hidden="true" />
-            </Link>
+            </LocaleLink>
           </div>
         </div>
         <ul className="goal-list" data-reveal="">

@@ -9,24 +9,24 @@ vi.mock("next/navigation", () => ({
 
 describe("SiteHeader", () => {
   it("puts the skip link first and points it at #main", () => {
-    render(<SiteHeader />);
+    render(<SiteHeader locale="en" />);
     const first = screen.getAllByRole("link")[0];
     expect(first.textContent).toBe("Skip to content");
     expect(first.getAttribute("href")).toBe("#main");
   });
 
   it("links the logo to the home page with its labels", () => {
-    render(<SiteHeader />);
+    render(<SiteHeader locale="en" />);
     const home = screen.getByRole("link", { name: "XionTech home" });
-    expect(home.getAttribute("href")).toBe("/");
+    expect(home.getAttribute("href")).toBe("/en");
     const logo = screen.getByAltText("XionTech, Get IT Done");
     expect(home.contains(logo)).toBe(true);
   });
 
   it("links Book a demo to the demo form, as a small primary button", () => {
-    render(<SiteHeader />);
+    render(<SiteHeader locale="en" />);
     const demo = screen.getByRole("link", { name: "Book a demo" });
-    expect(demo.getAttribute("href")).toBe("/demo");
+    expect(demo.getAttribute("href")).toBe("/en/demo");
     expect(demo.className).toContain("btn btn-primary btn-sm");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
@@ -34,7 +34,7 @@ describe("SiteHeader", () => {
   });
 
   it("floats a pill over the page and lets clicks through the strip around it", () => {
-    render(<SiteHeader />);
+    render(<SiteHeader locale="en" />);
     const header = screen.getByRole("banner");
     expect(header.className).toContain("pointer-events-none");
     expect(header.className).toContain(
@@ -48,13 +48,13 @@ describe("SiteHeader", () => {
   });
 
   it("renders the primary nav inside a header", () => {
-    render(<SiteHeader />);
+    render(<SiteHeader locale="en" />);
     expect(screen.getByRole("banner")).toBeTruthy();
     expect(screen.getByRole("navigation", { name: "Main" })).toBeTruthy();
   });
 
   it("puts the main nav after the logo, then Book a demo, and the Menu button last", () => {
-    render(<SiteHeader />);
+    render(<SiteHeader locale="en" />);
     const header = screen.getByRole("banner");
     const logo = screen.getByRole("link", { name: "XionTech home" });
     const nav = screen.getAllByRole("navigation", { name: "Main" })[0];
@@ -75,12 +75,44 @@ describe("SiteHeader", () => {
   });
 
   it("puts the language button last in the bar, outside the mobile menu", () => {
-    render(<SiteHeader />);
+    render(<SiteHeader locale="en" />);
     const pill = screen.getByRole("banner").firstElementChild as HTMLElement;
     const language = screen.getByRole("button", { name: /Language/ });
     expect(pill.lastElementChild?.contains(language)).toBe(true);
     expect(document.getElementById("mobile-menu")?.contains(language)).toBe(
       false,
     );
+  });
+
+  it("prefixes the links with the locale and reads labels from the shell dictionary", () => {
+    render(<SiteHeader locale="vi" />);
+    const hrefs = [
+      "Trang chủ",
+      "Sản phẩm",
+      "Dịch vụ",
+      "Tin tức",
+      "Về chúng tôi",
+      "Tuyển dụng",
+    ].map((name) =>
+      screen.getAllByRole("link", { name })[0].getAttribute("href"),
+    );
+    expect(hrefs).toEqual([
+      "/vi",
+      "/vi/products",
+      "/vi/services",
+      "/vi/news",
+      "/vi/about",
+      "/vi/careers",
+    ]);
+    expect(
+      screen
+        .getByRole("link", { name: "[Placeholder] Book a demo" })
+        .getAttribute("href"),
+    ).toBe("/vi/demo");
+    expect(
+      screen
+        .getByRole("link", { name: "[Placeholder] XionTech home" })
+        .getAttribute("href"),
+    ).toBe("/vi");
   });
 });

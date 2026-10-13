@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { homeDoors } from "@/content/home";
 import { HomeAppBadge } from "./home-app-badge";
 
@@ -32,7 +32,11 @@ export function FrontDoors() {
   return (
     <section aria-label={label} className="doors">
       <div className="wrap doors-grid">
-        <Link href={products.href} className="door door-products" data-glow="">
+        <LocaleLink
+          href={products.href}
+          className="door door-products"
+          data-glow=""
+        >
           <div className="top">
             <div className="chips">
               {products.badges.map((app) => (
@@ -44,9 +48,9 @@ export function FrontDoors() {
           <h2>{products.title}</h2>
           <p>{products.line}</p>
           <Chips items={products.chips} />
-        </Link>
+        </LocaleLink>
 
-        <Link
+        <LocaleLink
           href={services.href}
           className="door door-services surface-navy"
           data-glow=""
@@ -58,7 +62,7 @@ export function FrontDoors() {
           <h2>{services.title}</h2>
           <p>{services.line}</p>
           <Chips items={services.chips} />
-        </Link>
+        </LocaleLink>
       </div>
     </section>
   );

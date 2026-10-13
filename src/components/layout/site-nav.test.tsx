@@ -25,22 +25,22 @@ afterEach(() => {
 describe("SiteNav", () => {
   it("lists six plain links in order, with no React warning", () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {});
-    render(<SiteNav />);
+    render(<SiteNav locale="en" />);
     expect(links().map((a) => [a.textContent, a.getAttribute("href")])).toEqual(
       [
-        ["Home", "/"],
-        ["Products", "/products"],
-        ["Services", "/services"],
-        ["News", "/news"],
-        ["About", "/about"],
-        ["Careers", "/careers"],
+        ["Home", "/en"],
+        ["Products", "/en/products"],
+        ["Services", "/en/services"],
+        ["News", "/en/news"],
+        ["About", "/en/about"],
+        ["Careers", "/en/careers"],
       ],
     );
     expect(error).not.toHaveBeenCalled();
   });
 
   it("has no menu buttons and no mega-menu panels", () => {
-    const { container } = render(<SiteNav />);
+    const { container } = render(<SiteNav locale="en" />);
     expect(container.querySelector("button")).toBeNull();
     expect(container.querySelector("[aria-expanded]")).toBeNull();
     expect(document.getElementById("mega-products")).toBeNull();
@@ -59,12 +59,12 @@ describe("SiteNav", () => {
     ["/no-such-page", []],
   ])("on %s marks %j as the current page", (path, expected) => {
     mockPathname = path;
-    render(<SiteNav />);
+    render(<SiteNav locale="en" />);
     expect(current()).toEqual(expected);
   });
 
   it("shows only above 1080px, in the middle of the pill, 4px apart", () => {
-    render(<SiteNav />);
+    render(<SiteNav locale="en" />);
     const css = nav().className;
     expect(css).toContain("hidden");
     expect(css).toContain("min-[1081px]:flex");
@@ -73,7 +73,7 @@ describe("SiteNav", () => {
   });
 
   it("styles links as small pills: light blue on hover, soft amber when current", () => {
-    render(<SiteNav />);
+    render(<SiteNav locale="en" />);
     const css = links()[1].className;
     expect(css).toContain("h-11");
     expect(css).toContain("rounded-full");

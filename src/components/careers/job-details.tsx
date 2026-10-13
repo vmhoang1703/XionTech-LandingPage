@@ -1,5 +1,5 @@
 import { ArrowLeftIcon, CheckCircleIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import type { ReactNode } from "react";
 import { jobDetails } from "@/content/job";
 import type { OpenRoleDetail } from "@/lib/careers/open-roles";
@@ -55,10 +55,10 @@ export function JobDetails({
             </>
           )}
           <p className="mt-7">
-            <Link className="link-arrow" href={jobDetails.backHref}>
+            <LocaleLink className="link-arrow" href={jobDetails.backHref}>
               <ArrowLeftIcon aria-hidden="true" />
               <span>{jobDetails.backLabel}</span>
-            </Link>
+            </LocaleLink>
           </p>
         </article>
         <div id="apply" className="form-card">

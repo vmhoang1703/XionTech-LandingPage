@@ -95,7 +95,7 @@ describe("JobApplicationForm fields", () => {
     expect(describedText("a-cv")).toBe("PDF or Word, up to 5 MB.");
     expect(
       screen.getByRole("link", { name: "Privacy policy" }).getAttribute("href"),
-    ).toBe("/privacy");
+    ).toBe("/en/privacy");
     expect(
       screen.getByText(
         "We only use your details and CV to consider your application.",

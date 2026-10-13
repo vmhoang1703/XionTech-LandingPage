@@ -21,17 +21,17 @@ describe("HomeApps", () => {
     );
     expect(
       within(region).getByRole("link", { name: "Explore products" }),
-    ).toHaveProperty("pathname", "/products");
+    ).toHaveProperty("pathname", "/en/products");
   });
 
   it("links each app to its own section on Products", () => {
     render(<HomeApps />);
 
     expect(appCards().map((card) => card.getAttribute("href"))).toEqual([
-      "/products#pxp",
-      "/products#sxp",
-      "/products#iot",
-      "/products#ai-tutor",
+      "/en/products#pxp",
+      "/en/products#sxp",
+      "/en/products#iot",
+      "/en/products#ai-tutor",
     ]);
     expect(
       appCards().map((card) => card.querySelector("h3")?.textContent),

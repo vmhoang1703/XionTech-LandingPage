@@ -57,8 +57,8 @@ describe("AboutPage", () => {
       container.querySelectorAll("#mission .ah-links a.link-arrow"),
     );
     expect(links.map((a) => [a.textContent, a.getAttribute("href")])).toEqual([
-      ["Explore our products", "/products"],
-      ["Explore our services", "/services"],
+      ["Explore our products", "/en/products"],
+      ["Explore our services", "/en/services"],
     ]);
     for (const a of links) {
       expect(a.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
@@ -170,7 +170,7 @@ describe("AboutPage", () => {
     const ask = faq?.lastElementChild;
     expect(ask?.tagName).toBe("A");
     expect(ask?.className).toBe("faq-ask");
-    expect(ask?.getAttribute("href")).toBe("/#contact");
+    expect(ask?.getAttribute("href")).toBe("/en#contact");
     expect(ask?.textContent).toBe("Still have a question? Ask us directly");
     expect(ask?.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
     expect(faq?.children).toHaveLength(10);

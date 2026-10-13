@@ -82,7 +82,7 @@ describe("Careers page", () => {
 
     expect(
       screen.getByRole("link", { name: /QA Engineer/ }).getAttribute("href"),
-    ).toBe("/careers/qa-engineer");
+    ).toBe("/en/careers/qa-engineer");
   });
 
   it("has no email capture band", async () => {

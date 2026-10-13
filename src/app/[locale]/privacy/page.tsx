@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { PRIVACY } from "@/content/privacy";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
       >
         <div className="wrap mx-auto max-w-180">
           <nav className="crumbs" aria-label={PRIVACY.breadcrumbLabel}>
-            <Link href="/">{PRIVACY.breadcrumbHome}</Link>
+            <LocaleLink href="/">{PRIVACY.breadcrumbHome}</LocaleLink>
             <span>/</span>
             <span>{PRIVACY.breadcrumbCurrent}</span>
           </nav>

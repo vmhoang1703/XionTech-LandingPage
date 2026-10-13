@@ -67,7 +67,7 @@ function Header() {
   return (
     <header>
       <Link href="/">logo</Link>
-      <MobileMenu />
+      <MobileMenu locale="en" />
     </header>
   );
 }
@@ -131,12 +131,12 @@ describe("MobileMenu", () => {
       a.getAttribute("href"),
     ]);
     expect(hrefs).toEqual([
-      ["Home", "/"],
-      ["Products", "/products"],
-      ["Services", "/services"],
-      ["News", "/news"],
-      ["About", "/about"],
-      ["Careers", "/careers"],
+      ["Home", "/en"],
+      ["Products", "/en/products"],
+      ["Services", "/en/services"],
+      ["News", "/en/news"],
+      ["About", "/en/about"],
+      ["Careers", "/en/careers"],
     ]);
   });
 
@@ -345,7 +345,7 @@ describe("MobileMenu", () => {
   });
 
   it("puts focus back on Menu when a menu link to the current page is activated", () => {
-    mockPathname = "/careers";
+    mockPathname = "/en/careers";
     render(<Header />);
     fireEvent.click(menuButton());
     const careers = menuLinks().find((a) => a.textContent === "Careers");
@@ -376,7 +376,7 @@ describe("MobileMenu", () => {
         <a href="https://example.com/" target="_blank" rel="noreferrer">
           external
         </a>
-        <MobileMenu />
+        <MobileMenu locale="en" />
       </header>,
     );
     const external = screen.getByRole("link", { name: "external" });
@@ -409,7 +409,7 @@ describe("MobileMenu", () => {
     const language = () => screen.getByRole("button", { name: /Language/ });
 
     it("wraps between the logo and the language button at 375px", () => {
-      render(<SiteHeader />);
+      render(<SiteHeader locale="en" />);
       fireEvent.click(menuButton());
       language().focus();
       expect(tab()).toBe(false);

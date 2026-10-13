@@ -50,7 +50,7 @@ describe("HomeNews", () => {
         .className,
     ).toBe("lede");
     const seeAll = screen.getByRole("link", { name: "See all news" });
-    expect(seeAll.getAttribute("href")).toBe("/news");
+    expect(seeAll.getAttribute("href")).toBe("/en/news");
     expect(seeAll.parentElement).toBe(row);
     expect(screen.queryByText(/\[Placeholder\]|sample/i)).toBeNull();
     const grid = container.querySelector(".sgrid");
@@ -75,7 +75,7 @@ describe("HomeNews", () => {
     ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
-    ).toBe("/news");
+    ).toBe("/en/news");
   });
 
   it("keeps Home up when the news fetch fails: logs it and shows the no-stories state", async () => {
@@ -86,7 +86,7 @@ describe("HomeNews", () => {
     expect(container.querySelector(".sgrid")).toBeNull();
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
-    ).toBe("/news");
+    ).toBe("/en/news");
     expect(error).toHaveBeenCalledWith(
       expect.stringContaining("Home news"),
       expect.any(Error),

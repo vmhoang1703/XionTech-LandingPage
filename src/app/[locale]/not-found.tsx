@@ -1,42 +1,46 @@
+"use client";
+
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { LocaleLink, useLocale } from "@/components/layout/locale-link";
 import { notFound } from "@/content/not-found";
+import { SHELL } from "@/i18n/shell";
 
-export const metadata: Metadata = {
-  title: notFound.metaTitle,
-  robots: { index: false },
-};
-
-// Server Component. Next.js renders it with a 404 status for any unmatched path.
+// Next.js renders it with a 404 status for any unmatched path. It reads the locale from the
+// URL, so it is a Client Component; React puts its title and robots tags in the head.
 // The trail map matches the footer mountain (ENH-043); it is decorative.
 export default function NotFound() {
-  const { title, lede, primary, links, map } = notFound;
+  const t = SHELL[useLocale()];
+  const { title, lede, primary, here } = t.notFound;
 
   return (
     <section
       aria-labelledby="not-found-title"
       className="hero-navy page-hero flex min-h-[70dvh] items-center"
     >
+      <title>{t.notFound.metaTitle}</title>
+      <meta name="robots" content="noindex" />
       <div className="wrap">
         <div className="trail-grid">
           <div>
             <h1 id="not-found-title">{title}</h1>
             <p className="lede">{lede}</p>
             <div className="mt-8 flex flex-wrap gap-3.5">
-              <Link href={primary.href} className="btn btn-primary">
-                {primary.label}
+              <LocaleLink
+                href={notFound.primaryHref}
+                className="btn btn-primary"
+              >
+                {primary}
                 <ArrowRightIcon aria-hidden="true" />
-              </Link>
-              {links.map((link) => (
-                <Link
+              </LocaleLink>
+              {notFound.links.map((link) => (
+                <LocaleLink
                   key={link.href}
                   href={link.href}
                   className="btn btn-glass"
                 >
-                  {link.label}
-                </Link>
+                  {t.nav[link.label]}
+                </LocaleLink>
               ))}
             </div>
           </div>
@@ -65,10 +69,10 @@ export default function NotFound() {
               <circle className="tm-here" cx="88" cy="318" r="7" />
               <circle className="tm-here-ring" cx="88" cy="318" r="7" />
               <text className="tm-label" x="104" y="344">
-                {map.here}
+                {here}
               </text>
               <text className="tm-label" x="362" y="104">
-                {map.home}
+                {t.nav.home}
               </text>
             </svg>
             <Image

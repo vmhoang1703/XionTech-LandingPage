@@ -4,6 +4,8 @@ import Link from "next/link";
 import { contactIcon } from "@/components/sections/contact-icon";
 import { footerOffices, otherLocations } from "@/content/offices";
 import { siteFooter } from "@/content/site-footer";
+import { localeHref, type Locale } from "@/i18n/locales";
+import { SHELL } from "@/i18n/shell";
 
 // Colour, font and breakpoint classes come from the Story 1.1 @theme tokens
 // (DESIGN.md site-footer: ink background, on-navy-muted text, amber-tint headings).
@@ -13,7 +15,8 @@ const linkClass =
 
 const iconClass = "text-amber-tint shrink-0";
 
-export function SiteFooter() {
+export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
+  const t = SHELL[locale];
   return (
     <footer className="bg-ink text-on-navy-muted relative pt-18 pb-9 [--color-focus:var(--color-focus-on-navy)]">
       <div className="footer-ridge" data-ridge="" aria-hidden="true">
@@ -37,7 +40,7 @@ export function SiteFooter() {
         <div className="footer-grid" data-reveal="">
           <div>
             <Link
-              href="/"
+              href={localeHref(locale, "/")}
               className="bg-paper inline-block rounded-sm px-3 py-2"
             >
               <Image
@@ -48,17 +51,20 @@ export function SiteFooter() {
                 className="h-7.5 w-auto"
               />
             </Link>
-            <p className="text-body-sm mt-4.5">{siteFooter.blurb}</p>
+            <p className="text-body-sm mt-4.5">{t.footer.blurb}</p>
           </div>
 
           {siteFooter.columns.map((column) => (
-            <div key={column.heading}>
-              <h2 className={headingClass}>{column.heading}</h2>
+            <div key={column.heading(t)}>
+              <h2 className={headingClass}>{column.heading(t)}</h2>
               <ul className="grid gap-2.5">
                 {column.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className={linkClass}>
-                      {link.label}
+                    <Link
+                      href={localeHref(locale, link.href)}
+                      className={linkClass}
+                    >
+                      {link.label(t)}
                     </Link>
                   </li>
                 ))}
@@ -67,7 +73,7 @@ export function SiteFooter() {
           ))}
 
           <div>
-            <h2 className={headingClass}>{siteFooter.officesHeading}</h2>
+            <h2 className={headingClass}>{siteFooter.officesHeading(t)}</h2>
             {footerOffices.map((office) => (
               <address
                 key={office.id}
@@ -123,10 +129,10 @@ export function SiteFooter() {
           <span>
             {siteFooter.copyright} ·{" "}
             <Link
-              href={siteFooter.privacy.href}
+              href={localeHref(locale, siteFooter.privacy.href)}
               className="inline-flex min-h-6 items-center hover:text-white"
             >
-              {siteFooter.privacy.label}
+              {siteFooter.privacy.label(t)}
             </Link>
           </span>
           <span className="font-brand text-label text-white">

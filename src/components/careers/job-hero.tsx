@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { HeroArt } from "@/components/sections/hero-art";
 import { jobHero } from "@/content/job";
 import { type OpenRoleDetail, roleTypeLabel } from "@/lib/careers/open-roles";
@@ -16,9 +16,9 @@ export function JobHero({ role }: Readonly<{ role: OpenRoleDetail }>) {
       <HeroArt tone="amber" />
       <div className="wrap">
         <nav className="crumbs" aria-label={breadcrumbLabel}>
-          <Link href="/">{breadcrumbHome}</Link>
+          <LocaleLink href="/">{breadcrumbHome}</LocaleLink>
           <span>/</span>
-          <Link href="/careers">{breadcrumbCareers}</Link>
+          <LocaleLink href="/careers">{breadcrumbCareers}</LocaleLink>
           <span>/</span>
           <span aria-current="page">{role.title}</span>
         </nav>

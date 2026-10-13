@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
-import NotFound, { metadata } from "./not-found";
+import NotFound from "./not-found";
 
 describe("NotFound page", () => {
   it("shows the lost-trail H1 without a label or highlight, and the lede", () => {
@@ -24,12 +25,12 @@ describe("NotFound page", () => {
     render(<NotFound />);
 
     const home = screen.getByRole("link", { name: "Go to Home" });
-    expect(home.getAttribute("href")).toBe("/");
+    expect(home.getAttribute("href")).toBe("/en");
     expect(home.className).toContain("btn-primary");
     for (const [name, href] of [
-      ["Products", "/products"],
-      ["Services", "/services"],
-      ["News", "/news"],
+      ["Products", "/en/products"],
+      ["Services", "/en/services"],
+      ["News", "/en/news"],
     ]) {
       const link = screen.getByRole("link", { name });
       expect(link.getAttribute("href")).toBe(href);
@@ -67,8 +68,31 @@ describe("NotFound page", () => {
   });
 
   it("sets the Not found title and keeps the page out of search results", () => {
-    expect(metadata.title).toBe("Page not found | XionTech");
-    expect(metadata.robots).toEqual({ index: false });
+    render(<NotFound />);
+
+    expect(document.querySelector("title")?.textContent).toBe(
+      "Page not found | XionTech",
+    );
+    expect(
+      document.querySelector('meta[name="robots"]')?.getAttribute("content"),
+    ).toBe("noindex");
+  });
+
+  it("shows the Vietnamese strings and /vi links inside a vi page", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <NotFound />
+      </LocaleProvider>,
+    );
+
+    expect(
+      screen
+        .getByRole("link", { name: "[Placeholder] Go to Home" })
+        .getAttribute("href"),
+    ).toBe("/vi");
+    expect(
+      screen.getByRole("link", { name: "Sản phẩm" }).getAttribute("href"),
+    ).toBe("/vi/products");
   });
 
   it("uses only defined classes, and stops the trail motion under reduced motion", () => {

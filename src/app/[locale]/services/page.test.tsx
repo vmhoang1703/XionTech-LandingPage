@@ -58,7 +58,7 @@ describe("ServicesPage", () => {
     const links = Array.from(row?.querySelectorAll("a") ?? []);
     expect(links).toHaveLength(1);
     expect(links[0].textContent).toBe("Start a project");
-    expect(links[0].getAttribute("href")).toBe("/demo#project");
+    expect(links[0].getAttribute("href")).toBe("/en/demo#project");
     expect(links[0].classList.contains("btn-primary")).toBe(true);
     expect(screen.queryByText("See our 4-D process")).toBeNull();
     expect(container.querySelector(".clock-strip")).toBeNull();

@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink, useLocale } from "@/components/layout/locale-link";
+import { localeHref } from "@/i18n/locales";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type SubmitEvent } from "react";
 import {
@@ -57,6 +58,7 @@ export function CaptureBand({
   id?: string;
 }>) {
   const router = useRouter();
+  const locale = useLocale();
   const copy = copyOverride
     ? { ...S[kind], heading: copyOverride.heading, lede: copyOverride.lede }
     : S[kind];
@@ -107,7 +109,7 @@ export function CaptureBand({
     if (result.kind === "sent") {
       // The button stays disabled until the new page replaces this one.
       rememberEmail(value);
-      router.push(DESTINATIONS[kind]);
+      router.push(localeHref(locale, DESTINATIONS[kind]));
       return;
     }
     setStatus("idle");
@@ -174,7 +176,7 @@ export function CaptureBand({
           )}
           <small>
             <span>{copy.consent}</span>{" "}
-            <Link href="/privacy">{FORM.privacyLink}</Link>
+            <LocaleLink href="/privacy">{FORM.privacyLink}</LocaleLink>
           </small>
         </form>
       </div>

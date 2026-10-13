@@ -26,7 +26,7 @@ describe("NewsCard", () => {
     const link = screen.getByRole("link", {
       name: "Parent Hub launches 18 Sep 2026 Schools",
     });
-    expect(link.getAttribute("href")).toBe("/news/pxp-launch");
+    expect(link.getAttribute("href")).toBe("/en/news/pxp-launch");
     expect(link.className).toBe("scard");
 
     const time = container.querySelector("time");
@@ -78,7 +78,7 @@ describe("NewsCard", () => {
     render(<NewsCard post={{ ...post, slug: "a/b?c" }} />);
 
     expect(screen.getByRole("link").getAttribute("href")).toBe(
-      "/news/a%2Fb%3Fc",
+      "/en/news/a%2Fb%3Fc",
     );
   });
 

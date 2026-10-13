@@ -29,7 +29,7 @@ describe("Demo page", () => {
     expect(nav.textContent).toBe("Home/Contact");
     expect(
       screen.getByRole("link", { name: "Home" }).getAttribute("href"),
-    ).toBe("/");
+    ).toBe("/en");
   });
 
   it("renders the three reassurance items", () => {

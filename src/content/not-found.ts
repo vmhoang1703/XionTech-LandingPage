@@ -1,14 +1,11 @@
-// Not found page copy. Kept out of the component so it can be translated later.
+// Not found page links. The text comes from the shell dictionary (`src/i18n/shell.ts`);
+// the three route buttons reuse the nav labels.
 
 export const notFound = {
-  metaTitle: "Page not found | XionTech",
-  title: "You’ve wandered off the trail.",
-  lede: "The page you were looking for isn’t here. Follow the trail back home, or pick a path below.",
-  primary: { href: "/", label: "Go to Home" },
+  primaryHref: "/",
   links: [
-    { href: "/products", label: "Products" },
-    { href: "/services", label: "Services" },
-    { href: "/news", label: "News" },
+    { href: "/products", label: "products" },
+    { href: "/services", label: "services" },
+    { href: "/news", label: "news" },
   ],
-  map: { here: "You are here", home: "Home" },
-};
+} as const;

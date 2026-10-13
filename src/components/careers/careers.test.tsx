@@ -135,8 +135,8 @@ describe("OpenRoles", () => {
 
     const links = screen.getAllByRole("link");
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
-      "/careers/qa-engineer",
-      "/careers/designer",
+      "/en/careers/qa-engineer",
+      "/en/careers/designer",
     ]);
     for (const link of links) {
       expect(within(link).queryByRole("link")).toBeNull();

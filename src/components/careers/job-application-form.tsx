@@ -2,7 +2,7 @@
 
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import { uploadPresigned } from "@vercel/blob/client";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -311,7 +311,9 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
         </button>
         <p className="consent">
           {jobForm.consent}{" "}
-          <Link href={jobForm.privacyHref}>{jobForm.privacyLink}</Link>
+          <LocaleLink href={jobForm.privacyHref}>
+            {jobForm.privacyLink}
+          </LocaleLink>
         </p>
         <div className="sr-only" aria-live="polite">
           {announcement.messages.length > 0 && (

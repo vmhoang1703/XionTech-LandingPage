@@ -81,7 +81,7 @@ describe("NewsPage", () => {
     ).toBeTruthy();
     const cards = container.querySelectorAll("#newsGrid a.scard");
     expect(cards).toHaveLength(4);
-    expect(cards[0].getAttribute("href")).toBe("/news/story-1");
+    expect(cards[0].getAttribute("href")).toBe("/en/news/story-1");
     // Rendered for 3 columns: the first is the lead, a full row follows.
     expect(cards[0].parentElement?.className).toBe("s-lead");
     expect(cards[1].parentElement?.className).toBe("");

@@ -30,11 +30,11 @@ describe("JobHero", () => {
     const nav = screen.getByRole("navigation", { name: "Breadcrumb" });
     expect(within(nav).getByRole("link", { name: "Home" })).toHaveProperty(
       "pathname",
-      "/",
+      "/en",
     );
     expect(within(nav).getByRole("link", { name: "Careers" })).toHaveProperty(
       "pathname",
-      "/careers",
+      "/en/careers",
     );
     const current = nav.querySelector('[aria-current="page"]');
     expect(current?.textContent).toBe("QA Engineer");
@@ -103,7 +103,7 @@ describe("JobDetails", () => {
 
     expect(
       screen.getByRole("link", { name: "All open roles" }).getAttribute("href"),
-    ).toBe("/careers#roles");
+    ).toBe("/en/careers#roles");
 
     const apply = container.querySelector("#apply");
     expect(apply?.classList.contains("form-card")).toBe(true);

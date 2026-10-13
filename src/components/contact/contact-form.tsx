@@ -1,7 +1,7 @@
 "use client";
 
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -476,7 +476,7 @@ export function ContactForm() {
           <PaperPlaneTiltIcon aria-hidden="true" />
         </button>
         <p className="consent">
-          {S.consent} <Link href="/privacy">{S.privacyLink}</Link>
+          {S.consent} <LocaleLink href="/privacy">{S.privacyLink}</LocaleLink>
         </p>
         <div className="sr-only" aria-live="polite">
           {announcement.messages.length > 0 && (

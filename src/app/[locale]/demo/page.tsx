@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { Fragment } from "react";
 import { ContactForm } from "@/components/contact/contact-form";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
@@ -21,7 +21,7 @@ export default function DemoPage() {
       <div className="wrap split">
         <div>
           <nav className="crumbs" aria-label={hero.breadcrumbLabel}>
-            <Link href="/">{hero.breadcrumbHome}</Link>
+            <LocaleLink href="/">{hero.breadcrumbHome}</LocaleLink>
             <span>/</span>
             <span>{hero.breadcrumbCurrent}</span>
           </nav>
