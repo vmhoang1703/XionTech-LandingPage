@@ -12,6 +12,7 @@ vi.mock("next/font/google", () => ({
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
+  useRouter: () => ({ push: vi.fn() }),
   notFound: () => {
     throw new Error("NEXT_NOT_FOUND");
   },

@@ -9,7 +9,10 @@ vi.mock("next/font/google", () => ({
   JetBrains_Mono: () => ({ variable: "font-jetbrains-mono" }),
 }));
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+  useRouter: () => ({ push: vi.fn() }),
+}));
 
 const { default: GlobalNotFound, metadata } =
   await import("./global-not-found");

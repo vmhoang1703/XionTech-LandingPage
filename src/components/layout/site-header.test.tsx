@@ -4,6 +4,7 @@ import { SiteHeader } from "./site-header";
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
+  useRouter: () => ({ push: vi.fn() }),
 }));
 
 describe("SiteHeader", () => {
@@ -71,5 +72,15 @@ describe("SiteHeader", () => {
       demo.compareDocumentPosition(menu) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
     expect(nav.className).toContain("mx-auto");
+  });
+
+  it("puts the language button last in the bar, outside the mobile menu", () => {
+    render(<SiteHeader />);
+    const pill = screen.getByRole("banner").firstElementChild as HTMLElement;
+    const language = screen.getByRole("button", { name: /Language/ });
+    expect(pill.lastElementChild?.contains(language)).toBe(true);
+    expect(document.getElementById("mobile-menu")?.contains(language)).toBe(
+      false,
+    );
   });
 });

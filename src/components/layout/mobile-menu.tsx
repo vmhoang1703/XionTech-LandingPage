@@ -14,7 +14,7 @@ const DESKTOP_QUERY = "(min-width: 1081px)";
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-// While open, focus cycles through the header bar controls (logo, Menu, later the EN/VI
+// While open, focus cycles through the header bar controls (logo, Menu, the EN/VI
 // switch) and the open panel (EXPERIENCE.md "Mobile menu").
 // Elements hidden by CSS at this width (the desktop nav) have no boxes and are skipped.
 function trapTargets(scope: ParentNode) {

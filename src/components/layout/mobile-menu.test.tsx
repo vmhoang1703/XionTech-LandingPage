@@ -9,6 +9,7 @@ import { SiteHeader } from "./site-header";
 let mockPathname = "/";
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+  useRouter: () => ({ push: vi.fn() }),
 }));
 
 // jsdom has no layout. Elements get boxes the way the header's breakpoint classes would
@@ -405,17 +406,16 @@ describe("MobileMenu", () => {
 
   describe("in the real site header", () => {
     const home = () => screen.getByRole("link", { name: "XionTech home" });
-    const menuCareers = () =>
-      panel()?.querySelector('a[href="/careers"]') as HTMLElement;
+    const language = () => screen.getByRole("button", { name: /Language/ });
 
-    it("wraps between the logo and the last menu item at 375px", () => {
+    it("wraps between the logo and the language button at 375px", () => {
       render(<SiteHeader />);
       fireEvent.click(menuButton());
-      menuCareers().focus();
+      language().focus();
       expect(tab()).toBe(false);
       expect(document.activeElement).toBe(home());
       expect(tab(true)).toBe(false);
-      expect(document.activeElement).toBe(menuCareers());
+      expect(document.activeElement).toBe(language());
     });
   });
 });

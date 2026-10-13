@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
+import { LanguageMenu } from "./language-menu";
 import { LABELS } from "./nav-data";
 import { MobileMenu } from "./mobile-menu";
 import { SiteNav } from "./site-nav";
@@ -40,6 +41,7 @@ export function SiteHeader() {
             <ArrowRightIcon aria-hidden="true" className="max-[420px]:hidden" />
           </Link>
           <MobileMenu />
+          <LanguageMenu />
         </div>
       </header>
     </>
