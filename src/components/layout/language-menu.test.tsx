@@ -132,6 +132,7 @@ describe("LanguageMenu", () => {
     unmount();
 
     pathname = "/vi/demo";
+    window.scrollY = 0;
     const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
     const onInput = vi.fn();
     render(
@@ -157,10 +158,82 @@ describe("LanguageMenu", () => {
       (document.querySelector('[name="agree"]') as HTMLInputElement).checked,
     ).toBe(true);
     expect(onInput).toHaveBeenCalled();
-    expect(scrollTo).toHaveBeenCalledWith(0, 640);
+    expect(scrollTo).toHaveBeenCalledWith({ top: 640, behavior: "instant" });
     expect(sessionStorage.getItem("locale-switch")).toBeNull();
     scrollTo.mockRestore();
     window.scrollY = 0;
+  });
+
+  describe("after a switch, on the new page", () => {
+    let height = 800;
+    beforeEach(() => {
+      vi.useFakeTimers();
+      height = 800;
+      vi.spyOn(
+        document.documentElement,
+        "scrollHeight",
+        "get",
+      ).mockImplementation(() => height);
+      // Like a browser: the page cannot scroll past its own height.
+      vi.spyOn(window, "scrollTo").mockImplementation(((
+        options: ScrollToOptions,
+      ) => {
+        window.scrollY = Math.min(
+          options.top ?? 0,
+          height - window.innerHeight,
+        );
+      }) as typeof window.scrollTo);
+      sessionStorage.setItem(
+        "locale-switch",
+        JSON.stringify({ path: "/vi/demo", scrollY: 1141, fields: {} }),
+      );
+      pathname = "/vi/demo";
+    });
+    afterEach(() => {
+      vi.useRealTimers();
+      vi.restoreAllMocks();
+      window.scrollY = 0;
+    });
+
+    it("waits for the page to grow tall enough, then restores the scroll", () => {
+      render(<LanguageMenu />);
+      act(() => vi.advanceTimersByTime(100));
+      height = 4000;
+      act(() => vi.advanceTimersByTime(100));
+      expect(window.scrollY).toBe(1141);
+    });
+
+    it("puts the scroll back when something moves it while the page settles", () => {
+      height = 4000;
+      render(<LanguageMenu />);
+      window.scrollY = 719;
+      act(() => vi.advanceTimersByTime(100));
+      expect(window.scrollY).toBe(1141);
+    });
+
+    it("stops restoring once the visitor scrolls", () => {
+      height = 4000;
+      render(<LanguageMenu />);
+      fireEvent.wheel(window);
+      window.scrollY = 300;
+      act(() => vi.advanceTimersByTime(500));
+      expect(window.scrollY).toBe(300);
+    });
+
+    it("gives up after a while on a page that never grows", () => {
+      render(<LanguageMenu />);
+      act(() => vi.advanceTimersByTime(5000));
+      const calls = vi.mocked(window.scrollTo).mock.calls.length;
+      act(() => vi.advanceTimersByTime(500));
+      expect(vi.mocked(window.scrollTo).mock.calls.length).toBe(calls);
+    });
+
+    it("returns focus to the language button", () => {
+      render(<LanguageMenu />);
+      expect(document.activeElement).toBe(
+        screen.getByRole("button", { name: /Ngôn ngữ/ }),
+      );
+    });
   });
 
   it("does not restore a saved state meant for another page", () => {

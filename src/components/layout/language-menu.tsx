@@ -92,6 +92,40 @@ function takeSaved(): SavedState | null {
   }
 }
 
+// The new page grows as images, fonts and reveals load, and Next or a layout shift can move
+// the scroll meanwhile. Keep putting it back (instant, so the smooth-scroll CSS does not
+// animate it) until it has held for SETTLE_MS, the visitor scrolls, or GIVE_UP_MS passes.
+const SETTLE_MS = 500;
+const GIVE_UP_MS = 3000;
+const USER_SCROLL = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
+
+function restoreScroll(top: number) {
+  const start = Date.now();
+  let heldSince = start;
+  let frame = 0;
+  const stop = () => {
+    cancelAnimationFrame(frame);
+    USER_SCROLL.forEach((type) => window.removeEventListener(type, stop));
+  };
+  const step = () => {
+    const now = Date.now();
+    if (Math.abs(window.scrollY - top) > 1) {
+      window.scrollTo({ top, behavior: "instant" });
+      heldSince = now;
+    }
+    if (now - heldSince >= SETTLE_MS || now - start >= GIVE_UP_MS) {
+      stop();
+      return;
+    }
+    frame = requestAnimationFrame(step);
+  };
+  USER_SCROLL.forEach((type) =>
+    window.addEventListener(type, stop, { passive: true }),
+  );
+  step();
+  return stop;
+}
+
 function swapLocale(pathname: string, locale: Locale) {
   const rest = pathname.split("/").slice(2).join("/");
   return rest ? `/${locale}/${rest}` : `/${locale}`;
@@ -127,7 +161,9 @@ export function LanguageMenu() {
           (field) => fieldKey(field) === key && writeField(field, value),
         );
     });
-    window.scrollTo(0, saved.scrollY);
+    // The header remounts on the new locale, so focus goes back to the button here.
+    buttonRef.current?.focus({ preventScroll: true });
+    return restoreScroll(saved.scrollY);
   }, [pathname]);
 
   useEffect(() => {
