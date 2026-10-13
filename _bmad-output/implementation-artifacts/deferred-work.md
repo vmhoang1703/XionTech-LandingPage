@@ -437,3 +437,11 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
   summary: Focus does not return to the language button after a switch when sessionStorage is blocked.
   evidence: Task-4 review: early return before the focus call.
+
+- source_spec: none
+  summary: Add Japanese (ja), French (fr), Korean (ko) and Simplified Chinese (zh-Hans) locales with AI translations of all page content, flagged for native review.
+  evidence: User chose Split on 2026-10-13 (A first, then B, then C); B reuses the per-locale content dictionaries built by the Vietnamese content story.
+
+- source_spec: none
+  summary: Add Arabic (ar, Dubai/UAE) with right-to-left layout mirroring (dir="rtl") and AI translations flagged for native review.
+  evidence: User chose Split on 2026-10-13; RTL mirroring touches every layout and animation and ships after the other locales.
