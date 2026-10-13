@@ -13,7 +13,7 @@ H1 top 64px vs pill bottom 84px at 1080px and up, 48px vs 68px on phones and tab
 ## Change
 
 - `.map-sec { padding-top: calc(var(--spacing-header-room) + var(--spacing-section)); }` in
-  `src/app/globals.css`: 160px at 1080px and up, 144px below (room 80px). The bottom padding and the
+  `src/app/globals.css`: 160px above 1080px, 144px at 1080px and below (room 80px). The bottom padding and the
   roadmap are unchanged; the scroll tour measures its positions at run time.
 - Test: `src/app/products/page.test.tsx` pins the rule and that the first section is `.map-sec`.
 
