@@ -4754,6 +4754,41 @@
   }
 }
 
+/*
+  Phones and tablets (lead, 2026-10-13): the XT mark and GET IT DONE sit on the
+  right, behind the headline, fully on screen and as bright as on desktop; no
+  globe (hero-silk.tsx draws the mark-only story below 1080px). A soft navy
+  glow behind the words keeps them readable over the dots.
+*/
+@media (width < 1080px) {
+  .home-hero .hero-stage {
+    position: absolute;
+    top: 110px;
+    right: 6px;
+    width: max(60%, 212px);
+    height: 320px;
+    aspect-ratio: auto;
+    pointer-events: none;
+  }
+
+  .home-hero h1,
+  .home-hero h1 + p {
+    text-shadow:
+      0 0 4px var(--color-ink),
+      0 0 14px var(--color-ink),
+      0 0 28px var(--color-ink);
+  }
+}
+
+@media (640px < width < 1080px) {
+  .home-hero .hero-stage {
+    top: 90px;
+    right: 16px;
+    width: 50%;
+    height: 420px;
+  }
+}
+
 /* ---------- E-S1 Home: Why XionTech (2 cards, "+3" reveal, motto) ---------- */
 .why2 {
   display: grid;

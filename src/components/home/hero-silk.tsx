@@ -21,9 +21,13 @@ import {
   SCENE_REST_TIME,
 } from "./globe-mark";
 
+// Below this width .hero-stage sits behind the headline (globals.css) and the
+// scene is the short mark-only story, with no globe (lead, 2026-10-13).
+const MARK_ONLY_QUERY = "(width < 1080px)";
+
 // The globe and the XT mark form in the hero's .hero-stage box (the right
-// column on wide screens), sized so the mark fits its width and the globe its
-// height; the stage is hidden on narrow screens, so there is no scene there.
+// column on wide screens, behind the headline on narrow ones), sized so the
+// mark fits its width and the globe its height.
 function measureMark(canvas: HTMLCanvasElement): MarkArea {
   const stage = canvas.parentElement?.querySelector(".hero-stage");
   if (!stage) return null;
@@ -38,6 +42,7 @@ function measureMark(canvas: HTMLCanvasElement): MarkArea {
     x: area.left + area.width / 2 - box.left,
     y: area.top + area.height / 2 - box.top,
     size,
+    markOnly: window.matchMedia?.(MARK_ONLY_QUERY).matches ?? false,
   };
 }
 

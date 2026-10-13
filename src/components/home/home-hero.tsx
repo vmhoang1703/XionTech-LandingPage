@@ -24,7 +24,8 @@ export function HomeHero() {
           animation and the stats fill the first screen, with the stats at
           its bottom (.hero-fold in globals.css). Wide screens: copy on the
           left, the globe and XT mark on the right in .hero-stage (a box
-          HeroSilk measures and draws into). */}
+          HeroSilk measures and draws into); below 1080px the stage sits
+          behind the headline and shows the XT mark only. */}
       <div className="hero-fold flex w-full flex-col items-center">
         <div className="wrap w-full pt-24 md:pt-36 lg:grid lg:flex-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-12 lg:py-6">
           <div>
@@ -52,7 +53,7 @@ export function HomeHero() {
               <ArrowRightIcon aria-hidden="true" />
             </a>
           </div>
-          <div className="hero-stage relative hidden aspect-[6/5] w-full lg:block" />
+          <div className="hero-stage relative aspect-[6/5] w-full" />
         </div>
         <div className="wrap home-stats mt-14 w-full md:mt-22 lg:mt-0 lg:pb-6">
           <StatsBand

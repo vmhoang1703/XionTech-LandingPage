@@ -273,7 +273,23 @@ describe("HeroSilk scene", () => {
   it("draws the globe and the mark in the stage, sized to fit both", () => {
     renderInHero();
     const size = Math.min(600 / MARK_WIDTH, 500 / (2 * GLOBE_RADIUS));
-    expect(globe.resize).toHaveBeenLastCalledWith({ x: 1000, y: 328, size });
+    expect(globe.resize).toHaveBeenLastCalledWith({
+      x: 1000,
+      y: 328,
+      size,
+      markOnly: false,
+    });
+  });
+
+  it("asks for the mark-only story below 1080px (lead, 2026-10-13)", () => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({ matches: query === "(width < 1080px)" })),
+    );
+    renderInHero();
+    expect(globe.resize).toHaveBeenLastCalledWith(
+      expect.objectContaining({ markOnly: true }),
+    );
   });
 
   it("leaves the scene out when the stage is too small or missing", () => {
