@@ -60,7 +60,7 @@ Unit tests mock Gmail and Upstash. They never send mail.
 2. In Vercel, open the project, then Storage, then Create, then Marketplace, then Upstash Redis (free). Connect it to `xion-tech-landing-page` for Production and Preview. Check that the project now has `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
 3. In Vercel, open Environment Variables. Set these for Production and Preview, and mark them Sensitive: `CONTACT_INBOX` (the lead's company email, the same value in both), `GMAIL_USER` and `GMAIL_APP_PASSWORD`. Do not set them for Development. If they are team Shared variables, link them to `xion-tech-landing-page`.
 4. Copy the same five into `.env.local` for local runs.
-5. After merge to `develop`: send one real Product demo request on https://xiontech-dev.vercel.app/demo. The mail must arrive at the inbox with every field, and Reply-To must be the visitor. Then send six quickly, from one browser, with one email, counting the first real request. The sixth should show the rate-limit message. The window is an estimate (see "Rate limit"), so if the sixth passes, send one more.
+5. After merge to `develop`: send one real Product demo request on https://xiontech-hoangvu-dev.vercel.app/demo. The mail must arrive at the inbox with every field, and Reply-To must be the visitor. Then send six quickly, from one browser, with one email, counting the first real request. The sixth should show the rate-limit message. The window is an estimate (see "Rate limit"), so if the sixth passes, send one more.
 6. After the first release PR to `main`: open https://xion-tech-landing-page.vercel.app/demo and send one real Product demo request. The mail must arrive at the inbox. Then open the Vercel logs of the Production deployment and check that there is no "not configured" line.
 
 ## What the route does
@@ -148,7 +148,7 @@ Lead steps for job applications (the private store was created and connected on 
 
 1. Add `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` to `.env.local`. Run `vercel env pull` for local runs. It also writes `VERCEL_OIDC_TOKEN`, which expires after about 12 hours.
 2. After merge to `develop`: switch to `develop` and pull. Run `cd studio && npx sanity deploy`. Fill "What you'll do" and "What you bring" on the sample role (decision A10, `docs/sanity.md`).
-3. Send one real application with a small PDF on https://xiontech-dev.vercel.app/careers/placeholder-sample-job. Check the mail and the attachment. Check the blob in the store. Check that its URL does not open without auth. Check that nothing new appeared in Sanity.
+3. Send one real application with a small PDF on https://xiontech-hoangvu-dev.vercel.app/careers/placeholder-sample-job. Check the mail and the attachment. Check the blob in the store. Check that its URL does not open without auth. Check that nothing new appeared in Sanity.
 
 ## Rate limit
 

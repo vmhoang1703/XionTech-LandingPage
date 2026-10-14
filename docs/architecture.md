@@ -25,7 +25,7 @@ flowchart LR
 | Branch    | URL                                       | Notes                                                    |
 | --------- | ----------------------------------------- | -------------------------------------------------------- |
 | `main`    | https://xion-tech-landing-page.vercel.app | Production. Changed only by a release PR from `develop`. |
-| `develop` | https://xiontech-dev.vercel.app           | Integration. Every story PR merges here.                 |
+| `develop` | https://xiontech-hoangvu-dev.vercel.app   | Integration. Every story PR merges here.                 |
 | PR branch | Vercel preview URL                        | One per PR.                                              |
 
 Both sites read the same Sanity dataset (`1khn3hf4` / `production`), so a publish shows on both. Today only the dev site's webhook exists; the production webhook is added after the first release, and until then production refreshes only on a deploy. Secrets live only in Vercel env vars and each developer's `.env.local` (names in `.env.example`, values never in git).

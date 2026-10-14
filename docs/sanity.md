@@ -41,7 +41,8 @@ The project ID `1khn3hf4` and the dataset `production` are public values.
    - `http://localhost:3333` (allow credentials). Only the local Studio needs credentials.
    - `http://localhost:3000` (no credentials). The site reads on the server without a login.
    - `https://xion-tech-landing-page.vercel.app` (no credentials)
-   - `https://xiontech-dev.vercel.app` (no credentials)
+   - `https://xiontech-hoangvu-dev.vercel.app` (no credentials)
+     (On 2026-10-14 the dev URL was renamed from `xiontech-dev.vercel.app`; the old one no longer exists. In Manage, replace the old origin and the old webhook URL with the new one.)
    - `https://xion-tech-landing-page-*-vmhoang1703s-projects.vercel.app` (no credentials). This is the preview pattern.
 3. Run `cd studio && npm install && npx sanity login && npx sanity deploy`. Use the host `xiontech-landing`. The Studio is then at `https://xiontech-landing.sanity.studio`. Create one real post (see the post rules below) and one `[Placeholder]` job. Publish both.
 
@@ -75,7 +76,7 @@ Home shows the 3 newest posts. A post without an English title, a slug or a date
 If Sanity cannot be reached while Home is built or refreshed, Home still renders: the news section shows its heading and "See all news", and the log says "Home news: could not load the latest posts from Sanity". That empty news section stays until the next refresh, so after an outage **re-publish any post** (the webhook refreshes Home) **or redeploy**.
 
 4. Make the webhook. Copy `SANITY_REVALIDATE_SECRET` from `.env.local`. In Manage, open API, then Webhooks. Use these settings:
-   - URL: `https://xiontech-dev.vercel.app/api/revalidate`. Add a second webhook for the production URL `https://xion-tech-landing-page.vercel.app/api/revalidate`.
+   - URL: `https://xiontech-hoangvu-dev.vercel.app/api/revalidate`. Add a second webhook for the production URL `https://xion-tech-landing-page.vercel.app/api/revalidate`.
    - Filter: `_type in ["post", "job", "careersPhotos", "product"]`. If the filter does not list all four types, a new photo shows only after a redeploy.
    - Projection: `{_type}`
    - Trigger on: create, update, delete
