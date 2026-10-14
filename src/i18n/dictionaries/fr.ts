@@ -883,7 +883,7 @@ export const fr: Dictionaries = {
         id: PRIVACY.sections[3].id,
         heading: "Avec qui nous les partageons",
         paragraphs: [
-          "[Placeholder] Les prestataires qui traitent des données pour notre compte : Gmail (envoie les messages des formulaires à la boîte de réception de l’entreprise), Upstash (compteurs de limitation de débit créés à partir de valeurs hachées), Vercel (hébergement du site web et stockage privé des CV).",
+          "[Placeholder] Les prestataires qui traitent des données pour notre compte : Gmail (envoie les messages des formulaires à la boîte de réception de l’entreprise), Upstash (compteurs de limitation de débit créés à partir de valeurs hachées), Vercel (hébergement du site web et stockage privé des CV), Google Fonts (polices des pages en japonais, coréen et chinois).",
         ],
       },
       {

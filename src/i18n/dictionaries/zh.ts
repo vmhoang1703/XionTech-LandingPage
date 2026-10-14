@@ -856,7 +856,7 @@ export const zh: Dictionaries = {
         id: PRIVACY.sections[3].id,
         heading: "我们与谁共享",
         paragraphs: [
-          "[Placeholder] 代表我们处理数据的服务商：Gmail（将表单消息发送到公司收件箱）、Upstash（基于哈希值的请求频率计数器）、Vercel（网站托管和私有简历存储）。",
+          "[Placeholder] 代表我们处理数据的服务商：Gmail（将表单消息发送到公司收件箱）、Upstash（基于哈希值的请求频率计数器）、Vercel（网站托管和私有简历存储）、Google Fonts（日文、韩文和中文页面使用的字体）。",
         ],
       },
       {

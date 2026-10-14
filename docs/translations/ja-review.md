@@ -502,7 +502,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:privacy.sections[2].heading` | How we use it | 情報の利用方法 |
 | `ja:privacy.sections[2].paragraphs[0]` | [Placeholder] Only to answer your request, arrange a demo, or consider your job application and CV. | [Placeholder] お問い合わせへの回答、デモの手配、または応募書類と CV の選考にのみ使用します。 |
 | `ja:privacy.sections[3].heading` | Who we share it with | 情報の共有先 |
-| `ja:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage). | [Placeholder] 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを当社の受信箱に送信）、Upstash（ハッシュ化した値から作成するレート制限カウンター）、Vercel（ウェブサイトのホスティングと CV の非公開保管）。 |
+| `ja:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | [Placeholder] 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを当社の受信箱に送信）、Upstash（ハッシュ化した値から作成するレート制限カウンター）、Vercel（ウェブサイトのホスティングと CV の非公開保管）、Google Fonts（日本語・韓国語・中国語ページ用のフォント）。 |
 | `ja:privacy.sections[4].heading` | Transfers outside Vietnam | ベトナム国外への移転 |
 | `ja:privacy.sections[4].paragraphs[0]` | [Placeholder] When data is transferred abroad (for example to our Plano office) and the safeguards required by Decree 13/2023. | [Placeholder] データが国外（例：プレイノのオフィス）に移転される場合と、政令 13/2023 が求める保護措置。 |
 | `ja:privacy.sections[5].heading` | How long we keep it | 保管期間 |

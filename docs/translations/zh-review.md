@@ -503,7 +503,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:privacy.sections[2].heading` | How we use it | 我们如何使用这些信息 |
 | `zh:privacy.sections[2].paragraphs[0]` | [Placeholder] Only to answer your request, arrange a demo, or consider your job application and CV. | [Placeholder] 仅用于回复您的咨询、安排演示，或审核求职申请和简历。 |
 | `zh:privacy.sections[3].heading` | Who we share it with | 我们与谁共享 |
-| `zh:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage). | [Placeholder] 代表我们处理数据的服务商：Gmail（将表单消息发送到公司收件箱）、Upstash（基于哈希值的请求频率计数器）、Vercel（网站托管和私有简历存储）。 |
+| `zh:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | [Placeholder] 代表我们处理数据的服务商：Gmail（将表单消息发送到公司收件箱）、Upstash（基于哈希值的请求频率计数器）、Vercel（网站托管和私有简历存储）、Google Fonts（日文、韩文和中文页面使用的字体）。 |
 | `zh:privacy.sections[4].heading` | Transfers outside Vietnam | 向越南境外传输 |
 | `zh:privacy.sections[4].paragraphs[0]` | [Placeholder] When data is transferred abroad (for example to our Plano office) and the safeguards required by Decree 13/2023. | [Placeholder] 数据何时传输到境外（例如普莱诺办公室），以及第 13/2023 号法令要求的保护措施。 |
 | `zh:privacy.sections[5].heading` | How long we keep it | 保存期限 |

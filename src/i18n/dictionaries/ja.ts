@@ -864,7 +864,7 @@ export const ja: Dictionaries = {
         id: PRIVACY.sections[3].id,
         heading: "情報の共有先",
         paragraphs: [
-          "[Placeholder] 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを当社の受信箱に送信）、Upstash（ハッシュ化した値から作成するレート制限カウンター）、Vercel（ウェブサイトのホスティングと CV の非公開保管）。",
+          "[Placeholder] 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを当社の受信箱に送信）、Upstash（ハッシュ化した値から作成するレート制限カウンター）、Vercel（ウェブサイトのホスティングと CV の非公開保管）、Google Fonts（日本語・韓国語・中国語ページ用のフォント）。",
         ],
       },
       {

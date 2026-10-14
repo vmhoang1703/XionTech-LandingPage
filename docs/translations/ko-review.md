@@ -502,7 +502,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:privacy.sections[2].heading` | How we use it | 정보의 사용 방법 |
 | `ko:privacy.sections[2].paragraphs[0]` | [Placeholder] Only to answer your request, arrange a demo, or consider your job application and CV. | [Placeholder] 문의에 답변하거나, 데모 일정을 잡거나, 지원서와 이력서를 검토하는 데에만 사용합니다. |
 | `ko:privacy.sections[3].heading` | Who we share it with | 정보를 공유하는 대상 |
-| `ko:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage). | [Placeholder] 당사를 대신해 데이터를 처리하는 업체: Gmail(양식 메시지를 회사 받은편지함으로 전송), Upstash(해시된 값으로 만든 요청 제한 카운터), Vercel(웹사이트 호스팅 및 비공개 이력서 저장소). |
+| `ko:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | [Placeholder] 당사를 대신해 데이터를 처리하는 업체: Gmail(양식 메시지를 회사 받은편지함으로 전송), Upstash(해시된 값으로 만든 요청 제한 카운터), Vercel(웹사이트 호스팅 및 비공개 이력서 저장소), Google Fonts(일본어·한국어·중국어 페이지용 글꼴). |
 | `ko:privacy.sections[4].heading` | Transfers outside Vietnam | 베트남 외부로의 이전 |
 | `ko:privacy.sections[4].paragraphs[0]` | [Placeholder] When data is transferred abroad (for example to our Plano office) and the safeguards required by Decree 13/2023. | [Placeholder] 데이터가 해외(예: 플레이노 사무소)로 이전되는 경우와 시행령 13/2023이 요구하는 보호 조치. |
 | `ko:privacy.sections[5].heading` | How long we keep it | 보관 기간 |

@@ -867,7 +867,7 @@ export const ko: Dictionaries = {
         id: PRIVACY.sections[3].id,
         heading: "정보를 공유하는 대상",
         paragraphs: [
-          "[Placeholder] 당사를 대신해 데이터를 처리하는 업체: Gmail(양식 메시지를 회사 받은편지함으로 전송), Upstash(해시된 값으로 만든 요청 제한 카운터), Vercel(웹사이트 호스팅 및 비공개 이력서 저장소).",
+          "[Placeholder] 당사를 대신해 데이터를 처리하는 업체: Gmail(양식 메시지를 회사 받은편지함으로 전송), Upstash(해시된 값으로 만든 요청 제한 카운터), Vercel(웹사이트 호스팅 및 비공개 이력서 저장소), Google Fonts(일본어·한국어·중국어 페이지용 글꼴).",
         ],
       },
       {
