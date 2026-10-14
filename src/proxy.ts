@@ -4,10 +4,11 @@ import { DEFAULT_LOCALE, LOCALE_COOKIE, isLocale } from "@/i18n/locales";
 import type { Locale } from "@/i18n/locales";
 
 // Chinese is offered in Simplified only: zh, zh-CN, zh-SG and zh-Hans(-*) map
-// to it; zh-TW, zh-HK, zh-MO and zh-Hant(-*) are left to fall through.
+// to it (zh-Hans-TW too); zh-TW, zh-HK, zh-MO and zh-Hant(-*) fall through.
 function languageOf(tag: string): string {
   const [language, ...subtags] = tag.toLowerCase().split("-");
   if (language !== "zh") return language;
+  if (subtags.includes("hans")) return "zh";
   const traditional = subtags.some((s) =>
     ["hant", "tw", "hk", "mo"].includes(s),
   );

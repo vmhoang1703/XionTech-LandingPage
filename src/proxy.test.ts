@@ -14,7 +14,7 @@ describe("proxy", () => {
     expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/vi");
   });
 
-  it.each(["zh-CN", "zh", "zh-SG", "zh-Hans", "zh-Hans-SG"])(
+  it.each(["zh-CN", "zh", "zh-SG", "zh-Hans", "zh-Hans-SG", "zh-Hans-TW"])(
     "redirects / to /zh for Accept-Language %s",
     (tag) => {
       const res = run("/", { "accept-language": tag });
