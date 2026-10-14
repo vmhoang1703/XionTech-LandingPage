@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { ContactForm } from "./contact-form";
 
 // The success panel is a polite live region that takes focus (Sonar S6819:
@@ -698,5 +699,48 @@ describe("ContactForm capture prefill", () => {
     );
     expect(scrollIntoView).toHaveBeenCalledTimes(1);
     expect(scrollIntoView.mock.contexts[0]).toBe(field("form"));
+  });
+});
+
+describe("ContactForm in Vietnamese", () => {
+  const renderVi = () =>
+    render(
+      <LocaleProvider locale="vi">
+        <ContactForm />
+      </LocaleProvider>,
+    );
+
+  it("shows Vietnamese field errors on an empty submit", () => {
+    renderVi();
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    expect(errorText("f-name")).toBe("Vui lòng nhập họ tên.");
+    expect(errorText("f-email")).toBe("Vui lòng nhập email hợp lệ.");
+    expect(errorText("f-org")).toBe("Vui lòng nhập tên tổ chức.");
+  });
+
+  it("shows a server error as the Vietnamese message for its field, or the generic error", async () => {
+    renderVi();
+    fillRequired();
+    fetchMock.mockReturnValueOnce(
+      reply(400, {
+        errors: {
+          name: "Please keep this under 200 characters.",
+          email: "Something new from the server.",
+        },
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    await settle();
+    expect(errorText("f-name")).toBe("Vui lòng nhập dưới 200 ký tự.");
+    expect(errorText("f-email")).toBe(
+      "Không gửi được yêu cầu của bạn. Vui lòng thử lại.",
+    );
+  });
+
+  it("keeps the English option values the server checks, with Vietnamese labels", () => {
+    renderVi();
+    const size = field("f-size").querySelector("option");
+    expect(size?.value).toBe("Under 500 students");
+    expect(size?.textContent).toBe("Dưới 500 học sinh");
   });
 });

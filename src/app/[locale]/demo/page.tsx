@@ -3,18 +3,39 @@ import { CheckCircleIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { Fragment } from "react";
 import { ContactForm } from "@/components/contact/contact-form";
-import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
+import {
+  CONTACT_STRINGS,
+  CONTACT_STRINGS_VI,
+} from "@/components/contact/contact-strings";
 import { HeroArt } from "@/components/sections/hero-art";
-import { offices, otherLocations } from "@/content/offices";
+import {
+  offices as officesEn,
+  officesVi,
+  otherLocations as otherLocationsEn,
+  otherLocationsVi,
+} from "@/content/offices";
+import { pickLocale } from "@/i18n/content";
+import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
   title: CONTACT_STRINGS.metaTitle,
   description: CONTACT_STRINGS.metaDescription,
 });
 
-const { hero } = CONTACT_STRINGS;
-
-export default function DemoPage() {
+export default async function DemoPage({
+  params,
+}: Readonly<Pick<PageProps<"/[locale]/demo">, "params">>) {
+  const { locale: param } = await params;
+  const locale = isLocale(param) ? param : "en";
+  const { hero } = pickLocale(locale, {
+    en: CONTACT_STRINGS,
+    vi: CONTACT_STRINGS_VI,
+  });
+  const offices = pickLocale(locale, { en: officesEn, vi: officesVi });
+  const otherLocations = pickLocale(locale, {
+    en: otherLocationsEn,
+    vi: otherLocationsVi,
+  });
   return (
     <section className="hero-navy page-hero" aria-labelledby="demo-h1">
       <HeroArt tone="navy" />

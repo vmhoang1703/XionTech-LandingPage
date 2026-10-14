@@ -11,11 +11,13 @@ import {
   type RequestKind,
 } from "@/lib/contact/contact-rules";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
-import { CONTACT_STRINGS } from "./contact-strings";
+import { pickLocale } from "@/i18n/content";
+import {
+  CONTACT_STRINGS,
+  CONTACT_STRINGS_VI,
+  localizeError,
+} from "./contact-strings";
 import { postSubmission } from "./post-submission";
-
-const S = CONTACT_STRINGS.capture;
-const FORM = CONTACT_STRINGS.form;
 
 const DESTINATIONS: Record<RequestKind, string> = {
   demo: "/demo#form",
@@ -29,11 +31,6 @@ const LOOK_SURFACES = {
   navy: "surface-navy",
 } as const;
 
-const MESSAGES = {
-  email: CONTACT_ERRORS.email,
-  send: FORM.sendError,
-  rate: FORM.rateError,
-};
 const ERROR_ID = "cap-err";
 
 /** The email is never put in the URL; the /demo form reads it from here once. */
@@ -59,13 +56,23 @@ export function CaptureBand({
 }>) {
   const router = useRouter();
   const locale = useLocale();
+  const T = pickLocale(locale, { en: CONTACT_STRINGS, vi: CONTACT_STRINGS_VI });
+  const S = T.capture;
+  const FORM = T.form;
+  const MESSAGES = {
+    email: localizeError(CONTACT_ERRORS.email, locale),
+    send: FORM.sendError,
+    rate: FORM.rateError,
+  };
   const copy = copyOverride
     ? { ...S[kind], heading: copyOverride.heading, lede: copyOverride.lede }
     : S[kind];
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending">("idle");
-  const [problem, setProblem] = useState<keyof typeof MESSAGES | null>(null);
+  const [problem, setProblem] = useState<"email" | "send" | "rate" | null>(
+    null,
+  );
   const emailRef = useRef<HTMLInputElement>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
 

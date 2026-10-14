@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRightIcon } from "@phosphor-icons/react";
-import { LocaleLink } from "@/components/layout/locale-link";
+import { LocaleLink, useLocale } from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -16,12 +16,14 @@ import {
   validateContact,
   type ContactErrors,
 } from "@/lib/contact/contact-rules";
-import { CONTACT_STRINGS } from "./contact-strings";
+import { pickLocale } from "@/i18n/content";
+import {
+  CONTACT_STRINGS,
+  CONTACT_STRINGS_VI,
+  localizeErrors,
+} from "./contact-strings";
 import { postSubmission } from "./post-submission";
 import { SummitMark } from "./summit-mark";
-
-const S = CONTACT_STRINGS.home;
-const F = CONTACT_STRINGS.form;
 
 /** Fields in form order, so the first invalid one gets focus. */
 const FIELDS = ["name", "email", "phone", "message"] as const;
@@ -48,6 +50,10 @@ function withoutError(errors: ContactErrors, field: HomeField): ContactErrors {
 }
 
 export function HomeContactForm() {
+  const locale = useLocale();
+  const T = pickLocale(locale, { en: CONTACT_STRINGS, vi: CONTACT_STRINGS_VI });
+  const S = T.home;
+  const F = T.form;
   const [errors, setErrors] = useState<ContactErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [failure, setFailure] = useState<"send" | "rate" | null>(null);
@@ -74,7 +80,8 @@ export function HomeContactForm() {
   }
 
   /** Show, announce and focus the invalid fields; true when there are any. */
-  function showErrors(form: HTMLFormElement, found: ContactErrors): boolean {
+  function showErrors(form: HTMLFormElement, english: ContactErrors): boolean {
+    const found: ContactErrors = localizeErrors(english, locale);
     const invalid = FIELDS.filter((field) => found[field]);
     setErrors(found);
     setAnnouncement((current) => ({

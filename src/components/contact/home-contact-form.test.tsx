@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { HomeContactForm } from "./home-contact-form";
 
 // The success panel is a polite live region that takes focus (Sonar S6819:
@@ -209,5 +210,22 @@ describe("HomeContactForm honeypot", () => {
     submit();
     await settle();
     expect(sentBody().website).toBe("https://spam.example");
+  });
+});
+
+describe("HomeContactForm in Vietnamese", () => {
+  it("shows the required-message and phone errors in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <HomeContactForm />
+      </LocaleProvider>,
+    );
+    fill("c-phone", "12");
+    fireEvent.click(screen.getByRole("button", { name: /Bắt đầu trao đổi/ }));
+    expect(errorText("c-name")).toBe("Vui lòng nhập họ tên.");
+    expect(errorText("c-phone")).toBe(
+      "Vui lòng nhập số điện thoại hợp lệ, ví dụ (+1) 469 322 9899.",
+    );
+    expect(errorText("c-msg")).toBe("Vui lòng kể đôi chút về dự án của bạn.");
   });
 });

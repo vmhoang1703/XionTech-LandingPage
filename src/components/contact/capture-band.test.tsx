@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { CaptureBand } from "./capture-band";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 
@@ -389,5 +390,29 @@ describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
     await submitAndSettle();
 
     expect(push).toHaveBeenCalledExactlyOnceWith(band.destination);
+  });
+});
+
+describe("CaptureBand in Vietnamese", () => {
+  it("shows the demo copy, labels and email error in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <CaptureBand kind="demo" look="navy" />
+      </LocaleProvider>,
+    );
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Xem ứng dụng hoạt động tại trường của bạn.",
+      }),
+    ).toBeTruthy();
+    expect(screen.getByLabelText("Email công việc")).toBeTruthy();
+    expect(
+      screen.getByRole("link", { name: "Chính sách bảo mật" }),
+    ).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Đặt lịch demo" }));
+    expect(screen.getByRole("alert").textContent).toBe(
+      "Vui lòng nhập email hợp lệ.",
+    );
   });
 });

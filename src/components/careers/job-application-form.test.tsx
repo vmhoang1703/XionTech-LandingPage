@@ -459,3 +459,25 @@ describe("JobApplicationForm in Vietnamese", () => {
     expect(screen.getByRole("button", { name: "Gửi hồ sơ" })).toBeTruthy();
   });
 });
+
+describe("JobApplicationForm in Vietnamese", () => {
+  it("shows and announces the field errors in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <JobApplicationForm slug="role" />
+      </LocaleProvider>,
+    );
+    fill("a-note", "a".repeat(2001));
+    fireEvent.submit(field("a-name").closest("form") as HTMLFormElement);
+    expect(describedText("a-name")).toBe("Vui lòng nhập họ tên.");
+    expect(describedText("a-email")).toBe("Vui lòng nhập email hợp lệ.");
+    expect(describedText("a-cv")).toContain(
+      "Vui lòng tải lên CV dạng PDF hoặc Word, tối đa 5 MB.",
+    );
+    expect(describedText("a-note")).toBe(
+      "Vui lòng giữ lời nhắn dưới 2.000 ký tự.",
+    );
+    expect(liveRegion().textContent).toContain("Vui lòng nhập họ tên.");
+    expect(liveRegion().textContent).not.toContain("Please");
+  });
+});

@@ -13,6 +13,7 @@ import {
 import { postSubmission } from "@/components/contact/post-submission";
 import { SummitMark } from "@/components/contact/summit-mark";
 import { jobForm as jobFormEn, jobFormVi } from "@/content/job";
+import { localizeError } from "@/components/contact/contact-strings";
 import { pickLocale } from "@/i18n/content";
 import {
   CV_TYPES,
@@ -80,7 +81,8 @@ async function uploadCv(file: File): Promise<string> {
 }
 
 export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
-  const jobForm = pickLocale(useLocale(), { en: jobFormEn, vi: jobFormVi });
+  const locale = useLocale();
+  const jobForm = pickLocale(locale, { en: jobFormEn, vi: jobFormVi });
   const [errors, setErrors] = useState<JobErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [failure, setFailure] = useState<"send" | "rate" | null>(null);
@@ -101,7 +103,11 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
   }, [failure]);
 
   function announce(found: JobErrors) {
-    const messages = FIELD_ORDER.flatMap((field) => found[field] ?? []);
+    // Errors are kept in English (rules and server); shown in the page's language.
+    const messages = FIELD_ORDER.flatMap((field) => {
+      const message = found[field];
+      return message ? [localizeError(message, locale)] : [];
+    });
     setAnnouncement((current) => ({ count: current.count + 1, messages }));
   }
 
@@ -198,7 +204,7 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
   const fieldError = (field: JobField) =>
     errors[field] ? (
       <span id={errorId(field)} className="err">
-        {errors[field]}
+        {localizeError(errors[field], locale)}
       </span>
     ) : null;
 
