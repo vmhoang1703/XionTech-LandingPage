@@ -39,8 +39,8 @@ export function JobHero({
         </h1>
         {chips.length > 0 && (
           <ul className="chips mt-4.5" aria-label={chipsLabel}>
-            {chips.map((chip) => (
-              <li key={chip.text} className="chip" lang={chip.lang}>
+            {chips.map((chip, i) => (
+              <li key={`${i}-${chip.text}`} className="chip" lang={chip.lang}>
                 {chip.text}
               </li>
             ))}

@@ -25,7 +25,7 @@ function RoleMeta({
   return (
     <>
       {parts.map((part, i) => (
-        <Fragment key={part.text}>
+        <Fragment key={`${i}-${part.text}`}>
           {i > 0 ? " · " : null}
           <span lang={part.lang}>{part.text}</span>
         </Fragment>
