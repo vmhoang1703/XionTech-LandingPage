@@ -42,7 +42,7 @@ test(
   "unsupported locale answers 404 instead of redirecting",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/fr/products", { maxRedirects: 0 });
+    const response = await request.get("/de/products", { maxRedirects: 0 });
 
     expect(response.status()).toBe(404);
     expect(
