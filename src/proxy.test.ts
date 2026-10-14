@@ -22,6 +22,18 @@ describe("proxy", () => {
     },
   );
 
+  it.each([
+    "zh-TW,zh;q=0.9,en;q=0.8",
+    "zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3",
+    "zh-Hant-HK,zh;q=0.9",
+  ])(
+    "sends a Traditional browser with a bare zh fallback (%s) to /en",
+    (tag) => {
+      const res = run("/", { "accept-language": tag });
+      expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
+    },
+  );
+
   it.each(["zh-TW", "zh-Hant", "zh-HK"])(
     "sends Traditional Chinese %s to /en",
     (tag) => {
