@@ -29,6 +29,15 @@ async function renderPage(posts: LatestPost[]) {
 
 describe("NewsPage", () => {
   beforeEach(() => {
+    // jsdom has no IntersectionObserver: the cards never unfold here.
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
     vi.mocked(getAllPosts).mockReset();
     // A 1280px window: the filter reads its column count from matchMedia.
     vi.stubGlobal("matchMedia", () => ({
@@ -62,6 +71,11 @@ describe("NewsPage", () => {
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1.id).toBe("news-h1");
     expect(h1.textContent).toBe("Catch up with us");
+    // Each word rises on its own (lead, 2026-10-13).
+    expect(
+      Array.from(h1.querySelectorAll("[data-hw]"), (w) => w.textContent),
+    ).toEqual(["Catch", "up", "with", "us"]);
+    expect(h1.nextElementSibling?.tagName).toBe("P");
     expect(
       screen.getByText(
         "Stay informed with the latest news and announcements, fresh off the press.",

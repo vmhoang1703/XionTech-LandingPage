@@ -166,8 +166,8 @@ afterEach(() => {
 });
 
 describe("POST /api/contact valid send", () => {
-  it("allows up to 10 seconds", () => {
-    expect(maxDuration).toBe(10);
+  it("allows up to 30 seconds, longer than the worst-case send", () => {
+    expect(maxDuration).toBe(30);
   });
 
   it("answers 200 and sends one mail to the inbox for a demo request", async () => {

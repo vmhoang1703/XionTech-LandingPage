@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PRIVACY } from "@/content/privacy";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const metadata: Metadata = {
   title: PRIVACY.metaTitle,
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 // Plain reading page: no capture band (FR-33 exception). The aurora hero
 // background and shared breadcrumbs come with Story 1.6, after demo.
 export default function PrivacyPage() {
+  const t = heroWords();
   return (
     <>
       <section
@@ -22,7 +24,7 @@ export default function PrivacyPage() {
             <span>/</span>
             <span>{PRIVACY.breadcrumbCurrent}</span>
           </nav>
-          <h1 id="privacy-h1">{PRIVACY.title}</h1>
+          <h1 id="privacy-h1">{t.words(PRIVACY.title)}</h1>
           <p className="lede mt-5">{PRIVACY.lede}</p>
         </div>
       </section>

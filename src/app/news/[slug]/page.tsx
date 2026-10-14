@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { newsMeta, newsStory } from "@/content/news";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
 import { getPost, type StoryBlock } from "@/lib/news/post";
+import { heroWords } from "@/components/sections/hero-words";
 
 type StoryProps = Readonly<PageProps<"/news/[slug]">>;
 
@@ -48,6 +49,7 @@ export default async function StoryPage({ params }: StoryProps) {
   const alt = story.alt?.trim();
   const { backToNews, storyLabel, sampleNote } = newsStory;
 
+  const t = heroWords();
   return (
     <>
       <section
@@ -67,7 +69,7 @@ export default async function StoryPage({ params }: StoryProps) {
               </time>
             ) : null}
           </div>
-          <h1 id="story-h1">{story.title}</h1>
+          <h1 id="story-h1">{t.words(story.title)}</h1>
           {story.excerpt?.trim() ? (
             <p className="art-dek">{story.excerpt}</p>
           ) : null}

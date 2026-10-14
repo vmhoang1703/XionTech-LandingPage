@@ -103,8 +103,9 @@ describe("nav-data", () => {
       expect(LABELS.menu).toBe("Menu");
     });
 
-    it("has the Book a demo label and no mega-menu data", () => {
-      expect(LABELS.demo).toBe("Book a demo");
+    it("has the Get in touch label, its link and no mega-menu data", () => {
+      expect(LABELS.contact).toBe("Get in touch");
+      expect(navData.CONTACT_HREF).toBe("/#contact");
       expect(navData).not.toHaveProperty("PRODUCTS");
       expect(navData).not.toHaveProperty("PRODUCTS_FOOTER");
       expect(navData).not.toHaveProperty("SERVICES_FOOTER");

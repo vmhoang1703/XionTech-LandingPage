@@ -7,6 +7,7 @@ import { newsMeta, newsPage } from "@/content/news";
 import { getAllPosts } from "@/lib/news/all-posts";
 import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const metadata: Metadata = {
   title: newsMeta.title,
@@ -32,6 +33,7 @@ export default async function NewsPage() {
   const posts = await loadPosts();
   const { title, sub, storiesHeading } = newsPage;
 
+  const t = heroWords();
   return (
     <PageScene fade={false}>
       <section
@@ -39,7 +41,7 @@ export default async function NewsPage() {
         aria-labelledby="news-h1"
       >
         <div className="wrap nhead">
-          <h1 id="news-h1">{title}</h1>
+          <h1 id="news-h1">{t.words(title)}</h1>
           <p>{sub}</p>
         </div>
       </section>

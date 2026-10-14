@@ -2,6 +2,7 @@ import Link from "next/link";
 import { HeroArt } from "@/components/sections/hero-art";
 import { jobHero } from "@/content/job";
 import { type OpenRoleDetail, roleTypeLabel } from "@/lib/careers/open-roles";
+import { heroWords } from "@/components/sections/hero-words";
 
 // Server Component. Amber page hero with crumbs, the role title and chips (CAP-1).
 export function JobHero({ role }: Readonly<{ role: OpenRoleDetail }>) {
@@ -11,6 +12,7 @@ export function JobHero({ role }: Readonly<{ role: OpenRoleDetail }>) {
     (chip): chip is string => Boolean(chip),
   );
 
+  const t = heroWords();
   return (
     <section className="hero-amber page-hero" aria-labelledby="job-h1">
       <HeroArt tone="amber" />
@@ -22,7 +24,7 @@ export function JobHero({ role }: Readonly<{ role: OpenRoleDetail }>) {
           <span>/</span>
           <span aria-current="page">{role.title}</span>
         </nav>
-        <h1 id="job-h1">{role.title}</h1>
+        <h1 id="job-h1">{t.words(role.title)}</h1>
         {chips.length > 0 && (
           <ul className="chips mt-4.5" aria-label={chipsLabel}>
             {chips.map((chip) => (

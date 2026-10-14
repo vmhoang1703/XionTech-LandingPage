@@ -92,6 +92,8 @@ const menuLinks = () =>
   [...(panel()?.querySelectorAll("a") ?? [])].filter(
     (a) => a.getClientRects().length > 0,
   );
+// The last focusable item: the second phone under Get in touch (lead, 2026-10-13).
+const LAST = "Ho Chi Minh City +84 908 107 552";
 const tab = (shiftKey = false) =>
   fireEvent.keyDown(document, { key: "Tab", shiftKey });
 
@@ -138,6 +140,9 @@ describe("MobileMenu", () => {
       ["News", "/news"],
       ["About", "/about"],
       ["Careers", "/careers"],
+      ["Get in touch", "/#contact"],
+      ["Plano +1 469 322 9899", "tel:+14693229899"],
+      [LAST, "tel:+84908107552"],
     ]);
   });
 
@@ -158,7 +163,7 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
   });
 
-  it("has no Book a demo link at any width", () => {
+  it("ends with Get in touch and both phones at any width, no Book a demo", () => {
     for (const w of [390, 640, 800]) {
       width = w;
       const { unmount } = render(<Header />);
@@ -170,6 +175,9 @@ describe("MobileMenu", () => {
         "News",
         "About",
         "Careers",
+        "Get in touch",
+        "Plano +1 469 322 9899",
+        LAST,
       ]);
       unmount();
     }
@@ -232,7 +240,7 @@ describe("MobileMenu", () => {
     it("wraps Tab from the last item to the logo link", () => {
       render(<Header />);
       fireEvent.click(menuButton());
-      screen.getByRole("link", { name: "Careers" }).focus();
+      screen.getByRole("link", { name: LAST }).focus();
       expect(tab()).toBe(false);
       expect(document.activeElement).toBe(
         screen.getByRole("link", { name: "logo" }),
@@ -245,7 +253,7 @@ describe("MobileMenu", () => {
       screen.getByRole("link", { name: "logo" }).focus();
       expect(tab(true)).toBe(false);
       expect(document.activeElement).toBe(
-        screen.getByRole("link", { name: "Careers" }),
+        screen.getByRole("link", { name: LAST }),
       );
     });
 
@@ -272,7 +280,7 @@ describe("MobileMenu", () => {
       expect(document.activeElement?.textContent).toBe("logo");
       page.focus();
       expect(tab(true)).toBe(false);
-      expect(document.activeElement?.textContent).toBe("Careers");
+      expect(document.activeElement?.textContent).toBe(LAST);
     });
 
     it("does not trap Tab while closed", () => {
@@ -287,11 +295,11 @@ describe("MobileMenu", () => {
     width = 800;
     render(<Header />);
     fireEvent.click(menuButton());
-    screen.getByRole("link", { name: "Careers" }).focus();
+    screen.getByRole("link", { name: LAST }).focus();
     tab();
     expect(document.activeElement?.textContent).toBe("logo");
     tab(true);
-    expect(document.activeElement?.textContent).toBe("Careers");
+    expect(document.activeElement?.textContent).toBe(LAST);
   });
 
   it("closes when a menu link is activated", () => {
@@ -336,6 +344,15 @@ describe("MobileMenu", () => {
       for (const listener of mediaListeners) listener({ matches: false });
     });
     expect(expanded()).toBe("true");
+  });
+
+  it("closes when Get in touch is activated", () => {
+    render(<Header />);
+    fireEvent.click(menuButton());
+    const contact = screen.getByRole("link", { name: "Get in touch" });
+    contact.addEventListener("click", (event) => event.preventDefault());
+    fireEvent.click(contact);
+    expect(expanded()).toBe("false");
   });
 
   it("ignores a click whose target is not an element", () => {
@@ -407,17 +424,17 @@ describe("MobileMenu", () => {
 
   describe("in the real site header", () => {
     const home = () => screen.getByRole("link", { name: "XionTech home" });
-    const menuCareers = () =>
-      panel()?.querySelector('a[href="/careers"]') as HTMLElement;
+    const menuLast = () =>
+      panel()?.querySelector('a[href="tel:+84908107552"]') as HTMLElement;
 
     it("wraps between the logo and the last menu item at 375px", () => {
       render(<SiteHeader />);
       fireEvent.click(menuButton());
-      menuCareers().focus();
+      menuLast().focus();
       expect(tab()).toBe(false);
       expect(document.activeElement).toBe(home());
       expect(tab(true)).toBe(false);
-      expect(document.activeElement).toBe(menuCareers());
+      expect(document.activeElement).toBe(menuLast());
     });
   });
 });

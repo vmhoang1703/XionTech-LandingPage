@@ -4,6 +4,7 @@ import { StatsBand } from "@/components/sections/stats-band";
 import { homeHero, homeStats } from "@/content/home";
 import { FrontDoors } from "./front-doors";
 import { HeroSilk } from "./hero-silk";
+import { heroWords } from "@/components/sections/hero-words";
 
 // Server Component: text and CTA render without JavaScript. The static navy
 // and amber glow (.silk-fallback) is always painted; HeroSilk (Story 3.2)
@@ -13,6 +14,7 @@ import { HeroSilk } from "./hero-silk";
 export function HomeHero() {
   const { title, sub, cta } = homeHero;
 
+  const t = heroWords();
   return (
     <section
       aria-labelledby="home-hero-title"
@@ -37,10 +39,12 @@ export function HomeHero() {
                   reads "Build smarter. Ship faster. Get IT done." */}
               {title.lines.map((line) => (
                 <Fragment key={line}>
-                  <span className="block">{line}</span>{" "}
+                  <span className="block">{t.words(line)}</span>{" "}
                 </Fragment>
               ))}
-              <span className="hl">{title.highlight}</span>
+              <span className="hl" {...t.unit()}>
+                {title.highlight}
+              </span>
               {title.tail}
             </h1>
             <p className="text-body-lg mt-5.5 mb-8.5 max-w-[62ch] text-pretty">

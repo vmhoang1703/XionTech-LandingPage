@@ -2,6 +2,7 @@ import { ArrowLeftIcon, CheckCircleIcon } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { jobDetails } from "@/content/job";
+import { ApplyBar } from "./apply-bar";
 import type { OpenRoleDetail } from "@/lib/careers/open-roles";
 
 function CheckList({ items }: Readonly<{ items: readonly string[] }>) {
@@ -64,6 +65,7 @@ export function JobDetails({
         <div id="apply" className="form-card">
           {children}
         </div>
+        <ApplyBar target="apply" />
       </div>
     </section>
   );

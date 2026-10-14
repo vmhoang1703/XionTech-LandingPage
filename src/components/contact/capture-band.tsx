@@ -2,24 +2,19 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, type SubmitEvent } from "react";
+import { useRef, useState, type SubmitEvent } from "react";
+import { CONTACT_HREF } from "@/components/layout/nav-data";
 import {
   CONTACT_ERRORS,
   EMAIL_MAX_LENGTH,
   isValidEmail,
   type RequestKind,
 } from "@/lib/contact/contact-rules";
-import { CAPTURE_EMAIL_KEY } from "./capture-storage";
+import { rememberCapturedEmail } from "./capture-storage";
 import { CONTACT_STRINGS } from "./contact-strings";
-import { postSubmission } from "./post-submission";
 
 const S = CONTACT_STRINGS.capture;
 const FORM = CONTACT_STRINGS.form;
-
-const DESTINATIONS: Record<RequestKind, string> = {
-  demo: "/demo#form",
-  project: "/demo#project",
-};
 
 /** Plain looks have no corner rings and an amber button (E-A4). */
 const LOOK_SURFACES = {
@@ -28,23 +23,11 @@ const LOOK_SURFACES = {
   navy: "surface-navy",
 } as const;
 
-const MESSAGES = {
-  email: CONTACT_ERRORS.email,
-  send: FORM.sendError,
-  rate: FORM.rateError,
-};
 const ERROR_ID = "cap-err";
 
-/** The email is never put in the URL; the /demo form reads it from here once. */
-function rememberEmail(email: string) {
-  try {
-    sessionStorage.setItem(CAPTURE_EMAIL_KEY, email);
-  } catch {
-    // Storage is blocked: the visitor still lands on the right tab, with no
-    // prefill and no error. The email is not logged.
-  }
-}
-
+// An email field that leads to the Home Get in touch form with the email
+// already filled in (lead, 2026-10-13: the Demo page is inactive, one form
+// for everything). Nothing is sent from the band itself.
 export function CaptureBand({
   kind,
   look,
@@ -61,58 +44,19 @@ export function CaptureBand({
     ? { ...S[kind], heading: copyOverride.heading, lede: copyOverride.lede }
     : S[kind];
   const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending">("idle");
-  const [problem, setProblem] = useState<keyof typeof MESSAGES | null>(null);
+  const [invalid, setInvalid] = useState(false);
   const emailRef = useRef<HTMLInputElement>(null);
-  const submitRef = useRef<HTMLButtonElement>(null);
 
-  // The button was disabled while sending and lost focus, so put it back
-  // where the visitor can read the message and retry.
-  const mountedRef = useRef(true);
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (problem === "send" || problem === "rate") submitRef.current?.focus();
-  }, [problem]);
-
-  function showEmailError() {
-    setProblem("email");
-    emailRef.current?.focus();
-  }
-
-  async function onSubmit(event: SubmitEvent<HTMLFormElement>) {
+  function onSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const value = email.trim();
     if (!isValidEmail(value) || value.length > EMAIL_MAX_LENGTH) {
-      showEmailError();
+      setInvalid(true);
+      emailRef.current?.focus();
       return;
     }
-
-    setProblem(null);
-    setStatus("sending");
-    const result = await postSubmission({
-      type: "capture",
-      kind,
-      email: value,
-      website,
-    });
-    // The visitor left while the send was pending: do not pull them back.
-    if (!mountedRef.current) return;
-    if (result.kind === "sent") {
-      // The button stays disabled until the new page replaces this one.
-      rememberEmail(value);
-      router.push(DESTINATIONS[kind]);
-      return;
-    }
-    setStatus("idle");
-    if (result.kind === "errors") showEmailError();
-    else setProblem(result.kind);
+    rememberCapturedEmail(value);
+    router.push(CONTACT_HREF);
   }
 
   return (
@@ -142,34 +86,23 @@ export function CaptureBand({
               placeholder={copy.placeholder}
               required
               value={email}
-              aria-invalid={problem === "email" || undefined}
-              aria-describedby={problem === "email" ? ERROR_ID : undefined}
+              aria-invalid={invalid || undefined}
+              aria-describedby={invalid ? ERROR_ID : undefined}
               onChange={(event) => {
                 setEmail(event.target.value);
-                setProblem((current) => (current === "email" ? null : current));
+                setInvalid(false);
               }}
             />
             <button
-              ref={submitRef}
               className={look ? "btn btn-primary" : "btn btn-navy"}
               type="submit"
-              disabled={status === "sending"}
             >
-              {status === "sending" ? FORM.sending : copy.button}
+              {copy.button}
             </button>
           </div>
-          <input
-            className="sr-only"
-            name="website"
-            tabIndex={-1}
-            aria-hidden="true"
-            autoComplete="off"
-            value={website}
-            onChange={(event) => setWebsite(event.target.value)}
-          />
-          {problem && (
+          {invalid && (
             <small id={ERROR_ID} className="err" role="alert">
-              {MESSAGES[problem]}
+              {CONTACT_ERRORS.email}
             </small>
           )}
           <small>

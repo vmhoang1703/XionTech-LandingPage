@@ -1721,3 +1721,43 @@ Template:
   - Step 4: flip cards as tall as their text, the 4-D process as a swipe row, the footer links in two columns. Home at 390px: 13,790 → 12,264px.
   - Checks: 1390 unit tests; diff coverage 100%; smoke + a11y 72/72; build; screenshots at 320–1440.
   - **AI got it wrong?** Yes: the preview showed value cards two a row, but only their fronts. With the real back text (up to 204 characters) two columns were no shorter and too narrow, so the AI kept one a row with auto height and said so. A test clock started before the page had loaded, so some screenshots came out blank; waiting for the Pause button fixed it. The audit's hover finding was overstated: the moving hover effects were already limited to mouse devices.
+
+## 2026-10-13 — Mobile round 2: shorter pages (feat/mobile-compact)
+
+- **Prompt:** "Pages are too long, require excessive scrolling, and some interactions … are not convenient." Then: "one branch, one PR. Enhance until I feel good."
+- **What the AI did:** measured every section at 390 and 768, found the card sets (one tall card a row), the footer and the News cards were most of the height.
+- **AI got it wrong:** it started building its own picks without a preview. The lead asked "why you dont self-brainstorm and make preview with many options?" The AI had over-read an earlier "I am confused with all options" as "never show options". Fix: one preview page with 2-4 real-page options per problem and the AI's pick marked. The lead picked 1A 2D 3A 4C 5B.
+- **AI got it wrong (2):** the first swipe row for values gave card 1 a 0px column and 720px tall cards: a more specific `.home-values .flip-cards` rule still set the columns. Caught in screenshots, fixed by adding that selector.
+- **Result:** Home 12,264 → 9,434px on a phone, 10,376 → 9,156px on a tablet; desktop unchanged. Spec: `_bmad-output/implementation-artifacts/spec-mobile-compact.md`.
+
+## 2026-10-13 — Mobile round 3: count-up, next steps, swipe dots
+
+- **Prompt:** "I do not see animation count number by number … Start a project and Explore services … at ugly position … run UI/UX/animation/behavior at all pages." Then: "Nice to have the preview of options you suggest."
+- **What the AI did:** logged the drawn count on every animation frame at 390/768/1440, with the CPU slowed ×4. Cause: frames 250-600ms apart while the page loads, and the count ran then (0 → 15). Fix: wait until loaded and idle. Then it took screenshots of every page at 390 and 768, found five problems, and rendered 2-4 options each on the real pages with its pick marked. The lead picked 1a D, 1b B, 2 B + animation, 3 C, 4 C, 5 B.
+- **AI got it wrong:** the first swipe dots counted the 4-D track and nodes as cards (7 dots for 4 steps). It first tried to skip hidden children, but they are 1px wide, not `display: none`, so it skipped them by class.
+- **AI got it wrong (2):** the preview hid the Services tags on phones. The no-JS content test flagged it, and the tags are facts, so they stay.
+- **AI got it wrong (3):** the auto swipe from round 2 ran only on the first page; after a client-side navigation the new page's rows had no auto swipe. `SwipeRows` now runs again on each route, as `ScrollReveal` does.
+- **AI got it wrong (4), count-up again:** the lead, on a phone: "the counter still jumps from 0 straight to 25". The first fix was measured in Chrome only. In WebKit (Safari's engine, installed for Playwright) the CSS animation of `--count` never redrew the counter: 0 until 2.5s, then 25. Fix: the script sets `--count` each frame, at most one step a frame, so every number shows in every browser and on a slow phone; the CSS animation and `@property` are gone. It also waits only for an idle moment, not the full page load (that started the count 7s late on a slow CPU), and sets 0 before it starts (one frame showed 25). Checked: WebKit 0 → 6 → 16 → 24 → 25; Chrome logs all 26 values in order at 390 and 768, CPU ×1 and ×4.
+
+## 2026-10-13 — Round 4: behaviour, touch, one Get in touch form
+
+- **Prompt:** "are there any suggestions on UI/UX/animation/behaviour from all components across all pages?", then "do all", then the picks and: "Inactive demo page ... Just use get in touch form. But you need to test behavior of it because I test some times and it get worse".
+- **What the AI did:** a scripted behaviour audit (fields, anchors, menu, header, FAQ, touch), Lighthouse mobile on local and live, an options preview with videos for the motion picks, then built the picks, moved every call to action to the Home form and added a 20-test e2e suite that fakes the API (no real mail).
+- **AI got it wrong:** it moved the hero animation start to an idle moment to raise the speed score. The score went from 69 to 57-59, so it reverted that and reported the speed work as a separate pass instead of guessing on.
+- **AI got it wrong (2):** its first "press feedback" idea missed that the CSS already had pressed states; iPhone Safari simply never applied `:active` without a touch listener.
+- **Finding:** the contact route had `maxDuration = 10`, below its own worst case; raised to 30 s, the client waits 32 s. This is the likely reason repeated tests "got worse", but no log access confirmed it.
+
+## 2026-10-13 — Round 5: Amber's prototype motion
+
+- **Prompt:** "help me check that are there any animation which are from Amber's latest prototype and we have not applied in development, such as: animation about mountain in Inspired by a mountain ... Should make preview for me before implementation."
+- **What the AI did:** listed the prototype's keyframes and scripted motion, checked each against development and the specs (Q5 had left the mountain picture out; the climber was Tier 2), served the prototype locally and recorded each missing animation next to development, plus a mock of the climb on a self-drawn mountain. The lead picked 1B 2A 3B 4B 5B; the AI ported them.
+- **Rule kept:** the project allows only transform and opacity in motion. Amber's mountain (mask), card unfold (clip-path) and shine (text gradient) were rebuilt with moving windows and counter-moving copies so they look the same and still follow it.
+- **AI got it wrong:** the first shine put a second copy of "get IT done" in the heading, so the heading text read the words twice (screen readers skipped it, search would not). The copy now comes from `data-text` in CSS.
+- **Content kept honest:** Amber's summit tag also said "Founded in America"; that is the placeholder founding line (Q12), so the tag says "newXion" only.
+
+## 2026-10-14 — Round 6: page and word motion in sync
+
+- **Prompt:** "We must make syncs on page animation and words animation across all devices for consistency." Then, after the preview: "B".
+- **What the AI did:** logged every running animation per page and device. Finding: timings are the same on every device; the pages open differently (four pages had no hero motion, one had words, one a shine, two an underline). It recorded options on six pages at phone and desktop, then built the lead's pick, B: the News words entrance on every page title.
+- **AI got it wrong:** the preview wrapped words with a script after load, which is fine for a video but would flash the text and fight React. It built the real one as `heroWords()` in the server HTML instead. Seven smoke tests then failed because they looked for the title as one string; the tests now compare the text with the tags removed.
+- **Left out on purpose:** the motion-rules table (one easing curve, fixed durations): the lead picked B only.

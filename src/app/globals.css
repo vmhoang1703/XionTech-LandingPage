@@ -883,7 +883,8 @@
     border: 1.5px solid var(--color-field-border);
     border-radius: var(--radius-sm);
     background: var(--color-page);
-    font-size: 0.98rem;
+    /* 16px: iPhone Safari zooms the page into any field under 16px. */
+    font-size: 1rem;
     color: var(--color-text);
   }
 
@@ -2220,13 +2221,6 @@
     }
   }
 
-  /* One card a row: two columns made the long titles and backs too narrow. */
-  @media (width <= 520px) {
-    .flip-cards {
-      grid-template-columns: minmax(0, 1fr);
-    }
-  }
-
   /* Careers open roles and life frames (Story 6.5), ported from the prototype site.css */
   .link-arrow {
     display: inline-flex;
@@ -3025,12 +3019,11 @@
      with transparent glyphs (screen readers and search still read it) and
      ::after draws --count over it, from the same start in the same box, so
      nothing moves (aligned right, the growing count moved its start: a layout
-     shift). On screen at load it counts at first paint, with no script. The
-     script holds a figure below the screen at 0 ("wait") and plays it in view
-     ("play"); "off" is a saved Pause. Reduced motion and print show the plain
-     number. --count is registered at the top level (@property). The count
-     uses a softer ease-out than --ease-brand, which would jump most of the
-     way at once and hide the counting. */
+     shift). It is held at 0 ("wait"); once it is in view and the page has a
+     quiet moment, the script sets --count frame by frame ("play"), at most
+     one step a frame, so every number shows. A CSS animation of --count jumped
+     from 0 to 25 on phones (Safari did not redraw the counter while it ran).
+     "off" is a saved Pause. Reduced motion and print show the plain number. */
   @media screen and (prefers-reduced-motion: no-preference) {
     .count-up:not([data-count="off"]) {
       --count: var(--to);
@@ -3055,21 +3048,7 @@
       }
     }
 
-    .count-up:not([data-count]) {
-      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) 0.2s both;
-    }
-
     .count-up[data-count="wait"] {
-      --count: 0;
-    }
-
-    .count-up[data-count="play"] {
-      animation: count-up 1.6s cubic-bezier(0.33, 1, 0.68, 1) both;
-    }
-  }
-
-  @keyframes count-up {
-    from {
       --count: 0;
     }
   }
@@ -3346,27 +3325,6 @@
     text-transform: uppercase;
   }
 
-  /* Phones (lead, 2026-10-13): the steps sit in a row you swipe through, the
-     next card peeking in, instead of four tall cards one under another. */
-  @media (width < --theme(--breakpoint-sm)) {
-    .flow {
-      grid-template-columns: none;
-      grid-auto-columns: 84%;
-      grid-auto-flow: column;
-      margin-inline: calc(var(--spacing-gutter-mobile) * -1);
-      padding: 4px var(--spacing-gutter-mobile) 12px;
-      overflow-x: auto;
-      overscroll-behavior-x: contain;
-      scroll-padding-inline: var(--spacing-gutter-mobile);
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-    }
-
-    .flow > .step4 {
-      scroll-snap-align: start;
-    }
-  }
-
   @media (width >= --theme(--breakpoint-sm)) {
     .flow {
       grid-template-columns: 1fr 1fr;
@@ -3461,14 +3419,6 @@
         0;
     }
   }
-}
-
-/* The count-up's number (CountUp, "Count-up" above): an integer, so CSS can
-   animate it and a counter can show it. Registered at the top level. */
-@property --count {
-  syntax: "<integer>";
-  inherits: false;
-  initial-value: 0;
 }
 
 @layer components {
@@ -4595,78 +4545,6 @@
     }
   }
 
-  /*
-    About mountain story (E-S3), the prototype's no-JS layout (site.css
-    1307-1319, 1363-1385): both chapters stacked, no picture, no held scroll.
-  */
-  .mtn-h {
-    margin: 0 auto clamp(20px, 4vh, 40px);
-    font-size: clamp(2.2rem, 4.4vw, 3.6rem);
-    font-weight: 300;
-    line-height: 1.04;
-    letter-spacing: -0.04em;
-    text-align: center;
-    text-wrap: balance;
-  }
-
-  .mtn-story {
-    display: grid;
-    gap: 40px;
-    max-width: 640px;
-    margin-inline: auto;
-  }
-
-  .mtn-title {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    margin: 0;
-    font-size: clamp(1.4rem, 2.2vw, 1.85rem);
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-  }
-
-  /* #735500 keeps the number readable on the light glows (prototype review fix) */
-  .mtn-num {
-    font-size: 0.8em;
-    color: #735500;
-  }
-
-  .mtn-text {
-    max-width: 46ch;
-    margin: 16px 0 0;
-    font-size: var(--text-body-lg);
-    line-height: 1.7;
-    color: var(--color-text);
-  }
-
-  .mtn-close {
-    display: grid;
-    gap: 6px;
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-
-  .mtn-close p {
-    margin: 0;
-  }
-
-  .mtn-close strong {
-    font-weight: 500;
-    color: var(--color-heading);
-  }
-
-  @media (width <= 800px) {
-    .mtn-h {
-      font-size: clamp(1.6rem, 7.4vw, 2.1rem);
-    }
-
-    .mtn-title {
-      font-size: 1.3rem;
-    }
-  }
-
   /* About background: white with soft light blue glows on alternating sides (ENH-067, site.css 1473-1477) */
   #story {
     background:
@@ -5375,12 +5253,6 @@
 @media (width <= 820px) {
   .home-values .flip-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (width <= 520px) {
-  .home-values .flip-cards {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -6183,5 +6055,1223 @@ main > .page-scene:last-child > .surface-navy:last-child {
   /* The prototype hides the still ring; it is decoration over the dot */
   .tm-here-ring {
     stroke-opacity: 0;
+  }
+}
+
+/* Home core values keep their original layout on phones: one a row. */
+@media (width <= 520px) {
+  .home-values .flip-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Phones: shorter pages (lead, 2026-10-13) ---------- */
+/* Card sets sit in a row you swipe through, the next card peeking in, instead
+   of tall cards one under another: the 4-D process, the apps, the values and
+   the latest stories. */
+@media (width < 640px) {
+  .flow,
+  .app-cards,
+  .flip-cards:not(.home-values .flip-cards),
+  .sgrid-row {
+    grid-template-columns: none;
+    grid-auto-columns: 84%;
+    grid-auto-flow: column;
+    margin-inline: calc(var(--spacing-gutter-mobile) * -1);
+    padding: 4px var(--spacing-gutter-mobile) 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: var(--spacing-gutter-mobile);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .flow > *,
+  .app-cards > *,
+  .flip-cards:not(.home-values .flip-cards) > *,
+  .sgrid-row > * {
+    scroll-snap-align: start;
+  }
+
+  /* Stories: the title and "Read story" need about 250px, not 340px or a
+     square; the lead story on the News page stays a little taller. */
+  .scard,
+  .sgrid-row .scard {
+    min-height: 250px;
+  }
+
+  #newsGrid .scard {
+    aspect-ratio: auto;
+  }
+
+  #newsGrid .s-lead .scard {
+    min-height: 320px;
+  }
+
+  /* Services (lead, 2026-10-13): one list card, a row a service with its
+     icon and name, the line and the tags under them. */
+  .svc-cards {
+    gap: 0;
+    overflow: hidden;
+    border: 1px solid rgb(22 54 99 / 0.14);
+    border-radius: 20px;
+    background: var(--color-white);
+  }
+
+  .svc-card {
+    padding: 16px 18px;
+    border: 0;
+    border-bottom: 1px solid rgb(22 54 99 / 0.1);
+    border-radius: 0;
+    background: none;
+  }
+
+  .svc-card:last-child {
+    border-bottom: 0;
+  }
+
+  .svc-card-h {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .svc-card p,
+  .svc-card p:not(.svc-card-tags) {
+    margin: 6px 0 0 calc(1.7rem + 14px);
+    font-size: 0.92rem;
+  }
+
+  .svc-card .svc-card-tags {
+    margin-top: 4px;
+    font-size: 0.8rem;
+  }
+
+  /* Careers, Inside XionTech (lead, 2026-10-13): a small mosaic, the big
+     moment across, then pairs. */
+  .ins-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: 10px;
+  }
+
+  .ins-card {
+    min-height: 170px;
+    padding: 16px;
+  }
+
+  .ins-card.big {
+    grid-column: 1 / -1;
+  }
+
+  .ins-card h3 {
+    font-size: 1rem;
+  }
+
+  .ins-card p {
+    font-size: 0.8rem;
+  }
+
+  /* Why XionTech: no empty space under the chips. */
+  .w-card {
+    min-height: 0;
+  }
+
+  /* Footer: Company sits under Products, beside the longer Services list. */
+  .footer-grid > :nth-child(3) {
+    grid-row: span 2;
+  }
+}
+
+/* Phones (lead, 2026-10-13): the hero figures as rows, number then label, so
+   all five show with none left alone in a column. */
+@media (width < 640px) {
+  .home-stats ul {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  .home-stats li {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: center;
+    padding-block: 8px;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .home-stats li:first-child {
+    border-top: 0;
+  }
+
+  .home-stats li > p:first-child {
+    font-size: 1.75rem;
+  }
+
+  .home-stats li > p + p {
+    max-width: none;
+    margin-top: 0;
+  }
+}
+
+/* Tablets (lead, 2026-10-13): use the width. Flip cards are as tall as their
+   longer face, the values three across; the two doors side by side; three
+   stories a row; three footer link columns and the offices side by side. */
+@media (640px <= width < 1080px) {
+  section:not(.home-values) .flip-card,
+  section:not(.home-values) .flip-inner {
+    min-height: 0;
+  }
+
+  section:not(.home-values) .flip-inner {
+    display: grid;
+  }
+
+  section:not(.home-values) .flip-face {
+    position: relative;
+    inset: auto;
+    grid-area: 1 / 1;
+    padding: 18px;
+  }
+
+  .doors-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .door {
+    padding: 24px;
+  }
+
+  .sgrid-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sgrid-row .scard {
+    min-height: 300px;
+  }
+
+  .sgrid-row .scard-content {
+    inset-inline: 18px;
+  }
+}
+
+@media (640px <= width <= 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-grid > :first-child,
+  .footer-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .footer-grid > :last-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+  }
+
+  .footer-grid > :last-child > h2,
+  .footer-grid > :last-child > p {
+    grid-column: 1 / -1;
+  }
+
+  .footer-grid address {
+    margin-top: 0;
+  }
+}
+
+/* Swipe dots (SwipeRows, lead 2026-10-13): one dot a card under each phone
+   swipe row; the amber pill slides to the card in front, which is full size
+   while the others shrink a little. Each dot is a 28x44px button. With
+   reduced motion or a saved Pause the script marks the row "still": no
+   animation. */
+@media (width < 640px) {
+  .swipe-dots {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    margin: 2px auto 0;
+  }
+
+  .swipe-dots button {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 44px;
+    color: inherit;
+  }
+
+  .swipe-dots button::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: currentcolor;
+    opacity: 0.28;
+  }
+
+  .swipe-dots::after {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 4px;
+    width: 20px;
+    height: 8px;
+    border-radius: 99px;
+    background: var(--color-amber);
+    pointer-events: none;
+    transform: translateX(calc(var(--i, 0) * 28px));
+  }
+
+  [data-swipe="move"] > * {
+    transition: scale 0.45s var(--ease-brand);
+  }
+
+  [data-swipe="move"] > :not([data-active]) {
+    scale: 0.94;
+  }
+
+  [data-swipe="move"] + .swipe-dots::after {
+    transition: transform 0.45s var(--ease-brand);
+  }
+}
+
+@media (width >= 640px) {
+  .swipe-dots {
+    display: none;
+  }
+}
+
+/* What can we help you achieve? (lead, 2026-10-13): below 980px the next
+   steps come after the four goals, in one row on tablets and as a full-width
+   button with the link under it on phones. The heading block lets its parts
+   join the column so the steps can move; the DOM order is unchanged. */
+@media (width <= 980px) {
+  .svc-split:has(> .goal-list) {
+    row-gap: 0;
+  }
+
+  .svc-split:has(> .goal-list) > .svc-stick {
+    display: contents;
+  }
+
+  .svc-split:has(> .goal-list) > .svc-stick > .lede {
+    margin-top: 20px;
+  }
+
+  .goal-list {
+    margin-top: var(--spacing-section-head-gap);
+  }
+
+  .goal-ctas {
+    order: 1;
+    margin-top: 28px;
+  }
+}
+
+@media (width < 640px) {
+  .goal-ctas {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .goal-ctas .btn,
+  .goal-ctas .link-arrow {
+    justify-content: center;
+  }
+}
+
+/* Tablets (lead, 2026-10-13): the two Why XionTech cards side by side, as tall
+   as their content. */
+@media (640px <= width <= 900px) {
+  .w-delivery,
+  .w-industries {
+    grid-column: span 6;
+  }
+
+  .w-card {
+    min-height: 0;
+    padding: 24px;
+  }
+}
+
+/* Touch screens (lead, 2026-10-13): no dotted underline on "HCMC". It
+   promises a tooltip that only a mouse can open; the card already says
+   where the two headquarters are. */
+@media (hover: none) {
+  .w-chip abbr {
+    text-decoration: none;
+  }
+}
+
+/* Apply bar (ApplyBar, lead 2026-10-13): on phones and tablets the job page
+   offers the form from a bar at the foot of the screen while the form is
+   still below it. From 900px the form sits beside the role text. */
+.apply-bar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: var(--z-index-header);
+  padding: 10px var(--spacing-gutter-mobile)
+    calc(10px + env(safe-area-inset-bottom));
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 -10px 30px -18px rgb(11 33 71 / 0.4);
+  backdrop-filter: blur(14px);
+  translate: 0 110%;
+  visibility: hidden;
+}
+
+.apply-bar[data-shown] {
+  translate: none;
+  visibility: visible;
+}
+
+.apply-bar .btn {
+  justify-content: center;
+  width: 100%;
+}
+
+/* Hidden only once it has slid away; shown at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .apply-bar {
+    transition:
+      translate 0.35s var(--ease-brand),
+      visibility 0s linear 0.35s;
+  }
+
+  .apply-bar[data-shown] {
+    transition: translate 0.35s var(--ease-brand);
+  }
+}
+
+@media (width >= 900px) {
+  .apply-bar {
+    display: none;
+  }
+}
+
+/* Header on scroll (HeaderScroll, lead 2026-10-13): below 1080px the pill
+   slides away while the visitor scrolls down and back when they scroll up. */
+@media (width < 1080px) {
+  header[data-hidden] {
+    translate: 0 -110%;
+  }
+}
+
+@media (width < 1080px) and (prefers-reduced-motion: no-preference) {
+  header[data-autohide] {
+    transition: translate 0.35s var(--ease-brand);
+  }
+}
+
+/* Press on touch screens (TouchPress, lead 2026-10-13): buttons and cards
+   press in a little more than with a mouse, so a tap shows it worked. */
+@media (hover: none) {
+  .btn:not(:disabled, [aria-disabled="true"]):active {
+    transform: scale(0.96);
+  }
+
+  .door:active,
+  .app-card:active,
+  .scard:active,
+  .flip-card:active {
+    scale: 0.96;
+  }
+
+  .scard {
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.45s ease,
+      scale 0.2s var(--ease-brand);
+  }
+
+  .flip-card {
+    transition: scale 0.2s var(--ease-brand);
+  }
+}
+
+/* FAQ (lead, 2026-10-13): the answer fades and slides in, and the + turns
+   into an x (rotated, not swapped), so an open row reads as open. */
+.faq details[open] summary::after {
+  content: "+";
+  rotate: 45deg;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq summary::after {
+    transition: rotate 0.3s var(--ease-brand);
+  }
+
+  .faq details[open] > p {
+    animation: faq-open 0.35s var(--ease-brand) both;
+  }
+}
+
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+}
+
+/* News filters on phones (lead, 2026-10-13): one row to swipe. */
+@media (width < 640px) {
+  .filters {
+    flex-wrap: nowrap;
+    min-inline-size: 0;
+    margin-inline: calc(var(--spacing-gutter-mobile) * -1);
+    padding: 4px var(--spacing-gutter-mobile);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filters button {
+    flex: 0 0 auto;
+  }
+}
+
+/* Phone menu (lead, 2026-10-13): Get in touch and both headquarters' phones
+   under the links. */
+.menu-contact {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.menu-contact .btn {
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.menu-contact a:not(.btn) {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  color: var(--color-muted);
+  font-size: var(--text-body-sm);
+}
+
+/* ---------- About: Inspired by a mountain (MountainStory; lead 2026-10-13) ----------
+   Amber's prototype (ENH-030, site.css 1298-1431). With no script both chapters
+   stack and the picture is in full colour. [data-armed] (the script) holds the
+   story for about one more screen: the chapter text swaps beneath the title and
+   the mountain climbs beside it. Moves are transform and opacity only: the colour
+   rises in a window (.mtn-rise) the script slides up while the picture inside
+   slides down by as much; the X mark lights by fading a colour copy in. */
+.mtn {
+  --mtn-top: var(--spacing-header-room);
+  padding-block: calc(var(--spacing-header-room) * 0.5) var(--spacing-section);
+}
+
+.mtn-h {
+  margin: 0 auto clamp(20px, 4vh, 40px);
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.mtn-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+}
+
+.mtn-chs {
+  display: grid;
+  gap: 40px;
+}
+
+.mtn-title {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* #735500 keeps the number readable on the light glows (prototype review fix) */
+.mtn-num {
+  font-size: 0.8em;
+  color: #735500;
+}
+
+.mtn-text {
+  max-width: 46ch;
+  margin: 16px 0 0;
+  font-size: var(--text-body-lg);
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.mtn-cue {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 0;
+  font-size: var(--text-label);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.mtn-cue::after {
+  content: "";
+  width: 38px;
+  height: 1px;
+  background: currentcolor;
+  opacity: 0.6;
+}
+
+.mtn-close {
+  display: grid;
+  gap: 6px;
+  margin-top: 28px;
+  font-size: var(--text-body-sm);
+  color: var(--color-muted);
+}
+
+.mtn-close p {
+  margin: 0;
+}
+
+.mtn-close strong {
+  font-weight: 500;
+  color: var(--color-heading);
+}
+
+.mtn-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.mtn-art {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, calc((100svh - var(--mtn-top) - 240px) * 1.5));
+  margin: 0 auto;
+}
+
+/* a soft pastel-amber glow around the mountain, brightest behind the peak */
+.mtn-art::before {
+  content: "";
+  position: absolute;
+  inset: 6% -4% -6%;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 46% 44% at 50% 62%,
+    rgb(255 226 150 / 0.26) 0%,
+    rgb(255 238 196 / 0.12) 45%,
+    transparent 75%
+  );
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.mtn-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mtn-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  transform: scale(1.01);
+}
+
+.mtn-base {
+  position: relative;
+  filter: grayscale(1);
+  opacity: 0.9;
+}
+
+/* The colour window: 112% tall with a soft top edge, so the colour arrives
+   with a fading front; the picture inside sits on the base picture. */
+.mtn-rise {
+  position: absolute;
+  inset: -12% 0 auto;
+  height: 112%;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent, #000 10.7%);
+  pointer-events: none;
+}
+
+.mtn-color {
+  position: absolute;
+  top: calc(100% * 12 / 112);
+  left: 0;
+  opacity: 0.9;
+}
+
+.mtn-beacon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-amber);
+  box-shadow:
+    0 0 0 7px rgb(255 192 0 / 0.16),
+    0 0 24px rgb(255 192 0 / 0.45);
+  transition: opacity 0.5s var(--ease-brand);
+}
+
+/* The X mark crowns the summit: grey until the story reaches the top, then in
+   colour, taking over from the light. */
+.mtn-summit {
+  position: absolute;
+  top: 19.4%;
+  left: 58.4%;
+  width: clamp(30px, 3.6vw, 52px);
+  height: auto;
+  translate: -50% -78%;
+  transition:
+    opacity 0.8s var(--ease-brand),
+    translate 0.8s var(--ease-brand);
+}
+
+.mtn-summit-grey {
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.mtn-summit-lit {
+  opacity: 0;
+}
+
+.mtn:not([data-armed]) .mtn-summit-grey,
+.mtn[data-top] .mtn-summit-grey {
+  opacity: 0;
+}
+
+.mtn:not([data-armed]) .mtn-summit-lit,
+.mtn[data-top] .mtn-summit-lit {
+  opacity: 1;
+}
+
+.mtn[data-top] .mtn-summit {
+  translate: -50% -86%;
+}
+
+.mtn[data-top] .mtn-beacon {
+  opacity: 0;
+}
+
+/* The newXion tag sits above the X with a short line down to it, and shows
+   with chapter 02. */
+.mtn-tag {
+  position: absolute;
+  top: 19.4%;
+  left: 58.4%;
+  translate: -50% calc(-100% - 38px);
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: var(--color-heading);
+  transition: opacity 0.6s var(--ease-brand);
+}
+
+.mtn-tag::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 1px;
+  height: 12px;
+  background: currentcolor;
+  opacity: 0.7;
+}
+
+.mtn[data-armed]:not([data-late]) .mtn-tag {
+  opacity: 0;
+}
+
+/* One dot a chapter; the amber pill slides to the one being read. */
+.mtn-dots {
+  position: relative;
+  display: none;
+  gap: 8px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.mtn-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-navy) 18%, transparent);
+}
+
+.mtn-dots::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 16px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-amber);
+  transform: translateX(calc(var(--i, 0) * 16px));
+  transition: transform 0.4s var(--ease-brand);
+}
+
+/* Held: the story sticks under the header for one more screen of scrolling
+   and the chapters share one place, the one being read on show (screen
+   readers still read both, in order). */
+.mtn[data-armed] {
+  height: calc(190svh - var(--mtn-top));
+  padding-block: 0;
+}
+
+.mtn[data-armed] .mtn-pin {
+  position: sticky;
+  top: var(--mtn-top);
+  padding-top: 48px;
+}
+
+.mtn[data-armed] .mtn-chs {
+  gap: 0;
+}
+
+.mtn[data-armed] .mtn-ch {
+  grid-area: 1 / 1;
+}
+
+.mtn[data-armed] .mtn-cue,
+.mtn[data-armed] .mtn-dots {
+  display: flex;
+}
+
+.mtn[data-armed] .mtn-beacon {
+  display: block;
+}
+
+.mtn[data-armed] .mtn-ch > * {
+  transition:
+    opacity 0.7s var(--ease-brand),
+    translate 0.7s var(--ease-brand);
+}
+
+.mtn[data-armed] .mtn-ch:not([data-on]) > * {
+  opacity: 0;
+  translate: 0 20px;
+  transition-duration: 0.35s;
+}
+
+.mtn[data-armed] .mtn-ch[data-on] > :nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.mtn[data-armed] .mtn-ch[data-on] > :nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+/* Phones and small tablets: one column, the picture above the chapter. */
+@media (width <= 800px) {
+  .mtn-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .mtn-story {
+    display: contents;
+  }
+
+  .mtn-h {
+    margin: 0 0 12px;
+    font-size: clamp(1.6rem, 7.4vw, 2.1rem);
+  }
+
+  .mtn-stage {
+    order: 1;
+    gap: 0;
+  }
+
+  .mtn-chs {
+    order: 2;
+  }
+
+  .mtn-art {
+    width: min(100%, calc(26svh * 1.5));
+  }
+
+  .mtn-title {
+    font-size: 1.3rem;
+  }
+
+  .mtn-text {
+    margin-top: 10px;
+    font-size: var(--text-body);
+    line-height: 1.6;
+  }
+
+  .mtn-cue {
+    margin-top: 16px;
+  }
+
+  .mtn-close {
+    margin-top: 14px;
+  }
+
+  .mtn[data-armed] .mtn-pin {
+    padding-top: 24px;
+  }
+
+  .mtn[data-armed] .mtn-dots {
+    display: none;
+  }
+
+  .mtn-beacon {
+    width: 6px;
+    height: 6px;
+    box-shadow: 0 0 0 4px rgb(255 192 0 / 0.16);
+  }
+
+  /* No room above the peak: the tag sits left of the X, a short line across. */
+  .mtn-tag {
+    top: 15%;
+    right: calc(100% - 58.4% + 18px);
+    left: auto;
+    translate: 0 -50%;
+    padding: 2px 8px;
+  }
+
+  .mtn-tag::after {
+    top: 50%;
+    right: -14px;
+    left: auto;
+    width: 12px;
+    height: 1px;
+  }
+}
+
+/* Tablets in portrait have the height for a bigger picture. */
+@media (600px <= width <= 800px) and (height >= 900px) {
+  .mtn-art {
+    width: min(100%, calc(40svh * 1.5));
+  }
+}
+
+/* Short screens (short phones, landscape phones): the held story would not
+   fit, so the chapters follow one another under a sticky picture that climbs
+   as they are read. */
+@media (width <= 800px) and (height <= 740px), (height <= 520px) {
+  .mtn[data-armed] {
+    height: auto;
+    padding-block: 24px var(--spacing-section);
+  }
+
+  .mtn[data-armed] .mtn-pin {
+    position: static;
+    padding-top: 0;
+  }
+
+  .mtn[data-armed] .mtn-stage {
+    position: sticky;
+    top: var(--mtn-top);
+    z-index: 2;
+    padding-bottom: 6px;
+    background: var(--color-paper);
+    box-shadow: 0 14px 14px -6px var(--color-paper);
+  }
+
+  .mtn[data-armed] .mtn-chs {
+    gap: 36px;
+  }
+
+  .mtn[data-armed] .mtn-ch {
+    grid-area: auto;
+  }
+
+  .mtn[data-armed] .mtn-ch:not([data-on]) > * {
+    opacity: 1;
+    translate: none;
+  }
+
+  .mtn[data-armed] .mtn-cue {
+    display: none;
+  }
+}
+
+/* Landscape phones keep two columns, so the picture fills its column. */
+@media (width > 800px) and (height <= 520px) {
+  .mtn-art {
+    width: min(100%, calc((100svh - var(--mtn-top) - 24px) * 1.5));
+  }
+}
+
+/* Short desktop windows: a little tighter, so the held story still fits. */
+@media (width > 800px) and (520px < height <= 700px) {
+  .mtn[data-armed] .mtn-pin {
+    padding-top: 28px;
+  }
+
+  .mtn-h {
+    margin-bottom: 16px;
+  }
+
+  .mtn-text {
+    font-size: var(--text-body);
+    line-height: 1.6;
+  }
+}
+
+/* Very large screens: the held story grows into the space. */
+@media (width >= 1500px) and (height >= 1050px) {
+  .mtn[data-armed] .mtn-pin {
+    padding-top: clamp(48px, 7svh, 120px);
+  }
+
+  .mtn-h {
+    margin-bottom: clamp(40px, 4svh, 64px);
+    font-size: clamp(3rem, 3vw, 4rem);
+  }
+
+  .mtn-title {
+    font-size: clamp(1.85rem, 1.6vw, 2.3rem);
+  }
+
+  .mtn-text {
+    max-width: 44ch;
+    font-size: 1.25rem;
+  }
+
+  .mtn-art {
+    width: min(100%, calc((100svh - var(--mtn-top) - 300px) * 1.5));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mtn[data-armed] .mtn-ch > *,
+  .mtn-summit,
+  .mtn-beacon,
+  .mtn-dots::after,
+  .mtn-tag {
+    transition: none;
+  }
+
+  .mtn[data-armed] .mtn-ch:not([data-on]) > * {
+    translate: none;
+  }
+
+  .mtn[data-top] .mtn-summit {
+    translate: -50% -78%;
+  }
+
+  .mtn[data-armed] .mtn-beacon {
+    display: none;
+  }
+}
+
+/* ---------- Hero entrance: every page opens the same way (lead 2026-10-14) ----------
+   Amber's News entrance (site.css 1449-1457) on every page title: the words rise
+   one after another with a small turn (heroWords puts each in a [data-hw] span,
+   its place in --i), then the line under the title, then the button; the
+   highlight draws once the words have landed. The delays are fixed, so a page
+   opens in about a second and a half on phone, tablet and desktop alike. A
+   long title (a story) caps its stagger at the eighth word. It plays on first
+   paint with no script; reduced motion shows the page at once. */
+[data-hw] {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  h1 [data-hw] {
+    animation: press-word 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.25)
+      calc(min(var(--i), 8) * 80ms) both;
+  }
+
+  h1:has([data-hw]) ~ :is(p, ul.chips, ul.list-check) {
+    animation: press-word 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.55s both;
+  }
+
+  h1:has([data-hw]) ~ :is(.cta-row, .btn, .ah-links) {
+    animation: press-word 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.7s both;
+  }
+
+  h1:has([data-hw]) .hl::after {
+    animation: hl-draw 1s 0.9s var(--ease-brand) both;
+  }
+}
+
+@keyframes press-word {
+  from {
+    opacity: 0;
+    translate: 0 0.6em;
+    rotate: 4deg;
+  }
+}
+
+/* ---------- News stories: each card unfolds from the top (lead 2026-10-13) ----------
+   Amber's prototype unfolds the card with clip-path; here it drops in and
+   stretches down from its top edge, so it moves with transform and opacity
+   only. The script (NewsFilters) marks the grid and each card as it arrives. */
+#newsGrid[data-unfold] > :not([data-in]) {
+  opacity: 0;
+}
+
+#newsGrid[data-unfold] > [data-in] {
+  transform-origin: top;
+  animation: card-unfold 1.25s cubic-bezier(0.22, 0.7, 0.2, 1)
+    var(--unfold-delay, 0ms) both;
+}
+
+@keyframes card-unfold {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scaleY(0.86);
+  }
+}
+
+/* ---------- Services hero shine (lead 2026-10-13) ----------
+   Amber's prototype sweeps a light across "get IT done" by moving a text
+   gradient. Here a window with a soft edge slides across a pale copy of the
+   words while the copy slides back by as much, so the light passes over the
+   letters and only transform moves. Once, a second after load. */
+.svc-hero .hl {
+  display: inline-block;
+}
+
+.hl-shine {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hl-shine {
+    position: absolute;
+    top: -0.2em;
+    bottom: -0.2em;
+    left: 0;
+    display: block;
+    width: 40%;
+    overflow: hidden;
+    pointer-events: none;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 40%,
+      #000 60%,
+      transparent
+    );
+    animation: shine-window 2.2s ease-in-out 1s both;
+  }
+
+  .hl-shine::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0.2em;
+    left: 0;
+    white-space: nowrap;
+    color: #fff6cc;
+    animation: shine-copy 2.2s ease-in-out 1s both;
+  }
+}
+
+/* The window crosses from just left of the words to just right of them; the
+   copy inside moves the other way by the same distance, so it stays put. */
+@keyframes shine-window {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes shine-copy {
+  from {
+    transform: translateX(40%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ---------- Services cards: the icon pops on hover (lead 2026-10-13) ---------- */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .svc-card:hover .svc-card-h svg {
+    animation: icon-pop 0.7s ease-in-out;
+  }
+}
+
+@keyframes icon-pop {
+  40% {
+    transform: translateY(-5px) rotate(-12deg) scale(1.15);
+  }
+
+  70% {
+    transform: translateY(1px) rotate(6deg);
+  }
+}
+
+/* ---------- Home, Why XionTech: the card parts rise, the chips pop (lead 2026-10-13) ----------
+   Amber's prototype (site.css 704-711): when a card comes into view its parts
+   rise one after another and its chips pop in. Cards on screen at load show
+   at once (ScrollReveal only plays cards that arrive later). */
+@media (prefers-reduced-motion: no-preference) {
+  .why2 > .w-card[data-shown="play"] > * {
+    animation: w-up 0.6s var(--ease-brand) both;
+  }
+
+  .why2 > .w-card[data-shown="play"] > :nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .why2 > .w-card[data-shown="play"] > :nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  .why2 > .w-card[data-shown="play"] > :nth-child(4) {
+    animation-delay: 0.24s;
+  }
+
+  .why2 > .w-card[data-shown="play"] > :nth-child(5) {
+    animation-delay: 0.32s;
+  }
+
+  .why2 > .w-card[data-shown="play"] .w-chips > .w-chip,
+  .why2 > .w-card[data-shown="play"] .w-industry-row > .w-chip {
+    animation: w-pop 0.5s var(--ease-brand) 0.35s both;
+  }
+
+  .why2 > .w-card[data-shown="play"] .w-chips > .w-chip:nth-child(2) {
+    animation-delay: 0.43s;
+  }
+}
+
+@keyframes w-up {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+
+@keyframes w-pop {
+  from {
+    opacity: 0;
+    scale: 0.8;
   }
 }

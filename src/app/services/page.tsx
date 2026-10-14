@@ -11,6 +11,7 @@ import {
   servicesProcess,
   servicesSection,
 } from "@/content/services";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const metadata: Metadata = {
   title: servicesMeta.title,
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   const { title, lede, primaryCta } = servicesPage;
 
+  const t = heroWords();
   return (
     <>
       <section
@@ -31,8 +33,17 @@ export default function ServicesPage() {
       >
         <div className="wrap">
           <h1 id="services-h1">
-            {title.lead}
-            <span className="hl">{title.highlight}</span>
+            {t.words(title.lead)}
+            <span className="hl" {...t.unit()}>
+              {title.highlight}
+              {/* A light window slides across a pale copy of the words,
+                  drawn from data-text (globals.css, "Services hero shine"). */}
+              <span
+                className="hl-shine"
+                aria-hidden="true"
+                data-text={title.highlight}
+              />
+            </span>
             {title.tail}
           </h1>
           <p className="lede mt-5">{lede}</p>

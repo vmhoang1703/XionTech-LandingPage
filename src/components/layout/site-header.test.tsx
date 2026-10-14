@@ -25,10 +25,11 @@ describe("SiteHeader", () => {
     expect(home.contains(logo)).toBe(true);
   });
 
-  it("links Book a demo to the demo form, as a small primary button", () => {
+  it("links Get in touch to the Home form, as a small primary button", () => {
     render(<SiteHeader />);
-    const demo = screen.getByRole("link", { name: "Book a demo" });
-    expect(demo.getAttribute("href")).toBe("/demo");
+    // The Demo page is kept but not linked (lead, 2026-10-13).
+    const demo = screen.getByRole("link", { name: "Get in touch" });
+    expect(demo.getAttribute("href")).toBe("/#contact");
     expect(demo.className).toContain("btn btn-primary btn-sm");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
@@ -55,13 +56,13 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("navigation", { name: "Main" })).toBeTruthy();
   });
 
-  it("puts the main nav after the logo, then Book a demo, and the Menu button last", () => {
+  it("puts the main nav after the logo, then Get in touch, and the Menu button last", () => {
     render(<SiteHeader />);
     const header = screen.getByRole("banner");
     const logo = screen.getByRole("link", { name: "XionTech home" });
     const nav = screen.getAllByRole("navigation", { name: "Main" })[0];
     const menu = screen.getByRole("button", { name: "Menu" });
-    const demo = screen.getByRole("link", { name: "Book a demo" });
+    const demo = screen.getByRole("link", { name: "Get in touch" });
     expect(header.contains(menu)).toBe(true);
     expect(menu.getAttribute("aria-expanded")).toBe("false");
     expect(

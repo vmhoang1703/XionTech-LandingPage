@@ -1,7 +1,8 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
-import { LABELS } from "./nav-data";
+import { HeaderScroll } from "./header-scroll";
+import { CONTACT_HREF, LABELS } from "./nav-data";
 import { MobileMenu } from "./mobile-menu";
 import { SiteNav } from "./site-nav";
 
@@ -15,7 +16,10 @@ export function SiteHeader() {
           prototype ENH-002's full-width bar): a white pill with rounded ends floats over the
           top of each page, which runs under it (each first section adds --spacing-header-room
           to its top padding). The strip around the pill lets clicks through. */}
-      <header className="pointer-events-none sticky top-0 z-[var(--z-index-header)] mb-[calc(var(--spacing-header-room)*-1)] h-[var(--spacing-header-room)] px-3 pt-3">
+      <header
+        data-autohide=""
+        className="pointer-events-none sticky top-0 z-[var(--z-index-header)] mb-[calc(var(--spacing-header-room)*-1)] h-[var(--spacing-header-room)] px-3 pt-3"
+      >
         <div className="pointer-events-auto mx-auto flex h-[var(--spacing-header-height)] max-w-[1180px] items-center gap-[22px] rounded-full border border-white/80 bg-white/95 pr-3 pl-4 shadow-[0_14px_34px_-16px_rgb(11_23_48/0.32),0_1px_2px_rgb(11_23_48/0.06)] backdrop-blur-[18px] backdrop-saturate-[170%] max-[1080px]:h-14 max-[1080px]:gap-2 max-[1080px]:pr-1.5 max-[1080px]:pl-2.5 max-[339px]:gap-1">
           <Link
             href="/"
@@ -33,14 +37,15 @@ export function SiteHeader() {
           </Link>
           <SiteNav />
           <Link
-            href="/demo"
+            href={CONTACT_HREF}
             className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[420px]:px-3.5"
           >
-            {LABELS.demo}
+            {LABELS.contact}
             <ArrowRightIcon aria-hidden="true" className="max-[420px]:hidden" />
           </Link>
           <MobileMenu />
         </div>
+        <HeaderScroll />
       </header>
     </>
   );

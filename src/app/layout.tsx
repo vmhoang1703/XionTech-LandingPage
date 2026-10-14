@@ -7,6 +7,9 @@ import {
 } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { SwipeRows } from "@/components/sections/swipe-rows";
+import { TouchPress } from "@/components/sections/touch-press";
+import { PageFade } from "@/components/sections/page-fade";
 import { PointerGlow } from "@/components/sections/pointer-glow";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
 import "./globals.css";
@@ -60,6 +63,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${unbounded.variable} ${lexendExa.variable} ${beVietnamPro.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {/* With no script, a count-up figure shows its number (count-up.tsx). */}
+        <noscript>
+          <style>{`.count-up[data-count="wait"] { --count: var(--to) !important; }`}</style>
+        </noscript>
         <SiteHeader />
         <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
           {children}
@@ -67,6 +74,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteFooter />
         <ScrollReveal />
         <PointerGlow />
+        <SwipeRows />
+        <TouchPress />
+        <PageFade />
       </body>
     </html>
   );

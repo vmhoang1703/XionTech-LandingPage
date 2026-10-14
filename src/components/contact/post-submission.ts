@@ -16,7 +16,9 @@ export const FIELD_ORDER = [
 export type DemoFormField = (typeof FIELD_ORDER)[number];
 
 const CONTACT_ENDPOINT = "/api/contact";
-export const SEND_TIMEOUT_MS = 15_000;
+// Longer than the route's maxDuration (30 s), so the form never gives up on a
+// send the server may still finish.
+export const SEND_TIMEOUT_MS = 32_000;
 
 export type SendResult =
   { kind: "sent" | "rate" | "send" } | { kind: "errors"; errors: FieldErrors };
