@@ -1,0 +1,1394 @@
+[
+ {
+  "w": 320,
+  "url": "/ja",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ja/products",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ja/services",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ja/about",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ja/careers",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ja/news",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ja/demo",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ja/privacy",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/fr",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/fr/products",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/fr/services",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/fr/about",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/fr/careers",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/fr/news",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/fr/demo",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/fr/privacy",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 320,
+  "url": "/ko",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ko/products",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ko/services",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ko/about",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ko/careers",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ko/news",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ko/demo",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/ko/privacy",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh/products",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh/services",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh/about",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh/careers",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh/news",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh/demo",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 320,
+  "url": "/zh/privacy",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja/products",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja/services",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja/about",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja/careers",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja/news",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja/demo",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ja/privacy",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/fr",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/fr/products",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/fr/services",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/fr/about",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/fr/careers",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/fr/news",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/fr/demo",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/fr/privacy",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 375,
+  "url": "/ko",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ko/products",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ko/services",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ko/about",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ko/careers",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ko/news",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ko/demo",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/ko/privacy",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh/products",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh/services",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh/about",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh/careers",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh/news",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh/demo",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 375,
+  "url": "/zh/privacy",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja/products",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja/services",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja/about",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja/careers",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja/news",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja/demo",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ja/privacy",
+  "status": 200,
+  "lang": "ja",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/fr",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/fr/products",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/fr/services",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/fr/about",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/fr/careers",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/fr/news",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/fr/demo",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/fr/privacy",
+  "status": 200,
+  "lang": "fr",
+  "fontLoaded": null,
+  "googleLinks": 0,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": []
+ },
+ {
+  "w": 1440,
+  "url": "/ko",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ko/products",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ko/services",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ko/about",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ko/careers",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ko/news",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ko/demo",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/ko/privacy",
+  "status": 200,
+  "lang": "ko",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [
+   "+3"
+  ],
+  "english": [
+   "Low-code",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh/products",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh/services",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "Web · Mobile",
+   "AI/ML · Dashboards",
+   "Power Platform · Make · n8n · Retool · Bubble",
+   "Generative AI · AI/ML",
+   "Azure · AWS · GCP",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh/about",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh/careers",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": true,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "[Placeholder] Get IT Done",
+   "05 · GET IT DONE",
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh/news",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh/demo",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ },
+ {
+  "w": 1440,
+  "url": "/zh/privacy",
+  "status": 200,
+  "lang": "zh-Hans",
+  "fontLoaded": false,
+  "googleLinks": 1,
+  "pageOverflow": 0,
+  "headerOverflow": 0,
+  "truncated": [],
+  "english": [
+   "GET IT"
+  ]
+ }
+]

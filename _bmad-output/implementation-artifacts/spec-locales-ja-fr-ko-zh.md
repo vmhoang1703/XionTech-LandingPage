@@ -2,9 +2,10 @@
 title: 'Japanese, French, Korean and Simplified Chinese'
 type: 'feature'
 created: '2026-10-14'
-status: 'draft'
+status: 'in-review'
 route: 'dispatch'
 review_loop_iteration: 0
+baseline_commit: '68d7b1845de29a1a87d2ac0badeb19995dec5c5a'
 context:
   - '{project-root}/AGENTS.md'
 ---
@@ -30,6 +31,11 @@ New on 2026-10-14:
 - (2) The language button shows the code (EN, VI, JA, FR, KO, ZH). The list shows native names: English, Tiếng Việt, 日本語, Français, 한국어, 简体中文.
 - (3) Simplified Chinese uses `/zh/`, with `lang="zh-Hans"`. Browsers asking for zh, zh-CN, zh-SG or zh-Hans land there.
 - (4) Sanity news and jobs have no ja, fr, ko or zh fields. They fall back to English, marked `lang="en"`. No schema change.
+
+Task 2 decisions (user, 2026-10-14):
+
+- (5) next/font cannot keep the Noto CSS off the other locales' pages, so Japanese, Korean and Chinese pages load Noto Sans JP, KR or SC with a Google Fonts `<link>` (`display=swap`) on those pages only. en, vi and fr pages load no CJK font.
+- (6) The header hides "Get in touch" below 492px and compacts it below 524px, so the header fits in every locale. This fixes an overflow at 412–443px that exists on `develop`.
 
 ## Boundaries & Constraints
 
@@ -87,19 +93,19 @@ New on 2026-10-14:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] Locale plumbing -- add ja, fr, ko, zh to `LOCALES`. Add a translation registry so a locale is one set of dictionaries, typed against the English shapes; vi keeps working. `pickLocale` falls back to en for a missing dictionary until each locale task fills it. Map Accept-Language zh variants, set `lang="zh-Hans"` for zh, add per-locale `DATE_FORMATS`, and extend SHELL, META and page-metadata with locale entries.
+- [x] Locale plumbing -- add ja, fr, ko, zh to `LOCALES`. Add a translation registry so a locale is one set of dictionaries, typed against the English shapes; vi keeps working. `pickLocale` falls back to en for a missing dictionary until each locale task fills it. Map Accept-Language zh variants, set `lang="zh-Hans"` for zh, add per-locale `DATE_FORMATS`, and extend SHELL, META and page-metadata with locale entries.
   - red: `src/proxy.test.ts` -- `Accept-Language: zh-CN` is not redirected to `/zh`.
-- [ ] Language menu and type -- native names in the list, codes on the button, header fit at every listed width. Load Noto Sans JP, KR and SC per locale. Add CJK `:lang()` rules: no negative or uppercase tracking, readable line-height.
+- [x] Language menu and type -- native names in the list, codes on the button, header fit at every listed width. Load Noto Sans JP, KR and SC per locale. Add CJK `:lang()` rules: no negative or uppercase tracking, readable line-height.
   - red: `src/components/layout/language-menu.test.tsx` -- the list does not show 日本語 and 简体中文.
-- [ ] Japanese -- every dictionary (content modules, contact strings and errors, shell, meta).
+- [x] Japanese -- every dictionary (content modules, contact strings and errors, shell, meta).
   - red: `src/app/[locale]/services/page.test.tsx` -- `ja` render shows the English title.
-- [ ] French -- every dictionary.
+- [x] French -- every dictionary.
   - red: `src/app/[locale]/services/page.test.tsx` -- `fr` render shows the English title.
-- [ ] Korean -- every dictionary.
+- [x] Korean -- every dictionary.
   - red: `src/app/[locale]/services/page.test.tsx` -- `ko` render shows the English title.
-- [ ] Simplified Chinese -- every dictionary.
+- [x] Simplified Chinese -- every dictionary.
   - red: `src/app/[locale]/services/page.test.tsx` -- `zh` render shows the English title.
-- [ ] Review tooling and docs -- generalise the review generator and the untranslated guard to every non-English locale (`docs/translations/<locale>-review.md`); a completeness test across all locales; `e2e/header-language.spec.ts` and `language-switch.spec.ts` cover every locale; update `AGENTS.md` and `docs/ai-log.md`.
+- [x] Review tooling and docs -- generalise the review generator and the untranslated guard to every non-English locale (`docs/translations/<locale>-review.md`); a completeness test across all locales; `e2e/header-language.spec.ts` and `language-switch.spec.ts` cover every locale; update `AGENTS.md` and `docs/ai-log.md`.
   - red: `scripts/i18n/untranslated.test.mjs` -- a ja string equal to its English passes.
 
 **Acceptance Criteria:**
@@ -119,3 +125,56 @@ Prefer one file per locale under `src/content/locales/<locale>/` (or one per mod
 
 **Manual checks:**
 - At 320, 375 and 1440 px, every page in `/ja`, `/fr`, `/ko` and `/zh`: the copy is in that language, CJK glyphs render in Noto (no tofu), and buttons fit.
+
+## Review Triage Log
+
+| # | Source | Finding | Verdict | Evidence | Route |
+|---|---|---|---|---|---|
+| 1 | acceptance, blind, T4-T6 minors | fr/ko/zh wording adds or strengthens claims (maîtrisons, 교사의 지도, 현장에서, 거점, 即时, 公开分享, 真正重叠) | medium | Breaks the "add nothing" Never rule | patch |
+| 2 | T3-T6 minors | Other wording minors: ja `ariaLabel?.replace` can print "undefined"; literal "Parent Hub" (ja, ko); fr "Centre de delivery", "Lettre de motivation"/"note"; ko register slips, 경영진, 책임감; zh dangling 以, 你/您 mix, NEW_TAB spacing | low | Ledger rows T3-T6 | patch |
+| 3 | blind, security | Google Fonts requests are not listed on the Privacy page (provider list names Gmail, Upstash, Vercel only) | medium | `src/content/privacy.ts`; decision (5) sends IPs to Google | patch (fact added in every locale) |
+| 4 | blind | Noto loads weights 400-600 only; the site uses 300 | low | 11 `font-weight: 300` rules | patch |
+| 5 | blind | The CJK heading line-height rule leaks into `lang="en"` islands | low | Descendant `:lang(ja) :is(h1…)` | patch |
+| 6 | blind | Count plural is English-shaped (fr singular for 0) | low | `storyCount` n===1 | patch (`Intl.PluralRules`) |
+| 7 | blind, edge, T7 minors | Completeness pins only `id` (not href/slug/icon/tel/mailto); no array/object kind check; DATA regex too wide; `LOCALE_ALLOWED[locale]` spread of undefined; `walk` messages say "vi"; duplicate `i18n:vi-review` writer | low | review.mjs, completeness.test.mjs | patch |
+| 8 | verif | No test that the layout feeds a client island translated strings on a new locale; `clientStrings` error pairing only tested as English-to-English; `roleTypeLabel` never tested with a real translation | medium | Removing `strings=` keeps every test green | patch (tests) |
+| 9 | acceptance | Task 6 had no red/green rows | low | Ledger | fixed: red reproduced by the controller |
+| 10 | acceptance | The "+3" chip overflows 3px at 320/375 in every locale | low | walk-b.json; pre-existing, but the AC says no truncated button | patch |
+| 11 | edge | A Traditional tag with q=0 still drops bare `zh` | low | proxy.ts | patch |
+| 12 | edge | A pseudo-element can keep its own letter-spacing on CJK pages | low | globals.css | patch (cheap) |
+| 13 | acceptance | No before/after proof that `/en` and `/vi` text is unchanged | maybe-false (medium if true) | Settle by diffing built HTML text against the baseline | patch (controller check) |
+| 14 | edge | A client switch from ja to en keeps the Noto stylesheet loaded | low | React hoists the `<link>` | defer |
+| 15 | edge | Native CJK names in the menu can show as tofu on devices without CJK fonts | low | OS fallback only on en/vi/fr | defer |
+| 16 | blind | No hreflang / alternates for six locales | medium | Story 7.1 | defer |
+| 17 | verif | The header-fit e2e runs only in the a11y project, not the smoke gate | low | playwright.config.ts | defer |
+| 18 | edge | String-valued registry entries are keyed by content | maybe-false (low) | translations.ts | reject (low, unshown) |
+| 19 | blind | `zh-TW,zh-CN;q=0.5` lands on `/zh` | false | The user lists Simplified, so `/zh` is right; the matrix row covers Traditional-only headers | reject |
+| 20 | blind | "Get in touch" hidden at 411-491px in English too | false | User decision (6) | reject |
+| 21 | blind | newsDate uses the Asia/Ho_Chi_Minh time zone in fr | false | Same rule as en/vi (FR-26, the company's time zone) | reject |
+| 22 | security | The third-party stylesheet has no SRI and no CSP in the repo | maybe-false | Google CSS varies per UA, so SRI is impossible; any CSP lives in Vercel | defer |
+
+## Acceptance Evidence
+
+Captured at the end of step-03 on 2026-10-14, at commit 945255c.
+
+**Commands**
+
+- `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
+- `npm test` -- exit 0 -- Tests 1761 passed (1761)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100% (Missing: 0), C1 ok on 42 files
+- `npm run test:smoke` -- exit 0 -- 18 passed (17.6s)
+- `npm run build` -- exit 0 -- six locales prerendered
+
+**Observed**
+
+- ja, fr, ko and zh, with 8 routes each at 320, 375 and 1440 px (96 checks): every route returns 200 with `lang` ja/fr/ko/zh-Hans; nothing overflows; only ja, ko and zh load a Google Fonts stylesheet, and Noto JP/KR/SC render; the CJK pages show only the agreed English names and tags -- production build on :3005
+- The home page's "+3" button overflows by 3 px in every locale, en and vi included; this existed before this story -- production build on :3005
+
+**Artifacts**
+
+- [observed.md](spec-locales-ja-fr-ko-zh-evidence/observed.md), [walk-b.json](spec-locales-ja-fr-ko-zh-evidence/walk-b.json), [verification.txt](spec-locales-ja-fr-ko-zh-evidence/verification.txt) and 16 screenshots; each file's byte count and sha256 are recorded in the ledger
+
+**Not captured**
+
+- Leftover English in French is checked by the untranslated and completeness tests, not by the browser walk.
+- Translations stored in Sanity: none exist, by decision (4).
