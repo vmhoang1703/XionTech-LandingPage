@@ -45,6 +45,17 @@ export function climbPoint(p: number): [number, number] {
   ];
 }
 
+/** The element id in a URL hash; a malformed escape (#%E0) is taken as typed. */
+export function hashId(hash: string): string {
+  const raw = hash.slice(1);
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    // decodeURIComponent throws only URIError, on a malformed escape.
+    return raw;
+  }
+}
+
 /**
  * The chapter that the held scroll is on: each takes an equal share of the
  * scroll while the story sticks. Not held (short screens, no sticky): the last
@@ -181,7 +192,7 @@ export function MountainStory({
     // Arming makes the story taller, so a link to a later section
     // (/about#faq) has already scrolled to its old place: go there again.
     const target = location.hash
-      ? document.getElementById(decodeURIComponent(location.hash.slice(1)))
+      ? document.getElementById(hashId(location.hash))
       : null;
     if (
       target &&
