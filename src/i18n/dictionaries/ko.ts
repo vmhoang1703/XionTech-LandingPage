@@ -42,6 +42,11 @@ import type { Dictionaries } from "../translations";
 // service names and "Get IT done" stay English; addresses, numbers, emails,
 // hrefs and ids are shared with English.
 
+const parentHub = appById("parent-hub");
+const staffHub = appById("staff-hub");
+const iotApp = appById("iot");
+const aiTutor = appById("ai-tutor");
+
 const count = (n: number) => n.toLocaleString("ko-KR");
 
 const NEW_TAB = "(새 탭에서 열림)";
@@ -81,7 +86,7 @@ const hcmcKo: Office = {
   tag: VIETNAM_DELIVERY_CENTER,
 };
 
-const OTHER_LOCATIONS = "하노이와 다낭에도 거점이 있습니다.";
+const OTHER_LOCATIONS = "하노이와 다낭에도 있습니다.";
 
 const [aboutPlano, aboutHcmc] = aboutOffices.offices;
 
@@ -99,11 +104,11 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
     })),
   },
   "staff-hub": {
-    madeFor: "교직원, 교사, 경영진",
+    madeFor: "교직원, 교사, 학교 관리자",
     features: [
       "실시간 출결과 기록",
       "학급, 시간표, 성적",
-      "Parent Hub를 통한 학부모 메시지",
+      `${parentHub.shortName}를 통한 학부모 메시지`,
       "오늘의 우선순위를 보여 주는 경영진 대시보드",
     ].map((title, i) => ({
       ...productDetails["staff-hub"].features[i],
@@ -120,7 +125,7 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
     ].map((title, i) => ({ ...productDetails.iot.features[i], title })),
   },
   "ai-tutor": {
-    madeFor: "교사의 지도를 받는 학생",
+    madeFor: "교사와 함께하는 학생",
     features: [
       "역량별 진단",
       "스스로 시도한 뒤에 받는 단계별 힌트",
@@ -132,7 +137,7 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
 const APP_TAGLINES: Record<AppId, string> = {
   "parent-hub": "학부모가 휴대폰으로 매일의 학교생활을 가까이에서 확인합니다.",
   "staff-hub":
-    "교직원, 교사, 경영진이 같은 데이터를 공유하는 하나의 업무 공간입니다.",
+    "교직원, 교사, 관리자가 같은 데이터를 공유하는 하나의 업무 공간입니다.",
   iot: "교실 기기, 조명, 냉난방, 출입을 하나의 화면에서 제어합니다.",
   "ai-tutor":
     "[Placeholder] 해답을 읽기만 하는 것이 아니라 새로운 문제를 스스로 풉니다.",
@@ -150,7 +155,7 @@ const FAQ: Record<string, { question: string; answer: string }> = {
       "에듀테크가 핵심 분야입니다. 헬스케어, 물류, 사모펀드 분야도 지원합니다.",
   },
   "try-apps": {
-    question: "우리 학교에서 Parent Hub나 Staff Hub를 어떻게 체험할 수 있나요?",
+    question: `우리 학교에서 ${parentHub.shortName}나 ${staffHub.shortName}를 어떻게 체험할 수 있나요?`,
     answer:
       "문의해 주세요. 귀교의 실제 상황을 바탕으로 앱을 직접 안내해 드립니다.",
   },
@@ -283,11 +288,6 @@ const ERRORS = {
   message: `메시지는 ${count(MESSAGE_MAX_LENGTH)}자 미만이어야 합니다.`,
 };
 
-const parentHub = appById("parent-hub");
-const staffHub = appById("staff-hub");
-const iotApp = appById("iot");
-const aiTutor = appById("ai-tutor");
-
 export const ko: Dictionaries = {
   aboutCapture: {
     heading: "앱이 실제로 작동하는 모습을 확인하세요.",
@@ -418,7 +418,7 @@ export const ko: Dictionaries = {
       {
         tag: "관계 만들기",
         title: "고객 방문",
-        text: "현장에서 맥락을 이해하고 업무 관계를 다집니다.",
+        text: "맥락을 직접 이해하고 업무 관계를 다집니다.",
       },
       {
         tag: "같은 방향",
@@ -433,7 +433,7 @@ export const ko: Dictionaries = {
       {
         tag: "성과 축하하기",
         title: "[Placeholder] 축하 행사",
-        text: "완료된 일은 초록색으로 바뀐 상태 표시 이상을 누릴 자격이 있으니까요.",
+        text: "완료된 일은 초록색으로 바뀐 상태 표시 이상을 누릴 자격이 있기 때문입니다.",
       },
     ].map((copy, i) => ({ ...careersInside.tiles[i], ...copy })),
   },
@@ -469,7 +469,7 @@ export const ko: Dictionaries = {
       },
       {
         title: "[Placeholder] 결과에 책임지기",
-        label: "책임감",
+        label: "주인의식",
         backTitle: "[Placeholder] 내 업무 너머를 봅니다.",
         text: "문제를 일찍 알리고, 품질을 지키며, 일이 실제로 성공하도록 책임집니다.",
       },
@@ -514,7 +514,7 @@ export const ko: Dictionaries = {
       breadcrumbCurrent: "문의하기",
       titleBefore: "귀하의 ",
       titleHighlight: "학교",
-      titleAfter: " 또는 프로젝트에 대해 이야기해 봅시다.",
+      titleAfter: " 또는 프로젝트에 대해 이야기해 보세요.",
       items: [
         `귀교의 상황을 바탕으로 한 ${parentHub.shortName}와 ${staffHub.shortName} 안내.`,
         "도입, 데이터, 지원에 대한 답변.",
@@ -679,7 +679,7 @@ export const ko: Dictionaries = {
     products: {
       ...homeDoors.products,
       title: "학교를 위한 제품",
-      line: "학부모, 학생, 교사, 경영진, 교직원을 위한 연결된 앱.",
+      line: "학부모, 학생, 교사, 관리자, 교직원을 위한 연결된 앱.",
     },
     services: {
       ...homeDoors.services,
@@ -701,7 +701,7 @@ export const ko: Dictionaries = {
       highlight: "Get IT done",
       tail: ".",
     },
-    sub: "AI 기반 개발의 개척자들이 만드는 학교와 캠퍼스를 위한 연결된 솔루션, 소프트웨어 제품, 전담 팀.",
+    sub: "AI 지원 개발을 이끄는 사람들이 만드는 학교와 캠퍼스를 위한 연결된 솔루션, 소프트웨어 제품, 전담 팀.",
     motion: { pause: "애니메이션 일시 정지", play: "애니메이션 재생" },
     cta: { href: homeHero.cta.href, label: "문의하기" },
   },
@@ -905,7 +905,7 @@ export const ko: Dictionaries = {
   productDetails: PRODUCT_DETAILS,
   productsMeta: {
     title: `학교용 앱: ${parentHub.shortName}, ${staffHub.shortName}, ${iotApp.shortName}, ${aiTutor.shortName} | XionTech`,
-    description: `학부모를 위한 ${parentHub.shortName}, 교직원·교사·경영진을 위한 ${staffHub.shortName}, 캠퍼스를 위한 ${iotApp.fullName}. XionTech의 연결된 학교 앱.`,
+    description: `학부모를 위한 ${parentHub.shortName}, 교직원·교사·관리자를 위한 ${staffHub.shortName}, 캠퍼스를 위한 ${iotApp.fullName}. XionTech의 연결된 학교 앱.`,
   },
   productsShowcase: {
     madeFor: "대상",

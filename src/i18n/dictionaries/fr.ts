@@ -46,8 +46,8 @@ import type { Dictionaries } from "../translations";
 const count = (n: number) => n.toLocaleString("fr-FR");
 
 const NEW_TAB = "(s’ouvre dans un nouvel onglet)";
-const US_DELIVERY_CENTER = "Centre de delivery États-Unis";
-const VIETNAM_DELIVERY_CENTER = "Centre de delivery Vietnam";
+const US_DELIVERY_CENTER = "Centre de développement aux États-Unis";
+const VIETNAM_DELIVERY_CENTER = "Centre de développement au Vietnam";
 const DETAILS_CONSENT =
   "Nous utilisons vos coordonnées uniquement pour répondre à cette demande.";
 const SEND_ERROR =
@@ -511,7 +511,7 @@ export const fr: Dictionaries = {
     messageRequired: "Parlez-nous un peu de votre projet.",
     length: `Ce champ doit faire moins de ${count(TEXT_MAX_LENGTH)} caractères.`,
     cv: "Veuillez téléverser votre CV au format PDF ou Word, 5 Mo maximum.",
-    note: `Votre note doit faire moins de ${count(MESSAGE_MAX_LENGTH)} caractères.`,
+    note: `Votre note d’accompagnement doit faire moins de ${count(MESSAGE_MAX_LENGTH)} caractères.`,
   },
   contactStrings: {
     metaTitle: "Réserver une démo ou démarrer un projet | XionTech",
@@ -745,7 +745,7 @@ export const fr: Dictionaries = {
     stats: [
       "Années d’expérience de direction dans le logiciel",
       "Couverture mondiale sur plusieurs fuseaux horaires",
-      "Stacks technologiques que nous maîtrisons",
+      "Stacks technologiques dans lesquelles nous travaillons",
       "Offres de services, de l’idée à l’exploitation",
       "Implantations : sièges à Plano et Hô Chi Minh-Ville",
     ].map((caption, i) => ({ ...homeStats.stats[i], caption })),
@@ -771,7 +771,7 @@ export const fr: Dictionaries = {
     phone: "Téléphone (facultatif)",
     cv: "CV",
     cvHelp: "PDF ou Word, 5 Mo maximum.",
-    note: "Lettre de motivation (facultatif)",
+    note: "Note d’accompagnement (facultatif)",
     submit: "Envoyer la candidature",
     sending: "Envoi en cours…",
     successHeading: SUMMIT,

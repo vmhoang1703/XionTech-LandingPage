@@ -57,9 +57,9 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:aboutOffices.offices[0].name` | Plano, Texas, USA | Plano, Texas, États-Unis |
 | `fr:aboutOffices.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (s’ouvre dans un nouvel onglet) |
 | `fr:aboutOffices.offices[0].zoneLabel` | US Central | Heure du Centre (États-Unis) |
-| `fr:aboutOffices.offices[0].tag` | US Delivery Center | Centre de delivery États-Unis |
+| `fr:aboutOffices.offices[0].tag` | US Delivery Center | Centre de développement aux États-Unis |
 | `fr:aboutOffices.offices[1].name` | Ho Chi Minh City, Vietnam | Hô Chi Minh-Ville, Vietnam |
-| `fr:aboutOffices.offices[1].tag` | Vietnam Delivery Center | Centre de delivery Vietnam |
+| `fr:aboutOffices.offices[1].tag` | Vietnam Delivery Center | Centre de développement au Vietnam |
 | `fr:aboutStory.title.lead` | Inspired by a mountain. | Inspirés par une montagne. |
 | `fr:aboutStory.title.middle` | United by  | Unis par un  |
 | `fr:aboutStory.title.highlight` | purpose | but |
@@ -215,7 +215,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:contactErrors.messageRequired` | Please tell us a little about your project. | Parlez-nous un peu de votre projet. |
 | `fr:contactErrors.length` | Please keep this under 200 characters. | Ce champ doit faire moins de 200 caractères. |
 | `fr:contactErrors.cv` | Please upload your CV as a PDF or Word file, up to 5 MB. | Veuillez téléverser votre CV au format PDF ou Word, 5 Mo maximum. |
-| `fr:contactErrors.note` | Please keep your note under 2,000 characters. | Votre note doit faire moins de 2 000 caractères. |
+| `fr:contactErrors.note` | Please keep your note under 2,000 characters. | Votre note d’accompagnement doit faire moins de 2 000 caractères. |
 | `fr:contactStrings.metaTitle` | Book a Demo or Start a Project \| XionTech | Réserver une démo ou démarrer un projet \| XionTech |
 | `fr:contactStrings.metaDescription` | Book a demo of Parent Hub and Staff Hub for your school, or tell us about your software project. XionTech, Ho Chi Minh City and Plano. | Réservez une démo de Parent Hub et Staff Hub pour votre école, ou parlez-nous de votre projet logiciel. XionTech, Hô Chi Minh-Ville et Plano. |
 | `fr:contactStrings.hero.breadcrumbLabel` | Breadcrumb | Fil d’Ariane |
@@ -343,8 +343,8 @@ For a native French reader. Every row is a French string on the site that differ
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:footerOffices[0].name`<br>`fr:hcmc.tag`<br>`fr:offices[1].tag` | Vietnam Delivery Center | Centre de delivery Vietnam |
-| `fr:footerOffices[1].name` | US Delivery Center | Centre de delivery États-Unis |
+| `fr:footerOffices[0].name`<br>`fr:hcmc.tag`<br>`fr:offices[1].tag` | Vietnam Delivery Center | Centre de développement au Vietnam |
+| `fr:footerOffices[1].name` | US Delivery Center | Centre de développement aux États-Unis |
 | `fr:footerOffices[1].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (s’ouvre dans un nouvel onglet) |
 | `fr:hcmc.name`<br>`fr:offices[1].name` | Ho Chi Minh City, Vietnam | Hô Chi Minh-Ville, Vietnam |
 | `fr:offices[0].name`<br>`fr:plano.name` | Plano, Texas, USA | Plano, Texas, États-Unis |
@@ -431,7 +431,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:homeStats.label` | Experience you can count on | Une expérience sur laquelle compter |
 | `fr:homeStats.stats[0].caption` | Years of leadership experience in software | Années d’expérience de direction dans le logiciel |
 | `fr:homeStats.stats[1].caption` | Global coverage across time zones | Couverture mondiale sur plusieurs fuseaux horaires |
-| `fr:homeStats.stats[2].caption` | Technology stacks we work in | Stacks technologiques que nous maîtrisons |
+| `fr:homeStats.stats[2].caption` | Technology stacks we work in | Stacks technologiques dans lesquelles nous travaillons |
 | `fr:homeStats.stats[3].caption` | Service offerings, from idea to operation | Offres de services, de l’idée à l’exploitation |
 | `fr:homeStats.stats[4].caption` | Locations: HQs in Plano and Ho Chi Minh City | Implantations : sièges à Plano et Hô Chi Minh-Ville |
 
@@ -451,7 +451,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:jobForm.email` | Email | E-mail |
 | `fr:jobForm.phone` | Phone (optional) | Téléphone (facultatif) |
 | `fr:jobForm.cvHelp` | PDF or Word, up to 5 MB. | PDF ou Word, 5 Mo maximum. |
-| `fr:jobForm.note` | Cover note (optional) | Lettre de motivation (facultatif) |
+| `fr:jobForm.note` | Cover note (optional) | Note d’accompagnement (facultatif) |
 | `fr:jobForm.submit` | Send application | Envoyer la candidature |
 | `fr:jobForm.sending` | Sending... | Envoi en cours… |
 | `fr:jobForm.successHeading` | Summit reached. Thank you! | Sommet atteint. Merci ! |

@@ -42,10 +42,10 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:aboutFaq.items[7].question` | How do we give feedback during a project? | 项目进行中我们如何反馈意见？ |
 | `zh:aboutFaq.items[7].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | 通过专属沟通渠道、定期沟通和敏捷冲刺，您的意见从始至终都会体现在产品中。 |
 | `zh:aboutFaq.items[8].question` | How do you measure and show value? | 你们如何衡量并展示价值？ |
-| `zh:aboutFaq.items[8].answer` | We track speed, quality, product impact and team autonomy, and share them openly with you. | 我们跟踪速度、质量、对产品的影响和团队自主性，并公开分享结果。 |
+| `zh:aboutFaq.items[8].answer` | We track speed, quality, product impact and team autonomy, and share them openly with you. | 我们跟踪速度、质量、对产品的影响和团队自主性，并向您公开结果。 |
 | `zh:aboutFaq.ask.label` | Still have a question? Ask us directly | 还有疑问？直接问我们 |
-| `zh:aboutHero.title.lead` | We’re XionTech, | 我们是 XionTech，以 |
-| `zh:aboutHero.title.middle` | technology built with  |  |
+| `zh:aboutHero.title.lead` | We’re XionTech, | 我们是 XionTech， |
+| `zh:aboutHero.title.middle` | technology built with  | 以 |
 | `zh:aboutHero.title.accent` | ownership | 主人翁精神 |
 | `zh:aboutHero.title.tail` | . | 打造技术。 |
 | `zh:aboutHero.text` | We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world. | 我们连接人才、创意与技术，打造卓越的 IT 系统，为所有人创造更美好的未来。我们在胡志明市和普莱诺为学校打造自有平台，并为世界各地的客户开发数字产品。 |
@@ -56,7 +56,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:aboutOffices.title` | Two headquarters, four locations. | 两个总部，四个地点。 |
 | `zh:aboutOffices.more` | Also in Ha Noi and Da Nang. | 我们也在河内和岘港。 |
 | `zh:aboutOffices.offices[0].name` | Plano, Texas, USA | 美国得克萨斯州普莱诺 |
-| `zh:aboutOffices.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 （在新标签页中打开） |
+| `zh:aboutOffices.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345（在新标签页中打开） |
 | `zh:aboutOffices.offices[0].zoneLabel` | US Central | 美国中部时间 |
 | `zh:aboutOffices.offices[0].tag` | US Delivery Center | 美国交付中心 |
 | `zh:aboutOffices.offices[1].name` | Ho Chi Minh City, Vietnam | 越南胡志明市 |
@@ -128,7 +128,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:careersGrowth.steps[4]` | Improve | 进步 |
 | `zh:careersHero.title.first` | Stay curious. | 保持好奇。 |
 | `zh:careersHero.title.second` | Build what’s next. | 创造未来。 |
-| `zh:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | 我们正在组建一支团队，成员学得快、善于提出更好的问题、能随变化而调整，并且关心结果，而不只是任务。在这里，你将参与开创用 AI 构建软件的新方式。 |
+| `zh:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | 我们正在组建一支团队，成员学得快、善于提出更好的问题、能随变化而调整，并且关心结果，而不只是任务。在这里，您将参与开创用 AI 构建软件的新方式。 |
 | `zh:careersHero.cta.label` | Explore open roles | 查看在招职位 |
 | `zh:careersInside.heading` | Inside XionTech. | 走进 XionTech。 |
 | `zh:careersInside.lede` | A look at the moments that shape life here: workshops, project starts, team days, celebrations, shared learning and the small moments in between. | 一窥塑造我们日常的那些时刻：研讨会、项目启动、团队日、庆祝活动、共同学习，以及其间的点滴瞬间。 |
@@ -153,7 +153,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] 活动照片 |
 | `zh:careersMeta.title` | Careers at XionTech \| Software Jobs in Ho Chi Minh City | XionTech 招聘 \| 胡志明市软件工作机会 |
 | `zh:careersMeta.description` | Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture. | 加入胡志明市的 XionTech。在以人为本的文化中，运用 AI/ML、生成式 AI、云和敏捷开发，打造学校平台和客户产品。 |
-| `zh:careersRoles.heading` | Find your next challenge. | 寻找你的下一个挑战。 |
+| `zh:careersRoles.heading` | Find your next challenge. | 寻找您的下一个挑战。 |
 | `zh:careersRoles.emptyText` | No open roles right now. | 目前暂无在招职位。 |
 | `zh:careersRoles.applyLabel` | View and apply | 查看并申请 |
 | `zh:careersValues.heading` | Five things that shape the way we work. | 塑造我们工作方式的五项原则。 |
@@ -167,7 +167,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:careersValues.cards[1].title` | [Placeholder] Own the outcome | [Placeholder] 对结果负责 |
 | `zh:careersValues.cards[1].label` | OWNERSHIP | 担当 |
 | `zh:careersValues.cards[1].backTitle` | [Placeholder] Care beyond your task. | [Placeholder] 着眼于自己的任务之外。 |
-| `zh:careersValues.cards[1].text` | Raise issues early, protect quality and take responsibility for whether the work actually succeeds. | 我们及早发现问题，守护质量，并确保工作真正取得成功。 |
+| `zh:careersValues.cards[1].text` | Raise issues early, protect quality and take responsibility for whether the work actually succeeds. | 我们及早提出问题，守护质量，并对工作是否真正成功负责。 |
 | `zh:careersValues.cards[2].title` | [Placeholder] Innovate with purpose | [Placeholder] 有目的地创新 |
 | `zh:careersValues.cards[2].label` | INNOVATE | 创新 |
 | `zh:careersValues.cards[2].backTitle` | [Placeholder] New is useful only when it helps. | [Placeholder] 新事物只有在有用时才有意义。 |
@@ -319,7 +319,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:journeyMap.intro.title` | Built apart. Better together. | 各自独立打造，携手效果更佳。 |
 | `zh:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。 |
 | `zh:productDetails.parent-hub.madeFor` | Parents and families | 家长与家庭 |
-| `zh:productDetails.parent-hub.features[0].title` | Alerts when your child reaches the gate | 孩子到达校门时即时通知 |
+| `zh:productDetails.parent-hub.features[0].title` | Alerts when your child reaches the gate | 孩子到达校门时通知 |
 | `zh:productDetails.parent-hub.features[1].title` | Scores and comments as soon as published | 成绩与反馈一经发布即可查看 |
 | `zh:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 与教师双向沟通 |
 | `zh:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 缴纳学费，收据清晰 |
@@ -350,10 +350,10 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | --- | --- | --- |
 | `zh:footerOffices[0].name`<br>`zh:hcmc.tag`<br>`zh:offices[1].tag` | Vietnam Delivery Center | 越南交付中心 |
 | `zh:footerOffices[1].name` | US Delivery Center | 美国交付中心 |
-| `zh:footerOffices[1].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 （在新标签页中打开） |
+| `zh:footerOffices[1].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345（在新标签页中打开） |
 | `zh:hcmc.name`<br>`zh:offices[1].name` | Ho Chi Minh City, Vietnam | 越南胡志明市 |
 | `zh:offices[0].name`<br>`zh:plano.name` | Plano, Texas, USA | 美国得克萨斯州普莱诺 |
-| `zh:offices[0].contacts[1].ariaLabel`<br>`zh:plano.contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345 （在新标签页中打开） |
+| `zh:offices[0].contacts[1].ariaLabel`<br>`zh:plano.contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345（在新标签页中打开） |
 | `zh:offices[0].zoneLabel`<br>`zh:plano.zoneLabel` | US Central | 美国中部时间 |
 | `zh:otherLocations` | Also in Ha Noi and Da Nang. | 我们也在河内和岘港。 |
 
@@ -366,7 +366,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:homeApps.title` | One connected school. | 互联的学校。 |
 | `zh:homeApps.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。 |
 | `zh:homeApps.apps[0].madeFor` | Parents and families | 家长与家庭 |
-| `zh:homeApps.apps[0].features[0]` | Alerts when your child reaches the gate | 孩子到达校门时即时通知 |
+| `zh:homeApps.apps[0].features[0]` | Alerts when your child reaches the gate | 孩子到达校门时通知 |
 | `zh:homeApps.apps[0].features[1]` | Scores and comments as soon as published | 成绩与反馈一经发布即可查看 |
 | `zh:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 教职员工、教师与管理层 |
 | `zh:homeApps.apps[1].features[0]` | Attendance and records in real time | 实时考勤与记录 |
@@ -382,7 +382,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:homeCapabilities.lede` | The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI. | 这是我们每一款学校应用和每一次交付背后的能力，以及一支不断寻找用 AI 让工作更智能的团队。 |
 | `zh:homeCapabilities.delivery.label` | Global delivery | 全球交付 |
 | `zh:homeCapabilities.delivery.title` | Two headquarters, one working day. | 两个总部，一个工作日。 |
-| `zh:homeCapabilities.delivery.line` | Teams across time zones keep delivery moving with practical overlap. | 跨时区的团队利用真正重叠的工作时间，让开发持续推进。 |
+| `zh:homeCapabilities.delivery.line` | Teams across time zones keep delivery moving with practical overlap. | 跨时区的团队利用切实可行的重叠工作时间，让开发持续推进。 |
 | `zh:homeCapabilities.industries.label` | Domain expertise | 领域专长 |
 | `zh:homeCapabilities.industries.title` | Deep in education. Built to adapt. | 深耕教育，灵活应变。 |
 | `zh:homeCapabilities.industries.line` | Education is where we go deepest, while the same engineering capability supports other industries too. | 教育是我们最深耕的领域，同样的工程能力也服务于其他行业。 |

@@ -64,7 +64,7 @@ const HOME = "首页";
 const withNewTab = (contacts: OfficeContact[], prefix = ""): OfficeContact[] =>
   contacts.map((contact) =>
     contact.external
-      ? { ...contact, ariaLabel: `${prefix}${contact.label} ${NEW_TAB}` }
+      ? { ...contact, ariaLabel: `${prefix}${contact.label}${NEW_TAB}` }
       : contact,
   );
 
@@ -89,7 +89,7 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
   "parent-hub": {
     madeFor: "家长与家庭",
     features: [
-      "孩子到达校门时即时通知",
+      "孩子到达校门时通知",
       "成绩与反馈一经发布即可查看",
       "与教师双向沟通",
       "缴纳学费，收据清晰",
@@ -177,7 +177,7 @@ const FAQ: Record<string, { question: string; answer: string }> = {
   },
   value: {
     question: "你们如何衡量并展示价值？",
-    answer: "我们跟踪速度、质量、对产品的影响和团队自主性，并公开分享结果。",
+    answer: "我们跟踪速度、质量、对产品的影响和团队自主性，并向您公开结果。",
   },
 };
 
@@ -296,8 +296,8 @@ export const zh: Dictionaries = {
   },
   aboutHero: {
     title: {
-      lead: "我们是 XionTech，以",
-      middle: "",
+      lead: "我们是 XionTech，",
+      middle: "以",
       accent: "主人翁精神",
       tail: "打造技术。",
     },
@@ -395,7 +395,7 @@ export const zh: Dictionaries = {
       first: "保持好奇。",
       second: "创造未来。",
     },
-    lede: "我们正在组建一支团队，成员学得快、善于提出更好的问题、能随变化而调整，并且关心结果，而不只是任务。在这里，你将参与开创用 AI 构建软件的新方式。",
+    lede: "我们正在组建一支团队，成员学得快、善于提出更好的问题、能随变化而调整，并且关心结果，而不只是任务。在这里，您将参与开创用 AI 构建软件的新方式。",
     cta: { href: careersHero.cta.href, label: "查看在招职位" },
   },
   careersInside: {
@@ -443,7 +443,7 @@ export const zh: Dictionaries = {
       "加入胡志明市的 XionTech。在以人为本的文化中，运用 AI/ML、生成式 AI、云和敏捷开发，打造学校平台和客户产品。",
   },
   careersRoles: {
-    heading: "寻找你的下一个挑战。",
+    heading: "寻找您的下一个挑战。",
     emptyText: "目前暂无在招职位。",
     applyLabel: "查看并申请",
   },
@@ -463,7 +463,7 @@ export const zh: Dictionaries = {
         title: "[Placeholder] 对结果负责",
         label: "担当",
         backTitle: "[Placeholder] 着眼于自己的任务之外。",
-        text: "我们及早发现问题，守护质量，并确保工作真正取得成功。",
+        text: "我们及早提出问题，守护质量，并对工作是否真正成功负责。",
       },
       {
         title: "[Placeholder] 有目的地创新",
@@ -650,7 +650,7 @@ export const zh: Dictionaries = {
     delivery: {
       label: "全球交付",
       title: "两个总部，一个工作日。",
-      line: "跨时区的团队利用真正重叠的工作时间，让开发持续推进。",
+      line: "跨时区的团队利用切实可行的重叠工作时间，让开发持续推进。",
     },
     industries: {
       label: "领域专长",

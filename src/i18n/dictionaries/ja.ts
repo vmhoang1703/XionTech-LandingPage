@@ -44,6 +44,9 @@ import type { Dictionaries } from "../translations";
 
 const count = (n: number) => n.toLocaleString("ja-JP");
 
+const parentHub = appById("parent-hub");
+const staffHub = appById("staff-hub");
+
 const NEW_TAB = "（新しいタブで開きます）";
 const US_DELIVERY_CENTER = "米国デリバリーセンター";
 const VIETNAM_DELIVERY_CENTER = "ベトナム デリバリーセンター";
@@ -58,12 +61,14 @@ const SUMMIT = "登頂成功。ありがとうございます！";
 const FLIP_FRONT = "めくって詳細を見る";
 const FLIP_BACK = "元に戻す";
 
-const withNewTab = (contacts: OfficeContact[]): OfficeContact[] =>
+// The accessible name of an external contact: its visible label, an optional
+// prefix (the bracketed views drop "WhatsApp" from the label) and the new-tab note.
+const withNewTab = (contacts: OfficeContact[], prefix = ""): OfficeContact[] =>
   contacts.map((contact) =>
     contact.external
       ? {
           ...contact,
-          ariaLabel: `${contact.ariaLabel?.replace(/ \(opens in a new tab\)$/, "")} ${NEW_TAB}`,
+          ariaLabel: `${prefix}${contact.label} ${NEW_TAB}`,
         }
       : contact,
   );
@@ -103,7 +108,7 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
     features: [
       "出欠と記録をリアルタイムで",
       "クラス、時間割、成績",
-      "Parent Hub を通じた保護者へのメッセージ",
+      `${parentHub.shortName} を通じた保護者へのメッセージ`,
       "管理職向けの今日の優先事項ダッシュボード",
     ].map((title, i) => ({
       ...productDetails["staff-hub"].features[i],
@@ -150,7 +155,7 @@ const FAQ: Record<string, { question: string; answer: string }> = {
       "中核は EdTech です。ヘルスケア、物流、プライベートエクイティの分野にもサービスを提供しています。",
   },
   "try-apps": {
-    question: "Parent Hub や Staff Hub を学校で試すにはどうすればよいですか？",
+    question: `${parentHub.shortName} や ${staffHub.shortName} を学校で試すにはどうすればよいですか？`,
     answer:
       "お気軽にお問い合わせください。貴校の実際の場面に沿ってアプリをご案内します。",
   },
@@ -286,7 +291,7 @@ const ERRORS = {
 export const ja: Dictionaries = {
   aboutCapture: {
     heading: "アプリの実際の動きをご覧ください。",
-    lede: "業務用メールアドレスをご入力いただければ、Parent Hub と Staff Hub のご案内を手配します。",
+    lede: `業務用メールアドレスをご入力いただければ、${parentHub.shortName} と ${staffHub.shortName} のご案内を手配します。`,
   },
   aboutFaq: {
     title: "ご質問にお答えします",
@@ -322,7 +327,7 @@ export const ja: Dictionaries = {
       {
         ...planoJa,
         tag: US_DELIVERY_CENTER,
-        contacts: withNewTab(aboutPlano.contacts),
+        contacts: withNewTab(aboutPlano.contacts, "WhatsApp "),
       },
       { ...hcmcJa, contacts: aboutHcmc.contacts },
     ],
@@ -499,8 +504,7 @@ export const ja: Dictionaries = {
   },
   contactStrings: {
     metaTitle: "デモの予約・プロジェクトのご相談 | XionTech",
-    metaDescription:
-      "貴校向けに Parent Hub と Staff Hub のデモをご予約いただくか、ソフトウェアプロジェクトについてお聞かせください。XionTech、ホーチミン市とプレイノ。",
+    metaDescription: `貴校向けに ${parentHub.shortName} と ${staffHub.shortName} のデモをご予約いただくか、ソフトウェアプロジェクトについてお聞かせください。XionTech、ホーチミン市とプレイノ。`,
     hero: {
       breadcrumbLabel: "パンくずリスト",
       breadcrumbHome: "ホーム",
@@ -509,7 +513,7 @@ export const ja: Dictionaries = {
       titleHighlight: "学校",
       titleAfter: "やプロジェクトについてお話ししましょう。",
       items: [
-        "貴校の実際の場面に沿った Parent Hub と Staff Hub のご案内。",
+        `貴校の実際の場面に沿った ${parentHub.shortName} と ${staffHub.shortName} のご案内。`,
         "導入、データ、サポートに関するご質問への回答。",
         "プロジェクトの場合：4 つのステップの第一歩となる、最初のディスカバリーの打ち合わせ。",
       ],
@@ -602,12 +606,12 @@ export const ja: Dictionaries = {
       {
         ...attendance,
         title: "出欠を記録",
-        text: "教員が Staff Hub で生徒の出欠を記録します。",
+        text: `教員が ${staffHub.shortName} で生徒の出欠を記録します。`,
       },
       {
         ...parentStop,
         title: "保護者にお知らせ",
-        text: "Parent Hub が、生徒が学校に着いたことを保護者に通知します。",
+        text: `${parentHub.shortName} が、生徒が学校に着いたことを保護者に通知します。`,
       },
       {
         ...learn,
@@ -631,7 +635,7 @@ export const ja: Dictionaries = {
     {
       ...footerOffices[1],
       name: US_DELIVERY_CENTER,
-      contacts: withNewTab(footerOffices[1].contacts),
+      contacts: withNewTab(footerOffices[1].contacts, "WhatsApp "),
     },
   ],
   hcmc: hcmcJa,

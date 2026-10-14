@@ -54,7 +54,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:aboutMeta.title` | About XionTech \| Get IT Done | XionTech 소개 \| Get IT Done |
 | `ko:aboutMeta.description` | XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia. | XionTech는 미국 플레이노와 베트남 호찌민시에 본사를 두고 하노이와 다낭에 팀을 둔 교육 기술 기업이자 소프트웨어 파트너로, 미국, 유럽, 호주의 고객을 지원합니다. |
 | `ko:aboutOffices.title` | Two headquarters, four locations. | 두 개의 본사, 네 개의 거점. |
-| `ko:aboutOffices.more` | Also in Ha Noi and Da Nang. | 하노이와 다낭에도 거점이 있습니다. |
+| `ko:aboutOffices.more` | Also in Ha Noi and Da Nang. | 하노이와 다낭에도 있습니다. |
 | `ko:aboutOffices.offices[0].name` | Plano, Texas, USA | 미국 텍사스주 플레이노 |
 | `ko:aboutOffices.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (새 탭에서 열림) |
 | `ko:aboutOffices.offices[0].zoneLabel` | US Central | 미국 중부 시간 |
@@ -109,7 +109,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | Where | English | 한국어 |
 | --- | --- | --- |
 | `ko:appTaglines.parent-hub` | Keeps parents close to every school day, on their phone. | 학부모가 휴대폰으로 매일의 학교생활을 가까이에서 확인합니다. |
-| `ko:appTaglines.staff-hub` | One workspace where staff, teachers and leaders share the same data. | 교직원, 교사, 경영진이 같은 데이터를 공유하는 하나의 업무 공간입니다. |
+| `ko:appTaglines.staff-hub` | One workspace where staff, teachers and leaders share the same data. | 교직원, 교사, 관리자가 같은 데이터를 공유하는 하나의 업무 공간입니다. |
 | `ko:appTaglines.iot` | Run classroom devices, lighting, climate and access from one screen. | 교실 기기, 조명, 냉난방, 출입을 하나의 화면에서 제어합니다. |
 | `ko:appTaglines.ai-tutor` | [Placeholder] Solve new problems on your own. Not just read solutions. | [Placeholder] 해답을 읽기만 하는 것이 아니라 새로운 문제를 스스로 풉니다. |
 
@@ -137,7 +137,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:careersInside.tiles[0].text` | Hands-on sessions where the team tries new tools, agentic workflows and better ways to work. | 팀이 새로운 도구, 에이전트 기반 워크플로, 더 나은 일하는 방식을 시험해 보는 실습 세션입니다. |
 | `ko:careersInside.tiles[1].tag` | Build relationships | 관계 만들기 |
 | `ko:careersInside.tiles[1].title` | Client visits | 고객 방문 |
-| `ko:careersInside.tiles[1].text` | Understand context directly and build stronger working relationships. | 현장에서 맥락을 이해하고 업무 관계를 다집니다. |
+| `ko:careersInside.tiles[1].text` | Understand context directly and build stronger working relationships. | 맥락을 직접 이해하고 업무 관계를 다집니다. |
 | `ko:careersInside.tiles[2].tag` | Shared direction | 같은 방향 |
 | `ko:careersInside.tiles[2].title` | Town halls | 타운홀 미팅 |
 | `ko:careersInside.tiles[2].text` | What changed, what matters now, and where we’re going next. | 무엇이 바뀌었는지, 지금 무엇이 중요한지, 다음은 어디로 가는지. |
@@ -146,7 +146,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:careersInside.tiles[3].text` | New work starts with shared context, not a mysterious task list. | 새로운 일은 알 수 없는 작업 목록이 아니라 공유된 맥락에서 시작합니다. |
 | `ko:careersInside.tiles[4].tag` | Celebrate progress | 성과 축하하기 |
 | `ko:careersInside.tiles[4].title` | [Placeholder] Celebration | [Placeholder] 축하 행사 |
-| `ko:careersInside.tiles[4].text` | Because shipped work deserves more than a green status label. | 완료된 일은 초록색으로 바뀐 상태 표시 이상을 누릴 자격이 있으니까요. |
+| `ko:careersInside.tiles[4].text` | Because shipped work deserves more than a green status label. | 완료된 일은 초록색으로 바뀐 상태 표시 이상을 누릴 자격이 있기 때문입니다. |
 | `ko:careersLife.heading` | Life at XionTech. | XionTech에서의 생활. |
 | `ko:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] 팀 사진 |
 | `ko:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] 사무실 사진 |
@@ -165,7 +165,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:careersValues.cards[0].backTitle` | [Placeholder] Move without losing direction. | [Placeholder] 방향을 잃지 않고 움직입니다. |
 | `ko:careersValues.cards[0].text` | Stay flexible and adapt when new information or a better answer changes the path. | 새로운 정보나 더 나은 답이 길을 바꾸면 유연하게 적응합니다. |
 | `ko:careersValues.cards[1].title` | [Placeholder] Own the outcome | [Placeholder] 결과에 책임지기 |
-| `ko:careersValues.cards[1].label` | OWNERSHIP | 책임감 |
+| `ko:careersValues.cards[1].label` | OWNERSHIP | 주인의식 |
 | `ko:careersValues.cards[1].backTitle` | [Placeholder] Care beyond your task. | [Placeholder] 내 업무 너머를 봅니다. |
 | `ko:careersValues.cards[1].text` | Raise issues early, protect quality and take responsibility for whether the work actually succeeds. | 문제를 일찍 알리고, 품질을 지키며, 일이 실제로 성공하도록 책임집니다. |
 | `ko:careersValues.cards[2].title` | [Placeholder] Innovate with purpose | [Placeholder] 목적 있는 혁신 |
@@ -226,7 +226,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:contactStrings.hero.breadcrumbCurrent` | Contact | 문의하기 |
 | `ko:contactStrings.hero.titleBefore` | Let's talk about your  | 귀하의  |
 | `ko:contactStrings.hero.titleHighlight` | school | 학교 |
-| `ko:contactStrings.hero.titleAfter` |  or your project. |  또는 프로젝트에 대해 이야기해 봅시다. |
+| `ko:contactStrings.hero.titleAfter` |  or your project. |  또는 프로젝트에 대해 이야기해 보세요. |
 | `ko:contactStrings.hero.items[0]` | A walkthrough of Parent Hub and Staff Hub using your school's scenarios. | 귀교의 상황을 바탕으로 한 Parent Hub와 Staff Hub 안내. |
 | `ko:contactStrings.hero.items[1]` | Answers on setup, data and support. | 도입, 데이터, 지원에 대한 답변. |
 | `ko:contactStrings.hero.items[2]` | For projects: a first Discovery conversation, the first of our four steps. | 프로젝트의 경우: 4단계 중 첫 단계인 탐색 상담. |
@@ -323,7 +323,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:productDetails.parent-hub.features[1].title` | Scores and comments as soon as published | 성적과 피드백을 게시 즉시 확인 |
 | `ko:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 교사와 양방향 메시지 |
 | `ko:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 명확한 영수증과 함께 학비 납부 |
-| `ko:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 교직원, 교사, 경영진 |
+| `ko:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 교직원, 교사, 학교 관리자 |
 | `ko:productDetails.staff-hub.features[0].title` | Attendance and records in real time | 실시간 출결과 기록 |
 | `ko:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 학급, 시간표, 성적 |
 | `ko:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub를 통한 학부모 메시지 |
@@ -332,12 +332,12 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:productDetails.iot.features[0].title` | Projectors, displays and sound | 프로젝터, 디스플레이, 음향 |
 | `ko:productDetails.iot.features[2].title` | Doors and zones managed centrally | 중앙에서 관리하는 출입문과 구역 |
 | `ko:productDetails.iot.features[3].title` | Energy use across the campus | 캠퍼스 전체의 에너지 사용량 |
-| `ko:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 교사의 지도를 받는 학생 |
+| `ko:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 교사와 함께하는 학생 |
 | `ko:productDetails.ai-tutor.features[0].title` | Skill-by-skill diagnosis | 역량별 진단 |
 | `ko:productDetails.ai-tutor.features[1].title` | Step-by-step hints once you have tried | 스스로 시도한 뒤에 받는 단계별 힌트 |
 | `ko:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 혼자 해낼 수 있을 때에만 인정되는 숙달 |
 | `ko:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 학교용 앱: Parent Hub, Staff Hub, IoT, AI Tutor \| XionTech |
-| `ko:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 학부모를 위한 Parent Hub, 교직원·교사·경영진을 위한 Staff Hub, 캠퍼스를 위한 IoT Device Management. XionTech의 연결된 학교 앱. |
+| `ko:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 학부모를 위한 Parent Hub, 교직원·교사·관리자를 위한 Staff Hub, 캠퍼스를 위한 IoT Device Management. XionTech의 연결된 학교 앱. |
 | `ko:productsShowcase.madeFor` | Made for | 대상 |
 | `ko:productsShowcase.featuresHeading` | Features | 기능 |
 | `ko:roadDialog.close` | Close | 닫기 |
@@ -355,7 +355,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:offices[0].name`<br>`ko:plano.name` | Plano, Texas, USA | 미국 텍사스주 플레이노 |
 | `ko:offices[0].contacts[1].ariaLabel`<br>`ko:plano.contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345 (새 탭에서 열림) |
 | `ko:offices[0].zoneLabel`<br>`ko:plano.zoneLabel` | US Central | 미국 중부 시간 |
-| `ko:otherLocations` | Also in Ha Noi and Da Nang. | 하노이와 다낭에도 거점이 있습니다. |
+| `ko:otherLocations` | Also in Ha Noi and Da Nang. | 하노이와 다낭에도 있습니다. |
 
 ## Home
 
@@ -368,13 +368,13 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:homeApps.apps[0].madeFor` | Parents and families | 학부모와 가족 |
 | `ko:homeApps.apps[0].features[0]` | Alerts when your child reaches the gate | 자녀가 교문에 도착하면 알림 |
 | `ko:homeApps.apps[0].features[1]` | Scores and comments as soon as published | 성적과 피드백을 게시 즉시 확인 |
-| `ko:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 교직원, 교사, 경영진 |
+| `ko:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 교직원, 교사, 학교 관리자 |
 | `ko:homeApps.apps[1].features[0]` | Attendance and records in real time | 실시간 출결과 기록 |
 | `ko:homeApps.apps[1].features[1]` | Classes, timetables and grades | 학급, 시간표, 성적 |
 | `ko:homeApps.apps[2].madeFor` | School operations and facilities teams | 시설 운영 및 유지보수 팀 |
 | `ko:homeApps.apps[2].features[0]` | Projectors, displays and sound | 프로젝터, 디스플레이, 음향 |
 | `ko:homeApps.apps[2].features[1]` | Lighting and climate on the timetable | 시간표에 따른 조명과 냉난방 |
-| `ko:homeApps.apps[3].madeFor` | Students, with teachers alongside | 교사의 지도를 받는 학생 |
+| `ko:homeApps.apps[3].madeFor` | Students, with teachers alongside | 교사와 함께하는 학생 |
 | `ko:homeApps.apps[3].features[0]` | Skill-by-skill diagnosis | 역량별 진단 |
 | `ko:homeApps.apps[3].features[1]` | Step-by-step hints once you have tried | 스스로 시도한 뒤에 받는 단계별 힌트 |
 | `ko:homeApps.link.label` | Explore products | 제품 살펴보기 |
@@ -395,7 +395,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:homeCapabilities.motto.line` | Ownership of our commitments and pride in quality. | 약속에 책임을 지고 품질에 자부심을 갖습니다. |
 | `ko:homeDoors.label` | What we do | 우리가 하는 일 |
 | `ko:homeDoors.products.title` | Products for schools | 학교를 위한 제품 |
-| `ko:homeDoors.products.line` | Connected apps for parents, students, teachers, leaders and school staff. | 학부모, 학생, 교사, 경영진, 교직원을 위한 연결된 앱. |
+| `ko:homeDoors.products.line` | Connected apps for parents, students, teachers, leaders and school staff. | 학부모, 학생, 교사, 관리자, 교직원을 위한 연결된 앱. |
 | `ko:homeDoors.services.label` | Outsourcing services | 아웃소싱 서비스 |
 | `ko:homeDoors.services.title` | Your software delivery team | 귀사의 소프트웨어 개발 팀 |
 | `ko:homeDoors.services.line` | Dedicated teams and end-to-end delivery for companies building digital products. | 디지털 제품을 만드는 기업을 위한 전담 팀과 엔드투엔드 개발. |
@@ -413,7 +413,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:homeFaq.link.label` | See all questions | 모든 질문 보기 |
 | `ko:homeHero.title.lines[0]` | Build smarter. | 더 스마트하게 만들고. |
 | `ko:homeHero.title.lines[1]` | Ship faster. | 더 빠르게 출시하고. |
-| `ko:homeHero.sub` | Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development. | AI 기반 개발의 개척자들이 만드는 학교와 캠퍼스를 위한 연결된 솔루션, 소프트웨어 제품, 전담 팀. |
+| `ko:homeHero.sub` | Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development. | AI 지원 개발을 이끄는 사람들이 만드는 학교와 캠퍼스를 위한 연결된 솔루션, 소프트웨어 제품, 전담 팀. |
 | `ko:homeHero.motion.pause` | Pause motion | 애니메이션 일시 정지 |
 | `ko:homeHero.motion.play` | Play motion | 애니메이션 재생 |
 | `ko:homeHero.cta.label` | Get in touch | 문의하기 |
