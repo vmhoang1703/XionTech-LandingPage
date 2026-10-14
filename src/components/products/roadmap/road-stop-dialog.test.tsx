@@ -3,7 +3,27 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { APPS, appTaglinesVi } from "@/content/apps";
 import { dayRoad, productDetails, productsShowcase } from "@/content/products";
+import { ProductScene } from "../scene/product-scene";
 import { RoadStopDialog } from "./road-stop-dialog";
+
+// The scene loads on the first click (next/dynamic); here it is a stand-in
+// that shows what the dialog gave it, and the loaders it was given are kept.
+const loaders = vi.hoisted(() => [] as (() => Promise<unknown>)[]);
+vi.mock("next/dynamic", async () => {
+  const { createElement } = await import("react");
+  return {
+    default: (load: () => Promise<unknown>) => {
+      loaders.push(load);
+      return function Scene(props: { index: number; words: string[] }) {
+        return createElement("div", {
+          "data-testid": "scene",
+          "data-index": props.index,
+          "data-words": props.words.join("|"),
+        });
+      };
+    },
+  };
+});
 
 const LAST = dayRoad.stops.length - 1;
 
@@ -99,34 +119,90 @@ describe("RoadStopDialog", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  describe("backdrop", () => {
-    const box = { left: 100, right: 300, top: 100, bottom: 300 } as DOMRect;
+  describe("click outside the card", () => {
+    const scene = () => screen.getByTestId("scene");
 
-    it("closes on a click outside the box", () => {
+    it("closes on a click on the scene, which fills the window", () => {
       const { dialog, onClose } = setup(0);
-      vi.spyOn(dialog, "getBoundingClientRect").mockReturnValue(box);
-      fireEvent.click(dialog, { clientX: 10, clientY: 10 });
+      fireEvent.pointerDown(scene());
+      fireEvent.click(scene());
       expect(dialog.open).toBe(false);
       expect(onClose).toHaveBeenCalledTimes(1);
     });
 
-    it("stays open on a click inside the box", () => {
+    it("closes on a click on the dialog itself", () => {
       const { dialog, onClose } = setup(0);
-      vi.spyOn(dialog, "getBoundingClientRect").mockReturnValue(box);
-      fireEvent.click(dialog, { clientX: 200, clientY: 200 });
+      fireEvent.click(dialog);
+      expect(dialog.open).toBe(false);
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it("stays open on a click in the card", () => {
+      const { dialog, onClose } = setup(0);
+      const heading = screen.getByRole("heading", { level: 2 });
+      fireEvent.pointerDown(heading);
+      fireEvent.click(heading);
       expect(dialog.open).toBe(true);
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it("stays open on a click on the content", () => {
+    it("stays open when a press in the card ends outside it", () => {
       const { dialog, onClose } = setup(0);
-      vi.spyOn(dialog, "getBoundingClientRect").mockReturnValue(box);
-      fireEvent.click(screen.getByRole("heading", { level: 2 }), {
-        clientX: 10,
-        clientY: 10,
-      });
+      fireEvent.pointerDown(screen.getByRole("heading", { level: 2 }));
+      fireEvent.click(scene());
       expect(dialog.open).toBe(true);
       expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it("closes on a click outside after an earlier press in the card", () => {
+      const { dialog } = setup(0);
+      fireEvent.pointerDown(screen.getByRole("heading", { level: 2 }));
+      fireEvent.pointerDown(scene());
+      fireEvent.click(scene());
+      expect(dialog.open).toBe(false);
+    });
+  });
+
+  describe("the scene behind the card", () => {
+    const words = () => screen.getByTestId("scene").dataset.words;
+
+    it("loads the scene's own chunk, only when asked to", async () => {
+      expect(loaders).toHaveLength(1);
+      expect(await loaders[0]()).toBe(ProductScene);
+    });
+
+    it("is not built while the dialog is closed", () => {
+      setup(null);
+      expect(screen.queryByTestId("scene")).toBeNull();
+    });
+
+    it("stands the app's name at an app's stop, and passes the stop", () => {
+      setup(1);
+      expect(words()).toBe("Staff Hub");
+      expect(screen.getByTestId("scene").dataset.index).toBe("1");
+    });
+
+    it("stands the brand at the first stop", () => {
+      setup(0);
+      expect(words()).toBe("XionTech");
+    });
+
+    it("stands all four apps at the last stop", () => {
+      setup(LAST);
+      expect(words()).toBe(APPS.map((app) => app.shortName).join("|"));
+    });
+
+    it("moves with Next, without being built again", () => {
+      const { rerender, onMove, onClose } = setup(1);
+      const before = screen.getByTestId("scene");
+      rerender(<RoadStopDialog index={2} onMove={onMove} onClose={onClose} />);
+      expect(screen.getByTestId("scene")).toBe(before);
+      expect(words()).toBe("Parent Hub");
+    });
+
+    it("is decoration: the card keeps the app's name as real text", () => {
+      setup(2);
+      expect(screen.getByRole("heading", { name: "Parent Hub" })).toBeTruthy();
     });
   });
 

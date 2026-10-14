@@ -1,0 +1,390 @@
+/* The stop scene behind the stop dialog (product-scene.tsx; this file loads
+   with it, on the first click on a stop).
+
+   The scene is drawn on a fixed stage in design pixels, wide (1000x640) or
+   tall (760x840), and scaled to fit the free part of the window: right of the
+   stop card on a landscape window, above the card's sheet on a portrait one.
+   The camera is a stack of wrappers that all turn about the ground point under
+   the towers: .rd-orbit (the pointer's look-around), .rd-sway (a slow drift)
+   and .rd-world (the camera move and its resting view). Letters are stacks of
+   flat copies of one glyph, one behind the other (.rd-slice), so they stand as
+   towers with depth. Only transform and opacity move. */
+
+.rd-scene {
+  --rd-ground-y: 70%;
+  /* How far the road runs in front of the towers. */
+  --rd-road-z: 190px;
+
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  background:
+    radial-gradient(
+      ellipse 46% 30% at 62% 52%,
+      rgb(255 192 0 / 0.22),
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      #c9d9f0 0%,
+      var(--color-ice) 34%,
+      var(--color-page) 54%,
+      var(--color-mist) 100%
+    );
+}
+
+/* The free part of the window, which sets how far the stage is scaled. */
+.rd-frame {
+  position: absolute;
+  inset: 0 0 var(--rd-sheet, 50%) 0;
+  container: rdframe / size;
+}
+
+@media (orientation: landscape) {
+  .rd-frame {
+    inset: 0 0 0 var(--rd-side, 0px);
+  }
+}
+
+.rd-fit {
+  --rd-w: 1000px;
+  --rd-h: 640px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--rd-w);
+  height: var(--rd-h);
+  margin: calc(var(--rd-h) / -2) 0 0 calc(var(--rd-w) / -2);
+  scale: 0.45;
+}
+
+@supports (width: calc(1px * tan(atan2(1px, 2px)))) {
+  .rd-fit {
+    scale: min(
+      tan(atan2(100cqw, var(--rd-w))),
+      tan(atan2(100cqh, var(--rd-h)))
+    );
+  }
+}
+
+@container rdframe (aspect-ratio < 1) {
+  .rd-fit {
+    --rd-w: 760px;
+    --rd-h: 840px;
+  }
+}
+
+.rd-persp {
+  position: absolute;
+  inset: 0;
+  perspective: 1500px;
+  perspective-origin: 50% 38%;
+}
+
+/* All four are zero-size anchors at the ground point, so each turns about it. */
+.rd-orbit,
+.rd-sway,
+.rd-world,
+.rd-city {
+  position: absolute;
+  top: var(--rd-ground-y);
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+.rd-sway,
+.rd-world,
+.rd-city {
+  top: 0;
+  left: 0;
+}
+
+.rd-orbit {
+  transform: rotateX(var(--pitch, 0deg)) rotateY(var(--yaw, 0deg));
+}
+
+.rd-world {
+  --rd-cx: 0px;
+  --rd-cy: 30px;
+  --rd-cz: 0px;
+  --rd-pitch: -17deg;
+  --rd-yaw: -22deg;
+
+  transform: translate3d(var(--rd-cx), var(--rd-cy), var(--rd-cz))
+    rotateX(var(--rd-pitch)) rotateY(var(--rd-yaw));
+}
+
+/* Four words stand wider than one: a little to the left makes room. */
+.rd-scene[data-count="4"] .rd-world {
+  --rd-cx: -40px;
+}
+
+@container rdframe (aspect-ratio < 1) {
+  .rd-world {
+    --rd-yaw: -20deg;
+    --rd-pitch: -22deg;
+  }
+}
+
+/* The ground: a flat plane, its road slid so the shown stop lies under the
+   towers (its pin at --px, --py), and the road runs --rd-road-z in front. */
+.rd-ground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  transform: rotateX(90deg)
+    translate(calc(var(--px) * -1px), calc(var(--py) * -1px + var(--rd-road-z)));
+}
+
+.rd-plane {
+  position: absolute;
+  mask-image: radial-gradient(
+    ellipse 50% 64% at 50% 64%,
+    #000 50%,
+    transparent 100%
+  );
+}
+
+.rd-lawn {
+  fill: var(--color-white);
+  fill-opacity: 0.72;
+}
+
+.rd-grid {
+  fill: none;
+  stroke: var(--color-ice);
+  stroke-width: 2;
+}
+
+.rd-edge,
+.rd-asphalt,
+.rd-line {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.rd-edge {
+  stroke: var(--color-ice);
+  stroke-width: 84;
+}
+
+.rd-asphalt {
+  stroke: var(--color-navy);
+  stroke-width: 64;
+}
+
+.rd-line {
+  stroke: var(--color-amber-pale);
+  stroke-dasharray: 22 22;
+  stroke-width: 4;
+}
+
+.rd-pin-halo {
+  fill: none;
+}
+
+.rd-pin-dot {
+  fill: var(--color-white);
+  stroke: var(--color-navy);
+  stroke-width: 6;
+}
+
+.rd-pin-no {
+  fill: var(--color-navy);
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.rd-pin[data-on="true"] .rd-pin-halo {
+  fill: rgb(255 192 0 / 0.4);
+}
+
+.rd-pin[data-on="true"] .rd-pin-dot {
+  fill: var(--color-amber);
+}
+
+/* A word: its towers side by side on the ground, baseline on the ground.
+   --w-* is the wide stage's fit, --n-* the tall stage's (scene-layout.ts). */
+.rd-word {
+  --size: var(--w-size);
+  --stretch: var(--w-stretch);
+  --x: var(--w-x);
+  --z: var(--w-z);
+  --depth: calc(var(--size) * 0.62);
+  --step: calc(var(--depth) / var(--slices));
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  transform-style: preserve-3d;
+  transform: translate3d(var(--x), 0, var(--z)) translate(-50%, -100%);
+  font-family: var(--font-display);
+  font-size: var(--size);
+  font-weight: 500;
+  /* A line box as tall as a capital (0.75em), so the baseline is its bottom
+     and a letter stands on the ground with nothing under it. */
+  line-height: 0.75;
+  text-transform: uppercase;
+  white-space: pre;
+}
+
+@container rdframe (aspect-ratio < 1) {
+  .rd-word {
+    --size: var(--n-size);
+    --stretch: var(--n-stretch);
+    --x: var(--n-x);
+    --z: var(--n-z);
+  }
+}
+
+/* The shadow the word casts on the ground, back and to the right. */
+.rd-word::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: calc(var(--size) * 1.5);
+  background: linear-gradient(180deg, rgb(11 23 48 / 0.3), transparent);
+  transform-origin: 50% 0;
+  transform: rotateX(-90deg) skewX(32deg);
+}
+
+.rd-gap {
+  flex: none;
+  width: calc(var(--size) * 0.45);
+}
+
+/* A tower: one letter, its pivot at the baseline, stretched up. */
+.rd-tower {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+  transform-origin: 50% 100%;
+  transform: scale3d(1, calc(var(--stretch) * var(--h)), 1);
+}
+
+/* One flat copy of the letter. The first is the front face and holds the
+   place; the others stand behind it, each a step further back and a shade
+   darker, which reads as the tower's sides and roof. The top of each copy is
+   amber: the lit roof. */
+.rd-slice {
+  --shade: color-mix(
+    in srgb,
+    var(--color-ink) calc(var(--k) / var(--slices) * 78%),
+    var(--color-navy-2)
+  );
+
+  display: block;
+  background:
+    linear-gradient(180deg, var(--color-amber) 0 2.5%, transparent 2.5%),
+    linear-gradient(var(--shade), var(--shade));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.rd-slice:not(:first-child) {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(calc(var(--step) * var(--k) * -1));
+}
+
+/* Without color-mix the sides are one flat navy, not shaded by depth. */
+@supports not (color: color-mix(in srgb, red, blue)) {
+  .rd-slice {
+    --shade: var(--color-navy);
+  }
+}
+
+/* The front face: lit from above, with a line for each floor. */
+.rd-slice:first-child {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 0.09em,
+      rgb(255 255 255 / 0.18) 0.09em 0.105em
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-navy-soft) 8%,
+      var(--color-navy-2) 45%,
+      var(--color-navy) 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* The camera move and the rise of the towers. Without data-play="on" (reduced
+   motion, a saved Pause) none of it runs: the scene rests at its final view. */
+@keyframes rd-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes rd-dolly {
+  from {
+    transform: translate3d(90px, 190px, 520px) rotateX(8deg) rotateY(10deg);
+  }
+}
+
+@keyframes rd-rise {
+  from {
+    transform: scale3d(1, 0.03, 0.2);
+  }
+}
+
+@keyframes rd-sway {
+  from {
+    transform: rotateX(0.8deg) rotateY(-2.4deg);
+  }
+
+  to {
+    transform: rotateX(-0.8deg) rotateY(2.4deg);
+  }
+}
+
+.rd-scene[data-play="off"] {
+  cursor: default;
+}
+
+.rd-scene[data-play="on"]:active {
+  cursor: grabbing;
+}
+
+.rd-scene[data-play="on"] {
+  animation: rd-in var(--transition-duration-crossfade) var(--ease-brand) both;
+}
+
+.rd-scene[data-play="on"] .rd-orbit {
+  transition: transform var(--transition-duration-reveal) var(--ease-brand);
+}
+
+.rd-scene[data-play="on"] .rd-world {
+  animation: rd-dolly 3600ms cubic-bezier(0.5, 0, 0.1, 1) both;
+}
+
+.rd-scene[data-play="on"] .rd-sway {
+  animation: rd-sway 12s ease-in-out 3s infinite alternate both;
+}
+
+.rd-scene[data-play="on"] .rd-ground {
+  transition: transform var(--transition-duration-highlight) var(--ease-brand);
+}
+
+.rd-scene[data-play="on"] .rd-tower {
+  animation: rd-rise 1600ms var(--ease-brand) both;
+  animation-delay: calc(500ms + var(--at) * 90ms);
+}

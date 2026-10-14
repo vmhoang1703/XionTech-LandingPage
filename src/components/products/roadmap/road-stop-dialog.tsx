@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from "@phosphor-icons/react";
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import { useLocalized } from "@/components/layout/locale-link";
 import {
@@ -22,10 +23,19 @@ import {
   type DayRoad,
 } from "@/content/products";
 import { MapBadge } from "../map/map-badge";
+import { sceneWords } from "../scene/scene-words";
+
+// The 3D scene behind the card is built on the first click on a stop: its code
+// and stylesheet do not load with the page.
+const ProductScene = dynamic(
+  () => import("../scene/product-scene").then((m) => m.ProductScene),
+  { ssr: false },
+);
 
 // The modal for one stop on the school-day road: the step in full, the app
 // at work there (its "Made for" line and features), and Previous/Next to walk
-// the road.
+// the road. Behind the card, the stop's product name stands up as 3D towers
+// on a piece of the road. The scene is decoration; the card has the text.
 
 type Props = Readonly<{
   index: number | null;
@@ -53,17 +63,18 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
     if (index === null && dialog.open) dialog.close();
   }, [index]);
 
-  // A click on the backdrop (the dialog element itself, outside its box) closes it.
+  // A click anywhere outside the card (the scene fills the window) closes it,
+  // unless the press began in the card: a text selection dragged out of it
+  // ends with a click on the scene.
+  const pressedInCard = useRef(false);
+  const inCard = (target: EventTarget) =>
+    (target as Element).closest(".road-dialog-body") !== null;
+  const onPointerDown = (event: React.PointerEvent<HTMLDialogElement>) => {
+    pressedInCard.current = inCard(event.target);
+  };
   const onClick = (event: React.MouseEvent<HTMLDialogElement>) => {
-    const dialog = ref.current;
-    if (!dialog || event.target !== dialog) return;
-    const box = dialog.getBoundingClientRect();
-    const inside =
-      event.clientX >= box.left &&
-      event.clientX <= box.right &&
-      event.clientY >= box.top &&
-      event.clientY <= box.bottom;
-    if (!inside) dialog.close();
+    if (inCard(event.target) || pressedInCard.current) return;
+    ref.current?.close();
   };
 
   const stop = index === null ? null : road.stops[index];
@@ -74,51 +85,58 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
       className="road-dialog"
       aria-labelledby="road-dialog-h"
       onClose={onClose}
+      onPointerDown={onPointerDown}
       onClick={onClick}
     >
       {stop && index !== null ? (
-        <div className="road-dialog-body">
-          <div className="road-dialog-top">
-            <span className="road-dialog-step">
-              {index + 1} / {road.stops.length}
-              {stop.time ? ` · ${stop.time}` : ""}
-            </span>
-            <button
-              type="button"
-              className="road-dialog-close"
-              onClick={() => ref.current?.close()}
-            >
-              <XIcon aria-hidden="true" />
-              <span className="sr-only">{close}</span>
-            </button>
-          </div>
-          <h2 id="road-dialog-h">{stop.title}</h2>
-          <p className="road-dialog-text">{stop.text}</p>
+        <>
+          <ProductScene
+            index={index}
+            words={sceneWords(stop, index === LAST)}
+          />
+          <div className="road-dialog-body">
+            <div className="road-dialog-top">
+              <span className="road-dialog-step">
+                {index + 1} / {road.stops.length}
+                {stop.time ? ` · ${stop.time}` : ""}
+              </span>
+              <button
+                type="button"
+                className="road-dialog-close"
+                onClick={() => ref.current?.close()}
+              >
+                <XIcon aria-hidden="true" />
+                <span className="sr-only">{close}</span>
+              </button>
+            </div>
+            <h2 id="road-dialog-h">{stop.title}</h2>
+            <p className="road-dialog-text">{stop.text}</p>
 
-          {stop.app ? <StopApp id={stop.app} /> : null}
-          {!stop.app && index === LAST ? <AllApps /> : null}
+            {stop.app ? <StopApp id={stop.app} /> : null}
+            {!stop.app && index === LAST ? <AllApps /> : null}
 
-          <div className="road-dialog-nav">
-            <button
-              type="button"
-              className="btn btn-glass"
-              disabled={index === 0}
-              onClick={() => onMove(index - 1)}
-            >
-              <ArrowLeftIcon aria-hidden="true" />
-              {index > 0 ? road.stops[index - 1].title : road.start}
-            </button>
-            <button
-              type="button"
-              className="btn btn-glass"
-              disabled={index === LAST}
-              onClick={() => onMove(index + 1)}
-            >
-              {index < LAST ? road.stops[index + 1].title : road.finish}
-              <ArrowRightIcon aria-hidden="true" />
-            </button>
+            <div className="road-dialog-nav">
+              <button
+                type="button"
+                className="btn btn-glass"
+                disabled={index === 0}
+                onClick={() => onMove(index - 1)}
+              >
+                <ArrowLeftIcon aria-hidden="true" />
+                {index > 0 ? road.stops[index - 1].title : road.start}
+              </button>
+              <button
+                type="button"
+                className="btn btn-glass"
+                disabled={index === LAST}
+                onClick={() => onMove(index + 1)}
+              >
+                {index < LAST ? road.stops[index + 1].title : road.finish}
+                <ArrowRightIcon aria-hidden="true" />
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       ) : null}
     </dialog>
   );

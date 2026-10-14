@@ -4001,29 +4001,79 @@
   }
 
   /* The stop modal. */
+  /* A full-window stage. The 3D scene behind it
+     (components/products/scene) fills it; the stop's text sits in a card at the
+     left, or in a sheet at the bottom of a portrait window. The browser's own
+     dialog box (centred, 6px and 2em short of the window) is undone here, and
+     the reset has taken its auto margin: it was left in the top-left corner. */
   .road-dialog {
-    width: min(560px, calc(100vw - 32px));
-    max-height: calc(100dvh - 48px);
+    --rd-side: min(484px, 46vw);
+    --rd-sheet: min(52dvh, 560px);
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
     padding: 0;
     border: 0;
-    border-radius: var(--radius-lg);
-    background: var(--color-white);
+    overflow: hidden;
+    background: transparent;
     color: var(--color-text);
-    box-shadow: 0 24px 60px rgb(22 54 99 / 0.25);
+  }
+
+  .road-dialog[open] {
+    display: flex;
+    align-items: center;
+    padding: 24px;
   }
 
   .road-dialog::backdrop {
     background: rgb(16 34 63 / 0.55);
   }
 
-  .road-dialog-body {
-    padding: 24px;
+  /* The page behind does not scroll while a stop is open. */
+  html:has(.road-dialog[open]) {
+    overflow: hidden;
   }
 
+  .road-dialog-body {
+    position: relative;
+    z-index: 1;
+    width: calc(var(--rd-side) - 48px);
+    max-height: 100%;
+    padding: 0 24px 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    box-shadow:
+      0 2px 6px rgb(22 54 99 / 0.08),
+      0 28px 70px rgb(22 54 99 / 0.3);
+  }
+
+  @media (orientation: portrait) {
+    .road-dialog[open] {
+      align-items: flex-end;
+      padding: 0;
+    }
+
+    .road-dialog-body {
+      width: 100%;
+      max-height: var(--rd-sheet);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+  }
+
+  /* The heading row stays in view while the card scrolls. */
   .road-dialog-top {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-block: 16px 4px;
+    background: var(--color-white);
   }
 
   .road-dialog-step {
@@ -4035,8 +4085,8 @@
   .road-dialog-close {
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border: 1px solid var(--color-mist);
     border-radius: var(--radius-full);
     background: var(--color-white);
@@ -4065,6 +4115,12 @@
     display: flex;
     gap: 12px;
     align-items: flex-start;
+  }
+
+  /* A badge keeps its whole text: it was squeezed to "S-" beside a long line. */
+  .road-dialog .map-badge {
+    flex: none;
+    white-space: nowrap;
   }
 
   .road-dialog-app h3 {
@@ -4124,6 +4180,28 @@
     justify-content: space-between;
     gap: 12px;
     margin-top: 24px;
+  }
+
+  /* A button holds a whole stop title, which may need two lines. */
+  .road-dialog-nav button {
+    flex: 1 1 0;
+    min-width: 0;
+    height: auto;
+    min-height: var(--spacing-button-height);
+    padding-block: 10px;
+    padding-inline: 18px;
+    line-height: 1.25;
+    text-align: start;
+    white-space: normal;
+  }
+
+  .road-dialog-nav button:last-child {
+    justify-content: flex-end;
+    text-align: end;
+  }
+
+  .road-dialog-nav button svg {
+    flex: none;
   }
 
   .road-dialog-nav button:disabled {
