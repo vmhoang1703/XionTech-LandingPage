@@ -41,7 +41,10 @@ const {
   generateStaticParams,
 } = await import("./layout");
 const { siteFooter } = await import("@/content/site-footer");
-const { LocaleLink } = await import("@/components/layout/locale-link");
+const { LocaleLink, useLocalized } =
+  await import("@/components/layout/locale-link");
+const { homeHero, homeHeroVi } = await import("@/content/home");
+const { DICTIONARIES } = await import("@/i18n/dictionaries");
 
 function params(locale: string) {
   return { params: Promise.resolve({ locale }) };
@@ -228,4 +231,29 @@ describe("RootLayout", () => {
       } as LayoutProps<"/[locale]">),
     ).rejects.toThrow("NEXT_NOT_FOUND");
   });
+});
+
+describe("RootLayout client strings", () => {
+  function HeroProbe() {
+    const hero = useLocalized("homeHero", { en: homeHero, vi: homeHeroVi });
+    return <output>{JSON.stringify(hero)}</output>;
+  }
+
+  it.each(["ja", "ko"] as const)(
+    "sends the %s client dictionaries to client islands below it",
+    async (locale) => {
+      const html = (await RootLayout({
+        children: <HeroProbe />,
+        ...params(locale),
+      } as LayoutProps<"/[locale]">)) as ReactElement<{
+        children: ReactElement<{ children: ReactElement[] }>;
+      }>;
+      const { container } = render(html.props.children.props.children);
+      const expected = DICTIONARIES[locale]?.homeHero;
+      expect(expected).toBeDefined();
+      expect(container.querySelector("output")?.textContent).toBe(
+        JSON.stringify(expected),
+      );
+    },
+  );
 });
