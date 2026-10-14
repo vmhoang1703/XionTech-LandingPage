@@ -1797,3 +1797,11 @@ Template:
 - **What the AI did:** logged every running animation per page and device. Finding: timings are the same on every device; the pages open differently (four pages had no hero motion, one had words, one a shine, two an underline). It recorded options on six pages at phone and desktop, then built the lead's pick, B: the News words entrance on every page title.
 - **AI got it wrong:** the preview wrapped words with a script after load, which is fine for a video but would flash the text and fight React. It built the real one as `heroWords()` in the server HTML instead. Seven smoke tests then failed because they looked for the title as one string; the tests now compare the text with the tags removed.
 - **Left out on purpose:** the motion-rules table (one easing curve, fixed durations): the lead picked B only.
+
+## 2026-10-14 — Speed pass 1: Home on a phone
+
+- **Prompt:** "start the speed pass" (Lighthouse mobile Home was 64-72; the rule is 90).
+- **What the AI did:** measured before changing. Local Lighthouse mobile run three times each. A CPU profile of the first 700 ms showed one function, the hero effect, using 200-340 ms: opening WebGL and waiting for the GPU to build the silk shader (`getProgramParameter(LINK_STATUS)` blocks). Turning WebGL off with `--disable-3d-apis` lifted the score to 80-86, which confirmed it.
+- **Built:** the silk shader asks the `KHR_parallel_shader_compile` extension if the build is done and draws once it is (no extension: the old check). The scene opens 2.5 s after the page has loaded (`SCENE_DELAY_MS`), when the title has finished rising; the static glow shows until then. Home: 64-72 to 85-86, Total Blocking Time 500-840 ms to 90-120 ms. Phone and desktop start the scene at the same time.
+- **AI got it wrong:** I first guessed fonts. Dropping the Be Vietnam Pro preload made the first paint slower (1.5 s to 2.1 s) and dropping the italic files changed nothing; both were reverted. The scene's per-frame cost (1.5 ms) was also not the problem.
+- **Still open:** Largest Contentful Paint stays 4.1-4.3 s in the simulation (even with WebGL off). With JavaScript blocked it is 3.2 s, so the JavaScript and font bytes loaded before the first paint set it. Home is 85-86, not yet 90.

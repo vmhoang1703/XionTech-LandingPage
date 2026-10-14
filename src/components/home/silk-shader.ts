@@ -67,32 +67,67 @@ export function createSilk(canvas: HTMLCanvasElement): Silk | null {
   gl.attachShader(program, vertex);
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
-  gl.useProgram(program);
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-    gl.STATIC_DRAW,
-  );
-  const position = gl.getAttribLocation(program, "p");
-  gl.enableVertexAttribArray(position);
-  gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-
-  const uniform = (name: string) => gl.getUniformLocation(program, name);
-  for (const [name, hex] of Object.entries(PALETTE)) {
-    gl.uniform3fv(uniform(name), toRgb(hex));
+  // Asking for the link result makes the page wait for the GPU to build the
+  // shader (about 200 ms on a slow device, all before the first paint). With
+  // the parallel-compile extension we ask only whether it is done, and draw
+  // once it is; the static glow shows until then.
+  const parallel = gl.getExtension("KHR_parallel_shader_compile");
+  if (!parallel && !gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    return null;
   }
-  const timeUniform = uniform("t");
-  const threadUniform = uniform("a");
-  const sizeUniform = uniform("r");
+
+  let timeUniform: WebGLUniformLocation | null = null;
+  let threadUniform: WebGLUniformLocation | null = null;
+  let sizeUniform: WebGLUniformLocation | null = null;
   let lastTime = SILK_START_TIME;
   let lastThreads = 1;
+  let ready = false;
+  let failed = false;
+
+  const fit = () => {
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(sizeUniform, canvas.width, canvas.height);
+  };
+
+  // Sets the program up once it is linked; false while it is still building.
+  const setUp = () => {
+    if (
+      parallel &&
+      !gl.getProgramParameter(program, parallel.COMPLETION_STATUS_KHR)
+    ) {
+      return false;
+    }
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      failed = true;
+      return false;
+    }
+    gl.useProgram(program);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+      gl.STATIC_DRAW,
+    );
+    const position = gl.getAttribLocation(program, "p");
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+    const uniform = (name: string) => gl.getUniformLocation(program, name);
+    for (const [name, hex] of Object.entries(PALETTE)) {
+      gl.uniform3fv(uniform(name), toRgb(hex));
+    }
+    timeUniform = uniform("t");
+    threadUniform = uniform("a");
+    sizeUniform = uniform("r");
+    fit();
+    ready = true;
+    return true;
+  };
 
   const draw = (time: number, threads = 1) => {
     lastTime = time;
     lastThreads = threads;
+    if (!ready && (failed || !setUp())) return;
     gl.uniform1f(timeUniform, time);
     gl.uniform1f(threadUniform, threads);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -102,8 +137,7 @@ export function createSilk(canvas: HTMLCanvasElement): Silk | null {
     const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
     canvas.width = canvas.clientWidth * ratio;
     canvas.height = canvas.clientHeight * ratio;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform2f(sizeUniform, canvas.width, canvas.height);
+    if (ready) fit();
     draw(lastTime, lastThreads);
   };
 
