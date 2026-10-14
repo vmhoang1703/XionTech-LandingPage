@@ -198,3 +198,30 @@ the prototype (served locally) next to development, and marked a pick. Lead pick
 | Services cards | Hover | Mouse | Icon pops | 4B | Yes (CSS test) |
 | Why XionTech | Scroll in | Mouse, touch | Card parts rise, chips pop | 5B | Yes (1280) |
 
+## Round 6 (lead, 2026-10-14): page and word motion in sync
+
+Lead: "We must make syncs on page animation and words animation across all devices for consistency."
+Claude measured every CSS animation per page at 390, 768 and 1440: durations are identical on every
+device, so the gap was between pages. Page openings: Home, Products, Careers, Privacy had no hero motion;
+News had words rising; Services a shine; About and Demo the underline draw. Options were recorded
+(A now, B words, C block); lead picked **B**. The motion-rules table (one easing, fixed durations) was
+offered and is **not** built.
+
+- **Hero entrance:** `heroWords()` (`src/components/sections/hero-words.tsx`) renders each title word as
+  `<span data-hw style="--i:n">` in the server HTML; a highlight is one more word. CSS ("Hero entrance"):
+  words rise 0.7 s with a small turn, 80 ms apart (capped at the eighth word), the line under the title
+  at 0.55 s, the button at 0.7 s, the highlight draws at 0.9 s. Fixed delays: the same on every device.
+  Plays on first paint with no script; off with reduced motion. Applied to Home, Services, Products,
+  About, Careers, News, Demo, Privacy, job pages, news stories and the 404 page. Replaces the News-only
+  `press-h` markup.
+
+### UX checks (round 6)
+
+| Part | State or action | Input | Expected (visible) | Source | Checked |
+| --- | --- | --- | --- | --- | --- |
+| Every page title | Load | n/a | Words rise one by one (last word by 0.4 s), then the line (0.55 s), then the button (0.7 s) | Pick B | Yes (measured 390, 768, 1440 on 10 pages) |
+| Same page | Load on phone, tablet, desktop | n/a | Identical delays | Lead | Yes |
+| Highlight | Load | n/a | Draws after the words land (0.9 s) | Pick B | Yes (CSS test) |
+| Reduced motion, no script | Load | n/a | Title and text show at once | Motion rule | Yes (CSS, no-JS unit test) |
+| Heading text | Read | Screen reader, search | Reads as one title | a11y | Yes (unit, e2e on the HTML text) |
+

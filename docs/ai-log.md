@@ -1754,3 +1754,10 @@ Template:
 - **Rule kept:** the project allows only transform and opacity in motion. Amber's mountain (mask), card unfold (clip-path) and shine (text gradient) were rebuilt with moving windows and counter-moving copies so they look the same and still follow it.
 - **AI got it wrong:** the first shine put a second copy of "get IT done" in the heading, so the heading text read the words twice (screen readers skipped it, search would not). The copy now comes from `data-text` in CSS.
 - **Content kept honest:** Amber's summit tag also said "Founded in America"; that is the placeholder founding line (Q12), so the tag says "newXion" only.
+
+## 2026-10-14 — Round 6: page and word motion in sync
+
+- **Prompt:** "We must make syncs on page animation and words animation across all devices for consistency." Then, after the preview: "B".
+- **What the AI did:** logged every running animation per page and device. Finding: timings are the same on every device; the pages open differently (four pages had no hero motion, one had words, one a shine, two an underline). It recorded options on six pages at phone and desktop, then built the lead's pick, B: the News words entrance on every page title.
+- **AI got it wrong:** the preview wrapped words with a script after load, which is fine for a video but would flash the text and fight React. It built the real one as `heroWords()` in the server HTML instead. Seven smoke tests then failed because they looked for the title as one string; the tests now compare the text with the tags removed.
+- **Left out on purpose:** the motion-rules table (one easing curve, fixed durations): the lead picked B only.
