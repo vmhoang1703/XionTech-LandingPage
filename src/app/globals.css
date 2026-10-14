@@ -5035,6 +5035,22 @@
     padding: 24px;
   }
 
+  /* Phones: the circle is the full 44px tap target, so no hit area sticks out. */
+  .w-more {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .w-more-trigger {
+    width: 44px;
+    height: 44px;
+  }
+
+  .w-more-trigger::after {
+    inset: 0;
+  }
+
   .w-more.open {
     flex-basis: 100%;
     width: 100%;
