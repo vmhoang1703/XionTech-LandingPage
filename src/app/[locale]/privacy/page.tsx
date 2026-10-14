@@ -1,14 +1,22 @@
-import { localeMetadata } from "@/i18n/page-metadata";
+import type { Metadata } from "next";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { PRIVACY as PRIVACY_EN, PRIVACY_VI } from "@/content/privacy";
 import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 import { heroWords } from "@/components/sections/hero-words";
 
-export const generateMetadata = localeMetadata({
-  en: { title: PRIVACY_EN.metaTitle, description: PRIVACY_EN.metaDescription },
-  vi: { title: PRIVACY_VI.metaTitle, description: PRIVACY_VI.metaDescription },
-});
+export async function generateMetadata({
+  params,
+}: Readonly<
+  Pick<PageProps<"/[locale]/privacy">, "params">
+>): Promise<Metadata> {
+  const { locale } = await params;
+  const { metaTitle, metaDescription } = pickLocale(
+    isLocale(locale) ? locale : "en",
+    { en: PRIVACY_EN, vi: PRIVACY_VI },
+  );
+  return { title: metaTitle, description: metaDescription };
+}
 
 // Plain reading page: no capture band (FR-33 exception). The aurora hero
 // background and shared breadcrumbs come with Story 1.6, after demo.

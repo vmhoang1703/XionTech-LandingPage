@@ -1,19 +1,12 @@
+import { DICTIONARIES } from "./dictionaries";
 import type { Locale } from "./locales";
+import { SERVICE_NAMES } from "./service-names";
 
 // Site shell strings (header, footer, language menu, 404). Page bodies are not translated here.
 // Vietnamese comes from the prototype (data-vi) where it has the string, otherwise it is
 // AI-translated for native review; each string's source is in docs/translations/vi-review.md.
 
-const names = {
-  productEngineering: "Product Engineering",
-  aiAnalytics: "AI-Driven Analytics",
-  coCreation: "Product Co-Creation",
-  staffing: "Staffing Service",
-  customApps: "Custom App Development",
-  lowCode: "Low-code Solutions",
-  aiSolutions: "AI-Powered Solutions",
-  cloud: "Cloud Computing",
-};
+const names = SERVICE_NAMES;
 
 export interface ShellDictionary {
   names: Record<keyof typeof names, string>;
@@ -35,7 +28,7 @@ export interface ShellDictionary {
     cityPlano: string;
     cityHcmc: string;
   };
-  language: { label: string; en: string; vi: string };
+  language: { label: string };
   footer: {
     blurb: string;
     products: string;
@@ -78,7 +71,7 @@ const en: ShellDictionary = {
     cityPlano: "Plano",
     cityHcmc: "Ho Chi Minh City",
   },
-  language: { label: "Language", en: "English", vi: "Tiếng Việt" },
+  language: { label: "Language" },
   footer: {
     blurb:
       "Education technology products and software delivery services for schools and businesses.",
@@ -122,11 +115,7 @@ const vi: ShellDictionary = {
     cityPlano: "Plano",
     cityHcmc: "TP. Hồ Chí Minh",
   },
-  language: {
-    label: "Ngôn ngữ",
-    en: "English",
-    vi: "Tiếng Việt",
-  },
+  language: { label: "Ngôn ngữ" },
   footer: {
     blurb:
       "Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp.",
@@ -151,4 +140,11 @@ const vi: ShellDictionary = {
   },
 };
 
-export const SHELL: Record<Locale, ShellDictionary> = { en, vi };
+export const SHELL: Record<Locale, ShellDictionary> = {
+  en,
+  vi,
+  ja: DICTIONARIES.ja?.shell ?? en,
+  fr: DICTIONARIES.fr?.shell ?? en,
+  ko: DICTIONARIES.ko?.shell ?? en,
+  zh: DICTIONARIES.zh?.shell ?? en,
+};

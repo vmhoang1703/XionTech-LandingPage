@@ -4604,6 +4604,45 @@
 }
 
 /*
+  Japanese, Korean and Chinese pages load Noto Sans from Google Fonts
+  (layout.tsx). It follows each brand face, so Latin keeps the brand font.
+*/
+:root:lang(ja) {
+  --font-cjk: "Noto Sans JP";
+}
+:root:lang(ko) {
+  --font-cjk: "Noto Sans KR";
+}
+:root:lang(zh) {
+  --font-cjk: "Noto Sans SC";
+}
+:root:is(:lang(ja), :lang(ko), :lang(zh)) {
+  --font-display: var(--font-unbounded), var(--font-cjk), system-ui, sans-serif;
+  --font-brand: var(--font-lexend-exa), var(--font-cjk), system-ui, sans-serif;
+  --font-body:
+    var(--font-be-vietnam-pro), var(--font-cjk), system-ui, sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), var(--font-cjk), ui-monospace, monospace;
+}
+
+/*
+  Japanese, Korean and Chinese text has no case and reads badly tracked, so the
+  negative and uppercase letter-spacing is reset. Unlayered and !important on
+  purpose: it must beat every tracking utility and component rule.
+*/
+:lang(ja),
+:lang(ko),
+:lang(zh),
+:lang(ja)::before,
+:lang(ko)::before,
+:lang(zh)::before,
+:lang(ja)::after,
+:lang(ko)::after,
+:lang(zh)::after {
+  letter-spacing: normal !important;
+}
+
+/*
   E-S1 Home. Unlayered on purpose: these Home-only overrides must beat the
   shared StatsBand utilities and the .doors / .badge component rules.
 */
@@ -4994,6 +5033,22 @@
 @media (max-width: 640px) {
   .w-card {
     padding: 24px;
+  }
+
+  /* Phones: the circle is the full 44px tap target, so no hit area sticks out. */
+  .w-more {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .w-more-trigger {
+    width: 44px;
+    height: 44px;
+  }
+
+  .w-more-trigger::after {
+    inset: 0;
   }
 
   .w-more.open {
@@ -7274,4 +7329,13 @@ main > .page-scene:last-child > .surface-navy:last-child {
     opacity: 0;
     scale: 0.8;
   }
+}
+
+/*
+  CJK headings need more room than the tight Latin display leading. Unlayered
+  and last on purpose: it must beat the component heading rules above.
+*/
+/* On the heading itself, so an English fallback island (lang="en") keeps its leading. */
+:is(h1, h2, h3, h4):is(:lang(ja), :lang(ko), :lang(zh)) {
+  line-height: 1.35;
 }

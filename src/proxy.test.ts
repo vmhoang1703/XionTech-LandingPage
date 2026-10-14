@@ -14,6 +14,48 @@ describe("proxy", () => {
     expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/vi");
   });
 
+  it.each(["zh-CN", "zh", "zh-SG", "zh-Hans", "zh-Hans-SG", "zh-Hans-TW"])(
+    "redirects / to /zh for Accept-Language %s",
+    (tag) => {
+      const res = run("/", { "accept-language": tag });
+      expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/zh");
+    },
+  );
+
+  it.each([
+    "zh-TW,zh;q=0.9,en;q=0.8",
+    "zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3",
+    "zh-Hant-HK,zh;q=0.9",
+  ])(
+    "sends a Traditional browser with a bare zh fallback (%s) to /en",
+    (tag) => {
+      const res = run("/", { "accept-language": tag });
+      expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
+    },
+  );
+
+  it("ignores a refused Traditional tag (q=0): zh-TW;q=0,zh;q=0.9 goes to /zh", () => {
+    const res = run("/", { "accept-language": "zh-TW;q=0,zh;q=0.9" });
+    expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/zh");
+  });
+
+  it.each(["zh-TW", "zh-Hant", "zh-HK"])(
+    "sends Traditional Chinese %s to /en",
+    (tag) => {
+      const res = run("/", { "accept-language": tag });
+      expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
+    },
+  );
+
+  it.each([
+    ["ja-JP", "/ja"],
+    ["fr-CA,en;q=0.5", "/fr"],
+    ["ko", "/ko"],
+  ])("redirects / for Accept-Language %s to %s", (header, path) => {
+    const res = run("/", { "accept-language": header });
+    expect(new URL(res.headers.get("location") ?? "").pathname).toBe(path);
+  });
+
   it("falls back to /en for an unparseable header", () => {
     const res = run("/", { "accept-language": ";;;" });
     expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
@@ -23,7 +65,7 @@ describe("proxy", () => {
     expect(new URL(run("/").headers.get("location") ?? "").pathname).toBe(
       "/en",
     );
-    const fr = run("/", { "accept-language": "fr-FR,de;q=0.8" });
+    const fr = run("/", { "accept-language": "de-DE,it;q=0.8" });
     expect(new URL(fr.headers.get("location") ?? "").pathname).toBe("/en");
   });
 
@@ -49,7 +91,7 @@ describe("proxy", () => {
   });
 
   it("ignores an invalid cookie", () => {
-    const res = run("/about", { cookie: "locale=fr" });
+    const res = run("/about", { cookie: "locale=de" });
     expect(new URL(res.headers.get("location") ?? "").pathname).toBe(
       "/en/about",
     );
@@ -62,11 +104,11 @@ describe("proxy", () => {
   });
 
   it("leaves an unknown locale to the 404 page", () => {
-    const res = run("/fr/products");
+    const res = run("/de/products");
     expect(res.headers.get("location")).toBeNull();
     expect(
       new URL(res.headers.get("x-middleware-rewrite") ?? "").pathname,
-    ).toBe("/en/fr/products");
+    ).toBe("/en/de/products");
   });
 
   it("matcher excludes api, _next and files with an extension", () => {

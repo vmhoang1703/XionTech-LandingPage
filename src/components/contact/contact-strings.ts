@@ -240,21 +240,51 @@ export const ERRORS_VI: ReadonlyMap<string, string> = new Map([
   ],
 ]);
 
-/** One English field error in the page's language; an unknown one becomes the generic send error. */
-export function localizeError(message: string, locale: Locale): string {
+/** The English errors outside `CONTACT_STRINGS.errors`, keyed for translation. */
+export const CONTACT_ERROR_MESSAGES = {
+  messageRequired: MESSAGE_REQUIRED_ERROR,
+  length: LENGTH_ERROR,
+  cv: JOB_ERRORS.cv,
+  note: JOB_ERRORS.note,
+};
+
+/** A non-en/vi locale's contact errors: English to translated pairs, and the generic send error. */
+export interface ContactErrorText {
+  pairs: [string, string][];
+  fallback: string;
+}
+
+/**
+ * One English field error in the page's language; an unknown one becomes the
+ * generic send error. Locales other than en and vi read `text`, which the
+ * [locale] layout resolves on the server (useContactErrorText); without it the
+ * English message stays.
+ */
+export function localizeError(
+  message: string,
+  locale: Locale,
+  text?: ContactErrorText,
+): string {
   if (locale === "en") return message;
-  return ERRORS_VI.get(message) ?? CONTACT_STRINGS_VI.form.sendError;
+  if (locale === "vi") {
+    return ERRORS_VI.get(message) ?? CONTACT_STRINGS_VI.form.sendError;
+  }
+  if (!text) return message;
+  return (
+    text.pairs.find(([english]) => english === message)?.[1] ?? text.fallback
+  );
 }
 
 /** Field errors (from the rules or the server, always English) in the page's language. */
 export function localizeErrors(
   errors: Partial<Record<string, string>>,
   locale: Locale,
+  text?: ContactErrorText,
 ): Partial<Record<string, string>> {
   if (locale === "en") return errors;
   const localized: Partial<Record<string, string>> = {};
   for (const [field, message] of Object.entries(errors)) {
-    if (message) localized[field] = localizeError(message, locale);
+    if (message) localized[field] = localizeError(message, locale, text);
   }
   return localized;
 }

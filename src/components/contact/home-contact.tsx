@@ -22,10 +22,8 @@ export function HomeContact({ locale }: Readonly<{ locale: Locale }>) {
     en: CONTACT_STRINGS,
     vi: CONTACT_STRINGS_VI,
   }).home;
-  const [plano, hcmc] = pickLocale(locale, {
-    en: [planoEn, hcmcEn],
-    vi: [planoVi, hcmcVi],
-  });
+  const plano = pickLocale(locale, { en: planoEn, vi: planoVi });
+  const hcmc = pickLocale(locale, { en: hcmcEn, vi: hcmcVi });
   const emails = byScheme(plano, "mailto:");
   const phones = [plano, hcmc].flatMap((office) =>
     byScheme(office, "tel:").map((c) => ({ city: city(office), ...c })),

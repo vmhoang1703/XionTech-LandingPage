@@ -1,19 +1,17 @@
 #!/usr/bin/env node
-// Writes docs/translations/vi-review.md: every Vietnamese string of the site next to its
+// Builds docs/translations/vi-review.md: every Vietnamese string of the site next to its
 // English, with its source (Amber's prototype or AI), for a native reader to check.
+// review.mjs writes it, with the other locales' pages.
 //
 // The list is generated from the dictionaries themselves, so it cannot go stale:
 // vi-review.test.mjs fails when the committed file differs from a fresh run.
 // A dictionary pair is a `fooVi` / `FOO_VI` export next to `foo` / `FOO` in the same module,
 // plus the few pairs named in NAMED_PAIRS and OVERRIDES below.
 //
-// Usage: node scripts/i18n/vi-review.mjs   (or: npm run i18n:vi-review)
-import { readFileSync, writeFileSync } from "node:fs";
+// Usage: npm run i18n:review   (npm run i18n:vi-review is an alias)
 import { join } from "node:path";
-import { pathToFileURL } from "node:url";
 
 const ROOT = join(import.meta.dirname, "../..");
-const PROTOTYPE_JSON = join(ROOT, "src/i18n/prototype-vi.json");
 export const OUTPUT = join(ROOT, "docs/translations/vi-review.md");
 
 /** Modules whose `*Vi` / `*_VI` exports are dictionaries, and the heading of the page each belongs to. */
@@ -64,26 +62,33 @@ function isObject(value) {
   return typeof value === "object" && value !== null;
 }
 
-function walk(en, vi, path, found, same) {
+/**
+ * Compares a translation with its English, pushing each string path to `found` (differs) or
+ * `same`. Throws, naming `locale`, when the translation lacks a key or has another shape.
+ */
+export function walk(en, tr, path, found, same, locale = "vi") {
   if (typeof en === "string") {
-    if (typeof vi !== "string") throw new Error(`${path}: vi is not a string`);
-    if (vi !== en) found.push({ path, english: en, vi });
-    else same.push({ path, english: en, vi });
+    if (typeof tr !== "string")
+      throw new Error(`${path}: ${locale} is not a string`);
+    if (tr !== en) found.push({ path, english: en, vi: tr });
+    else same.push({ path, english: en, vi: tr });
     return;
   }
   if (!isObject(en)) return;
-  if (!isObject(vi)) throw new Error(`${path}: vi has no matching object`);
+  if (!isObject(tr) || Array.isArray(tr) !== Array.isArray(en))
+    throw new Error(`${path}: ${locale} has no matching object`);
+  const next = (value, other, at) =>
+    walk(value, other, at, found, same, locale);
   if (en instanceof Map) {
-    for (const [key, value] of en)
-      walk(value, vi.get(key), `${path}[${key}]`, found, same);
+    for (const [key, value] of en) next(value, tr.get(key), `${path}[${key}]`);
   } else if (Array.isArray(en)) {
-    if (!Array.isArray(vi) || vi.length !== en.length)
-      throw new Error(`${path}: vi list differs in length`);
-    en.forEach((value, i) => walk(value, vi[i], `${path}[${i}]`, found, same));
+    if (tr.length !== en.length)
+      throw new Error(`${path}: ${locale} list differs in length`);
+    en.forEach((value, i) => next(value, tr[i], `${path}[${i}]`));
   } else {
     for (const key of Object.keys(en)) {
-      if (!(key in vi)) throw new Error(`${path}.${key}: missing in vi`);
-      walk(en[key], vi[key], `${path}.${key}`, found, same);
+      if (!(key in tr)) throw new Error(`${path}.${key}: missing in ${locale}`);
+      next(en[key], tr[key], `${path}.${key}`);
     }
   }
 }
@@ -101,6 +106,32 @@ function pairNames(mod) {
 }
 
 /**
+ * Every Vietnamese dictionary next to its English, in module order:
+ * `{ file, page, name, en, vi }`. `load(relativePath)` returns a loaded module.
+ * Throws when a Vietnamese export has no English counterpart.
+ */
+export async function viPairs(load) {
+  const pairs = [];
+  for (const [file] of PAGES) {
+    const mod = await load(file);
+    const page = pageOf(file);
+    for (const [base, name] of pairNames(mod)) {
+      const en = OVERRIDES[name] ? OVERRIDES[name](mod) : mod[base];
+      const vi = OVERRIDE_VI[name] ? OVERRIDE_VI[name](mod) : mod[name];
+      if (en === undefined)
+        throw new Error(`${file}: ${name} has no English ${base}`);
+      pairs.push({ file, page, name, en, vi });
+    }
+    for (const [namedFile, name] of NAMED_PAIRS) {
+      if (namedFile !== file) continue;
+      if (!mod[name]) throw new Error(`${file}: ${name} is not exported`);
+      pairs.push({ file, page, name, en: mod[name].en, vi: mod[name].vi });
+    }
+  }
+  return pairs;
+}
+
+/**
  * Every Vietnamese string that differs from its English, in dictionary order:
  * `{ page, location, english, vi }`. `load(relativePath)` returns a loaded module.
  * With `{ same: true }`, the strings left equal to their English instead.
@@ -108,33 +139,17 @@ function pairNames(mod) {
  */
 export async function collectStrings(load, { same: wantSame = false } = {}) {
   const rows = [];
-  for (const [file] of PAGES) {
-    const mod = await load(file);
-    const page = pageOf(file);
-    const add = (location, en, vi) => {
-      const found = [];
-      const same = [];
-      walk(en, vi, location, found, same);
-      for (const { path, english, vi: text } of wantSame ? same : found) {
-        rows.push({
-          page,
-          location: `${moduleName(file)}:${path}`,
-          english,
-          vi: text,
-        });
-      }
-    };
-    for (const [base, name] of pairNames(mod)) {
-      const en = OVERRIDES[name] ? OVERRIDES[name](mod) : mod[base];
-      const vi = OVERRIDE_VI[name] ? OVERRIDE_VI[name](mod) : mod[name];
-      if (en === undefined)
-        throw new Error(`${file}: ${name} has no English ${base}`);
-      add(name, en, vi);
-    }
-    for (const [namedFile, name] of NAMED_PAIRS) {
-      if (namedFile !== file) continue;
-      if (!mod[name]) throw new Error(`${file}: ${name} is not exported`);
-      add(name, mod[name].en, mod[name].vi);
+  for (const { file, page, name, en, vi } of await viPairs(load)) {
+    const found = [];
+    const same = [];
+    walk(en, vi, name, found, same);
+    for (const { path, english, vi: text } of wantSame ? same : found) {
+      rows.push({
+        page,
+        location: `${moduleName(file)}:${path}`,
+        english,
+        vi: text,
+      });
     }
   }
   return rows;
@@ -205,7 +220,7 @@ export function renderReview(rows) {
   const lines = [
     "# Vietnamese review",
     "",
-    "<!-- Generated by `npm run i18n:vi-review`. Do not edit by hand; edit the dictionaries and run it again. -->",
+    "<!-- Generated by `npm run i18n:review`. Do not edit by hand; edit the dictionaries and run it again. -->",
     "",
     "For a native Vietnamese reader. Every row is a Vietnamese string on the site that differs from its English.",
     "",
@@ -216,7 +231,7 @@ export function renderReview(rows) {
     "",
     "**Loanwords kept on purpose:** outsourcing, workshop, low-code, demo (as in “đặt lịch demo”). Write them in lower case inside a sentence.",
     "",
-    "**Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:vi-review`.",
+    "**Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.",
     "",
     `**Total:** ${total.ai + total.prototype} strings, ${total.ai} AI and ${total.prototype} prototype.`,
   ];
@@ -245,32 +260,4 @@ export function renderReview(rows) {
 /** The review page for the loaded dictionaries and the prototype pairs. */
 export async function buildReview(load, prototypePairs) {
   return renderReview(withSources(await collectStrings(load), prototypePairs));
-}
-
-async function main() {
-  // The dictionaries are TypeScript with "@/" imports, so Vite (already installed with Vitest) loads them.
-  const { createServer } = await import("vite");
-  const server = await createServer({
-    configFile: false,
-    appType: "custom",
-    logLevel: "error",
-    server: { middlewareMode: true, hmr: false, ws: false },
-    optimizeDeps: { noDiscovery: true },
-    resolve: { tsconfigPaths: true },
-  });
-  try {
-    const prototype = JSON.parse(readFileSync(PROTOTYPE_JSON, "utf8"));
-    const review = await buildReview(
-      (file) => server.ssrLoadModule(`/${file}`),
-      prototype,
-    );
-    writeFileSync(OUTPUT, review);
-    console.log("Written to docs/translations/vi-review.md");
-  } finally {
-    await server.close();
-  }
-}
-
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  await main();
 }

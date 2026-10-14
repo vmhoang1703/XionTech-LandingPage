@@ -2,9 +2,8 @@
 
 import { ArrowDownIcon } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import { useLocale } from "@/components/layout/locale-link";
+import { useLocalized } from "@/components/layout/locale-link";
 import { jobForm, jobFormVi } from "@/content/job";
-import { pickLocale } from "@/i18n/content";
 
 // Phones and tablets (lead, 2026-10-13): the form sits under the role text,
 // about 1,650px down on a phone, so a bar at the foot of the screen offers it
@@ -12,7 +11,7 @@ import { pickLocale } from "@/i18n/content";
 // text and the bar is not shown (globals.css, "Apply bar"). Hidden, it is
 // inert: no tab stop and nothing read out.
 export function ApplyBar({ target }: Readonly<{ target: string }>) {
-  const { heading } = pickLocale(useLocale(), { en: jobForm, vi: jobFormVi });
+  const { heading } = useLocalized("jobForm", { en: jobForm, vi: jobFormVi });
   const [shown, setShown] = useState(false);
 
   useEffect(() => {

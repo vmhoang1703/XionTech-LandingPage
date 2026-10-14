@@ -30,10 +30,8 @@ export function Capabilities({ locale = "en" }: Readonly<{ locale?: Locale }>) {
     en: homeCapabilities,
     vi: homeCapabilitiesVi,
   });
-  const [usOffice, vnOffice] = pickLocale(locale, {
-    en: [plano, hcmc],
-    vi: [planoVi, hcmcVi],
-  });
+  const usOffice = pickLocale(locale, { en: plano, vi: planoVi });
+  const vnOffice = pickLocale(locale, { en: hcmc, vi: hcmcVi });
 
   return (
     <section aria-labelledby="capabilities-title" className="sec">

@@ -2,7 +2,12 @@
 
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import { uploadPresigned } from "@vercel/blob/client";
-import { LocaleLink, useLocale } from "@/components/layout/locale-link";
+import {
+  LocaleLink,
+  useContactErrorText,
+  useLocale,
+  useLocalized,
+} from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -14,7 +19,6 @@ import { postSubmission } from "@/components/contact/post-submission";
 import { SummitMark } from "@/components/contact/summit-mark";
 import { jobForm as jobFormEn, jobFormVi } from "@/content/job";
 import { localizeError } from "@/components/contact/contact-strings";
-import { pickLocale } from "@/i18n/content";
 import {
   CV_TYPES,
   JOB_ERRORS,
@@ -82,7 +86,8 @@ async function uploadCv(file: File): Promise<string> {
 
 export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
   const locale = useLocale();
-  const jobForm = pickLocale(locale, { en: jobFormEn, vi: jobFormVi });
+  const jobForm = useLocalized("jobForm", { en: jobFormEn, vi: jobFormVi });
+  const errorText = useContactErrorText();
   const [errors, setErrors] = useState<JobErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [failure, setFailure] = useState<"send" | "rate" | null>(null);
@@ -106,7 +111,7 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
     // Errors are kept in English (rules and server); shown in the page's language.
     const messages = FIELD_ORDER.flatMap((field) => {
       const message = found[field];
-      return message ? [localizeError(message, locale)] : [];
+      return message ? [localizeError(message, locale, errorText)] : [];
     });
     setAnnouncement((current) => ({ count: current.count + 1, messages }));
   }
@@ -204,7 +209,7 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
   const fieldError = (field: JobField) =>
     errors[field] ? (
       <span id={errorId(field)} className="err">
-        {localizeError(errors[field], locale)}
+        {localizeError(errors[field], locale, errorText)}
       </span>
     ) : null;
 

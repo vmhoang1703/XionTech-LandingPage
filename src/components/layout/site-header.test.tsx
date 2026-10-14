@@ -83,6 +83,11 @@ describe("SiteHeader", () => {
     expect(nav.className).toContain("mx-auto");
   });
 
+  it("gives the language button its label in the page's language", () => {
+    render(<SiteHeader locale="vi" />);
+    expect(screen.getByRole("button", { name: /^Ngôn ngữ/ })).toBeTruthy();
+  });
+
   it("puts the language button last in the bar, outside the mobile menu", () => {
     render(<SiteHeader locale="en" />);
     const pill = screen.getByRole("banner").firstElementChild as HTMLElement;

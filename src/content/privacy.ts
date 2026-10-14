@@ -48,7 +48,7 @@ export const PRIVACY = {
       id: "privacy-share",
       heading: "Who we share it with",
       paragraphs: [
-        "[Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage).",
+        "[Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages).",
       ],
     },
     {
@@ -131,7 +131,7 @@ export const PRIVACY_VI: Localized<typeof PRIVACY> = {
       id: share.id,
       heading: "Chúng tôi chia sẻ với ai",
       paragraphs: [
-        "[Placeholder] Các nhà cung cấp dịch vụ xử lý dữ liệu cho chúng tôi: Gmail (gửi tin nhắn biểu mẫu đến hộp thư công ty), Upstash (bộ đếm giới hạn tần suất tạo từ giá trị đã băm), Vercel (lưu trữ website và lưu trữ CV riêng tư).",
+        "[Placeholder] Các nhà cung cấp dịch vụ xử lý dữ liệu cho chúng tôi: Gmail (gửi tin nhắn biểu mẫu đến hộp thư công ty), Upstash (bộ đếm giới hạn tần suất tạo từ giá trị đã băm), Vercel (lưu trữ website và lưu trữ CV riêng tư), Google Fonts (phông chữ cho các trang tiếng Nhật, tiếng Hàn và tiếng Trung).",
       ],
     },
     {

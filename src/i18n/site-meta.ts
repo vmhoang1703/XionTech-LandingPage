@@ -1,14 +1,26 @@
+import { DICTIONARIES } from "./dictionaries";
 import type { Locale } from "./locales";
+
+export interface SiteMeta {
+  title: string;
+  description: string;
+}
 
 // Site-wide title and description, the fallback for pages that set no metadata of their own.
 const DESCRIPTION =
   "IT services and product engineering: AI, cloud, custom apps and low-code solutions.";
 
-export const META: Record<Locale, { title: string; description: string }> = {
-  en: { title: "XionTech", description: DESCRIPTION },
+const en: SiteMeta = { title: "XionTech", description: DESCRIPTION };
+
+export const META: Record<Locale, SiteMeta> = {
+  en,
   vi: {
     title: "XionTech",
     description:
       "Dịch vụ CNTT và phát triển sản phẩm: AI, cloud, ứng dụng tùy chỉnh và giải pháp low-code.",
   },
+  ja: DICTIONARIES.ja?.meta ?? en,
+  fr: DICTIONARIES.fr?.meta ?? en,
+  ko: DICTIONARIES.ko?.meta ?? en,
+  zh: DICTIONARIES.zh?.meta ?? en,
 };

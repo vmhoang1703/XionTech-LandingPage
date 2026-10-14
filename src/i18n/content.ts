@@ -1,17 +1,29 @@
 import type { Locale } from "./locales";
+import { registeredTranslation } from "./translations";
 
-/** The shape of an English content value with its strings widened, so a Vietnamese dictionary type-checks against it. */
+/** The shape of an English content value with its strings widened, so a translated dictionary type-checks against it. */
 export type Localized<T> = T extends string
   ? string
-  : T extends object
-    ? { [K in keyof T]: Localized<T[K]> }
-    : T;
+  : T extends (...args: never[]) => unknown
+    ? T
+    : T extends object
+      ? { [K in keyof T]: Localized<T[K]> }
+      : T;
 
+/**
+ * A content value in `locale`: the twin passed in (en, vi), else the locale's
+ * registered translation of the English value (src/i18n/translations.ts),
+ * else the English value itself.
+ */
 export function pickLocale<T>(
   locale: Locale,
-  dictionary: Record<Locale, T>,
+  dictionary: { en: T } & Partial<Record<Locale, T>>,
 ): T {
-  return dictionary[locale];
+  return (
+    dictionary[locale] ??
+    registeredTranslation(locale, dictionary.en) ??
+    dictionary.en
+  );
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

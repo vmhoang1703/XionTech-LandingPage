@@ -128,3 +128,19 @@ describe("Privacy page metadata in Vietnamese", () => {
     );
   });
 });
+
+describe("Privacy page metadata in other locales", () => {
+  it("uses the Japanese title on ja", async () => {
+    const meta = await generateMetadata({
+      params: Promise.resolve({ locale: "ja" }),
+    });
+    expect(meta.title).toBe("プライバシーポリシー | XionTech");
+  });
+
+  it("uses the English title on an unknown locale", async () => {
+    const meta = await generateMetadata({
+      params: Promise.resolve({ locale: "de" }),
+    });
+    expect(meta.title).toBe(PRIVACY.metaTitle);
+  });
+});

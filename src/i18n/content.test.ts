@@ -79,6 +79,10 @@ describe("pickLocale", () => {
     expect(pickLocale("en", dict)).toBe("Hello");
     expect(pickLocale("vi", dict)).toBe("Xin chào");
   });
+
+  it("falls back to English for a locale with no translation", () => {
+    expect(pickLocale("ja", { en: "Hello", vi: "Xin chào" })).toBe("Hello");
+  });
 });
 
 describe("fallbackLang", () => {

@@ -3,7 +3,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { APPS, appById } from "@/content/apps";
-import { useLocale } from "@/components/layout/locale-link";
+import { useLocalized } from "@/components/layout/locale-link";
 import {
   dayRoad,
   dayRoadVi,
@@ -13,7 +13,6 @@ import {
   type JourneyBoard,
   type RoadStop,
 } from "@/content/products";
-import { pickLocale } from "@/i18n/content";
 import { MapBadge } from "../map/map-badge";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
 
@@ -209,9 +208,11 @@ function who(stop: RoadStop, board: JourneyBoard) {
 }
 
 export function RoadMap() {
-  const locale = useLocale();
-  const { stops } = pickLocale<DayRoad>(locale, { en: dayRoad, vi: dayRoadVi });
-  const board = pickLocale<JourneyBoard>(locale, {
+  const { stops } = useLocalized<"dayRoad", DayRoad>("dayRoad", {
+    en: dayRoad,
+    vi: dayRoadVi,
+  });
+  const board = useLocalized<"journeyBoard", JourneyBoard>("journeyBoard", {
     en: journeyBoard,
     vi: journeyBoardVi,
   });

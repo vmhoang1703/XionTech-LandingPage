@@ -1,15 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { isLocale, LOCALES, localeHref } from "./locales";
+import { htmlLang, isLocale, LOCALES, localeHref } from "./locales";
 
 describe("locales", () => {
-  it("lists en and vi", () => {
-    expect(LOCALES).toEqual(["en", "vi"]);
+  it("lists the six locales, English first", () => {
+    expect(LOCALES).toEqual(["en", "vi", "ja", "fr", "ko", "zh"]);
   });
 
   it("isLocale accepts only supported locales", () => {
     expect(isLocale("vi")).toBe(true);
-    expect(isLocale("fr")).toBe(false);
+    expect(isLocale("zh")).toBe(true);
+    expect(isLocale("de")).toBe(false);
     expect(isLocale(undefined)).toBe(false);
+  });
+
+  it("htmlLang marks Chinese as Simplified", () => {
+    expect(htmlLang("zh")).toBe("zh-Hans");
+    expect(htmlLang("ja")).toBe("ja");
   });
 
   it("localeHref prefixes paths, keeping hash and query", () => {

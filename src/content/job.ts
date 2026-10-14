@@ -1,7 +1,6 @@
 // Job page copy. Kept out of the components so it can be translated later.
 
 import type { Localized } from "@/i18n/content";
-import type { Locale } from "@/i18n/locales";
 
 export const jobMeta = {
   title: "Open role | Careers at XionTech",
@@ -94,7 +93,7 @@ export const jobFormVi: Localized<typeof jobForm> = {
 };
 
 // Employment type labels for the roles list. The keys are the type values stored in Sanity.
-export const ROLE_TYPE_LABELS: Record<Locale, Map<string, string>> = {
+export const ROLE_TYPE_LABELS: Record<"en" | "vi", Map<string, string>> = {
   en: new Map([
     ["full-time", "Full-time"],
     ["part-time", "Part-time"],
@@ -108,3 +107,8 @@ export const ROLE_TYPE_LABELS: Record<Locale, Map<string, string>> = {
     ["internship", "Thực tập"],
   ]),
 };
+
+/** The English labels by type, the source a translation is keyed to. */
+export const ROLE_TYPES: Record<string, string> = Object.fromEntries(
+  ROLE_TYPE_LABELS.en,
+);

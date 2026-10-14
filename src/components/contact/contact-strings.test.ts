@@ -26,6 +26,22 @@ describe("localizeError", () => {
     expect(localizeErrors(errors, "en")).toBe(errors);
   });
 
+  it("reads a new locale's errors from the text the layout sent", () => {
+    const text = {
+      pairs: [[CONTACT_ERRORS.name, "ja name"]] as [string, string][],
+      fallback: "ja send error",
+    };
+    expect(localizeError(CONTACT_ERRORS.name, "ja", text)).toBe("ja name");
+    expect(localizeError("Unknown.", "ja", text)).toBe("ja send error");
+    expect(localizeErrors({ name: CONTACT_ERRORS.name }, "ja", text)).toEqual({
+      name: "ja name",
+    });
+  });
+
+  it("keeps the English error in a new locale without text", () => {
+    expect(localizeError(JOB_ERRORS.cv, "fr")).toBe(JOB_ERRORS.cv);
+  });
+
   it("maps a known message and falls back to the generic error", () => {
     expect(
       localizeErrors(

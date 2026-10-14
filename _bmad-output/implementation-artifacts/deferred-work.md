@@ -465,3 +465,23 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
   summary: Placeholder-preservation test is positional and covers only careers, news and privacy.
   evidence: Blind review.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-locales-ja-fr-ko-zh.md`
+  summary: A client-side switch from ja/ko/zh to en/vi/fr keeps the Noto stylesheet loaded until a full reload.
+  evidence: Edge review; React hoists the stylesheet link.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-locales-ja-fr-ko-zh.md`
+  summary: The native CJK names in the language menu rely on OS fonts on en/vi/fr pages and can show as tofu on devices without CJK fonts.
+  evidence: Edge review.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-locales-ja-fr-ko-zh.md`
+  summary: Add hreflang alternates for the six locales.
+  evidence: Blind review; Story 7.1.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-locales-ja-fr-ko-zh.md`
+  summary: The header-fit and language-switch e2e run only in the a11y project, not the smoke gate.
+  evidence: Verification-gap review.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-locales-ja-fr-ko-zh.md`
+  summary: Check whether the Vercel deployment sends a CSP and whether it allows fonts.googleapis.com and fonts.gstatic.com.
+  evidence: Security review; SRI is not possible for Google Fonts CSS.

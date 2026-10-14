@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 const INTERACTIVE = "a[href], button, input, select, textarea";
 
-for (const locale of ["en", "vi"] as const) {
+for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
   for (const width of [
     320, 375, 390, 412, 430, 444, 480, 520, 640, 900, 1080, 1440,
   ]) {
@@ -15,9 +15,7 @@ for (const locale of ["en", "vi"] as const) {
         await page.setViewportSize({ width, height: 800 });
         await page.goto(`/${locale}`);
         const header = page.getByRole("banner");
-        const language = header.getByRole("button", {
-          name: locale === "en" ? /Language/ : /Ngôn ngữ/,
-        });
+        const language = header.locator("[aria-controls='language-list']");
         await expect(language).toBeVisible();
 
         // The last visible interactive item in the bar (the closed list is hidden).

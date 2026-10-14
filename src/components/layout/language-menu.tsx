@@ -5,12 +5,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   DEFAULT_LOCALE,
+  htmlLang,
   isLocale,
   LOCALE_COOKIE,
+  LANGUAGE_NAMES,
   LOCALES,
   type Locale,
 } from "@/i18n/locales";
-import { SHELL } from "@/i18n/shell";
 
 const LIST_ID = "language-list";
 const STATE_KEY = "locale-switch";
@@ -135,7 +136,7 @@ function restoreScroll(top: number) {
   return stop;
 }
 
-// Off a locale path (the global 404, e.g. /fr/products) the chosen locale replaces a
+// Off a locale path (the global 404, e.g. /de/products) the chosen locale replaces a
 // two-letter first segment and is prefixed to anything else.
 function swapLocale(pathname: string, locale: Locale) {
   const segments = pathname.split("/").slice(1);
@@ -150,13 +151,13 @@ function setLocaleCookie(locale: Locale) {
   document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=${ONE_YEAR}; SameSite=Lax`;
 }
 
-export function LanguageMenu() {
+/** `label` is "Language" in the page's language (SiteHeader passes it). */
+export function LanguageMenu({ label }: Readonly<{ label: string }>) {
   const pathname = usePathname();
   const router = useRouter();
   const segment = pathname.split("/")[1];
   const current = isLocale(segment) ? segment : undefined;
   const shown = current ?? DEFAULT_LOCALE;
-  const text = SHELL[shown].language;
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -230,7 +231,7 @@ export function LanguageMenu() {
         aria-expanded={open}
         onClick={() => setOpen(!open)}
       >
-        <span className="sr-only">{text.label}: </span>
+        <span className="sr-only">{label}: </span>
         {shown.toUpperCase()}
         <CaretDownIcon aria-hidden="true" />
       </button>
@@ -243,13 +244,12 @@ export function LanguageMenu() {
           <li key={locale}>
             <button
               type="button"
-              lang={locale}
+              lang={htmlLang(locale)}
               aria-current={locale === current ? "true" : undefined}
-              className="text-navy flex h-11 w-full items-center rounded-xl px-3 text-sm font-semibold hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-[current=true]:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)]"
+              className="text-navy flex h-11 w-full items-center rounded-xl px-3 text-sm font-semibold whitespace-nowrap hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-[current=true]:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)]"
               onClick={() => choose(locale)}
             >
-              {locale.toUpperCase()}
-              <span className="sr-only"> {text[locale]}</span>
+              {LANGUAGE_NAMES[locale]}
             </button>
           </li>
         ))}

@@ -1798,6 +1798,16 @@ Template:
 - **AI got it wrong:** the preview wrapped words with a script after load, which is fine for a video but would flash the text and fight React. It built the real one as `heroWords()` in the server HTML instead. Seven smoke tests then failed because they looked for the title as one string; the tests now compare the text with the tags removed.
 - **Left out on purpose:** the motion-rules table (one easing curve, fixed durations): the lead picked B only.
 
+## 2026-10-14 — Part B: Japanese, French, Korean and Simplified Chinese
+
+- **Prompt:** part B of the 2026-10-13 multi-language request: add ja, fr, ko and zh, AI-translated and flagged for review. Spec: `_bmad-output/implementation-artifacts/spec-locales-ja-fr-ko-zh.md`.
+- **Who and tools:** a controller session (Claude Opus 5.5, `bmad-build` dispatch route) gave each task to an implementer subagent (Claude Opus 5.5, tasks 1–7) and each result to a reviewer subagent (Claude Sonnet 5.5).
+- **Decisions (user):** (1) Noto Sans JP, KR or SC only on that locale's pages; (2) the language button shows the code, the list native names; (3) Simplified Chinese at `/zh` with `lang="zh-Hans"`, zh, zh-CN, zh-SG and zh-Hans land there; (4) Sanity news and jobs fall back to English, marked `lang="en"`, no schema change; (5) the CJK fonts come from a Google Fonts `<link>` on ja/ko/zh pages, since next/font could not keep them off the others; (6) the header hides "Get in touch" below 492px and compacts it below 524px.
+- **What the AI did:** a translation registry (one dictionary per locale, typed against the English), the four dictionaries, and review pages for every non-English locale (`npm run i18n:review` → `docs/translations/<locale>-review.md`), with a guard that fails on a string left in English and a completeness test (keys, list lengths, ids, `{n}`, `[Placeholder]`) for every locale.
+- **AI got it wrong, caught by review and fixed:** the first registry guard failed open (it missed some call shapes) and the registry bundled every locale into the client islands; a `zh-TW,zh` browser header landed on `/zh`; the news count was a function inside a client payload; the CJK heading line-height lost to component rules in the cascade.
+- **AI got it wrong, still pending (review stage):** the fr, ko and zh reviews found wording that makes the English claims stronger (for example fr "maîtrisons" for "work in", zh 即时 "instantly" and 公开分享 "publicly", ko '교사의 지도' for "alongside"). They are listed for the native readers and are fixed in the review stage, not yet.
+- **Kept English on purpose:** the app taglines inside the shared app records of the Home dictionaries (`homeDoors.products.badges[*].tagline`, `homeApps.apps[*].app.tagline`). Home does not render them; the shown taglines come from the translated `appTaglines`. The guard allows them by location, with a comment.
+
 ## 2026-10-14 — Speed pass 1: Home on a phone
 
 - **Prompt:** "start the speed pass" (Lighthouse mobile Home was 64-72; the rule is 90).

@@ -33,6 +33,15 @@ const LATEST_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && define
 }`;
 
 // FR-26: "18 Sep 2026" in English (CSS sets the capitals), "18/09/2026" in Vietnamese.
+// The other locales write a date as Intl does in that locale ("2026年9月18日").
+const localDate = (tag: string) =>
+  new Intl.DateTimeFormat(tag, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Ho_Chi_Minh",
+  });
+
 const DATE_FORMATS: Record<Locale, Intl.DateTimeFormat> = {
   en: new Intl.DateTimeFormat("en-US", {
     day: "numeric",
@@ -46,6 +55,10 @@ const DATE_FORMATS: Record<Locale, Intl.DateTimeFormat> = {
     year: "numeric",
     timeZone: "Asia/Ho_Chi_Minh",
   }),
+  ja: localDate("ja-JP"),
+  fr: localDate("fr-FR"),
+  ko: localDate("ko-KR"),
+  zh: localDate("zh-Hans-CN"),
 };
 
 export function getLatestPosts(locale: Locale = "en"): Promise<LatestPost[]> {
@@ -61,6 +74,9 @@ export function newsDate(iso: string, locale: Locale = "en"): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) {
     return "";
+  }
+  if (locale !== "en" && locale !== "vi") {
+    return DATE_FORMATS[locale].format(date);
   }
   const parts = Object.fromEntries(
     DATE_FORMATS[locale]

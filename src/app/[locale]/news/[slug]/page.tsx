@@ -1,4 +1,3 @@
-import { forLocale } from "@/i18n/page-metadata";
 import { ArrowLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -19,16 +18,13 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const story = await getPost(slug, isLocale(locale) ? locale : "en");
   if (!story) return {};
-  return forLocale(locale, {
-    en: {
-      title: newsStory.metaTitle(story.title),
-      description: story.excerpt ?? newsMeta.description,
-    },
-    vi: {
-      title: newsStoryVi.metaTitle(story.title),
-      description: story.excerpt ?? newsMetaVi.description,
-    },
-  });
+  const page = isLocale(locale) ? locale : "en";
+  const { metaTitle } = pickLocale(page, { en: newsStory, vi: newsStoryVi });
+  const meta = pickLocale(page, { en: newsMeta, vi: newsMetaVi });
+  return {
+    title: metaTitle(story.title),
+    description: story.excerpt ?? meta.description,
+  };
 }
 
 /**

@@ -53,6 +53,11 @@ export const APPS: readonly App[] = [
   },
 ];
 
+// Taglines by app, the English a translation is keyed to.
+export const APP_TAGLINES = Object.fromEntries(
+  APPS.map((app) => [app.id, app.tagline]),
+) as Record<AppId, string>;
+
 // Taglines in Vietnamese. App names and badges stay English (2026-10-13).
 export const appTaglinesVi: Record<AppId, string> = {
   "parent-hub":
