@@ -1015,6 +1015,7 @@ export const fr: Dictionaries = {
       logoAlt: "XionTech, Get IT Done",
       menu: "Menu",
       contact: "Contact",
+      contactShort: "Contact",
       cityPlano: "Plano",
       cityHcmc: "Hô Chi Minh-Ville",
     },

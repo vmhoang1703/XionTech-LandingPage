@@ -606,7 +606,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:shell.nav.mainNav` | Main | メイン |
 | `ja:shell.nav.homeLink` | XionTech home | XionTech ホーム |
 | `ja:shell.nav.menu` | Menu | メニュー |
-| `ja:shell.nav.contact` | Get in touch | お問い合わせ |
+| `ja:shell.nav.contact`<br>`ja:shell.nav.contactShort` | Get in touch | お問い合わせ |
 | `ja:shell.nav.cityPlano` | Plano | プレイノ |
 | `ja:shell.nav.cityHcmc` | Ho Chi Minh City | ホーチミン市 |
 | `ja:shell.language.label` | Language | 言語 |

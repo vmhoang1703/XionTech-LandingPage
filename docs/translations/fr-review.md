@@ -598,7 +598,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:shell.nav.skipLink` | Skip to content | Aller au contenu |
 | `fr:shell.nav.mainNav` | Main | Principale |
 | `fr:shell.nav.homeLink` | XionTech home | Accueil XionTech |
-| `fr:shell.nav.contact` | Get in touch | Contact |
+| `fr:shell.nav.contact`<br>`fr:shell.nav.contactShort` | Get in touch | Contact |
 | `fr:shell.nav.cityHcmc` | Ho Chi Minh City | Hô Chi Minh-Ville |
 | `fr:shell.language.label` | Language | Langue |
 | `fr:shell.footer.blurb` | Education technology products and software delivery services for schools and businesses. | Produits de technologie éducative et services de réalisation logicielle pour les écoles et les entreprises. |

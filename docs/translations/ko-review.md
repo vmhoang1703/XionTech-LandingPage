@@ -606,7 +606,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:shell.nav.mainNav` | Main | 주 메뉴 |
 | `ko:shell.nav.homeLink` | XionTech home | XionTech 홈 |
 | `ko:shell.nav.menu` | Menu | 메뉴 |
-| `ko:shell.nav.contact` | Get in touch | 문의하기 |
+| `ko:shell.nav.contact`<br>`ko:shell.nav.contactShort` | Get in touch | 문의하기 |
 | `ko:shell.nav.cityPlano` | Plano | 플레이노 |
 | `ko:shell.nav.cityHcmc` | Ho Chi Minh City | 호찌민시 |
 | `ko:shell.language.label` | Language | 언어 |

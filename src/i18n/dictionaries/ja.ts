@@ -991,6 +991,7 @@ export const ja: Dictionaries = {
       logoAlt: "XionTech, Get IT Done",
       menu: "メニュー",
       contact: "お問い合わせ",
+      contactShort: "お問い合わせ",
       cityPlano: "プレイノ",
       cityHcmc: "ホーチミン市",
     },

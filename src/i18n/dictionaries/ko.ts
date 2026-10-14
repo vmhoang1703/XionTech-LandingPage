@@ -996,6 +996,7 @@ export const ko: Dictionaries = {
       logoAlt: "XionTech, Get IT Done",
       menu: "메뉴",
       contact: "문의하기",
+      contactShort: "문의하기",
       cityPlano: "플레이노",
       cityHcmc: "호찌민시",
     },

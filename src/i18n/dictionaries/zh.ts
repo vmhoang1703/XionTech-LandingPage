@@ -982,6 +982,7 @@ export const zh: Dictionaries = {
       logoAlt: "XionTech, Get IT Done",
       menu: "菜单",
       contact: "联系我们",
+      contactShort: "联系我们",
       cityPlano: "普莱诺",
       cityHcmc: "胡志明市",
     },

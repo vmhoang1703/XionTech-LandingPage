@@ -34,11 +34,11 @@ describe("SiteHeader", () => {
     expect(demo.className).toContain("btn btn-primary btn-sm");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
-    // Below 492px (the narrowest width where the vi bar, the longest label, fits
-    // with the full button set, measured 2026-10-14) it leaves the bar; the mobile menu offers it instead.
-    // Up to 523px it drops its arrow and side padding.
-    expect(demo.className).toContain("max-[491px]:hidden");
-    expect(demo.className).toContain("max-[523px]:px-3.5");
+    // Below 412px (the narrowest width where the en and vi bars fit, measured
+    // 2026-10-14) it leaves the bar; the mobile menu offers it instead.
+    // Up to 479px it drops its arrow and side padding (the Vietnamese bar needs this too).
+    expect(demo.className).toContain("max-[411px]:hidden");
+    expect(demo.className).toContain("max-[479px]:px-3.5");
     expect(demo.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
   });
 
@@ -120,7 +120,8 @@ describe("SiteHeader", () => {
     ]);
     expect(
       screen
-        .getByRole("link", { name: "Liên hệ với chúng tôi" })
+        // The header button is the short word; the phone menu keeps the long one.
+        .getByRole("link", { name: "Liên hệ" })
         .getAttribute("href"),
     ).toBe("/vi#contact");
     expect(

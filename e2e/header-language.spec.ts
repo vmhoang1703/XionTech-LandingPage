@@ -4,7 +4,7 @@ const INTERACTIVE = "a[href], button, input, select, textarea";
 
 for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
   for (const width of [
-    320, 375, 390, 412, 444, 492, 524, 640, 900, 1080, 1440,
+    320, 375, 390, 412, 430, 444, 480, 520, 640, 900, 1080, 1440,
   ]) {
     test(
       `/${locale} at ${width}px: the language button is the last header item`,

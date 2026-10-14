@@ -607,7 +607,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:shell.nav.mainNav` | Main | 主导航 |
 | `zh:shell.nav.homeLink` | XionTech home | XionTech 首页 |
 | `zh:shell.nav.menu` | Menu | 菜单 |
-| `zh:shell.nav.contact` | Get in touch | 联系我们 |
+| `zh:shell.nav.contact`<br>`zh:shell.nav.contactShort` | Get in touch | 联系我们 |
 | `zh:shell.nav.cityPlano` | Plano | 普莱诺 |
 | `zh:shell.nav.cityHcmc` | Ho Chi Minh City | 胡志明市 |
 | `zh:shell.language.label` | Language | 语言 |
