@@ -13,7 +13,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:vi-review`.
 
-**Total:** 505 strings, 155 AI and 350 prototype.
+**Total:** 507 strings, 157 AI and 350 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -487,13 +487,15 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## News
 
-4 AI, 17 prototype.
+6 AI, 17 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `news:newsMetaVi.title` | News \| XionTech | Tin tức \| XionTech |
 | AI | `news:newsMetaVi.description` | Short stories about XionTech's products, schools, team and client work. | Những câu chuyện ngắn về sản phẩm, trường học, đội ngũ và các dự án khách hàng của XionTech. |
 | AI | `news:newsPageVi.sampleNote` | Stories from the newXion newsroom; those marked [Placeholder] are samples. | Tin từ phòng tin tức newXion; những tin có dấu [Placeholder] là tin mẫu. |
+| AI | `news:newsPageVi.countOne` | Showing 1 story | Đang hiển thị 1 tin |
+| AI | `news:newsPageVi.countMany` | Showing {n} stories | Đang hiển thị {n} tin |
 | AI | `news:newsStoryVi.sampleNote` | [Placeholder] Sample story to show the layout. Replace with a real story before launch. | [Placeholder] Tin mẫu để minh họa bố cục. Thay bằng tin thật trước khi ra mắt. |
 | Prototype | `news:homeNewsVi.heading` | Latest from XionTech. | Tin mới từ XionTech. |
 | Prototype | `news:homeNewsVi.lede` | Catch up with what our team is building and shipping. | Cập nhật những gì đội ngũ chúng tôi đang xây dựng và phát hành. |

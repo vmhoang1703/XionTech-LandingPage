@@ -32,8 +32,18 @@ export const newsPage = {
   allFilter: { id: "all", label: "All" },
   empty: "No stories are available in this category yet.",
   showAll: "Show all",
-  count: (n: number) => (n === 1 ? "Showing 1 story" : `Showing ${n} stories`),
+  // Plain strings, since a client component receives them: "{n}" is the number.
+  countOne: "Showing 1 story",
+  countMany: "Showing {n} stories",
 };
+
+/** "Showing 3 stories" in the page's language. */
+export function storyCount(
+  page: { countOne: string; countMany: string },
+  n: number,
+): string {
+  return n === 1 ? page.countOne : page.countMany.replace("{n}", String(n));
+}
 
 // Story page copy (Story 6.2, E-A6).
 export const newsStory = {
@@ -76,7 +86,8 @@ export const newsPageVi: typeof newsPage = {
   allFilter: { id: newsPage.allFilter.id, label: "Tất cả" },
   empty: "Chưa có tin nào trong mục này.",
   showAll: "Xem tất cả",
-  count: (n: number) => `Đang hiển thị ${n} tin`,
+  countOne: "Đang hiển thị 1 tin",
+  countMany: "Đang hiển thị {n} tin",
 };
 
 export const newsStoryVi: typeof newsStory = {

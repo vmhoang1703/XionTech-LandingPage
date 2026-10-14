@@ -13,6 +13,7 @@ import {
   categoryLabelsVi,
   newsPage as newsPageEn,
   newsPageVi,
+  storyCount,
 } from "@/content/news";
 import { readMotionPaused } from "@/lib/motion/motion-preference";
 import type { Audience } from "@/lib/news/audience";
@@ -167,7 +168,7 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
         </div>
       )}
       <p className="sr-only" aria-live="polite">
-        {newsPage.count(shown.length)}
+        {storyCount(newsPage, shown.length)}
       </p>
     </>
   );
