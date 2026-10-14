@@ -8,7 +8,8 @@ import { currentSection, NAV_LINKS } from "./nav-data";
 
 // The header pill (lead, 2026-10-12, in the style of busplanner.com): each link is a
 // small pill of its own, light blue on hover and soft amber when it is the current page.
-// The mobile menu uses the same links.
+// The mobile menu uses the same links. In the bar each label stays on one line;
+// the padding tightens below 1280px so long Vietnamese labels still fit.
 export const itemClass =
   "inline-flex h-11 items-center rounded-full px-4 text-ui leading-none font-semibold text-navy transition-[background-color] duration-[250ms] ease-[var(--ease-brand)] hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-[current=page]:bg-[color-mix(in_srgb,var(--color-amber-light)_38%,white)]";
 
@@ -27,7 +28,7 @@ export function SiteNav({
         <Link
           key={item.section}
           href={localeHref(locale, item.href)}
-          className={itemClass}
+          className={`${itemClass} whitespace-nowrap min-[1081px]:max-[1119px]:px-1.5 min-[1120px]:max-[1279px]:px-2 min-[1280px]:px-3`}
           aria-current={section === item.section ? "page" : undefined}
         >
           {t[item.section]}
