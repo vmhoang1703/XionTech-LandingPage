@@ -24,7 +24,7 @@
     "ux:shots": "node scripts/ux/shots.mjs",
     "i18n:prototype-vi": "node scripts/i18n/prototype-vi.mjs",
     "i18n:review": "node scripts/i18n/review.mjs",
-    "i18n:vi-review": "node scripts/i18n/vi-review.mjs",
+    "i18n:vi-review": "npm run i18n:review",
     "sanity:check": "node --env-file-if-exists=.env.local scripts/sanity-check.mjs"
   },
   "dependencies": {

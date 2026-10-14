@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/locales";
+
 // Home "latest news" copy. Kept out of the components so it can be translated later.
 
 export const homeNews = {
@@ -37,12 +39,17 @@ export const newsPage = {
   countMany: "Showing {n} stories",
 };
 
-/** "Showing 3 stories" in the page's language. */
+/**
+ * "Showing 3 stories" in the page's language. The locale's plural rules pick the
+ * form (French uses the singular for 0 as well as 1).
+ */
 export function storyCount(
   page: { countOne: string; countMany: string },
   n: number,
+  locale: Locale,
 ): string {
-  return n === 1 ? page.countOne : page.countMany.replace("{n}", String(n));
+  const one = new Intl.PluralRules(locale).select(n) === "one";
+  return (one ? page.countOne : page.countMany).replace("{n}", String(n));
 }
 
 // Story page copy (Story 6.2, E-A6).

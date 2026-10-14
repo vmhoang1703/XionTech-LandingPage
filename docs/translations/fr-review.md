@@ -200,7 +200,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:newsPage.allFilter.label` | All | Tous |
 | `fr:newsPage.empty` | No stories are available in this category yet. | Aucun article n’est encore disponible dans cette catégorie. |
 | `fr:newsPage.showAll` | Show all | Tout afficher |
-| `fr:newsPage.countOne` | Showing 1 story | 1 article affiché |
+| `fr:newsPage.countOne` | Showing 1 story | {n} article affiché |
 | `fr:newsPage.countMany` | Showing {n} stories | {n} articles affichés |
 | `fr:newsStory.storyLabel` | Story | Article |
 | `fr:newsStory.sampleNote` | [Placeholder] Sample story to show the layout. Replace with a real story before launch. | [Placeholder] Article d’exemple pour montrer la mise en page. À remplacer par un vrai article avant le lancement. |

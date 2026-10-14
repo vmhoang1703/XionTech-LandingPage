@@ -827,7 +827,7 @@ export const fr: Dictionaries = {
     allFilter: { id: newsPage.allFilter.id, label: "Tous" },
     empty: "Aucun article n’est encore disponible dans cette catégorie.",
     showAll: "Tout afficher",
-    countOne: "1 article affiché",
+    countOne: "{n} article affiché",
     countMany: "{n} articles affichés",
   },
   newsStory: {

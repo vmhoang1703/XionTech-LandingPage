@@ -102,7 +102,7 @@ export async function collectLocaleStrings(
   for (const { page, name, en, tr } of await localePairs(load, locale)) {
     const found = [];
     const same = [];
-    walk(en, tr, name, found, same);
+    walk(en, tr, name, found, same, locale);
     for (const { path, english, vi: text } of wantSame ? same : found)
       rows.push({ page, location: `${locale}:${path}`, english, text });
   }
@@ -185,8 +185,26 @@ const LOCALE_ALLOWED = {
   zh: [],
 };
 
-/** Ids, links and numbers: no words to translate. */
-const DATA = /^(?:[^A-Za-z]*|[a-z0-9-]+|(?:\/|#|https?:|mailto:|tel:).*)$/;
+/** Keys whose values are data (ids, links, icons, app and style refs), never copy. */
+export const DATA_KEYS = new Set([
+  "id",
+  "href",
+  "slug",
+  "icon",
+  "anchor",
+  "app",
+  "tone",
+  "slot",
+]);
+
+/** Maps whose values are all data: journeyBoard.laneOf maps a step to a lane id. */
+const DATA_MAPS = /\.laneOf\.\w+$/;
+
+/** Values that are links or carry no letters: no words to translate. */
+const DATA_VALUE = /^(?:[^A-Za-z]*|(?:\/|#|https?:|mailto:|tel:).*)$/;
+
+/** The last key of a location such as `ja:homeHero.links[0].href` ("href"). */
+const lastKey = (location) => /\.(\w+)(?:\[[^\]]*\])*$/.exec(location)?.[1];
 
 /**
  * Shared app records inside the Home dictionaries. Their fields (taglines included) stay the
@@ -198,12 +216,19 @@ const SHARED_APP =
 
 /** The rows (strings equal to their English) that are not allowed, as `location: english`. */
 export function untranslated(rows, locale) {
-  const allowed = new Set([...GLOBAL_ALLOWED, ...LOCALE_ALLOWED[locale]]);
+  if (!REVIEW_LOCALES.includes(locale))
+    throw new Error(`${locale}: not a review locale; add it to REVIEW_LOCALES`);
+  const allowed = new Set([
+    ...GLOBAL_ALLOWED,
+    ...(LOCALE_ALLOWED[locale] ?? []),
+  ]);
   return rows
     .filter(
       ({ english, location }) =>
         !allowed.has(english) &&
-        !DATA.test(english) &&
+        !DATA_KEYS.has(lastKey(location)) &&
+        !DATA_MAPS.test(location) &&
+        !DATA_VALUE.test(english) &&
         !SHARED_APP.test(location),
     )
     .map(({ location, english }) => `${location}: ${english}`);

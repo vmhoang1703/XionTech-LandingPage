@@ -11,6 +11,7 @@ import {
   outputOf,
   renderLocaleReview,
 } from "./review.mjs";
+import { walk } from "./vi-review.mjs";
 
 const ROOT = join(import.meta.dirname, "../..");
 const load = (file) =>
@@ -93,6 +94,17 @@ describe("renderLocaleReview", () => {
   it("merges one pair used in several places and escapes table characters", () => {
     expect(review).toContain(
       "| `ja:a`<br>`ja:b` | Pipe \\| and<br>line | パイプ \\| 行 |",
+    );
+  });
+});
+
+describe("walk", () => {
+  it("names the locale whose dictionary is wrong", () => {
+    expect(() => walk({ a: "A" }, {}, "x", [], [], "ja")).toThrow(
+      "x.a: missing in ja",
+    );
+    expect(() => walk({ a: {} }, { a: [] }, "x", [], [], "ko")).toThrow(
+      "x.a: ko has no matching object",
     );
   });
 });

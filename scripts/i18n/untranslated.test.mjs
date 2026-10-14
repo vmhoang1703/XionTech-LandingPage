@@ -24,6 +24,20 @@ describe("the untranslated guard", () => {
     ]);
   });
 
+  it("flags a single lowercase English word, but not data keys or links", () => {
+    const rows = [
+      { location: "ja:a.label", english: "campus" },
+      { location: "ja:a.links[0].href", english: "/products" },
+      { location: "ja:a.stops[1].app", english: "staff-hub" },
+      { location: "ja:a.cta", english: "#contact" },
+    ];
+    expect(untranslated(rows, "ja")).toEqual(["ja:a.label: campus"]);
+  });
+
+  it("fails clearly for a locale it has no allow-list for", () => {
+    expect(() => untranslated([], "de")).toThrow("de: not a review locale");
+  });
+
   it("allows French words that French spells the same, only in French", () => {
     const rows = [{ location: "x:a", english: "Parents" }];
     expect(untranslated(rows, "fr")).toEqual([]);

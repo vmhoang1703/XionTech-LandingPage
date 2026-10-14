@@ -7,7 +7,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { useLocalized } from "@/components/layout/locale-link";
+import { useLocale, useLocalized } from "@/components/layout/locale-link";
 import {
   categoryLabels,
   categoryLabelsVi,
@@ -58,6 +58,7 @@ const serverColumns = () => 3;
 // (CAP-5). The first card shown is the full-width lead only when it is alone
 // or a full row of squares follows it (prototype site.js `shape()`).
 export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
+  const locale = useLocale();
   const newsPage = useLocalized("newsPage", {
     en: newsPageEn,
     vi: newsPageVi,
@@ -168,7 +169,7 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
         </div>
       )}
       <p className="sr-only" aria-live="polite">
-        {storyCount(newsPage, shown.length)}
+        {storyCount(newsPage, shown.length, locale)}
       </p>
     </>
   );

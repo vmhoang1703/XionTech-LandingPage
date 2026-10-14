@@ -55,9 +55,15 @@ describe("Careers, job, news and privacy in Vietnamese", () => {
   });
 
   it("counts stories in Vietnamese and keeps the story meta title", () => {
-    expect(news.storyCount(news.newsPageVi, 3)).toBe("Đang hiển thị 3 tin");
-    expect(news.storyCount(news.newsPage, 1)).toBe("Showing 1 story");
-    expect(news.storyCount(news.newsPage, 2)).toBe("Showing 2 stories");
+    expect(news.storyCount(news.newsPageVi, 3, "vi")).toBe("Đang hiển thị 3 tin");
+    expect(news.storyCount(news.newsPageVi, 1, "vi")).toBe("Đang hiển thị 1 tin");
+    expect(news.storyCount(news.newsPage, 1, "en")).toBe("Showing 1 story");
+    expect(news.storyCount(news.newsPage, 2, "en")).toBe("Showing 2 stories");
+    expect(news.storyCount(news.newsPage, 0, "en")).toBe("Showing 0 stories");
+    const fr = { countOne: "{n} article affiché", countMany: "{n} articles affichés" };
+    expect(news.storyCount(fr, 0, "fr")).toBe("0 article affiché");
+    expect(news.storyCount(fr, 1, "fr")).toBe("1 article affiché");
+    expect(news.storyCount(fr, 2, "fr")).toBe("2 articles affichés");
     expect(news.newsStoryVi.metaTitle("Tin")).toBe("Tin | XionTech");
   });
 });

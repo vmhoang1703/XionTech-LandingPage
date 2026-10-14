@@ -1,14 +1,18 @@
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { describe, expect, it } from "vitest";
-import { REVIEW_LOCALES, localePairs } from "./review.mjs";
+import { DATA_KEYS, REVIEW_LOCALES, localePairs } from "./review.mjs";
 
 // Every locale has the English shape: the same keys, list lengths and ids,
-// the {n} slot where English has one (the news count), and [Placeholder] exactly where English has it.
+// data (ids, links, icons) equal to English, the {n} slot where English has one,
+// and [Placeholder] exactly where English has it.
 const ROOT = join(import.meta.dirname, "../..");
 const load = (file) =>
   import(/* @vite-ignore */ pathToFileURL(join(ROOT, file)).href);
 const PLACEHOLDER = "[Placeholder]";
+const LINK = /^(?:\/|#|https?:|mailto:|tel:)/;
+// countOne may carry {n}: plural rules pick it for 0 too in French.
+const COUNT_ONE = /\.countOne$/;
 
 /** The differences between an English value and its translation, as `path: problem`. */
 export function shapeProblems(en, tr, path, problems = []) {
@@ -17,17 +21,20 @@ export function shapeProblems(en, tr, path, problems = []) {
     else {
       if (en.includes(PLACEHOLDER) !== tr.includes(PLACEHOLDER))
         problems.push(`${path}: [Placeholder] differs`);
-      if (en.includes("{n}") !== tr.includes("{n}"))
+      if (!COUNT_ONE.test(path) && en.includes("{n}") !== tr.includes("{n}"))
         problems.push(`${path}: {n} differs`);
-      if (/\.id$/.test(path) && tr !== en) problems.push(`${path}: id differs`);
+      const key = /\.(\w+)$/.exec(path)?.[1];
+      if ((DATA_KEYS.has(key) || LINK.test(en)) && tr !== en)
+        problems.push(`${path}: data differs`);
     }
   } else if (Array.isArray(en)) {
-    if (!Array.isArray(tr) || tr.length !== en.length)
+    if (!Array.isArray(tr)) problems.push(`${path}: not a list`);
+    else if (tr.length !== en.length)
       problems.push(`${path}: list length differs`);
     else
       en.forEach((v, i) => shapeProblems(v, tr[i], `${path}[${i}]`, problems));
   } else if (typeof en === "object" && en !== null) {
-    if (typeof tr !== "object" || tr === null) {
+    if (typeof tr !== "object" || tr === null || Array.isArray(tr)) {
       problems.push(`${path}: not an object`);
       return problems;
     }
@@ -44,24 +51,33 @@ export function shapeProblems(en, tr, path, problems = []) {
 }
 
 describe("shapeProblems", () => {
-  it("reports missing and extra keys, list lengths, ids and placeholders", () => {
+  it("reports missing and extra keys, kinds, list lengths, data and placeholders", () => {
     expect(
       shapeProblems(
         {
           a: "A",
           l: ["1"],
-          f: { id: "x" },
+          f: { id: "x", href: "/a", to: "mailto:a@b.c" },
           p: "[Placeholder] P",
           c: "{n} x",
           n: 1,
         },
-        { b: "B", l: [], f: { id: "y" }, p: "P", c: "x", n: "1" },
+        {
+          b: "B",
+          l: [],
+          f: { id: "y", href: "/b", to: "mailto:x@b.c" },
+          p: "P",
+          c: "x",
+          n: "1",
+        },
         "d",
       ),
     ).toEqual([
       "d.a: missing",
       "d.l: list length differs",
-      "d.f.id: id differs",
+      "d.f.id: data differs",
+      "d.f.href: data differs",
+      "d.f.to: data differs",
       "d.p: [Placeholder] differs",
       "d.c: {n} differs",
       "d.n: type differs",
@@ -70,7 +86,16 @@ describe("shapeProblems", () => {
     expect(shapeProblems({ a: {} }, { a: "s" }, "d")).toEqual([
       "d.a: not an object",
     ]);
+    expect(shapeProblems({ a: {} }, { a: [] }, "d")).toEqual([
+      "d.a: not an object",
+    ]);
+    expect(shapeProblems({ a: [] }, { a: {} }, "d")).toEqual([
+      "d.a: not a list",
+    ]);
     expect(shapeProblems("s", 1, "d")).toEqual(["d: not a string"]);
+    expect(
+      shapeProblems({ countOne: "One" }, { countOne: "{n} un" }, "d"),
+    ).toEqual([]);
   });
 });
 
