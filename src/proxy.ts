@@ -28,8 +28,11 @@ function fromAcceptLanguage(header: string | null): Locale | undefined {
     };
   });
   // A Traditional browser lists bare "zh" as its fallback ("zh-TW,zh;q=0.9"):
-  // that zh means Traditional too, so it does not pick Simplified.
-  const traditional = entries.some((entry) => entry.language === "zh-hant");
+  // that zh means Traditional too, so it does not pick Simplified. A refused
+  // Traditional tag (q=0) does not count.
+  const traditional = entries.some(
+    (entry) => entry.language === "zh-hant" && entry.weight > 0,
+  );
   const ranked = entries
     .filter(
       (entry) =>

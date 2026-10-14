@@ -34,6 +34,11 @@ describe("proxy", () => {
     },
   );
 
+  it("ignores a refused Traditional tag (q=0): zh-TW;q=0,zh;q=0.9 goes to /zh", () => {
+    const res = run("/", { "accept-language": "zh-TW;q=0,zh;q=0.9" });
+    expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/zh");
+  });
+
   it.each(["zh-TW", "zh-Hant", "zh-HK"])(
     "sends Traditional Chinese %s to /en",
     (tag) => {
