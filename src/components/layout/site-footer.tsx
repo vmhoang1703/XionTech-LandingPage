@@ -17,7 +17,7 @@ import { SHELL } from "@/i18n/shell";
 // (DESIGN.md site-footer: ink background, on-navy-muted text, amber-tint headings).
 const headingClass = "font-brand text-label-sm mb-4 text-amber-tint uppercase";
 const linkClass =
-  "text-body-sm text-on-navy-muted inline-flex min-h-6 items-center hover:text-white";
+  "text-body-sm text-on-navy-muted inline-flex min-h-6 items-center pointer-coarse:min-h-11 hover:text-white";
 
 const iconClass = "text-amber-tint shrink-0";
 
@@ -71,7 +71,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
           {siteFooter.columns.map((column) => (
             <div key={column.heading(t)}>
               <h2 className={headingClass}>{column.heading(t)}</h2>
-              <ul className="grid gap-2.5">
+              <ul className="grid gap-2.5 pointer-coarse:gap-0">
                 {column.links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -126,7 +126,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
                         {...(contact.external
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}
-                        className="inline-flex min-h-6 items-center [overflow-wrap:anywhere] hover:text-white"
+                        className="inline-flex min-h-6 items-center [overflow-wrap:anywhere] hover:text-white pointer-coarse:min-h-11"
                       >
                         {contact.label}
                       </a>
@@ -144,7 +144,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
             {siteFooter.copyright} ·{" "}
             <Link
               href={localeHref(locale, siteFooter.privacy.href)}
-              className="inline-flex min-h-6 items-center hover:text-white"
+              className="inline-flex min-h-6 items-center hover:text-white pointer-coarse:min-h-11"
             >
               {siteFooter.privacy.label(t)}
             </Link>

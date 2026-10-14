@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { productsMeta } from "@/content/products";
-import { undefinedClasses } from "@/test-utils/css-classes";
+import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import ProductsPage, { generateMetadata } from "./page";
 
@@ -103,6 +103,14 @@ describe("Products page", () => {
     expect(
       undefinedClasses(container, /^(sr-only|size-|mt-|-?z-|absolute)/),
     ).toEqual([]);
+  });
+
+  it("starts the first section below the floating header pill", async () => {
+    const { container } = render(await productsAt("en"));
+    expect(container.querySelector("section")?.classList).toContain("map-sec");
+    expect(globalsCss()).toMatch(
+      /\.map-sec\s*\{\s*padding-top:\s*calc\(var\(--spacing-header-room\) \+ var\(--spacing-section\)\);\s*\}/,
+    );
   });
 
   it("sets the page metadata", () => {

@@ -779,7 +779,7 @@
     display: block;
     margin-block: 2px 6px;
     font-family: var(--font-brand);
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     opacity: 0.75;
@@ -1599,7 +1599,7 @@
     height: 44px;
     border-radius: var(--radius-md);
     font-family: var(--font-display);
-    font-size: 0.66rem;
+    font-size: 0.72rem;
     font-weight: 400;
   }
 
@@ -2190,6 +2190,37 @@
     }
   }
 
+  /* Phones (lead, 2026-10-13): shorter cards. The faces stack in one grid cell
+     instead of sitting absolute, so each card is as tall as its longer face
+     (not a fixed 304px) and the back text is never cut off. */
+  @media (width <= 640px) {
+    .flip-cards {
+      gap: 10px;
+    }
+
+    .flip-card,
+    .flip-inner {
+      min-height: 0;
+    }
+
+    .flip-inner {
+      display: grid;
+    }
+
+    .flip-face {
+      position: relative;
+      inset: auto;
+      grid-area: 1 / 1;
+      padding: 16px;
+    }
+
+    .flip-ill {
+      width: 64px;
+      height: 64px;
+    }
+  }
+
+  /* One card a row: two columns made the long titles and backs too narrow. */
   @media (width <= 520px) {
     .flip-cards {
       grid-template-columns: minmax(0, 1fr);
@@ -2207,6 +2238,13 @@
 
   .link-arrow svg {
     transition: transform 0.3s var(--ease-brand);
+  }
+
+  /* Touch screens: 44px tall to tap (PRODUCT.md), mouse layouts unchanged. */
+  @media (pointer: coarse) {
+    .link-arrow {
+      min-height: 44px;
+    }
   }
 
   .roles {
@@ -3302,10 +3340,31 @@
     margin-bottom: 4px;
     color: var(--color-muted);
     font-family: var(--font-brand);
-    font-size: 0.6rem;
+    font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  /* Phones (lead, 2026-10-13): the steps sit in a row you swipe through, the
+     next card peeking in, instead of four tall cards one under another. */
+  @media (width < --theme(--breakpoint-sm)) {
+    .flow {
+      grid-template-columns: none;
+      grid-auto-columns: 84%;
+      grid-auto-flow: column;
+      margin-inline: calc(var(--spacing-gutter-mobile) * -1);
+      padding: 4px var(--spacing-gutter-mobile) 12px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: var(--spacing-gutter-mobile);
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .flow > .step4 {
+      scroll-snap-align: start;
+    }
   }
 
   @media (width >= --theme(--breakpoint-sm)) {
@@ -3516,6 +3575,12 @@
   */
 
   /* Products map */
+  /* The map is the page's first section, so like every page hero it adds the
+     header room: the floating pill no longer covers the H1 (lead, 2026-10-13). */
+  .map-sec {
+    padding-top: calc(var(--spacing-header-room) + var(--spacing-section));
+  }
+
   /* Heading and badge shared by the roadmap. */
   .map-sec h1 {
     margin: 0;
@@ -3542,7 +3607,7 @@
     background: var(--color-navy);
     color: var(--color-white);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
   /* Products roadmap (2D) */
@@ -4748,6 +4813,41 @@
   }
 }
 
+/*
+  Phones and tablets (lead, 2026-10-13): the XT mark and GET IT DONE sit on the
+  right, behind the headline, fully on screen and as bright as on desktop; no
+  globe (hero-silk.tsx draws the mark-only story below 1080px). A soft navy
+  glow behind the words keeps them readable over the dots.
+*/
+@media (width < 1080px) {
+  .home-hero .hero-stage {
+    position: absolute;
+    top: 110px;
+    right: 6px;
+    width: max(60%, 212px);
+    height: 320px;
+    aspect-ratio: auto;
+    pointer-events: none;
+  }
+
+  .home-hero h1,
+  .home-hero h1 + p {
+    text-shadow:
+      0 0 4px var(--color-ink),
+      0 0 14px var(--color-ink),
+      0 0 28px var(--color-ink);
+  }
+}
+
+@media (640px < width < 1080px) {
+  .home-hero .hero-stage {
+    top: 90px;
+    right: 16px;
+    width: 50%;
+    height: 420px;
+  }
+}
+
 /* ---------- E-S1 Home: Why XionTech (2 cards, "+3" reveal, motto) ---------- */
 .why2 {
   display: grid;
@@ -4880,6 +4980,14 @@
   transition:
     flex-basis 0.5s var(--ease-brand),
     width 0.5s var(--ease-brand);
+}
+
+/* The 38px circle taps as 44px (PRODUCT.md). */
+.w-more-trigger::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
 }
 
 .w-more-trigger {
@@ -5571,6 +5679,20 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.25rem;
+}
+
+/* Phones (lead, 2026-10-13): the link groups pair up in two columns; the
+   brand and the offices keep the full width. */
+@media (max-width: 640px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+
+  .footer-grid > :first-child,
+  .footer-grid > :last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (min-width: 641px) {
