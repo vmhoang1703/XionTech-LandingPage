@@ -36,9 +36,9 @@ describe("SiteHeader", () => {
     expect(demo.className).toContain("max-[1080px]:ml-auto");
     // Below 412px (the narrowest width where the en and vi bars fit, measured
     // 2026-10-14) it leaves the bar; the mobile menu offers it instead.
-    // Up to 443px it drops its arrow and side padding.
+    // Up to 479px it drops its arrow and side padding (the Vietnamese bar needs this too).
     expect(demo.className).toContain("max-[411px]:hidden");
-    expect(demo.className).toContain("max-[443px]:px-3.5");
+    expect(demo.className).toContain("max-[479px]:px-3.5");
     expect(demo.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
   });
 
@@ -115,7 +115,8 @@ describe("SiteHeader", () => {
     ]);
     expect(
       screen
-        .getByRole("link", { name: "Liên hệ với chúng tôi" })
+        // The header button is the short word; the phone menu keeps the long one.
+        .getByRole("link", { name: "Liên hệ" })
         .getAttribute("href"),
     ).toBe("/vi#contact");
     expect(

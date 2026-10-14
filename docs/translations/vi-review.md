@@ -13,17 +13,18 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:vi-review`.
 
-**Total:** 505 strings, 155 AI and 350 prototype.
+**Total:** 506 strings, 156 AI and 350 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
-5 AI, 22 prototype.
+6 AI, 22 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `shell:SHELL.nav.skipLink` | Skip to content | Chuyển đến nội dung |
 | AI | `shell:SHELL.nav.mainNav` | Main | Điều hướng chính |
 | AI | `shell:SHELL.nav.homeLink` | XionTech home | Trang chủ XionTech |
+| AI | `shell:SHELL.nav.contactShort` | Get in touch | Liên hệ |
 | AI | `shell:SHELL.language.label` | Language | Ngôn ngữ |
 | AI | `shell:SHELL.notFound.metaTitle` | Page not found \| XionTech | Không tìm thấy trang \| XionTech |
 | Prototype | `shell:SHELL.nav.home` | Home | Trang chủ |
