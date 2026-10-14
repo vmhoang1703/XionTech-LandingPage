@@ -66,6 +66,7 @@ describe("LanguageMenu", () => {
     openMenu();
     const items = screen.getAllByRole("listitem").map((item) => {
       const button = item.querySelector("button");
+      expect(button?.querySelector(".sr-only")).toBeNull();
       return [button?.textContent, button?.getAttribute("lang")];
     });
     expect(items).toEqual([

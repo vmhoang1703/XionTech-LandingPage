@@ -4601,13 +4601,6 @@
   :lang(vi) h2 {
     line-height: 1.2;
   }
-
-  /* CJK headings need more room than the tight Latin display leading. */
-  :lang(ja) :is(h1, h2, h3, h4),
-  :lang(ko) :is(h1, h2, h3, h4),
-  :lang(zh) :is(h1, h2, h3, h4) {
-    line-height: 1.35;
-  }
 }
 
 /*
@@ -7314,4 +7307,14 @@ main > .page-scene:last-child > .surface-navy:last-child {
     opacity: 0;
     scale: 0.8;
   }
+}
+
+/*
+  CJK headings need more room than the tight Latin display leading. Unlayered
+  and last on purpose: it must beat the component heading rules above.
+*/
+:lang(ja) :is(h1, h2, h3, h4),
+:lang(ko) :is(h1, h2, h3, h4),
+:lang(zh) :is(h1, h2, h3, h4) {
+  line-height: 1.35;
 }
