@@ -1721,7 +1721,7 @@ Template:
 
 ## 2026-10-13 — Vietnamese for all page content (part A of the multi-language request)
 
-- **Who / tool:** Son Nguyen (Sammy) / Claude Code, `/bmad-build` dispatch route. Planning and build controller Claude Opus 5.5; task implementers Claude Opus 5.5 (tasks 2–5) and Claude Sonnet 5.5 (tasks 1, 6, 7); all reviews Claude Sonnet 5.5.
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code, `/bmad-build` dispatch route. Planning and build controller Claude Opus 5.5; implementers Claude Opus 5.5 (tasks 2–5, including the task 4 fix round) and Claude Sonnet 5.5 (tasks 1, 6, 7); task and whole-change reviewers Claude Sonnet 5.5. The commit trailers read "Claude Opus 5.5" for all commits (session attribution), whichever model wrote them.
 - **Prompt (short):** Make `/vi/` fully Vietnamese: page bodies, page titles, form messages and Sanity stories. Parts B (ja, fr, ko, zh-Hans) and C (Arabic, RTL) come later and reuse the same plumbing.
 - **What the AI did:**
   - Wrote `spec-vi-page-content.md` and split the work into seven tasks: shared plumbing (`Localized<T>`, `pickLocale`, a parity helper, and a script that pulls Amber's `data-vi` pairs into `src/i18n/prototype-vi.json`), then home/values/process/apps, products/services/about/offices, careers/job/news/privacy/not-found/footer with Sanity `vi` fields and per-locale dates, forms, shell and page meta, and this review list.
@@ -1733,4 +1733,4 @@ Template:
   - Open: a native Vietnamese reader still has to check the AI rows.
 - **AI got it wrong?** yes —
   - (a) The task 4 dispatch was interrupted part-way. Its shared Sanity `lang` flag then labelled fields that had fallen back to English as Vietnamese, and a blank `vi` counted as filled. Review caught it; it was fixed per field (a field is marked only when it differs from the page language, and a blank `vi` falls back to `en`).
-  - (b) The hand-kept `src/i18n/vi-sources.json` was incomplete (keys missing for the offices and about-office dictionaries; about 110 of 528 places had no entry) and some tags were wrong (about 26 disagreed with the generated result, for example the demo hero, `form.sending` and `form.successText`, which match the prototype). Replaced by the generator and deleted.
+  - (b) The hand-kept `src/i18n/vi-sources.json` was incomplete and partly wrong. Compared with the generated list, 106 of the 528 places had no key (for example the offices and about-office dictionaries), and 26 were tagged `prototype` where the English matches the prototype but the Vietnamese was reworded, so the generator tags them AI (for example the Careers hero "Stay curious.", the `[Placeholder]` Careers value cards and the journey lane "Student"). Replaced by the generator and deleted.
