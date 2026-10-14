@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { localeMetadata } from "@/i18n/page-metadata";
 import { CheckCircleIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { Fragment } from "react";
@@ -21,22 +20,17 @@ import { heroWords } from "@/components/sections/hero-words";
 
 // Kept but inactive (lead, 2026-10-13): nothing links here and search engines
 // leave it out; every call to action uses the Home Get in touch form.
-const pageMetadata = localeMetadata({
-  en: {
-    title: CONTACT_STRINGS.metaTitle,
-    description: CONTACT_STRINGS.metaDescription,
-  },
-  vi: {
-    title: CONTACT_STRINGS_VI.metaTitle,
-    description: CONTACT_STRINGS_VI.metaDescription,
-  },
-});
-
-export async function generateMetadata(
-  props: Parameters<typeof pageMetadata>[0],
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: Readonly<Pick<PageProps<"/[locale]/demo">, "params">>): Promise<Metadata> {
+  const { locale } = await params;
+  const { metaTitle, metaDescription } = pickLocale(
+    isLocale(locale) ? locale : "en",
+    { en: CONTACT_STRINGS, vi: CONTACT_STRINGS_VI },
+  );
   return {
-    ...(await pageMetadata(props)),
+    title: metaTitle,
+    description: metaDescription,
     robots: { index: false, follow: false },
   };
 }

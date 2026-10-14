@@ -1,4 +1,4 @@
-export const LOCALES = ["en", "vi"] as const;
+export const LOCALES = ["en", "vi", "ja", "fr", "ko", "zh"] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
@@ -18,3 +18,8 @@ export function localeHref(locale: Locale, path: string): string {
 }
 
 export const LOCALE_COOKIE = "locale";
+
+/** The `<html lang>` value: Chinese is Simplified, so "zh" pages say "zh-Hans". */
+export function htmlLang(locale: Locale): string {
+  return locale === "zh" ? "zh-Hans" : locale;
+}

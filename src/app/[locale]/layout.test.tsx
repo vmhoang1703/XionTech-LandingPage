@@ -49,6 +49,15 @@ describe("RootLayout", () => {
     expect(html.props.lang).toBe("vi");
   });
 
+  it("renders a Simplified Chinese html root on zh", async () => {
+    const html = (await RootLayout({
+      children: <p>child</p>,
+      ...params("zh"),
+    } as LayoutProps<"/[locale]">)) as ReactElement<{ lang: string }>;
+
+    expect(html.props.lang).toBe("zh-Hans");
+  });
+
   it("renders an English html root with all four brand font variables", async () => {
     const html = (await RootLayout({
       children: <p>child</p>,
@@ -159,15 +168,19 @@ describe("RootLayout", () => {
     );
   });
 
-  it("prerenders en and vi only and 404s any other locale", async () => {
-    expect(generateStaticParams()).toEqual([
-      { locale: "en" },
-      { locale: "vi" },
-    ]);
+  it("falls back to the English site meta for a locale not yet translated", async () => {
+    const ja = await generateMetadata(params("ja") as LayoutProps<"/[locale]">);
+    expect(ja.description).toMatch(/^IT services/);
+  });
+
+  it("prerenders the six locales only and 404s any other locale", async () => {
+    expect(generateStaticParams()).toEqual(
+      ["en", "vi", "ja", "fr", "ko", "zh"].map((locale) => ({ locale })),
+    );
     await expect(
       RootLayout({
         children: <p>child</p>,
-        ...params("fr"),
+        ...params("de"),
       } as LayoutProps<"/[locale]">),
     ).rejects.toThrow("NEXT_NOT_FOUND");
   });

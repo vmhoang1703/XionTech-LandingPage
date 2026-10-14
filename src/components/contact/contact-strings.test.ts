@@ -26,6 +26,14 @@ describe("localizeError", () => {
     expect(localizeErrors(errors, "en")).toBe(errors);
   });
 
+  it("keeps English errors in a locale not yet translated", () => {
+    expect(localizeError(CONTACT_ERRORS.name, "ja")).toBe(CONTACT_ERRORS.name);
+    expect(localizeError(JOB_ERRORS.cv, "fr")).toBe(JOB_ERRORS.cv);
+    expect(localizeError("Unknown.", "zh")).toBe(
+      CONTACT_STRINGS.form.sendError,
+    );
+  });
+
   it("maps a known message and falls back to the generic error", () => {
     expect(
       localizeErrors(

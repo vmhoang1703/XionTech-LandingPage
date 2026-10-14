@@ -1,6 +1,6 @@
 import { SERVICES } from "@/components/layout/nav-data";
 import { APPS, appById } from "@/content/apps";
-import type { Localized } from "@/i18n/content";
+import { pickLocale, type Localized } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { JOB_ERRORS } from "@/lib/careers/application-rules";
 import {
@@ -240,10 +240,37 @@ export const ERRORS_VI: ReadonlyMap<string, string> = new Map([
   ],
 ]);
 
+/** The English errors outside `CONTACT_STRINGS.errors`, keyed for translation. */
+export const CONTACT_ERROR_MESSAGES = {
+  messageRequired: MESSAGE_REQUIRED_ERROR,
+  length: LENGTH_ERROR,
+  cv: JOB_ERRORS.cv,
+  note: JOB_ERRORS.note,
+};
+
 /** One English field error in the page's language; an unknown one becomes the generic send error. */
 export function localizeError(message: string, locale: Locale): string {
   if (locale === "en") return message;
-  return ERRORS_VI.get(message) ?? CONTACT_STRINGS_VI.form.sendError;
+  if (locale === "vi") {
+    return ERRORS_VI.get(message) ?? CONTACT_STRINGS_VI.form.sendError;
+  }
+  const strings = pickLocale(locale, { en: CONTACT_STRINGS });
+  const others = pickLocale(locale, { en: CONTACT_ERROR_MESSAGES });
+  const errors = new Map<string, string>([
+    ...Object.entries(CONTACT_ERRORS).map(
+      ([field, english]): [string, string] => [
+        english,
+        strings.errors[field as keyof typeof CONTACT_ERRORS],
+      ],
+    ),
+    ...Object.entries(CONTACT_ERROR_MESSAGES).map(
+      ([key, english]): [string, string] => [
+        english,
+        others[key as keyof typeof CONTACT_ERROR_MESSAGES],
+      ],
+    ),
+  ]);
+  return errors.get(message) ?? strings.form.sendError;
 }
 
 /** Field errors (from the rules or the server, always English) in the page's language. */

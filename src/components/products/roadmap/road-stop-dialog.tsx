@@ -3,7 +3,13 @@
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
 import { useLocale } from "@/components/layout/locale-link";
-import { APPS, appById, appTaglinesVi, type AppId } from "@/content/apps";
+import {
+  APP_TAGLINES,
+  APPS,
+  appById,
+  appTaglinesVi,
+  type AppId,
+} from "@/content/apps";
 import {
   dayRoad,
   dayRoadVi,
@@ -166,5 +172,5 @@ function AllApps({ locale }: Readonly<{ locale: Locale }>) {
 }
 
 function tagline(id: AppId, locale: Locale): string {
-  return pickLocale(locale, { en: appById(id).tagline, vi: appTaglinesVi[id] });
+  return pickLocale(locale, { en: APP_TAGLINES, vi: appTaglinesVi })[id];
 }

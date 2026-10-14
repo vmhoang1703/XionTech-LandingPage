@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/locales";
-import { ROLE_TYPE_LABELS } from "@/content/job";
+import { ROLE_TYPE_LABELS, ROLE_TYPES } from "@/content/job";
+import { pickLocale } from "@/i18n/content";
 import { sanityFetch } from "@/lib/sanity/client";
 import { localized, localizedLang } from "@/lib/sanity/localized";
 
@@ -76,7 +77,10 @@ export function roleTypeLabel(
   type?: string | null,
   locale: Locale = "en",
 ): string | undefined {
-  return type ? ROLE_TYPE_LABELS[locale].get(type) : undefined;
+  if (!type) return undefined;
+  if (locale === "vi") return ROLE_TYPE_LABELS.vi.get(type);
+  const labels = pickLocale(locale, { en: ROLE_TYPES });
+  return Object.hasOwn(labels, type) ? labels[type] : undefined;
 }
 
 export function roleMeta(

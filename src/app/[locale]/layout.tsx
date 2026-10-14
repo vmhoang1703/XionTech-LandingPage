@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale, LOCALES } from "@/i18n/locales";
+import { htmlLang, isLocale, LOCALES } from "@/i18n/locales";
 import { setRequestLocale } from "@/i18n/request-locale";
 import { META } from "@/i18n/site-meta";
 import { LocaleProvider } from "@/components/layout/locale-link";
@@ -42,7 +42,7 @@ export default async function RootLayout({
   setRequestLocale(locale);
   return (
     <html
-      lang={locale}
+      lang={htmlLang(locale)}
       // globals.css sets smooth scroll for in-page links; this asks Next.js 16
       // to switch it off during route changes so they stay instant.
       data-scroll-behavior="smooth"

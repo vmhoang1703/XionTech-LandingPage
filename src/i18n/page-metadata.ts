@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pickLocale } from "./content";
 import { isLocale, type Locale } from "./locales";
 
 interface PageMeta {
@@ -6,19 +7,19 @@ interface PageMeta {
   description?: string;
 }
 
+type PageMetas = { en: PageMeta } & Partial<Record<Locale, PageMeta>>;
+
 /**
- * A page's title and description for one locale. Each page passes both; a
- * `[Placeholder]` prefix appears in vi only where the English source has one.
+ * A page's title and description for one locale: the twin passed in, else the
+ * registered translation of the English, else the English. A `[Placeholder]`
+ * prefix appears in a translation only where the English source has one.
  */
-export function forLocale(
-  locale: string,
-  meta: Record<Locale, PageMeta>,
-): Metadata {
-  return { ...meta[isLocale(locale) ? locale : "en"] };
+export function forLocale(locale: string, meta: PageMetas): Metadata {
+  return { ...pickLocale(isLocale(locale) ? locale : "en", meta) };
 }
 
-/** A page's generateMetadata from its English and Vietnamese title and description. */
-export function localeMetadata(meta: Record<Locale, PageMeta>) {
+/** A page's generateMetadata from its title and description by locale. */
+export function localeMetadata(meta: PageMetas) {
   return async ({
     params,
   }: {

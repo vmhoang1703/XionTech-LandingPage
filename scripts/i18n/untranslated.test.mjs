@@ -60,6 +60,7 @@ const ALLOWED = new Set([
   "CV",
   // Language names, each in its own language.
   "English",
+  "Français",
   "Tiếng Việt",
   // Icon names and time zones (data).
   "Cpu",

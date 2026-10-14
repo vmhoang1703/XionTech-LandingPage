@@ -3,6 +3,17 @@ import type { NextRequest } from "next/server";
 import { DEFAULT_LOCALE, LOCALE_COOKIE, isLocale } from "@/i18n/locales";
 import type { Locale } from "@/i18n/locales";
 
+// Chinese is offered in Simplified only: zh, zh-CN, zh-SG and zh-Hans(-*) map
+// to it; zh-TW, zh-HK, zh-MO and zh-Hant(-*) are left to fall through.
+function languageOf(tag: string): string {
+  const [language, ...subtags] = tag.toLowerCase().split("-");
+  if (language !== "zh") return language;
+  const traditional = subtags.some((s) =>
+    ["hant", "tw", "hk", "mo"].includes(s),
+  );
+  return traditional ? "" : "zh";
+}
+
 function fromAcceptLanguage(header: string | null): Locale | undefined {
   const ranked = (header ?? "")
     .split(",")
@@ -11,7 +22,7 @@ function fromAcceptLanguage(header: string | null): Locale | undefined {
       const q = params.find((p) => p.trim().startsWith("q="));
       const weight = q ? Number(q.trim().slice(2)) : 1;
       return {
-        language: tag.trim().toLowerCase().split("-")[0],
+        language: languageOf(tag.trim()),
         weight: Number.isNaN(weight) ? 0 : weight,
       };
     })

@@ -198,6 +198,12 @@ describe("roleMeta", () => {
 describe("roleTypeLabel", () => {
   it("maps a known type to its label", () => {
     expect(roleTypeLabel("full-time")).toBe("Full-time");
+    expect(roleTypeLabel("contract", "vi")).toBe("Hợp đồng");
+  });
+
+  it("falls back to English in a locale not yet translated", () => {
+    expect(roleTypeLabel("internship", "ko")).toBe("Internship");
+    expect(roleTypeLabel("constructor", "ko")).toBeUndefined();
   });
 
   it.each([undefined, null, "", "weekend", "constructor"])(

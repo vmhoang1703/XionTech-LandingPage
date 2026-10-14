@@ -1,3 +1,4 @@
+import { DICTIONARIES } from "./dictionaries";
 import type { Locale } from "./locales";
 
 // Site shell strings (header, footer, language menu, 404). Page bodies are not translated here.
@@ -33,7 +34,7 @@ export interface ShellDictionary {
     cityPlano: string;
     cityHcmc: string;
   };
-  language: { label: string; en: string; vi: string };
+  language: { label: string } & Record<Locale, string>;
   footer: {
     blurb: string;
     products: string;
@@ -75,7 +76,15 @@ const en: ShellDictionary = {
     cityPlano: "Plano",
     cityHcmc: "Ho Chi Minh City",
   },
-  language: { label: "Language", en: "English", vi: "Tiếng Việt" },
+  language: {
+    label: "Language",
+    en: "English",
+    vi: "Tiếng Việt",
+    ja: "日本語",
+    fr: "Français",
+    ko: "한국어",
+    zh: "简体中文",
+  },
   footer: {
     blurb:
       "Education technology products and software delivery services for schools and businesses.",
@@ -122,6 +131,10 @@ const vi: ShellDictionary = {
     label: "Ngôn ngữ",
     en: "English",
     vi: "Tiếng Việt",
+    ja: "日本語",
+    fr: "Français",
+    ko: "한국어",
+    zh: "简体中文",
   },
   footer: {
     blurb:
@@ -147,4 +160,11 @@ const vi: ShellDictionary = {
   },
 };
 
-export const SHELL: Record<Locale, ShellDictionary> = { en, vi };
+export const SHELL: Record<Locale, ShellDictionary> = {
+  en,
+  vi,
+  ja: DICTIONARIES.ja?.shell ?? en,
+  fr: DICTIONARIES.fr?.shell ?? en,
+  ko: DICTIONARIES.ko?.shell ?? en,
+  zh: DICTIONARIES.zh?.shell ?? en,
+};
