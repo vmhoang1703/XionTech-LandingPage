@@ -73,9 +73,9 @@ describe("NewsPage", () => {
     expect(h1.textContent).toBe("Catch up with us");
     // Each word rises on its own (lead, 2026-10-13).
     expect(
-      Array.from(h1.querySelectorAll(".press-w"), (w) => w.textContent),
+      Array.from(h1.querySelectorAll("[data-hw]"), (w) => w.textContent),
     ).toEqual(["Catch", "up", "with", "us"]);
-    expect(h1.nextElementSibling?.className).toBe("press-sub");
+    expect(h1.nextElementSibling?.tagName).toBe("P");
     expect(
       screen.getByText(
         "Stay informed with the latest news and announcements, fresh off the press.",

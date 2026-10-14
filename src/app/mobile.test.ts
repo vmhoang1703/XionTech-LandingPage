@@ -299,3 +299,34 @@ describe("prototype motion", () => {
     expect(css).toMatch(/\.mtn-rise\s*\{[^}]*overflow:\s*hidden;/);
   });
 });
+
+// Hero entrance (lead, 2026-10-14: B, every page opens the same way).
+describe("hero entrance", () => {
+  const css = globalsCss();
+  const block = css.slice(css.indexOf("/* ---------- Hero entrance"));
+
+  it("plays only without reduced motion, with fixed delays", () => {
+    const media = block.slice(
+      block.indexOf("@media (prefers-reduced-motion: no-preference)"),
+    );
+    expect(media).toMatch(
+      /h1 \[data-hw\]\s*\{\s*animation:\s*press-word 0\.7s[^;]*calc\(min\(var\(--i\), 8\) \* 80ms\) both;/,
+    );
+    expect(media).toMatch(
+      /h1:has\(\[data-hw\]\) ~ :is\(p, ul\.chips, ul\.list-check\)\s*\{\s*animation:[^;]*0\.55s both;/,
+    );
+    expect(media).toMatch(
+      /h1:has\(\[data-hw\]\) ~ :is\(\.cta-row, \.btn, \.ah-links\)\s*\{\s*animation:[^;]*0\.7s both;/,
+    );
+    expect(media).toMatch(
+      /h1:has\(\[data-hw\]\) \.hl::after\s*\{\s*animation:\s*hl-draw 1s 0\.9s/,
+    );
+  });
+
+  it("moves with opacity, translate and rotate only", () => {
+    const start = css.indexOf("@keyframes press-word {");
+    const frames = css.slice(start, css.indexOf("\n}", start));
+    const props = [...frames.matchAll(/^\s+([a-z-]+):/gm)].map((m) => m[1]);
+    expect(props.sort()).toEqual(["opacity", "rotate", "translate"]);
+  });
+});

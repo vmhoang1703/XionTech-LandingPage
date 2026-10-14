@@ -1,5 +1,7 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
+const text = (html: string) => html.replaceAll(/<[^>]*>/g, "");
+
 test(
   "products page responds 200 with the H1, the map, the four card anchors and no Updates link",
   { tag: "@smoke" },
@@ -8,7 +10,8 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(200);
-    expect(html).toContain("Built apart. Better together.");
+    // Each title word is its own span (the hero entrance): compare the text.
+    expect(text(html)).toContain("Built apart. Better together.");
     expect(html).toContain('id="map"');
     // Inside the roadmap: between the map section's start and its end.
     const start = html.indexOf('id="map"');

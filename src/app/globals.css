@@ -7084,36 +7084,34 @@ main > .page-scene:last-child > .surface-navy:last-child {
   }
 }
 
-/* ---------- News hero: the words rise in (lead 2026-10-13) ----------
-   Amber's prototype (site.css 1449-1457): each word of the title rises with a
-   small turn, one after another, then the line under it. */
-.press-h .press-w {
+/* ---------- Hero entrance: every page opens the same way (lead 2026-10-14) ----------
+   Amber's News entrance (site.css 1449-1457) on every page title: the words rise
+   one after another with a small turn (heroWords puts each in a [data-hw] span,
+   its place in --i), then the line under the title, then the button; the
+   highlight draws once the words have landed. The delays are fixed, so a page
+   opens in about a second and a half on phone, tablet and desktop alike. A
+   long title (a story) caps its stagger at the eighth word. It plays on first
+   paint with no script; reduced motion shows the page at once. */
+[data-hw] {
   display: inline-block;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .press-h .press-w {
-    animation: press-word 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.25) both;
+  h1 [data-hw] {
+    animation: press-word 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.25)
+      calc(min(var(--i), 8) * 80ms) both;
   }
 
-  .press-h .press-w:nth-of-type(2) {
-    animation-delay: 0.08s;
+  h1:has([data-hw]) ~ :is(p, ul.chips, ul.list-check) {
+    animation: press-word 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.55s both;
   }
 
-  .press-h .press-w:nth-of-type(3) {
-    animation-delay: 0.16s;
+  h1:has([data-hw]) ~ :is(.cta-row, .btn, .ah-links) {
+    animation: press-word 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.7s both;
   }
 
-  .press-h .press-w:nth-of-type(4) {
-    animation-delay: 0.24s;
-  }
-
-  .press-h .press-w:nth-of-type(5) {
-    animation-delay: 0.32s;
-  }
-
-  .press-sub {
-    animation: press-word 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.45s both;
+  h1:has([data-hw]) .hl::after {
+    animation: hl-draw 1s 0.9s var(--ease-brand) both;
   }
 }
 

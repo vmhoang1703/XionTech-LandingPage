@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "@/content/not-found";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const metadata: Metadata = {
   title: notFound.metaTitle,
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   const { title, lede, primary, links, map } = notFound;
 
+  const t = heroWords();
   return (
     <section
       aria-labelledby="not-found-title"
@@ -22,7 +24,7 @@ export default function NotFound() {
       <div className="wrap">
         <div className="trail-grid">
           <div>
-            <h1 id="not-found-title">{title}</h1>
+            <h1 id="not-found-title">{t.words(title)}</h1>
             <p className="lede">{lede}</p>
             <div className="mt-8 flex flex-wrap gap-3.5">
               <Link href={primary.href} className="btn btn-primary">

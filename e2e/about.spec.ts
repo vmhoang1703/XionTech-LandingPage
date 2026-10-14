@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const text = (html: string) => html.replaceAll(/<[^>]*>/g, "");
+
 test(
   "about page serves content with anchors and FAQ without JavaScript",
   { tag: "@smoke" },
@@ -12,7 +14,8 @@ test(
 
     // One H1, with the About headline
     expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
-    expect(html).toContain("technology built with ");
+    // Each title word is its own span (the hero entrance): compare the text.
+    expect(text(html)).toContain("technology built with ");
     expect(html).toContain("ownership");
 
     // The values moved to Home

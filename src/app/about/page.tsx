@@ -16,6 +16,7 @@ import {
   aboutOffices,
   aboutStory,
 } from "@/content/about";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const metadata: Metadata = {
   title: aboutMeta.title,
@@ -30,6 +31,7 @@ export default function AboutPage() {
   const { title, text, links } = aboutHero;
   const { title: story, chapters, closing } = aboutStory;
 
+  const t = heroWords();
   return (
     <>
       <section id="mission" className="about-hero" aria-labelledby="about-h1">
@@ -72,10 +74,12 @@ export default function AboutPage() {
         </svg>
         <div className="wrap ah-inner">
           <h1 id="about-h1">
-            {title.lead}
+            {t.words(title.lead)}
             <br />
-            {title.middle}
-            <span className="ah-accent">{title.accent}</span>
+            {t.words(title.middle)}
+            <span className="ah-accent" {...t.unit()}>
+              {title.accent}
+            </span>
             {title.tail}
           </h1>
           <p className="ah-text">{text}</p>

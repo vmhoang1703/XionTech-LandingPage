@@ -6,6 +6,7 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { CONTACT_STRINGS } from "@/components/contact/contact-strings";
 import { HeroArt } from "@/components/sections/hero-art";
 import { offices, otherLocations } from "@/content/offices";
+import { heroWords } from "@/components/sections/hero-words";
 
 // Kept but inactive (lead, 2026-10-13): nothing links here and search engines
 // leave it out; every call to action uses the Home Get in touch form.
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
 const { hero } = CONTACT_STRINGS;
 
 export default function DemoPage() {
+  const t = heroWords();
   return (
     <section className="hero-navy page-hero" aria-labelledby="demo-h1">
       <HeroArt tone="navy" />
@@ -29,8 +31,10 @@ export default function DemoPage() {
             <span>{hero.breadcrumbCurrent}</span>
           </nav>
           <h1 id="demo-h1">
-            {hero.titleBefore}
-            <span className="hl">{hero.titleHighlight}</span>
+            {t.words(hero.titleBefore)}
+            <span className="hl" {...t.unit()}>
+              {hero.titleHighlight}
+            </span>
             {hero.titleAfter}
           </h1>
           <ul className="list-check">

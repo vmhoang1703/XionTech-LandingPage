@@ -8,7 +8,8 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    expect(html).toContain("You’ve wandered off the trail.");
+    // The 404 copy itself is checked in not-found.spec.ts.
+    expect(html).toContain("Page not found");
   },
 );
 

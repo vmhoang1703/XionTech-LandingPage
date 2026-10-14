@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const text = (html: string) => html.replaceAll(/<[^>]*>/g, "");
+
 test(
   "unknown path answers 404 with the lost-trail copy and no capture band",
   { tag: "@smoke" },
@@ -8,7 +10,8 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    expect(html).toContain("You’ve wandered off the trail.");
+    // Each title word is its own span (the hero entrance): compare the text.
+    expect(text(html)).toContain("You’ve wandered off the trail.");
     expect(html).toContain("You are here");
     expect(html).not.toContain(">404<");
     expect(html).toContain("Go to Home");

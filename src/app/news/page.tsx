@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
 import { CaptureBand } from "@/components/contact/capture-band";
 import { NewsCard } from "@/components/news/news-card";
 import { NewsFilters } from "@/components/news/news-filters";
@@ -8,6 +7,7 @@ import { newsMeta, newsPage } from "@/content/news";
 import { getAllPosts } from "@/lib/news/all-posts";
 import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const metadata: Metadata = {
   title: newsMeta.title,
@@ -33,6 +33,7 @@ export default async function NewsPage() {
   const posts = await loadPosts();
   const { title, sub, storiesHeading } = newsPage;
 
+  const t = heroWords();
   return (
     <PageScene fade={false}>
       <section
@@ -40,16 +41,8 @@ export default async function NewsPage() {
         aria-labelledby="news-h1"
       >
         <div className="wrap nhead">
-          {/* Each word rises in on its own (Amber's prototype, news.html). */}
-          <h1 id="news-h1" className="press-h">
-            {title.split(" ").map((word, index) => (
-              <Fragment key={`${word}-${index}`}>
-                {index > 0 && " "}
-                <span className="press-w">{word}</span>
-              </Fragment>
-            ))}
-          </h1>
-          <p className="press-sub">{sub}</p>
+          <h1 id="news-h1">{t.words(title)}</h1>
+          <p>{sub}</p>
         </div>
       </section>
 
