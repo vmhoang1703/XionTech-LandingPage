@@ -10,6 +10,14 @@ vi.mock("next/font/google", () => ({
   JetBrains_Mono: () => ({ variable: "font-jetbrains-mono" }),
 }));
 
+// The registered dictionaries, minus zh, so the fallback test below holds
+// whichever locales are filled.
+vi.mock("@/i18n/dictionaries", async (importOriginal) => {
+  const { DICTIONARIES } =
+    await importOriginal<typeof import("@/i18n/dictionaries")>();
+  return { DICTIONARIES: { ...DICTIONARIES, zh: undefined } };
+});
+
 vi.mock("next/navigation", () => ({
   usePathname: () => "/",
   useRouter: () => ({ push: vi.fn() }),
@@ -204,7 +212,7 @@ describe("RootLayout", () => {
     expect(ja.description).toMatch(/^IT サービス/);
   });
 
-  it("falls back to the English site meta for a locale not yet translated", async () => {
+  it("falls back to the English site meta for a locale with no dictionary", async () => {
     const zh = await generateMetadata(params("zh") as LayoutProps<"/[locale]">);
     expect(zh.description).toMatch(/^IT services/);
   });

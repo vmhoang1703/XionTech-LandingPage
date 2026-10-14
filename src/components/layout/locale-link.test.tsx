@@ -45,7 +45,7 @@ describe("useLocalized", () => {
     expect(show("ja", ja)).toBe("閉じる|ja send error");
   });
 
-  it("falls back to English when the locale has no translation yet", () => {
+  it("falls back to English when the layout sent no translation for the key", () => {
     expect(show("ko", { ...ja, dictionary: {} })).toBe("Close|ja send error");
     expect(show("fr")).toBe("Close|none");
   });

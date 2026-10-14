@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const { sanityFetchMock } = vi.hoisted(() => ({ sanityFetchMock: vi.fn() }));
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: sanityFetchMock }));
+// No registered dictionaries, so the English fallback holds whichever locales are filled.
+vi.mock("@/i18n/dictionaries", () => ({ DICTIONARIES: {} }));
 
 import {
   getOpenRole,
@@ -201,7 +203,7 @@ describe("roleTypeLabel", () => {
     expect(roleTypeLabel("contract", "vi")).toBe("Hợp đồng");
   });
 
-  it("falls back to English in a locale not yet translated", () => {
+  it("falls back to English in a locale with no dictionary", () => {
     expect(roleTypeLabel("internship", "ko")).toBe("Internship");
     expect(roleTypeLabel("constructor", "ko")).toBeUndefined();
   });

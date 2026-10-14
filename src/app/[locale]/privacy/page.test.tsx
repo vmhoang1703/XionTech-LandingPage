@@ -137,9 +137,9 @@ describe("Privacy page metadata in other locales", () => {
     expect(meta.title).toBe("プライバシーポリシー | XionTech");
   });
 
-  it.each(["zh", "de"])("uses the English title on %s", async (locale) => {
+  it("uses the English title on an unknown locale", async () => {
     const meta = await generateMetadata({
-      params: Promise.resolve({ locale }),
+      params: Promise.resolve({ locale: "de" }),
     });
     expect(meta.title).toBe(PRIVACY.metaTitle);
   });
