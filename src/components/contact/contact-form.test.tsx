@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { ContactForm } from "./contact-form";
 
 // The success panel is a polite live region that takes focus (Sonar S6819:
@@ -101,7 +102,7 @@ describe("ContactForm", () => {
   });
 
   it("selects Outsourcing project when the page loads with #project", () => {
-    history.replaceState(null, "", "/demo#project");
+    history.replaceState(null, "", "/en/demo#project");
     render(<ContactForm />);
     expect(selected("Outsourcing project")).toBe("true");
     expect(selected("Product demo")).toBe("false");
@@ -110,12 +111,12 @@ describe("ContactForm", () => {
   it("follows the hash when it changes after load", () => {
     render(<ContactForm />);
     act(() => {
-      history.replaceState(null, "", "/demo#project");
+      history.replaceState(null, "", "/en/demo#project");
       globalThis.dispatchEvent(new HashChangeEvent("hashchange"));
     });
     expect(selected("Outsourcing project")).toBe("true");
     act(() => {
-      history.replaceState(null, "", "/demo#form");
+      history.replaceState(null, "", "/en/demo#form");
       globalThis.dispatchEvent(new HashChangeEvent("hashchange"));
     });
     expect(selected("Product demo")).toBe("true");
@@ -131,7 +132,7 @@ describe("ContactForm", () => {
     render(<ContactForm />);
     fireEvent.click(tab("Outsourcing project"));
     act(() => {
-      history.replaceState(null, "", "/demo#form");
+      history.replaceState(null, "", "/en/demo#form");
       globalThis.dispatchEvent(new HashChangeEvent("hashchange"));
     });
     expect(selected("Product demo")).toBe("true");
@@ -208,7 +209,7 @@ describe("ContactForm", () => {
   });
 
   it("hides the Product demo fields on the Outsourcing tab", () => {
-    history.replaceState(null, "", "/demo#project");
+    history.replaceState(null, "", "/en/demo#project");
     render(<ContactForm />);
     for (const id of ["f-size", "f-date"]) {
       expect(field(id).closest("[hidden]")).not.toBeNull();
@@ -375,7 +376,7 @@ describe("ContactForm", () => {
     ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "Privacy policy" }).getAttribute("href"),
-    ).toBe("/privacy");
+    ).toBe("/en/privacy");
   });
 
   it("limits name, work email, school and role to the server lengths", () => {
@@ -690,7 +691,7 @@ describe("ContactForm capture prefill", () => {
     );
     expect(scrollIntoView).not.toHaveBeenCalled();
     unmount();
-    history.replaceState(null, "", "/demo#project");
+    history.replaceState(null, "", "/en/demo#project");
     render(
       <div id="form">
         <ContactForm />
@@ -698,5 +699,101 @@ describe("ContactForm capture prefill", () => {
     );
     expect(scrollIntoView).toHaveBeenCalledTimes(1);
     expect(scrollIntoView.mock.contexts[0]).toBe(field("form"));
+  });
+});
+
+describe("ContactForm in Vietnamese", () => {
+  const renderVi = () =>
+    render(
+      <LocaleProvider locale="vi">
+        <ContactForm />
+      </LocaleProvider>,
+    );
+
+  it("shows Vietnamese field errors on an empty submit", () => {
+    renderVi();
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    expect(errorText("f-name")).toBe("Vui lòng nhập họ tên.");
+    expect(errorText("f-email")).toBe("Vui lòng nhập email hợp lệ.");
+    expect(errorText("f-org")).toBe("Vui lòng nhập tên tổ chức.");
+  });
+
+  it("shows a server error as the Vietnamese message for its field, or the generic error", async () => {
+    renderVi();
+    fillRequired();
+    fetchMock.mockReturnValueOnce(
+      reply(400, {
+        errors: {
+          name: "Please keep this under 200 characters.",
+          email: "Something new from the server.",
+        },
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    await settle();
+    expect(errorText("f-name")).toBe("Vui lòng nhập dưới 200 ký tự.");
+    expect(errorText("f-email")).toBe(
+      "Không gửi được yêu cầu của bạn. Vui lòng thử lại.",
+    );
+  });
+
+  const options = (id: string) =>
+    [...field(id).querySelectorAll("option")].map((o) => [
+      o.value,
+      o.textContent,
+    ]);
+
+  it("keeps the English option values the server checks, with Vietnamese labels", () => {
+    renderVi();
+    expect(options("f-size")).toEqual([
+      ["Under 500 students", "Dưới 500 học sinh"],
+      ["500 to 1,500 students", "500 đến 1.500 học sinh"],
+      ["Over 1,500 students", "Trên 1.500 học sinh"],
+      ["Multiple campuses", "Nhiều cơ sở"],
+    ]);
+    expect(options("f-svc")).toEqual([
+      ["Product Engineering", "Product Engineering"],
+      ["AI-Driven Analytics", "AI-Driven Analytics"],
+      ["Product Co-Creation", "Product Co-Creation"],
+      ["Staffing Service", "Staffing Service"],
+      ["Custom App Development", "Custom App Development"],
+      ["Low-code Solutions", "Low-code Solutions"],
+      ["AI-Powered Solutions", "AI-Powered Solutions"],
+      ["Cloud Computing", "Cloud Computing"],
+      ["Not sure yet", "Chưa chắc chắn"],
+    ]);
+    expect(options("f-when")).toEqual([
+      ["As soon as possible", "Càng sớm càng tốt"],
+      ["In 1 to 3 months", "Trong 1 đến 3 tháng"],
+      ["Just exploring", "Đang tìm hiểu"],
+    ]);
+  });
+
+  it("posts the English values from a Vietnamese form", async () => {
+    fetchMock.mockReturnValue(pendingFetch());
+    const demo = renderVi();
+    fillRequired();
+    fill("f-size", "Over 1,500 students");
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    await settle();
+    expect(sentBody()).toMatchObject({
+      type: "demo",
+      schoolSize: "Over 1,500 students",
+    });
+
+    demo.unmount();
+    renderVi();
+    fillRequired();
+    fireEvent.click(screen.getAllByRole("tab")[1]);
+    fill("f-svc", "Not sure yet");
+    fill("f-when", "Just exploring");
+    fill("f-msg", "Xin chào");
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    await settle();
+    expect(sentBody(1)).toMatchObject({
+      type: "project",
+      service: "Not sure yet",
+      startTiming: "Just exploring",
+    });
   });
 });

@@ -6,7 +6,7 @@ test(
   "products page responds 200 with the H1, the map, the four card anchors and no Updates link",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/products");
+    const response = await request.get("/en/products");
     const html = await response.text();
 
     expect(response.status()).toBe(200);
@@ -36,10 +36,10 @@ test.describe("deep links to an app", { tag: "@a11y" }, () => {
     ["ai-tutor", 3, "Student learns"],
     ["iot", 4, null],
   ] as const) {
-    test(`/products#${anchor} makes stop ${index + 1} active with its card in view below the header`, async ({
+    test(`/en/products#${anchor} makes stop ${index + 1} active with its card in view below the header`, async ({
       page,
     }) => {
-      await page.goto(`/products#${anchor}`);
+      await page.goto(`/en/products#${anchor}`);
       const stop = page.locator("#map .rm-stop").nth(index);
       const card = stop.locator(".rm-card");
       if (title) await expect(card).toContainText(title);
@@ -91,7 +91,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
   };
 
   test("the roadmap shows the H1 and six cards", async ({ page }) => {
-    await page.goto("/products");
+    await page.goto("/en/products");
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(
       page.getByRole("heading", {
@@ -107,7 +107,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
   test("scrolling walks the tour stop by stop, pinned, then the demo band follows", async ({
     page,
   }) => {
-    await page.goto("/products");
+    await page.goto("/en/products");
     await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
     const stage = roadmap(page).locator(".rm-stage");
     const stops = roadmap(page).locator(".rm-stop");
@@ -203,7 +203,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
   test("each stop becomes active exactly once, in order, and back again", async ({
     page,
   }) => {
-    await page.goto("/products");
+    await page.goto("/en/products");
     await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
     const { top, step, pin } = await track(page);
     // Record every change of the active stop while scrolling in small steps.
@@ -248,7 +248,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       page,
     }) => {
       await page.setViewportSize({ width, height });
-      await page.goto("/products");
+      await page.goto("/en/products");
       await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
       const { top, step, pin } = await track(page);
       for (let i = 0; i < 6; i += 1) {
@@ -302,7 +302,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
         }
       }).observe({ type: "layout-shift", buffered: true });
     });
-    await page.goto("/products");
+    await page.goto("/en/products");
     await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
     const { top, step, pin } = await track(page);
     for (let i = 0; i < 6; i += 1) {
@@ -316,7 +316,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
   });
 
   test("Tab reaches the six cards in road order", async ({ page }) => {
-    await page.goto("/products");
+    await page.goto("/en/products");
     const buttons = cards(page).getByRole("button");
     await expect(buttons).toHaveCount(6);
     await buttons.first().focus();
@@ -340,7 +340,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
   test("the footer link For schools lands on Staff Hub with its card whole", async ({
     page,
   }) => {
-    await page.goto("/products");
+    await page.goto("/en/products");
     const link = page
       .getByRole("contentinfo")
       .getByRole("link", { name: "For schools" });
@@ -371,7 +371,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     test.use({ viewport: { width: 390, height: 800 } });
 
     test("each stop appears as it scrolls into view", async ({ page }) => {
-      await page.goto("/products");
+      await page.goto("/en/products");
       await expect(roadmap(page)).toHaveAttribute("data-reveal", "armed");
       await expect(roadmap(page)).not.toHaveAttribute("data-tour", "on");
       await expect(roadmap(page).locator(".rm-stage")).not.toHaveCSS(
@@ -392,7 +392,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     test.use({ reducedMotion: "reduce" });
 
     test("shows the whole roadmap at once", async ({ page }) => {
-      await page.goto("/products");
+      await page.goto("/en/products");
       await expect(roadmap(page)).toHaveAttribute("data-reveal", "static");
       await expect(roadmap(page)).not.toHaveAttribute("data-tour", "on");
       await expect(roadmap(page).locator(".rm-stage")).not.toHaveCSS(
@@ -409,7 +409,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
   test("a card opens the modal, Next moves, and Esc returns focus to the card", async ({
     page,
   }) => {
-    await page.goto("/products");
+    await page.goto("/en/products");
     const first = page.getByRole("button", { name: "1. Student arrives" });
     await first.scrollIntoViewIfNeeded();
     await first.click();
@@ -433,7 +433,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
 
   test("390px has no sideways scroll", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 800 });
-    await page.goto("/products");
+    await page.goto("/en/products");
     await expect(cards(page)).toHaveCount(6);
     const overflow = await page.evaluate(
       () =>

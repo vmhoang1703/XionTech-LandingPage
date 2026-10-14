@@ -1,9 +1,14 @@
 import { FaqList } from "@/components/sections/faq-list";
-import { homeFaq } from "@/content/home";
+import { homeFaq, homeFaqVi } from "@/content/home";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 
 // Home "Your questions, answered.": four About answers and a link to the rest.
-export function HomeFaq() {
-  const { title, lede, items, link } = homeFaq;
+export function HomeFaq({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { title, lede, items, link } = pickLocale(locale, {
+    en: homeFaq,
+    vi: homeFaqVi,
+  });
 
   return (
     <section aria-labelledby="home-faq-h" className="sec">

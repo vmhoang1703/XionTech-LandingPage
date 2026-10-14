@@ -1,20 +1,52 @@
 import { expect, test } from "@playwright/test";
 
-const text = (html: string) => html.replaceAll(/<[^>]*>/g, "");
+// Each title word is its own span (the hero entrance). In a locale 404 the
+// words arrive in the RSC payload, not the HTML shell (as before the merge),
+// so look for every word of the title.
+const hasTitle = (html: string, title: string) =>
+  title.split(" ").every((word) => html.includes(word));
 
 test(
   "unknown path answers 404 with the lost-trail copy and no capture band",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/does-not-exist");
+    const response = await request.get("/en/does-not-exist");
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    // Each title word is its own span (the hero entrance): compare the text.
-    expect(text(html)).toContain("You’ve wandered off the trail.");
+    expect(hasTitle(html, "You’ve wandered off the trail.")).toBe(true);
+    expect(html).toContain("<title>Page not found | XionTech</title>");
     expect(html).toContain("You are here");
     expect(html).not.toContain(">404<");
     expect(html).toContain("Go to Home");
     expect(html).not.toContain("See it working at your school.");
+  },
+);
+
+test(
+  "unknown Vietnamese path answers 404 in Vietnamese with one title and one robots tag",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    const response = await request.get("/vi/does-not-exist");
+    const html = await response.text();
+
+    expect(response.status()).toBe(404);
+    expect(hasTitle(html, "Bạn đã đi lạc lối mòn.")).toBe(true);
+    expect(html.match(/<title>/g)).toHaveLength(1);
+    expect(html).toContain("<title>Không tìm thấy trang | XionTech</title>");
+    expect(html.match(/<meta name="robots"/g)).toHaveLength(1);
+  },
+);
+
+test(
+  "unsupported locale answers 404 instead of redirecting",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    const response = await request.get("/fr/products", { maxRedirects: 0 });
+
+    expect(response.status()).toBe(404);
+    expect(
+      hasTitle(await response.text(), "You’ve wandered off the trail."),
+    ).toBe(true);
   },
 );

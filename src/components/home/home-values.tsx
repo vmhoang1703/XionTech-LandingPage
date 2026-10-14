@@ -1,21 +1,33 @@
 import { FlipToggle } from "@/components/sections/flip-toggle";
-import { aboutValues, homeValuesHeading } from "@/content/values";
+import {
+  aboutValues,
+  aboutValuesVi,
+  homeValuesHeading,
+  homeValuesHeadingVi,
+} from "@/content/values";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 
 // Home core values as flip cards: the front shows the icon, the title and a
 // short line; the back the full value. Home is the only page with them. No
 // id="values": the About page no longer has that anchor either.
-export function HomeValues() {
-  const { frontHint, backHint } = homeValuesHeading;
+export function HomeValues({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const heading = pickLocale(locale, {
+    en: homeValuesHeading,
+    vi: homeValuesHeadingVi,
+  });
+  const values = pickLocale(locale, { en: aboutValues, vi: aboutValuesVi });
+  const { frontHint, backHint } = heading;
 
   return (
     <section aria-labelledby="home-values-h" className="sec home-values">
       <div className="wrap">
         <div className="sec-head" data-reveal="">
-          <h2 id="home-values-h">{homeValuesHeading.title}</h2>
-          <p className="lede">{homeValuesHeading.lede}</p>
+          <h2 id="home-values-h">{heading.title}</h2>
+          <p className="lede">{heading.lede}</p>
         </div>
         <div className="flip-cards" data-reveal="">
-          {aboutValues.items.map(
+          {values.items.map(
             ({ icon: ValueIcon, title, short, text, featured }) => (
               <FlipToggle
                 key={title}

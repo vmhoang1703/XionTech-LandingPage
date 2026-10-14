@@ -41,7 +41,7 @@ describe("HomeProcess", () => {
 
     const region = screen.getByRole("region", { name: "How we work." });
     const link = screen.getByRole("link", { name: "See the full process" });
-    expect(link.getAttribute("href")).toBe("/services#process");
+    expect(link.getAttribute("href")).toBe("/en/services#process");
     expect(link.parentElement?.classList.contains("sec-head-row")).toBe(true);
     expect(link.parentElement).toBe(region.querySelector(".sec-head-row"));
     expect(region.querySelector(".sec-head-row .sec-head h2")).not.toBeNull();

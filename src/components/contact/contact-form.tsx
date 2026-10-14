@@ -1,7 +1,7 @@
 "use client";
 
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
-import Link from "next/link";
+import { LocaleLink, useLocale } from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -19,7 +19,12 @@ import {
   type RequestKind,
 } from "@/lib/contact/contact-rules";
 import { fillCapturedEmail } from "./capture-storage";
-import { CONTACT_STRINGS } from "./contact-strings";
+import { pickLocale } from "@/i18n/content";
+import {
+  CONTACT_STRINGS,
+  CONTACT_STRINGS_VI,
+  localizeErrors,
+} from "./contact-strings";
 import {
   FIELD_ORDER,
   postSubmission,
@@ -27,13 +32,7 @@ import {
 } from "./post-submission";
 import { SummitMark } from "./summit-mark";
 
-const S = CONTACT_STRINGS.form;
-
 const TYPES: readonly RequestKind[] = ["demo", "project"];
-const TAB_LABELS: Record<RequestKind, string> = {
-  demo: S.tabDemo,
-  project: S.tabProject,
-};
 
 /** Fields in form order, so the first invalid one gets focus. */
 const FIELD_IDS: Record<DemoFormField, string> = {
@@ -138,6 +137,13 @@ function nextTabIndex(key: string, index: number): number | null {
 }
 
 export function ContactForm() {
+  const locale = useLocale();
+  const T = pickLocale(locale, { en: CONTACT_STRINGS, vi: CONTACT_STRINGS_VI });
+  const S = T.form;
+  const TAB_LABELS: Record<RequestKind, string> = {
+    demo: S.tabDemo,
+    project: S.tabProject,
+  };
   // The hash and today's date only exist in the browser; the server snapshot
   // ("") keeps the server HTML on Product demo with no `min`.
   const hash = useSyncExternalStore(subscribeToHash, readHash, serverValue);
@@ -205,7 +211,8 @@ export function ContactForm() {
   }
 
   /** Show, announce and focus the invalid fields; true when there are any. */
-  function showErrors(form: HTMLFormElement, found: ContactErrors): boolean {
+  function showErrors(form: HTMLFormElement, english: ContactErrors): boolean {
+    const found: ContactErrors = localizeErrors(english, locale);
     const invalid = FIELD_ORDER.filter((field) => found[field]);
     setErrors(found);
     setAnnouncement((current) => ({
@@ -395,8 +402,10 @@ export function ContactForm() {
             <div className="field">
               <label htmlFor="f-size">{S.schoolSize}</label>
               <select id="f-size" name="schoolSize">
-                {CONTACT_STRINGS.schoolSizes.map((size) => (
-                  <option key={size}>{size}</option>
+                {CONTACT_STRINGS.schoolSizes.map((size, index) => (
+                  <option key={size} value={size}>
+                    {T.schoolSizes[index]}
+                  </option>
                 ))}
               </select>
             </div>
@@ -423,16 +432,20 @@ export function ContactForm() {
             <div className="field">
               <label htmlFor="f-svc">{S.service}</label>
               <select id="f-svc" name="service">
-                {CONTACT_STRINGS.services.map((service) => (
-                  <option key={service}>{service}</option>
+                {CONTACT_STRINGS.services.map((service, index) => (
+                  <option key={service} value={service}>
+                    {T.services[index]}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field">
               <label htmlFor="f-when">{S.startTiming}</label>
               <select id="f-when" name="startTiming">
-                {CONTACT_STRINGS.startTimings.map((timing) => (
-                  <option key={timing}>{timing}</option>
+                {CONTACT_STRINGS.startTimings.map((timing, index) => (
+                  <option key={timing} value={timing}>
+                    {T.startTimings[index]}
+                  </option>
                 ))}
               </select>
             </div>
@@ -466,7 +479,7 @@ export function ContactForm() {
           <PaperPlaneTiltIcon aria-hidden="true" />
         </button>
         <p className="consent">
-          {S.consent} <Link href="/privacy">{S.privacyLink}</Link>
+          {S.consent} <LocaleLink href="/privacy">{S.privacyLink}</LocaleLink>
         </p>
         <div className="sr-only" aria-live="polite">
           {announcement.messages.length > 0 && (

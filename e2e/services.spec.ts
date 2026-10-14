@@ -6,7 +6,7 @@ test(
   "services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/services");
+    const response = await request.get("/en/services");
     const html = await response.text();
 
     expect(response.status()).toBe(200);

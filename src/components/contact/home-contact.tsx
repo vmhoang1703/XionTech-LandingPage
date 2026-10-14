@@ -1,9 +1,15 @@
 import { EnvelopeSimpleIcon, PhoneIcon } from "@phosphor-icons/react/ssr";
-import { hcmc, plano, type Office } from "@/content/offices";
-import { CONTACT_STRINGS } from "./contact-strings";
+import {
+  hcmc as hcmcEn,
+  hcmcVi,
+  plano as planoEn,
+  planoVi,
+  type Office,
+} from "@/content/offices";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
+import { CONTACT_STRINGS, CONTACT_STRINGS_VI } from "./contact-strings";
 import { HomeContactForm } from "./home-contact-form";
-
-const S = CONTACT_STRINGS.home;
 
 const city = (office: Office) => office.name.split(",")[0];
 
@@ -11,7 +17,15 @@ const byScheme = (office: Office, scheme: "mailto:" | "tel:") =>
   office.contacts.filter((c) => c.href.startsWith(scheme));
 
 /** Home's last section: a short contact form and our direct lines (CAP-1). */
-export function HomeContact() {
+export function HomeContact({ locale }: Readonly<{ locale: Locale }>) {
+  const S = pickLocale(locale, {
+    en: CONTACT_STRINGS,
+    vi: CONTACT_STRINGS_VI,
+  }).home;
+  const [plano, hcmc] = pickLocale(locale, {
+    en: [planoEn, hcmcEn],
+    vi: [planoVi, hcmcVi],
+  });
   const emails = byScheme(plano, "mailto:");
   const phones = [plano, hcmc].flatMap((office) =>
     byScheme(office, "tel:").map((c) => ({ city: city(office), ...c })),

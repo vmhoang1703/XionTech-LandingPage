@@ -40,7 +40,7 @@ const submit = (page: Page) =>
   form(page).getByRole("button", { name: /Start the conversation|Sending/ });
 
 async function openForm(page: Page) {
-  await page.goto("/#contact");
+  await page.goto("/en#contact");
   await expect(form(page)).toBeVisible();
 }
 
@@ -187,17 +187,17 @@ test.describe(
   "Get in touch everywhere, no Demo page links",
   { tag: "@a11y" },
   () => {
-    test("no page links to /demo", async ({ page }) => {
+    test("no page links to the Demo page", async ({ page }) => {
       for (const path of [
-        "/",
-        "/services",
-        "/products",
-        "/about",
-        "/careers",
-        "/news",
+        "/en",
+        "/en/services",
+        "/en/products",
+        "/en/about",
+        "/en/careers",
+        "/en/news",
       ]) {
         await page.goto(path);
-        const demo = await page.locator('a[href^="/demo"]').count();
+        const demo = await page.locator('a[href*="/demo"]').count();
         expect(demo, path).toBe(0);
       }
     });
@@ -206,12 +206,12 @@ test.describe(
       page,
     }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
-      await page.goto("/about");
+      await page.goto("/en/about");
       await page
         .getByRole("banner")
         .getByRole("link", { name: "Get in touch" })
         .click();
-      await expect(page).toHaveURL(/\/#contact$/);
+      await expect(page).toHaveURL(/\/en#contact$/);
       await expect(form(page)).toBeInViewport();
     });
 
@@ -219,10 +219,10 @@ test.describe(
       page,
     }) => {
       const { sent } = await fakeApi(page, [{ status: 200 }]);
-      await page.goto("/news");
+      await page.goto("/en/news");
       await page.getByLabel("Work email").fill("lan@school.edu.vn");
       await page.getByRole("button", { name: "Get in touch" }).click();
-      await expect(page).toHaveURL(/\/#contact$/);
+      await expect(page).toHaveURL(/\/en#contact$/);
       await expect(field(page, "Work email")).toHaveValue("lan@school.edu.vn");
       expect(sent).toHaveLength(0);
     });
@@ -231,7 +231,7 @@ test.describe(
       page,
     }) => {
       await page.setViewportSize({ width: 390, height: 844 });
-      await page.goto("/services");
+      await page.goto("/en/services");
       await page.getByRole("button", { name: "Menu" }).click();
       const nav = page.locator("#mobile-menu");
       await expect(nav.getByRole("link", { name: /^Plano/ })).toHaveAttribute(
@@ -239,7 +239,7 @@ test.describe(
         "tel:+14693229899",
       );
       await nav.getByRole("link", { name: "Get in touch" }).click();
-      await expect(page).toHaveURL(/\/#contact$/);
+      await expect(page).toHaveURL(/\/en#contact$/);
       await expect(nav).toBeHidden();
       await expect(form(page)).toBeInViewport();
     });

@@ -4,7 +4,7 @@ test(
   "home page responds 200 with the site name",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/");
+    const response = await request.get("/en");
 
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain("XionTech");
@@ -25,7 +25,7 @@ test(
   "demo page responds 200 with send request button",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/demo");
+    const response = await request.get("/en/demo");
 
     expect(response.status()).toBe(200);
     expect(await response.text()).toContain("Send request");
@@ -42,5 +42,17 @@ test(
 
     expect(response.status()).toBe(200);
     expect(await response.json()).toEqual({ ok: true });
+  },
+);
+
+test(
+  "bare path redirects to a locale and /en answers 200",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    const bare = await request.get("/", { maxRedirects: 0 });
+
+    expect(bare.status()).toBe(307);
+    expect(bare.headers().location).toMatch(/\/en$/);
+    expect((await request.get("/en")).status()).toBe(200);
   },
 );

@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CV_MAX_BYTES, JOB_ERRORS } from "@/lib/careers/application-rules";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { JobApplicationForm } from "./job-application-form";
 
 // The success panel is a polite live region that takes focus (Sonar S6819:
@@ -95,7 +96,7 @@ describe("JobApplicationForm fields", () => {
     expect(describedText("a-cv")).toBe("PDF or Word, up to 5 MB.");
     expect(
       screen.getByRole("link", { name: "Privacy policy" }).getAttribute("href"),
-    ).toBe("/privacy");
+    ).toBe("/en/privacy");
     expect(
       screen.getByText(
         "We only use your details and CV to consider your application.",
@@ -442,5 +443,41 @@ describe("JobApplicationForm failures", () => {
     submit();
     await settle();
     expect(uploadMock).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe("JobApplicationForm in Vietnamese", () => {
+  it("labels the form in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <JobApplicationForm slug="role" />
+      </LocaleProvider>,
+    );
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(
+      "Ứng tuyển vị trí này",
+    );
+    expect(screen.getByRole("button", { name: "Gửi hồ sơ" })).toBeTruthy();
+  });
+});
+
+describe("JobApplicationForm in Vietnamese", () => {
+  it("shows and announces the field errors in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <JobApplicationForm slug="role" />
+      </LocaleProvider>,
+    );
+    fill("a-note", "a".repeat(2001));
+    fireEvent.submit(field("a-name").closest("form") as HTMLFormElement);
+    expect(describedText("a-name")).toBe("Vui lòng nhập họ tên.");
+    expect(describedText("a-email")).toBe("Vui lòng nhập email hợp lệ.");
+    expect(describedText("a-cv")).toContain(
+      "Vui lòng tải lên CV dạng PDF hoặc Word, tối đa 5 MB.",
+    );
+    expect(describedText("a-note")).toBe(
+      "Vui lòng giữ lời nhắn dưới 2.000 ký tự.",
+    );
+    expect(liveRegion().textContent).toContain("Vui lòng nhập họ tên.");
+    expect(liveRegion().textContent).not.toContain("Please");
   });
 });

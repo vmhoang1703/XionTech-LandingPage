@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink, useLocale } from "@/components/layout/locale-link";
+import { localeHref } from "@/i18n/locales";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type SubmitEvent } from "react";
 import { CONTACT_HREF } from "@/components/layout/nav-data";
@@ -11,10 +12,12 @@ import {
   type RequestKind,
 } from "@/lib/contact/contact-rules";
 import { rememberCapturedEmail } from "./capture-storage";
-import { CONTACT_STRINGS } from "./contact-strings";
-
-const S = CONTACT_STRINGS.capture;
-const FORM = CONTACT_STRINGS.form;
+import { pickLocale } from "@/i18n/content";
+import {
+  CONTACT_STRINGS,
+  CONTACT_STRINGS_VI,
+  localizeError,
+} from "./contact-strings";
 
 /** Plain looks have no corner rings and an amber button (E-A4). */
 const LOOK_SURFACES = {
@@ -40,6 +43,10 @@ export function CaptureBand({
   id?: string;
 }>) {
   const router = useRouter();
+  const locale = useLocale();
+  const T = pickLocale(locale, { en: CONTACT_STRINGS, vi: CONTACT_STRINGS_VI });
+  const S = T.capture;
+  const FORM = T.form;
   const copy = copyOverride
     ? { ...S[kind], heading: copyOverride.heading, lede: copyOverride.lede }
     : S[kind];
@@ -56,7 +63,7 @@ export function CaptureBand({
       return;
     }
     rememberCapturedEmail(value);
-    router.push(CONTACT_HREF);
+    router.push(localeHref(locale, CONTACT_HREF));
   }
 
   return (
@@ -102,12 +109,12 @@ export function CaptureBand({
           </div>
           {invalid && (
             <small id={ERROR_ID} className="err" role="alert">
-              {CONTACT_ERRORS.email}
+              {localizeError(CONTACT_ERRORS.email, locale)}
             </small>
           )}
           <small>
             <span>{copy.consent}</span>{" "}
-            <Link href="/privacy">{FORM.privacyLink}</Link>
+            <LocaleLink href="/privacy">{FORM.privacyLink}</LocaleLink>
           </small>
         </form>
       </div>

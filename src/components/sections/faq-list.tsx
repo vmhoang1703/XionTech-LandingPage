@@ -1,5 +1,5 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 
 type FaqItem = { question: string; answer: string };
 
@@ -20,10 +20,10 @@ export function FaqList({
           <p>{answer}</p>
         </details>
       ))}
-      <Link className="faq-ask" href={link.href}>
+      <LocaleLink className="faq-ask" href={link.href}>
         <span>{link.label}</span>
         <ArrowRightIcon aria-hidden="true" />
-      </Link>
+      </LocaleLink>
     </div>
   );
 }

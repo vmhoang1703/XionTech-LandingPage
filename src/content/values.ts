@@ -7,6 +7,7 @@ import {
   UsersThreeIcon,
 } from "@phosphor-icons/react/ssr";
 import type { Icon } from "@phosphor-icons/react";
+import type { Localized } from "@/i18n/content";
 
 // Core values, shown on Home (the About page dropped them in E-S3). Each
 // card shows the short line, written from the full text, and flips over to
@@ -70,4 +71,52 @@ export const homeValuesHeading = {
   // Same words as the Careers flip cards.
   frontHint: "Flip for details",
   backHint: "Flip back",
+};
+
+export const aboutValuesViList: Pick<AboutValue, "title" | "short" | "text">[] =
+  [
+    {
+      title: "Tinh thần khởi nghiệp",
+      short: "Nhanh nhạy, bền bỉ và không ngừng cải tiến.",
+      text: "Mang tư duy khởi nghiệp, đề cao sự nhanh nhạy, linh hoạt và niềm đam mê đổi mới. Cam kết hướng tới sự xuất sắc được thúc đẩy bởi sự bền bỉ và văn hóa cải tiến liên tục.",
+    },
+    {
+      title: "Khách hàng là trọng tâm",
+      short: "Khách hàng là trọng tâm của mọi việc chúng tôi làm.",
+      text: "Khách hàng là trọng tâm của mọi việc chúng tôi làm. Chúng tôi mang đến trải nghiệm vượt trội và kết quả thiết thực nhờ thấu hiểu sâu sắc, chủ động gắn kết và giải pháp phù hợp.",
+    },
+    {
+      title: "Chính trực là trên hết",
+      short: "Trung thực, minh bạch và có trách nhiệm.",
+      text: "Làm việc trung thực, minh bạch và có trách nhiệm. Chuẩn mực đạo đức dẫn dắt mọi quyết định và tương tác, xây dựng niềm tin và quan hệ lâu dài.",
+    },
+    {
+      title: "Tiên phong đổi mới",
+      short: "Khám phá công nghệ mới để luôn đi trước.",
+      text: "Đam mê khám phá công nghệ mới và những cách tiếp cận sáng tạo. Đổi mới nằm trong DNA của chúng tôi, giúp giải pháp luôn phát triển và đi trước xu hướng.",
+    },
+    {
+      title: 'Tinh thần "Get IT Done"',
+      short: "Chúng tôi làm chủ cam kết và hoàn thành.",
+      text: "Làm chủ cam kết và mang đến giải pháp chất lượng cao, tin cậy và hiệu quả. Đội ngũ được thúc đẩy bởi tinh thần trách nhiệm và tư duy hướng kết quả, đáp ứng hoặc vượt chuẩn ngành.",
+    },
+    {
+      title: "Văn hóa lấy con người làm trọng tâm",
+      short: "Mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền.",
+      text: "Xây dựng môi trường nơi mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. Văn hóa của chúng tôi vượt ra ngoài công việc: đó là sự gắn bó, hợp tác và thành công chung.",
+    },
+  ];
+
+export const aboutValuesVi: typeof aboutValues = {
+  items: aboutValues.items.map((item, index) => ({
+    ...item,
+    ...aboutValuesViList[index],
+  })),
+};
+
+export const homeValuesHeadingVi: Localized<typeof homeValuesHeading> = {
+  title: "Giá trị cốt lõi.",
+  lede: "Những điều dẫn dắt cách chúng tôi làm việc. Lật một thẻ để đọc đầy đủ từng giá trị.",
+  frontHint: "Lật để xem chi tiết",
+  backHint: "Lật lại",
 };

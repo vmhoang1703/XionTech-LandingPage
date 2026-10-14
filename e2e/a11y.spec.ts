@@ -18,15 +18,15 @@ async function firstDetail(page: Page, listPath: string, prefix: string) {
 }
 
 const STATIC_PAGES = [
-  "/",
-  "/products",
-  "/services",
-  "/news",
-  "/about",
-  "/careers",
-  "/demo",
-  "/privacy",
-  "/no-such-page",
+  "/en",
+  "/en/products",
+  "/en/services",
+  "/en/news",
+  "/en/about",
+  "/en/careers",
+  "/en/demo",
+  "/en/privacy",
+  "/en/no-such-page",
 ];
 
 // A link or button must not hold another control (AC-A11Y-4).
@@ -66,18 +66,21 @@ async function checkPage(page: Page, path: string, status = 200) {
 test.describe("every page type", { tag: "@a11y" }, () => {
   for (const path of STATIC_PAGES) {
     test(`${path}: axe, one H1, alt text, no nesting`, async ({ page }) => {
-      await checkPage(page, path, path === "/no-such-page" ? 404 : 200);
+      await checkPage(page, path, path === "/en/no-such-page" ? 404 : 200);
     });
   }
 
   test("one news story: axe, one H1, alt text, no nesting", async ({
     page,
   }) => {
-    await checkPage(page, await firstDetail(page, "/news", "/news/"));
+    await checkPage(page, await firstDetail(page, "/en/news", "/en/news/"));
   });
 
   test("one job page: axe, one H1, alt text, no nesting", async ({ page }) => {
-    await checkPage(page, await firstDetail(page, "/careers", "/careers/"));
+    await checkPage(
+      page,
+      await firstDetail(page, "/en/careers", "/en/careers/"),
+    );
   });
 });
 
@@ -188,13 +191,13 @@ function expectKeyboardRules(path: string, stops: Stop[]) {
 }
 
 const KEYBOARD_PAGES = [
-  "/",
-  "/products",
-  "/services",
-  "/news",
-  "/demo",
-  "/about",
-  "/careers",
+  "/en",
+  "/en/products",
+  "/en/services",
+  "/en/news",
+  "/en/demo",
+  "/en/about",
+  "/en/careers",
 ];
 
 test.describe("keyboard", { tag: "@a11y" }, () => {
@@ -227,14 +230,14 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
   test("closed parts exist and are hidden, so Tab cannot reach them", async ({
     page,
   }) => {
-    await page.goto("/");
+    await page.goto("/en");
     await expect(page.locator('[id="mobile-menu"]')).toHaveAttribute(
       "hidden",
       "",
     );
-    await page.goto("/demo");
+    await page.goto("/en/demo");
     await expect(page.locator('[role="tabpanel"][hidden]')).toHaveCount(1);
-    await page.goto("/products");
+    await page.goto("/en/products");
     await expect(page.locator("dialog.pdetail")).toHaveCount(0);
   });
 
@@ -242,7 +245,7 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/");
+    await page.goto("/en");
     expectKeyboardRules("/ at 390px", await tabThrough(page));
     await expect(page.locator('[id="mobile-menu"]')).toHaveAttribute(
       "hidden",
@@ -256,7 +259,7 @@ test.describe("reflow", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/");
+    await page.goto("/en");
     const layout = await page.evaluate(() => {
       const boxes = (selector: string) =>
         [...document.querySelectorAll(selector)].map((el) => {
@@ -328,17 +331,17 @@ async function expectErrorWiring(page: Page, fieldSelector: string) {
 
 test.describe("form errors", { tag: "@a11y" }, () => {
   test("contact form on /demo", async ({ page }) => {
-    await page.goto("/demo");
+    await page.goto("/en/demo");
     await expectErrorWiring(page, 'main form input[type="email"]');
   });
 
   test("contact form on Home", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/en");
     await expectErrorWiring(page, "#contact input[type=email]");
   });
 
   test("job application form", async ({ page }) => {
-    const href = await firstDetail(page, "/careers", "/careers/");
+    const href = await firstDetail(page, "/en/careers", "/en/careers/");
     const response = await page.goto(href);
     expect(response?.status(), `${href} answers 200`).toBe(200);
     await expectErrorWiring(page, "#a-name");
@@ -351,7 +354,7 @@ test.describe("Home hero doors and +3 reveal", { tag: "@a11y" }, () => {
   test("doors straddle the hero and the +3 list opens and closes", async ({
     page,
   }) => {
-    await page.goto("/");
+    await page.goto("/en");
 
     const join = await page.evaluate(() => {
       const doors = document.querySelector(".home-hero .doors") as HTMLElement;
@@ -457,7 +460,7 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
   }
 
   for (const viewport of VIEWPORTS) {
-    for (const path of ["/", "/careers", "/about", "/privacy"]) {
+    for (const path of ["/en", "/en/careers", "/en/about", "/en/privacy"]) {
       test(`${path} at ${viewport.width}px: content clears the ridge`, async ({
         page,
       }) => {
@@ -467,8 +470,8 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
     }
 
     for (const [name, listPath, prefix] of [
-      ["news story", "/news", "/news/"],
-      ["job page", "/careers", "/careers/"],
+      ["news story", "/en/news", "/en/news/"],
+      ["job page", "/en/careers", "/en/careers/"],
     ]) {
       test(`${name} at ${viewport.width}px: content clears the ridge`, async ({
         page,
@@ -498,7 +501,7 @@ test.describe("services layout", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
-    await page.goto("/services");
+    await page.goto("/en/services");
     await page
       .locator(".svc-card")
       .nth(5)
@@ -511,7 +514,7 @@ test.describe("services layout", { tag: "@a11y" }, () => {
     expect(stick.bottom).toBeLessThanOrEqual(800);
 
     await page.setViewportSize({ width: 980, height: 800 });
-    await page.goto("/services");
+    await page.goto("/en/services");
     const position = await page
       .locator(".svc-stick")
       .evaluate((el) => getComputedStyle(el).position);
@@ -521,7 +524,7 @@ test.describe("services layout", { tag: "@a11y" }, () => {
     );
 
     await page.setViewportSize({ width: 640, height: 800 });
-    await page.goto("/services");
+    await page.goto("/en/services");
     expect((await box(page, ".svc-card", 1)).top).toBeGreaterThan(
       (await box(page, ".svc-card", 0)).top,
     );
@@ -533,9 +536,9 @@ test.describe("services layout", { tag: "@a11y" }, () => {
     ]) {
       // Start each anchor from the top of a fresh load, so the scroll gate
       // below cannot pass on the previous anchor's position.
-      await page.goto("/services");
+      await page.goto("/en/services");
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-      await page.goto(`/services#${hash}`);
+      await page.goto(`/en/services#${hash}`);
       await expect
         .poll(() => page.evaluate(() => window.scrollY))
         .toBeGreaterThan(0);
@@ -572,18 +575,18 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
-    await page.goto("/about");
+    await page.goto("/en/about");
     expect(await columns(page)).toBe(2);
 
     await page.setViewportSize({ width: 760, height: 800 });
-    await page.goto("/about");
+    await page.goto("/en/about");
     expect(await columns(page)).toBe(1);
 
     await page.setViewportSize({ width: 1280, height: 800 });
     for (const id of ["faq", "book"]) {
-      await page.goto("/about");
+      await page.goto("/en/about");
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-      await page.goto(`/about#${id}`);
+      await page.goto(`/en/about#${id}`);
       await expect
         .poll(() => page.evaluate(() => window.scrollY))
         .toBeGreaterThan(0);
@@ -619,7 +622,7 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
-    await page.goto("/about");
+    await page.goto("/en/about");
     const offices = await page.evaluate(() => {
       const grid = document.querySelector("#offices .offices");
       const wrap = document.querySelector("#offices .wrap");
@@ -691,7 +694,7 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     await expect.poll(() => markerTurn(0)).toBe("none");
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/about");
+    await page.goto("/en/about");
     expect(
       await page
         .locator("#offices .offices")

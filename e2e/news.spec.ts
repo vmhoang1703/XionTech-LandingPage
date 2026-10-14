@@ -4,7 +4,7 @@ test(
   "news page responds 200 with its hero, the audience filters, the sample note and the demo capture",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/news");
+    const response = await request.get("/en/news");
     const html = await response.text();
 
     expect(response.status()).toBe(200);
@@ -29,7 +29,7 @@ test(
   "unknown story slug answers 404 with the Not found page",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/news/no-such-story");
+    const response = await request.get("/en/news/no-such-story");
     const html = await response.text();
 
     expect(response.status()).toBe(404);
@@ -42,10 +42,10 @@ test(
   "the first story on the News page answers 200 with its header, Back to News and no breadcrumb",
   { tag: "@smoke" },
   async ({ request }) => {
-    const newsResponse = await request.get("/news");
+    const newsResponse = await request.get("/en/news");
     expect(newsResponse.status()).toBe(200);
     const news = await newsResponse.text();
-    const href = /href="(\/news\/[^"#?]+)"/.exec(news)?.[1];
+    const href = /href="(\/en\/news\/[^"#?]+)"/.exec(news)?.[1];
     expect(href, "a published story in Sanity to open").toBeTruthy();
 
     const response = await request.get(href ?? "");

@@ -20,6 +20,7 @@ Update it in the same PR whenever a decision changes.
 Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI build challenge.
 
 - **Demo day:** 2026-10-16 (10 min presentation + 5 min Q&A; moved from 2026-10-09 on 2026-10-08)
+- **Scope (2026-10-13):** Story 1.2 (locale routing, language dropdown, Vietnamese shell) is built before Demo day on the user's decision, overriding the 2026-09-29 English-only plan. Vietnamese page content shipped 2026-10-14: AI translations are flagged in `docs/translations/vi-review.md`; product and service names and "Get IT done" stay English; `[Placeholder]` is kept in front of placeholder text. Any copy edit must re-run `npm run i18n:vi-review` and commit the regenerated page. Log: `docs/ai-log.md`.
 - **Team:** 3 people. Leader: Hoang Vu.
 - **Hand-in:** public URL (https://xion-tech-landing-page.vercel.app), full git history, this context
   file, `docs/ai-log.md`.

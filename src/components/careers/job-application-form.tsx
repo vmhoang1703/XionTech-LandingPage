@@ -2,7 +2,7 @@
 
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
 import { uploadPresigned } from "@vercel/blob/client";
-import Link from "next/link";
+import { LocaleLink, useLocale } from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -12,7 +12,9 @@ import {
 } from "react";
 import { postSubmission } from "@/components/contact/post-submission";
 import { SummitMark } from "@/components/contact/summit-mark";
-import { jobForm } from "@/content/job";
+import { jobForm as jobFormEn, jobFormVi } from "@/content/job";
+import { localizeError } from "@/components/contact/contact-strings";
+import { pickLocale } from "@/i18n/content";
 import {
   CV_TYPES,
   JOB_ERRORS,
@@ -79,6 +81,8 @@ async function uploadCv(file: File): Promise<string> {
 }
 
 export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
+  const locale = useLocale();
+  const jobForm = pickLocale(locale, { en: jobFormEn, vi: jobFormVi });
   const [errors, setErrors] = useState<JobErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
   const [failure, setFailure] = useState<"send" | "rate" | null>(null);
@@ -99,7 +103,11 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
   }, [failure]);
 
   function announce(found: JobErrors) {
-    const messages = FIELD_ORDER.flatMap((field) => found[field] ?? []);
+    // Errors are kept in English (rules and server); shown in the page's language.
+    const messages = FIELD_ORDER.flatMap((field) => {
+      const message = found[field];
+      return message ? [localizeError(message, locale)] : [];
+    });
     setAnnouncement((current) => ({ count: current.count + 1, messages }));
   }
 
@@ -196,7 +204,7 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
   const fieldError = (field: JobField) =>
     errors[field] ? (
       <span id={errorId(field)} className="err">
-        {errors[field]}
+        {localizeError(errors[field], locale)}
       </span>
     ) : null;
 
@@ -311,7 +319,9 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
         </button>
         <p className="consent">
           {jobForm.consent}{" "}
-          <Link href={jobForm.privacyHref}>{jobForm.privacyLink}</Link>
+          <LocaleLink href={jobForm.privacyHref}>
+            {jobForm.privacyLink}
+          </LocaleLink>
         </p>
         <div className="sr-only" aria-live="polite">
           {announcement.messages.length > 0 && (

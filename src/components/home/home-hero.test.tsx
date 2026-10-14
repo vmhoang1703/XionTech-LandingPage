@@ -97,6 +97,24 @@ describe("HomeHero", () => {
     ]);
   });
 
+  it("shows the Vietnamese heading, sub line and button on vi", () => {
+    render(<HomeHero locale="vi" />);
+
+    const h1 = screen.getByRole("heading", { level: 1 });
+    expect(h1.textContent).toBe(
+      "Xây dựng thông minh hơn. Phát hành nhanh hơn. Get IT done.",
+    );
+    expect(
+      screen.getByRole("link", { name: "Liên hệ với chúng tôi" }),
+    ).toBeDefined();
+    expect(
+      screen.getByRole("group", { name: "Kinh nghiệm bạn có thể tin cậy" }),
+    ).toBeDefined();
+    expect(
+      screen.getByRole("region", { name: "Chúng tôi làm gì" }),
+    ).toBeDefined();
+  });
+
   it("paints the static glow layer behind the content", () => {
     const hero = renderHero();
 

@@ -401,3 +401,67 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: `_bmad-output/implementation-artifacts/spec-products-roadmap-draw-in.md`
   summary: Remove the faint light seams where the narrow roadmap bends join.
   evidence: Seen in the 390px walk screenshots; cosmetic.
+
+- source_spec: none
+  summary: Vietnamese translations for every page's copy (all of src/content), split from Story 1.2 locale routing.
+  evidence: User chose Split on 2026-10-13; routing, cookie, dropdown and string-set plumbing ship first, with VI only for the shell; page copy needs a Vietnamese copy owner (open item).
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Language switch keeps typed form values (personal data) in sessionStorage until the next page reads them; add a short expiry and pagehide cleanup, and list it on the privacy page.
+  evidence: Security and edge review of Story 1.2: save()/takeSaved() in language-menu.tsx have no timestamp or cleanup.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Confirm the proxy's locale redirects are not cached by URL alone on Vercel (Vary on Cookie/Accept-Language).
+  evidence: Unverified: settle with curl -I on a Vercel preview for / and /products.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: /vi/* pages carry English bodies with no noindex or canonical until translated.
+  evidence: Blind review of Story 1.2; Story 7.1 owns hreflang and canonical.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Two forms on one page sharing a field name collide in the language-switch restore.
+  evidence: Edge review: fields keyed by name only (home capture band and contact form).
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Escape with both the mobile menu and the language list open fires both document handlers.
+  evidence: Edge review: two keydown listeners, no stopPropagation.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Language-switch scroll hold is lost under React StrictMode in next dev.
+  evidence: Task-4 review: the first mount consumes the saved state; production is exact.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: request-locale silently falls back to English when the layout did not set it.
+  evidence: Task-6 review: no test or log of the unset path.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-1-2-locale-routing-dropdown.md`
+  summary: Focus does not return to the language button after a switch when sessionStorage is blocked.
+  evidence: Task-4 review: early return before the focus call.
+
+- source_spec: none
+  summary: Add Japanese (ja), French (fr), Korean (ko) and Simplified Chinese (zh-Hans) locales with AI translations of all page content, flagged for native review.
+  evidence: User chose Split on 2026-10-13 (A first, then B, then C); B reuses the per-locale content dictionaries built by the Vietnamese content story.
+
+- source_spec: none
+  summary: Add Arabic (ar, Dubai/UAE) with right-to-left layout mirroring (dir="rtl") and AI translations flagged for native review.
+  evidence: User chose Split on 2026-10-13; RTL mirroring touches every layout and animation and ships after the other locales.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Whitespace-only Sanity vi strings or empty Portable Text blocks count as filled, so no English fallback.
+  evidence: Edge review: localized.ts uses length() only.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Optional locale = "en" props and a repeated isLocale guard in ~12 pages hide wiring bugs; make locale required or read it from context.
+  evidence: Blind and edge review; the root cause of the Home clock-label miss.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Add hreflang alternates and openGraph.locale for /en and /vi.
+  evidence: Blind review; belongs to Story 7.1.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: getOpenRoles sorts vi roles by English titles.
+  evidence: Blind review.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Placeholder-preservation test is positional and covers only careers, news and privacy.
+  evidence: Blind review.

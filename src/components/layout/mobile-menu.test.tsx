@@ -9,6 +9,7 @@ import { SiteHeader } from "./site-header";
 let mockPathname = "/";
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+  useRouter: () => ({ push: vi.fn() }),
 }));
 
 // jsdom has no layout. Elements get boxes the way the header's breakpoint classes would
@@ -66,7 +67,7 @@ function Header() {
   return (
     <header>
       <Link href="/">logo</Link>
-      <MobileMenu />
+      <MobileMenu locale="en" />
     </header>
   );
 }
@@ -98,6 +99,40 @@ const tab = (shiftKey = false) =>
   fireEvent.keyDown(document, { key: "Tab", shiftKey });
 
 describe("MobileMenu", () => {
+  it("shows Vietnamese labels and /vi links on vi", () => {
+    render(
+      <header>
+        <MobileMenu locale="vi" />
+      </header>,
+    );
+    fireEvent.click(menuButton());
+    expect(expanded()).toBe("true");
+    const links = menuLinks();
+    expect(links.map((a) => a.textContent)).toEqual([
+      "Trang chủ",
+      "Sản phẩm",
+      "Dịch vụ",
+      "Tin tức",
+      "Về chúng tôi",
+      "Tuyển dụng",
+      "Liên hệ với chúng tôi",
+      "Plano +1 469 322 9899",
+      "TP. Hồ Chí Minh +84 908 107 552",
+    ]);
+    expect(links.map((a) => a.getAttribute("href"))).toEqual([
+      "/vi",
+      "/vi/products",
+      "/vi/services",
+      "/vi/news",
+      "/vi/about",
+      "/vi/careers",
+      "/vi#contact",
+      "tel:+14693229899",
+      "tel:+84908107552",
+    ]);
+    expect(panel()?.getAttribute("aria-label")).toBe("Điều hướng chính");
+  });
+
   it("renders a closed 44px list icon named Menu that controls the panel", () => {
     render(<Header />);
     expect(menuButton().textContent).toBe("Menu");
@@ -107,7 +142,7 @@ describe("MobileMenu", () => {
     expect(menuButton().className).toContain("size-11");
     // A 320px pill must not squeeze it below 44px (lead, 2026-10-13).
     expect(menuButton().className).toContain("shrink-0");
-    // Round like the nav links; Book a demo keeps it at the right edge.
+    // Round like the nav links; Get in touch keeps it at the right edge.
     expect(menuButton().className).toContain("rounded-full");
     expect(menuButton().className).not.toContain("ml-auto");
     expect(menuButton().className).not.toContain("border");
@@ -123,7 +158,7 @@ describe("MobileMenu", () => {
     expect(document.documentElement.style.overflow).toBe("");
   });
 
-  it("opens on click and lists the six pages, Home first", () => {
+  it("opens on click and lists the six pages, then Get in touch and both phones", () => {
     render(<Header />);
     fireEvent.click(menuButton());
     expect(expanded()).toBe("true");
@@ -134,13 +169,13 @@ describe("MobileMenu", () => {
       a.getAttribute("href"),
     ]);
     expect(hrefs).toEqual([
-      ["Home", "/"],
-      ["Products", "/products"],
-      ["Services", "/services"],
-      ["News", "/news"],
-      ["About", "/about"],
-      ["Careers", "/careers"],
-      ["Get in touch", "/#contact"],
+      ["Home", "/en"],
+      ["Products", "/en/products"],
+      ["Services", "/en/services"],
+      ["News", "/en/news"],
+      ["About", "/en/about"],
+      ["Careers", "/en/careers"],
+      ["Get in touch", "/en#contact"],
       ["Plano +1 469 322 9899", "tel:+14693229899"],
       [LAST, "tel:+84908107552"],
     ]);
@@ -363,7 +398,7 @@ describe("MobileMenu", () => {
   });
 
   it("puts focus back on Menu when a menu link to the current page is activated", () => {
-    mockPathname = "/careers";
+    mockPathname = "/en/careers";
     render(<Header />);
     fireEvent.click(menuButton());
     const careers = menuLinks().find((a) => a.textContent === "Careers");
@@ -394,7 +429,7 @@ describe("MobileMenu", () => {
         <a href="https://example.com/" target="_blank" rel="noreferrer">
           external
         </a>
-        <MobileMenu />
+        <MobileMenu locale="en" />
       </header>,
     );
     const external = screen.getByRole("link", { name: "external" });
@@ -424,17 +459,16 @@ describe("MobileMenu", () => {
 
   describe("in the real site header", () => {
     const home = () => screen.getByRole("link", { name: "XionTech home" });
-    const menuLast = () =>
-      panel()?.querySelector('a[href="tel:+84908107552"]') as HTMLElement;
+    const language = () => screen.getByRole("button", { name: /Language/ });
 
-    it("wraps between the logo and the last menu item at 375px", () => {
-      render(<SiteHeader />);
+    it("wraps between the logo and the language button at 375px", () => {
+      render(<SiteHeader locale="en" />);
       fireEvent.click(menuButton());
-      menuLast().focus();
+      language().focus();
       expect(tab()).toBe(false);
       expect(document.activeElement).toBe(home());
       expect(tab(true)).toBe(false);
-      expect(document.activeElement).toBe(menuLast());
+      expect(document.activeElement).toBe(language());
     });
   });
 });

@@ -1,12 +1,17 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import { careersHero } from "@/content/careers";
+import { careersHero, careersHeroVi } from "@/content/careers";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { GrowthRing } from "./growth-ring";
 import { heroWords } from "@/components/sections/hero-words";
 
 // Server Component. Light hero beside the Growth Learning Model; no
 // breadcrumb (E-A7 CAP-1, prototype careers.html).
-export function CareersHero() {
-  const { title, lede, cta } = careersHero;
+export function CareersHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { title, lede, cta } = pickLocale(locale, {
+    en: careersHero,
+    vi: careersHeroVi,
+  });
 
   const t = heroWords();
   return (

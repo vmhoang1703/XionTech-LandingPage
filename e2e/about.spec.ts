@@ -6,7 +6,7 @@ test(
   "about page serves content with anchors and FAQ without JavaScript",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/about");
+    const response = await request.get("/en/about");
     const html = await response.text();
 
     // Page returns 200

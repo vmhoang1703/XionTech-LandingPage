@@ -17,7 +17,7 @@ describe("FrontDoors", () => {
       within(region)
         .getAllByRole("link")
         .map((link) => link.getAttribute("href")),
-    ).toEqual(["/products", "/services"]);
+    ).toEqual(["/en/products", "/en/services"]);
   });
 
   it("gives both doors the pointer glow", () => {
@@ -31,7 +31,7 @@ describe("FrontDoors", () => {
   it("shows the Products door with badges, line and chips", () => {
     const products = door(/Products for schools/);
 
-    expect(products.getAttribute("href")).toBe("/products");
+    expect(products.getAttribute("href")).toBe("/en/products");
     expect(
       within(products).getByRole("heading", { name: "Products for schools" }),
     ).toBeDefined();
@@ -51,7 +51,7 @@ describe("FrontDoors", () => {
   it("shows the Services door with label, line and chips", () => {
     const services = door(/Your software delivery team/);
 
-    expect(services.getAttribute("href")).toBe("/services");
+    expect(services.getAttribute("href")).toBe("/en/services");
     for (const text of [
       "Outsourcing services",
       "Dedicated teams and end-to-end delivery for companies building digital products.",

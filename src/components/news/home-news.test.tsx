@@ -22,7 +22,7 @@ const makePost = (n: number): LatestPost => ({
 
 async function renderNews(posts: LatestPost[]) {
   vi.mocked(getLatestPosts).mockResolvedValue(posts);
-  return render(await HomeNews());
+  return render(await HomeNews({}));
 }
 
 describe("HomeNews", () => {
@@ -50,7 +50,7 @@ describe("HomeNews", () => {
         .className,
     ).toBe("lede");
     const seeAll = screen.getByRole("link", { name: "See all news" });
-    expect(seeAll.getAttribute("href")).toBe("/news");
+    expect(seeAll.getAttribute("href")).toBe("/en/news");
     expect(seeAll.parentElement).toBe(row);
     expect(screen.queryByText(/\[Placeholder\]|sample/i)).toBeNull();
     const grid = container.querySelector(".sgrid");
@@ -75,18 +75,18 @@ describe("HomeNews", () => {
     ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
-    ).toBe("/news");
+    ).toBe("/en/news");
   });
 
   it("keeps Home up when the news fetch fails: logs it and shows the no-stories state", async () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {});
     vi.mocked(getLatestPosts).mockRejectedValue(new Error("Sanity down"));
-    const { container } = render(await HomeNews());
+    const { container } = render(await HomeNews({}));
 
     expect(container.querySelector(".sgrid")).toBeNull();
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
-    ).toBe("/news");
+    ).toBe("/en/news");
     expect(error).toHaveBeenCalledWith(
       expect.stringContaining("Home news"),
       expect.any(Error),
@@ -100,5 +100,32 @@ describe("HomeNews", () => {
       { ...makePost(2), category: "product", app: "parent-hub" },
     ]);
     expect(undefinedClasses(container, /^sr-only$/)).toEqual([]);
+  });
+});
+
+describe("HomeNews in Vietnamese", () => {
+  it("fetches in Vietnamese and shows the Vietnamese heading, date and read label", async () => {
+    vi.mocked(getLatestPosts).mockResolvedValue([
+      {
+        slug: "a",
+        title: "Tin A",
+        publishedAt: "2026-09-17T20:00:00Z",
+        titleLang: "vi",
+      },
+    ]);
+    const { container } = render(await HomeNews({ locale: "vi" }));
+
+    expect(getLatestPosts).toHaveBeenCalledWith("vi");
+    expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(
+      "Tin mới từ XionTech.",
+    );
+    expect(screen.getByText("Xem tất cả tin tức")).toBeTruthy();
+    expect(screen.getByText("Đọc tiếp")).toBeTruthy();
+    expect(container.querySelector(".scard-date")?.textContent).toBe(
+      "18/09/2026",
+    );
+    expect(container.querySelector(".scard-title")?.hasAttribute("lang")).toBe(
+      false,
+    );
   });
 });

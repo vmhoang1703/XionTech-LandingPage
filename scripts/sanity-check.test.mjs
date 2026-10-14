@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { summarize } from "./sanity-check.mjs";
+import { checkLocalized, summarize } from "./sanity-check.mjs";
 
 const post = { _id: "p1", title: "[Placeholder] Post" };
 const job = { _id: "j1", title: "[Placeholder] Job" };
@@ -68,5 +68,39 @@ describe("summarize", () => {
     });
     expect(result.ok).toBe(false);
     expect(result.lines.filter((l) => l.startsWith("FAIL"))).toHaveLength(3);
+  });
+});
+
+describe("checkLocalized", () => {
+  const langs = ["titleLang"];
+
+  it("passes when every document has a title and an en or vi language", () => {
+    const result = checkLocalized({
+      "news list (vi)": {
+        docs: [
+          { slug: "a", title: "Tin", titleLang: "vi" },
+          { slug: "b", title: "News", titleLang: "en" },
+        ],
+        langs,
+      },
+    });
+    expect(result.ok).toBe(true);
+    expect(result.lines).toEqual([
+      "news list (vi): 2 ok — Tin [vi] | News [en]",
+    ]);
+  });
+
+  it("fails on no documents, a missing title or a missing language", () => {
+    const result = checkLocalized({
+      "roles list (en)": { docs: [], langs },
+      "role (vi)": { docs: [{ slug: "r", title: null }], langs },
+      "story (vi)": { docs: [{ title: "T", titleLang: null }], langs },
+    });
+    expect(result.ok).toBe(false);
+    expect(result.lines).toEqual([
+      "FAIL: roles list (en): no documents",
+      "FAIL: role (vi): r has no title; r has titleLang = undefined",
+      "FAIL: story (vi): ? has titleLang = null",
+    ]);
   });
 });

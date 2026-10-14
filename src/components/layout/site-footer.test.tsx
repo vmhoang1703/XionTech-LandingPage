@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { SiteFooter } from "./site-footer";
 
 function renderFooter() {
-  render(<SiteFooter />);
+  render(<SiteFooter locale="en" />);
   return screen.getByRole("contentinfo");
 }
 
@@ -26,7 +26,7 @@ describe("SiteFooter", () => {
     const footer = renderFooter();
 
     const logo = within(footer).getByRole("img", { name: "XionTech" });
-    expect(logo.closest("a")?.getAttribute("href")).toBe("/");
+    expect(logo.closest("a")?.getAttribute("href")).toBe("/en");
     expect(
       within(footer).getByText(
         "Education technology products and software delivery services for schools and businesses.",
@@ -42,9 +42,9 @@ describe("SiteFooter", () => {
         .getAllByRole("link")
         .map((link) => [link.textContent, link.getAttribute("href")]),
     ).toEqual([
-      ["For schools", "/products#sxp"],
-      ["For students", "/products#ai-tutor"],
-      ["For parents", "/products#pxp"],
+      ["For schools", "/en/products#sxp"],
+      ["For students", "/en/products#ai-tutor"],
+      ["For parents", "/en/products#pxp"],
     ]);
     expect(
       linkHrefs(screen.getByRole("contentinfo")).some((href) =>
@@ -57,13 +57,13 @@ describe("SiteFooter", () => {
     const services = column("Services");
 
     expect(linkHrefs(services)).toEqual([
-      "/services#product-engineering",
-      "/services#ai-analytics",
-      "/services#staffing",
-      "/services#low-code",
-      "/services#cloud",
-      "/services#process",
-      "/services",
+      "/en/services#product-engineering",
+      "/en/services#ai-analytics",
+      "/en/services#staffing",
+      "/en/services#low-code",
+      "/en/services#cloud",
+      "/en/services#process",
+      "/en/services",
     ]);
     expect(
       within(services).getByRole("link", { name: "All services" }),
@@ -76,9 +76,9 @@ describe("SiteFooter", () => {
     expect(
       company.map((link) => [link.textContent, link.getAttribute("href")]),
     ).toEqual([
-      ["News", "/news"],
-      ["About us", "/about"],
-      ["Careers", "/careers"],
+      ["News", "/en/news"],
+      ["About us", "/en/about"],
+      ["Careers", "/en/careers"],
     ]);
   });
 
@@ -160,7 +160,7 @@ describe("SiteFooter", () => {
       within(footer)
         .getByRole("link", { name: "Privacy policy" })
         .getAttribute("href"),
-    ).toBe("/privacy");
+    ).toBe("/en/privacy");
     expect(within(footer).getByText("DONE").tagName).toBe("B");
   });
 
@@ -188,5 +188,43 @@ describe("SiteFooter", () => {
         .querySelector("ul.grid")
         ?.classList.contains("pointer-coarse:gap-0"),
     ).toBe(true);
+  });
+
+  it("reads its text from the vi dictionary and prefixes links with /vi", () => {
+    render(<SiteFooter locale="vi" />);
+    const footer = screen.getByRole("contentinfo");
+
+    const privacy = within(footer).getByRole("link", {
+      name: "Chính sách bảo mật",
+    });
+    expect(privacy.getAttribute("href")).toBe("/vi/privacy");
+    expect(
+      within(footer)
+        .getByRole("link", { name: "Cho nhà trường" })
+        .getAttribute("href"),
+    ).toBe("/vi/products#sxp");
+    expect(
+      within(footer).getByRole("heading", { name: "Văn phòng" }),
+    ).toBeDefined();
+  });
+});
+
+describe("SiteFooter in Vietnamese", () => {
+  it("shows the Vietnamese offices note", () => {
+    render(<SiteFooter locale="vi" />);
+    expect(
+      screen.getByText("Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng."),
+    ).toBeTruthy();
+  });
+
+  it("names the WhatsApp link in Vietnamese", () => {
+    render(<SiteFooter locale="vi" />);
+    expect(
+      screen
+        .getByRole("link", {
+          name: "WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)",
+        })
+        .getAttribute("href"),
+    ).toBe("https://wa.me/14694399345");
   });
 });

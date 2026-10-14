@@ -48,6 +48,7 @@ Both sites read the same Sanity dataset (`1khn3hf4` / `production`), so a publis
 | `/privacy`                    | 2.1           | Code (`[Placeholder]` policy)        |
 | Not found                     | 1.7           | Code; real HTTP 404                  |
 
+- **Locales (Story 1.2):** every page lives under `src/app/[locale]` (`en`, `vi`; `dynamicParams = false`, so other locales are 404), and the routes above are served as `/en/...` and `/vi/...`. `src/proxy.ts` redirects a bare path (307) to a locale, in this order: the locale in the URL, then the `locale` cookie, then `Accept-Language`, then `en`; it skips `/api/`, `/_next/` and files with an extension. `src/app/global-not-found.tsx` (behind `experimental.globalNotFound` in `next.config.ts`) answers unmatched URLs; an unsupported two-letter locale (`/fr/products`) is instead rewritten by `src/proxy.ts` to `/en/fr/products` and answered by the catch-all; and the `[locale]/[...rest]` catch-all calls `notFound()` so unknown paths inside a locale get the localised 404. `src/i18n/` holds the locale list and helpers (`locales.ts`), the EN/VI shell dictionary (`shell.ts`), the per-request locale for the 404 (`request-locale.ts`) and per-locale page metadata (`page-metadata.ts`).
 - **Code layout:** `src/app` (routes and API), `src/components/<area>` (UI by page area), `src/lib/<area>` (data reads, rules, helpers), `src/content` (all page copy, kept apart so it can be translated later).
 
 ## 4. Content from Sanity

@@ -1700,6 +1700,42 @@ Template:
   - The first anchor pass left `#pxp` and `#iot` landing under the header.
 - **Follow-up (2026-10-13), merging develop:** develop's floating header pill moved the header bottom to 96px, so the pinned roadmap slid under it. The tour now pins at `--spacing-header-room`. The AI first copied develop's anchor formula onto the tour's step anchors as well; that dropped deep links 16px short of their stop, and the e2e caught it. The footer-link test also had to wait for develop's new footer scroll reveal to settle before clicking.
 
+## 2026-10-13 — Story 1.2 (locale routing and language dropdown) built before Demo day
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code, `/bmad-build` dispatch route. Planning on Claude Haiku 5.5; build controller Claude Opus 5.5; task implementers and reviewers Claude Sonnet 5.5 (tasks 1, 2, 5, 6 and all reviews), Claude Opus 5.5 (tasks 3, 4), Claude Haiku 5.5 (task 7).
+- **Prompt (short):** Build Story 1.2 now, before Demo day, with Vietnamese for the site shell.
+- **What the AI did:**
+  - Wrote `spec-1-2-locale-routing-dropdown.md` from the PRD (FR-4, FR-5, AC-NAV-1) and Amber's prototype `data-vi` strings.
+  - Found that `epic-1-context.md` and `epics.md` still record the 2026-09-29 English-only Demo-day decision, and that the same file asks for the lead's confirmation and an entry here.
+  - Logged the change in `AGENTS.md` (project scope) and here.
+- **Decision / result:**
+  - The user decided on 2026-10-13 to build Story 1.2 before Demo day, overriding the 2026-09-29 "after demo" plan.
+  - Scope: routing, cookie, language dropdown and EN/VI shell strings. Vietnamese covers the site shell only; page-body translation stays deferred (`deferred-work.md`, 2026-10-13).
+  - Decision: until page copy is translated, a `/vi/` page will show the Vietnamese shell around the English page body, with `lang="en"` on `<main>`.
+  - Shell strings missing from the prototype use `[Placeholder]` plus the English text. No invented Vietnamese.
+  - Hoang Vu still has to be told. The lead's confirmation, which `epic-1-context.md` asks for, is still open; the spec records it as a to-do.
+- **AI got it wrong?** yes —
+  - (a) The first shell dictionary marked the Vietnamese 404 text `[Placeholder]`, although Amber's prototype `404.html` had real `data-vi` text. The controller caught it, and it was replaced with the prototype text.
+  - (b) Moving pages under `[locale]` left the 404 as a Client Component. A `notFound()` inside a page (an unknown news story or job) served Next's bare error shell, and unknown `/vi/` paths showed the English 404. The Playwright smoke test caught both; the 404 became a server component plus a `[...rest]` catch-all.
+  - (c) The first browser walk reported that switching language lost the scroll position. A debug trace showed the test harness had caused the jump: Playwright's `click()` on the sticky header button scrolled the page before the switch, and the restore put back the value it was given. The e2e test now opens the menu with the keyboard.
+
+## 2026-10-13 — Vietnamese for all page content (part A of the multi-language request)
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code, `/bmad-build` dispatch route. Planning and build controller Claude Opus 5.5; implementers Claude Opus 5.5 (tasks 2–5, including the task 4 fix round) and Claude Sonnet 5.5 (tasks 1, 6, 7); task and whole-change reviewers Claude Sonnet 5.5. The commit trailers read "Claude Opus 5.5" for all commits (session attribution), whichever model wrote them.
+- **Prompt (short):** Make `/vi/` fully Vietnamese: page bodies, page titles, form messages and Sanity stories. Parts B (ja, fr, ko, zh-Hans) and C (Arabic, RTL) come later and reuse the same plumbing.
+- **What the AI did:**
+  - Wrote `spec-vi-page-content.md` and split the work into seven tasks: shared plumbing (`Localized<T>`, `pickLocale`, a parity helper, and a script that pulls Amber's `data-vi` pairs into `src/i18n/prototype-vi.json`), then home/values/process/apps, products/services/about/offices, careers/job/news/privacy/not-found/footer with Sanity `vi` fields and per-locale dates, forms, shell and page meta, and this review list.
+  - Every `vi` dictionary has the shape of its English one, and a unit test fails on a missing or extra key.
+  - Generated `docs/translations/vi-review.md` with `npm run i18n:vi-review`: 503 distinct English and Vietnamese pairs (528 places in the code), 356 from the prototype and 147 AI-translated, grouped by page with the AI rows first, for a native reader to check.
+- **Decision / result:**
+  - The user decided on 2026-10-13 to do the work in three parts (A: Vietnamese now, B and C deferred), to allow AI translations when they are flagged for review, to keep product and service names in English, and to keep `[Placeholder]` in front of placeholder text. Keeping "Get IT done" in English was not part of that decision: the AI assumed it, and the user decided it in review on 2026-10-14 (spec decision 4).
+  - The source of each string is no longer hand-kept: the script reads the dictionaries and matches the English against the prototype pairs. A unit test fails when the committed review is out of date, or when a Vietnamese string is missing from it.
+  - Open: a native Vietnamese reader still has to check the AI rows.
+- **AI got it wrong?** yes —
+  - (a) The task 4 dispatch was interrupted part-way. Its shared Sanity `lang` flag then labelled fields that had fallen back to English as Vietnamese, and a blank `vi` counted as filled. Review caught it; it was fixed per field (a field is marked only when it differs from the page language, and a blank `vi` falls back to `en`).
+  - (b) The hand-kept `src/i18n/vi-sources.json` was incomplete and partly wrong. Compared with the generated list, 106 of the 528 places had no key (for example the offices and about-office dictionaries), and 26 were tagged `prototype` where the English matches the prototype but the Vietnamese was reworded, so the generator tags them AI (for example the Careers hero "Stay curious.", the `[Placeholder]` Careers value cards and the journey lane "Student"). Replaced by the generator and deleted.
+  - (c) The AI wrote the "Get IT done" exemption into the log and the review page as a user decision, but the user had not made it; meanwhile the Services hero followed the prototype and translated the tagline ("luôn hoàn thành cam kết"). Review on 2026-10-14 caught both: the user decided the tagline stays English everywhere, the Services hero now reads `Đội ngũ phần mềm có tinh thần "Get IT done".`, and this entry was corrected.
+
 ## 2026-10-13 — Mobile and tablet audit; Products title clears the header pill
 
 - **Who / tool:** Hoang Vu (Andy) / Claude Code (Claude Opus 5.5), `/impeccable adapt`

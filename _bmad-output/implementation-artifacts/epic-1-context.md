@@ -4,51 +4,50 @@
 
 ## Goal
 
-Give every page one shared, branded shell — tokens, fonts, surfaces, header, mobile menu, footer, Not found page — and connect the Sanity content source, so later page stories only add content sections. The site is bilingual (EN/VI) by design, but Demo day (2026-10-09) ships English only; locale routing and the EN/VI switch come after demo. The shell must meet WCAG 2.2 AA from the first page built, because every later story inherits it.
+Any visitor can move through a branded, bilingual (EN/VI) site at any width. Stories 1.1 to 1.7 deliver the shared layout every later page renders inside (tokens and fonts, locale routing and language dropdown, header and mega menu, mobile menu, footer, inner hero and breadcrumbs, Not found); Story 1.8 connects the Sanity content source. Scope note: on 2026-09-29 the team decided the Demo-day build (2026-10-16) is English only with no language switch, so Story 1.2 and all Vietnamese strings were scheduled after demo and VI parts of acceptance criteria are checked after demo. The planning docs record no later reversal of that decision; if Story 1.2 is being built before Demo day, confirm with the lead (Hoang Vu) and log it in `docs/ai-log.md`.
 
 ## Stories
 
 - Story 1.1: Brand tokens, fonts, surfaces and motion primitives
-- Story 1.2: Locale routing and EN/VI switch (after demo)
+- Story 1.2: Locale routing and language dropdown
 - Story 1.3: Desktop header, mega menus and skip link
 - Story 1.4: Mobile menu
 - Story 1.5: Site footer
-- Story 1.6: Inner page hero, breadcrumbs and anchor landing (after demo)
+- Story 1.6: Inner page hero, breadcrumbs and anchor landing
 - Story 1.7: Not found page
 - Story 1.8: Sanity setup
 
 ## Requirements & Constraints
 
-- Palette is navy, amber and white only. Amber is a fill, never text on light surfaces; amber text/icons on paper, page or mist use the darker amber-text token; the decorative amber is never text. White text on amber is banned; amber always carries navy text.
-- No dark mode. Pages follow a colour rhythm: at least one navy band, at most one full-width amber band.
-- WCAG 2.2 AA: 4.5:1 text, 3:1 large text, icons, focus indicators and field boundaries. Focus ring 2.5px, 3px offset, 8px radius — navy on light and amber surfaces, amber on navy.
-- Four fonts, one job each (display, brand caps, body/UI, data), all with the Vietnamese subset and `display: swap`. Vietnamese H1/H2 need line-height ≥ 1.18 (built as 1.2); never tighten tracking on Vietnamese uppercase.
-- Reduced motion: no animation or transition, content in its final state. Without JavaScript every section is visible.
-- Icons from a React icon package; nothing render-blocking (no icon CDN script).
-- Content is real or marked `[Placeholder]`. Port the prototype (`prototype-enhancement/prototype`); do not redesign. The UX spines win over the prototype on conflict.
-- Free-first services; SonarQube local only; Definition of Done per `CLAUDE.md`.
+- **Locale routing:** every page exists under `/en/` and `/vi/`. Bare `/` redirects on the server, at request level, to the saved locale (cookie), else `/vi/` when the browser prefers Vietnamese, else `/en/`. A locale in the URL always wins over the saved choice (a shared `/en/products` opens in English for a `vi` visitor). A path without a locale (e.g. `/products`) redirects to the same path under the resolved locale; `sitemap.xml`, `robots.txt`, favicon, `_next` and public assets are excluded and served as-is.
+- **Locale cookie:** the choice is stored in an essential first-party cookie (never local storage, which the server cannot read). Under Vietnam PDPD it counts as essential, needs no consent, and must be listed in the privacy page's cookies section. No non-essential cookies without opt-in.
+- **Switching language:** lands on the same page under the other locale, keeps scroll position and typed form values, updates `<html lang>`, title and meta description, and saves the cookie.
+- **Strings:** every visible string, page title, meta description, screen-reader label, alt text and toast exists in EN and VI. A unit test must fail when a key exists in one locale but not the other, and must check product and service names are identical in both. Product names (PXP, LXP, SXP, IoT Device Management) and service names stay English. Who writes/checks the Vietnamese copy is an open question; unverified copy uses `[Placeholder]` in both languages.
+- **Voice:** short plain sentences, headlines end with a full stop, "you"/"we", no exclamation marks (except "Thank you!"), no emoji, prototype spelling (organisation). Brand name in copy is "XionTech". English is the default language.
+- **SEO (Epic 7, after demo, but routing must allow it):** per page and locale title, description, canonical, Open Graph; `hreflang` pairs for `/en/` and `/vi/` plus `x-default` to `/en/`; sitemap for both locales; header, footer and News server-rendered.
+- **Accessibility:** WCAG 2.2 AA in both locales; visible focus ring; controls (including the language dropdown and its options) at least 44px; hidden content unfocusable; meaningful alt text in EN and VI.
+- **Layout:** Vietnamese runs longer; buttons never truncate, headlines may wrap; breakpoints 1080/900/640px down to 320px.
+- **Dates:** news dates in mono, `18 SEP 2026` (EN) and `18/09/2026` (VI).
 
 ## Technical Decisions
 
-- Next.js 16 App Router, `src/` dir, Server Components by default; read `node_modules/next/dist/docs/` before using a Next.js API.
-- Tailwind CSS v4: all design tokens live in `@theme` in `src/app/globals.css`, mapped 1:1 — colours to `--color-*`, fonts to `--font-display|brand|body|mono`, type to `--text-*`, radii to `--radius-*`, spacing to `--spacing-*`, container to `--container-page`. Build tokens: breakpoints 640/900/1080px, z layers (art -1, content 0, sub-nav 40, header 50, mega 55, mobile menu 60, toast 100, skip 200), `--ease-brand`, durations, three shadows, fluid type sizes.
-- shadcn/ui variables map to brand tokens (`--primary` amber, `--primary-foreground` navy, `--background` page, `--foreground` text, `--ring` focus, overridden on navy).
-- Section surfaces are scoped token sets (`surface-paper|mist|navy|amber`, `hero-silk|light|navy|amber`) that set text, link and focus colours for everything inside.
-- Fonts through `next/font`; no Geist, no dark-mode `prefers-color-scheme` rule.
-- Sanity is the CMS (free plan): the client and one tagged fetch helper live in `src/lib/sanity/*` (Story 1.8); page stories write their own queries. CVs never go to Sanity.
-- File ownership: Andy owns `src/app/layout.tsx`, `globals.css` `@theme`, `src/components/layout/*` (except `site-footer.tsx`, Sammy's), `src/lib/sanity/*`, `src/app/api/*`, `src/app/demo/*`, and since plan C (decision P1, 2026-10-03) also `src/app/careers/*`, `src/app/news/*`, `src/app/products/*`, `src/app/privacy/*`, `src/components/news/*` and the Not found page. Sammy owns `src/app/page.tsx`, `src/app/services/*`, `src/app/about/*`, `src/components/home/*` and the footer.
+- Locale segment `src/app/[locale]/...` with a request-level redirect for bare and unprefixed paths reading the locale cookie; the exact Next.js 16 mechanism (e.g. proxy/middleware) must be confirmed in `node_modules/next/dist/docs/` before coding.
+- Fonts via `next/font` with `subsets: ['latin', 'vietnamese']` and `display: swap`: Unbounded (headlines), Lexend Exa (brand caps), Be Vietnam Pro (body/UI), JetBrains Mono (data). Never fonts without Vietnamese glyphs (Michroma, Orbitron, Sora).
+- `:lang(vi) h1, :lang(vi) h2 { line-height: 1.2 }` (floor 1.18); never tighten tracking on Vietnamese uppercase.
+- Tokens live in `src/app/globals.css` `@theme`; amber text uses `#8A6700`, never `#C99700`.
+- Sanity content uses field-level translation (one document with EN and VI fields) `[ASSUMPTION]`.
+- Server Components by default; the dropdown is a client component only where state is needed.
 
 ## UX & Interaction Patterns
 
-- Three button variants, all pills (52px, small 42px): primary (amber gradient, navy text), navy (main action on amber), glass (translucent, secondary). Press 1px down at 0.98 scale; hover lifts 2px.
-- Header: sticky glass, 72px; text-only nav; active page navy bold with 2px amber underline; mega menus open on click on Demo day.
-- Mobile menu below 1080px: "Menu" text pill, focus trap, scroll lock, Escape closes; Book a demo is the first item at 640px and below.
-- Footer: ink background, four link columns with amber-tint caps headings, offices (Plano first, then the Vietnam Delivery Center), bottom bar with GET IT **DONE**.
-- Shapes: pills for buttons/chips/fields-in-capture; 24px cards; 28px front doors and form card; 12px fields; 14px badges.
+- **Language dropdown** (popover disclosure, not a menu role): the last item in the header bar at every width (320px to wide desktop), never inside the mobile menu. Trigger is a button styled like the nav links (Be Vietnam Pro 500, ink text, no border, mist fill on hover and while open, 44px tall, pill) showing the current code EN or VI with a caret that flips up when open; it is the only header control with a caret. Options "EN" and "VI" (named English and Tiếng Việt) appear in a small list on the header glass (page at 96%, hairline border, large radius), same text style; current option is bold navy and has `aria-current`. Choosing closes the list and returns focus to the button; Escape or an outside click closes it.
+- Design reference: prototype header template in `_bmad-output/prototype-enhancement/prototype/js/site.js` (`.lang`, `#langBtn`, `#langList`).
+- Below 1080px the header bar shows logo, language dropdown and Menu button; the mobile menu focus trap includes the language dropdown.
+- Reduced motion: no animation runs; animate only transform and opacity.
 
 ## Cross-Story Dependencies
 
-- 1.1 blocks every story in every epic; its token and font part merges first (end of 2026-10-01).
-- 1.3 mounts Sammy's footer (1.5) in the root layout; 1.4 builds on 1.3.
-- 1.7's header/footer check passes only once 1.3 and 1.5 are merged.
-- 1.8 unblocks 3.7, 6.1, 6.2, 6.5, 6.6 and 6.3 (content schema, fetch helper, cache tags, webhook).
+- 1.1 (tokens and fonts, including the Vietnamese subset) underpins every story; 1.2 depends on 1.1.
+- 1.3 and 1.4 reserve the language dropdown slot in the header bar that 1.2 fills; 1.4's focus trap must include it.
+- 1.5, 1.7 and every page story render links and copy in the current locale, so they consume 1.2's routing and string sets.
+- Epic 2 privacy page must list the locale cookie; Epic 7 (Story 7.1) adds metadata, hreflang and sitemap on top of 1.2's locale URLs.

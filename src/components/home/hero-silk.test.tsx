@@ -7,6 +7,7 @@ import {
   MARK_WIDTH,
   SCENE_REST_TIME,
 } from "./globe-mark";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { HeroSilk } from "./hero-silk";
 import { createSilk, type Silk } from "./silk-shader";
 
@@ -123,6 +124,21 @@ describe("HeroSilk", () => {
 
     fireEvent.click(button);
     expect(screen.getByRole("button", { name: "Pause motion" })).toBe(button);
+  });
+
+  it("names the toggle in Vietnamese on vi", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <HeroSilk />
+      </LocaleProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "Tạm dừng chuyển động" }),
+    );
+    expect(
+      screen.getByRole("button", { name: "Phát chuyển động" }),
+    ).toBeDefined();
   });
 
   it("advances the shader time on each frame", () => {

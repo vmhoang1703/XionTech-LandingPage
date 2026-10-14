@@ -1,7 +1,9 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { Fragment } from "react";
 import { StatsBand } from "@/components/sections/stats-band";
-import { homeHero, homeStats } from "@/content/home";
+import { homeHero, homeHeroVi, homeStats, homeStatsVi } from "@/content/home";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { FrontDoors } from "./front-doors";
 import { HeroSilk } from "./hero-silk";
 import { heroWords } from "@/components/sections/hero-words";
@@ -11,8 +13,12 @@ import { heroWords } from "@/components/sections/hero-words";
 // draws the silk canvas above it and adds the motion toggle as a client
 // island, so the glow is what shows without JavaScript or WebGL. The two
 // front doors sit inside the hero and straddle its lower edge (E-S1 Home).
-export function HomeHero() {
-  const { title, sub, cta } = homeHero;
+export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { title, sub, cta } = pickLocale(locale, {
+    en: homeHero,
+    vi: homeHeroVi,
+  });
+  const stats = pickLocale(locale, { en: homeStats, vi: homeStatsVi });
 
   const t = heroWords();
   return (
@@ -60,14 +66,10 @@ export function HomeHero() {
           <div className="hero-stage relative aspect-[6/5] w-full" />
         </div>
         <div className="wrap home-stats mt-14 w-full md:mt-22 lg:mt-0 lg:pb-6">
-          <StatsBand
-            label={homeStats.label}
-            stats={homeStats.stats}
-            tone="navy"
-          />
+          <StatsBand label={stats.label} stats={stats.stats} tone="navy" />
         </div>
       </div>
-      <FrontDoors />
+      <FrontDoors locale={locale} />
     </section>
   );
 }

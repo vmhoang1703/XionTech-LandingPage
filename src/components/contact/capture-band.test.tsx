@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { LocaleProvider } from "@/components/layout/locale-link";
 import { CaptureBand } from "./capture-band";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 
@@ -9,7 +10,7 @@ vi.mock("next/navigation", () => ({ useRouter: () => ({ push }) }));
 const EMAIL = "lan@school.edu.vn";
 const INVALID_EMAIL = "Please enter a valid email address.";
 // The Demo page is inactive: every band leads to the Home Get in touch form.
-const DESTINATION = "/#contact";
+const DESTINATION = "/en#contact";
 
 const BANDS = {
   demo: {
@@ -101,7 +102,7 @@ describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
     expect(button().textContent).toBe("Get in touch");
     const consent = screen.getByText(band.consent);
     const link = screen.getByRole("link", { name: "Privacy policy" });
-    expect(link.getAttribute("href")).toBe("/privacy");
+    expect(link.getAttribute("href")).toBe("/en/privacy");
     expect(consent.parentElement?.contains(link)).toBe(true);
   });
 
@@ -192,5 +193,38 @@ describe.each(["demo", "project"] as const)("CaptureBand kind %s", (kind) => {
     type(EMAIL);
     submit();
     expect(push).toHaveBeenCalledExactlyOnceWith(DESTINATION);
+  });
+});
+
+describe("CaptureBand in Vietnamese", () => {
+  it("shows the demo copy, labels and email error in Vietnamese", () => {
+    render(
+      <LocaleProvider locale="vi">
+        <CaptureBand kind="demo" look="navy" />
+      </LocaleProvider>,
+    );
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Xem ứng dụng hoạt động tại trường của bạn.",
+      }),
+    ).toBeTruthy();
+    expect(screen.getByLabelText("Email công việc")).toBeTruthy();
+    expect(
+      screen.getByRole("link", { name: "Chính sách bảo mật" }),
+    ).toBeTruthy();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Liên hệ với chúng tôi" }),
+    );
+    expect(screen.getByRole("alert").textContent).toBe(
+      "Vui lòng nhập email hợp lệ.",
+    );
+    fireEvent.change(screen.getByLabelText("Email công việc"), {
+      target: { value: EMAIL },
+    });
+    fireEvent.click(
+      screen.getByRole("button", { name: "Liên hệ với chúng tôi" }),
+    );
+    expect(push).toHaveBeenCalledExactlyOnceWith("/vi#contact");
   });
 });

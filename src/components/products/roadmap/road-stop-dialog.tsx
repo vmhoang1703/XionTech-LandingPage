@@ -2,8 +2,21 @@
 
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
-import { APPS, appById, type AppId } from "@/content/apps";
-import { dayRoad, productDetails, productsShowcase } from "@/content/products";
+import { useLocale } from "@/components/layout/locale-link";
+import { APPS, appById, appTaglinesVi, type AppId } from "@/content/apps";
+import {
+  dayRoad,
+  dayRoadVi,
+  productDetails,
+  productDetailsVi,
+  productsShowcase,
+  productsShowcaseVi,
+  roadDialog,
+  roadDialogVi,
+  type DayRoad,
+} from "@/content/products";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { MapBadge } from "../map/map-badge";
 
 // The modal for one stop on the school-day road: the step in full, the app
@@ -20,6 +33,9 @@ const LAST = dayRoad.stops.length - 1;
 
 export function RoadStopDialog({ index, onMove, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
+  const locale = useLocale();
+  const road = pickLocale<DayRoad>(locale, { en: dayRoad, vi: dayRoadVi });
+  const { close } = pickLocale(locale, { en: roadDialog, vi: roadDialogVi });
 
   useEffect(() => {
     const dialog = ref.current;
@@ -41,7 +57,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
     if (!inside) dialog.close();
   };
 
-  const stop = index === null ? null : dayRoad.stops[index];
+  const stop = index === null ? null : road.stops[index];
 
   return (
     <dialog
@@ -55,7 +71,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
         <div className="road-dialog-body">
           <div className="road-dialog-top">
             <span className="road-dialog-step">
-              {index + 1} / {dayRoad.stops.length}
+              {index + 1} / {road.stops.length}
               {stop.time ? ` · ${stop.time}` : ""}
             </span>
             <button
@@ -64,14 +80,14 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
               onClick={() => ref.current?.close()}
             >
               <XIcon aria-hidden="true" />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{close}</span>
             </button>
           </div>
           <h2 id="road-dialog-h">{stop.title}</h2>
           <p className="road-dialog-text">{stop.text}</p>
 
-          {stop.app ? <StopApp id={stop.app} /> : null}
-          {!stop.app && index === LAST ? <AllApps /> : null}
+          {stop.app ? <StopApp id={stop.app} locale={locale} /> : null}
+          {!stop.app && index === LAST ? <AllApps locale={locale} /> : null}
 
           <div className="road-dialog-nav">
             <button
@@ -81,7 +97,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
               onClick={() => onMove(index - 1)}
             >
               <ArrowLeftIcon aria-hidden="true" />
-              {index > 0 ? dayRoad.stops[index - 1].title : dayRoad.start}
+              {index > 0 ? road.stops[index - 1].title : road.start}
             </button>
             <button
               type="button"
@@ -89,7 +105,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
               disabled={index === LAST}
               onClick={() => onMove(index + 1)}
             >
-              {index < LAST ? dayRoad.stops[index + 1].title : dayRoad.finish}
+              {index < LAST ? road.stops[index + 1].title : road.finish}
               <ArrowRightIcon aria-hidden="true" />
             </button>
           </div>
@@ -100,22 +116,29 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
 }
 
 // The app at work at this stop: name, tagline, "Made for" and features.
-function StopApp({ id }: Readonly<{ id: AppId }>) {
+function StopApp({ id, locale }: Readonly<{ id: AppId; locale: Locale }>) {
   const app = appById(id);
-  const detail = productDetails[id];
+  const detail = pickLocale(locale, {
+    en: productDetails,
+    vi: productDetailsVi,
+  })[id];
+  const showcase = pickLocale(locale, {
+    en: productsShowcase,
+    vi: productsShowcaseVi,
+  });
   return (
     <section className="road-dialog-app" aria-label={app.shortName}>
       <div className="road-dialog-app-h">
         <MapBadge badge={app.badge} />
         <div>
           <h3>{app.fullName}</h3>
-          <p>{app.tagline}</p>
+          <p>{tagline(app.id, locale)}</p>
         </div>
       </div>
       <p className="road-dialog-made">
-        {productsShowcase.madeFor}: {detail.madeFor}
+        {showcase.madeFor}: {detail.madeFor}
       </p>
-      <h4>{productsShowcase.featuresHeading}</h4>
+      <h4>{showcase.featuresHeading}</h4>
       <ul>
         {detail.features.map((feature) => (
           <li key={feature.id}>{feature.title}</li>
@@ -126,7 +149,7 @@ function StopApp({ id }: Readonly<{ id: AppId }>) {
 }
 
 // The last stop: every app that kept the day connected.
-function AllApps() {
+function AllApps({ locale }: Readonly<{ locale: Locale }>) {
   return (
     <ul className="road-dialog-apps">
       {APPS.map((one) => (
@@ -134,10 +157,14 @@ function AllApps() {
           <MapBadge badge={one.badge} />
           <span>
             <strong>{one.shortName}</strong>
-            <span>{one.tagline}</span>
+            <span>{tagline(one.id, locale)}</span>
           </span>
         </li>
       ))}
     </ul>
   );
+}
+
+function tagline(id: AppId, locale: Locale): string {
+  return pickLocale(locale, { en: appById(id).tagline, vi: appTaglinesVi[id] });
 }

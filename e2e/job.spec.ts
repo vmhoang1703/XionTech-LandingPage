@@ -4,7 +4,7 @@ test(
   "unknown job slug answers 404 with the Not found page",
   { tag: "@smoke" },
   async ({ request }) => {
-    const response = await request.get("/careers/no-such-role");
+    const response = await request.get("/en/careers/no-such-role");
     const html = await response.text();
 
     expect(response.status()).toBe(404);

@@ -5,7 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { contactByPrefix, hcmc, plano } from "@/content/offices";
-import { CONTACT_HREF, currentSection, LABELS, NAV_LINKS } from "./nav-data";
+import { localeHref, type Locale } from "@/i18n/locales";
+import { SHELL } from "@/i18n/shell";
+import { CONTACT_HREF, currentSection, NAV_LINKS } from "./nav-data";
 import { itemClass } from "./site-nav";
 
 const MENU_ID = "mobile-menu";
@@ -13,16 +15,16 @@ const MENU_ID = "mobile-menu";
 // Under the links (lead, 2026-10-13): Get in touch and both headquarters'
 // phones, so contact is one tap away from any page.
 const MENU_PHONES = [
-  { city: "Plano", phone: contactByPrefix(plano, "tel:") },
-  { city: "Ho Chi Minh City", phone: contactByPrefix(hcmc, "tel:") },
-];
+  { city: "cityPlano", phone: contactByPrefix(plano, "tel:") },
+  { city: "cityHcmc", phone: contactByPrefix(hcmc, "tel:") },
+] as const;
 // The menu is for 1080px and below (inclusive, as the prototype CSS); above it the desktop
 // nav shows, so growing past it closes the menu (decision T6).
 const DESKTOP_QUERY = "(min-width: 1081px)";
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-// While open, focus cycles through the header bar controls (logo, Menu, later the EN/VI
+// While open, focus cycles through the header bar controls (logo, Menu, the EN/VI
 // switch) and the open panel (EXPERIENCE.md "Mobile menu").
 // Elements hidden by CSS at this width (the desktop nav) have no boxes and are skipped.
 function trapTargets(scope: ParentNode) {
@@ -31,7 +33,8 @@ function trapTargets(scope: ParentNode) {
   );
 }
 
-export function MobileMenu() {
+export function MobileMenu({ locale }: Readonly<{ locale: Locale }>) {
+  const t = SHELL[locale].nav;
   const pathname = usePathname();
   // The menu is open only on the pathname it was opened on, so a navigation closes it.
   const [openedOn, setOpenedOn] = useState<string | null>(null);
@@ -125,36 +128,36 @@ export function MobileMenu() {
         onClick={() => setOpenedOn(open ? null : pathname)}
       >
         {open ? <XIcon aria-hidden="true" /> : <ListIcon aria-hidden="true" />}
-        <span className="sr-only">{LABELS.menu}</span>
+        <span className="sr-only">{t.menu}</span>
       </button>
       <nav
         id={MENU_ID}
-        aria-label={LABELS.mainNav}
+        aria-label={t.mainNav}
         hidden={!open}
         className="border-border bg-paper pointer-events-auto absolute inset-x-3 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-room))] flex-col items-stretch gap-0.5 overflow-auto rounded-[28px] border p-4 shadow-[0_24px_48px_-24px_rgb(11_23_48/0.35)]"
       >
         {NAV_LINKS.map((item) => (
           <Link
             key={item.section}
-            href={item.href}
+            href={localeHref(locale, item.href)}
             className={itemClass}
             aria-current={section === item.section ? "page" : undefined}
           >
-            {item.label}
+            {t[item.section]}
           </Link>
         ))}
         <div className="menu-contact">
           <Link
-            href={CONTACT_HREF}
+            href={localeHref(locale, CONTACT_HREF)}
             className="btn btn-primary"
             onClick={() => setOpenedOn(null)}
           >
-            {LABELS.contact}
+            {t.contact}
             <ArrowRightIcon aria-hidden="true" />
           </Link>
           {MENU_PHONES.map(({ city, phone }) => (
             <a key={city} href={phone.href}>
-              {city} {phone.label}
+              {t[city]} {phone.label}
             </a>
           ))}
         </div>

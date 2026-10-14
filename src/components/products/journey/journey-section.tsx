@@ -1,10 +1,31 @@
-import { dayRoad, journeyBoard, journeyMap } from "@/content/products";
+import {
+  dayRoad,
+  dayRoadVi,
+  journeyBoard,
+  journeyBoardVi,
+  journeyMap,
+  journeyMapVi,
+  type DayRoad,
+  type JourneyBoard,
+} from "@/content/products";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { RoadMap } from "./road-map";
 import { heroWords } from "@/components/sections/hero-words";
 
 // Products hero: the page title, then the school day as a winding roadmap.
-export function JourneySection() {
-  const { title, lede } = journeyMap.intro;
+export function JourneySection({
+  locale = "en",
+}: Readonly<{ locale?: Locale }>) {
+  const { title, lede } = pickLocale(locale, {
+    en: journeyMap,
+    vi: journeyMapVi,
+  }).intro;
+  const road = pickLocale<DayRoad>(locale, { en: dayRoad, vi: dayRoadVi });
+  const board = pickLocale<JourneyBoard>(locale, {
+    en: journeyBoard,
+    vi: journeyBoardVi,
+  });
   const t = heroWords();
   return (
     <section
@@ -16,9 +37,9 @@ export function JourneySection() {
         <h1 id="map-h">{t.words(title)}</h1>
         <p className="lede">{lede}</p>
         <div className="rm-head">
-          <h2>{dayRoad.heading}</h2>
-          <p>{dayRoad.lede}</p>
-          <p className="rm-hint">{journeyBoard.hint}</p>
+          <h2>{road.heading}</h2>
+          <p>{road.lede}</p>
+          <p className="rm-hint">{board.hint}</p>
         </div>
         <RoadMap />
       </div>

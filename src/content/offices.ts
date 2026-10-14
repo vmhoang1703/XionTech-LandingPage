@@ -123,3 +123,50 @@ export const aboutOfficeView: Office[] = [
   { ...plano, tag: US_DELIVERY_CENTER, contacts: planoBracketed },
   { ...hcmc, contacts: hcmcBracketed },
 ];
+
+// Vietnamese. Addresses, numbers, emails, hrefs and time zones are shared with
+// English; only names, tags, zone labels and accessible names change.
+const NEW_TAB_VI = "(mở trong thẻ mới)";
+const US_DELIVERY_CENTER_VI = "Trung tâm Phát triển Mỹ";
+const VIETNAM_DELIVERY_CENTER_VI = "Trung tâm Phát triển Việt Nam";
+
+export const planoVi: Office = {
+  ...plano,
+  name: "Plano, Texas, Mỹ",
+  contacts: plano.contacts.map((contact) =>
+    contact.external
+      ? { ...contact, ariaLabel: `${contact.label} ${NEW_TAB_VI}` }
+      : contact,
+  ),
+  zoneLabel: "Giờ miền Trung Mỹ",
+};
+
+export const hcmcVi: Office = {
+  ...hcmc,
+  name: "TP. Hồ Chí Minh, Việt Nam",
+  tag: VIETNAM_DELIVERY_CENTER_VI,
+};
+
+export const officesVi: Office[] = [planoVi, hcmcVi];
+
+export const otherLocationsVi = "Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng.";
+
+const planoBracketedVi: OfficeContact[] = planoBracketed.map((contact) =>
+  contact.external
+    ? { ...contact, ariaLabel: `WhatsApp ${contact.label} ${NEW_TAB_VI}` }
+    : contact,
+);
+
+export const footerOfficesVi: FooterOffice[] = [
+  { ...footerOffices[0], name: VIETNAM_DELIVERY_CENTER_VI },
+  {
+    ...footerOffices[1],
+    name: US_DELIVERY_CENTER_VI,
+    contacts: planoBracketedVi,
+  },
+];
+
+export const aboutOfficeViewVi: Office[] = [
+  { ...planoVi, tag: US_DELIVERY_CENTER_VI, contacts: planoBracketedVi },
+  { ...hcmcVi, contacts: hcmcBracketed },
+];

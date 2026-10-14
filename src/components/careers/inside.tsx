@@ -1,9 +1,14 @@
-import { careersInside } from "@/content/careers";
+import { careersInside, careersInsideVi } from "@/content/careers";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 
 // Server Component. Inside XionTech: five text tiles, no links (E-A7 CAP-2).
 // Navy tiles use the base `.ins-card` look; the others add their tone.
-export function Inside() {
-  const { heading, lede, tiles } = careersInside;
+export function Inside({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { heading, lede, tiles } = pickLocale(locale, {
+    en: careersInside,
+    vi: careersInsideVi,
+  });
 
   return (
     <section id="life" className="sec" aria-labelledby="life-h">

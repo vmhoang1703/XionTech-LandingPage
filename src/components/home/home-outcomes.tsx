@@ -1,12 +1,17 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
-import { homeOutcomes } from "@/content/home";
+import { LocaleLink } from "@/components/layout/locale-link";
+import { homeOutcomes, homeOutcomesVi } from "@/content/home";
+import { pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 
 // Home "What can we help you achieve?": the four Services outcomes beside a
 // sticky heading with the two next steps (the Services split layout). The
 // outcomes are not links; the two calls to action are.
-export function HomeOutcomes() {
-  const { title, lede, items, cta, link } = homeOutcomes;
+export function HomeOutcomes({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+  const { title, lede, items, cta, link } = pickLocale(locale, {
+    en: homeOutcomes,
+    vi: homeOutcomesVi,
+  });
 
   return (
     <section aria-labelledby="home-outcomes-h" className="sec">
@@ -21,10 +26,10 @@ export function HomeOutcomes() {
               {cta.label}
               <ArrowRightIcon aria-hidden="true" />
             </a>
-            <Link href={link.href} className="link-arrow">
+            <LocaleLink href={link.href} className="link-arrow">
               <span>{link.label}</span>
               <ArrowRightIcon aria-hidden="true" />
-            </Link>
+            </LocaleLink>
           </div>
         </div>
         <ul className="goal-list" data-reveal="">

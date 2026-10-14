@@ -1,13 +1,18 @@
 import { ArrowLeftIcon, CheckCircleIcon } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { LocaleLink } from "@/components/layout/locale-link";
 import type { ReactNode } from "react";
-import { jobDetails } from "@/content/job";
+import { jobDetails as jobDetailsEn, jobDetailsVi } from "@/content/job";
+import { fallbackLang, pickLocale } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 import { ApplyBar } from "./apply-bar";
 import type { OpenRoleDetail } from "@/lib/careers/open-roles";
 
-function CheckList({ items }: Readonly<{ items: readonly string[] }>) {
+function CheckList({
+  items,
+  lang,
+}: Readonly<{ items: readonly string[]; lang?: string }>) {
   return (
-    <ul className="list-check">
+    <ul className="list-check" lang={lang}>
       {items.map((item) => (
         <li key={item}>
           <CheckCircleIcon weight="fill" aria-hidden="true" />
@@ -23,7 +28,9 @@ function CheckList({ items }: Readonly<{ items: readonly string[] }>) {
 export function JobDetails({
   role,
   children,
-}: Readonly<{ role: OpenRoleDetail; children: ReactNode }>) {
+  locale = "en",
+}: Readonly<{ role: OpenRoleDetail; children: ReactNode; locale?: Locale }>) {
+  const jobDetails = pickLocale(locale, { en: jobDetailsEn, vi: jobDetailsVi });
   const paragraphs = (role.about ?? "")
     .split("\n\n")
     .map((text) => text.trim())
@@ -39,27 +46,35 @@ export function JobDetails({
             <>
               <h2>{jobDetails.aboutHeading}</h2>
               {paragraphs.map((text) => (
-                <p key={text}>{text}</p>
+                <p key={text} lang={fallbackLang(role.aboutLang, locale)}>
+                  {text}
+                </p>
               ))}
             </>
           )}
           {responsibilities.length > 0 && (
             <>
               <h2>{jobDetails.doHeading}</h2>
-              <CheckList items={responsibilities} />
+              <CheckList
+                items={responsibilities}
+                lang={fallbackLang(role.responsibilitiesLang, locale)}
+              />
             </>
           )}
           {requirements.length > 0 && (
             <>
               <h2>{jobDetails.bringHeading}</h2>
-              <CheckList items={requirements} />
+              <CheckList
+                items={requirements}
+                lang={fallbackLang(role.requirementsLang, locale)}
+              />
             </>
           )}
           <p className="mt-7">
-            <Link className="link-arrow" href={jobDetails.backHref}>
+            <LocaleLink className="link-arrow" href={jobDetails.backHref}>
               <ArrowLeftIcon aria-hidden="true" />
               <span>{jobDetails.backLabel}</span>
-            </Link>
+            </LocaleLink>
           </p>
         </article>
         <div id="apply" className="form-card">

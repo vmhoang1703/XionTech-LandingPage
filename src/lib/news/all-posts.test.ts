@@ -28,8 +28,8 @@ describe("getAllPosts", () => {
     expect(query).not.toMatch(/\[0\.\.\./);
     for (const field of [
       '"slug": slug.current',
-      '"title": title.en',
-      '"excerpt": excerpt.en',
+      '"title": select(length(title[$locale]) > 0 => title[$locale], title.en)',
+      '"excerpt": select(length(excerpt[$locale]) > 0 => excerpt[$locale], excerpt.en)',
       "publishedAt",
       "category",
       "app",
@@ -37,6 +37,29 @@ describe("getAllPosts", () => {
       "alt",
     ]) {
       expect(query).toContain(field);
+    }
+  });
+});
+
+describe("getAllPosts in Vietnamese", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("fetches with the locale, English when the post has no Vietnamese title", async () => {
+    sanityFetchMock.mockResolvedValue([]);
+
+    await getAllPosts("vi");
+
+    const { query, params } = sanityFetchMock.mock.calls[0][0];
+    expect(params).toEqual({ locale: "vi" });
+    expect(query).toContain(
+      '"title": select(length(title[$locale]) > 0 => title[$locale], title.en)',
+    );
+    for (const field of ["title", "excerpt"]) {
+      expect(query).toContain(
+        `"${field}Lang": select(length(${field}[$locale]) > 0 => $locale, "en")`,
+      );
     }
   });
 });

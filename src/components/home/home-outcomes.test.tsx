@@ -36,7 +36,7 @@ describe("HomeOutcomes", () => {
     ]);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "#contact",
-      "/services",
+      "/en/services",
     ]);
     expect(links[0].className).toBe("btn btn-primary");
   });

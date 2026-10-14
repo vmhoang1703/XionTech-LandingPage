@@ -1,5 +1,8 @@
 // Job page copy. Kept out of the components so it can be translated later.
 
+import type { Localized } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
+
 export const jobMeta = {
   title: "Open role | Careers at XionTech",
   description:
@@ -43,3 +46,65 @@ export const jobForm = {
   privacyHref: "/privacy",
   errorsHeading: "Please fix the following:",
 } as const;
+
+// Vietnamese. Prototype `data-vi` text where the English still matches, the
+// rest AI-translated for native review (docs/translations/vi-review.md).
+export const jobMetaVi: typeof jobMeta = {
+  title: "Vị trí tuyển dụng | Tuyển dụng tại XionTech",
+  description:
+    "Đọc mô tả vị trí và ứng tuyển kèm CV. XionTech, TP. Hồ Chí Minh.",
+};
+
+export const jobHeroVi: Localized<typeof jobHero> = {
+  breadcrumbLabel: "Đường dẫn",
+  breadcrumbHome: "Trang chủ",
+  breadcrumbCareers: "Tuyển dụng",
+  chipsLabel: "Thông tin vị trí",
+};
+
+export const jobDetailsVi: Localized<typeof jobDetails> = {
+  sectionLabel: "Thông tin vị trí và ứng tuyển",
+  aboutHeading: "Về vị trí này",
+  doHeading: "Bạn sẽ làm gì",
+  bringHeading: "Bạn mang đến điều gì",
+  backLabel: "Tất cả vị trí",
+  backHref: jobDetails.backHref,
+};
+
+export const jobFormVi: Localized<typeof jobForm> = {
+  heading: "Ứng tuyển vị trí này",
+  name: "Họ và tên",
+  email: "Email",
+  phone: "Số điện thoại (không bắt buộc)",
+  cv: "CV",
+  cvHelp: "PDF hoặc Word, tối đa 5 MB.",
+  note: "Lời nhắn (không bắt buộc)",
+  submit: "Gửi hồ sơ",
+  sending: "Đang gửi...",
+  successHeading: "Đã lên tới đỉnh. Cảm ơn bạn!",
+  successText:
+    "Chúng tôi đã nhận được hồ sơ của bạn và sẽ liên hệ nếu phù hợp.",
+  sendError: "Chúng tôi không gửi được hồ sơ của bạn. Vui lòng thử lại.",
+  rateError:
+    "Bạn đã gửi nhiều yêu cầu trong thời gian ngắn. Vui lòng thử lại sau vài phút.",
+  consent: "Chúng tôi chỉ dùng thông tin và CV của bạn để xét tuyển.",
+  privacyLink: "Chính sách bảo mật",
+  privacyHref: jobForm.privacyHref,
+  errorsHeading: "Vui lòng sửa các mục sau:",
+};
+
+// Employment type labels for the roles list. The keys are the type values stored in Sanity.
+export const ROLE_TYPE_LABELS: Record<Locale, Map<string, string>> = {
+  en: new Map([
+    ["full-time", "Full-time"],
+    ["part-time", "Part-time"],
+    ["contract", "Contract"],
+    ["internship", "Internship"],
+  ]),
+  vi: new Map([
+    ["full-time", "Toàn thời gian"],
+    ["part-time", "Bán thời gian"],
+    ["contract", "Hợp đồng"],
+    ["internship", "Thực tập"],
+  ]),
+};

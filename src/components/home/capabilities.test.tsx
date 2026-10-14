@@ -52,6 +52,17 @@ describe("Capabilities", () => {
     );
   });
 
+  it("names the zone and the city in Vietnamese on vi", () => {
+    const html = renderToString(<Capabilities locale="vi" />);
+    expect(html).toContain("Giờ miền Trung Mỹ");
+    expect(html).not.toContain("US Central");
+
+    render(<Capabilities locale="vi" />);
+    expect(screen.getByText("HCMC").getAttribute("title")).toBe(
+      "TP. Hồ Chí Minh",
+    );
+  });
+
   it("has the three industries in the markup before any click", () => {
     const button = reveal();
 

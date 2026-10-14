@@ -26,6 +26,7 @@ describe("next.config.ts", () => {
     // Allows this project's Sanity images for optimized use; the life photos
     // are `unoptimized`, so this list is not checked for them (Story 6.3).
     expect(nextConfig).toEqual({
+      experimental: { globalNotFound: true },
       images: {
         remotePatterns: [
           {
