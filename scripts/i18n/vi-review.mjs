@@ -64,25 +64,26 @@ function isObject(value) {
   return typeof value === "object" && value !== null;
 }
 
-function walk(en, vi, path, found) {
+function walk(en, vi, path, found, same) {
   if (typeof en === "string") {
     if (typeof vi !== "string") throw new Error(`${path}: vi is not a string`);
     if (vi !== en) found.push({ path, english: en, vi });
+    else same.push({ path, english: en, vi });
     return;
   }
   if (!isObject(en)) return;
   if (!isObject(vi)) throw new Error(`${path}: vi has no matching object`);
   if (en instanceof Map) {
     for (const [key, value] of en)
-      walk(value, vi.get(key), `${path}[${key}]`, found);
+      walk(value, vi.get(key), `${path}[${key}]`, found, same);
   } else if (Array.isArray(en)) {
     if (!Array.isArray(vi) || vi.length !== en.length)
       throw new Error(`${path}: vi list differs in length`);
-    en.forEach((value, i) => walk(value, vi[i], `${path}[${i}]`, found));
+    en.forEach((value, i) => walk(value, vi[i], `${path}[${i}]`, found, same));
   } else {
     for (const key of Object.keys(en)) {
       if (!(key in vi)) throw new Error(`${path}.${key}: missing in vi`);
-      walk(en[key], vi[key], `${path}.${key}`, found);
+      walk(en[key], vi[key], `${path}.${key}`, found, same);
     }
   }
 }
@@ -102,17 +103,19 @@ function pairNames(mod) {
 /**
  * Every Vietnamese string that differs from its English, in dictionary order:
  * `{ page, location, english, vi }`. `load(relativePath)` returns a loaded module.
+ * With `{ same: true }`, the strings left equal to their English instead.
  * Throws when a Vietnamese export has no English counterpart or another shape.
  */
-export async function collectStrings(load) {
+export async function collectStrings(load, { same: wantSame = false } = {}) {
   const rows = [];
   for (const [file] of PAGES) {
     const mod = await load(file);
     const page = pageOf(file);
     const add = (location, en, vi) => {
       const found = [];
-      walk(en, vi, location, found);
-      for (const { path, english, vi: text } of found) {
+      const same = [];
+      walk(en, vi, location, found, same);
+      for (const { path, english, vi: text } of wantSame ? same : found) {
         rows.push({
           page,
           location: `${moduleName(file)}:${path}`,
@@ -209,6 +212,9 @@ export function renderReview(rows) {
     "- **AI** rows were translated by an AI from the real English copy. Check these first: meaning, tone, spelling, and that nothing is added or left out.",
     "- **Prototype** rows are Amber's own Vietnamese from the clickable prototype (`data-vi`), kept where the English still matches. A quick read is enough.",
     '- Product and service names, and the tagline "Get IT done", stay English on purpose. `[Placeholder]` stays in front of a placeholder text.',
+    "- **Privacy** is legal text translated by an AI. It needs the lead's and a legal reviewer's sign-off before it is published.",
+    "",
+    "**Loanwords kept on purpose:** outsourcing, workshop, low-code, demo (as in “đặt lịch demo”). Write them in lower case inside a sentence.",
     "",
     "**Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:vi-review`.",
     "",
@@ -248,7 +254,7 @@ async function main() {
     configFile: false,
     appType: "custom",
     logLevel: "error",
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, hmr: false, ws: false },
     optimizeDeps: { noDiscovery: true },
     resolve: { tsconfigPaths: true },
   });

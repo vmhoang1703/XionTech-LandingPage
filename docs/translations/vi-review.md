@@ -7,6 +7,9 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 - **AI** rows were translated by an AI from the real English copy. Check these first: meaning, tone, spelling, and that nothing is added or left out.
 - **Prototype** rows are Amber's own Vietnamese from the clickable prototype (`data-vi`), kept where the English still matches. A quick read is enough.
 - Product and service names, and the tagline "Get IT done", stay English on purpose. `[Placeholder]` stays in front of a placeholder text.
+- **Privacy** is legal text translated by an AI. It needs the lead's and a legal reviewer's sign-off before it is published.
+
+**Loanwords kept on purpose:** outsourcing, workshop, low-code, demo (as in “đặt lịch demo”). Write them in lower case inside a sentence.
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:vi-review`.
 

@@ -6,7 +6,8 @@
 // aria-label next to data-vi-aria, and from placeholder next to data-vi-ph.
 // Pairs whose text is built at run time (a "${...}" template) are skipped.
 //
-// Usage: node scripts/i18n/prototype-vi.mjs
+// Usage: npm run i18n:prototype-vi            (writes the JSON)
+//        npm run i18n:prototype-vi -- --check (fails when the JSON is out of date)
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -79,12 +80,24 @@ export function collectPairs(directory = PROTOTYPE) {
   return result;
 }
 
-function main() {
+function main(check) {
   const pairs = collectPairs();
-  writeFileSync(OUTPUT, `${JSON.stringify(pairs, null, 2)}\n`);
-  console.log(`${pairs.length} pairs written to src/i18n/prototype-vi.json`);
+  const json = `${JSON.stringify(pairs, null, 2)}\n`;
+  if (!check) {
+    writeFileSync(OUTPUT, json);
+    console.log(`${pairs.length} pairs written to src/i18n/prototype-vi.json`);
+  } else if (readFileSync(OUTPUT, "utf8") === json) {
+    console.log(
+      `src/i18n/prototype-vi.json is up to date (${pairs.length} pairs)`,
+    );
+  } else {
+    console.error(
+      "src/i18n/prototype-vi.json differs from the prototype; run npm run i18n:prototype-vi",
+    );
+    process.exitCode = 1;
+  }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main();
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
+  main(process.argv.includes("--check"));
 }

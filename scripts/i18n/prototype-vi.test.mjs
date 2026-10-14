@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { collectPairs, extractPairs } from "./prototype-vi.mjs";
+import { extractPairs } from "./prototype-vi.mjs";
 
 describe("extractPairs", () => {
   it("pairs the text of an element with its data-vi", () => {
@@ -47,10 +47,6 @@ describe("committed prototype-vi.json", () => {
       "utf8",
     ),
   );
-
-  it("is what the script extracts from the prototype", () => {
-    expect(committed).toEqual(collectPairs());
-  });
 
   it("has only unique non-empty pairs with a source file", () => {
     const keys = committed.map((pair) => `${pair.english}\u0000${pair.vi}`);
