@@ -147,8 +147,8 @@ Notes:
 Lead steps for job applications (the private store was created and connected on 2026-10-04):
 
 1. Add `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` to `.env.local`. Run `vercel env pull` for local runs. It also writes `VERCEL_OIDC_TOKEN`, which expires after about 12 hours.
-2. After merge to `develop`: switch to `develop` and pull. Run `cd studio && npx sanity deploy`. Fill "What you'll do" and "What you bring" on the sample role (decision A10, `docs/sanity.md`).
-3. Send one real application with a small PDF on https://xiontech-hoangvu-dev.vercel.app/careers/placeholder-sample-job. Check the mail and the attachment. Check the blob in the store. Check that its URL does not open without auth. Check that nothing new appeared in Sanity.
+2. After merge to `develop`: switch to `develop` and pull. Run `cd studio && npx sanity deploy`. Fill "What you'll do" and "What you bring" on the role (decision A10, `docs/sanity.md`; the sample role was deleted on 2026-10-14, so use Fresh Full Stack Developer).
+3. Send one real application with a small PDF on https://xiontech-hoangvu-dev.vercel.app/en/careers/fresh-full-stack-developer. Check the mail and the attachment. Check the blob in the store. Check that its URL does not open without auth. Check that nothing new appeared in Sanity.
 
 ## Rate limit
 
