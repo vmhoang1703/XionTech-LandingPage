@@ -15,7 +15,7 @@ export type OpenRole = {
   locationLang?: string | null;
 };
 
-const OPEN_ROLES_QUERY = `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en)] | order(title.en asc) {
+export const OPEN_ROLES_QUERY = `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en)] | order(title.en asc) {
   "slug": slug.current,
   "title": ${localized("title")},
   "titleLang": ${localizedLang("title")},
@@ -35,7 +35,7 @@ export type OpenRoleDetail = OpenRole & {
   requirementsLang?: string | null;
 };
 
-const OPEN_ROLE_QUERY = `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en) && slug.current == $slug][0] {
+export const OPEN_ROLE_QUERY = `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en) && slug.current == $slug][0] {
   "slug": slug.current,
   "title": ${localized("title")},
   "titleLang": ${localizedLang("title")},

@@ -18,7 +18,7 @@ export type NewsStory = LatestPost & {
 
 // One story for its page (Story 6.2), with Home's filter. The body comes as
 // plain text per block (no links or images yet).
-const POST_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt) && slug.current == $slug][0] {
+export const POST_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt) && slug.current == $slug][0] {
   "slug": slug.current,
   "title": ${localized("title")},
   "titleLang": ${localizedLang("title")},

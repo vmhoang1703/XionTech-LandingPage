@@ -6,7 +6,7 @@ import { localized, localizedLang } from "@/lib/sanity/localized";
 // Every story for the News page (Story 6.1), newest first, with Home's filter:
 // a post without a slug, an English title or a date is never shown. Text is
 // in the locale, or English when the locale's field is empty.
-const ALL_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt)] | order(publishedAt desc) {
+export const ALL_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt)] | order(publishedAt desc) {
   "slug": slug.current,
   "title": ${localized("title")},
   "titleLang": ${localizedLang("title")},
