@@ -319,6 +319,22 @@ describe("ServicesPage", () => {
     ).toBeNull();
   });
 
+  it("renders French copy on fr, with service names in English", async () => {
+    render(await servicesAt("fr"));
+
+    const h1 = screen.getByRole("heading", { level: 1 });
+    expect(h1.textContent).toBe(
+      "Des équipes logicielles qui incarnent « Get IT done ».",
+    );
+    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
+    expect(
+      screen.getByRole("heading", { name: "Product Engineering" }),
+    ).toBeTruthy();
+    expect(
+      screen.queryByRole("heading", { name: "Eight services, one team." }),
+    ).toBeNull();
+  });
+
   it("falls back to English for an unknown locale", async () => {
     render(await servicesAt("xx"));
 
