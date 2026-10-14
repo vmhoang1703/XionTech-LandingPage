@@ -69,7 +69,7 @@ export default async function RootLayout({
             />
             <link
               rel="stylesheet"
-              href={`https://fonts.googleapis.com/css2?family=${cjkFont}:wght@400;500;600&display=swap`}
+              href={`https://fonts.googleapis.com/css2?family=${cjkFont}:wght@300;400;500;600&display=swap`}
               precedence="default"
             />
           </>

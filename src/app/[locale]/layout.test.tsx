@@ -184,7 +184,7 @@ describe("RootLayout", () => {
     expect(sheets).toEqual([
       [
         "stylesheet",
-        `https://fonts.googleapis.com/css2?family=${family}:wght@400;500;600&display=swap`,
+        `https://fonts.googleapis.com/css2?family=${family}:wght@300;400;500;600&display=swap`,
       ],
     ]);
     expect(

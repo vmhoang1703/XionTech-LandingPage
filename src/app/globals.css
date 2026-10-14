@@ -4632,7 +4632,13 @@
 */
 :lang(ja),
 :lang(ko),
-:lang(zh) {
+:lang(zh),
+:lang(ja)::before,
+:lang(ko)::before,
+:lang(zh)::before,
+:lang(ja)::after,
+:lang(ko)::after,
+:lang(zh)::after {
   letter-spacing: normal !important;
 }
 
@@ -7313,8 +7319,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
   CJK headings need more room than the tight Latin display leading. Unlayered
   and last on purpose: it must beat the component heading rules above.
 */
-:lang(ja) :is(h1, h2, h3, h4),
-:lang(ko) :is(h1, h2, h3, h4),
-:lang(zh) :is(h1, h2, h3, h4) {
+/* On the heading itself, so an English fallback island (lang="en") keeps its leading. */
+:is(h1, h2, h3, h4):is(:lang(ja), :lang(ko), :lang(zh)) {
   line-height: 1.35;
 }
