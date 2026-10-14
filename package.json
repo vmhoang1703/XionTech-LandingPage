@@ -22,6 +22,7 @@
     "test:skills": "bash .claude/skills/create-pr/scripts/test_pr_scripts.sh",
     "ux:parity": "node scripts/ux/parity.mjs",
     "ux:shots": "node scripts/ux/shots.mjs",
+    "i18n:vi-review": "node scripts/i18n/vi-review.mjs",
     "sanity:check": "node --env-file-if-exists=.env.local scripts/sanity-check.mjs"
   },
   "dependencies": {

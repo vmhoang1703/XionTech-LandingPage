@@ -2,7 +2,7 @@ import type { Locale } from "./locales";
 
 // Site shell strings (header, footer, language menu, 404). Page bodies are not translated here.
 // Vietnamese comes from the prototype (data-vi) where it has the string, otherwise it is
-// AI-translated for native review; each string's source is in src/i18n/vi-sources.json.
+// AI-translated for native review; each string's source is in docs/translations/vi-review.md.
 
 const names = {
   productEngineering: "Product Engineering",

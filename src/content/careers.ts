@@ -141,7 +141,7 @@ export const careersLife = {
 };
 
 // Vietnamese. Prototype `data-vi` text where the English still matches, the
-// rest AI-translated for native review (src/i18n/vi-sources.json).
+// rest AI-translated for native review (docs/translations/vi-review.md).
 export const careersMetaVi: typeof careersMeta = {
   title: "Tuyển dụng tại XionTech | Việc làm phần mềm tại TP. Hồ Chí Minh",
   description:

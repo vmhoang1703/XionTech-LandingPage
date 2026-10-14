@@ -1718,3 +1718,19 @@ Template:
   - (a) The first shell dictionary marked the Vietnamese 404 text `[Placeholder]`, although Amber's prototype `404.html` had real `data-vi` text. The controller caught it, and it was replaced with the prototype text.
   - (b) Moving pages under `[locale]` left the 404 as a Client Component. A `notFound()` inside a page (an unknown news story or job) served Next's bare error shell, and unknown `/vi/` paths showed the English 404. The Playwright smoke test caught both; the 404 became a server component plus a `[...rest]` catch-all.
   - (c) The first browser walk reported that switching language lost the scroll position. A debug trace showed the test harness had caused the jump: Playwright's `click()` on the sticky header button scrolled the page before the switch, and the restore put back the value it was given. The e2e test now opens the menu with the keyboard.
+
+## 2026-10-13 — Vietnamese for all page content (part A of the multi-language request)
+
+- **Who / tool:** Son Nguyen (Sammy) / Claude Code, `/bmad-build` dispatch route. Planning and build controller Claude Opus 5.5; task implementers Claude Opus 5.5 (tasks 2–5) and Claude Sonnet 5.5 (tasks 1, 6, 7); all reviews Claude Sonnet 5.5.
+- **Prompt (short):** Make `/vi/` fully Vietnamese: page bodies, page titles, form messages and Sanity stories. Parts B (ja, fr, ko, zh-Hans) and C (Arabic, RTL) come later and reuse the same plumbing.
+- **What the AI did:**
+  - Wrote `spec-vi-page-content.md` and split the work into seven tasks: shared plumbing (`Localized<T>`, `pickLocale`, a parity helper, and a script that pulls Amber's `data-vi` pairs into `src/i18n/prototype-vi.json`), then home/values/process/apps, products/services/about/offices, careers/job/news/privacy/not-found/footer with Sanity `vi` fields and per-locale dates, forms, shell and page meta, and this review list.
+  - Every `vi` dictionary has the shape of its English one, and a unit test fails on a missing or extra key.
+  - Generated `docs/translations/vi-review.md` with `npm run i18n:vi-review`: 503 distinct English and Vietnamese pairs (528 places in the code), 356 from the prototype and 147 AI-translated, grouped by page with the AI rows first, for a native reader to check.
+- **Decision / result:**
+  - The user decided on 2026-10-13 to do the work in three parts (A: Vietnamese now, B and C deferred), to allow AI translations when they are flagged for review, to keep product and service names and "Get IT done" in English, and to keep `[Placeholder]` in front of placeholder text.
+  - The source of each string is no longer hand-kept: the script reads the dictionaries and matches the English against the prototype pairs. A unit test fails when the committed review is out of date, or when a Vietnamese string is missing from it.
+  - Open: a native Vietnamese reader still has to check the AI rows.
+- **AI got it wrong?** yes —
+  - (a) The task 4 dispatch was interrupted part-way. Its shared Sanity `lang` flag then labelled fields that had fallen back to English as Vietnamese, and a blank `vi` counted as filled. Review caught it; it was fixed per field (a field is marked only when it differs from the page language, and a blank `vi` falls back to `en`).
+  - (b) The hand-kept `src/i18n/vi-sources.json` was incomplete (keys missing for the offices and about-office dictionaries; about 110 of 528 places had no entry) and some tags were wrong (about 26 disagreed with the generated result, for example the demo hero, `form.sending` and `form.successText`, which match the prototype). Replaced by the generator and deleted.

@@ -90,7 +90,7 @@ const [who, collect, use, share, transfers, retention, cookies, rights] =
   PRIVACY.sections;
 
 // Vietnamese. Prototype `data-vi` text where the English still matches, the
-// rest AI-translated for native review (src/i18n/vi-sources.json).
+// rest AI-translated for native review (docs/translations/vi-review.md).
 export const PRIVACY_VI: Localized<typeof PRIVACY> = {
   metaTitle: "Chính sách bảo mật | XionTech",
   metaDescription:

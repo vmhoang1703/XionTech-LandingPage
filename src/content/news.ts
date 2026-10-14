@@ -45,7 +45,7 @@ export const newsStory = {
 };
 
 // Vietnamese. Prototype `data-vi` text where the English still matches, the
-// rest AI-translated for native review (src/i18n/vi-sources.json).
+// rest AI-translated for native review (docs/translations/vi-review.md).
 export const homeNewsVi: typeof homeNews = {
   heading: "Tin mới từ XionTech.",
   lede: "Cập nhật những gì đội ngũ chúng tôi đang xây dựng và phát hành.",
