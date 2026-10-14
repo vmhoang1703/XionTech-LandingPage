@@ -335,6 +335,20 @@ describe("ServicesPage", () => {
     ).toBeNull();
   });
 
+  it("renders Korean copy on ko, with service names in English", async () => {
+    render(await servicesAt("ko"));
+
+    const h1 = screen.getByRole("heading", { level: 1 });
+    expect(h1.textContent).toBe("‘Get IT done’을 실현하는 소프트웨어 팀.");
+    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
+    expect(
+      screen.getByRole("heading", { name: "Product Engineering" }),
+    ).toBeTruthy();
+    expect(
+      screen.queryByRole("heading", { name: "Eight services, one team." }),
+    ).toBeNull();
+  });
+
   it("falls back to English for an unknown locale", async () => {
     render(await servicesAt("xx"));
 
