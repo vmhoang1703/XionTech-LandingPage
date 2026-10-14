@@ -210,4 +210,15 @@ describe("SiteFooter in Vietnamese", () => {
       screen.getByText("Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng."),
     ).toBeTruthy();
   });
+
+  it("names the WhatsApp link in Vietnamese", () => {
+    render(<SiteFooter locale="vi" />);
+    expect(
+      screen
+        .getByRole("link", {
+          name: "WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)",
+        })
+        .getAttribute("href"),
+    ).toBe("https://wa.me/14694399345");
+  });
 });

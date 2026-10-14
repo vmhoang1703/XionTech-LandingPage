@@ -138,6 +138,13 @@ describe("Demo page", () => {
     }
     expect(screen.getByText(otherLocationsVi)).toBeDefined();
     expect(screen.getByRole("heading", { name: "Bạn cần gì?" })).toBeDefined();
+    expect(
+      screen
+        .getByRole("link", {
+          name: "WhatsApp +1 469 439 9345 (mở trong thẻ mới)",
+        })
+        .getAttribute("href"),
+    ).toBe("https://wa.me/14694399345");
   });
 });
 
