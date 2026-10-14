@@ -30,8 +30,11 @@ describe("SiteHeader", () => {
     expect(demo.className).toContain("btn btn-primary btn-sm");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
-    // Below 360px it leaves the bar; the mobile menu offers it first instead.
-    expect(demo.className).toContain("max-[360px]:hidden");
+    // Below 412px (the narrowest width where the en and vi bars fit, measured
+    // 2026-10-14) it leaves the bar; the mobile menu offers it first instead.
+    // Up to 443px it drops its arrow and side padding.
+    expect(demo.className).toContain("max-[411px]:hidden");
+    expect(demo.className).toContain("max-[443px]:px-3.5");
     expect(demo.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
   });
 

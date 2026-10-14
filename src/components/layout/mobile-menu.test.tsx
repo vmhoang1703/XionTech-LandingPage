@@ -188,7 +188,7 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
   });
 
-  it("offers Book a demo first at every width (the header hides it below 360px)", () => {
+  it("offers Book a demo first at every width (the header hides it below 412px)", () => {
     for (const w of [390, 640, 800]) {
       width = w;
       const { unmount } = render(<Header />);

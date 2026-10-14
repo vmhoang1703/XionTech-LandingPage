@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const INTERACTIVE = "a[href], button, input, select, textarea";
 
 for (const locale of ["en", "vi"] as const) {
-  for (const width of [320, 640, 900, 1080, 1440]) {
+  for (const width of [320, 375, 390, 412, 444, 640, 900, 1080, 1440]) {
     test(
       `/${locale} at ${width}px: the language button is the last header item`,
       {

@@ -128,7 +128,7 @@ export function MobileMenu({ locale }: Readonly<{ locale: Locale }>) {
         hidden={!open}
         className="border-border bg-paper pointer-events-auto absolute inset-x-3 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-room))] flex-col items-stretch gap-0.5 overflow-auto rounded-[28px] border p-4 shadow-[0_24px_48px_-24px_rgb(11_23_48/0.35)]"
       >
-        {/* Below 360px the header hides Book a demo, so the menu always offers it first. */}
+        {/* Below 412px the header hides Book a demo, so the menu always offers it first. */}
         <Link href={localeHref(locale, "/demo")} className={itemClass}>
           {t.demo}
         </Link>
