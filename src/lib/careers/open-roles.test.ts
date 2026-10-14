@@ -1,11 +1,15 @@
 // @vitest-environment node
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { sanityFetchMock } = vi.hoisted(() => ({ sanityFetchMock: vi.fn() }));
+const { sanityFetchMock, dictionaries } = vi.hoisted(() => ({
+  sanityFetchMock: vi.fn(),
+  dictionaries: {} as Record<string, unknown>,
+}));
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: sanityFetchMock }));
-// No registered dictionaries, so the English fallback holds whichever locales are filled.
-vi.mock("@/i18n/dictionaries", () => ({ DICTIONARIES: {} }));
+// No registered dictionaries unless a test adds one, so the English fallback
+// holds whichever locales are filled.
+vi.mock("@/i18n/dictionaries", () => ({ DICTIONARIES: dictionaries }));
 
 import {
   getOpenRole,
@@ -206,6 +210,22 @@ describe("roleTypeLabel", () => {
   it("falls back to English in a locale with no dictionary", () => {
     expect(roleTypeLabel("internship", "ko")).toBe("Internship");
     expect(roleTypeLabel("constructor", "ko")).toBeUndefined();
+  });
+
+  it("gives a registered locale's translated label", () => {
+    dictionaries.ja = {
+      roleTypes: {
+        "full-time": "正社員",
+        "part-time": "パートタイム",
+        contract: "契約",
+        internship: "インターンシップ",
+      },
+    };
+    try {
+      expect(roleTypeLabel("full-time", "ja")).toBe("正社員");
+    } finally {
+      delete dictionaries.ja;
+    }
   });
 
   it.each([undefined, null, "", "weekend", "constructor"])(
