@@ -1,20 +1,12 @@
 import { DICTIONARIES } from "./dictionaries";
 import type { Locale } from "./locales";
+import { SERVICE_NAMES } from "./service-names";
 
 // Site shell strings (header, footer, language menu, 404). Page bodies are not translated here.
 // Vietnamese comes from the prototype (data-vi) where it has the string, otherwise it is
 // AI-translated for native review; each string's source is in docs/translations/vi-review.md.
 
-const names = {
-  productEngineering: "Product Engineering",
-  aiAnalytics: "AI-Driven Analytics",
-  coCreation: "Product Co-Creation",
-  staffing: "Staffing Service",
-  customApps: "Custom App Development",
-  lowCode: "Low-code Solutions",
-  aiSolutions: "AI-Powered Solutions",
-  cloud: "Cloud Computing",
-};
+const names = SERVICE_NAMES;
 
 export interface ShellDictionary {
   names: Record<keyof typeof names, string>;

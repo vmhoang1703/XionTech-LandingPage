@@ -130,7 +130,14 @@ describe("Privacy page metadata in Vietnamese", () => {
 });
 
 describe("Privacy page metadata in other locales", () => {
-  it.each(["ja", "de"])("uses the English title on %s", async (locale) => {
+  it("uses the Japanese title on ja", async () => {
+    const meta = await generateMetadata({
+      params: Promise.resolve({ locale: "ja" }),
+    });
+    expect(meta.title).toBe("プライバシーポリシー | XionTech");
+  });
+
+  it.each(["zh", "de"])("uses the English title on %s", async (locale) => {
     const meta = await generateMetadata({
       params: Promise.resolve({ locale }),
     });

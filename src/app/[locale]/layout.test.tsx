@@ -199,9 +199,14 @@ describe("RootLayout", () => {
     );
   });
 
-  it("falls back to the English site meta for a locale not yet translated", async () => {
+  it("uses the Japanese site meta on ja", async () => {
     const ja = await generateMetadata(params("ja") as LayoutProps<"/[locale]">);
-    expect(ja.description).toMatch(/^IT services/);
+    expect(ja.description).toMatch(/^IT サービス/);
+  });
+
+  it("falls back to the English site meta for a locale not yet translated", async () => {
+    const zh = await generateMetadata(params("zh") as LayoutProps<"/[locale]">);
+    expect(zh.description).toMatch(/^IT services/);
   });
 
   it("prerenders the six locales only and 404s any other locale", async () => {
