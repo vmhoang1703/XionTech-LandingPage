@@ -81,7 +81,7 @@ export const homeStats: { label: string; stats: Stat[] } = {
   ],
 };
 
-const STAT_CAPTIONS_VI = [
+export const statCaptionsViList = [
   "Năm kinh nghiệm lãnh đạo trong ngành phần mềm",
   "Hỗ trợ toàn cầu qua các múi giờ",
   "Nền tảng công nghệ chúng tôi làm việc",
@@ -93,7 +93,7 @@ export const homeStatsVi: { label: string; stats: Stat[] } = {
   label: "Kinh nghiệm bạn có thể tin cậy",
   stats: homeStats.stats.map((stat, index) => ({
     ...stat,
-    caption: STAT_CAPTIONS_VI[index],
+    caption: statCaptionsViList[index],
   })),
 };
 

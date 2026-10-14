@@ -2,10 +2,11 @@ import { describe, expect, it } from "vitest";
 import { contentMismatches } from "@/i18n/content";
 import { appTaglinesVi, APPS } from "./apps";
 import * as home from "./home";
-import { processFlow, processFlowVi } from "./process";
+import { processFlow, processFlowVi, processStepsViList } from "./process";
 import {
   aboutValues,
   aboutValuesVi,
+  aboutValuesViList,
   homeValuesHeading,
   homeValuesHeadingVi,
 } from "./values";
@@ -27,6 +28,12 @@ describe("Home, values, process and apps in Vietnamese", () => {
     ["processFlow", processFlow, processFlowVi],
   ])("%s has the English shape", (_name, en, vi) => {
     expect(contentMismatches(en, vi)).toEqual([]);
+  });
+
+  it("pairs each index-matched Vietnamese list with an English list of the same length", () => {
+    expect(home.statCaptionsViList).toHaveLength(home.homeStats.stats.length);
+    expect(processStepsViList).toHaveLength(processFlow.steps.length);
+    expect(aboutValuesViList).toHaveLength(aboutValues.items.length);
   });
 
   it("keeps numbers, links and icons shared with English", () => {

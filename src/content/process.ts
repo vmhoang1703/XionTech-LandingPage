@@ -92,7 +92,10 @@ export const processFlow: ProcessFlowContent = {
   ],
 };
 
-const STEPS_VI: Pick<ProcessStep, "title" | "line" | "receive">[] = [
+export const processStepsViList: Pick<
+  ProcessStep,
+  "title" | "line" | "receive"
+>[] = [
   {
     title: "Khám phá",
     line: "Workshop để hiểu mục tiêu, người dùng, rủi ro và phạm vi.",
@@ -130,6 +133,6 @@ export const processFlowVi: ProcessFlowContent = {
   },
   steps: processFlow.steps.map((step, index) => ({
     ...step,
-    ...STEPS_VI[index],
+    ...processStepsViList[index],
   })),
 };

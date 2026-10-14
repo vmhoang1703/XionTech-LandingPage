@@ -45,6 +45,10 @@ describe("Products, services, about and offices in Vietnamese", () => {
   });
 
   it("keeps service names, ids, hrefs and contact data shared with English", () => {
+    // The Services page finds each card's icon by the English id at its index.
+    expect(services.servicesSectionVi.services.map((s) => s.id)).toEqual(
+      services.servicesSection.services.map((s) => s.id),
+    );
     expect(services.servicesSectionVi.services.map((s) => s.name)).toEqual(
       services.servicesSection.services.map((s) => s.name),
     );
