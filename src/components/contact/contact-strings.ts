@@ -115,7 +115,7 @@ const DETAILS_CONSENT_VI =
   "Chúng tôi chỉ dùng thông tin của bạn để phản hồi yêu cầu này.";
 
 // Vietnamese: prototype demo.html and index.html renderings where the English
-// matches, the rest AI-translated for native review (src/i18n/vi-sources.json).
+// matches, the rest AI-translated for native review (docs/translations/vi-review.md).
 // Option lists are display labels only: the form posts the English value at
 // the same index, which the server checks. Product and service names stay English.
 export const CONTACT_STRINGS_VI: Localized<typeof CONTACT_STRINGS> = {
@@ -219,7 +219,7 @@ export const CONTACT_STRINGS_VI: Localized<typeof CONTACT_STRINGS> = {
 };
 
 /** Vietnamese for every English field error the rules or the server can return. */
-const ERRORS_VI: ReadonlyMap<string, string> = new Map([
+export const ERRORS_VI: ReadonlyMap<string, string> = new Map([
   ...Object.entries(CONTACT_ERRORS).map(
     ([field, message]): [string, string] => [
       message,

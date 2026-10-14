@@ -1,6 +1,7 @@
 // Job page copy. Kept out of the components so it can be translated later.
 
 import type { Localized } from "@/i18n/content";
+import type { Locale } from "@/i18n/locales";
 
 export const jobMeta = {
   title: "Open role | Careers at XionTech",
@@ -47,7 +48,7 @@ export const jobForm = {
 } as const;
 
 // Vietnamese. Prototype `data-vi` text where the English still matches, the
-// rest AI-translated for native review (src/i18n/vi-sources.json).
+// rest AI-translated for native review (docs/translations/vi-review.md).
 export const jobMetaVi: typeof jobMeta = {
   title: "Vị trí tuyển dụng | Tuyển dụng tại XionTech",
   description:
@@ -90,4 +91,20 @@ export const jobFormVi: Localized<typeof jobForm> = {
   privacyLink: "Chính sách bảo mật",
   privacyHref: jobForm.privacyHref,
   errorsHeading: "Vui lòng sửa các mục sau:",
+};
+
+// Employment type labels for the roles list. The keys are the type values stored in Sanity.
+export const ROLE_TYPE_LABELS: Record<Locale, Map<string, string>> = {
+  en: new Map([
+    ["full-time", "Full-time"],
+    ["part-time", "Part-time"],
+    ["contract", "Contract"],
+    ["internship", "Internship"],
+  ]),
+  vi: new Map([
+    ["full-time", "Toàn thời gian"],
+    ["part-time", "Bán thời gian"],
+    ["contract", "Hợp đồng"],
+    ["internship", "Thực tập"],
+  ]),
 };

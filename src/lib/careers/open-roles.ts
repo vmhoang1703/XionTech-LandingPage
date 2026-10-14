@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/locales";
+import { ROLE_TYPE_LABELS } from "@/content/job";
 import { sanityFetch } from "@/lib/sanity/client";
 import { localized, localizedLang } from "@/lib/sanity/localized";
 
@@ -51,21 +52,6 @@ const OPEN_ROLE_QUERY = `*[_type == "job" && closed != true && defined(slug.curr
   "requirementsLang": ${localizedLang("requirements")}
 }`;
 
-const TYPE_LABELS: Record<Locale, Map<string, string>> = {
-  en: new Map([
-    ["full-time", "Full-time"],
-    ["part-time", "Part-time"],
-    ["contract", "Contract"],
-    ["internship", "Internship"],
-  ]),
-  vi: new Map([
-    ["full-time", "Toàn thời gian"],
-    ["part-time", "Bán thời gian"],
-    ["contract", "Hợp đồng"],
-    ["internship", "Thực tập"],
-  ]),
-};
-
 export function getOpenRoles(locale: Locale = "en"): Promise<OpenRole[]> {
   return sanityFetch<OpenRole[]>({
     query: OPEN_ROLES_QUERY,
@@ -90,7 +76,7 @@ export function roleTypeLabel(
   type?: string | null,
   locale: Locale = "en",
 ): string | undefined {
-  return type ? TYPE_LABELS[locale].get(type) : undefined;
+  return type ? ROLE_TYPE_LABELS[locale].get(type) : undefined;
 }
 
 export function roleMeta(

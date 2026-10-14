@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { isLocale, LOCALES, type Locale } from "@/i18n/locales";
+import { isLocale, LOCALES } from "@/i18n/locales";
 import { setRequestLocale } from "@/i18n/request-locale";
+import { META } from "@/i18n/site-meta";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -9,18 +10,6 @@ import { PointerGlow } from "@/components/sections/pointer-glow";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
 import "../globals.css";
 import { fontVariables } from "../fonts";
-
-const DESCRIPTION =
-  "IT services and product engineering: AI, cloud, custom apps and low-code solutions.";
-
-const META: Record<Locale, { title: string; description: string }> = {
-  en: { title: "XionTech", description: DESCRIPTION },
-  vi: {
-    title: "XionTech",
-    description:
-      "Dịch vụ CNTT và phát triển sản phẩm: AI, cloud, ứng dụng tùy chỉnh và giải pháp low-code.",
-  },
-};
 
 export const dynamicParams = false;
 
