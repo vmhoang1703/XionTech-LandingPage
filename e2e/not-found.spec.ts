@@ -27,9 +27,7 @@ test(
     expect(response.status()).toBe(404);
     expect(html).toContain("Bạn đã đi lạc lối mòn.");
     expect(html.match(/<title>/g)).toHaveLength(1);
-    expect(html).toContain(
-      "<title>[Placeholder] Page not found | XionTech</title>",
-    );
+    expect(html).toContain("<title>Không tìm thấy trang | XionTech</title>");
     expect(html.match(/<meta name="robots"/g)).toHaveLength(1);
   },
 );

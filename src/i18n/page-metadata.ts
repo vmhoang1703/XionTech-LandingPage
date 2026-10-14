@@ -1,29 +1,24 @@
 import type { Metadata } from "next";
-import { isLocale } from "./locales";
+import { isLocale, type Locale } from "./locales";
 
 interface PageMeta {
   title: string;
   description?: string;
 }
 
-const PLACEHOLDER = "[Placeholder] ";
-
-// Page copy is not translated yet, so a vi title and description are the English text
-// marked as placeholder (spec decision 4); en is unchanged.
-export function forLocale(locale: string, meta: PageMeta): Metadata {
-  if (!isLocale(locale) || locale === "en") return { ...meta };
-  const mark = (text: string) =>
-    text.startsWith(PLACEHOLDER) ? text : `${PLACEHOLDER}${text}`;
-  return {
-    title: mark(meta.title),
-    ...(meta.description === undefined
-      ? {}
-      : { description: mark(meta.description) }),
-  };
+/**
+ * A page's title and description for one locale. Each page passes both; a
+ * `[Placeholder]` prefix appears in vi only where the English source has one.
+ */
+export function forLocale(
+  locale: string,
+  meta: Record<Locale, PageMeta>,
+): Metadata {
+  return { ...meta[isLocale(locale) ? locale : "en"] };
 }
 
-/** A page's generateMetadata from its English title and description. */
-export function localeMetadata(meta: PageMeta) {
+/** A page's generateMetadata from its English and Vietnamese title and description. */
+export function localeMetadata(meta: Record<Locale, PageMeta>) {
   return async ({
     params,
   }: {

@@ -4,13 +4,13 @@ import { FlipCards } from "@/components/careers/flip-cards";
 import { Inside } from "@/components/careers/inside";
 import { OpenRoles } from "@/components/careers/open-roles";
 import { PageScene } from "@/components/sections/page-scene";
-import { careersMeta } from "@/content/careers";
+import { careersMeta, careersMetaVi } from "@/content/careers";
 import { isLocale } from "@/i18n/locales";
 import { getOpenRoles } from "@/lib/careers/open-roles";
 
 export const generateMetadata = localeMetadata({
-  title: careersMeta.title,
-  description: careersMeta.description,
+  en: careersMeta,
+  vi: careersMetaVi,
 });
 
 // E-A7: the hero's light blue fades into the shared page scene, which ends

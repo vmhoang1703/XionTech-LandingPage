@@ -6,6 +6,7 @@ import { ProcessFlow } from "@/components/sections/process-flow";
 import { serviceIcons } from "@/content/service-icons";
 import {
   servicesMeta,
+  servicesMetaVi,
   servicesOutcomes as servicesOutcomesEn,
   servicesOutcomesVi,
   servicesPage,
@@ -19,8 +20,8 @@ import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
-  title: servicesMeta.title,
-  description: servicesMeta.description,
+  en: servicesMeta,
+  vi: servicesMetaVi,
 });
 
 // E-S2 (prototype services.html): a navy hero panel, the eight services in a

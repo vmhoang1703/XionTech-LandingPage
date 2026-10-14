@@ -150,3 +150,13 @@ it("falls back to English for an unknown locale", async () => {
   await CareersPage({ params: Promise.resolve({ locale: "xx" }) });
   expect(vi.mocked(getOpenRoles)).toHaveBeenCalledWith("en");
 });
+
+describe("Careers page metadata in Vietnamese", () => {
+  it("uses the Vietnamese title and description", async () => {
+    const viMeta = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(String(viMeta.title)).toMatch(/^Tuyển dụng tại XionTech | /);
+    expect(String(viMeta.title)).not.toContain("[Placeholder]");
+  });
+});

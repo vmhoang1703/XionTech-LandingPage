@@ -25,6 +25,10 @@ const staffHub = appById("staff-hub");
 const iot = appById("iot");
 const aiTutor = appById("ai-tutor");
 
+export const homeMeta = {
+  title: "XionTech | School Platforms & Software Outsourcing in Vietnam",
+};
+
 export const homeHero = {
   // Three short beats, one a line, ending on the slogan (lead, 2026-10-12).
   title: {
@@ -36,6 +40,10 @@ export const homeHero = {
   motion: { pause: "Pause motion", play: "Play motion" },
   // The contact section on this page (E-A4).
   cta: { href: "#contact", label: "Get in touch" },
+};
+
+export const homeMetaVi: typeof homeMeta = {
+  title: "XionTech | Nền tảng trường học và gia công phần mềm tại Việt Nam",
 };
 
 export const homeHeroVi: Localized<typeof homeHero> = {

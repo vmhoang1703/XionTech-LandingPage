@@ -33,12 +33,12 @@ describe("AboutPage", () => {
     expect(String(metadata.description)).toContain("Plano");
   });
 
-  it("marks the vi title and description as placeholder English", async () => {
+  it("has a Vietnamese title and description on vi, without a placeholder mark", async () => {
     const vi = await generateMetadata({
       params: Promise.resolve({ locale: "vi" }),
     });
-    expect(vi.title).toBe("[Placeholder] About XionTech | Get IT Done");
-    expect(String(vi.description)).toMatch(/^\[Placeholder\] .*Plano/);
+    expect(vi.title).toBe("Về XionTech | Get IT Done");
+    expect(String(vi.description)).toMatch(/^XionTech là .*Plano/);
   });
 
   it("opens with the centred statement, the amber ownership and the peaks", async () => {

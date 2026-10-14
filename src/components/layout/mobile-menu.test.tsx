@@ -107,7 +107,7 @@ describe("MobileMenu", () => {
     expect(expanded()).toBe("true");
     const links = menuLinks();
     expect(links.map((a) => a.textContent)).toEqual([
-      "[Placeholder] Book a demo",
+      "Đặt lịch demo",
       "Trang chủ",
       "Sản phẩm",
       "Dịch vụ",
@@ -124,7 +124,7 @@ describe("MobileMenu", () => {
       "/vi/about",
       "/vi/careers",
     ]);
-    expect(panel()?.getAttribute("aria-label")).toBe("[Placeholder] Main");
+    expect(panel()?.getAttribute("aria-label")).toBe("Điều hướng chính");
   });
 
   it("renders a closed 44px list icon named Menu that controls the panel", () => {

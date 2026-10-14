@@ -7,12 +7,14 @@ import { HomeHero } from "@/components/home/home-hero";
 import { HomeOutcomes } from "@/components/home/home-outcomes";
 import { HomeProcess } from "@/components/home/home-process";
 import { HomeValues } from "@/components/home/home-values";
+import { homeMeta, homeMetaVi } from "@/content/home";
 import { HomeContact } from "@/components/contact/home-contact";
 import { HomeNews } from "@/components/news/home-news";
 import { PageScene } from "@/components/sections/page-scene";
 
 export const generateMetadata = localeMetadata({
-  title: "XionTech | School Platforms & Software Outsourcing in Vietnam",
+  en: homeMeta,
+  vi: homeMetaVi,
 });
 
 // Home (E-S1): the hero with its doors, then one story on one flowing light

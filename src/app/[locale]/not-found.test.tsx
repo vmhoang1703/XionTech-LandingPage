@@ -29,7 +29,7 @@ describe("locale NotFound", () => {
   it("sets the title from the same locale, after the layout metadata", async () => {
     setRequestLocale("vi");
     expect(await generateMetadata({}, parent)).toEqual({
-      title: "[Placeholder] Page not found | XionTech",
+      title: "Không tìm thấy trang | XionTech",
     });
     setRequestLocale("en");
     expect(await generateMetadata({}, parent)).toEqual({

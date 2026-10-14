@@ -3,7 +3,7 @@ import { CaptureBand } from "@/components/contact/capture-band";
 import { NewsCard } from "@/components/news/news-card";
 import { NewsFilters } from "@/components/news/news-filters";
 import { PageScene } from "@/components/sections/page-scene";
-import { newsMeta, newsPage, newsPageVi } from "@/content/news";
+import { newsMeta, newsMetaVi, newsPage, newsPageVi } from "@/content/news";
 import { pickLocale } from "@/i18n/content";
 import { isLocale, type Locale } from "@/i18n/locales";
 import { getAllPosts } from "@/lib/news/all-posts";
@@ -11,8 +11,8 @@ import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
 
 export const generateMetadata = localeMetadata({
-  title: newsMeta.title,
-  description: newsMeta.description,
+  en: newsMeta,
+  vi: newsMetaVi,
 });
 
 // A failed fetch is logged and shown as "no stories", as on Home, so Sanity

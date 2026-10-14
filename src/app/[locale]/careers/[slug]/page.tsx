@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import { JobApplicationForm } from "@/components/careers/job-application-form";
 import { JobDetails } from "@/components/careers/job-details";
 import { JobHero } from "@/components/careers/job-hero";
-import { jobMeta } from "@/content/job";
+import { jobMeta, jobMetaVi } from "@/content/job";
 import { isLocale } from "@/i18n/locales";
 import { getOpenRole } from "@/lib/careers/open-roles";
 
 export const generateMetadata = localeMetadata({
-  title: jobMeta.title,
-  description: jobMeta.description,
+  en: jobMeta,
+  vi: jobMetaVi,
 });
 
 // No loading.tsx here: streaming would turn the 404 into a 200.

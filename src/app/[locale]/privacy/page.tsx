@@ -5,8 +5,8 @@ import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
-  title: PRIVACY_EN.metaTitle,
-  description: PRIVACY_EN.metaDescription,
+  en: { title: PRIVACY_EN.metaTitle, description: PRIVACY_EN.metaDescription },
+  vi: { title: PRIVACY_VI.metaTitle, description: PRIVACY_VI.metaDescription },
 });
 
 // Plain reading page: no capture band (FR-33 exception). The aurora hero

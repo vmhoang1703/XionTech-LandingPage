@@ -13,6 +13,7 @@ import {
 // Every Vietnamese dictionary has exactly the shape of its English one.
 describe("Home, values, process and apps in Vietnamese", () => {
   it.each([
+    ["homeMeta", home.homeMeta, home.homeMetaVi],
     ["homeHero", home.homeHero, home.homeHeroVi],
     ["homeStats", home.homeStats, home.homeStatsVi],
     ["homeDoors", home.homeDoors, home.homeDoorsVi],

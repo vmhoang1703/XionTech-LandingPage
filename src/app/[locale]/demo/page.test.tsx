@@ -140,3 +140,15 @@ describe("Demo page", () => {
     expect(screen.getByRole("heading", { name: "Bạn cần gì?" })).toBeDefined();
   });
 });
+
+describe("Demo page metadata in Vietnamese", () => {
+  it("uses the Vietnamese title and description", async () => {
+    const viMeta = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(String(viMeta.title)).toBe(
+      "Đặt lịch demo hoặc bắt đầu dự án | XionTech",
+    );
+    expect(String(viMeta.title)).not.toContain("[Placeholder]");
+  });
+});

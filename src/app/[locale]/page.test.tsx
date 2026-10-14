@@ -214,3 +214,15 @@ describe("Home page", () => {
     );
   });
 });
+
+describe("Home metadata in Vietnamese", () => {
+  it("uses the Vietnamese title and description", async () => {
+    const viMeta = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(String(viMeta.title)).toBe(
+      "XionTech | Nền tảng trường học và gia công phần mềm tại Việt Nam",
+    );
+    expect(String(viMeta.title)).not.toContain("[Placeholder]");
+  });
+});

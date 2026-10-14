@@ -305,3 +305,15 @@ describe("ServicesPage", () => {
     );
   });
 });
+
+describe("ServicesPage metadata in Vietnamese", () => {
+  it("uses the Vietnamese title and description", async () => {
+    const viMeta = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(String(viMeta.title)).toMatch(
+      /^Outsourcing phần mềm tại Việt Nam | /,
+    );
+    expect(String(viMeta.title)).not.toContain("[Placeholder]");
+  });
+});

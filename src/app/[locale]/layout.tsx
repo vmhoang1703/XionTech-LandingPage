@@ -13,10 +13,13 @@ import { fontVariables } from "../fonts";
 const DESCRIPTION =
   "IT services and product engineering: AI, cloud, custom apps and low-code solutions.";
 
-// No Vietnamese copy exists yet for the description (no invented Vietnamese).
 const META: Record<Locale, { title: string; description: string }> = {
   en: { title: "XionTech", description: DESCRIPTION },
-  vi: { title: "XionTech", description: `[Placeholder] ${DESCRIPTION}` },
+  vi: {
+    title: "XionTech",
+    description:
+      "Dịch vụ CNTT và phát triển sản phẩm: AI, cloud, ứng dụng tùy chỉnh và giải pháp low-code.",
+  },
 };
 
 export const dynamicParams = false;
@@ -56,13 +59,7 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col">
         <LocaleProvider locale={locale}>
           <SiteHeader locale={locale} />
-          <main
-            id="main"
-            tabIndex={-1}
-            // Page copy is English until translated; the shell around it is not.
-            lang={locale === "vi" ? "en" : undefined}
-            className="flex flex-1 flex-col"
-          >
+          <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
             {children}
           </main>
           <SiteFooter locale={locale} />

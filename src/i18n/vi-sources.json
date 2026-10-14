@@ -418,5 +418,12 @@
   "contact-strings:ERRORS_VI.messageRequired": "prototype",
   "contact-strings:ERRORS_VI.length": "ai",
   "contact-strings:ERRORS_VI.jobCv": "prototype",
-  "contact-strings:ERRORS_VI.jobNote": "prototype"
+  "contact-strings:ERRORS_VI.jobNote": "prototype",
+  "home:homeMetaVi.title": "ai",
+  "shell:vi.nav.skipLink": "ai",
+  "shell:vi.nav.mainNav": "ai",
+  "shell:vi.nav.homeLink": "ai",
+  "shell:vi.nav.demo": "prototype",
+  "shell:vi.notFound.metaTitle": "ai",
+  "layout:META.vi.description": "ai"
 }

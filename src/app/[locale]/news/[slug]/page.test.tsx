@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { newsMeta } from "@/content/news";
+import { newsMeta, newsMetaVi } from "@/content/news";
 import { getPost, type NewsStory } from "@/lib/news/post";
 import { undefinedClasses } from "@/test-utils/css-classes";
 
@@ -254,5 +254,18 @@ describe("StoryPage in Vietnamese", () => {
       searchParams: Promise.resolve({}),
     });
     expect(getPost).toHaveBeenCalledWith("pxp-day", "vi");
+  });
+
+  it("titles the story in Vietnamese and falls back to the Vietnamese News description", async () => {
+    vi.mocked(getPost).mockResolvedValue({ ...story, excerpt: null });
+    await expect(
+      generateMetadata({
+        params: Promise.resolve({ locale: "vi", slug: "pxp-day" }),
+        searchParams: Promise.resolve({}),
+      }),
+    ).resolves.toEqual({
+      title: "Parent Hub: the school day | XionTech",
+      description: newsMetaVi.description,
+    });
   });
 });

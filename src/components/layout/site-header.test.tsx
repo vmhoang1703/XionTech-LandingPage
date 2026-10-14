@@ -107,13 +107,11 @@ describe("SiteHeader", () => {
       "/vi/careers",
     ]);
     expect(
-      screen
-        .getByRole("link", { name: "[Placeholder] Book a demo" })
-        .getAttribute("href"),
+      screen.getByRole("link", { name: "Đặt lịch demo" }).getAttribute("href"),
     ).toBe("/vi/demo");
     expect(
       screen
-        .getByRole("link", { name: "[Placeholder] XionTech home" })
+        .getByRole("link", { name: "Trang chủ XionTech" })
         .getAttribute("href"),
     ).toBe("/vi");
   });

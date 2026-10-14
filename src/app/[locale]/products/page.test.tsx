@@ -141,3 +141,13 @@ describe("Products page", () => {
     );
   });
 });
+
+describe("Products page metadata in Vietnamese", () => {
+  it("uses the Vietnamese title and description", async () => {
+    const viMeta = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(String(viMeta.title)).toMatch(/^Ứng dụng cho trường học: /);
+    expect(String(viMeta.title)).not.toContain("[Placeholder]");
+  });
+});

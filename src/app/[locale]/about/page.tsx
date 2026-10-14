@@ -15,6 +15,7 @@ import {
   aboutHero,
   aboutHeroVi,
   aboutMeta,
+  aboutMetaVi,
   aboutOffices,
   aboutOfficesVi,
   aboutStory,
@@ -24,8 +25,8 @@ import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
-  title: aboutMeta.title,
-  description: aboutMeta.description,
+  en: aboutMeta,
+  vi: aboutMetaVi,
 });
 
 // E-S3 (prototype about.html): the intro over pastel peaks, the mountain story

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { notFound } from "next/navigation";
-import { newsMeta, newsStory, newsStoryVi } from "@/content/news";
+import { newsMeta, newsMetaVi, newsStory, newsStoryVi } from "@/content/news";
 import { fallbackLang, pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
@@ -19,8 +19,14 @@ export async function generateMetadata({
   const story = await getPost(slug, isLocale(locale) ? locale : "en");
   if (!story) return {};
   return forLocale(locale, {
-    title: newsStory.metaTitle(story.title),
-    description: story.excerpt ?? newsMeta.description,
+    en: {
+      title: newsStory.metaTitle(story.title),
+      description: story.excerpt ?? newsMeta.description,
+    },
+    vi: {
+      title: newsStoryVi.metaTitle(story.title),
+      description: story.excerpt ?? newsMetaVi.description,
+    },
   });
 }
 

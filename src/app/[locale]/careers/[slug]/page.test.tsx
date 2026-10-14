@@ -158,3 +158,15 @@ it("falls back to English for an unknown locale", async () => {
   });
   expect(getOpenRole).toHaveBeenCalledWith("qa-engineer", "en");
 });
+
+describe("Job page metadata in Vietnamese", () => {
+  it("uses the Vietnamese title and description", async () => {
+    const viMeta = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(String(viMeta.title)).toBe(
+      "Vị trí tuyển dụng | Tuyển dụng tại XionTech",
+    );
+    expect(String(viMeta.title)).not.toContain("[Placeholder]");
+  });
+});

@@ -1,8 +1,8 @@
 import type { Locale } from "./locales";
 
 // Site shell strings (header, footer, language menu, 404). Page bodies are not translated here.
-// Vietnamese comes from the prototype (data-vi); where the prototype has none, the value is
-// "[Placeholder] " + the English text.
+// Vietnamese comes from the prototype (data-vi) where it has the string, otherwise it is
+// AI-translated for native review; each string's source is in src/i18n/vi-sources.json.
 
 const names = {
   productEngineering: "Product Engineering",
@@ -105,12 +105,12 @@ const vi: ShellDictionary = {
     news: "Tin tức",
     about: "Về chúng tôi",
     careers: "Tuyển dụng",
-    skipLink: "[Placeholder] Skip to content",
-    mainNav: "[Placeholder] Main",
-    homeLink: "[Placeholder] XionTech home",
+    skipLink: "Chuyển đến nội dung",
+    mainNav: "Điều hướng chính",
+    homeLink: "Trang chủ XionTech",
     logoAlt: "XionTech, Get IT Done",
     menu: "Menu",
-    demo: "[Placeholder] Book a demo",
+    demo: "Đặt lịch demo",
   },
   language: {
     label: "Ngôn ngữ",
@@ -133,7 +133,7 @@ const vi: ShellDictionary = {
     privacy: "Chính sách bảo mật",
   },
   notFound: {
-    metaTitle: "[Placeholder] Page not found | XionTech",
+    metaTitle: "Không tìm thấy trang | XionTech",
     title: "Bạn đã đi lạc lối mòn.",
     lede: "Trang bạn tìm không có ở đây. Hãy theo lối mòn về trang chủ, hoặc chọn một con đường bên dưới.",
     primary: "Về trang chủ",

@@ -116,3 +116,15 @@ it("falls back to English for an unknown locale", async () => {
     "Privacy policy.",
   );
 });
+
+describe("Privacy page metadata in Vietnamese", () => {
+  it("uses the Vietnamese title and description", async () => {
+    const viMeta = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(String(viMeta.title)).toBe("Chính sách bảo mật | XionTech");
+    expect(String(viMeta.description)).toMatch(
+      /^\[Placeholder\] Cách XionTech/,
+    );
+  });
+});

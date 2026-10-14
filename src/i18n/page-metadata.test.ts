@@ -1,31 +1,46 @@
 import { describe, expect, it } from "vitest";
 import { forLocale, localeMetadata } from "./page-metadata";
 
+const meta = {
+  en: { title: "News", description: "All" },
+  vi: { title: "Tin tức", description: "Tất cả" },
+};
+
 describe("page metadata per locale", () => {
-  it("keeps en as written", () => {
-    expect(forLocale("en", { title: "News", description: "All" })).toEqual({
+  it("uses the English meta on en", () => {
+    expect(forLocale("en", meta)).toEqual({
       title: "News",
       description: "All",
     });
   });
 
-  it("marks the English title and description as placeholder on vi", () => {
-    expect(forLocale("vi", { title: "News", description: "All" })).toEqual({
-      title: "[Placeholder] News",
-      description: "[Placeholder] All",
+  it("uses the Vietnamese meta on vi, with no placeholder prefix added", () => {
+    expect(forLocale("vi", meta)).toEqual({
+      title: "Tin tức",
+      description: "Tất cả",
     });
   });
 
-  it("does not mark a placeholder twice, and adds no description that was not given", () => {
-    expect(forLocale("vi", { title: "[Placeholder] Home" })).toEqual({
-      title: "[Placeholder] Home",
-    });
+  it("keeps a placeholder that is already in the Vietnamese source", () => {
+    expect(
+      forLocale("vi", {
+        en: { title: "[Placeholder] Home" },
+        vi: { title: "[Placeholder] Trang chủ" },
+      }),
+    ).toEqual({ title: "[Placeholder] Trang chủ" });
+  });
+
+  it("falls back to the English meta for a locale it does not know", () => {
+    expect(forLocale("fr", meta)).toEqual(meta.en);
   });
 
   it("builds a generateMetadata that reads the locale from params", async () => {
-    const generate = localeMetadata({ title: "About" });
+    const generate = localeMetadata(meta);
     expect(
       await generate({ params: Promise.resolve({ locale: "vi" }) }),
-    ).toEqual({ title: "[Placeholder] About" });
+    ).toEqual(meta.vi);
+    expect(
+      await generate({ params: Promise.resolve({ locale: "en" }) }),
+    ).toEqual(meta.en);
   });
 });

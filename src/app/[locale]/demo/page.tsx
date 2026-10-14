@@ -18,8 +18,14 @@ import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
-  title: CONTACT_STRINGS.metaTitle,
-  description: CONTACT_STRINGS.metaDescription,
+  en: {
+    title: CONTACT_STRINGS.metaTitle,
+    description: CONTACT_STRINGS.metaDescription,
+  },
+  vi: {
+    title: CONTACT_STRINGS_VI.metaTitle,
+    description: CONTACT_STRINGS_VI.metaDescription,
+  },
 });
 
 export default async function DemoPage({

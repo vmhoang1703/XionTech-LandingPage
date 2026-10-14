@@ -141,13 +141,12 @@ describe("RootLayout", () => {
     return container.querySelector("main#main");
   }
 
-  it("marks main as English on vi until the page copy is translated", async () => {
-    expect((await renderMain("vi"))?.getAttribute("lang")).toBe("en");
-  });
-
-  it("leaves main without a lang attribute on en", async () => {
-    expect((await renderMain("en"))?.hasAttribute("lang")).toBe(false);
-  });
+  it.each(["en", "vi"])(
+    "leaves main without a lang attribute on %s",
+    async (locale) => {
+      expect((await renderMain(locale))?.hasAttribute("lang")).toBe(false);
+    },
+  );
 
   it("sets the site title and description per locale", async () => {
     const en = await generateMetadata(params("en") as LayoutProps<"/[locale]">);
@@ -155,7 +154,9 @@ describe("RootLayout", () => {
     expect(en.title).toBe("XionTech");
     expect(en.description).toMatch(/^IT services/);
     expect(vi.title).toBe("XionTech");
-    expect(vi.description).toMatch(/^\[Placeholder\] IT services/);
+    expect(vi.description).toBe(
+      "Dịch vụ CNTT và phát triển sản phẩm: AI, cloud, ứng dụng tùy chỉnh và giải pháp low-code.",
+    );
   });
 
   it("prerenders en and vi only and 404s any other locale", async () => {
