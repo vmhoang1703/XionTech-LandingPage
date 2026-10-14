@@ -10,7 +10,7 @@ import { LiveClock } from "@/components/sections/live-clock";
 import { homeCapabilities, homeCapabilitiesVi } from "@/content/home";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
-import { hcmc, plano } from "@/content/offices";
+import { hcmc, hcmcVi, plano, planoVi } from "@/content/offices";
 import { MoreIndustries } from "./more-industries";
 
 const INDUSTRY_ICON: Record<
@@ -30,6 +30,10 @@ export function Capabilities({ locale = "en" }: Readonly<{ locale?: Locale }>) {
     en: homeCapabilities,
     vi: homeCapabilitiesVi,
   });
+  const [usOffice, vnOffice] = pickLocale(locale, {
+    en: [plano, hcmc],
+    vi: [planoVi, hcmcVi],
+  });
 
   return (
     <section aria-labelledby="capabilities-title" className="sec">
@@ -45,22 +49,22 @@ export function Capabilities({ locale = "en" }: Readonly<{ locale?: Locale }>) {
             <p>{delivery.line}</p>
             <span className="w-chips">
               <span className="w-chip">
-                <DaylightIcon timeZone={plano.timeZone} />
+                <DaylightIcon timeZone={usOffice.timeZone} />
                 Plano{" "}
                 <b>
                   <LiveClock
-                    timeZone={plano.timeZone}
-                    zoneLabel={plano.zoneLabel}
+                    timeZone={usOffice.timeZone}
+                    zoneLabel={usOffice.zoneLabel}
                   />
                 </b>
               </span>
               <span className="w-chip">
-                <DaylightIcon timeZone={hcmc.timeZone} />
-                <abbr title="Ho Chi Minh City">HCMC</abbr>{" "}
+                <DaylightIcon timeZone={vnOffice.timeZone} />
+                <abbr title={vnOffice.name.split(",")[0]}>HCMC</abbr>{" "}
                 <b>
                   <LiveClock
-                    timeZone={hcmc.timeZone}
-                    zoneLabel={hcmc.zoneLabel}
+                    timeZone={vnOffice.timeZone}
+                    zoneLabel={vnOffice.zoneLabel}
                   />
                 </b>
               </span>

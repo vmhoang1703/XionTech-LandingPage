@@ -287,7 +287,8 @@ describe("ServicesPage", () => {
     render(await servicesAt("vi"));
 
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe("Đội ngũ phần mềm luôn hoàn thành cam kết.");
+    expect(h1.textContent).toBe('Đội ngũ phần mềm có tinh thần "Get IT done".');
+    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
     expect(
       screen.getByRole("heading", { name: "Product Engineering" }),
     ).toBeTruthy();
@@ -311,8 +312,8 @@ describe("ServicesPage metadata in Vietnamese", () => {
     const viMeta = await generateMetadata({
       params: Promise.resolve({ locale: "vi" }),
     });
-    expect(String(viMeta.title)).toMatch(
-      /^Outsourcing phần mềm tại Việt Nam | /,
+    expect(viMeta.title).toBe(
+      "Outsourcing phần mềm tại Việt Nam | Product Engineering, AI, Low-code & Cloud | XionTech",
     );
     expect(String(viMeta.title)).not.toContain("[Placeholder]");
   });

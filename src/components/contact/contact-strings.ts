@@ -121,7 +121,7 @@ const DETAILS_CONSENT_VI =
 export const CONTACT_STRINGS_VI: Localized<typeof CONTACT_STRINGS> = {
   metaTitle: "Đặt lịch demo hoặc bắt đầu dự án | XionTech",
   metaDescription:
-    "Đặt lịch demo Parent Hub và Staff Hub cho trường của bạn, hoặc kể cho chúng tôi về dự án phần mềm của bạn. XionTech, Thành phố Hồ Chí Minh và Plano.",
+    "Đặt lịch demo Parent Hub và Staff Hub cho trường của bạn, hoặc kể cho chúng tôi về dự án phần mềm của bạn. XionTech, TP. Hồ Chí Minh và Plano.",
   hero: {
     breadcrumbLabel: "Đường dẫn",
     breadcrumbHome: "Trang chủ",

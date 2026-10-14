@@ -138,7 +138,7 @@ export const aboutCapture = {
 export const aboutMetaVi: typeof aboutMeta = {
   title: "Về XionTech | Get IT Done",
   description:
-    "XionTech là công ty công nghệ giáo dục và đối tác phần mềm, có trụ sở chính tại Plano (Hoa Kỳ) và TP. Hồ Chí Minh (Việt Nam), cùng đội ngũ tại Hà Nội và Đà Nẵng, phục vụ khách hàng tại Mỹ, Châu Âu và Úc.",
+    "XionTech là công ty công nghệ giáo dục và đối tác phần mềm, có trụ sở chính tại Plano (Mỹ) và TP. Hồ Chí Minh (Việt Nam), cùng đội ngũ tại Hà Nội và Đà Nẵng, phục vụ khách hàng tại Mỹ, châu Âu và Úc.",
 };
 
 export const aboutHeroVi: typeof aboutHero = {
@@ -189,7 +189,7 @@ const FAQ_VI: Record<string, { question: string; answer: string }> = {
   industries: {
     question: "Các bạn làm việc với những lĩnh vực nào?",
     answer:
-      "Giáo dục là thế mạnh cốt lõi. Chúng tôi cũng phục vụ Y tế, Logistics và Đầu tư tư nhân.",
+      "Giáo dục là thế mạnh cốt lõi. Chúng tôi cũng phục vụ Y tế, Logistics và Quỹ đầu tư tư nhân.",
   },
   "try-apps": {
     question:
@@ -200,7 +200,7 @@ const FAQ_VI: Record<string, { question: string; answer: string }> = {
   "time-zones": {
     question: "Các bạn làm việc qua nhiều múi giờ như thế nào?",
     answer:
-      "Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, Châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực.",
+      "Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực.",
   },
   shape: {
     question: "Khi nào giải pháp được điều chỉnh theo nhu cầu của chúng tôi?",

@@ -100,9 +100,9 @@ const VALUES_VI: Pick<AboutValue, "title" | "short" | "text">[] = [
     text: "Làm chủ cam kết và mang đến giải pháp chất lượng cao, tin cậy và hiệu quả. Đội ngũ được thúc đẩy bởi tinh thần trách nhiệm và tư duy hướng kết quả, đáp ứng hoặc vượt chuẩn ngành.",
   },
   {
-    title: "Văn hoá lấy con người làm trọng tâm",
+    title: "Văn hóa lấy con người làm trọng tâm",
     short: "Mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền.",
-    text: "Xây dựng môi trường nơi mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. Văn hoá của chúng tôi vượt ra ngoài công việc: đó là sự gắn bó, hợp tác và thành công chung.",
+    text: "Xây dựng môi trường nơi mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. Văn hóa của chúng tôi vượt ra ngoài công việc: đó là sự gắn bó, hợp tác và thành công chung.",
   },
 ];
 

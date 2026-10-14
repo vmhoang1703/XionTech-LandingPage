@@ -127,18 +127,18 @@ export const aboutOfficeView: Office[] = [
 // Vietnamese. Addresses, numbers, emails, hrefs and time zones are shared with
 // English; only names, tags, zone labels and accessible names change.
 const NEW_TAB_VI = "(mở trong thẻ mới)";
-const US_DELIVERY_CENTER_VI = "Trung tâm Phát triển Hoa Kỳ";
+const US_DELIVERY_CENTER_VI = "Trung tâm Phát triển Mỹ";
 const VIETNAM_DELIVERY_CENTER_VI = "Trung tâm Phát triển Việt Nam";
 
 export const planoVi: Office = {
   ...plano,
-  name: "Plano, Texas, Hoa Kỳ",
+  name: "Plano, Texas, Mỹ",
   contacts: plano.contacts.map((contact) =>
     contact.external
       ? { ...contact, ariaLabel: `${contact.label} ${NEW_TAB_VI}` }
       : contact,
   ),
-  zoneLabel: "Giờ miền Trung Hoa Kỳ",
+  zoneLabel: "Giờ miền Trung Mỹ",
 };
 
 export const hcmcVi: Office = {

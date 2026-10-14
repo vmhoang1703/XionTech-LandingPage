@@ -132,16 +132,16 @@ export const servicesMetaVi: typeof servicesMeta = {
   title:
     "Outsourcing phần mềm tại Việt Nam | Product Engineering, AI, Low-code & Cloud | XionTech",
   description:
-    "Đội ngũ chuyên trách và phát triển phần mềm trọn gói từ TP. Hồ Chí Minh: phát triển sản phẩm, AI, low-code và cloud, theo múi giờ Mỹ, Châu Âu và Úc.",
+    "Đội ngũ chuyên trách và phát triển phần mềm trọn gói từ TP. Hồ Chí Minh: phát triển sản phẩm, AI, low-code và cloud, theo múi giờ Mỹ, châu Âu và Úc.",
 };
 
 export const servicesPageVi: typeof servicesPage = {
   title: {
-    lead: "Đội ngũ phần mềm ",
-    highlight: "luôn hoàn thành cam kết",
-    tail: ".",
+    lead: 'Đội ngũ phần mềm có tinh thần "',
+    highlight: "Get IT done",
+    tail: '".',
   },
-  lede: "Phát triển sản phẩm, AI, low-code và cloud từ TP. Hồ Chí Minh, làm việc theo múi giờ Mỹ, Châu Âu và Úc. Chúng tôi làm việc thông minh hơn với AI và không ngừng đổi mới cách triển khai.",
+  lede: "Phát triển sản phẩm, AI, low-code và cloud từ TP. Hồ Chí Minh, làm việc theo múi giờ Mỹ, châu Âu và Úc. Chúng tôi làm việc thông minh hơn với AI và không ngừng đổi mới cách triển khai.",
   primaryCta: { ...servicesPage.primaryCta, label: "Bắt đầu dự án" },
 };
 

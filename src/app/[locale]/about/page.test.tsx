@@ -350,7 +350,7 @@ describe("AboutPage", () => {
       screen.getByRole("heading", { name: "Bạn hỏi, chúng tôi trả lời" }),
     ).toBeTruthy();
     expect(container.textContent).toContain("Parent Hub");
-    expect(container.textContent).toContain("Trung tâm Phát triển Hoa Kỳ");
+    expect(container.textContent).toContain("Trung tâm Phát triển Mỹ");
     expect(container.textContent).toContain(
       "Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng.",
     );

@@ -10,7 +10,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:vi-review`.
 
-**Total:** 503 strings, 147 AI and 356 prototype.
+**Total:** 504 strings, 153 AI and 351 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -76,7 +76,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `home:homeProcessVi.link.label` | See the full process | Xem toàn bộ quy trình |
 | AI | `home:homeAppsVi.title` | One connected school. | Một ngôi trường kết nối. |
 | AI | `home:homeFaqVi.title` | Your questions, answered. | Giải đáp thắc mắc của bạn. |
-| AI | `home:homeFaqVi.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, Châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
+| AI | `home:homeFaqVi.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
 | AI | `home:homeFaqVi.link.label` | See all questions | Xem tất cả câu hỏi |
 | Prototype | `home:homeHeroVi.cta.label` | Get in touch | Liên hệ với chúng tôi |
 | Prototype | `home:homeStatsVi.label` | Experience you can count on | Kinh nghiệm bạn có thể tin cậy |
@@ -148,7 +148,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Values (Home and About)
 
-7 AI, 15 prototype.
+9 AI, 13 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -157,7 +157,9 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `values:aboutValuesVi.items[2].short` | Honest, transparent and accountable. | Trung thực, minh bạch và có trách nhiệm. |
 | AI | `values:aboutValuesVi.items[3].short` | Exploring new technology to stay ahead. | Khám phá công nghệ mới để luôn đi trước. |
 | AI | `values:aboutValuesVi.items[4].short` | We own our commitments and deliver. | Chúng tôi làm chủ cam kết và hoàn thành. |
+| AI | `values:aboutValuesVi.items[5].title` | People-Centered Culture | Văn hóa lấy con người làm trọng tâm |
 | AI | `values:aboutValuesVi.items[5].short` | Every team member valued, supported and empowered. | Mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. |
+| AI | `values:aboutValuesVi.items[5].text` | Cultivate a workplace where every team member feels valued, supported, and empowered. Our culture goes beyond employment: it's about belonging, collaboration, and shared success. | Xây dựng môi trường nơi mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. Văn hóa của chúng tôi vượt ra ngoài công việc: đó là sự gắn bó, hợp tác và thành công chung. |
 | AI | `values:homeValuesHeadingVi.lede` | What guides how we work. Flip a card to read each value in full. | Những điều dẫn dắt cách chúng tôi làm việc. Lật một thẻ để đọc đầy đủ từng giá trị. |
 | Prototype | `values:aboutValuesVi.items[0].title` | Startup Spirit | Tinh thần khởi nghiệp |
 | Prototype | `values:aboutValuesVi.items[0].text` | Embody an entrepreneurial mindset, embracing agility, flexibility, and a passion for innovation. Our commitment to excellence is driven by resilience and a culture of continuous improvement. | Mang tư duy khởi nghiệp, đề cao sự nhanh nhạy, linh hoạt và niềm đam mê đổi mới. Cam kết hướng tới sự xuất sắc được thúc đẩy bởi sự bền bỉ và văn hóa cải tiến liên tục. |
@@ -169,8 +171,6 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `values:aboutValuesVi.items[3].text` | Passionate about exploring emerging technologies and creative approaches. Innovation is embedded in our DNA, enabling us to evolve our solutions and stay ahead of industry trends. | Đam mê khám phá công nghệ mới và những cách tiếp cận sáng tạo. Đổi mới nằm trong DNA của chúng tôi, giúp giải pháp luôn phát triển và đi trước xu hướng. |
 | Prototype | `values:aboutValuesVi.items[4].title` | "Get IT Done" Attitude | Tinh thần "Get IT Done" |
 | Prototype | `values:aboutValuesVi.items[4].text` | Take ownership of our commitments and deliver high-quality, reliable, and efficient solutions. Our team is driven by accountability and a results-oriented mindset that meets or exceeds industry standards. | Làm chủ cam kết và mang đến giải pháp chất lượng cao, tin cậy và hiệu quả. Đội ngũ được thúc đẩy bởi tinh thần trách nhiệm và tư duy hướng kết quả, đáp ứng hoặc vượt chuẩn ngành. |
-| Prototype | `values:aboutValuesVi.items[5].title` | People-Centered Culture | Văn hoá lấy con người làm trọng tâm |
-| Prototype | `values:aboutValuesVi.items[5].text` | Cultivate a workplace where every team member feels valued, supported, and empowered. Our culture goes beyond employment: it's about belonging, collaboration, and shared success. | Xây dựng môi trường nơi mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. Văn hoá của chúng tôi vượt ra ngoài công việc: đó là sự gắn bó, hợp tác và thành công chung. |
 | Prototype | `values:homeValuesHeadingVi.title` | Our core values. | Giá trị cốt lõi. |
 | Prototype | `values:homeValuesHeadingVi.frontHint` | Flip for details | Lật để xem chi tiết |
 | Prototype | `values:homeValuesHeadingVi.backHint` | Flip back | Lật lại |
@@ -257,15 +257,16 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Services
 
-6 AI, 39 prototype.
+7 AI, 39 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `services:servicesMetaVi.title` | Software Outsourcing Vietnam \| Product Engineering, AI, Low-code & Cloud \| XionTech | Outsourcing phần mềm tại Việt Nam \| Product Engineering, AI, Low-code & Cloud \| XionTech |
-| AI | `services:servicesMetaVi.description` | Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones. | Đội ngũ chuyên trách và phát triển phần mềm trọn gói từ TP. Hồ Chí Minh: phát triển sản phẩm, AI, low-code và cloud, theo múi giờ Mỹ, Châu Âu và Úc. |
-| AI | `services:servicesPageVi.title.lead` | Software teams that  | Đội ngũ phần mềm  |
-| AI | `services:servicesPageVi.title.highlight` | get IT done | luôn hoàn thành cam kết |
-| AI | `services:servicesPageVi.lede` | Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver. | Phát triển sản phẩm, AI, low-code và cloud từ TP. Hồ Chí Minh, làm việc theo múi giờ Mỹ, Châu Âu và Úc. Chúng tôi làm việc thông minh hơn với AI và không ngừng đổi mới cách triển khai. |
+| AI | `services:servicesMetaVi.description` | Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones. | Đội ngũ chuyên trách và phát triển phần mềm trọn gói từ TP. Hồ Chí Minh: phát triển sản phẩm, AI, low-code và cloud, theo múi giờ Mỹ, châu Âu và Úc. |
+| AI | `services:servicesPageVi.title.lead` | Software teams that  | Đội ngũ phần mềm có tinh thần " |
+| AI | `services:servicesPageVi.title.highlight` | get IT done | Get IT done |
+| AI | `services:servicesPageVi.title.tail` | . | ". |
+| AI | `services:servicesPageVi.lede` | Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver. | Phát triển sản phẩm, AI, low-code và cloud từ TP. Hồ Chí Minh, làm việc theo múi giờ Mỹ, châu Âu và Úc. Chúng tôi làm việc thông minh hơn với AI và không ngừng đổi mới cách triển khai. |
 | AI | `services:servicesProcessVi.lede` | Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it. | Mỗi bước kết thúc bằng một kết quả bạn có thể xem, kiểm tra và phê duyệt. AI đồng hành trong mọi bước, và chúng tôi không ngừng cải thiện cách sử dụng AI. |
 | Prototype | `services:servicesPageVi.primaryCta.label` | Start a project | Bắt đầu dự án |
 | Prototype | `services:servicesSectionVi.title` | Eight services, one team. | Tám dịch vụ, một đội ngũ. |
@@ -309,12 +310,12 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## About
 
-17 AI, 31 prototype.
+19 AI, 29 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `about:aboutMetaVi.title` | About XionTech \| Get IT Done | Về XionTech \| Get IT Done |
-| AI | `about:aboutMetaVi.description` | XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia. | XionTech là công ty công nghệ giáo dục và đối tác phần mềm, có trụ sở chính tại Plano (Hoa Kỳ) và TP. Hồ Chí Minh (Việt Nam), cùng đội ngũ tại Hà Nội và Đà Nẵng, phục vụ khách hàng tại Mỹ, Châu Âu và Úc. |
+| AI | `about:aboutMetaVi.description` | XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia. | XionTech là công ty công nghệ giáo dục và đối tác phần mềm, có trụ sở chính tại Plano (Mỹ) và TP. Hồ Chí Minh (Việt Nam), cùng đội ngũ tại Hà Nội và Đà Nẵng, phục vụ khách hàng tại Mỹ, châu Âu và Úc. |
 | AI | `about:aboutHeroVi.title.lead` | We’re XionTech, | Chúng tôi là XionTech, |
 | AI | `about:aboutHeroVi.title.middle` | technology built with  | công nghệ của tinh thần  |
 | AI | `about:aboutHeroVi.title.accent` | ownership | làm chủ |
@@ -323,12 +324,14 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `about:aboutStoryVi.title.highlight` | purpose | mục đích |
 | AI | `about:aboutStoryVi.chapters[1].text` | [Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all. | [Placeholder] Từ hình ảnh đó, một nhóm người tiên phong đã lập nên newXion tại Mỹ. Dẫn dắt bởi những giá trị cốt lõi bền vững, họ xây dựng một cộng đồng mang tinh thần của ngọn núi: nơi con người gắn kết, làm chủ công nghệ tiên tiến và xây dựng những hệ thống CNTT xuất sắc, vì nhân loại và một tương lai tươi sáng hơn cho tất cả. |
 | AI | `about:aboutFaqVi.items[0].answer` | We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing. | Chúng tôi xây dựng nền tảng riêng cho trường học (Parent Hub, Staff Hub và IoT Device Management) và phát triển phần mềm cho doanh nghiệp khác: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo sản phẩm và cung cấp nhân sự. |
-| AI | `about:aboutFaqVi.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, Châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
+| AI | `about:aboutFaqVi.items[1].answer` | EdTech is our core. We also serve Healthcare, Logistics and Private Equity. | Giáo dục là thế mạnh cốt lõi. Chúng tôi cũng phục vụ Y tế, Logistics và Quỹ đầu tư tư nhân. |
+| AI | `about:aboutFaqVi.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
 | AI | `about:aboutFaqVi.items[6].answer` | [Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning. | [Placeholder] Chúng tôi làm việc trung thực, minh bạch và theo chuẩn mực đạo đức rõ ràng, cùng với tự động hóa bảo mật và quét liên tục. |
 | AI | `about:aboutOfficesVi.title` | Two headquarters, four locations. | Hai trụ sở chính, bốn địa điểm. |
 | AI | `about:aboutOfficesVi.more` | Also in Ha Noi and Da Nang. | Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng. |
-| AI | `about:aboutOfficesVi.offices[0].name` | Plano, Texas, USA | Plano, Texas, Hoa Kỳ |
-| AI | `about:aboutOfficesVi.offices[0].zoneLabel` | US Central | Giờ miền Trung Hoa Kỳ |
+| AI | `about:aboutOfficesVi.offices[0].name` | Plano, Texas, USA | Plano, Texas, Mỹ |
+| AI | `about:aboutOfficesVi.offices[0].zoneLabel` | US Central | Giờ miền Trung Mỹ |
+| AI | `about:aboutOfficesVi.offices[0].tag` | US Delivery Center | Trung tâm Phát triển Mỹ |
 | AI | `about:aboutOfficesVi.offices[1].name` | Ho Chi Minh City, Vietnam | TP. Hồ Chí Minh, Việt Nam |
 | Prototype | `about:aboutHeroVi.text` | We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world. | Chúng tôi kết nối con người, ý tưởng và công nghệ để xây dựng những hệ thống CNTT xuất sắc và kiến tạo một tương lai tươi sáng hơn cho tất cả. Từ TP. Hồ Chí Minh và Plano, chúng tôi tự xây dựng nền tảng cho trường học và phát triển sản phẩm số cho khách hàng trên toàn thế giới. |
 | Prototype | `about:aboutHeroVi.links[0].label` | Explore our products | Khám phá sản phẩm |
@@ -342,7 +345,6 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `about:aboutFaqVi.lede` | Straight answers about our products, our services and how we work. | Câu trả lời thẳng thắn về sản phẩm, dịch vụ và cách chúng tôi làm việc. |
 | Prototype | `about:aboutFaqVi.items[0].question` | What does XionTech do? | XionTech làm gì? |
 | Prototype | `about:aboutFaqVi.items[1].question` | Which industries do you work with? | Các bạn làm việc với những lĩnh vực nào? |
-| Prototype | `about:aboutFaqVi.items[1].answer` | EdTech is our core. We also serve Healthcare, Logistics and Private Equity. | Giáo dục là thế mạnh cốt lõi. Chúng tôi cũng phục vụ Y tế, Logistics và Đầu tư tư nhân. |
 | Prototype | `about:aboutFaqVi.items[2].question` | How can our school try Parent Hub or Staff Hub? | Trường chúng tôi có thể trải nghiệm Parent Hub hoặc Staff Hub như thế nào? |
 | Prototype | `about:aboutFaqVi.items[2].answer` | Book a demo. We walk you through the apps using scenarios from your own school. | Hãy đặt lịch demo. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn. |
 | Prototype | `about:aboutFaqVi.items[3].question` | How do you work across time zones? | Các bạn làm việc qua nhiều múi giờ như thế nào? |
@@ -357,24 +359,23 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `about:aboutFaqVi.items[8].answer` | We track speed, quality, product impact and team autonomy, and share them openly with you. | Chúng tôi theo dõi tốc độ, chất lượng, tác động sản phẩm và tính tự chủ của đội ngũ, và chia sẻ minh bạch với bạn. |
 | Prototype | `about:aboutFaqVi.ask.label` | Still have a question? Ask us directly | Vẫn còn câu hỏi? Hỏi trực tiếp chúng tôi |
 | Prototype | `about:aboutOfficesVi.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (mở trong thẻ mới) |
-| Prototype | `about:aboutOfficesVi.offices[0].tag` | US Delivery Center | Trung tâm Phát triển Hoa Kỳ |
 | Prototype | `about:aboutOfficesVi.offices[1].tag` | Vietnam Delivery Center | Trung tâm Phát triển Việt Nam |
 | Prototype | `about:aboutCaptureVi.heading` | See our apps in action. | Xem ứng dụng của chúng tôi hoạt động. |
 | Prototype | `about:aboutCaptureVi.lede` | Leave your work email and we'll arrange a walkthrough of Parent Hub and Staff Hub. | Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo Parent Hub và Staff Hub cho bạn. |
 
 ## Offices (About, Contact, footer)
 
-5 AI, 3 prototype.
+6 AI, 2 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `offices:planoVi.name`<br>`offices:officesVi[0].name`<br>`offices:aboutOfficeViewVi[0].name` | Plano, Texas, USA | Plano, Texas, Hoa Kỳ |
+| AI | `offices:planoVi.name`<br>`offices:officesVi[0].name`<br>`offices:aboutOfficeViewVi[0].name` | Plano, Texas, USA | Plano, Texas, Mỹ |
 | AI | `offices:planoVi.contacts[1].ariaLabel`<br>`offices:officesVi[0].contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345 (mở trong thẻ mới) |
-| AI | `offices:planoVi.zoneLabel`<br>`offices:officesVi[0].zoneLabel`<br>`offices:aboutOfficeViewVi[0].zoneLabel` | US Central | Giờ miền Trung Hoa Kỳ |
+| AI | `offices:planoVi.zoneLabel`<br>`offices:officesVi[0].zoneLabel`<br>`offices:aboutOfficeViewVi[0].zoneLabel` | US Central | Giờ miền Trung Mỹ |
 | AI | `offices:hcmcVi.name`<br>`offices:officesVi[1].name`<br>`offices:aboutOfficeViewVi[1].name` | Ho Chi Minh City, Vietnam | TP. Hồ Chí Minh, Việt Nam |
 | AI | `offices:otherLocationsVi` | Also in Ha Noi and Da Nang. | Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng. |
+| AI | `offices:footerOfficesVi[1].name`<br>`offices:aboutOfficeViewVi[0].tag` | US Delivery Center | Trung tâm Phát triển Mỹ |
 | Prototype | `offices:hcmcVi.tag`<br>`offices:officesVi[1].tag`<br>`offices:footerOfficesVi[0].name`<br>`offices:aboutOfficeViewVi[1].tag` | Vietnam Delivery Center | Trung tâm Phát triển Việt Nam |
-| Prototype | `offices:footerOfficesVi[1].name`<br>`offices:aboutOfficeViewVi[0].tag` | US Delivery Center | Trung tâm Phát triển Hoa Kỳ |
 | Prototype | `offices:footerOfficesVi[1].contacts[1].ariaLabel`<br>`offices:aboutOfficeViewVi[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (mở trong thẻ mới) |
 
 ## Careers
@@ -548,7 +549,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `contact-strings:CONTACT_STRINGS_VI.metaTitle` | Book a Demo or Start a Project \| XionTech | Đặt lịch demo hoặc bắt đầu dự án \| XionTech |
-| AI | `contact-strings:CONTACT_STRINGS_VI.metaDescription` | Book a demo of Parent Hub and Staff Hub for your school, or tell us about your software project. XionTech, Ho Chi Minh City and Plano. | Đặt lịch demo Parent Hub và Staff Hub cho trường của bạn, hoặc kể cho chúng tôi về dự án phần mềm của bạn. XionTech, Thành phố Hồ Chí Minh và Plano. |
+| AI | `contact-strings:CONTACT_STRINGS_VI.metaDescription` | Book a demo of Parent Hub and Staff Hub for your school, or tell us about your software project. XionTech, Ho Chi Minh City and Plano. | Đặt lịch demo Parent Hub và Staff Hub cho trường của bạn, hoặc kể cho chúng tôi về dự án phần mềm của bạn. XionTech, TP. Hồ Chí Minh và Plano. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.hero.breadcrumbLabel` | Breadcrumb | Đường dẫn |
 | AI | `contact-strings:CONTACT_STRINGS_VI.hero.titleBefore` | Let's talk about your  | Hãy trao đổi về  |
 | AI | `contact-strings:CONTACT_STRINGS_VI.hero.titleHighlight` | school | trường học |

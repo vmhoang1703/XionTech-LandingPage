@@ -156,7 +156,9 @@ describe("Careers page metadata in Vietnamese", () => {
     const viMeta = await generateMetadata({
       params: Promise.resolve({ locale: "vi" }),
     });
-    expect(String(viMeta.title)).toMatch(/^Tuyển dụng tại XionTech | /);
+    expect(viMeta.title).toBe(
+      "Tuyển dụng tại XionTech | Việc làm phần mềm tại TP. Hồ Chí Minh",
+    );
     expect(String(viMeta.title)).not.toContain("[Placeholder]");
   });
 });
