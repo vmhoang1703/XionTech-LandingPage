@@ -105,7 +105,7 @@ before the release PR; findings become fix PRs. After Demo day:
 
 - `main` = production, deployed by Vercel to https://xion-tech-landing-page.vercel.app. Only updated by a
   release PR from `develop` (merge commit).
-- `develop` = integration branch, deployed to https://xiontech-dev.vercel.app. Everyone branches from it
+- `develop` = integration branch, deployed to https://xiontech-hoangvu-dev.vercel.app. Everyone branches from it
   and opens PRs back into it. Every PR gets a Vercel preview URL, unless the Hobby commit-email
   limit blocks it (see "Live URLs" in `README.md`).
 - Open every PR with the `create-pr` skill (`/create-pr` in Claude Code); do not run `gh pr create`

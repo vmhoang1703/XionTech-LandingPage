@@ -9,7 +9,7 @@ Built for the XionTech internal AI build challenge (demo day: 2026-10-16).
 | Environment | Branch        | URL                                       | Vercel environment |
 | ----------- | ------------- | ----------------------------------------- | ------------------ |
 | Production  | `main`        | https://xion-tech-landing-page.vercel.app | Production         |
-| Development | `develop`     | https://xiontech-dev.vercel.app           | Preview            |
+| Development | `develop`     | https://xiontech-hoangvu-dev.vercel.app   | Preview            |
 | PR preview  | any PR branch | posted by the Vercel bot on the PR        | Preview            |
 
 - Production is public. Preview URLs (including the `develop` URL) show a Vercel login page
