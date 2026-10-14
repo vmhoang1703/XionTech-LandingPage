@@ -12,4 +12,4 @@ scripts/sonar
 studio/dist
 studio/node_modules
 studio/.sanity
-docs/translations/vi-review.md
+docs/translations/*-review.md

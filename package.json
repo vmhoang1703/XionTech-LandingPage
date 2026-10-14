@@ -23,6 +23,7 @@
     "ux:parity": "node scripts/ux/parity.mjs",
     "ux:shots": "node scripts/ux/shots.mjs",
     "i18n:prototype-vi": "node scripts/i18n/prototype-vi.mjs",
+    "i18n:review": "node scripts/i18n/review.mjs",
     "i18n:vi-review": "node scripts/i18n/vi-review.mjs",
     "sanity:check": "node --env-file-if-exists=.env.local scripts/sanity-check.mjs"
   },

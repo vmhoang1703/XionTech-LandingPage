@@ -64,7 +64,7 @@ function isObject(value) {
   return typeof value === "object" && value !== null;
 }
 
-function walk(en, vi, path, found, same) {
+export function walk(en, vi, path, found, same) {
   if (typeof en === "string") {
     if (typeof vi !== "string") throw new Error(`${path}: vi is not a string`);
     if (vi !== en) found.push({ path, english: en, vi });
@@ -101,6 +101,32 @@ function pairNames(mod) {
 }
 
 /**
+ * Every Vietnamese dictionary next to its English, in module order:
+ * `{ file, page, name, en, vi }`. `load(relativePath)` returns a loaded module.
+ * Throws when a Vietnamese export has no English counterpart.
+ */
+export async function viPairs(load) {
+  const pairs = [];
+  for (const [file] of PAGES) {
+    const mod = await load(file);
+    const page = pageOf(file);
+    for (const [base, name] of pairNames(mod)) {
+      const en = OVERRIDES[name] ? OVERRIDES[name](mod) : mod[base];
+      const vi = OVERRIDE_VI[name] ? OVERRIDE_VI[name](mod) : mod[name];
+      if (en === undefined)
+        throw new Error(`${file}: ${name} has no English ${base}`);
+      pairs.push({ file, page, name, en, vi });
+    }
+    for (const [namedFile, name] of NAMED_PAIRS) {
+      if (namedFile !== file) continue;
+      if (!mod[name]) throw new Error(`${file}: ${name} is not exported`);
+      pairs.push({ file, page, name, en: mod[name].en, vi: mod[name].vi });
+    }
+  }
+  return pairs;
+}
+
+/**
  * Every Vietnamese string that differs from its English, in dictionary order:
  * `{ page, location, english, vi }`. `load(relativePath)` returns a loaded module.
  * With `{ same: true }`, the strings left equal to their English instead.
@@ -108,33 +134,17 @@ function pairNames(mod) {
  */
 export async function collectStrings(load, { same: wantSame = false } = {}) {
   const rows = [];
-  for (const [file] of PAGES) {
-    const mod = await load(file);
-    const page = pageOf(file);
-    const add = (location, en, vi) => {
-      const found = [];
-      const same = [];
-      walk(en, vi, location, found, same);
-      for (const { path, english, vi: text } of wantSame ? same : found) {
-        rows.push({
-          page,
-          location: `${moduleName(file)}:${path}`,
-          english,
-          vi: text,
-        });
-      }
-    };
-    for (const [base, name] of pairNames(mod)) {
-      const en = OVERRIDES[name] ? OVERRIDES[name](mod) : mod[base];
-      const vi = OVERRIDE_VI[name] ? OVERRIDE_VI[name](mod) : mod[name];
-      if (en === undefined)
-        throw new Error(`${file}: ${name} has no English ${base}`);
-      add(name, en, vi);
-    }
-    for (const [namedFile, name] of NAMED_PAIRS) {
-      if (namedFile !== file) continue;
-      if (!mod[name]) throw new Error(`${file}: ${name} is not exported`);
-      add(name, mod[name].en, mod[name].vi);
+  for (const { file, page, name, en, vi } of await viPairs(load)) {
+    const found = [];
+    const same = [];
+    walk(en, vi, name, found, same);
+    for (const { path, english, vi: text } of wantSame ? same : found) {
+      rows.push({
+        page,
+        location: `${moduleName(file)}:${path}`,
+        english,
+        vi: text,
+      });
     }
   }
   return rows;
