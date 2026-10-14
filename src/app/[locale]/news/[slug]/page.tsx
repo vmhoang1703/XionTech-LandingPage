@@ -105,6 +105,8 @@ export default async function StoryPage({ params }: StoryProps) {
               <Image
                 src={`${story.image}?w=1800&auto=format`}
                 alt={alt}
+                // The alt is one English field in Sanity.
+                lang={fallbackLang("en", locale)}
                 width={1800}
                 height={1200}
                 unoptimized

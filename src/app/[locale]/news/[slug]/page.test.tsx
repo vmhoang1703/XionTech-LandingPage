@@ -235,6 +235,24 @@ describe("StoryPage in Vietnamese", () => {
     expect(screen.getByText("A subheading").getAttribute("lang")).toBe("en");
   });
 
+  it("marks the English photo alt on vi", async () => {
+    vi.mocked(getPost).mockResolvedValue({
+      ...story,
+      image: PHOTO,
+      alt: "Parents at the school gate",
+    });
+    render(
+      await StoryPage({
+        params: Promise.resolve({ locale: "vi", slug: "pxp-day" }),
+        searchParams: Promise.resolve({}),
+      }),
+    );
+
+    expect(
+      screen.getByAltText("Parents at the school gate").getAttribute("lang"),
+    ).toBe("en");
+  });
+
   it("adds no lang attribute on /en when every field is English", async () => {
     vi.mocked(getPost).mockResolvedValue({
       ...story,
