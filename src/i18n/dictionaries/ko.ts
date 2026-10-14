@@ -109,7 +109,7 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
       "실시간 출결과 기록",
       "학급, 시간표, 성적",
       `${parentHub.shortName}를 통한 학부모 메시지`,
-      "오늘의 우선순위를 보여 주는 경영진 대시보드",
+      "오늘의 우선순위를 보여 주는 관리자 대시보드",
     ].map((title, i) => ({
       ...productDetails["staff-hub"].features[i],
       title,

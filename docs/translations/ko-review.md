@@ -327,7 +327,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:productDetails.staff-hub.features[0].title` | Attendance and records in real time | 실시간 출결과 기록 |
 | `ko:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 학급, 시간표, 성적 |
 | `ko:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub를 통한 학부모 메시지 |
-| `ko:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 오늘의 우선순위를 보여 주는 경영진 대시보드 |
+| `ko:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 오늘의 우선순위를 보여 주는 관리자 대시보드 |
 | `ko:productDetails.iot.madeFor` | School operations and facilities teams | 시설 운영 및 유지보수 팀 |
 | `ko:productDetails.iot.features[0].title` | Projectors, displays and sound | 프로젝터, 디스플레이, 음향 |
 | `ko:productDetails.iot.features[2].title` | Doors and zones managed centrally | 중앙에서 관리하는 출입문과 구역 |
