@@ -69,3 +69,11 @@ export function contentMismatches(
     ? []
     : [`${path || "(root)"}: expected ${typeof en}`];
 }
+
+/** A `lang` value for a block whose text is in `fieldLang`: set only when it differs from the page locale. */
+export function fallbackLang(
+  fieldLang: string | null | undefined,
+  locale: Locale,
+): string | undefined {
+  return fieldLang && fieldLang !== locale ? fieldLang : undefined;
+}

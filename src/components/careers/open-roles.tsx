@@ -1,9 +1,38 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import { Fragment } from "react";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { careersRoles, careersRolesVi } from "@/content/careers";
-import { pickLocale } from "@/i18n/content";
+import { fallbackLang, pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
-import { type OpenRole, roleMeta } from "@/lib/careers/open-roles";
+import {
+  type OpenRole,
+  roleMeta,
+  roleTypeLabel,
+} from "@/lib/careers/open-roles";
+
+// The meta line as one string, or as parts when a Sanity field fell back to
+// English, so only that part is marked lang="en".
+function RoleMeta({
+  role,
+  locale,
+}: Readonly<{ role: OpenRole; locale: Locale }>) {
+  const parts = [
+    { text: role.team, lang: fallbackLang(role.teamLang, locale) },
+    { text: role.location, lang: fallbackLang(role.locationLang, locale) },
+    { text: roleTypeLabel(role.type, locale) },
+  ].filter((part) => part.text);
+  if (!parts.some((part) => part.lang)) return <>{roleMeta(role, locale)}</>;
+  return (
+    <>
+      {parts.map((part, i) => (
+        <Fragment key={part.text}>
+          {i > 0 ? " · " : null}
+          <span lang={part.lang}>{part.text}</span>
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 // Server Component. Each role is one link and nothing inside it is interactive
 // (FR-32, AC-A11Y-4). With no roles it shows the empty panel (CAP-3).
@@ -27,16 +56,21 @@ export function OpenRoles({
         ) : (
           <div className="roles" data-reveal="">
             {roles.map((role) => {
-              const meta = roleMeta(role, locale);
               return (
                 <LocaleLink
                   key={role.slug}
                   href={`/careers/${role.slug}`}
                   className="spot role"
                 >
-                  <span className="role-main" lang={role.lang ?? undefined}>
-                    <b>{role.title}</b>
-                    {meta ? <small>{meta}</small> : null}
+                  <span className="role-main">
+                    <b lang={fallbackLang(role.titleLang, locale)}>
+                      {role.title}
+                    </b>
+                    {roleMeta(role, locale) ? (
+                      <small>
+                        <RoleMeta role={role} locale={locale} />
+                      </small>
+                    ) : null}
                   </span>
                   <span className="link-arrow">
                     <span>{applyLabel}</span>

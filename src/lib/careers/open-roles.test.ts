@@ -40,9 +40,9 @@ describe("getOpenRoles", () => {
     const projection = query.slice(query.indexOf("{"));
     for (const line of [
       '"slug": slug.current',
-      '"title": coalesce(title[$locale], title.en)',
-      '"team": coalesce(team[$locale], team.en)',
-      '"location": coalesce(location[$locale], location.en)',
+      '"title": select(length(title[$locale]) > 0 => title[$locale], title.en)',
+      '"team": select(length(team[$locale]) > 0 => team[$locale], team.en)',
+      '"location": select(length(location[$locale]) > 0 => location[$locale], location.en)',
     ]) {
       expect(projection).toContain(line);
     }
@@ -100,12 +100,12 @@ describe("getOpenRole", () => {
     const projection = query.slice(query.indexOf("{", query.indexOf("[0]")));
     for (const line of [
       '"slug": slug.current',
-      '"title": coalesce(title[$locale], title.en)',
-      '"team": coalesce(team[$locale], team.en)',
-      '"location": coalesce(location[$locale], location.en)',
-      '"about": pt::text(coalesce(description[$locale], description.en))',
-      '"responsibilities": coalesce(responsibilities[$locale], responsibilities.en)',
-      '"requirements": coalesce(requirements[$locale], requirements.en)',
+      '"title": select(length(title[$locale]) > 0 => title[$locale], title.en)',
+      '"team": select(length(team[$locale]) > 0 => team[$locale], team.en)',
+      '"location": select(length(location[$locale]) > 0 => location[$locale], location.en)',
+      '"about": pt::text(select(length(description[$locale]) > 0 => description[$locale], description.en))',
+      '"responsibilities": select(length(responsibilities[$locale]) > 0 => responsibilities[$locale], responsibilities.en)',
+      '"requirements": select(length(requirements[$locale]) > 0 => requirements[$locale], requirements.en)',
     ]) {
       expect(projection).toContain(line);
     }
@@ -221,8 +221,13 @@ describe("Vietnamese", () => {
     const { query, params } = sanityFetchMock.mock.calls[0][0];
     expect(params).toEqual({ locale: "vi" });
     expect(query).toContain(
-      '"lang": select(defined(title[$locale]) => $locale, "en")',
+      '"titleLang": select(length(title[$locale]) > 0 => $locale, "en")',
     );
+    for (const field of ["team", "location"]) {
+      expect(query).toContain(
+        `"${field}Lang": select(length(${field}[$locale]) > 0 => $locale, "en")`,
+      );
+    }
   });
 
   it("marks an English description fallback on one role", async () => {
@@ -233,8 +238,19 @@ describe("Vietnamese", () => {
     const { query, params } = sanityFetchMock.mock.calls[0][0];
     expect(params).toEqual({ slug: "qa-engineer", locale: "vi" });
     expect(query).toContain(
-      '"detailLang": select(defined(description[$locale]) => $locale, "en")',
+      '"aboutLang": select(length(description[$locale]) > 0 => $locale, "en")',
     );
+    for (const field of [
+      "title",
+      "team",
+      "location",
+      "responsibilities",
+      "requirements",
+    ]) {
+      expect(query).toContain(
+        `"${field}Lang": select(length(${field}[$locale]) > 0 => $locale, "en")`,
+      );
+    }
   });
 
   it("labels the role type and meta in Vietnamese", () => {

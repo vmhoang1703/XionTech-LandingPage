@@ -3,6 +3,7 @@ import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { postAudience } from "@/lib/news/audience";
 import { sanityFetch } from "@/lib/sanity/client";
+import { localized, localizedLang } from "@/lib/sanity/localized";
 
 export type LatestPost = {
   slug: string;
@@ -13,15 +14,17 @@ export type LatestPost = {
   app?: string | null;
   image?: string | null;
   alt?: string | null;
-  /** The language of title and excerpt: "en" when the locale's text is empty. */
-  lang?: string | null;
+  /** Each field's language: "en" when the locale's text is empty. */
+  titleLang?: string | null;
+  excerptLang?: string | null;
 };
 
 const LATEST_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt)] | order(publishedAt desc)[0...3] {
   "slug": slug.current,
-  "title": coalesce(title[$locale], title.en),
-  "excerpt": coalesce(excerpt[$locale], excerpt.en),
-  "lang": select(defined(title[$locale]) => $locale, "en"),
+  "title": ${localized("title")},
+  "titleLang": ${localizedLang("title")},
+  "excerpt": ${localized("excerpt")},
+  "excerptLang": ${localizedLang("excerpt")},
   publishedAt,
   category,
   app,

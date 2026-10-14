@@ -114,7 +114,8 @@ describe("Careers page in Vietnamese", () => {
         title: "QA Engineer",
         team: "QA",
         type: "full-time",
-        lang: "en",
+        titleLang: "en",
+        teamLang: "en",
       },
     ]);
     const { container } = render(
@@ -130,10 +131,17 @@ describe("Careers page in Vietnamese", () => {
     ).toBeTruthy();
     expect(screen.getByText("Bên trong XionTech.")).toBeTruthy();
     expect(screen.getByText("Xem và ứng tuyển")).toBeTruthy();
-    expect(screen.getByText("QA · Toàn thời gian")).toBeTruthy();
-    expect(container.querySelector(".role-main")?.getAttribute("lang")).toBe(
-      "en",
+    expect(container.querySelector(".role-main small")?.textContent).toBe(
+      "QA · Toàn thời gian",
     );
+    expect(container.querySelector(".role-main")?.hasAttribute("lang")).toBe(
+      false,
+    );
+    expect(screen.getByText("QA Engineer").getAttribute("lang")).toBe("en");
+    expect(screen.getByText("QA").getAttribute("lang")).toBe("en");
+    expect(
+      container.querySelector('.role-main small [lang="en"]')?.textContent,
+    ).toBe("QA");
   });
 });
 

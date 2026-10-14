@@ -2,7 +2,7 @@ import { ArrowLeftIcon, CheckCircleIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
 import type { ReactNode } from "react";
 import { jobDetails as jobDetailsEn, jobDetailsVi } from "@/content/job";
-import { pickLocale } from "@/i18n/content";
+import { fallbackLang, pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import type { OpenRoleDetail } from "@/lib/careers/open-roles";
 
@@ -36,7 +36,6 @@ export function JobDetails({
     .filter(Boolean);
   const responsibilities = role.responsibilities ?? [];
   const requirements = role.requirements ?? [];
-  const lang = role.detailLang ?? undefined;
 
   return (
     <section className="sec surface-paper" aria-label={jobDetails.sectionLabel}>
@@ -46,7 +45,7 @@ export function JobDetails({
             <>
               <h2>{jobDetails.aboutHeading}</h2>
               {paragraphs.map((text) => (
-                <p key={text} lang={lang}>
+                <p key={text} lang={fallbackLang(role.aboutLang, locale)}>
                   {text}
                 </p>
               ))}
@@ -55,13 +54,19 @@ export function JobDetails({
           {responsibilities.length > 0 && (
             <>
               <h2>{jobDetails.doHeading}</h2>
-              <CheckList items={responsibilities} lang={lang} />
+              <CheckList
+                items={responsibilities}
+                lang={fallbackLang(role.responsibilitiesLang, locale)}
+              />
             </>
           )}
           {requirements.length > 0 && (
             <>
               <h2>{jobDetails.bringHeading}</h2>
-              <CheckList items={requirements} lang={lang} />
+              <CheckList
+                items={requirements}
+                lang={fallbackLang(role.requirementsLang, locale)}
+              />
             </>
           )}
           <p className="mt-7">

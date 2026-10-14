@@ -57,8 +57,8 @@ describe("getLatestPosts", () => {
     );
     for (const line of [
       '"slug": slug.current',
-      '"title": coalesce(title[$locale], title.en)',
-      '"excerpt": coalesce(excerpt[$locale], excerpt.en)',
+      '"title": select(length(title[$locale]) > 0 => title[$locale], title.en)',
+      '"excerpt": select(length(excerpt[$locale]) > 0 => excerpt[$locale], excerpt.en)',
     ]) {
       expect(projection).toContain(line);
     }
@@ -142,7 +142,10 @@ describe("Vietnamese", () => {
     const { query, params } = sanityFetchMock.mock.calls[0][0];
     expect(params).toEqual({ locale: "vi" });
     expect(query).toContain(
-      '"lang": select(defined(title[$locale]) => $locale, "en")',
+      '"titleLang": select(length(title[$locale]) > 0 => $locale, "en")',
+    );
+    expect(query).toContain(
+      '"excerptLang": select(length(excerpt[$locale]) > 0 => $locale, "en")',
     );
   });
 

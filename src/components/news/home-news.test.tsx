@@ -110,7 +110,7 @@ describe("HomeNews in Vietnamese", () => {
         slug: "a",
         title: "Tin A",
         publishedAt: "2026-09-17T20:00:00Z",
-        lang: "vi",
+        titleLang: "vi",
       },
     ]);
     const { container } = render(await HomeNews({ locale: "vi" }));
@@ -124,8 +124,8 @@ describe("HomeNews in Vietnamese", () => {
     expect(container.querySelector(".scard-date")?.textContent).toBe(
       "18/09/2026",
     );
-    expect(container.querySelector(".scard-title")?.getAttribute("lang")).toBe(
-      "vi",
+    expect(container.querySelector(".scard-title")?.hasAttribute("lang")).toBe(
+      false,
     );
   });
 });

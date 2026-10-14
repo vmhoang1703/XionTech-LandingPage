@@ -100,8 +100,13 @@ describe("Job page in Vietnamese", () => {
     vi.mocked(getOpenRole).mockResolvedValue({
       ...role,
       responsibilities: ["Write tests."],
-      lang: "en",
-      detailLang: "en",
+      requirements: ["Know Vitest."],
+      titleLang: "en",
+      teamLang: "en",
+      locationLang: "vi",
+      aboutLang: "en",
+      responsibilitiesLang: "vi",
+      requirementsLang: "en",
     });
     const { container } = render(
       await JobPage({
@@ -119,10 +124,30 @@ describe("Job page in Vietnamese", () => {
     expect(screen.getByText("Toàn thời gian")).toBeTruthy();
     expect(screen.getByRole("heading", { name: "Về vị trí này" })).toBeTruthy();
     expect(screen.getByText("Test things.").getAttribute("lang")).toBe("en");
-    expect(container.querySelector(".list-check")?.getAttribute("lang")).toBe(
-      "en",
+    const lists = container.querySelectorAll(".list-check");
+    expect(lists[0].hasAttribute("lang")).toBe(false);
+    expect(lists[1].getAttribute("lang")).toBe("en");
+    expect(screen.getByText("Engineering").getAttribute("lang")).toBe("en");
+    expect(screen.getByText("Ho Chi Minh City").hasAttribute("lang")).toBe(
+      false,
     );
+    expect(screen.getByText("Toàn thời gian").hasAttribute("lang")).toBe(false);
   });
+});
+
+it("adds no lang attribute on /en when every field is English", async () => {
+  vi.mocked(getOpenRole).mockResolvedValue({
+    ...role,
+    responsibilities: ["Write tests."],
+    titleLang: "en",
+    teamLang: "en",
+    locationLang: "en",
+    aboutLang: "en",
+    responsibilitiesLang: "en",
+  });
+  const { container } = await renderPage();
+
+  expect(container.querySelector("main [lang], section [lang]")).toBeNull();
 });
 
 it("falls back to English for an unknown locale", async () => {

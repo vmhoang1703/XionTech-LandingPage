@@ -2,7 +2,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { homeNews, homeNewsVi } from "@/content/news";
-import { pickLocale } from "@/i18n/content";
+import { fallbackLang, pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { postAudience } from "@/lib/news/audience";
 import {
@@ -70,7 +70,7 @@ export function NewsCard({
         <h3
           id={`${id}-t`}
           className="scard-title"
-          lang={post.lang ?? undefined}
+          lang={fallbackLang(post.titleLang, locale)}
         >
           {post.title}
         </h3>

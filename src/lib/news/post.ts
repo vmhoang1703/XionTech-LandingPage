@@ -2,6 +2,7 @@ import { getAllPosts } from "@/lib/news/all-posts";
 import type { LatestPost } from "@/lib/news/latest-posts";
 import type { Locale } from "@/i18n/locales";
 import { sanityFetch } from "@/lib/sanity/client";
+import { localized, localizedLang } from "@/lib/sanity/localized";
 
 export type StoryBlock = {
   _key: string;
@@ -19,16 +20,17 @@ export type NewsStory = LatestPost & {
 // plain text per block (no links or images yet).
 const POST_QUERY = `*[_type == "post" && defined(slug.current) && defined(title.en) && defined(publishedAt) && slug.current == $slug][0] {
   "slug": slug.current,
-  "title": coalesce(title[$locale], title.en),
-  "excerpt": coalesce(excerpt[$locale], excerpt.en),
-  "lang": select(defined(title[$locale]) => $locale, "en"),
+  "title": ${localized("title")},
+  "titleLang": ${localizedLang("title")},
+  "excerpt": ${localized("excerpt")},
+  "excerptLang": ${localizedLang("excerpt")},
   publishedAt,
   category,
   app,
   "image": image.asset->url,
   alt,
-  "body": coalesce(body[$locale], body.en)[_type == "block"] { _key, style, "text": pt::text(@) },
-  "bodyLang": select(defined(body[$locale]) => $locale, "en")
+  "body": ${localized("body")}[_type == "block"] { _key, style, "text": pt::text(@) },
+  "bodyLang": ${localizedLang("body")}
 }`;
 
 /**

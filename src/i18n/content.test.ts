@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { contentMismatches, pickLocale, type Localized } from "./content";
+import {
+  contentMismatches,
+  fallbackLang,
+  pickLocale,
+  type Localized,
+} from "./content";
 
 const en = {
   title: "Hello",
@@ -73,5 +78,14 @@ describe("pickLocale", () => {
 
     expect(pickLocale("en", dict)).toBe("Hello");
     expect(pickLocale("vi", dict)).toBe("Xin chào");
+  });
+});
+
+describe("fallbackLang", () => {
+  it("returns the field's language only when it differs from the page locale", () => {
+    expect(fallbackLang("en", "vi")).toBe("en");
+    expect(fallbackLang("en", "en")).toBeUndefined();
+    expect(fallbackLang("vi", "vi")).toBeUndefined();
+    expect(fallbackLang(null, "vi")).toBeUndefined();
   });
 });

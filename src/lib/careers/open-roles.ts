@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/locales";
 import { sanityFetch } from "@/lib/sanity/client";
+import { localized, localizedLang } from "@/lib/sanity/localized";
 
 export type OpenRole = {
   slug: string;
@@ -7,16 +8,20 @@ export type OpenRole = {
   team?: string | null;
   location?: string | null;
   type?: string | null;
-  /** The language of title, team and location: "en" when the locale's title is empty. */
-  lang?: string | null;
+  /** Each field's language: "en" when the locale's value is empty. */
+  titleLang?: string | null;
+  teamLang?: string | null;
+  locationLang?: string | null;
 };
 
 const OPEN_ROLES_QUERY = `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en)] | order(title.en asc) {
   "slug": slug.current,
-  "title": coalesce(title[$locale], title.en),
-  "team": coalesce(team[$locale], team.en),
-  "location": coalesce(location[$locale], location.en),
-  "lang": select(defined(title[$locale]) => $locale, "en"),
+  "title": ${localized("title")},
+  "titleLang": ${localizedLang("title")},
+  "team": ${localized("team")},
+  "teamLang": ${localizedLang("team")},
+  "location": ${localized("location")},
+  "locationLang": ${localizedLang("location")},
   type
 }`;
 
@@ -24,21 +29,26 @@ export type OpenRoleDetail = OpenRole & {
   about?: string | null;
   responsibilities?: string[] | null;
   requirements?: string[] | null;
-  /** The language of about and the lists: "en" when the locale's description is empty. */
-  detailLang?: string | null;
+  aboutLang?: string | null;
+  responsibilitiesLang?: string | null;
+  requirementsLang?: string | null;
 };
 
 const OPEN_ROLE_QUERY = `*[_type == "job" && closed != true && defined(slug.current) && defined(title.en) && slug.current == $slug][0] {
   "slug": slug.current,
-  "title": coalesce(title[$locale], title.en),
-  "team": coalesce(team[$locale], team.en),
-  "location": coalesce(location[$locale], location.en),
-  "lang": select(defined(title[$locale]) => $locale, "en"),
+  "title": ${localized("title")},
+  "titleLang": ${localizedLang("title")},
+  "team": ${localized("team")},
+  "teamLang": ${localizedLang("team")},
+  "location": ${localized("location")},
+  "locationLang": ${localizedLang("location")},
   type,
-  "about": pt::text(coalesce(description[$locale], description.en)),
-  "responsibilities": coalesce(responsibilities[$locale], responsibilities.en),
-  "requirements": coalesce(requirements[$locale], requirements.en),
-  "detailLang": select(defined(description[$locale]) => $locale, "en")
+  "about": pt::text(${localized("description")}),
+  "aboutLang": ${localizedLang("description")},
+  "responsibilities": ${localized("responsibilities")},
+  "responsibilitiesLang": ${localizedLang("responsibilities")},
+  "requirements": ${localized("requirements")},
+  "requirementsLang": ${localizedLang("requirements")}
 }`;
 
 const TYPE_LABELS: Record<Locale, Map<string, string>> = {

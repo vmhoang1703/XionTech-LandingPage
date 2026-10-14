@@ -5,7 +5,7 @@ import Image from "next/image";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { notFound } from "next/navigation";
 import { newsMeta, newsStory, newsStoryVi } from "@/content/news";
-import { pickLocale } from "@/i18n/content";
+import { fallbackLang, pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
 import { getPost, type StoryBlock } from "@/lib/news/post";
@@ -58,7 +58,6 @@ export default async function StoryPage({ params }: StoryProps) {
 
   const tag = categoryTag(story, locale);
   const date = newsDate(story.publishedAt, locale);
-  const lang = story.lang ?? undefined;
   const alt = story.alt?.trim();
   const { backToNews, storyLabel, sampleNote } = pickLocale(locale, {
     en: newsStory,
@@ -84,11 +83,14 @@ export default async function StoryPage({ params }: StoryProps) {
               </time>
             ) : null}
           </div>
-          <h1 id="story-h1" lang={lang}>
+          <h1 id="story-h1" lang={fallbackLang(story.titleLang, locale)}>
             {story.title}
           </h1>
           {story.excerpt?.trim() ? (
-            <p className="art-dek" lang={lang}>
+            <p
+              className="art-dek"
+              lang={fallbackLang(story.excerptLang, locale)}
+            >
               {story.excerpt}
             </p>
           ) : null}
@@ -111,7 +113,7 @@ export default async function StoryPage({ params }: StoryProps) {
           <article className="art-body">
             <StoryBody
               blocks={story.body ?? []}
-              lang={story.bodyLang ?? undefined}
+              lang={fallbackLang(story.bodyLang, locale)}
             />
             {story.title.startsWith("[Placeholder]") ? (
               <p className="sample">{sampleNote}</p>

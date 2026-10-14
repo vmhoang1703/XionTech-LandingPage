@@ -1,7 +1,7 @@
 import { LocaleLink } from "@/components/layout/locale-link";
 import { HeroArt } from "@/components/sections/hero-art";
 import { jobHero, jobHeroVi } from "@/content/job";
-import { pickLocale } from "@/i18n/content";
+import { fallbackLang, pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { type OpenRoleDetail, roleTypeLabel } from "@/lib/careers/open-roles";
 
@@ -12,12 +12,14 @@ export function JobHero({
 }: Readonly<{ role: OpenRoleDetail; locale?: Locale }>) {
   const { breadcrumbLabel, breadcrumbHome, breadcrumbCareers, chipsLabel } =
     pickLocale(locale, { en: jobHero, vi: jobHeroVi });
-  const lang = role.lang ?? undefined;
+  const lang = fallbackLang(role.titleLang, locale);
   const chips = [
-    role.team,
-    role.location,
-    roleTypeLabel(role.type, locale),
-  ].filter((chip): chip is string => Boolean(chip));
+    { text: role.team, lang: fallbackLang(role.teamLang, locale) },
+    { text: role.location, lang: fallbackLang(role.locationLang, locale) },
+    { text: roleTypeLabel(role.type, locale) },
+  ].filter((chip): chip is { text: string; lang?: string } =>
+    Boolean(chip.text),
+  );
 
   return (
     <section className="hero-amber page-hero" aria-labelledby="job-h1">
@@ -38,8 +40,8 @@ export function JobHero({
         {chips.length > 0 && (
           <ul className="chips mt-4.5" aria-label={chipsLabel}>
             {chips.map((chip) => (
-              <li key={chip} className="chip">
-                {chip}
+              <li key={chip.text} className="chip" lang={chip.lang}>
+                {chip.text}
               </li>
             ))}
           </ul>

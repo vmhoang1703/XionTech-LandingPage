@@ -205,7 +205,9 @@ describe("StoryPage in Vietnamese", () => {
   it("shows Vietnamese chrome and date, and marks an English fallback", async () => {
     vi.mocked(getPost).mockResolvedValue({
       ...story,
-      lang: "en",
+      title: "Parent Hub: ngày học",
+      titleLang: "vi",
+      excerptLang: "en",
       bodyLang: "en",
     });
     const { container } = render(
@@ -221,8 +223,8 @@ describe("StoryPage in Vietnamese", () => {
       "04/10/2026",
     );
     expect(container.querySelector(".art-pill")?.textContent).toBe("Phụ huynh");
-    expect(screen.getByRole("heading", { level: 1 }).getAttribute("lang")).toBe(
-      "en",
+    expect(screen.getByRole("heading", { level: 1 }).hasAttribute("lang")).toBe(
+      false,
     );
     expect(container.querySelector(".art-dek")?.getAttribute("lang")).toBe(
       "en",
@@ -231,6 +233,18 @@ describe("StoryPage in Vietnamese", () => {
       "en",
     );
     expect(screen.getByText("A subheading").getAttribute("lang")).toBe("en");
+  });
+
+  it("adds no lang attribute on /en when every field is English", async () => {
+    vi.mocked(getPost).mockResolvedValue({
+      ...story,
+      titleLang: "en",
+      excerptLang: "en",
+      bodyLang: "en",
+    });
+    const { container } = render(await StoryPage(props("pxp-day")));
+
+    expect(container.querySelector("[lang]")).toBeNull();
   });
 
   it("fetches the metadata story in Vietnamese", async () => {
