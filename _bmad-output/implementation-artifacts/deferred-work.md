@@ -445,3 +445,23 @@ Change reviewed: `ux:parity` / `ux:shots`, the `ux-critic` skill and `docs/ux-qu
 - source_spec: none
   summary: Add Arabic (ar, Dubai/UAE) with right-to-left layout mirroring (dir="rtl") and AI translations flagged for native review.
   evidence: User chose Split on 2026-10-13; RTL mirroring touches every layout and animation and ships after the other locales.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Whitespace-only Sanity vi strings or empty Portable Text blocks count as filled, so no English fallback.
+  evidence: Edge review: localized.ts uses length() only.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Optional locale = "en" props and a repeated isLocale guard in ~12 pages hide wiring bugs; make locale required or read it from context.
+  evidence: Blind and edge review; the root cause of the Home clock-label miss.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Add hreflang alternates and openGraph.locale for /en and /vi.
+  evidence: Blind review; belongs to Story 7.1.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: getOpenRoles sorts vi roles by English titles.
+  evidence: Blind review.
+
+- source_spec: `D:/XionTech-LandingPage/_bmad-output/implementation-artifacts/spec-vi-page-content.md`
+  summary: Placeholder-preservation test is positional and covers only careers, news and privacy.
+  evidence: Blind review.

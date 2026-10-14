@@ -1,0 +1,292 @@
+===== $ npm run lint && npm run typecheck && npm run format:check
+
+> xiontech-landing-page@0.1.0 lint
+> eslint
+
+
+> xiontech-landing-page@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> xiontech-landing-page@0.1.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+===== exit 0
+===== $ npm test
+
+> xiontech-landing-page@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 D:/XionTech-LandingPage
+
+
+ Test Files  114 passed (114)
+      Tests  1602 passed (1602)
+   Start at  09:54:15
+   Duration  171.22s (import 61%, environment 25%, tests 10%, setup 3%, transform 1%)
+
+     Import  286 modules were evaluated 1119 times · 1084.84s total, 61% of tracked time
+             ~27.67s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+===== exit 0
+===== $ npm run test:coverage && npm run coverage:diff
+
+> xiontech-landing-page@0.1.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.2 D:/XionTech-LandingPage
+      Coverage enabled with v8
+
+
+ Test Files  114 passed (114)
+      Tests  1602 passed (1602)
+   Start at  09:57:08
+   Duration  106.28s (import 53%, environment 21%, tests 17%, setup 6%, worker 1%, transform 1%)
+
+     Import  286 modules were evaluated 1104 times · 566.85s total, 53% of tracked time
+             ~14.66s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   99.74 |    97.38 |   99.69 |     100 |                   
+ ...[locale]/about |     100 |     87.5 |     100 |     100 |                   
+  page.tsx         |     100 |     87.5 |     100 |     100 | 178               
+ .../[locale]/demo |     100 |     87.5 |     100 |     100 |                   
+  page.tsx         |     100 |     87.5 |     100 |     100 | 35                
+ ...e]/news/[slug] |     100 |    92.85 |     100 |     100 |                   
+  page.tsx         |     100 |    92.85 |     100 |     100 | 19,61             
+ ...onents/careers |     100 |    98.24 |     100 |     100 |                   
+  ...tion-form.tsx |     100 |    96.72 |     100 |     100 | 48,132            
+ ...onents/contact |   99.39 |    96.06 |   98.91 |     100 |                   
+  contact-form.tsx |   98.54 |    93.58 |   97.61 |     100 | ...29,199,230,428 
+  ...tact-form.tsx |     100 |    94.59 |     100 |     100 | 42,89             
+ ...omponents/home |   99.72 |    94.17 |     100 |     100 |                   
+  globe-mark.ts    |     100 |    96.92 |     100 |     100 | 340,377,866,1016  
+  hero-silk.tsx    |   98.93 |    84.61 |     100 |     100 | 63,67-75,104-107  
+  ...ndustries.tsx |    97.5 |     92.3 |     100 |     100 | 35                
+  silk-shader.ts   |     100 |    92.85 |     100 |     100 | 102               
+ ...ponents/layout |     100 |    97.27 |     100 |     100 |                   
+  ...uage-menu.tsx |     100 |    96.55 |     100 |     100 | 142-146           
+  mobile-menu.tsx  |     100 |     97.5 |     100 |     100 | 47                
+ ...omponents/news |   97.72 |      100 |   93.33 |     100 |                   
+  news-filters.tsx |   96.77 |      100 |    90.9 |     100 |                   
+ ...oducts/journey |     100 |    98.88 |     100 |     100 |                   
+  road-map.tsx     |     100 |    98.87 |     100 |     100 | 208               
+ ...oducts/roadmap |   97.14 |    97.36 |     100 |     100 |                   
+  ...op-dialog.tsx |   97.14 |    97.36 |     100 |     100 | 42                
+ ...nents/sections |     100 |    97.95 |     100 |     100 |                   
+  hero-art.tsx     |     100 |       90 |     100 |     100 | 36,65             
+ src/i18n          |     100 |    95.23 |     100 |     100 |                   
+  content.ts       |     100 |    94.11 |     100 |     100 | 30,70             
+ src/test-utils    |      96 |    85.71 |     100 |     100 |                   
+  css-classes.ts   |      96 |    85.71 |     100 |     100 | 50                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.74% ( 2791/2798 )
+Branches     : 97.38% ( 1304/1339 )
+Functions    : 99.69% ( 650/652 )
+Lines        : 100% ( 2524/2524 )
+================================================================================
+
+> xiontech-landing-page@0.1.0 coverage:diff
+> npm run -s coverage:fetch-base && uvx diff-cover coverage/cobertura-coverage.xml --compare-branch=origin/develop --fail-under=100 && node scripts/coverage-branches.mjs origin/develop
+
+-------------
+Diff Coverage
+Diff: origin/develop...HEAD, staged and unstaged changes
+-------------
+src/app/[locale]/[...rest]/page.tsx (100%)
+src/app/[locale]/about/page.tsx (100%)
+src/app/[locale]/careers/[slug]/page.tsx (100%)
+src/app/[locale]/careers/page.tsx (100%)
+src/app/[locale]/demo/page.tsx (100%)
+src/app/[locale]/layout.tsx (100%)
+src/app/[locale]/news/[slug]/page.tsx (100%)
+src/app/[locale]/news/page.tsx (100%)
+src/app/[locale]/not-found.tsx (100%)
+src/app/[locale]/page.tsx (100%)
+src/app/[locale]/privacy/page.tsx (100%)
+src/app/[locale]/products/page.tsx (100%)
+src/app/[locale]/services/page.tsx (100%)
+src/app/fonts.ts (100%)
+src/app/global-not-found.tsx (100%)
+src/components/careers/careers-hero.tsx (100%)
+src/components/careers/flip-cards.tsx (100%)
+src/components/careers/growth-ring.tsx (100%)
+src/components/careers/inside.tsx (100%)
+src/components/careers/job-application-form.tsx (100%)
+src/components/careers/job-details.tsx (100%)
+src/components/careers/job-hero.tsx (100%)
+src/components/careers/life-frames.tsx (100%)
+src/components/careers/open-roles.tsx (100%)
+src/components/contact/capture-band.tsx (100%)
+src/components/contact/contact-form.tsx (100%)
+src/components/contact/contact-strings.ts (100%)
+src/components/contact/home-contact-form.tsx (100%)
+src/components/contact/home-contact.tsx (100%)
+src/components/home/capabilities.tsx (100%)
+src/components/home/front-doors.tsx (100%)
+src/components/home/hero-silk.tsx (100%)
+src/components/home/home-apps.tsx (100%)
+src/components/home/home-faq.tsx (100%)
+src/components/home/home-hero.tsx (100%)
+src/components/home/home-outcomes.tsx (100%)
+src/components/home/home-process.tsx (100%)
+src/components/home/home-values.tsx (100%)
+src/components/layout/language-menu.tsx (100%)
+src/components/layout/locale-link.tsx (100%)
+src/components/layout/mobile-menu.tsx (100%)
+src/components/layout/nav-data.ts (100%)
+src/components/layout/not-found-view.tsx (100%)
+src/components/layout/site-footer.tsx (100%)
+src/components/layout/site-header.tsx (100%)
+src/components/layout/site-nav.tsx (100%)
+src/components/news/home-news.tsx (100%)
+src/components/news/news-card.tsx (100%)
+src/components/news/news-filters.tsx (100%)
+src/components/products/journey/journey-section.tsx (100%)
+src/components/products/journey/road-map.tsx (100%)
+src/components/products/roadmap/road-stop-dialog.tsx (100%)
+src/content/about.ts (100%)
+src/content/apps.ts (100%)
+src/content/careers.ts (100%)
+src/content/home.ts (100%)
+src/content/job.ts (100%)
+src/content/news.ts (100%)
+src/content/offices.ts (100%)
+src/content/privacy.ts (100%)
+src/content/process.ts (100%)
+src/content/products.ts (100%)
+src/content/services.ts (100%)
+src/content/site-footer.ts (100%)
+src/content/values.ts (100%)
+src/i18n/content.ts (100%)
+src/i18n/locales.ts (100%)
+src/i18n/page-metadata.ts (100%)
+src/i18n/request-locale.ts (100%)
+src/i18n/shell.ts (100%)
+src/i18n/site-meta.ts (100%)
+src/lib/careers/open-roles.ts (100%)
+src/lib/news/all-posts.ts (100%)
+src/lib/news/latest-posts.ts (100%)
+src/lib/news/post.ts (100%)
+src/lib/sanity/localized.ts (100%)
+src/proxy.ts (100%)
+-------------
+Total:   479 lines
+Missing: 0 lines
+Coverage: 100%
+-------------
+
+warning: in the working copy of '_bmad-output/implementation-artifacts/deferred-work.md', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of '_bmad-output/implementation-artifacts/spec-vi-page-content.md', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of '_bmad-output/implementation-artifacts/spec-vi-page-content.md', CRLF will be replaced by LF the next time Git touches it
+C1 ok: 80 changed file(s) with branch coverage >= 80% vs origin/develop.
+===== exit 0
+===== $ npm run test:smoke
+
+> xiontech-landing-page@0.1.0 test:smoke
+> playwright test --project=smoke
+
+
+Running 18 tests using 6 workers
+
+  ok  1 [smoke] › e2e\careers.spec.ts:3:5 › careers page responds 200 with its H1, Inside XionTech and the open roles @smoke (307ms)
+  ok  6 [smoke] › e2e\home-hero.spec.ts:3:5 › home page serves the hero headline and CTA without JavaScript @smoke (298ms)
+  ok  7 [smoke] › e2e\privacy.spec.ts:3:5 › privacy page responds 200 with its H1 and no capture band @smoke (52ms)
+  ok  5 [smoke] › e2e\about.spec.ts:3:5 › about page serves content with anchors and FAQ without JavaScript @smoke (315ms)
+  ok  2 [smoke] › e2e\news.spec.ts:3:5 › news page responds 200 with its hero, the audience filters, the sample note and the demo capture @smoke (352ms)
+  ok  4 [smoke] › e2e\not-found.spec.ts:3:5 › unknown path answers 404 with the lost-trail copy and no capture band @smoke (372ms)
+  ok  3 [smoke] › e2e\job.spec.ts:3:5 › unknown job slug answers 404 with the Not found page @smoke (391ms)
+  ok 13 [smoke] › e2e\job.spec.ts:15:5 › apply route answers 200 to a filled honeypot without any secrets @smoke (218ms)
+  ok 11 [smoke] › e2e\smoke.spec.ts:3:5 › home page responds 200 with the site name @smoke (320ms)
+  ok  8 [smoke] › e2e\services.spec.ts:3:5 › services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript @smoke (406ms)
+  ok  9 [smoke] › e2e\products.spec.ts:3:5 › products page responds 200 with the H1, the map, the four card anchors and no Updates link @smoke (383ms)
+  ok 10 [smoke] › e2e\news.spec.ts:27:5 › unknown story slug answers 404 with the Not found page @smoke (409ms)
+  ok 14 [smoke] › e2e\smoke.spec.ts:24:5 › demo page responds 200 with send request button @smoke (78ms)
+  ok 12 [smoke] › e2e\not-found.spec.ts:20:5 › unknown Vietnamese path answers 404 in Vietnamese with one title and one robots tag @smoke (420ms)
+  ok 16 [smoke] › e2e\smoke.spec.ts:35:5 › contact route answers 200 to a filled honeypot without any secrets @smoke (67ms)
+  ok 18 [smoke] › e2e\smoke.spec.ts:48:5 › bare path redirects to a locale and /en answers 200 @smoke (45ms)
+  ok 17 [smoke] › e2e\not-found.spec.ts:35:5 › unsupported locale answers 404 instead of redirecting @smoke (120ms)
+  ok 15 [smoke] › e2e\news.spec.ts:40:5 › the first story on the News page answers 200 with its header, Back to News and no breadcrumb @smoke (157ms)
+
+  18 passed (38.7s)
+===== exit 0
+===== $ npm run build
+
+> xiontech-landing-page@0.1.0 build
+> next build
+
+▲ Next.js 16.3.6 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 28ms
+- Experiments (use with caution):
+  ✓ globalNotFound
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.1s
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/24) ...
+  Generating static pages using 11 workers (6/24) 
+  Generating static pages using 11 workers (12/24) 
+  Generating static pages using 11 workers (18/24) 
+✓ Generating static pages using 11 workers (24/24) in 1149ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /_not-found
+├   /[locale]
+│ ├ ● /en
+│ └ ● /vi
+├ ƒ /[locale]/[...rest]
+├   /[locale]/about
+│ ├ ● /en/about
+│ └ ● /vi/about
+├   /[locale]/careers
+│ ├ ● /en/careers
+│ └ ● /vi/careers
+├ ƒ /[locale]/careers/[slug]
+├   /[locale]/demo
+│ ├ ● /en/demo
+│ └ ● /vi/demo
+├   /[locale]/news
+│ ├ ● /en/news
+│ └ ● /vi/news
+├ ƒ /[locale]/news/[slug]
+├   /[locale]/privacy
+│ ├ ● /en/privacy
+│ └ ● /vi/privacy
+├   /[locale]/products
+│ ├ ● /en/products
+│ └ ● /vi/products
+├   /[locale]/services
+│ ├ ● /en/services
+│ └ ● /vi/services
+├ ƒ /api/careers/apply
+├ ƒ /api/careers/cv-upload
+├ ƒ /api/contact
+├ ƒ /api/revalidate
+├ ○ /apple-icon.png
+└ ○ /icon.png
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+===== exit 0
