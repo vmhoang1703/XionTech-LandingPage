@@ -1,7 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 import { createSilk } from "./silk-shader";
 
-function fakeGl(linked = true, shaders = true) {
+// `done` is the answer to "is the build finished?" of the parallel-compile
+// extension; without `parallel` the browser has no such extension.
+const COMPLETION = 99;
+
+function fakeGl(linked = true, shaders = true, parallel = false, done = true) {
   const calls: string[] = [];
   const gl = new Proxy(
     {
@@ -12,7 +16,10 @@ function fakeGl(linked = true, shaders = true) {
       FLOAT: 5,
       TRIANGLE_STRIP: 6,
       LINK_STATUS: 7,
-      getProgramParameter: () => linked,
+      getProgramParameter: (_program: unknown, name: number) =>
+        name === COMPLETION ? done : linked,
+      getExtension: () =>
+        parallel ? { COMPLETION_STATUS_KHR: COMPLETION } : null,
       getAttribLocation: () => 0,
       createShader: () => (shaders ? {} : null),
     } as Record<string, unknown>,
@@ -38,6 +45,36 @@ function canvasWith(context: unknown) {
   Object.defineProperty(canvas, "clientHeight", { value: 200 });
   return canvas;
 }
+
+describe("createSilk with the parallel-compile extension", () => {
+  const draws = (calls: string[]) =>
+    calls.filter((c) => c === "drawArrays").length;
+
+  it("does not wait for the build: it draws once the build is done", () => {
+    const state = fakeGl(true, true, true, false);
+    const silk = createSilk(canvasWith(state.gl));
+    expect(silk).not.toBeNull();
+    silk?.resize();
+    silk?.draw(9);
+    expect(draws(state.calls)).toBe(0);
+    expect(state.calls).not.toContain("useProgram");
+
+    const ready = fakeGl(true, true, true, true);
+    const quick = createSilk(canvasWith(ready.gl));
+    quick?.draw(9);
+    expect(draws(ready.calls)).toBe(1);
+    expect(ready.calls).toContain("viewport");
+  });
+
+  it("keeps the canvas empty when the finished build did not link", () => {
+    const state = fakeGl(false, true, true, true);
+    const silk = createSilk(canvasWith(state.gl));
+    expect(silk).not.toBeNull();
+    silk?.draw(9);
+    silk?.draw(10);
+    expect(draws(state.calls)).toBe(0);
+  });
+});
 
 describe("createSilk", () => {
   it("returns null when WebGL is not available", () => {

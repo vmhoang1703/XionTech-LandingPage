@@ -30,6 +30,8 @@ export interface ShellDictionary {
     logoAlt: string;
     menu: string;
     contact: string;
+    // The header button: short, so the bar fits a 412px phone in Vietnamese.
+    contactShort: string;
     cityPlano: string;
     cityHcmc: string;
   };
@@ -72,6 +74,7 @@ const en: ShellDictionary = {
     logoAlt: "XionTech, Get IT Done",
     menu: "Menu",
     contact: "Get in touch",
+    contactShort: "Get in touch",
     cityPlano: "Plano",
     cityHcmc: "Ho Chi Minh City",
   },
@@ -115,6 +118,7 @@ const vi: ShellDictionary = {
     logoAlt: "XionTech, Get IT Done",
     menu: "Menu",
     contact: "Liên hệ với chúng tôi",
+    contactShort: "Liên hệ",
     cityPlano: "Plano",
     cityHcmc: "TP. Hồ Chí Minh",
   },

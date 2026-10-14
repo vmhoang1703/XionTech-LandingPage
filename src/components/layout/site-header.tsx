@@ -24,7 +24,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
         data-autohide=""
         className="pointer-events-none sticky top-0 z-[var(--z-index-header)] mb-[calc(var(--spacing-header-room)*-1)] h-[var(--spacing-header-room)] px-3 pt-3"
       >
-        <div className="pointer-events-auto mx-auto flex h-[var(--spacing-header-height)] max-w-[1180px] items-center gap-[22px] rounded-full border border-white/80 bg-white/95 pr-3 pl-4 shadow-[0_14px_34px_-16px_rgb(11_23_48/0.32),0_1px_2px_rgb(11_23_48/0.06)] backdrop-blur-[18px] backdrop-saturate-[170%] max-[1080px]:h-14 max-[1080px]:gap-2 max-[1080px]:pr-1.5 max-[1080px]:pl-2.5 max-[339px]:gap-1">
+        <div className="pointer-events-auto mx-auto flex h-[var(--spacing-header-height)] max-w-[1180px] items-center gap-[22px] rounded-full border border-white/80 bg-white/95 pr-3 pl-4 shadow-[0_14px_34px_-16px_rgb(11_23_48/0.32),0_1px_2px_rgb(11_23_48/0.06)] backdrop-blur-[18px] backdrop-saturate-[170%] max-[1080px]:h-14 max-[1080px]:gap-2 max-[1080px]:pr-1.5 max-[1080px]:pl-2.5 max-[479px]:gap-1">
           <Link
             href={localeHref(locale, "/")}
             aria-label={t.homeLink}
@@ -42,10 +42,10 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
           <SiteNav locale={locale} />
           <Link
             href={localeHref(locale, CONTACT_HREF)}
-            className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[443px]:px-3.5 max-[411px]:hidden"
+            className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[479px]:px-3.5 max-[411px]:hidden"
           >
-            {t.contact}
-            <ArrowRightIcon aria-hidden="true" className="max-[443px]:hidden" />
+            {t.contactShort}
+            <ArrowRightIcon aria-hidden="true" className="max-[479px]:hidden" />
           </Link>
           <MobileMenu locale={locale} />
           <LanguageMenu />

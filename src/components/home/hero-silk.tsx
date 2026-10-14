@@ -23,6 +23,13 @@ import {
   SCENE_REST_TIME,
 } from "./globe-mark";
 
+// The scene starts this long after the page has loaded, when the title has
+// finished rising in (globals.css, "Hero entrance"). Opening WebGL and building
+// the scene took the main thread for about 200 ms right at the start, which held
+// back the first screen on a phone (speed pass, 2026-10-14); the static glow
+// shows until then.
+export const SCENE_DELAY_MS = 2500;
+
 // Below this width .hero-stage sits behind the headline (globals.css) and the
 // scene is the short mark-only story, with no globe (lead, 2026-10-13).
 const MARK_ONLY_QUERY = "(width < 1080px)";
@@ -58,12 +65,27 @@ export function HeroSilk() {
   const particleCanvasRef = useRef<HTMLCanvasElement>(null);
   const paintRef = useRef<((time: number) => void) | null>(null);
   const timeRef = useRef(SILK_START_TIME);
+  const [started, setStarted] = useState(false);
   const [supported, setSupported] = useState(false);
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
 
   useEffect(() => {
+    let timer = 0;
+    const wait = () => {
+      timer = window.setTimeout(() => setStarted(true), SCENE_DELAY_MS);
+    };
+    if (document.readyState === "complete") wait();
+    else window.addEventListener("load", wait, { once: true });
+    return () => {
+      window.removeEventListener("load", wait);
+      window.clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
     const canvas = canvasRef.current;
     const silk = canvas ? createSilk(canvas) : null;
     if (!canvas || !silk) return;
@@ -129,7 +151,7 @@ export function HeroSilk() {
       document.removeEventListener("visibilitychange", onVisibility);
       canvas.removeEventListener("webglcontextlost", onContextLost);
     };
-  }, []);
+  }, [started]);
 
   const running = supported && !paused && inView && pageVisible;
 
