@@ -157,6 +157,37 @@ describe("RootLayout", () => {
     },
   );
 
+  async function fontLinks(locale: string) {
+    document.head.innerHTML = "";
+    await renderMain(locale);
+    return [...document.head.querySelectorAll("link")].map((link) => [
+      link.rel,
+      link.getAttribute("href"),
+    ]);
+  }
+
+  it.each([
+    ["ja", "Noto+Sans+JP"],
+    ["ko", "Noto+Sans+KR"],
+    ["zh", "Noto+Sans+SC"],
+  ])("loads only its Noto Sans stylesheet on %s", async (locale, family) => {
+    const links = await fontLinks(locale);
+    const sheets = links.filter(([rel]) => rel === "stylesheet");
+    expect(sheets).toEqual([
+      [
+        "stylesheet",
+        `https://fonts.googleapis.com/css2?family=${family}:wght@400;500;600&display=swap`,
+      ],
+    ]);
+    expect(
+      links.filter(([rel]) => rel === "preconnect").map(([, href]) => href),
+    ).toEqual(["https://fonts.googleapis.com", "https://fonts.gstatic.com"]);
+  });
+
+  it.each(["en", "vi", "fr"])("loads no CJK font on %s", async (locale) => {
+    expect(await fontLinks(locale)).toEqual([]);
+  });
+
   it("sets the site title and description per locale", async () => {
     const en = await generateMetadata(params("en") as LayoutProps<"/[locale]">);
     const vi = await generateMetadata(params("vi") as LayoutProps<"/[locale]">);

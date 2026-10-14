@@ -4611,6 +4611,28 @@
 }
 
 /*
+  Japanese, Korean and Chinese pages load Noto Sans from Google Fonts
+  (layout.tsx). It follows each brand face, so Latin keeps the brand font.
+*/
+:root:lang(ja) {
+  --font-cjk: "Noto Sans JP";
+}
+:root:lang(ko) {
+  --font-cjk: "Noto Sans KR";
+}
+:root:lang(zh) {
+  --font-cjk: "Noto Sans SC";
+}
+:root:is(:lang(ja), :lang(ko), :lang(zh)) {
+  --font-display: var(--font-unbounded), var(--font-cjk), system-ui, sans-serif;
+  --font-brand: var(--font-lexend-exa), var(--font-cjk), system-ui, sans-serif;
+  --font-body:
+    var(--font-be-vietnam-pro), var(--font-cjk), system-ui, sans-serif;
+  --font-mono:
+    var(--font-jetbrains-mono), var(--font-cjk), ui-monospace, monospace;
+}
+
+/*
   Japanese, Korean and Chinese text has no case and reads badly tracked, so the
   negative and uppercase letter-spacing is reset. Unlayered and !important on
   purpose: it must beat every tracking utility and component rule.

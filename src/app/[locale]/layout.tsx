@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { htmlLang, isLocale, LOCALES } from "@/i18n/locales";
+import { htmlLang, isLocale, LOCALES, type Locale } from "@/i18n/locales";
 import { clientStrings } from "@/i18n/client-strings";
 import { setRequestLocale } from "@/i18n/request-locale";
 import { META } from "@/i18n/site-meta";
@@ -16,6 +16,14 @@ import "../globals.css";
 import { fontVariables } from "../fonts";
 
 export const dynamicParams = false;
+
+// Noto Sans for CJK glyphs, from Google Fonts and only on these locales' pages, so
+// en/vi/fr never load it (next/font would add its CSS to every locale).
+const CJK_FONTS: Partial<Record<Locale, string>> = {
+  ja: "Noto+Sans+JP",
+  ko: "Noto+Sans+KR",
+  zh: "Noto+Sans+SC",
+};
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -41,6 +49,7 @@ export default async function RootLayout({
 }: LayoutProps<"/[locale]">) {
   const locale = await resolveLocale(params);
   setRequestLocale(locale);
+  const cjkFont = CJK_FONTS[locale];
   return (
     <html
       lang={htmlLang(locale)}
@@ -50,6 +59,21 @@ export default async function RootLayout({
       className={`${fontVariables} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {cjkFont && (
+          <>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link
+              rel="preconnect"
+              href="https://fonts.gstatic.com"
+              crossOrigin=""
+            />
+            <link
+              rel="stylesheet"
+              href={`https://fonts.googleapis.com/css2?family=${cjkFont}:wght@400;500;600&display=swap`}
+              precedence="default"
+            />
+          </>
+        )}
         {/* With no script, a count-up figure shows its number (count-up.tsx). */}
         <noscript>
           <style>{`.count-up[data-count="wait"] { --count: var(--to) !important; }`}</style>
