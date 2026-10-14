@@ -1,6 +1,12 @@
 "use client";
 
-import { useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import { useLocale } from "@/components/layout/locale-link";
 import {
   categoryLabels,
@@ -9,6 +15,7 @@ import {
   newsPageVi,
 } from "@/content/news";
 import { pickLocale } from "@/i18n/content";
+import { readMotionPaused } from "@/lib/motion/motion-preference";
 import type { Audience } from "@/lib/news/audience";
 
 export type FilterItem = {
@@ -37,6 +44,10 @@ function columns() {
   return matchMedia(TWO_COLUMNS).matches ? 2 : 3;
 }
 
+// A card that arrives with others in its row waits this long per column, so a
+// row unfolds left to right (Amber's prototype, site.js "press").
+const UNFOLD_STAGGER_MS = 260;
+
 // The server (and so the no-JavaScript page) decides the lead for 3 columns.
 const serverColumns = () => 3;
 
@@ -59,12 +70,51 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
   ];
   const [active, setActive] = useState(newsPage.allFilter.id);
   const allRef = useRef<HTMLButtonElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const cols = useSyncExternalStore(subscribe, columns, serverColumns);
   const shown =
     active === newsPage.allFilter.id
       ? items
       : items.filter((item) => item.category === active);
   const hasLead = shown.length === 1 || shown.length - 1 >= cols;
+
+  // Each story card unfolds from the top as it comes into view, one after
+  // another across its row; a filter change replays it (lead, 2026-10-13).
+  // Only cards the script marks wait hidden; reduced motion or a saved Pause:
+  // no unfold.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (
+      !grid ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      readMotionPaused()
+    ) {
+      return;
+    }
+    const cards = [...grid.children] as HTMLElement[];
+    const lead = cards[0]?.classList.contains("s-lead") ? 1 : 0;
+    for (const card of cards) card.removeAttribute("data-in");
+    grid.setAttribute("data-unfold", "");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const { target, isIntersecting } of entries) {
+          if (!isIntersecting) continue;
+          const card = target as HTMLElement;
+          observer.unobserve(card);
+          const index = cards.indexOf(card);
+          const column = index < lead ? 0 : (index - lead) % cols;
+          card.style.setProperty(
+            "--unfold-delay",
+            `${column * UNFOLD_STAGGER_MS}ms`,
+          );
+          card.setAttribute("data-in", "");
+        }
+      },
+      { threshold: 0.01 },
+    );
+    for (const card of cards) observer.observe(card);
+    return () => observer.disconnect();
+  }, [active, cols]);
 
   function showAll() {
     setActive(newsPage.allFilter.id);
@@ -91,7 +141,7 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
         <p className="sample">{newsPage.sampleNote}</p>
       </div>
       {shown.length > 0 ? (
-        <div className="sgrid" id="newsGrid">
+        <div ref={gridRef} className="sgrid" id="newsGrid">
           {shown.map((item, index) => (
             <div
               key={item.key}

@@ -2,6 +2,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { notFound } from "@/content/not-found";
+import { heroWords } from "@/components/sections/hero-words";
 import type { Locale } from "@/i18n/locales";
 import { SHELL } from "@/i18n/shell";
 
@@ -12,6 +13,7 @@ export function NotFoundView({ locale }: Readonly<{ locale: Locale }>) {
   const t = SHELL[locale];
   const { title, lede, primary, here } = t.notFound;
 
+  const hw = heroWords();
   return (
     <section
       lang={locale}
@@ -21,7 +23,7 @@ export function NotFoundView({ locale }: Readonly<{ locale: Locale }>) {
       <div className="wrap">
         <div className="trail-grid">
           <div>
-            <h1 id="not-found-title">{title}</h1>
+            <h1 id="not-found-title">{hw.words(title)}</h1>
             <p className="lede">{lede}</p>
             <div className="mt-8 flex flex-wrap gap-3.5">
               <LocaleLink

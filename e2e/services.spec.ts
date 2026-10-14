@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+const text = (html: string) => html.replaceAll(/<[^>]*>/g, "");
+
 test(
   "services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript",
   { tag: "@smoke" },
@@ -12,7 +14,8 @@ test(
       "<title>Software Outsourcing Vietnam | Product Engineering, AI, Low-code &amp; Cloud | XionTech</title>",
     );
     // H1 is present in server-rendered HTML
-    expect(html).toContain("Software teams that");
+    // Each title word is its own span (the hero entrance): compare the text.
+    expect(text(html)).toContain("Software teams that");
     expect(html).toContain("get IT done");
     // Eight service card IDs and section title, anchors exist without JavaScript
     expect(html).toContain('<article id="product-engineering"');

@@ -18,6 +18,7 @@ import {
 } from "@/content/services";
 import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const generateMetadata = localeMetadata({
   en: servicesMeta,
@@ -49,6 +50,7 @@ export default async function ServicesPage({
     vi: servicesProcessVi,
   });
 
+  const t = heroWords();
   return (
     <>
       <section
@@ -57,8 +59,17 @@ export default async function ServicesPage({
       >
         <div className="wrap">
           <h1 id="services-h1">
-            {title.lead}
-            <span className="hl">{title.highlight}</span>
+            {t.words(title.lead)}
+            <span className="hl" {...t.unit()}>
+              {title.highlight}
+              {/* A light window slides across a pale copy of the words,
+                  drawn from data-text (globals.css, "Services hero shine"). */}
+              <span
+                className="hl-shine"
+                aria-hidden="true"
+                data-text={title.highlight}
+              />
+            </span>
             {title.tail}
           </h1>
           <p className="lede mt-5">{lede}</p>

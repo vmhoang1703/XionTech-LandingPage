@@ -1,15 +1,45 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties } from "react";
+import { whenIdle } from "@/lib/idle/when-idle";
 import { readMotionPaused } from "@/lib/motion/motion-preference";
 import { ROOT_MARGIN } from "./scroll-reveal";
 
+const COUNT_MS = 1600;
+// Ease-out cubic: fast at first, settling on the number.
+const easeOut = (t: number) => 1 - (1 - t) ** 3;
+
+// Counts the figure from 0 to `to`, one frame at a time, by at most a 30th of
+// the number a frame (1 for every figure we show), so a slow phone that drops
+// frames still shows 0, 1, 2 … and catches up after. Returns a cancel.
+function count(figure: HTMLElement, to: number) {
+  const step = Math.max(1, Math.ceil(to / 30));
+  let shown = 0;
+  let start: number | undefined;
+  let frame = 0;
+  const tick = (now: number) => {
+    start ??= now;
+    const target = Math.round(
+      to * easeOut(Math.min(1, (now - start) / COUNT_MS)),
+    );
+    shown = Math.min(target, shown + step);
+    figure.style.setProperty("--count", String(shown));
+    if (shown < to) frame = requestAnimationFrame(tick);
+  };
+  // 0 first: leaving "wait" alone would show the number for a frame.
+  figure.style.setProperty("--count", "0");
+  figure.dataset.count = "play";
+  frame = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(frame);
+}
+
 // A figure that counts up from 0 (globals.css, "Count-up"). The real number is
 // always in the HTML; CSS draws the count over it, so the width never changes.
-// On screen at load, CSS counts at first paint with no script. Below the
-// screen, this script holds it at 0 ("wait") and plays it as it comes into
-// view, with the scroll reveal. A saved Pause shows the plain number ("off");
-// under reduced motion CSS never counts.
+// It starts held at 0 ("wait") and counts ("play") once it is in view and the
+// page has a quiet moment, one step a frame at most, so every number shows
+// (lead, 2026-10-13). A saved Pause
+// shows the plain number ("off"); under reduced motion CSS never counts, and
+// with no script the layout's <noscript> style shows the number.
 export function CountUp({ value }: Readonly<{ value: string }>) {
   const ref = useRef<HTMLSpanElement>(null);
 
@@ -22,27 +52,32 @@ export function CountUp({ value }: Readonly<{ value: string }>) {
       figure.dataset.count = "off";
       return;
     }
+    let cancelStart = () => {};
+    let cancelCount = () => {};
     const observer = new IntersectionObserver(
       (entries) => {
         // A fast scroll can deliver several entries at once: the last is now.
-        if (!entries.at(-1)?.isIntersecting) {
-          figure.dataset.count = "wait";
-          return;
-        }
-        // In view: play a held count; one on screen at load already counted.
-        if (figure.dataset.count === "wait") figure.dataset.count = "play";
+        if (!entries.at(-1)?.isIntersecting) return;
         observer.disconnect();
+        cancelStart = whenIdle(() => {
+          cancelCount = count(figure, Number.parseInt(value, 10));
+        });
       },
       { rootMargin: ROOT_MARGIN },
     );
     observer.observe(figure);
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      cancelStart();
+      cancelCount();
+    };
+  }, [value]);
 
   return (
     <span
       ref={ref}
       className="count-up"
+      data-count="wait"
       style={{ "--to": value } as CSSProperties}
     >
       {value}

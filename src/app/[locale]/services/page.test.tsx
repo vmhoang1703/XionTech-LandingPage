@@ -54,6 +54,11 @@ describe("ServicesPage", () => {
     expect(h1s[0].id).toBe("services-h1");
     expect(h1s[0].textContent).toBe("Software teams that get IT done.");
     expect(h1s[0].querySelector(".hl")?.textContent).toBe("get IT done");
+    // The shine (lead, 2026-10-13) draws its pale copy from data-text.
+    const shine = h1s[0].querySelector(".hl-shine");
+    expect(shine?.getAttribute("aria-hidden")).toBe("true");
+    expect(shine?.getAttribute("data-text")).toBe("get IT done");
+    expect(shine?.textContent).toBe("");
     expect(hero?.querySelector("p.lede")?.textContent).toContain(
       "Product engineering, AI, low-code and cloud delivery",
     );
@@ -66,7 +71,7 @@ describe("ServicesPage", () => {
     const links = Array.from(row?.querySelectorAll("a") ?? []);
     expect(links).toHaveLength(1);
     expect(links[0].textContent).toBe("Start a project");
-    expect(links[0].getAttribute("href")).toBe("/en/demo#project");
+    expect(links[0].getAttribute("href")).toBe("/en#contact");
     expect(links[0].classList.contains("btn-primary")).toBe(true);
     expect(screen.queryByText("See our 4-D process")).toBeNull();
     expect(container.querySelector(".clock-strip")).toBeNull();

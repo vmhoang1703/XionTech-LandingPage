@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { OpenRoleDetail } from "@/lib/careers/open-roles";
 import { undefinedClasses } from "@/test-utils/css-classes";
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
@@ -10,6 +10,18 @@ import { JobHero } from "./job-hero";
 // jsdom has no canvas: HeroArt skips the ribbon.
 beforeEach(() => {
   vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+  // jsdom has no IntersectionObserver: the Apply bar stays hidden.
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      observe() {}
+      disconnect() {}
+    },
+  );
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
 });
 
 const full: OpenRoleDetail = {

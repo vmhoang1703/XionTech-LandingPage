@@ -93,6 +93,8 @@ const menuLinks = () =>
   [...(panel()?.querySelectorAll("a") ?? [])].filter(
     (a) => a.getClientRects().length > 0,
   );
+// The last focusable item: the second phone under Get in touch (lead, 2026-10-13).
+const LAST = "Ho Chi Minh City +84 908 107 552";
 const tab = (shiftKey = false) =>
   fireEvent.keyDown(document, { key: "Tab", shiftKey });
 
@@ -107,22 +109,26 @@ describe("MobileMenu", () => {
     expect(expanded()).toBe("true");
     const links = menuLinks();
     expect(links.map((a) => a.textContent)).toEqual([
-      "Đặt lịch demo",
       "Trang chủ",
       "Sản phẩm",
       "Dịch vụ",
       "Tin tức",
       "Về chúng tôi",
       "Tuyển dụng",
+      "Liên hệ với chúng tôi",
+      "Plano +1 469 322 9899",
+      "TP. Hồ Chí Minh +84 908 107 552",
     ]);
     expect(links.map((a) => a.getAttribute("href"))).toEqual([
-      "/vi/demo",
       "/vi",
       "/vi/products",
       "/vi/services",
       "/vi/news",
       "/vi/about",
       "/vi/careers",
+      "/vi#contact",
+      "tel:+14693229899",
+      "tel:+84908107552",
     ]);
     expect(panel()?.getAttribute("aria-label")).toBe("Điều hướng chính");
   });
@@ -136,7 +142,7 @@ describe("MobileMenu", () => {
     expect(menuButton().className).toContain("size-11");
     // A 320px pill must not squeeze it below 44px (lead, 2026-10-13).
     expect(menuButton().className).toContain("shrink-0");
-    // Round like the nav links; Book a demo keeps it at the right edge.
+    // Round like the nav links; Get in touch keeps it at the right edge.
     expect(menuButton().className).toContain("rounded-full");
     expect(menuButton().className).not.toContain("ml-auto");
     expect(menuButton().className).not.toContain("border");
@@ -152,7 +158,7 @@ describe("MobileMenu", () => {
     expect(document.documentElement.style.overflow).toBe("");
   });
 
-  it("opens on click and lists Book a demo first, then the six pages", () => {
+  it("opens on click and lists the six pages, then Get in touch and both phones", () => {
     render(<Header />);
     fireEvent.click(menuButton());
     expect(expanded()).toBe("true");
@@ -163,13 +169,15 @@ describe("MobileMenu", () => {
       a.getAttribute("href"),
     ]);
     expect(hrefs).toEqual([
-      ["Book a demo", "/en/demo"],
       ["Home", "/en"],
       ["Products", "/en/products"],
       ["Services", "/en/services"],
       ["News", "/en/news"],
       ["About", "/en/about"],
       ["Careers", "/en/careers"],
+      ["Get in touch", "/en#contact"],
+      ["Plano +1 469 322 9899", "tel:+14693229899"],
+      [LAST, "tel:+84908107552"],
     ]);
   });
 
@@ -190,19 +198,21 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
   });
 
-  it("offers Book a demo first at every width (the header hides it below 412px)", () => {
+  it("ends with Get in touch and both phones at any width, no Book a demo", () => {
     for (const w of [390, 640, 800]) {
       width = w;
       const { unmount } = render(<Header />);
       fireEvent.click(menuButton());
       expect(menuLinks().map((a) => a.textContent)).toEqual([
-        "Book a demo",
         "Home",
         "Products",
         "Services",
         "News",
         "About",
         "Careers",
+        "Get in touch",
+        "Plano +1 469 322 9899",
+        LAST,
       ]);
       unmount();
     }
@@ -265,7 +275,7 @@ describe("MobileMenu", () => {
     it("wraps Tab from the last item to the logo link", () => {
       render(<Header />);
       fireEvent.click(menuButton());
-      screen.getByRole("link", { name: "Careers" }).focus();
+      screen.getByRole("link", { name: LAST }).focus();
       expect(tab()).toBe(false);
       expect(document.activeElement).toBe(
         screen.getByRole("link", { name: "logo" }),
@@ -278,7 +288,7 @@ describe("MobileMenu", () => {
       screen.getByRole("link", { name: "logo" }).focus();
       expect(tab(true)).toBe(false);
       expect(document.activeElement).toBe(
-        screen.getByRole("link", { name: "Careers" }),
+        screen.getByRole("link", { name: LAST }),
       );
     });
 
@@ -305,7 +315,7 @@ describe("MobileMenu", () => {
       expect(document.activeElement?.textContent).toBe("logo");
       page.focus();
       expect(tab(true)).toBe(false);
-      expect(document.activeElement?.textContent).toBe("Careers");
+      expect(document.activeElement?.textContent).toBe(LAST);
     });
 
     it("does not trap Tab while closed", () => {
@@ -320,11 +330,11 @@ describe("MobileMenu", () => {
     width = 800;
     render(<Header />);
     fireEvent.click(menuButton());
-    screen.getByRole("link", { name: "Careers" }).focus();
+    screen.getByRole("link", { name: LAST }).focus();
     tab();
     expect(document.activeElement?.textContent).toBe("logo");
     tab(true);
-    expect(document.activeElement?.textContent).toBe("Careers");
+    expect(document.activeElement?.textContent).toBe(LAST);
   });
 
   it("closes when a menu link is activated", () => {
@@ -369,6 +379,15 @@ describe("MobileMenu", () => {
       for (const listener of mediaListeners) listener({ matches: false });
     });
     expect(expanded()).toBe("true");
+  });
+
+  it("closes when Get in touch is activated", () => {
+    render(<Header />);
+    fireEvent.click(menuButton());
+    const contact = screen.getByRole("link", { name: "Get in touch" });
+    contact.addEventListener("click", (event) => event.preventDefault());
+    fireEvent.click(contact);
+    expect(expanded()).toBe("false");
   });
 
   it("ignores a click whose target is not an element", () => {

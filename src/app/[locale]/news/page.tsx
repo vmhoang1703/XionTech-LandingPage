@@ -9,6 +9,7 @@ import { isLocale, type Locale } from "@/i18n/locales";
 import { getAllPosts } from "@/lib/news/all-posts";
 import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const generateMetadata = localeMetadata({
   en: newsMeta,
@@ -41,6 +42,7 @@ export default async function NewsPage({
     vi: newsPageVi,
   });
 
+  const t = heroWords();
   return (
     <PageScene fade={false}>
       <section
@@ -48,7 +50,7 @@ export default async function NewsPage({
         aria-labelledby="news-h1"
       >
         <div className="wrap nhead">
-          <h1 id="news-h1">{title}</h1>
+          <h1 id="news-h1">{t.words(title)}</h1>
           <p>{sub}</p>
         </div>
       </section>

@@ -1,15 +1,23 @@
 "use client";
 
-import { ListIcon, XIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { contactByPrefix, hcmc, plano } from "@/content/offices";
 import { localeHref, type Locale } from "@/i18n/locales";
 import { SHELL } from "@/i18n/shell";
-import { currentSection, NAV_LINKS } from "./nav-data";
+import { CONTACT_HREF, currentSection, NAV_LINKS } from "./nav-data";
 import { itemClass } from "./site-nav";
 
 const MENU_ID = "mobile-menu";
+
+// Under the links (lead, 2026-10-13): Get in touch and both headquarters'
+// phones, so contact is one tap away from any page.
+const MENU_PHONES = [
+  { city: "cityPlano", phone: contactByPrefix(plano, "tel:") },
+  { city: "cityHcmc", phone: contactByPrefix(hcmc, "tel:") },
+] as const;
 // The menu is for 1080px and below (inclusive, as the prototype CSS); above it the desktop
 // nav shows, so growing past it closes the menu (decision T6).
 const DESKTOP_QUERY = "(min-width: 1081px)";
@@ -128,10 +136,6 @@ export function MobileMenu({ locale }: Readonly<{ locale: Locale }>) {
         hidden={!open}
         className="border-border bg-paper pointer-events-auto absolute inset-x-3 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-room))] flex-col items-stretch gap-0.5 overflow-auto rounded-[28px] border p-4 shadow-[0_24px_48px_-24px_rgb(11_23_48/0.35)]"
       >
-        {/* Below 412px the header hides Book a demo, so the menu always offers it first. */}
-        <Link href={localeHref(locale, "/demo")} className={itemClass}>
-          {t.demo}
-        </Link>
         {NAV_LINKS.map((item) => (
           <Link
             key={item.section}
@@ -142,6 +146,21 @@ export function MobileMenu({ locale }: Readonly<{ locale: Locale }>) {
             {t[item.section]}
           </Link>
         ))}
+        <div className="menu-contact">
+          <Link
+            href={localeHref(locale, CONTACT_HREF)}
+            className="btn btn-primary"
+            onClick={() => setOpenedOn(null)}
+          >
+            {t.contact}
+            <ArrowRightIcon aria-hidden="true" />
+          </Link>
+          {MENU_PHONES.map(({ city, phone }) => (
+            <a key={city} href={phone.href}>
+              {t[city]} {phone.label}
+            </a>
+          ))}
+        </div>
       </nav>
     </>
   );

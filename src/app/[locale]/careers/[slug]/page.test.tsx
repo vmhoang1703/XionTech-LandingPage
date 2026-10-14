@@ -25,9 +25,18 @@ const metadata = await generateMetadata({
 // jsdom has no canvas: HeroArt skips the ribbon.
 beforeEach(() => {
   vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(null);
+  // jsdom has no IntersectionObserver: the Apply bar stays hidden.
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      observe() {}
+      disconnect() {}
+    },
+  );
 });
 
 afterEach(() => {
+  vi.unstubAllGlobals();
   vi.restoreAllMocks();
   vi.clearAllMocks();
 });

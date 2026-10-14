@@ -97,7 +97,7 @@ describe("postSubmission", () => {
     await expect(postSubmission({})).resolves.toEqual({ kind: "send" });
   });
 
-  it("aborts after 15 seconds and reports send", async () => {
+  it("aborts after 32 seconds and reports send", async () => {
     vi.useFakeTimers();
     fetchMock.mockImplementation(
       (_url: string, init: RequestInit) =>
@@ -112,8 +112,8 @@ describe("postSubmission", () => {
       result = value;
     });
 
-    expect(SEND_TIMEOUT_MS).toBe(15_000);
-    await vi.advanceTimersByTimeAsync(14_999);
+    expect(SEND_TIMEOUT_MS).toBe(32_000);
+    await vi.advanceTimersByTimeAsync(31_999);
     expect(result).toBeUndefined();
     expect(fetchMock.mock.calls[0][1].signal.aborted).toBe(false);
 
@@ -122,7 +122,7 @@ describe("postSubmission", () => {
     expect(result).toEqual({ kind: "send" });
   });
 
-  it("aborts after a given timeout instead of 15 seconds", async () => {
+  it("aborts after a given timeout instead of 32 seconds", async () => {
     vi.useFakeTimers();
     fetchMock.mockImplementation(
       (_url: string, init: RequestInit) =>

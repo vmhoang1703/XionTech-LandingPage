@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { jobDetails as jobDetailsEn, jobDetailsVi } from "@/content/job";
 import { fallbackLang, pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
+import { ApplyBar } from "./apply-bar";
 import type { OpenRoleDetail } from "@/lib/careers/open-roles";
 
 function CheckList({
@@ -79,6 +80,7 @@ export function JobDetails({
         <div id="apply" className="form-card">
           {children}
         </div>
+        <ApplyBar target="apply" />
       </div>
     </section>
   );

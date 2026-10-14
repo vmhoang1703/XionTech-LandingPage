@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { localeMetadata } from "@/i18n/page-metadata";
 import { CheckCircleIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
@@ -16,8 +17,11 @@ import {
 } from "@/content/offices";
 import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { heroWords } from "@/components/sections/hero-words";
 
-export const generateMetadata = localeMetadata({
+// Kept but inactive (lead, 2026-10-13): nothing links here and search engines
+// leave it out; every call to action uses the Home Get in touch form.
+const pageMetadata = localeMetadata({
   en: {
     title: CONTACT_STRINGS.metaTitle,
     description: CONTACT_STRINGS.metaDescription,
@@ -27,6 +31,15 @@ export const generateMetadata = localeMetadata({
     description: CONTACT_STRINGS_VI.metaDescription,
   },
 });
+
+export async function generateMetadata(
+  props: Parameters<typeof pageMetadata>[0],
+): Promise<Metadata> {
+  return {
+    ...(await pageMetadata(props)),
+    robots: { index: false, follow: false },
+  };
+}
 
 export default async function DemoPage({
   params,
@@ -42,6 +55,7 @@ export default async function DemoPage({
     en: otherLocationsEn,
     vi: otherLocationsVi,
   });
+  const t = heroWords();
   return (
     <section className="hero-navy page-hero" aria-labelledby="demo-h1">
       <HeroArt tone="navy" />
@@ -53,8 +67,10 @@ export default async function DemoPage({
             <span>{hero.breadcrumbCurrent}</span>
           </nav>
           <h1 id="demo-h1">
-            {hero.titleBefore}
-            <span className="hl">{hero.titleHighlight}</span>
+            {t.words(hero.titleBefore)}
+            <span className="hl" {...t.unit()}>
+              {hero.titleHighlight}
+            </span>
             {hero.titleAfter}
           </h1>
           <ul className="list-check">

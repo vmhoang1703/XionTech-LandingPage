@@ -10,6 +10,10 @@ export interface Service {
   name: string;
 }
 
+// Every call to action goes to the Home Get in touch form; the Demo page is
+// kept but not linked (lead, 2026-10-13). Prefix it with localeHref.
+export const CONTACT_HREF = "/#contact";
+
 // Services (8 total, in order)
 export const SERVICES: Service[] = [
   {

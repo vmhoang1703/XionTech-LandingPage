@@ -18,7 +18,7 @@ import {
   type ContactErrors,
   type RequestKind,
 } from "@/lib/contact/contact-rules";
-import { CAPTURE_EMAIL_KEY } from "./capture-storage";
+import { fillCapturedEmail } from "./capture-storage";
 import { pickLocale } from "@/i18n/content";
 import {
   CONTACT_STRINGS,
@@ -175,17 +175,7 @@ export function ContactForm() {
   // The capture band leaves its email in session storage. Read it once after
   // mount, never overwrite a typed value, and never fail when storage is blocked.
   useEffect(() => {
-    try {
-      const email = sessionStorage.getItem(CAPTURE_EMAIL_KEY);
-      if (email === null) return;
-      sessionStorage.removeItem(CAPTURE_EMAIL_KEY);
-      const input = document.getElementById("f-email");
-      if (input instanceof HTMLInputElement && input.value === "") {
-        input.value = email;
-      }
-    } catch {
-      // Storage is blocked: the visitor still gets the form, without a prefill.
-    }
+    fillCapturedEmail("f-email");
   }, []);
 
   // `/demo#project` has no element to scroll to, so bring the form card in view.

@@ -22,7 +22,7 @@ export const servicesPage = {
   },
   lede: "Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver.",
   primaryCta: {
-    href: "/demo#project",
+    href: "/#contact",
     label: "Start a project",
   },
 };

@@ -13,11 +13,11 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:vi-review`.
 
-**Total:** 504 strings, 153 AI and 351 prototype.
+**Total:** 505 strings, 155 AI and 350 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
-5 AI, 21 prototype.
+5 AI, 22 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -32,7 +32,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `shell:SHELL.nav.news` | News | Tin tức |
 | Prototype | `shell:SHELL.nav.about` | About | Về chúng tôi |
 | Prototype | `shell:SHELL.nav.careers` | Careers | Tuyển dụng |
-| Prototype | `shell:SHELL.nav.demo` | Book a demo | Đặt lịch demo |
+| Prototype | `shell:SHELL.nav.contact` | Get in touch | Liên hệ với chúng tôi |
+| Prototype | `shell:SHELL.nav.cityHcmc` | Ho Chi Minh City | TP. Hồ Chí Minh |
 | Prototype | `shell:SHELL.footer.blurb` | Education technology products and software delivery services for schools and businesses. | Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp. |
 | Prototype | `shell:SHELL.footer.forSchools` | For schools | Cho nhà trường |
 | Prototype | `shell:SHELL.footer.forStudents` | For students | Cho học sinh |
@@ -58,7 +59,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Home
 
-19 AI, 56 prototype.
+20 AI, 55 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -79,6 +80,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `home:homeProcessVi.link.label` | See the full process | Xem toàn bộ quy trình |
 | AI | `home:homeAppsVi.title` | One connected school. | Một ngôi trường kết nối. |
 | AI | `home:homeFaqVi.title` | Your questions, answered. | Giải đáp thắc mắc của bạn. |
+| AI | `home:homeFaqVi.items[0].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | Hãy liên hệ với chúng tôi. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn. |
 | AI | `home:homeFaqVi.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
 | AI | `home:homeFaqVi.link.label` | See all questions | Xem tất cả câu hỏi |
 | Prototype | `home:homeHeroVi.cta.label` | Get in touch | Liên hệ với chúng tôi |
@@ -131,7 +133,6 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `home:homeAppsVi.link.label` | Explore products | Khám phá sản phẩm |
 | Prototype | `home:homeFaqVi.lede` | Straight answers about our products, our services and how we work. | Câu trả lời thẳng thắn về sản phẩm, dịch vụ và cách chúng tôi làm việc. |
 | Prototype | `home:homeFaqVi.items[0].question` | How can our school try Parent Hub or Staff Hub? | Trường chúng tôi có thể trải nghiệm Parent Hub hoặc Staff Hub như thế nào? |
-| Prototype | `home:homeFaqVi.items[0].answer` | Book a demo. We walk you through the apps using scenarios from your own school. | Hãy đặt lịch demo. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn. |
 | Prototype | `home:homeFaqVi.items[1].question` | How do you work across time zones? | Các bạn làm việc qua nhiều múi giờ như thế nào? |
 | Prototype | `home:homeFaqVi.items[2].question` | What results can we expect? | Chúng tôi có thể mong đợi kết quả gì? |
 | Prototype | `home:homeFaqVi.items[2].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | Phát triển tối ưu chi phí bởi đội ngũ kỹ sư Việt Nam giàu kinh nghiệm, phát hành đúng hạn và kết quả đo lường được, hỗ trợ sự phát triển của bạn. |
@@ -313,7 +314,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## About
 
-19 AI, 29 prototype.
+20 AI, 29 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -328,6 +329,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `about:aboutStoryVi.chapters[1].text` | [Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all. | [Placeholder] Từ hình ảnh đó, một nhóm người tiên phong đã lập nên newXion tại Mỹ. Dẫn dắt bởi những giá trị cốt lõi bền vững, họ xây dựng một cộng đồng mang tinh thần của ngọn núi: nơi con người gắn kết, làm chủ công nghệ tiên tiến và xây dựng những hệ thống CNTT xuất sắc, vì nhân loại và một tương lai tươi sáng hơn cho tất cả. |
 | AI | `about:aboutFaqVi.items[0].answer` | We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing. | Chúng tôi xây dựng nền tảng riêng cho trường học (Parent Hub, Staff Hub và IoT Device Management) và phát triển phần mềm cho doanh nghiệp khác: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo sản phẩm và cung cấp nhân sự. |
 | AI | `about:aboutFaqVi.items[1].answer` | EdTech is our core. We also serve Healthcare, Logistics and Private Equity. | Giáo dục là thế mạnh cốt lõi. Chúng tôi cũng phục vụ Y tế, Logistics và Quỹ đầu tư tư nhân. |
+| AI | `about:aboutFaqVi.items[2].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | Hãy liên hệ với chúng tôi. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn. |
 | AI | `about:aboutFaqVi.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
 | AI | `about:aboutFaqVi.items[6].answer` | [Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning. | [Placeholder] Chúng tôi làm việc trung thực, minh bạch và theo chuẩn mực đạo đức rõ ràng, cùng với tự động hóa bảo mật và quét liên tục. |
 | AI | `about:aboutOfficesVi.title` | Two headquarters, four locations. | Hai trụ sở chính, bốn địa điểm. |
@@ -344,12 +346,12 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `about:aboutStoryVi.chapters[1].title` | The purpose | Mục đích |
 | Prototype | `about:aboutStoryVi.closing.line` | Our inspiration is a mountain. Our purpose is people. | Cảm hứng của chúng tôi là một ngọn núi. Mục đích của chúng tôi là con người. |
 | Prototype | `about:aboutStoryVi.closing.tags` | Vision · Community · Technology | Tầm nhìn · Cộng đồng · Công nghệ |
+| Prototype | `about:aboutStoryVi.cue` | Scroll | Cuộn xuống |
 | Prototype | `about:aboutFaqVi.title` | Your question, we answer | Bạn hỏi, chúng tôi trả lời |
 | Prototype | `about:aboutFaqVi.lede` | Straight answers about our products, our services and how we work. | Câu trả lời thẳng thắn về sản phẩm, dịch vụ và cách chúng tôi làm việc. |
 | Prototype | `about:aboutFaqVi.items[0].question` | What does XionTech do? | XionTech làm gì? |
 | Prototype | `about:aboutFaqVi.items[1].question` | Which industries do you work with? | Các bạn làm việc với những lĩnh vực nào? |
 | Prototype | `about:aboutFaqVi.items[2].question` | How can our school try Parent Hub or Staff Hub? | Trường chúng tôi có thể trải nghiệm Parent Hub hoặc Staff Hub như thế nào? |
-| Prototype | `about:aboutFaqVi.items[2].answer` | Book a demo. We walk you through the apps using scenarios from your own school. | Hãy đặt lịch demo. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn. |
 | Prototype | `about:aboutFaqVi.items[3].question` | How do you work across time zones? | Các bạn làm việc qua nhiều múi giờ như thế nào? |
 | Prototype | `about:aboutFaqVi.items[4].question` | When do you shape the solution to our needs? | Khi nào giải pháp được điều chỉnh theo nhu cầu của chúng tôi? |
 | Prototype | `about:aboutFaqVi.items[4].answer` | From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins. | Ngay từ đầu. Bước Khám phá, bước đầu tiên trong quy trình bốn bước của chúng tôi, xác định mục tiêu, người dùng và phạm vi trước khi bắt đầu thiết kế. |
@@ -547,7 +549,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Contact, demo form and capture band
 
-20 AI, 52 prototype.
+20 AI, 51 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -605,8 +607,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.consent` | We only use your details to reply to your message. | Chúng tôi chỉ dùng thông tin của bạn để phản hồi tin nhắn này. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.successHeading` | Summit reached. Thanks — we've received your message. | Đã lên tới đỉnh. Cảm ơn bạn, chúng tôi đã nhận được tin nhắn. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.successText` | Our team will review what you shared and get in touch with you. | Đội ngũ của chúng tôi sẽ xem nội dung bạn chia sẻ và liên hệ với bạn. |
-| Prototype | `contact-strings:CONTACT_STRINGS_VI.capture.demo.button` | Book a demo | Đặt lịch demo |
-| Prototype | `contact-strings:CONTACT_STRINGS_VI.capture.project.button` | Start a project | Bắt đầu dự án |
+| Prototype | `contact-strings:CONTACT_STRINGS_VI.capture.demo.button`<br>`contact-strings:CONTACT_STRINGS_VI.capture.project.button` | Get in touch | Liên hệ với chúng tôi |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.errors.name`<br>`contact-strings:ERRORS_VI[0]` | Please enter your name. | Vui lòng nhập họ tên. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.errors.email`<br>`contact-strings:ERRORS_VI[1]` | Please enter a valid email address. | Vui lòng nhập email hợp lệ. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.errors.org`<br>`contact-strings:ERRORS_VI[2]` | Please enter your organisation. | Vui lòng nhập tên tổ chức. |

@@ -10,7 +10,8 @@ test(
     expect(response.status()).toBe(200);
     expect(html).toContain("<title>News | XionTech</title>");
     expect(html).toContain('id="news-h1"');
-    expect(html).toContain("Catch up with us");
+    // Each title word is its own span (the words rise in), so compare the text.
+    expect(html.replaceAll(/<[^>]*>/g, "")).toContain("Catch up with us");
     expect(html).toContain('class="page-scene"');
     expect(html).not.toContain('aria-label="Breadcrumb"');
     expect(html).toContain('aria-label="Filter stories by audience"');

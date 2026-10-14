@@ -32,6 +32,15 @@ function resize(to: number) {
 }
 
 beforeEach(() => {
+  // jsdom has no IntersectionObserver: the cards never unfold here.
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
   width = 1280;
   listeners.clear();
   vi.stubGlobal("matchMedia", (query: string) => ({
@@ -205,5 +214,86 @@ describe("NewsFilters in Vietnamese", () => {
     expect(screen.getByText("Chưa có tin nào trong mục này.")).toBeTruthy();
     expect(chip("Xem tất cả")).toBeTruthy();
     expect(live()?.textContent).toBe("Đang hiển thị 0 tin");
+  });
+});
+
+// Amber's unfold (lead, 2026-10-13): the script marks the grid, then each card
+// as it comes into view, with a delay by its column.
+describe("NewsFilters card unfold", () => {
+  let arrive: (cards: Element[]) => void = () => undefined;
+  const disconnect = vi.fn();
+
+  beforeEach(() => {
+    disconnect.mockClear();
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class {
+        constructor(callback: IntersectionObserverCallback) {
+          arrive = (cards) =>
+            act(() =>
+              callback(
+                [
+                  ...cards.map(
+                    (target) =>
+                      ({
+                        target,
+                        isIntersecting: true,
+                      }) as IntersectionObserverEntry,
+                  ),
+                  {
+                    target: cards[0],
+                    isIntersecting: false,
+                  } as IntersectionObserverEntry,
+                ],
+                this as unknown as IntersectionObserver,
+              ),
+            );
+        }
+        observe() {}
+        unobserve() {}
+        disconnect = disconnect;
+      },
+    );
+  });
+
+  const four = [
+    item("a", "schools"),
+    item("b", "parents"),
+    item("c", "schools"),
+    item("d", "company"),
+  ];
+
+  it("marks each arriving card, a row left to right after the lead", () => {
+    render(<NewsFilters items={four} />);
+    const grid = document.getElementById("newsGrid");
+    expect(grid?.hasAttribute("data-unfold")).toBe(true);
+    expect(cells().some((cell) => cell.hasAttribute("data-in"))).toBe(false);
+    arrive(cells());
+    expect(cells().every((cell) => cell.hasAttribute("data-in"))).toBe(true);
+    expect(
+      cells().map((cell) =>
+        (cell as HTMLElement).style.getPropertyValue("--unfold-delay"),
+      ),
+    ).toEqual(["0ms", "0ms", "260ms", "520ms"]);
+  });
+
+  it("replays after a filter change and stops watching the old cards", () => {
+    render(<NewsFilters items={four} />);
+    arrive(cells());
+    fireEvent.click(chip("Schools"));
+    expect(disconnect).toHaveBeenCalled();
+    expect(cells().some((cell) => cell.hasAttribute("data-in"))).toBe(false);
+  });
+
+  it("does not unfold with reduced motion", () => {
+    vi.stubGlobal("matchMedia", (query: string) => ({
+      matches: query.includes("reduce"),
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+    }));
+    render(<NewsFilters items={four} />);
+    expect(
+      document.getElementById("newsGrid")?.hasAttribute("data-unfold"),
+    ).toBe(false);
   });
 });

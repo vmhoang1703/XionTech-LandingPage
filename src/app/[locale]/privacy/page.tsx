@@ -3,6 +3,7 @@ import { LocaleLink } from "@/components/layout/locale-link";
 import { PRIVACY as PRIVACY_EN, PRIVACY_VI } from "@/content/privacy";
 import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const generateMetadata = localeMetadata({
   en: { title: PRIVACY_EN.metaTitle, description: PRIVACY_EN.metaDescription },
@@ -17,6 +18,7 @@ export default async function PrivacyPage({
   const { locale: param } = await params;
   const locale = isLocale(param) ? param : "en";
   const PRIVACY = pickLocale(locale, { en: PRIVACY_EN, vi: PRIVACY_VI });
+  const t = heroWords();
   return (
     <>
       <section
@@ -29,7 +31,7 @@ export default async function PrivacyPage({
             <span>/</span>
             <span>{PRIVACY.breadcrumbCurrent}</span>
           </nav>
-          <h1 id="privacy-h1">{PRIVACY.title}</h1>
+          <h1 id="privacy-h1">{t.words(PRIVACY.title)}</h1>
           <p className="lede mt-5">{PRIVACY.lede}</p>
         </div>
       </section>

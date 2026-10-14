@@ -33,9 +33,13 @@ describe("no JavaScript", () => {
     );
 
     expect(html).toMatch(/^<html lang="en"/);
-    expect(html).toMatch(
-      /<h1[^>]*><span class="block">Build smarter\.<\/span> <span class="block">Ship faster\.<\/span> <span class="hl">Get IT done<\/span>\.<\/h1>/,
+    // Every title word is its own span (the hero entrance), in the HTML.
+    const h1 = /<h1[^>]*>(.*?)<\/h1>/.exec(html)?.[1] ?? "";
+    expect(h1.replaceAll(/<[^>]*>/g, "")).toBe(
+      "Build smarter. Ship faster. Get IT done.",
     );
+    expect(h1.match(/data-hw=""/g)).toHaveLength(5);
+    expect(h1).toContain('<span class="hl" data-hw=""');
     expect(html).toContain("Get in touch");
     expect(html).toContain("How we work.");
     // Every value's short line and every Home answer render without a script.

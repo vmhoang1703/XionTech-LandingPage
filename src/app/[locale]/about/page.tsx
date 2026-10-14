@@ -2,6 +2,7 @@ import { localeMetadata } from "@/i18n/page-metadata";
 import { ArrowRightIcon, MapPinIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { Fragment } from "react";
+import { MountainStory } from "@/components/about/mountain-story";
 import { CaptureBand } from "@/components/contact/capture-band";
 import { contactIcon } from "@/components/sections/contact-icon";
 import { FaqList } from "@/components/sections/faq-list";
@@ -23,6 +24,7 @@ import {
 } from "@/content/about";
 import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { heroWords } from "@/components/sections/hero-words";
 
 export const generateMetadata = localeMetadata({
   en: aboutMeta,
@@ -46,11 +48,14 @@ export default async function AboutPage({
     title: story,
     chapters,
     closing,
+    cue,
+    tagName,
   } = pickLocale(locale, { en: aboutStory, vi: aboutStoryVi });
   const faq = pickLocale(locale, { en: aboutFaq, vi: aboutFaqVi });
   const offices = pickLocale(locale, { en: aboutOffices, vi: aboutOfficesVi });
   const capture = pickLocale(locale, { en: aboutCapture, vi: aboutCaptureVi });
 
+  const t = heroWords();
   return (
     <>
       <section id="mission" className="about-hero" aria-labelledby="about-h1">
@@ -93,10 +98,12 @@ export default async function AboutPage({
         </svg>
         <div className="wrap ah-inner">
           <h1 id="about-h1">
-            {title.lead}
+            {t.words(title.lead)}
             <br />
-            {title.middle}
-            <span className="ah-accent">{title.accent}</span>
+            {t.words(title.middle)}
+            <span className="ah-accent" {...t.unit()}>
+              {title.accent}
+            </span>
             {title.tail}
           </h1>
           <p className="ah-text">{text}</p>
@@ -111,37 +118,13 @@ export default async function AboutPage({
         </div>
       </section>
       <PageScene>
-        <section
-          id="story"
-          className="sec surface-paper"
-          aria-labelledby="about-story-h"
-        >
-          <div className="wrap">
-            <h2 id="about-story-h" className="mtn-h">
-              {story.lead}
-              <br />
-              {story.middle}
-              <span className="hl">{story.highlight}</span>
-              {story.tail}
-            </h2>
-            <div className="mtn-story" data-reveal="">
-              {chapters.map(({ number, title: name, text: body }) => (
-                <article key={number}>
-                  <h3 className="mtn-title">
-                    <span className="mtn-num">{number}</span> {name}
-                  </h3>
-                  <p className="mtn-text">{body}</p>
-                </article>
-              ))}
-              <div className="mtn-close">
-                <p>
-                  <strong>{closing.line}</strong>
-                </p>
-                <p>{closing.tags}</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <MountainStory
+          title={story}
+          chapters={chapters}
+          closing={closing}
+          cue={cue}
+          tagName={tagName}
+        />
         <section
           id="faq"
           className="sec surface-paper"

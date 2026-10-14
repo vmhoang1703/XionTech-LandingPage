@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LocaleProvider } from "@/components/layout/locale-link";
+import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { HomeContactForm } from "./home-contact-form";
 
 // The success panel is a polite live region that takes focus (Sonar S6819:
@@ -61,6 +62,16 @@ afterEach(() => {
 });
 
 describe("HomeContactForm", () => {
+  it("fills in the email a capture band on another page kept", () => {
+    sessionStorage.setItem(CAPTURE_EMAIL_KEY, "lan@school.edu.vn");
+    render(<HomeContactForm />);
+    expect(screen.getByLabelText("Work email")).toHaveProperty(
+      "value",
+      "lan@school.edu.vn",
+    );
+    expect(sessionStorage.getItem(CAPTURE_EMAIL_KEY)).toBeNull();
+  });
+
   it("posts a general request without a phone and shows the summit in place", async () => {
     fetchMock.mockReturnValueOnce(reply(200, { ok: true }));
     render(<HomeContactForm />);

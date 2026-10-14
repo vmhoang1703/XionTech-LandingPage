@@ -1,5 +1,11 @@
 import { expect, test } from "@playwright/test";
 
+// Each title word is its own span (the hero entrance). In a locale 404 the
+// words arrive in the RSC payload, not the HTML shell (as before the merge),
+// so look for every word of the title.
+const hasTitle = (html: string, title: string) =>
+  title.split(" ").every((word) => html.includes(word));
+
 test(
   "unknown path answers 404 with the lost-trail copy and no capture band",
   { tag: "@smoke" },
@@ -8,7 +14,7 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    expect(html).toContain("You’ve wandered off the trail.");
+    expect(hasTitle(html, "You’ve wandered off the trail.")).toBe(true);
     expect(html).toContain("<title>Page not found | XionTech</title>");
     expect(html).toContain("You are here");
     expect(html).not.toContain(">404<");
@@ -25,7 +31,7 @@ test(
     const html = await response.text();
 
     expect(response.status()).toBe(404);
-    expect(html).toContain("Bạn đã đi lạc lối mòn.");
+    expect(hasTitle(html, "Bạn đã đi lạc lối mòn.")).toBe(true);
     expect(html.match(/<title>/g)).toHaveLength(1);
     expect(html).toContain("<title>Không tìm thấy trang | XionTech</title>");
     expect(html.match(/<meta name="robots"/g)).toHaveLength(1);
@@ -39,6 +45,8 @@ test(
     const response = await request.get("/fr/products", { maxRedirects: 0 });
 
     expect(response.status()).toBe(404);
-    expect(await response.text()).toContain("You’ve wandered off the trail.");
+    expect(
+      hasTitle(await response.text(), "You’ve wandered off the trail."),
+    ).toBe(true);
   },
 );

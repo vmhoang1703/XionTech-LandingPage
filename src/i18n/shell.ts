@@ -29,7 +29,9 @@ export interface ShellDictionary {
     homeLink: string;
     logoAlt: string;
     menu: string;
-    demo: string;
+    contact: string;
+    cityPlano: string;
+    cityHcmc: string;
   };
   language: { label: string; en: string; vi: string };
   footer: {
@@ -69,7 +71,9 @@ const en: ShellDictionary = {
     homeLink: "XionTech home",
     logoAlt: "XionTech, Get IT Done",
     menu: "Menu",
-    demo: "Book a demo",
+    contact: "Get in touch",
+    cityPlano: "Plano",
+    cityHcmc: "Ho Chi Minh City",
   },
   language: { label: "Language", en: "English", vi: "Tiếng Việt" },
   footer: {
@@ -110,7 +114,9 @@ const vi: ShellDictionary = {
     homeLink: "Trang chủ XionTech",
     logoAlt: "XionTech, Get IT Done",
     menu: "Menu",
-    demo: "Đặt lịch demo",
+    contact: "Liên hệ với chúng tôi",
+    cityPlano: "Plano",
+    cityHcmc: "TP. Hồ Chí Minh",
   },
   language: {
     label: "Ngôn ngữ",

@@ -3,6 +3,7 @@ import { careersHero, careersHeroVi } from "@/content/careers";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { GrowthRing } from "./growth-ring";
+import { heroWords } from "@/components/sections/hero-words";
 
 // Server Component. Light hero beside the Growth Learning Model; no
 // breadcrumb (E-A7 CAP-1, prototype careers.html).
@@ -12,6 +13,7 @@ export function CareersHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
     vi: careersHeroVi,
   });
 
+  const t = heroWords();
   return (
     <section
       className="hero-light page-hero careers-hero"
@@ -21,8 +23,8 @@ export function CareersHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
       <div className="wrap ch-grid">
         <div>
           <h1 id="careers-h1">
-            {title.first} <br />
-            {title.second}
+            {t.words(title.first)} <br />
+            {t.words(title.second)}
           </h1>
           <p className="lede mt-4.5 mb-8">{lede}</p>
           <a className="btn btn-primary" href={cta.href}>

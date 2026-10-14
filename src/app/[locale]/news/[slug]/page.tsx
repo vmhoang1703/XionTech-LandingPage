@@ -9,6 +9,7 @@ import { fallbackLang, pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
 import { getPost, type StoryBlock } from "@/lib/news/post";
+import { heroWords } from "@/components/sections/hero-words";
 
 type StoryProps = Readonly<PageProps<"/[locale]/news/[slug]">>;
 
@@ -70,6 +71,7 @@ export default async function StoryPage({ params }: StoryProps) {
     vi: newsStoryVi,
   });
 
+  const t = heroWords();
   return (
     <>
       <section
@@ -90,7 +92,7 @@ export default async function StoryPage({ params }: StoryProps) {
             ) : null}
           </div>
           <h1 id="story-h1" lang={fallbackLang(story.titleLang, locale)}>
-            {story.title}
+            {t.words(story.title)}
           </h1>
           {story.excerpt?.trim() ? (
             <p

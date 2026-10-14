@@ -16,6 +16,7 @@ import {
   validateContact,
   type ContactErrors,
 } from "@/lib/contact/contact-rules";
+import { fillCapturedEmail } from "./capture-storage";
 import { pickLocale } from "@/i18n/content";
 import {
   CONTACT_STRINGS,
@@ -69,6 +70,10 @@ export function HomeContactForm() {
   useEffect(() => {
     if (status === "sent") panelRef.current?.focus();
   }, [status]);
+  // A capture band on another page sends its email here (lead, 2026-10-13).
+  useEffect(() => {
+    fillCapturedEmail("c-email");
+  }, []);
   useEffect(() => {
     if (failure) submitRef.current?.focus();
   }, [failure]);

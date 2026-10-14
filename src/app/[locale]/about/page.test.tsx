@@ -98,7 +98,8 @@ describe("AboutPage", () => {
       "offices",
       "book",
     ]);
-    expect(sections[1].className).toBe("sec surface-paper");
+    // The mountain story holds its own spacing (MountainStory).
+    expect(sections[1].className).toBe("mtn surface-paper");
     expect(sections[2].className).toBe("sec surface-paper");
     expect(sections[3].className).toBe("sec surface-paper");
     expect(sections[4].className).toBe("capture capture-plain surface-paper");
@@ -117,7 +118,7 @@ describe("AboutPage", () => {
     expect(container.textContent).not.toContain("Key facts");
   });
 
-  it("tells the mountain story as two stacked chapters with no picture", async () => {
+  it("tells the mountain story: two chapters beside the mountain picture", async () => {
     const { container } = render(await aboutAt("en"));
 
     const h2 = screen.getByRole("heading", { level: 2, name: /Inspired by/ });
@@ -142,8 +143,31 @@ describe("AboutPage", () => {
       "Our inspiration is a mountain. Our purpose is people.",
     );
     expect(close?.textContent).toContain("Vision · Community · Technology");
-    expect(section?.querySelector("img, .mtn-cue, .mtn-dots")).toBeNull();
-    expect(container.querySelectorAll("#story img")).toHaveLength(0);
+    // Amber's picture (lead, 2026-10-13: 1B lifts Q5): decorative and hidden
+    // from screen readers, with the climb's light, dots and the X mark.
+    const stage = section?.querySelector(".mtn-stage");
+    expect(stage?.getAttribute("aria-hidden")).toBe("true");
+    const pictures = Array.from(stage?.querySelectorAll("img") ?? []);
+    expect(pictures.map((img) => img.getAttribute("alt"))).toEqual([
+      "",
+      "",
+      "",
+      "",
+      "",
+    ]);
+    expect(
+      pictures.some((img) =>
+        img.getAttribute("src")?.includes("mountain-clear"),
+      ),
+    ).toBe(true);
+    expect(stage?.querySelectorAll(".mtn-dots span")).toHaveLength(2);
+    expect(chapters[0].querySelector(".mtn-cue")?.textContent).toBe("Scroll");
+    // The tag names newXion only: the founding line is a placeholder (Q12).
+    expect(stage?.querySelector(".mtn-tag")?.textContent).toBe("newXion");
+    expect(section?.textContent).not.toContain("Founded in America");
+    expect(
+      container.querySelectorAll("img:not(#story .mtn-stage img)"),
+    ).toHaveLength(0);
   });
 
   it("lists nine closed native questions at #faq in the new heading", async () => {
@@ -267,7 +291,7 @@ describe("AboutPage", () => {
       "arrange a walkthrough of Parent Hub and Staff Hub.",
     );
     expect(capture?.querySelector('button[type="submit"]')?.textContent).toBe(
-      "Book a demo",
+      "Get in touch",
     );
     expect(container.querySelector(".page-scene")?.lastElementChild).toBe(
       capture,
@@ -321,7 +345,11 @@ describe("AboutPage", () => {
   it("names no people: no leadership section, no photos, no titles", async () => {
     const { container } = render(await aboutAt("en"));
 
-    expect(container.querySelectorAll("img")).toHaveLength(0);
+    // No photos of people: the only pictures are the mountain story's
+    // decorative mountain and X mark.
+    expect(container.querySelectorAll("img:not(.mtn-stage img)")).toHaveLength(
+      0,
+    );
     const headings = Array.from(container.querySelectorAll("h2, h3")).map(
       (h) => h.textContent ?? "",
     );

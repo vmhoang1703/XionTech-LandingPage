@@ -26,15 +26,16 @@ describe("SiteHeader", () => {
     expect(home.contains(logo)).toBe(true);
   });
 
-  it("links Book a demo to the demo form, as a small primary button", () => {
+  it("links Get in touch to the Home form, as a small primary button", () => {
     render(<SiteHeader locale="en" />);
-    const demo = screen.getByRole("link", { name: "Book a demo" });
-    expect(demo.getAttribute("href")).toBe("/en/demo");
+    // The Demo page is kept but not linked (lead, 2026-10-13).
+    const demo = screen.getByRole("link", { name: "Get in touch" });
+    expect(demo.getAttribute("href")).toBe("/en#contact");
     expect(demo.className).toContain("btn btn-primary btn-sm");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
     // Below 412px (the narrowest width where the en and vi bars fit, measured
-    // 2026-10-14) it leaves the bar; the mobile menu offers it first instead.
+    // 2026-10-14) it leaves the bar; the mobile menu offers it instead.
     // Up to 443px it drops its arrow and side padding.
     expect(demo.className).toContain("max-[411px]:hidden");
     expect(demo.className).toContain("max-[443px]:px-3.5");
@@ -61,13 +62,13 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("navigation", { name: "Main" })).toBeTruthy();
   });
 
-  it("puts the main nav after the logo, then Book a demo, and the Menu button last", () => {
+  it("puts the main nav after the logo, then Get in touch, and the Menu button last", () => {
     render(<SiteHeader locale="en" />);
     const header = screen.getByRole("banner");
     const logo = screen.getByRole("link", { name: "XionTech home" });
     const nav = screen.getAllByRole("navigation", { name: "Main" })[0];
     const menu = screen.getByRole("button", { name: "Menu" });
-    const demo = screen.getByRole("link", { name: "Book a demo" });
+    const demo = screen.getByRole("link", { name: "Get in touch" });
     expect(header.contains(menu)).toBe(true);
     expect(menu.getAttribute("aria-expanded")).toBe("false");
     expect(
@@ -113,8 +114,10 @@ describe("SiteHeader", () => {
       "/vi/careers",
     ]);
     expect(
-      screen.getByRole("link", { name: "Đặt lịch demo" }).getAttribute("href"),
-    ).toBe("/vi/demo");
+      screen
+        .getByRole("link", { name: "Liên hệ với chúng tôi" })
+        .getAttribute("href"),
+    ).toBe("/vi#contact");
     expect(
       screen
         .getByRole("link", { name: "Trang chủ XionTech" })

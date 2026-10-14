@@ -53,6 +53,11 @@ export const aboutStory = {
     line: "Our inspiration is a mountain. Our purpose is people.",
     tags: "Vision · Community · Technology",
   },
+  // Under chapter 01 while the story is held; on the summit of the picture.
+  // Amber's tag also read "Founded in America": left out while the founding
+  // sentence is a placeholder (Q12).
+  cue: "Scroll",
+  tagName: "newXion",
 };
 
 // Each answer has an id, so Home can pick some (homeFaq in home.ts).
@@ -76,7 +81,7 @@ export const aboutFaq = {
       id: "try-apps",
       question: "How can our school try Parent Hub or Staff Hub?",
       answer:
-        "Book a demo. We walk you through the apps using scenarios from your own school.",
+        "Get in touch. We walk you through the apps using scenarios from your own school.",
     },
     {
       id: "time-zones",
@@ -178,6 +183,8 @@ export const aboutStoryVi: typeof aboutStory = {
     line: "Cảm hứng của chúng tôi là một ngọn núi. Mục đích của chúng tôi là con người.",
     tags: "Tầm nhìn · Cộng đồng · Công nghệ",
   },
+  cue: "Cuộn xuống",
+  tagName: aboutStory.tagName,
 };
 
 const FAQ_VI: Record<string, { question: string; answer: string }> = {
@@ -195,7 +202,7 @@ const FAQ_VI: Record<string, { question: string; answer: string }> = {
     question:
       "Trường chúng tôi có thể trải nghiệm Parent Hub hoặc Staff Hub như thế nào?",
     answer:
-      "Hãy đặt lịch demo. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn.",
+      "Hãy liên hệ với chúng tôi. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn.",
   },
   "time-zones": {
     question: "Các bạn làm việc qua nhiều múi giờ như thế nào?",

@@ -18,6 +18,9 @@ const ALLOWED = new Set([
   "GET IT DONE",
   "XionTech, Get IT Done",
   "[Placeholder] Get IT Done",
+  "newXion",
+  // Place names that read the same in Vietnamese.
+  "Plano",
   // App, product and service names and badges.
   "Parent Hub",
   "Staff Hub",

@@ -108,7 +108,8 @@ describe("nav-data", () => {
       ]);
     });
 
-    it("has no mega-menu data", () => {
+    it("has the contact link and no mega-menu data", () => {
+      expect(navData.CONTACT_HREF).toBe("/#contact");
       expect(navData).not.toHaveProperty("PRODUCTS");
       expect(navData).not.toHaveProperty("PRODUCTS_FOOTER");
       expect(navData).not.toHaveProperty("SERVICES_FOOTER");
