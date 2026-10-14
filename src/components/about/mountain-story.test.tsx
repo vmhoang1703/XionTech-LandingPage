@@ -221,6 +221,33 @@ describe("MountainStory", () => {
     expect(frames).toHaveLength(0);
   });
 
+  it("scrolls again to a #link target below the story once armed", () => {
+    const before = document.createElement("h2");
+    before.id = "intro";
+    const after = document.createElement("section");
+    after.id = "faq";
+    document.body.append(before, after);
+    const scrolled: string[] = [];
+    Element.prototype.scrollIntoView = function (this: Element) {
+      scrolled.push(this.id);
+    };
+    try {
+      for (const hash of ["", "#intro", "#missing", "#faq"]) {
+        history.replaceState(null, "", `/about${hash}`);
+        const container = document.createElement("div");
+        after.before(container);
+        render(<MountainStory {...STORY} />, { container }).unmount();
+        container.remove();
+      }
+      expect(scrolled).toEqual(["faq"]);
+    } finally {
+      history.replaceState(null, "", "/");
+      Reflect.deleteProperty(Element.prototype, "scrollIntoView");
+      before.remove();
+      after.remove();
+    }
+  });
+
   it("disarms and stops listening on unmount", () => {
     const { view, mtn } = mount();
     view.unmount();

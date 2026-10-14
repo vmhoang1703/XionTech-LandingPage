@@ -178,6 +178,17 @@ export function MountainStory({
     };
 
     mtn.setAttribute("data-armed", "");
+    // Arming makes the story taller, so a link to a later section
+    // (/about#faq) has already scrolled to its old place: go there again.
+    const target = location.hash
+      ? document.getElementById(decodeURIComponent(location.hash.slice(1)))
+      : null;
+    if (
+      target &&
+      mtn.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING
+    ) {
+      target.scrollIntoView();
+    }
     box = art.getBoundingClientRect();
     // Opened part-way down: show that chapter at once, no climb replay.
     settle();
