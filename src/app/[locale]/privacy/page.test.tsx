@@ -128,3 +128,12 @@ describe("Privacy page metadata in Vietnamese", () => {
     );
   });
 });
+
+describe("Privacy page metadata in other locales", () => {
+  it.each(["ja", "de"])("uses the English title on %s", async (locale) => {
+    const meta = await generateMetadata({
+      params: Promise.resolve({ locale }),
+    });
+    expect(meta.title).toBe(PRIVACY.metaTitle);
+  });
+});
