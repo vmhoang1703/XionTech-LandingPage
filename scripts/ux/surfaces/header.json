@@ -34,32 +34,32 @@
     {
       "name": "home-link",
       "proto": "nav.menu > a[href='index.html']",
-      "dev": "header nav > a[href='/']"
+      "dev": "header nav > a:first-child"
     },
     {
       "name": "products-link",
       "proto": "nav.menu > a[href='products.html']",
-      "dev": "header nav > a[href='/products']"
+      "dev": "header nav > a[href$='/products']"
     },
     {
       "name": "services-link",
       "proto": "nav.menu > a[href='services.html']",
-      "dev": "header nav > a[href='/services']"
+      "dev": "header nav > a[href$='/services']"
     },
     {
       "name": "news-link",
       "proto": "nav.menu > a[href='news.html']",
-      "dev": "header nav > a[href='/news']"
+      "dev": "header nav > a[href$='/news']"
     },
     {
       "name": "about-link",
       "proto": "nav.menu > a[href='about.html']",
-      "dev": "header nav > a[href='/about']"
+      "dev": "header nav > a[href$='/about']"
     },
     {
       "name": "careers-link",
       "proto": "nav.menu > a[href='careers.html']",
-      "dev": "header nav > a[href='/careers']"
+      "dev": "header nav > a[href$='/careers']"
     }
   ],
   "states": [
@@ -90,7 +90,7 @@
       ],
       "dev": [
         {
-          "hover": "header nav > a[href='/news']"
+          "hover": "header nav > a[href$='/news']"
         },
         {
           "wait": 300

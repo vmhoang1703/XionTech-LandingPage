@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MOTION_KEY } from "@/lib/motion/motion-preference";
-import { chapterAt, climbPoint, MountainStory } from "./mountain-story";
+import { chapterAt, climbPoint, hashId, MountainStory } from "./mountain-story";
 
 const STORY = {
   title: {
@@ -97,6 +97,14 @@ describe("climbPoint", () => {
     const [x, y] = climbPoint(1 / 16);
     expect(x).toBeCloseTo(24);
     expect(y).toBeCloseTo(67.5);
+  });
+});
+
+describe("hashId", () => {
+  it("decodes the hash, and keeps a malformed escape as typed", () => {
+    expect(hashId("#faq")).toBe("faq");
+    expect(hashId("#c%C3%A2u-h%E1%BB%8Fi")).toBe("câu-hỏi");
+    expect(hashId("#%E0")).toBe("%E0");
   });
 });
 
@@ -219,6 +227,33 @@ describe("MountainStory", () => {
     runFrames();
     expect(on(mtn)).toEqual([true, false]);
     expect(frames).toHaveLength(0);
+  });
+
+  it("scrolls again to a #link target below the story once armed", () => {
+    const before = document.createElement("h2");
+    before.id = "intro";
+    const after = document.createElement("section");
+    after.id = "faq";
+    document.body.append(before, after);
+    const scrolled: string[] = [];
+    Element.prototype.scrollIntoView = function (this: Element) {
+      scrolled.push(this.id);
+    };
+    try {
+      for (const hash of ["", "#intro", "#missing", "#%E0", "#faq"]) {
+        history.replaceState(null, "", `/about${hash}`);
+        const container = document.createElement("div");
+        after.before(container);
+        render(<MountainStory {...STORY} />, { container }).unmount();
+        container.remove();
+      }
+      expect(scrolled).toEqual(["faq"]);
+    } finally {
+      history.replaceState(null, "", "/");
+      Reflect.deleteProperty(Element.prototype, "scrollIntoView");
+      before.remove();
+      after.remove();
+    }
   });
 
   it("disarms and stops listening on unmount", () => {
