@@ -2,7 +2,7 @@
 title: 'Japanese, French, Korean and Simplified Chinese'
 type: 'feature'
 created: '2026-10-14'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: '68d7b1845de29a1a87d2ac0badeb19995dec5c5a'
@@ -155,26 +155,27 @@ Prefer one file per locale under `src/content/locales/<locale>/` (or one per mod
 
 ## Acceptance Evidence
 
-Captured at the end of step-03 on 2026-10-14, at commit 945255c.
+Re-captured after the review patches on 2026-10-14. Code at ced1c17.
 
 **Commands**
 
 - `npm run lint && npm run typecheck && npm run format:check` -- exit 0 -- clean
-- `npm test` -- exit 0 -- Tests 1761 passed (1761)
-- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100% (Missing: 0), C1 ok on 42 files
-- `npm run test:smoke` -- exit 0 -- 18 passed (17.6s)
+- `npm test` -- exit 0 -- Tests 1773 passed (1773)
+- `npm run test:coverage && npm run coverage:diff` -- exit 0 -- Coverage: 100% (Missing: 0), C1 ok on 43 files
+- `npm run test:smoke` -- exit 0 -- 18 passed (30.1s)
 - `npm run build` -- exit 0 -- six locales prerendered
 
 **Observed**
 
-- ja, fr, ko and zh, with 8 routes each at 320, 375 and 1440 px (96 checks): every route returns 200 with `lang` ja/fr/ko/zh-Hans; nothing overflows; only ja, ko and zh load a Google Fonts stylesheet, and Noto JP/KR/SC render; the CJK pages show only the agreed English names and tags -- production build on :3005
-- The home page's "+3" button overflows by 3 px in every locale, en and vi included; this existed before this story -- production build on :3005
+- ja, fr, ko and zh across 8 routes at 320, 375 and 1440 px (96 checks): every route returns 200; nothing overflows; only ja, ko and zh load a Google Fonts stylesheet, and Noto JP/KR/SC render -- production build on :3005
+- The "+3" chip is a full 44 px circle below 640 px. At wider widths its invisible hit area extends 3 px, which is the original design and the same in en -- production build on :3005
+- `/en` and `/vi` text compared with the baseline 6069334 on all 8 routes: the only differences are the native names in the language list, the Google Fonts line in the Privacy provider list, and the live clocks -- two production builds on :3005
 
 **Artifacts**
 
-- [observed.md](spec-locales-ja-fr-ko-zh-evidence/observed.md), [walk-b.json](spec-locales-ja-fr-ko-zh-evidence/walk-b.json), [verification.txt](spec-locales-ja-fr-ko-zh-evidence/verification.txt) and 16 screenshots; each file's byte count and sha256 are recorded in the ledger
+- [observed.md](spec-locales-ja-fr-ko-zh-evidence/observed.md), [walk-b.json](spec-locales-ja-fr-ko-zh-evidence/walk-b.json), [en-vi-text.diff](spec-locales-ja-fr-ko-zh-evidence/en-vi-text.diff), [verification.txt](spec-locales-ja-fr-ko-zh-evidence/verification.txt) and 16 screenshots; each file's byte count and sha256 are in the ledger's latest rows
 
 **Not captured**
 
-- Leftover English in French is checked by the untranslated and completeness tests, not by the browser walk.
+- The walk does not check French for leftover English; the untranslated and completeness tests cover it.
 - Translations stored in Sanity: none exist, by decision (4).

@@ -1,6 +1,6 @@
 # Japanese, French, Korean, Chinese: what the browser showed
 
-Production build (`npm run build`, then `next start -p 3005`), Chrome via Playwright, 2026-10-14, at commit 945255c. `/api/*` was intercepted.
+Production build (`npm run build`, then `next start -p 3005`), Chrome via Playwright, 2026-10-14, re-captured after the review patches, at commit c35da46 (code at ced1c17). `/api/*` was intercepted.
 
 ## Method
 
@@ -19,4 +19,15 @@ Every route (`/`, products, services, about, careers, news, demo, privacy) was o
   - Names and tags kept English by decision: Low-code, the service tags (Web · Mobile, AI/ML · Dashboards, Power Platform…, Azure · AWS · GCP), "GET IT" in the logo, and "Get IT Done" on the Careers card.
   - Sanity text without a translation, shown inside `lang="en"`.
 - **French:** this walk does not check for leftover English in French. `scripts/i18n/untranslated.test.mjs` and `completeness.test.mjs` cover it instead; both pass in `npm test`.
-- **"+3" button:** the home page's "+3" more-services button (`w-more-trigger`) has scrollWidth 41 against clientWidth 38 at 320 and 375 px in every locale, en and vi included. It is not caused by this story and is logged as deferred.
+- **"+3" button:**
+  - At 320 and 375 px it no longer overflows in any locale. Below 640 px the circle is now the full 44 px tap target (`e2e/home-more-chip.spec.ts`).
+  - At 900 and 1440 px the 38 px circle still has scrollWidth 41, the same in en and ja. The cause is its invisible `::after` hit area, which extends 3 px to make a 44 px tap target. Nothing visible is cut off. This is the original design and the patch did not change it.
+
+## English and Vietnamese unchanged
+
+- **How it was checked:** the baseline commit 6069334 and this branch were each built and served, and the visible text of all eight routes was captured in en and vi at 1440 px. The diff is in `en-vi-text.diff`.
+- **What differs (intended):**
+  - The language list shows native names instead of the EN/VI codes (decision 2).
+  - The Privacy provider line adds Google Fonts.
+  - The live office clocks moved by a minute between the two captures.
+- **What else differs:** nothing.

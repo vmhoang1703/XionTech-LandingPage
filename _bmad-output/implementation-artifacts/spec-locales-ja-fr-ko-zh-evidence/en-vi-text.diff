@@ -1,0 +1,200 @@
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_about.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_about.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+76c78
+< 04:15
+---
+> 04:16
+84c86
+< 16:15
+---
+> 16:16
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_careers.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_careers.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_demo.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_demo.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_home.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_home.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+111c113
+< 04:15
+---
+> 04:16
+113c115
+< 16:15
+---
+> 16:16
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_news.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_news.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_privacy.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_privacy.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+44c46
+< [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage).
+---
+> [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages).
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_products.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_products.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/en_services.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/en_services.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_about.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_about.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+80c82
+< 04:15
+---
+> 04:16
+88c90
+< 16:15
+---
+> 16:16
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_careers.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_careers.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_demo.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_demo.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_home.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_home.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+116c118
+< 04:15
+---
+> 04:16
+118c120
+< 16:15
+---
+> 16:16
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_news.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_news.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_privacy.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_privacy.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+46c48
+< [Placeholder] Các nhà cung cấp dịch vụ xử lý dữ liệu cho chúng tôi: Gmail (gửi tin nhắn biểu mẫu đến hộp thư công ty), Upstash (bộ đếm giới hạn tần suất tạo từ giá trị đã băm), Vercel (lưu trữ website và lưu trữ CV riêng tư).
+---
+> [Placeholder] Các nhà cung cấp dịch vụ xử lý dữ liệu cho chúng tôi: Gmail (gửi tin nhắn biểu mẫu đến hộp thư công ty), Upstash (bộ đếm giới hạn tần suất tạo từ giá trị đã băm), Vercel (lưu trữ website và lưu trữ CV riêng tư), Google Fonts (phông chữ cho các trang tiếng Nhật, tiếng Hàn và tiếng Trung).
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_products.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_products.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文
+diff -r C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-base/vi_services.txt C:/Users/SONNGU~1/AppData/Local/Temp/claude/d--XionTech-LandingPage/1c6e4bbb-fba5-43bd-96d5-acf2d6db5914/scratchpad/text-head/vi_services.txt
+25d24
+< EN
+27d25
+< VI
+28a27,30
+> 日本語
+> Français
+> 한국어
+> 简体中文

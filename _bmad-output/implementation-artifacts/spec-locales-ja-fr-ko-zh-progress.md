@@ -86,3 +86,30 @@ Task 6: red — controller reproduced: services/page -t 'Simplified Chinese' aga
 Task 6: green — controller: same test on HEAD zh.ts — 1 passed
 Review: patch round 38651f4..4c18f74 applied for triage rows 1-8,10-12
 Review: follow-up 4eabac2 (format), f743e9b (layout strings test, proven red without prop), ced1c17 (ko term); re-review row 8 now addressed
+Acceptance: verification — npm run lint && npm run typecheck && npm run format:check — exit 0 — clean (re-verify at ced1c17)
+Acceptance: verification — npm test — exit 0 — Tests 1773 passed (1773)
+Acceptance: verification — npm run test:coverage && npm run coverage:diff — exit 0 — Coverage: 100%, Missing: 0; C1 ok 43 files
+Acceptance: verification — npm run test:smoke — exit 0 — 18 passed (30.1s)
+Acceptance: verification — npm run build — exit 0 — six locales prerendered
+Acceptance: manual — ja/fr/ko/zh x 8 routes x 320/375/1440 re-walk — observed: all 200, no page/header overflow, Google Fonts link only on ja/ko/zh; '+3' chip 44px fit below 640px; at 900/1440 its ::after hit area extends 3px (design, invisible, same in en)
+Acceptance: manual — en/vi text, baseline 6069334 vs branch build, 8 routes each — observed: only language-list native names, Google Fonts privacy line and clock minutes differ
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/en-vi-text.diff — 7316 bytes — sha256 3b7022935f49 — en/vi text diff vs baseline
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/observed.md — 2718 bytes — sha256 27bccb95d1c9 — walk notes
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/verification.txt — 11980 bytes — sha256 75a02c15ed78 — command output
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_fr_home.png — 333954 bytes — sha256 75192553b2af — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_fr_services.png — 456786 bytes — sha256 3669036583c3 — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_ja_home.png — 326757 bytes — sha256 beba7cf90203 — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_ja_services.png — 428689 bytes — sha256 31d6356f005b — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_ko_home.png — 292973 bytes — sha256 4770e8b018ba — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_ko_services.png — 402402 bytes — sha256 479361832471 — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_zh_home.png — 316297 bytes — sha256 385ab86c59cb — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w1440_zh_services.png — 416067 bytes — sha256 846d85de5a49 — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_fr_home.png — 1476703 bytes — sha256 205c5b96055c — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_fr_services.png — 678436 bytes — sha256 1288199256a9 — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_ja_home.png — 1368873 bytes — sha256 a2a036d9441d — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_ja_services.png — 667312 bytes — sha256 243b97ed40c8 — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_ko_home.png — 1103086 bytes — sha256 a27d9bb5f720 — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_ko_services.png — 521311 bytes — sha256 364c6f08542e — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_zh_home.png — 1170028 bytes — sha256 a2924cec392c — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/w320_zh_services.png — 556166 bytes — sha256 72dcce6dc47e — screenshot
+Acceptance: evidence — spec-locales-ja-fr-ko-zh-evidence/walk-b.json — 22090 bytes — sha256 9df2a4e98cf3 — raw walk results
