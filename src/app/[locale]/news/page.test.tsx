@@ -166,3 +166,18 @@ describe("NewsPage in Vietnamese", () => {
     expect(screen.getByText("04/10/2026")).toBeTruthy();
   });
 });
+
+it("falls back to English for an unknown locale", async () => {
+  vi.mocked(getAllPosts).mockResolvedValue([]);
+  vi.stubGlobal("matchMedia", () => ({
+    matches: false,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+  }));
+  try {
+    await NewsPage({ params: Promise.resolve({ locale: "xx" }) });
+    expect(getAllPosts).toHaveBeenCalledWith("en");
+  } finally {
+    vi.unstubAllGlobals();
+  }
+});

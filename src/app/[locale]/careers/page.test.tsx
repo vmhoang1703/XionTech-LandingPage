@@ -136,3 +136,9 @@ describe("Careers page in Vietnamese", () => {
     );
   });
 });
+
+it("falls back to English for an unknown locale", async () => {
+  vi.mocked(getOpenRoles).mockResolvedValue([]);
+  await CareersPage({ params: Promise.resolve({ locale: "xx" }) });
+  expect(vi.mocked(getOpenRoles)).toHaveBeenCalledWith("en");
+});

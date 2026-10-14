@@ -109,3 +109,10 @@ describe("Privacy page in Vietnamese", () => {
     );
   });
 });
+
+it("falls back to English for an unknown locale", async () => {
+  await renderPage("xx");
+  expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+    "Privacy policy.",
+  );
+});

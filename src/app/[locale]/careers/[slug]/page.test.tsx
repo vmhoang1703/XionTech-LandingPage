@@ -124,3 +124,12 @@ describe("Job page in Vietnamese", () => {
     );
   });
 });
+
+it("falls back to English for an unknown locale", async () => {
+  vi.mocked(getOpenRole).mockResolvedValue(role);
+  await JobPage({
+    params: Promise.resolve({ locale: "xx", slug: "qa-engineer" }),
+    searchParams: Promise.resolve({}),
+  });
+  expect(getOpenRole).toHaveBeenCalledWith("qa-engineer", "en");
+});
