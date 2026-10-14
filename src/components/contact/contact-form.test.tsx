@@ -737,10 +737,63 @@ describe("ContactForm in Vietnamese", () => {
     );
   });
 
+  const options = (id: string) =>
+    [...field(id).querySelectorAll("option")].map((o) => [
+      o.value,
+      o.textContent,
+    ]);
+
   it("keeps the English option values the server checks, with Vietnamese labels", () => {
     renderVi();
-    const size = field("f-size").querySelector("option");
-    expect(size?.value).toBe("Under 500 students");
-    expect(size?.textContent).toBe("Dưới 500 học sinh");
+    expect(options("f-size")).toEqual([
+      ["Under 500 students", "Dưới 500 học sinh"],
+      ["500 to 1,500 students", "500 đến 1.500 học sinh"],
+      ["Over 1,500 students", "Trên 1.500 học sinh"],
+      ["Multiple campuses", "Nhiều cơ sở"],
+    ]);
+    expect(options("f-svc")).toEqual([
+      ["Product Engineering", "Product Engineering"],
+      ["AI-Driven Analytics", "AI-Driven Analytics"],
+      ["Product Co-Creation", "Product Co-Creation"],
+      ["Staffing Service", "Staffing Service"],
+      ["Custom App Development", "Custom App Development"],
+      ["Low-code Solutions", "Low-code Solutions"],
+      ["AI-Powered Solutions", "AI-Powered Solutions"],
+      ["Cloud Computing", "Cloud Computing"],
+      ["Not sure yet", "Chưa chắc chắn"],
+    ]);
+    expect(options("f-when")).toEqual([
+      ["As soon as possible", "Càng sớm càng tốt"],
+      ["In 1 to 3 months", "Trong 1 đến 3 tháng"],
+      ["Just exploring", "Đang tìm hiểu"],
+    ]);
+  });
+
+  it("posts the English values from a Vietnamese form", async () => {
+    fetchMock.mockReturnValue(pendingFetch());
+    const demo = renderVi();
+    fillRequired();
+    fill("f-size", "Over 1,500 students");
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    await settle();
+    expect(sentBody()).toMatchObject({
+      type: "demo",
+      schoolSize: "Over 1,500 students",
+    });
+
+    demo.unmount();
+    renderVi();
+    fillRequired();
+    fireEvent.click(screen.getAllByRole("tab")[1]);
+    fill("f-svc", "Not sure yet");
+    fill("f-when", "Just exploring");
+    fill("f-msg", "Xin chào");
+    fireEvent.click(screen.getByRole("button", { name: /Gửi yêu cầu/ }));
+    await settle();
+    expect(sentBody(1)).toMatchObject({
+      type: "project",
+      service: "Not sure yet",
+      startTiming: "Just exploring",
+    });
   });
 });

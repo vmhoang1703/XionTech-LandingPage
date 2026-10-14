@@ -6,8 +6,13 @@ import { JOB_ERRORS } from "@/lib/careers/application-rules";
 import {
   CONTACT_ERRORS,
   LENGTH_ERROR,
+  MESSAGE_MAX_LENGTH,
   MESSAGE_REQUIRED_ERROR,
+  TEXT_MAX_LENGTH,
 } from "@/lib/contact/contact-rules";
+
+// A length limit as Vietnamese writes it ("2.000").
+const viCount = (n: number) => n.toLocaleString("vi-VN");
 
 const DETAILS_CONSENT = "We only use your details to respond to this request.";
 
@@ -204,7 +209,7 @@ export const CONTACT_STRINGS_VI: Localized<typeof CONTACT_STRINGS> = {
     org: "Vui lòng nhập tên tổ chức.",
     phone: "Vui lòng nhập số điện thoại hợp lệ, ví dụ (+1) 469 322 9899.",
     date: "Vui lòng chọn hôm nay hoặc một ngày sau đó.",
-    message: "Vui lòng giữ tin nhắn dưới 2.000 ký tự.",
+    message: `Vui lòng giữ tin nhắn dưới ${viCount(MESSAGE_MAX_LENGTH)} ký tự.`,
   },
   productPills: CONTACT_STRINGS.productPills,
   defaultProduct: CONTACT_STRINGS.defaultProduct,
@@ -227,9 +232,12 @@ export const ERRORS_VI: ReadonlyMap<string, string> = new Map([
     ],
   ),
   [MESSAGE_REQUIRED_ERROR, "Vui lòng kể đôi chút về dự án của bạn."],
-  [LENGTH_ERROR, "Vui lòng nhập dưới 200 ký tự."],
+  [LENGTH_ERROR, `Vui lòng nhập dưới ${viCount(TEXT_MAX_LENGTH)} ký tự.`],
   [JOB_ERRORS.cv, "Vui lòng tải lên CV dạng PDF hoặc Word, tối đa 5 MB."],
-  [JOB_ERRORS.note, "Vui lòng giữ lời nhắn dưới 2.000 ký tự."],
+  [
+    JOB_ERRORS.note,
+    `Vui lòng giữ lời nhắn dưới ${viCount(MESSAGE_MAX_LENGTH)} ký tự.`,
+  ],
 ]);
 
 /** One English field error in the page's language; an unknown one becomes the generic send error. */
