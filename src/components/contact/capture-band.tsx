@@ -1,6 +1,11 @@
 "use client";
 
-import { LocaleLink, useLocale } from "@/components/layout/locale-link";
+import {
+  LocaleLink,
+  useContactErrorText,
+  useLocale,
+  useLocalized,
+} from "@/components/layout/locale-link";
 import { localeHref } from "@/i18n/locales";
 import { useRouter } from "next/navigation";
 import { useRef, useState, type SubmitEvent } from "react";
@@ -12,7 +17,6 @@ import {
   type RequestKind,
 } from "@/lib/contact/contact-rules";
 import { rememberCapturedEmail } from "./capture-storage";
-import { pickLocale } from "@/i18n/content";
 import {
   CONTACT_STRINGS,
   CONTACT_STRINGS_VI,
@@ -44,7 +48,11 @@ export function CaptureBand({
 }>) {
   const router = useRouter();
   const locale = useLocale();
-  const T = pickLocale(locale, { en: CONTACT_STRINGS, vi: CONTACT_STRINGS_VI });
+  const T = useLocalized("contactStrings", {
+    en: CONTACT_STRINGS,
+    vi: CONTACT_STRINGS_VI,
+  });
+  const errorText = useContactErrorText();
   const S = T.capture;
   const FORM = T.form;
   const copy = copyOverride
@@ -109,7 +117,7 @@ export function CaptureBand({
           </div>
           {invalid && (
             <small id={ERROR_ID} className="err" role="alert">
-              {localizeError(CONTACT_ERRORS.email, locale)}
+              {localizeError(CONTACT_ERRORS.email, locale, errorText)}
             </small>
           )}
           <small>

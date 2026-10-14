@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { contactByPrefix, hcmc, plano } from "@/content/offices";
 import { localeHref, type Locale } from "@/i18n/locales";
-import { SHELL } from "@/i18n/shell";
+import type { ShellDictionary } from "@/i18n/shell";
 import { CONTACT_HREF, currentSection, NAV_LINKS } from "./nav-data";
 import { itemClass } from "./site-nav";
 
@@ -33,8 +33,10 @@ function trapTargets(scope: ParentNode) {
   );
 }
 
-export function MobileMenu({ locale }: Readonly<{ locale: Locale }>) {
-  const t = SHELL[locale].nav;
+export function MobileMenu({
+  locale,
+  t,
+}: Readonly<{ locale: Locale; t: ShellDictionary["nav"] }>) {
   const pathname = usePathname();
   // The menu is open only on the pathname it was opened on, so a navigation closes it.
   const [openedOn, setOpenedOn] = useState<string | null>(null);

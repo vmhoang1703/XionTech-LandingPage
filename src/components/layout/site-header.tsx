@@ -39,7 +39,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
               className="h-8 w-auto max-[641px]:h-[26px] max-[374px]:h-[22px] max-[339px]:h-5"
             />
           </Link>
-          <SiteNav locale={locale} />
+          <SiteNav locale={locale} t={t} />
           <Link
             href={localeHref(locale, CONTACT_HREF)}
             className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[443px]:px-3.5 max-[411px]:hidden"
@@ -47,8 +47,8 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
             {t.contact}
             <ArrowRightIcon aria-hidden="true" className="max-[443px]:hidden" />
           </Link>
-          <MobileMenu locale={locale} />
-          <LanguageMenu />
+          <MobileMenu locale={locale} t={t} />
+          <LanguageMenu label={SHELL[locale].language.label} />
         </div>
         <HeaderScroll />
       </header>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { htmlLang, isLocale, LOCALES } from "@/i18n/locales";
+import { clientStrings } from "@/i18n/client-strings";
 import { setRequestLocale } from "@/i18n/request-locale";
 import { META } from "@/i18n/site-meta";
 import { LocaleProvider } from "@/components/layout/locale-link";
@@ -53,7 +54,7 @@ export default async function RootLayout({
         <noscript>
           <style>{`.count-up[data-count="wait"] { --count: var(--to) !important; }`}</style>
         </noscript>
-        <LocaleProvider locale={locale}>
+        <LocaleProvider locale={locale} strings={clientStrings(locale)}>
           <SiteHeader locale={locale} />
           <main id="main" tabIndex={-1} className="flex flex-1 flex-col">
             {children}

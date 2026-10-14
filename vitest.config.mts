@@ -5,6 +5,10 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     tsconfigPaths: true,
+    // "server-only" is a Next.js build guard; tests load its no-op build.
+    alias: {
+      "server-only": "next/dist/compiled/server-only/empty.js",
+    },
   },
   test: {
     environment: "jsdom",

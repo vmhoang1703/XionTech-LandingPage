@@ -1,7 +1,12 @@
 "use client";
 
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
-import { LocaleLink, useLocale } from "@/components/layout/locale-link";
+import {
+  LocaleLink,
+  useContactErrorText,
+  useLocale,
+  useLocalized,
+} from "@/components/layout/locale-link";
 import {
   useEffect,
   useRef,
@@ -19,7 +24,6 @@ import {
   type RequestKind,
 } from "@/lib/contact/contact-rules";
 import { fillCapturedEmail } from "./capture-storage";
-import { pickLocale } from "@/i18n/content";
 import {
   CONTACT_STRINGS,
   CONTACT_STRINGS_VI,
@@ -138,7 +142,11 @@ function nextTabIndex(key: string, index: number): number | null {
 
 export function ContactForm() {
   const locale = useLocale();
-  const T = pickLocale(locale, { en: CONTACT_STRINGS, vi: CONTACT_STRINGS_VI });
+  const T = useLocalized("contactStrings", {
+    en: CONTACT_STRINGS,
+    vi: CONTACT_STRINGS_VI,
+  });
+  const errorText = useContactErrorText();
   const S = T.form;
   const TAB_LABELS: Record<RequestKind, string> = {
     demo: S.tabDemo,
@@ -212,7 +220,7 @@ export function ContactForm() {
 
   /** Show, announce and focus the invalid fields; true when there are any. */
   function showErrors(form: HTMLFormElement, english: ContactErrors): boolean {
-    const found: ContactErrors = localizeErrors(english, locale);
+    const found: ContactErrors = localizeErrors(english, locale, errorText);
     const invalid = FIELD_ORDER.filter((field) => found[field]);
     setErrors(found);
     setAnnouncement((current) => ({

@@ -2,7 +2,7 @@
 
 import { ArrowLeftIcon, ArrowRightIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
-import { useLocale } from "@/components/layout/locale-link";
+import { useLocalized } from "@/components/layout/locale-link";
 import {
   APP_TAGLINES,
   APPS,
@@ -21,8 +21,6 @@ import {
   roadDialogVi,
   type DayRoad,
 } from "@/content/products";
-import { pickLocale } from "@/i18n/content";
-import type { Locale } from "@/i18n/locales";
 import { MapBadge } from "../map/map-badge";
 
 // The modal for one stop on the school-day road: the step in full, the app
@@ -39,9 +37,14 @@ const LAST = dayRoad.stops.length - 1;
 
 export function RoadStopDialog({ index, onMove, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
-  const locale = useLocale();
-  const road = pickLocale<DayRoad>(locale, { en: dayRoad, vi: dayRoadVi });
-  const { close } = pickLocale(locale, { en: roadDialog, vi: roadDialogVi });
+  const road = useLocalized<"dayRoad", DayRoad>("dayRoad", {
+    en: dayRoad,
+    vi: dayRoadVi,
+  });
+  const { close } = useLocalized("roadDialog", {
+    en: roadDialog,
+    vi: roadDialogVi,
+  });
 
   useEffect(() => {
     const dialog = ref.current;
@@ -92,8 +95,8 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
           <h2 id="road-dialog-h">{stop.title}</h2>
           <p className="road-dialog-text">{stop.text}</p>
 
-          {stop.app ? <StopApp id={stop.app} locale={locale} /> : null}
-          {!stop.app && index === LAST ? <AllApps locale={locale} /> : null}
+          {stop.app ? <StopApp id={stop.app} /> : null}
+          {!stop.app && index === LAST ? <AllApps /> : null}
 
           <div className="road-dialog-nav">
             <button
@@ -122,13 +125,17 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
 }
 
 // The app at work at this stop: name, tagline, "Made for" and features.
-function StopApp({ id, locale }: Readonly<{ id: AppId; locale: Locale }>) {
+function StopApp({ id }: Readonly<{ id: AppId }>) {
   const app = appById(id);
-  const detail = pickLocale(locale, {
+  const detail = useLocalized("productDetails", {
     en: productDetails,
     vi: productDetailsVi,
   })[id];
-  const showcase = pickLocale(locale, {
+  const taglines = useLocalized("appTaglines", {
+    en: APP_TAGLINES,
+    vi: appTaglinesVi,
+  });
+  const showcase = useLocalized("productsShowcase", {
     en: productsShowcase,
     vi: productsShowcaseVi,
   });
@@ -138,7 +145,7 @@ function StopApp({ id, locale }: Readonly<{ id: AppId; locale: Locale }>) {
         <MapBadge badge={app.badge} />
         <div>
           <h3>{app.fullName}</h3>
-          <p>{tagline(app.id, locale)}</p>
+          <p>{taglines[app.id]}</p>
         </div>
       </div>
       <p className="road-dialog-made">
@@ -155,7 +162,11 @@ function StopApp({ id, locale }: Readonly<{ id: AppId; locale: Locale }>) {
 }
 
 // The last stop: every app that kept the day connected.
-function AllApps({ locale }: Readonly<{ locale: Locale }>) {
+function AllApps() {
+  const taglines = useLocalized("appTaglines", {
+    en: APP_TAGLINES,
+    vi: appTaglinesVi,
+  });
   return (
     <ul className="road-dialog-apps">
       {APPS.map((one) => (
@@ -163,14 +174,10 @@ function AllApps({ locale }: Readonly<{ locale: Locale }>) {
           <MapBadge badge={one.badge} />
           <span>
             <strong>{one.shortName}</strong>
-            <span>{tagline(one.id, locale)}</span>
+            <span>{taglines[one.id]}</span>
           </span>
         </li>
       ))}
     </ul>
   );
-}
-
-function tagline(id: AppId, locale: Locale): string {
-  return pickLocale(locale, { en: APP_TAGLINES, vi: appTaglinesVi })[id];
 }

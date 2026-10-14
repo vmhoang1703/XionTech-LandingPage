@@ -34,7 +34,7 @@ export interface ShellDictionary {
     cityPlano: string;
     cityHcmc: string;
   };
-  language: { label: string } & Record<Locale, string>;
+  language: { label: string };
   footer: {
     blurb: string;
     products: string;
@@ -76,15 +76,7 @@ const en: ShellDictionary = {
     cityPlano: "Plano",
     cityHcmc: "Ho Chi Minh City",
   },
-  language: {
-    label: "Language",
-    en: "English",
-    vi: "Tiếng Việt",
-    ja: "日本語",
-    fr: "Français",
-    ko: "한국어",
-    zh: "简体中文",
-  },
+  language: { label: "Language" },
   footer: {
     blurb:
       "Education technology products and software delivery services for schools and businesses.",
@@ -127,15 +119,7 @@ const vi: ShellDictionary = {
     cityPlano: "Plano",
     cityHcmc: "TP. Hồ Chí Minh",
   },
-  language: {
-    label: "Ngôn ngữ",
-    en: "English",
-    vi: "Tiếng Việt",
-    ja: "日本語",
-    fr: "Français",
-    ko: "한국어",
-    zh: "简体中文",
-  },
+  language: { label: "Ngôn ngữ" },
   footer: {
     blurb:
       "Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp.",

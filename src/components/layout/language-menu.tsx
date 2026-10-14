@@ -7,10 +7,10 @@ import {
   DEFAULT_LOCALE,
   isLocale,
   LOCALE_COOKIE,
+  LANGUAGE_NAMES,
   LOCALES,
   type Locale,
 } from "@/i18n/locales";
-import { SHELL } from "@/i18n/shell";
 
 const LIST_ID = "language-list";
 const STATE_KEY = "locale-switch";
@@ -150,13 +150,13 @@ function setLocaleCookie(locale: Locale) {
   document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=${ONE_YEAR}; SameSite=Lax`;
 }
 
-export function LanguageMenu() {
+/** `label` is "Language" in the page's language (SiteHeader passes it). */
+export function LanguageMenu({ label }: Readonly<{ label: string }>) {
   const pathname = usePathname();
   const router = useRouter();
   const segment = pathname.split("/")[1];
   const current = isLocale(segment) ? segment : undefined;
   const shown = current ?? DEFAULT_LOCALE;
-  const text = SHELL[shown].language;
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -230,7 +230,7 @@ export function LanguageMenu() {
         aria-expanded={open}
         onClick={() => setOpen(!open)}
       >
-        <span className="sr-only">{text.label}: </span>
+        <span className="sr-only">{label}: </span>
         {shown.toUpperCase()}
         <CaretDownIcon aria-hidden="true" />
       </button>
@@ -249,7 +249,7 @@ export function LanguageMenu() {
               onClick={() => choose(locale)}
             >
               {locale.toUpperCase()}
-              <span className="sr-only"> {text[locale]}</span>
+              <span className="sr-only"> {LANGUAGE_NAMES[locale]}</span>
             </button>
           </li>
         ))}

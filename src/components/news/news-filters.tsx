@@ -7,14 +7,13 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { useLocale } from "@/components/layout/locale-link";
+import { useLocalized } from "@/components/layout/locale-link";
 import {
   categoryLabels,
   categoryLabelsVi,
   newsPage as newsPageEn,
   newsPageVi,
 } from "@/content/news";
-import { pickLocale } from "@/i18n/content";
 import { readMotionPaused } from "@/lib/motion/motion-preference";
 import type { Audience } from "@/lib/news/audience";
 
@@ -58,9 +57,11 @@ const serverColumns = () => 3;
 // (CAP-5). The first card shown is the full-width lead only when it is alone
 // or a full row of squares follows it (prototype site.js `shape()`).
 export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
-  const locale = useLocale();
-  const newsPage = pickLocale(locale, { en: newsPageEn, vi: newsPageVi });
-  const labels = pickLocale(locale, {
+  const newsPage = useLocalized("newsPage", {
+    en: newsPageEn,
+    vi: newsPageVi,
+  });
+  const labels = useLocalized("categoryLabels", {
     en: categoryLabels,
     vi: categoryLabelsVi,
   });

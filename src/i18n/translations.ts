@@ -1,3 +1,4 @@
+import "server-only";
 import {
   aboutCapture,
   aboutFaq,
@@ -52,6 +53,7 @@ import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
 import {
   dayRoad,
+  journeyBoard,
   journeyMap,
   productDetails,
   productsMeta,
@@ -81,7 +83,7 @@ import type { SiteMeta } from "./site-meta";
  * dictionary (src/i18n/dictionaries/<locale>.ts) gives the same names in its
  * language. Read on first use, since content modules import pickLocale's file.
  */
-function english() {
+export function english() {
   return {
     aboutCapture,
     aboutFaq,
@@ -119,6 +121,7 @@ function english() {
     jobForm,
     jobHero,
     jobMeta,
+    journeyBoard,
     journeyMap,
     newsMeta,
     newsPage,
@@ -164,6 +167,11 @@ function keyOf(en: unknown): keyof English | undefined {
     ]),
   );
   return byEnglish.get(en);
+}
+
+/** Whether a value is one of the English values the registry names. */
+export function isRegistered(en: unknown): boolean {
+  return keyOf(en) !== undefined;
 }
 
 /** The registered translation of an English content value, if the locale has one. */

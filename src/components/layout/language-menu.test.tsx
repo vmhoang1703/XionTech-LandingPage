@@ -26,7 +26,7 @@ describe("LanguageMenu", () => {
   });
 
   it("navigates to the same path in the chosen locale and sets the cookie", () => {
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     fireEvent.click(screen.getByRole("button", { name: /Tiếng Việt/ }));
     expect(push).toHaveBeenCalledWith("/vi/demo", { scroll: false });
@@ -35,7 +35,7 @@ describe("LanguageMenu", () => {
 
   it("keeps the query and hash when switching", () => {
     window.history.replaceState(null, "", "/en/demo?a=1#form");
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     fireEvent.click(screen.getByRole("button", { name: /Tiếng Việt/ }));
     expect(push).toHaveBeenCalledWith("/vi/demo?a=1#form", { scroll: false });
@@ -43,7 +43,7 @@ describe("LanguageMenu", () => {
   });
 
   it("marks the current locale and shows its code on the button", () => {
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     const button = screen.getByRole("button", { name: /Language/ });
     expect(button.textContent).toContain("EN");
     expect(button.getAttribute("aria-expanded")).toBe("false");
@@ -61,16 +61,16 @@ describe("LanguageMenu", () => {
     ).toBe(false);
   });
 
-  it("uses the Vietnamese label on a vi page", () => {
+  it("shows the label SiteHeader gives it", () => {
     pathname = "/vi";
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Ngôn ngữ" />);
     expect(
       screen.getByRole("button", { name: /Ngôn ngữ/ }).textContent,
     ).toContain("VI");
   });
 
   it("choosing the current locale only closes the menu", () => {
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     fireEvent.click(screen.getByRole("button", { name: /English/ }));
     expect(push).not.toHaveBeenCalled();
@@ -80,7 +80,7 @@ describe("LanguageMenu", () => {
   });
 
   it("closes on Escape and returns focus to the button", () => {
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     fireEvent.keyDown(document, { key: "Escape" });
     const button = screen.getByRole("button", { name: /Language/ });
@@ -89,7 +89,7 @@ describe("LanguageMenu", () => {
   });
 
   it("ignores other keys and Escape while closed", () => {
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     fireEvent.keyDown(document, { key: "Escape" });
     openMenu();
     fireEvent.keyDown(document, { key: "a" });
@@ -101,7 +101,7 @@ describe("LanguageMenu", () => {
     render(
       <>
         <input aria-label="outside" />
-        <LanguageMenu />
+        <LanguageMenu label="Language" />
       </>,
     );
     openMenu();
@@ -116,7 +116,7 @@ describe("LanguageMenu", () => {
   it("closes when focus tabs out of the menu, without moving focus", () => {
     render(
       <>
-        <LanguageMenu />
+        <LanguageMenu label="Language" />
         <a href="#after">after</a>
       </>,
     );
@@ -136,7 +136,7 @@ describe("LanguageMenu", () => {
   });
 
   it("stays open on a blur with no new focus target", () => {
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     fireEvent.blur(screen.getByRole("button", { name: /English/ }), {
       relatedTarget: null,
@@ -154,7 +154,7 @@ describe("LanguageMenu", () => {
         <input type="checkbox" name="products" value="pxp" />
         <input type="checkbox" name="products" value="sxp" />
         <input type="checkbox" name="products" value="iot" />
-        <LanguageMenu />
+        <LanguageMenu label="Language" />
       </form>
     );
     const box = (value: string) =>
@@ -178,7 +178,7 @@ describe("LanguageMenu", () => {
 
   it("off a locale path, replaces an unsupported two-letter segment", () => {
     pathname = "/fr/products";
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     const english = screen.getByRole("button", { name: /English/ });
     expect(english.hasAttribute("aria-current")).toBe(false);
@@ -188,7 +188,7 @@ describe("LanguageMenu", () => {
 
   it("off a locale path, prefixes the locale without dropping a segment", () => {
     pathname = "/products/x";
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     fireEvent.click(screen.getByRole("button", { name: /Tiếng Việt/ }));
     expect(push).toHaveBeenCalledWith("/vi/products/x", { scroll: false });
@@ -204,7 +204,7 @@ describe("LanguageMenu", () => {
         <textarea aria-label="unnamed" defaultValue="" />
         <input type="radio" name="size" value="s" />
         <input type="radio" name="size" value="m" defaultChecked />
-        <LanguageMenu />
+        <LanguageMenu label="Language" />
       </form>,
     );
     (document.querySelector('[name="name"]') as HTMLInputElement).value = "Lan";
@@ -230,7 +230,7 @@ describe("LanguageMenu", () => {
         <input type="checkbox" name="agree" />
         <input type="radio" name="size" value="s" />
         <input type="radio" name="size" value="m" />
-        <LanguageMenu />
+        <LanguageMenu label="Language" />
       </form>,
     );
     expect(
@@ -284,7 +284,7 @@ describe("LanguageMenu", () => {
     });
 
     it("waits for the page to grow tall enough, then restores the scroll", () => {
-      render(<LanguageMenu />);
+      render(<LanguageMenu label="Language" />);
       act(() => vi.advanceTimersByTime(100));
       height = 4000;
       act(() => vi.advanceTimersByTime(100));
@@ -293,7 +293,7 @@ describe("LanguageMenu", () => {
 
     it("puts the scroll back when something moves it while the page settles", () => {
       height = 4000;
-      render(<LanguageMenu />);
+      render(<LanguageMenu label="Language" />);
       window.scrollY = 719;
       act(() => vi.advanceTimersByTime(100));
       expect(window.scrollY).toBe(1141);
@@ -301,7 +301,7 @@ describe("LanguageMenu", () => {
 
     it("stops restoring once the visitor scrolls", () => {
       height = 4000;
-      render(<LanguageMenu />);
+      render(<LanguageMenu label="Language" />);
       fireEvent.wheel(window);
       window.scrollY = 300;
       act(() => vi.advanceTimersByTime(500));
@@ -309,7 +309,7 @@ describe("LanguageMenu", () => {
     });
 
     it("gives up after a while on a page that never grows", () => {
-      render(<LanguageMenu />);
+      render(<LanguageMenu label="Language" />);
       act(() => vi.advanceTimersByTime(5000));
       const calls = vi.mocked(window.scrollTo).mock.calls.length;
       act(() => vi.advanceTimersByTime(500));
@@ -317,7 +317,7 @@ describe("LanguageMenu", () => {
     });
 
     it("returns focus to the language button", () => {
-      render(<LanguageMenu />);
+      render(<LanguageMenu label="Ngôn ngữ" />);
       expect(document.activeElement).toBe(
         screen.getByRole("button", { name: /Ngôn ngữ/ }),
       );
@@ -330,7 +330,7 @@ describe("LanguageMenu", () => {
       JSON.stringify({ path: "/vi/about", scrollY: 10, fields: {} }),
     );
     const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     expect(scrollTo).not.toHaveBeenCalled();
     expect(sessionStorage.getItem("locale-switch")).toBeNull();
     scrollTo.mockRestore();
@@ -347,7 +347,7 @@ describe("LanguageMenu", () => {
       .mockImplementation(() => {
         throw new Error("blocked");
       });
-    render(<LanguageMenu />);
+    render(<LanguageMenu label="Language" />);
     openMenu();
     act(() => {
       fireEvent.click(screen.getByRole("button", { name: /Tiếng Việt/ }));

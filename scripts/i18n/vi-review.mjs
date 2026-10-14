@@ -256,7 +256,11 @@ async function main() {
     logLevel: "error",
     server: { middlewareMode: true, hmr: false, ws: false },
     optimizeDeps: { noDiscovery: true },
-    resolve: { tsconfigPaths: true },
+    resolve: {
+      tsconfigPaths: true,
+      // shell.ts reads the server-only translation registry; load its no-op build.
+      alias: { "server-only": "next/dist/compiled/server-only/empty.js" },
+    },
   });
   try {
     const prototype = JSON.parse(readFileSync(PROTOTYPE_JSON, "utf8"));

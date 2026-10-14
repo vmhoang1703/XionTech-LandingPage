@@ -1,3 +1,4 @@
+import { SHELL } from "@/i18n/shell";
 import { ListIcon, XIcon } from "@phosphor-icons/react";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -67,7 +68,7 @@ function Header() {
   return (
     <header>
       <Link href="/">logo</Link>
-      <MobileMenu locale="en" />
+      <MobileMenu locale="en" t={SHELL.en.nav} />
     </header>
   );
 }
@@ -102,7 +103,7 @@ describe("MobileMenu", () => {
   it("shows Vietnamese labels and /vi links on vi", () => {
     render(
       <header>
-        <MobileMenu locale="vi" />
+        <MobileMenu locale="vi" t={SHELL.vi.nav} />
       </header>,
     );
     fireEvent.click(menuButton());
@@ -429,7 +430,7 @@ describe("MobileMenu", () => {
         <a href="https://example.com/" target="_blank" rel="noreferrer">
           external
         </a>
-        <MobileMenu locale="en" />
+        <MobileMenu locale="en" t={SHELL.en.nav} />
       </header>,
     );
     const external = screen.getByRole("link", { name: "external" });

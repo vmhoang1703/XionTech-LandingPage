@@ -1,3 +1,4 @@
+import "server-only";
 import type { Locale } from "../locales";
 import type { Dictionaries } from "../translations";
 import { fr } from "./fr";

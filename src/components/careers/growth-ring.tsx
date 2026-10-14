@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useLocale } from "@/components/layout/locale-link";
+import { useLocalized } from "@/components/layout/locale-link";
 import { careersGrowth, careersGrowthVi } from "@/content/careers";
-import { pickLocale } from "@/i18n/content";
 
 // Angle of each step on the ring, clockwise from the top (prototype careers.html).
 const ANGLES = [-90, -18, 54, 126, 198];
@@ -20,7 +19,7 @@ const dotAt = (angle: number) =>
 // the ring, lighting each step, and rests on the last. Server HTML and
 // reduced motion show the first step and never move.
 export function GrowthRing() {
-  const { caption, center, steps } = pickLocale(useLocale(), {
+  const { caption, center, steps } = useLocalized("careersGrowth", {
     en: careersGrowth,
     vi: careersGrowthVi,
   });
