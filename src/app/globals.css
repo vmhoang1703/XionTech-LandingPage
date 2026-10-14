@@ -4601,6 +4601,24 @@
   :lang(vi) h2 {
     line-height: 1.2;
   }
+
+  /* CJK headings need more room than the tight Latin display leading. */
+  :lang(ja) :is(h1, h2, h3, h4),
+  :lang(ko) :is(h1, h2, h3, h4),
+  :lang(zh) :is(h1, h2, h3, h4) {
+    line-height: 1.35;
+  }
+}
+
+/*
+  Japanese, Korean and Chinese text has no case and reads badly tracked, so the
+  negative and uppercase letter-spacing is reset. Unlayered and !important on
+  purpose: it must beat every tracking utility and component rule.
+*/
+:lang(ja),
+:lang(ko),
+:lang(zh) {
+  letter-spacing: normal !important;
 }
 
 /*

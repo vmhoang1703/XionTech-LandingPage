@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   DEFAULT_LOCALE,
+  htmlLang,
   isLocale,
   LOCALE_COOKIE,
   LANGUAGE_NAMES,
@@ -135,7 +136,7 @@ function restoreScroll(top: number) {
   return stop;
 }
 
-// Off a locale path (the global 404, e.g. /fr/products) the chosen locale replaces a
+// Off a locale path (the global 404, e.g. /de/products) the chosen locale replaces a
 // two-letter first segment and is prefixed to anything else.
 function swapLocale(pathname: string, locale: Locale) {
   const segments = pathname.split("/").slice(1);
@@ -243,13 +244,12 @@ export function LanguageMenu({ label }: Readonly<{ label: string }>) {
           <li key={locale}>
             <button
               type="button"
-              lang={locale}
+              lang={htmlLang(locale)}
               aria-current={locale === current ? "true" : undefined}
-              className="text-navy flex h-11 w-full items-center rounded-xl px-3 text-sm font-semibold hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-[current=true]:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)]"
+              className="text-navy flex h-11 w-full items-center rounded-xl px-3 text-sm font-semibold whitespace-nowrap hover:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)] aria-[current=true]:bg-[color-mix(in_srgb,var(--color-ice)_70%,transparent)]"
               onClick={() => choose(locale)}
             >
-              {locale.toUpperCase()}
-              <span className="sr-only"> {LANGUAGE_NAMES[locale]}</span>
+              {LANGUAGE_NAMES[locale]}
             </button>
           </li>
         ))}

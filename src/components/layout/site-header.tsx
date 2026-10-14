@@ -42,10 +42,10 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
           <SiteNav locale={locale} t={t} />
           <Link
             href={localeHref(locale, CONTACT_HREF)}
-            className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[443px]:px-3.5 max-[411px]:hidden"
+            className="btn btn-primary btn-sm max-[1080px]:ml-auto max-[523px]:px-3.5 max-[491px]:hidden"
           >
             {t.contact}
-            <ArrowRightIcon aria-hidden="true" className="max-[443px]:hidden" />
+            <ArrowRightIcon aria-hidden="true" className="max-[523px]:hidden" />
           </Link>
           <MobileMenu locale={locale} t={t} />
           <LanguageMenu label={SHELL[locale].language.label} />

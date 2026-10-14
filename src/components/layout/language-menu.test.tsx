@@ -61,6 +61,23 @@ describe("LanguageMenu", () => {
     ).toBe(false);
   });
 
+  it("lists every language by its native name, visibly, with its lang", () => {
+    render(<LanguageMenu label="Language" />);
+    openMenu();
+    const items = screen.getAllByRole("listitem").map((item) => {
+      const button = item.querySelector("button");
+      return [button?.textContent, button?.getAttribute("lang")];
+    });
+    expect(items).toEqual([
+      ["English", "en"],
+      ["Tiếng Việt", "vi"],
+      ["日本語", "ja"],
+      ["Français", "fr"],
+      ["한국어", "ko"],
+      ["简体中文", "zh-Hans"],
+    ]);
+  });
+
   it("shows the label SiteHeader gives it", () => {
     pathname = "/vi";
     render(<LanguageMenu label="Ngôn ngữ" />);
@@ -177,7 +194,7 @@ describe("LanguageMenu", () => {
   });
 
   it("off a locale path, replaces an unsupported two-letter segment", () => {
-    pathname = "/fr/products";
+    pathname = "/de/products";
     render(<LanguageMenu label="Language" />);
     openMenu();
     const english = screen.getByRole("button", { name: /English/ });
