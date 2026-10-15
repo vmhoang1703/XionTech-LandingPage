@@ -14,46 +14,42 @@ describe("proxy", () => {
     expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/vi");
   });
 
-  it.each(["zh-CN", "zh", "zh-SG", "zh-Hans", "zh-Hans-SG", "zh-Hans-TW"])(
-    "redirects / to /zh for Accept-Language %s",
-    (tag) => {
-      const res = run("/", { "accept-language": tag });
-      expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/zh");
-    },
-  );
-
-  it.each([
-    "zh-TW,zh;q=0.9,en;q=0.8",
-    "zh-TW,zh;q=0.8,en-US;q=0.5,en;q=0.3",
-    "zh-Hant-HK,zh;q=0.9",
-  ])(
-    "sends a Traditional browser with a bare zh fallback (%s) to /en",
+  it.each(["ja-JP", "fr-CA", "ko", "zh-CN", "zh-TW"])(
+    "sends a removed language (Accept-Language %s) to /en",
     (tag) => {
       const res = run("/", { "accept-language": tag });
       expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
     },
   );
 
-  it("ignores a refused Traditional tag (q=0): zh-TW;q=0,zh;q=0.9 goes to /zh", () => {
-    const res = run("/", { "accept-language": "zh-TW;q=0,zh;q=0.9" });
-    expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/zh");
+  it("picks vi behind a removed language: ja,vi;q=0.8 goes to /vi", () => {
+    const res = run("/", { "accept-language": "ja,vi;q=0.8,en;q=0.5" });
+    expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/vi");
   });
 
-  it.each(["zh-TW", "zh-Hant", "zh-HK"])(
-    "sends Traditional Chinese %s to /en",
-    (tag) => {
-      const res = run("/", { "accept-language": tag });
+  it.each(["ja", "fr", "ko", "zh"])(
+    "sends a removed locale cookie (%s) to /en",
+    (locale) => {
+      const res = run("/", { cookie: `locale=${locale}` });
       expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
     },
   );
 
-  it.each([
-    ["ja-JP", "/ja"],
-    ["fr-CA,en;q=0.5", "/fr"],
-    ["ko", "/ko"],
-  ])("redirects / for Accept-Language %s to %s", (header, path) => {
-    const res = run("/", { "accept-language": header });
-    expect(new URL(res.headers.get("location") ?? "").pathname).toBe(path);
+  it.each(["ja", "fr", "ko", "zh"])(
+    "redirects /%s permanently to the same path under /en",
+    (locale) => {
+      const res = run(`/${locale}/products/staff-hub?x=1`);
+      expect(res.status).toBe(308);
+      const url = new URL(res.headers.get("location") ?? "");
+      expect(url.pathname).toBe("/en/products/staff-hub");
+      expect(url.search).toBe("?x=1");
+    },
+  );
+
+  it("redirects a bare removed locale (/ja) to /en", () => {
+    const res = run("/ja", { cookie: "locale=vi" });
+    expect(res.status).toBe(308);
+    expect(new URL(res.headers.get("location") ?? "").pathname).toBe("/en");
   });
 
   it("falls back to /en for an unparseable header", () => {

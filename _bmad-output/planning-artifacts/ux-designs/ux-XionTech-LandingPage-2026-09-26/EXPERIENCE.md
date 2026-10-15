@@ -16,7 +16,7 @@ What the code in `src/` ships today. Where an older section below disagrees (Boo
 
 - **Contact:** one get-in-touch form, on Home (`/{locale}#contact`). Every primary button on every page goes there with a label that fits its page; the header "Let's talk" (amber primary) and the same button in the mobile menu reach it from any page. Email capture bands also send the visitor there. `/demo` redirects to `/#contact`.
 - **Careers:** hero (H1 "Careers at XionTech", lede, the prompt line "Ready to build with us?", stacked-cards picture that floats; no buttons), then Principles we value, Meet the team at XionTech (`#meet-the-team`) and open roles (`#roles`). Team photos: every image file in `public/careers/life/` (any filename; `.webp`, `.jpg`, `.jpeg`, `.png` or `.avif`; sorted by filename) shows in the strip with the generic localized alt "XionTech team moment" and no caption. The page reads the folder when it is built, so rebuild and redeploy after adding photos (in `npm run dev` a refresh is enough). An empty folder shows plain tinted tiles. HEIC files are skipped (browsers cannot show them); export them as JPEG or WebP first.
-- **Locales:** six, en, vi, ja, fr, ko, zh (`/zh` is Simplified Chinese). Every visible string needs an entry in all six dictionaries; AI translations are listed for a native reader in `docs/translations/<locale>-review.md` (run `npm run i18n:review` after any copy change). Product names and "Get IT done" stay English.
+- **Locales:** two, en and vi (ja, fr, ko and zh were removed on 2026-10-15; their URLs redirect to `/en`). Every visible string needs its Vietnamese twin; AI translations are listed for a native reader in `docs/translations/vi-review.md` (run `npm run i18n:review` after any copy change). Product names and "Get IT done" stay English.
 - **Motion:**
   - *Hero load-in:* every page title opens word by word (`heroWords`, `[data-hw]`), then the lines under it, then the button, in about 1.5s, with no script.
   - *Sequential reveal:* one shared system (`src/components/sections/scroll-reveal.tsx`) plays each section's children in page order as they cross 10% above the bottom of the screen, 100ms apart, capped at five steps. Parts that animate themselves (mountain story, three-layer stack, 4-D flow) or carry `[data-reveal-off]` are left alone. New sections join it; do not add a second reveal script.
@@ -56,7 +56,7 @@ Reference mockups: [`prototype-enhancement/prototype/index.html`](../../../proto
 | Privacy policy | `/privacy` | How personal data from the forms is used (PDPD) | Linked from every consent line and the footer. Content is an open question. |
 | Not found | any unknown path | Recover from a broken link | Short message, links to Home, Products, Services and News, in the current language. |
 
-The 2026-09-29 English-only plan was dropped; the site ships six locales (see Shipped Site).
+The 2026-09-29 English-only plan was dropped; the site ships two locales, en and vi (see Shipped Site).
 
 **Locale routing.** Paths above are shown without the locale prefix; every page exists under `/en/` and `/vi/`. A bare `/` redirects to the saved language, else to `/vi/` if the browser prefers Vietnamese, else to `/en/`. A locale in the URL always wins over the saved choice, so a shared link opens in the sender's language. `hreflang` links pair each page, with `x-default` pointing to `/en/`.
 

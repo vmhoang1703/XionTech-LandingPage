@@ -19,13 +19,6 @@ function Probe() {
   );
 }
 
-const ja: ClientStrings = {
-  dictionary: {
-    roadDialog: { close: "閉じる", previous: "前へ", next: "次へ" },
-  },
-  errors: { pairs: [], fallback: "ja send error" },
-};
-
 function show(locale: Locale, strings?: ClientStrings) {
   const { container, unmount } = render(
     <LocaleProvider locale={locale} strings={strings}>
@@ -41,14 +34,5 @@ describe("useLocalized", () => {
   it("uses the twins on en and vi", () => {
     expect(show("en")).toBe("Close|none");
     expect(show("vi")).toBe("Đóng|none");
-  });
-
-  it("uses the strings the layout sent in another locale", () => {
-    expect(show("ja", ja)).toBe("閉じる|ja send error");
-  });
-
-  it("falls back to English when the layout sent no translation for the key", () => {
-    expect(show("ko", { ...ja, dictionary: {} })).toBe("Close|ja send error");
-    expect(show("fr")).toBe("Close|none");
   });
 });

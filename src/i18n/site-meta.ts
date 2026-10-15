@@ -1,4 +1,3 @@
-import { DICTIONARIES } from "./dictionaries";
 import type { Locale } from "./locales";
 
 export interface SiteMeta {
@@ -19,8 +18,4 @@ export const META: Record<Locale, SiteMeta> = {
     description:
       "Dịch vụ CNTT và phát triển sản phẩm: AI, cloud, ứng dụng tùy chỉnh và giải pháp low-code.",
   },
-  ja: DICTIONARIES.ja?.meta ?? en,
-  fr: DICTIONARIES.fr?.meta ?? en,
-  ko: DICTIONARIES.ko?.meta ?? en,
-  zh: DICTIONARIES.zh?.meta ?? en,
 };

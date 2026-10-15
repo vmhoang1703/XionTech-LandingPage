@@ -59,7 +59,7 @@ describe("HomeApps", () => {
     expect(aiTutor.querySelector(".badge")?.className).toBe("badge b-ait");
   });
 
-  it.each(["vi", "ja", "fr", "ko", "zh"] as const)(
+  it.each(["vi"] as const)(
     "shows the %s taglines, not the English ones",
     (locale) => {
       render(<HomeApps locale={locale} />);

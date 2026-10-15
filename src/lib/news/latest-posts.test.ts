@@ -101,15 +101,6 @@ describe("newsDate", () => {
   it("formats Vietnamese as day/month/year with leading zeros", () => {
     expect(newsDate("2026-09-17T20:00:00Z", "vi")).toBe("18/09/2026");
   });
-
-  it.each([
-    ["ja", "2026年9月18日"],
-    ["fr", "18 septembre 2026"],
-    ["ko", "2026년 9월 18일"],
-    ["zh", "2026年9月18日"],
-  ] as const)("formats %s with that locale's Intl date", (locale, date) => {
-    expect(newsDate("2026-09-17T20:00:00Z", locale)).toBe(date);
-  });
 });
 
 describe("categoryTag", () => {

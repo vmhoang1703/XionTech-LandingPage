@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/demo", destination: "/#contact", permanent: false },
       {
-        source: "/:locale(en|vi|ja|fr|ko|zh)/demo",
+        source: "/:locale(en|vi)/demo",
         destination: "/:locale#contact",
         permanent: false,
       },

@@ -34,10 +34,6 @@ describe("page metadata per locale", () => {
     expect(forLocale("de", meta)).toEqual(meta.en);
   });
 
-  it("falls back to the English meta for a locale not yet translated", () => {
-    expect(forLocale("ja", meta)).toEqual(meta.en);
-  });
-
   it("builds a generateMetadata that reads the locale from params", async () => {
     const generate = localeMetadata(meta);
     expect(

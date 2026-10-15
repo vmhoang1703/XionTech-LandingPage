@@ -3,8 +3,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CAPTURE_EMAIL_KEY } from "./capture-storage";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { ContactForm } from "./contact-form";
-import { clientStrings } from "@/i18n/client-strings";
-import { DICTIONARIES } from "@/i18n/dictionaries";
 
 // The success panel is a polite live region that takes focus (Sonar S6819:
 // no role="status" on a block of headings and text).
@@ -797,30 +795,5 @@ describe("ContactForm in Vietnamese", () => {
       service: "Not sure yet",
       startTiming: "Just exploring",
     });
-  });
-});
-
-describe("ContactForm in Japanese, with the strings the [locale] layout sends", () => {
-  const ja = DICTIONARIES.ja?.contactStrings;
-  if (!ja) throw new Error("no Japanese contact strings");
-  const renderJa = () =>
-    render(
-      <LocaleProvider locale="ja" strings={clientStrings("ja")}>
-        <ContactForm />
-      </LocaleProvider>,
-    );
-
-  it("shows the Japanese form copy from the real dictionary", () => {
-    renderJa();
-    expect(screen.getByRole("tab", { name: ja.form.tabDemo })).toBeTruthy();
-    expect(screen.getByText(ja.form.heading)).toBeTruthy();
-  });
-
-  it("shows Japanese field errors on an empty submit", () => {
-    renderJa();
-    fireEvent.click(screen.getByRole("button", { name: ja.form.submit }));
-    expect(errorText("f-name")).toBe(ja.errors.name);
-    expect(errorText("f-name")).toBe("お名前を入力してください。");
-    expect(errorText("f-email")).toBe(ja.errors.email);
   });
 });

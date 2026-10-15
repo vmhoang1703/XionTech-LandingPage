@@ -14,34 +14,33 @@ const load = (file) =>
   import(/* @vite-ignore */ pathToFileURL(join(ROOT, file)).href);
 
 describe("the untranslated guard", () => {
-  it("flags a Japanese string left equal to its English", () => {
+  it("flags a Vietnamese string left equal to its English", () => {
     const rows = [
-      { location: "ja:homeHero.title", english: "Hello there" },
-      { location: "ja:homeHero.tag", english: "Get IT done" },
+      { location: "vi:homeHero.title", english: "Hello there" },
+      { location: "vi:homeHero.tag", english: "Get IT done" },
     ];
-    expect(untranslated(rows, "ja")).toEqual([
-      "ja:homeHero.title: Hello there",
+    expect(untranslated(rows, "vi")).toEqual([
+      "vi:homeHero.title: Hello there",
     ]);
   });
 
   it("flags a single lowercase English word, but not data keys or links", () => {
     const rows = [
-      { location: "ja:a.label", english: "campus" },
-      { location: "ja:a.links[0].href", english: "/products" },
-      { location: "ja:a.stops[1].app", english: "staff-hub" },
-      { location: "ja:a.cta", english: "#contact" },
+      { location: "vi:a.label", english: "campus" },
+      { location: "vi:a.links[0].href", english: "/products" },
+      { location: "vi:a.stops[1].app", english: "staff-hub" },
+      { location: "vi:a.cta", english: "#contact" },
     ];
-    expect(untranslated(rows, "ja")).toEqual(["ja:a.label: campus"]);
+    expect(untranslated(rows, "vi")).toEqual(["vi:a.label: campus"]);
   });
 
   it("fails clearly for a locale it has no allow-list for", () => {
     expect(() => untranslated([], "de")).toThrow("de: not a review locale");
   });
 
-  it("allows French words that French spells the same, only in French", () => {
-    const rows = [{ location: "x:a", english: "Parents" }];
-    expect(untranslated(rows, "fr")).toEqual([]);
-    expect(untranslated(rows, "ja")).toEqual(["x:a: Parents"]);
+  it("allows the words a locale writes like the English", () => {
+    const rows = [{ location: "x:a", english: "Logistics" }];
+    expect(untranslated(rows, "vi")).toEqual([]);
   });
 });
 

@@ -70,17 +70,3 @@ describe("E-A1 site icon", () => {
     expect(existsSync(join(__dirname, "favicon.ico"))).toBe(false);
   });
 });
-
-describe("CJK type rules", () => {
-  it("set the CJK heading leading on the heading itself, so lang=en islands keep theirs", () => {
-    expect(css).toContain(
-      ":is(h1, h2, h3, h4):is(:lang(ja), :lang(ko), :lang(zh)) {\n  line-height: 1.35;",
-    );
-  });
-
-  it("reset letter-spacing on CJK pseudo-elements too", () => {
-    expect(css).toMatch(
-      /:lang\(zh\)::after \{\n {2}letter-spacing: normal !important;/,
-    );
-  });
-});

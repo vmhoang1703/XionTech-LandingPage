@@ -14,7 +14,7 @@ describe("catch-all page", () => {
     expect(() => CatchAll()).toThrow("NEXT_NOT_FOUND");
   });
 
-  it.each(["en", "vi", "ja", "fr", "ko", "zh"] as const)(
+  it.each(["en", "vi"] as const)(
     "gives the %s Not found title",
     async (locale) => {
       const meta = await generateMetadata({

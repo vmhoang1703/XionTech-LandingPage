@@ -1,4 +1,3 @@
-import { DICTIONARIES } from "./dictionaries";
 import type { Locale } from "./locales";
 import { SERVICE_NAMES } from "./service-names";
 
@@ -131,8 +130,4 @@ const vi: ShellDictionary = {
 export const SHELL: Record<Locale, ShellDictionary> = {
   en,
   vi,
-  ja: DICTIONARIES.ja?.shell ?? en,
-  fr: DICTIONARIES.fr?.shell ?? en,
-  ko: DICTIONARIES.ko?.shell ?? en,
-  zh: DICTIONARIES.zh?.shell ?? en,
 };

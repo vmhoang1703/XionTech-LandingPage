@@ -72,10 +72,6 @@ describe("LanguageMenu", () => {
     expect(items).toEqual([
       ["English", "en"],
       ["Tiếng Việt", "vi"],
-      ["日本語", "ja"],
-      ["Français", "fr"],
-      ["한국어", "ko"],
-      ["简体中文", "zh-Hans"],
     ]);
   });
 

@@ -17,34 +17,13 @@ import { PAGES, buildReview, viPairs, walk } from "./vi-review.mjs";
 const ROOT = join(import.meta.dirname, "../..");
 const PROTOTYPE_JSON = join(ROOT, "src/i18n/prototype-vi.json");
 
-export const REVIEW_LOCALES = ["vi", "ja", "fr", "ko", "zh"];
+export const REVIEW_LOCALES = ["vi"];
 
 export const outputOf = (locale) =>
   join(ROOT, `docs/translations/${locale}-review.md`);
 
 /** What each review page says to its reader. vi is rendered by vi-review.mjs. */
-export const LOCALE_INFO = {
-  ja: {
-    name: "Japanese",
-    column: "日本語",
-    kept: "names of products, services and apps, tech tags (Web, Mobile, AI/ML, Power Platform, n8n …), XionTech and the tagline “Get IT done”. The CV upload label stays “CV”.",
-  },
-  fr: {
-    name: "French",
-    column: "Français",
-    kept: "names of products, services and apps, tech tags, XionTech and the tagline “Get IT done”. Words French spells like English stay as they are: Service, Services, Menu, Contact, Parents, Campus, CV.",
-  },
-  ko: {
-    name: "Korean",
-    column: "한국어",
-    kept: "names of products, services and apps, tech tags (Web, Mobile, AI/ML, Power Platform, n8n …), XionTech and the tagline “Get IT done”.",
-  },
-  zh: {
-    name: "Simplified Chinese",
-    column: "简体中文",
-    kept: "names of products, services and apps, tech tags (Web, Mobile, AI/ML, Power Platform, n8n …), XionTech and the tagline “Get IT done”.",
-  },
-};
+export const LOCALE_INFO = {};
 
 const SHELL_PAGE = PAGES[0][1];
 const META_PAGE = PAGES[1][1];
@@ -157,7 +136,6 @@ const GLOBAL_ALLOWED = [
   "GCP",
   // Language names, each in its own language.
   "English",
-  "Français",
   "Tiếng Việt",
   // Icon names and time zones (data).
   "Cpu",
@@ -182,23 +160,6 @@ const GLOBAL_ALLOWED = [
 /** Words a locale writes like the English (spec-vi-page-content decisions 2 and 4 for vi). */
 const LOCALE_ALLOWED = {
   vi: ["Logistics", "Menu", "Email", "CV", "WIREFRAME", "Otaku", "Karaoke"],
-  ja: ["CV"],
-  fr: [
-    "Service",
-    "Services",
-    "Menu",
-    "Contact",
-    "Parents",
-    "Campus",
-    "CV",
-    "vision",
-    "vision.",
-    "Otaku",
-    "Badminton",
-    "Football",
-  ],
-  ko: [],
-  zh: [],
 };
 
 /** Keys whose values are data (ids, links, icons, app and style refs), never copy. */
@@ -220,7 +181,7 @@ const DATA_MAPS = /:productRoad(?:Vi)?\.stops\[\d+\]$/;
 /** Values that are links or carry no letters: no words to translate. */
 const DATA_VALUE = /^(?:[^A-Za-z]*|(?:\/|#|https?:|mailto:|tel:).*)$/;
 
-/** The last key of a location such as `ja:homeHero.links[0].href` ("href"). */
+/** The last key of a location such as `vi:homeHero.links[0].href` ("href"). */
 const lastKey = (location) => /\.(\w+)(?:\[[^\]]*\])*$/.exec(location)?.[1];
 
 /**
