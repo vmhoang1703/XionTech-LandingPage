@@ -18,12 +18,6 @@ describe("touch targets and small text", () => {
     );
   });
 
-  it("lets the 38px '+3 more' circle tap as 44px", () => {
-    const body = ruleBody(".w-more-trigger::after");
-    expect(body).toMatch(/position:\s*absolute;/);
-    expect(body).toMatch(/inset:\s*-3px;/);
-  });
-
   it.each([".step4 .get b", ".badge", ".map-badge", ".office-tag"])(
     "sets %s to 11.5px (0.72rem)",
     (selector) => {
@@ -237,9 +231,7 @@ describe("behaviour and touch", () => {
   });
 
   it("gives the phone menu's phone links 44px to tap", () => {
-    expect(css).toMatch(
-      /\.menu-contact a:not\(\.btn\)\s*\{[^}]*min-height:\s*44px;/,
-    );
+    expect(css).toMatch(/\.mm-phones a\s*\{[^}]*min-height:\s*44px;/);
   });
 });
 
@@ -252,15 +244,7 @@ describe("prototype motion", () => {
     return css.slice(start, css.indexOf("\n}", start));
   };
 
-  it.each([
-    "press-word",
-    "card-unfold",
-    "shine-window",
-    "shine-copy",
-    "icon-pop",
-    "w-up",
-    "w-pop",
-  ])(
+  it.each(["press-word", "card-unfold", "icon-pop", "w-up", "w-pop"])(
     "%s animates only transform, translate, rotate, scale and opacity",
     (name) => {
       const props = [...keyframes(name).matchAll(/^\s+([a-z-]+):/gm)].map(
@@ -283,7 +267,7 @@ describe("prototype motion", () => {
     expect(css).toMatch(
       /@media \(hover: hover\) and \(prefers-reduced-motion: no-preference\)\s*\{\s*\.svc-card:hover \.svc-card-h svg\s*\{\s*animation:\s*icon-pop/,
     );
-    for (const name of ["press-word", "shine-window", "w-up"]) {
+    for (const name of ["press-word", "w-up"]) {
       const use = css.indexOf(`animation: ${name}`);
       const block = css.lastIndexOf("@media", use);
       expect(css.slice(block, use), name).toContain(

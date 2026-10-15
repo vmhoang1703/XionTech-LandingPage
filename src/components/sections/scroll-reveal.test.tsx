@@ -95,8 +95,35 @@ describe("ScrollReveal", () => {
     ]);
     expect(item("b").dataset.shown).toBe("play");
     expect(item("b").style.getPropertyValue("--reveal-delay")).toBe("0ms");
-    expect(item("c").style.getPropertyValue("--reveal-delay")).toBe("70ms");
+    expect(item("c").style.getPropertyValue("--reveal-delay")).toBe("100ms");
     expect(unobserve).toHaveBeenCalledWith(item("c"));
+  });
+
+  it("plays arrivals in page order, whatever order they are reported in", () => {
+    start();
+    callback([
+      { isIntersecting: true, target: item("c") },
+      { isIntersecting: true, target: item("b") },
+    ]);
+    expect(item("b").style.getPropertyValue("--reveal-delay")).toBe("0ms");
+    expect(item("c").style.getPropertyValue("--reveal-delay")).toBe("100ms");
+  });
+
+  it("gives a section with no group of its own one, stepping into a lone wrapper", () => {
+    document.body.innerHTML = `
+      <main>
+        <section id="plain"><div class="wrap"><div id="grid"><p></p><p></p></div></div></section>
+        <section id="story" class="mtn"><div class="wrap"><p></p><p></p></div></section>
+        <section id="flow"><div class="wrap"><h2></h2><ol class="flow"><li></li></ol></div></section>
+        <section id="own"><div class="wrap"><div data-reveal=""><p></p></div></div></section>
+      </main>`;
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockReturnValue({
+      top: 2000,
+    } as DOMRect);
+    start();
+    expect(document.getElementById("grid")?.dataset.reveal).toBe("auto");
+    expect(document.querySelectorAll("[data-reveal='auto']")).toHaveLength(1);
+    expect(observed).toHaveLength(3);
   });
 
   it("ignores items leaving the screen", () => {
@@ -113,7 +140,7 @@ describe("ScrollReveal", () => {
     start();
     callback(observed.map((target) => ({ isIntersecting: true, target })));
     const last = observed.at(-1) as HTMLElement;
-    expect(last.style.getPropertyValue("--reveal-delay")).toBe("280ms");
+    expect(last.style.getPropertyValue("--reveal-delay")).toBe("500ms");
   });
 
   it("scans again after a navigation, keeping played items and freeing ones now on screen", () => {

@@ -514,7 +514,9 @@ describe("reduced motion", () => {
 // question text and the +/- stay visible. The shared scroll reveal hides only
 // items its script marked "wait" and starts its rise (`from`) only on items
 // the script marked "play", so with no JavaScript neither ever applies. The
-// pointer glow is an empty decorative light that shows on hover.
+// pointer glow is an empty decorative light that shows on hover. The Services
+// hero rotating word server-renders its first word as data-state="in", so it
+// shows with no JavaScript; only the other, aria-hidden alternates are hidden.
 const MAY_HIDE = new Set([
   "[hidden]",
   ".fpanel[hidden]",
@@ -549,6 +551,8 @@ const MAY_HIDE = new Set([
   "#newsGrid[data-unfold] > :not([data-in])",
   // The Services hero shine copy: decoration, aria-hidden.
   ".hl-shine",
+  ".rot-item",
+  '.rot-item[data-state="out"]',
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],
