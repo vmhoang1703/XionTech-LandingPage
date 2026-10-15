@@ -80,7 +80,7 @@ describe("DeviceScreen wireframe", () => {
     );
     expect(container.querySelector(".ws-name")?.textContent).toBe("Parent Hub");
     expect(container.querySelector(".ws-label")?.textContent).toBe(
-      "Thông báo khi con qua cổng trường",
+      "Thông báo đến trường theo thời gian thực",
     );
   });
 });

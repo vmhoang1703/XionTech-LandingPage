@@ -139,14 +139,14 @@ describe("Products page", () => {
       "Xây dựng riêng. Mạnh hơn khi kết nối",
     );
     expect(
-      screen.getByRole("heading", { name: "Một ngôi trường kết nối." }),
+      screen.getByRole("heading", { name: "Một ngôi trường kết nối" }),
     ).toBeTruthy();
     expect(container.querySelector(".rm-title")?.textContent).toBe(
       "1. Parent Hub",
     );
     expect(container.textContent).toContain("Giáo viên và nhân viên");
     expect(container.textContent).toContain(
-      "Giúp phụ huynh đồng hành cùng con mỗi ngày học, ngay trên điện thoại.",
+      "Giúp phụ huynh luôn nắm bắt thông tin và gắn kết với đời sống học đường của con.",
     );
     expect(container.textContent).toContain("Staff Hub");
     expect(container.textContent).not.toContain("A day at school.");

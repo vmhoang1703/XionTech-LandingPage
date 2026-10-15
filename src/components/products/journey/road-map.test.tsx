@@ -325,7 +325,7 @@ describe("RoadMap draw-in", () => {
       cards.map((card) => card.querySelector(".rm-open")?.textContent),
     ).toEqual(["1. Parent Hub", "2. Staff Hub", "3. AI Tutor"]);
     expect(cards[0].querySelector(".rm-text")?.textContent).toBe(
-      "Giúp phụ huynh đồng hành cùng con mỗi ngày học, ngay trên điện thoại.",
+      "Giúp phụ huynh luôn nắm bắt thông tin và gắn kết với đời sống học đường của con.",
     );
     expect(cards[0].querySelector(".rm-more")?.textContent).toBe("Chi tiết");
   });
