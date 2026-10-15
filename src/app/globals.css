@@ -3870,8 +3870,9 @@
       min-height: 0;
     }
 
+    /* Hidden like the stops' bends (.rm-seg above), at their 1px. */
     .rm-end .rm-seg {
-      display: none;
+      height: 1px;
     }
 
     .rm-end-pin {

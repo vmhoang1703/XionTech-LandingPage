@@ -874,7 +874,8 @@
 }
 
 .rd-scene[data-play="on"] .rd-sway {
-  animation: rd-sway 12s ease-in-out 3s infinite alternate both;}
+  animation: rd-sway 12s ease-in-out 3s infinite alternate both;
+}
 
 .rd-scene[data-play="on"] .rd-ground {
   transition: transform var(--transition-duration-highlight) var(--ease-brand);
