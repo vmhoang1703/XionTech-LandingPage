@@ -39,7 +39,11 @@ describe("HomeHero", () => {
     );
     // Round 11: the last beat has its own block too, so it can rise in on load.
     expect(beats).toEqual(["Build smarter.", "Ship faster.", "Get IT done"]);
-    expect(h1.querySelectorAll("[data-load]")).toHaveLength(3);
+    // M4: the headline and lede paint at once (the lede is the LCP).
+    expect(h1.querySelectorAll("[data-load]")).toHaveLength(0);
+    expect(within(hero).getByText(homeHero.sub).hasAttribute("data-load")).toBe(
+      false,
+    );
     expect(within(hero).getByText(homeHero.sub)).toBeDefined();
   });
 

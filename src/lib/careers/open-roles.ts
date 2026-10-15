@@ -29,6 +29,8 @@ export const OPEN_ROLES_QUERY = `*[_type == "job" && closed != true && defined(s
 
 export type OpenRoleDetail = OpenRole & {
   about?: string | null;
+  /** When the job document was created in Sanity (JSON-LD datePosted). */
+  createdAt?: string | null;
   responsibilities?: string[] | null;
   requirements?: string[] | null;
   aboutLang?: string | null;
@@ -45,6 +47,7 @@ export const OPEN_ROLE_QUERY = `*[_type == "job" && closed != true && defined(sl
   "location": ${localized("location")},
   "locationLang": ${localizedLang("location")},
   type,
+  "createdAt": _createdAt,
   "about": pt::text(${localized("description")}),
   "aboutLang": ${localizedLang("description")},
   "responsibilities": ${localized("responsibilities")},

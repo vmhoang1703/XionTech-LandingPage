@@ -1,5 +1,5 @@
 import { localeMetadata } from "@/i18n/page-metadata";
-import { CaptureBand } from "@/components/contact/capture-band";
+import { TalkBand } from "@/components/contact/talk-band";
 import { NewsCard } from "@/components/news/news-card";
 import { NewsFilters } from "@/components/news/news-filters";
 import { PageScene } from "@/components/sections/page-scene";
@@ -10,11 +10,13 @@ import { getAllPosts } from "@/lib/news/all-posts";
 import { postAudience } from "@/lib/news/audience";
 import type { LatestPost } from "@/lib/news/latest-posts";
 import { heroWords } from "@/components/sections/hero-words";
+import { breadcrumbLd, JsonLd } from "@/lib/seo/json-ld";
+import { SHELL } from "@/i18n/shell";
 
-export const generateMetadata = localeMetadata({
-  en: newsMeta,
-  vi: newsMetaVi,
-});
+export const generateMetadata = localeMetadata(
+  { en: newsMeta, vi: newsMetaVi },
+  "/news",
+);
 
 // A failed fetch is logged and shown as "no stories", as on Home, so Sanity
 // can never take the page (or the build that prerenders it) down.
@@ -45,6 +47,11 @@ export default async function NewsPage({
   const t = heroWords();
   return (
     <PageScene fade={false}>
+      <JsonLd
+        data={breadcrumbLd(locale, [
+          { name: SHELL[locale].nav.news, path: "/news" },
+        ])}
+      />
       <section
         className="hero-light page-hero nhead-sec"
         aria-labelledby="news-h1"
@@ -70,7 +77,7 @@ export default async function NewsPage({
           />
         </div>
       </section>
-      <CaptureBand kind="demo" look="page" />
+      <TalkBand locale={locale} page="news" />
     </PageScene>
   );
 }

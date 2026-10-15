@@ -11,11 +11,6 @@ const metadata = await generateMetadata({
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
 vi.mock("@/lib/news/all-posts", () => ({ getAllPosts: vi.fn() }));
-vi.mock("@/components/contact/capture-band", () => ({
-  CaptureBand: ({ kind }: { kind: string }) => (
-    <section data-testid={`capture-${kind}`} />
-  ),
-}));
 
 const post = (n: number, category: string): LatestPost => ({
   slug: `story-${n}`,
@@ -56,11 +51,13 @@ describe("NewsPage", () => {
   });
 
   it("has its own title and description", () => {
-    expect(metadata.title).toBe("News | XionTech");
-    expect(String(metadata.description)).toContain("products");
+    expect(metadata.title).toBe(
+      "Technology news and stories | AI and school technology | XionTech",
+    );
+    expect(String(metadata.description)).toContain("client visits");
   });
 
-  it("renders the hero with no breadcrumb, the filters with no sample note, every story as a card and the demo capture", async () => {
+  it("renders the hero with no breadcrumb, the filters with no sample note, every story as a card and the Let's talk band", async () => {
     const { container } = await renderPage([
       post(1, "product"),
       post(2, "team"),
@@ -99,8 +96,15 @@ describe("NewsPage", () => {
     // Rendered for 3 columns: the first is the lead, a full row follows.
     expect(cards[0].parentElement?.className).toBe("s-lead");
     expect(cards[1].parentElement?.className).toBe("");
-    const capture = screen.getByTestId("capture-demo");
-    expect(flow?.lastElementChild).toBe(capture);
+    const talk = flow?.lastElementChild;
+    expect(talk?.querySelector("h2")?.textContent).toBe(
+      "Have something you want to build?",
+    );
+    expect(talk?.textContent).toContain(
+      "Tell us about your idea and we'll get back to you.",
+    );
+    expect(talk?.querySelector("a")?.getAttribute("href")).toBe("/en#contact");
+    expect(talk?.querySelector("input, form")).toBeNull();
     expect(container.firstElementChild).toBe(flow);
   });
 
@@ -205,7 +209,9 @@ describe("NewsPage metadata in Vietnamese", () => {
     const viMeta = await generateMetadata({
       params: Promise.resolve({ locale: "vi" }),
     });
-    expect(String(viMeta.title)).toBe("Tin tức | XionTech");
+    expect(String(viMeta.title)).toBe(
+      "Tin tức và câu chuyện công nghệ | AI và công nghệ trường học | XionTech",
+    );
     expect(String(viMeta.title)).not.toContain("[Placeholder]");
   });
 });

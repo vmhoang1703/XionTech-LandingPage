@@ -28,9 +28,13 @@ afterEach(() => {
 });
 
 describe("AboutPage", () => {
-  it("has its own title and an engineering-partner description", async () => {
-    expect(metadata.title).toBe("About XionTech | Get IT Done");
-    expect(String(metadata.description)).toContain("engineering partner");
+  it("has its own title and an delivery-centers description", async () => {
+    expect(metadata.title).toBe(
+      "About XionTech | AI-driven product and engineering company",
+    );
+    expect(String(metadata.description)).toContain(
+      "delivery centers in Plano and Ho Chi Minh City",
+    );
     expect(String(metadata.description)).not.toMatch(/newxion|XionTechs/i);
   });
 
@@ -78,7 +82,9 @@ describe("AboutPage", () => {
     const page = container.firstElementChild;
     expect(container.children).toHaveLength(1);
     expect(page?.className).toBe("about-page");
-    expect(page?.children).toHaveLength(2);
+    // The JSON-LD breadcrumb script, the hero, the scene.
+    expect(page?.children).toHaveLength(3);
+    expect(page?.firstElementChild?.tagName).toBe("SCRIPT");
     expect(page?.lastElementChild).toBe(scene);
     const sections = Array.from(
       container.querySelectorAll("#mission, .page-scene > section"),
@@ -117,7 +123,7 @@ describe("AboutPage", () => {
         (p) => p.textContent,
       ),
     ).toEqual([
-      "Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights.",
+      "Our name draws inspiration from a mountain, a symbol of ambition, unity, and the determination to reach new heights.",
       "That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress.",
     ]);
     expect(section?.querySelector(".mtn-summit-lit")).not.toBeNull();
@@ -354,8 +360,10 @@ describe("AboutPage in Vietnamese", () => {
     const vi = await generateMetadata({
       params: Promise.resolve({ locale: "vi" }),
     });
-    expect(vi.title).toBe("Về XionTech | Get IT Done");
-    expect(String(vi.description)).toMatch(/^XionTech là đối tác kỹ thuật/);
+    expect(vi.title).toBe(
+      "Về XionTech | Công ty phát triển sản phẩm và kỹ thuật dựa trên AI",
+    );
+    expect(String(vi.description)).toMatch(/^Gặp gỡ XionTech: /);
   });
 
   it("shows the Vietnamese copy and /vi links on vi", async () => {

@@ -8,9 +8,9 @@ import {
 // Services page copy. Kept out of the components so it can be translated later.
 
 export const servicesMeta = {
-  title: "Software Outsourcing Vietnam | XionTech",
+  title: "Custom software, AI and cloud services | XionTech",
   description:
-    "Software outsourcing from Ho Chi Minh City: product engineering, AI-driven analytics, co-creation, staffing, custom apps, low-code, AI solutions and cloud.",
+    "Product engineering, AI-driven analytics, custom apps, low-code, AI-powered solutions, cloud and dedicated teams, built around your goals by XionTech.",
 };
 
 export const servicesPage = {
@@ -121,7 +121,7 @@ export const servicesOutcomes = {
     },
     {
       id: "apply-ai",
-      title: "Leverage AI to drive business value",
+      title: "Put AI to work for your business",
       description:
         "Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions.",
     },
@@ -141,9 +141,9 @@ export const servicesProcess: {
 // Vietnamese. Service names stay English (2026-10-13); ids and the process
 // icons are shared with English.
 export const servicesMetaVi: typeof servicesMeta = {
-  title: "Outsourcing phần mềm tại Việt Nam | XionTech",
+  title: "Dịch vụ phần mềm theo yêu cầu, AI và cloud | XionTech",
   description:
-    "Outsourcing phần mềm từ TP. Hồ Chí Minh: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo, cung cấp nhân sự, ứng dụng theo yêu cầu, low-code, giải pháp AI và cloud.",
+    "Phát triển sản phẩm, phân tích dữ liệu bằng AI, ứng dụng theo yêu cầu, low-code, giải pháp AI, cloud và đội ngũ chuyên trách từ XionTech, theo mục tiêu của bạn.",
 };
 
 export const servicesPageVi: Localized<typeof servicesPage> = {
@@ -240,7 +240,7 @@ export const servicesOutcomesVi: Localized<typeof servicesOutcomes> = {
     },
     {
       id: servicesOutcomes.items[3].id,
-      title: "Tận dụng AI để tạo giá trị kinh doanh",
+      title: "Đưa AI vào công việc kinh doanh của bạn",
       description:
         "Xây dựng giải pháp ứng dụng AI, tự động hóa quy trình và biến dữ liệu kinh doanh thành thông tin hữu ích, hỗ trợ ra quyết định thông minh hơn.",
     },

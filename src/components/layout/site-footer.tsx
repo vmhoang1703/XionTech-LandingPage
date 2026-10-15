@@ -1,4 +1,8 @@
-import { MapPinIcon } from "@phosphor-icons/react/ssr";
+import {
+  FacebookLogoIcon,
+  LinkedinLogoIcon,
+  MapPinIcon,
+} from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { contactIcon } from "@/components/sections/contact-icon";
@@ -8,7 +12,7 @@ import {
   otherLocations,
   otherLocationsVi,
 } from "@/content/offices";
-import { siteFooter } from "@/content/site-footer";
+import { SOCIAL_LINKS, siteFooter } from "@/content/site-footer";
 import { pickLocale } from "@/i18n/content";
 import { localeHref, type Locale } from "@/i18n/locales";
 import { SHELL } from "@/i18n/shell";
@@ -20,6 +24,8 @@ const linkClass =
   "text-body-sm text-on-navy-muted inline-flex min-h-6 items-center pointer-coarse:min-h-11 hover:text-white";
 
 const iconClass = "text-amber-tint shrink-0";
+
+const SOCIAL_ICONS = { linkedin: LinkedinLogoIcon, facebook: FacebookLogoIcon };
 
 export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
   const t = SHELL[locale];
@@ -67,11 +73,36 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
               />
             </Link>
             <p className="text-body-sm mt-4.5">{t.footer.blurb}</p>
+            {/* Social pages; labels in English except on Vietnamese pages (EN/VI scope). */}
+            <ul className="mt-4 flex gap-2">
+              {SOCIAL_LINKS.map((social) => {
+                const SocialIcon = SOCIAL_ICONS[social.id];
+                return (
+                  <li key={social.id}>
+                    <a
+                      href={social.href}
+                      aria-label={
+                        locale === "vi"
+                          ? social.ariaLabel.vi
+                          : social.ariaLabel.en
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-amber-tint inline-flex size-8 items-center justify-center hover:text-white pointer-coarse:size-11"
+                    >
+                      <SocialIcon aria-hidden="true" size={22} />
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
           {siteFooter.columns.map((column) => (
-            <div key={column.heading(t)}>
-              <h2 className={headingClass}>{column.heading(t)}</h2>
+            // Column labels are not headings (audit L6): each list is a nav
+            // named by its label, so the page outline keeps only its content.
+            <nav key={column.heading(t)} aria-label={column.heading(t)}>
+              <p className={headingClass}>{column.heading(t)}</p>
               <ul className="grid gap-2.5 pointer-coarse:gap-0">
                 {column.links.map((link) => (
                   <li key={link.href}>
@@ -84,11 +115,11 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
 
-          <div>
-            <h2 className={headingClass}>{siteFooter.officesHeading(t)}</h2>
+          <div role="group" aria-label={siteFooter.officesHeading(t)}>
+            <p className={headingClass}>{siteFooter.officesHeading(t)}</p>
             {offices.map((office) => (
               <address
                 key={office.id}

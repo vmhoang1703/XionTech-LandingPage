@@ -60,7 +60,7 @@ function sectionNames(container: HTMLElement) {
 describe("Home page", () => {
   it("sets the page title", () => {
     expect(metadata.title).toBe(
-      "XionTech | School Platforms & Software Outsourcing in Vietnam",
+      "AI-driven product engineering | Custom software development company",
     );
   });
 
@@ -220,7 +220,7 @@ describe("Home metadata in Vietnamese", () => {
       params: Promise.resolve({ locale: "vi" }),
     });
     expect(String(viMeta.title)).toBe(
-      "XionTech | Nền tảng trường học và gia công phần mềm tại Việt Nam",
+      "Phát triển sản phẩm dựa trên AI | Công ty phát triển phần mềm theo yêu cầu",
     );
     expect(String(viMeta.title)).not.toContain("[Placeholder]");
   });

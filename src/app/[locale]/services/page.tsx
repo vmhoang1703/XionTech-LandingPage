@@ -21,11 +21,13 @@ import {
 } from "@/content/services";
 import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { breadcrumbLd, JsonLd } from "@/lib/seo/json-ld";
+import { SHELL } from "@/i18n/shell";
 
-export const generateMetadata = localeMetadata({
-  en: servicesMeta,
-  vi: servicesMetaVi,
-});
+export const generateMetadata = localeMetadata(
+  { en: servicesMeta, vi: servicesMetaVi },
+  "/services",
+);
 
 // E-S2 (prototype services.html): a navy hero panel, the eight services in a
 // sticky heading beside them, the outcomes and the 4-D process at #process.
@@ -58,6 +60,11 @@ export default async function ServicesPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbLd(locale, [
+          { name: SHELL[locale].nav.services, path: "/services" },
+        ])}
+      />
       <section
         className="hero-navy page-hero svc-hero"
         aria-labelledby="services-h1"
@@ -65,25 +72,20 @@ export default async function ServicesPage({
         <div className="wrap svc-hero-grid">
           <div className="svc-hero-copy">
             <h1 id="services-h1">
-              <span className="svc-h1-line" data-load="" style={loadAt(0)}>
+              <span className="svc-h1-line">
                 {title.lead}
                 <span className="sr-only">{title.staticWord}</span>
                 <RotatingWord words={title.words} suffix={title.suffix} />
               </span>{" "}
-              <span className="svc-h1-line" data-load="" style={loadAt(1)}>
+              <span className="svc-h1-line">
                 {title.tail[0]}
                 <span className="hl">{title.tail[1]}</span>
                 {title.tail[2]}
               </span>
             </h1>
-            <p
-              className="lede svc-hero-lede mt-5"
-              data-load=""
-              style={loadAt(2)}
-            >
-              {lede}
-            </p>
-            <div className="cta-row" data-load="" style={loadAt(3)}>
+            {/* No load-in on the headline or lede: the lede is the LCP. */}
+            <p className="lede svc-hero-lede mt-5">{lede}</p>
+            <div className="cta-row" data-load="" style={loadAt(0)}>
               <LocaleLink className="btn btn-primary" href={primaryCta.href}>
                 {primaryCta.label}
                 <ArrowRightIcon aria-hidden="true" />

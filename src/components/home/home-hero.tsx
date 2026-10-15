@@ -14,6 +14,8 @@ import { HeroSilk } from "./hero-silk";
 // front doors sit inside the hero and straddle its lower edge (E-S1 Home).
 // [data-load] items rise in one after another on load (globals.css,
 // "Load-in"), CSS only so they paint at once and show without JavaScript.
+// The headline and the lede are left out: the lede is the page's largest
+// paint (LCP), so it shows on the first frame with no fade or offset.
 const loadAt = (index: number) => ({ "--load-i": index }) as CSSProperties;
 
 export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
@@ -22,7 +24,6 @@ export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
     vi: homeHeroVi,
   });
   const stats = pickLocale(locale, { en: homeStats, vi: homeStatsVi });
-  const n = title.lines.length;
 
   return (
     <section
@@ -48,21 +49,15 @@ export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
                   reads "Build smarter. Ship faster. Get IT done" */}
               {title.lines.map((line, index) => (
                 <Fragment key={line}>
-                  <span className="block" data-load="" style={loadAt(index)}>
-                    {line}
-                  </span>{" "}
+                  <span className="block">{line}</span>{" "}
                 </Fragment>
               ))}
-              <span className="block" data-load="" style={loadAt(n)}>
+              <span className="block">
                 <span className="hl">{title.highlight}</span>
                 {title.tail}
               </span>
             </h1>
-            <p
-              className="text-body-lg mt-5.5 mb-8.5 max-w-[62ch] text-pretty"
-              data-load=""
-              style={loadAt(n + 1)}
-            >
+            <p className="text-body-lg mt-5.5 mb-8.5 max-w-[62ch] text-pretty">
               {sub}
             </p>
             {/* A plain anchor: next/link does not scroll again when the hash
@@ -71,7 +66,7 @@ export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
               href={cta.href}
               className="btn btn-primary"
               data-load=""
-              style={loadAt(n + 2)}
+              style={loadAt(0)}
             >
               {cta.label}
               <ArrowRightIcon aria-hidden="true" />
@@ -82,7 +77,7 @@ export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
         <div
           className="wrap home-stats mt-14 w-full md:mt-22 lg:mt-0 lg:pb-6"
           data-load=""
-          style={loadAt(n + 3)}
+          style={loadAt(1)}
         >
           <StatsBand label={stats.label} stats={stats.stats} tone="navy" />
         </div>

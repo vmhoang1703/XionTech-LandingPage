@@ -19,6 +19,10 @@ Built for the XionTech internal AI build challenge (demo day: 2026-10-16).
   is a verified email on the owner's GitHub account (`vmhoang1703`). Other commits get a
   "GitHub couldn't verify an account" comment and no preview. Merges done with GitHub's merge
   button by the owner always deploy.
+- **Site origin for SEO:** `NEXT_PUBLIC_SITE_URL` (no trailing slash) sets the host used in
+  canonical and hreflang links, Open Graph URLs, JSON-LD, `robots.txt` and `sitemap.xml`.
+  Unset, it is https://xiontech-hoangvu-dev.vercel.app (the challenge host until the final
+  domain is chosen). Set it per Vercel environment and redeploy when the domain changes.
 
 ## Getting started
 

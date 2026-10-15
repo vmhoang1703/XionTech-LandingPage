@@ -3,9 +3,9 @@
 import type { Localized } from "@/i18n/content";
 
 export const careersMeta = {
-  title: "Careers at XionTech | Software Jobs in Ho Chi Minh City",
+  title: "Careers at XionTech | Software and AI jobs",
   description:
-    "Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture.",
+    "Join XionTech to solve real problems, explore AI and new technologies, and grow with a team that builds things that make a difference.",
 };
 
 export const careersHero = {
@@ -31,7 +31,7 @@ export const careersRoles = {
 // which are off the page and stay for later (deferred-work.md).
 export const careersLife = {
   heading: "Meet the team at XionTech",
-  lede: "At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby.",
+  lede: "At XionTech, we take engineering seriously, but not ourselves. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby.",
   tagsLabel: "Our team interests",
   tags: [
     "Badminton regulars",
@@ -88,9 +88,9 @@ export const careersGain = {
 // Vietnamese. Prototype `data-vi` text where the English still matches, the
 // rest AI-translated for native review (docs/translations/vi-review.md).
 export const careersMetaVi: typeof careersMeta = {
-  title: "Tuyển dụng tại XionTech | Việc làm phần mềm tại TP. Hồ Chí Minh",
+  title: "Tuyển dụng tại XionTech | Việc làm phần mềm và AI",
   description:
-    "Gia nhập XionTech tại TP. Hồ Chí Minh. Làm việc với các nền tảng cho trường học và sản phẩm của khách hàng cùng AI/ML, AI tạo sinh, cloud và phương pháp agile, trong một văn hóa lấy con người làm trung tâm.",
+    "Gia nhập XionTech để giải quyết bài toán thực tế, khám phá AI và công nghệ mới, và phát triển cùng đội ngũ tạo ra những sản phẩm mang lại khác biệt.",
 };
 
 export const careersHeroVi: typeof careersHero = {

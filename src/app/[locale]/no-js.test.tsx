@@ -54,6 +54,12 @@ describe("no JavaScript", () => {
     expect(html).toContain(
       "Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved.",
     );
-    expect(html).not.toContain("<script");
+    // JSON-LD is data, not script: the only <script> tags allowed.
+    expect(
+      html.replaceAll(
+        /<script type="application\/ld\+json">.*?<\/script>/g,
+        "",
+      ),
+    ).not.toContain("<script");
   });
 });

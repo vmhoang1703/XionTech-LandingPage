@@ -18,9 +18,11 @@ vi.mock("next/navigation", () => ({
 import { notFound } from "next/navigation";
 import JobPage, { generateMetadata } from "./page";
 
-const metadata = await generateMetadata({
-  params: Promise.resolve({ locale: "en" }),
-});
+const jobMetadata = (locale: string, slug = "qa-engineer") =>
+  generateMetadata({
+    params: Promise.resolve({ locale, slug }),
+    searchParams: Promise.resolve({}),
+  });
 
 // jsdom has no canvas: HeroArt skips the ribbon.
 beforeEach(() => {
@@ -98,9 +100,30 @@ describe("Job page", () => {
     expect(container.querySelectorAll("form")).toHaveLength(1);
   });
 
-  it("sets the static page metadata", () => {
-    expect(metadata.title).toBe(jobMeta.title);
-    expect(metadata.description).toBe(jobMeta.description);
+  it("titles the page with the role and describes it with the role summary", async () => {
+    vi.mocked(getOpenRole).mockResolvedValue({
+      ...role,
+      about: `${"Build and test school apps with the team. ".repeat(6)}`,
+    });
+    const metadata = await jobMetadata("en");
+    expect(metadata.title).toBe("QA Engineer | Careers at XionTech");
+    const description = String(metadata.description);
+    expect(description.length).toBeLessThanOrEqual(155);
+    expect(description).toMatch(/^Build and test school apps.*…$/);
+    expect(metadata.alternates?.canonical).toBe("/en/careers/qa-engineer");
+    expect(metadata.openGraph?.title).toBe("QA Engineer | Careers at XionTech");
+  });
+
+  it("keeps a short summary whole and falls back to the static text without one", async () => {
+    vi.mocked(getOpenRole).mockResolvedValue(role);
+    expect((await jobMetadata("en")).description).toBe("Test things.");
+    vi.mocked(getOpenRole).mockResolvedValue({ ...role, about: null });
+    expect((await jobMetadata("en")).description).toBe(jobMeta.description);
+  });
+
+  it("has only the static title for an unknown role", async () => {
+    vi.mocked(getOpenRole).mockResolvedValue(null);
+    expect(await jobMetadata("en", "nope")).toEqual({ title: jobMeta.title });
   });
 });
 
@@ -170,12 +193,9 @@ it("falls back to English for an unknown locale", async () => {
 
 describe("Job page metadata in Vietnamese", () => {
   it("uses the Vietnamese title and description", async () => {
-    const viMeta = await generateMetadata({
-      params: Promise.resolve({ locale: "vi" }),
-    });
-    expect(String(viMeta.title)).toBe(
-      "Vị trí tuyển dụng | Tuyển dụng tại XionTech",
-    );
+    vi.mocked(getOpenRole).mockResolvedValue(role);
+    const viMeta = await jobMetadata("vi");
+    expect(String(viMeta.title)).toBe("QA Engineer | Tuyển dụng tại XionTech");
     expect(String(viMeta.title)).not.toContain("[Placeholder]");
   });
 });
