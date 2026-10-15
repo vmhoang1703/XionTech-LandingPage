@@ -7,7 +7,7 @@ for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
     320, 375, 390, 412, 430, 444, 480, 520, 640, 900, 1080, 1440,
   ]) {
     test(
-      `/${locale} at ${width}px: the language button is the last header item`,
+      `/${locale} at ${width}px: the language button is the last item in the pill`,
       {
         tag: "@a11y",
       },
@@ -18,8 +18,11 @@ for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
         const language = header.locator("[aria-controls='language-list']");
         await expect(language).toBeVisible();
 
-        // The last visible interactive item in the bar (the closed list is hidden).
-        const lastIsLanguage = await header.evaluate((el, selector) => {
+        // The last visible interactive item in the pill (the closed list is
+        // hidden). Above 1080px the dark-mode toggle sits outside the pill, on
+        // its right (2026-10-15); below, it is a row in the menu.
+        const pill = header.locator(".nav-pill");
+        const lastIsLanguage = await pill.evaluate((el, selector) => {
           const items = [...el.querySelectorAll<HTMLElement>(selector)].filter(
             (item) => item.getClientRects().length > 0,
           );
@@ -28,8 +31,10 @@ for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
           );
         }, INTERACTIVE);
         expect(lastIsLanguage).toBe(true);
+        const toggle = header.locator(".theme-toggle");
+        if (width > 1080) await expect(toggle).toBeVisible();
+        else await expect(toggle).toBeHidden();
 
-        const pill = header.locator(":scope > div").first();
         const overflow = await pill.evaluate(
           (el) => el.scrollWidth - el.clientWidth,
         );
