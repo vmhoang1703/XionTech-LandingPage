@@ -3809,7 +3809,7 @@
     display: grid;
     grid-template-columns: 80px minmax(0, 1fr);
     align-items: center;
-    min-height: 80px;
+    min-height: 112px;
   }
 
   .rm-end .rm-seg {
