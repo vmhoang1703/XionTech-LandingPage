@@ -5812,10 +5812,10 @@ main > .page-scene:last-child > .surface-navy:last-child {
   Unlayered on purpose, like E-S1: these Services-only rules must beat the shared
   .page-hero, .sec, .step4 and .flow rules.
 */
+/* Full width, like every other page's first section: the header pill floats
+   over it. An inset box put the pill on the box's top edge (2026-10-15). */
 .svc-hero {
-  margin-inline: clamp(10px, 2vw, 28px);
-  margin-top: 12px;
-  border-radius: 28px;
+  border-radius: 0 0 28px 28px;
   overflow: hidden;
   padding-bottom: clamp(56px, 6vw, 88px);
   background:
@@ -6518,6 +6518,8 @@ main > .page-scene:last-child > .surface-navy:last-child {
    word in the brand yellow (components/sections/rotating-word.tsx). */
 .svc-hero h1 {
   max-width: none;
+  /* Nothing sits above it: the hero's top padding is the whole gap. */
+  margin-top: 0;
   /* The longest first line is about 13.9em wide, so 7cqi of the copy
      column always fits it; the page display size stays the cap. */
   font-size: min(var(--text-display-page), 7cqi);
@@ -6584,7 +6586,10 @@ main > .page-scene:last-child > .surface-navy:last-child {
   align-items: center;
 }
 
+/* The title starts at the same distance under the header as on every page,
+   whatever the height of the art beside it. */
 .svc-hero-copy {
+  align-self: start;
   min-width: 0;
   container-type: inline-size;
 }
@@ -7037,7 +7042,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
 /* About 530px tall at 1440: top padding just clears the floating nav. */
 @media (min-width: 1100px) {
   .svc-hero.page-hero {
-    padding-top: 112px;
     padding-bottom: 32px;
   }
 }
@@ -8468,10 +8472,6 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
   .flow {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
-  }
-
-  .svc-hero {
-    padding-top: calc(var(--spacing-header-room) + clamp(24px, 5svh, 64px));
   }
 
   .svc-hero-grid {
