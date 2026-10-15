@@ -928,6 +928,8 @@ export const fr: Dictionaries = {
       cityHcmc: "Hô Chi Minh-Ville",
     },
     language: { label: "Langue" },
+    theme: { label: "Mode sombre" },
+    backToTop: { label: "Retour en haut" },
     footer: {
       blurb:
         "XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure, alliant expérience concrète et technologies modernes pour relever les défis des entreprises.",

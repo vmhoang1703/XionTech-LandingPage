@@ -180,6 +180,7 @@ Hoang Vu and Sammy improve UI/UX, animation and 3D after the enhancement tasks (
 - **3D:** lazy-load it, show a still fallback on slow or small devices, and keep the Lighthouse
   mobile performance score at 90 or higher.
 - **Content:** the `[Placeholder]` rule still applies. No invented stats, logos or testimonials.
+- **Dark mode (2026-10-15):** Hoang Vu and Sammy overrode DESIGN.md's "no dark mode" rule. Tokens live in the Dark theme block at the end of `src/app/globals.css`; every new colour needs a dark value there (`docs/ai-log.md`).
 - **Approval:** Hoang Vu and Sammy decide; Amber's sign-off is not needed in this stage. The
   Definition of Done in `CLAUDE.md` still applies.
 

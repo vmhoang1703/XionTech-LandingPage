@@ -15,6 +15,7 @@ import { contactByPrefix, hcmc, plano } from "@/content/offices";
 import { localeHref, type Locale } from "@/i18n/locales";
 import type { ShellDictionary } from "@/i18n/shell";
 import { CONTACT_HREF, currentSection, NAV_LINKS } from "./nav-data";
+import { ThemeToggle } from "./theme-toggle";
 
 const MENU_ID = "mobile-menu";
 const noSubscribe = () => () => {};
@@ -44,7 +45,12 @@ function trapTargets(scope: ParentNode) {
 export function MobileMenu({
   locale,
   t,
-}: Readonly<{ locale: Locale; t: ShellDictionary["nav"] }>) {
+  themeLabel,
+}: Readonly<{
+  locale: Locale;
+  t: ShellDictionary["nav"];
+  themeLabel: string;
+}>) {
   const pathname = usePathname();
   // The menu is open only on the pathname it was opened on, so a navigation closes it.
   const [openedOn, setOpenedOn] = useState<string | null>(null);
@@ -197,6 +203,7 @@ export function MobileMenu({
             </a>
           ))}
         </div>
+        <ThemeToggle label={themeLabel} variant="menu" />
       </nav>
       {mounted &&
         createPortal(

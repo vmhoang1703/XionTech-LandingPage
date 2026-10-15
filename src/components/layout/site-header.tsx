@@ -8,6 +8,7 @@ import { HeaderScroll } from "./header-scroll";
 import { CONTACT_HREF } from "./nav-data";
 import { MobileMenu } from "./mobile-menu";
 import { SiteNav } from "./site-nav";
+import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
   const t = SHELL[locale].nav;
@@ -24,35 +25,44 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
         data-autohide=""
         className="pointer-events-none sticky top-0 z-[var(--z-index-header)] mb-[calc(var(--spacing-header-room)*-1)] h-[var(--spacing-header-room)] px-3 pt-3"
       >
-        <div className="nav-pill pointer-events-auto relative mx-auto flex h-[var(--spacing-header-height)] max-w-[1180px] items-center gap-[22px] rounded-full border border-white/80 bg-white/95 pr-3 pl-4 shadow-[0_14px_34px_-16px_rgb(11_23_48/0.32),0_1px_2px_rgb(11_23_48/0.06)] backdrop-blur-[18px] backdrop-saturate-[170%] max-[1080px]:h-14 max-[1080px]:gap-2 max-[1080px]:pr-1.5 max-[1080px]:pl-2.5 max-[479px]:gap-1 min-[1081px]:max-[1279.98px]:gap-3">
-          <Link
-            href={localeHref(locale, "/")}
-            aria-label={t.homeLink}
-            className="flex min-h-11 shrink-0 items-center px-2 max-[1080px]:px-1"
-          >
-            <Image
-              src="/brand/xiontech-logo.svg"
-              alt={t.logoAlt}
-              width={250}
-              height={46}
-              loading="eager"
-              unoptimized
-              className="h-8 w-auto max-[641px]:h-[26px] max-[374px]:h-[22px] max-[339px]:h-5"
+        {/* The dark-mode toggle sits outside the pill, on its right, on desktop
+            (2026-10-15); on smaller screens it is a row in the menu sheet. */}
+        <div className="mx-auto flex max-w-[1236px] items-center gap-2">
+          <div className="nav-pill pointer-events-auto relative flex h-[var(--spacing-header-height)] min-w-0 flex-1 items-center gap-[22px] rounded-full border border-white/80 bg-white/95 pr-3 pl-4 shadow-[0_14px_34px_-16px_rgb(11_23_48/0.32),0_1px_2px_rgb(11_23_48/0.06)] backdrop-blur-[18px] backdrop-saturate-[170%] max-[1080px]:h-14 max-[1080px]:gap-2 max-[1080px]:pr-1.5 max-[1080px]:pl-2.5 max-[479px]:gap-1 min-[1081px]:max-[1279.98px]:gap-3">
+            <Link
+              href={localeHref(locale, "/")}
+              aria-label={t.homeLink}
+              className="flex min-h-11 shrink-0 items-center px-2 max-[1080px]:px-1"
+            >
+              <Image
+                src="/brand/xiontech-logo.svg"
+                alt={t.logoAlt}
+                width={250}
+                height={46}
+                loading="eager"
+                unoptimized
+                className="h-8 w-auto max-[641px]:h-[26px] max-[374px]:h-[22px] max-[339px]:h-5"
+              />
+            </Link>
+            <SiteNav locale={locale} t={t} />
+            <Link
+              href={localeHref(locale, CONTACT_HREF)}
+              className="btn btn-primary btn-sm nav-talk max-[1080px]:ml-auto max-[479px]:px-3.5 max-[411px]:hidden min-[1081px]:max-[1199.98px]:px-3.5"
+            >
+              {t.contactShort}
+              <ArrowRightIcon
+                aria-hidden="true"
+                className="max-[479px]:hidden min-[1081px]:max-[1199.98px]:hidden"
+              />
+            </Link>
+            <MobileMenu
+              locale={locale}
+              t={t}
+              themeLabel={SHELL[locale].theme.label}
             />
-          </Link>
-          <SiteNav locale={locale} t={t} />
-          <Link
-            href={localeHref(locale, CONTACT_HREF)}
-            className="btn btn-primary btn-sm nav-talk max-[1080px]:ml-auto max-[479px]:px-3.5 max-[411px]:hidden min-[1081px]:max-[1199.98px]:px-3.5"
-          >
-            {t.contactShort}
-            <ArrowRightIcon
-              aria-hidden="true"
-              className="max-[479px]:hidden min-[1081px]:max-[1199.98px]:hidden"
-            />
-          </Link>
-          <MobileMenu locale={locale} t={t} />
-          <LanguageMenu label={SHELL[locale].language.label} />
+            <LanguageMenu label={SHELL[locale].language.label} />
+          </div>
+          <ThemeToggle label={SHELL[locale].theme.label} variant="header" />
         </div>
         <HeaderScroll />
       </header>

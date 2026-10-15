@@ -907,6 +907,8 @@ export const ja: Dictionaries = {
       cityHcmc: "ホーチミン市",
     },
     language: { label: "言語" },
+    theme: { label: "ダークモード" },
+    backToTop: { label: "ページの先頭へ" },
     footer: {
       blurb:
         "XionTech は、現場での経験と最新技術を組み合わせ、AI を活用した製品とカスタムソリューションでビジネスの課題を解決します。",

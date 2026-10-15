@@ -890,6 +890,8 @@ export const zh: Dictionaries = {
       cityHcmc: "胡志明市",
     },
     language: { label: "语言" },
+    theme: { label: "深色模式" },
+    backToTop: { label: "返回顶部" },
     footer: {
       blurb:
         "XionTech 将实践经验与现代技术相结合，打造 AI 驱动的产品和定制解决方案，解决企业面临的挑战。",

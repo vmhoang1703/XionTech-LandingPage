@@ -24,6 +24,8 @@ function shown(el: Element) {
   if (css.contains("max-[641px]:inline-flex")) return width < 641;
   if (css.contains("min-[1081px]:hidden")) return width <= 1080;
   if (css.contains("min-[1081px]:flex")) return width > 1080;
+  // globals.css shows the round theme toggle only above 1080px.
+  if (css.contains("theme-toggle")) return width > 1080;
   return !css.contains("hidden");
 }
 
@@ -68,7 +70,11 @@ function Header() {
   return (
     <header>
       <Link href="/">logo</Link>
-      <MobileMenu locale="en" t={SHELL.en.nav} />
+      <MobileMenu
+        locale="en"
+        t={SHELL.en.nav}
+        themeLabel={SHELL.en.theme.label}
+      />
     </header>
   );
 }
@@ -96,6 +102,9 @@ const menuLinks = () =>
   );
 // The last focusable item: the second phone under Let's talk (lead, 2026-10-13).
 const LAST = "Ho Chi Minh City +84 908 107 552";
+// The last focusable item in the open menu: the dark-mode row after the phones.
+const LAST_ITEM = "Dark mode";
+const lastItem = () => screen.getByRole("button", { name: LAST_ITEM });
 const tab = (shiftKey = false) =>
   fireEvent.keyDown(document, { key: "Tab", shiftKey });
 
@@ -103,7 +112,11 @@ describe("MobileMenu", () => {
   it("shows Vietnamese labels and /vi links on vi", () => {
     render(
       <header>
-        <MobileMenu locale="vi" t={SHELL.vi.nav} />
+        <MobileMenu
+          locale="vi"
+          t={SHELL.vi.nav}
+          themeLabel={SHELL.vi.theme.label}
+        />
       </header>,
     );
     fireEvent.click(menuButton());
@@ -276,7 +289,7 @@ describe("MobileMenu", () => {
     it("wraps Tab from the last item to the logo link", () => {
       render(<Header />);
       fireEvent.click(menuButton());
-      screen.getByRole("link", { name: LAST }).focus();
+      lastItem().focus();
       expect(tab()).toBe(false);
       expect(document.activeElement).toBe(
         screen.getByRole("link", { name: "logo" }),
@@ -288,9 +301,7 @@ describe("MobileMenu", () => {
       fireEvent.click(menuButton());
       screen.getByRole("link", { name: "logo" }).focus();
       expect(tab(true)).toBe(false);
-      expect(document.activeElement).toBe(
-        screen.getByRole("link", { name: LAST }),
-      );
+      expect(document.activeElement).toBe(lastItem());
     });
 
     it("lets Tab move normally inside the header", () => {
@@ -316,7 +327,7 @@ describe("MobileMenu", () => {
       expect(document.activeElement?.textContent).toBe("logo");
       page.focus();
       expect(tab(true)).toBe(false);
-      expect(document.activeElement?.textContent).toBe(LAST);
+      expect(document.activeElement?.textContent).toBe(LAST_ITEM);
     });
 
     it("does not trap Tab while closed", () => {
@@ -331,11 +342,11 @@ describe("MobileMenu", () => {
     width = 800;
     render(<Header />);
     fireEvent.click(menuButton());
-    screen.getByRole("link", { name: LAST }).focus();
+    lastItem().focus();
     tab();
     expect(document.activeElement?.textContent).toBe("logo");
     tab(true);
-    expect(document.activeElement?.textContent).toBe(LAST);
+    expect(document.activeElement?.textContent).toBe(LAST_ITEM);
   });
 
   it("closes when a menu link is activated", () => {
@@ -370,7 +381,8 @@ describe("MobileMenu", () => {
     act(widen);
     expect(expanded()).toBe("false");
     expect(document.documentElement.style.overflow).toBe("");
-    expect(mediaListeners).toEqual([]);
+    // Only the theme toggle's colour-scheme listener stays; the width one is gone.
+    expect(mediaListeners).toHaveLength(1);
   });
 
   it("stays open on a media change that is not above 1080px", () => {
@@ -430,7 +442,11 @@ describe("MobileMenu", () => {
         <a href="https://example.com/" target="_blank" rel="noreferrer">
           external
         </a>
-        <MobileMenu locale="en" t={SHELL.en.nav} />
+        <MobileMenu
+          locale="en"
+          t={SHELL.en.nav}
+          themeLabel={SHELL.en.theme.label}
+        />
       </header>,
     );
     const external = screen.getByRole("link", { name: "external" });
