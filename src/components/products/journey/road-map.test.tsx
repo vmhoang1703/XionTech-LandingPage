@@ -55,6 +55,14 @@ beforeEach(() => {
     return frames.length;
   });
   vi.stubGlobal("cancelAnimationFrame", cancelFrame);
+  // jsdom has no ResizeObserver (the narrow wave measures its pins).
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      observe() {}
+      disconnect() {}
+    },
+  );
   // A wide window (jsdom's own is 1024x768, under the 1100px breakpoint).
   vi.stubGlobal("innerWidth", 1280);
   vi.stubGlobal(
@@ -398,8 +406,11 @@ describe("RoadMap draw-in", () => {
     expect(focused?.body).toMatch(/transform: none;/);
     const moving = rules.filter(({ body }) => /transition/.test(body));
     expect(moving.length).toBeGreaterThanOrEqual(4);
+    // The narrow wave moves as its reach (--reach) follows the stops shown.
     for (const { selector } of moving) {
-      expect(selector).toMatch(/\[data-tour="on"\]|\[data-in\]/);
+      expect(selector).toMatch(
+        /\[data-tour="on"\]|\[data-in\]|^\.rm\[data-reveal="armed"\] \.rm-wave$/,
+      );
     }
     // The timed wide draw-in is gone.
     expect(rules.some(({ body }) => /--delay|--road\b/.test(body))).toBe(false);
@@ -446,6 +457,32 @@ describe("RoadMap selection", () => {
     const list = container.querySelector(".rm-stops") as HTMLElement;
     expect(ends[0].nextElementSibling).toBe(list);
     expect(list.nextElementSibling).toBe(ends[1]);
+  });
+
+  it("joins the narrow road's pieces straight down at x 40, overlapping", () => {
+    const { container } = render(<RoadMap />);
+    const pieces = Array.from(container.querySelectorAll(".rm-seg"));
+    // Start, three stops, Finish: one continuous road.
+    expect(pieces).toHaveLength(COUNT + 2);
+    const d = (piece: Element, stroke: string) =>
+      piece.querySelector(`.${stroke}`)?.getAttribute("d") ?? "";
+    const [start, ...rest] = pieces;
+    const finish = rest.pop() as Element;
+    // Start leaves its flag and joins stop 1 below, heading down.
+    expect(d(start, "rm-asphalt")).toMatch(
+      /^M67 50 C 67 75, 40 75, 40 100 L40 102$/,
+    );
+    for (const stop of rest) {
+      // Asphalt runs past both ends further than the edge; the dashes do not.
+      expect(d(stop, "rm-asphalt")).toMatch(
+        /^M40 -2 L40 0 C 40 25, .* 40 100 L40 102$/,
+      );
+      expect(d(stop, "rm-edge")).toMatch(/^M40 -1 L40 0 C .* L40 101$/);
+      expect(d(stop, "rm-line")).toMatch(/^M40 0 L40 0 C .* L40 100$/);
+    }
+    expect(d(finish, "rm-asphalt")).toMatch(
+      /^M40 -2 L40 0 C 40 25, 67 25, 67 50$/,
+    );
   });
 
   it("speaks Start and Finish in Vietnamese on vi", () => {

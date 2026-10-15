@@ -11,7 +11,8 @@ test(
 
     expect(response.status()).toBe(200);
     // Each title word is its own span (the hero entrance): compare the text.
-    expect(text(html)).toContain("Stay curious.");
+    expect(text(html)).toMatch(/Careers at\s*XionTech/);
+    expect(html).toContain('id="meet-the-team"');
     expect(html).toContain('id="roles"');
     // Round 13: Inside XionTech (#life) and the five values (#culture) are gone.
     expect(html).not.toContain('id="life"');

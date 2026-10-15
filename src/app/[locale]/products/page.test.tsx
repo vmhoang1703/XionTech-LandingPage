@@ -116,8 +116,11 @@ describe("Products page", () => {
   it("starts the first section below the floating header pill", async () => {
     const { container } = render(await productsAt("en"));
     expect(container.querySelector("section")?.classList).toContain("map-sec");
+    // `.sec.map-sec`: the shared `.sec` padding later in the file (one
+    // class) must not take the header room away; the gap matches the other
+    // page heroes.
     expect(globalsCss()).toMatch(
-      /\.map-sec\s*\{\s*padding-top:\s*calc\(var\(--spacing-header-room\) \+ var\(--spacing-section\)\);\s*\}/,
+      /\.sec\.map-sec\s*\{\s*padding-top:\s*calc\(\s*var\(--spacing-header-room\) \+ var\(--spacing-page-hero-top\)\s*\);\s*\}/,
     );
   });
 

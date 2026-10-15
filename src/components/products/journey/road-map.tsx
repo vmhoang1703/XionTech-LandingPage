@@ -19,6 +19,7 @@ import {
   type ProductRoad,
 } from "@/content/products";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
+import { NarrowWave, useWave } from "./narrow-wave";
 import {
   FINISH,
   H,
@@ -174,11 +175,48 @@ function canTour() {
   );
 }
 
-// The narrow road's bend beside each card, alternating left and right.
+// The narrow road is one piece per row (Start, each stop, Finish), each its
+// own stretched SVG (80 x 100). Pieces meet at x 40 heading straight down, so
+// a joint looks the same whatever the rows' heights: a piece that ended at a
+// slant left a wedge and a kink at the flat row edge (seen on phones). Where
+// two pieces meet, each runs on a little past its row (JOIN), so a fractional
+// row height leaves no hairline gap; the asphalt runs further than the edge,
+// so the next piece's edge never paints across the asphalt.
+type Piece = Readonly<{ from: string; curve: string; top: boolean }>;
+
+// The bend beside each card, alternating left and right: out to the pin
+// (x 13 or 67, y 50) and back.
 const BEND = {
-  left: "M40 0 C 4 30, 4 70, 40 100",
-  right: "M40 0 C 76 30, 76 70, 40 100",
-};
+  left: {
+    from: "40 0",
+    curve: "C 40 25, 13 25, 13 50 C 13 75, 40 75, 40 100",
+    top: true,
+  },
+  right: {
+    from: "40 0",
+    curve: "C 40 25, 67 25, 67 50 C 67 75, 40 75, 40 100",
+    top: true,
+  },
+} satisfies Record<string, Piece>;
+
+const JOIN = { "rm-edge": 1, "rm-asphalt": 2, "rm-line": 0 } as const;
+
+// The three strokes of one piece. `top`: it joins a piece above at y 0; it
+// always joins one below at y 100 unless it ends at a pin (y 50).
+function RoadPiece({ from, curve, top }: Piece) {
+  const bottom = curve.endsWith("100");
+  return Object.entries(JOIN).map(([stroke, run]) => {
+    const head = top ? "M40 " + -run + " L" : "M";
+    const tail = bottom ? " L40 " + (100 + run) : "";
+    return (
+      <path
+        key={stroke}
+        className={stroke}
+        d={head + from + " " + curve + tail}
+      />
+    );
+  });
+}
 
 // Who the app is for.
 function who(app: AppId, board: JourneyBoard) {
@@ -223,6 +261,9 @@ export function RoadMap() {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
   const mask = useId();
+  // Narrow: one measured wave through the pins replaces the rows' bends.
+  const stage = useRef<HTMLDivElement>(null);
+  const wave = useWave(stage, STOPS.length + 2);
 
   useEffect(() => {
     const map = ref.current;
@@ -306,7 +347,10 @@ export function RoadMap() {
           ))
         : null}
 
-      <div className="rm-stage">
+      <div ref={stage} className="rm-stage">
+        {wave ? (
+          <NarrowWave wave={wave} shown={shown} armed={mode === "armed"} />
+        ) : null}
         <svg
           className="rm-road"
           viewBox={`0 0 ${W} ${H}`}
@@ -352,7 +396,7 @@ export function RoadMap() {
           </g>
         </svg>
 
-        <RoadEnd end="start" label={start} shown={shown.has(0)} />
+        <RoadEnd end="start" label={start} shown={shown.has(0)} bend={!wave} />
         <ol className="rm-stops">
           {stops.map((app, i) => (
             <RoadCard
@@ -364,11 +408,17 @@ export function RoadMap() {
               anchored={!tour}
               active={tour && active === i}
               selected={selected === i}
+              bend={!wave}
               onOpen={() => choose(i)}
             />
           ))}
         </ol>
-        <RoadEnd end="finish" label={finish} shown={shown.has(LAST)} />
+        <RoadEnd
+          end="finish"
+          label={finish}
+          shown={shown.has(LAST)}
+          bend={!wave}
+        />
       </div>
 
       <RoadStopDialog
@@ -388,6 +438,7 @@ function RoadCard({
   anchored,
   active,
   selected,
+  bend: drawBend,
   onOpen,
 }: Readonly<{
   app: AppId;
@@ -397,6 +448,7 @@ function RoadCard({
   anchored: boolean;
   active: boolean;
   selected: boolean;
+  bend: boolean;
   onOpen: () => void;
 }>) {
   const app = appById(id);
@@ -424,18 +476,19 @@ function RoadCard({
       data-selected={selected ? "true" : undefined}
       style={place}
     >
-      {/* The narrow road: one bend per stop, drawn beside the card. */}
-      <svg
-        className="rm-seg"
-        viewBox="0 0 80 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path className="rm-edge" d={bend} />
-        <path className="rm-asphalt" d={bend} />
-        <path className="rm-line" d={bend} />
-      </svg>
+      {/* The narrow road before the wave is measured: one bend per stop,
+          drawn beside the card. */}
+      {drawBend ? (
+        <svg
+          className="rm-seg"
+          viewBox="0 0 80 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <RoadPiece {...bend} />
+        </svg>
+      ) : null}
       <span className="rm-pin" aria-hidden="true">
         {index + 1}
       </span>
@@ -467,18 +520,29 @@ function RoadCard({
   );
 }
 
-// The narrow road's ends: a half bend, so the road leaves Start and reaches
-// Finish at about the angle of the stop's bend it joins (the first stop bends
-// left, so Start comes in from the right). The end rows are shorter than a
-// stop, so the half bend meets the stop more upright than a stop's own bend.
-// The pin stands where it is level: x 67 on the right, 13 on the left.
+// The narrow road's ends: half a bend from the flag (y 50, where the pin
+// stands: x 67 on the right, 13 on the left) to the stop's joint (x 40). The
+// first stop bends left, so Start comes in from the right; Finish leaves on
+// the side the last stop does not bend to.
 const END_BEND = {
-  start: { box: "0 50 80 50", d: "M67 50 C 67 70, 47 85, 40 100", x: 67 },
+  start: {
+    box: "0 50 80 50",
+    piece: { from: "67 50", curve: "C 67 75, 40 75, 40 100", top: false },
+    x: 67,
+  },
   finish:
     LAST % 2 === 0
-      ? { box: "0 0 80 50", d: "M40 0 C 47 15, 67 30, 67 50", x: 67 }
-      : { box: "0 0 80 50", d: "M40 0 C 33 15, 13 30, 13 50", x: 13 },
-};
+      ? {
+          box: "0 0 80 50",
+          piece: { from: "40 0", curve: "C 40 25, 67 25, 67 50", top: true },
+          x: 67,
+        }
+      : {
+          box: "0 0 80 50",
+          piece: { from: "40 0", curve: "C 40 25, 13 25, 13 50", top: true },
+          x: 13,
+        },
+} satisfies Record<string, { box: string; piece: Piece; x: number }>;
 
 // The road's Start or Finish marker: a flag pin on the road's end and its name.
 // Wide screens place it on the drawn road; narrow ones show it above the first
@@ -488,7 +552,13 @@ function RoadEnd({
   end,
   label,
   shown,
-}: Readonly<{ end: "start" | "finish"; label: string; shown: boolean }>) {
+  bend: drawBend,
+}: Readonly<{
+  end: "start" | "finish";
+  label: string;
+  shown: boolean;
+  bend: boolean;
+}>) {
   const point = end === "start" ? START : FINISH;
   const bend = END_BEND[end];
   return (
@@ -505,16 +575,16 @@ function RoadEnd({
         } as CSSProperties
       }
     >
-      <svg
-        className="rm-seg"
-        viewBox={bend.box}
-        preserveAspectRatio="none"
-        focusable="false"
-      >
-        <path className="rm-edge" d={bend.d} />
-        <path className="rm-asphalt" d={bend.d} />
-        <path className="rm-line" d={bend.d} />
-      </svg>
+      {drawBend ? (
+        <svg
+          className="rm-seg"
+          viewBox={bend.box}
+          preserveAspectRatio="none"
+          focusable="false"
+        >
+          <RoadPiece {...bend.piece} />
+        </svg>
+      ) : null}
       <span className="rm-end-pin">
         <FlagIcon weight="fill" />
       </span>
