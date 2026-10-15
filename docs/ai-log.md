@@ -1860,3 +1860,75 @@ Template:
 - **What the AI did:** the hero picture column now takes a bit over half the hero (about 680px wide at 1440, 550px at 1024, full width on phones), re-extracted at the mock's full 1448 x 1086 (56 KB WebP); the hero still fills one screen at 1440 x 900 and 1280 x 800. The strip reads the folder on the server (`src/lib/careers/life-photo-folder.ts`: webp, jpg, jpeg, png, avif, sorted by filename), uses `next/image` so the phone JPEGs are resized, and repeats a short set so the loop works from one photo. An empty folder shows plain tinted tiles. Section anchor is now `#meet-the-team`; heading and the generic alt are in all six locales. `next.config.ts` ships the folder with the careers route, because a Sanity job webhook re-renders the page on the server.
 - **AI got it wrong:** the first enlargement let the picture overflow its column by 8%, and the hero clipped its right edge; it now fills the column instead.
 - **Still open:** the page is static, so new photos show after a rebuild and redeploy. A `.heic` file in the folder is skipped; export it as JPEG or WebP.
+
+## 2026-10-14 — Website copy v3 reviewed on a mock copy of the real site (PR #116)
+
+- **Who / tool:** Amber / Claude Code (Opus 5.5), sub-agents, impeccable + high-end-visual-design, inspo MCP
+- **Prompt (short):** "I want the content wording I approved to show on the UI as a mock already", then about 15 review rounds of wording, layout and motion.
+- **What the AI did:** made a separate git worktree of the real Next.js site (`mock/website-content`, localhost:3001) so approved wording could be checked on the current UI without touching Amber's branch. Each round: edit, headless Edge screenshots at 1440 / 768 / 390, Amber's feedback. Built the Services three-layer diagram and rotating headline, the About mountain story as a card over the hero, values flip cards ("What drives us"), the 4-D process layout, the mobile menu sheet and the sequential reveal. Then rebased the whole set onto develop (116 commits ahead), translated it into all six locales and opened PR #116.
+- **Decision / result:** PR #116 merged into develop on 2026-10-15. The static HTML prototype stayed for early exploration; the mock worktree became the review surface.
+- **AI got it wrong?** yes — a CSS block was nested inside a media query so it never applied on desktop (caught in screenshots); a diagram label pointed at the wrong layer (caught by Amber); an audit flagged "4 locations" as wrong (Amber confirmed 2 delivery centers + 2 offices).
+
+## 2026-10-14 — Hero options from real landing-page references
+
+- **Who / tool:** Amber / Claude Code, inspo MCP, impeccable, high-end-visual-design
+- **Prompt (short):** "before building, show me some inspo design references first … build these options as simple HTML for only the hero section".
+- **What the AI did:** pulled hero references (Azure, Bolt, CircleCI, Raycast, Rivian, Recraft) for a navy + gold, premium minimal style, then built seven standalone hero options (A, B, C, D, A+B, E, E2) in `.working/services-hero/`.
+- **Decision / result:** Amber chose the three-layer "requirements → wireframe → code" diagram from her own reference file for Services; the mountain-with-logo option stayed as an alternative.
+- **AI got it wrong?** yes — the first mountain shapes looked "too circular" and "not natural"; redrawn from Amber's three reference images.
+
+## 2026-10-15 — Performance check before choosing an animation
+
+- **Who / tool:** Amber / Claude Code, Lighthouse, Playwright, autocannon (local only)
+- **Prompt (short):** "which one is heavier … if fifty percent access the website at the same time".
+- **What the AI did:** Lighthouse (mobile and desktop, 3 runs) and a 100-connection local load test on the About scroll mountain vs Services hero option E, plus main-thread measurements.
+- **Decision / result:** the About mountain was heavier (about 750 KB per page, 344 KB image), so its image was recompressed to 149 KB. Option E's endless glow cost only about 4% of the main thread.
+- **AI got it wrong?** yes — the estimate before measuring said the endless glow would be the expensive part; the measurement showed it was not.
+
+## 2026-10-15 — Marketing audits on phone, iPad and desktop
+
+- **Who / tool:** Amber / Claude Code with the copy-editing, seo-audit and cro skills
+- **Prompt (short):** "run marketing skills to see if there's any issue with content or headers on my phone and iPad".
+- **What the AI did:** audited every page at 390 / 768 / 1024 (and 1440): 25 issues (3 high, 11 medium, 11 low) with evidence thumbnails. A second audit after this branch found 15 (2 high, 7 medium, 6 low).
+- **Decision / result:** Amber approved all high and medium fixes except the stats eyebrow; location wording kept. Open follow-ups: hreflang/canonical, robots.txt + sitemap, long meta descriptions.
+- **AI got it wrong?** yes — it flagged "4 locations" as a contradiction; it is correct.
+
+## 2026-10-15 — One primary action: every primary CTA goes to the Home form
+
+- **Who / tool:** Amber / Claude Code (cro skill)
+- **Prompt (short):** "update the Let's talk button to primary … every primary button … direct them to the get in touch form on the homepage".
+- **What the AI did:** made the nav "Let's talk" an amber primary button (header and mobile menu), checked every page's primary buttons and pointed them at `/{locale}#contact`; the About hero's first button became "Talk to our team". The Demo page had already been removed with a `/demo` redirect.
+- **Decision / result:** one conversion path site-wide; labels can differ by context, the destination is the same.
+- **AI got it wrong?** no
+
+## 2026-10-15 — Careers: hero, Principles we value, Meet the team
+
+- **Who / tool:** Amber / Claude Code
+- **Prompt (short):** two HTML files from Amber (culture photo strip, careers hero) plus "Careers at XionTech … Ready to build with us?".
+- **What the AI did:** rebuilt the hero with the full stacked-cards picture and no buttons; renamed "What you'll gain along the way" to "Principles we value"; added a "Meet the team at XionTech" strip that reads every photo in `public/careers/life/` (any file name). Amber's six photos were converted to WebP (about 18 MB to 1.1 MB).
+- **Decision / result:** team photos are managed by dropping files in one folder; the page is static, so rebuild after adding photos.
+- **AI got it wrong?** yes — the first picture mask cropped the right-hand card; replaced with an edge-only fade so the whole image shows.
+
+## 2026-10-15 — Tall and zoomed-out screens
+
+- **Who / tool:** Amber / Claude Code
+- **Prompt (short):** "on news, careers, about … when the screen is high and zoom out, I cannot see the full content".
+- **What the AI did:** reproduced at 1920×2160 and 2880×1800. The About and Careers heroes used `min-height: 100svh`, so tall screens showed only an empty hero; both are now capped at `min(100svh, 1040px)`.
+- **Decision / result:** normal laptops keep the one-screen hero; large screens now show the next section.
+- **AI got it wrong?** no
+
+## 2026-10-15 — News lead story: newest post with a photo
+
+- **Who / tool:** Amber / Claude Code
+- **Prompt (short):** "one featured news, a bit different UI … the newest gets featured … use the newest one with a photo".
+- **What the AI did:** started a Sanity "Featured story" switch and badge, then backed both out when Amber asked for no CMS change. The newest post that has a cover photo now leads with a larger image; newer posts without photos follow as normal cards; with no photos it falls back to the newest post.
+- **Decision / result:** no editor action needed; adding a photo to a newer post makes it the lead.
+- **AI got it wrong?** yes — it built more than asked (Sanity field and badge) before the scope was confirmed; reverted.
+
+## 2026-10-15 — Design and rule docs brought up to date
+
+- **Who / tool:** Amber / Claude Code
+- **Prompt (short):** "update the design system files and other files related to the latest information … don't touch specs".
+- **What the AI did:** added "Shipped site" sections to DESIGN.md and EXPERIENCE.md and updated PRODUCT.md, AGENTS.md, docs/architecture.md and docs/ux-checks.md (brand spelling, locations, single contact path, no Demo page, title and spelling rules, motion, components, six locales, photo folder rule).
+- **Decision / result:** specs, PRD, epics and stories untouched; older text kept, with the "Shipped site" sections taking priority.
+- **AI got it wrong?** no
