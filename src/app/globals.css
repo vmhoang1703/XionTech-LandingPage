@@ -5812,10 +5812,15 @@ main > .page-scene:last-child > .surface-navy:last-child {
   Unlayered on purpose, like E-S1: these Services-only rules must beat the shared
   .page-hero, .sec, .step4 and .flow rules.
 */
-/* Full width, like every other page's first section: the header pill floats
-   over it. An inset box put the pill on the box's top edge (2026-10-15). */
+/* An inset box that starts 16px under the header pill (lead, 2026-10-15): at
+   12px the pill sat on its top edge. The box's own top padding is the hero
+   room less that offset, so the title starts as far under the pill as on
+   every other page. */
 .svc-hero {
-  border-radius: 0 0 28px 28px;
+  margin-inline: clamp(10px, 2vw, 28px);
+  margin-top: calc(var(--spacing-header-room) + 4px);
+  padding-top: calc(var(--spacing-page-hero-top) - 4px);
+  border-radius: 28px;
   overflow: hidden;
   padding-bottom: clamp(56px, 6vw, 88px);
   background:
