@@ -351,13 +351,13 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
     expect(names[STOPS - 1]).toMatch(/^3\./);
   });
 
-  test("the footer link For schools lands on Staff Hub with its card whole", async ({
+  test("the footer link Staff Hub lands on Staff Hub with its card whole", async ({
     page,
   }) => {
     await page.goto("/en/products");
     const link = page
       .getByRole("contentinfo")
-      .getByRole("link", { name: "For schools" });
+      .getByRole("link", { name: "Staff Hub", exact: true });
     // The footer reveals as it scrolls in (shared scroll reveal): bring the
     // link into view and let it settle before clicking.
     await link.scrollIntoViewIfNeeded();
@@ -516,7 +516,7 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
     await expect(scene.locator(".ws-tag")).toHaveText("[Placeholder] screen");
     await expect(scene.locator(".ws-name")).toHaveText("Staff Hub");
     await expect(scene.locator(".ws-label")).toHaveText([
-      "Attendance and records in real time",
+      "Attendance and student records",
       "Classes, timetables and grades",
       "Messages to parents through Parent Hub",
       "Leader dashboards for today's priorities",
