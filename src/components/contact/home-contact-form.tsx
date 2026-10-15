@@ -29,6 +29,7 @@ import {
 } from "./contact-strings";
 import { postSubmission } from "./post-submission";
 import { SummitMark } from "./summit-mark";
+import { focusField } from "@/lib/a11y/focus-field";
 
 /** Fields in form order, so the first invalid one gets focus. */
 const FIELDS = ["name", "email", "phone", "message"] as const;
@@ -102,7 +103,7 @@ export function HomeContactForm() {
       messages: invalid.map((field) => found[field] ?? ""),
     }));
     if (invalid.length === 0) return false;
-    form.querySelector<HTMLElement>(`#${FIELD_IDS[invalid[0]]}`)?.focus();
+    focusField(form.querySelector<HTMLElement>(`#${FIELD_IDS[invalid[0]]}`));
     return true;
   }
 

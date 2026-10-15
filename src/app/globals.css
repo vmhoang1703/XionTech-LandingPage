@@ -878,6 +878,10 @@
   .field input,
   .field select,
   .field textarea {
+    /* WebKit keeps an input at its size="20" width (256px) unless told to
+       fill; on a 320px phone that ran past the card (mobile retest). */
+    width: 100%;
+    min-width: 0;
     height: var(--spacing-field-height);
     padding-inline: 14px;
     border: 1.5px solid var(--color-field-border);
@@ -9188,6 +9192,14 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
   #newsGrid .s-lead .scard {
     min-height: 340px;
   }
+}
+
+/* Job page (mobile retest, 2026-10-15): in WebKit the form fields' natural
+   width (256px) set the one-column grid track to 306px, wider than a 320px
+   phone. Both columns may shrink to the track; the fields fill their card. */
+.job-body,
+.split > .form-card {
+  min-width: 0;
 }
 
 /* ---------- Dark theme (Hoang Vu and Sammy, 2026-10-15; overrides DESIGN.md "no dark mode") ----------
