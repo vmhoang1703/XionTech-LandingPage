@@ -57,8 +57,9 @@ export function tourGeometry(map: HTMLElement, stops: number): StepGeometry {
 // header room, the html scroll-padding), where a centred snap lands.
 function readingLine() {
   const pad =
-    Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) ||
-    0;
+    Number.parseFloat(
+      getComputedStyle(document.documentElement).scrollPaddingTop,
+    ) || 0;
   return (pad + innerHeight) / 2;
 }
 

@@ -76,8 +76,8 @@ describe("Products, services, about and offices in Vietnamese", () => {
     expect(products.journeyBoardVi.lanes.map((lane) => lane.app)).toEqual(
       products.journeyBoard.lanes.map((lane) => lane.app),
     );
-    expect(products.productDetailsVi["ai-tutor"].features.map((f) => f.id)).toEqual(
-      products.productDetails["ai-tutor"].features.map((f) => f.id),
-    );
+    expect(
+      products.productDetailsVi["ai-tutor"].features.map((f) => f.id),
+    ).toEqual(products.productDetails["ai-tutor"].features.map((f) => f.id));
   });
 });

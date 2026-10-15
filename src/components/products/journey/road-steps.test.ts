@@ -43,7 +43,11 @@ describe("stepStops", () => {
 
   function start(by: number | null, paused = false) {
     window.scrollBy = scrolled as unknown as typeof window.scrollBy;
-    stop = stepStops(() => by, () => paused, false);
+    stop = stepStops(
+      () => by,
+      () => paused,
+      false,
+    );
   }
 
   function wheel(deltaY: number) {

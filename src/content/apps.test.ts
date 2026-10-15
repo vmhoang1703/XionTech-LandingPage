@@ -28,11 +28,7 @@ describe("APPS", () => {
   });
 
   it("has the anchors", () => {
-    expect(APPS.map((a) => a.anchor)).toEqual([
-      "pxp",
-      "sxp",
-      "ai-tutor",
-    ]);
+    expect(APPS.map((a) => a.anchor)).toEqual(["pxp", "sxp", "ai-tutor"]);
   });
 
   it("has the approved taglines, with no placeholder", () => {

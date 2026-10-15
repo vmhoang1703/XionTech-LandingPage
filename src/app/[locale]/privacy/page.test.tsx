@@ -131,9 +131,7 @@ describe("Privacy page in Vietnamese", () => {
     expect(container.querySelector(".policy-lang-note")?.textContent).toBe(
       "Chính sách này được cung cấp bằng tiếng Anh.",
     );
-    expect(container.querySelector("article")?.getAttribute("lang")).toBe(
-      "en",
-    );
+    expect(container.querySelector("article")?.getAttribute("lang")).toBe("en");
     expect(screen.getAllByRole("heading", { level: 2 })[0].textContent).toBe(
       "Introduction",
     );

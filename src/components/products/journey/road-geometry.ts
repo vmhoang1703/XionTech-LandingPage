@@ -74,4 +74,3 @@ export function stopShares(path: SVGPathElement | null | undefined) {
     return Math.round(((lo + hi) / 2 / total) * 1e6) / 1e6;
   });
 }
-
