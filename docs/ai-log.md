@@ -1931,3 +1931,9 @@ Template:
 - **What the AI did:** below 1080 px the mark was drawn behind the headline on purpose (2026-10-13), so its dots ran through the words. It proposed four placements, published an HTML preview of two (above the headline; below the button) with real screenshots at 390 and 820 px, and the lead chose "above". The `.hero-stage` box now sits first in the hero column on narrow screens, in its own band (180 to 300 px, smaller on short screens), and the mark forms there; nothing overlaps the text. The hero's top padding there is 8 px, so "Get in touch" ends at 616 px on a 390 x 844 phone and 637 px on 320 x 640. Desktop is unchanged. CSS only, plus comments.
 - **AI got it wrong:** its first screenshots of the build showed no mark, which looked like a break; the test browser (software WebGL) was just slow, and the mark showed after 13 s.
 - **Not covered:** a landscape phone (844 x 390) has "Get in touch" below the first screen; Firefox, WebKit and real phones not tested.
+
+## 2026-10-15 — Pre-demo regression run
+
+- **Prompt:** "help me run smoke test/regression test all features/functional to ensure all work well before the demo tmr"
+- **What the AI did:** on `develop` (9394d8d): lint, typecheck, format, 1,816 unit tests with the coverage gate, then the production build with every Playwright test (smoke and a11y projects, contact form mocked): 186 passed, 1 failed. It also requested every main page in six locales on the live dev site (42 pages, all 200), a news story, a job and the 404 page.
+- **AI got it wrong:** the one failure was its own: PR #125 made the modal's Start and Finish work but it ran only unit tests, not the e2e, so `e2e/products.spec.ts` still expected them disabled. Fixed in PR #127; the Products file passes in full (28 tests).
