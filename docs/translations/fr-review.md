@@ -13,90 +13,74 @@ For a native French reader. Every row is a French string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/fr.ts` and open a pull request. `Where` is `fr:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 505 strings.
+**Total:** 447 strings.
 
 ## About
 
-49 strings.
+37 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:aboutCapture.heading` | See our apps in action. | Découvrez nos applications en action. |
-| `fr:aboutCapture.lede` | Leave your work email and we'll arrange a walkthrough of Parent Hub and Staff Hub. | Laissez votre e-mail professionnel et nous organiserons une présentation de Parent Hub et Staff Hub. |
-| `fr:aboutFaq.title` | Your question, we answer | Vos questions, nos réponses |
-| `fr:aboutFaq.lede` | Straight answers about our products, our services and how we work. | Des réponses franches sur nos produits, nos services et notre façon de travailler. |
+| `fr:aboutCta.title` | Let’s build what’s next | Construisons la suite |
+| `fr:aboutCta.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | Vous avez une idée de produit, un défi technologique ou une équipe d’ingénierie à faire grandir ? Voyons ensemble comment transformer vos objectifs en solutions utiles. |
+| `fr:aboutCta.primary.label` | Let’s talk about your project | Parlons de votre projet |
+| `fr:aboutCta.secondary.label`<br>`fr:aboutHero.links[0].label` | Explore our products | Découvrir nos produits |
+| `fr:aboutFaq.title` | Curious about XionTech? | Envie d’en savoir plus sur XionTech ? |
+| `fr:aboutFaq.lede` | A few things you might want to know before working with us. | Quelques points à connaître avant de travailler avec nous. |
 | `fr:aboutFaq.items[0].question` | What does XionTech do? | Que fait XionTech ? |
-| `fr:aboutFaq.items[0].answer` | We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing. | Nous développons nos propres plateformes pour les écoles (Parent Hub, Staff Hub et IoT Device Management) et réalisons des logiciels pour d’autres entreprises : ingénierie produit, analytique pilotée par l’IA, co-création de produits et mise à disposition de talents. |
+| `fr:aboutFaq.items[0].answer` | We create AI-powered products and deliver custom software, product engineering, dedicated teams, and technology solutions for businesses. | Nous créons des produits propulsés par l’IA et réalisons des logiciels sur mesure, de l’ingénierie produit, des équipes dédiées et des solutions technologiques pour les entreprises. |
 | `fr:aboutFaq.items[1].question` | Which industries do you work with? | Avec quels secteurs travaillez-vous ? |
-| `fr:aboutFaq.items[1].answer` | EdTech is our core. We also serve Healthcare, Logistics and Private Equity. | L’EdTech est notre cœur de métier. Nous servons aussi la santé, la logistique et le capital-investissement. |
-| `fr:aboutFaq.items[2].question` | How can our school try Parent Hub or Staff Hub? | Comment notre école peut-elle essayer Parent Hub ou Staff Hub ? |
-| `fr:aboutFaq.items[2].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | Contactez-nous. Nous vous présentons les applications à partir de scénarios tirés de votre propre école. |
-| `fr:aboutFaq.items[3].question` | How do you work across time zones? | Comment travaillez-vous avec plusieurs fuseaux horaires ? |
+| `fr:aboutFaq.items[1].answer` | Education is our starting point. We bring adaptable engineering capabilities to projects in other industries, based on each client’s needs. | L’éducation est notre point de départ. Nous apportons des compétences d’ingénierie adaptables à des projets dans d’autres secteurs, selon les besoins de chaque client. |
+| `fr:aboutFaq.items[2].question` | How does a new project begin? | Comment démarre un nouveau projet ? |
+| `fr:aboutFaq.items[2].answer` | We start by understanding your goals and requirements, then shape the approach before progressing through design, development, testing, and deployment. | Nous commençons par comprendre vos objectifs et vos besoins, puis nous définissons l’approche avant de passer à la conception, au développement, aux tests et au déploiement. |
+| `fr:aboutFaq.items[3].question` | How do your teams work across time zones? | Comment vos équipes travaillent-elles avec plusieurs fuseaux horaires ? |
 | `fr:aboutFaq.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Nos équipes de Plano, Hô Chi Minh-Ville, Hanoï et Da Nang couvrent les fuseaux horaires des États-Unis, de l’Europe et de l’Australie, avec des outils partagés pour des mises à jour en temps réel. |
-| `fr:aboutFaq.items[4].question` | When do you shape the solution to our needs? | Quand adaptez-vous la solution à nos besoins ? |
-| `fr:aboutFaq.items[4].answer` | From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins. | Dès le départ. La découverte, la première de nos quatre étapes, définit vos objectifs, vos utilisateurs et le périmètre avant le début de la conception. |
-| `fr:aboutFaq.items[5].question` | What results can we expect? | Quels résultats pouvons-nous attendre ? |
-| `fr:aboutFaq.items[5].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | Une réalisation rentable par des ingénieurs vietnamiens qualifiés, des livraisons dans les délais et des résultats mesurables qui soutiennent votre croissance. |
-| `fr:aboutFaq.items[6].question` | How do you keep our data secure? | Comment protégez-vous nos données ? |
-| `fr:aboutFaq.items[6].answer` | [Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning. | [Placeholder] Nous travaillons avec honnêteté, transparence et des normes éthiques claires, appuyées par l’automatisation de la sécurité et une analyse continue. |
-| `fr:aboutFaq.items[7].question` | How do we give feedback during a project? | Comment donner notre avis pendant un projet ? |
-| `fr:aboutFaq.items[7].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | Par des canaux dédiés, des points réguliers et des sprints agiles, pour que vos retours façonnent le produit du début à la fin. |
-| `fr:aboutFaq.items[8].question` | How do you measure and show value? | Comment mesurez-vous et démontrez-vous la valeur ? |
-| `fr:aboutFaq.items[8].answer` | We track speed, quality, product impact and team autonomy, and share them openly with you. | Nous suivons la vitesse, la qualité, l’impact sur le produit et l’autonomie de l’équipe, et nous les partageons ouvertement avec vous. |
-| `fr:aboutFaq.ask.label` | Still have a question? Ask us directly | Encore une question ? Posez-la-nous directement |
-| `fr:aboutHero.title.lead` | We’re XionTech, | Nous sommes XionTech, |
-| `fr:aboutHero.title.middle` | technology built with  | une technologie bâtie avec  |
+| `fr:aboutFaq.items[4].question` | How do you maintain delivery quality? | Comment garantissez-vous la qualité de la réalisation ? |
+| `fr:aboutFaq.items[4].answer` | Engineers review work and combine testing and quality assurance with AI-assisted development, guided by agreed project standards. | Nos ingénieurs relisent le travail et associent tests et assurance qualité au développement assisté par l’IA, selon les standards convenus pour le projet. |
+| `fr:aboutHero.title.lead` | We’re XionTech. | Nous sommes XionTech. |
+| `fr:aboutHero.title.middle` | Technology built with  | Une technologie bâtie avec  |
 | `fr:aboutHero.title.accent` | ownership | responsabilité |
-| `fr:aboutHero.text` | We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world. | Nous réunissons les personnes, les idées et la technologie pour créer des systèmes informatiques d’exception et bâtir un avenir meilleur pour tous. Depuis Hô Chi Minh-Ville et Plano, nous développons nos propres plateformes pour les écoles et réalisons des produits numériques pour des clients du monde entier. |
-| `fr:aboutHero.links[0].label` | Explore our products | Découvrir nos produits |
+| `fr:aboutHero.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | Nous réunissons les personnes, les idées et la technologie pour créer des solutions numériques qui comptent. Du développement de produits logiciels à l’exploration de l’innovation propulsée par l’IA, nous associons expertise d’ingénierie, direction expérimentée et un fort sens des responsabilités pour aider les entreprises à avancer. |
 | `fr:aboutHero.links[1].label` | Explore our services | Découvrir nos services |
 | `fr:aboutMeta.title` | About XionTech \| Get IT Done | À propos de XionTech \| Get IT Done |
-| `fr:aboutMeta.description` | XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia. | XionTech est une entreprise de technologie éducative et un partenaire logiciel, avec des sièges à Plano (États-Unis) et à Hô Chi Minh-Ville (Vietnam) et des équipes à Hanoï et Da Nang, au service de clients aux États-Unis, en Europe et en Australie. |
-| `fr:aboutOffices.title` | Two headquarters, four locations. | Deux sièges, quatre implantations. |
-| `fr:aboutOffices.more` | Also in Ha Noi and Da Nang. | Également présents à Hanoï et Da Nang. |
-| `fr:aboutOffices.offices[0].name` | Plano, Texas, USA | Plano, Texas, États-Unis |
-| `fr:aboutOffices.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (s’ouvre dans un nouvel onglet) |
-| `fr:aboutOffices.offices[0].zoneLabel` | US Central | Heure du Centre (États-Unis) |
-| `fr:aboutOffices.offices[0].tag` | US Delivery Center | Centre de développement aux États-Unis |
-| `fr:aboutOffices.offices[1].name` | Ho Chi Minh City, Vietnam | Hô Chi Minh-Ville, Vietnam |
-| `fr:aboutOffices.offices[1].tag` | Vietnam Delivery Center | Centre de développement au Vietnam |
+| `fr:aboutMeta.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech est un partenaire d’ingénierie avec des équipes aux États-Unis et au Vietnam. Nous créons des produits logiciels, explorons l’innovation propulsée par l’IA et assumons la réalisation aux côtés de nos clients. |
+| `fr:aboutOffices.title` | Two delivery centers. One connected team | Deux centres de réalisation. Une seule équipe connectée |
+| `fr:aboutOffices.lede` | From Plano to Ho Chi Minh City, our teams work across time zones to support clients and keep projects moving. | De Plano à Hô Chi Minh-Ville, nos équipes travaillent sur plusieurs fuseaux horaires pour accompagner nos clients et faire avancer les projets. |
+| `fr:aboutOffices.timeLabel` | Local time | Heure locale |
+| `fr:aboutOffices.mapLabel` | Open {city} in Google Maps (opens in a new tab) | Ouvrir {city} dans Google Maps (s’ouvre dans un nouvel onglet) |
+| `fr:aboutOffices.locations[0].eyebrow` | US Delivery Center | Centre de développement aux États-Unis |
+| `fr:aboutOffices.locations[1].eyebrow` | Vietnam Delivery Center | Centre de développement au Vietnam |
+| `fr:aboutOffices.locations[1].city` | Ho Chi Minh City | Hô Chi Minh-Ville |
 | `fr:aboutStory.title.lead` | Inspired by a mountain. | Inspirés par une montagne. |
-| `fr:aboutStory.title.middle` | United by  | Unis par un  |
+| `fr:aboutStory.title.middle` | Driven by  | Portés par un  |
 | `fr:aboutStory.title.highlight` | purpose | but |
-| `fr:aboutStory.chapters[0].title` | The inspiration | L’inspiration |
-| `fr:aboutStory.chapters[0].text` | Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future. | Notre nom s’inspire d’une montagne : un lieu que l’on admire, autour duquel on se rassemble et que l’on gravit ensemble vers un avenir meilleur. |
-| `fr:aboutStory.chapters[1].title` | The purpose | Le but |
-| `fr:aboutStory.chapters[1].text` | [Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all. | [Placeholder] Inspirés par cette vision, un groupe de pionniers a fondé newXion en Amérique. Guidés par des valeurs fondamentales durables, ils ont entrepris de bâtir une communauté fidèle à l’esprit de la montagne : un lieu où les gens s’unissent, exploitent les technologies de pointe et créent des systèmes informatiques d’exception pour faire progresser l’humanité et bâtir un avenir meilleur pour tous. |
-| `fr:aboutStory.closing.line` | Our inspiration is a mountain. Our purpose is people. | Notre inspiration est une montagne. Notre but, ce sont les gens. |
-| `fr:aboutStory.closing.tags` | Vision · Community · Technology | Vision · Communauté · Technologie |
-| `fr:aboutStory.cue` | Scroll | Défiler |
+| `fr:aboutStory.paragraphs[0]` | Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights. | Notre nom s’inspire d’une montagne, symbole d’ambition, d’unité et de la détermination à atteindre de nouveaux sommets. |
+| `fr:aboutStory.paragraphs[1]` | That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress. | Cet esprit façonne qui nous sommes aujourd’hui. Nous réunissons les personnes et la technologie, relevons les défis et assumons ce que nous construisons, pour un avenir où l’innovation crée des progrès qui comptent. |
+| `fr:aboutValuesHeading.title` | What drives us | Ce qui nous anime |
+| `fr:aboutValuesHeading.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | Cinq principes qui guident notre façon de collaborer, de décider et d’obtenir des résultats qui comptent. |
 
 ## Values (Home and About)
 
-22 strings.
+18 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:aboutValues.items[0].title` | Startup Spirit | Esprit start-up |
-| `fr:aboutValues.items[0].short` | Agile, resilient and always improving. | Agiles, résilients et toujours en progrès. |
-| `fr:aboutValues.items[0].text` | Embody an entrepreneurial mindset, embracing agility, flexibility, and a passion for innovation. Our commitment to excellence is driven by resilience and a culture of continuous improvement. | Incarner un état d’esprit entrepreneurial, fait d’agilité, de flexibilité et de passion pour l’innovation. Notre exigence d’excellence repose sur la résilience et une culture d’amélioration continue. |
-| `fr:aboutValues.items[1].title` | Client Centricity | Le client au centre |
-| `fr:aboutValues.items[1].short` | Clients at the heart of everything we do. | Les clients au cœur de tout ce que nous faisons. |
-| `fr:aboutValues.items[1].text` | Clients are at the heart of everything we do. We strive to deliver exceptional experiences and impactful outcomes through deep understanding, proactive engagement, and tailored solutions. | Les clients sont au cœur de tout ce que nous faisons. Nous nous efforçons d’offrir des expériences exceptionnelles et des résultats concrets grâce à une compréhension approfondie, un engagement proactif et des solutions sur mesure. |
-| `fr:aboutValues.items[2].title` | Integrity First | L’intégrité d’abord |
-| `fr:aboutValues.items[2].short` | Honest, transparent and accountable. | Honnêtes, transparents et responsables. |
-| `fr:aboutValues.items[2].text` | Operate with honesty, transparency, and accountability. Ethical standards guide every decision and interaction, fostering trust and long-term relationships. | Agir avec honnêteté, transparence et responsabilité. Des normes éthiques guident chaque décision et chaque échange, et favorisent la confiance et les relations durables. |
-| `fr:aboutValues.items[3].title` | Innovation Driven | Portés par l’innovation |
-| `fr:aboutValues.items[3].short` | Exploring new technology to stay ahead. | Explorer les nouvelles technologies pour garder une longueur d’avance. |
-| `fr:aboutValues.items[3].text` | Passionate about exploring emerging technologies and creative approaches. Innovation is embedded in our DNA, enabling us to evolve our solutions and stay ahead of industry trends. | Passionnés par l’exploration des technologies émergentes et des approches créatives. L’innovation est inscrite dans notre ADN : elle nous permet de faire évoluer nos solutions et de garder une longueur d’avance sur les tendances du secteur. |
-| `fr:aboutValues.items[4].title` | "Get IT Done" Attitude | L’état d’esprit « Get IT Done » |
-| `fr:aboutValues.items[4].short` | We own our commitments and deliver. | Nous tenons nos engagements et nous livrons. |
-| `fr:aboutValues.items[4].text` | Take ownership of our commitments and deliver high-quality, reliable, and efficient solutions. Our team is driven by accountability and a results-oriented mindset that meets or exceeds industry standards. | Assumer nos engagements et livrer des solutions de haute qualité, fiables et efficaces. Notre équipe est animée par le sens des responsabilités et un état d’esprit orienté résultats, qui atteint ou dépasse les standards du secteur. |
-| `fr:aboutValues.items[5].title` | People-Centered Culture | Une culture centrée sur les personnes |
-| `fr:aboutValues.items[5].short` | Every team member valued, supported and empowered. | Chaque membre de l’équipe valorisé, soutenu et en mesure d’agir. |
-| `fr:aboutValues.items[5].text` | Cultivate a workplace where every team member feels valued, supported, and empowered. Our culture goes beyond employment: it's about belonging, collaboration, and shared success. | Cultiver un environnement de travail où chaque membre de l’équipe se sent valorisé, soutenu et en mesure d’agir. Notre culture va au-delà de l’emploi : elle repose sur l’appartenance, la collaboration et la réussite partagée. |
-| `fr:homeValuesHeading.title` | Our core values. | Nos valeurs fondamentales. |
-| `fr:homeValuesHeading.lede` | What guides how we work. Flip a card to read each value in full. | Ce qui guide notre façon de travailler. Retournez une carte pour lire chaque valeur en entier. |
+| `fr:aboutValues.items[0].label` | Stay agile | Rester agile |
+| `fr:aboutValues.items[0].title` | Adapt with purpose. | S’adapter avec un but. |
+| `fr:aboutValues.items[0].text` | Stay flexible, respond to change, and keep moving toward what matters. | Rester flexible, répondre au changement et continuer d’avancer vers l’essentiel. |
+| `fr:aboutValues.items[1].label` | Take ownership | Responsabilité |
+| `fr:aboutValues.items[1].title` | Own the outcome. | Assumer le résultat. |
+| `fr:aboutValues.items[1].text` | Speak up, take responsibility, and see things through from start to finish. | Prendre la parole, prendre ses responsabilités et mener les choses du début à la fin. |
+| `fr:aboutValues.items[2].label` | Innovate | Innover |
+| `fr:aboutValues.items[2].title` | Make innovation useful. | Rendre l’innovation utile. |
+| `fr:aboutValues.items[2].text` | Explore new ideas and technologies that create meaningful value for people and businesses. | Explorer de nouvelles idées et technologies qui créent une vraie valeur pour les personnes et les entreprises. |
+| `fr:aboutValues.items[3].label` | Grow together | Grandir ensemble |
+| `fr:aboutValues.items[3].title` | Better together. | Meilleurs ensemble. |
+| `fr:aboutValues.items[3].text` | Share knowledge, support each other, and grow through collaboration and feedback. | Partager ses connaissances, se soutenir et grandir grâce à la collaboration et aux retours. |
+| `fr:aboutValues.items[4].title` | Turn ideas into impact. | Transformer les idées en impact. |
+| `fr:aboutValues.items[4].text` | Move beyond ideas and deliver practical solutions that make a difference. | Aller au-delà des idées et livrer des solutions concrètes qui font la différence. |
+| `fr:homeValuesHeading.title` | What drives us | Ce qui nous anime |
+| `fr:homeValuesHeading.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | Cinq principes qui guident notre façon de collaborer, de décider et d’obtenir des résultats qui comptent. |
 | `fr:homeValuesHeading.frontHint` | Flip for details | Retourner pour en savoir plus |
 | `fr:homeValuesHeading.backHint` | Flip back | Revenir |
 
@@ -106,88 +90,53 @@ For a native French reader. Every row is a French string on the site that differ
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:appTaglines.parent-hub` | Keeps parents close to every school day, on their phone. | Les parents restent proches de chaque journée d’école, sur leur téléphone. |
-| `fr:appTaglines.staff-hub` | One workspace where staff, teachers and leaders share the same data. | Un seul espace de travail où le personnel, les enseignants et la direction partagent les mêmes données. |
-| `fr:appTaglines.iot` | Run classroom devices, lighting, climate and access from one screen. | Pilotez les équipements des salles, l’éclairage, la climatisation et les accès depuis un seul écran. |
-| `fr:appTaglines.ai-tutor` | [Placeholder] Solve new problems on your own. Not just read solutions. | [Placeholder] Résoudre de nouveaux problèmes par soi-même. Pas seulement lire des solutions. |
+| `fr:appTaglines.parent-hub` | Keep parents informed and connected to their child’s school life. | Les parents restent informés et proches de la vie scolaire de leur enfant. |
+| `fr:appTaglines.staff-hub` | Bring daily school operations into one connected workspace. | Réunissez la gestion quotidienne de l’école dans un espace de travail connecté. |
+| `fr:appTaglines.iot` | Simplify how schools manage connected campus technology. | Simplifiez la gestion des technologies connectées du campus. |
+| `fr:appTaglines.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | Aider les élèves à comprendre leurs erreurs et à prendre confiance grâce à un apprentissage guidé. |
 
 ## Careers
 
-59 strings.
+24 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:careersGrowth.caption` | [Placeholder] Growth Learning Model | [Placeholder] Modèle d’apprentissage pour grandir |
-| `fr:careersGrowth.center` | Growth | Grandir |
-| `fr:careersGrowth.steps[0]` | Curious | Curiosité |
-| `fr:careersGrowth.steps[1]` | Learn | Apprendre |
-| `fr:careersGrowth.steps[2]` | Ask | Questionner |
-| `fr:careersGrowth.steps[3]` | Grow | Grandir |
-| `fr:careersGrowth.steps[4]` | Improve | Progresser |
+| `fr:careersGain.heading` | What you’ll gain along the way | Ce que vous gagnerez en chemin |
+| `fr:careersGain.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | Développez vos compétences, explorez de nouvelles technologies et travaillez avec des personnes qui se soutiennent. Voici ce qui vous attend chez XionTech. |
+| `fr:careersGain.cards[0].title` | Hands-on Learning | Apprendre par la pratique |
+| `fr:careersGain.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | Apprenez en faisant, grâce aux ateliers, au partage de connaissances et à de vrais défis d’ingénierie. |
+| `fr:careersGain.cards[1].title` | AI & New Technologies | IA et nouvelles technologies |
+| `fr:careersGain.cards[1].text` | Explore AI tools, automation, and modern technologies that help you work smarter. | Explorez les outils d’IA, l’automatisation et les technologies modernes qui vous aident à travailler plus intelligemment. |
+| `fr:careersGain.cards[2].title` | Real-World Projects | Des projets concrets |
+| `fr:careersGain.cards[2].text` | Solve real customer problems and see how your work makes a difference. | Résolvez de vrais problèmes clients et voyez en quoi votre travail fait la différence. |
+| `fr:careersGain.cards[3].title` | Team Experiences | Des moments d’équipe |
+| `fr:careersGain.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | Créez des liens grâce aux activités d’équipe, à l’apprentissage partagé et aux réussites célébrées ensemble. |
 | `fr:careersHero.title.first` | Stay curious. | Restez curieux. |
-| `fr:careersHero.title.second` | Build what’s next. | Construisez la suite. |
+| `fr:careersHero.title.second` | Build what’s next | Construisez la suite |
 | `fr:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | Nous construisons une équipe pour celles et ceux qui apprennent vite, posent de meilleures questions, s’adaptent quand les choses changent et se soucient du résultat, pas seulement de la tâche. Ici, vous contribuerez à inventer de nouvelles façons de créer des logiciels avec l’IA. |
-| `fr:careersHero.cta.label` | Explore open roles | Voir les postes ouverts |
-| `fr:careersInside.heading` | Inside XionTech. | Au cœur de XionTech. |
-| `fr:careersInside.lede` | A look at the moments that shape life here: workshops, project starts, team days, celebrations, shared learning and the small moments in between. | Un aperçu des moments qui rythment la vie ici : ateliers, lancements de projets, journées d’équipe, célébrations, apprentissage partagé et les petits moments entre les deux. |
-| `fr:careersInside.tiles[0].tag` | Learn together | Apprendre ensemble |
-| `fr:careersInside.tiles[0].title` | Workshops & experiments | Ateliers et expérimentations |
-| `fr:careersInside.tiles[0].text` | Hands-on sessions where the team tries new tools, agentic workflows and better ways to work. | Des sessions pratiques où l’équipe teste de nouveaux outils, des workflows agentiques et de meilleures façons de travailler. |
-| `fr:careersInside.tiles[1].tag` | Build relationships | Créer des liens |
-| `fr:careersInside.tiles[1].title` | Client visits | Visites clients |
-| `fr:careersInside.tiles[1].text` | Understand context directly and build stronger working relationships. | Comprendre le contexte sur place et renforcer les relations de travail. |
-| `fr:careersInside.tiles[2].tag` | Shared direction | Un cap commun |
-| `fr:careersInside.tiles[2].title` | Town halls | Réunions générales |
-| `fr:careersInside.tiles[2].text` | What changed, what matters now, and where we’re going next. | Ce qui a changé, ce qui compte maintenant et où nous allons ensuite. |
-| `fr:careersInside.tiles[3].tag` | Start together | Démarrer ensemble |
-| `fr:careersInside.tiles[3].title` | Project kickoffs | Lancements de projets |
-| `fr:careersInside.tiles[3].text` | New work starts with shared context, not a mysterious task list. | Un nouveau travail commence par un contexte partagé, pas par une mystérieuse liste de tâches. |
-| `fr:careersInside.tiles[4].tag` | Celebrate progress | Célébrer les progrès |
-| `fr:careersInside.tiles[4].title` | [Placeholder] Celebration | [Placeholder] Célébration |
-| `fr:careersInside.tiles[4].text` | Because shipped work deserves more than a green status label. | Parce qu’un travail livré mérite plus qu’un statut passé au vert. |
-| `fr:careersLife.heading` | Life at XionTech. | La vie chez XionTech. |
+| `fr:careersLife.heading` | Life at XionTech | La vie chez XionTech |
+| `fr:careersLife.prevLabel` | Previous photo | Photo précédente |
+| `fr:careersLife.nextLabel` | Next photo | Photo suivante |
 | `fr:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] Photo d’équipe |
 | `fr:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] Photo des bureaux |
 | `fr:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] Photo d’événement |
 | `fr:careersMeta.title` | Careers at XionTech \| Software Jobs in Ho Chi Minh City | Carrières chez XionTech \| Emplois dans le logiciel à Hô Chi Minh-Ville |
 | `fr:careersMeta.description` | Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture. | Rejoignez XionTech à Hô Chi Minh-Ville. Travaillez sur des plateformes scolaires et des produits clients avec l’IA/ML, l’IA générative, le cloud et une réalisation agile, dans une culture centrée sur les personnes. |
-| `fr:careersRoles.heading` | Find your next challenge. | Trouvez votre prochain défi. |
+| `fr:careersRoles.heading` | Find your next challenge | Trouvez votre prochain défi |
 | `fr:careersRoles.emptyText` | No open roles right now. | Aucun poste ouvert pour le moment. |
 | `fr:careersRoles.applyLabel` | View and apply | Voir et postuler |
-| `fr:careersValues.heading` | Five things that shape the way we work. | Cinq principes qui façonnent notre façon de travailler. |
-| `fr:careersValues.lede` | These are the behaviours we want people to experience from us every day. Flip a card to see what each one means in practice. | Ce sont les comportements que nous voulons que chacun ressente de notre part, chaque jour. Retournez une carte pour voir ce que chacun signifie en pratique. |
-| `fr:careersValues.frontHint` | Flip for details | Retourner pour en savoir plus |
-| `fr:careersValues.backHint` | Flip back | Revenir |
-| `fr:careersValues.cards[0].title` | [Placeholder] Stay agile | [Placeholder] Rester agile |
-| `fr:careersValues.cards[0].label` | STAY AGILE | RESTER AGILE |
-| `fr:careersValues.cards[0].backTitle` | [Placeholder] Move without losing direction. | [Placeholder] Avancer sans perdre le cap. |
-| `fr:careersValues.cards[0].text` | Stay flexible and adapt when new information or a better answer changes the path. | Rester flexible et s’adapter quand une nouvelle information ou une meilleure réponse change le chemin. |
-| `fr:careersValues.cards[1].title` | [Placeholder] Own the outcome | [Placeholder] Assumer le résultat |
-| `fr:careersValues.cards[1].label` | OWNERSHIP | RESPONSABILITÉ |
-| `fr:careersValues.cards[1].backTitle` | [Placeholder] Care beyond your task. | [Placeholder] Voir au-delà de sa tâche. |
-| `fr:careersValues.cards[1].text` | Raise issues early, protect quality and take responsibility for whether the work actually succeeds. | Signaler les problèmes tôt, protéger la qualité et assumer la réussite réelle du travail. |
-| `fr:careersValues.cards[2].title` | [Placeholder] Innovate with purpose | [Placeholder] Innover avec un but |
-| `fr:careersValues.cards[2].label` | INNOVATE | INNOVER |
-| `fr:careersValues.cards[2].backTitle` | [Placeholder] New is useful only when it helps. | [Placeholder] La nouveauté n’est utile que si elle aide. |
-| `fr:careersValues.cards[2].text` | Explore emerging technology when it improves the product, the user experience or the way we work. | Explorer les technologies émergentes quand elles améliorent le produit, l’expérience utilisateur ou notre façon de travailler. |
-| `fr:careersValues.cards[3].title` | [Placeholder] Grow together | [Placeholder] Grandir ensemble |
-| `fr:careersValues.cards[3].label` | GROW TOGETHER | GRANDIR ENSEMBLE |
-| `fr:careersValues.cards[3].backTitle` | [Placeholder] Make each other better. | [Placeholder] Se rendre meilleurs les uns les autres. |
-| `fr:careersValues.cards[3].text` | Share what you know, give useful feedback and create space for teammates to stretch, contribute and grow. | Partager ce que l’on sait, donner des retours utiles et laisser à ses collègues l’espace pour se dépasser, contribuer et grandir. |
-| `fr:careersValues.cards[4].backTitle` | [Placeholder] Turn possibility into something real. | [Placeholder] Transformer le possible en réalité. |
-| `fr:careersValues.cards[4].text` | Good ideas matter. Delivering useful, working outcomes is what gives them value. | Les bonnes idées comptent. C’est en livrant des résultats utiles et concrets qu’on leur donne de la valeur. |
 
 ## News
 
-22 strings.
+20 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
 | `fr:categoryLabels.schools` | Schools | Écoles |
 | `fr:categoryLabels.students` | Students | Élèves |
 | `fr:categoryLabels.company` | Company | Entreprise |
-| `fr:homeNews.heading` | Latest from XionTech. | Les dernières nouvelles de XionTech. |
-| `fr:homeNews.lede` | Catch up with what our team is building and shipping. | Découvrez ce que notre équipe construit et livre. |
+| `fr:homeNews.heading` | Latest from XionTech | Les dernières nouvelles de XionTech |
+| `fr:homeNews.lede` | Explore what we’re building, the ideas we’re exploring, and the people behind our work. | Découvrez ce que nous construisons, les idées que nous explorons et les personnes derrière notre travail. |
 | `fr:homeNews.seeAll.label` | See all news | Voir toutes les actualités |
 | `fr:homeNews.readStory` | Read story | Lire l’article |
 | `fr:newsMeta.title` | News \| XionTech | Actualités \| XionTech |
@@ -196,19 +145,17 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:newsPage.sub` | Stay informed with the latest news and announcements, fresh off the press. | Suivez nos dernières actualités et annonces, dès leur parution. |
 | `fr:newsPage.storiesHeading` | All stories | Tous les articles |
 | `fr:newsPage.filtersLabel` | Filter stories by audience | Filtrer les articles par public |
-| `fr:newsPage.sampleNote` | Stories from the newXion newsroom; those marked [Placeholder] are samples. | Articles de la salle de presse newXion ; ceux marqués [Placeholder] sont des exemples. |
 | `fr:newsPage.allFilter.label` | All | Tous |
 | `fr:newsPage.empty` | No stories are available in this category yet. | Aucun article n’est encore disponible dans cette catégorie. |
 | `fr:newsPage.showAll` | Show all | Tout afficher |
 | `fr:newsPage.countOne` | Showing 1 story | {n} article affiché |
 | `fr:newsPage.countMany` | Showing {n} stories | {n} articles affichés |
 | `fr:newsStory.storyLabel` | Story | Article |
-| `fr:newsStory.sampleNote` | [Placeholder] Sample story to show the layout. Replace with a real story before launch. | [Placeholder] Article d’exemple pour montrer la mise en page. À remplacer par un vrai article avant le lancement. |
 | `fr:newsStory.backToNews.label` | Back to News | Retour aux actualités |
 
 ## Contact, demo form and capture band
 
-70 strings.
+71 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
@@ -224,7 +171,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:contactStrings.hero.titleBefore` | Let's talk about your  | Parlons de votre  |
 | `fr:contactStrings.hero.titleHighlight` | school | école |
 | `fr:contactStrings.hero.titleAfter` |  or your project. |  ou de votre projet. |
-| `fr:contactStrings.hero.items[0]` | A walkthrough of Parent Hub and Staff Hub using your school's scenarios. | Une présentation de Parent Hub et Staff Hub à partir des scénarios de votre école. |
+| `fr:contactStrings.hero.items[0]` | A demo of Parent Hub and Staff Hub using your school's scenarios. | Une présentation de Parent Hub et Staff Hub à partir des scénarios de votre école. |
 | `fr:contactStrings.hero.items[1]` | Answers on setup, data and support. | Des réponses sur la mise en place, les données et le support. |
 | `fr:contactStrings.hero.items[2]` | For projects: a first Discovery conversation, the first of our four steps. | Pour les projets : un premier échange de découverte, la première de nos quatre étapes. |
 | `fr:contactStrings.hero.officesLabel` | Our offices | Nos bureaux |
@@ -233,7 +180,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:contactStrings.form.tabDemo` | Product demo | Démo produit |
 | `fr:contactStrings.form.tabProject` | Outsourcing project | Projet d’externalisation |
 | `fr:contactStrings.form.name` | Full name | Nom complet |
-| `fr:contactStrings.form.email`<br>`fr:contactStrings.home.email`<br>`fr:contactStrings.capture.emailLabel` | Work email | E-mail professionnel |
+| `fr:contactStrings.form.email`<br>`fr:contactStrings.home.email` | Email address | Adresse e-mail |
 | `fr:contactStrings.form.org` | School or company | École ou entreprise |
 | `fr:contactStrings.form.role` | Your role | Votre fonction |
 | `fr:contactStrings.form.roleHelp` | For example: Principal, Head of IT | Par exemple : chef d’établissement, responsable informatique |
@@ -252,7 +199,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:contactStrings.form.privacyLink` | Privacy policy | Politique de confidentialité |
 | `fr:contactStrings.form.errorsHeading` | Please fix the following: | Veuillez corriger les points suivants : |
 | `fr:contactStrings.home.heading` | Have something you want to build? | Vous avez un projet à construire ? |
-| `fr:contactStrings.home.lede` | Tell us a little about yourself and what you're working on. Our team will get in touch to learn more. | Parlez-nous un peu de vous et de ce sur quoi vous travaillez. Notre équipe vous contactera pour en savoir plus. |
+| `fr:contactStrings.home.lede` | Building something new or improving what you already have? Tell us about your goals, and we’ll explore how we can help. | Vous créez quelque chose de nouveau ou améliorez l’existant ? Parlez-nous de vos objectifs, et nous verrons comment vous aider. |
 | `fr:contactStrings.home.name` | Your name | Votre nom |
 | `fr:contactStrings.home.phone` | Phone number | Numéro de téléphone |
 | `fr:contactStrings.home.optional` | (optional) | (facultatif) |
@@ -262,11 +209,12 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:contactStrings.home.consent` | We only use your details to reply to your message. | Nous utilisons vos coordonnées uniquement pour répondre à votre message. |
 | `fr:contactStrings.home.successHeading` | Summit reached. Thanks — we've received your message. | Sommet atteint. Merci, nous avons bien reçu votre message. |
 | `fr:contactStrings.home.successText` | Our team will review what you shared and get in touch with you. | Notre équipe va examiner ce que vous nous avez transmis et reviendra vers vous. |
-| `fr:contactStrings.capture.demo.heading` | See it working at your school. | Voyez-le fonctionner dans votre école. |
-| `fr:contactStrings.capture.demo.lede` | Leave your work email and we'll arrange a walkthrough built around your school. | Laissez votre e-mail professionnel et nous organiserons une présentation pensée pour votre école. |
+| `fr:contactStrings.capture.emailLabel` | Work email | E-mail professionnel |
+| `fr:contactStrings.capture.demo.heading` | See it working at your school | Voyez-le fonctionner dans votre école |
+| `fr:contactStrings.capture.demo.lede` | Leave your work email and we'll arrange a demo built around your school. | Laissez votre e-mail professionnel et nous organiserons une démo pensée pour votre école. |
 | `fr:contactStrings.capture.demo.button`<br>`fr:contactStrings.capture.project.button` | Get in touch | Nous contacter |
 | `fr:contactStrings.capture.demo.consent` | We only use your email to arrange your demo. | Nous utilisons votre e-mail uniquement pour organiser votre démo. |
-| `fr:contactStrings.capture.project.heading` | Tell us what you're building. | Dites-nous ce que vous construisez. |
+| `fr:contactStrings.capture.project.heading` | Tell us what you're building | Dites-nous ce que vous construisez |
 | `fr:contactStrings.capture.project.lede` | Leave your work email and we'll reach out to start Discovery. | Laissez votre e-mail professionnel et nous vous contacterons pour lancer la découverte. |
 | `fr:contactStrings.errors.name` | Please enter your name. | Veuillez saisir votre nom. |
 | `fr:contactStrings.errors.email` | Please enter a valid email address. | Veuillez saisir une adresse e-mail valide. |
@@ -289,7 +237,7 @@ For a native French reader. Every row is a French string on the site that differ
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:dayRoad.heading` | A day at school. | Une journée à l’école. |
+| `fr:dayRoad.heading` | A day at school | Une journée à l’école |
 | `fr:dayRoad.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | Suivez le parcours d’un élève au fil d’une journée d’école type, et voyez comment élèves, parents et personnel restent informés et connectés à chaque étape. |
 | `fr:dayRoad.start` | Start | Départ |
 | `fr:dayRoad.finish` | Finish | Arrivée |
@@ -300,9 +248,9 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:dayRoad.stops[2].title` | Parent updated | Parents informés |
 | `fr:dayRoad.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub informe les parents que l’élève est à l’école. |
 | `fr:dayRoad.stops[3].title` | Student learns | L’élève apprend |
-| `fr:dayRoad.stops[3].text` | Students practise and ask questions with the AI Tutor. | Les élèves s’exercent et posent leurs questions avec AI Tutor. |
-| `fr:dayRoad.stops[4].title`<br>`fr:productDetails.iot.features[1].title` | Lighting and climate on the timetable | Éclairage et climatisation selon l’emploi du temps |
-| `fr:dayRoad.stops[4].text` | Run classroom devices, lighting, climate and access from one screen. | Pilotez les équipements des salles, l’éclairage, la climatisation et les accès depuis un seul écran. |
+| `fr:dayRoad.stops[3].text` | Students practice and ask questions with the AI Tutor. | Les élèves s’exercent et posent leurs questions avec AI Tutor. |
+| `fr:dayRoad.stops[4].title`<br>`fr:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | Éclairage et climatisation programmés |
+| `fr:dayRoad.stops[4].text` | Simplify how schools manage connected campus technology. | Simplifiez la gestion des technologies connectées du campus. |
 | `fr:dayRoad.stops[5].title` | Day stays connected | Une journée connectée |
 | `fr:dayRoad.stops[5].text` | Notifications and school information stay connected across the system. | Les notifications et les informations de l’école restent connectées dans tout le système. |
 | `fr:journeyBoard.hint` | Select a step to see the app behind it. | Sélectionnez une étape pour voir l’application qui la porte. |
@@ -311,25 +259,25 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:journeyBoard.lanes[0].label` | Student | Élève |
 | `fr:journeyBoard.lanes[1].label` | Teacher and staff | Enseignants et personnel |
 | `fr:journeyBoard.lanes[2].label` | Parent | Parents |
-| `fr:journeyMap.intro.title` | Built apart. Better together. | Conçues séparément. Meilleures ensemble. |
+| `fr:journeyMap.intro.title` | Built apart. Better together | Conçues séparément. Meilleures ensemble |
 | `fr:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage, la gestion du personnel et la technologie du campus dans un même écosystème. |
 | `fr:productDetails.parent-hub.madeFor` | Parents and families | Parents et familles |
-| `fr:productDetails.parent-hub.features[0].title` | Alerts when your child reaches the gate | Alertes quand votre enfant arrive au portail |
-| `fr:productDetails.parent-hub.features[1].title` | Scores and comments as soon as published | Notes et commentaires dès leur publication |
+| `fr:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | Alertes d’arrivée en temps réel |
+| `fr:productDetails.parent-hub.features[1].title` | Published grades and feedback | Notes et commentaires publiés |
 | `fr:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | Messagerie bidirectionnelle avec les enseignants |
 | `fr:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | Paiement des frais avec des reçus clairs |
 | `fr:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | Personnel, enseignants et direction |
-| `fr:productDetails.staff-hub.features[0].title` | Attendance and records in real time | Présences et dossiers en temps réel |
+| `fr:productDetails.staff-hub.features[0].title` | Attendance and student records | Présences et dossiers des élèves |
 | `fr:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | Classes, emplois du temps et notes |
 | `fr:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Messages aux parents via Parent Hub |
 | `fr:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | Tableaux de bord de direction pour les priorités du jour |
 | `fr:productDetails.iot.madeFor` | School operations and facilities teams | Équipes d’exploitation et de maintenance des établissements |
-| `fr:productDetails.iot.features[0].title` | Projectors, displays and sound | Projecteurs, écrans et son |
+| `fr:productDetails.iot.features[0].title` | Centralized device management | Gestion centralisée des équipements |
 | `fr:productDetails.iot.features[2].title` | Doors and zones managed centrally | Portes et zones gérées de façon centralisée |
 | `fr:productDetails.iot.features[3].title` | Energy use across the campus | Consommation d’énergie sur tout le campus |
 | `fr:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | Les élèves, accompagnés de leurs enseignants |
-| `fr:productDetails.ai-tutor.features[0].title` | Skill-by-skill diagnosis | Diagnostic compétence par compétence |
-| `fr:productDetails.ai-tutor.features[1].title` | Step-by-step hints once you have tried | Des indices pas à pas, une fois que vous avez essayé |
+| `fr:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | Vérification de la compréhension par compétence |
+| `fr:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | Des indices pas à pas personnalisés |
 | `fr:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | La maîtrise, seulement quand vous y arrivez seul |
 | `fr:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | Applications scolaires : Parent Hub, Staff Hub, IoT et AI Tutor \| XionTech |
 | `fr:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | Parent Hub pour les parents, Staff Hub pour le personnel, les enseignants et la direction, et IoT Device Management pour les campus. Des applications scolaires connectées signées XionTech. |
@@ -343,62 +291,62 @@ For a native French reader. Every row is a French string on the site that differ
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:footerOffices[0].name`<br>`fr:hcmc.tag`<br>`fr:offices[1].tag` | Vietnam Delivery Center | Centre de développement au Vietnam |
-| `fr:footerOffices[1].name` | US Delivery Center | Centre de développement aux États-Unis |
-| `fr:footerOffices[1].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (s’ouvre dans un nouvel onglet) |
+| `fr:footerOffices[0].tag` | US Delivery Center | Centre de développement aux États-Unis |
+| `fr:footerOffices[1].name` | Ho Chi Minh City | Hô Chi Minh-Ville |
+| `fr:footerOffices[1].tag`<br>`fr:hcmc.tag`<br>`fr:offices[1].tag` | Vietnam Delivery Center | Centre de développement au Vietnam |
 | `fr:hcmc.name`<br>`fr:offices[1].name` | Ho Chi Minh City, Vietnam | Hô Chi Minh-Ville, Vietnam |
 | `fr:offices[0].name`<br>`fr:plano.name` | Plano, Texas, USA | Plano, Texas, États-Unis |
 | `fr:offices[0].contacts[1].ariaLabel`<br>`fr:plano.contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345 (s’ouvre dans un nouvel onglet) |
 | `fr:offices[0].zoneLabel`<br>`fr:plano.zoneLabel` | US Central | Heure du Centre (États-Unis) |
-| `fr:otherLocations` | Also in Ha Noi and Da Nang. | Également présents à Hanoï et Da Nang. |
+| `fr:otherLocations` | Ha Noi, Da Nang | Hanoï, Da Nang |
 
 ## Home
 
-76 strings.
+77 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:homeApps.title` | One connected school. | Une école connectée. |
-| `fr:homeApps.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage, la gestion du personnel et la technologie du campus dans un même écosystème. |
+| `fr:homeApps.title` | One connected school | Une école connectée |
+| `fr:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | Rassemblez toute la communauté scolaire avec des solutions connectées pour les parents, le personnel, les élèves et la gestion du campus, toutes pensées pour simplifier la gestion quotidienne de l’école. |
 | `fr:homeApps.apps[0].madeFor` | Parents and families | Parents et familles |
-| `fr:homeApps.apps[0].features[0]` | Alerts when your child reaches the gate | Alertes quand votre enfant arrive au portail |
-| `fr:homeApps.apps[0].features[1]` | Scores and comments as soon as published | Notes et commentaires dès leur publication |
+| `fr:homeApps.apps[0].features[0]` | Real-time arrival alerts | Alertes d’arrivée en temps réel |
+| `fr:homeApps.apps[0].features[1]` | Published grades and feedback | Notes et commentaires publiés |
 | `fr:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | Personnel, enseignants et direction |
-| `fr:homeApps.apps[1].features[0]` | Attendance and records in real time | Présences et dossiers en temps réel |
+| `fr:homeApps.apps[1].features[0]` | Attendance and student records | Présences et dossiers des élèves |
 | `fr:homeApps.apps[1].features[1]` | Classes, timetables and grades | Classes, emplois du temps et notes |
 | `fr:homeApps.apps[2].madeFor` | School operations and facilities teams | Équipes d’exploitation et de maintenance des établissements |
-| `fr:homeApps.apps[2].features[0]` | Projectors, displays and sound | Projecteurs, écrans et son |
-| `fr:homeApps.apps[2].features[1]` | Lighting and climate on the timetable | Éclairage et climatisation selon l’emploi du temps |
+| `fr:homeApps.apps[2].features[0]` | Centralized device management | Gestion centralisée des équipements |
+| `fr:homeApps.apps[2].features[1]` | Scheduled lighting and climate controls | Éclairage et climatisation programmés |
 | `fr:homeApps.apps[3].madeFor` | Students, with teachers alongside | Les élèves, accompagnés de leurs enseignants |
-| `fr:homeApps.apps[3].features[0]` | Skill-by-skill diagnosis | Diagnostic compétence par compétence |
-| `fr:homeApps.apps[3].features[1]` | Step-by-step hints once you have tried | Des indices pas à pas, une fois que vous avez essayé |
+| `fr:homeApps.apps[3].features[0]` | Skill-level understanding checks | Vérification de la compréhension par compétence |
+| `fr:homeApps.apps[3].features[1]` | Personalized step-by-step hints | Des indices pas à pas personnalisés |
 | `fr:homeApps.link.label` | Explore products | Découvrir les produits |
-| `fr:homeCapabilities.title` | Why XionTech. | Pourquoi XionTech. |
-| `fr:homeCapabilities.lede` | The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI. | Les compétences derrière chaque application scolaire et chaque produit que nous livrons, et une équipe qui ne cesse de trouver des façons plus intelligentes de construire avec l’IA. |
+| `fr:homeCapabilities.title` | Why XionTech | Pourquoi XionTech |
+| `fr:homeCapabilities.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | Nous créons nous-mêmes des produits et mettons cette expérience concrète au service de nos clients, en associant découverte métier, maîtrise de l’ingénierie et développement assisté par l’IA. |
 | `fr:homeCapabilities.delivery.label` | Global delivery | Réalisation mondiale |
-| `fr:homeCapabilities.delivery.title` | Two headquarters, one working day. | Deux sièges, une seule journée de travail. |
+| `fr:homeCapabilities.delivery.title` | Two headquarters, one working day | Deux sièges, une seule journée de travail |
 | `fr:homeCapabilities.delivery.line` | Teams across time zones keep delivery moving with practical overlap. | Des équipes réparties sur plusieurs fuseaux horaires font avancer la réalisation grâce à des plages communes concrètes. |
 | `fr:homeCapabilities.industries.label` | Domain expertise | Expertise métier |
-| `fr:homeCapabilities.industries.title` | Deep in education. Built to adapt. | Experts de l’éducation. Prêts à s’adapter. |
-| `fr:homeCapabilities.industries.line` | Education is where we go deepest, while the same engineering capability supports other industries too. | C’est dans l’éducation que nous allons le plus loin, et les mêmes compétences d’ingénierie servent aussi d’autres secteurs. |
+| `fr:homeCapabilities.industries.title` | Start with education. Built to adapt | Partir de l’éducation. Prêts à s’adapter |
+| `fr:homeCapabilities.industries.line` | Our experience building education technology provides a strong foundation for developing tailored solutions across industries. | Notre expérience de la technologie éducative est une base solide pour développer des solutions sur mesure dans de nombreux secteurs. |
 | `fr:homeCapabilities.industries.main` | Education | Éducation |
 | `fr:homeCapabilities.industries.more[0]` | Healthcare | Santé |
 | `fr:homeCapabilities.industries.more[1]` | Logistics | Logistique |
 | `fr:homeCapabilities.industries.more[2]` | Private Equity | Capital-investissement |
 | `fr:homeCapabilities.industries.moreLabel` | +3 more industries: Healthcare, Logistics and Private Equity | +3 autres secteurs : santé, logistique et capital-investissement |
-| `fr:homeCapabilities.motto.title` | Built with ownership. | Bâti avec responsabilité. |
-| `fr:homeCapabilities.motto.line` | Ownership of our commitments and pride in quality. | Nous assumons nos engagements et sommes fiers de la qualité. |
+| `fr:homeCapabilities.motto.title` | Built with ownership, from the first idea to delivery. | Bâti avec responsabilité, de la première idée à la livraison. |
 | `fr:homeDoors.label` | What we do | Ce que nous faisons |
-| `fr:homeDoors.products.title` | Products for schools | Des produits pour les écoles |
-| `fr:homeDoors.products.line` | Connected apps for parents, students, teachers, leaders and school staff. | Des applications connectées pour les parents, les élèves, les enseignants, la direction et le personnel. |
+| `fr:homeDoors.products.label` | Products for schools | Des produits pour les écoles |
+| `fr:homeDoors.products.title` | Platforms in one ecosystem | Des plateformes, un seul écosystème |
+| `fr:homeDoors.products.line` | An integrated, AI-powered ecosystem that enhances learning, simplifies school administration and keeps students engaged | Un écosystème intégré et propulsé par l’IA qui enrichit l’apprentissage, simplifie la gestion de l’école et maintient l’engagement des élèves |
 | `fr:homeDoors.services.label` | Outsourcing services | Services d’externalisation |
-| `fr:homeDoors.services.title` | Your software delivery team | Votre équipe de réalisation logicielle |
-| `fr:homeDoors.services.line` | Dedicated teams and end-to-end delivery for companies building digital products. | Des équipes dédiées et une réalisation de bout en bout pour les entreprises qui créent des produits numériques. |
+| `fr:homeDoors.services.title` | Custom software for your business | Des logiciels sur mesure pour votre entreprise |
+| `fr:homeDoors.services.line` | Work with our dedicated teams on custom software. We shape each team around your product and work with you from discovery through launch and support. | Travaillez avec nos équipes dédiées sur des logiciels sur mesure. Nous constituons chaque équipe autour de votre produit et vous accompagnons de la découverte au lancement, puis au support. |
 | `fr:homeDoors.services.chips[5]` | +3 more | +3 autres |
-| `fr:homeFaq.title` | Your questions, answered. | Vos questions, nos réponses. |
+| `fr:homeFaq.title` | Before you reach out | Avant de nous contacter |
 | `fr:homeFaq.lede` | Straight answers about our products, our services and how we work. | Des réponses franches sur nos produits, nos services et notre façon de travailler. |
 | `fr:homeFaq.items[0].question` | How can our school try Parent Hub or Staff Hub? | Comment notre école peut-elle essayer Parent Hub ou Staff Hub ? |
-| `fr:homeFaq.items[0].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | Contactez-nous. Nous vous présentons les applications à partir de scénarios tirés de votre propre école. |
+| `fr:homeFaq.items[0].answer` | Leave your work email on the Products page and we walk you through the apps using scenarios from your own school. | Laissez votre e-mail professionnel sur la page Produits et nous vous présenterons les applications à partir de scénarios tirés de votre propre école. |
 | `fr:homeFaq.items[1].question` | How do you work across time zones? | Comment travaillez-vous avec plusieurs fuseaux horaires ? |
 | `fr:homeFaq.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Nos équipes de Plano, Hô Chi Minh-Ville, Hanoï et Da Nang couvrent les fuseaux horaires des États-Unis, de l’Europe et de l’Australie, avec des outils partagés pour des mises à jour en temps réel. |
 | `fr:homeFaq.items[2].question` | What results can we expect? | Quels résultats pouvons-nous attendre ? |
@@ -408,25 +356,26 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:homeFaq.link.label` | See all questions | Voir toutes les questions |
 | `fr:homeHero.title.lines[0]` | Build smarter. | Construire plus intelligemment. |
 | `fr:homeHero.title.lines[1]` | Ship faster. | Livrer plus vite. |
-| `fr:homeHero.sub` | Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development. | Des solutions connectées pour les écoles et les campus, des produits logiciels et des équipes dédiées, par des pionniers du développement assisté par l’IA. |
+| `fr:homeHero.sub` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure, alliant expérience concrète et technologies modernes pour relever les défis des entreprises. |
 | `fr:homeHero.motion.pause` | Pause motion | Mettre l’animation en pause |
 | `fr:homeHero.motion.play` | Play motion | Lire l’animation |
 | `fr:homeHero.cta.label` | Get in touch | Nous contacter |
 | `fr:homeMeta.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| Plateformes scolaires et externalisation logicielle au Vietnam |
+| `fr:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure : plateformes scolaires (Parent Hub, Staff Hub, IoT, AI Tutor) et externalisation logicielle depuis le Vietnam. |
 | `fr:homeOutcomes.title` | What can we help you achieve? | Que pouvons-nous vous aider à accomplir ? |
 | `fr:homeOutcomes.lede` | Pick one service or combine several. We shape the team around your product. | Choisissez un service ou combinez-en plusieurs. Nous constituons l’équipe autour de votre produit. |
 | `fr:homeOutcomes.items[0].title` | Build a new digital product | Créer un nouveau produit numérique |
-| `fr:homeOutcomes.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | Passez de la découverte et de l’UX à l’ingénierie, aux tests et au lancement avec une seule équipe de réalisation. |
+| `fr:homeOutcomes.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | Transformez votre idée en un produit prêt pour le marché, avec une conception de bout en bout, un développement logiciel sur mesure, des tests et un accompagnement au lancement. |
 | `fr:homeOutcomes.items[1].title` | Extend your team | Renforcer votre équipe |
-| `fr:homeOutcomes.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | Ajoutez des talents techniques spécialisés quand votre équipe interne a besoin de plus de capacité ou de compétences précises. |
-| `fr:homeOutcomes.items[2].title` | Modernise an existing platform | Moderniser une plateforme existante |
+| `fr:homeOutcomes.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | Ajoutez des talents techniques spécialisés quand votre équipe interne a besoin de plus de capacité ou de compétences précises. |
+| `fr:homeOutcomes.items[2].title` | Modernize an existing platform | Moderniser une plateforme existante |
 | `fr:homeOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | Améliorez les applications, l’infrastructure, le déploiement dans le cloud et les pratiques d’ingénierie tout en préservant ce qui fonctionne déjà. |
-| `fr:homeOutcomes.items[3].title` | Apply AI where it creates value | Appliquer l’IA là où elle crée de la valeur |
-| `fr:homeOutcomes.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | Utilisez l’IA, l’analytique et l’automatisation pour améliorer les produits, les processus et la prise de décision. |
-| `fr:homeOutcomes.cta.label` | Start a project | Démarrer un projet |
+| `fr:homeOutcomes.items[3].title` | Leverage AI to drive business value | Tirer parti de l’IA pour créer de la valeur |
+| `fr:homeOutcomes.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | Créez des solutions propulsées par l’IA, automatisez vos processus et transformez vos données en informations exploitables pour des décisions plus éclairées. |
+| `fr:homeOutcomes.cta.label` | Let's build together | Démarrer un projet |
 | `fr:homeOutcomes.link.label` | Explore services | Découvrir les services |
-| `fr:homeProcess.title` | How we work. | Notre façon de travailler. |
-| `fr:homeProcess.lede` | Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve. AI runs through every step, and we keep improving how we use it. | Notre processus 4-D (Découverte, Conception, Développement, Déploiement) mène votre idée jusqu’au lancement, et chaque étape se termine par un livrable que vous pouvez voir et valider. L’IA intervient à chaque étape, et nous améliorons sans cesse notre façon de l’utiliser. |
+| `fr:homeProcess.title` | How we work | Notre façon de travailler |
+| `fr:homeProcess.lede` | From idea to launch, our 4-D process brings clarity, collaboration, and measurable progress to every stage. With AI-assisted workflows and clear deliverables, you stay involved from start to finish. | De l’idée au lancement, notre processus 4-D apporte clarté, collaboration et progrès mesurables à chaque étape. Grâce à des méthodes assistées par l’IA et des livrables clairs, vous restez impliqué du début à la fin. |
 | `fr:homeProcess.link.label` | See the full process | Voir tout le processus |
 | `fr:homeStats.label` | Experience you can count on | Une expérience sur laquelle compter |
 | `fr:homeStats.stats[0].caption` | Years of leadership experience in software | Années d’expérience de direction dans le logiciel |
@@ -474,37 +423,24 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Privacy
 
-27 strings.
+14 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
 | `fr:privacy.metaTitle` | Privacy Policy \| XionTech | Politique de confidentialité \| XionTech |
-| `fr:privacy.metaDescription` | [Placeholder] How XionTech uses the personal data you share through our forms. | [Placeholder] Comment XionTech utilise les données personnelles que vous transmettez via nos formulaires. |
+| `fr:privacy.metaDescription` | How XionTech uses the personal data you share through our forms. | Comment XionTech utilise les données personnelles que vous transmettez via nos formulaires. |
 | `fr:privacy.breadcrumbLabel` | Breadcrumb | Fil d’Ariane |
 | `fr:privacy.breadcrumbHome` | Home | Accueil |
-| `fr:privacy.breadcrumbCurrent` | Privacy policy | Politique de confidentialité |
-| `fr:privacy.title` | Privacy policy. | Politique de confidentialité. |
-| `fr:privacy.lede` | [Placeholder] Policy text to be supplied by the legal owner, compliant with Vietnam's Decree 13/2023 (PDPD). | [Placeholder] Texte de la politique à fournir par le responsable juridique, conforme au décret vietnamien 13/2023 (PDPD). |
+| `fr:privacy.breadcrumbCurrent`<br>`fr:privacy.title` | Privacy policy | Politique de confidentialité |
 | `fr:privacy.bodyLabel` | Policy | Politique |
-| `fr:privacy.outlineNote` | [Placeholder] Content outline. The sections below are what the policy must cover, not the real policy. | [Placeholder] Plan du contenu. Les sections ci-dessous indiquent ce que la politique doit couvrir, il ne s’agit pas de la politique réelle. |
-| `fr:privacy.retentionDecided`<br>`fr:privacy.sections[5].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | Les demandes de contact et de démo, les adresses e-mail envoyées, les candidatures et les CV sont conservés sans limite de durée. |
-| `fr:privacy.sections[0].heading` | Who we are and how to reach us | Qui nous sommes et comment nous joindre |
-| `fr:privacy.sections[0].paragraphs[0]` | [Placeholder] The data controller (XionTech legal entity), its address and a contact for privacy requests. | [Placeholder] Le responsable du traitement (entité juridique XionTech), son adresse et un contact pour les demandes relatives à la vie privée. |
-| `fr:privacy.sections[1].heading` | What we collect | Ce que nous collectons |
-| `fr:privacy.sections[1].paragraphs[0]` | [Placeholder] Email, name, phone number, organisation, role and anything you send through our forms, including a CV if you apply for a job. | [Placeholder] E-mail, nom, numéro de téléphone, organisation, fonction et tout ce que vous envoyez via nos formulaires, y compris un CV si vous postulez à un emploi. |
-| `fr:privacy.sections[1].paragraphs[1]` | [Placeholder] The email you type in the email capture band is sent to our company inbox like a form message. Your browser also keeps it in session storage only until the demo request page reads it. | [Placeholder] L’e-mail que vous saisissez dans le bandeau de collecte d’e-mail est envoyé à la boîte de réception de l’entreprise, comme un message de formulaire. Votre navigateur le conserve aussi dans le stockage de session, uniquement jusqu’à ce que la page de demande de démo le lise. |
-| `fr:privacy.sections[2].heading` | How we use it | Comment nous les utilisons |
-| `fr:privacy.sections[2].paragraphs[0]` | [Placeholder] Only to answer your request, arrange a demo, or consider your job application and CV. | [Placeholder] Uniquement pour répondre à votre demande, organiser une démo, ou étudier votre candidature et votre CV. |
-| `fr:privacy.sections[3].heading` | Who we share it with | Avec qui nous les partageons |
-| `fr:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | [Placeholder] Les prestataires qui traitent des données pour notre compte : Gmail (envoie les messages des formulaires à la boîte de réception de l’entreprise), Upstash (compteurs de limitation de débit créés à partir de valeurs hachées), Vercel (hébergement du site web et stockage privé des CV), Google Fonts (polices des pages en japonais, coréen et chinois). |
-| `fr:privacy.sections[4].heading` | Transfers outside Vietnam | Transferts hors du Vietnam |
-| `fr:privacy.sections[4].paragraphs[0]` | [Placeholder] When data is transferred abroad (for example to our Plano office) and the safeguards required by Decree 13/2023. | [Placeholder] Quand des données sont transférées à l’étranger (par exemple vers notre bureau de Plano) et les garanties exigées par le décret 13/2023. |
-| `fr:privacy.sections[5].heading` | How long we keep it | Durée de conservation |
-| `fr:privacy.sections[5].paragraphs[1]` | [Placeholder] The final retention wording, and whether a time limit will be added later. | [Placeholder] La formulation définitive de la conservation, et si une limite de durée sera ajoutée plus tard. |
-| `fr:privacy.sections[6].heading` | Cookies and analytics | Cookies et mesure d’audience |
-| `fr:privacy.sections[6].paragraphs[0]` | [Placeholder] Temporary text. The final text will list the essential first-party language cookie (what it stores and why) and state that no non-essential cookies or analytics are set without your consent. | [Placeholder] Texte provisoire. Le texte définitif listera le cookie de langue propriétaire essentiel (ce qu’il stocke et pourquoi) et précisera qu’aucun cookie non essentiel ni outil de mesure d’audience n’est déposé sans votre consentement. |
-| `fr:privacy.sections[7].heading` | Your rights | Vos droits |
-| `fr:privacy.sections[7].paragraphs[0]` | [Placeholder] Access, correct or delete your data, or withdraw consent; how to ask for deletion is not decided yet. | [Placeholder] Accéder à vos données, les corriger ou les supprimer, ou retirer votre consentement ; la manière de demander la suppression n’est pas encore décidée. |
+| `fr:privacy.retentionDecided`<br>`fr:privacy.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | Les demandes de contact et de démo, les adresses e-mail envoyées, les candidatures et les CV sont conservés sans limite de durée. |
+| `fr:privacy.sections[0].heading` | What we collect | Ce que nous collectons |
+| `fr:privacy.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | E-mail, nom, numéro de téléphone, organisation, fonction et tout ce que vous envoyez via nos formulaires, y compris un CV si vous postulez à un emploi. |
+| `fr:privacy.sections[1].heading` | How we use it | Comment nous les utilisons |
+| `fr:privacy.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | Uniquement pour répondre à votre demande ou étudier votre candidature et votre CV. |
+| `fr:privacy.sections[2].heading` | Who we share it with | Avec qui nous les partageons |
+| `fr:privacy.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | Les prestataires qui traitent des données pour notre compte : Gmail (envoie les messages des formulaires à la boîte de réception de l’entreprise), Upstash (compteurs de limitation de débit créés à partir de valeurs hachées), Vercel (hébergement du site web et stockage privé des CV), Google Fonts (polices des pages en japonais, coréen et chinois). |
+| `fr:privacy.sections[3].heading` | How long we keep it | Durée de conservation |
 
 ## Process (Home and Services)
 
@@ -515,78 +451,89 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:processFlow.label` | 4-D process | Processus 4-D |
 | `fr:processFlow.receiveLabel` | You receive | Vous recevez |
 | `fr:processFlow.start.title` | Your request | Votre demande |
-| `fr:processFlow.start.line` | An idea, a brief or a requirement. | Une idée, un brief ou un besoin. |
+| `fr:processFlow.start.line` | An idea, a brief or a business need | Une idée, un brief ou un besoin métier |
 | `fr:processFlow.end.title` | Launch | Lancement |
-| `fr:processFlow.end.line` | And we keep growing it together. | Et nous continuons à le faire grandir ensemble. |
+| `fr:processFlow.end.line` | Growing the product together, release after release | Faire grandir le produit ensemble, version après version |
 | `fr:processFlow.steps[0].title` | Discovery | Découverte |
-| `fr:processFlow.steps[0].line` | Workshops to understand your goals, users, risks and scope. | Des ateliers pour comprendre vos objectifs, vos utilisateurs, les risques et le périmètre. |
-| `fr:processFlow.steps[0].receive` | A clear scope, estimate and delivery plan. | Un périmètre clair, une estimation et un plan de réalisation. |
+| `fr:processFlow.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | Nos ateliers révèlent vos objectifs, vos utilisateurs, les risques et le périmètre, et transforment l’idée en exigences claires |
+| `fr:processFlow.steps[0].receive` | Clear requirements, an estimate and a delivery plan | Des exigences claires, une estimation et un plan de réalisation |
 | `fr:processFlow.steps[1].title` | Design | Conception |
-| `fr:processFlow.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | Parcours utilisateurs, interfaces et architecture validés avant d’écrire le code. |
-| `fr:processFlow.steps[1].receive` | A clickable prototype and technical design. | Un prototype cliquable et une conception technique. |
+| `fr:processFlow.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | Ces exigences deviennent des parcours utilisateurs et un prototype cliquable, pour voir et affiner le produit avant de le construire |
+| `fr:processFlow.steps[1].receive` | An approved prototype and technical design | Un prototype validé et une conception technique |
 | `fr:processFlow.steps[2].title` | Development | Développement |
-| `fr:processFlow.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | Des sprints agiles avec des démos régulières. Les tests et l’assurance qualité (QA) ont lieu dans chaque sprint, pas à la fin. |
-| `fr:processFlow.steps[2].receive` | Tested, working software every sprint. | Un logiciel testé et fonctionnel à chaque sprint. |
+| `fr:processFlow.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | Le prototype validé guide la construction en sprints agiles, avec des tests à chaque sprint |
+| `fr:processFlow.steps[2].receive` | Tested, working software at every demo | Un logiciel testé et fonctionnel à chaque démo |
 | `fr:processFlow.steps[3].title` | Deployment | Déploiement |
-| `fr:processFlow.steps[3].line` | A safe release, monitoring and improvement after launch. | Une mise en production sûre, une surveillance et des améliorations après le lancement. |
-| `fr:processFlow.steps[3].receive` | A live release with ongoing support. | Une version en production avec un support continu. |
+| `fr:processFlow.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | Le produit fini est mis en production en toute sécurité, puis suivi et amélioré grâce à l’usage réel |
+| `fr:processFlow.steps[3].receive` | A live product with ongoing support | Un produit en production avec un support continu |
 
 ## Services
 
-46 strings.
+57 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:servicesMeta.title` | Software Outsourcing Vietnam \| Product Engineering, AI, Low-code & Cloud \| XionTech | Externalisation logicielle au Vietnam \| Product Engineering, AI, Low-code & Cloud \| XionTech |
-| `fr:servicesMeta.description` | Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones. | Des équipes dédiées et une réalisation logicielle de bout en bout depuis Hô Chi Minh-Ville : ingénierie produit, IA, low-code et cloud, sur les fuseaux horaires des États-Unis, de l’Europe et de l’Australie. |
+| `fr:servicesMeta.title` | Software Outsourcing Vietnam \| XionTech | Externalisation logicielle au Vietnam \| XionTech |
+| `fr:servicesMeta.description` | Software outsourcing from Ho Chi Minh City: product engineering, AI-driven analytics, co-creation, staffing, custom apps, low-code, AI solutions and cloud. | Externalisation logicielle depuis Hô Chi Minh-Ville : ingénierie produit, analytique pilotée par l’IA, co-création, mise à disposition de talents, applications sur mesure, low-code, solutions d’IA et cloud. |
 | `fr:servicesOutcomes.title` | What can we help you achieve? | Que pouvons-nous vous aider à accomplir ? |
 | `fr:servicesOutcomes.items[0].title` | Build a new digital product | Créer un nouveau produit numérique |
-| `fr:servicesOutcomes.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | Passez de la découverte et de l’UX à l’ingénierie, aux tests et au lancement avec une seule équipe de réalisation. |
+| `fr:servicesOutcomes.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | Transformez votre idée en un produit prêt pour le marché, avec une conception de bout en bout, un développement logiciel sur mesure, des tests et un accompagnement au lancement. |
 | `fr:servicesOutcomes.items[1].title` | Extend your team | Renforcer votre équipe |
-| `fr:servicesOutcomes.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | Ajoutez des talents techniques spécialisés quand votre équipe interne a besoin de plus de capacité ou de compétences précises. |
-| `fr:servicesOutcomes.items[2].title` | Modernise an existing platform | Moderniser une plateforme existante |
+| `fr:servicesOutcomes.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | Ajoutez des talents techniques spécialisés quand votre équipe interne a besoin de plus de capacité ou de compétences précises. |
+| `fr:servicesOutcomes.items[2].title` | Modernize an existing platform | Moderniser une plateforme existante |
 | `fr:servicesOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | Améliorez les applications, l’infrastructure, le déploiement dans le cloud et les pratiques d’ingénierie tout en préservant ce qui fonctionne déjà. |
-| `fr:servicesOutcomes.items[3].title` | Apply AI where it creates value | Appliquer l’IA là où elle crée de la valeur |
-| `fr:servicesOutcomes.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | Utilisez l’IA, l’analytique et l’automatisation pour améliorer les produits, les processus et la prise de décision. |
-| `fr:servicesPage.title.lead` | Software teams that  | Des équipes logicielles qui incarnent «  |
-| `fr:servicesPage.title.highlight` | get IT done | Get IT done |
-| `fr:servicesPage.title.tail` | . |  ». |
-| `fr:servicesPage.lede` | Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver. | Ingénierie produit, IA, low-code et cloud depuis Hô Chi Minh-Ville, sur les fuseaux horaires des États-Unis, de l’Europe et de l’Australie. Nous travaillons plus intelligemment grâce à l’IA et innovons sans cesse dans notre façon de livrer. |
-| `fr:servicesPage.primaryCta.label` | Start a project | Démarrer un projet |
-| `fr:servicesProcess.title` | Our 4-D process: from your request to launch. | Notre processus 4-D : de votre demande au lancement. |
+| `fr:servicesOutcomes.items[3].title` | Leverage AI to drive business value | Tirer parti de l’IA pour créer de la valeur |
+| `fr:servicesOutcomes.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | Créez des solutions propulsées par l’IA, automatisez vos processus et transformez vos données en informations exploitables pour des décisions plus éclairées. |
+| `fr:servicesPage.title.lead` | You bring your  | Vous apportez votre  |
+| `fr:servicesPage.title.words[1]` | challenges | défi |
+| `fr:servicesPage.title.words[2]` | ideas | idée |
+| `fr:servicesPage.title.words[3]` | ambition | projet |
+| `fr:servicesPage.title.words[4]` | goals | objectif |
+| `fr:servicesPage.title.tail[0]` | We get  | Notre réponse : «  |
+| `fr:servicesPage.title.tail[1]` | IT | Get IT done |
+| `fr:servicesPage.title.tail[2]` |  done |  » |
+| `fr:servicesPage.title.label` | You bring your vision. We get IT done | Vous apportez votre vision. Notre réponse : « Get IT done » |
+| `fr:servicesPage.lede` | From digital products to AI integration and technology modernization, we bring the expertise to solve your challenges, accelerate innovation, and drive your business forward. | Des produits numériques à l’intégration de l’IA et à la modernisation technologique, nous apportons l’expertise pour relever vos défis, accélérer l’innovation et faire avancer votre entreprise. |
+| `fr:servicesPage.primaryCta.label` | Let's build together | Construisons ensemble |
+| `fr:servicesPage.secondaryCta.label` | Explore our services | Découvrir nos services |
+| `fr:servicesPage.stack.label` | Illustration: requirements, wireframe and technical code layers of a software build | Illustration : les couches exigences, maquette et code technique d’un logiciel |
+| `fr:servicesPage.stack.requirements` | REQUIREMENTS | EXIGENCES |
+| `fr:servicesPage.stack.wireframe` | WIREFRAME | MAQUETTE |
+| `fr:servicesPage.stack.code` | TECHNICAL CODE | CODE TECHNIQUE |
+| `fr:servicesProcess.title` | Our 4-D process: from your request to launch | Notre processus 4-D : de votre demande au lancement |
 | `fr:servicesProcess.lede` | Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it. | Chaque étape se termine par un livrable que vous pouvez voir, tester et valider. L’IA intervient à chaque étape, et nous améliorons sans cesse notre façon de l’utiliser. |
 | `fr:servicesProcess.flow.label` | 4-D process | Processus 4-D |
 | `fr:servicesProcess.flow.receiveLabel` | You receive | Vous recevez |
 | `fr:servicesProcess.flow.start.title` | Your request | Votre demande |
-| `fr:servicesProcess.flow.start.line` | An idea, a brief or a requirement. | Une idée, un brief ou un besoin. |
+| `fr:servicesProcess.flow.start.line` | An idea, a brief or a business need | Une idée, un brief ou un besoin métier |
 | `fr:servicesProcess.flow.end.title` | Launch | Lancement |
-| `fr:servicesProcess.flow.end.line` | And we keep growing it together. | Et nous continuons à le faire grandir ensemble. |
+| `fr:servicesProcess.flow.end.line` | Growing the product together, release after release | Faire grandir le produit ensemble, version après version |
 | `fr:servicesProcess.flow.steps[0].title` | Discovery | Découverte |
-| `fr:servicesProcess.flow.steps[0].line` | Workshops to understand your goals, users, risks and scope. | Des ateliers pour comprendre vos objectifs, vos utilisateurs, les risques et le périmètre. |
-| `fr:servicesProcess.flow.steps[0].receive` | A clear scope, estimate and delivery plan. | Un périmètre clair, une estimation et un plan de réalisation. |
+| `fr:servicesProcess.flow.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | Nos ateliers révèlent vos objectifs, vos utilisateurs, les risques et le périmètre, et transforment l’idée en exigences claires |
+| `fr:servicesProcess.flow.steps[0].receive` | Clear requirements, an estimate and a delivery plan | Des exigences claires, une estimation et un plan de réalisation |
 | `fr:servicesProcess.flow.steps[1].title` | Design | Conception |
-| `fr:servicesProcess.flow.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | Parcours utilisateurs, interfaces et architecture validés avant d’écrire le code. |
-| `fr:servicesProcess.flow.steps[1].receive` | A clickable prototype and technical design. | Un prototype cliquable et une conception technique. |
+| `fr:servicesProcess.flow.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | Ces exigences deviennent des parcours utilisateurs et un prototype cliquable, pour voir et affiner le produit avant de le construire |
+| `fr:servicesProcess.flow.steps[1].receive` | An approved prototype and technical design | Un prototype validé et une conception technique |
 | `fr:servicesProcess.flow.steps[2].title` | Development | Développement |
-| `fr:servicesProcess.flow.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | Des sprints agiles avec des démos régulières. Les tests et l’assurance qualité (QA) ont lieu dans chaque sprint, pas à la fin. |
-| `fr:servicesProcess.flow.steps[2].receive` | Tested, working software every sprint. | Un logiciel testé et fonctionnel à chaque sprint. |
+| `fr:servicesProcess.flow.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | Le prototype validé guide la construction en sprints agiles, avec des tests à chaque sprint |
+| `fr:servicesProcess.flow.steps[2].receive` | Tested, working software at every demo | Un logiciel testé et fonctionnel à chaque démo |
 | `fr:servicesProcess.flow.steps[3].title` | Deployment | Déploiement |
-| `fr:servicesProcess.flow.steps[3].line` | A safe release, monitoring and improvement after launch. | Une mise en production sûre, une surveillance et des améliorations après le lancement. |
-| `fr:servicesProcess.flow.steps[3].receive` | A live release with ongoing support. | Une version en production avec un support continu. |
-| `fr:servicesSection.title` | Eight services, one team. | Huit services, une seule équipe. |
+| `fr:servicesProcess.flow.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | Le produit fini est mis en production en toute sécurité, puis suivi et amélioré grâce à l’usage réel |
+| `fr:servicesProcess.flow.steps[3].receive` | A live product with ongoing support | Un produit en production avec un support continu |
+| `fr:servicesSection.title` | Eight services, one team | Huit services, une seule équipe |
 | `fr:servicesSection.lede` | Pick one service or combine several. We shape the team around your product. | Choisissez un service ou combinez-en plusieurs. Nous constituons l’équipe autour de votre produit. |
-| `fr:servicesSection.services[0].description` | Transform innovative ideas into market-ready digital products with end-to-end engineering expertise. | Transformez des idées innovantes en produits numériques prêts pour le marché grâce à une expertise d’ingénierie de bout en bout. |
-| `fr:servicesSection.services[1].description` | Transform raw data into actionable intelligence using AI and advanced visualisation. | Transformez des données brutes en informations exploitables grâce à l’IA et à la visualisation avancée. |
-| `fr:servicesSection.services[2].description` | Accelerate innovation by combining your domain knowledge with our technical expertise. | Accélérez l’innovation en associant votre connaissance métier à notre expertise technique. |
-| `fr:servicesSection.services[3].description` | Access specialised technology talent when you need it, with flexible options. | Accédez à des talents techniques spécialisés quand vous en avez besoin, avec des formules flexibles. |
-| `fr:servicesSection.services[4].description` | Develop custom solutions aligned with your unique requirements. | Développez des solutions sur mesure, alignées sur vos besoins spécifiques. |
-| `fr:servicesSection.services[5].description` | Ship tools and automations faster on leading low-code platforms. | Livrez plus vite des outils et des automatisations sur les principales plateformes low-code. |
-| `fr:servicesSection.services[6].description` | Harness artificial intelligence to transform your operations. | Exploitez l’intelligence artificielle pour transformer vos opérations. |
-| `fr:servicesSection.services[7].description` | Expert solutions on Azure, AWS and GCP. | Des solutions expertes sur Azure, AWS et GCP. |
+| `fr:servicesSection.services[0].description` | Turn ideas into market-ready digital products, from concept to launch. | Transformez vos idées en produits numériques prêts pour le marché, du concept au lancement. |
+| `fr:servicesSection.services[1].description` | Turn complex data into actionable insights with AI and intuitive dashboards. | Transformez des données complexes en informations exploitables grâce à l’IA et à des tableaux de bord intuitifs. |
+| `fr:servicesSection.services[2].description` | Bring your industry knowledge and our product expertise together to create solutions that matter. | Associez votre connaissance du secteur à notre expertise produit pour créer des solutions qui comptent. |
+| `fr:servicesSection.services[3].description` | Get the right technology talent to support your projects and scale your team. | Trouvez les bons talents techniques pour soutenir vos projets et faire grandir votre équipe. |
+| `fr:servicesSection.services[4].description` | Build tailored applications that fit your business needs and workflows. | Créez des applications sur mesure adaptées à vos besoins et à vos processus. |
+| `fr:servicesSection.services[5].description` | Build applications and automate workflows faster with flexible low-code platforms. | Créez des applications et automatisez vos processus plus vite grâce à des plateformes low-code flexibles. |
+| `fr:servicesSection.services[6].description` | Put AI to work with intelligent solutions that streamline processes and improve productivity. | Mettez l’IA au travail avec des solutions intelligentes qui simplifient les processus et améliorent la productivité. |
+| `fr:servicesSection.services[7].description` | Build, scale, and manage cloud solutions that support your growing business. | Créez, faites évoluer et gérez des solutions cloud qui accompagnent la croissance de votre entreprise. |
 
 ## Site shell: header, footer, language menu, 404
 
-26 strings.
+21 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
@@ -598,13 +545,10 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:shell.nav.skipLink` | Skip to content | Aller au contenu |
 | `fr:shell.nav.mainNav` | Main | Principale |
 | `fr:shell.nav.homeLink` | XionTech home | Accueil XionTech |
-| `fr:shell.nav.contact`<br>`fr:shell.nav.contactShort` | Get in touch | Contact |
+| `fr:shell.nav.contact`<br>`fr:shell.nav.contactShort` | Let's talk | Contact |
 | `fr:shell.nav.cityHcmc` | Ho Chi Minh City | Hô Chi Minh-Ville |
 | `fr:shell.language.label` | Language | Langue |
-| `fr:shell.footer.blurb` | Education technology products and software delivery services for schools and businesses. | Produits de technologie éducative et services de réalisation logicielle pour les écoles et les entreprises. |
-| `fr:shell.footer.forSchools` | For schools | Pour les écoles |
-| `fr:shell.footer.forStudents` | For students | Pour les élèves |
-| `fr:shell.footer.forParents` | For parents | Pour les parents |
+| `fr:shell.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure, alliant expérience concrète et technologies modernes pour relever les défis des entreprises. |
 | `fr:shell.footer.howWeWork` | How we work | Notre façon de travailler |
 | `fr:shell.footer.allServices` | All services | Tous les services |
 | `fr:shell.footer.company` | Company | Entreprise |
@@ -612,10 +556,8 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:shell.footer.offices` | Offices | Bureaux |
 | `fr:shell.footer.privacy` | Privacy policy | Politique de confidentialité |
 | `fr:shell.notFound.metaTitle` | Page not found \| XionTech | Page introuvable \| XionTech |
-| `fr:shell.notFound.title` | You’ve wandered off the trail. | Vous vous êtes écarté du sentier. |
-| `fr:shell.notFound.lede` | The page you were looking for isn’t here. Follow the trail back home, or pick a path below. | La page que vous cherchez n’est pas ici. Suivez le sentier pour revenir à l’accueil, ou choisissez un chemin ci-dessous. |
-| `fr:shell.notFound.primary` | Go to Home | Retour à l’accueil |
-| `fr:shell.notFound.here` | You are here | Vous êtes ici |
+| `fr:shell.notFound.title` | Page not found | Page introuvable |
+| `fr:shell.notFound.primary` | Back to Home | Retour à l’accueil |
 
 ## Site title and description
 

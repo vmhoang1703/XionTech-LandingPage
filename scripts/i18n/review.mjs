@@ -121,6 +121,7 @@ const GLOBAL_ALLOWED = [
   "newXion",
   // Place names.
   "Plano",
+  "Plano, Texas",
   // App, product and service names and badges.
   "Parent Hub",
   "Staff Hub",
@@ -132,9 +133,9 @@ const GLOBAL_ALLOWED = [
   "Product Engineering",
   "AI-Driven Analytics",
   "Product Co-Creation",
-  "Staffing Service",
+  "Staffing Services",
   "Custom App Development",
-  "Low-code Solutions",
+  "Low-Code Solutions",
   "AI-Powered Solutions",
   "Cloud Computing",
   "Staffing",
@@ -168,9 +169,11 @@ const GLOBAL_ALLOWED = [
   "7950 Legacy Drive, Suite 400",
   "Plano, Texas 75024, USA",
   "Floor 15, B1 Building",
+  "Floor 15, B1 Building, 279 Nguyen Tri Phuong Street",
   "279 Nguyen Tri Phuong Street",
   "Dien Hong Ward, Ho Chi Minh City, Vietnam",
   "vinni.tran@newxion.com",
+  "vinni.tran@xiontechs.com",
   "WhatsApp +1 469 439 9345",
   "name@school.edu.vn",
   "name@company.com",
@@ -178,9 +181,19 @@ const GLOBAL_ALLOWED = [
 
 /** Words a locale writes like the English (spec-vi-page-content decisions 2 and 4 for vi). */
 const LOCALE_ALLOWED = {
-  vi: ["Logistics", "Menu", "Email", "CV"],
+  vi: ["Logistics", "Menu", "Email", "CV", "WIREFRAME"],
   ja: ["CV"],
-  fr: ["Service", "Services", "Menu", "Contact", "Parents", "Campus", "CV"],
+  fr: [
+    "Service",
+    "Services",
+    "Menu",
+    "Contact",
+    "Parents",
+    "Campus",
+    "CV",
+    "vision",
+    "vision.",
+  ],
   ko: [],
   zh: [],
 };
@@ -195,6 +208,7 @@ export const DATA_KEYS = new Set([
   "app",
   "tone",
   "slot",
+  "drawing",
 ]);
 
 /** Maps whose values are all data: journeyBoard.laneOf maps a step to a lane id. */

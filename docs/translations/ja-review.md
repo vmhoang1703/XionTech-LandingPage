@@ -13,92 +13,77 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ja.ts` and open a pull request. `Where` is `ja:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 514 strings.
+**Total:** 459 strings.
 
 ## About
 
-51 strings.
+40 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:aboutCapture.heading` | See our apps in action. | アプリの実際の動きをご覧ください。 |
-| `ja:aboutCapture.lede` | Leave your work email and we'll arrange a walkthrough of Parent Hub and Staff Hub. | 業務用メールアドレスをご入力いただければ、Parent Hub と Staff Hub のご案内を手配します。 |
-| `ja:aboutFaq.title` | Your question, we answer | ご質問にお答えします |
-| `ja:aboutFaq.lede` | Straight answers about our products, our services and how we work. | 製品、サービス、仕事の進め方について、率直にお答えします。 |
+| `ja:aboutCta.title` | Let’s build what’s next | 次のものを一緒につくりましょう |
+| `ja:aboutCta.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | 製品のアイデア、技術的な課題、あるいは拡大したいエンジニアリングチームはありますか？ 目標を意味のあるソリューションに変える方法を一緒に考えましょう。 |
+| `ja:aboutCta.primary.label` | Let’s talk about your project | プロジェクトについて相談する |
+| `ja:aboutCta.secondary.label`<br>`ja:aboutHero.links[0].label` | Explore our products | 製品を見る |
+| `ja:aboutFaq.title` | Curious about XionTech? | XionTech についてもっと知りたいですか？ |
+| `ja:aboutFaq.lede` | A few things you might want to know before working with us. | 一緒に仕事を始める前に知っておきたいことをまとめました。 |
 | `ja:aboutFaq.items[0].question` | What does XionTech do? | XionTech は何をしている会社ですか？ |
-| `ja:aboutFaq.items[0].answer` | We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing. | 学校向けの自社プラットフォーム（Parent Hub、Staff Hub、IoT Device Management）を開発するとともに、他社向けのソフトウェア開発を行っています。プロダクトエンジニアリング、AI を活用したアナリティクス、プロダクト共創、人材提供です。 |
-| `ja:aboutFaq.items[1].question` | Which industries do you work with? | どの業界と仕事をしていますか？ |
-| `ja:aboutFaq.items[1].answer` | EdTech is our core. We also serve Healthcare, Logistics and Private Equity. | 中核は EdTech です。ヘルスケア、物流、プライベートエクイティの分野にもサービスを提供しています。 |
-| `ja:aboutFaq.items[2].question` | How can our school try Parent Hub or Staff Hub? | Parent Hub や Staff Hub を学校で試すにはどうすればよいですか？ |
-| `ja:aboutFaq.items[2].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | お気軽にお問い合わせください。貴校の実際の場面に沿ってアプリをご案内します。 |
-| `ja:aboutFaq.items[3].question` | How do you work across time zones? | タイムゾーンをまたいでどのように仕事をしていますか？ |
+| `ja:aboutFaq.items[0].answer` | We create AI-powered products and deliver custom software, product engineering, dedicated teams, and technology solutions for businesses. | AI を活用した製品を開発し、企業向けにカスタムソフトウェア、プロダクトエンジニアリング、専任チーム、テクノロジーソリューションを提供しています。 |
+| `ja:aboutFaq.items[1].question` | Which industries do you work with? | どのような業界と仕事をしていますか？ |
+| `ja:aboutFaq.items[1].answer` | Education is our starting point. We bring adaptable engineering capabilities to projects in other industries, based on each client’s needs. | 出発点は教育です。お客様それぞれのニーズに応じて、柔軟なエンジニアリング力を他の業界のプロジェクトにも提供しています。 |
+| `ja:aboutFaq.items[2].question` | How does a new project begin? | 新しいプロジェクトはどのように始まりますか？ |
+| `ja:aboutFaq.items[2].answer` | We start by understanding your goals and requirements, then shape the approach before progressing through design, development, testing, and deployment. | まずお客様の目標と要件を理解し、進め方を固めたうえで、設計、開発、テスト、デプロイへと進みます。 |
+| `ja:aboutFaq.items[3].question` | How do your teams work across time zones? | チームは複数のタイムゾーンでどのように働いていますか？ |
 | `ja:aboutFaq.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | プレイノ、ホーチミン市、ハノイ、ダナンのチームが米国、ヨーロッパ、オーストラリアのタイムゾーンをカバーし、共有ツールでリアルタイムに情報を更新しています。 |
-| `ja:aboutFaq.items[4].question` | When do you shape the solution to our needs? | ソリューションを私たちのニーズに合わせるのはいつですか？ |
-| `ja:aboutFaq.items[4].answer` | From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins. | 最初からです。4 つのステップの第一歩であるディスカバリーで、設計を始める前に目標、ユーザー、スコープを定めます。 |
-| `ja:aboutFaq.items[5].question` | What results can we expect? | どのような成果が期待できますか？ |
-| `ja:aboutFaq.items[5].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | 経験豊富なベトナム人エンジニアによるコスト効率の高い開発、期日どおりのリリース、そして貴社の成長を支える測定可能な成果です。 |
-| `ja:aboutFaq.items[6].question` | How do you keep our data secure? | データの安全はどのように守っていますか？ |
-| `ja:aboutFaq.items[6].answer` | [Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning. | [Placeholder] 誠実さ、透明性、明確な倫理基準のもとで業務を行い、セキュリティの自動化と継続的なスキャンでそれを支えています。 |
-| `ja:aboutFaq.items[7].question` | How do we give feedback during a project? | プロジェクト中にどのようにフィードバックを伝えればよいですか？ |
-| `ja:aboutFaq.items[7].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | 専用のチャネル、頻繁な確認の場、アジャイルなスプリントを通じて、お客様のご意見が最後までプロダクトに反映されます。 |
-| `ja:aboutFaq.items[8].question` | How do you measure and show value? | 価値をどのように測定し、示していますか？ |
-| `ja:aboutFaq.items[8].answer` | We track speed, quality, product impact and team autonomy, and share them openly with you. | スピード、品質、プロダクトへの影響、チームの自律性を追跡し、お客様とオープンに共有します。 |
-| `ja:aboutFaq.ask.label` | Still have a question? Ask us directly | まだ疑問がありますか？直接お尋ねください |
-| `ja:aboutHero.title.lead` | We’re XionTech, | 私たちは XionTech。 |
-| `ja:aboutHero.title.middle` | technology built with  |  |
+| `ja:aboutFaq.items[4].question` | How do you maintain delivery quality? | 開発の品質をどのように保っていますか？ |
+| `ja:aboutFaq.items[4].answer` | Engineers review work and combine testing and quality assurance with AI-assisted development, guided by agreed project standards. | エンジニアが成果物をレビューし、合意したプロジェクト基準に沿って、テストと品質保証を AI 支援開発と組み合わせています。 |
+| `ja:aboutHero.title.lead` | We’re XionTech. | 私たちは XionTech。 |
+| `ja:aboutHero.title.middle` | Technology built with  |  |
 | `ja:aboutHero.title.accent` | ownership | オーナーシップ |
-| `ja:aboutHero.title.tail` | . | でつくるテクノロジー。 |
-| `ja:aboutHero.text` | We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world. | 人、アイデア、テクノロジーを結びつけ、優れた IT システムを構築し、すべての人にとってより明るい未来を形づくります。ホーチミン市とプレイノを拠点に、学校向けの自社プラットフォームを開発し、世界中のお客様にデジタルプロダクトをお届けしています。 |
-| `ja:aboutHero.links[0].label` | Explore our products | 製品を見る |
+| `ja:aboutHero.title.tail` |  | でつくるテクノロジー |
+| `ja:aboutHero.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | 人、アイデア、テクノロジーを結びつけ、意味のあるデジタルソリューションをつくります。ソフトウェア製品の開発から AI を活用したイノベーションの探求まで、エンジニアリングの専門性、経験豊富なリーダーシップ、そして強い当事者意識を組み合わせ、企業の前進を支えます。 |
 | `ja:aboutHero.links[1].label` | Explore our services | サービスを見る |
 | `ja:aboutMeta.title` | About XionTech \| Get IT Done | XionTech について \| Get IT Done |
-| `ja:aboutMeta.description` | XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia. | XionTech は教育テクノロジー企業であり、ソフトウェアパートナーです。プレイノ（米国）とホーチミン市（ベトナム）に本社を置き、ハノイとダナンにもチームを持ち、米国、ヨーロッパ、オーストラリアのお客様にサービスを提供しています。 |
-| `ja:aboutOffices.title` | Two headquarters, four locations. | 2 つの本社、4 つの拠点。 |
-| `ja:aboutOffices.more` | Also in Ha Noi and Da Nang. | ハノイとダナンにも拠点があります。 |
-| `ja:aboutOffices.offices[0].name` | Plano, Texas, USA | 米国テキサス州プレイノ |
-| `ja:aboutOffices.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 （新しいタブで開きます） |
-| `ja:aboutOffices.offices[0].zoneLabel` | US Central | 米国中部時間 |
-| `ja:aboutOffices.offices[0].tag` | US Delivery Center | 米国デリバリーセンター |
-| `ja:aboutOffices.offices[1].name` | Ho Chi Minh City, Vietnam | ベトナム ホーチミン市 |
-| `ja:aboutOffices.offices[1].tag` | Vietnam Delivery Center | ベトナム デリバリーセンター |
+| `ja:aboutMeta.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech は米国とベトナムにチームを持つエンジニアリングパートナーです。ソフトウェア製品をつくり、AI を活用したイノベーションを探求し、お客様とともに責任を持って開発を進めます。 |
+| `ja:aboutOffices.title` | Two delivery centers. One connected team | 2 つのデリバリーセンター、ひとつにつながるチーム |
+| `ja:aboutOffices.lede` | From Plano to Ho Chi Minh City, our teams work across time zones to support clients and keep projects moving. | プレイノからホーチミン市まで、チームは複数のタイムゾーンをまたいでお客様を支え、プロジェクトを前に進めます。 |
+| `ja:aboutOffices.timeLabel` | Local time | 現地時刻 |
+| `ja:aboutOffices.mapLabel` | Open {city} in Google Maps (opens in a new tab) | Google マップで{city}を開く（新しいタブで開きます） |
+| `ja:aboutOffices.locations[0].eyebrow` | US Delivery Center | 米国デリバリーセンター |
+| `ja:aboutOffices.locations[0].city` | Plano, Texas | テキサス州プレイノ |
+| `ja:aboutOffices.locations[1].eyebrow` | Vietnam Delivery Center | ベトナム デリバリーセンター |
+| `ja:aboutOffices.locations[1].city` | Ho Chi Minh City | ホーチミン市 |
 | `ja:aboutStory.title.lead` | Inspired by a mountain. | 山に着想を得て。 |
-| `ja:aboutStory.title.middle` | United by  |  |
+| `ja:aboutStory.title.middle` | Driven by  |  |
 | `ja:aboutStory.title.highlight` | purpose | 目的 |
-| `ja:aboutStory.title.tail` | . | で結ばれて。 |
-| `ja:aboutStory.chapters[0].title` | The inspiration | 着想 |
-| `ja:aboutStory.chapters[0].text` | Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future. | 私たちの名前は、ある山に着想を得ています。人々が見上げ、集い、より明るい未来へと共に登っていく場所です。 |
-| `ja:aboutStory.chapters[1].title` | The purpose | 目的 |
-| `ja:aboutStory.chapters[1].text` | [Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all. | [Placeholder] このビジョンに触発された先駆者たちが、米国で newXion を設立しました。揺るぎないコアバリューに導かれ、彼らは山の精神に忠実なコミュニティを築こうとしました。人々が団結し、最先端のテクノロジーを活かし、優れた IT システムを構築して人類の発展とすべての人のより明るい未来に貢献する場所です。 |
-| `ja:aboutStory.closing.line` | Our inspiration is a mountain. Our purpose is people. | 私たちの着想は山。私たちの目的は人。 |
-| `ja:aboutStory.closing.tags` | Vision · Community · Technology | ビジョン · コミュニティ · テクノロジー |
-| `ja:aboutStory.cue` | Scroll | スクロール |
+| `ja:aboutStory.title.tail` |  | に突き動かされて |
+| `ja:aboutStory.paragraphs[0]` | Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights. | 私たちの名前は山に着想を得ています。山は、志、団結、そして新たな高みを目指す決意の象徴です。 |
+| `ja:aboutStory.paragraphs[1]` | That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress. | その精神が今の私たちをかたちづくっています。人とテクノロジーを結びつけ、課題に挑み、自分たちがつくるものに責任を持ち、イノベーションが意味のある進歩を生む未来を目指しています。 |
+| `ja:aboutValuesHeading.title` | What drives us | 私たちを動かすもの |
+| `ja:aboutValuesHeading.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | 協力の仕方、意思決定、そして意味のある成果の届け方を導く 5 つの原則です。 |
 
 ## Values (Home and About)
 
-22 strings.
+18 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:aboutValues.items[0].title` | Startup Spirit | スタートアップ精神 |
-| `ja:aboutValues.items[0].short` | Agile, resilient and always improving. | 俊敏で、粘り強く、常に改善を続ける。 |
-| `ja:aboutValues.items[0].text` | Embody an entrepreneurial mindset, embracing agility, flexibility, and a passion for innovation. Our commitment to excellence is driven by resilience and a culture of continuous improvement. | 起業家精神を体現し、俊敏さ、柔軟性、イノベーションへの情熱を大切にします。卓越への取り組みは、粘り強さと継続的な改善の文化によって支えられています。 |
-| `ja:aboutValues.items[1].title` | Client Centricity | クライアント中心 |
-| `ja:aboutValues.items[1].short` | Clients at the heart of everything we do. | すべての仕事の中心にお客様がいます。 |
-| `ja:aboutValues.items[1].text` | Clients are at the heart of everything we do. We strive to deliver exceptional experiences and impactful outcomes through deep understanding, proactive engagement, and tailored solutions. | お客様は私たちのすべての仕事の中心にいます。深い理解、主体的な関わり、最適なソリューションを通じて、卓越した体験と確かな成果をお届けします。 |
-| `ja:aboutValues.items[2].title` | Integrity First | 誠実さを第一に |
-| `ja:aboutValues.items[2].short` | Honest, transparent and accountable. | 誠実、透明、そして責任ある姿勢。 |
-| `ja:aboutValues.items[2].text` | Operate with honesty, transparency, and accountability. Ethical standards guide every decision and interaction, fostering trust and long-term relationships. | 誠実さ、透明性、説明責任をもって行動します。あらゆる判断とやり取りを倫理基準が導き、信頼と長期的な関係を育みます。 |
-| `ja:aboutValues.items[3].title` | Innovation Driven | イノベーション志向 |
-| `ja:aboutValues.items[3].short` | Exploring new technology to stay ahead. | 新しい技術を探求し、一歩先を行く。 |
-| `ja:aboutValues.items[3].text` | Passionate about exploring emerging technologies and creative approaches. Innovation is embedded in our DNA, enabling us to evolve our solutions and stay ahead of industry trends. | 新しいテクノロジーと創造的なアプローチの探求に情熱を注ぎます。イノベーションは私たちの DNA に組み込まれており、ソリューションを進化させ、業界の潮流の先を行くことを可能にしています。 |
-| `ja:aboutValues.items[4].title` | "Get IT Done" Attitude | 「Get IT Done」の姿勢 |
-| `ja:aboutValues.items[4].short` | We own our commitments and deliver. | 約束に責任を持ち、やり遂げる。 |
-| `ja:aboutValues.items[4].text` | Take ownership of our commitments and deliver high-quality, reliable, and efficient solutions. Our team is driven by accountability and a results-oriented mindset that meets or exceeds industry standards. | 約束に責任を持ち、高品質で信頼性が高く効率的なソリューションをお届けします。私たちのチームは、業界水準を満たし、またはそれを上回る、説明責任と成果志向の姿勢に支えられています。 |
-| `ja:aboutValues.items[5].title` | People-Centered Culture | 人を大切にする文化 |
-| `ja:aboutValues.items[5].short` | Every team member valued, supported and empowered. | 一人ひとりが尊重され、支えられ、力を発揮できる。 |
-| `ja:aboutValues.items[5].text` | Cultivate a workplace where every team member feels valued, supported, and empowered. Our culture goes beyond employment: it's about belonging, collaboration, and shared success. | 一人ひとりが尊重され、支えられ、力を発揮できる職場を育てます。私たちの文化は雇用の枠を超え、帰属意識、協働、そして共に分かち合う成功を大切にしています。 |
-| `ja:homeValuesHeading.title` | Our core values. | 私たちのコアバリュー。 |
-| `ja:homeValuesHeading.lede` | What guides how we work. Flip a card to read each value in full. | 私たちの働き方の指針です。カードをめくると、それぞれの価値観の全文を読めます。 |
+| `ja:aboutValues.items[0].label` | Stay agile | 俊敏であること |
+| `ja:aboutValues.items[0].title` | Adapt with purpose. | 目的を持って適応する。 |
+| `ja:aboutValues.items[0].text` | Stay flexible, respond to change, and keep moving toward what matters. | 柔軟に変化へ対応し、大切なことに向かって進み続けます。 |
+| `ja:aboutValues.items[1].label` | Take ownership | 当事者意識 |
+| `ja:aboutValues.items[1].title` | Own the outcome. | 成果に責任を持つ。 |
+| `ja:aboutValues.items[1].text` | Speak up, take responsibility, and see things through from start to finish. | 声を上げ、責任を引き受け、最初から最後までやり遂げます。 |
+| `ja:aboutValues.items[2].label` | Innovate | イノベーション |
+| `ja:aboutValues.items[2].title` | Make innovation useful. | イノベーションを役立つものに。 |
+| `ja:aboutValues.items[2].text` | Explore new ideas and technologies that create meaningful value for people and businesses. | 人と企業に意味のある価値を生む、新しいアイデアと技術を探求します。 |
+| `ja:aboutValues.items[3].label` | Grow together | ともに成長する |
+| `ja:aboutValues.items[3].title` | Better together. | 一緒だからこそ、より良く。 |
+| `ja:aboutValues.items[3].text` | Share knowledge, support each other, and grow through collaboration and feedback. | 知識を共有し、支え合い、協力とフィードバックを通じて成長します。 |
+| `ja:aboutValues.items[4].title` | Turn ideas into impact. | アイデアを成果に変える。 |
+| `ja:aboutValues.items[4].text` | Move beyond ideas and deliver practical solutions that make a difference. | アイデアの先へ進み、違いを生む実用的なソリューションを届けます。 |
+| `ja:homeValuesHeading.title` | What drives us | 私たちを動かすもの |
+| `ja:homeValuesHeading.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | 協力の仕方、意思決定、そして意味のある成果の届け方を導く 5 つの原則です。 |
 | `ja:homeValuesHeading.frontHint` | Flip for details | めくって詳細を見る |
 | `ja:homeValuesHeading.backHint` | Flip back | 元に戻す |
 
@@ -108,80 +93,45 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:appTaglines.parent-hub` | Keeps parents close to every school day, on their phone. | 毎日の学校生活を、保護者のスマートフォンに届けます。 |
-| `ja:appTaglines.staff-hub` | One workspace where staff, teachers and leaders share the same data. | 職員、教員、管理職が同じデータを共有する、ひとつのワークスペース。 |
-| `ja:appTaglines.iot` | Run classroom devices, lighting, climate and access from one screen. | 教室の機器、照明、空調、入退室をひとつの画面で管理。 |
-| `ja:appTaglines.ai-tutor` | [Placeholder] Solve new problems on your own. Not just read solutions. | [Placeholder] 新しい問題を自分の力で解く。解答を読むだけではなく。 |
+| `ja:appTaglines.parent-hub` | Keep parents informed and connected to their child’s school life. | 保護者がお子さまの学校生活をいつでも把握し、つながっていられます。 |
+| `ja:appTaglines.staff-hub` | Bring daily school operations into one connected workspace. | 学校の日々の運営を、ひとつのつながったワークスペースにまとめます。 |
+| `ja:appTaglines.iot` | Simplify how schools manage connected campus technology. | キャンパスのコネクテッド技術の管理をシンプルにします。 |
+| `ja:appTaglines.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | ガイド付きの学習で、生徒が間違いを理解し自信をつけられるよう支えます。 |
 
 ## Careers
 
-59 strings.
+24 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:careersGrowth.caption` | [Placeholder] Growth Learning Model | [Placeholder] 成長のための学習モデル |
-| `ja:careersGrowth.center` | Growth | 成長 |
-| `ja:careersGrowth.steps[0]` | Curious | 好奇心 |
-| `ja:careersGrowth.steps[1]` | Learn | 学ぶ |
-| `ja:careersGrowth.steps[2]` | Ask | 問う |
-| `ja:careersGrowth.steps[3]` | Grow | 成長する |
-| `ja:careersGrowth.steps[4]` | Improve | 改善する |
+| `ja:careersGain.heading` | What you’ll gain along the way | ここで得られるもの |
+| `ja:careersGain.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | スキルを伸ばし、新しい技術を探求し、支え合う仲間と働けます。XionTech で期待できることをご紹介します。 |
+| `ja:careersGain.cards[0].title` | Hands-on Learning | 実践で学ぶ |
+| `ja:careersGain.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | ワークショップ、知識の共有、実際のエンジニアリングの課題を通じて、手を動かしながら学びます。 |
+| `ja:careersGain.cards[1].title` | AI & New Technologies | AI と新しい技術 |
+| `ja:careersGain.cards[1].text` | Explore AI tools, automation, and modern technologies that help you work smarter. | よりスマートに働くための AI ツール、自動化、最新の技術を探求します。 |
+| `ja:careersGain.cards[2].title` | Real-World Projects | 実際のプロジェクト |
+| `ja:careersGain.cards[2].text` | Solve real customer problems and see how your work makes a difference. | お客様の本当の課題を解決し、自分の仕事が生む違いを実感できます。 |
+| `ja:careersGain.cards[3].title` | Team Experiences | チームでの体験 |
+| `ja:careersGain.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | チーム活動、ともに学ぶ時間、成功をみんなで祝うことを通じてつながりを築きます。 |
 | `ja:careersHero.title.first` | Stay curious. | 好奇心を持ち続ける。 |
-| `ja:careersHero.title.second` | Build what’s next. | 次をつくる。 |
+| `ja:careersHero.title.second` | Build what’s next | 次をつくる |
 | `ja:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | 私たちが築いているのは、学ぶのが早く、より良い問いを立て、変化に適応し、タスクだけでなく成果にこだわる人のためのチームです。ここでは、AI を使ったソフトウェア開発の新しい方法を切り拓く役割を担います。 |
-| `ja:careersHero.cta.label` | Explore open roles | 募集中の職種を見る |
-| `ja:careersInside.heading` | Inside XionTech. | XionTech の内側。 |
-| `ja:careersInside.lede` | A look at the moments that shape life here: workshops, project starts, team days, celebrations, shared learning and the small moments in between. | ここでの日々を形づくる瞬間をご紹介します。ワークショップ、プロジェクトの始動、チームの日、お祝い、共に学ぶ時間、そしてその合間の小さな瞬間です。 |
-| `ja:careersInside.tiles[0].tag` | Learn together | 共に学ぶ |
-| `ja:careersInside.tiles[0].title` | Workshops & experiments | ワークショップと実験 |
-| `ja:careersInside.tiles[0].text` | Hands-on sessions where the team tries new tools, agentic workflows and better ways to work. | 新しいツール、エージェント型のワークフロー、より良い働き方をチームで試す実践的なセッション。 |
-| `ja:careersInside.tiles[1].tag` | Build relationships | 関係を築く |
-| `ja:careersInside.tiles[1].title` | Client visits | お客様訪問 |
-| `ja:careersInside.tiles[1].text` | Understand context directly and build stronger working relationships. | 背景を直接理解し、より強い協力関係を築きます。 |
-| `ja:careersInside.tiles[2].tag` | Shared direction | 方向をそろえる |
-| `ja:careersInside.tiles[2].title` | Town halls | タウンホール |
-| `ja:careersInside.tiles[2].text` | What changed, what matters now, and where we’re going next. | 何が変わったのか、今何が重要なのか、次にどこへ向かうのか。 |
-| `ja:careersInside.tiles[3].tag` | Start together | 共に始める |
-| `ja:careersInside.tiles[3].title` | Project kickoffs | プロジェクトキックオフ |
-| `ja:careersInside.tiles[3].text` | New work starts with shared context, not a mysterious task list. | 新しい仕事は、謎めいたタスクリストではなく、共有された背景から始まります。 |
-| `ja:careersInside.tiles[4].tag` | Celebrate progress | 前進を祝う |
-| `ja:careersInside.tiles[4].title` | [Placeholder] Celebration | [Placeholder] お祝い |
-| `ja:careersInside.tiles[4].text` | Because shipped work deserves more than a green status label. | リリースした仕事には、緑のステータスラベル以上のものがふさわしいから。 |
-| `ja:careersLife.heading` | Life at XionTech. | XionTech での毎日。 |
+| `ja:careersLife.heading` | Life at XionTech | XionTech での毎日 |
+| `ja:careersLife.prevLabel` | Previous photo | 前の写真 |
+| `ja:careersLife.nextLabel` | Next photo | 次の写真 |
 | `ja:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] チームの写真 |
 | `ja:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] オフィスの写真 |
 | `ja:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] イベントの写真 |
 | `ja:careersMeta.title` | Careers at XionTech \| Software Jobs in Ho Chi Minh City | XionTech の採用情報 \| ホーチミン市のソフトウェア職 |
 | `ja:careersMeta.description` | Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture. | ホーチミン市の XionTech に参加しませんか。人を大切にする文化の中で、AI/ML、生成 AI、クラウド、アジャイルなデリバリーを活かし、学校向けプラットフォームとお客様のプロダクトに携われます。 |
-| `ja:careersRoles.heading` | Find your next challenge. | 次の挑戦を見つけよう。 |
+| `ja:careersRoles.heading` | Find your next challenge | 次の挑戦を見つけよう |
 | `ja:careersRoles.emptyText` | No open roles right now. | 現在、募集中の職種はありません。 |
 | `ja:careersRoles.applyLabel` | View and apply | 詳細を見て応募する |
-| `ja:careersValues.heading` | Five things that shape the way we work. | 私たちの働き方を形づくる 5 つのこと。 |
-| `ja:careersValues.lede` | These are the behaviours we want people to experience from us every day. Flip a card to see what each one means in practice. | これらは、私たちが毎日周りの人に感じてほしい行動です。カードをめくると、それぞれが実際に何を意味するかがわかります。 |
-| `ja:careersValues.frontHint` | Flip for details | めくって詳細を見る |
-| `ja:careersValues.backHint` | Flip back | 元に戻す |
-| `ja:careersValues.cards[0].title` | [Placeholder] Stay agile | [Placeholder] 柔軟であり続ける |
-| `ja:careersValues.cards[0].label` | STAY AGILE | 柔軟に |
-| `ja:careersValues.cards[0].backTitle` | [Placeholder] Move without losing direction. | [Placeholder] 方向を見失わずに動く。 |
-| `ja:careersValues.cards[0].text` | Stay flexible and adapt when new information or a better answer changes the path. | 新しい情報やより良い答えによって道筋が変わるときも、柔軟に適応します。 |
-| `ja:careersValues.cards[1].title` | [Placeholder] Own the outcome | [Placeholder] 成果に責任を持つ |
-| `ja:careersValues.cards[1].label` | OWNERSHIP | オーナーシップ |
-| `ja:careersValues.cards[1].backTitle` | [Placeholder] Care beyond your task. | [Placeholder] 自分のタスクの先まで気を配る。 |
-| `ja:careersValues.cards[1].text` | Raise issues early, protect quality and take responsibility for whether the work actually succeeds. | 問題を早めに伝え、品質を守り、仕事が本当に成功するかどうかに責任を持ちます。 |
-| `ja:careersValues.cards[2].title` | [Placeholder] Innovate with purpose | [Placeholder] 目的あるイノベーション |
-| `ja:careersValues.cards[2].label` | INNOVATE | イノベーション |
-| `ja:careersValues.cards[2].backTitle` | [Placeholder] New is useful only when it helps. | [Placeholder] 新しさは、役に立ってこそ意味がある。 |
-| `ja:careersValues.cards[2].text` | Explore emerging technology when it improves the product, the user experience or the way we work. | プロダクト、ユーザー体験、働き方を良くするときに、新しいテクノロジーを探求します。 |
-| `ja:careersValues.cards[3].title` | [Placeholder] Grow together | [Placeholder] 共に成長する |
-| `ja:careersValues.cards[3].label` | GROW TOGETHER | 共に成長 |
-| `ja:careersValues.cards[3].backTitle` | [Placeholder] Make each other better. | [Placeholder] お互いを高め合う。 |
-| `ja:careersValues.cards[3].text` | Share what you know, give useful feedback and create space for teammates to stretch, contribute and grow. | 知っていることを共有し、役立つフィードバックを伝え、仲間が挑戦し、貢献し、成長できる場をつくります。 |
-| `ja:careersValues.cards[4].backTitle` | [Placeholder] Turn possibility into something real. | [Placeholder] 可能性を現実のものに。 |
-| `ja:careersValues.cards[4].text` | Good ideas matter. Delivering useful, working outcomes is what gives them value. | 良いアイデアは大切です。役に立ち、実際に動く成果を届けてこそ、その価値が生まれます。 |
 
 ## News
 
-23 strings.
+21 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
@@ -189,8 +139,8 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:categoryLabels.students` | Students | 生徒 |
 | `ja:categoryLabels.parents` | Parents | 保護者 |
 | `ja:categoryLabels.company` | Company | 会社 |
-| `ja:homeNews.heading` | Latest from XionTech. | XionTech の最新情報。 |
-| `ja:homeNews.lede` | Catch up with what our team is building and shipping. | 私たちのチームがつくり、届けているものをご覧ください。 |
+| `ja:homeNews.heading` | Latest from XionTech | XionTech の最新情報 |
+| `ja:homeNews.lede` | Explore what we’re building, the ideas we’re exploring, and the people behind our work. | 私たちがつくっているもの、探求しているアイデア、そして仕事を支える人々をご紹介します。 |
 | `ja:homeNews.seeAll.label` | See all news | すべてのニュースを見る |
 | `ja:homeNews.readStory` | Read story | 記事を読む |
 | `ja:newsMeta.title` | News \| XionTech | ニュース \| XionTech |
@@ -199,19 +149,17 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:newsPage.sub` | Stay informed with the latest news and announcements, fresh off the press. | 最新のニュースとお知らせを、いち早くお届けします。 |
 | `ja:newsPage.storiesHeading` | All stories | すべての記事 |
 | `ja:newsPage.filtersLabel` | Filter stories by audience | 対象で記事を絞り込む |
-| `ja:newsPage.sampleNote` | Stories from the newXion newsroom; those marked [Placeholder] are samples. | newXion ニュースルームの記事です。[Placeholder] と記されたものはサンプルです。 |
 | `ja:newsPage.allFilter.label` | All | すべて |
 | `ja:newsPage.empty` | No stories are available in this category yet. | このカテゴリにはまだ記事がありません。 |
 | `ja:newsPage.showAll` | Show all | すべて表示 |
 | `ja:newsPage.countOne` | Showing 1 story | 1 件の記事を表示中 |
 | `ja:newsPage.countMany` | Showing {n} stories | {n} 件の記事を表示中 |
 | `ja:newsStory.storyLabel` | Story | 記事 |
-| `ja:newsStory.sampleNote` | [Placeholder] Sample story to show the layout. Replace with a real story before launch. | [Placeholder] レイアウトを示すためのサンプル記事です。公開前に実際の記事に差し替えてください。 |
 | `ja:newsStory.backToNews.label` | Back to News | ニュースに戻る |
 
 ## Contact, demo form and capture band
 
-71 strings.
+72 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
@@ -227,7 +175,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:contactStrings.hero.titleBefore` | Let's talk about your  |  |
 | `ja:contactStrings.hero.titleHighlight` | school | 学校 |
 | `ja:contactStrings.hero.titleAfter` |  or your project. | やプロジェクトについてお話ししましょう。 |
-| `ja:contactStrings.hero.items[0]` | A walkthrough of Parent Hub and Staff Hub using your school's scenarios. | 貴校の実際の場面に沿った Parent Hub と Staff Hub のご案内。 |
+| `ja:contactStrings.hero.items[0]` | A demo of Parent Hub and Staff Hub using your school's scenarios. | 貴校の実際の場面に沿った Parent Hub と Staff Hub のご案内。 |
 | `ja:contactStrings.hero.items[1]` | Answers on setup, data and support. | 導入、データ、サポートに関するご質問への回答。 |
 | `ja:contactStrings.hero.items[2]` | For projects: a first Discovery conversation, the first of our four steps. | プロジェクトの場合：4 つのステップの第一歩となる、最初のディスカバリーの打ち合わせ。 |
 | `ja:contactStrings.hero.officesLabel` | Our offices | 拠点 |
@@ -236,7 +184,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:contactStrings.form.tabDemo` | Product demo | 製品デモ |
 | `ja:contactStrings.form.tabProject` | Outsourcing project | 開発委託プロジェクト |
 | `ja:contactStrings.form.name` | Full name | 氏名 |
-| `ja:contactStrings.form.email`<br>`ja:contactStrings.home.email`<br>`ja:contactStrings.capture.emailLabel` | Work email | 業務用メールアドレス |
+| `ja:contactStrings.form.email`<br>`ja:contactStrings.home.email` | Email address | メールアドレス |
 | `ja:contactStrings.form.org` | School or company | 学校名または会社名 |
 | `ja:contactStrings.form.role` | Your role | 役職 |
 | `ja:contactStrings.form.roleHelp` | For example: Principal, Head of IT | 例：校長、IT 責任者 |
@@ -256,7 +204,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:contactStrings.form.privacyLink` | Privacy policy | プライバシーポリシー |
 | `ja:contactStrings.form.errorsHeading` | Please fix the following: | 次の項目を修正してください： |
 | `ja:contactStrings.home.heading` | Have something you want to build? | つくりたいものはありますか？ |
-| `ja:contactStrings.home.lede` | Tell us a little about yourself and what you're working on. Our team will get in touch to learn more. | あなたご自身と取り組んでいることについて、少し教えてください。詳しくお伺いするため、私たちのチームからご連絡します。 |
+| `ja:contactStrings.home.lede` | Building something new or improving what you already have? Tell us about your goals, and we’ll explore how we can help. | 新しいものをつくりたい、あるいは今あるものを改善したいとお考えですか？ 目標をお聞かせください。どのようにお手伝いできるか一緒に考えます。 |
 | `ja:contactStrings.home.name` | Your name | お名前 |
 | `ja:contactStrings.home.phone` | Phone number | 電話番号 |
 | `ja:contactStrings.home.optional` | (optional) | （任意） |
@@ -266,11 +214,12 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:contactStrings.home.consent` | We only use your details to reply to your message. | ご入力いただいた情報は、メッセージへの返信にのみ使用します。 |
 | `ja:contactStrings.home.successHeading` | Summit reached. Thanks — we've received your message. | 登頂成功。ありがとうございます。メッセージを受け取りました。 |
 | `ja:contactStrings.home.successText` | Our team will review what you shared and get in touch with you. | お寄せいただいた内容を私たちのチームが確認し、ご連絡いたします。 |
-| `ja:contactStrings.capture.demo.heading` | See it working at your school. | 貴校で実際に動く様子をご覧ください。 |
-| `ja:contactStrings.capture.demo.lede` | Leave your work email and we'll arrange a walkthrough built around your school. | 業務用メールアドレスをご入力いただければ、貴校に合わせたご案内を手配します。 |
+| `ja:contactStrings.capture.emailLabel` | Work email | 業務用メールアドレス |
+| `ja:contactStrings.capture.demo.heading` | See it working at your school | 貴校での動きをご覧ください |
+| `ja:contactStrings.capture.demo.lede` | Leave your work email and we'll arrange a demo built around your school. | 仕事用のメールアドレスを残していただければ、貴校に合わせたデモを手配します。 |
 | `ja:contactStrings.capture.demo.button`<br>`ja:contactStrings.capture.project.button` | Get in touch | お問い合わせ |
 | `ja:contactStrings.capture.demo.consent` | We only use your email to arrange your demo. | メールアドレスはデモの手配にのみ使用します。 |
-| `ja:contactStrings.capture.project.heading` | Tell us what you're building. | つくっているものを教えてください。 |
+| `ja:contactStrings.capture.project.heading` | Tell us what you're building | つくりたいものを教えてください |
 | `ja:contactStrings.capture.project.lede` | Leave your work email and we'll reach out to start Discovery. | 業務用メールアドレスをご入力いただければ、ディスカバリーを始めるためにご連絡します。 |
 | `ja:contactStrings.errors.name` | Please enter your name. | お名前を入力してください。 |
 | `ja:contactStrings.errors.email` | Please enter a valid email address. | 有効なメールアドレスを入力してください。 |
@@ -293,7 +242,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:dayRoad.heading` | A day at school. | 学校の一日。 |
+| `ja:dayRoad.heading` | A day at school | 学校の一日 |
 | `ja:dayRoad.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | ある生徒の典型的な一日をたどり、生徒、保護者、学校職員が各段階でどのように情報を共有し、つながっているかをご覧ください。 |
 | `ja:dayRoad.start` | Start | スタート |
 | `ja:dayRoad.finish` | Finish | ゴール |
@@ -304,9 +253,9 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:dayRoad.stops[2].title` | Parent updated | 保護者にお知らせ |
 | `ja:dayRoad.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub が、生徒が学校に着いたことを保護者に通知します。 |
 | `ja:dayRoad.stops[3].title` | Student learns | 生徒が学ぶ |
-| `ja:dayRoad.stops[3].text` | Students practise and ask questions with the AI Tutor. | 生徒は AI Tutor で練習し、質問します。 |
-| `ja:dayRoad.stops[4].title`<br>`ja:productDetails.iot.features[1].title` | Lighting and climate on the timetable | 時間割に合わせた照明と空調 |
-| `ja:dayRoad.stops[4].text` | Run classroom devices, lighting, climate and access from one screen. | 教室の機器、照明、空調、入退室をひとつの画面で管理。 |
+| `ja:dayRoad.stops[3].text` | Students practice and ask questions with the AI Tutor. | 生徒は AI Tutor で練習し、質問します。 |
+| `ja:dayRoad.stops[4].title`<br>`ja:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明と空調のスケジュール制御 |
+| `ja:dayRoad.stops[4].text` | Simplify how schools manage connected campus technology. | キャンパスのコネクテッド技術の管理をシンプルにします。 |
 | `ja:dayRoad.stops[5].title` | Day stays connected | 一日中つながる |
 | `ja:dayRoad.stops[5].text` | Notifications and school information stay connected across the system. | 通知と学校の情報が、システム全体でつながり続けます。 |
 | `ja:journeyBoard.hint` | Select a step to see the app behind it. | ステップを選ぶと、その裏で動くアプリが表示されます。 |
@@ -316,25 +265,25 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:journeyBoard.lanes[1].label` | Teacher and staff | 教員と職員 |
 | `ja:journeyBoard.lanes[2].label` | Parent | 保護者 |
 | `ja:journeyBoard.lanes[3].label` | Campus | キャンパス |
-| `ja:journeyMap.intro.title` | Built apart. Better together. | それぞれに。そして、つながるともっと良く。 |
+| `ja:journeyMap.intro.title` | Built apart. Better together | 別々につくり、一緒にもっと良く |
 | `ja:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 学校コミュニティのためのつながったスイート。保護者、学び、職員の業務、キャンパスのテクノロジーをひとつのエコシステムにまとめます。 |
 | `ja:productDetails.parent-hub.madeFor` | Parents and families | 保護者とご家族 |
-| `ja:productDetails.parent-hub.features[0].title` | Alerts when your child reaches the gate | お子さまが校門に着いたらお知らせ |
-| `ja:productDetails.parent-hub.features[1].title` | Scores and comments as soon as published | 成績とコメントを公開と同時に確認 |
+| `ja:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | リアルタイムの到着通知 |
+| `ja:productDetails.parent-hub.features[1].title` | Published grades and feedback | 公開された成績とフィードバック |
 | `ja:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 先生との双方向メッセージ |
 | `ja:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 明細がわかりやすい学費のお支払い |
 | `ja:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 職員、教員、学校管理職 |
-| `ja:productDetails.staff-hub.features[0].title` | Attendance and records in real time | 出欠と記録をリアルタイムで |
+| `ja:productDetails.staff-hub.features[0].title` | Attendance and student records | 出欠と生徒の記録 |
 | `ja:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | クラス、時間割、成績 |
 | `ja:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub を通じた保護者へのメッセージ |
 | `ja:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 管理職向けの今日の優先事項ダッシュボード |
 | `ja:productDetails.iot.madeFor` | School operations and facilities teams | 学校の運営・施設管理チーム |
-| `ja:productDetails.iot.features[0].title` | Projectors, displays and sound | プロジェクター、ディスプレイ、音響 |
+| `ja:productDetails.iot.features[0].title` | Centralized device management | 機器の一元管理 |
 | `ja:productDetails.iot.features[2].title` | Doors and zones managed centrally | ドアとエリアを一元管理 |
 | `ja:productDetails.iot.features[3].title` | Energy use across the campus | キャンパス全体のエネルギー使用量 |
 | `ja:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 生徒と、寄り添う教員 |
-| `ja:productDetails.ai-tutor.features[0].title` | Skill-by-skill diagnosis | スキルごとの診断 |
-| `ja:productDetails.ai-tutor.features[1].title` | Step-by-step hints once you have tried | 自分で取り組んだ後のステップごとのヒント |
+| `ja:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | スキルごとの理解度チェック |
+| `ja:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 一人ひとりに合わせたステップごとのヒント |
 | `ja:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 一人でできるようになって初めて習得 |
 | `ja:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校向けアプリ：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
 | `ja:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 保護者向けの Parent Hub、職員・教員・管理職向けの Staff Hub、キャンパス向けの IoT Device Management。XionTech のつながる学校向けアプリ。 |
@@ -348,14 +297,14 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:footerOffices[0].name`<br>`ja:hcmc.tag`<br>`ja:offices[1].tag` | Vietnam Delivery Center | ベトナム デリバリーセンター |
-| `ja:footerOffices[1].name` | US Delivery Center | 米国デリバリーセンター |
-| `ja:footerOffices[1].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 （新しいタブで開きます） |
+| `ja:footerOffices[0].tag` | US Delivery Center | 米国デリバリーセンター |
+| `ja:footerOffices[1].name` | Ho Chi Minh City | ホーチミン市 |
+| `ja:footerOffices[1].tag`<br>`ja:hcmc.tag`<br>`ja:offices[1].tag` | Vietnam Delivery Center | ベトナム デリバリーセンター |
 | `ja:hcmc.name`<br>`ja:offices[1].name` | Ho Chi Minh City, Vietnam | ベトナム ホーチミン市 |
 | `ja:offices[0].name`<br>`ja:plano.name` | Plano, Texas, USA | 米国テキサス州プレイノ |
 | `ja:offices[0].contacts[1].ariaLabel`<br>`ja:plano.contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345 （新しいタブで開きます） |
 | `ja:offices[0].zoneLabel`<br>`ja:plano.zoneLabel` | US Central | 米国中部時間 |
-| `ja:otherLocations` | Also in Ha Noi and Da Nang. | ハノイとダナンにも拠点があります。 |
+| `ja:otherLocations` | Ha Noi, Da Nang | ハノイ、ダナン |
 
 ## Home
 
@@ -363,76 +312,76 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:homeApps.title` | One connected school. | つながる学校。 |
-| `ja:homeApps.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 学校コミュニティのためのつながったスイート。保護者、学び、職員の業務、キャンパスのテクノロジーをひとつのエコシステムにまとめます。 |
+| `ja:homeApps.title` | One connected school | つながる学校 |
+| `ja:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | 保護者、教職員、生徒、キャンパス運営のためのコネクテッドなソリューションで、学校コミュニティ全体をひとつにします。すべて、日々の学校運営をシンプルにするために設計されています。 |
 | `ja:homeApps.apps[0].madeFor` | Parents and families | 保護者とご家族 |
-| `ja:homeApps.apps[0].features[0]` | Alerts when your child reaches the gate | お子さまが校門に着いたらお知らせ |
-| `ja:homeApps.apps[0].features[1]` | Scores and comments as soon as published | 成績とコメントを公開と同時に確認 |
+| `ja:homeApps.apps[0].features[0]` | Real-time arrival alerts | リアルタイムの到着通知 |
+| `ja:homeApps.apps[0].features[1]` | Published grades and feedback | 公開された成績とフィードバック |
 | `ja:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 職員、教員、学校管理職 |
-| `ja:homeApps.apps[1].features[0]` | Attendance and records in real time | 出欠と記録をリアルタイムで |
+| `ja:homeApps.apps[1].features[0]` | Attendance and student records | 出欠と生徒の記録 |
 | `ja:homeApps.apps[1].features[1]` | Classes, timetables and grades | クラス、時間割、成績 |
 | `ja:homeApps.apps[2].madeFor` | School operations and facilities teams | 学校の運営・施設管理チーム |
-| `ja:homeApps.apps[2].features[0]` | Projectors, displays and sound | プロジェクター、ディスプレイ、音響 |
-| `ja:homeApps.apps[2].features[1]` | Lighting and climate on the timetable | 時間割に合わせた照明と空調 |
+| `ja:homeApps.apps[2].features[0]` | Centralized device management | 機器の一元管理 |
+| `ja:homeApps.apps[2].features[1]` | Scheduled lighting and climate controls | 照明と空調のスケジュール制御 |
 | `ja:homeApps.apps[3].madeFor` | Students, with teachers alongside | 生徒と、寄り添う教員 |
-| `ja:homeApps.apps[3].features[0]` | Skill-by-skill diagnosis | スキルごとの診断 |
-| `ja:homeApps.apps[3].features[1]` | Step-by-step hints once you have tried | 自分で取り組んだ後のステップごとのヒント |
+| `ja:homeApps.apps[3].features[0]` | Skill-level understanding checks | スキルごとの理解度チェック |
+| `ja:homeApps.apps[3].features[1]` | Personalized step-by-step hints | 一人ひとりに合わせたステップごとのヒント |
 | `ja:homeApps.link.label` | Explore products | 製品を見る |
-| `ja:homeCapabilities.title` | Why XionTech. | XionTech が選ばれる理由。 |
-| `ja:homeCapabilities.lede` | The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI. | あらゆる学校向けアプリとお届けするすべてのプロダクトを支える力、そして AI を使ったよりスマートなつくり方を探し続けるチーム。 |
+| `ja:homeCapabilities.title` | Why XionTech | XionTech が選ばれる理由 |
+| `ja:homeCapabilities.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | 私たちは自ら製品をつくり、その実践的な経験をお客様に還元しています。業界の理解、エンジニアリングへの責任、AI 支援開発を組み合わせています。 |
 | `ja:homeCapabilities.delivery.label` | Global delivery | グローバルデリバリー |
-| `ja:homeCapabilities.delivery.title` | Two headquarters, one working day. | 2 つの本社、ひとつの稼働日。 |
+| `ja:homeCapabilities.delivery.title` | Two headquarters, one working day | 2 つの本社、ひとつの稼働日 |
 | `ja:homeCapabilities.delivery.line` | Teams across time zones keep delivery moving with practical overlap. | タイムゾーンをまたぐチームが、実用的に重なる時間帯を活かしてデリバリーを止めません。 |
 | `ja:homeCapabilities.industries.label` | Domain expertise | ドメインの専門性 |
-| `ja:homeCapabilities.industries.title` | Deep in education. Built to adapt. | 教育に深く。変化に強く。 |
-| `ja:homeCapabilities.industries.line` | Education is where we go deepest, while the same engineering capability supports other industries too. | 最も深く取り組んでいるのは教育ですが、同じエンジニアリング力がほかの業界も支えています。 |
+| `ja:homeCapabilities.industries.title` | Start with education. Built to adapt | 教育から始まり、どこへでも適応 |
+| `ja:homeCapabilities.industries.line` | Our experience building education technology provides a strong foundation for developing tailored solutions across industries. | 教育テクノロジーを構築してきた経験が、さまざまな業界向けのソリューション開発の確かな土台になっています。 |
 | `ja:homeCapabilities.industries.main` | Education | 教育 |
 | `ja:homeCapabilities.industries.more[0]` | Healthcare | ヘルスケア |
 | `ja:homeCapabilities.industries.more[1]` | Logistics | 物流 |
 | `ja:homeCapabilities.industries.more[2]` | Private Equity | プライベートエクイティ |
 | `ja:homeCapabilities.industries.moreLabel` | +3 more industries: Healthcare, Logistics and Private Equity | ほか 3 業界：ヘルスケア、物流、プライベートエクイティ |
-| `ja:homeCapabilities.motto.title` | Built with ownership. | オーナーシップでつくる。 |
-| `ja:homeCapabilities.motto.line` | Ownership of our commitments and pride in quality. | 約束への責任と、品質への誇り。 |
+| `ja:homeCapabilities.motto.title` | Built with ownership, from the first idea to delivery. | 最初のアイデアから納品まで、当事者意識で。 |
 | `ja:homeDoors.label` | What we do | 私たちの仕事 |
-| `ja:homeDoors.products.title` | Products for schools | 学校向け製品 |
-| `ja:homeDoors.products.line` | Connected apps for parents, students, teachers, leaders and school staff. | 保護者、生徒、教員、管理職、学校職員をつなぐアプリ。 |
-| `ja:homeDoors.services.label` | Outsourcing services | 開発委託サービス |
-| `ja:homeDoors.services.title` | Your software delivery team | あなたのソフトウェア開発チーム |
-| `ja:homeDoors.services.line` | Dedicated teams and end-to-end delivery for companies building digital products. | デジタルプロダクトをつくる企業のための専任チームとエンドツーエンドのデリバリー。 |
+| `ja:homeDoors.products.label` | Products for schools | 学校向けの製品 |
+| `ja:homeDoors.products.title` | Platforms in one ecosystem | ひとつのエコシステムにつながるプラットフォーム |
+| `ja:homeDoors.products.line` | An integrated, AI-powered ecosystem that enhances learning, simplifies school administration and keeps students engaged | 学びを深め、学校運営をシンプルにし、生徒の意欲を保つ、AI を活用した統合エコシステム |
+| `ja:homeDoors.services.label` | Outsourcing services | アウトソーシングサービス |
+| `ja:homeDoors.services.title` | Custom software for your business | ビジネスのためのカスタムソフトウェア |
+| `ja:homeDoors.services.line` | Work with our dedicated teams on custom software. We shape each team around your product and work with you from discovery through launch and support. | 専任チームとともにカスタムソフトウェアを開発します。製品に合わせてチームを編成し、ディスカバリーからローンチ、サポートまで伴走します。 |
 | `ja:homeDoors.services.chips[5]` | +3 more | ほか 3 件 |
-| `ja:homeFaq.title` | Your questions, answered. | よくあるご質問。 |
-| `ja:homeFaq.lede` | Straight answers about our products, our services and how we work. | 製品、サービス、仕事の進め方について、率直にお答えします。 |
-| `ja:homeFaq.items[0].question` | How can our school try Parent Hub or Staff Hub? | Parent Hub や Staff Hub を学校で試すにはどうすればよいですか？ |
-| `ja:homeFaq.items[0].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | お気軽にお問い合わせください。貴校の実際の場面に沿ってアプリをご案内します。 |
-| `ja:homeFaq.items[1].question` | How do you work across time zones? | タイムゾーンをまたいでどのように仕事をしていますか？ |
+| `ja:homeFaq.title` | Before you reach out | お問い合わせの前に |
+| `ja:homeFaq.lede` | Straight answers about our products, our services and how we work. | 製品、サービス、私たちの働き方について率直にお答えします。 |
+| `ja:homeFaq.items[0].question` | How can our school try Parent Hub or Staff Hub? | 私たちの学校で Parent Hub や Staff Hub を試すには？ |
+| `ja:homeFaq.items[0].answer` | Leave your work email on the Products page and we walk you through the apps using scenarios from your own school. | 製品ページで仕事用のメールアドレスを残していただければ、貴校の実際の場面に沿ってアプリをご紹介します。 |
+| `ja:homeFaq.items[1].question` | How do you work across time zones? | 複数のタイムゾーンでどのように働いていますか？ |
 | `ja:homeFaq.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | プレイノ、ホーチミン市、ハノイ、ダナンのチームが米国、ヨーロッパ、オーストラリアのタイムゾーンをカバーし、共有ツールでリアルタイムに情報を更新しています。 |
 | `ja:homeFaq.items[2].question` | What results can we expect? | どのような成果が期待できますか？ |
-| `ja:homeFaq.items[2].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | 経験豊富なベトナム人エンジニアによるコスト効率の高い開発、期日どおりのリリース、そして貴社の成長を支える測定可能な成果です。 |
-| `ja:homeFaq.items[3].question` | How do we give feedback during a project? | プロジェクト中にどのようにフィードバックを伝えればよいですか？ |
-| `ja:homeFaq.items[3].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | 専用のチャネル、頻繁な確認の場、アジャイルなスプリントを通じて、お客様のご意見が最後までプロダクトに反映されます。 |
+| `ja:homeFaq.items[2].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | 優秀なベトナム人エンジニアによるコスト効率の高い開発、期日どおりのリリース、そして成長を支える測定可能な成果です。 |
+| `ja:homeFaq.items[3].question` | How do we give feedback during a project? | プロジェクト中にどのようにフィードバックを伝えられますか？ |
+| `ja:homeFaq.items[3].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | 専用チャンネル、頻繁な打ち合わせ、アジャイルなスプリントを通じて、お客様の意見を最初から最後まで製品に反映します。 |
 | `ja:homeFaq.link.label` | See all questions | すべての質問を見る |
 | `ja:homeHero.title.lines[0]` | Build smarter. | もっとスマートにつくる。 |
 | `ja:homeHero.title.lines[1]` | Ship faster. | もっと速く届ける。 |
-| `ja:homeHero.title.tail` | . | 。 |
-| `ja:homeHero.sub` | Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development. | 学校とキャンパスをつなぐソリューション、ソフトウェア製品、専任チームを、AI を活用した開発の先頭に立つ人々がお届けします。 |
+| `ja:homeHero.sub` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech は、現場での経験と最新技術を組み合わせ、AI を活用した製品とカスタムソリューションでビジネスの課題を解決します。 |
 | `ja:homeHero.motion.pause` | Pause motion | アニメーションを停止 |
 | `ja:homeHero.motion.play` | Play motion | アニメーションを再生 |
 | `ja:homeHero.cta.label` | Get in touch | お問い合わせ |
 | `ja:homeMeta.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| ベトナムの学校向けプラットフォームとソフトウェア開発委託 |
+| `ja:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech は AI を活用した製品とカスタムソリューションを開発しています。学校向けプラットフォーム（Parent Hub、Staff Hub、IoT、AI Tutor）とベトナムからのソフトウェア開発委託。 |
 | `ja:homeOutcomes.title` | What can we help you achieve? | どのような目標の実現をお手伝いできますか？ |
 | `ja:homeOutcomes.lede` | Pick one service or combine several. We shape the team around your product. | ひとつのサービスを選ぶことも、複数を組み合わせることもできます。お客様のプロダクトに合わせてチームを編成します。 |
-| `ja:homeOutcomes.items[0].title` | Build a new digital product | 新しいデジタルプロダクトをつくる |
-| `ja:homeOutcomes.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | ディスカバリーと UX から、エンジニアリング、テスト、ローンチまで、ひとつのデリバリーチームで進めます。 |
+| `ja:homeOutcomes.items[0].title` | Build a new digital product | 新しいデジタル製品をつくる |
+| `ja:homeOutcomes.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | エンドツーエンドの設計、カスタムソフトウェア開発、テスト、ローンチ支援で、アイデアを市場に出せる製品へと形にします。 |
 | `ja:homeOutcomes.items[1].title` | Extend your team | チームを拡張する |
-| `ja:homeOutcomes.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | 社内チームに人手や特定のスキルが必要なとき、専門性の高い技術人材を加えます。 |
-| `ja:homeOutcomes.items[2].title` | Modernise an existing platform | 既存のプラットフォームを刷新する |
-| `ja:homeOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | うまく機能している部分を守りながら、アプリケーション、インフラ、クラウドでのデリバリー、エンジニアリングの手法を改善します。 |
-| `ja:homeOutcomes.items[3].title` | Apply AI where it creates value | 価値を生む場面で AI を活用する |
-| `ja:homeOutcomes.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | AI、アナリティクス、自動化を使って、プロダクト、ワークフロー、経営判断を改善します。 |
-| `ja:homeOutcomes.cta.label` | Start a project | プロジェクトを始める |
+| `ja:homeOutcomes.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | 社内チームにさらなる人員や特定のスキルが必要なときに、専門的な技術人材を加えます。 |
+| `ja:homeOutcomes.items[2].title` | Modernize an existing platform | 既存のプラットフォームを刷新する |
+| `ja:homeOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | うまく機能している部分を守りながら、アプリケーション、インフラ、クラウドでの提供、エンジニアリングの実践を改善します。 |
+| `ja:homeOutcomes.items[3].title` | Leverage AI to drive business value | AI でビジネス価値を生み出す |
+| `ja:homeOutcomes.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | AI を活用したソリューションを構築し、業務を自動化し、ビジネスデータをより良い意思決定のための実用的な知見に変えます。 |
+| `ja:homeOutcomes.cta.label` | Let's build together | プロジェクトを始める |
 | `ja:homeOutcomes.link.label` | Explore services | サービスを見る |
-| `ja:homeProcess.title` | How we work. | 仕事の進め方。 |
-| `ja:homeProcess.lede` | Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve. AI runs through every step, and we keep improving how we use it. | 私たちの 4-D プロセス（ディスカバリー、デザイン、開発、デプロイ）は、アイデアをローンチまで導きます。各ステップの終わりには、目で見て承認できる成果物があります。AI はすべてのステップに組み込まれており、その使い方を改善し続けています。 |
+| `ja:homeProcess.title` | How we work | 私たちの進め方 |
+| `ja:homeProcess.lede` | From idea to launch, our 4-D process brings clarity, collaboration, and measurable progress to every stage. With AI-assisted workflows and clear deliverables, you stay involved from start to finish. | アイデアからローンチまで、4-D プロセスはすべての段階に明確さ、協力、そして測定可能な進捗をもたらします。AI 支援のワークフローと明確な成果物により、最初から最後までプロジェクトに関わっていただけます。 |
 | `ja:homeProcess.link.label` | See the full process | プロセスの全体を見る |
 | `ja:homeStats.label` | Experience you can count on | 信頼できる実績 |
 | `ja:homeStats.stats[0].caption` | Years of leadership experience in software | ソフトウェア分野でのリーダーシップ経験年数 |
@@ -480,37 +429,24 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Privacy
 
-27 strings.
+14 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
 | `ja:privacy.metaTitle` | Privacy Policy \| XionTech | プライバシーポリシー \| XionTech |
-| `ja:privacy.metaDescription` | [Placeholder] How XionTech uses the personal data you share through our forms. | [Placeholder] フォームを通じてご提供いただいた個人データを XionTech がどのように使用するか。 |
+| `ja:privacy.metaDescription` | How XionTech uses the personal data you share through our forms. | フォームを通じてご提供いただいた個人データを XionTech がどのように利用するかについて。 |
 | `ja:privacy.breadcrumbLabel` | Breadcrumb | パンくずリスト |
 | `ja:privacy.breadcrumbHome` | Home | ホーム |
-| `ja:privacy.breadcrumbCurrent` | Privacy policy | プライバシーポリシー |
-| `ja:privacy.title` | Privacy policy. | プライバシーポリシー。 |
-| `ja:privacy.lede` | [Placeholder] Policy text to be supplied by the legal owner, compliant with Vietnam's Decree 13/2023 (PDPD). | [Placeholder] ポリシー本文は法務担当者が用意し、ベトナムの政令 13/2023（PDPD）に準拠します。 |
+| `ja:privacy.breadcrumbCurrent`<br>`ja:privacy.title` | Privacy policy | プライバシーポリシー |
 | `ja:privacy.bodyLabel` | Policy | ポリシー |
-| `ja:privacy.outlineNote` | [Placeholder] Content outline. The sections below are what the policy must cover, not the real policy. | [Placeholder] 内容の概要です。以下の各セクションはポリシーが扱うべき項目であり、実際のポリシーではありません。 |
-| `ja:privacy.retentionDecided`<br>`ja:privacy.sections[5].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | お問い合わせとデモのご依頼、メールアドレスの送信、応募書類と CV は、期限を設けずに保管します。 |
-| `ja:privacy.sections[0].heading` | Who we are and how to reach us | 私たちについてと連絡先 |
-| `ja:privacy.sections[0].paragraphs[0]` | [Placeholder] The data controller (XionTech legal entity), its address and a contact for privacy requests. | [Placeholder] データ管理者（XionTech の法人）、その所在地、プライバシーに関するお問い合わせ先。 |
-| `ja:privacy.sections[1].heading` | What we collect | 収集する情報 |
-| `ja:privacy.sections[1].paragraphs[0]` | [Placeholder] Email, name, phone number, organisation, role and anything you send through our forms, including a CV if you apply for a job. | [Placeholder] メールアドレス、氏名、電話番号、組織、役職、およびフォームを通じて送信されたすべての内容。求人に応募された場合は CV を含みます。 |
-| `ja:privacy.sections[1].paragraphs[1]` | [Placeholder] The email you type in the email capture band is sent to our company inbox like a form message. Your browser also keeps it in session storage only until the demo request page reads it. | [Placeholder] メールアドレス入力欄に入力されたメールアドレスは、フォームのメッセージと同様に当社の受信箱に送信されます。また、デモ依頼ページが読み込むまでの間に限り、ブラウザーのセッションストレージにも保持されます。 |
-| `ja:privacy.sections[2].heading` | How we use it | 情報の利用方法 |
-| `ja:privacy.sections[2].paragraphs[0]` | [Placeholder] Only to answer your request, arrange a demo, or consider your job application and CV. | [Placeholder] お問い合わせへの回答、デモの手配、または応募書類と CV の選考にのみ使用します。 |
-| `ja:privacy.sections[3].heading` | Who we share it with | 情報の共有先 |
-| `ja:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | [Placeholder] 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを当社の受信箱に送信）、Upstash（ハッシュ化した値から作成するレート制限カウンター）、Vercel（ウェブサイトのホスティングと CV の非公開保管）、Google Fonts（日本語・韓国語・中国語ページ用のフォント）。 |
-| `ja:privacy.sections[4].heading` | Transfers outside Vietnam | ベトナム国外への移転 |
-| `ja:privacy.sections[4].paragraphs[0]` | [Placeholder] When data is transferred abroad (for example to our Plano office) and the safeguards required by Decree 13/2023. | [Placeholder] データが国外（例：プレイノのオフィス）に移転される場合と、政令 13/2023 が求める保護措置。 |
-| `ja:privacy.sections[5].heading` | How long we keep it | 保管期間 |
-| `ja:privacy.sections[5].paragraphs[1]` | [Placeholder] The final retention wording, and whether a time limit will be added later. | [Placeholder] 保管期間に関する最終的な文言と、今後期限を設けるかどうか。 |
-| `ja:privacy.sections[6].heading` | Cookies and analytics | Cookie とアナリティクス |
-| `ja:privacy.sections[6].paragraphs[0]` | [Placeholder] Temporary text. The final text will list the essential first-party language cookie (what it stores and why) and state that no non-essential cookies or analytics are set without your consent. | [Placeholder] 暫定の文章です。最終版では、必須のファーストパーティ言語 Cookie（保存する内容とその理由）を記載し、同意なしに必須ではない Cookie やアナリティクスを設定しないことを明記します。 |
-| `ja:privacy.sections[7].heading` | Your rights | お客様の権利 |
-| `ja:privacy.sections[7].paragraphs[0]` | [Placeholder] Access, correct or delete your data, or withdraw consent; how to ask for deletion is not decided yet. | [Placeholder] データへのアクセス、訂正、削除、または同意の撤回。削除を依頼する方法はまだ決まっていません。 |
+| `ja:privacy.retentionDecided`<br>`ja:privacy.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | お問い合わせとデモのご依頼、メールアドレスの送信、応募書類と CV は、期限を設けずに保管します。 |
+| `ja:privacy.sections[0].heading` | What we collect | 収集する情報 |
+| `ja:privacy.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | メールアドレス、氏名、電話番号、所属組織、役職、そしてフォームから送信されたすべての内容（求人に応募される場合は履歴書を含む）。 |
+| `ja:privacy.sections[1].heading` | How we use it | 利用目的 |
+| `ja:privacy.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | お問い合わせへの回答、または応募書類と履歴書の検討にのみ利用します。 |
+| `ja:privacy.sections[2].heading` | Who we share it with | 共有先 |
+| `ja:privacy.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを会社の受信トレイに送信）、Upstash（ハッシュ化した値から作るレート制限カウンター）、Vercel（ウェブサイトのホスティングと履歴書の非公開保存）、Google Fonts（日本語、韓国語、中国語ページのフォント）。 |
+| `ja:privacy.sections[3].heading` | How long we keep it | 保存期間 |
 
 ## Process (Home and Services)
 
@@ -521,78 +457,92 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:processFlow.label` | 4-D process | 4-D プロセス |
 | `ja:processFlow.receiveLabel` | You receive | お届けするもの |
 | `ja:processFlow.start.title` | Your request | お客様のご依頼 |
-| `ja:processFlow.start.line` | An idea, a brief or a requirement. | アイデア、概要、または要件。 |
+| `ja:processFlow.start.line` | An idea, a brief or a business need | アイデア、要望、またはビジネス上のニーズ |
 | `ja:processFlow.end.title` | Launch | ローンチ |
-| `ja:processFlow.end.line` | And we keep growing it together. | その後も一緒に育てていきます。 |
+| `ja:processFlow.end.line` | Growing the product together, release after release | リリースを重ねながら、製品をともに育てる |
 | `ja:processFlow.steps[0].title` | Discovery | ディスカバリー |
-| `ja:processFlow.steps[0].line` | Workshops to understand your goals, users, risks and scope. | 目標、ユーザー、リスク、スコープを理解するためのワークショップ。 |
-| `ja:processFlow.steps[0].receive` | A clear scope, estimate and delivery plan. | 明確なスコープ、見積もり、デリバリー計画。 |
+| `ja:processFlow.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | ワークショップで目標、ユーザー、リスク、範囲を明らかにし、アイデアを明確な要件に落とし込みます |
+| `ja:processFlow.steps[0].receive` | Clear requirements, an estimate and a delivery plan | 明確な要件、見積もり、開発計画 |
 | `ja:processFlow.steps[1].title` | Design | デザイン |
-| `ja:processFlow.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | コードを書く前に、ユーザーフロー、インターフェース、アーキテクチャを合意します。 |
-| `ja:processFlow.steps[1].receive` | A clickable prototype and technical design. | クリックできるプロトタイプと技術設計。 |
+| `ja:processFlow.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | 要件をユーザーフローとクリックできるプロトタイプにし、つくる前に製品を見て磨き込めるようにします |
+| `ja:processFlow.steps[1].receive` | An approved prototype and technical design | 承認済みのプロトタイプと技術設計 |
 | `ja:processFlow.steps[2].title` | Development | 開発 |
-| `ja:processFlow.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | 定期的なデモを伴うアジャイルなスプリント。テストと品質保証（QA）は最後ではなく、毎スプリントの中で行います。 |
-| `ja:processFlow.steps[2].receive` | Tested, working software every sprint. | 毎スプリント、テスト済みで動作するソフトウェア。 |
+| `ja:processFlow.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | 承認したプロトタイプをもとにアジャイルなスプリントで開発し、スプリントごとにテストします |
+| `ja:processFlow.steps[2].receive` | Tested, working software at every demo | デモのたびにテスト済みで動くソフトウェア |
 | `ja:processFlow.steps[3].title` | Deployment | デプロイ |
-| `ja:processFlow.steps[3].line` | A safe release, monitoring and improvement after launch. | 安全なリリース、モニタリング、ローンチ後の改善。 |
-| `ja:processFlow.steps[3].receive` | A live release with ongoing support. | 本番リリースと継続的なサポート。 |
+| `ja:processFlow.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | 完成した製品を安全に公開し、実際の利用を通じて監視と改善を続けます |
+| `ja:processFlow.steps[3].receive` | A live product with ongoing support | 稼働中の製品と継続的なサポート |
 
 ## Services
 
-46 strings.
+60 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:servicesMeta.title` | Software Outsourcing Vietnam \| Product Engineering, AI, Low-code & Cloud \| XionTech | ベトナムのソフトウェア開発委託 \| Product Engineering, AI, Low-code & Cloud \| XionTech |
-| `ja:servicesMeta.description` | Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones. | ホーチミン市から、専任チームとエンドツーエンドのソフトウェアデリバリーを。プロダクトエンジニアリング、AI、ローコード、クラウドを、米国、ヨーロッパ、オーストラリアのタイムゾーンでご提供します。 |
+| `ja:servicesMeta.title` | Software Outsourcing Vietnam \| XionTech | ベトナムのソフトウェアアウトソーシング \| XionTech |
+| `ja:servicesMeta.description` | Software outsourcing from Ho Chi Minh City: product engineering, AI-driven analytics, co-creation, staffing, custom apps, low-code, AI solutions and cloud. | ホーチミン市からのソフトウェアアウトソーシング：プロダクトエンジニアリング、AI 分析、共創、人材提供、カスタムアプリ、ローコード、AI ソリューション、クラウド。 |
 | `ja:servicesOutcomes.title` | What can we help you achieve? | どのような目標の実現をお手伝いできますか？ |
-| `ja:servicesOutcomes.items[0].title` | Build a new digital product | 新しいデジタルプロダクトをつくる |
-| `ja:servicesOutcomes.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | ディスカバリーと UX から、エンジニアリング、テスト、ローンチまで、ひとつのデリバリーチームで進めます。 |
+| `ja:servicesOutcomes.items[0].title` | Build a new digital product | 新しいデジタル製品をつくる |
+| `ja:servicesOutcomes.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | エンドツーエンドの設計、カスタムソフトウェア開発、テスト、ローンチ支援で、アイデアを市場に出せる製品へと形にします。 |
 | `ja:servicesOutcomes.items[1].title` | Extend your team | チームを拡張する |
-| `ja:servicesOutcomes.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | 社内チームに人手や特定のスキルが必要なとき、専門性の高い技術人材を加えます。 |
-| `ja:servicesOutcomes.items[2].title` | Modernise an existing platform | 既存のプラットフォームを刷新する |
-| `ja:servicesOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | うまく機能している部分を守りながら、アプリケーション、インフラ、クラウドでのデリバリー、エンジニアリングの手法を改善します。 |
-| `ja:servicesOutcomes.items[3].title` | Apply AI where it creates value | 価値を生む場面で AI を活用する |
-| `ja:servicesOutcomes.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | AI、アナリティクス、自動化を使って、プロダクト、ワークフロー、経営判断を改善します。 |
-| `ja:servicesPage.title.lead` | Software teams that  | 「 |
-| `ja:servicesPage.title.highlight` | get IT done | Get IT done |
-| `ja:servicesPage.title.tail` | . | 」を体現するソフトウェアチーム。 |
-| `ja:servicesPage.lede` | Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver. | ホーチミン市から、プロダクトエンジニアリング、AI、ローコード、クラウドのデリバリーを、米国、ヨーロッパ、オーストラリアのタイムゾーンに合わせてご提供します。AI でよりスマートに働き、デリバリーの方法を革新し続けています。 |
-| `ja:servicesPage.primaryCta.label` | Start a project | プロジェクトを始める |
-| `ja:servicesProcess.title` | Our 4-D process: from your request to launch. | 4-D プロセス：ご依頼からローンチまで。 |
+| `ja:servicesOutcomes.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | 社内チームにさらなる人員や特定のスキルが必要なときに、専門的な技術人材を加えます。 |
+| `ja:servicesOutcomes.items[2].title` | Modernize an existing platform | 既存のプラットフォームを刷新する |
+| `ja:servicesOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | うまく機能している部分を守りながら、アプリケーション、インフラ、クラウドでの提供、エンジニアリングの実践を改善します。 |
+| `ja:servicesOutcomes.items[3].title` | Leverage AI to drive business value | AI でビジネス価値を生み出す |
+| `ja:servicesOutcomes.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | AI を活用したソリューションを構築し、業務を自動化し、ビジネスデータをより良い意思決定のための実用的な知見に変えます。 |
+| `ja:servicesPage.title.lead` | You bring your  | お客様の |
+| `ja:servicesPage.title.words[0]` | vision | ビジョン |
+| `ja:servicesPage.title.words[1]` | challenges | 課題 |
+| `ja:servicesPage.title.words[2]` | ideas | アイデア |
+| `ja:servicesPage.title.words[3]` | ambition | 志 |
+| `ja:servicesPage.title.words[4]` | goals | 目標 |
+| `ja:servicesPage.title.suffix` | . | 。 |
+| `ja:servicesPage.title.tail[0]` | We get  | 私たちは「 |
+| `ja:servicesPage.title.tail[1]` | IT | Get IT done |
+| `ja:servicesPage.title.tail[2]` |  done | 」で応えます |
+| `ja:servicesPage.title.staticWord` | vision. | ビジョン。 |
+| `ja:servicesPage.title.label` | You bring your vision. We get IT done | お客様のビジョン。私たちは「Get IT done」で応えます |
+| `ja:servicesPage.lede` | From digital products to AI integration and technology modernization, we bring the expertise to solve your challenges, accelerate innovation, and drive your business forward. | デジタル製品から AI の統合、技術の刷新まで、課題を解決し、イノベーションを加速し、ビジネスを前進させる専門性を提供します。 |
+| `ja:servicesPage.primaryCta.label` | Let's build together | 一緒につくりましょう |
+| `ja:servicesPage.secondaryCta.label` | Explore our services | サービスを見る |
+| `ja:servicesPage.stack.label` | Illustration: requirements, wireframe and technical code layers of a software build | イラスト：ソフトウェア開発の要件、ワイヤーフレーム、技術コードの 3 つのレイヤー |
+| `ja:servicesPage.stack.requirements` | REQUIREMENTS | 要件 |
+| `ja:servicesPage.stack.wireframe` | WIREFRAME | ワイヤーフレーム |
+| `ja:servicesPage.stack.code` | TECHNICAL CODE | 技術コード |
+| `ja:servicesProcess.title` | Our 4-D process: from your request to launch | 4-D プロセス：ご依頼からローンチまで |
 | `ja:servicesProcess.lede` | Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it. | 各ステップの終わりには、目で見て、試して、承認できる成果物があります。AI はすべてのステップに組み込まれており、その使い方を改善し続けています。 |
 | `ja:servicesProcess.flow.label` | 4-D process | 4-D プロセス |
 | `ja:servicesProcess.flow.receiveLabel` | You receive | お届けするもの |
 | `ja:servicesProcess.flow.start.title` | Your request | お客様のご依頼 |
-| `ja:servicesProcess.flow.start.line` | An idea, a brief or a requirement. | アイデア、概要、または要件。 |
+| `ja:servicesProcess.flow.start.line` | An idea, a brief or a business need | アイデア、要望、またはビジネス上のニーズ |
 | `ja:servicesProcess.flow.end.title` | Launch | ローンチ |
-| `ja:servicesProcess.flow.end.line` | And we keep growing it together. | その後も一緒に育てていきます。 |
+| `ja:servicesProcess.flow.end.line` | Growing the product together, release after release | リリースを重ねながら、製品をともに育てる |
 | `ja:servicesProcess.flow.steps[0].title` | Discovery | ディスカバリー |
-| `ja:servicesProcess.flow.steps[0].line` | Workshops to understand your goals, users, risks and scope. | 目標、ユーザー、リスク、スコープを理解するためのワークショップ。 |
-| `ja:servicesProcess.flow.steps[0].receive` | A clear scope, estimate and delivery plan. | 明確なスコープ、見積もり、デリバリー計画。 |
+| `ja:servicesProcess.flow.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | ワークショップで目標、ユーザー、リスク、範囲を明らかにし、アイデアを明確な要件に落とし込みます |
+| `ja:servicesProcess.flow.steps[0].receive` | Clear requirements, an estimate and a delivery plan | 明確な要件、見積もり、開発計画 |
 | `ja:servicesProcess.flow.steps[1].title` | Design | デザイン |
-| `ja:servicesProcess.flow.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | コードを書く前に、ユーザーフロー、インターフェース、アーキテクチャを合意します。 |
-| `ja:servicesProcess.flow.steps[1].receive` | A clickable prototype and technical design. | クリックできるプロトタイプと技術設計。 |
+| `ja:servicesProcess.flow.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | 要件をユーザーフローとクリックできるプロトタイプにし、つくる前に製品を見て磨き込めるようにします |
+| `ja:servicesProcess.flow.steps[1].receive` | An approved prototype and technical design | 承認済みのプロトタイプと技術設計 |
 | `ja:servicesProcess.flow.steps[2].title` | Development | 開発 |
-| `ja:servicesProcess.flow.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | 定期的なデモを伴うアジャイルなスプリント。テストと品質保証（QA）は最後ではなく、毎スプリントの中で行います。 |
-| `ja:servicesProcess.flow.steps[2].receive` | Tested, working software every sprint. | 毎スプリント、テスト済みで動作するソフトウェア。 |
+| `ja:servicesProcess.flow.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | 承認したプロトタイプをもとにアジャイルなスプリントで開発し、スプリントごとにテストします |
+| `ja:servicesProcess.flow.steps[2].receive` | Tested, working software at every demo | デモのたびにテスト済みで動くソフトウェア |
 | `ja:servicesProcess.flow.steps[3].title` | Deployment | デプロイ |
-| `ja:servicesProcess.flow.steps[3].line` | A safe release, monitoring and improvement after launch. | 安全なリリース、モニタリング、ローンチ後の改善。 |
-| `ja:servicesProcess.flow.steps[3].receive` | A live release with ongoing support. | 本番リリースと継続的なサポート。 |
-| `ja:servicesSection.title` | Eight services, one team. | 8 つのサービス、ひとつのチーム。 |
+| `ja:servicesProcess.flow.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | 完成した製品を安全に公開し、実際の利用を通じて監視と改善を続けます |
+| `ja:servicesProcess.flow.steps[3].receive` | A live product with ongoing support | 稼働中の製品と継続的なサポート |
+| `ja:servicesSection.title` | Eight services, one team | 8 つのサービス、ひとつのチーム |
 | `ja:servicesSection.lede` | Pick one service or combine several. We shape the team around your product. | ひとつのサービスを選ぶことも、複数を組み合わせることもできます。お客様のプロダクトに合わせてチームを編成します。 |
-| `ja:servicesSection.services[0].description` | Transform innovative ideas into market-ready digital products with end-to-end engineering expertise. | エンドツーエンドのエンジニアリングの専門性で、革新的なアイデアを市場投入できるデジタルプロダクトに変えます。 |
-| `ja:servicesSection.services[1].description` | Transform raw data into actionable intelligence using AI and advanced visualisation. | AI と高度な可視化で、生データを行動につながるインテリジェンスに変えます。 |
-| `ja:servicesSection.services[2].description` | Accelerate innovation by combining your domain knowledge with our technical expertise. | お客様の業界知識と私たちの技術的専門性を組み合わせ、イノベーションを加速します。 |
-| `ja:servicesSection.services[3].description` | Access specialised technology talent when you need it, with flexible options. | 必要なときに、柔軟な形態で専門性の高い技術人材を確保できます。 |
-| `ja:servicesSection.services[4].description` | Develop custom solutions aligned with your unique requirements. | お客様固有の要件に合わせたソリューションを開発します。 |
-| `ja:servicesSection.services[5].description` | Ship tools and automations faster on leading low-code platforms. | 主要なローコードプラットフォームで、ツールと自動化をより速く提供します。 |
-| `ja:servicesSection.services[6].description` | Harness artificial intelligence to transform your operations. | 人工知能を活用して、業務を変革します。 |
-| `ja:servicesSection.services[7].description` | Expert solutions on Azure, AWS and GCP. | Azure、AWS、GCP に精通したソリューション。 |
+| `ja:servicesSection.services[0].description` | Turn ideas into market-ready digital products, from concept to launch. | アイデアを、コンセプトからローンチまで、市場に出せるデジタル製品に変えます。 |
+| `ja:servicesSection.services[1].description` | Turn complex data into actionable insights with AI and intuitive dashboards. | AI と直感的なダッシュボードで、複雑なデータを実用的な知見に変えます。 |
+| `ja:servicesSection.services[2].description` | Bring your industry knowledge and our product expertise together to create solutions that matter. | お客様の業界知識と私たちの製品の専門性を組み合わせ、意味のあるソリューションをつくります。 |
+| `ja:servicesSection.services[3].description` | Get the right technology talent to support your projects and scale your team. | プロジェクトを支え、チームを拡大するのにふさわしい技術人材を確保します。 |
+| `ja:servicesSection.services[4].description` | Build tailored applications that fit your business needs and workflows. | ビジネスのニーズとワークフローに合ったアプリケーションをつくります。 |
+| `ja:servicesSection.services[5].description` | Build applications and automate workflows faster with flexible low-code platforms. | 柔軟なローコードプラットフォームで、アプリケーションの構築とワークフローの自動化をより速く進めます。 |
+| `ja:servicesSection.services[6].description` | Put AI to work with intelligent solutions that streamline processes and improve productivity. | 業務を効率化し生産性を高めるインテリジェントなソリューションで、AI を活用します。 |
+| `ja:servicesSection.services[7].description` | Build, scale, and manage cloud solutions that support your growing business. | 成長するビジネスを支えるクラウドソリューションを構築、拡張、管理します。 |
 
 ## Site shell: header, footer, language menu, 404
 
-29 strings.
+24 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
@@ -606,14 +556,11 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:shell.nav.mainNav` | Main | メイン |
 | `ja:shell.nav.homeLink` | XionTech home | XionTech ホーム |
 | `ja:shell.nav.menu` | Menu | メニュー |
-| `ja:shell.nav.contact`<br>`ja:shell.nav.contactShort` | Get in touch | お問い合わせ |
+| `ja:shell.nav.contact`<br>`ja:shell.nav.contactShort` | Let's talk | お問い合わせ |
 | `ja:shell.nav.cityPlano` | Plano | プレイノ |
 | `ja:shell.nav.cityHcmc` | Ho Chi Minh City | ホーチミン市 |
 | `ja:shell.language.label` | Language | 言語 |
-| `ja:shell.footer.blurb` | Education technology products and software delivery services for schools and businesses. | 学校と企業のための教育テクノロジー製品とソフトウェア開発サービス。 |
-| `ja:shell.footer.forSchools` | For schools | 学校向け |
-| `ja:shell.footer.forStudents` | For students | 生徒向け |
-| `ja:shell.footer.forParents` | For parents | 保護者向け |
+| `ja:shell.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech は、現場での経験と最新技術を組み合わせ、AI を活用した製品とカスタムソリューションでビジネスの課題を解決します。 |
 | `ja:shell.footer.howWeWork` | How we work | 仕事の進め方 |
 | `ja:shell.footer.allServices` | All services | すべてのサービス |
 | `ja:shell.footer.company` | Company | 会社 |
@@ -621,10 +568,8 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:shell.footer.offices` | Offices | 拠点 |
 | `ja:shell.footer.privacy` | Privacy policy | プライバシーポリシー |
 | `ja:shell.notFound.metaTitle` | Page not found \| XionTech | ページが見つかりません \| XionTech |
-| `ja:shell.notFound.title` | You’ve wandered off the trail. | 道に迷ってしまったようです。 |
-| `ja:shell.notFound.lede` | The page you were looking for isn’t here. Follow the trail back home, or pick a path below. | お探しのページはここにはありません。道をたどってホームに戻るか、下から行き先を選んでください。 |
-| `ja:shell.notFound.primary` | Go to Home | ホームへ |
-| `ja:shell.notFound.here` | You are here | 現在地 |
+| `ja:shell.notFound.title` | Page not found | ページが見つかりません |
+| `ja:shell.notFound.primary` | Back to Home | ホームへ |
 
 ## Site title and description
 
