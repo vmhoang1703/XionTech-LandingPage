@@ -55,7 +55,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
           <div>
             <Link
               href={localeHref(locale, "/")}
-              className="bg-paper inline-block rounded-sm px-3 py-2"
+              className="logo-chip bg-paper inline-block rounded-sm px-3 py-2"
             >
               <Image
                 src="/brand/xiontech-logo.svg"

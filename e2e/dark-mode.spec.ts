@@ -56,6 +56,30 @@ test.describe("dark mode", { tag: "@a11y" }, () => {
     }
   });
 
+  test("the product dialog is dark, its device screen and the footer logo stay light", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto("/en/products");
+    const logo = page.locator("footer .logo-chip");
+    await expect(logo).toHaveCSS("background-color", "rgb(253, 253, 254)");
+    const open = page.locator(".rm-open").first();
+    await open.scrollIntoViewIfNeeded();
+    await open.click({ force: true });
+    const top = page.locator(".road-dialog-top");
+    await expect(top).toBeVisible();
+    await expect(top).toHaveCSS("background-color", "rgb(18, 33, 63)");
+    await expect(page.locator(".ws").first()).toHaveCSS(
+      "background-color",
+      "rgb(253, 253, 254)",
+    );
+    const result = await new AxeBuilder({ page })
+      .include(".road-dialog")
+      .withRules(["color-contrast"])
+      .analyze();
+    expect(result.violations.flatMap((v) => v.nodes)).toEqual([]);
+  });
+
   test("the theme is on <html> before the page's scripts run", async ({
     page,
   }) => {

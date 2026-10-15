@@ -9236,6 +9236,7 @@ html[data-theme="dark"] .art-pill {
 
 /* The accent value card stays amber and pale yellow, so it keeps the light text set. */
 html[data-theme="dark"] .flip-card.accent {
+  --color-amber-text: #8a6700;
   --color-heading: #163663;
   --color-text: #10223f;
   --color-muted: #23406b;
@@ -9261,6 +9262,43 @@ html[data-theme="dark"] .step4 .art {
 /* Services sets its process cards white by id. */
 html[data-theme="dark"] #process .flow .step4 {
   background-color: var(--color-paper);
+}
+
+/* The footer logo keeps its white chip, like the header pill (the logo is
+   dark ink). */
+html[data-theme="dark"] .logo-chip {
+  background: #fdfdfe;
+}
+
+/* Products roadmap dialog (sticky top bar, close button) and Careers tags are white. */
+html[data-theme="dark"] .road-dialog-top,
+html[data-theme="dark"] .road-dialog-close,
+html[data-theme="dark"] .life-tag {
+  background: var(--color-paper);
+  border-color: var(--color-border);
+  color: var(--color-heading);
+}
+
+html[data-theme="dark"] .life-tag {
+  background: var(--color-ice);
+}
+
+/* The app screens on the 3D devices keep the light design in both themes,
+   like the scene around them. */
+html[data-theme="dark"] .ws {
+  --color-paper: #fdfdfe;
+  --color-page: #f7f9fd;
+  --color-mist: #eef2f9;
+  --color-mist-end: #f4f7fc;
+  --color-ice: #dce6f5;
+  --color-heading: #163663;
+  --color-text: #10223f;
+  --color-muted: #4a5b78;
+  --color-border: #1636631f;
+  --color-link: #163663;
+  --color-focus: #163663;
+  --color-amber-text: #8a6700;
+  color: var(--color-text);
 }
 
 /* The theme toggle: a round glass button to the right of the header pill on desktop,
