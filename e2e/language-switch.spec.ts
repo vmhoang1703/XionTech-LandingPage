@@ -40,3 +40,15 @@ test.describe("language switch", { tag: "@a11y" }, () => {
     ).toBe("vi");
   });
 });
+
+test(
+  "a 404 keeps its translated tab title after the page loads",
+  {
+    tag: "@a11y",
+  },
+  async ({ page }) => {
+    await page.goto("/vi/no-such-page");
+    await page.waitForLoadState("networkidle");
+    await expect(page).toHaveTitle("Không tìm thấy trang | XionTech");
+  },
+);

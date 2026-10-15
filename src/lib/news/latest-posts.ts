@@ -33,7 +33,6 @@ const LATEST_POSTS_QUERY = `*[_type == "post" && defined(slug.current) && define
 }`;
 
 // FR-26: "18 Sep 2026" in English (CSS sets the capitals), "18/09/2026" in Vietnamese.
-// The other locales write a date as Intl does in that locale ("2026年9月18日").
 const DATE_FORMATS: Record<Locale, Intl.DateTimeFormat> = {
   en: new Intl.DateTimeFormat("en-US", {
     day: "numeric",

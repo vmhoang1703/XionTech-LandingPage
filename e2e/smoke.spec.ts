@@ -52,3 +52,16 @@ test(
     expect((await request.get("/en")).status()).toBe(200);
   },
 );
+
+test(
+  "removed languages redirect to English, path and query kept",
+  { tag: "@smoke" },
+  async ({ request }) => {
+    // ja, fr, ko and zh were removed on 2026-10-15 (lead).
+    const response = await request.get("/ja/products?x=1", {
+      maxRedirects: 0,
+    });
+    expect(response.status()).toBe(308);
+    expect(response.headers().location).toMatch(/\/en\/products\?x=1$/);
+  },
+);

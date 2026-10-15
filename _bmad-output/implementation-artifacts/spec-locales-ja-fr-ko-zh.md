@@ -10,6 +10,9 @@ context:
   - '{project-root}/AGENTS.md'
 ---
 
+> **Superseded 2026-10-15.** Japanese, French, Korean and Chinese were removed at the lead's request (branch `fix/i18n-retest`); their URLs 308-redirect to `/en`. Kept as history. Do not bring these locales back without the lead.
+
+
 <frozen-after-approval reason="human-owned intent — do not modify unless human renegotiates">
 
 ## Intent
