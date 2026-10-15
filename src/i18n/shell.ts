@@ -39,6 +39,7 @@ export interface ShellDictionary {
     aboutUs: string;
     offices: string;
     privacy: string;
+    copyright: string;
   };
   notFound: {
     metaTitle: string;
@@ -79,6 +80,8 @@ const en: ShellDictionary = {
     aboutUs: "About us",
     offices: "Offices",
     privacy: "Privacy policy",
+    copyright:
+      "Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved.",
   },
   notFound: {
     metaTitle: "Page not found | XionTech",
@@ -119,6 +122,8 @@ const vi: ShellDictionary = {
     aboutUs: "Về chúng tôi",
     offices: "Văn phòng",
     privacy: "Chính sách bảo mật",
+    copyright:
+      "Bản quyền © 2026 XionTech Joint Stock Company. Bảo lưu mọi quyền.",
   },
   notFound: {
     metaTitle: "Không tìm thấy trang | XionTech",

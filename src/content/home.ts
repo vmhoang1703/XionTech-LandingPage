@@ -16,13 +16,12 @@ import {
 // App names and badges come from apps.ts (E-A2), the one source for them.
 const parentHub = appById("parent-hub");
 const staffHub = appById("staff-hub");
-const iot = appById("iot");
 const aiTutor = appById("ai-tutor");
 
 export const homeMeta = {
   title: "XionTech | School Platforms & Software Outsourcing in Vietnam",
   description:
-    "XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam.",
+    "XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam.",
 };
 
 export const homeHero = {
@@ -41,7 +40,7 @@ export const homeHero = {
 export const homeMetaVi: typeof homeMeta = {
   title: "XionTech | Nền tảng trường học và gia công phần mềm tại Việt Nam",
   description:
-    "XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu: nền tảng trường học (Parent Hub, Staff Hub, IoT, AI Tutor) và gia công phần mềm từ Việt Nam.",
+    "XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu: nền tảng trường học (Parent Hub, Staff Hub, AI Tutor) và gia công phần mềm từ Việt Nam.",
 };
 
 export const homeHeroVi: Localized<typeof homeHero> = {
@@ -99,14 +98,13 @@ export const homeDoors = {
   label: "What we do",
   products: {
     href: "/products",
-    badges: [parentHub, staffHub, iot, aiTutor],
+    badges: [parentHub, staffHub, aiTutor],
     label: "Products for schools",
     title: "Platforms in one ecosystem",
     line: "An integrated, AI-powered ecosystem that enhances learning, simplifies school administration and keeps students engaged",
     chips: [
       parentHub.shortName,
       staffHub.shortName,
-      iot.shortName,
       aiTutor.shortName,
     ],
   },
@@ -230,8 +228,8 @@ export const homeOutcomesVi: Localized<typeof homeOutcomes> = {
 // placeholder, so the cards do not use taglines.
 export const homeApps = {
   title: "One connected school",
-  lede: "Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management.",
-  apps: [parentHub, staffHub, iot, aiTutor].map((app) => ({
+  lede: "Bring your entire school community together with connected solutions for parents, staff and students; all designed to simplify everyday school management.",
+  apps: [parentHub, staffHub, aiTutor].map((app) => ({
     app,
     href: `/products#${app.anchor}`,
     madeFor: productDetails[app.id].madeFor,
@@ -245,7 +243,7 @@ export const homeApps = {
 // The "made for" lines and features come from products.ts in Vietnamese.
 export const homeAppsVi: typeof homeApps = {
   title: "Một ngôi trường kết nối",
-  lede: "Gắn kết toàn bộ cộng đồng nhà trường với các giải pháp kết nối dành cho phụ huynh, nhân viên, học sinh và vận hành khuôn viên; tất cả được thiết kế để đơn giản hóa công tác quản lý trường học hằng ngày.",
+  lede: "Gắn kết toàn bộ cộng đồng nhà trường với các giải pháp kết nối dành cho phụ huynh, nhân viên và học sinh; tất cả được thiết kế để đơn giản hóa công tác quản lý trường học hằng ngày.",
   apps: homeApps.apps.map((card) => ({
     ...card,
     madeFor: productDetailsVi[card.app.id].madeFor,

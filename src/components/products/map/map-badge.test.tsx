@@ -13,7 +13,7 @@ describe("MapBadge", () => {
     expect(badge?.querySelector("svg")).toBeNull();
   });
 
-  it.each(["Cpu", "Sparkle"] as const)("shows the %s icon", (icon) => {
+  it.each(["Sparkle"] as const)("shows the %s icon", (icon) => {
     const { container } = render(<MapBadge badge={{ kind: "icon", icon }} />);
     const badge = container.querySelector(".map-badge");
     expect(badge?.getAttribute("aria-hidden")).toBe("true");

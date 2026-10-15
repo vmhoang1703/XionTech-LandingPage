@@ -35,13 +35,43 @@ export function shareOf(index: number) {
   return Math.round(share * 10000) / 10000;
 }
 
-// Trees in the open ground between the cards.
+// Groves of mixed kinds in the open ground, clear of the road, the pins, the cards
+// and the Start and Finish labels: [x, y of the foot, size, kind].
 export const TREES = [
-  [610, 230],
-  [660, 254],
-  [740, 226],
-  [150, 640],
-  [194, 666],
-  [1150, 640],
-  [1194, 666],
+  [618, 262, 1, "round"],
+  [662, 286, 0.8, "birch"],
+  [700, 266, 0.7, "poplar"],
+  [742, 258, 0.95, "pine"],
+  [96, 236, 0.85, "pine"],
+  [134, 258, 0.75, "blossom"],
+  [150, 676, 1, "round"],
+  [190, 698, 0.75, "poplar"],
+  [238, 684, 0.8, "pine"],
+  [1150, 676, 0.95, "pine"],
+  [1196, 700, 0.9, "blossom"],
+  [1240, 690, 0.75, "birch"],
+  [1292, 262, 0.9, "round"],
+  [1336, 284, 0.8, "poplar"],
 ] as const;
+
+// Each stop's place along the drawn road, 0 to 1 of its length, measured on
+// the path itself (the road's x runs one way, so a search on x finds the
+// length at a stop). Without SVG geometry (server, jsdom) it falls back to the
+// stops' share of the road's width.
+export function stopShares(path: SVGPathElement | null | undefined) {
+  const fallback = POINTS.map((_, i) => shareOf(i));
+  if (!path || typeof path.getTotalLength !== "function") return fallback;
+  const total = path.getTotalLength();
+  if (Number.isNaN(total) || total <= 0) return fallback;
+  return POINTS.map(({ x }) => {
+    let lo = 0;
+    let hi = total;
+    for (let step = 0; step < 40; step += 1) {
+      const mid = (lo + hi) / 2;
+      if (path.getPointAtLength(mid).x < x) lo = mid;
+      else hi = mid;
+    }
+    return Math.round(((lo + hi) / 2 / total) * 1e6) / 1e6;
+  });
+}
+

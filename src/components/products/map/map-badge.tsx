@@ -1,9 +1,8 @@
 import type { Icon } from "@phosphor-icons/react";
-import { CpuIcon, SparkleIcon } from "@phosphor-icons/react/ssr";
+import { SparkleIcon } from "@phosphor-icons/react/ssr";
 import type { AppBadge } from "@/content/apps";
 
 const BADGE_ICONS: Record<Extract<AppBadge, { kind: "icon" }>["icon"], Icon> = {
-  Cpu: CpuIcon,
   Sparkle: SparkleIcon,
 };
 

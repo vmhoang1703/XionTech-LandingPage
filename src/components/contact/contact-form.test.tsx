@@ -185,16 +185,12 @@ describe("ContactForm", () => {
     }
     expect(
       screen.getAllByRole("checkbox").map((box) => box.getAttribute("value")),
-    ).toEqual(["Parent Hub", "Staff Hub", "IoT"]);
+    ).toEqual(["Parent Hub", "Staff Hub"]);
     expect(screen.getByRole("checkbox", { name: "Parent Hub" })).toHaveProperty(
       "checked",
       true,
     );
     expect(screen.getByRole("checkbox", { name: "Staff Hub" })).toHaveProperty(
-      "checked",
-      false,
-    );
-    expect(screen.getByRole("checkbox", { name: "IoT" })).toHaveProperty(
       "checked",
       false,
     );

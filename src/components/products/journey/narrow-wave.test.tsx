@@ -40,8 +40,8 @@ describe("reachOf", () => {
     expect(reachOf(WAVE, new Set([0, 1]), true)).toBe(400);
   });
 
-  it("draws on to Finish once the last stop is shown", () => {
-    expect(reachOf(WAVE, new Set([2]), true)).toBe(800);
+  it("draws on to Finish's pin once the last stop is shown", () => {
+    expect(reachOf(WAVE, new Set([2]), true)).toBe(WAVE.points.at(-1)!.y);
   });
 });
 

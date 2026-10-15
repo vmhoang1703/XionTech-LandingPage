@@ -32,7 +32,6 @@ const {
   generateMetadata,
   generateStaticParams,
 } = await import("./layout");
-const { siteFooter } = await import("@/content/site-footer");
 const { LocaleLink } = await import("@/components/layout/locale-link");
 
 function params(locale: string) {
@@ -122,7 +121,9 @@ describe("RootLayout", () => {
     const main = container.querySelector("main#main");
     const footer = container.querySelector("footer");
     expect(footer).not.toBeNull();
-    expect(footer?.textContent).toContain(siteFooter.copyright);
+    expect(footer?.textContent).toContain(
+      "Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved.",
+    );
     expect(main?.contains(footer!)).toBe(false);
     expect(
       main!.compareDocumentPosition(footer!) & Node.DOCUMENT_POSITION_FOLLOWING,

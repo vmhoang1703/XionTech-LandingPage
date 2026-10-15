@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { PRIVACY } from "@/content/privacy";
 import PrivacyPage, { generateMetadata } from "./page";
@@ -7,13 +7,26 @@ const metadata = await generateMetadata({
   params: Promise.resolve({ locale: "en" }),
 });
 
-// Website copy v3: the outline-only sections (who we are, transfers, cookies,
-// rights) are off the page until the legal text exists.
+// The XionTech Privacy Policy, Document Version 1.1: its top sections in order.
 const SECTION_HEADINGS = [
-  "What we collect",
-  "How we use it",
-  "Who we share it with",
-  "How long we keep it",
+  "Introduction",
+  "Company Information",
+  "Service Scope and Ownership",
+  "Covered Services",
+  "Information We Collect",
+  "How We Use Your Information",
+  "Information Sharing and Disclosure",
+  "Data Retention",
+  "Your Rights and Choices",
+  "Children’s Privacy",
+  "International Data Transfers",
+  "Security Measures",
+  "Cookies and Tracking Technologies",
+  "Artificial Intelligence and Automated Processing",
+  "Service-Specific Privacy Information",
+  "Compliance Information",
+  "Contact Information",
+  "Changes to This Policy",
 ];
 
 const renderPage = async (locale = "en") =>
@@ -24,7 +37,7 @@ describe("Privacy page", () => {
     await renderPage();
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings).toHaveLength(1);
-    expect(headings[0].textContent).toBe("Privacy policy");
+    expect(headings[0].textContent).toBe("Privacy Policy");
   });
 
   it("renders the breadcrumbs with a Home link", async () => {
@@ -36,7 +49,14 @@ describe("Privacy page", () => {
     ).toBe("/en");
   });
 
-  it("renders the four sections in order", async () => {
+  it("shows the update, effective date and version under the title", async () => {
+    const { container } = await renderPage();
+    expect(container.querySelector(".policy-dates")?.textContent).toBe(
+      "Last update: July 10, 2025 · Effective Date: July 10, 2025 · Document Version: 1.1",
+    );
+  });
+
+  it("renders the policy sections in order as H2s", async () => {
     await renderPage();
     const h2 = screen
       .getAllByRole("heading", { level: 2 })
@@ -44,19 +64,47 @@ describe("Privacy page", () => {
     expect(h2).toEqual(SECTION_HEADINGS);
   });
 
-  it("shows no lede, outline note or [Placeholder] text", async () => {
-    const { container } = await renderPage();
-    expect(container.querySelector(".lede")).toBeNull();
-    expect(container.querySelector(".sample")).toBeNull();
-    expect(container.textContent).not.toContain("[Placeholder");
+  it("renders subsections as H3s", async () => {
+    await renderPage();
+    const h3 = screen
+      .getAllByRole("heading", { level: 3 })
+      .map((heading) => heading.textContent);
+    expect(h3).toContain("Current Ownership");
+    expect(h3).toContain("1. Information You Provide Directly");
+    expect(h3).toContain("Technical Safeguards");
   });
 
-  it("says in the retention section that data is kept with no time limit", async () => {
+  it("links every section from the contents list", async () => {
+    await renderPage();
+    const toc = screen.getByRole("navigation", { name: "On this page" });
+    const links = within(toc).getAllByRole("link");
+    expect(links.map((link) => link.textContent)).toEqual(SECTION_HEADINGS);
+    for (const link of links) {
+      const id = link.getAttribute("href")?.slice(1) ?? "";
+      expect(document.getElementById(id)).not.toBeNull();
+    }
+  });
+
+  it("makes the emails and phone number mailto: and tel: links", async () => {
+    await renderPage();
+    const hrefs = screen
+      .getAllByRole("link")
+      .map((link) => link.getAttribute("href"));
+    expect(hrefs).toContain("mailto:contact@xiontechs.com");
+    expect(hrefs).toContain("mailto:itsupport@xiontechs.com");
+    expect(hrefs).toContain("tel:+84908107552");
+  });
+
+  it("shows the company facts and leaves out the stray QRCode word", async () => {
     const { container } = await renderPage();
-    const section = container.querySelector("#privacy-retention");
-    expect(section?.textContent).toContain(
-      "Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit.",
-    );
+    const facts = container.querySelector("#company-information dl");
+    expect(facts?.textContent).toContain("Business License Number0318883639");
+    expect(container.textContent).not.toContain("QRCode");
+  });
+
+  it("does not show the English-language note on English", async () => {
+    const { container } = await renderPage();
+    expect(container.querySelector(".policy-lang-note")).toBeNull();
   });
 
   it("has no capture band and no main element", async () => {
@@ -67,29 +115,35 @@ describe("Privacy page", () => {
 
   it("sets the metadata title and description", () => {
     expect(metadata.title).toBe("Privacy Policy | XionTech");
-    expect(metadata.description).toBe(
-      "How XionTech uses the personal data you share through our forms.",
-    );
+    expect(metadata.description).toBe(PRIVACY.metaDescription);
   });
 });
 
 describe("Privacy page in Vietnamese", () => {
-  it("shows the Vietnamese title and breadcrumbs, with no lede", async () => {
-    await renderPage("vi");
+  it("shows the Vietnamese title and the English-language note, with the policy in English", async () => {
+    const { container } = await renderPage("vi");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
       "Chính sách bảo mật",
     );
     expect(
       screen.getByRole("navigation", { name: "Đường dẫn" }).textContent,
     ).toBe("Trang chủ/Chính sách bảo mật");
-    expect(document.querySelector(".lede")).toBeNull();
+    expect(container.querySelector(".policy-lang-note")?.textContent).toBe(
+      "Chính sách này được cung cấp bằng tiếng Anh.",
+    );
+    expect(container.querySelector("article")?.getAttribute("lang")).toBe(
+      "en",
+    );
+    expect(screen.getAllByRole("heading", { level: 2 })[0].textContent).toBe(
+      "Introduction",
+    );
   });
 });
 
 it("falls back to English for an unknown locale", async () => {
   await renderPage("xx");
   expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-    "Privacy policy",
+    "Privacy Policy",
   );
 });
 

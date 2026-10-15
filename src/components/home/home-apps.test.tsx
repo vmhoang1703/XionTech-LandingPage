@@ -31,18 +31,17 @@ describe("HomeApps", () => {
     expect(appCards().map((card) => card.getAttribute("href"))).toEqual([
       "/en/products#pxp",
       "/en/products#sxp",
-      "/en/products#iot",
       "/en/products#ai-tutor",
     ]);
     expect(
       appCards().map((card) => card.querySelector("h3")?.textContent),
-    ).toEqual(["Parent Hub", "Staff Hub", "IoT Device Management", "AI Tutor"]);
+    ).toEqual(["Parent Hub", "Staff Hub", "AI Tutor"]);
   });
 
   it("shows each app’s tagline and its first two real features", () => {
     render(<HomeApps />);
 
-    const [parentHub, , , aiTutor] = appCards();
+    const [parentHub, , aiTutor] = appCards();
     expect(parentHub.querySelector(".app-for")?.textContent).toBe(
       appById("parent-hub").tagline,
     );

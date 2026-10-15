@@ -3,13 +3,13 @@
 import { ArrowRightIcon, FlagIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import {
-  APPS,
   APP_TAGLINES,
   appById,
   appTaglinesVi,
   type AppId,
 } from "@/content/apps";
 import { useLocalized } from "@/components/layout/locale-link";
+import { narrowGeometry, stepStops, tourGeometry } from "./road-steps";
 import {
   journeyBoard,
   journeyBoardVi,
@@ -20,6 +20,7 @@ import {
 } from "@/content/products";
 import { RoadStopDialog, type RoadEndId } from "../roadmap/road-stop-dialog";
 import { NarrowWave, useWave } from "./narrow-wave";
+import { RoadTree } from "./road-tree";
 import {
   FINISH,
   H,
@@ -29,7 +30,7 @@ import {
   START,
   TREES,
   W,
-  shareOf,
+  stopShares,
 } from "./road-geometry";
 
 // The products as a 2D roadmap: a winding road with a pin per product and its
@@ -96,18 +97,12 @@ function revealStops(map: HTMLElement, show: (index: number) => void) {
 const STOPS = productRoad.stops;
 const LAST = STOPS.length - 1;
 const FINISH_AT = 0.7;
-// An app with no stop on the road: its old deep link (/products#iot) lands at
-// the start of the roadmap.
-const ALIASES = APPS.filter(
-  (app) => !STOPS.some((stop) => stop === app.id),
-).map((app) => app.anchor);
 
 // The tour: the active stop is the step of the track the pinned stage has
 // travelled into (each stop an equal share). Past FINISH_AT of the last step
 // (after its anchor, mid-step, where a deep link lands) the road is drawn on
-// to Finish. Calls `show` when either
-// changes. Native scroll only: this reads the scroll position, it never sets
-// it. Returns the cleanup.
+// to Finish. Calls `show` when either changes. Native scroll only: this reads
+// the scroll position, it never sets it. Returns the cleanup.
 function followScroll(
   map: HTMLElement,
   show: (index: number, finished: boolean) => void,
@@ -242,16 +237,6 @@ export function RoadMap() {
     setOpen(index);
     setSelected(index);
   };
-  // Start or Finish in the modal: the modal has closed, so the page shows
-  // that end of the road.
-  const showEnd = (end: RoadEndId) => {
-    const flag = stage.current?.querySelector(`[data-end="${end}"]`);
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    flag?.scrollIntoView({
-      block: "center",
-      behavior: still ? "instant" : "smooth",
-    });
-  };
   // The tour leaves the selection alone while the modal is open (a wheel
   // over its backdrop still scrolls the page).
   const openRef = useRef(open);
@@ -266,8 +251,13 @@ export function RoadMap() {
   const [roadMoving, setRoadMoving] = useState(false);
   // The tour has passed the last stop: the road is drawn on to Finish.
   const [finished, setFinished] = useState(false);
+  // The road's length up to each dot (0 to 1), measured on the drawn path so
+  // each step ends exactly at its dot.
+  const [shares, setShares] = useState<readonly number[]>(() =>
+    stopShares(null),
+  );
   let share = 0;
-  if (roadMoving) share = finished ? 1 : shareOf(active);
+  if (roadMoving) share = finished ? 1 : (shares[active] ?? 0);
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
   const mask = useId();
@@ -281,11 +271,19 @@ export function RoadMap() {
     const layout = matchMedia(NARROW);
     const wide: Mode = canTour() ? "tour" : "static";
     setMode(layout.matches ? "armed" : wide);
-    const stop = layout.matches
+    const stopRevealing = layout.matches
       ? revealStops(map, (i) =>
           setShown((prev) => (prev.has(i) ? prev : new Set(prev).add(i))),
         )
       : () => undefined;
+    // One gesture, one stop, down the narrow roadmap too.
+    const stopStepping = layout.matches
+      ? stepStops(narrowGeometry(map), () => openRef.current !== null, false)
+      : () => undefined;
+    const stop = () => {
+      stopRevealing();
+      stopStepping();
+    };
     // A resize or rotation across the breakpoint: show it all at once
     // ("static": nothing hidden, nothing moves, no tour).
     const showAll = () => {
@@ -302,20 +300,33 @@ export function RoadMap() {
   useEffect(() => {
     const map = ref.current;
     if (!tour || !map) return;
+    // The road's length up to each dot, measured on the drawn path (again on
+    // resize).
+    const path = map.querySelector<SVGPathElement>(".rm-draw");
+    const remeasure = () => setShares(stopShares(path));
+    remeasure();
+    addEventListener("resize", remeasure);
     const stopFollowing = followScroll(map, (i, end) => {
       setActive(i);
       setFinished(end);
       if (openRef.current === null) setSelected(i);
     });
     landHash(map);
+    const stopStepping = stepStops(
+      tourGeometry(map, STOPS.length),
+      () => openRef.current !== null,
+      true,
+    );
     // Two frames: the first paints the road empty at Start, still; then it
-    // draws on to the active stop.
+    // draws on to the active stop's dot.
     let frame = requestAnimationFrame(() => {
       frame = requestAnimationFrame(() => setRoadMoving(true));
     });
     return () => {
       cancelAnimationFrame(frame);
       stopFollowing();
+      stopStepping();
+      removeEventListener("resize", remeasure);
       // Leaving the tour: no pin stays selected by it, the road stops moving.
       setSelected(null);
       setRoadMoving(false);
@@ -339,11 +350,6 @@ export function RoadMap() {
           : undefined
       }
     >
-      {/* The anchors of apps with no stop: at the start of the roadmap. */}
-      {ALIASES.map((anchor) => (
-        <span key={anchor} id={anchor} className="rm-alias" />
-      ))}
-
       {/* The tour's track: one step per stop. A stop's step holds its
           anchor, where that stop is active. */}
       {tour
@@ -389,15 +395,8 @@ export function RoadMap() {
             rx="380"
             ry="120"
           />
-          {TREES.map(([x, y]) => (
-            <g
-              key={`${x}-${y}`}
-              className="rm-tree"
-              transform={`translate(${x} ${y})`}
-            >
-              <rect x="-3" y="10" width="6" height="16" rx="2" />
-              <circle r="18" />
-            </g>
+          {TREES.map(([x, y, size, kind]) => (
+            <RoadTree key={`${x}-${y}`} x={x} y={y} size={size} kind={kind} />
           ))}
           <g mask={`url(#${mask})`}>
             <path className="rm-edge" d={ROAD} />
@@ -434,7 +433,6 @@ export function RoadMap() {
       <RoadStopDialog
         index={open}
         onMove={choose}
-        onEnd={showEnd}
         onClose={() => setOpen(null)}
       />
     </div>
@@ -500,9 +498,16 @@ function RoadCard({
           <RoadPiece {...bend} />
         </svg>
       ) : null}
-      <span className="rm-pin" aria-hidden="true">
-        {index + 1}
-      </span>
+      {/* The dot on the road: a button of its own that opens the stop. */}
+      <button
+        type="button"
+        className="rm-pin"
+        aria-label={board.viewDetails.replace("{name}", app.shortName)}
+        aria-haspopup="dialog"
+        onClick={onOpen}
+      >
+        <span aria-hidden="true">{index + 1}</span>
+      </button>
 
       <div className="rm-card">
         <p className="rm-kicker">

@@ -167,7 +167,7 @@ describe("LanguageMenu", () => {
       <form>
         <input type="checkbox" name="products" value="pxp" />
         <input type="checkbox" name="products" value="sxp" />
-        <input type="checkbox" name="products" value="iot" />
+        <input type="checkbox" name="products" value="ait" />
         <LanguageMenu label="Language" />
       </form>
     );
@@ -175,7 +175,7 @@ describe("LanguageMenu", () => {
       document.querySelector(`[value="${value}"]`) as HTMLInputElement;
     const { unmount } = render(group());
     box("pxp").checked = true;
-    box("iot").checked = true;
+    box("ait").checked = true;
     openMenu();
     fireEvent.click(screen.getByRole("button", { name: /Tiếng Việt/ }));
     unmount();
@@ -185,7 +185,7 @@ describe("LanguageMenu", () => {
     expect([
       box("pxp").checked,
       box("sxp").checked,
-      box("iot").checked,
+      box("ait").checked,
     ]).toEqual([true, false, true]);
     scrollTo.mockRestore();
   });

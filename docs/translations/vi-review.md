@@ -13,11 +13,11 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 453 strings, 276 AI and 177 prototype.
+**Total:** 441 strings, 273 AI and 168 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
-11 AI, 13 prototype.
+12 AI, 13 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -29,6 +29,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `shell:SHELL.language.label` | Language | Ngôn ngữ |
 | AI | `shell:SHELL.backToTop.label` | Back to top | Lên đầu trang |
 | AI | `shell:SHELL.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh. |
+| AI | `shell:SHELL.footer.copyright` | Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved. | Bản quyền © 2026 XionTech Joint Stock Company. Bảo lưu mọi quyền. |
 | AI | `shell:SHELL.notFound.metaTitle` | Page not found \| XionTech | Không tìm thấy trang \| XionTech |
 | AI | `shell:SHELL.notFound.title` | Page not found | Không tìm thấy trang |
 | AI | `shell:SHELL.notFound.primary` | Back to Home | Về trang chủ |
@@ -56,12 +57,12 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Home
 
-47 AI, 29 prototype.
+45 AI, 28 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `home:homeMetaVi.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| Nền tảng trường học và gia công phần mềm tại Việt Nam |
-| AI | `home:homeMetaVi.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu: nền tảng trường học (Parent Hub, Staff Hub, IoT, AI Tutor) và gia công phần mềm từ Việt Nam. |
+| AI | `home:homeMetaVi.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu: nền tảng trường học (Parent Hub, Staff Hub, AI Tutor) và gia công phần mềm từ Việt Nam. |
 | AI | `home:homeHeroVi.title.lines[0]` | Build smarter. | Xây dựng thông minh hơn. |
 | AI | `home:homeHeroVi.title.lines[1]` | Ship faster. | Phát hành nhanh hơn. |
 | AI | `home:homeHeroVi.sub` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh. |
@@ -90,14 +91,12 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `home:homeOutcomesVi.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | Xây dựng giải pháp ứng dụng AI, tự động hóa quy trình và biến dữ liệu kinh doanh thành thông tin hữu ích, hỗ trợ ra quyết định thông minh hơn. |
 | AI | `home:homeOutcomesVi.cta.label` | Let's build together | Cùng nhau xây dựng |
 | AI | `home:homeAppsVi.title` | One connected school | Một ngôi trường kết nối |
-| AI | `home:homeAppsVi.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | Gắn kết toàn bộ cộng đồng nhà trường với các giải pháp kết nối dành cho phụ huynh, nhân viên, học sinh và vận hành khuôn viên; tất cả được thiết kế để đơn giản hóa công tác quản lý trường học hằng ngày. |
+| AI | `home:homeAppsVi.lede` | Bring your entire school community together with connected solutions for parents, staff and students; all designed to simplify everyday school management. | Gắn kết toàn bộ cộng đồng nhà trường với các giải pháp kết nối dành cho phụ huynh, nhân viên và học sinh; tất cả được thiết kế để đơn giản hóa công tác quản lý trường học hằng ngày. |
 | AI | `home:homeAppsVi.apps[0].features[0]` | Real-time arrival alerts | Thông báo đến trường theo thời gian thực |
 | AI | `home:homeAppsVi.apps[0].features[1]` | Published grades and feedback | Điểm số và nhận xét đã công bố |
 | AI | `home:homeAppsVi.apps[1].features[0]` | Attendance and student records | Điểm danh và hồ sơ học sinh |
-| AI | `home:homeAppsVi.apps[2].features[0]` | Centralized device management | Quản lý thiết bị tập trung |
-| AI | `home:homeAppsVi.apps[2].features[1]` | Scheduled lighting and climate controls | Điều khiển ánh sáng và điều hòa theo lịch |
-| AI | `home:homeAppsVi.apps[3].features[0]` | Skill-level understanding checks | Kiểm tra mức độ hiểu theo từng kỹ năng |
-| AI | `home:homeAppsVi.apps[3].features[1]` | Personalized step-by-step hints | Gợi ý từng bước theo từng học sinh |
+| AI | `home:homeAppsVi.apps[2].features[0]` | Skill-level understanding checks | Kiểm tra mức độ hiểu theo từng kỹ năng |
+| AI | `home:homeAppsVi.apps[2].features[1]` | Personalized step-by-step hints | Gợi ý từng bước theo từng học sinh |
 | AI | `home:homeFaqVi.title` | Before you reach out | Trước khi bạn liên hệ |
 | AI | `home:homeFaqVi.items[0].question` | How can our school try Parent Hub or Staff Hub? | Trường chúng tôi có thể dùng thử Parent Hub hoặc Staff Hub bằng cách nào? |
 | AI | `home:homeFaqVi.items[0].answer` | Leave your work email on the Products page and we walk you through the apps using scenarios from your own school. | Hãy để lại email công việc trên trang Sản phẩm, chúng tôi sẽ giới thiệu các ứng dụng qua những tình huống từ chính trường của bạn. |
@@ -131,21 +130,19 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `home:homeAppsVi.apps[0].madeFor` | Parents and families | Phụ huynh và gia đình |
 | Prototype | `home:homeAppsVi.apps[1].madeFor` | Staff, teachers and school leaders | Nhân viên, giáo viên và lãnh đạo nhà trường |
 | Prototype | `home:homeAppsVi.apps[1].features[1]` | Classes, timetables and grades | Lớp, thời khóa biểu và điểm số |
-| Prototype | `home:homeAppsVi.apps[2].madeFor` | School operations and facilities teams | Đội vận hành và cơ sở vật chất của trường |
-| Prototype | `home:homeAppsVi.apps[3].madeFor` | Students, with teachers alongside | Học sinh, cùng giáo viên đồng hành |
+| Prototype | `home:homeAppsVi.apps[2].madeFor` | Students, with teachers alongside | Học sinh, cùng giáo viên đồng hành |
 | Prototype | `home:homeAppsVi.link.label` | Explore products | Khám phá sản phẩm |
 | Prototype | `home:homeFaqVi.lede` | Straight answers about our products, our services and how we work. | Câu trả lời thẳng thắn về sản phẩm, dịch vụ và cách chúng tôi làm việc. |
 | Prototype | `home:homeFaqVi.items[1].question` | How do you work across time zones? | Các bạn làm việc qua nhiều múi giờ như thế nào? |
 
 ## Apps (Home and Products)
 
-4 AI, 0 prototype.
+3 AI, 0 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `apps:appTaglinesVi.parent-hub` | Keep parents informed and connected to their child’s school life. | Giúp phụ huynh luôn nắm bắt thông tin và gắn kết với đời sống học đường của con. |
 | AI | `apps:appTaglinesVi.staff-hub` | Bring daily school operations into one connected workspace. | Đưa mọi hoạt động vận hành hằng ngày của nhà trường vào một không gian làm việc kết nối. |
-| AI | `apps:appTaglinesVi.iot` | Simplify how schools manage connected campus technology. | Đơn giản hóa cách nhà trường quản lý công nghệ trong khuôn viên kết nối. |
 | AI | `apps:appTaglinesVi.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | Giúp học sinh hiểu lỗi sai và tự tin hơn qua việc học có hướng dẫn. |
 
 ## Values (Home and About)
@@ -200,23 +197,23 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Products
 
-19 AI, 15 prototype.
+19 AI, 11 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `products:productsMetaVi.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | Ứng dụng cho trường học: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech |
-| AI | `products:productsMetaVi.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | Parent Hub cho phụ huynh, Staff Hub cho nhân viên, giáo viên và lãnh đạo, và IoT Device Management cho khuôn viên trường. Các ứng dụng trường học kết nối từ XionTech. |
+| AI | `products:productsMetaVi.title` | School Apps: Parent Hub, Staff Hub & AI Tutor \| XionTech | Ứng dụng cho trường học: Parent Hub, Staff Hub & AI Tutor \| XionTech |
+| AI | `products:productsMetaVi.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and AI Tutor for students. Connected school apps from XionTech. | Parent Hub cho phụ huynh, Staff Hub cho nhân viên, giáo viên và lãnh đạo, và AI Tutor cho học sinh. Các ứng dụng trường học kết nối từ XionTech. |
 | AI | `products:productDetailsVi.parent-hub.features[0].title` | Real-time arrival alerts | Thông báo đến trường theo thời gian thực |
 | AI | `products:productDetailsVi.parent-hub.features[1].title` | Published grades and feedback | Điểm số và nhận xét đã công bố |
 | AI | `products:productDetailsVi.staff-hub.features[0].title` | Attendance and student records | Điểm danh và hồ sơ học sinh |
-| AI | `products:productDetailsVi.iot.features[0].title` | Centralized device management | Quản lý thiết bị tập trung |
-| AI | `products:productDetailsVi.iot.features[1].title` | Scheduled lighting and climate controls | Điều khiển ánh sáng và điều hòa theo lịch |
 | AI | `products:productDetailsVi.ai-tutor.features[0].title` | Skill-level understanding checks | Kiểm tra mức độ hiểu theo từng kỹ năng |
 | AI | `products:productDetailsVi.ai-tutor.features[1].title` | Personalized step-by-step hints | Gợi ý từng bước theo từng học sinh |
 | AI | `products:journeyMapVi.intro.title` | Built apart. Better together | Xây dựng riêng. Mạnh hơn khi kết nối |
+| AI | `products:journeyMapVi.intro.lede` | A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem. | Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học và vận hành nhà trường vào một hệ sinh thái chung. |
 | AI | `products:productRoadVi.start` | Start | Bắt đầu |
 | AI | `products:productRoadVi.finish` | Finish | Kết thúc |
 | AI | `products:journeyBoardVi.details` | Details | Chi tiết |
+| AI | `products:journeyBoardVi.viewDetails` | View details: {name} | Xem chi tiết: {name} |
 | AI | `products:journeyBoardVi.lanes[0].label` | Student | Học sinh |
 | AI | `products:journeyBoardVi.lanes[1].label` | Teacher and staff | Giáo viên và nhân viên |
 | AI | `products:journeyBoardVi.lanes[2].label` | Parent | Phụ huynh |
@@ -232,12 +229,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `products:productDetailsVi.staff-hub.features[1].title` | Classes, timetables and grades | Lớp, thời khóa biểu và điểm số |
 | Prototype | `products:productDetailsVi.staff-hub.features[2].title` | Messages to parents through Parent Hub | Gửi tin đến phụ huynh qua Parent Hub |
 | Prototype | `products:productDetailsVi.staff-hub.features[3].title` | Leader dashboards for today's priorities | Bảng điều khiển cho việc cần xử lý hôm nay |
-| Prototype | `products:productDetailsVi.iot.madeFor` | School operations and facilities teams | Đội vận hành và cơ sở vật chất của trường |
-| Prototype | `products:productDetailsVi.iot.features[2].title` | Doors and zones managed centrally | Quản lý cửa và khu vực tập trung |
-| Prototype | `products:productDetailsVi.iot.features[3].title` | Energy use across the campus | Mức dùng năng lượng toàn trường |
 | Prototype | `products:productDetailsVi.ai-tutor.madeFor` | Students, with teachers alongside | Học sinh, cùng giáo viên đồng hành |
 | Prototype | `products:productDetailsVi.ai-tutor.features[2].title` | Mastery only when you can do it alone | Chỉ thành thạo khi tự làm được |
-| Prototype | `products:journeyMapVi.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung. |
 
 ## Services
 
@@ -475,24 +468,19 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Privacy
 
-8 AI, 6 prototype.
+7 AI, 2 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `privacy:PRIVACY_VI.metaTitle` | Privacy Policy \| XionTech | Chính sách bảo mật \| XionTech |
-| AI | `privacy:PRIVACY_VI.metaDescription` | How XionTech uses the personal data you share through our forms. | Cách XionTech sử dụng dữ liệu cá nhân bạn chia sẻ qua các biểu mẫu của chúng tôi. |
+| AI | `privacy:PRIVACY_VI.metaDescription` | How XionTech Joint Stock Company collects, uses and protects your information when you use our digital products, applications, websites and IT services. | Cách XionTech Joint Stock Company thu thập, sử dụng và bảo vệ thông tin của bạn khi bạn dùng sản phẩm số, ứng dụng, website và dịch vụ CNTT của chúng tôi. |
 | AI | `privacy:PRIVACY_VI.breadcrumbLabel` | Breadcrumb | Đường dẫn |
+| AI | `privacy:PRIVACY_VI.title` | Privacy Policy | Chính sách bảo mật |
 | AI | `privacy:PRIVACY_VI.bodyLabel` | Policy | Chính sách |
-| AI | `privacy:PRIVACY_VI.retentionDecided`<br>`privacy:PRIVACY_VI.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | Yêu cầu liên hệ và đặt lịch demo, email đăng ký nhận tin, hồ sơ ứng tuyển và CV được lưu giữ không giới hạn thời gian. |
-| AI | `privacy:PRIVACY_VI.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | Email, họ tên, số điện thoại, tổ chức, vai trò và mọi nội dung bạn gửi qua biểu mẫu của chúng tôi, bao gồm CV nếu bạn ứng tuyển. |
-| AI | `privacy:PRIVACY_VI.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | Chỉ để trả lời yêu cầu của bạn hoặc xét hồ sơ ứng tuyển và CV của bạn. |
-| AI | `privacy:PRIVACY_VI.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | Các nhà cung cấp dịch vụ xử lý dữ liệu cho chúng tôi: Gmail (gửi tin nhắn biểu mẫu đến hộp thư công ty), Upstash (bộ đếm giới hạn tần suất tạo từ giá trị đã băm), Vercel (lưu trữ website và lưu trữ CV riêng tư), Google Fonts (phông chữ cho các trang tiếng Nhật, tiếng Hàn và tiếng Trung). |
+| AI | `privacy:PRIVACY_VI.tocLabel` | On this page | Trong trang này |
+| AI | `privacy:PRIVACY_VI.languageNote` | This policy is provided in English. | Chính sách này được cung cấp bằng tiếng Anh. |
 | Prototype | `privacy:PRIVACY_VI.breadcrumbHome` | Home | Trang chủ |
-| Prototype | `privacy:PRIVACY_VI.breadcrumbCurrent`<br>`privacy:PRIVACY_VI.title` | Privacy policy | Chính sách bảo mật |
-| Prototype | `privacy:PRIVACY_VI.sections[0].heading` | What we collect | Chúng tôi thu thập gì |
-| Prototype | `privacy:PRIVACY_VI.sections[1].heading` | How we use it | Chúng tôi dùng để làm gì |
-| Prototype | `privacy:PRIVACY_VI.sections[2].heading` | Who we share it with | Chúng tôi chia sẻ với ai |
-| Prototype | `privacy:PRIVACY_VI.sections[3].heading` | How long we keep it | Lưu trữ bao lâu |
+| Prototype | `privacy:PRIVACY_VI.breadcrumbCurrent` | Privacy policy | Chính sách bảo mật |
 
 ## Contact, demo form and capture band
 

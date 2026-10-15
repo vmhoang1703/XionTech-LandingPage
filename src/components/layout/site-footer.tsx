@@ -149,7 +149,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
             covered "GET IT DONE" at the end of the page (i18n retest). */}
         <div className="border-on-navy-border text-body-sm mt-13 flex flex-wrap items-center justify-between gap-3 border-t pt-6 max-[1439px]:pr-16">
           <span>
-            {siteFooter.copyright} ·{" "}
+            {siteFooter.copyright(t)} ·{" "}
             <Link
               href={localeHref(locale, siteFooter.privacy.href)}
               className="inline-flex min-h-6 items-center hover:text-white pointer-coarse:min-h-11"
