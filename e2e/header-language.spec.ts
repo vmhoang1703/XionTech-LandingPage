@@ -30,9 +30,17 @@ for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
         expect(lastIsLanguage).toBe(true);
 
         const pill = header.locator(":scope > div").first();
-        const overflow = await pill.evaluate(
-          (el) => el.scrollWidth - el.clientWidth,
-        );
+        // The bar's own items must stay inside the pill. The menu sheet is
+        // drawn 1px wider than the pill on purpose (globals.css, .mm-sheet).
+        const overflow = await pill.evaluate((el) => {
+          const edge = el.getBoundingClientRect().right;
+          return Math.max(
+            0,
+            ...[...el.children]
+              .filter((item) => !item.classList.contains("mm-sheet"))
+              .map((item) => item.getBoundingClientRect().right - edge),
+          );
+        });
         expect(overflow).toBeLessThanOrEqual(0);
         const box = await language.boundingBox();
         expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(width);
