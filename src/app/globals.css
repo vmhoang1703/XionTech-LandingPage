@@ -3796,6 +3796,107 @@
     }
   }
 
+  /* The road's Start and Finish markers (road-map.tsx, RoadEnd): a flag pin
+     and its name. Narrow: a row above the first stop and below the last, with
+     a stub of road joining it to them. Wide: on the drawn road's two ends. */
+  .rm-end {
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    align-items: center;
+    min-height: 64px;
+  }
+
+  .rm-end::before {
+    content: "";
+    position: absolute;
+    left: 29px;
+    width: 22px;
+    background: var(--color-navy);
+    box-shadow: 0 0 0 4px var(--color-ice);
+  }
+
+  .rm-end[data-end="start"]::before {
+    top: 50%;
+    bottom: 0;
+  }
+
+  .rm-end[data-end="finish"]::before {
+    top: 0;
+    bottom: 50%;
+  }
+
+  .rm-end-pin {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-navy);
+    border-radius: var(--radius-full);
+    background: var(--color-amber);
+    color: var(--color-navy);
+    box-shadow: 0 6px 16px rgb(22 54 99 / 0.25);
+  }
+
+  .rm-end-pin svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .rm-end-label {
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 1100px) {
+    .rm-end {
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
+      display: block;
+      width: 0;
+      height: 0;
+      min-height: 0;
+    }
+
+    .rm-end::before {
+      content: none;
+    }
+
+    .rm-end-pin {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 52px;
+      height: 52px;
+      translate: -50% -50%;
+    }
+
+    .rm-end-pin svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .rm-end-label {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      padding: 3px 12px;
+      border-radius: var(--radius-full);
+      background: var(--color-white);
+      box-shadow: 0 4px 12px rgb(22 54 99 / 0.12);
+      white-space: nowrap;
+      translate: -50% 0;
+    }
+  }
+
   /* Roadmap reveal (narrow): each stop reveals on its own as it scrolls in
      ([data-in]). Only "armed" clips and scales, never by opacity, so text
      keeps its contrast; only [data-in] moves. "static" (no JavaScript,

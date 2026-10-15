@@ -144,7 +144,7 @@ export function ProductScene({
                 <div className="rd-world">
                   <Ground index={index} />
                   <div className="rd-city" key={index}>
-                    <Device app={app} small={small} />
+                    <Device app={app} small={small} play={play} />
                   </div>
                 </div>
               </div>

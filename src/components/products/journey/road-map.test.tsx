@@ -3,7 +3,7 @@ import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { APPS, appById } from "@/content/apps";
-import { productRoad } from "@/content/products";
+import { productRoad, productRoadVi } from "@/content/products";
 import { siteFooter } from "@/content/site-footer";
 import { globalsCss } from "@/test-utils/css-classes";
 import { RoadMap } from "./road-map";
@@ -423,11 +423,34 @@ describe("RoadMap selection", () => {
       .map((stop, i) => (stop.dataset.selected === "true" ? i : -1))
       .filter((i) => i >= 0);
 
-  it("has no Start or Finish badge on the road", () => {
+  it("marks the road's Start before the first stop and its Finish after the last", () => {
     const { container } = render(<RoadMap />);
-    expect(container.querySelector(".rm-end")).toBeNull();
-    expect(container.textContent).not.toContain(productRoad.start);
-    expect(container.textContent).not.toContain(productRoad.finish);
+    const ends = Array.from(container.querySelectorAll<HTMLElement>(".rm-end"));
+    expect(ends.map((end) => end.dataset.end)).toEqual(["start", "finish"]);
+    expect(ends.map((end) => end.textContent)).toEqual([
+      productRoad.start,
+      productRoad.finish,
+    ]);
+    // Decoration: the stops carry the content.
+    for (const end of ends) {
+      expect(end.getAttribute("aria-hidden")).toBe("true");
+    }
+    const list = container.querySelector(".rm-stops") as HTMLElement;
+    expect(ends[0].nextElementSibling).toBe(list);
+    expect(list.nextElementSibling).toBe(ends[1]);
+  });
+
+  it("speaks Start and Finish in Vietnamese on vi", () => {
+    const { container } = render(
+      <LocaleProvider locale="vi">
+        <RoadMap />
+      </LocaleProvider>,
+    );
+    expect(
+      Array.from(container.querySelectorAll(".rm-end-label")).map(
+        (el) => el.textContent,
+      ),
+    ).toEqual([productRoadVi.start, productRoadVi.finish]);
   });
 
   it("highlights no pin until a card is clicked, then only that one", () => {
@@ -462,7 +485,6 @@ describe("RoadMap selection", () => {
     expect(amberPins.map((r) => r.selector)).toEqual([
       '.rm-stop[data-selected="true"] .rm-pin',
     ]);
-    expect(rules.some((r) => r.selector.includes(".rm-end"))).toBe(false);
   });
 });
 

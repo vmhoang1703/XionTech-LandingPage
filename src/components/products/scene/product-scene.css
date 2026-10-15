@@ -215,7 +215,13 @@
    its shadow. */
 .dv {
   --u: 1.05;
-  --p: calc(var(--u) * 1px);
+  /* On a 1x screen the device is built at --k = 2 times its size and shrunk
+     back (transform below): the scene's slow drift never ends, so the browser
+     rasterises the device once and stretches it, and at twice the size the
+     screenshots stay sharp. A 2x screen already rasterises at twice the size;
+     building it bigger there runs out of GPU memory (the road vanished). */
+  --k: 1;
+  --p: calc(var(--u) * var(--k) * 1px);
   --dv-z: -110;
   --sw: 230;
   --sd: 130;
@@ -226,21 +232,28 @@
   width: 0;
   height: 0;
   transform-style: preserve-3d;
-  transform: translate3d(0, 0, calc(var(--dv-z) * var(--p))) rotateY(6deg);
+  transform: scale3d(calc(1 / var(--k)), calc(1 / var(--k)), calc(1 / var(--k)))
+    translate3d(0, 0, calc(var(--dv-z) * var(--p))) rotateY(6deg);
+}
+
+@media (resolution < 1.5dppx) {
+  .dv {
+    --k: 2;
+  }
 }
 
 .dv[data-kind="laptop"] {
-  --u: 1.12;
-  --dv-z: -270;
-  --sw: 560;
+  --u: 1.05;
+  --dv-z: -400;
+  --sw: 620;
   --sd: 400;
 }
 
 .dv[data-kind="monitor"] {
-  --u: 1.05;
+  --u: 1;
   --dv-z: -150;
-  --sw: 360;
-  --sd: 220;
+  --sw: 420;
+  --sd: 240;
 }
 
 @container rdframe (aspect-ratio < 1) {
@@ -249,11 +262,11 @@
   }
 
   .dv[data-kind="laptop"] {
-    --u: 1.2;
+    --u: 1.1;
   }
 
   .dv[data-kind="monitor"] {
-    --u: 1.05;
+    --u: 0.98;
   }
 
   .rd-orbit {
@@ -319,7 +332,10 @@
 .dv-face {
   padding: var(--B);
   background: var(--color-ink);
-  box-shadow: inset 0 0 0 calc(1.5 * var(--p)) var(--edge);
+  /* A thin metal rim and a hairline of light on its outer edge. */
+  box-shadow:
+    inset 0 0 0 calc(1.5 * var(--p)) var(--edge),
+    inset 0 0 0 calc(2.5 * var(--p)) rgb(255 255 255 / 0.08);
 }
 
 /* A soft reflection across the glass. */
@@ -330,8 +346,9 @@
   border-radius: inherit;
   background: linear-gradient(
     118deg,
-    rgb(255 255 255 / 0.1) 0 32%,
-    transparent 32.2%
+    rgb(255 255 255 / 0.12) 0%,
+    rgb(255 255 255 / 0.04) 30%,
+    transparent 46%
   );
   pointer-events: none;
 }
@@ -369,11 +386,13 @@
   transform: translateX(-50%);
 }
 
+/* The phone's camera: a pill inside the top of the screen. */
 .dv-notch {
-  top: calc(17 * var(--p));
-  width: calc(58 * var(--p));
-  height: calc(17 * var(--p));
-  border-radius: calc(9 * var(--p));
+  top: calc(16 * var(--p));
+  width: calc(56 * var(--p));
+  height: calc(16 * var(--p));
+  border-radius: calc(8 * var(--p));
+  background: #000;
 }
 
 .dv-cam {
@@ -465,15 +484,58 @@
   transform: translateZ(calc(-8 * var(--p))) rotateX(4deg);
 }
 
-/* What a screen shows: a screenshot, or the wireframe (device-screen.tsx). */
+/* What a screen shows: the screenshots, or the wireframe (device-screen.tsx).
+   The screenshots are stacked and the current one fades in (opacity only);
+   a still scene shows the first one without a fade. */
+.ws-slides {
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+}
+
 .ws-image {
   object-fit: cover;
+  object-position: 50% 0;
+  opacity: 0;
+  transition: opacity 700ms var(--ease-brand);
+}
+
+.ws-image[data-on] {
+  opacity: 1;
+}
+
+.rd-scene[data-play="off"] .ws-image {
+  transition: none;
+}
+
+.ws-dots {
+  position: absolute;
+  bottom: calc(8 * var(--p));
+  left: 50%;
+  display: flex;
+  gap: calc(5 * var(--p));
+  padding: calc(4 * var(--p)) calc(6 * var(--p));
+  border-radius: 999px;
+  background: rgb(11 23 48 / 0.45);
+  transform: translateX(-50%);
+}
+
+.ws-dots i {
+  width: calc(5 * var(--p));
+  height: calc(5 * var(--p));
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.5);
+  transition: opacity 300ms;
+}
+
+.ws-dots i[data-on] {
+  background: var(--color-amber);
 }
 
 .ws {
   position: absolute;
   inset: 0;
-  zoom: var(--u);
+  zoom: calc(var(--u) * var(--k));
   display: flex;
   flex-direction: column;
   background: var(--color-paper);
@@ -739,8 +801,8 @@
 
 @keyframes dv-rise {
   from {
-    transform: translate3d(0, 120px, 0) scale3d(0.04, 0.04, 0.04)
-      rotateY(-80deg);
+    transform: translate3d(0, calc(120px * var(--k)), 0)
+      scale3d(0.04, 0.04, 0.04) rotateY(-80deg);
   }
 }
 
@@ -750,7 +812,7 @@
   }
 
   to {
-    transform: translateY(-12px);
+    transform: translateY(calc(-12px * var(--k)));
   }
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRightIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, FlagIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import {
   APPS,
@@ -19,7 +19,17 @@ import {
   type ProductRoad,
 } from "@/content/products";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
-import { H, PAD, POINTS, ROAD, TREES, W, shareOf } from "./road-geometry";
+import {
+  FINISH,
+  H,
+  PAD,
+  POINTS,
+  ROAD,
+  START,
+  TREES,
+  W,
+  shareOf,
+} from "./road-geometry";
 
 // The products as a 2D roadmap: a winding road with a pin per product and its
 // card beside it. Wide screens draw one road across the section with
@@ -168,10 +178,13 @@ function who(app: AppId, board: JourneyBoard) {
 }
 
 export function RoadMap() {
-  const { stops } = useLocalized<"productRoad", ProductRoad>("productRoad", {
-    en: productRoad,
-    vi: productRoadVi,
-  });
+  const { stops, start, finish } = useLocalized<"productRoad", ProductRoad>(
+    "productRoad",
+    {
+      en: productRoad,
+      vi: productRoadVi,
+    },
+  );
   const board = useLocalized<"journeyBoard", JourneyBoard>("journeyBoard", {
     en: journeyBoard,
     vi: journeyBoardVi,
@@ -324,6 +337,7 @@ export function RoadMap() {
           </g>
         </svg>
 
+        <RoadEnd end="start" label={start} />
         <ol className="rm-stops">
           {stops.map((app, i) => (
             <RoadCard
@@ -339,6 +353,7 @@ export function RoadMap() {
             />
           ))}
         </ol>
+        <RoadEnd end="finish" label={finish} />
       </div>
 
       <RoadStopDialog
@@ -434,5 +449,33 @@ function RoadCard({
         </div>
       </div>
     </li>
+  );
+}
+
+// The road's Start or Finish marker: a flag pin on the road's end and its name.
+// Wide screens place it on the drawn road; narrow ones show it above the first
+// stop and below the last. Decoration: the stops carry the content.
+function RoadEnd({
+  end,
+  label,
+}: Readonly<{ end: "start" | "finish"; label: string }>) {
+  const point = end === "start" ? START : FINISH;
+  return (
+    <div
+      className="rm-end"
+      data-end={end}
+      aria-hidden="true"
+      style={
+        {
+          "--x": `${(point.x / W) * 100}%`,
+          "--y": `${(point.y / H) * 100}%`,
+        } as CSSProperties
+      }
+    >
+      <span className="rm-end-pin">
+        <FlagIcon weight="fill" />
+      </span>
+      <span className="rm-end-label">{label}</span>
+    </div>
   );
 }
