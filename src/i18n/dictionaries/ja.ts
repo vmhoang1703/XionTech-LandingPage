@@ -803,7 +803,7 @@ export const ja: Dictionaries = {
     description: `保護者向けの ${appById("parent-hub").shortName}、職員・教員・管理職向けの ${appById("staff-hub").shortName}、キャンパス向けの ${appById("iot").fullName}。XionTech のつながる学校向けアプリ。`,
   },
   productsShowcase: { madeFor: "対象", featuresHeading: "機能" },
-  roadDialog: { close: "閉じる" },
+  roadDialog: { close: "閉じる", previous: "前へ", next: "次へ" },
   roleTypes: {
     "full-time": "正社員",
     "part-time": "パートタイム",

@@ -793,7 +793,7 @@ export const zh: Dictionaries = {
     madeFor: "适用对象",
     featuresHeading: "功能",
   },
-  roadDialog: { close: "关闭" },
+  roadDialog: { close: "关闭", previous: "上一个", next: "下一个" },
   roleTypes: {
     "full-time": "全职",
     "part-time": "兼职",

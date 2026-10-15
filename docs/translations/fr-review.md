@@ -13,7 +13,7 @@ For a native French reader. Every row is a French string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/fr.ts` and open a pull request. `Where` is `fr:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 447 strings.
+**Total:** 449 strings.
 
 ## About
 
@@ -383,7 +383,7 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Products
 
-32 strings.
+34 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
@@ -419,6 +419,8 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:productsShowcase.madeFor` | Made for | Conçu pour |
 | `fr:productsShowcase.featuresHeading` | Features | Fonctionnalités |
 | `fr:roadDialog.close` | Close | Fermer |
+| `fr:roadDialog.previous` | Previous | Précédent |
+| `fr:roadDialog.next` | Next | Suivant |
 
 ## Privacy
 

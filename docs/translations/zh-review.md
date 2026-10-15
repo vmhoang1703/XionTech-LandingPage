@@ -13,7 +13,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/zh.ts` and open a pull request. `Where` is `zh:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 460 strings.
+**Total:** 462 strings.
 
 ## About
 
@@ -390,7 +390,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Products
 
-32 strings.
+34 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
@@ -426,6 +426,8 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:productsShowcase.madeFor` | Made for | 适用对象 |
 | `zh:productsShowcase.featuresHeading` | Features | 功能 |
 | `zh:roadDialog.close` | Close | 关闭 |
+| `zh:roadDialog.previous` | Previous | 上一个 |
+| `zh:roadDialog.next` | Next | 下一个 |
 
 ## Privacy
 

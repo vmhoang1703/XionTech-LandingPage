@@ -4310,31 +4310,102 @@
     margin-top: 24px;
   }
 
-  /* A button holds a whole stop title, which may need two lines. */
-  .road-dialog-nav button {
+  /* Previous and Next: a small label over the stop's name, with the arrow in
+     a round chip. Next is the filled one, the way along the road. A button
+     holds a whole stop title, which may need two lines. */
+  .road-dialog-go {
+    display: flex;
     flex: 1 1 0;
+    align-items: center;
+    gap: 12px;
     min-width: 0;
-    height: auto;
-    min-height: var(--spacing-button-height);
-    padding-block: 10px;
-    padding-inline: 18px;
+    min-height: 64px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-ice);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    color: var(--color-navy);
+    font-weight: var(--text-button--font-weight);
     line-height: 1.25;
     text-align: start;
-    white-space: normal;
+    cursor: pointer;
+    transition:
+      border-color 0.3s,
+      box-shadow 0.35s var(--ease-brand),
+      transform 0.35s var(--ease-brand);
   }
 
-  .road-dialog-nav button:last-child {
+  .road-dialog-go[data-dir="next"] {
     justify-content: flex-end;
+    border-color: var(--color-navy);
+    background: var(--color-navy);
+    color: var(--color-white);
     text-align: end;
+    box-shadow: 0 14px 30px -14px rgb(22 54 99 / 0.6);
   }
 
-  .road-dialog-nav button svg {
+  .road-dialog-go-text {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .road-dialog-go-label {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .road-dialog-go[data-dir="next"] .road-dialog-go-label {
+    color: var(--color-ice);
+  }
+
+  .road-dialog-go-arrow {
+    display: grid;
     flex: none;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: var(--color-mist);
+    transition: transform 0.35s var(--ease-brand);
   }
 
-  .road-dialog-nav button:disabled {
-    opacity: 0.5;
-    cursor: default;
+  .road-dialog-go[data-dir="next"] .road-dialog-go-arrow {
+    background: var(--color-amber);
+    color: var(--color-navy);
+  }
+
+  .road-dialog-go:hover {
+    border-color: var(--color-navy);
+    box-shadow: 0 10px 24px -14px rgb(22 54 99 / 0.5);
+  }
+
+  .road-dialog-go[data-dir="prev"]:hover .road-dialog-go-arrow {
+    transform: translateX(-3px);
+  }
+
+  .road-dialog-go[data-dir="next"]:hover .road-dialog-go-arrow {
+    transform: translateX(3px);
+  }
+
+  .road-dialog-go:active {
+    transform: scale(0.98);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .road-dialog-go,
+    .road-dialog-go-arrow {
+      transition: none;
+    }
+
+    .road-dialog-go:active,
+    .road-dialog-go:hover .road-dialog-go-arrow {
+      transform: none;
+    }
   }
 
   /* Services hero (Story 5.1), ported from the prototype site.css. */

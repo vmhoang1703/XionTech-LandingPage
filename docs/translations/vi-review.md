@@ -13,7 +13,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 451 strings, 274 AI and 177 prototype.
+**Total:** 453 strings, 276 AI and 177 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -200,7 +200,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Products
 
-17 AI, 15 prototype.
+19 AI, 15 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -221,6 +221,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `products:journeyBoardVi.lanes[1].label` | Teacher and staff | Giáo viên và nhân viên |
 | AI | `products:journeyBoardVi.lanes[2].label` | Parent | Phụ huynh |
 | AI | `products:roadDialogVi.close` | Close | Đóng |
+| AI | `products:roadDialogVi.previous` | Previous | Trước |
+| AI | `products:roadDialogVi.next` | Next | Tiếp |
 | Prototype | `products:productsShowcaseVi.madeFor` | Made for | Dành cho |
 | Prototype | `products:productsShowcaseVi.featuresHeading` | Features | Tính năng |
 | Prototype | `products:productDetailsVi.parent-hub.madeFor` | Parents and families | Phụ huynh và gia đình |

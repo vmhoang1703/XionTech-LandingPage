@@ -53,12 +53,18 @@ afterEach(() => {
 
 function setup(index: number | null) {
   const onMove = vi.fn();
+  const onEnd = vi.fn();
   const onClose = vi.fn();
   const view = render(
-    <RoadStopDialog index={index} onMove={onMove} onClose={onClose} />,
+    <RoadStopDialog
+      index={index}
+      onMove={onMove}
+      onEnd={onEnd}
+      onClose={onClose}
+    />,
   );
   const dialog = view.container.querySelector("dialog") as HTMLDialogElement;
-  return { ...view, dialog, onMove, onClose };
+  return { ...view, dialog, onMove, onEnd, onClose };
 }
 
 function button(name: string) {
@@ -93,31 +99,65 @@ describe("RoadStopDialog", () => {
 
   it("opens when the index changes from null, and closes when it goes back", () => {
     const { dialog, rerender, onMove, onClose } = setup(null);
-    rerender(<RoadStopDialog index={0} onMove={onMove} onClose={onClose} />);
+    rerender(
+      <RoadStopDialog
+        index={0}
+        onMove={onMove}
+        onEnd={vi.fn()}
+        onClose={onClose}
+      />,
+    );
     expect(dialog.open).toBe(true);
-    rerender(<RoadStopDialog index={null} onMove={onMove} onClose={onClose} />);
+    rerender(
+      <RoadStopDialog
+        index={null}
+        onMove={onMove}
+        onEnd={vi.fn()}
+        onClose={onClose}
+      />,
+    );
     expect(dialog.open).toBe(false);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it("moves with Previous and Next, which are named for the neighbouring products", () => {
     const { onMove } = setup(1);
-    fireEvent.click(button("Parent Hub"));
+    fireEvent.click(button("Previous Parent Hub"));
     expect(onMove).toHaveBeenLastCalledWith(0);
-    fireEvent.click(button("AI Tutor"));
+    fireEvent.click(button("Next AI Tutor"));
     expect(onMove).toHaveBeenLastCalledWith(2);
   });
 
-  it("disables Previous on the first stop, which says Start", () => {
-    setup(0);
-    expect(button(productRoad.start).disabled).toBe(true);
-    expect(button("Staff Hub").disabled).toBe(false);
+  it("closes and shows the start of the road from Previous on the first stop", () => {
+    const { dialog, onMove, onEnd, onClose } = setup(0);
+    fireEvent.click(button(`Previous ${productRoad.start}`));
+    expect(dialog.open).toBe(false);
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onEnd).toHaveBeenCalledWith("start");
+    expect(onMove).not.toHaveBeenCalled();
   });
 
-  it("disables Next on the last stop, which says Finish", () => {
-    setup(LAST);
-    expect(button(productRoad.finish).disabled).toBe(true);
-    expect(button("Staff Hub").disabled).toBe(false);
+  it("closes and shows the finish of the road from Next on the last stop", () => {
+    const { dialog, onMove, onEnd } = setup(LAST);
+    fireEvent.click(button(`Next ${productRoad.finish}`));
+    expect(dialog.open).toBe(false);
+    expect(onEnd).toHaveBeenCalledWith("finish");
+    expect(onMove).not.toHaveBeenCalled();
+  });
+
+  it("shows a new stop from the top of the card", () => {
+    const { dialog, rerender, onMove, onEnd, onClose } = setup(0);
+    const body = dialog.querySelector(".road-dialog-body") as HTMLElement;
+    body.scrollTop = 300;
+    rerender(
+      <RoadStopDialog
+        index={1}
+        onMove={onMove}
+        onEnd={onEnd}
+        onClose={onClose}
+      />,
+    );
+    expect(body.scrollTop).toBe(0);
   });
 
   it("closes with the close button", () => {
@@ -221,7 +261,12 @@ describe("RoadStopDialog", () => {
       const { rerender, onMove, onClose } = setup(0);
       for (const [i, expected] of productRoad.stops.entries()) {
         rerender(
-          <RoadStopDialog index={i} onMove={onMove} onClose={onClose} />,
+          <RoadStopDialog
+            index={i}
+            onMove={onMove}
+            onEnd={vi.fn()}
+            onClose={onClose}
+          />,
         );
         expect(shown()).toBe(expected);
         expect(screen.getByTestId("scene").dataset.index).toBe(String(i));
@@ -231,7 +276,14 @@ describe("RoadStopDialog", () => {
     it("moves with Next, without being built again", () => {
       const { rerender, onMove, onClose } = setup(1);
       const before = screen.getByTestId("scene");
-      rerender(<RoadStopDialog index={2} onMove={onMove} onClose={onClose} />);
+      rerender(
+        <RoadStopDialog
+          index={2}
+          onMove={onMove}
+          onEnd={vi.fn()}
+          onClose={onClose}
+        />,
+      );
       expect(screen.getByTestId("scene")).toBe(before);
       expect(shown()).toBe("ai-tutor");
     });
@@ -245,7 +297,12 @@ describe("RoadStopDialog", () => {
   it("speaks Vietnamese on vi: close, step, product details and tagline", () => {
     const { container, rerender } = render(
       <LocaleProvider locale="vi">
-        <RoadStopDialog index={1} onMove={vi.fn()} onClose={vi.fn()} />
+        <RoadStopDialog
+          index={1}
+          onMove={vi.fn()}
+          onEnd={vi.fn()}
+          onClose={vi.fn()}
+        />
       </LocaleProvider>,
     );
     const dialog = container.querySelector("dialog") as HTMLDialogElement;
@@ -259,21 +316,31 @@ describe("RoadStopDialog", () => {
       "Dành cho: Nhân viên, giáo viên và lãnh đạo nhà trường",
     );
     expect(screen.getByRole("heading", { name: "Tính năng" })).toBeTruthy();
-    expect(button("Parent Hub")).toBeTruthy();
+    expect(button("Trước Parent Hub")).toBeTruthy();
 
     rerender(
       <LocaleProvider locale="vi">
-        <RoadStopDialog index={LAST} onMove={vi.fn()} onClose={vi.fn()} />
+        <RoadStopDialog
+          index={LAST}
+          onMove={vi.fn()}
+          onEnd={vi.fn()}
+          onClose={vi.fn()}
+        />
       </LocaleProvider>,
     );
     expect(dialog.textContent).toContain(appTaglinesVi["ai-tutor"]);
-    expect(button("Kết thúc").disabled).toBe(true);
+    expect(button("Tiếp Kết thúc").disabled).toBe(false);
 
     rerender(
       <LocaleProvider locale="vi">
-        <RoadStopDialog index={0} onMove={vi.fn()} onClose={vi.fn()} />
+        <RoadStopDialog
+          index={0}
+          onMove={vi.fn()}
+          onEnd={vi.fn()}
+          onClose={vi.fn()}
+        />
       </LocaleProvider>,
     );
-    expect(button("Bắt đầu").disabled).toBe(true);
+    expect(button("Trước Bắt đầu").disabled).toBe(false);
   });
 });
