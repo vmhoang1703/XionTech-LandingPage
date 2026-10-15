@@ -22,7 +22,7 @@ describe("locale NotFound", () => {
     render(<NotFound />);
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Bạn đã đi lạc lối mòn.",
+      "Không tìm thấy trang",
     );
   });
 

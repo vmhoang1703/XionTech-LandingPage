@@ -2,6 +2,7 @@
 // "Product updates" (/products#updates) is hidden on Demo day (decision T5);
 // Story 4.5 adds it back.
 
+import { APPS } from "@/content/apps";
 import type { ShellDictionary } from "@/i18n/shell";
 
 type Text = (t: ShellDictionary) => string;
@@ -13,11 +14,12 @@ export const siteFooter = {
   columns: [
     {
       heading: (t) => t.footer.products,
-      links: [
-        { href: "/products#sxp", label: (t) => t.footer.forSchools },
-        { href: "/products#ai-tutor", label: (t) => t.footer.forStudents },
-        { href: "/products#pxp", label: (t) => t.footer.forParents },
-      ],
+      // The four apps on the Products journey, by their product names (the
+      // same in every locale).
+      links: APPS.map((app) => ({
+        href: `/products#${app.anchor}`,
+        label: () => app.fullName,
+      })),
     },
     {
       heading: (t) => t.footer.services,

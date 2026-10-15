@@ -32,9 +32,6 @@ export interface ShellDictionary {
   footer: {
     blurb: string;
     products: string;
-    forSchools: string;
-    forStudents: string;
-    forParents: string;
     services: string;
     howWeWork: string;
     allServices: string;
@@ -46,9 +43,7 @@ export interface ShellDictionary {
   notFound: {
     metaTitle: string;
     title: string;
-    lede: string;
     primary: string;
-    here: string;
   };
 }
 
@@ -66,19 +61,16 @@ const en: ShellDictionary = {
     homeLink: "XionTech home",
     logoAlt: "XionTech, Get IT Done",
     menu: "Menu",
-    contact: "Get in touch",
-    contactShort: "Get in touch",
+    contact: "Let's talk",
+    contactShort: "Let's talk",
     cityPlano: "Plano",
     cityHcmc: "Ho Chi Minh City",
   },
   language: { label: "Language" },
   footer: {
     blurb:
-      "Education technology products and software delivery services for schools and businesses.",
+      "XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges.",
     products: "Products",
-    forSchools: "For schools",
-    forStudents: "For students",
-    forParents: "For parents",
     services: "Services",
     howWeWork: "How we work",
     allServices: "All services",
@@ -89,10 +81,8 @@ const en: ShellDictionary = {
   },
   notFound: {
     metaTitle: "Page not found | XionTech",
-    title: "You’ve wandered off the trail.",
-    lede: "The page you were looking for isn’t here. Follow the trail back home, or pick a path below.",
-    primary: "Go to Home",
-    here: "You are here",
+    title: "Page not found",
+    primary: "Back to Home",
   },
 };
 
@@ -110,7 +100,7 @@ const vi: ShellDictionary = {
     homeLink: "Trang chủ XionTech",
     logoAlt: "XionTech, Get IT Done",
     menu: "Menu",
-    contact: "Liên hệ với chúng tôi",
+    contact: "Trao đổi với chúng tôi",
     contactShort: "Liên hệ",
     cityPlano: "Plano",
     cityHcmc: "TP. Hồ Chí Minh",
@@ -118,11 +108,8 @@ const vi: ShellDictionary = {
   language: { label: "Ngôn ngữ" },
   footer: {
     blurb:
-      "Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp.",
+      "XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh.",
     products: "Sản phẩm",
-    forSchools: "Cho nhà trường",
-    forStudents: "Cho học sinh",
-    forParents: "Cho phụ huynh",
     services: "Dịch vụ",
     howWeWork: "Cách chúng tôi làm việc",
     allServices: "Tất cả dịch vụ",
@@ -133,10 +120,8 @@ const vi: ShellDictionary = {
   },
   notFound: {
     metaTitle: "Không tìm thấy trang | XionTech",
-    title: "Bạn đã đi lạc lối mòn.",
-    lede: "Trang bạn tìm không có ở đây. Hãy theo lối mòn về trang chủ, hoặc chọn một con đường bên dưới.",
+    title: "Không tìm thấy trang",
     primary: "Về trang chủ",
-    here: "Bạn đang ở đây",
   },
 };
 

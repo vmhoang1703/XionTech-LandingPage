@@ -30,7 +30,7 @@ export const SERVICES: Service[] = [
   },
   {
     anchor: "staffing",
-    name: "Staffing Service",
+    name: "Staffing Services",
   },
   {
     anchor: "custom-apps",
@@ -38,7 +38,7 @@ export const SERVICES: Service[] = [
   },
   {
     anchor: "low-code",
-    name: "Low-code Solutions",
+    name: "Low-Code Solutions",
   },
   {
     anchor: "ai-solutions",
@@ -81,7 +81,7 @@ const SECTIONS: readonly Exclude<Section, "home">[] = [
  * A section matches its own path or a child path ("/news", "/news/x"),
  * not a path that only shares a prefix ("/newsletter"). Matching is case-sensitive.
  * Home is only exactly "/" (a prefix match would mark it on every page, the 404 included).
- * /demo and unknown paths return null.
+ * Unknown paths return null.
  */
 export function currentSection(pathname: string): Section | null {
   const [, first, ...rest] = pathname.split("/");

@@ -22,7 +22,7 @@ describe("offices", () => {
       "Plano, Texas 75024, USA",
     ]);
     expect(plano?.contacts).toEqual([
-      { href: "tel:+14693229899", label: "+1 469 322 9899" },
+      { href: "tel:+14693229899", label: "+1 (469) 322-9899" },
       {
         href: "https://wa.me/14694399345",
         label: "WhatsApp +1 469 439 9345",
@@ -49,35 +49,34 @@ describe("offices", () => {
     ]);
     expect(hcmc?.contacts).toEqual([
       { href: "tel:+84908107552", label: "+84 908 107 552" },
+      {
+        href: "mailto:vinni.tran@xiontechs.com",
+        label: "vinni.tran@xiontechs.com",
+      },
     ]);
     expect(hcmc?.timeZone).toBe("Asia/Ho_Chi_Minh");
     expect(hcmc?.zoneLabel).toBe("GMT+7");
   });
 
-  it("lists the footer offices Vietnam first, then US, with bracketed phones", () => {
-    expect(footerOffices.map((office) => office.id)).toEqual(["hcmc", "plano"]);
+  it("lists the footer offices as the About cards: Plano first, tags, phone and email", () => {
+    expect(footerOffices.map((office) => office.id)).toEqual(["plano", "hcmc"]);
     expect(footerOffices.map((office) => office.name)).toEqual([
-      "Vietnam Delivery Center",
+      "Plano, Texas",
+      "Ho Chi Minh City",
+    ]);
+    expect(footerOffices.map((office) => office.tag)).toEqual([
       "US Delivery Center",
+      "Vietnam Delivery Center",
     ]);
-    expect(footerOffices[0].contacts).toEqual([
-      { href: "tel:+84908107552", label: "(+84) 908 107 552" },
+    expect(footerOffices[0].contacts.map(({ label }) => label)).toEqual([
+      "+1 (469) 322-9899",
+      "vinni.tran@newxion.com",
     ]);
-    expect(footerOffices[1].contacts).toEqual([
-      { href: "tel:+14693229899", label: "(+1) 469 322 9899" },
-      {
-        href: "https://wa.me/14694399345",
-        label: "(+1) 469 439 9345",
-        ariaLabel: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
-        external: true,
-      },
-      {
-        href: "mailto:vinni.tran@newxion.com",
-        label: "vinni.tran@newxion.com",
-      },
+    expect(footerOffices[1].contacts.map(({ label }) => label)).toEqual([
+      "+84 908 107 552",
+      "vinni.tran@xiontechs.com",
     ]);
-    expect(footerOffices[0].addressLines).toEqual(hcmc.addressLines);
-    expect(footerOffices[1].addressLines).toEqual(plano.addressLines);
+    expect(footerOffices[0].addressLines).toEqual(plano.addressLines);
   });
 
   it("leaves the shared offices in Plano then HCMC order with the old labels", () => {
@@ -86,7 +85,7 @@ describe("offices", () => {
       "Plano, Texas, USA",
       "Ho Chi Minh City, Vietnam",
     ]);
-    expect(offices[0].contacts[0].label).toBe("+1 469 322 9899");
+    expect(offices[0].contacts[0].label).toBe("+1 (469) 322-9899");
     expect(offices[1].contacts[0].label).toBe("+84 908 107 552");
   });
 
@@ -103,8 +102,8 @@ describe("offices", () => {
     expect(contactByPrefix(plano, "mailto:").label).toBe(
       "vinni.tran@newxion.com",
     );
-    expect(() => contactByPrefix(hcmc, "mailto:")).toThrow(
-      "Office hcmc has no mailto: contact",
+    expect(() => contactByPrefix(hcmc, "https://wa.me/")).toThrow(
+      "Office hcmc has no https://wa.me/ contact",
     );
   });
 
@@ -114,7 +113,7 @@ describe("offices", () => {
       .flatMap((office) => office.contacts)
       .filter(({ href }) => !href.startsWith("mailto:"));
 
-    expect(dialled).toHaveLength(3);
+    expect(dialled).toHaveLength(2);
     for (const { href, label } of dialled) {
       expect(digits(label)).toBe(digits(href.replace("https://wa.me/", "")));
     }

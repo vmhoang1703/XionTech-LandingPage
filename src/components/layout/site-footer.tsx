@@ -58,10 +58,11 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
               className="bg-paper inline-block rounded-sm px-3 py-2"
             >
               <Image
-                src="/brand/xiontechs-logo.png"
+                src="/brand/xiontech-logo.svg"
                 alt={siteFooter.logoAlt}
                 width={250}
                 height={46}
+                unoptimized
                 className="h-7.5 w-auto"
               />
             </Link>
@@ -93,6 +94,11 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
                 key={office.id}
                 className="text-body-sm not-italic [&+&]:mt-5"
               >
+                {office.tag ? (
+                  <small className="font-brand text-label-sm text-amber-tint block uppercase">
+                    {office.tag}
+                  </small>
+                ) : null}
                 <b className="mb-1.5 block text-white">{office.name}</b>
                 <span className="mt-1.5 flex items-start gap-2.5">
                   <MapPinIcon
@@ -135,7 +141,7 @@ export function SiteFooter({ locale }: Readonly<{ locale: Locale }>) {
                 })}
               </address>
             ))}
-            <p className="text-body-sm mt-5">{others}</p>
+            <p className="text-body-sm mt-5 font-medium text-white">{others}</p>
           </div>
         </div>
 

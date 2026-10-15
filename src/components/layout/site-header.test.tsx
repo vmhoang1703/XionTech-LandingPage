@@ -26,12 +26,11 @@ describe("SiteHeader", () => {
     expect(home.contains(logo)).toBe(true);
   });
 
-  it("links Get in touch to the Home form, as a small primary button", () => {
+  it("links Let's talk to the Home contact section, as a quiet outlined pill", () => {
     render(<SiteHeader locale="en" />);
-    // The Demo page is kept but not linked (lead, 2026-10-13).
-    const demo = screen.getByRole("link", { name: "Get in touch" });
+    const demo = screen.getByRole("link", { name: "Let's talk" });
     expect(demo.getAttribute("href")).toBe("/en#contact");
-    expect(demo.className).toContain("btn btn-primary btn-sm");
+    expect(demo.className).toContain("btn btn-glass btn-sm nav-talk");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
     // Below 412px (the narrowest width where the en and vi bars fit, measured
@@ -62,13 +61,13 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("navigation", { name: "Main" })).toBeTruthy();
   });
 
-  it("puts the main nav after the logo, then Get in touch, and the Menu button last", () => {
+  it("puts the main nav after the logo, then Let's talk, and the Menu button last", () => {
     render(<SiteHeader locale="en" />);
     const header = screen.getByRole("banner");
     const logo = screen.getByRole("link", { name: "XionTech home" });
     const nav = screen.getAllByRole("navigation", { name: "Main" })[0];
     const menu = screen.getByRole("button", { name: "Menu" });
-    const demo = screen.getByRole("link", { name: "Get in touch" });
+    const demo = screen.getByRole("link", { name: "Let's talk" });
     expect(header.contains(menu)).toBe(true);
     expect(menu.getAttribute("aria-expanded")).toBe("false");
     expect(
