@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { LocaleLink } from "@/components/layout/locale-link";
+import { APP_TAGLINES, appTaglinesVi } from "@/content/apps";
 import { homeApps, homeAppsVi } from "@/content/home";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
@@ -13,6 +14,9 @@ export function HomeApps({ locale = "en" }: Readonly<{ locale?: Locale }>) {
     en: homeApps,
     vi: homeAppsVi,
   });
+  // The shared app records hold English taglines; the page's language comes
+  // from the translated set (i18n retest, 2026-10-15), as on Products.
+  const taglines = pickLocale(locale, { en: APP_TAGLINES, vi: appTaglinesVi });
 
   return (
     <section aria-labelledby="home-apps-h" className="sec">
@@ -38,7 +42,7 @@ export function HomeApps({ locale = "en" }: Readonly<{ locale?: Locale }>) {
                   </span>
                 </span>
                 <h3>{app.fullName}</h3>
-                <span className="app-for">{app.tagline}</span>
+                <span className="app-for">{taglines[app.id]}</span>
                 <ul className="app-feats">
                   {features.map((feature) => (
                     <li key={feature}>{feature}</li>

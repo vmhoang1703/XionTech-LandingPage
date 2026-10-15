@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { appById } from "@/content/apps";
+import { appById, APP_TAGLINES, appTaglinesVi } from "@/content/apps";
+import { pickLocale } from "@/i18n/content";
 import { homeApps } from "@/content/home";
 import { productDetails } from "@/content/products";
 import { undefinedClasses } from "@/test-utils/css-classes";
@@ -57,6 +58,22 @@ describe("HomeApps", () => {
     expect(aiTutor.textContent).not.toContain("[Placeholder]");
     expect(aiTutor.querySelector(".badge")?.className).toBe("badge b-ait");
   });
+
+  it.each(["vi", "ja", "fr", "ko", "zh"] as const)(
+    "shows the %s taglines, not the English ones",
+    (locale) => {
+      render(<HomeApps locale={locale} />);
+      const taglines = pickLocale(locale, {
+        en: APP_TAGLINES,
+        vi: appTaglinesVi,
+      });
+      const shown = appCards().map(
+        (card) => card.querySelector(".app-for")?.textContent,
+      );
+      expect(shown).toEqual(homeApps.apps.map(({ app }) => taglines[app.id]));
+      expect(shown[0]).not.toBe(APP_TAGLINES["parent-hub"]);
+    },
+  );
 
   it("gives every card the pointer glow, in a reveal group", () => {
     const { container } = render(<HomeApps />);
