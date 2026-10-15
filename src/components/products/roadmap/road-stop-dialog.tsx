@@ -32,18 +32,20 @@ const ProductScene = dynamic(
 
 // The modal for one stop on the road, which is one product: its name, its
 // tagline, who it is made for and its features, and Previous/Next to walk the
-// road. Behind the card, the product's device (a phone, a laptop or a monitor)
+// road. Before the first stop is Start and after the last is Finish: they
+// close the card and show that end of the road. Behind the card, the product's device (a phone, a laptop or a monitor)
 // stands on a piece of the road. The scene is decoration; the card has the text.
 
 type Props = Readonly<{
   index: number | null;
   onMove: (index: number) => void;
+  onEnd: (end: RoadEndId) => void;
   onClose: () => void;
 }>;
 
-const LAST = productRoad.stops.length - 1;
+export type RoadEndId = "start" | "finish";
 
-export function RoadStopDialog({ index, onMove, onClose }: Props) {
+export function RoadStopDialog({ index, onMove, onEnd, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
   const road = useLocalized<"productRoad", ProductRoad>("productRoad", {
     en: productRoad,
@@ -53,7 +55,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
     en: APP_TAGLINES,
     vi: appTaglinesVi,
   });
-  const { close } = useLocalized("roadDialog", {
+  const { close, previous, next } = useLocalized("roadDialog", {
     en: roadDialog,
     vi: roadDialogVi,
   });
@@ -63,6 +65,9 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
     if (!dialog) return;
     if (index !== null && !dialog.open) dialog.showModal();
     if (index === null && dialog.open) dialog.close();
+    // A new stop starts at its top: Next is pressed at the card's bottom.
+    const body = dialog.querySelector(".road-dialog-body");
+    if (body) body.scrollTop = 0;
   }, [index]);
 
   // A click anywhere outside the card (the scene fills the window) closes it,
@@ -84,6 +89,11 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
   // The neighbour's name, or the end of the road.
   const name = (at: number, end: string) =>
     road.stops[at] ? appById(road.stops[at]).shortName : end;
+  const go = (at: number) => {
+    if (road.stops[at]) return onMove(at);
+    ref.current?.close();
+    onEnd(at < 0 ? "start" : "finish");
+  };
 
   return (
     <dialog
@@ -119,21 +129,31 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
             <div className="road-dialog-nav">
               <button
                 type="button"
-                className="btn btn-glass"
-                disabled={index === 0}
-                onClick={() => onMove(index - 1)}
+                className="road-dialog-go"
+                data-dir="prev"
+                onClick={() => go(index - 1)}
               >
-                <ArrowLeftIcon aria-hidden="true" />
-                {name(index - 1, road.start)}
+                <span className="road-dialog-go-arrow" aria-hidden="true">
+                  <ArrowLeftIcon />
+                </span>
+                <span className="road-dialog-go-text">
+                  <span className="road-dialog-go-label">{previous}</span>{" "}
+                  {name(index - 1, road.start)}
+                </span>
               </button>
               <button
                 type="button"
-                className="btn btn-glass"
-                disabled={index === LAST}
-                onClick={() => onMove(index + 1)}
+                className="road-dialog-go"
+                data-dir="next"
+                onClick={() => go(index + 1)}
               >
-                {name(index + 1, road.finish)}
-                <ArrowRightIcon aria-hidden="true" />
+                <span className="road-dialog-go-text">
+                  <span className="road-dialog-go-label">{next}</span>{" "}
+                  {name(index + 1, road.finish)}
+                </span>
+                <span className="road-dialog-go-arrow" aria-hidden="true">
+                  <ArrowRightIcon />
+                </span>
               </button>
             </div>
           </div>

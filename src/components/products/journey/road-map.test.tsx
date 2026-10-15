@@ -514,12 +514,53 @@ describe("RoadMap selection", () => {
     const dialog = document.querySelector("dialog") as HTMLDialogElement;
     fireEvent.click(
       within(dialog).getByRole("button", {
-        name: appById(productRoad.stops[1]).shortName,
+        name: `Next ${appById(productRoad.stops[1]).shortName}`,
       }),
     );
     expect(selected(container)).toEqual([1]);
     act(() => dialog.close());
     expect(selected(container)).toEqual([1]);
+  });
+
+  it("shows the road's Start or Finish from the modal's ends, smooth unless reduced", () => {
+    const scrolled = vi.fn();
+    Element.prototype.scrollIntoView = scrolled;
+    const { container } = render(<RoadMap />);
+    const open = (i: number) =>
+      fireEvent.click(
+        container.querySelectorAll<HTMLButtonElement>(".rm-open")[i],
+      );
+    const dialog = () => document.querySelector("dialog") as HTMLDialogElement;
+
+    open(0);
+    fireEvent.click(
+      within(dialog()).getByRole("button", {
+        name: `Previous ${productRoad.start}`,
+      }),
+    );
+    expect(dialog().open).toBe(false);
+    expect(scrolled.mock.contexts[0]).toBe(
+      container.querySelector('[data-end="start"]'),
+    );
+    expect(scrolled).toHaveBeenLastCalledWith({
+      block: "center",
+      behavior: "smooth",
+    });
+
+    reducedMotion = true;
+    open(productRoad.stops.length - 1);
+    fireEvent.click(
+      within(dialog()).getByRole("button", {
+        name: `Next ${productRoad.finish}`,
+      }),
+    );
+    expect(scrolled.mock.contexts[1]).toBe(
+      container.querySelector('[data-end="finish"]'),
+    );
+    expect(scrolled).toHaveBeenLastCalledWith({
+      block: "center",
+      behavior: "instant",
+    });
   });
 
   it("colours only the selected pin amber", () => {

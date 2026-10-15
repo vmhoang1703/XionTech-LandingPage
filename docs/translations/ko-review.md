@@ -13,7 +13,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ko.ts` and open a pull request. `Where` is `ko:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 460 strings.
+**Total:** 462 strings.
 
 ## About
 
@@ -391,7 +391,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Products
 
-32 strings.
+34 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
@@ -427,6 +427,8 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:productsShowcase.madeFor` | Made for | 대상 |
 | `ko:productsShowcase.featuresHeading` | Features | 기능 |
 | `ko:roadDialog.close` | Close | 닫기 |
+| `ko:roadDialog.previous` | Previous | 이전 |
+| `ko:roadDialog.next` | Next | 다음 |
 
 ## Privacy
 

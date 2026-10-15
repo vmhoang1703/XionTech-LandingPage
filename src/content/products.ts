@@ -126,7 +126,11 @@ export const journeyBoard: JourneyBoard = {
 };
 
 // The close button of the stop dialog.
-export const roadDialog = { close: "Close" };
+export const roadDialog = {
+  close: "Close",
+  previous: "Previous",
+  next: "Next",
+};
 
 // Vietnamese. App names, badges and ids stay English (2026-10-13).
 export const productsMetaVi: typeof productsMeta = {
@@ -209,4 +213,8 @@ export const journeyBoardVi: JourneyBoard = {
   ],
 };
 
-export const roadDialogVi: typeof roadDialog = { close: "Đóng" };
+export const roadDialogVi: typeof roadDialog = {
+  close: "Đóng",
+  previous: "Trước",
+  next: "Tiếp",
+};

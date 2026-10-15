@@ -18,7 +18,7 @@ import {
   type JourneyBoard,
   type ProductRoad,
 } from "@/content/products";
-import { RoadStopDialog } from "../roadmap/road-stop-dialog";
+import { RoadStopDialog, type RoadEndId } from "../roadmap/road-stop-dialog";
 import { NarrowWave, useWave } from "./narrow-wave";
 import {
   FINISH,
@@ -242,6 +242,16 @@ export function RoadMap() {
     setOpen(index);
     setSelected(index);
   };
+  // Start or Finish in the modal: the modal has closed, so the page shows
+  // that end of the road.
+  const showEnd = (end: RoadEndId) => {
+    const flag = stage.current?.querySelector(`[data-end="${end}"]`);
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    flag?.scrollIntoView({
+      block: "center",
+      behavior: still ? "instant" : "smooth",
+    });
+  };
   // The tour leaves the selection alone while the modal is open (a wheel
   // over its backdrop still scrolls the page).
   const openRef = useRef(open);
@@ -424,6 +434,7 @@ export function RoadMap() {
       <RoadStopDialog
         index={open}
         onMove={choose}
+        onEnd={showEnd}
         onClose={() => setOpen(null)}
       />
     </div>
@@ -554,7 +565,7 @@ function RoadEnd({
   shown,
   bend: drawBend,
 }: Readonly<{
-  end: "start" | "finish";
+  end: RoadEndId;
   label: string;
   shown: boolean;
   bend: boolean;

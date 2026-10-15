@@ -821,7 +821,7 @@ export const fr: Dictionaries = {
     madeFor: "Conçu pour",
     featuresHeading: "Fonctionnalités",
   },
-  roadDialog: { close: "Fermer" },
+  roadDialog: { close: "Fermer", previous: "Précédent", next: "Suivant" },
   roleTypes: {
     "full-time": "Temps plein",
     "part-time": "Temps partiel",

@@ -13,7 +13,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ja.ts` and open a pull request. `Where` is `ja:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 460 strings.
+**Total:** 462 strings.
 
 ## About
 
@@ -390,7 +390,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Products
 
-32 strings.
+34 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
@@ -426,6 +426,8 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:productsShowcase.madeFor` | Made for | 対象 |
 | `ja:productsShowcase.featuresHeading` | Features | 機能 |
 | `ja:roadDialog.close` | Close | 閉じる |
+| `ja:roadDialog.previous` | Previous | 前へ |
+| `ja:roadDialog.next` | Next | 次へ |
 
 ## Privacy
 

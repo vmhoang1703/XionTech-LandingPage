@@ -20,7 +20,9 @@ function Probe() {
 }
 
 const ja: ClientStrings = {
-  dictionary: { roadDialog: { close: "閉じる" } },
+  dictionary: {
+    roadDialog: { close: "閉じる", previous: "前へ", next: "次へ" },
+  },
   errors: { pairs: [], fallback: "ja send error" },
 };
 

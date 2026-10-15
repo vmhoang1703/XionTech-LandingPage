@@ -802,7 +802,7 @@ export const ko: Dictionaries = {
     madeFor: "대상",
     featuresHeading: "기능",
   },
-  roadDialog: { close: "닫기" },
+  roadDialog: { close: "닫기", previous: "이전", next: "다음" },
   roleTypes: {
     "full-time": "정규직",
     "part-time": "파트타임",
