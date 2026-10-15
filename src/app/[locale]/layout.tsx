@@ -12,6 +12,8 @@ import { TouchPress } from "@/components/sections/touch-press";
 import { PageFade } from "@/components/sections/page-fade";
 import { PointerGlow } from "@/components/sections/pointer-glow";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
+import { BackToTop } from "@/components/layout/back-to-top";
+import { SHELL } from "@/i18n/shell";
 import { THEME_SCRIPT } from "@/lib/theme/theme-preference";
 import "../globals.css";
 import { fontVariables } from "../fonts";
@@ -92,6 +94,7 @@ export default async function RootLayout({
           </main>
           <SiteFooter locale={locale} />
         </LocaleProvider>
+        <BackToTop label={SHELL[locale].backToTop.label} />
         <ScrollReveal />
         <PointerGlow />
         <SwipeRows />

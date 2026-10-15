@@ -9161,6 +9161,54 @@ html[data-theme="dark"] #process .flow .step4 {
   background: var(--color-ice);
 }
 
+/* Back to top: an amber round button, bottom right, shown after about a screen of
+   scroll. Fades and rises with opacity and transform only. */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: var(--z-index-header);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-amber);
+  color: var(--color-navy);
+  font-size: 20px;
+  box-shadow: 0 14px 30px -14px rgb(11 23 48 / 0.45);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 0.25s var(--ease-brand),
+    transform 0.25s var(--ease-brand);
+}
+
+.back-to-top[data-shown] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: var(--color-amber-tint);
+}
+
+.back-to-top:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
 /* No JavaScript: follow the colour-scheme setting with the same tokens. */
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) {

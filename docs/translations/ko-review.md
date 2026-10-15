@@ -13,7 +13,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ko.ts` and open a pull request. `Where` is `ko:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 444 strings.
+**Total:** 445 strings.
 
 ## About
 
@@ -526,7 +526,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Site shell: header, footer, language menu, 404
 
-25 strings.
+26 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
@@ -545,6 +545,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:shell.nav.cityHcmc` | Ho Chi Minh City | 호찌민시 |
 | `ko:shell.language.label` | Language | 언어 |
 | `ko:shell.theme.label` | Dark mode | 다크 모드 |
+| `ko:shell.backToTop.label` | Back to top | 맨 위로 |
 | `ko:shell.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech는 실무 경험과 최신 기술을 결합해 AI 기반 제품과 맞춤형 솔루션으로 비즈니스 과제를 해결합니다. |
 | `ko:shell.footer.howWeWork` | How we work | 일하는 방식 |
 | `ko:shell.footer.allServices` | All services | 모든 서비스 |

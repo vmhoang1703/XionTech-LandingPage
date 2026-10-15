@@ -13,7 +13,7 @@ For a native French reader. Every row is a French string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/fr.ts` and open a pull request. `Where` is `fr:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 433 strings.
+**Total:** 434 strings.
 
 ## About
 
@@ -518,7 +518,7 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Site shell: header, footer, language menu, 404
 
-22 strings.
+23 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
@@ -534,6 +534,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:shell.nav.cityHcmc` | Ho Chi Minh City | Hô Chi Minh-Ville |
 | `fr:shell.language.label` | Language | Langue |
 | `fr:shell.theme.label` | Dark mode | Mode sombre |
+| `fr:shell.backToTop.label` | Back to top | Retour en haut |
 | `fr:shell.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure, alliant expérience concrète et technologies modernes pour relever les défis des entreprises. |
 | `fr:shell.footer.howWeWork` | How we work | Notre façon de travailler |
 | `fr:shell.footer.allServices` | All services | Tous les services |

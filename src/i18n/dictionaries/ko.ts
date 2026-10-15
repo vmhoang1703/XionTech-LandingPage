@@ -891,6 +891,7 @@ export const ko: Dictionaries = {
     },
     language: { label: "언어" },
     theme: { label: "다크 모드" },
+    backToTop: { label: "맨 위로" },
     footer: {
       blurb:
         "XionTech는 실무 경험과 최신 기술을 결합해 AI 기반 제품과 맞춤형 솔루션으로 비즈니스 과제를 해결합니다.",
