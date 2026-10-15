@@ -572,15 +572,22 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
     );
     await expect(modal.locator('.dv[data-kind="monitor"]')).toHaveCount(1);
     expect(await at()).not.toBe(first);
-    // The last stop: Next is the end of the road, and Previous walks back.
-    await expect(card.getByRole("button", { name: "Finish" })).toBeDisabled();
+    // The last stop: Next is the end of the road (Finish), and Previous
+    // walks back.
+    await expect(
+      card.getByRole("button", { name: "Next Finish" }),
+    ).toBeEnabled();
     await card.getByRole("button", { name: "Staff Hub" }).click();
     await card.getByRole("button", { name: "Parent Hub" }).click();
     await expect(card.getByRole("heading", { level: 2 })).toHaveText(
       "Parent Hub",
     );
-    await expect(card.getByRole("button", { name: "Start" })).toBeDisabled();
     await expect(modal.locator('.dv[data-kind="phone"]')).toHaveCount(1);
+    // Before the first stop is Start: it closes the modal and shows the
+    // start of the road.
+    await card.getByRole("button", { name: "Previous Start" }).click();
+    await expect(modal).not.toBeVisible();
+    await expect(page.locator('.rm-end[data-end="start"]')).toBeInViewport();
   });
 
   test("Esc, the close button and a click outside close it, and focus returns to the card", async ({
