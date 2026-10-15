@@ -19,6 +19,7 @@ import {
   type ProductRoad,
 } from "@/content/products";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
+import { NarrowWave, useWave } from "./narrow-wave";
 import {
   FINISH,
   H,
@@ -260,6 +261,9 @@ export function RoadMap() {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
   const mask = useId();
+  // Narrow: one measured wave through the pins replaces the rows' bends.
+  const stage = useRef<HTMLDivElement>(null);
+  const wave = useWave(stage, STOPS.length + 2);
 
   useEffect(() => {
     const map = ref.current;
@@ -343,7 +347,10 @@ export function RoadMap() {
           ))
         : null}
 
-      <div className="rm-stage">
+      <div ref={stage} className="rm-stage">
+        {wave ? (
+          <NarrowWave wave={wave} shown={shown} armed={mode === "armed"} />
+        ) : null}
         <svg
           className="rm-road"
           viewBox={`0 0 ${W} ${H}`}
@@ -389,7 +396,7 @@ export function RoadMap() {
           </g>
         </svg>
 
-        <RoadEnd end="start" label={start} shown={shown.has(0)} />
+        <RoadEnd end="start" label={start} shown={shown.has(0)} bend={!wave} />
         <ol className="rm-stops">
           {stops.map((app, i) => (
             <RoadCard
@@ -401,11 +408,17 @@ export function RoadMap() {
               anchored={!tour}
               active={tour && active === i}
               selected={selected === i}
+              bend={!wave}
               onOpen={() => choose(i)}
             />
           ))}
         </ol>
-        <RoadEnd end="finish" label={finish} shown={shown.has(LAST)} />
+        <RoadEnd
+          end="finish"
+          label={finish}
+          shown={shown.has(LAST)}
+          bend={!wave}
+        />
       </div>
 
       <RoadStopDialog
@@ -425,6 +438,7 @@ function RoadCard({
   anchored,
   active,
   selected,
+  bend: drawBend,
   onOpen,
 }: Readonly<{
   app: AppId;
@@ -434,6 +448,7 @@ function RoadCard({
   anchored: boolean;
   active: boolean;
   selected: boolean;
+  bend: boolean;
   onOpen: () => void;
 }>) {
   const app = appById(id);
@@ -461,16 +476,19 @@ function RoadCard({
       data-selected={selected ? "true" : undefined}
       style={place}
     >
-      {/* The narrow road: one bend per stop, drawn beside the card. */}
-      <svg
-        className="rm-seg"
-        viewBox="0 0 80 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <RoadPiece {...bend} />
-      </svg>
+      {/* The narrow road before the wave is measured: one bend per stop,
+          drawn beside the card. */}
+      {drawBend ? (
+        <svg
+          className="rm-seg"
+          viewBox="0 0 80 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <RoadPiece {...bend} />
+        </svg>
+      ) : null}
       <span className="rm-pin" aria-hidden="true">
         {index + 1}
       </span>
@@ -534,7 +552,13 @@ function RoadEnd({
   end,
   label,
   shown,
-}: Readonly<{ end: "start" | "finish"; label: string; shown: boolean }>) {
+  bend: drawBend,
+}: Readonly<{
+  end: "start" | "finish";
+  label: string;
+  shown: boolean;
+  bend: boolean;
+}>) {
   const point = end === "start" ? START : FINISH;
   const bend = END_BEND[end];
   return (
@@ -551,14 +575,16 @@ function RoadEnd({
         } as CSSProperties
       }
     >
-      <svg
-        className="rm-seg"
-        viewBox={bend.box}
-        preserveAspectRatio="none"
-        focusable="false"
-      >
-        <RoadPiece {...bend.piece} />
-      </svg>
+      {drawBend ? (
+        <svg
+          className="rm-seg"
+          viewBox={bend.box}
+          preserveAspectRatio="none"
+          focusable="false"
+        >
+          <RoadPiece {...bend.piece} />
+        </svg>
+      ) : null}
       <span className="rm-end-pin">
         <FlagIcon weight="fill" />
       </span>

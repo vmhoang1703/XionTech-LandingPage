@@ -2266,7 +2266,10 @@
   /* E-A6 News (prototype news.html, site.css "News" blocks; ENH-037, ENH-053) */
   /* White with light blue shading through the whole page, hero included (site.js "cool") */
   .nhead-sec {
-    padding-block: calc(var(--spacing-header-room) + 56px) 0;
+    padding-block: calc(
+        var(--spacing-header-room) + var(--spacing-page-hero-top)
+      )
+      0;
   }
 
   .nhead {
@@ -2582,7 +2585,10 @@
 
   /* Story page: an editorial article (prototype news-story.html) */
   .art-hero {
-    padding-block: calc(var(--spacing-header-room) + 56px) 24px;
+    padding-block: calc(
+        var(--spacing-header-room) + var(--spacing-page-hero-top)
+      )
+      24px;
   }
 
   .art-back {
@@ -2726,7 +2732,7 @@
 
   @media (width <= 520px) {
     .nhead-sec {
-      padding-top: calc(var(--spacing-header-room) + 40px);
+      padding-top: calc(var(--spacing-header-room) + 80px);
     }
 
     .scard {
@@ -3415,9 +3421,13 @@
 
   /* Products map */
   /* The map is the page's first section, so like every page hero it adds the
-     header room: the floating pill no longer covers the H1 (lead, 2026-10-13). */
-  .map-sec {
-    padding-top: calc(var(--spacing-header-room) + var(--spacing-section));
+     header room: the floating pill no longer covers the H1 (lead, 2026-10-13).
+     `.sec.map-sec`, so the later shared `.sec` padding (website copy v3) does
+     not take the header room away again. */
+  .sec.map-sec {
+    padding-top: calc(
+      var(--spacing-header-room) + var(--spacing-page-hero-top)
+    );
   }
 
   /* Heading and badge shared by the roadmap. */
@@ -3826,6 +3836,29 @@
     top: 0;
   }
 
+  /* The narrow road once measured (narrow-wave.tsx): one smooth wave through
+     the pins, under the cards and pins. Armed, it is drawn down to the last
+     stop shown (--reach), then on to Finish. */
+  .rm-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .rm-wave path {
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  .rm[data-reveal="armed"] .rm-wave {
+    clip-path: inset(-40px -40px calc(100% - var(--reach)) -40px);
+    transition: clip-path 600ms var(--ease-brand);
+  }
+
   /* Clear of a pin on the right of the road (x 67, 22px wide half). */
   .rm-end-label {
     grid-column: 2;
@@ -3872,6 +3905,14 @@
       width: 0;
       height: 0;
       min-height: 0;
+    }
+
+    /* The wide road is drawn on its own; the narrow wave is hidden at 1px. */
+    .rm-wave {
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
     }
 
     /* Hidden like the stops' bends (.rm-seg above), at their 1px. */
@@ -4111,8 +4152,14 @@
   }
 
   @media print and (width < 1100px) {
-    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-seg {
+    .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-seg,
+    .rm[data-reveal="armed"] .rm-end:not([data-in]) .rm-seg,
+    .rm[data-reveal="armed"] .rm-wave {
       clip-path: none;
+    }
+
+    .rm[data-reveal="armed"] .rm-end:not([data-in]) .rm-end-pin {
+      scale: 1;
     }
   }
 
