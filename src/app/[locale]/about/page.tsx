@@ -1,16 +1,21 @@
 import { localeMetadata } from "@/i18n/page-metadata";
-import { ArrowRightIcon, MapPinIcon } from "@phosphor-icons/react/ssr";
-import { LocaleLink } from "@/components/layout/locale-link";
-import { Fragment } from "react";
+import {
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  EnvelopeSimpleIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from "@phosphor-icons/react/ssr";
+import type { CSSProperties } from "react";
 import { MountainStory } from "@/components/about/mountain-story";
-import { CaptureBand } from "@/components/contact/capture-band";
-import { contactIcon } from "@/components/sections/contact-icon";
+import { HomeValues } from "@/components/home/home-values";
+import { LocaleLink } from "@/components/layout/locale-link";
 import { FaqList } from "@/components/sections/faq-list";
 import { LiveClock } from "@/components/sections/live-clock";
 import { PageScene } from "@/components/sections/page-scene";
 import {
-  aboutCapture,
-  aboutCaptureVi,
+  aboutCta,
+  aboutCtaVi,
   aboutFaq,
   aboutFaqVi,
   aboutHero,
@@ -21,20 +26,25 @@ import {
   aboutOfficesVi,
   aboutStory,
   aboutStoryVi,
+  aboutValuesHeading,
+  aboutValuesHeadingVi,
 } from "@/content/about";
 import { pickLocale } from "@/i18n/content";
-import { isLocale } from "@/i18n/locales";
-import { heroWords } from "@/components/sections/hero-words";
+import { isLocale, localeHref } from "@/i18n/locales";
 
 export const generateMetadata = localeMetadata({
   en: aboutMeta,
   vi: aboutMetaVi,
 });
 
-// E-S3 (prototype about.html): the intro over pastel peaks, the mountain story
-// (static, no picture), the FAQ at #faq, the offices and the demo capture, on
-// the shared page scene below the hero (lead, 2026-10-12). Only the clocks,
-// the capture form and the scene are client parts.
+// E-S3 (prototype about.html; website copy v3): the text-only hero, the
+// mountain story, the core values (the Careers flip-card look), the FAQ at
+// #faq, the offices and a closing call to action, on the shared page scene
+// below the hero. Only the mountain story slides over the pinned hero; the
+// rest is normal flow. The hero items rise in on load, one after another
+// (globals.css, "Load-in"); the rest uses the shared scroll reveal.
+const loadAt = (index: number) => ({ "--load-i": index }) as CSSProperties;
+
 export default async function AboutPage({
   params,
 }: Readonly<Pick<PageProps<"/[locale]/about">, "params">>) {
@@ -44,72 +54,39 @@ export default async function AboutPage({
     en: aboutHero,
     vi: aboutHeroVi,
   });
-  const {
-    title: story,
-    chapters,
-    closing,
-    cue,
-    tagName,
-  } = pickLocale(locale, { en: aboutStory, vi: aboutStoryVi });
+  const story = pickLocale(locale, { en: aboutStory, vi: aboutStoryVi });
+  const values = pickLocale(locale, {
+    en: aboutValuesHeading,
+    vi: aboutValuesHeadingVi,
+  });
   const faq = pickLocale(locale, { en: aboutFaq, vi: aboutFaqVi });
   const offices = pickLocale(locale, { en: aboutOffices, vi: aboutOfficesVi });
-  const capture = pickLocale(locale, { en: aboutCapture, vi: aboutCaptureVi });
+  const cta = pickLocale(locale, { en: aboutCta, vi: aboutCtaVi });
 
-  const t = heroWords();
+  // One plain wrapper. The App Router scrolls the first non-sticky element of
+  // a new page into view on client navigation; with the sticky hero first, it
+  // skipped to the story card and landed 700px down the page.
   return (
-    <>
+    <div className="about-page">
       <section id="mission" className="about-hero" aria-labelledby="about-h1">
-        <svg
-          className="ah-peaks"
-          viewBox="0 0 1440 360"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <defs>
-            <linearGradient id="about-peaks-a" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#FCE7B0" />
-              <stop offset="1" stopColor="#FFF8E6" />
-            </linearGradient>
-            <linearGradient id="about-peaks-b" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#F8D98A" />
-              <stop offset="1" stopColor="#FDF1D2" />
-            </linearGradient>
-          </defs>
-          <path
-            fill="url(#about-peaks-a)"
-            d="M0 360V214C30 190 66 160 84 154S132 172 146 168 226 84 240 76 270 78 284 92 318 132 330 134 392 108 408 108 444 140 470 160 532 196 560 360Z"
-          />
-          <path
-            fill="url(#about-peaks-a)"
-            d="M880 360C910 300 938 246 958 236S1022 262 1040 256 1130 132 1146 124 1176 130 1194 146 1210 168 1226 162 1282 96 1300 92 1334 116 1364 136 1414 128 1440 128V360Z"
-          />
-          <path
-            fill="url(#about-peaks-b)"
-            opacity=".7"
-            d="M0 360V272C40 248 92 218 118 212S192 246 210 244 282 196 300 192 336 214 358 238 418 284 460 360Z"
-          />
-          <path
-            fill="url(#about-peaks-b)"
-            opacity=".7"
-            d="M1000 360C1036 318 1078 270 1100 262S1160 286 1180 286 1266 210 1288 204 1360 230 1440 258V360Z"
-          />
-          <path className="ah-ground" d="M0 360 C360 300 1080 300 1440 360 Z" />
-        </svg>
         <div className="wrap ah-inner">
-          <h1 id="about-h1">
-            {t.words(title.lead)}
+          <h1 id="about-h1" data-load="" style={loadAt(0)}>
+            {title.lead}
             <br />
-            {t.words(title.middle)}
-            <span className="ah-accent" {...t.unit()}>
-              {title.accent}
-            </span>
+            {title.middle}
+            <span className="ah-accent">{title.accent}</span>
             {title.tail}
           </h1>
-          <p className="ah-text">{text}</p>
-          <div className="ah-links">
-            {links.map(({ href, label }) => (
-              <LocaleLink key={href} className="link-arrow" href={href}>
+          <p className="ah-text" data-load="" style={loadAt(1)}>
+            {text}
+          </p>
+          <div className="ah-links" data-load="" style={loadAt(2)}>
+            {links.map(({ href, label }, i) => (
+              <LocaleLink
+                key={href}
+                className={i === 0 ? "btn btn-primary" : "btn btn-glass"}
+                href={href}
+              >
                 {label}
                 <ArrowRightIcon aria-hidden="true" />
               </LocaleLink>
@@ -118,12 +95,14 @@ export default async function AboutPage({
         </div>
       </section>
       <PageScene>
-        <MountainStory
-          title={story}
-          chapters={chapters}
-          closing={closing}
-          cue={cue}
-          tagName={tagName}
+        <MountainStory {...story} />
+        <HomeValues
+          locale={locale}
+          id="values"
+          headingId="about-values-h"
+          title={values.title}
+          lede={values.lede}
+          variant="drawing"
         />
         <section
           id="faq"
@@ -135,7 +114,7 @@ export default async function AboutPage({
             <p className="lede">{faq.lede}</p>
           </div>
           <div className="wrap">
-            <FaqList items={faq.items} link={faq.ask} />
+            <FaqList items={faq.items} />
           </div>
         </section>
         <section
@@ -144,65 +123,91 @@ export default async function AboutPage({
           aria-labelledby="about-offices-h"
         >
           <div className="wrap">
-            <div className="sec-head">
+            <div className="sec-head" data-reveal="">
               <h2 id="about-offices-h">{offices.title}</h2>
-              <p>{offices.more}</p>
+              <p className="lede">{offices.lede}</p>
             </div>
-            <div className="offices" data-reveal="">
-              {offices.offices.map((office) => (
-                <div key={office.id} className="spot office-card">
-                  <span className="clock">
-                    <LiveClock
-                      timeZone={office.timeZone}
-                      zoneLabel={office.zoneLabel}
-                    />
-                  </span>
-                  <h3>{office.name}</h3>
-                  {office.tag ? (
-                    <small className="office-tag">{office.tag}</small>
-                  ) : null}
-                  <address>
-                    <span className="orow">
-                      <MapPinIcon aria-hidden="true" />
+            <div className="loc-cards" data-reveal="">
+              {offices.locations.map((loc) => (
+                <article key={loc.id} className="loc-card">
+                  <div className="loc-top">
+                    <div>
+                      <p className="loc-eyebrow">{loc.eyebrow}</p>
+                      <h3>{loc.city}</h3>
+                    </div>
+                    <p className="loc-time">
+                      <b>
+                        <LiveClock timeZone={loc.timeZone} zoneLabel="--:--" />
+                      </b>
+                      <small>{offices.timeLabel}</small>
+                    </p>
+                  </div>
+                  <address className="loc-rows">
+                    <span className="loc-row">
+                      <MapPinIcon weight="light" aria-hidden="true" />
                       <span>
-                        {office.addressLines.map((line, index) => (
-                          <Fragment key={line}>
-                            {index > 0 ? <br /> : null}
-                            {line}
-                          </Fragment>
-                        ))}
+                        {loc.addressLines[0]}
+                        <br />
+                        {loc.addressLines[1]}
                       </span>
+                      <a
+                        className="loc-map"
+                        href={loc.mapHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={offices.mapLabel.replace(
+                          "{city}",
+                          loc.city,
+                        )}
+                      >
+                        <ArrowUpRightIcon aria-hidden="true" />
+                      </a>
                     </span>
-                    {office.contacts.map((contact) => {
-                      const ContactIcon = contactIcon(contact.href);
-                      return (
-                        <span key={contact.href} className="orow">
-                          <ContactIcon aria-hidden="true" />
-                          <span>
-                            <a
-                              href={contact.href}
-                              aria-label={contact.ariaLabel}
-                              {...(contact.external
-                                ? {
-                                    target: "_blank",
-                                    rel: "noopener noreferrer",
-                                  }
-                                : {})}
-                            >
-                              {contact.label}
-                            </a>
-                          </span>
-                        </span>
-                      );
-                    })}
+                    <span className="loc-row">
+                      <PhoneIcon weight="light" aria-hidden="true" />
+                      <a href={loc.phone.href}>{loc.phone.label}</a>
+                    </span>
+                    <span className="loc-row">
+                      <EnvelopeSimpleIcon weight="light" aria-hidden="true" />
+                      {loc.email.href ? (
+                        <a href={loc.email.href}>{loc.email.label}</a>
+                      ) : (
+                        <span>{loc.email.label}</span>
+                      )}
+                    </span>
                   </address>
-                </div>
+                </article>
               ))}
             </div>
           </div>
         </section>
-        <CaptureBand id="book" kind="demo" look="white" copy={capture} />
+        <section
+          id="next"
+          className="sec surface-paper about-cta"
+          aria-labelledby="about-cta-h"
+        >
+          <div className="wrap about-cta-inner" data-reveal="">
+            <h2 id="about-cta-h">{cta.title}</h2>
+            <p className="lede">{cta.text}</p>
+            <div className="about-cta-actions">
+              {/* A plain anchor to the Home contact section. */}
+              <a
+                className="btn btn-primary"
+                href={localeHref(locale, cta.primary.href)}
+              >
+                {cta.primary.label}
+                <span className="about-cta-arrow" aria-hidden="true">
+                  <ArrowRightIcon weight="bold" />
+                </span>
+              </a>
+              <LocaleLink className="link-arrow" href={cta.secondary.href}>
+                {cta.secondary.label}
+                <ArrowRightIcon aria-hidden="true" />
+              </LocaleLink>
+            </div>
+          </div>
+        </section>
       </PageScene>
-    </>
+    </div>
   );
 }

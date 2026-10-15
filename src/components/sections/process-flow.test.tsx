@@ -65,12 +65,12 @@ describe("ProcessFlow", () => {
       .getAllByRole("listitem")
       .map((item) => item.textContent);
     expect(items).toEqual([
-      "Your requestAn idea, a brief or a requirement.",
-      "01DiscoveryWorkshops to understand your goals, users, risks and scope.You receiveA clear scope, estimate and delivery plan.",
-      "02DesignUser flows, interfaces and architecture agreed before code is written.You receiveA clickable prototype and technical design.",
-      "03DevelopmentAgile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end.You receiveTested, working software every sprint.",
-      "04DeploymentA safe release, monitoring and improvement after launch.You receiveA live release with ongoing support.",
-      "LaunchAnd we keep growing it together.",
+      "Your requestAn idea, a brief or a business need",
+      "01DiscoveryOur workshops uncover your goals, users, risks and scope, and turn the idea into clear requirementsYou receiveClear requirements, an estimate and a delivery plan",
+      "02DesignThose requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s builtYou receiveAn approved prototype and technical design",
+      "03DevelopmentThe approved prototype guides the build in Agile sprints, with testing in every sprintYou receiveTested, working software at every demo",
+      "04DeploymentThe finished product goes live safely, then is monitored and improved through real useYou receiveA live product with ongoing support",
+      "LaunchGrowing the product together, release after release",
     ]);
   });
 
@@ -183,7 +183,7 @@ describe("ProcessFlow", () => {
       const art = step.querySelector(".art");
       expect(art?.getAttribute("aria-hidden")).toBe("true");
       expect(art?.querySelectorAll(".main svg")).toHaveLength(1);
-      expect(art?.querySelectorAll(".orb svg")).toHaveLength(3);
+      expect(art?.querySelectorAll(".orb")).toHaveLength(0);
       expect(step.querySelector(".num")).not.toBeNull();
       expect(step.querySelector(".get b")?.textContent).toBe("You receive");
     }

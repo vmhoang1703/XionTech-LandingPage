@@ -10,7 +10,7 @@ export function FaqList({
   link,
 }: Readonly<{
   items: readonly FaqItem[];
-  link: { href: string; label: string };
+  link?: { href: string; label: string };
 }>) {
   return (
     <div className="faq" data-reveal="">
@@ -20,10 +20,12 @@ export function FaqList({
           <p>{answer}</p>
         </details>
       ))}
-      <LocaleLink className="faq-ask" href={link.href}>
-        <span>{link.label}</span>
-        <ArrowRightIcon aria-hidden="true" />
-      </LocaleLink>
+      {link ? (
+        <LocaleLink className="faq-ask" href={link.href}>
+          <span>{link.label}</span>
+          <ArrowRightIcon aria-hidden="true" />
+        </LocaleLink>
+      ) : null}
     </div>
   );
 }

@@ -3,21 +3,29 @@
 import { ArrowRightIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+} from "react";
+import { createPortal } from "react-dom";
 import { contactByPrefix, hcmc, plano } from "@/content/offices";
 import { localeHref, type Locale } from "@/i18n/locales";
 import type { ShellDictionary } from "@/i18n/shell";
 import { CONTACT_HREF, currentSection, NAV_LINKS } from "./nav-data";
-import { itemClass } from "./site-nav";
 
 const MENU_ID = "mobile-menu";
+const noSubscribe = () => () => {};
 
-// Under the links (lead, 2026-10-13): Get in touch and both headquarters'
-// phones, so contact is one tap away from any page.
+// Under the links (lead, 2026-10-13): the contact button and both
+// headquarters' phones, so contact is one tap away from any page.
 const MENU_PHONES = [
   { city: "cityPlano", phone: contactByPrefix(plano, "tel:") },
   { city: "cityHcmc", phone: contactByPrefix(hcmc, "tel:") },
 ] as const;
+
 // The menu is for 1080px and below (inclusive, as the prototype CSS); above it the desktop
 // nav shows, so growing past it closes the menu (decision T6).
 const DESKTOP_QUERY = "(min-width: 1081px)";
@@ -46,6 +54,13 @@ export function MobileMenu({
     setOpenedOn(null);
   }
   const open = openedOn === pathname;
+  // The dimmed backdrop lives on <body>: the pill's backdrop-filter would
+  // otherwise trap a fixed layer inside the pill.
+  const mounted = useSyncExternalStore(
+    noSubscribe,
+    () => true,
+    () => false,
+  );
   const section = currentSection(pathname);
 
   useEffect(() => {
@@ -105,11 +120,16 @@ export function MobileMenu({
         setOpenedOn(null);
       }
     };
+    // The header contact button fades out while open (globals.css);
+    // inert keeps it out of the focus cycle, the sheet has its own.
+    const talk = scope.querySelector<HTMLElement>(".nav-talk");
+    talk?.setAttribute("inert", "");
     root.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("click", onClick);
     desktop.addEventListener("change", onWiden);
     return () => {
+      talk?.removeAttribute("inert");
       root.style.overflow = lockedBefore;
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("click", onClick);
@@ -132,31 +152,45 @@ export function MobileMenu({
         {open ? <XIcon aria-hidden="true" /> : <ListIcon aria-hidden="true" />}
         <span className="sr-only">{t.menu}</span>
       </button>
+      {/* The open menu is one surface
+          with the pill (globals.css "Mobile menu sheet"): the pill squares its
+          bottom corners and the sheet hangs from it. Closed, the sheet stays
+          in the DOM (inert, aria-hidden) so it can animate out. */}
       <nav
         id={MENU_ID}
         aria-label={t.mainNav}
-        hidden={!open}
-        className="border-border bg-paper pointer-events-auto absolute inset-x-3 top-full z-[var(--z-index-mobile-menu)] flex max-h-[calc(100dvh-var(--spacing-header-room))] flex-col items-stretch gap-0.5 overflow-auto rounded-[28px] border p-4 shadow-[0_24px_48px_-24px_rgb(11_23_48/0.35)]"
+        aria-hidden={!open || undefined}
+        inert={!open}
+        data-open={open || undefined}
+        className="mm-sheet"
       >
-        {NAV_LINKS.map((item) => (
-          <Link
-            key={item.section}
-            href={localeHref(locale, item.href)}
-            className={itemClass}
-            aria-current={section === item.section ? "page" : undefined}
-          >
-            {t[item.section]}
-          </Link>
-        ))}
-        <div className="menu-contact">
-          <Link
-            href={localeHref(locale, CONTACT_HREF)}
-            className="btn btn-primary"
-            onClick={() => setOpenedOn(null)}
-          >
-            {t.contact}
-            <ArrowRightIcon aria-hidden="true" />
-          </Link>
+        <div className="mm-links">
+          {NAV_LINKS.map((item, i) => (
+            <Link
+              key={item.section}
+              href={localeHref(locale, item.href)}
+              className="mm-link"
+              style={{ "--i": i } as CSSProperties}
+              aria-current={section === item.section ? "page" : undefined}
+            >
+              {t[item.section]}
+              <ArrowRightIcon aria-hidden="true" className="mm-arrow" />
+            </Link>
+          ))}
+        </div>
+        <Link
+          href={localeHref(locale, CONTACT_HREF)}
+          className="btn btn-primary mm-cta"
+          style={{ "--i": NAV_LINKS.length } as CSSProperties}
+          onClick={() => setOpenedOn(null)}
+        >
+          {t.contact}
+          <ArrowRightIcon aria-hidden="true" />
+        </Link>
+        <div
+          className="mm-phones"
+          style={{ "--i": NAV_LINKS.length + 1 } as CSSProperties}
+        >
           {MENU_PHONES.map(({ city, phone }) => (
             <a key={city} href={phone.href}>
               {t[city]} {phone.label}
@@ -164,6 +198,16 @@ export function MobileMenu({
           ))}
         </div>
       </nav>
+      {mounted &&
+        createPortal(
+          <div
+            className="mm-backdrop"
+            data-open={open || undefined}
+            aria-hidden="true"
+            onClick={() => setOpenedOn(null)}
+          />,
+          document.body,
+        )}
     </>
   );
 }

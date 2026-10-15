@@ -24,7 +24,6 @@ const STATIC_PAGES = [
   "/en/news",
   "/en/about",
   "/en/careers",
-  "/en/demo",
   "/en/privacy",
   "/en/no-such-page",
 ];
@@ -195,7 +194,6 @@ const KEYBOARD_PAGES = [
   "/en/products",
   "/en/services",
   "/en/news",
-  "/en/demo",
   "/en/about",
   "/en/careers",
 ];
@@ -232,11 +230,9 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
   }) => {
     await page.goto("/en");
     await expect(page.locator('[id="mobile-menu"]')).toHaveAttribute(
-      "hidden",
+      "inert",
       "",
     );
-    await page.goto("/en/demo");
-    await expect(page.locator('[role="tabpanel"][hidden]')).toHaveCount(1);
     await page.goto("/en/products");
     await expect(page.locator("dialog.pdetail")).toHaveCount(0);
   });
@@ -248,7 +244,7 @@ test.describe("keyboard", { tag: "@a11y" }, () => {
     await page.goto("/en");
     expectKeyboardRules("/ at 390px", await tabThrough(page));
     await expect(page.locator('[id="mobile-menu"]')).toHaveAttribute(
-      "hidden",
+      "inert",
       "",
     );
   });
@@ -330,11 +326,6 @@ async function expectErrorWiring(page: Page, fieldSelector: string) {
 }
 
 test.describe("form errors", { tag: "@a11y" }, () => {
-  test("contact form on /demo", async ({ page }) => {
-    await page.goto("/en/demo");
-    await expectErrorWiring(page, 'main form input[type="email"]');
-  });
-
   test("contact form on Home", async ({ page }) => {
     await page.goto("/en");
     await expectErrorWiring(page, "#contact input[type=email]");

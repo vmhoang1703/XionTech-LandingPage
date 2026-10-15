@@ -36,7 +36,7 @@ export function ProcessFlow({ flow }: Readonly<{ flow: ProcessFlowContent }>) {
       </li>
       <EndNode node={start} />
       {steps.map((step, index) => {
-        const { icon: MainIcon, orbs } = step;
+        const { icon: MainIcon } = step;
         return (
           <li
             key={step.num}
@@ -47,11 +47,6 @@ export function ProcessFlow({ flow }: Readonly<{ flow: ProcessFlowContent }>) {
               <span className="main">
                 <MainIcon />
               </span>
-              {orbs.map((OrbIcon, orb) => (
-                <span key={OrbIcon.displayName} className={`orb o${orb + 1}`}>
-                  <OrbIcon />
-                </span>
-              ))}
             </div>
             <span className="num">{step.num}</span>
             <h3>{step.title}</h3>

@@ -13,92 +13,78 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/zh.ts` and open a pull request. `Where` is `zh:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 515 strings.
+**Total:** 461 strings.
 
 ## About
 
-51 strings.
+41 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:aboutCapture.heading` | See our apps in action. | 亲眼看看这些应用如何运作。 |
-| `zh:aboutCapture.lede` | Leave your work email and we'll arrange a walkthrough of Parent Hub and Staff Hub. | 留下您的工作邮箱，我们将为您安排 Parent Hub 和 Staff Hub 的演示。 |
-| `zh:aboutFaq.title` | Your question, we answer | 为您解答 |
-| `zh:aboutFaq.lede` | Straight answers about our products, our services and how we work. | 关于我们的产品、服务和工作方式的坦诚回答。 |
-| `zh:aboutFaq.items[0].question` | What does XionTech do? | XionTech 是做什么的？ |
-| `zh:aboutFaq.items[0].answer` | We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing. | 我们为学校打造自有平台（Parent Hub、Staff Hub、IoT Device Management），并为其他企业开发软件。我们提供产品工程、AI 驱动的分析、产品共创和人员扩充服务。 |
+| `zh:aboutCta.title` | Let’s build what’s next | 一起打造下一步 |
+| `zh:aboutCta.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | 有产品想法、技术难题，或需要扩充的工程团队？让我们一起探讨如何把您的目标变成有意义的解决方案。 |
+| `zh:aboutCta.primary.label` | Let’s talk about your project | 聊聊您的项目 |
+| `zh:aboutCta.secondary.label` | Explore our products | 了解我们的产品 |
+| `zh:aboutFaq.title` | Curious about XionTech? | 想更了解 XionTech？ |
+| `zh:aboutFaq.lede` | A few things you might want to know before working with us. | 与我们合作前，您可能想知道的几件事。 |
+| `zh:aboutFaq.items[0].question` | What does XionTech do? | XionTech 做什么？ |
+| `zh:aboutFaq.items[0].answer` | We create AI-powered products and deliver custom software, product engineering, dedicated teams, and technology solutions for businesses. | 我们打造 AI 驱动的产品，并为企业提供定制软件、产品工程、专属团队和技术解决方案。 |
 | `zh:aboutFaq.items[1].question` | Which industries do you work with? | 你们服务哪些行业？ |
-| `zh:aboutFaq.items[1].answer` | EdTech is our core. We also serve Healthcare, Logistics and Private Equity. | 教育科技是我们的核心领域。我们也服务医疗、物流和私募股权行业。 |
-| `zh:aboutFaq.items[2].question` | How can our school try Parent Hub or Staff Hub? | 我们学校如何试用 Parent Hub 或 Staff Hub？ |
-| `zh:aboutFaq.items[2].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | 请联系我们。我们会结合贵校的实际情况，为您演示这些应用。 |
-| `zh:aboutFaq.items[3].question` | How do you work across time zones? | 你们如何跨时区协作？ |
-| `zh:aboutFaq.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | 我们在普莱诺、胡志明市、河内和岘港的团队覆盖美国、欧洲和澳大利亚时区，并通过共享工具提供实时进展。 |
-| `zh:aboutFaq.items[4].question` | When do you shape the solution to our needs? | 你们何时开始根据我们的需求塑造方案？ |
-| `zh:aboutFaq.items[4].answer` | From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins. | 从一开始。在四个阶段的第一个阶段“探索”中，我们会在设计开始前明确目标、用户和范围。 |
-| `zh:aboutFaq.items[5].question` | What results can we expect? | 我们可以期待什么样的成果？ |
-| `zh:aboutFaq.items[5].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | 由经验丰富的越南工程师提供高性价比的开发、按期交付，以及支撑业务增长的可衡量成果。 |
-| `zh:aboutFaq.items[6].question` | How do you keep our data secure? | 你们如何保护我们的数据？ |
-| `zh:aboutFaq.items[6].answer` | [Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning. | [Placeholder] 我们以诚信、透明和明确的道德标准行事，并以安全自动化和持续扫描作为支撑。 |
-| `zh:aboutFaq.items[7].question` | How do we give feedback during a project? | 项目进行中我们如何反馈意见？ |
-| `zh:aboutFaq.items[7].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | 通过专属沟通渠道、定期沟通和敏捷冲刺，您的意见从始至终都会体现在产品中。 |
-| `zh:aboutFaq.items[8].question` | How do you measure and show value? | 你们如何衡量并展示价值？ |
-| `zh:aboutFaq.items[8].answer` | We track speed, quality, product impact and team autonomy, and share them openly with you. | 我们跟踪速度、质量、对产品的影响和团队自主性，并向您公开结果。 |
-| `zh:aboutFaq.ask.label` | Still have a question? Ask us directly | 还有疑问？直接问我们 |
-| `zh:aboutHero.title.lead` | We’re XionTech, | 我们是 XionTech， |
-| `zh:aboutHero.title.middle` | technology built with  | 以 |
+| `zh:aboutFaq.items[1].answer` | Education is our starting point. We bring adaptable engineering capabilities to projects in other industries, based on each client’s needs. | 教育是我们的起点。我们根据每位客户的需求，把灵活的工程能力带到其他行业的项目中。 |
+| `zh:aboutFaq.items[2].question` | How does a new project begin? | 新项目如何开始？ |
+| `zh:aboutFaq.items[2].answer` | We start by understanding your goals and requirements, then shape the approach before progressing through design, development, testing, and deployment. | 我们先了解您的目标和需求，确定实施方法，再依次推进设计、开发、测试和部署。 |
+| `zh:aboutFaq.items[3].question` | How do your teams work across time zones? | 你们的团队如何跨时区协作？ |
+| `zh:aboutFaq.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | 我们在普莱诺、胡志明市、河内和岘港的团队覆盖美国、欧洲和澳大利亚时区，并通过共享工具实时同步进展。 |
+| `zh:aboutFaq.items[4].question` | How do you maintain delivery quality? | 你们如何保证交付质量？ |
+| `zh:aboutFaq.items[4].answer` | Engineers review work and combine testing and quality assurance with AI-assisted development, guided by agreed project standards. | 工程师会评审工作成果，并按照约定的项目标准，将测试和质量保证与 AI 辅助开发相结合。 |
+| `zh:aboutHero.title.lead` | We’re XionTech. | 我们是 XionTech。 |
+| `zh:aboutHero.title.middle` | Technology built with  | 以 |
 | `zh:aboutHero.title.accent` | ownership | 主人翁精神 |
-| `zh:aboutHero.title.tail` | . | 打造技术。 |
-| `zh:aboutHero.text` | We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world. | 我们连接人才、创意与技术，打造卓越的 IT 系统，为所有人创造更美好的未来。我们在胡志明市和普莱诺为学校打造自有平台，并为世界各地的客户开发数字产品。 |
+| `zh:aboutHero.title.tail` |  | 打造技术 |
+| `zh:aboutHero.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | 我们把人、想法和技术连接在一起，打造有意义的数字解决方案。从开发软件产品到探索 AI 驱动的创新，我们结合工程专长、经验丰富的领导力和强烈的主人翁精神，帮助企业不断前进。 |
 | `zh:aboutHero.links[0].label` | Explore our products | 了解产品 |
 | `zh:aboutHero.links[1].label` | Explore our services | 了解服务 |
 | `zh:aboutMeta.title` | About XionTech \| Get IT Done | 关于 XionTech \| Get IT Done |
-| `zh:aboutMeta.description` | XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia. | XionTech 是一家教育科技公司和软件合作伙伴，总部位于美国普莱诺和越南胡志明市，在河内和岘港设有团队，服务美国、欧洲和澳大利亚的客户。 |
-| `zh:aboutOffices.title` | Two headquarters, four locations. | 两个总部，四个地点。 |
-| `zh:aboutOffices.more` | Also in Ha Noi and Da Nang. | 我们也在河内和岘港。 |
-| `zh:aboutOffices.offices[0].name` | Plano, Texas, USA | 美国得克萨斯州普莱诺 |
-| `zh:aboutOffices.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345（在新标签页中打开） |
-| `zh:aboutOffices.offices[0].zoneLabel` | US Central | 美国中部时间 |
-| `zh:aboutOffices.offices[0].tag` | US Delivery Center | 美国交付中心 |
-| `zh:aboutOffices.offices[1].name` | Ho Chi Minh City, Vietnam | 越南胡志明市 |
-| `zh:aboutOffices.offices[1].tag` | Vietnam Delivery Center | 越南交付中心 |
+| `zh:aboutMeta.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech 是一家在美国和越南设有团队的工程合作伙伴。我们打造软件产品，探索 AI 驱动的创新，并与客户一起对交付负责。 |
+| `zh:aboutOffices.title` | Two delivery centers. One connected team | 两个交付中心，一支互联的团队 |
+| `zh:aboutOffices.lede` | From Plano to Ho Chi Minh City, our teams work across time zones to support clients and keep projects moving. | 从普莱诺到胡志明市，我们的团队跨时区协作，为客户提供支持，推动项目不断前进。 |
+| `zh:aboutOffices.timeLabel` | Local time | 当地时间 |
+| `zh:aboutOffices.mapLabel` | Open {city} in Google Maps (opens in a new tab) | 在 Google 地图中打开{city}（在新标签页中打开） |
+| `zh:aboutOffices.locations[0].eyebrow` | US Delivery Center | 美国交付中心 |
+| `zh:aboutOffices.locations[0].city` | Plano, Texas | 得克萨斯州普莱诺 |
+| `zh:aboutOffices.locations[1].eyebrow` | Vietnam Delivery Center | 越南交付中心 |
+| `zh:aboutOffices.locations[1].city` | Ho Chi Minh City | 胡志明市 |
 | `zh:aboutStory.title.lead` | Inspired by a mountain. | 灵感源于山。 |
-| `zh:aboutStory.title.middle` | United by  |  |
+| `zh:aboutStory.title.middle` | Driven by  |  |
 | `zh:aboutStory.title.highlight` | purpose | 使命 |
-| `zh:aboutStory.title.tail` | . | 让我们团结。 |
-| `zh:aboutStory.chapters[0].title` | The inspiration | 灵感 |
-| `zh:aboutStory.chapters[0].text` | Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future. | 我们的名字源于山：人们仰望它、在此相聚，并一同攀登，奔向更美好的未来。 |
-| `zh:aboutStory.chapters[1].title` | The purpose | 使命 |
-| `zh:aboutStory.chapters[1].text` | [Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all. | [Placeholder] 受这一愿景启发，一群开拓者在美国创立了 newXion。在恒久核心价值观的指引下，他们立志打造一个忠于山之精神的社区：人们在这里团结一心，运用前沿技术，打造卓越的 IT 系统，推动人类进步，为所有人创造更美好的未来。 |
-| `zh:aboutStory.closing.line` | Our inspiration is a mountain. Our purpose is people. | 我们的灵感是山。我们的使命是人。 |
-| `zh:aboutStory.closing.tags` | Vision · Community · Technology | 愿景 · 社区 · 技术 |
-| `zh:aboutStory.cue` | Scroll | 滚动 |
+| `zh:aboutStory.title.tail` |  | 驱动我们前行 |
+| `zh:aboutStory.paragraphs[0]` | Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights. | 我们的名字源于一座山：它象征着抱负、团结，以及攀登新高峰的决心。 |
+| `zh:aboutStory.paragraphs[1]` | That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress. | 这种精神塑造了今天的我们。我们把人与技术连接在一起，勇于迎接挑战，对自己打造的一切负责，努力迈向一个由创新带来有意义进步的未来。 |
+| `zh:aboutValuesHeading.title` | What drives us | 驱动我们的力量 |
+| `zh:aboutValuesHeading.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | 五项原则，指引我们如何协作、如何决策，以及如何交付有意义的成果。 |
 
 ## Values (Home and About)
 
-22 strings.
+18 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:aboutValues.items[0].title` | Startup Spirit | 创业精神 |
-| `zh:aboutValues.items[0].short` | Agile, resilient and always improving. | 敏捷、坚韧、持续进步。 |
-| `zh:aboutValues.items[0].text` | Embody an entrepreneurial mindset, embracing agility, flexibility, and a passion for innovation. Our commitment to excellence is driven by resilience and a culture of continuous improvement. | 我们秉持创业精神：敏捷、灵活，并对创新充满热情。我们对卓越的追求根植于坚韧和持续改进的文化。 |
-| `zh:aboutValues.items[1].title` | Client Centricity | 以客户为中心 |
-| `zh:aboutValues.items[1].short` | Clients at the heart of everything we do. | 客户是我们一切工作的核心。 |
-| `zh:aboutValues.items[1].text` | Clients are at the heart of everything we do. We strive to deliver exceptional experiences and impactful outcomes through deep understanding, proactive engagement, and tailored solutions. | 客户是我们一切工作的核心。我们通过深入理解、积极沟通和量身定制的解决方案，努力提供卓越的体验和有意义的成果。 |
-| `zh:aboutValues.items[2].title` | Integrity First | 诚信为先 |
-| `zh:aboutValues.items[2].short` | Honest, transparent and accountable. | 诚实、透明、负责。 |
-| `zh:aboutValues.items[2].text` | Operate with honesty, transparency, and accountability. Ethical standards guide every decision and interaction, fostering trust and long-term relationships. | 我们诚实、透明、负责地行事。道德标准指导我们的每一项决策和每一次沟通，从而建立信任和长久的关系。 |
-| `zh:aboutValues.items[3].title` | Innovation Driven | 创新驱动 |
-| `zh:aboutValues.items[3].short` | Exploring new technology to stay ahead. | 探索新技术，保持领先。 |
-| `zh:aboutValues.items[3].text` | Passionate about exploring emerging technologies and creative approaches. Innovation is embedded in our DNA, enabling us to evolve our solutions and stay ahead of industry trends. | 我们热衷于探索新技术和创造性的方法。创新融入我们的基因，推动我们的解决方案不断进步，并让我们走在行业前列。 |
-| `zh:aboutValues.items[4].title` | "Get IT Done" Attitude | “Get IT Done”心态 |
-| `zh:aboutValues.items[4].short` | We own our commitments and deliver. | 对承诺负责，交付成果。 |
-| `zh:aboutValues.items[4].text` | Take ownership of our commitments and deliver high-quality, reliable, and efficient solutions. Our team is driven by accountability and a results-oriented mindset that meets or exceeds industry standards. | 我们对承诺负责，交付高质量、可靠、高效的解决方案。我们的团队以责任感和结果导向的思维，达到甚至超越行业标准。 |
-| `zh:aboutValues.items[5].title` | People-Centered Culture | 以人为本的文化 |
-| `zh:aboutValues.items[5].short` | Every team member valued, supported and empowered. | 每位成员都受到尊重、支持和赋能。 |
-| `zh:aboutValues.items[5].text` | Cultivate a workplace where every team member feels valued, supported, and empowered. Our culture goes beyond employment: it's about belonging, collaboration, and shared success. | 我们营造让每位成员都受到尊重、支持和赋能的工作环境。我们的文化不止于雇佣关系，而是建立在归属感、协作和共同成功之上。 |
-| `zh:homeValuesHeading.title` | Our core values. | 核心价值观。 |
-| `zh:homeValuesHeading.lede` | What guides how we work. Flip a card to read each value in full. | 指引我们工作方式的理念。翻转卡片，阅读每项价值观的完整内容。 |
+| `zh:aboutValues.items[0].label` | Stay agile | 保持敏捷 |
+| `zh:aboutValues.items[0].title` | Adapt with purpose. | 有目标地适应。 |
+| `zh:aboutValues.items[0].text` | Stay flexible, respond to change, and keep moving toward what matters. | 保持灵活，积极应对变化，持续朝重要的方向前进。 |
+| `zh:aboutValues.items[1].label` | Take ownership | 主人翁精神 |
+| `zh:aboutValues.items[1].title` | Own the outcome. | 对结果负责。 |
+| `zh:aboutValues.items[1].text` | Speak up, take responsibility, and see things through from start to finish. | 敢于发声，勇于担当，从开始到结束把事情做好。 |
+| `zh:aboutValues.items[2].label` | Innovate | 创新 |
+| `zh:aboutValues.items[2].title` | Make innovation useful. | 让创新真正有用。 |
+| `zh:aboutValues.items[2].text` | Explore new ideas and technologies that create meaningful value for people and businesses. | 探索能为人和企业创造实际价值的新想法和新技术。 |
+| `zh:aboutValues.items[3].label` | Grow together | 共同成长 |
+| `zh:aboutValues.items[3].title` | Better together. | 携手更出色。 |
+| `zh:aboutValues.items[3].text` | Share knowledge, support each other, and grow through collaboration and feedback. | 分享知识，互相支持，在协作和反馈中共同成长。 |
+| `zh:aboutValues.items[4].title` | Turn ideas into impact. | 把想法变成影响力。 |
+| `zh:aboutValues.items[4].text` | Move beyond ideas and deliver practical solutions that make a difference. | 不止于想法，交付真正带来改变的实用解决方案。 |
+| `zh:homeValuesHeading.title` | What drives us | 驱动我们的力量 |
+| `zh:homeValuesHeading.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | 五项原则，指引我们如何协作、如何决策，以及如何交付有意义的成果。 |
 | `zh:homeValuesHeading.frontHint` | Flip for details | 翻转卡片查看详情 |
 | `zh:homeValuesHeading.backHint` | Flip back | 翻回 |
 
@@ -108,80 +94,45 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:appTaglines.parent-hub` | Keeps parents close to every school day, on their phone. | 让家长通过手机，紧跟孩子的每个上学日。 |
-| `zh:appTaglines.staff-hub` | One workspace where staff, teachers and leaders share the same data. | 一个工作空间，让教职员工、教师和管理层共享同一份数据。 |
-| `zh:appTaglines.iot` | Run classroom devices, lighting, climate and access from one screen. | 在一个屏幕上管理教室设备、照明、空调和门禁。 |
-| `zh:appTaglines.ai-tutor` | [Placeholder] Solve new problems on your own. Not just read solutions. | [Placeholder] 独立解决新问题，而不只是阅读答案。 |
+| `zh:appTaglines.parent-hub` | Keep parents informed and connected to their child’s school life. | 让家长随时了解孩子的校园生活，与学校保持联系。 |
+| `zh:appTaglines.staff-hub` | Bring daily school operations into one connected workspace. | 把学校的日常运营汇集到一个互联的工作空间。 |
+| `zh:appTaglines.iot` | Simplify how schools manage connected campus technology. | 让学校更轻松地管理互联的校园技术。 |
+| `zh:appTaglines.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | 通过引导式学习，帮助学生理解错误、建立信心。 |
 
 ## Careers
 
-59 strings.
+24 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:careersGrowth.caption` | [Placeholder] Growth Learning Model | [Placeholder] 成长学习模型 |
-| `zh:careersGrowth.center` | Growth | 成长 |
-| `zh:careersGrowth.steps[0]` | Curious | 好奇 |
-| `zh:careersGrowth.steps[1]` | Learn | 学习 |
-| `zh:careersGrowth.steps[2]` | Ask | 提问 |
-| `zh:careersGrowth.steps[3]` | Grow | 成长 |
-| `zh:careersGrowth.steps[4]` | Improve | 进步 |
+| `zh:careersGain.heading` | What you’ll gain along the way | 一路上你将收获什么 |
+| `zh:careersGain.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | 提升技能，探索新技术，与互相支持的伙伴一起工作。以下是你在 XionTech 可以期待的。 |
+| `zh:careersGain.cards[0].title` | Hands-on Learning | 在实践中学习 |
+| `zh:careersGain.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | 通过工作坊、知识分享和真实的工程挑战，在动手中学习。 |
+| `zh:careersGain.cards[1].title` | AI & New Technologies | AI 与新技术 |
+| `zh:careersGain.cards[1].text` | Explore AI tools, automation, and modern technologies that help you work smarter. | 探索帮助你更聪明工作的 AI 工具、自动化和现代技术。 |
+| `zh:careersGain.cards[2].title` | Real-World Projects | 真实项目 |
+| `zh:careersGain.cards[2].text` | Solve real customer problems and see how your work makes a difference. | 解决真实的客户问题，看到你的工作带来的改变。 |
+| `zh:careersGain.cards[3].title` | Team Experiences | 团队时光 |
+| `zh:careersGain.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | 通过团队活动、共同学习和一起庆祝成功，建立彼此的联系。 |
 | `zh:careersHero.title.first` | Stay curious. | 保持好奇。 |
-| `zh:careersHero.title.second` | Build what’s next. | 创造未来。 |
+| `zh:careersHero.title.second` | Build what’s next | 创造未来 |
 | `zh:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | 我们正在组建一支团队，成员学得快、善于提出更好的问题、能随变化而调整，并且关心结果，而不只是任务。在这里，您将参与开创用 AI 构建软件的新方式。 |
-| `zh:careersHero.cta.label` | Explore open roles | 查看在招职位 |
-| `zh:careersInside.heading` | Inside XionTech. | 走进 XionTech。 |
-| `zh:careersInside.lede` | A look at the moments that shape life here: workshops, project starts, team days, celebrations, shared learning and the small moments in between. | 一窥塑造我们日常的那些时刻：研讨会、项目启动、团队日、庆祝活动、共同学习，以及其间的点滴瞬间。 |
-| `zh:careersInside.tiles[0].tag` | Learn together | 一起学习 |
-| `zh:careersInside.tiles[0].title` | Workshops & experiments | 研讨会与实验 |
-| `zh:careersInside.tiles[0].text` | Hands-on sessions where the team tries new tools, agentic workflows and better ways to work. | 团队在动手实践中尝试新工具、智能体工作流和更好的工作方式。 |
-| `zh:careersInside.tiles[1].tag` | Build relationships | 建立关系 |
-| `zh:careersInside.tiles[1].title` | Client visits | 拜访客户 |
-| `zh:careersInside.tiles[1].text` | Understand context directly and build stronger working relationships. | 在现场了解背景，巩固合作关系。 |
-| `zh:careersInside.tiles[2].tag` | Shared direction | 目标一致 |
-| `zh:careersInside.tiles[2].title` | Town halls | 全员大会 |
-| `zh:careersInside.tiles[2].text` | What changed, what matters now, and where we’re going next. | 发生了哪些变化，现在什么最重要，下一步走向何方。 |
-| `zh:careersInside.tiles[3].tag` | Start together | 一起启程 |
-| `zh:careersInside.tiles[3].title` | Project kickoffs | 项目启动 |
-| `zh:careersInside.tiles[3].text` | New work starts with shared context, not a mysterious task list. | 新工作从共享的背景出发，而不是一份陌生的任务清单。 |
-| `zh:careersInside.tiles[4].tag` | Celebrate progress | 庆祝成果 |
-| `zh:careersInside.tiles[4].title` | [Placeholder] Celebration | [Placeholder] 庆祝活动 |
-| `zh:careersInside.tiles[4].text` | Because shipped work deserves more than a green status label. | 因为完成的工作，值得的不只是一个变绿的状态标记。 |
-| `zh:careersLife.heading` | Life at XionTech. | 在 XionTech 的生活。 |
+| `zh:careersLife.heading` | Life at XionTech | 在 XionTech 的日常 |
+| `zh:careersLife.prevLabel` | Previous photo | 上一张照片 |
+| `zh:careersLife.nextLabel` | Next photo | 下一张照片 |
 | `zh:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] 团队照片 |
 | `zh:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] 办公室照片 |
 | `zh:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] 活动照片 |
 | `zh:careersMeta.title` | Careers at XionTech \| Software Jobs in Ho Chi Minh City | XionTech 招聘 \| 胡志明市软件工作机会 |
 | `zh:careersMeta.description` | Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture. | 加入胡志明市的 XionTech。在以人为本的文化中，运用 AI/ML、生成式 AI、云和敏捷开发，打造学校平台和客户产品。 |
-| `zh:careersRoles.heading` | Find your next challenge. | 寻找您的下一个挑战。 |
+| `zh:careersRoles.heading` | Find your next challenge | 寻找你的下一个挑战 |
 | `zh:careersRoles.emptyText` | No open roles right now. | 目前暂无在招职位。 |
 | `zh:careersRoles.applyLabel` | View and apply | 查看并申请 |
-| `zh:careersValues.heading` | Five things that shape the way we work. | 塑造我们工作方式的五项原则。 |
-| `zh:careersValues.lede` | These are the behaviours we want people to experience from us every day. Flip a card to see what each one means in practice. | 这是我们希望每个人每天都能从我们身上感受到的行为。翻转卡片，看看每项原则在实践中意味着什么。 |
-| `zh:careersValues.frontHint` | Flip for details | 翻转卡片查看详情 |
-| `zh:careersValues.backHint` | Flip back | 翻回 |
-| `zh:careersValues.cards[0].title` | [Placeholder] Stay agile | [Placeholder] 保持敏捷 |
-| `zh:careersValues.cards[0].label` | STAY AGILE | 敏捷 |
-| `zh:careersValues.cards[0].backTitle` | [Placeholder] Move without losing direction. | [Placeholder] 灵活行动，不失方向。 |
-| `zh:careersValues.cards[0].text` | Stay flexible and adapt when new information or a better answer changes the path. | 当新信息或更好的答案改变了路线时，我们灵活调整。 |
-| `zh:careersValues.cards[1].title` | [Placeholder] Own the outcome | [Placeholder] 对结果负责 |
-| `zh:careersValues.cards[1].label` | OWNERSHIP | 担当 |
-| `zh:careersValues.cards[1].backTitle` | [Placeholder] Care beyond your task. | [Placeholder] 着眼于自己的任务之外。 |
-| `zh:careersValues.cards[1].text` | Raise issues early, protect quality and take responsibility for whether the work actually succeeds. | 我们及早提出问题，守护质量，并对工作是否真正成功负责。 |
-| `zh:careersValues.cards[2].title` | [Placeholder] Innovate with purpose | [Placeholder] 有目的地创新 |
-| `zh:careersValues.cards[2].label` | INNOVATE | 创新 |
-| `zh:careersValues.cards[2].backTitle` | [Placeholder] New is useful only when it helps. | [Placeholder] 新事物只有在有用时才有意义。 |
-| `zh:careersValues.cards[2].text` | Explore emerging technology when it improves the product, the user experience or the way we work. | 当新技术能改进产品、用户体验或工作方式时，我们就去探索它。 |
-| `zh:careersValues.cards[3].title` | [Placeholder] Grow together | [Placeholder] 共同成长 |
-| `zh:careersValues.cards[3].label` | GROW TOGETHER | 共同成长 |
-| `zh:careersValues.cards[3].backTitle` | [Placeholder] Make each other better. | [Placeholder] 让彼此变得更好。 |
-| `zh:careersValues.cards[3].text` | Share what you know, give useful feedback and create space for teammates to stretch, contribute and grow. | 我们分享所知，给出有帮助的反馈，并为同事留出挑战、贡献和成长的空间。 |
-| `zh:careersValues.cards[4].backTitle` | [Placeholder] Turn possibility into something real. | [Placeholder] 把可能变为现实。 |
-| `zh:careersValues.cards[4].text` | Good ideas matter. Delivering useful, working outcomes is what gives them value. | 好的想法很重要。只有交付有用、真实的成果，它才有价值。 |
 
 ## News
 
-23 strings.
+21 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
@@ -189,8 +140,8 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:categoryLabels.students` | Students | 学生 |
 | `zh:categoryLabels.parents` | Parents | 家长 |
 | `zh:categoryLabels.company` | Company | 公司 |
-| `zh:homeNews.heading` | Latest from XionTech. | XionTech 最新动态。 |
-| `zh:homeNews.lede` | Catch up with what our team is building and shipping. | 看看我们的团队正在打造和发布什么。 |
+| `zh:homeNews.heading` | Latest from XionTech | XionTech 最新动态 |
+| `zh:homeNews.lede` | Explore what we’re building, the ideas we’re exploring, and the people behind our work. | 了解我们正在打造的产品、正在探索的想法，以及背后的团队。 |
 | `zh:homeNews.seeAll.label` | See all news | 查看所有动态 |
 | `zh:homeNews.readStory` | Read story | 阅读文章 |
 | `zh:newsMeta.title` | News \| XionTech | 新闻 \| XionTech |
@@ -199,19 +150,17 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:newsPage.sub` | Stay informed with the latest news and announcements, fresh off the press. | 第一时间了解我们的最新动态和公告。 |
 | `zh:newsPage.storiesHeading` | All stories | 所有文章 |
 | `zh:newsPage.filtersLabel` | Filter stories by audience | 按受众筛选文章 |
-| `zh:newsPage.sampleNote` | Stories from the newXion newsroom; those marked [Placeholder] are samples. | 文章来自 newXion 新闻室。标有 [Placeholder] 的文章为示例。 |
 | `zh:newsPage.allFilter.label` | All | 全部 |
 | `zh:newsPage.empty` | No stories are available in this category yet. | 该类别暂无文章。 |
 | `zh:newsPage.showAll` | Show all | 显示全部 |
 | `zh:newsPage.countOne` | Showing 1 story | 显示 1 篇文章 |
 | `zh:newsPage.countMany` | Showing {n} stories | 显示 {n} 篇文章 |
 | `zh:newsStory.storyLabel` | Story | 文章 |
-| `zh:newsStory.sampleNote` | [Placeholder] Sample story to show the layout. Replace with a real story before launch. | [Placeholder] 这是一篇用于展示版式的示例文章，上线前须替换为真实文章。 |
 | `zh:newsStory.backToNews.label` | Back to News | 返回新闻 |
 
 ## Contact, demo form and capture band
 
-71 strings.
+72 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
@@ -227,7 +176,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:contactStrings.hero.titleBefore` | Let's talk about your  | 聊聊您的 |
 | `zh:contactStrings.hero.titleHighlight` | school | 学校 |
 | `zh:contactStrings.hero.titleAfter` |  or your project. | 或项目。 |
-| `zh:contactStrings.hero.items[0]` | A walkthrough of Parent Hub and Staff Hub using your school's scenarios. | 结合贵校情况演示 Parent Hub 和 Staff Hub。 |
+| `zh:contactStrings.hero.items[0]` | A demo of Parent Hub and Staff Hub using your school's scenarios. | 结合贵校情况演示 Parent Hub 和 Staff Hub。 |
 | `zh:contactStrings.hero.items[1]` | Answers on setup, data and support. | 解答关于部署、数据和支持的问题。 |
 | `zh:contactStrings.hero.items[2]` | For projects: a first Discovery conversation, the first of our four steps. | 对于项目：一次探索沟通，即四个阶段中的第一个阶段。 |
 | `zh:contactStrings.hero.officesLabel` | Our offices | 办公地点 |
@@ -236,7 +185,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:contactStrings.form.tabDemo` | Product demo | 产品演示 |
 | `zh:contactStrings.form.tabProject` | Outsourcing project | 外包项目 |
 | `zh:contactStrings.form.name` | Full name | 姓名 |
-| `zh:contactStrings.form.email`<br>`zh:contactStrings.home.email`<br>`zh:contactStrings.capture.emailLabel` | Work email | 工作邮箱 |
+| `zh:contactStrings.form.email`<br>`zh:contactStrings.home.email` | Email address | 电子邮箱 |
 | `zh:contactStrings.form.org` | School or company | 学校或公司 |
 | `zh:contactStrings.form.role` | Your role | 职位 |
 | `zh:contactStrings.form.roleHelp` | For example: Principal, Head of IT | 例如：校长、IT 负责人 |
@@ -256,7 +205,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:contactStrings.form.privacyLink` | Privacy policy | 隐私政策 |
 | `zh:contactStrings.form.errorsHeading` | Please fix the following: | 请修正以下内容： |
 | `zh:contactStrings.home.heading` | Have something you want to build? | 有想要打造的东西吗？ |
-| `zh:contactStrings.home.lede` | Tell us a little about yourself and what you're working on. Our team will get in touch to learn more. | 简单介绍一下您和您正在做的事情，我们的团队会联系您，进一步了解详情。 |
+| `zh:contactStrings.home.lede` | Building something new or improving what you already have? Tell us about your goals, and we’ll explore how we can help. | 正在打造新产品，或想改进现有产品？告诉我们您的目标，我们会一起探讨如何提供帮助。 |
 | `zh:contactStrings.home.name` | Your name | 姓名 |
 | `zh:contactStrings.home.phone` | Phone number | 电话 |
 | `zh:contactStrings.home.optional` | (optional) | （可选） |
@@ -266,11 +215,12 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:contactStrings.home.consent` | We only use your details to reply to your message. | 您提供的信息仅用于回复您的留言。 |
 | `zh:contactStrings.home.successHeading` | Summit reached. Thanks — we've received your message. | 登顶成功，谢谢。我们已收到您的留言。 |
 | `zh:contactStrings.home.successText` | Our team will review what you shared and get in touch with you. | 我们会阅读您发送的内容，并回复您。 |
-| `zh:contactStrings.capture.demo.heading` | See it working at your school. | 看看它在贵校如何运作。 |
-| `zh:contactStrings.capture.demo.lede` | Leave your work email and we'll arrange a walkthrough built around your school. | 留下您的工作邮箱，我们将为贵校安排一次专属演示。 |
+| `zh:contactStrings.capture.emailLabel` | Work email | 工作邮箱 |
+| `zh:contactStrings.capture.demo.heading` | See it working at your school | 看看它在贵校如何运行 |
+| `zh:contactStrings.capture.demo.lede` | Leave your work email and we'll arrange a demo built around your school. | 留下您的工作邮箱，我们将为贵校安排一场量身定制的演示。 |
 | `zh:contactStrings.capture.demo.button`<br>`zh:contactStrings.capture.project.button` | Get in touch | 联系我们 |
 | `zh:contactStrings.capture.demo.consent` | We only use your email to arrange your demo. | 您的邮箱仅用于安排演示。 |
-| `zh:contactStrings.capture.project.heading` | Tell us what you're building. | 告诉我们您在打造什么。 |
+| `zh:contactStrings.capture.project.heading` | Tell us what you're building | 告诉我们您在打造什么 |
 | `zh:contactStrings.capture.project.lede` | Leave your work email and we'll reach out to start Discovery. | 留下您的工作邮箱，我们会联系您，开始探索阶段。 |
 | `zh:contactStrings.errors.name` | Please enter your name. | 请输入您的姓名。 |
 | `zh:contactStrings.errors.email` | Please enter a valid email address. | 请输入有效的电子邮箱地址。 |
@@ -293,7 +243,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:dayRoad.heading` | A day at school. | 校园里的一天。 |
+| `zh:dayRoad.heading` | A day at school | 校园的一天 |
 | `zh:dayRoad.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | 跟随一名学生度过普通的上学日，看看学生、家长和教职员工在每一步如何获得信息、保持连接。 |
 | `zh:dayRoad.start` | Start | 出发 |
 | `zh:dayRoad.finish` | Finish | 到达 |
@@ -304,9 +254,9 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:dayRoad.stops[2].title` | Parent updated | 通知家长 |
 | `zh:dayRoad.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub 告知家长学生已到校。 |
 | `zh:dayRoad.stops[3].title` | Student learns | 学生学习 |
-| `zh:dayRoad.stops[3].text` | Students practise and ask questions with the AI Tutor. | 学生使用 AI Tutor 练习和提问。 |
-| `zh:dayRoad.stops[4].title`<br>`zh:productDetails.iot.features[1].title` | Lighting and climate on the timetable | 按课表控制照明与空调 |
-| `zh:dayRoad.stops[4].text` | Run classroom devices, lighting, climate and access from one screen. | 在一个屏幕上管理教室设备、照明、空调和门禁。 |
+| `zh:dayRoad.stops[3].text` | Students practice and ask questions with the AI Tutor. | 学生使用 AI Tutor 练习和提问。 |
+| `zh:dayRoad.stops[4].title`<br>`zh:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明和空调定时控制 |
+| `zh:dayRoad.stops[4].text` | Simplify how schools manage connected campus technology. | 让学校更轻松地管理互联的校园技术。 |
 | `zh:dayRoad.stops[5].title` | Day stays connected | 互联的一天 |
 | `zh:dayRoad.stops[5].text` | Notifications and school information stay connected across the system. | 通知和学校信息在整个系统中保持互通。 |
 | `zh:journeyBoard.hint` | Select a step to see the app behind it. | 选择一个步骤，查看支持该步骤的应用。 |
@@ -316,25 +266,25 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:journeyBoard.lanes[1].label` | Teacher and staff | 教师与教职员工 |
 | `zh:journeyBoard.lanes[2].label` | Parent | 家长 |
 | `zh:journeyBoard.lanes[3].label` | Campus | 校园 |
-| `zh:journeyMap.intro.title` | Built apart. Better together. | 各自独立打造，携手效果更佳。 |
+| `zh:journeyMap.intro.title` | Built apart. Better together | 各自打造，携手更强 |
 | `zh:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。 |
 | `zh:productDetails.parent-hub.madeFor` | Parents and families | 家长与家庭 |
-| `zh:productDetails.parent-hub.features[0].title` | Alerts when your child reaches the gate | 孩子到达校门时通知 |
-| `zh:productDetails.parent-hub.features[1].title` | Scores and comments as soon as published | 成绩与反馈一经发布即可查看 |
+| `zh:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | 实时到校提醒 |
+| `zh:productDetails.parent-hub.features[1].title` | Published grades and feedback | 已发布的成绩和评语 |
 | `zh:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 与教师双向沟通 |
 | `zh:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 缴纳学费，收据清晰 |
 | `zh:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 教职员工、教师与管理层 |
-| `zh:productDetails.staff-hub.features[0].title` | Attendance and records in real time | 实时考勤与记录 |
+| `zh:productDetails.staff-hub.features[0].title` | Attendance and student records | 考勤和学生档案 |
 | `zh:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 班级、课表与成绩 |
 | `zh:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | 通过 Parent Hub 向家长发送消息 |
 | `zh:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 展示当日重点的管理层看板 |
 | `zh:productDetails.iot.madeFor` | School operations and facilities teams | 设施与运维团队 |
-| `zh:productDetails.iot.features[0].title` | Projectors, displays and sound | 投影仪、显示屏与音响 |
+| `zh:productDetails.iot.features[0].title` | Centralized device management | 设备集中管理 |
 | `zh:productDetails.iot.features[2].title` | Doors and zones managed centrally | 集中管理门禁与区域 |
 | `zh:productDetails.iot.features[3].title` | Energy use across the campus | 全校园能耗 |
 | `zh:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 学生，教师从旁陪伴 |
-| `zh:productDetails.ai-tutor.features[0].title` | Skill-by-skill diagnosis | 按技能诊断 |
-| `zh:productDetails.ai-tutor.features[1].title` | Step-by-step hints once you have tried | 先自己尝试，再获得分步提示 |
+| `zh:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | 按技能检查理解程度 |
+| `zh:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 个性化的分步提示 |
 | `zh:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 只有能独立完成时才算掌握 |
 | `zh:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校应用：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
 | `zh:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 面向家长的 Parent Hub、面向教职员工、教师和管理层的 Staff Hub，以及面向校园的 IoT Device Management。XionTech 的互联学校应用。 |
@@ -348,14 +298,14 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:footerOffices[0].name`<br>`zh:hcmc.tag`<br>`zh:offices[1].tag` | Vietnam Delivery Center | 越南交付中心 |
-| `zh:footerOffices[1].name` | US Delivery Center | 美国交付中心 |
-| `zh:footerOffices[1].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345（在新标签页中打开） |
+| `zh:footerOffices[0].tag` | US Delivery Center | 美国交付中心 |
+| `zh:footerOffices[1].name` | Ho Chi Minh City | 胡志明市 |
+| `zh:footerOffices[1].tag`<br>`zh:hcmc.tag`<br>`zh:offices[1].tag` | Vietnam Delivery Center | 越南交付中心 |
 | `zh:hcmc.name`<br>`zh:offices[1].name` | Ho Chi Minh City, Vietnam | 越南胡志明市 |
 | `zh:offices[0].name`<br>`zh:plano.name` | Plano, Texas, USA | 美国得克萨斯州普莱诺 |
 | `zh:offices[0].contacts[1].ariaLabel`<br>`zh:plano.contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345（在新标签页中打开） |
 | `zh:offices[0].zoneLabel`<br>`zh:plano.zoneLabel` | US Central | 美国中部时间 |
-| `zh:otherLocations` | Also in Ha Noi and Da Nang. | 我们也在河内和岘港。 |
+| `zh:otherLocations` | Ha Noi, Da Nang | 河内、岘港 |
 
 ## Home
 
@@ -363,76 +313,76 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:homeApps.title` | One connected school. | 互联的学校。 |
-| `zh:homeApps.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。 |
+| `zh:homeApps.title` | One connected school | 互联的学校 |
+| `zh:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | 用为家长、教职员工、学生和校园运营打造的互联解决方案，把整个学校社区连接在一起，让日常的学校管理更简单。 |
 | `zh:homeApps.apps[0].madeFor` | Parents and families | 家长与家庭 |
-| `zh:homeApps.apps[0].features[0]` | Alerts when your child reaches the gate | 孩子到达校门时通知 |
-| `zh:homeApps.apps[0].features[1]` | Scores and comments as soon as published | 成绩与反馈一经发布即可查看 |
+| `zh:homeApps.apps[0].features[0]` | Real-time arrival alerts | 实时到校提醒 |
+| `zh:homeApps.apps[0].features[1]` | Published grades and feedback | 已发布的成绩和评语 |
 | `zh:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 教职员工、教师与管理层 |
-| `zh:homeApps.apps[1].features[0]` | Attendance and records in real time | 实时考勤与记录 |
+| `zh:homeApps.apps[1].features[0]` | Attendance and student records | 考勤和学生档案 |
 | `zh:homeApps.apps[1].features[1]` | Classes, timetables and grades | 班级、课表与成绩 |
 | `zh:homeApps.apps[2].madeFor` | School operations and facilities teams | 设施与运维团队 |
-| `zh:homeApps.apps[2].features[0]` | Projectors, displays and sound | 投影仪、显示屏与音响 |
-| `zh:homeApps.apps[2].features[1]` | Lighting and climate on the timetable | 按课表控制照明与空调 |
+| `zh:homeApps.apps[2].features[0]` | Centralized device management | 设备集中管理 |
+| `zh:homeApps.apps[2].features[1]` | Scheduled lighting and climate controls | 照明和空调定时控制 |
 | `zh:homeApps.apps[3].madeFor` | Students, with teachers alongside | 学生，教师从旁陪伴 |
-| `zh:homeApps.apps[3].features[0]` | Skill-by-skill diagnosis | 按技能诊断 |
-| `zh:homeApps.apps[3].features[1]` | Step-by-step hints once you have tried | 先自己尝试，再获得分步提示 |
+| `zh:homeApps.apps[3].features[0]` | Skill-level understanding checks | 按技能检查理解程度 |
+| `zh:homeApps.apps[3].features[1]` | Personalized step-by-step hints | 个性化的分步提示 |
 | `zh:homeApps.link.label` | Explore products | 了解产品 |
-| `zh:homeCapabilities.title` | Why XionTech. | 为什么选择 XionTech。 |
-| `zh:homeCapabilities.lede` | The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI. | 这是我们每一款学校应用和每一次交付背后的能力，以及一支不断寻找用 AI 让工作更智能的团队。 |
+| `zh:homeCapabilities.title` | Why XionTech | 为什么选择 XionTech |
+| `zh:homeCapabilities.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | 我们亲自打造产品，并把这些实践经验带给客户，将行业探索、工程担当和 AI 辅助开发结合在一起。 |
 | `zh:homeCapabilities.delivery.label` | Global delivery | 全球交付 |
-| `zh:homeCapabilities.delivery.title` | Two headquarters, one working day. | 两个总部，一个工作日。 |
+| `zh:homeCapabilities.delivery.title` | Two headquarters, one working day | 两个总部，同一个工作日 |
 | `zh:homeCapabilities.delivery.line` | Teams across time zones keep delivery moving with practical overlap. | 跨时区的团队利用切实可行的重叠工作时间，让开发持续推进。 |
 | `zh:homeCapabilities.industries.label` | Domain expertise | 领域专长 |
-| `zh:homeCapabilities.industries.title` | Deep in education. Built to adapt. | 深耕教育，灵活应变。 |
-| `zh:homeCapabilities.industries.line` | Education is where we go deepest, while the same engineering capability supports other industries too. | 教育是我们最深耕的领域，同样的工程能力也服务于其他行业。 |
+| `zh:homeCapabilities.industries.title` | Start with education. Built to adapt | 从教育出发，灵活适应 |
+| `zh:homeCapabilities.industries.line` | Our experience building education technology provides a strong foundation for developing tailored solutions across industries. | 我们在教育科技领域的积累，为面向各行各业开发定制解决方案打下了坚实基础。 |
 | `zh:homeCapabilities.industries.main` | Education | 教育 |
 | `zh:homeCapabilities.industries.more[0]` | Healthcare | 医疗 |
 | `zh:homeCapabilities.industries.more[1]` | Logistics | 物流 |
 | `zh:homeCapabilities.industries.more[2]` | Private Equity | 私募股权 |
 | `zh:homeCapabilities.industries.moreLabel` | +3 more industries: Healthcare, Logistics and Private Equity | 另外 3 个行业：医疗、物流、私募股权 |
-| `zh:homeCapabilities.motto.title` | Built with ownership. | 以主人翁精神打造。 |
-| `zh:homeCapabilities.motto.line` | Ownership of our commitments and pride in quality. | 我们对承诺负责，并以质量为荣。 |
-| `zh:homeDoors.label` | What we do | 我们做什么 |
-| `zh:homeDoors.products.title` | Products for schools | 面向学校的产品 |
-| `zh:homeDoors.products.line` | Connected apps for parents, students, teachers, leaders and school staff. | 为家长、学生、教师、管理层和教职员工打造的互联应用。 |
+| `zh:homeCapabilities.motto.title` | Built with ownership, from the first idea to delivery. | 从最初的想法到交付，始终以主人翁精神打造。 |
+| `zh:homeDoors.label` | What we do | 我们的业务 |
+| `zh:homeDoors.products.label` | Products for schools | 面向学校的产品 |
+| `zh:homeDoors.products.title` | Platforms in one ecosystem | 同一生态中的多个平台 |
+| `zh:homeDoors.products.line` | An integrated, AI-powered ecosystem that enhances learning, simplifies school administration and keeps students engaged | 一个集成的 AI 驱动生态系统，提升学习体验，简化学校管理，让学生保持投入 |
 | `zh:homeDoors.services.label` | Outsourcing services | 外包服务 |
-| `zh:homeDoors.services.title` | Your software delivery team | 您的软件交付团队 |
-| `zh:homeDoors.services.line` | Dedicated teams and end-to-end delivery for companies building digital products. | 为打造数字产品的企业提供专属团队和端到端交付。 |
-| `zh:homeDoors.services.chips[5]` | +3 more | 另外 3 项 |
-| `zh:homeFaq.title` | Your questions, answered. | 为您解答。 |
-| `zh:homeFaq.lede` | Straight answers about our products, our services and how we work. | 关于我们的产品、服务和工作方式的坦诚回答。 |
+| `zh:homeDoors.services.title` | Custom software for your business | 为您的企业定制软件 |
+| `zh:homeDoors.services.line` | Work with our dedicated teams on custom software. We shape each team around your product and work with you from discovery through launch and support. | 与我们的专属团队一起开发定制软件。我们围绕您的产品组建团队，从探索到上线和后续支持全程与您同行。 |
+| `zh:homeDoors.services.chips[5]` | +3 more | 另有 3 项 |
+| `zh:homeFaq.title` | Before you reach out | 联系我们之前 |
+| `zh:homeFaq.lede` | Straight answers about our products, our services and how we work. | 关于我们的产品、服务和工作方式的坦诚解答。 |
 | `zh:homeFaq.items[0].question` | How can our school try Parent Hub or Staff Hub? | 我们学校如何试用 Parent Hub 或 Staff Hub？ |
-| `zh:homeFaq.items[0].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | 请联系我们。我们会结合贵校的实际情况，为您演示这些应用。 |
+| `zh:homeFaq.items[0].answer` | Leave your work email on the Products page and we walk you through the apps using scenarios from your own school. | 在产品页面留下您的工作邮箱，我们会结合贵校的实际场景为您介绍这些应用。 |
 | `zh:homeFaq.items[1].question` | How do you work across time zones? | 你们如何跨时区协作？ |
-| `zh:homeFaq.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | 我们在普莱诺、胡志明市、河内和岘港的团队覆盖美国、欧洲和澳大利亚时区，并通过共享工具提供实时进展。 |
-| `zh:homeFaq.items[2].question` | What results can we expect? | 我们可以期待什么样的成果？ |
-| `zh:homeFaq.items[2].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | 由经验丰富的越南工程师提供高性价比的开发、按期交付，以及支撑业务增长的可衡量成果。 |
+| `zh:homeFaq.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | 我们在普莱诺、胡志明市、河内和岘港的团队覆盖美国、欧洲和澳大利亚时区，并通过共享工具实时同步进展。 |
+| `zh:homeFaq.items[2].question` | What results can we expect? | 我们可以期待什么成果？ |
+| `zh:homeFaq.items[2].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | 由技术娴熟的越南工程师带来高性价比的交付、按时发布，以及支持您发展的可衡量成果。 |
 | `zh:homeFaq.items[3].question` | How do we give feedback during a project? | 项目进行中我们如何反馈意见？ |
-| `zh:homeFaq.items[3].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | 通过专属沟通渠道、定期沟通和敏捷冲刺，您的意见从始至终都会体现在产品中。 |
+| `zh:homeFaq.items[3].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | 通过专属沟通渠道、频繁的进度沟通和敏捷冲刺，让您的意见贯穿始终地塑造产品。 |
 | `zh:homeFaq.link.label` | See all questions | 查看所有问题 |
 | `zh:homeHero.title.lines[0]` | Build smarter. | 更智能地构建。 |
 | `zh:homeHero.title.lines[1]` | Ship faster. | 更快速地发布。 |
-| `zh:homeHero.title.tail` | . | 。 |
-| `zh:homeHero.sub` | Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development. | 互联的学校与校园解决方案、软件产品和专属团队，来自在 AI 辅助开发领域走在前列的团队。 |
+| `zh:homeHero.sub` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech 将实践经验与现代技术相结合，打造 AI 驱动的产品和定制解决方案，解决企业面临的挑战。 |
 | `zh:homeHero.motion.pause` | Pause motion | 暂停动画 |
 | `zh:homeHero.motion.play` | Play motion | 播放动画 |
 | `zh:homeHero.cta.label` | Get in touch | 联系我们 |
 | `zh:homeMeta.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| 学校平台与越南软件外包 |
+| `zh:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech 打造 AI 驱动的产品和定制解决方案：学校平台（Parent Hub、Staff Hub、IoT、AI Tutor）以及来自越南的软件外包。 |
 | `zh:homeOutcomes.title` | What can we help you achieve? | 我们可以帮您实现什么？ |
 | `zh:homeOutcomes.lede` | Pick one service or combine several. We shape the team around your product. | 您可以选择一项服务，也可以组合多项服务。我们会围绕您的产品组建团队。 |
 | `zh:homeOutcomes.items[0].title` | Build a new digital product | 打造新的数字产品 |
-| `zh:homeOutcomes.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | 由一支交付团队完成从探索和 UX 到工程、测试和上线的全过程。 |
-| `zh:homeOutcomes.items[1].title` | Extend your team | 扩充团队 |
-| `zh:homeOutcomes.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | 当内部团队需要更多人手或特定技能时，补充专业技术人才。 |
-| `zh:homeOutcomes.items[2].title` | Modernise an existing platform | 现代化现有平台 |
-| `zh:homeOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | 在保留已有优势的同时，改进应用、基础设施、云部署和工程实践。 |
-| `zh:homeOutcomes.items[3].title` | Apply AI where it creates value | 在创造价值的地方应用 AI |
-| `zh:homeOutcomes.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | 运用 AI、分析和自动化，改进产品、流程和决策。 |
-| `zh:homeOutcomes.cta.label` | Start a project | 启动项目 |
+| `zh:homeOutcomes.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | 通过端到端设计、定制软件开发、测试和上线支持，把您的想法变成可以推向市场的产品。 |
+| `zh:homeOutcomes.items[1].title` | Extend your team | 扩充您的团队 |
+| `zh:homeOutcomes.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | 当内部团队需要更多人手或特定技能时，补充专业的技术人才。 |
+| `zh:homeOutcomes.items[2].title` | Modernize an existing platform | 升级现有平台 |
+| `zh:homeOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | 在保留现有可靠部分的同时，改进应用、基础设施、云交付和工程实践。 |
+| `zh:homeOutcomes.items[3].title` | Leverage AI to drive business value | 借助 AI 创造商业价值 |
+| `zh:homeOutcomes.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | 构建 AI 驱动的解决方案，实现流程自动化，把业务数据转化为可行的洞察，支持更明智的决策。 |
+| `zh:homeOutcomes.cta.label` | Let's build together | 启动项目 |
 | `zh:homeOutcomes.link.label` | Explore services | 了解服务 |
-| `zh:homeProcess.title` | How we work. | 我们的工作方式。 |
-| `zh:homeProcess.lede` | Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve. AI runs through every step, and we keep improving how we use it. | 4-D 流程（探索、设计、开发、交付）将想法推进到上线，每个阶段都以您可以查看和批准的成果结束。AI 贯穿每个阶段，我们也在不断改进使用 AI 的方式。 |
+| `zh:homeProcess.title` | How we work | 我们的工作方式 |
+| `zh:homeProcess.lede` | From idea to launch, our 4-D process brings clarity, collaboration, and measurable progress to every stage. With AI-assisted workflows and clear deliverables, you stay involved from start to finish. | 从想法到上线，我们的 4-D 流程为每个阶段带来清晰、协作和可衡量的进展。借助 AI 辅助的工作流程和清晰的交付物，您可以从头到尾参与其中。 |
 | `zh:homeProcess.link.label` | See the full process | 查看完整流程 |
 | `zh:homeStats.label` | Experience you can count on | 值得信赖的经验 |
 | `zh:homeStats.stats[0].caption` | Years of leadership experience in software | 年软件行业领导经验 |
@@ -481,37 +431,24 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Privacy
 
-27 strings.
+14 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
 | `zh:privacy.metaTitle` | Privacy Policy \| XionTech | 隐私政策 \| XionTech |
-| `zh:privacy.metaDescription` | [Placeholder] How XionTech uses the personal data you share through our forms. | [Placeholder] XionTech 如何使用您通过表单发送给我们的个人数据。 |
+| `zh:privacy.metaDescription` | How XionTech uses the personal data you share through our forms. | XionTech 如何使用您通过我们的表单提供的个人数据。 |
 | `zh:privacy.breadcrumbLabel` | Breadcrumb | 面包屑导航 |
 | `zh:privacy.breadcrumbHome` | Home | 首页 |
-| `zh:privacy.breadcrumbCurrent` | Privacy policy | 隐私政策 |
-| `zh:privacy.title` | Privacy policy. | 隐私政策。 |
-| `zh:privacy.lede` | [Placeholder] Policy text to be supplied by the legal owner, compliant with Vietnam's Decree 13/2023 (PDPD). | [Placeholder] 依据越南第 13/2023 号法令（PDPD）的政策文本将由法务人员提供。 |
+| `zh:privacy.breadcrumbCurrent`<br>`zh:privacy.title` | Privacy policy | 隐私政策 |
 | `zh:privacy.bodyLabel` | Policy | 政策 |
-| `zh:privacy.outlineNote` | [Placeholder] Content outline. The sections below are what the policy must cover, not the real policy. | [Placeholder] 内容大纲。以下各节说明政策需要涵盖的内容，并非实际政策。 |
-| `zh:privacy.retentionDecided`<br>`zh:privacy.sections[5].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | 咨询和演示请求、提交的电子邮箱地址，以及求职申请和简历均无限期保存。 |
-| `zh:privacy.sections[0].heading` | Who we are and how to reach us | 我们是谁以及如何联系我们 |
-| `zh:privacy.sections[0].paragraphs[0]` | [Placeholder] The data controller (XionTech legal entity), its address and a contact for privacy requests. | [Placeholder] 数据控制者（XionTech 法律实体）、地址以及隐私问题联系方式。 |
-| `zh:privacy.sections[1].heading` | What we collect | 我们收集哪些信息 |
-| `zh:privacy.sections[1].paragraphs[0]` | [Placeholder] Email, name, phone number, organisation, role and anything you send through our forms, including a CV if you apply for a job. | [Placeholder] 邮箱、姓名、电话、机构、职位，以及您通过表单发送的任何内容（求职时包括简历）。 |
-| `zh:privacy.sections[1].paragraphs[1]` | [Placeholder] The email you type in the email capture band is sent to our company inbox like a form message. Your browser also keeps it in session storage only until the demo request page reads it. | [Placeholder] 在邮箱收集横幅中输入的邮箱会像表单消息一样发送到公司收件箱。浏览器也会将其保存在会话存储中，直到演示请求页面读取为止。 |
-| `zh:privacy.sections[2].heading` | How we use it | 我们如何使用这些信息 |
-| `zh:privacy.sections[2].paragraphs[0]` | [Placeholder] Only to answer your request, arrange a demo, or consider your job application and CV. | [Placeholder] 仅用于回复您的咨询、安排演示，或审核求职申请和简历。 |
-| `zh:privacy.sections[3].heading` | Who we share it with | 我们与谁共享 |
-| `zh:privacy.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | [Placeholder] 代表我们处理数据的服务商：Gmail（将表单消息发送到公司收件箱）、Upstash（基于哈希值的请求频率计数器）、Vercel（网站托管和私有简历存储）、Google Fonts（日文、韩文和中文页面使用的字体）。 |
-| `zh:privacy.sections[4].heading` | Transfers outside Vietnam | 向越南境外传输 |
-| `zh:privacy.sections[4].paragraphs[0]` | [Placeholder] When data is transferred abroad (for example to our Plano office) and the safeguards required by Decree 13/2023. | [Placeholder] 数据何时传输到境外（例如普莱诺办公室），以及第 13/2023 号法令要求的保护措施。 |
-| `zh:privacy.sections[5].heading` | How long we keep it | 保存期限 |
-| `zh:privacy.sections[5].paragraphs[1]` | [Placeholder] The final retention wording, and whether a time limit will be added later. | [Placeholder] 关于保存的最终措辞，以及之后是否增加期限限制。 |
-| `zh:privacy.sections[6].heading` | Cookies and analytics | Cookie 与分析 |
-| `zh:privacy.sections[6].paragraphs[0]` | [Placeholder] Temporary text. The final text will list the essential first-party language cookie (what it stores and why) and state that no non-essential cookies or analytics are set without your consent. | [Placeholder] 临时文本。最终文本将说明必要的第一方语言 Cookie（存储什么以及原因），并说明未经同意不会设置非必要 Cookie 或分析工具。 |
-| `zh:privacy.sections[7].heading` | Your rights | 您的权利 |
-| `zh:privacy.sections[7].paragraphs[0]` | [Placeholder] Access, correct or delete your data, or withdraw consent; how to ask for deletion is not decided yet. | [Placeholder] 查阅、更正或删除您的数据，或撤回同意。申请删除的方式尚未确定。 |
+| `zh:privacy.retentionDecided`<br>`zh:privacy.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | 咨询和演示请求、提交的电子邮箱地址，以及求职申请和简历均无限期保存。 |
+| `zh:privacy.sections[0].heading` | What we collect | 我们收集的信息 |
+| `zh:privacy.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | 电子邮箱、姓名、电话号码、机构、职位，以及您通过我们的表单发送的任何内容，包括您申请职位时提交的简历。 |
+| `zh:privacy.sections[1].heading` | How we use it | 我们如何使用这些信息 |
+| `zh:privacy.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | 仅用于回复您的请求，或审阅您的求职申请和简历。 |
+| `zh:privacy.sections[2].heading` | Who we share it with | 我们与谁共享 |
+| `zh:privacy.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | 代表我们处理数据的服务提供商：Gmail（将表单消息发送到公司收件箱）、Upstash（由哈希值生成的限流计数器）、Vercel（网站托管和简历私密存储）、Google Fonts（日文、韩文和中文页面所用的字体）。 |
+| `zh:privacy.sections[3].heading` | How long we keep it | 我们保留多久 |
 
 ## Process (Home and Services)
 
@@ -522,78 +459,92 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:processFlow.label` | 4-D process | 4-D 流程 |
 | `zh:processFlow.receiveLabel` | You receive | 您将获得 |
 | `zh:processFlow.start.title` | Your request | 您的需求 |
-| `zh:processFlow.start.line` | An idea, a brief or a requirement. | 一个想法、一份简报或一项需求。 |
+| `zh:processFlow.start.line` | An idea, a brief or a business need | 一个想法、一份需求说明或一项业务需要 |
 | `zh:processFlow.end.title` | Launch | 上线 |
-| `zh:processFlow.end.line` | And we keep growing it together. | 然后我们继续一起推进。 |
+| `zh:processFlow.end.line` | Growing the product together, release after release | 一次次发布，与您共同成长产品 |
 | `zh:processFlow.steps[0].title` | Discovery | 探索 |
-| `zh:processFlow.steps[0].line` | Workshops to understand your goals, users, risks and scope. | 通过研讨会明确目标、用户、风险和范围。 |
-| `zh:processFlow.steps[0].receive` | A clear scope, estimate and delivery plan. | 清晰的范围、报价和交付计划。 |
+| `zh:processFlow.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | 通过工作坊厘清您的目标、用户、风险和范围，把想法转化为清晰的需求 |
+| `zh:processFlow.steps[0].receive` | Clear requirements, an estimate and a delivery plan | 清晰的需求、估算和交付计划 |
 | `zh:processFlow.steps[1].title` | Design | 设计 |
-| `zh:processFlow.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | 在编写代码之前，先确定用户流程、界面和架构。 |
-| `zh:processFlow.steps[1].receive` | A clickable prototype and technical design. | 可点击的原型和技术设计。 |
+| `zh:processFlow.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | 这些需求变成用户流程和可点击的原型，让产品在开发前就能看见并不断完善 |
+| `zh:processFlow.steps[1].receive` | An approved prototype and technical design | 经过确认的原型和技术设计 |
 | `zh:processFlow.steps[2].title` | Development | 开发 |
-| `zh:processFlow.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | 敏捷冲刺并定期演示。测试和 QA 贯穿每个冲刺，而不是留到最后。 |
-| `zh:processFlow.steps[2].receive` | Tested, working software every sprint. | 每个冲刺都交付经过测试、可运行的软件。 |
-| `zh:processFlow.steps[3].title` | Deployment | 交付 |
-| `zh:processFlow.steps[3].line` | A safe release, monitoring and improvement after launch. | 安全发布、监控和上线后的持续改进。 |
-| `zh:processFlow.steps[3].receive` | A live release with ongoing support. | 正式发布，并提供持续支持。 |
+| `zh:processFlow.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | 以确认的原型为指引，在敏捷冲刺中开发，每个冲刺都进行测试 |
+| `zh:processFlow.steps[2].receive` | Tested, working software at every demo | 每次演示都能交付经过测试、可运行的软件 |
+| `zh:processFlow.steps[3].title` | Deployment | 部署 |
+| `zh:processFlow.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | 成品安全上线，随后在真实使用中持续监控和改进 |
+| `zh:processFlow.steps[3].receive` | A live product with ongoing support | 正式运行的产品和持续支持 |
 
 ## Services
 
-46 strings.
+60 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:servicesMeta.title` | Software Outsourcing Vietnam \| Product Engineering, AI, Low-code & Cloud \| XionTech | 越南软件外包 \| Product Engineering, AI, Low-code & Cloud \| XionTech |
-| `zh:servicesMeta.description` | Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones. | 来自胡志明市的专属团队和端到端软件交付：覆盖美国、欧洲和澳大利亚时区的产品工程、AI、低代码和云。 |
+| `zh:servicesMeta.title` | Software Outsourcing Vietnam \| XionTech | 越南软件外包 \| XionTech |
+| `zh:servicesMeta.description` | Software outsourcing from Ho Chi Minh City: product engineering, AI-driven analytics, co-creation, staffing, custom apps, low-code, AI solutions and cloud. | 来自胡志明市的软件外包：产品工程、AI 驱动的分析、共创、人才派遣、定制应用、低代码、AI 解决方案和云。 |
 | `zh:servicesOutcomes.title` | What can we help you achieve? | 我们可以帮您实现什么？ |
 | `zh:servicesOutcomes.items[0].title` | Build a new digital product | 打造新的数字产品 |
-| `zh:servicesOutcomes.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | 由一支交付团队完成从探索和 UX 到工程、测试和上线的全过程。 |
-| `zh:servicesOutcomes.items[1].title` | Extend your team | 扩充团队 |
-| `zh:servicesOutcomes.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | 当内部团队需要更多人手或特定技能时，补充专业技术人才。 |
-| `zh:servicesOutcomes.items[2].title` | Modernise an existing platform | 现代化现有平台 |
-| `zh:servicesOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | 在保留已有优势的同时，改进应用、基础设施、云部署和工程实践。 |
-| `zh:servicesOutcomes.items[3].title` | Apply AI where it creates value | 在创造价值的地方应用 AI |
-| `zh:servicesOutcomes.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | 运用 AI、分析和自动化，改进产品、流程和决策。 |
-| `zh:servicesPage.title.lead` | Software teams that  | 践行“ |
-| `zh:servicesPage.title.highlight` | get IT done | Get IT done |
-| `zh:servicesPage.title.tail` | . | ”的软件团队。 |
-| `zh:servicesPage.lede` | Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver. | 从胡志明市出发，覆盖美国、欧洲和澳大利亚时区的产品工程、AI、低代码和云交付。我们借助 AI 更智能地工作，并不断革新交付方式。 |
-| `zh:servicesPage.primaryCta.label` | Start a project | 启动项目 |
-| `zh:servicesProcess.title` | Our 4-D process: from your request to launch. | 4-D 流程：从需求到上线。 |
+| `zh:servicesOutcomes.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | 通过端到端设计、定制软件开发、测试和上线支持，把您的想法变成可以推向市场的产品。 |
+| `zh:servicesOutcomes.items[1].title` | Extend your team | 扩充您的团队 |
+| `zh:servicesOutcomes.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | 当内部团队需要更多人手或特定技能时，补充专业的技术人才。 |
+| `zh:servicesOutcomes.items[2].title` | Modernize an existing platform | 升级现有平台 |
+| `zh:servicesOutcomes.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | 在保留现有可靠部分的同时，改进应用、基础设施、云交付和工程实践。 |
+| `zh:servicesOutcomes.items[3].title` | Leverage AI to drive business value | 借助 AI 创造商业价值 |
+| `zh:servicesOutcomes.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | 构建 AI 驱动的解决方案，实现流程自动化，把业务数据转化为可行的洞察，支持更明智的决策。 |
+| `zh:servicesPage.title.lead` | You bring your  | 您带来 |
+| `zh:servicesPage.title.words[0]` | vision | 愿景 |
+| `zh:servicesPage.title.words[1]` | challenges | 挑战 |
+| `zh:servicesPage.title.words[2]` | ideas | 想法 |
+| `zh:servicesPage.title.words[3]` | ambition | 抱负 |
+| `zh:servicesPage.title.words[4]` | goals | 目标 |
+| `zh:servicesPage.title.suffix` | . | 。 |
+| `zh:servicesPage.title.tail[0]` | We get  | 我们以“ |
+| `zh:servicesPage.title.tail[1]` | IT | Get IT done |
+| `zh:servicesPage.title.tail[2]` |  done | ”回应 |
+| `zh:servicesPage.title.staticWord` | vision. | 愿景。 |
+| `zh:servicesPage.title.label` | You bring your vision. We get IT done | 您带来愿景。我们以“Get IT done”回应 |
+| `zh:servicesPage.lede` | From digital products to AI integration and technology modernization, we bring the expertise to solve your challenges, accelerate innovation, and drive your business forward. | 从数字产品到 AI 集成和技术现代化，我们提供专业能力，帮助您解决挑战、加速创新、推动业务向前发展。 |
+| `zh:servicesPage.primaryCta.label` | Let's build together | 一起打造 |
+| `zh:servicesPage.secondaryCta.label` | Explore our services | 了解我们的服务 |
+| `zh:servicesPage.stack.label` | Illustration: requirements, wireframe and technical code layers of a software build | 插图：软件构建中的需求、线框图和技术代码三个层次 |
+| `zh:servicesPage.stack.requirements` | REQUIREMENTS | 需求 |
+| `zh:servicesPage.stack.wireframe` | WIREFRAME | 线框图 |
+| `zh:servicesPage.stack.code` | TECHNICAL CODE | 技术代码 |
+| `zh:servicesProcess.title` | Our 4-D process: from your request to launch | 我们的 4-D 流程：从您的需求到上线 |
 | `zh:servicesProcess.lede` | Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it. | 每个阶段都以您可以查看、测试和批准的成果结束。AI 贯穿每个阶段，我们也在不断改进使用 AI 的方式。 |
 | `zh:servicesProcess.flow.label` | 4-D process | 4-D 流程 |
 | `zh:servicesProcess.flow.receiveLabel` | You receive | 您将获得 |
 | `zh:servicesProcess.flow.start.title` | Your request | 您的需求 |
-| `zh:servicesProcess.flow.start.line` | An idea, a brief or a requirement. | 一个想法、一份简报或一项需求。 |
+| `zh:servicesProcess.flow.start.line` | An idea, a brief or a business need | 一个想法、一份需求说明或一项业务需要 |
 | `zh:servicesProcess.flow.end.title` | Launch | 上线 |
-| `zh:servicesProcess.flow.end.line` | And we keep growing it together. | 然后我们继续一起推进。 |
+| `zh:servicesProcess.flow.end.line` | Growing the product together, release after release | 一次次发布，与您共同成长产品 |
 | `zh:servicesProcess.flow.steps[0].title` | Discovery | 探索 |
-| `zh:servicesProcess.flow.steps[0].line` | Workshops to understand your goals, users, risks and scope. | 通过研讨会明确目标、用户、风险和范围。 |
-| `zh:servicesProcess.flow.steps[0].receive` | A clear scope, estimate and delivery plan. | 清晰的范围、报价和交付计划。 |
+| `zh:servicesProcess.flow.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | 通过工作坊厘清您的目标、用户、风险和范围，把想法转化为清晰的需求 |
+| `zh:servicesProcess.flow.steps[0].receive` | Clear requirements, an estimate and a delivery plan | 清晰的需求、估算和交付计划 |
 | `zh:servicesProcess.flow.steps[1].title` | Design | 设计 |
-| `zh:servicesProcess.flow.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | 在编写代码之前，先确定用户流程、界面和架构。 |
-| `zh:servicesProcess.flow.steps[1].receive` | A clickable prototype and technical design. | 可点击的原型和技术设计。 |
+| `zh:servicesProcess.flow.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | 这些需求变成用户流程和可点击的原型，让产品在开发前就能看见并不断完善 |
+| `zh:servicesProcess.flow.steps[1].receive` | An approved prototype and technical design | 经过确认的原型和技术设计 |
 | `zh:servicesProcess.flow.steps[2].title` | Development | 开发 |
-| `zh:servicesProcess.flow.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | 敏捷冲刺并定期演示。测试和 QA 贯穿每个冲刺，而不是留到最后。 |
-| `zh:servicesProcess.flow.steps[2].receive` | Tested, working software every sprint. | 每个冲刺都交付经过测试、可运行的软件。 |
-| `zh:servicesProcess.flow.steps[3].title` | Deployment | 交付 |
-| `zh:servicesProcess.flow.steps[3].line` | A safe release, monitoring and improvement after launch. | 安全发布、监控和上线后的持续改进。 |
-| `zh:servicesProcess.flow.steps[3].receive` | A live release with ongoing support. | 正式发布，并提供持续支持。 |
-| `zh:servicesSection.title` | Eight services, one team. | 八项服务，一个团队。 |
+| `zh:servicesProcess.flow.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | 以确认的原型为指引，在敏捷冲刺中开发，每个冲刺都进行测试 |
+| `zh:servicesProcess.flow.steps[2].receive` | Tested, working software at every demo | 每次演示都能交付经过测试、可运行的软件 |
+| `zh:servicesProcess.flow.steps[3].title` | Deployment | 部署 |
+| `zh:servicesProcess.flow.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | 成品安全上线，随后在真实使用中持续监控和改进 |
+| `zh:servicesProcess.flow.steps[3].receive` | A live product with ongoing support | 正式运行的产品和持续支持 |
+| `zh:servicesSection.title` | Eight services, one team | 八项服务，一支团队 |
 | `zh:servicesSection.lede` | Pick one service or combine several. We shape the team around your product. | 您可以选择一项服务，也可以组合多项服务。我们会围绕您的产品组建团队。 |
-| `zh:servicesSection.services[0].description` | Transform innovative ideas into market-ready digital products with end-to-end engineering expertise. | 凭借端到端的工程专长，将创新想法转化为可推向市场的数字产品。 |
-| `zh:servicesSection.services[1].description` | Transform raw data into actionable intelligence using AI and advanced visualisation. | 借助 AI 和高级可视化，将原始数据转化为可执行的洞察。 |
-| `zh:servicesSection.services[2].description` | Accelerate innovation by combining your domain knowledge with our technical expertise. | 将您的领域知识与我们的技术专长相结合，加速创新。 |
-| `zh:servicesSection.services[3].description` | Access specialised technology talent when you need it, with flexible options. | 在需要时以灵活的方式获得专业技术人才。 |
-| `zh:servicesSection.services[4].description` | Develop custom solutions aligned with your unique requirements. | 根据您的独特需求开发定制解决方案。 |
-| `zh:servicesSection.services[5].description` | Ship tools and automations faster on leading low-code platforms. | 在主流低代码平台上更快地交付工具和自动化。 |
-| `zh:servicesSection.services[6].description` | Harness artificial intelligence to transform your operations. | 借助人工智能变革运营。 |
-| `zh:servicesSection.services[7].description` | Expert solutions on Azure, AWS and GCP. | 覆盖 Azure、AWS 和 GCP 的专业解决方案。 |
+| `zh:servicesSection.services[0].description` | Turn ideas into market-ready digital products, from concept to launch. | 把想法变成可以推向市场的数字产品，从概念到上线。 |
+| `zh:servicesSection.services[1].description` | Turn complex data into actionable insights with AI and intuitive dashboards. | 借助 AI 和直观的仪表板，把复杂数据转化为可行的洞察。 |
+| `zh:servicesSection.services[2].description` | Bring your industry knowledge and our product expertise together to create solutions that matter. | 将您的行业知识与我们的产品专长相结合，打造真正有价值的解决方案。 |
+| `zh:servicesSection.services[3].description` | Get the right technology talent to support your projects and scale your team. | 找到合适的技术人才，支持您的项目并扩充团队。 |
+| `zh:servicesSection.services[4].description` | Build tailored applications that fit your business needs and workflows. | 构建贴合您业务需求和工作流程的定制应用。 |
+| `zh:servicesSection.services[5].description` | Build applications and automate workflows faster with flexible low-code platforms. | 借助灵活的低代码平台，更快地构建应用、实现工作流程自动化。 |
+| `zh:servicesSection.services[6].description` | Put AI to work with intelligent solutions that streamline processes and improve productivity. | 用智能解决方案让 AI 发挥作用，简化流程、提升效率。 |
+| `zh:servicesSection.services[7].description` | Build, scale, and manage cloud solutions that support your growing business. | 构建、扩展和管理云解决方案，支持您不断成长的业务。 |
 
 ## Site shell: header, footer, language menu, 404
 
-29 strings.
+24 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
@@ -607,14 +558,11 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:shell.nav.mainNav` | Main | 主导航 |
 | `zh:shell.nav.homeLink` | XionTech home | XionTech 首页 |
 | `zh:shell.nav.menu` | Menu | 菜单 |
-| `zh:shell.nav.contact`<br>`zh:shell.nav.contactShort` | Get in touch | 联系我们 |
+| `zh:shell.nav.contact`<br>`zh:shell.nav.contactShort` | Let's talk | 联系我们 |
 | `zh:shell.nav.cityPlano` | Plano | 普莱诺 |
 | `zh:shell.nav.cityHcmc` | Ho Chi Minh City | 胡志明市 |
 | `zh:shell.language.label` | Language | 语言 |
-| `zh:shell.footer.blurb` | Education technology products and software delivery services for schools and businesses. | 为学校和企业提供教育科技产品与软件交付服务。 |
-| `zh:shell.footer.forSchools` | For schools | 面向学校 |
-| `zh:shell.footer.forStudents` | For students | 面向学生 |
-| `zh:shell.footer.forParents` | For parents | 面向家长 |
+| `zh:shell.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech 将实践经验与现代技术相结合，打造 AI 驱动的产品和定制解决方案，解决企业面临的挑战。 |
 | `zh:shell.footer.howWeWork` | How we work | 工作方式 |
 | `zh:shell.footer.allServices` | All services | 所有服务 |
 | `zh:shell.footer.company` | Company | 公司 |
@@ -622,10 +570,8 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:shell.footer.offices` | Offices | 办公地点 |
 | `zh:shell.footer.privacy` | Privacy policy | 隐私政策 |
 | `zh:shell.notFound.metaTitle` | Page not found \| XionTech | 页面未找到 \| XionTech |
-| `zh:shell.notFound.title` | You’ve wandered off the trail. | 您偏离了道路。 |
-| `zh:shell.notFound.lede` | The page you were looking for isn’t here. Follow the trail back home, or pick a path below. | 您要找的页面不在这里。沿着道路返回首页，或在下方选择一条路线。 |
-| `zh:shell.notFound.primary` | Go to Home | 返回首页 |
-| `zh:shell.notFound.here` | You are here | 当前位置 |
+| `zh:shell.notFound.title` | Page not found | 页面未找到 |
+| `zh:shell.notFound.primary` | Back to Home | 返回首页 |
 
 ## Site title and description
 

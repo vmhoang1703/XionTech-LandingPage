@@ -60,7 +60,7 @@ describe("NewsPage", () => {
     expect(String(metadata.description)).toContain("products");
   });
 
-  it("renders the hero with no breadcrumb, the filters with the sample note, every story as a card and the demo capture", async () => {
+  it("renders the hero with no breadcrumb, the filters with no sample note, every story as a card and the demo capture", async () => {
     const { container } = await renderPage([
       post(1, "product"),
       post(2, "team"),
@@ -92,11 +92,7 @@ describe("NewsPage", () => {
     expect(
       screen.getByRole("group", { name: "Filter stories by audience" }),
     ).toBeTruthy();
-    expect(
-      screen.getByText(
-        "Stories from the newXion newsroom; those marked [Placeholder] are samples.",
-      ),
-    ).toBeTruthy();
+    expect(container.textContent).not.toContain("[Placeholder]");
     const cards = container.querySelectorAll("#newsGrid a.scard");
     expect(cards).toHaveLength(4);
     expect(cards[0].getAttribute("href")).toBe("/en/news/story-1");

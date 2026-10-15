@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { homeOutcomes } from "@/content/home";
 import { servicesOutcomes } from "@/content/services";
 import { undefinedClasses } from "@/test-utils/css-classes";
 import { HomeOutcomes } from "./home-outcomes";
@@ -31,7 +32,7 @@ describe("HomeOutcomes", () => {
 
     const links = screen.getAllByRole("link");
     expect(links.map((link) => link.textContent)).toEqual([
-      "Start a project",
+      homeOutcomes.cta.label,
       "Explore services",
     ]);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([

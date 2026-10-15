@@ -986,6 +986,24 @@
     color: inherit;
   }
 
+  /* Privacy link under email forms: a 24px tap target (44px on touch) that
+     keeps the line height, as the negative margin cancels the extra size. */
+  .consent a[href="/privacy"],
+  .cap-form small a[href="/privacy"] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    margin-block: -4px;
+  }
+
+  @media (pointer: coarse) {
+    .consent a[href="/privacy"],
+    .cap-form small a[href="/privacy"] {
+      min-height: 44px;
+      margin-block: -14px;
+    }
+  }
+
   .form-card .btn {
     margin-top: 22px;
   }
@@ -1925,140 +1943,7 @@
     }
   }
 
-  /* Inside XionTech: five text tiles on the page gradient */
-  .ins-head {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-    gap: 48px;
-    align-items: end;
-    max-width: none;
-  }
-
-  .ins-head .lede {
-    margin: 0;
-  }
-
-  .ins-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr 0.8fr;
-    grid-template-rows: 250px 250px;
-    gap: 14px;
-  }
-
-  .ins-card {
-    position: relative;
-    isolation: isolate;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: hidden;
-    padding: 24px;
-    border-radius: 24px;
-    color: var(--color-white);
-  }
-
-  .ins-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background: linear-gradient(160deg, #224f81, #0d2d54);
-  }
-
-  .ins-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(transparent 35%, rgb(5 24 45 / 0.8));
-  }
-
-  .ins-card.big {
-    grid-row: span 2;
-  }
-
-  .ins-card.yellow,
-  .ins-card.cream {
-    color: var(--color-navy);
-  }
-
-  .ins-card.yellow::before {
-    background: linear-gradient(145deg, #ffe47c, #ffc31f);
-  }
-
-  .ins-card.cream::before {
-    background: linear-gradient(145deg, var(--color-white), #efe6d1);
-  }
-
-  .ins-card.yellow::after,
-  .ins-card.cream::after {
-    background: none;
-  }
-
-  .ins-card h3 {
-    margin: 0 0 8px;
-    color: inherit;
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 1.9vw, 1.7rem);
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-  }
-
-  .ins-card p {
-    margin: 0;
-    color: #d9e2ed;
-    font-size: var(--text-body-sm);
-    line-height: 1.5;
-  }
-
-  .ins-card.yellow p,
-  .ins-card.cream p {
-    color: #3f4f6c;
-  }
-
-  .ins-tag {
-    position: absolute;
-    top: 18px;
-    left: 18px;
-    padding: 7px 12px;
-    border-radius: var(--radius-full);
-    background: rgb(255 255 255 / 0.16);
-    color: inherit;
-    font-size: var(--text-label);
-    font-weight: 500;
-  }
-
-  .ins-card.yellow .ins-tag,
-  .ins-card.cream .ins-tag {
-    background: rgb(255 255 255 / 0.75);
-  }
-
-  @media (width <= 980px) {
-    .ins-head {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 16px;
-    }
-
-    .ins-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: none;
-      grid-auto-rows: 240px;
-    }
-
-    .ins-card.big {
-      grid-row: auto;
-    }
-  }
-
-  @media (width <= 640px) {
-    .ins-grid {
-      grid-template-columns: minmax(0, 1fr);
-      grid-auto-rows: 220px;
-    }
-  }
-
-  /* Five things that shape the way we work: flip cards */
+  /* Value flip cards (Careers card, round 13: About "What drives us") */
   .flip-cards {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -4261,6 +4146,7 @@
   .svc-card[id],
   #outcomes,
   #process,
+  #services-all,
   #story,
   #faq,
   #offices,
@@ -4877,102 +4763,6 @@
   color: var(--color-white);
 }
 
-.w-chip.revealed {
-  border-color: rgb(22 54 99 / 18%);
-  background: var(--color-white);
-  color: var(--color-navy);
-}
-
-/*
-  "+3": a mouse hover or a click swaps the circle for the other industries.
-  MoreIndustries sets .open and the list's hidden attribute; the server HTML
-  ships it open, so the industries show without JavaScript.
-*/
-.w-more {
-  position: relative;
-  display: block;
-  flex: 0 0 38px;
-  width: 38px;
-  height: 38px;
-  transition:
-    flex-basis 0.5s var(--ease-brand),
-    width 0.5s var(--ease-brand);
-}
-
-/* The 38px circle taps as 44px (PRODUCT.md). */
-.w-more-trigger::after {
-  content: "";
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-}
-
-.w-more-trigger {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--color-navy);
-  color: var(--color-white);
-  font-size: 0.78rem;
-  font-weight: 500;
-  transition:
-    color 0.22s ease,
-    background-color 0.22s ease,
-    transform 0.36s var(--ease-brand);
-}
-
-.w-more-list {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 38px;
-  animation: w-more-in 0.4s var(--ease-brand) both;
-}
-
-@keyframes w-more-in {
-  from {
-    clip-path: inset(0 100% 0 0);
-    transform: translateX(-4px);
-  }
-}
-
-.w-more.open {
-  flex-basis: 430px;
-  width: 430px;
-  max-width: 100%;
-}
-
-/* The open trigger turns see-through but stays clickable, so a tap closes it */
-.w-more.open .w-more-trigger {
-  background: transparent;
-  color: transparent;
-  transform: scale(0.72);
-}
-
-/* Closed: the "+3" button carries its own ring. Open: the button is
-   hidden, so the ring moves to the widened container (as in the prototype). */
-.w-more-trigger:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 3px;
-  border-radius: var(--radius-full);
-}
-
-.w-more.open .w-more-trigger:focus-visible {
-  outline: none;
-}
-
-.w-more.open:has(:focus-visible) {
-  outline: 2.5px solid var(--color-focus);
-  outline-offset: 3px;
-  border-radius: var(--radius-full);
-}
-
 .w-motto {
   display: flex;
   align-items: center;
@@ -5033,43 +4823,6 @@
 @media (max-width: 640px) {
   .w-card {
     padding: 24px;
-  }
-
-  /* Phones: the circle is the full 44px tap target, so no hit area sticks out. */
-  .w-more {
-    flex-basis: 44px;
-    width: 44px;
-    height: 44px;
-  }
-
-  .w-more-trigger {
-    width: 44px;
-    height: 44px;
-  }
-
-  .w-more-trigger::after {
-    inset: 0;
-  }
-
-  .w-more.open {
-    flex-basis: 100%;
-    width: 100%;
-    height: auto;
-  }
-
-  .w-more-list {
-    position: static;
-    flex-wrap: wrap;
-    height: auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .w-more,
-  .w-more-trigger {
-    transition:
-      color 0.15s linear,
-      background-color 0.15s linear;
   }
 }
 
@@ -5890,13 +5643,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
   line-height: 1.6;
 }
 
-.svc-card .svc-card-tags {
-  margin-top: auto;
-  padding-top: 20px;
-  font-size: 0.86rem;
-}
-
-.svc-card p:not(.svc-card-tags) {
+.svc-card p {
   margin-bottom: 20px;
 }
 
@@ -5979,137 +5726,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
 @media (width <= 640px) {
   .svc-cards {
     grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-/* E-S5 404: the lost-trail map (prototype site.css 1265-1288, ENH-043) */
-.trail-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(24px, 4vw, 56px);
-  align-items: center;
-}
-
-.trail-map {
-  position: relative;
-  margin: 0;
-}
-
-.trail-map svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-  -webkit-mask-image: radial-gradient(
-    ellipse 95% 95% at 52% 45%,
-    #000 70%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 95% 95% at 52% 45%,
-    #000 70%,
-    transparent 100%
-  );
-}
-
-.tm-range {
-  fill: rgb(255 255 255 / 0.05);
-}
-
-.tm-ridge {
-  fill: none;
-  stroke: rgb(170 195 235 / 0.55);
-  stroke-width: 2;
-}
-
-.tm-contour {
-  fill: none;
-  stroke: rgb(170 195 235 / 0.18);
-  stroke-width: 1.5;
-}
-
-.tm-trail {
-  fill: none;
-  stroke: var(--color-amber);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-dasharray: 2 10;
-  animation: trail-walk 2.4s linear infinite;
-}
-
-.tm-here {
-  fill: var(--color-amber);
-}
-
-.tm-here-ring {
-  fill: none;
-  stroke: var(--color-amber);
-  stroke-width: 2;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: here-pulse 2s var(--ease-brand) infinite;
-}
-
-.tm-label {
-  font-family: var(--font-body);
-  font-size: 16px;
-  fill: var(--color-on-navy-text);
-}
-
-.tm-x {
-  position: absolute;
-  left: 68.75%;
-  top: 20.5%;
-  width: 13%;
-  height: auto;
-  /* left/top: the trail's end (330, 74) in the 480 x 360 viewBox */
-  transform: translate(-50%, -100%);
-}
-
-@keyframes trail-walk {
-  to {
-    stroke-dashoffset: -48;
-  }
-}
-
-@keyframes here-pulse {
-  /* stroke-opacity: the ring is a stroke only; it is decoration, not content */
-  from {
-    transform: scale(1);
-    stroke-opacity: 0.8;
-  }
-
-  to {
-    transform: scale(3);
-    stroke-opacity: 0;
-  }
-}
-
-@media (width <= 860px) {
-  .trail-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .trail-map {
-    max-width: 420px;
-  }
-}
-
-@media (width <= 600px) {
-  .tm-label {
-    font-size: 24px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tm-trail,
-  .tm-here-ring {
-    animation: none;
-  }
-
-  /* The prototype hides the still ring; it is decoration over the dot */
-  .tm-here-ring {
-    stroke-opacity: 0;
   }
 }
 
@@ -6584,23 +6200,28 @@ main > .page-scene:last-child > .surface-navy:last-child {
   }
 }
 
-/* Phone menu (lead, 2026-10-13): Get in touch and both headquarters' phones
-   under the links. */
-.menu-contact {
+/* Phone menu (lead, 2026-10-13): both headquarters' phones under the
+   contact button at the foot of the sheet. */
+.mm-phones {
   display: grid;
-  gap: 4px;
-  margin-top: 10px;
-  padding-top: 14px;
-  border-top: 1px solid var(--color-border);
+  gap: 2px;
   text-align: center;
+  translate: 0 -8px;
+  opacity: 0.01;
+  transition:
+    translate 0.3s var(--mm-ease),
+    opacity 0.2s;
 }
 
-.menu-contact .btn {
-  justify-content: center;
-  margin-bottom: 6px;
+.mm-sheet[data-open] .mm-phones {
+  translate: 0 0;
+  opacity: 1;
+  transition:
+    translate 0.5s var(--mm-ease) calc(80ms + var(--i, 0) * 35ms),
+    opacity 0.4s ease calc(80ms + var(--i, 0) * 35ms);
 }
 
-.menu-contact a:not(.btn) {
+.mm-phones a {
   display: grid;
   place-items: center;
   min-height: 44px;
@@ -6608,13 +6229,610 @@ main > .page-scene:last-child > .surface-navy:last-child {
   font-size: var(--text-body-sm);
 }
 
-/* ---------- About: Inspired by a mountain (MountainStory; lead 2026-10-13) ----------
-   Amber's prototype (ENH-030, site.css 1298-1431). With no script both chapters
-   stack and the picture is in full colour. [data-armed] (the script) holds the
-   story for about one more screen: the chapter text swaps beneath the title and
-   the mountain climbs beside it. Moves are transform and opacity only: the colour
-   rises in a window (.mtn-rise) the script slides up while the picture inside
-   slides down by as much; the X mark lights by fading a colour copy in. */
+@media (prefers-reduced-motion: reduce) {
+  .mm-phones,
+  .mm-sheet[data-open] .mm-phones {
+    translate: none;
+    transition: none;
+  }
+}
+
+/* Services hero headline: two lines where the width allows, the rotating
+   word in the brand yellow (components/sections/rotating-word.tsx). */
+.svc-hero h1 {
+  max-width: none;
+  /* The longest first line is about 13.9em wide, so 7cqi of the copy
+     column always fits it; the page display size stays the cap. */
+  font-size: min(var(--text-display-page), 7cqi);
+}
+
+.svc-h1-line {
+  display: block;
+}
+
+/* "You bring your challenges." stays on one line: no wrapping, and a size
+   that fits the copy column at every width. */
+.svc-h1-line:first-child {
+  white-space: nowrap;
+}
+
+.rot-word {
+  display: inline-grid;
+  vertical-align: bottom;
+  color: var(--color-amber-tint);
+  white-space: nowrap;
+}
+
+.rot-item {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 450ms var(--ease-brand),
+    transform 450ms var(--ease-brand);
+}
+
+.rot-item::before {
+  content: attr(data-word);
+}
+
+.rot-item[data-state="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+.rot-item[data-state="out"] {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.svc-hero-lede {
+  max-width: 600px;
+  color: var(--color-muted);
+  line-height: 1.6;
+  text-align: left;
+}
+
+/*
+  ---------- Services hero: three-layer stack (components/sections/three-layer-stack.tsx) ----------
+  Design ref services-three-layer-synchronized.html. Desktop: beside the
+  copy. Tablet and mobile: below the CTAs. The opening is one timing shared
+  by all three layers (same duration, easing, 22% start and 77% end; only
+  the keyframe offsets differ), so they move together. It runs once, when
+  the markup first paints; the static styles are the final state.
+*/
+.svc-hero-grid {
+  display: grid;
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+}
+
+.svc-hero-copy {
+  min-width: 0;
+  container-type: inline-size;
+}
+
+@media (min-width: 1100px) {
+  .svc-hero-grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  }
+}
+
+.tls-stack {
+  --tls-time: 3.6s;
+  --tls-ease: cubic-bezier(0.22, 0.7, 0.16, 1);
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  position: relative;
+}
+
+/* A very faint grid behind the drawing, fading out at the edges. */
+.tls-stack::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 9.17% 13.33%;
+  mask-image: radial-gradient(closest-side, #000 60%, transparent);
+  pointer-events: none;
+}
+
+/* The viewBox reserves the box up front: no layout shift. */
+.tls-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.tls-label {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  fill: #b3bfce;
+}
+
+.tls-leader {
+  fill: none;
+  stroke: #667183;
+  stroke-width: 1.3;
+}
+
+.tls-anchor {
+  fill: #e8ba38;
+}
+
+/* Labels scale with the drawing, so they are set larger than the ref (14px
+   at 1200 wide) to stay readable in the narrower copy-side column (about
+   9px and up), and bumped again on a phone. */
+@media (max-width: 620px) {
+  .tls-label {
+    font-size: 34px;
+    letter-spacing: 0;
+  }
+}
+
+.tls-layer {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.tls-req {
+  animation: tls-requirements-pop var(--tls-time) var(--tls-ease) both;
+}
+
+.tls-wire {
+  animation: tls-wireframe-pop var(--tls-time) var(--tls-ease) both;
+}
+
+.tls-tech {
+  animation: tls-technical-pop var(--tls-time) var(--tls-ease) both;
+}
+
+/* The labels and leaders arrive with the layers: same duration, easing and
+   22% / 77% moments. */
+.tls-callouts {
+  animation: tls-callouts-pop var(--tls-time) var(--tls-ease) both;
+}
+
+/* Shared 22% starting moment and 77% ending moment for every layer. The
+   hidden start is opacity 0.01, not 0: no CSS rule may hide content
+   outright (contrast.test.ts, no-JS check). */
+@keyframes tls-requirements-pop {
+  0%,
+  22% {
+    transform: translateY(242px);
+    opacity: 0.01;
+    filter: blur(9px) brightness(0.4);
+  }
+  77%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes tls-wireframe-pop {
+  0%,
+  22% {
+    transform: translateY(120px);
+    opacity: 1;
+    filter: brightness(1.18) drop-shadow(0 0 22px rgb(88 150 255 / 0.3));
+  }
+  77%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: brightness(1) drop-shadow(0 0 0 rgb(88 150 255 / 0));
+  }
+}
+
+@keyframes tls-technical-pop {
+  0%,
+  22% {
+    transform: translateY(0);
+    opacity: 0.01;
+    filter: blur(9px) brightness(0.4);
+  }
+  77%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0) brightness(1);
+  }
+}
+
+@keyframes tls-callouts-pop {
+  0%,
+  22% {
+    opacity: 0.01;
+  }
+  77%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Already played in this page lifecycle, or reduced motion: the final
+   state at once. */
+.tls-stack[data-settled] .tls-layer,
+.tls-stack[data-settled] .tls-callouts {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tls-layer,
+  .tls-callouts {
+    animation: none;
+  }
+}
+
+/* ---------- Website copy v3: door-minis + approved wording layout ---------- */
+/* Products door: four app tiles in one row, label under each (2x2 below 380px). */
+.door-products .label {
+  color: var(--color-amber-text, #8a6700);
+}
+
+.door > p {
+  flex-shrink: 0;
+}
+
+.door-minis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.door-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  text-align: center;
+}
+
+.home-hero .door-products .door-mini .badge,
+.door-mini .badge {
+  width: 60px;
+  min-width: 0;
+  height: 60px;
+  padding: 0;
+  border-radius: 18px;
+  box-shadow: 0 10px 20px -12px rgb(11 31 64 / 45%);
+}
+
+.door-mini .b-iot,
+.door-mini .b-ait {
+  font-size: 1.6rem;
+}
+
+.door-mini b {
+  color: var(--color-heading);
+  font-size: var(--text-caption, 0.8rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+@media (width < 380px) {
+  .door-minis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 16px;
+  }
+}
+
+/* ---------- Website copy v3: Home "How we work" = develop 4-D layout ---------- */
+/* Develop geometry (128px nodes, compact cards); only opaque navy fills so the
+   track runs behind the start dot and the cards. */
+@media (width >= 1080px) {
+  .home-process .flow .node .dot,
+  .home-process .flow .step4 {
+    background-color: #13284d;
+    background-image: linear-gradient(var(--glass), var(--glass));
+  }
+
+  .home-process .flow .node.end .dot {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-amber-light),
+      var(--color-amber)
+    );
+  }
+}
+
+@media (width < 420px) {
+  .door-mini b {
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- Website copy v3: About location cards ---------- */
+/* Two equal white cards: eyebrow, city, a live local-time chip, a hairline,
+   then address (with a Google Maps link), phone and email rows. Icons use the
+   darker amber so they keep 3:1 on white. One column on phones. */
+#offices .sec-head .lede {
+  margin-top: 16px;
+  max-width: 60ch;
+}
+
+.loc-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 28px);
+  margin-top: 40px;
+}
+
+.loc-card {
+  padding: clamp(22px, 2.6vw, 32px);
+  border: 1px solid color-mix(in srgb, var(--color-navy) 12%, transparent);
+  border-radius: 24px;
+  background: var(--color-white);
+  box-shadow: 0 24px 48px -32px
+    color-mix(in srgb, var(--color-navy) 35%, transparent);
+}
+
+.loc-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-navy) 12%, transparent);
+}
+
+.loc-eyebrow {
+  color: var(--color-muted);
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.loc-card h3 {
+  margin-top: 8px;
+  color: var(--color-navy);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  font-weight: 400;
+}
+
+.loc-time {
+  display: grid;
+  flex: 0 0 auto;
+  justify-items: center;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: #eef2f7;
+  color: var(--color-navy);
+}
+
+.loc-time b {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.loc-time small {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.loc-rows {
+  display: grid;
+  gap: 16px;
+  padding-top: 22px;
+  font-style: normal;
+}
+
+.loc-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.loc-row > svg {
+  flex: 0 0 auto;
+  margin-top: 3px;
+  color: var(--color-amber-text);
+  font-size: 1.15rem;
+}
+
+.loc-row a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.loc-row a:hover,
+.loc-row a:focus-visible {
+  color: var(--color-navy);
+  text-decoration: underline;
+}
+
+.loc-row .loc-map {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  border-radius: 8px;
+  color: var(--color-navy);
+}
+
+.loc-row .loc-map:hover,
+.loc-row .loc-map:focus-visible {
+  background: #eef2f7;
+}
+
+@media (width <= 760px) {
+  .loc-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Website copy v3: Services 4-D process = Home diagram, light mode ---------- */
+/* Same markup (ProcessFlow), geometry, line and cards as Home "How we work"
+   (develop geometry). Only the colours differ: white cards and
+   start dot, navy text, the same solid gradient line in a deeper amber that
+   holds 3:1 on the light band, amber end node. */
+@media (width >= 1080px) {
+  #process .flow .track i {
+    background: linear-gradient(
+      90deg,
+      var(--color-amber),
+      var(--color-amber-text)
+    );
+  }
+
+  #process .flow .node .dot {
+    background-color: var(--color-white);
+    color: var(--color-navy);
+  }
+
+  #process .flow .node.end .dot {
+    background-color: var(--color-amber);
+  }
+
+  #process .flow .step4 {
+    background-color: var(--color-white);
+    background-image: none;
+  }
+
+  #process .flow .node b,
+  #process .flow .step4 h3 {
+    color: var(--color-navy);
+  }
+}
+
+/* ---------- Website copy v3: Services hero, normal height ---------- */
+@media (min-width: 1100px) {
+  .svc-hero-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .svc-hero .tls-stack {
+    max-width: 560px;
+  }
+}
+
+/* ---------- Website copy v3: simple 404 ---------- */
+.nf-simple {
+  display: grid;
+  min-height: 60dvh;
+  place-items: center;
+  text-align: center;
+}
+
+.nf-code {
+  color: var(--color-amber-tint);
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 18vw, 12rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.nf-simple h1 {
+  margin-top: 12px;
+}
+
+.nf-home {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--color-white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Website copy v3: Services hero, compact height ---------- */
+/* About 530px tall at 1440: top padding just clears the floating nav. */
+@media (min-width: 1100px) {
+  .svc-hero.page-hero {
+    padding-top: 112px;
+    padding-bottom: 32px;
+  }
+}
+
+/* ---------- Website copy v3: three-layer labels after the split ---------- */
+/* Labels, leaders and anchors fade in only once the layers have reached
+   their final positions (77%), done by 95%. */
+.tls-callouts {
+  animation-name: tls-callouts-after;
+}
+
+@keyframes tls-callouts-after {
+  0%,
+  77% {
+    opacity: 0.01;
+  }
+  95%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.tls-stack[data-settled] .tls-callouts {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tls-callouts {
+    animation: none;
+  }
+}
+
+/* ---------- Website copy v3: About hero, text only ---------- */
+/* The pastel peaks are gone, so the bottom padding no longer reserves room for them. */
+.about-hero {
+  padding-bottom: 88px;
+}
+
+@media (width <= 640px) {
+  .about-hero {
+    padding-bottom: 56px;
+  }
+}
+
+/* ---------- Website copy v3: Careers hero, copy only ---------- */
+/* The growth diagram moved out of the hero into its own scroll section below. */
+.ch-stack {
+  display: grid;
+}
+
+.ch-copy {
+  max-width: 900px;
+}
+
+.careers-hero {
+  padding-bottom: 48px;
+}
+
+@media (width <= 640px) {
+  .careers-hero {
+    padding-bottom: 36px;
+  }
+}
+
+/* ---------- About: Inspired by a mountain (MountainStory) ----------
+   Amber's prototype (ENH-030, site.css 1298-1431); website copy v3: one
+   consolidated story, and the climb plays once by itself when the story comes
+   into view (no scroll hold). The light carries [hidden] until the script arms
+   the story; with no script the picture is in full colour. Moves are transform
+   and opacity only: the colour rises in a window (.mtn-rise) the script slides
+   up while the picture inside slides down by as much; the X mark lights by
+   fading a colour copy in. */
 .mtn {
   --mtn-top: var(--spacing-header-room);
   padding-block: calc(var(--spacing-header-room) * 0.5) var(--spacing-section);
@@ -6670,7 +6888,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
 }
 
 .mtn-cue {
-  display: none;
   align-items: center;
   gap: 10px;
   margin: 24px 0 0;
@@ -6678,6 +6895,10 @@ main > .page-scene:last-child > .surface-navy:last-child {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-muted);
+}
+
+.mtn-text + .mtn-text {
+  margin-top: 14px;
 }
 
 .mtn-cue::after {
@@ -6775,7 +6996,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
   position: absolute;
   top: 0;
   left: 0;
-  display: none;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -6806,12 +7026,12 @@ main > .page-scene:last-child > .surface-navy:last-child {
 }
 
 .mtn-summit-lit {
-  opacity: 0;
+  opacity: 0.01;
 }
 
 .mtn:not([data-armed]) .mtn-summit-grey,
 .mtn[data-top] .mtn-summit-grey {
-  opacity: 0;
+  opacity: 0.01;
 }
 
 .mtn:not([data-armed]) .mtn-summit-lit,
@@ -6824,7 +7044,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
 }
 
 .mtn[data-top] .mtn-beacon {
-  opacity: 0;
+  opacity: 0.01;
 }
 
 /* The newXion tag sits above the X with a short line down to it, and shows
@@ -6859,13 +7079,12 @@ main > .page-scene:last-child > .surface-navy:last-child {
 }
 
 .mtn[data-armed]:not([data-late]) .mtn-tag {
-  opacity: 0;
+  opacity: 0.01;
 }
 
 /* One dot a chapter; the amber pill slides to the one being read. */
 .mtn-dots {
   position: relative;
-  display: none;
   gap: 8px;
   width: fit-content;
   margin: 0 auto;
@@ -6895,7 +7114,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
    and the chapters share one place, the one being read on show (screen
    readers still read both, in order). */
 .mtn[data-armed] {
-  height: calc(190svh - var(--mtn-top));
+  height: calc(150svh - var(--mtn-top));
   padding-block: 0;
 }
 
@@ -6929,7 +7148,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
 }
 
 .mtn[data-armed] .mtn-ch:not([data-on]) > * {
-  opacity: 0;
+  opacity: 0.01;
   translate: 0 20px;
   transition-duration: 0.35s;
 }
@@ -6994,7 +7213,10 @@ main > .page-scene:last-child > .surface-navy:last-child {
   }
 
   .mtn[data-armed] .mtn-dots {
-    display: none;
+    display: block;
+    height: 0;
+    overflow: hidden;
+    opacity: 0.01;
   }
 
   .mtn-beacon {
@@ -7065,7 +7287,11 @@ main > .page-scene:last-child > .surface-navy:last-child {
   }
 
   .mtn[data-armed] .mtn-cue {
-    display: none;
+    display: block;
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+    opacity: 0.01;
   }
 }
 
@@ -7135,7 +7361,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
   }
 
   .mtn[data-armed] .mtn-beacon {
-    display: none;
+    opacity: 0.01;
   }
 }
 
@@ -7196,72 +7422,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
   from {
     opacity: 0;
     transform: translateY(-14px) scaleY(0.86);
-  }
-}
-
-/* ---------- Services hero shine (lead 2026-10-13) ----------
-   Amber's prototype sweeps a light across "get IT done" by moving a text
-   gradient. Here a window with a soft edge slides across a pale copy of the
-   words while the copy slides back by as much, so the light passes over the
-   letters and only transform moves. Once, a second after load. */
-.svc-hero .hl {
-  display: inline-block;
-}
-
-.hl-shine {
-  display: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hl-shine {
-    position: absolute;
-    top: -0.2em;
-    bottom: -0.2em;
-    left: 0;
-    display: block;
-    width: 40%;
-    overflow: hidden;
-    pointer-events: none;
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      #000 40%,
-      #000 60%,
-      transparent
-    );
-    animation: shine-window 2.2s ease-in-out 1s both;
-  }
-
-  .hl-shine::before {
-    content: attr(data-text);
-    position: absolute;
-    top: 0.2em;
-    left: 0;
-    white-space: nowrap;
-    color: #fff6cc;
-    animation: shine-copy 2.2s ease-in-out 1s both;
-  }
-}
-
-/* The window crosses from just left of the words to just right of them; the
-   copy inside moves the other way by the same distance, so it stays put. */
-@keyframes shine-window {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(250%);
-  }
-}
-
-@keyframes shine-copy {
-  from {
-    transform: translateX(40%);
-  }
-
-  to {
-    transform: translateX(-100%);
   }
 }
 
@@ -7328,6 +7488,1389 @@ main > .page-scene:last-child > .surface-navy:last-child {
   from {
     opacity: 0;
     scale: 0.8;
+  }
+}
+
+/* ---------- Website copy v3: ownership, values, closing CTA ---------- */
+#values,
+#next {
+  scroll-margin-top: calc(
+    var(--spacing-anchor-offset) - var(--spacing-header-room)
+  );
+}
+
+/* What ownership means to us: three numbered commitments on hairlines. */
+.own-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3.2vw, 48px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.own-item {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+}
+
+.own-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* #735500 keeps the number readable on the light glows (as .mtn-num) */
+.own-num {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: #735500;
+}
+
+.own-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--color-navy);
+}
+
+.own-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-heading);
+  text-wrap: balance;
+}
+
+.own-text {
+  max-width: 36ch;
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--color-text);
+}
+
+@media (width <= 800px) {
+  .own-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+/* Closing call to action: centred, the amber pill first. */
+.about-cta-inner {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  max-width: 760px;
+  text-align: center;
+}
+
+.about-cta-inner h2 {
+  margin: 0;
+}
+
+.about-cta-inner .lede {
+  max-width: 58ch;
+  margin: 0;
+}
+
+.about-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 28px;
+  margin-top: 12px;
+}
+
+/* The arrow sits in its own navy disc inside the pill. */
+.about-cta .btn-primary {
+  padding-right: 8px;
+}
+
+.about-cta-arrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: var(--color-amber);
+  transition: transform 0.35s var(--ease-brand);
+}
+
+.about-cta .btn-primary:hover .about-cta-arrow {
+  transform: translateX(3px);
+}
+
+@media (width <= 480px) {
+  .about-cta .btn-primary {
+    white-space: normal;
+  }
+}
+
+/* ---------- Website copy v3: sequential scroll reveal, every page ----------
+   Same mechanism as "Scroll reveal" above (ScrollReveal marks the items); the
+   script now also arms sections with no group of its own ([data-reveal="auto"])
+   and staggers arrivals 100ms apart in page order. A slightly longer rise on
+   the expo-out curve. Nothing here hides content: only script-marked items
+   wait, and reduced motion, print and focus keep their overrides above. */
+[data-reveal] > [data-shown="wait"] {
+  translate: 0 20px;
+}
+
+[data-reveal] > [data-shown="play"] {
+  animation-name: reveal-rise-20;
+  animation-duration: 0.72s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes reveal-rise-20 {
+  from {
+    opacity: 0.01;
+    translate: 0 20px;
+  }
+
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* ---------- Website copy v3: About story card rises over the hero ----------
+   The hero holds still (sticky) while the scene below, led by the mountain
+   story, slides up over it as a card: rounded top, its own background, a soft
+   shadow and a higher layer. The card is the page scene, so the story's own
+   sticky hold (.mtn[data-armed] .mtn-pin) keeps working inside it; overflow:
+   clip on the scene is not a scroll container. Reduced motion: plain stacked
+   flow (the card shape stays, nothing pins). */
+.about-hero + .page-scene {
+  z-index: 1;
+  border-radius: 32px 32px 0 0;
+  box-shadow: 0 -24px 60px -28px rgb(11 23 48 / 0.28);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-hero {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+  }
+}
+
+@media (width <= 640px) {
+  .about-hero + .page-scene {
+    border-radius: 24px 24px 0 0;
+  }
+}
+
+/* ---------- Website copy v3: Home contact anchor ----------
+   About's "Let's talk about your project" lands on /#contact; html
+   scroll-padding already clears the header, this adds a little air. */
+#contact {
+  scroll-margin-top: 16px;
+}
+
+/* ---------- Website copy v3: quieter header CTA ----------
+   "Let's talk" replaces the amber "Book a demo" fill: a hairline navy pill on
+   the white header, filled navy on hover so it still reads as the way in. */
+.nav-talk {
+  border-color: rgb(22 54 99 / 0.35);
+  background: transparent;
+  color: var(--color-navy);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.nav-talk:hover {
+  border-color: var(--color-navy);
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* ---------- Website copy v3: About hero fills the first screen ----------
+   The header pill floats over the hero, so a full small-viewport height puts
+   the story card's top edge exactly at the fold. */
+.about-hero {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding-block: calc(var(--spacing-header-room) + 24px) 48px;
+}
+
+/* ---------- Website copy v3: mountain climb plays by itself ----------
+   No scroll hold: the story is a normal-height card and the script plays the
+   climb once when it is 40% in view. */
+.mtn[data-armed] {
+  height: auto;
+  padding-block: calc(var(--spacing-header-room) + 16px) var(--spacing-section);
+}
+
+.mtn[data-armed] .mtn-pin {
+  position: relative;
+  top: auto;
+  padding-top: 0;
+}
+
+@media (width <= 800px) and (height <= 740px), (height <= 520px) {
+  .mtn[data-armed] .mtn-stage {
+    position: relative;
+    top: auto;
+    box-shadow: none;
+  }
+}
+
+/* ---------- Website copy v3: Careers "Life at XionTech" carousel ----------
+   Navy heading at full contrast. The current photo is centred, larger and
+   raised; the neighbours sit smaller at the sides; the rest wait behind. */
+.life-h {
+  color: var(--color-heading);
+  text-align: center;
+}
+
+.life-stage {
+  position: relative;
+  height: clamp(260px, 36vw, 480px);
+  margin-top: 40px;
+}
+
+.life-stage:focus-visible {
+  outline: 3px solid var(--color-navy);
+  outline-offset: 6px;
+  border-radius: 12px;
+}
+
+.life-slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(56%, 720px);
+  aspect-ratio: 16 / 10;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 14px 40px rgb(11 33 71 / 0.12);
+  translate: -50% -50%;
+  transition:
+    translate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    scale 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s ease;
+}
+
+.life-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.life-slide.current {
+  z-index: 2;
+  box-shadow: 0 28px 64px rgb(11 33 71 / 0.22);
+}
+
+.life-slide.prev,
+.life-slide.next {
+  z-index: 1;
+  scale: 0.78;
+  opacity: 0.7;
+}
+
+.life-slide.prev {
+  translate: -112% -50%;
+}
+
+.life-slide.next {
+  translate: 12% -50%;
+}
+
+.life-slide.away {
+  z-index: 0;
+  scale: 0.6;
+  opacity: 0.01;
+}
+
+.life-cap {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.94);
+  color: var(--color-navy);
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+}
+
+.life-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.life-count {
+  min-width: 4ch;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+@media (width <= 640px) {
+  .life-slide {
+    width: 86%;
+  }
+
+  .life-slide.prev,
+  .life-slide.next {
+    opacity: 0.01;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .life-slide {
+    transition: none;
+  }
+}
+
+/* ---------- Website copy v3: more air between sections ----------
+   The shared .sec padding, about 50% more: 96px desktop, 80px tablet, 64px
+   phones (tokens stay 64/48 for DESIGN.md). Same layer and selector as the
+   base rule, so sections with their own padding keep it. Round 11 (one
+   section, one screen): the padding follows the screen height, up to the
+   same 96/80px on tall screens, so a section fits one viewport. */
+@layer components {
+  .sec {
+    padding-block: clamp(48px, 7.5svh, 96px);
+  }
+
+  @media (width <= 1024px) {
+    .sec {
+      padding-block: clamp(40px, 5svh, 80px);
+    }
+  }
+
+  @media (width <= 640px) {
+    .sec {
+      padding-block: clamp(40px, 5svh, 64px);
+    }
+  }
+}
+
+/* ---------- Website copy v3: Life carousel arrows ---------- */
+.life-arrow {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-navy);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.life-arrow:hover {
+  border-color: var(--color-navy);
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* ---------- Website copy v3: About page wrapper ----------
+   About wraps its sticky hero and scene in one plain block so client
+   navigation lands at the top. The footer room moves from the wrapper back
+   onto the scene's last section, as on every other page. */
+main > .about-page:last-child {
+  padding-bottom: 0;
+}
+
+main > .about-page:last-child > .page-scene:last-child > :last-child {
+  padding-bottom: clamp(232px, 17vw, 256px);
+}
+
+@media (max-width: 640px) {
+  main > .about-page:last-child {
+    padding-bottom: 0;
+  }
+
+  main > .about-page:last-child > .page-scene:last-child > :last-child {
+    padding-bottom: 176px;
+  }
+}
+
+/* ---------- Website copy v3: Load-in ----------
+   Hero copy ([data-load], --load-i sets the order) and every card group in
+   the server HTML ([data-reveal] > *) rise in on load, from the first paint:
+   CSS only, so nothing waits for JavaScript and nothing is hidden without
+   it (the keyframes end visible). Short: 520ms each, 70ms apart, so the
+   hero settles inside ~0.8s. Groups the script arms later ("auto") and the
+   self-animated roadmap are left out, so nothing on screen flashes.
+   ScrollReveal still hides and plays the items below the fold. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-load] {
+    animation: load-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1)
+      calc(var(--load-i, 0) * 70ms) backwards;
+  }
+
+  [data-reveal]:not([data-reveal="auto"], .rm) > :not([data-shown]) {
+    animation: load-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0ms backwards;
+  }
+
+  [data-reveal]:not([data-reveal="auto"], .rm)
+    > :nth-child(2):not([data-shown]) {
+    animation-delay: 70ms;
+  }
+
+  [data-reveal]:not([data-reveal="auto"], .rm)
+    > :nth-child(3):not([data-shown]) {
+    animation-delay: 140ms;
+  }
+
+  [data-reveal]:not([data-reveal="auto"], .rm)
+    > :nth-child(4):not([data-shown]) {
+    animation-delay: 210ms;
+  }
+
+  [data-reveal]:not([data-reveal="auto"], .rm)
+    > :nth-child(n + 5):not([data-shown]) {
+    animation-delay: 280ms;
+  }
+}
+
+@keyframes load-rise {
+  from {
+    opacity: 0.01;
+    translate: 0 16px;
+  }
+
+  to {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* ---------- Website copy v3: one section, one screen ----------
+   On desktops and tablets each section's content fits one viewport under the
+   floating header (measured headlessly at 1440x900, 1280x800, 1024x768 and
+   768x1024). Nothing is removed: long lists go wider (more columns), card
+   art and gaps follow the screen height, and the shared .sec padding above
+   now does too. Phones keep their stacked layouts. */
+
+/* Home, What can we help you achieve?: tighter outcome rows. */
+@media (width >= 641px) {
+  .goal-list li {
+    padding: clamp(16px, 2.4svh, 26px) 0 clamp(18px, 2.6svh, 28px);
+  }
+
+  .goal-list p {
+    margin-top: 6px;
+  }
+}
+
+/* Home How we work + Services 4-D: a wider lede and lower step art. */
+@media (width >= 981px) {
+  .sec-head-row .sec-head,
+  .home-process .sec-head-row .sec-head {
+    max-width: 900px;
+  }
+
+  .home-process .sec-head .lede {
+    max-width: none;
+  }
+
+  #process .sec-head,
+  #process .sec-head .lede {
+    max-width: none;
+  }
+
+  .step4 .art {
+    height: clamp(72px, 9svh, 128px);
+    margin-bottom: 14px;
+  }
+
+  .step4 .get {
+    padding-top: 12px;
+  }
+}
+
+/* Core values (Home and About): flip cards follow the screen height. */
+@media (width >= 641px) {
+  .home-values .flip-card,
+  .home-values .flip-inner {
+    min-height: clamp(196px, 27svh, 264px);
+  }
+}
+
+.svc-outcomes {
+  padding-top: clamp(48px, 7.5svh, 96px);
+}
+
+/* News, All stories: four across from 1000px, the lead story two wide, and
+   card heights from the screen height, so the seven stories make two rows. */
+@media (width >= 1000px) {
+  #newsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  #newsGrid .s-lead {
+    grid-column: span 2;
+  }
+
+  #newsGrid .scard,
+  #newsGrid .s-lead .scard {
+    min-height: clamp(220px, calc(50svh - 160px), 300px);
+    aspect-ratio: auto;
+  }
+
+  #newsGrid .s-lead .scard-title {
+    font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+  }
+
+  .nlist .news-bar {
+    margin-bottom: 24px;
+  }
+}
+
+/* About, mountain story: the shared section top, not header room on top. */
+@media (width >= 641px) {
+  .mtn[data-armed] {
+    padding-block: clamp(40px, 6svh, 96px);
+  }
+}
+
+/* Landscape tablets (900px up, below the desktop layouts): the desktop
+   column counts, so each section stays one screen tall. */
+@media (width >= 900px) and (width < 1100px) and (orientation: landscape) {
+  .app-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .flow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .svc-hero {
+    padding-top: calc(var(--spacing-header-room) + clamp(24px, 5svh, 64px));
+  }
+
+  .svc-hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+
+  .svc-hero .tls-stack {
+    max-width: 440px;
+  }
+}
+
+@media (width >= 900px) and (orientation: landscape) {
+  .flip-cards-drawn {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* Portrait tablets (700px up, below the desktop layouts): wider rows so a
+   section fits the tall screen. */
+@media (width >= 700px) and (width <= 980px) and (orientation: portrait) {
+  .w-delivery {
+    grid-column: span 6;
+  }
+
+  .w-industries {
+    grid-column: span 6;
+  }
+
+  .home-values .flip-cards,
+  .flip-cards-drawn {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sgrid-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sgrid-row .scard {
+    min-height: 300px;
+  }
+
+  .contact-grid {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 28px;
+  }
+
+  #newsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #newsGrid .s-lead {
+    grid-column: span 2;
+  }
+
+  #newsGrid .scard,
+  #newsGrid .s-lead .scard {
+    min-height: clamp(200px, 22svh, 260px);
+    aspect-ratio: auto;
+  }
+
+  #newsGrid .s-lead .scard-title {
+    font-size: 1.4rem;
+  }
+
+  .step4 .art {
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
+  .flow {
+    gap: 12px;
+  }
+}
+
+/* Phones: shorter 4-D art, so that section fits too. */
+@media (width <= 640px) {
+  .step4 .art {
+    height: 72px;
+  }
+}
+
+/* ---------- Website copy v3: "What drives us" ----------
+   Five principle cards (Home and About), replacing the six flip cards: amber
+   number and uppercase label, display title, muted line. Five across on
+   desktops, three then two on tablets, one on phones. */
+.dv-cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+  list-style: none;
+}
+
+.dv-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: clamp(220px, 30svh, 280px);
+  padding: 24px 22px 26px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-white);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.dv-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgb(21 37 59 / 0.1);
+}
+
+.dv-card:last-child {
+  border-color: var(--color-amber-deep);
+  background: #fff8dc;
+}
+
+.dv-label {
+  font-family: var(--font-brand);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.dv-num {
+  color: var(--color-amber-text);
+}
+
+.dv-card h3 {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.6vw, 1.55rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-heading);
+}
+
+.dv-text {
+  color: var(--color-muted);
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+}
+
+@media (width <= 1100px) {
+  .dv-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 700px) {
+  .dv-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 480px) {
+  .dv-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dv-card {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dv-card {
+    transition: none;
+  }
+}
+
+/* ---------- Website copy v3: Careers "What you'll gain along the way" ----------
+   From Amber's careers-with-icons mock in XionTech colours: four cards at
+   staggered heights (amber tint, blue-grey, ice, deep navy with white text),
+   number, title, line and a navy/amber icon at the foot. Two columns on
+   phones, as in the mock. Hover lifts a card; reduced motion keeps it still. */
+.gain-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+  margin-top: 36px;
+  list-style: none;
+}
+
+.gain-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: clamp(260px, 36svh, 320px);
+  padding: 22px 20px;
+  border-radius: 16px;
+  color: var(--color-heading);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.gain-card:nth-child(1) {
+  margin-top: 28px;
+  background: #fff1b8;
+}
+
+.gain-card:nth-child(2) {
+  background: #e6ebf2;
+}
+
+.gain-card:nth-child(3) {
+  margin-top: 40px;
+  background: #dbe8f7;
+}
+
+.gain-card:nth-child(4) {
+  margin-top: 14px;
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+.gain-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgb(26 49 82 / 0.12);
+}
+
+.gain-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.gain-card h3 {
+  margin: 16px 0 10px;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.gain-card p {
+  color: var(--color-muted);
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+}
+
+.gain-card:nth-child(4) .gain-num,
+.gain-card:nth-child(4) p {
+  color: #d9e2ed;
+}
+
+.gain-card:nth-child(4) h3 {
+  color: var(--color-white);
+}
+
+/* The navy card's navy marks turn white so the icon still reads. */
+.gain-card:nth-child(4) .gain-art [fill="#163663"] {
+  fill: var(--color-white);
+}
+
+.gain-card:nth-child(4) .gain-art [stroke="#163663"] {
+  stroke: var(--color-white);
+}
+
+.gain-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.gain-art svg {
+  width: 84px;
+  height: 76px;
+}
+
+@media (width <= 650px) {
+  .gain-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .gain-card {
+    min-height: 265px;
+    padding: 16px 14px;
+  }
+
+  .gain-card:nth-child(3) {
+    margin-top: 0;
+  }
+
+  .gain-card:nth-child(4) {
+    margin-top: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gain-card {
+    transition: none;
+  }
+}
+
+/* Round 11 (one section, one screen), the five principles: five across on
+   landscape tablets. */
+@media (width >= 900px) and (orientation: landscape) {
+  .dv-cards {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+/* ---------- Website copy v3: About hero actions ----------
+   The two links are pills (amber primary, outline secondary) like the other
+   heroes. The hero holds still under the story card only when its content
+   fits the screen; on short screens it scrolls away normally, so the actions
+   are never trapped under the card. */
+.ah-links {
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.ah-links .btn-glass {
+  border-color: rgb(22 54 99 / 0.35);
+  background: var(--color-white);
+  color: var(--color-navy);
+}
+
+.ah-links .btn-glass:hover {
+  border-color: var(--color-navy);
+}
+
+@media (height <= 760px), (width <= 640px) and (height <= 820px) {
+  .about-hero {
+    position: relative;
+    min-height: auto;
+  }
+}
+
+@media (width <= 420px) {
+  .ah-links {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  .ah-links .btn {
+    justify-content: center;
+  }
+}
+
+/* ---------- Website copy v3: "What drives us" flip cards ----------
+   Five flip cards (the pre-round-11 look): five across on wide screens,
+   three then two centred on tablets, one a row on phones. */
+.flip-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-amber-text);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.flip-card.accent .flip-front .flip-label {
+  color: var(--color-navy);
+}
+
+.home-values .flip-cards-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+@media (width <= 1180px) {
+  .home-values .flip-cards-5 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .home-values .flip-cards-5 > * {
+    grid-column: span 2;
+  }
+
+  .home-values .flip-cards-5 > :nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+}
+
+@media (width <= 820px) {
+  .home-values .flip-cards-5 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .home-values .flip-cards-5 > *,
+  .home-values .flip-cards-5 > :nth-child(4) {
+    grid-column: span 2;
+  }
+
+  .home-values .flip-cards-5 > :nth-child(5) {
+    grid-column: 2 / span 2;
+  }
+}
+
+@media (width <= 520px) {
+  .home-values .flip-cards-5 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-values .flip-cards-5 > *,
+  .home-values .flip-cards-5 > :nth-child(4),
+  .home-values .flip-cards-5 > :nth-child(5) {
+    grid-column: auto;
+  }
+}
+
+@media (width > 1180px) {
+  .home-values .flip-cards-5 .flip-card,
+  .home-values .flip-cards-5 .flip-inner {
+    min-height: clamp(220px, 30svh, 280px);
+  }
+}
+
+/* ---------- Website copy v3: Mobile menu sheet ----------
+   Below 1081px the open menu is one surface with the header pill: the pill
+   squares its bottom corners and the sheet (same white, blur and border)
+   hangs from it, with a dimmed, blurred page behind. Links come in one after
+   another; the current page is amber with a bar; rows are 52px; the talk
+   button sits at the foot. Closed, the sheet is clipped away (inert). */
+.mm-sheet,
+.mm-backdrop {
+  --mm-ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (width <= 1080px) {
+  .nav-pill {
+    border-radius: 28px;
+    transition:
+      border-radius 0.42s cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .nav-pill:has(> .mm-sheet[data-open]) {
+    border-bottom-color: transparent;
+    border-radius: 28px 28px 0 0;
+    background: var(--color-white);
+    box-shadow: none;
+  }
+}
+
+.mm-sheet {
+  position: absolute;
+  top: calc(100% - 1px);
+  right: -1px;
+  left: -1px;
+  z-index: var(--z-index-mobile-menu);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100dvh - var(--spacing-header-room) - 12px);
+  overflow: auto;
+  padding: 8px 12px 16px;
+  border: 1px solid rgb(255 255 255 / 0.8);
+  border-top: 0;
+  border-radius: 0 0 28px 28px;
+  background: var(--color-white);
+  box-shadow: 0 30px 60px -24px rgb(11 23 48 / 0.4);
+  clip-path: inset(0 0 100% 0 round 0 0 28px 28px);
+  pointer-events: none;
+  transition: clip-path 0.42s var(--mm-ease);
+}
+
+.mm-sheet[data-open] {
+  clip-path: inset(0 -40px -60px -40px round 0 0 28px 28px);
+  pointer-events: auto;
+  transition: clip-path 0.5s var(--mm-ease);
+}
+
+.mm-sheet::before {
+  content: "";
+  display: block;
+  flex: none;
+  height: 1px;
+  margin: 0 8px;
+  background: var(--color-border);
+}
+
+.mm-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mm-link,
+.mm-cta {
+  translate: 0 -8px;
+  opacity: 0.01;
+  transition:
+    translate 0.3s var(--mm-ease),
+    opacity 0.2s,
+    background-color 0.25s;
+}
+
+.mm-sheet[data-open] .mm-link,
+.mm-sheet[data-open] .mm-cta {
+  translate: 0 0;
+  opacity: 1;
+  transition:
+    translate 0.5s var(--mm-ease) calc(80ms + var(--i, 0) * 35ms),
+    opacity 0.4s ease calc(80ms + var(--i, 0) * 35ms),
+    background-color 0.25s;
+}
+
+.mm-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 0 16px 0 20px;
+  border-radius: 16px;
+  color: var(--color-navy);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.mm-link:hover {
+  background: color-mix(in srgb, var(--color-ice) 70%, transparent);
+}
+
+.mm-arrow {
+  flex: none;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.mm-link[aria-current="page"] {
+  background: color-mix(in srgb, var(--color-amber-light) 38%, white);
+  font-weight: 500;
+}
+
+.mm-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 8px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--color-amber-text);
+}
+
+.mm-link[aria-current="page"] .mm-arrow {
+  color: var(--color-navy);
+}
+
+.mm-link:focus-visible,
+.mm-cta:focus-visible {
+  outline: 3px solid var(--color-navy);
+  outline-offset: 2px;
+}
+
+.mm-cta {
+  flex: none;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+}
+
+.mm-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-index-header) - 1);
+  background: rgb(11 23 48 / 0.32);
+  backdrop-filter: blur(6px);
+  opacity: 0.01;
+  pointer-events: none;
+  transition: opacity 0.35s var(--mm-ease);
+}
+
+.mm-backdrop[data-open] {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.4s var(--mm-ease);
+}
+
+@media (width >= 641px) and (width <= 1080px) {
+  .mm-sheet {
+    padding: 8px 16px 20px;
+  }
+
+  .mm-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-pill,
+  .mm-sheet,
+  .mm-sheet[data-open],
+  .mm-link,
+  .mm-cta,
+  .mm-sheet[data-open] .mm-link,
+  .mm-sheet[data-open] .mm-cta,
+  .mm-backdrop,
+  .mm-backdrop[data-open] {
+    translate: none;
+    transition: none;
+  }
+}
+
+/* ---------- Website copy v3: 4-D start and end below 1080px ----------
+   The start and end nodes show at every width: full-width strips (circle,
+   title, line) above and below the cards on tablets, and the first and last
+   cards of the phone swipe rail. Same colours as the desktop nodes. */
+@media (width < 1080px) {
+  .flow .node {
+    position: relative;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: 56px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-content: center;
+    align-items: center;
+    column-gap: 14px;
+    row-gap: 2px;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    padding: 12px 18px;
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    clip-path: none;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .flow .node.end {
+    border-style: solid;
+  }
+
+  .flow .node .dot {
+    grid-row: 1 / span 2;
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+
+  .flow .node b {
+    align-self: end;
+    font-size: 0.95rem;
+  }
+
+  .flow .node small {
+    align-self: start;
+  }
+
+  .home-process .flow .node .dot {
+    background-color: #13284d;
+    background-image: linear-gradient(var(--glass), var(--glass));
+  }
+
+  .home-process .flow .node.end .dot {
+    background-image: linear-gradient(
+      135deg,
+      var(--color-amber-light),
+      var(--color-amber)
+    );
+  }
+
+  #process .flow .node {
+    background: var(--color-white);
+  }
+
+  #process .flow .node b {
+    color: var(--color-navy);
+  }
+}
+
+@media (width < 640px) {
+  .flow {
+    grid-template-columns: 46% repeat(4, 84%) 46%;
+    grid-auto-columns: auto;
+  }
+
+  .flow .node {
+    grid-column: auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    align-content: center;
+    justify-items: center;
+    row-gap: 8px;
+    padding: 18px 14px;
+    text-align: center;
+    scroll-snap-align: start;
+  }
+
+  .flow .node .dot {
+    grid-row: auto;
+    width: 64px;
+    height: 64px;
+  }
+
+  .flow .node b,
+  .flow .node small {
+    align-self: auto;
+  }
+}
+
+/* ---------- Website copy v3: roomier 4-D cards ----------
+   Home and Services: the process gets a wider container and more padding, so
+   the card text wraps less. From 1080px the start and end columns narrow to
+   112px (circles 112px, the line still runs through their centres) to give the
+   four cards the width; the hover fill uses the same 112px. */
+@media (width >= 641px) {
+  .step4 {
+    padding: 0 26px 28px;
+  }
+}
+
+@media (width >= 1080px) {
+  .home-process > .wrap,
+  #process > .wrap {
+    max-width: 1440px;
+  }
+
+  .flow {
+    --flow-node: 112px;
+    column-gap: 14px;
+  }
+
+  .flow .node {
+    width: var(--flow-node);
+  }
+
+  .flow .node .dot {
+    width: var(--flow-node);
+    height: var(--flow-node);
+    font-size: 2rem;
+  }
+
+  .flow .track {
+    top: calc(var(--flow-node) / 2);
+  }
+
+  .step4 {
+    padding: 0 28px 28px;
+  }
+
+  .step4 p {
+    line-height: 1.55;
+  }
+}
+
+@media (hover: hover) and (width >= 1080px) {
+  .flow:has(> .step4:hover) .track i {
+    translate: calc(
+        var(--flow-node) + 14px + (var(--at) - 0.5) *
+          (100% - 2 * var(--flow-node) - 5 * 14px) / 4 + (var(--at) - 1) *
+          14px - 100%
+      )
+      0;
+  }
+}
+
+/* ---------- Website copy v3: mobile menu, one "Let's talk" ----------
+   While the sheet is open its own talk button is at the foot, so the header
+   pill's one fades out; it keeps its box, so the logo and toggle do not move. */
+@media (width <= 1080px) {
+  .nav-talk {
+    transition: opacity 0.25s ease;
+  }
+
+  .nav-pill:has(> .mm-sheet[data-open]) .nav-talk {
+    opacity: 0.01;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+}
+
+/* ---------- Website copy v3: About "What drives us" ----------
+   The Careers flip cards (line drawing) on the page scene; grid columns come
+   from .flip-cards and .flip-cards-drawn. */
+.values-drawn {
+  background: transparent;
+}
+
+/* ---------- Website copy v3: 4-D process in the standard section frame ----------
+   Home "How we work" and Services #process use the page wrap (same left edge
+   as their neighbours) instead of the round-13 1440px container. Home keeps
+   its navy colours but as a full-bleed band like the mist and amber sections,
+   not an inset rounded panel. */
+.home-process {
+  margin-inline: 0;
+  border-radius: 0;
+}
+
+@media (width >= 1080px) {
+  .home-process > .wrap,
+  #process > .wrap {
+    max-width: var(--container-page);
   }
 }
 

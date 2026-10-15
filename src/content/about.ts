@@ -1,159 +1,168 @@
-import type { Localized } from "@/i18n/content";
-import {
-  aboutOfficeView,
-  aboutOfficeViewVi,
-  otherLocations,
-  otherLocationsVi,
-} from "@/content/offices";
-
 // About page copy (prototype about.html). Kept out of the components so it can
 // be translated later.
 
 export const aboutMeta = {
   title: "About XionTech | Get IT Done",
   description:
-    "XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia.",
+    "XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients.",
 };
 
 export const aboutHero = {
   title: {
-    lead: "We’re XionTech,",
-    middle: "technology built with ",
+    lead: "We’re XionTech.",
+    middle: "Technology built with ",
     accent: "ownership",
-    tail: ".",
+    tail: "",
   },
-  text: "We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world.",
+  text: "We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward.",
   links: [
     { href: "/products", label: "Explore our products" },
     { href: "/services", label: "Explore our services" },
   ],
 };
 
+// Website copy v3: the two chapters are one story.
 export const aboutStory = {
   title: {
     lead: "Inspired by a mountain.",
-    middle: "United by ",
+    middle: "Driven by ",
     highlight: "purpose",
-    tail: ".",
+    tail: "",
   },
-  chapters: [
-    {
-      number: "01",
-      title: "The inspiration",
-      text: "Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future.",
-    },
-    {
-      number: "02",
-      title: "The purpose",
-      // The founding sentence is a placeholder until the business confirms it (Q12).
-      text: "[Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all.",
-    },
+  paragraphs: [
+    "Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights.",
+    "That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress.",
   ],
-  closing: {
-    line: "Our inspiration is a mountain. Our purpose is people.",
-    tags: "Vision · Community · Technology",
-  },
-  // Under chapter 01 while the story is held; on the summit of the picture.
-  // Amber's tag also read "Founded in America": left out while the founding
-  // sentence is a placeholder (Q12).
-  cue: "Scroll",
-  tagName: "newXion",
+  // Under the story while it is held; on the summit of the picture.
+  tagName: "XionTech",
 };
 
-// Each answer has an id, so Home can pick some (homeFaq in home.ts).
+// About shows the same "What drives us" heading as Home.
+export const aboutValuesHeading = {
+  title: "What drives us",
+  lede: "Five principles that guide how we collaborate, make decisions, and deliver meaningful results.",
+};
+
+// Each answer has an id (the two-column grid keys on it).
 export const aboutFaq = {
-  title: "Your question, we answer",
-  lede: "Straight answers about our products, our services and how we work.",
+  title: "Curious about XionTech?",
+  lede: "A few things you might want to know before working with us.",
+  // Two columns, row by row: left 1, 3, 5 and right 2, 4, 6.
   items: [
     {
       id: "what",
       question: "What does XionTech do?",
       answer:
-        "We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing.",
+        "We create AI-powered products and deliver custom software, product engineering, dedicated teams, and technology solutions for businesses.",
     },
     {
       id: "industries",
       question: "Which industries do you work with?",
       answer:
-        "EdTech is our core. We also serve Healthcare, Logistics and Private Equity.",
+        "Education is our starting point. We bring adaptable engineering capabilities to projects in other industries, based on each client’s needs.",
     },
     {
-      id: "try-apps",
-      question: "How can our school try Parent Hub or Staff Hub?",
+      id: "begin",
+      question: "How does a new project begin?",
       answer:
-        "Get in touch. We walk you through the apps using scenarios from your own school.",
+        "We start by understanding your goals and requirements, then shape the approach before progressing through design, development, testing, and deployment.",
     },
     {
       id: "time-zones",
-      question: "How do you work across time zones?",
+      question: "How do your teams work across time zones?",
       answer:
         "Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates.",
     },
     {
-      id: "shape",
-      question: "When do you shape the solution to our needs?",
+      id: "quality",
+      question: "How do you maintain delivery quality?",
       answer:
-        "From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins.",
-    },
-    {
-      id: "results",
-      question: "What results can we expect?",
-      answer:
-        "Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth.",
-    },
-    {
-      id: "security",
-      question: "How do you keep our data secure?",
-      answer:
-        "[Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning.",
-    },
-    {
-      id: "feedback",
-      question: "How do we give feedback during a project?",
-      answer:
-        "Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through.",
-    },
-    {
-      id: "value",
-      question: "How do you measure and show value?",
-      answer:
-        "We track speed, quality, product impact and team autonomy, and share them openly with you.",
+        "Engineers review work and combine testing and quality assurance with AI-assisted development, guided by agreed project standards.",
     },
   ],
-  ask: {
-    label: "Still have a question? Ask us directly",
-    href: "/#contact",
-  },
 };
+
+const mapsHref = (lines: readonly string[]) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lines.join(", "))}`;
+
+export type AboutLocation = {
+  id: string;
+  eyebrow: string;
+  city: string;
+  timeZone: string;
+  addressLines: readonly [string, string];
+  mapHref: string;
+  phone: { href: string; label: string };
+  email: { href?: string; label: string };
+};
+
+const usAddress = [
+  "7950 Legacy Drive, Suite 400",
+  "Plano, Texas 75024, USA",
+] as const;
+const vnAddress = [
+  "Floor 15, B1 Building, 279 Nguyen Tri Phuong Street",
+  "Dien Hong Ward, Ho Chi Minh City, Vietnam",
+] as const;
 
 export const aboutOffices = {
-  title: "Two headquarters, four locations.",
-  more: otherLocations,
-  // Plano first, then Ho Chi Minh City.
-  offices: aboutOfficeView,
+  title: "Two delivery centers. One connected team",
+  lede: "From Plano to Ho Chi Minh City, our teams work across time zones to support clients and keep projects moving.",
+  timeLabel: "Local time",
+  mapLabel: "Open {city} in Google Maps (opens in a new tab)",
+  locations: [
+    {
+      id: "plano",
+      eyebrow: "US Delivery Center",
+      city: "Plano, Texas",
+      timeZone: "America/Chicago",
+      addressLines: usAddress,
+      mapHref: mapsHref(usAddress),
+      phone: { href: "tel:+14693229899", label: "+1 (469) 322-9899" },
+      email: {
+        href: "mailto:vinni.tran@newxion.com",
+        label: "vinni.tran@newxion.com",
+      },
+    },
+    {
+      id: "hcmc",
+      eyebrow: "Vietnam Delivery Center",
+      city: "Ho Chi Minh City",
+      timeZone: "Asia/Ho_Chi_Minh",
+      addressLines: vnAddress,
+      mapHref: mapsHref(vnAddress),
+      phone: { href: "tel:+84908107552", label: "+84 908 107 552" },
+      email: {
+        href: "mailto:vinni.tran@xiontechs.com",
+        label: "vinni.tran@xiontechs.com",
+      },
+    },
+  ] as AboutLocation[],
 };
 
-export const aboutCapture = {
-  heading: "See our apps in action.",
-  lede: "Leave your work email and we'll arrange a walkthrough of Parent Hub and Staff Hub.",
+export const aboutCta = {
+  title: "Let’s build what’s next",
+  text: "Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions.",
+  primary: { href: "/#contact", label: "Let’s talk about your project" },
+  secondary: { href: "/products", label: "Explore our products" },
 };
 
-// Vietnamese. Product names stay English (2026-10-13); hrefs, ids and numbers
-// are shared with English.
+// Vietnamese. Product names stay English (2026-10-13); hrefs, ids, addresses,
+// phones and emails are shared with English.
 export const aboutMetaVi: typeof aboutMeta = {
   title: "Về XionTech | Get IT Done",
   description:
-    "XionTech là công ty công nghệ giáo dục và đối tác phần mềm, có trụ sở chính tại Plano (Mỹ) và TP. Hồ Chí Minh (Việt Nam), cùng đội ngũ tại Hà Nội và Đà Nẵng, phục vụ khách hàng tại Mỹ, châu Âu và Úc.",
+    "XionTech là đối tác kỹ thuật với đội ngũ tại Mỹ và Việt Nam. Chúng tôi xây dựng sản phẩm phần mềm, khám phá đổi mới sáng tạo ứng dụng AI và làm chủ quá trình triển khai cùng khách hàng.",
 };
 
 export const aboutHeroVi: typeof aboutHero = {
   title: {
-    lead: "Chúng tôi là XionTech,",
-    middle: "công nghệ của tinh thần ",
+    lead: "Chúng tôi là XionTech.",
+    middle: "Công nghệ xây dựng bằng tinh thần ",
     accent: "làm chủ",
-    tail: ".",
+    tail: "",
   },
-  text: "Chúng tôi kết nối con người, ý tưởng và công nghệ để xây dựng những hệ thống CNTT xuất sắc và kiến tạo một tương lai tươi sáng hơn cho tất cả. Từ TP. Hồ Chí Minh và Plano, chúng tôi tự xây dựng nền tảng cho trường học và phát triển sản phẩm số cho khách hàng trên toàn thế giới.",
+  text: "Chúng tôi kết nối con người, ý tưởng và công nghệ để xây dựng những giải pháp số có ý nghĩa. Từ phát triển sản phẩm phần mềm đến khám phá đổi mới sáng tạo ứng dụng AI, chúng tôi kết hợp chuyên môn kỹ thuật, đội ngũ lãnh đạo giàu kinh nghiệm và tinh thần làm chủ mạnh mẽ để giúp doanh nghiệp tiến về phía trước.",
   links: [
     { href: aboutHero.links[0].href, label: "Khám phá sản phẩm" },
     { href: aboutHero.links[1].href, label: "Khám phá dịch vụ" },
@@ -163,96 +172,78 @@ export const aboutHeroVi: typeof aboutHero = {
 export const aboutStoryVi: typeof aboutStory = {
   title: {
     lead: "Khởi nguồn từ một ngọn núi.",
-    middle: "Gắn kết bởi ",
+    middle: "Dẫn lối bởi ",
     highlight: "mục đích",
-    tail: ".",
+    tail: "",
   },
-  chapters: [
-    {
-      number: aboutStory.chapters[0].number,
-      title: "Nguồn cảm hứng",
-      text: "Tên Xion lấy cảm hứng từ một ngọn núi: nơi mọi người cùng hướng lên, cùng tụ hội và cùng nhau vượt lên tới một tương lai tươi sáng hơn.",
-    },
-    {
-      number: aboutStory.chapters[1].number,
-      title: "Mục đích",
-      text: "[Placeholder] Từ hình ảnh đó, một nhóm người tiên phong đã lập nên newXion tại Mỹ. Dẫn dắt bởi những giá trị cốt lõi bền vững, họ xây dựng một cộng đồng mang tinh thần của ngọn núi: nơi con người gắn kết, làm chủ công nghệ tiên tiến và xây dựng những hệ thống CNTT xuất sắc, vì nhân loại và một tương lai tươi sáng hơn cho tất cả.",
-    },
+  paragraphs: [
+    "Tên của chúng tôi lấy cảm hứng từ một ngọn núi — biểu tượng của khát vọng, sự đoàn kết và quyết tâm vươn tới những tầm cao mới.",
+    "Tinh thần đó định hình con người chúng tôi hôm nay. Chúng tôi kết nối con người với công nghệ, sẵn sàng đón nhận thử thách và làm chủ những gì mình xây dựng, hướng tới một tương lai nơi đổi mới sáng tạo tạo nên những tiến bộ có ý nghĩa.",
   ],
-  closing: {
-    line: "Cảm hứng của chúng tôi là một ngọn núi. Mục đích của chúng tôi là con người.",
-    tags: "Tầm nhìn · Cộng đồng · Công nghệ",
-  },
-  cue: "Cuộn xuống",
   tagName: aboutStory.tagName,
+};
+
+export const aboutValuesHeadingVi: typeof aboutValuesHeading = {
+  title: "Điều thúc đẩy chúng tôi",
+  lede: "Năm nguyên tắc định hướng cách chúng tôi hợp tác, đưa ra quyết định và mang lại kết quả có ý nghĩa.",
 };
 
 const FAQ_VI: Record<string, { question: string; answer: string }> = {
   what: {
     question: "XionTech làm gì?",
     answer:
-      "Chúng tôi xây dựng nền tảng riêng cho trường học (Parent Hub, Staff Hub và IoT Device Management) và phát triển phần mềm cho doanh nghiệp khác: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo sản phẩm và cung cấp nhân sự.",
+      "Chúng tôi tạo ra các sản phẩm ứng dụng AI và cung cấp phần mềm theo yêu cầu, phát triển sản phẩm, đội ngũ chuyên trách và các giải pháp công nghệ cho doanh nghiệp.",
   },
   industries: {
     question: "Các bạn làm việc với những lĩnh vực nào?",
     answer:
-      "Giáo dục là thế mạnh cốt lõi. Chúng tôi cũng phục vụ Y tế, Logistics và Quỹ đầu tư tư nhân.",
+      "Giáo dục là điểm khởi đầu của chúng tôi. Chúng tôi mang năng lực kỹ thuật linh hoạt đến các dự án ở những ngành khác, dựa trên nhu cầu của từng khách hàng.",
   },
-  "try-apps": {
-    question:
-      "Trường chúng tôi có thể trải nghiệm Parent Hub hoặc Staff Hub như thế nào?",
+  begin: {
+    question: "Một dự án mới bắt đầu như thế nào?",
     answer:
-      "Hãy liên hệ với chúng tôi. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn.",
+      "Chúng tôi bắt đầu bằng việc tìm hiểu mục tiêu và yêu cầu của bạn, định hình cách tiếp cận, rồi lần lượt đi qua thiết kế, phát triển, kiểm thử và triển khai.",
   },
   "time-zones": {
-    question: "Các bạn làm việc qua nhiều múi giờ như thế nào?",
+    question: "Đội ngũ của các bạn làm việc qua nhiều múi giờ như thế nào?",
     answer:
       "Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực.",
   },
-  shape: {
-    question: "Khi nào giải pháp được điều chỉnh theo nhu cầu của chúng tôi?",
+  quality: {
+    question: "Các bạn duy trì chất lượng triển khai như thế nào?",
     answer:
-      "Ngay từ đầu. Bước Khám phá, bước đầu tiên trong quy trình bốn bước của chúng tôi, xác định mục tiêu, người dùng và phạm vi trước khi bắt đầu thiết kế.",
-  },
-  results: {
-    question: "Chúng tôi có thể mong đợi kết quả gì?",
-    answer:
-      "Phát triển tối ưu chi phí bởi đội ngũ kỹ sư Việt Nam giàu kinh nghiệm, phát hành đúng hạn và kết quả đo lường được, hỗ trợ sự phát triển của bạn.",
-  },
-  security: {
-    question: "Các bạn bảo vệ dữ liệu của chúng tôi như thế nào?",
-    answer:
-      "[Placeholder] Chúng tôi làm việc trung thực, minh bạch và theo chuẩn mực đạo đức rõ ràng, cùng với tự động hóa bảo mật và quét liên tục.",
-  },
-  feedback: {
-    question: "Chúng tôi góp ý trong quá trình dự án bằng cách nào?",
-    answer:
-      "Qua các kênh riêng, các buổi trao đổi thường xuyên và sprint Agile, để ý kiến của bạn định hình sản phẩm xuyên suốt dự án.",
-  },
-  value: {
-    question: "Các bạn đo lường và chứng minh giá trị như thế nào?",
-    answer:
-      "Chúng tôi theo dõi tốc độ, chất lượng, tác động sản phẩm và tính tự chủ của đội ngũ, và chia sẻ minh bạch với bạn.",
+      "Kỹ sư rà soát công việc và kết hợp kiểm thử, đảm bảo chất lượng với phát triển có AI hỗ trợ, theo các tiêu chuẩn dự án đã thống nhất.",
   },
 };
 
 export const aboutFaqVi: typeof aboutFaq = {
-  title: "Bạn hỏi, chúng tôi trả lời",
-  lede: "Câu trả lời thẳng thắn về sản phẩm, dịch vụ và cách chúng tôi làm việc.",
+  title: "Bạn muốn biết thêm về XionTech?",
+  lede: "Một vài điều có thể bạn muốn biết trước khi làm việc cùng chúng tôi.",
   items: aboutFaq.items.map((item) => ({ id: item.id, ...FAQ_VI[item.id] })),
-  ask: {
-    href: aboutFaq.ask.href,
-    label: "Vẫn còn câu hỏi? Hỏi trực tiếp chúng tôi",
+};
+
+const CITY_VI: Record<string, { eyebrow: string; city: string }> = {
+  plano: { eyebrow: "Trung tâm Phát triển Mỹ", city: "Plano, Texas" },
+  hcmc: {
+    eyebrow: "Trung tâm Phát triển Việt Nam",
+    city: "TP. Hồ Chí Minh",
   },
 };
 
 export const aboutOfficesVi: typeof aboutOffices = {
-  title: "Hai trụ sở chính, bốn địa điểm.",
-  more: otherLocationsVi,
-  offices: aboutOfficeViewVi,
+  title: "Hai trung tâm triển khai. Một đội ngũ gắn kết",
+  lede: "Từ Plano đến TP. Hồ Chí Minh, đội ngũ của chúng tôi làm việc qua nhiều múi giờ để hỗ trợ khách hàng và giữ dự án luôn tiến triển.",
+  timeLabel: "Giờ địa phương",
+  mapLabel: "Mở {city} trên Google Maps (mở trong thẻ mới)",
+  locations: aboutOffices.locations.map((location) => ({
+    ...location,
+    ...CITY_VI[location.id],
+  })),
 };
 
-export const aboutCaptureVi: Localized<typeof aboutCapture> = {
-  heading: "Xem ứng dụng của chúng tôi hoạt động.",
-  lede: "Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo Parent Hub và Staff Hub cho bạn.",
+export const aboutCtaVi: typeof aboutCta = {
+  title: "Cùng xây dựng điều tiếp theo",
+  text: "Bạn có ý tưởng sản phẩm, một bài toán công nghệ hay một đội ngũ kỹ thuật cần mở rộng? Hãy cùng tìm cách biến mục tiêu của bạn thành những giải pháp có ý nghĩa.",
+  primary: { href: aboutCta.primary.href, label: "Trao đổi về dự án của bạn" },
+  secondary: { href: aboutCta.secondary.href, label: "Khám phá sản phẩm" },
 };

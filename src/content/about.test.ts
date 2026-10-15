@@ -1,56 +1,79 @@
 import {
-  aboutCapture,
+  aboutCta,
   aboutFaq,
   aboutHero,
   aboutMeta,
   aboutOffices,
   aboutStory,
+  aboutValuesHeading,
 } from "@/content/about";
+import { aboutValues } from "@/content/values";
 import { describe, expect, it } from "vitest";
 
 describe("About content", () => {
-  it("has nine FAQ entries, and the data-security answer starts with [Placeholder]", () => {
-    expect(aboutFaq.items).toHaveLength(9);
-    const security = aboutFaq.items.find(
-      (item) => item.question === "How do you keep our data secure?",
+  it("has five FAQ entries and no placeholder answer", () => {
+    expect(aboutFaq.items).toHaveLength(5);
+    const placeholders = aboutFaq.items.filter((item) =>
+      item.answer.startsWith("[Placeholder"),
     );
-    expect(security?.answer.startsWith("[Placeholder]")).toBe(true);
-    const others = aboutFaq.items.filter((item) => item !== security);
-    for (const item of others) {
-      expect(item.answer.startsWith("[Placeholder]")).toBe(false);
+    expect(placeholders).toEqual([]);
+  });
+
+  it("orders the questions so the two columns read 1, 3, 5 and 2, 4", () => {
+    expect(aboutFaq.items.map((item) => item.question)).toEqual([
+      "What does XionTech do?",
+      "Which industries do you work with?",
+      "How does a new project begin?",
+      "How do your teams work across time zones?",
+      "How do you maintain delivery quality?",
+    ]);
+  });
+
+  it("has the FAQ heading and lede, with no ask-us link", () => {
+    expect(aboutFaq.title).toBe("Curious about XionTech?");
+    expect(aboutFaq.lede).toBe(
+      "A few things you might want to know before working with us.",
+    );
+    expect("ask" in aboutFaq).toBe(false);
+  });
+
+  it("has two location cards, Plano first, with their mailto emails", () => {
+    expect(aboutOffices.title).toBe("Two delivery centers. One connected team");
+    expect(aboutOffices.locations.map((loc) => loc.timeZone)).toEqual([
+      "America/Chicago",
+      "Asia/Ho_Chi_Minh",
+    ]);
+    expect(aboutOffices.locations.map((loc) => loc.email)).toEqual([
+      {
+        href: "mailto:vinni.tran@newxion.com",
+        label: "vinni.tran@newxion.com",
+      },
+      {
+        href: "mailto:vinni.tran@xiontechs.com",
+        label: "vinni.tran@xiontechs.com",
+      },
+    ]);
+    for (const loc of aboutOffices.locations) {
+      expect(loc.mapHref).toContain(
+        "https://www.google.com/maps/search/?api=1&query=",
+      );
     }
   });
 
-  it("uses the prototype wording for FAQ questions 1, 3 and 5", () => {
-    expect(aboutFaq.items[0].question).toBe("What does XionTech do?");
-    expect(aboutFaq.items[0].answer).toContain(
-      "(Parent Hub, Staff Hub and IoT Device Management)",
-    );
-    expect(aboutFaq.items[2].question).toBe(
-      "How can our school try Parent Hub or Staff Hub?",
-    );
-    expect(aboutFaq.items[4].answer).toContain(
-      "Discovery, the first of our four steps,",
-    );
+  it("tells one story in two paragraphs, with no placeholder or old name", () => {
+    expect(aboutStory.paragraphs).toHaveLength(2);
+    expect(aboutStory.tagName).toBe("XionTech");
+    expect(JSON.stringify(aboutStory)).not.toMatch(/Placeholder|newxion/i);
   });
 
-  it("has the FAQ heading, lede and the ask-us link to the Home contact", () => {
-    expect(aboutFaq.title).toBe("Your question, we answer");
-    expect(aboutFaq.ask).toEqual({
-      label: "Still have a question? Ask us directly",
-      href: "/#contact",
-    });
+  it("titles the values What drives us, five principles", () => {
+    expect(aboutValuesHeading.title).toBe("What drives us");
+    expect(aboutValues.items).toHaveLength(5);
   });
 
-  it("has two story chapters, the founding sentence a placeholder", () => {
-    expect(aboutStory.chapters.map((chapter) => chapter.number)).toEqual([
-      "01",
-      "02",
-    ]);
-    expect(aboutStory.chapters[1].text).toMatch(
-      /^\[Placeholder\] Inspired by this vision, a group of pioneers established newXion in America\./,
-    );
-    expect(aboutStory.chapters[0].text.startsWith("[Placeholder]")).toBe(false);
+  it("sends the call to action to Home's contact section and Products", () => {
+    expect(aboutCta.primary.href).toBe("/#contact");
+    expect(aboutCta.secondary.href).toBe("/products");
   });
 
   it("links the intro to Products and Services", () => {
@@ -71,7 +94,8 @@ describe("About content", () => {
       aboutStory,
       aboutFaq,
       aboutOffices,
-      aboutCapture,
+      aboutValuesHeading,
+      aboutCta,
     });
     expect(everything).not.toMatch(/XionTechs/);
   });

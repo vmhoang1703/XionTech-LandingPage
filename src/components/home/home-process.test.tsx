@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { homeProcess } from "@/content/home";
 import { undefinedClasses } from "@/test-utils/css-classes";
 import { HomeProcess } from "./home-process";
 
@@ -22,24 +23,22 @@ afterEach(() => {
 });
 
 describe("HomeProcess", () => {
-  it("is the navy band named How we work. with the 4-D lede", () => {
+  it("is the navy band named How we work with the 4-D lede", () => {
     render(<HomeProcess />);
 
-    const region = screen.getByRole("region", { name: "How we work." });
+    const region = screen.getByRole("region", { name: "How we work" });
     expect(region.classList.contains("sec")).toBe(true);
     expect(region.classList.contains("surface-navy")).toBe(true);
     expect(region.classList.contains("gridbg")).toBe(false);
     expect(region.querySelector(".label")).toBeNull();
-    expect(region.querySelector("h2")?.textContent).toBe("How we work.");
-    expect(region.querySelector(".lede")?.textContent).toContain(
-      "Our 4-D process (Discovery, Design, Development, Deployment)",
-    );
+    expect(region.querySelector("h2")?.textContent).toBe("How we work");
+    expect(region.querySelector(".lede")?.textContent).toBe(homeProcess.lede);
   });
 
   it("puts the See the full process link to /services#process on the heading row", () => {
     render(<HomeProcess />);
 
-    const region = screen.getByRole("region", { name: "How we work." });
+    const region = screen.getByRole("region", { name: "How we work" });
     const link = screen.getByRole("link", { name: "See the full process" });
     expect(link.getAttribute("href")).toBe("/en/services#process");
     expect(link.parentElement?.classList.contains("sec-head-row")).toBe(true);

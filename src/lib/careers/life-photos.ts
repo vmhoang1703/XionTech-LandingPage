@@ -44,3 +44,12 @@ export async function getLifePhotos(): Promise<LifePhotos | null> {
     return null;
   }
 }
+
+// The "Life at XionTech" carousel (website copy v3) reads
+// these slides. Drop the photos in public/careers/life/ (life-01.webp to
+// life-06.webp, about 1600x1000) and list them here; with no slides the
+// section stays off the page. `alt` describes the photo; `caption` is the
+// short pill shown on it.
+export type LifeSlide = { src: string; alt: string; caption: string };
+
+export const LIFE_SLIDES: readonly LifeSlide[] = [];

@@ -38,7 +38,7 @@ afterEach(() => {
 vi.mock("@/components/news/home-news", () => ({
   HomeNews: () => (
     <section className="sec surface-mist" aria-labelledby="news-h">
-      <h2 id="news-h">Latest from XionTech.</h2>
+      <h2 id="news-h">Latest from XionTech</h2>
     </section>
   ),
 }));
@@ -70,7 +70,7 @@ describe("Home page", () => {
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings).toHaveLength(1);
     expect(headings[0].textContent).toBe(
-      "Build smarter. Ship faster. Get IT done.",
+      "Build smarter. Ship faster. Get IT done",
     );
   });
 
@@ -84,14 +84,14 @@ describe("Home page", () => {
     const { container } = render(await homeAt("en"));
 
     expect(sectionNames(container)).toEqual([
-      "Build smarter. Ship faster. Get IT done.",
+      "Build smarter. Ship faster. Get IT done",
       "What can we help you achieve?",
-      "One connected school.",
-      "Why XionTech.",
-      "How we work.",
-      "Our core values.",
-      "Your questions, answered.",
-      "Latest from XionTech.",
+      "One connected school",
+      "Why XionTech",
+      "How we work",
+      "What drives us",
+      "Before you reach out",
+      "Latest from XionTech",
       "Have something you want to build?",
     ]);
   });
@@ -104,15 +104,15 @@ describe("Home page", () => {
       .closest(".home-flow");
     expect(flow).not.toBeNull();
     for (const name of [
-      "One connected school.",
-      "Why XionTech.",
-      "How we work.",
-      "Our core values.",
-      "Your questions, answered.",
+      "One connected school",
+      "Why XionTech",
+      "How we work",
+      "What drives us",
+      "Before you reach out",
     ]) {
       expect(flow?.contains(screen.getByRole("region", { name }))).toBe(true);
     }
-    const news = screen.getByRole("region", { name: "Latest from XionTech." });
+    const news = screen.getByRole("region", { name: "Latest from XionTech" });
     expect(flow?.contains(news)).toBe(false);
     expect(news.className).toContain("surface-mist");
   });
@@ -121,7 +121,7 @@ describe("Home page", () => {
     render(await homeAt("en"));
 
     expect(
-      screen.queryByRole("heading", { name: "Eight services, one team." }),
+      screen.queryByRole("heading", { name: "Eight services, one team" }),
     ).toBeNull();
     expect(document.querySelector(".bento, .svc-cards")).toBeNull();
   });
@@ -136,7 +136,7 @@ describe("Home page", () => {
     const navy = Array.from(
       container.querySelectorAll(".home-flow > .surface-navy"),
     ).map((section) => section.querySelector("h2")?.textContent);
-    expect(navy).toEqual(["How we work."]);
+    expect(navy).toEqual(["How we work"]);
   });
 
   it("ends with the contact section and no capture band", async () => {
@@ -166,13 +166,13 @@ describe("Home page", () => {
         "tel:+84908107552",
       ]),
     );
-    expect(contact?.textContent).toContain("Plano +1 469 322 9899");
+    expect(contact?.textContent).toContain("Plano +1 (469) 322-9899");
     expect(contact?.textContent).toContain("Ho Chi Minh City +84 908 107 552");
     expect(
       screen.getByRole("button", { name: "Start the conversation" }),
     ).toBeDefined();
     expect(
-      screen.queryByRole("heading", { name: "See it working at your school." }),
+      screen.queryByRole("heading", { name: "See it working at your school" }),
     ).toBeNull();
   });
 
@@ -180,27 +180,26 @@ describe("Home page", () => {
     const { container } = render(await homeAt("vi"));
 
     expect(sectionNames(container).slice(0, 7)).toEqual([
-      "Xây dựng thông minh hơn. Phát hành nhanh hơn. Get IT done.",
+      "Xây dựng thông minh hơn. Phát hành nhanh hơn. Get IT done",
       "Chúng tôi có thể giúp bạn đạt được điều gì?",
-      "Một ngôi trường kết nối.",
-      "Vì sao chọn XionTech.",
-      "Cách chúng tôi làm việc.",
-      "Giá trị cốt lõi.",
-      "Giải đáp thắc mắc của bạn.",
+      "Một ngôi trường kết nối",
+      "Vì sao chọn XionTech",
+      "Cách chúng tôi làm việc",
+      "Điều thúc đẩy chúng tôi",
+      "Trước khi bạn liên hệ",
     ]);
     expect(
       screen.getByRole("link", { name: "Khám phá dịch vụ" }),
     ).toBeDefined();
     expect(screen.getAllByText("Lật để xem chi tiết")[0]).toBeDefined();
     expect(screen.getAllByText("Bạn nhận được")[0]).toBeDefined();
-    expect(
-      screen.getByRole("button", { name: /Thêm 3 lĩnh vực/ }),
-    ).toBeDefined();
     expect(screen.getByText("Quỹ đầu tư tư nhân")).toBeDefined();
     // Outcomes, app cards and FAQ follow the services, products and about
     // dictionaries.
     expect(screen.getByText("Mở rộng đội ngũ")).toBeDefined();
-    expect(screen.getByText("Phụ huynh và gia đình")).toBeDefined();
+    expect(
+      screen.getByText("Thông báo đến trường theo thời gian thực"),
+    ).toBeDefined();
     expect(
       screen.getByText("Các bạn làm việc qua nhiều múi giờ như thế nào?"),
     ).toBeDefined();
@@ -210,7 +209,7 @@ describe("Home page", () => {
     render(await homeAt("xx"));
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Build smarter. Ship faster. Get IT done.",
+      "Build smarter. Ship faster. Get IT done",
     );
   });
 });

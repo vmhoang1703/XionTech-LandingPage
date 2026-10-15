@@ -39,17 +39,13 @@ describe("APPS", () => {
     ]);
   });
 
-  it("has the taglines, and marks the AI Tutor one as a placeholder", () => {
-    expect(appById("parent-hub").tagline).toBe(
-      "Keeps parents close to every school day, on their phone.",
-    );
-    expect(appById("staff-hub").tagline).toBe(
-      "One workspace where staff, teachers and leaders share the same data.",
-    );
-    expect(appById("iot").tagline).toBe(
-      "Run classroom devices, lighting, climate and access from one screen.",
-    );
-    expect(appById("ai-tutor").tagline.startsWith("[Placeholder]")).toBe(true);
+  it("has the approved taglines, with no placeholder", () => {
+    expect(APPS.map((app) => app.tagline)).toEqual([
+      "Keep parents informed and connected to their child’s school life.",
+      "Bring daily school operations into one connected workspace.",
+      "Simplify how schools manage connected campus technology.",
+      "Help students understand mistakes and build confidence through guided learning.",
+    ]);
   });
 });
 

@@ -1,11 +1,18 @@
 import { localeMetadata } from "@/i18n/page-metadata";
 import { CareersHero } from "@/components/careers/careers-hero";
-import { FlipCards } from "@/components/careers/flip-cards";
-import { Inside } from "@/components/careers/inside";
+import { GainCards } from "@/components/careers/gain-cards";
+import { LifeCarousel } from "@/components/careers/life-carousel";
 import { OpenRoles } from "@/components/careers/open-roles";
 import { PageScene } from "@/components/sections/page-scene";
-import { careersMeta, careersMetaVi } from "@/content/careers";
+import {
+  careersLife,
+  careersLifeVi,
+  careersMeta,
+  careersMetaVi,
+} from "@/content/careers";
+import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { LIFE_SLIDES } from "@/lib/careers/life-photos";
 import { getOpenRoles } from "@/lib/careers/open-roles";
 
 export const generateMetadata = localeMetadata({
@@ -14,7 +21,9 @@ export const generateMetadata = localeMetadata({
 });
 
 // E-A7: the hero's light blue fades into the shared page scene, which ends
-// warm above the footer (lead, 2026-10-12), and the roles come last. The Life photo frames are off the page;
+// warm above the footer (lead, 2026-10-12), and the roles come last. The
+// Life photo carousel shows once photos are listed in LIFE_SLIDES; the Life
+// photo frames are off the page;
 // their Sanity code stays for later (Q15, deferred-work.md).
 export default async function CareersPage({
   params,
@@ -27,8 +36,12 @@ export default async function CareersPage({
     <>
       <CareersHero locale={locale} />
       <PageScene>
-        <Inside locale={locale} />
-        <FlipCards locale={locale} />
+        <LifeCarousel
+          slides={LIFE_SLIDES}
+          copy={pickLocale(locale, { en: careersLife, vi: careersLifeVi })}
+        />
+        {/* Inside XionTech and the five values are off the page (website copy v3). */}
+        <GainCards locale={locale} />
         <OpenRoles roles={roles} locale={locale} />
       </PageScene>
     </>

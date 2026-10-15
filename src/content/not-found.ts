@@ -1,11 +1,6 @@
-// Not found page links. The text comes from the shell dictionary (`src/i18n/shell.ts`);
-// the three route buttons reuse the nav labels.
+// Not found page. The text comes from the shell dictionary (`src/i18n/shell.ts`).
 
 export const notFound = {
-  primaryHref: "/",
-  links: [
-    { href: "/products", label: "products" },
-    { href: "/services", label: "services" },
-    { href: "/news", label: "news" },
-  ],
+  code: "404",
+  homeHref: "/",
 } as const;

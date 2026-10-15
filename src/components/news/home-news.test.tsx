@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { LatestPost } from "@/lib/news/latest-posts";
 import { getLatestPosts } from "@/lib/news/latest-posts";
 import { undefinedClasses } from "@/test-utils/css-classes";
+import { homeNews } from "@/content/news";
 import { HomeNews } from "./home-news";
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
@@ -42,13 +43,10 @@ describe("HomeNews", () => {
     );
     const heading = screen.getByRole("heading", {
       level: 2,
-      name: "Latest from XionTech.",
+      name: "Latest from XionTech",
     });
     expect(heading.closest(".sec-head-row")).toBe(row);
-    expect(
-      screen.getByText("Catch up with what our team is building and shipping.")
-        .className,
-    ).toBe("lede");
+    expect(screen.getByText(homeNews.lede).className).toBe("lede");
     const seeAll = screen.getByRole("link", { name: "See all news" });
     expect(seeAll.getAttribute("href")).toBe("/en/news");
     expect(seeAll.parentElement).toBe(row);
@@ -71,7 +69,7 @@ describe("HomeNews", () => {
     expect(container.querySelector(".scard")).toBeNull();
     expect(screen.queryByText(/^\[Placeholder\]/)).toBeNull();
     expect(
-      screen.getByRole("heading", { level: 2, name: "Latest from XionTech." }),
+      screen.getByRole("heading", { level: 2, name: "Latest from XionTech" }),
     ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "See all news" }).getAttribute("href"),
@@ -117,7 +115,7 @@ describe("HomeNews in Vietnamese", () => {
 
     expect(getLatestPosts).toHaveBeenCalledWith("vi");
     expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(
-      "Tin mới từ XionTech.",
+      "Tin mới từ XionTech",
     );
     expect(screen.getByText("Xem tất cả tin tức")).toBeTruthy();
     expect(screen.getByText("Đọc tiếp")).toBeTruthy();

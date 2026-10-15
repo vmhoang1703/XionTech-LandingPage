@@ -11,7 +11,6 @@ import { homeCapabilities, homeCapabilitiesVi } from "@/content/home";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { hcmc, hcmcVi, plano, planoVi } from "@/content/offices";
-import { MoreIndustries } from "./more-industries";
 
 const INDUSTRY_ICON: Record<
   (typeof homeCapabilities.industries.more)[number],
@@ -22,8 +21,8 @@ const INDUSTRY_ICON: Record<
   "Private Equity": BriefcaseIcon,
 };
 
-// Home "Why XionTech.": Global delivery and Domain expertise in a 5+7 row,
-// then the motto. Server Component; only the "+3" reveal, the live clocks and
+// Home "Why XionTech": Global delivery and Domain expertise in a 5+7 row,
+// then the motto. Server Component; only the live clocks and
 // their sun or moon are client parts.
 export function Capabilities({ locale = "en" }: Readonly<{ locale?: Locale }>) {
   const { title, lede, delivery, industries, motto } = pickLocale(locale, {
@@ -78,19 +77,17 @@ export function Capabilities({ locale = "en" }: Readonly<{ locale?: Locale }>) {
                 <GraduationCapIcon aria-hidden="true" />
                 {industries.main}
               </span>
-              <MoreIndustries label={industries.moreLabel}>
-                {industries.more.map((name, index) => {
-                  // Icons are keyed by the English name.
-                  const IndustryIcon =
-                    INDUSTRY_ICON[homeCapabilities.industries.more[index]];
-                  return (
-                    <span key={name} className="w-chip revealed">
-                      <IndustryIcon aria-hidden="true" />
-                      {name}
-                    </span>
-                  );
-                })}
-              </MoreIndustries>
+              {industries.more.map((name, index) => {
+                // Icons are keyed by the English name.
+                const IndustryIcon =
+                  INDUSTRY_ICON[homeCapabilities.industries.more[index]];
+                return (
+                  <span key={name} className="w-chip">
+                    <IndustryIcon aria-hidden="true" />
+                    {name}
+                  </span>
+                );
+              })}
             </span>
           </article>
         </div>
@@ -98,7 +95,7 @@ export function Capabilities({ locale = "en" }: Readonly<{ locale?: Locale }>) {
           <p className="w-gid">{motto.lead}</p>
           <div className="w-own">
             <p className="w-own-title">{motto.title}</p>
-            <p>{motto.line}</p>
+            {motto.line ? <p>{motto.line}</p> : null}
           </div>
         </div>
       </div>

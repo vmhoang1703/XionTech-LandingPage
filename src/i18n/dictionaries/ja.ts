@@ -1,12 +1,13 @@
 import { SERVICES } from "@/components/layout/nav-data";
-import { aboutFaq, aboutHero, aboutOffices, aboutStory } from "@/content/about";
-import { appById } from "@/content/apps";
 import {
-  careersHero,
-  careersInside,
-  careersLife,
-  careersValues,
-} from "@/content/careers";
+  aboutCta,
+  aboutFaq,
+  aboutHero,
+  aboutOffices,
+  aboutStory,
+} from "@/content/about";
+import { appById } from "@/content/apps";
+import { careersLife } from "@/content/careers";
 import {
   homeApps,
   homeDoors,
@@ -86,16 +87,12 @@ const hcmcJa: Office = {
   tag: VIETNAM_DELIVERY_CENTER,
 };
 
-const OTHER_LOCATIONS = "ハノイとダナンにも拠点があります。";
-
-const [aboutPlano, aboutHcmc] = aboutOffices.offices;
-
 const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
   "parent-hub": {
     madeFor: "保護者とご家族",
     features: [
-      "お子さまが校門に着いたらお知らせ",
-      "成績とコメントを公開と同時に確認",
+      "リアルタイムの到着通知",
+      "公開された成績とフィードバック",
       "先生との双方向メッセージ",
       "明細がわかりやすい学費のお支払い",
     ].map((title, i) => ({
@@ -106,7 +103,7 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
   "staff-hub": {
     madeFor: "職員、教員、学校管理職",
     features: [
-      "出欠と記録をリアルタイムで",
+      "出欠と生徒の記録",
       "クラス、時間割、成績",
       `${parentHub.shortName} を通じた保護者へのメッセージ`,
       "管理職向けの今日の優先事項ダッシュボード",
@@ -118,8 +115,8 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
   iot: {
     madeFor: "学校の運営・施設管理チーム",
     features: [
-      "プロジェクター、ディスプレイ、音響",
-      "時間割に合わせた照明と空調",
+      "機器の一元管理",
+      "照明と空調のスケジュール制御",
       "ドアとエリアを一元管理",
       "キャンパス全体のエネルギー使用量",
     ].map((title, i) => ({ ...productDetails.iot.features[i], title })),
@@ -127,67 +124,72 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
   "ai-tutor": {
     madeFor: "生徒と、寄り添う教員",
     features: [
-      "スキルごとの診断",
-      "自分で取り組んだ後のステップごとのヒント",
+      "スキルごとの理解度チェック",
+      "一人ひとりに合わせたステップごとのヒント",
       "一人でできるようになって初めて習得",
     ].map((title, i) => ({ ...productDetails["ai-tutor"].features[i], title })),
   },
 };
 
 const APP_TAGLINES: Record<AppId, string> = {
-  "parent-hub": "毎日の学校生活を、保護者のスマートフォンに届けます。",
+  "parent-hub":
+    "保護者がお子さまの学校生活をいつでも把握し、つながっていられます。",
   "staff-hub":
-    "職員、教員、管理職が同じデータを共有する、ひとつのワークスペース。",
-  iot: "教室の機器、照明、空調、入退室をひとつの画面で管理。",
+    "学校の日々の運営を、ひとつのつながったワークスペースにまとめます。",
+  iot: "キャンパスのコネクテッド技術の管理をシンプルにします。",
   "ai-tutor":
-    "[Placeholder] 新しい問題を自分の力で解く。解答を読むだけではなく。",
+    "ガイド付きの学習で、生徒が間違いを理解し自信をつけられるよう支えます。",
 };
 
 const FAQ: Record<string, { question: string; answer: string }> = {
   what: {
     question: "XionTech は何をしている会社ですか？",
     answer:
-      "学校向けの自社プラットフォーム（Parent Hub、Staff Hub、IoT Device Management）を開発するとともに、他社向けのソフトウェア開発を行っています。プロダクトエンジニアリング、AI を活用したアナリティクス、プロダクト共創、人材提供です。",
+      "AI を活用した製品を開発し、企業向けにカスタムソフトウェア、プロダクトエンジニアリング、専任チーム、テクノロジーソリューションを提供しています。",
   },
   industries: {
-    question: "どの業界と仕事をしていますか？",
+    question: "どのような業界と仕事をしていますか？",
     answer:
-      "中核は EdTech です。ヘルスケア、物流、プライベートエクイティの分野にもサービスを提供しています。",
+      "出発点は教育です。お客様それぞれのニーズに応じて、柔軟なエンジニアリング力を他の業界のプロジェクトにも提供しています。",
   },
-  "try-apps": {
-    question: `${parentHub.shortName} や ${staffHub.shortName} を学校で試すにはどうすればよいですか？`,
+  begin: {
+    question: "新しいプロジェクトはどのように始まりますか？",
     answer:
-      "お気軽にお問い合わせください。貴校の実際の場面に沿ってアプリをご案内します。",
+      "まずお客様の目標と要件を理解し、進め方を固めたうえで、設計、開発、テスト、デプロイへと進みます。",
   },
   "time-zones": {
-    question: "タイムゾーンをまたいでどのように仕事をしていますか？",
+    question: "チームは複数のタイムゾーンでどのように働いていますか？",
     answer:
       "プレイノ、ホーチミン市、ハノイ、ダナンのチームが米国、ヨーロッパ、オーストラリアのタイムゾーンをカバーし、共有ツールでリアルタイムに情報を更新しています。",
   },
-  shape: {
-    question: "ソリューションを私たちのニーズに合わせるのはいつですか？",
+  quality: {
+    question: "開発の品質をどのように保っていますか？",
     answer:
-      "最初からです。4 つのステップの第一歩であるディスカバリーで、設計を始める前に目標、ユーザー、スコープを定めます。",
+      "エンジニアが成果物をレビューし、合意したプロジェクト基準に沿って、テストと品質保証を AI 支援開発と組み合わせています。",
+  },
+};
+
+// Home asks its own four (website copy v3).
+const HOME_FAQ: Record<string, { question: string; answer: string }> = {
+  "try-apps": {
+    question: "私たちの学校で Parent Hub や Staff Hub を試すには？",
+    answer:
+      "製品ページで仕事用のメールアドレスを残していただければ、貴校の実際の場面に沿ってアプリをご紹介します。",
+  },
+  "time-zones": {
+    question: "複数のタイムゾーンでどのように働いていますか？",
+    answer:
+      "プレイノ、ホーチミン市、ハノイ、ダナンのチームが米国、ヨーロッパ、オーストラリアのタイムゾーンをカバーし、共有ツールでリアルタイムに情報を更新しています。",
   },
   results: {
     question: "どのような成果が期待できますか？",
     answer:
-      "経験豊富なベトナム人エンジニアによるコスト効率の高い開発、期日どおりのリリース、そして貴社の成長を支える測定可能な成果です。",
-  },
-  security: {
-    question: "データの安全はどのように守っていますか？",
-    answer:
-      "[Placeholder] 誠実さ、透明性、明確な倫理基準のもとで業務を行い、セキュリティの自動化と継続的なスキャンでそれを支えています。",
+      "優秀なベトナム人エンジニアによるコスト効率の高い開発、期日どおりのリリース、そして成長を支える測定可能な成果です。",
   },
   feedback: {
-    question: "プロジェクト中にどのようにフィードバックを伝えればよいですか？",
+    question: "プロジェクト中にどのようにフィードバックを伝えられますか？",
     answer:
-      "専用のチャネル、頻繁な確認の場、アジャイルなスプリントを通じて、お客様のご意見が最後までプロダクトに反映されます。",
-  },
-  value: {
-    question: "価値をどのように測定し、示していますか？",
-    answer:
-      "スピード、品質、プロダクトへの影響、チームの自律性を追跡し、お客様とオープンに共有します。",
+      "専用チャンネル、頻繁な打ち合わせ、アジャイルなスプリントを通じて、お客様の意見を最初から最後まで製品に反映します。",
   },
 };
 
@@ -204,27 +206,27 @@ const OUTCOMES: Dictionaries["servicesOutcomes"] = {
   items: [
     {
       id: servicesOutcomes.items[0].id,
-      title: "新しいデジタルプロダクトをつくる",
+      title: "新しいデジタル製品をつくる",
       description:
-        "ディスカバリーと UX から、エンジニアリング、テスト、ローンチまで、ひとつのデリバリーチームで進めます。",
+        "エンドツーエンドの設計、カスタムソフトウェア開発、テスト、ローンチ支援で、アイデアを市場に出せる製品へと形にします。",
     },
     {
       id: servicesOutcomes.items[1].id,
       title: "チームを拡張する",
       description:
-        "社内チームに人手や特定のスキルが必要なとき、専門性の高い技術人材を加えます。",
+        "社内チームにさらなる人員や特定のスキルが必要なときに、専門的な技術人材を加えます。",
     },
     {
       id: servicesOutcomes.items[2].id,
       title: "既存のプラットフォームを刷新する",
       description:
-        "うまく機能している部分を守りながら、アプリケーション、インフラ、クラウドでのデリバリー、エンジニアリングの手法を改善します。",
+        "うまく機能している部分を守りながら、アプリケーション、インフラ、クラウドでの提供、エンジニアリングの実践を改善します。",
     },
     {
       id: servicesOutcomes.items[3].id,
-      title: "価値を生む場面で AI を活用する",
+      title: "AI でビジネス価値を生み出す",
       description:
-        "AI、アナリティクス、自動化を使って、プロダクト、ワークフロー、経営判断を改善します。",
+        "AI を活用したソリューションを構築し、業務を自動化し、ビジネスデータをより良い意思決定のための実用的な知見に変えます。",
     },
   ],
 };
@@ -234,23 +236,23 @@ const START_PROJECT = "プロジェクトを始める";
 const PROCESS_STEPS = [
   {
     title: "ディスカバリー",
-    line: "目標、ユーザー、リスク、スコープを理解するためのワークショップ。",
-    receive: "明確なスコープ、見積もり、デリバリー計画。",
+    line: "ワークショップで目標、ユーザー、リスク、範囲を明らかにし、アイデアを明確な要件に落とし込みます",
+    receive: "明確な要件、見積もり、開発計画",
   },
   {
     title: "デザイン",
-    line: "コードを書く前に、ユーザーフロー、インターフェース、アーキテクチャを合意します。",
-    receive: "クリックできるプロトタイプと技術設計。",
+    line: "要件をユーザーフローとクリックできるプロトタイプにし、つくる前に製品を見て磨き込めるようにします",
+    receive: "承認済みのプロトタイプと技術設計",
   },
   {
     title: "開発",
-    line: "定期的なデモを伴うアジャイルなスプリント。テストと品質保証（QA）は最後ではなく、毎スプリントの中で行います。",
-    receive: "毎スプリント、テスト済みで動作するソフトウェア。",
+    line: "承認したプロトタイプをもとにアジャイルなスプリントで開発し、スプリントごとにテストします",
+    receive: "デモのたびにテスト済みで動くソフトウェア",
   },
   {
     title: "デプロイ",
-    line: "安全なリリース、モニタリング、ローンチ後の改善。",
-    receive: "本番リリースと継続的なサポート。",
+    line: "完成した製品を安全に公開し、実際の利用を通じて監視と改善を続けます",
+    receive: "稼働中の製品と継続的なサポート",
   },
 ];
 
@@ -260,18 +262,20 @@ const PROCESS_FLOW: Dictionaries["processFlow"] = {
   start: {
     ...processFlow.start,
     title: "お客様のご依頼",
-    line: "アイデア、概要、または要件。",
+    line: "アイデア、要望、またはビジネス上のニーズ",
   },
   end: {
     ...processFlow.end,
     title: "ローンチ",
-    line: "その後も一緒に育てていきます。",
+    line: "リリースを重ねながら、製品をともに育てる",
   },
   steps: processFlow.steps.map((step, i) => ({ ...step, ...PROCESS_STEPS[i] })),
 };
 
 const JOURNEY_LEDE =
   "学校コミュニティのためのつながったスイート。保護者、学び、職員の業務、キャンパスのテクノロジーをひとつのエコシステムにまとめます。";
+
+const PRIVACY_META_TITLE = "プライバシーポリシー | XionTech";
 
 const RETENTION_DECIDED =
   "お問い合わせとデモのご依頼、メールアドレスの送信、応募書類と CV は、期限を設けずに保管します。";
@@ -289,27 +293,28 @@ const ERRORS = {
 };
 
 export const ja: Dictionaries = {
-  aboutCapture: {
-    heading: "アプリの実際の動きをご覧ください。",
-    lede: `業務用メールアドレスをご入力いただければ、${parentHub.shortName} と ${staffHub.shortName} のご案内を手配します。`,
+  aboutCta: {
+    title: "次のものを一緒につくりましょう",
+    text: "製品のアイデア、技術的な課題、あるいは拡大したいエンジニアリングチームはありますか？ 目標を意味のあるソリューションに変える方法を一緒に考えましょう。",
+    primary: {
+      href: aboutCta.primary.href,
+      label: "プロジェクトについて相談する",
+    },
+    secondary: { href: aboutCta.secondary.href, label: "製品を見る" },
   },
   aboutFaq: {
-    title: "ご質問にお答えします",
-    lede: "製品、サービス、仕事の進め方について、率直にお答えします。",
+    title: "XionTech についてもっと知りたいですか？",
+    lede: "一緒に仕事を始める前に知っておきたいことをまとめました。",
     items: ABOUT_FAQ_ITEMS,
-    ask: {
-      href: aboutFaq.ask.href,
-      label: "まだ疑問がありますか？直接お尋ねください",
-    },
   },
   aboutHero: {
     title: {
       lead: "私たちは XionTech。",
       middle: "",
       accent: "オーナーシップ",
-      tail: "でつくるテクノロジー。",
+      tail: "でつくるテクノロジー",
     },
-    text: "人、アイデア、テクノロジーを結びつけ、優れた IT システムを構築し、すべての人にとってより明るい未来を形づくります。ホーチミン市とプレイノを拠点に、学校向けの自社プラットフォームを開発し、世界中のお客様にデジタルプロダクトをお届けしています。",
+    text: "人、アイデア、テクノロジーを結びつけ、意味のあるデジタルソリューションをつくります。ソフトウェア製品の開発から AI を活用したイノベーションの探求まで、エンジニアリングの専門性、経験豊富なリーダーシップ、そして強い当事者意識を組み合わせ、企業の前進を支えます。",
     links: [
       { href: aboutHero.links[0].href, label: "製品を見る" },
       { href: aboutHero.links[1].href, label: "サービスを見る" },
@@ -318,18 +323,24 @@ export const ja: Dictionaries = {
   aboutMeta: {
     title: "XionTech について | Get IT Done",
     description:
-      "XionTech は教育テクノロジー企業であり、ソフトウェアパートナーです。プレイノ（米国）とホーチミン市（ベトナム）に本社を置き、ハノイとダナンにもチームを持ち、米国、ヨーロッパ、オーストラリアのお客様にサービスを提供しています。",
+      "XionTech は米国とベトナムにチームを持つエンジニアリングパートナーです。ソフトウェア製品をつくり、AI を活用したイノベーションを探求し、お客様とともに責任を持って開発を進めます。",
   },
   aboutOffices: {
-    title: "2 つの本社、4 つの拠点。",
-    more: OTHER_LOCATIONS,
-    offices: [
+    title: "2 つのデリバリーセンター、ひとつにつながるチーム",
+    lede: "プレイノからホーチミン市まで、チームは複数のタイムゾーンをまたいでお客様を支え、プロジェクトを前に進めます。",
+    timeLabel: "現地時刻",
+    mapLabel: "Google マップで{city}を開く（新しいタブで開きます）",
+    locations: [
       {
-        ...planoJa,
-        tag: US_DELIVERY_CENTER,
-        contacts: withNewTab(aboutPlano.contacts, "WhatsApp "),
+        ...aboutOffices.locations[0],
+        eyebrow: US_DELIVERY_CENTER,
+        city: "テキサス州プレイノ",
       },
-      { ...hcmcJa, contacts: aboutHcmc.contacts },
+      {
+        ...aboutOffices.locations[1],
+        eyebrow: VIETNAM_DELIVERY_CENTER,
+        city: "ホーチミン市",
+      },
     ],
   },
   aboutStory: {
@@ -337,105 +348,83 @@ export const ja: Dictionaries = {
       lead: "山に着想を得て。",
       middle: "",
       highlight: "目的",
-      tail: "で結ばれて。",
+      tail: "に突き動かされて",
     },
-    chapters: [
-      {
-        number: aboutStory.chapters[0].number,
-        title: "着想",
-        text: "私たちの名前は、ある山に着想を得ています。人々が見上げ、集い、より明るい未来へと共に登っていく場所です。",
-      },
-      {
-        number: aboutStory.chapters[1].number,
-        title: "目的",
-        text: "[Placeholder] このビジョンに触発された先駆者たちが、米国で newXion を設立しました。揺るぎないコアバリューに導かれ、彼らは山の精神に忠実なコミュニティを築こうとしました。人々が団結し、最先端のテクノロジーを活かし、優れた IT システムを構築して人類の発展とすべての人のより明るい未来に貢献する場所です。",
-      },
+    paragraphs: [
+      "私たちの名前は山に着想を得ています。山は、志、団結、そして新たな高みを目指す決意の象徴です。",
+      "その精神が今の私たちをかたちづくっています。人とテクノロジーを結びつけ、課題に挑み、自分たちがつくるものに責任を持ち、イノベーションが意味のある進歩を生む未来を目指しています。",
     ],
-    closing: {
-      line: "私たちの着想は山。私たちの目的は人。",
-      tags: "ビジョン · コミュニティ · テクノロジー",
-    },
-    cue: "スクロール",
     tagName: aboutStory.tagName,
   },
   aboutValues: {
     items: [
       {
-        title: "スタートアップ精神",
-        short: "俊敏で、粘り強く、常に改善を続ける。",
-        text: "起業家精神を体現し、俊敏さ、柔軟性、イノベーションへの情熱を大切にします。卓越への取り組みは、粘り強さと継続的な改善の文化によって支えられています。",
+        label: "俊敏であること",
+        title: "目的を持って適応する。",
+        text: "柔軟に変化へ対応し、大切なことに向かって進み続けます。",
       },
       {
-        title: "クライアント中心",
-        short: "すべての仕事の中心にお客様がいます。",
-        text: "お客様は私たちのすべての仕事の中心にいます。深い理解、主体的な関わり、最適なソリューションを通じて、卓越した体験と確かな成果をお届けします。",
+        label: "当事者意識",
+        title: "成果に責任を持つ。",
+        text: "声を上げ、責任を引き受け、最初から最後までやり遂げます。",
       },
       {
-        title: "誠実さを第一に",
-        short: "誠実、透明、そして責任ある姿勢。",
-        text: "誠実さ、透明性、説明責任をもって行動します。あらゆる判断とやり取りを倫理基準が導き、信頼と長期的な関係を育みます。",
+        label: "イノベーション",
+        title: "イノベーションを役立つものに。",
+        text: "人と企業に意味のある価値を生む、新しいアイデアと技術を探求します。",
       },
       {
-        title: "イノベーション志向",
-        short: "新しい技術を探求し、一歩先を行く。",
-        text: "新しいテクノロジーと創造的なアプローチの探求に情熱を注ぎます。イノベーションは私たちの DNA に組み込まれており、ソリューションを進化させ、業界の潮流の先を行くことを可能にしています。",
+        label: "ともに成長する",
+        title: "一緒だからこそ、より良く。",
+        text: "知識を共有し、支え合い、協力とフィードバックを通じて成長します。",
       },
       {
-        title: "「Get IT Done」の姿勢",
-        short: "約束に責任を持ち、やり遂げる。",
-        text: "約束に責任を持ち、高品質で信頼性が高く効率的なソリューションをお届けします。私たちのチームは、業界水準を満たし、またはそれを上回る、説明責任と成果志向の姿勢に支えられています。",
-      },
-      {
-        title: "人を大切にする文化",
-        short: "一人ひとりが尊重され、支えられ、力を発揮できる。",
-        text: "一人ひとりが尊重され、支えられ、力を発揮できる職場を育てます。私たちの文化は雇用の枠を超え、帰属意識、協働、そして共に分かち合う成功を大切にしています。",
+        label: "Get IT done",
+        title: "アイデアを成果に変える。",
+        text: "アイデアの先へ進み、違いを生む実用的なソリューションを届けます。",
       },
     ].map((copy, i) => ({ ...aboutValues.items[i], ...copy })),
   },
+  aboutValuesHeading: {
+    title: "私たちを動かすもの",
+    lede: "協力の仕方、意思決定、そして意味のある成果の届け方を導く 5 つの原則です。",
+  },
   appTaglines: APP_TAGLINES,
-  careersGrowth: {
-    caption: "[Placeholder] 成長のための学習モデル",
-    center: "成長",
-    steps: ["好奇心", "学ぶ", "問う", "成長する", "改善する"],
+  careersGain: {
+    heading: "ここで得られるもの",
+    intro:
+      "スキルを伸ばし、新しい技術を探求し、支え合う仲間と働けます。XionTech で期待できることをご紹介します。",
+    cards: [
+      {
+        number: "01",
+        title: "実践で学ぶ",
+        text: "ワークショップ、知識の共有、実際のエンジニアリングの課題を通じて、手を動かしながら学びます。",
+      },
+      {
+        number: "02",
+        title: "AI と新しい技術",
+        text: "よりスマートに働くための AI ツール、自動化、最新の技術を探求します。",
+      },
+      {
+        number: "03",
+        title: "実際のプロジェクト",
+        text: "お客様の本当の課題を解決し、自分の仕事が生む違いを実感できます。",
+      },
+      {
+        number: "04",
+        title: "チームでの体験",
+        text: "チーム活動、ともに学ぶ時間、成功をみんなで祝うことを通じてつながりを築きます。",
+      },
+    ],
   },
   careersHero: {
-    title: { first: "好奇心を持ち続ける。", second: "次をつくる。" },
+    title: { first: "好奇心を持ち続ける。", second: "次をつくる" },
     lede: "私たちが築いているのは、学ぶのが早く、より良い問いを立て、変化に適応し、タスクだけでなく成果にこだわる人のためのチームです。ここでは、AI を使ったソフトウェア開発の新しい方法を切り拓く役割を担います。",
-    cta: { href: careersHero.cta.href, label: "募集中の職種を見る" },
-  },
-  careersInside: {
-    heading: "XionTech の内側。",
-    lede: "ここでの日々を形づくる瞬間をご紹介します。ワークショップ、プロジェクトの始動、チームの日、お祝い、共に学ぶ時間、そしてその合間の小さな瞬間です。",
-    tiles: [
-      {
-        tag: "共に学ぶ",
-        title: "ワークショップと実験",
-        text: "新しいツール、エージェント型のワークフロー、より良い働き方をチームで試す実践的なセッション。",
-      },
-      {
-        tag: "関係を築く",
-        title: "お客様訪問",
-        text: "背景を直接理解し、より強い協力関係を築きます。",
-      },
-      {
-        tag: "方向をそろえる",
-        title: "タウンホール",
-        text: "何が変わったのか、今何が重要なのか、次にどこへ向かうのか。",
-      },
-      {
-        tag: "共に始める",
-        title: "プロジェクトキックオフ",
-        text: "新しい仕事は、謎めいたタスクリストではなく、共有された背景から始まります。",
-      },
-      {
-        tag: "前進を祝う",
-        title: "[Placeholder] お祝い",
-        text: "リリースした仕事には、緑のステータスラベル以上のものがふさわしいから。",
-      },
-    ].map((copy, i) => ({ ...careersInside.tiles[i], ...copy })),
   },
   careersLife: {
-    heading: "XionTech での毎日。",
+    heading: "XionTech での毎日",
+    prevLabel: "前の写真",
+    nextLabel: "次の写真",
     frames: [
       "[Placeholder] チームの写真",
       "[Placeholder] オフィスの写真",
@@ -448,47 +437,9 @@ export const ja: Dictionaries = {
       "ホーチミン市の XionTech に参加しませんか。人を大切にする文化の中で、AI/ML、生成 AI、クラウド、アジャイルなデリバリーを活かし、学校向けプラットフォームとお客様のプロダクトに携われます。",
   },
   careersRoles: {
-    heading: "次の挑戦を見つけよう。",
+    heading: "次の挑戦を見つけよう",
     emptyText: "現在、募集中の職種はありません。",
     applyLabel: "詳細を見て応募する",
-  },
-  careersValues: {
-    heading: "私たちの働き方を形づくる 5 つのこと。",
-    lede: "これらは、私たちが毎日周りの人に感じてほしい行動です。カードをめくると、それぞれが実際に何を意味するかがわかります。",
-    frontHint: FLIP_FRONT,
-    backHint: FLIP_BACK,
-    cards: [
-      {
-        title: "[Placeholder] 柔軟であり続ける",
-        label: "柔軟に",
-        backTitle: "[Placeholder] 方向を見失わずに動く。",
-        text: "新しい情報やより良い答えによって道筋が変わるときも、柔軟に適応します。",
-      },
-      {
-        title: "[Placeholder] 成果に責任を持つ",
-        label: "オーナーシップ",
-        backTitle: "[Placeholder] 自分のタスクの先まで気を配る。",
-        text: "問題を早めに伝え、品質を守り、仕事が本当に成功するかどうかに責任を持ちます。",
-      },
-      {
-        title: "[Placeholder] 目的あるイノベーション",
-        label: "イノベーション",
-        backTitle: "[Placeholder] 新しさは、役に立ってこそ意味がある。",
-        text: "プロダクト、ユーザー体験、働き方を良くするときに、新しいテクノロジーを探求します。",
-      },
-      {
-        title: "[Placeholder] 共に成長する",
-        label: "共に成長",
-        backTitle: "[Placeholder] お互いを高め合う。",
-        text: "知っていることを共有し、役立つフィードバックを伝え、仲間が挑戦し、貢献し、成長できる場をつくります。",
-      },
-      {
-        title: "[Placeholder] Get IT Done",
-        label: "GET IT DONE",
-        backTitle: "[Placeholder] 可能性を現実のものに。",
-        text: "良いアイデアは大切です。役に立ち、実際に動く成果を届けてこそ、その価値が生まれます。",
-      },
-    ].map((copy, i) => ({ ...careersValues.cards[i], ...copy })),
   },
   categoryLabels: {
     schools: "学校",
@@ -525,7 +476,7 @@ export const ja: Dictionaries = {
       tabDemo: "製品デモ",
       tabProject: "開発委託プロジェクト",
       name: "氏名",
-      email: "業務用メールアドレス",
+      email: "メールアドレス",
       org: "学校名または会社名",
       role: "役職",
       roleHelp: "例：校長、IT 責任者",
@@ -547,9 +498,9 @@ export const ja: Dictionaries = {
     },
     home: {
       heading: "つくりたいものはありますか？",
-      lede: "あなたご自身と取り組んでいることについて、少し教えてください。詳しくお伺いするため、私たちのチームからご連絡します。",
+      lede: "新しいものをつくりたい、あるいは今あるものを改善したいとお考えですか？ 目標をお聞かせください。どのようにお手伝いできるか一緒に考えます。",
       name: "お名前",
-      email: "業務用メールアドレス",
+      email: "メールアドレス",
       phone: "電話番号",
       optional: "（任意）",
       phonePlaceholder: CONTACT_STRINGS.home.phonePlaceholder,
@@ -566,14 +517,14 @@ export const ja: Dictionaries = {
     capture: {
       emailLabel: "業務用メールアドレス",
       demo: {
-        heading: "貴校で実際に動く様子をご覧ください。",
-        lede: "業務用メールアドレスをご入力いただければ、貴校に合わせたご案内を手配します。",
+        heading: "貴校での動きをご覧ください",
+        lede: "仕事用のメールアドレスを残していただければ、貴校に合わせたデモを手配します。",
         placeholder: CONTACT_STRINGS.capture.demo.placeholder,
         button: "お問い合わせ",
         consent: "メールアドレスはデモの手配にのみ使用します。",
       },
       project: {
-        heading: "つくっているものを教えてください。",
+        heading: "つくりたいものを教えてください",
         lede: "業務用メールアドレスをご入力いただければ、ディスカバリーを始めるためにご連絡します。",
         placeholder: CONTACT_STRINGS.capture.project.placeholder,
         button: "お問い合わせ",
@@ -593,7 +544,7 @@ export const ja: Dictionaries = {
     services: [...SERVICES.map((service) => service.name), "未定"],
   },
   dayRoad: {
-    heading: "学校の一日。",
+    heading: "学校の一日",
     lede: "ある生徒の典型的な一日をたどり、生徒、保護者、学校職員が各段階でどのように情報を共有し、つながっているかをご覧ください。",
     start: "スタート",
     finish: "ゴール",
@@ -631,17 +582,17 @@ export const ja: Dictionaries = {
     ],
   },
   footerOffices: [
-    { ...footerOffices[0], name: VIETNAM_DELIVERY_CENTER },
+    { ...footerOffices[0], tag: US_DELIVERY_CENTER },
     {
       ...footerOffices[1],
-      name: US_DELIVERY_CENTER,
-      contacts: withNewTab(footerOffices[1].contacts, "WhatsApp "),
+      name: "ホーチミン市",
+      tag: VIETNAM_DELIVERY_CENTER,
     },
   ],
   hcmc: hcmcJa,
   homeApps: {
-    title: "つながる学校。",
-    lede: JOURNEY_LEDE,
+    title: "つながる学校",
+    lede: "保護者、教職員、生徒、キャンパス運営のためのコネクテッドなソリューションで、学校コミュニティ全体をひとつにします。すべて、日々の学校運営をシンプルにするために設計されています。",
     apps: homeApps.apps.map((card) => ({
       ...card,
       madeFor: PRODUCT_DETAILS[card.app.id].madeFor,
@@ -652,65 +603,71 @@ export const ja: Dictionaries = {
     link: { href: homeApps.link.href, label: "製品を見る" },
   },
   homeCapabilities: {
-    title: "XionTech が選ばれる理由。",
-    lede: "あらゆる学校向けアプリとお届けするすべてのプロダクトを支える力、そして AI を使ったよりスマートなつくり方を探し続けるチーム。",
+    title: "XionTech が選ばれる理由",
+    lede: "私たちは自ら製品をつくり、その実践的な経験をお客様に還元しています。業界の理解、エンジニアリングへの責任、AI 支援開発を組み合わせています。",
     delivery: {
       label: "グローバルデリバリー",
-      title: "2 つの本社、ひとつの稼働日。",
+      title: "2 つの本社、ひとつの稼働日",
       line: "タイムゾーンをまたぐチームが、実用的に重なる時間帯を活かしてデリバリーを止めません。",
     },
     industries: {
       label: "ドメインの専門性",
-      title: "教育に深く。変化に強く。",
-      line: "最も深く取り組んでいるのは教育ですが、同じエンジニアリング力がほかの業界も支えています。",
+      title: "教育から始まり、どこへでも適応",
+      line: "教育テクノロジーを構築してきた経験が、さまざまな業界向けのソリューション開発の確かな土台になっています。",
       main: "教育",
       more: ["ヘルスケア", "物流", "プライベートエクイティ"],
       moreLabel: "ほか 3 業界：ヘルスケア、物流、プライベートエクイティ",
     },
     motto: {
       lead: "Get IT Done",
-      title: "オーナーシップでつくる。",
-      line: "約束への責任と、品質への誇り。",
+      title: "最初のアイデアから納品まで、当事者意識で。",
+      line: "",
     },
   },
   homeDoors: {
     label: "私たちの仕事",
     products: {
       ...homeDoors.products,
-      title: "学校向け製品",
-      line: "保護者、生徒、教員、管理職、学校職員をつなぐアプリ。",
+      label: "学校向けの製品",
+      title: "ひとつのエコシステムにつながるプラットフォーム",
+      line: "学びを深め、学校運営をシンプルにし、生徒の意欲を保つ、AI を活用した統合エコシステム",
     },
     services: {
       ...homeDoors.services,
-      label: "開発委託サービス",
-      title: "あなたのソフトウェア開発チーム",
-      line: "デジタルプロダクトをつくる企業のための専任チームとエンドツーエンドのデリバリー。",
+      label: "アウトソーシングサービス",
+      title: "ビジネスのためのカスタムソフトウェア",
+      line: "専任チームとともにカスタムソフトウェアを開発します。製品に合わせてチームを編成し、ディスカバリーからローンチ、サポートまで伴走します。",
       chips: [...homeDoors.services.chips.slice(0, -1), "ほか 3 件"],
     },
   },
   homeFaq: {
-    title: "よくあるご質問。",
-    lede: "製品、サービス、仕事の進め方について、率直にお答えします。",
-    items: homeFaq.items.map((item) => ({ id: item.id, ...FAQ[item.id] })),
+    title: "お問い合わせの前に",
+    lede: "製品、サービス、私たちの働き方について率直にお答えします。",
+    items: homeFaq.items.map((item) => ({
+      id: item.id,
+      ...HOME_FAQ[item.id],
+    })),
     link: { href: homeFaq.link.href, label: "すべての質問を見る" },
   },
   homeHero: {
     title: {
       lines: ["もっとスマートにつくる。", "もっと速く届ける。"],
       highlight: "Get IT done",
-      tail: "。",
+      tail: "",
     },
-    sub: "学校とキャンパスをつなぐソリューション、ソフトウェア製品、専任チームを、AI を活用した開発の先頭に立つ人々がお届けします。",
+    sub: "XionTech は、現場での経験と最新技術を組み合わせ、AI を活用した製品とカスタムソリューションでビジネスの課題を解決します。",
     motion: { pause: "アニメーションを停止", play: "アニメーションを再生" },
     cta: { href: homeHero.cta.href, label: "お問い合わせ" },
   },
   homeMeta: {
     title:
       "XionTech | ベトナムの学校向けプラットフォームとソフトウェア開発委託",
+    description:
+      "XionTech は AI を活用した製品とカスタムソリューションを開発しています。学校向けプラットフォーム（Parent Hub、Staff Hub、IoT、AI Tutor）とベトナムからのソフトウェア開発委託。",
   },
   homeNews: {
-    heading: "XionTech の最新情報。",
-    lede: "私たちのチームがつくり、届けているものをご覧ください。",
+    heading: "XionTech の最新情報",
+    lede: "私たちがつくっているもの、探求しているアイデア、そして仕事を支える人々をご紹介します。",
     seeAll: { href: homeNews.seeAll.href, label: "すべてのニュースを見る" },
     readStory: "記事を読む",
   },
@@ -722,8 +679,8 @@ export const ja: Dictionaries = {
     link: { href: homeOutcomes.link.href, label: "サービスを見る" },
   },
   homeProcess: {
-    title: "仕事の進め方。",
-    lede: "私たちの 4-D プロセス（ディスカバリー、デザイン、開発、デプロイ）は、アイデアをローンチまで導きます。各ステップの終わりには、目で見て承認できる成果物があります。AI はすべてのステップに組み込まれており、その使い方を改善し続けています。",
+    title: "私たちの進め方",
+    lede: "アイデアからローンチまで、4-D プロセスはすべての段階に明確さ、協力、そして測定可能な進捗をもたらします。AI 支援のワークフローと明確な成果物により、最初から最後までプロジェクトに関わっていただけます。",
     link: { href: homeProcess.link.href, label: "プロセスの全体を見る" },
   },
   homeStats: {
@@ -737,8 +694,8 @@ export const ja: Dictionaries = {
     ].map((caption, i) => ({ ...homeStats.stats[i], caption })),
   },
   homeValuesHeading: {
-    title: "私たちのコアバリュー。",
-    lede: "私たちの働き方の指針です。カードをめくると、それぞれの価値観の全文を読めます。",
+    title: "私たちを動かすもの",
+    lede: "協力の仕方、意思決定、そして意味のある成果の届け方を導く 5 つの原則です。",
     frontHint: FLIP_FRONT,
     backHint: FLIP_BACK,
   },
@@ -792,7 +749,7 @@ export const ja: Dictionaries = {
   },
   journeyMap: {
     intro: {
-      title: "それぞれに。そして、つながるともっと良く。",
+      title: "別々につくり、一緒にもっと良く",
       lede: JOURNEY_LEDE,
     },
   },
@@ -806,8 +763,6 @@ export const ja: Dictionaries = {
     sub: "最新のニュースとお知らせを、いち早くお届けします。",
     storiesHeading: "すべての記事",
     filtersLabel: "対象で記事を絞り込む",
-    sampleNote:
-      "newXion ニュースルームの記事です。[Placeholder] と記されたものはサンプルです。",
     allFilter: { id: newsPage.allFilter.id, label: "すべて" },
     empty: "このカテゴリにはまだ記事がありません。",
     showAll: "すべて表示",
@@ -816,85 +771,48 @@ export const ja: Dictionaries = {
   },
   newsStory: {
     storyLabel: "記事",
-    sampleNote:
-      "[Placeholder] レイアウトを示すためのサンプル記事です。公開前に実際の記事に差し替えてください。",
     backToNews: { href: newsStory.backToNews.href, label: "ニュースに戻る" },
     metaTitle: newsStory.metaTitle,
   },
   offices: [planoJa, hcmcJa],
-  otherLocations: OTHER_LOCATIONS,
+  otherLocations: "ハノイ、ダナン",
   plano: planoJa,
   privacy: {
-    metaTitle: "プライバシーポリシー | XionTech",
+    metaTitle: PRIVACY_META_TITLE,
     metaDescription:
-      "[Placeholder] フォームを通じてご提供いただいた個人データを XionTech がどのように使用するか。",
+      "フォームを通じてご提供いただいた個人データを XionTech がどのように利用するかについて。",
     breadcrumbLabel: "パンくずリスト",
     breadcrumbHome: "ホーム",
     breadcrumbCurrent: PRIVACY_LINK,
-    title: "プライバシーポリシー。",
-    lede: "[Placeholder] ポリシー本文は法務担当者が用意し、ベトナムの政令 13/2023（PDPD）に準拠します。",
+    title: PRIVACY_LINK,
     bodyLabel: "ポリシー",
-    outlineNote:
-      "[Placeholder] 内容の概要です。以下の各セクションはポリシーが扱うべき項目であり、実際のポリシーではありません。",
     retentionDecided: RETENTION_DECIDED,
     sections: [
       {
         id: PRIVACY.sections[0].id,
-        heading: "私たちについてと連絡先",
+        heading: "収集する情報",
         paragraphs: [
-          "[Placeholder] データ管理者（XionTech の法人）、その所在地、プライバシーに関するお問い合わせ先。",
+          "メールアドレス、氏名、電話番号、所属組織、役職、そしてフォームから送信されたすべての内容（求人に応募される場合は履歴書を含む）。",
         ],
       },
       {
         id: PRIVACY.sections[1].id,
-        heading: "収集する情報",
+        heading: "利用目的",
         paragraphs: [
-          "[Placeholder] メールアドレス、氏名、電話番号、組織、役職、およびフォームを通じて送信されたすべての内容。求人に応募された場合は CV を含みます。",
-          "[Placeholder] メールアドレス入力欄に入力されたメールアドレスは、フォームのメッセージと同様に当社の受信箱に送信されます。また、デモ依頼ページが読み込むまでの間に限り、ブラウザーのセッションストレージにも保持されます。",
+          "お問い合わせへの回答、または応募書類と履歴書の検討にのみ利用します。",
         ],
       },
       {
         id: PRIVACY.sections[2].id,
-        heading: "情報の利用方法",
+        heading: "共有先",
         paragraphs: [
-          "[Placeholder] お問い合わせへの回答、デモの手配、または応募書類と CV の選考にのみ使用します。",
+          "当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを会社の受信トレイに送信）、Upstash（ハッシュ化した値から作るレート制限カウンター）、Vercel（ウェブサイトのホスティングと履歴書の非公開保存）、Google Fonts（日本語、韓国語、中国語ページのフォント）。",
         ],
       },
       {
         id: PRIVACY.sections[3].id,
-        heading: "情報の共有先",
-        paragraphs: [
-          "[Placeholder] 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを当社の受信箱に送信）、Upstash（ハッシュ化した値から作成するレート制限カウンター）、Vercel（ウェブサイトのホスティングと CV の非公開保管）、Google Fonts（日本語・韓国語・中国語ページ用のフォント）。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[4].id,
-        heading: "ベトナム国外への移転",
-        paragraphs: [
-          "[Placeholder] データが国外（例：プレイノのオフィス）に移転される場合と、政令 13/2023 が求める保護措置。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[5].id,
-        heading: "保管期間",
-        paragraphs: [
-          RETENTION_DECIDED,
-          "[Placeholder] 保管期間に関する最終的な文言と、今後期限を設けるかどうか。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[6].id,
-        heading: "Cookie とアナリティクス",
-        paragraphs: [
-          "[Placeholder] 暫定の文章です。最終版では、必須のファーストパーティ言語 Cookie（保存する内容とその理由）を記載し、同意なしに必須ではない Cookie やアナリティクスを設定しないことを明記します。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[7].id,
-        heading: "お客様の権利",
-        paragraphs: [
-          "[Placeholder] データへのアクセス、訂正、削除、または同意の撤回。削除を依頼する方法はまだ決まっていません。",
-        ],
+        heading: "保存期間",
+        paragraphs: [RETENTION_DECIDED],
       },
     ],
   },
@@ -913,66 +831,79 @@ export const ja: Dictionaries = {
     internship: "インターンシップ",
   },
   servicesMeta: {
-    title:
-      "ベトナムのソフトウェア開発委託 | Product Engineering, AI, Low-code & Cloud | XionTech",
+    title: "ベトナムのソフトウェアアウトソーシング | XionTech",
     description:
-      "ホーチミン市から、専任チームとエンドツーエンドのソフトウェアデリバリーを。プロダクトエンジニアリング、AI、ローコード、クラウドを、米国、ヨーロッパ、オーストラリアのタイムゾーンでご提供します。",
+      "ホーチミン市からのソフトウェアアウトソーシング：プロダクトエンジニアリング、AI 分析、共創、人材提供、カスタムアプリ、ローコード、AI ソリューション、クラウド。",
   },
   servicesOutcomes: OUTCOMES,
   servicesPage: {
     title: {
-      lead: "「",
-      highlight: "Get IT done",
-      tail: "」を体現するソフトウェアチーム。",
+      lead: "お客様の",
+      words: ["ビジョン", "課題", "アイデア", "志", "目標"],
+      suffix: "。",
+      tail: ["私たちは「", "Get IT done", "」で応えます"],
+      staticWord: "ビジョン。",
+      label: "お客様のビジョン。私たちは「Get IT done」で応えます",
     },
-    lede: "ホーチミン市から、プロダクトエンジニアリング、AI、ローコード、クラウドのデリバリーを、米国、ヨーロッパ、オーストラリアのタイムゾーンに合わせてご提供します。AI でよりスマートに働き、デリバリーの方法を革新し続けています。",
-    primaryCta: { ...servicesPage.primaryCta, label: START_PROJECT },
+    lede: "デジタル製品から AI の統合、技術の刷新まで、課題を解決し、イノベーションを加速し、ビジネスを前進させる専門性を提供します。",
+    primaryCta: { ...servicesPage.primaryCta, label: "一緒につくりましょう" },
+    secondaryCta: { ...servicesPage.secondaryCta, label: "サービスを見る" },
+    stack: {
+      label:
+        "イラスト：ソフトウェア開発の要件、ワイヤーフレーム、技術コードの 3 つのレイヤー",
+      requirements: "要件",
+      wireframe: "ワイヤーフレーム",
+      code: "技術コード",
+    },
   },
   servicesProcess: {
-    title: "4-D プロセス：ご依頼からローンチまで。",
+    title: "4-D プロセス：ご依頼からローンチまで",
     lede: "各ステップの終わりには、目で見て、試して、承認できる成果物があります。AI はすべてのステップに組み込まれており、その使い方を改善し続けています。",
     flow: PROCESS_FLOW,
   },
   servicesSection: {
-    title: "8 つのサービス、ひとつのチーム。",
+    title: "8 つのサービス、ひとつのチーム",
     lede: SERVICES_LEDE,
     services: [
       {
         ...servicesSection.services[0],
         description:
-          "エンドツーエンドのエンジニアリングの専門性で、革新的なアイデアを市場投入できるデジタルプロダクトに変えます。",
+          "アイデアを、コンセプトからローンチまで、市場に出せるデジタル製品に変えます。",
       },
       {
         ...servicesSection.services[1],
         description:
-          "AI と高度な可視化で、生データを行動につながるインテリジェンスに変えます。",
+          "AI と直感的なダッシュボードで、複雑なデータを実用的な知見に変えます。",
       },
       {
         ...servicesSection.services[2],
         description:
-          "お客様の業界知識と私たちの技術的専門性を組み合わせ、イノベーションを加速します。",
+          "お客様の業界知識と私たちの製品の専門性を組み合わせ、意味のあるソリューションをつくります。",
       },
       {
         ...servicesSection.services[3],
         description:
-          "必要なときに、柔軟な形態で専門性の高い技術人材を確保できます。",
+          "プロジェクトを支え、チームを拡大するのにふさわしい技術人材を確保します。",
       },
       {
         ...servicesSection.services[4],
-        description: "お客様固有の要件に合わせたソリューションを開発します。",
+        description:
+          "ビジネスのニーズとワークフローに合ったアプリケーションをつくります。",
       },
       {
         ...servicesSection.services[5],
         description:
-          "主要なローコードプラットフォームで、ツールと自動化をより速く提供します。",
+          "柔軟なローコードプラットフォームで、アプリケーションの構築とワークフローの自動化をより速く進めます。",
       },
       {
         ...servicesSection.services[6],
-        description: "人工知能を活用して、業務を変革します。",
+        description:
+          "業務を効率化し生産性を高めるインテリジェントなソリューションで、AI を活用します。",
       },
       {
         ...servicesSection.services[7],
-        description: "Azure、AWS、GCP に精通したソリューション。",
+        description:
+          "成長するビジネスを支えるクラウドソリューションを構築、拡張、管理します。",
       },
     ],
   },
@@ -998,11 +929,8 @@ export const ja: Dictionaries = {
     language: { label: "言語" },
     footer: {
       blurb:
-        "学校と企業のための教育テクノロジー製品とソフトウェア開発サービス。",
+        "XionTech は、現場での経験と最新技術を組み合わせ、AI を活用した製品とカスタムソリューションでビジネスの課題を解決します。",
       products: "製品",
-      forSchools: "学校向け",
-      forStudents: "生徒向け",
-      forParents: "保護者向け",
       services: "サービス",
       howWeWork: "仕事の進め方",
       allServices: "すべてのサービス",
@@ -1013,10 +941,8 @@ export const ja: Dictionaries = {
     },
     notFound: {
       metaTitle: "ページが見つかりません | XionTech",
-      title: "道に迷ってしまったようです。",
-      lede: "お探しのページはここにはありません。道をたどってホームに戻るか、下から行き先を選んでください。",
+      title: "ページが見つかりません",
       primary: "ホームへ",
-      here: "現在地",
     },
   },
   meta: {

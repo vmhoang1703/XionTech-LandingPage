@@ -1,88 +1,79 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { undefinedClasses } from "@/test-utils/css-classes";
-import { aboutValues, homeValuesHeading } from "@/content/values";
+import { aboutValues } from "@/content/values";
 import { HomeValues } from "./home-values";
 
-const faceText = (card: HTMLElement, face: "front" | "back") =>
-  card.querySelector(`.flip-${face}`)?.textContent;
-
 describe("HomeValues", () => {
-  it("is a region named Our core values. with the lede and no #values id", () => {
+  it("is a region named What drives us with the lede and no #values id", () => {
     const { container } = render(<HomeValues />);
 
-    const region = screen.getByRole("region", { name: "Our core values." });
+    const region = screen.getByRole("region", { name: "What drives us" });
     expect(region.querySelector(".lede")?.textContent).toBe(
-      "What guides how we work. Flip a card to read each value in full.",
+      "Five principles that guide how we collaborate, make decisions, and deliver meaningful results.",
     );
     expect(container.querySelector("#values")).toBeNull();
     expect(region.querySelector("h2")?.id).toBe("home-values-h");
   });
 
-  it("shows each value's title and short line, with the full text on the back", () => {
-    render(<HomeValues />);
+  it("shows the five principles as flip cards: label and title on the front, the line on the back", () => {
+    const { container } = render(<HomeValues />);
 
-    const cards = screen.getAllByRole("button");
-    expect(cards).toHaveLength(aboutValues.items.length);
-    aboutValues.items.forEach(({ title, short, text }, index) => {
-      const card = cards[index];
-      expect(card.getAttribute("aria-pressed")).toBe("false");
-      expect(faceText(card, "front")).toBe(`${title}${short}Flip for details`);
-      expect(faceText(card, "back")).toBe(`${title}${text}Flip back`);
-      expect(card.querySelector(".flip-back")?.hasAttribute("inert")).toBe(
-        true,
+    const cards = [
+      ...container.querySelectorAll(".flip-cards > button.flip-card"),
+    ];
+    expect(
+      cards.map((card) => [
+        card.querySelector(".flip-front .flip-label")?.textContent,
+        card.querySelector(".flip-front .flip-title")?.textContent,
+        card.querySelector(".flip-back .flip-text")?.textContent,
+      ]),
+    ).toEqual([
+      [
+        "01 · Stay agile",
+        "Adapt with purpose.",
+        "Stay flexible, respond to change, and keep moving toward what matters.",
+      ],
+      [
+        "02 · Take ownership",
+        "Own the outcome.",
+        "Speak up, take responsibility, and see things through from start to finish.",
+      ],
+      [
+        "03 · Innovate",
+        "Make innovation useful.",
+        "Explore new ideas and technologies that create meaningful value for people and businesses.",
+      ],
+      [
+        "04 · Grow together",
+        "Better together.",
+        "Share knowledge, support each other, and grow through collaboration and feedback.",
+      ],
+      [
+        "05 · Get IT done",
+        "Turn ideas into impact.",
+        "Move beyond ideas and deliver practical solutions that make a difference.",
+      ],
+    ]);
+    expect(aboutValues.items).toHaveLength(5);
+    for (const card of cards) {
+      expect(card.querySelector(".flip-front svg.flip-icon")).not.toBeNull();
+      expect(card.querySelector(".flip-front .flip-hint")?.textContent).toBe(
+        "Flip for details",
       );
-    });
-    expect(aboutValues.items.map(({ title }) => title)).toEqual([
-      "Startup Spirit",
-      "Client Centricity",
-      "Integrity First",
-      "Innovation Driven",
-      '"Get IT Done" Attitude',
-      "People-Centered Culture",
+      expect(card.getAttribute("aria-pressed")).toBe("false");
+    }
+    expect(cards.map((c) => c.classList.contains("accent"))).toEqual([
+      false,
+      false,
+      false,
+      false,
+      true,
     ]);
   });
 
-  it("features Get IT Done in gold", () => {
-    render(<HomeValues />);
-
-    const accents = screen
-      .getAllByRole("button")
-      .filter((card) => card.classList.contains("accent"));
-    expect(accents).toHaveLength(1);
-    expect(
-      within(accents[0]).getAllByText('"Get IT Done" Attitude'),
-    ).toHaveLength(2);
-  });
-
-  it("flips a card to its full value and back", () => {
-    render(<HomeValues />);
-
-    const [card] = screen.getAllByRole("button");
-    fireEvent.click(card);
-    expect(card.getAttribute("aria-pressed")).toBe("true");
-    expect(card.querySelector(".flip-front")?.hasAttribute("inert")).toBe(true);
-    expect(card.querySelector(".flip-back")?.hasAttribute("inert")).toBe(false);
-    fireEvent.click(card);
-    expect(card.getAttribute("aria-pressed")).toBe("false");
-  });
-
-  it("writes every short line shorter than the full value", () => {
-    for (const { short, text } of aboutValues.items) {
-      expect(short.length).toBeLessThan(text.length / 3);
-    }
-  });
-
-  it("uses only classes that globals.css defines", () => {
+  it("defines every class it uses in globals.css", () => {
     const { container } = render(<HomeValues />);
-
     expect(undefinedClasses(container)).toEqual([]);
-  });
-
-  it("never writes the brand as XionTechs", () => {
-    const { container } = render(<HomeValues />);
-
-    expect(container.textContent).not.toContain("XionTechs");
-    expect(JSON.stringify(homeValuesHeading)).not.toContain("XionTechs");
   });
 });

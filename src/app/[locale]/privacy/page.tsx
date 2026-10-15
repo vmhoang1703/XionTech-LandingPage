@@ -40,7 +40,6 @@ export default async function PrivacyPage({
             <span>{PRIVACY.breadcrumbCurrent}</span>
           </nav>
           <h1 id="privacy-h1">{t.words(PRIVACY.title)}</h1>
-          <p className="lede mt-5">{PRIVACY.lede}</p>
         </div>
       </section>
 
@@ -49,9 +48,6 @@ export default async function PrivacyPage({
         aria-label={PRIVACY.bodyLabel}
       >
         <div className="wrap text-body-lg mx-auto max-w-180">
-          <p className="sample text-body-sm text-muted italic">
-            {PRIVACY.outlineNote}
-          </p>
           {PRIVACY.sections.map((section) => (
             <div key={section.id} id={section.id}>
               <h2 className="font-display text-title-lg text-heading mt-10">

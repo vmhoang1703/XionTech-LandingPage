@@ -29,7 +29,7 @@ describe("GlobalNotFound", () => {
     expect(html.props.className).toContain("font-be-vietnam-pro");
     render(html.props.children.props.children);
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "You’ve wandered off the trail.",
+      "Page not found",
     );
     expect(metadata.title).toBe("Page not found | XionTech");
     expect(metadata.robots).toEqual({ index: false });

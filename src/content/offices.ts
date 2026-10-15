@@ -24,7 +24,7 @@ export const plano: Office = {
   name: "Plano, Texas, USA",
   addressLines: ["7950 Legacy Drive, Suite 400", "Plano, Texas 75024, USA"],
   contacts: [
-    { href: "tel:+14693229899", label: "+1 469 322 9899" },
+    { href: "tel:+14693229899", label: "+1 (469) 322-9899" },
     {
       href: "https://wa.me/14694399345",
       label: "WhatsApp +1 469 439 9345",
@@ -52,7 +52,13 @@ export const hcmc: Office = {
     "279 Nguyen Tri Phuong Street",
     "Dien Hong Ward, Ho Chi Minh City, Vietnam",
   ],
-  contacts: [{ href: "tel:+84908107552", label: "+84 908 107 552" }],
+  contacts: [
+    { href: "tel:+84908107552", label: "+84 908 107 552" },
+    {
+      href: "mailto:vinni.tran@xiontechs.com",
+      label: "vinni.tran@xiontechs.com",
+    },
+  ],
   timeZone: "Asia/Ho_Chi_Minh",
   zoneLabel: "GMT+7",
 };
@@ -60,12 +66,16 @@ export const hcmc: Office = {
 export const offices: Office[] = [plano, hcmc];
 
 // The two headquarters above have full cards; the other two locations are
-// named only, as their addresses are not published (lead, 2026-10-12).
-export const otherLocations = "Also in Ha Noi and Da Nang.";
+// named only, as their addresses are not published (lead, 2026-10-12). The
+// footer lists them under the cards (website copy v3).
+export const otherLocations = "Ha Noi, Da Nang";
 
 // Footer and About views (prototype order and wording): delivery-center names
 // and bracketed phone numbers. `offices` above stays as Demo and Home read it.
-export type FooterOffice = Pick<Office, "id" | "name" | "addressLines"> & {
+export type FooterOffice = Pick<
+  Office,
+  "id" | "name" | "tag" | "addressLines"
+> & {
   contacts: OfficeContact[];
 };
 
@@ -102,18 +112,28 @@ const hcmcBracketed: OfficeContact[] = [
   },
 ];
 
+// Footer view (website copy v3): the same two cards as About’s
+// locations, Plano first, each with its delivery-center tag, phone and email.
 export const footerOffices: FooterOffice[] = [
   {
-    id: hcmc.id,
-    name: VIETNAM_DELIVERY_CENTER,
-    addressLines: hcmc.addressLines,
-    contacts: hcmcBracketed,
+    id: plano.id,
+    name: "Plano, Texas",
+    tag: US_DELIVERY_CENTER,
+    addressLines: plano.addressLines,
+    contacts: [
+      contactByPrefix(plano, "tel:"),
+      contactByPrefix(plano, "mailto:"),
+    ],
   },
   {
-    id: plano.id,
-    name: US_DELIVERY_CENTER,
-    addressLines: plano.addressLines,
-    contacts: planoBracketed,
+    id: hcmc.id,
+    name: "Ho Chi Minh City",
+    tag: VIETNAM_DELIVERY_CENTER,
+    addressLines: [
+      "Floor 15, B1 Building, 279 Nguyen Tri Phuong Street",
+      "Dien Hong Ward, Ho Chi Minh City, Vietnam",
+    ],
+    contacts: [contactByPrefix(hcmc, "tel:"), contactByPrefix(hcmc, "mailto:")],
   },
 ];
 
@@ -149,7 +169,7 @@ export const hcmcVi: Office = {
 
 export const officesVi: Office[] = [planoVi, hcmcVi];
 
-export const otherLocationsVi = "Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng.";
+export const otherLocationsVi = "Hà Nội, Đà Nẵng";
 
 const planoBracketedVi: OfficeContact[] = planoBracketed.map((contact) =>
   contact.external
@@ -158,11 +178,11 @@ const planoBracketedVi: OfficeContact[] = planoBracketed.map((contact) =>
 );
 
 export const footerOfficesVi: FooterOffice[] = [
-  { ...footerOffices[0], name: VIETNAM_DELIVERY_CENTER_VI },
+  { ...footerOffices[0], tag: US_DELIVERY_CENTER_VI },
   {
     ...footerOffices[1],
-    name: US_DELIVERY_CENTER_VI,
-    contacts: planoBracketedVi,
+    name: "TP. Hồ Chí Minh",
+    tag: VIETNAM_DELIVERY_CENTER_VI,
   },
 ];
 

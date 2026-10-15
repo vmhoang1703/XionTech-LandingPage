@@ -4,13 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { readMotionPaused } from "@/lib/motion/motion-preference";
 
-type Chapter = { number: string; title: string; text: string };
-
 type MountainStoryProps = {
   title: { lead: string; middle: string; highlight: string; tail: string };
-  chapters: readonly Chapter[];
-  closing: { line: string; tags: string };
-  cue: string;
+  paragraphs: readonly string[];
   tagName: string;
 };
 
@@ -27,8 +23,12 @@ const PATH: readonly (readonly [number, number])[] = [
   [55.5, 25],
   [58.4, 19.4],
 ];
-// The newXion tag shows from this chapter on.
-const LATE = 1;
+// Website copy v3: the climb plays by itself, once, when
+// the story is 40% in view: foot to summit in CLIMB_MS. The brand tag shows
+// from halfway up.
+export const CLIMB_MS = 3400;
+export const IN_VIEW = 0.4;
+const LATE_AT = 0.5;
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 const easeInOut = (t: number) =>
@@ -45,83 +45,50 @@ export function climbPoint(p: number): [number, number] {
   ];
 }
 
-/** The element id in a URL hash; a malformed escape (#%E0) is taken as typed. */
-export function hashId(hash: string): string {
-  const raw = hash.slice(1);
-  try {
-    return decodeURIComponent(raw);
-  } catch {
-    // decodeURIComponent throws only URIError, on a malformed escape.
-    return raw;
-  }
-}
-
-/**
- * The chapter that the held scroll is on: each takes an equal share of the
- * scroll while the story sticks. Not held (short screens, no sticky): the last
- * chapter whose title is above 60% of the screen.
- */
-export function chapterAt(mtn: HTMLElement, pin: HTMLElement): number {
-  const chapters = [...mtn.querySelectorAll<HTMLElement>(".mtn-ch")];
-  const style = getComputedStyle(pin);
-  if (style.position === "sticky") {
-    const run = Math.max(1, mtn.offsetHeight - pin.offsetHeight);
-    const progress =
-      (Number.parseFloat(style.top) - mtn.getBoundingClientRect().top) / run;
-    return Math.max(
-      0,
-      Math.min(chapters.length - 1, Math.floor(progress * chapters.length)),
-    );
-  }
-  let at = 0;
-  chapters.forEach((chapter, index) => {
-    const top = chapter
-      .querySelector(".mtn-title")
-      ?.getBoundingClientRect().top;
-    if (top !== undefined && top < innerHeight * 0.6) at = index;
-  });
-  return at;
+/** Whether enough of the story is on screen to start the climb. */
+export function inView(entry: IntersectionObserverEntry): boolean {
+  if (!entry.isIntersecting) return false;
+  return (
+    entry.intersectionRatio >= IN_VIEW ||
+    entry.intersectionRect.height >= innerHeight * IN_VIEW
+  );
 }
 
 // About "Inspired by a mountain" (lead, 2026-10-13: Amber's prototype,
-// ENH-030). The story holds while the reader scrolls through its chapters;
-// each chapter climbs the mountain: a light walks the path, the colour rises
-// behind it and the X mark lights on the summit. It moves only with transform
-// and opacity: the colour rises in a window that slides up while the picture
-// inside slides down by the same amount. With no script both chapters show
-// and the mountain is in full colour; reduced motion or a saved Pause jump
-// straight to each chapter's place.
+// ENH-030; website copy v3: one consolidated story, no scroll hold;
+// the climb plays once by itself when the story comes into view). The climb
+// goes from the foot to the summit:
+// a light walks the path, the colour rises behind it and the X mark lights on
+// the summit. It moves only with transform and opacity: the colour rises in a
+// window that slides up while the picture inside slides down by the same
+// amount. With no script the mountain is in full colour; reduced motion or a
+// saved Pause show the summit at once.
 export function MountainStory({
   title,
-  chapters,
-  closing,
-  cue,
+  paragraphs,
   tagName,
 }: Readonly<MountainStoryProps>) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const mtn = ref.current;
-    const pin = mtn?.querySelector<HTMLElement>(".mtn-pin");
     const art = mtn?.querySelector<HTMLElement>(".mtn-art");
     const rise = mtn?.querySelector<HTMLElement>(".mtn-rise");
     const colour = mtn?.querySelector<HTMLElement>(".mtn-color");
     const beacon = mtn?.querySelector<HTMLElement>(".mtn-beacon");
-    const dots = mtn?.querySelector<HTMLElement>(".mtn-dots");
-    if (!mtn || !pin || !art || !rise || !colour || !beacon || !dots) return;
-    const parts = [...mtn.querySelectorAll<HTMLElement>(".mtn-ch")];
-    const targets = parts.map((_, i) =>
-      parts.length > 1 ? i / (parts.length - 1) : 0,
-    );
+    if (!mtn || !art || !rise || !colour || !beacon) return;
+    // No observer (old browsers, tests without one): the summit, at once.
+    const canWatch = typeof IntersectionObserver !== "undefined";
     const still =
+      !canWatch ||
       matchMedia("(prefers-reduced-motion: reduce)").matches ||
       readMotionPaused();
     let box = art.getBoundingClientRect();
     let p = 0;
-    let active = -1;
     let frame = 0;
+    let played = false;
 
-    const draw = (value: number, chapter: number) => {
+    const draw = (value: number) => {
       p = clamp(value);
       // The window holds the colour picture: it slides up from below the
       // foot as p grows, and the picture slides down as much, so it stays.
@@ -131,91 +98,65 @@ export function MountainStory({
       const [x, y] = climbPoint(p);
       beacon.style.transform = `translate(${(x / 100) * box.width}px, ${(y / 100) * box.height}px) translate(-50%, -50%)`;
       mtn.toggleAttribute("data-top", p > 0.985);
-      if (chapter === active) return;
-      active = chapter;
-      mtn.toggleAttribute("data-late", chapter >= LATE);
-      parts.forEach((part, i) =>
-        part.toggleAttribute("data-on", i === chapter),
-      );
-      dots.style.setProperty("--i", String(chapter));
+      mtn.toggleAttribute("data-late", p >= LATE_AT);
     };
     const stop = () => {
       cancelAnimationFrame(frame);
       frame = 0;
     };
-    const travel = (chapter: number) => {
-      stop();
-      const from = p;
-      const to = targets[chapter];
-      const distance = Math.abs(to - from);
-      draw(from, chapter);
-      if (still || distance < 0.001) {
-        draw(to, chapter);
+    const climb = () => {
+      played = true;
+      observer?.disconnect();
+      if (still) {
+        draw(1);
         return;
       }
       const start = performance.now();
-      const duration = 1400 + distance * 3000;
       const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / duration);
-        draw(from + (to - from) * easeInOut(t), chapter);
+        const t = Math.min(1, (now - start) / CLIMB_MS);
+        draw(easeInOut(t));
         frame = t < 1 ? requestAnimationFrame(tick) : 0;
       };
       frame = requestAnimationFrame(tick);
     };
-    const settle = () => {
-      stop();
-      const chapter = chapterAt(mtn, pin);
-      draw(targets[chapter], chapter);
-    };
-    let queued = false;
-    const onScroll = () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(() => {
-        queued = false;
-        const chapter = chapterAt(mtn, pin);
-        if (chapter !== active) travel(chapter);
-      });
-    };
+    const observer = canWatch
+      ? new IntersectionObserver(
+          (entries) => {
+            if (!played && entries.some(inView)) climb();
+          },
+          { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5] },
+        )
+      : null;
     const onResize = () => {
       box = art.getBoundingClientRect();
-      settle();
+      draw(p);
     };
     const onHide = () => {
-      if (document.hidden && active >= 0) {
+      if (document.hidden && frame) {
         stop();
-        draw(targets[active], active);
+        draw(1);
       }
     };
 
+    // The light only makes sense with a script: it carries [hidden] until now.
+    beacon.hidden = false;
     mtn.setAttribute("data-armed", "");
-    // Arming makes the story taller, so a link to a later section
-    // (/about#faq) has already scrolled to its old place: go there again.
-    const target = location.hash
-      ? document.getElementById(hashId(location.hash))
-      : null;
-    if (
-      target &&
-      mtn.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING
-    ) {
-      target.scrollIntoView();
-    }
     box = art.getBoundingClientRect();
-    // Opened part-way down: show that chapter at once, no climb replay.
-    settle();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    if (still) draw(1);
+    else draw(0);
+    observer?.observe(mtn);
     window.addEventListener("resize", onResize, { passive: true });
     document.addEventListener("visibilitychange", onHide);
     return () => {
       stop();
-      window.removeEventListener("scroll", onScroll);
+      observer?.disconnect();
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onHide);
       mtn.removeAttribute("data-armed");
+      beacon.hidden = true;
     };
   }, []);
 
-  const last = chapters.length - 1;
   return (
     <section
       ref={ref}
@@ -223,7 +164,8 @@ export function MountainStory({
       className="mtn surface-paper"
       aria-labelledby="about-story-h"
     >
-      <div className="mtn-pin">
+      {/* Round 11: the heading and story rise in with the shared reveal. */}
+      <div className="mtn-pin" data-reveal="">
         <div className="wrap">
           <h2 id="about-story-h" className="mtn-h">
             {title.lead}
@@ -235,27 +177,13 @@ export function MountainStory({
           <div className="mtn-grid">
             <div className="mtn-story">
               <div className="mtn-chs">
-                {chapters.map(({ number, title: name, text }, i) => (
-                  <article key={number} className="mtn-ch">
-                    <h3 className="mtn-title">
-                      <span className="mtn-num">{number}</span> {name}
-                    </h3>
-                    <p className="mtn-text">{text}</p>
-                    {i === 0 && (
-                      <p className="mtn-cue" aria-hidden="true">
-                        {cue}
-                      </p>
-                    )}
-                    {i === last && (
-                      <div className="mtn-close">
-                        <p>
-                          <strong>{closing.line}</strong>
-                        </p>
-                        <p>{closing.tags}</p>
-                      </div>
-                    )}
-                  </article>
-                ))}
+                <article className="mtn-ch" data-on="">
+                  {paragraphs.map((text) => (
+                    <p key={text} className="mtn-text">
+                      {text}
+                    </p>
+                  ))}
+                </article>
               </div>
             </div>
             <div className="mtn-stage" aria-hidden="true">
@@ -286,7 +214,7 @@ export function MountainStory({
                     sizes="(width <= 800px) 90vw, 55vw"
                   />
                 </div>
-                <span className="mtn-beacon" />
+                <span className="mtn-beacon" hidden />
                 <Image
                   className="mtn-summit mtn-summit-grey"
                   src="/brand/x-mark.webp"
@@ -302,11 +230,6 @@ export function MountainStory({
                   alt=""
                 />
                 <span className="mtn-tag">{tagName}</span>
-              </div>
-              <div className="mtn-dots">
-                {chapters.map(({ number }) => (
-                  <span key={number} />
-                ))}
               </div>
             </div>
           </div>

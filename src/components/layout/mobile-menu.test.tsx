@@ -17,7 +17,7 @@ vi.mock("next/navigation", () => ({
 // give them at `width`, so the focus trap sees only what a browser would show.
 let width = 375;
 function shown(el: Element) {
-  if (el.closest("[hidden]")) return false;
+  if (el.closest("[hidden], [inert]")) return false;
   const css = el.classList;
   // Tailwind v4 compiles max-[641px] to (width < 641px), that is 640px and below.
   if (css.contains("max-[641px]:hidden")) return width >= 641;
@@ -94,7 +94,7 @@ const menuLinks = () =>
   [...(panel()?.querySelectorAll("a") ?? [])].filter(
     (a) => a.getClientRects().length > 0,
   );
-// The last focusable item: the second phone under Get in touch (lead, 2026-10-13).
+// The last focusable item: the second phone under Let's talk (lead, 2026-10-13).
 const LAST = "Ho Chi Minh City +84 908 107 552";
 const tab = (shiftKey = false) =>
   fireEvent.keyDown(document, { key: "Tab", shiftKey });
@@ -116,8 +116,8 @@ describe("MobileMenu", () => {
       "Tin tức",
       "Về chúng tôi",
       "Tuyển dụng",
-      "Liên hệ với chúng tôi",
-      "Plano +1 469 322 9899",
+      "Trao đổi với chúng tôi",
+      "Plano +1 (469) 322-9899",
       "TP. Hồ Chí Minh +84 908 107 552",
     ]);
     expect(links.map((a) => a.getAttribute("href"))).toEqual([
@@ -143,13 +143,13 @@ describe("MobileMenu", () => {
     expect(menuButton().className).toContain("size-11");
     // A 320px pill must not squeeze it below 44px (lead, 2026-10-13).
     expect(menuButton().className).toContain("shrink-0");
-    // Round like the nav links; Get in touch keeps it at the right edge.
+    // Round like the nav links; Let's talk keeps it at the right edge.
     expect(menuButton().className).toContain("rounded-full");
     expect(menuButton().className).not.toContain("ml-auto");
     expect(menuButton().className).not.toContain("border");
     expect(expanded()).toBe("false");
     expect(panel()?.tagName).toBe("NAV");
-    expect(panel()?.hasAttribute("hidden")).toBe(true);
+    expect(panel()?.hasAttribute("inert")).toBe(true);
   });
 
   it("keeps closed menu items out of reach", () => {
@@ -159,11 +159,11 @@ describe("MobileMenu", () => {
     expect(document.documentElement.style.overflow).toBe("");
   });
 
-  it("opens on click and lists the six pages, then Get in touch and both phones", () => {
+  it("opens on click and lists the six pages, then Let's talk and both phones", () => {
     render(<Header />);
     fireEvent.click(menuButton());
     expect(expanded()).toBe("true");
-    expect(panel()?.hasAttribute("hidden")).toBe(false);
+    expect(panel()?.hasAttribute("inert")).toBe(false);
     const nav = screen.getByRole("navigation", { name: "Main" });
     const hrefs = [...nav.querySelectorAll("a")].map((a) => [
       a.textContent,
@@ -176,8 +176,8 @@ describe("MobileMenu", () => {
       ["News", "/en/news"],
       ["About", "/en/about"],
       ["Careers", "/en/careers"],
-      ["Get in touch", "/en#contact"],
-      ["Plano +1 469 322 9899", "tel:+14693229899"],
+      ["Let's talk", "/en#contact"],
+      ["Plano +1 (469) 322-9899", "tel:+14693229899"],
       [LAST, "tel:+84908107552"],
     ]);
   });
@@ -187,7 +187,7 @@ describe("MobileMenu", () => {
     fireEvent.click(menuButton());
     fireEvent.click(menuButton());
     expect(expanded()).toBe("false");
-    expect(panel()?.hasAttribute("hidden")).toBe(true);
+    expect(panel()?.hasAttribute("inert")).toBe(true);
   });
 
   it("shows a cross while open and the list icon again when closed", () => {
@@ -199,7 +199,7 @@ describe("MobileMenu", () => {
     expect(icon()).toBe("list");
   });
 
-  it("ends with Get in touch and both phones at any width, no Book a demo", () => {
+  it("ends with Let's talk and both phones at any width, no Book a demo", () => {
     for (const w of [390, 640, 800]) {
       width = w;
       const { unmount } = render(<Header />);
@@ -211,8 +211,8 @@ describe("MobileMenu", () => {
         "News",
         "About",
         "Careers",
-        "Get in touch",
-        "Plano +1 469 322 9899",
+        "Let's talk",
+        "Plano +1 (469) 322-9899",
         LAST,
       ]);
       unmount();
@@ -382,10 +382,10 @@ describe("MobileMenu", () => {
     expect(expanded()).toBe("true");
   });
 
-  it("closes when Get in touch is activated", () => {
+  it("closes when Let's talk is activated", () => {
     render(<Header />);
     fireEvent.click(menuButton());
-    const contact = screen.getByRole("link", { name: "Get in touch" });
+    const contact = screen.getByRole("link", { name: "Let's talk" });
     contact.addEventListener("click", (event) => event.preventDefault());
     fireEvent.click(contact);
     expect(expanded()).toBe("false");

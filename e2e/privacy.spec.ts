@@ -11,8 +11,8 @@ test(
 
     expect(response.status()).toBe(200);
     // Each title word is its own span (the hero entrance): compare the text.
-    expect(text(html)).toContain("Privacy policy.");
-    expect(html).toContain("[Placeholder]");
+    expect(text(html)).toContain("Privacy policy");
+    expect(html).not.toContain("[Placeholder]");
     expect(html).not.toContain("<form");
   },
 );

@@ -136,17 +136,13 @@ describe("StoryPage", () => {
     expect(container.querySelector(".art-dek")).toBeNull();
   });
 
-  it("shows the sample note under the body of a [Placeholder] story", async () => {
+  it("shows no sample note, even under a [Placeholder] story", async () => {
     const { container } = await renderPage({
       ...story,
       title: "[Placeholder] Making the school day easier",
     });
 
-    const note = container.querySelector(".art-body > .sample");
-    expect(note?.textContent).toBe(
-      "[Placeholder] Sample story to show the layout. Replace with a real story before launch.",
-    );
-    expect(note?.previousElementSibling?.textContent).toBe("Second paragraph.");
+    expect(container.querySelector(".sample")).toBeNull();
   });
 
   it.each([

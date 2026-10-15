@@ -48,8 +48,8 @@ export const productDetails: Record<AppId, ProductDetail> = {
   "parent-hub": {
     madeFor: "Parents and families",
     features: [
-      { id: "gate", title: "Alerts when your child reaches the gate" },
-      { id: "scores", title: "Scores and comments as soon as published" },
+      { id: "gate", title: "Real-time arrival alerts" },
+      { id: "scores", title: "Published grades and feedback" },
       { id: "messages", title: "Two-way messages with teachers" },
       { id: "fees", title: "Fee payments with clear receipts" },
     ],
@@ -57,7 +57,7 @@ export const productDetails: Record<AppId, ProductDetail> = {
   "staff-hub": {
     madeFor: "Staff, teachers and school leaders",
     features: [
-      { id: "attendance", title: "Attendance and records in real time" },
+      { id: "attendance", title: "Attendance and student records" },
       { id: "classes", title: "Classes, timetables and grades" },
       {
         id: "parents",
@@ -69,8 +69,8 @@ export const productDetails: Record<AppId, ProductDetail> = {
   iot: {
     madeFor: "School operations and facilities teams",
     features: [
-      { id: "av", title: "Projectors, displays and sound" },
-      { id: "climate", title: "Lighting and climate on the timetable" },
+      { id: "av", title: "Centralized device management" },
+      { id: "climate", title: "Scheduled lighting and climate controls" },
       { id: "doors", title: "Doors and zones managed centrally" },
       { id: "energy", title: "Energy use across the campus" },
     ],
@@ -78,8 +78,8 @@ export const productDetails: Record<AppId, ProductDetail> = {
   "ai-tutor": {
     madeFor: "Students, with teachers alongside",
     features: [
-      { id: "diagnosis", title: "Skill-by-skill diagnosis" },
-      { id: "hints", title: "Step-by-step hints once you have tried" },
+      { id: "diagnosis", title: "Skill-level understanding checks" },
+      { id: "hints", title: "Personalized step-by-step hints" },
       { id: "mastery", title: "Mastery only when you can do it alone" },
     ],
   },
@@ -87,7 +87,7 @@ export const productDetails: Record<AppId, ProductDetail> = {
 
 export const journeyMap = {
   intro: {
-    title: "Built apart. Better together.",
+    title: "Built apart. Better together",
     lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
   },
 };
@@ -105,7 +105,7 @@ export type RoadStop = {
 };
 
 export const dayRoad = {
-  heading: "A day at school.",
+  heading: "A day at school",
   lede: "Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step.",
   start: "Start",
   finish: "Finish",
@@ -134,7 +134,7 @@ export const dayRoad = {
       id: "learn",
       time: "09:30",
       title: "Student learns",
-      text: "Students practise and ask questions with the AI Tutor.",
+      text: "Students practice and ask questions with the AI Tutor.",
       app: "ai-tutor",
     },
     {
@@ -201,8 +201,8 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
   "parent-hub": {
     madeFor: "Phụ huynh và gia đình",
     features: [
-      feature("parent-hub", 0, "Thông báo khi con qua cổng trường"),
-      feature("parent-hub", 1, "Điểm và nhận xét ngay khi công bố"),
+      feature("parent-hub", 0, "Thông báo đến trường theo thời gian thực"),
+      feature("parent-hub", 1, "Điểm số và nhận xét đã công bố"),
       feature("parent-hub", 2, "Nhắn tin hai chiều với giáo viên"),
       feature("parent-hub", 3, "Đóng học phí với biên lai rõ ràng"),
     ],
@@ -210,7 +210,7 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
   "staff-hub": {
     madeFor: "Nhân viên, giáo viên và lãnh đạo nhà trường",
     features: [
-      feature("staff-hub", 0, "Điểm danh và hồ sơ theo thời gian thực"),
+      feature("staff-hub", 0, "Điểm danh và hồ sơ học sinh"),
       feature("staff-hub", 1, "Lớp, thời khóa biểu và điểm số"),
       feature(
         "staff-hub",
@@ -223,8 +223,8 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
   iot: {
     madeFor: "Đội vận hành và cơ sở vật chất của trường",
     features: [
-      feature("iot", 0, "Máy chiếu, màn hình và âm thanh"),
-      feature("iot", 1, "Ánh sáng và điều hòa theo thời khóa biểu"),
+      feature("iot", 0, "Quản lý thiết bị tập trung"),
+      feature("iot", 1, "Điều khiển ánh sáng và điều hòa theo lịch"),
       feature("iot", 2, "Quản lý cửa và khu vực tập trung"),
       feature("iot", 3, "Mức dùng năng lượng toàn trường"),
     ],
@@ -232,8 +232,8 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
   "ai-tutor": {
     madeFor: "Học sinh, cùng giáo viên đồng hành",
     features: [
-      feature("ai-tutor", 0, "Chẩn đoán theo từng kỹ năng"),
-      feature("ai-tutor", 1, "Gợi ý từng bước sau khi đã thử"),
+      feature("ai-tutor", 0, "Kiểm tra mức độ hiểu theo từng kỹ năng"),
+      feature("ai-tutor", 1, "Gợi ý từng bước theo từng học sinh"),
       feature("ai-tutor", 2, "Chỉ thành thạo khi tự làm được"),
     ],
   },
@@ -241,7 +241,7 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
 
 export const journeyMapVi: typeof journeyMap = {
   intro: {
-    title: "Xây dựng riêng. Mạnh hơn khi kết nối.",
+    title: "Xây dựng riêng. Mạnh hơn khi kết nối",
     lede: "Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung.",
   },
 };
@@ -266,7 +266,7 @@ export type JourneyBoard = {
 };
 
 export const dayRoadVi: DayRoad = {
-  heading: "Một ngày ở trường.",
+  heading: "Một ngày ở trường",
   lede: "Theo chân một học sinh qua một ngày học điển hình để thấy học sinh, phụ huynh và nhà trường luôn được cập nhật và kết nối ở từng bước.",
   start: "Bắt đầu",
   finish: "Kết thúc",

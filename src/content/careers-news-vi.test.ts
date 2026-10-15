@@ -10,11 +10,9 @@ describe("Careers, job, news and privacy in Vietnamese", () => {
   it.each([
     ["careersMeta", careers.careersMeta, careers.careersMetaVi],
     ["careersHero", careers.careersHero, careers.careersHeroVi],
-    ["careersGrowth", careers.careersGrowth, careers.careersGrowthVi],
-    ["careersInside", careers.careersInside, careers.careersInsideVi],
-    ["careersValues", careers.careersValues, careers.careersValuesVi],
     ["careersRoles", careers.careersRoles, careers.careersRolesVi],
     ["careersLife", careers.careersLife, careers.careersLifeVi],
+    ["careersGain", careers.careersGain, careers.careersGainVi],
     ["jobMeta", job.jobMeta, job.jobMetaVi],
     ["jobHero", job.jobHero, job.jobHeroVi],
     ["jobDetails", job.jobDetails, job.jobDetailsVi],
@@ -37,9 +35,6 @@ describe("Careers, job, news and privacy in Vietnamese", () => {
           ? Object.values(value).flatMap(placeholders)
           : [];
     const pairs = [
-      [careers.careersValues, careers.careersValuesVi],
-      [careers.careersInside, careers.careersInsideVi],
-      [careers.careersGrowth, careers.careersGrowthVi],
       [careers.careersLife, careers.careersLifeVi],
       [news.newsStory, news.newsStoryVi],
       [privacy.PRIVACY, privacy.PRIVACY_VI],

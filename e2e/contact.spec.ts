@@ -184,7 +184,7 @@ for (const [device, viewport] of [
 }
 
 test.describe(
-  "Get in touch everywhere, no Demo page links",
+  "Let's talk everywhere, no Demo page links",
   { tag: "@a11y" },
   () => {
     test("no page links to the Demo page", async ({ page }) => {
@@ -202,14 +202,14 @@ test.describe(
       }
     });
 
-    test("the header's Get in touch opens the Home form from another page", async ({
+    test("the header's Let's talk opens the Home form from another page", async ({
       page,
     }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
       await page.goto("/en/about");
       await page
         .getByRole("banner")
-        .getByRole("link", { name: "Get in touch" })
+        .getByRole("link", { name: "Let's talk" })
         .click();
       await expect(page).toHaveURL(/\/en#contact$/);
       await expect(form(page)).toBeInViewport();
@@ -223,11 +223,13 @@ test.describe(
       await page.getByLabel("Work email").fill("lan@school.edu.vn");
       await page.getByRole("button", { name: "Get in touch" }).click();
       await expect(page).toHaveURL(/\/en#contact$/);
-      await expect(field(page, "Work email")).toHaveValue("lan@school.edu.vn");
+      await expect(field(page, "Email address")).toHaveValue(
+        "lan@school.edu.vn",
+      );
       expect(sent).toHaveLength(0);
     });
 
-    test("the phone menu's Get in touch closes the menu and opens the form", async ({
+    test("the phone menu's Let's talk closes the menu and opens the form", async ({
       page,
     }) => {
       await page.setViewportSize({ width: 390, height: 844 });
@@ -238,7 +240,7 @@ test.describe(
         "href",
         "tel:+14693229899",
       );
-      await nav.getByRole("link", { name: "Get in touch" }).click();
+      await nav.getByRole("link", { name: "Let's talk" }).click();
       await expect(page).toHaveURL(/\/en#contact$/);
       await expect(nav).toBeHidden();
       await expect(form(page)).toBeInViewport();

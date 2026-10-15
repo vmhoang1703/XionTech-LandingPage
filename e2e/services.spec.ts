@@ -1,7 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-const text = (html: string) => html.replaceAll(/<[^>]*>/g, "");
-
 test(
   "services page responds 200 with the H1, the eight service anchors, the outcomes and #process in the HTML without JavaScript",
   { tag: "@smoke" },
@@ -11,12 +9,12 @@ test(
 
     expect(response.status()).toBe(200);
     expect(html).toContain(
-      "<title>Software Outsourcing Vietnam | Product Engineering, AI, Low-code &amp; Cloud | XionTech</title>",
+      "<title>Software Outsourcing Vietnam | XionTech</title>",
     );
     // H1 is present in server-rendered HTML
-    // Each title word is its own span (the hero entrance): compare the text.
-    expect(text(html)).toContain("Software teams that");
-    expect(html).toContain("get IT done");
+    expect(html).toContain("You bring your");
+    expect(html).toContain("vision.");
+    expect(html).toContain("Let&#x27;s build together");
     // Eight service card IDs and section title, anchors exist without JavaScript
     expect(html).toContain('<article id="product-engineering"');
     expect(html).toContain('<article id="ai-analytics"');
@@ -26,14 +24,14 @@ test(
     expect(html).toContain('<article id="low-code"');
     expect(html).toContain('<article id="ai-solutions"');
     expect(html).toContain('<article id="cloud"');
-    expect(html).toContain("Eight services, one team.");
+    expect(html).toContain("Eight services, one team");
     // E-S2: outcomes, then the process with the prototype heading; no clocks, no email band
     expect(html).toContain("What can we help you achieve?");
     expect(html).toContain('<section id="process"');
     expect(html.indexOf('<section id="outcomes"')).toBeLessThan(
       html.indexOf('<section id="process"'),
     );
-    expect(html).toContain("Our 4-D process: from your request to launch.");
+    expect(html).toContain("Our 4-D process: from your request to launch");
     expect(html).not.toContain('class="clock-strip');
     expect(html).not.toContain('class="capture');
   },

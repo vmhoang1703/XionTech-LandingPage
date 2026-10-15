@@ -34,19 +34,24 @@ async function renderPage() {
 }
 
 describe("Careers page", () => {
-  it("renders the H1, #life and #roles", async () => {
+  it("renders the H1 and #roles, without Inside XionTech or the five values", async () => {
     vi.mocked(getOpenRoles).mockResolvedValue([]);
     const { container } = await renderPage();
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Stay curious. Build what’s next.",
+      "Stay curious. Build what’s next",
     );
-    expect(container.querySelector("section#life")).not.toBeNull();
+    expect(container.querySelector("section#life, section#culture")).toBeNull();
+    expect(
+      screen.queryByRole("heading", {
+        name: /Inside XionTech|Five things that shape/,
+      }),
+    ).toBeNull();
     expect(container.querySelector("section#roles")).not.toBeNull();
     expect(
       screen.getByRole("heading", {
         level: 2,
-        name: "Find your next challenge.",
+        name: "Find your next challenge",
       }),
     ).not.toBeNull();
   });
@@ -58,7 +63,7 @@ describe("Careers page", () => {
     const labels = [...container.querySelectorAll("section")].map((s) =>
       s.getAttribute("aria-labelledby"),
     );
-    expect(labels).toEqual(["careers-h1", "life-h", "cul-h", "roles-h"]);
+    expect(labels).toEqual(["careers-h1", "gain-h", "roles-h"]);
     expect(container.querySelector(".page-scene section:last-child")?.id).toBe(
       "roles",
     );
@@ -72,7 +77,7 @@ describe("Careers page", () => {
       "Why you’ll grow here.",
       "Why you'll grow here.",
       "A culture that goes beyond employment.",
-      "Life at XionTech.",
+      "Life at XionTech",
     ]) {
       expect(screen.queryByRole("heading", { name: gone })).toBeNull();
     }
@@ -124,12 +129,11 @@ describe("Careers page in Vietnamese", () => {
 
     expect(vi.mocked(getOpenRoles)).toHaveBeenCalledWith("vi");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Luôn tò mò. Xây dựng điều tiếp theo.",
+      "Luôn tò mò. Xây dựng điều tiếp theo",
     );
     expect(
-      screen.getByText("Năm điều định hình cách chúng tôi làm việc."),
+      screen.getByText("Những điều bạn nhận được trên hành trình"),
     ).toBeTruthy();
-    expect(screen.getByText("Bên trong XionTech.")).toBeTruthy();
     expect(screen.getByText("Xem và ứng tuyển")).toBeTruthy();
     expect(container.querySelector(".role-main small")?.textContent).toBe(
       "QA · Toàn thời gian",

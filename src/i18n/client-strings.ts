@@ -13,7 +13,6 @@ import type { Dictionaries } from "./translations";
 /** The dictionaries client components read; en and vi stay twins in their bundles. */
 export const CLIENT_KEYS = [
   "appTaglines",
-  "careersGrowth",
   "categoryLabels",
   "contactStrings",
   "dayRoad",

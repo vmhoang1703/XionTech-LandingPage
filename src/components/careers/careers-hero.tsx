@@ -1,14 +1,12 @@
-import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { careersHero, careersHeroVi } from "@/content/careers";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
-import { GrowthRing } from "./growth-ring";
 import { heroWords } from "@/components/sections/hero-words";
 
-// Server Component. Light hero beside the Growth Learning Model; no
-// breadcrumb (E-A7 CAP-1, prototype careers.html).
+// Server Component. Copy only (website copy v3: the growth learning model and
+// the "Explore open roles" button are gone). No breadcrumb (E-A7 CAP-1).
 export function CareersHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
-  const { title, lede, cta } = pickLocale(locale, {
+  const { title, lede } = pickLocale(locale, {
     en: careersHero,
     vi: careersHeroVi,
   });
@@ -20,19 +18,14 @@ export function CareersHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
       aria-labelledby="careers-h1"
     >
       <div aria-hidden="true" className="aurora" />
-      <div className="wrap ch-grid">
-        <div>
+      <div className="wrap ch-stack">
+        <div className="ch-copy">
           <h1 id="careers-h1">
             {t.words(title.first)} <br />
             {t.words(title.second)}
           </h1>
-          <p className="lede mt-4.5 mb-8">{lede}</p>
-          <a className="btn btn-primary" href={cta.href}>
-            {cta.label}
-            <ArrowRightIcon aria-hidden="true" />
-          </a>
+          <p className="lede mt-4.5">{lede}</p>
         </div>
-        <GrowthRing />
       </div>
     </section>
   );

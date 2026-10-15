@@ -22,7 +22,8 @@ export const APPS: readonly App[] = [
     fullName: "Parent Hub",
     badge: { kind: "text", text: "P-Hub" },
     anchor: "pxp",
-    tagline: "Keeps parents close to every school day, on their phone.",
+    tagline:
+      "Keep parents informed and connected to their child’s school life.",
   },
   {
     id: "staff-hub",
@@ -30,8 +31,7 @@ export const APPS: readonly App[] = [
     fullName: "Staff Hub",
     badge: { kind: "text", text: "S-Hub" },
     anchor: "sxp",
-    tagline:
-      "One workspace where staff, teachers and leaders share the same data.",
+    tagline: "Bring daily school operations into one connected workspace.",
   },
   {
     id: "iot",
@@ -39,8 +39,7 @@ export const APPS: readonly App[] = [
     fullName: "IoT Device Management",
     badge: { kind: "icon", icon: "Cpu" },
     anchor: "iot",
-    tagline:
-      "Run classroom devices, lighting, climate and access from one screen.",
+    tagline: "Simplify how schools manage connected campus technology.",
   },
   {
     id: "ai-tutor",
@@ -49,7 +48,7 @@ export const APPS: readonly App[] = [
     badge: { kind: "icon", icon: "Sparkle" },
     anchor: "ai-tutor",
     tagline:
-      "[Placeholder] Solve new problems on your own. Not just read solutions.",
+      "Help students understand mistakes and build confidence through guided learning.",
   },
 ];
 
@@ -61,11 +60,12 @@ export const APP_TAGLINES = Object.fromEntries(
 // Taglines in Vietnamese. App names and badges stay English (2026-10-13).
 export const appTaglinesVi: Record<AppId, string> = {
   "parent-hub":
-    "Giúp phụ huynh đồng hành cùng con mỗi ngày học, ngay trên điện thoại.",
+    "Giúp phụ huynh luôn nắm bắt thông tin và gắn kết với đời sống học đường của con.",
   "staff-hub":
-    "Một không gian làm việc để nhân viên, giáo viên và lãnh đạo dùng chung dữ liệu.",
-  iot: "Điều khiển thiết bị lớp học, ánh sáng, điều hòa và ra vào từ một màn hình.",
-  "ai-tutor": "[Placeholder] Tự giải bài mới. Không chỉ đọc lời giải.",
+    "Đưa mọi hoạt động vận hành hằng ngày của nhà trường vào một không gian làm việc kết nối.",
+  iot: "Đơn giản hóa cách nhà trường quản lý công nghệ trong khuôn viên kết nối.",
+  "ai-tutor":
+    "Giúp học sinh hiểu lỗi sai và tự tin hơn qua việc học có hướng dẫn.",
 };
 
 // The text a badge shows: its text, or the short name for an icon badge.

@@ -11,7 +11,7 @@ test(
 
     expect(response.status()).toBe(200);
     // Each title word is its own span (the hero entrance): compare the text.
-    expect(text(html)).toContain("Built apart. Better together.");
+    expect(text(html)).toContain("Built apart. Better together");
     expect(html).toContain('id="map"');
     // Inside the roadmap: between the map section's start and its end.
     const start = html.indexOf('id="map"');
@@ -96,7 +96,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Built apart. Better together.",
+        name: "Built apart. Better together",
       }),
     ).toBeVisible();
     await expect(roadmap(page)).toBeVisible();

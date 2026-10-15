@@ -1,21 +1,20 @@
 import "server-only";
 import {
-  aboutCapture,
+  aboutCta,
   aboutFaq,
   aboutHero,
   aboutMeta,
   aboutOffices,
   aboutStory,
+  aboutValuesHeading,
 } from "@/content/about";
 import { APP_TAGLINES } from "@/content/apps";
 import {
-  careersGrowth,
+  careersGain,
   careersHero,
-  careersInside,
   careersLife,
   careersMeta,
   careersRoles,
-  careersValues,
 } from "@/content/careers";
 import {
   homeApps,
@@ -85,21 +84,20 @@ import type { SiteMeta } from "./site-meta";
  */
 export function english() {
   return {
-    aboutCapture,
+    aboutCta,
     aboutFaq,
     aboutHero,
     aboutMeta,
     aboutOffices,
     aboutStory,
     aboutValues,
+    aboutValuesHeading,
     appTaglines: APP_TAGLINES,
-    careersGrowth,
+    careersGain,
     careersHero,
-    careersInside,
     careersLife,
     careersMeta,
     careersRoles,
-    careersValues,
     categoryLabels,
     contactErrors: CONTACT_ERROR_MESSAGES,
     contactStrings: CONTACT_STRINGS,

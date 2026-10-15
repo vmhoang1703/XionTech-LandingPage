@@ -21,16 +21,12 @@ test(
   },
 );
 
-test(
-  "demo page responds 200 with send request button",
-  { tag: "@smoke" },
-  async ({ request }) => {
-    const response = await request.get("/en/demo");
-
-    expect(response.status()).toBe(200);
-    expect(await response.text()).toContain("Send request");
-  },
-);
+test("/demo redirects home", { tag: "@smoke" }, async ({ request }) => {
+  for (const path of ["/demo", "/en/demo", "/vi/demo"]) {
+    const response = await request.get(path, { maxRedirects: 0 });
+    expect([307, 308]).toContain(response.status());
+  }
+});
 
 test(
   "contact route answers 200 to a filled honeypot without any secrets",

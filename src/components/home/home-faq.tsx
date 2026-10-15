@@ -3,7 +3,7 @@ import { homeFaq, homeFaqVi } from "@/content/home";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 
-// Home "Your questions, answered.": four About answers and a link to the rest.
+// Home "Before you reach out": four answers and a link to the About FAQ.
 export function HomeFaq({ locale = "en" }: Readonly<{ locale?: Locale }>) {
   const { title, lede, items, link } = pickLocale(locale, {
     en: homeFaq,

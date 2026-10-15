@@ -23,9 +23,9 @@ describe("shell dictionaries", () => {
       "Product Engineering",
       "AI-Driven Analytics",
       "Product Co-Creation",
-      "Staffing Service",
+      "Staffing Services",
       "Custom App Development",
-      "Low-code Solutions",
+      "Low-Code Solutions",
       "AI-Powered Solutions",
       "Cloud Computing",
     ];

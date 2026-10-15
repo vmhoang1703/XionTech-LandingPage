@@ -29,12 +29,12 @@ describe("SiteFooter", () => {
     expect(logo.closest("a")?.getAttribute("href")).toBe("/en");
     expect(
       within(footer).getByText(
-        "Education technology products and software delivery services for schools and businesses.",
+        "XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges.",
       ),
     ).toBeDefined();
   });
 
-  it("groups products by audience and hides Product updates on Demo day", () => {
+  it("lists the four products by name and hides Product updates on Demo day", () => {
     const products = column("Products");
 
     expect(
@@ -42,9 +42,10 @@ describe("SiteFooter", () => {
         .getAllByRole("link")
         .map((link) => [link.textContent, link.getAttribute("href")]),
     ).toEqual([
-      ["For schools", "/en/products#sxp"],
-      ["For students", "/en/products#ai-tutor"],
-      ["For parents", "/en/products#pxp"],
+      ["Parent Hub", "/en/products#pxp"],
+      ["Staff Hub", "/en/products#sxp"],
+      ["IoT Device Management", "/en/products#iot"],
+      ["AI Tutor", "/en/products#ai-tutor"],
     ]);
     expect(
       linkHrefs(screen.getByRole("contentinfo")).some((href) =>
@@ -82,45 +83,43 @@ describe("SiteFooter", () => {
     ]);
   });
 
-  it("lists the Vietnam Delivery Center before the US Delivery Center with icon rows", () => {
+  it("matches the About location cards, Plano first", () => {
     const offices = column("Offices");
-    const [vietnam, us] = Array.from(offices.querySelectorAll("address"));
+    const [us, vietnam] = Array.from(offices.querySelectorAll("address"));
 
-    expect(vietnam.querySelector("b")?.textContent).toBe(
-      "Vietnam Delivery Center",
-    );
-    expect(us.querySelector("b")?.textContent).toBe("US Delivery Center");
+    expect(
+      Array.from(offices.querySelectorAll("address small")).map(
+        (tag) => tag.textContent,
+      ),
+    ).toEqual(["US Delivery Center", "Vietnam Delivery Center"]);
     expect(
       Array.from(offices.querySelectorAll("address b")).map(
         (heading) => heading.textContent,
       ),
-    ).toEqual(["Vietnam Delivery Center", "US Delivery Center"]);
-    expect(vietnam.textContent).toContain(
-      "Floor 15, B1 Building279 Nguyen Tri Phuong StreetDien Hong Ward, Ho Chi Minh City, Vietnam",
-    );
+    ).toEqual(["Plano, Texas", "Ho Chi Minh City"]);
     expect(us.textContent).toContain(
       "7950 Legacy Drive, Suite 400Plano, Texas 75024, USA",
     );
-
-    expect(linkHrefs(vietnam)).toEqual(["tel:+84908107552"]);
+    expect(vietnam.textContent).toContain(
+      "Floor 15, B1 Building, 279 Nguyen Tri Phuong StreetDien Hong Ward, Ho Chi Minh City, Vietnam",
+    );
     expect(
-      within(vietnam).getByRole("link", { name: "(+84) 908 107 552" }),
-    ).toBeDefined();
-    expect(vietnam.querySelectorAll("svg[aria-hidden='true']")).toHaveLength(2);
-    expect(vietnam.querySelector("a[href^='mailto:']")).toBeNull();
-
-    expect(linkHrefs(us)).toEqual([
-      "tel:+14693229899",
-      "https://wa.me/14694399345",
-      "mailto:vinni.tran@newxion.com",
+      within(us)
+        .getAllByRole("link")
+        .map((link) => [link.textContent, link.getAttribute("href")]),
+    ).toEqual([
+      ["+1 (469) 322-9899", "tel:+14693229899"],
+      ["vinni.tran@newxion.com", "mailto:vinni.tran@newxion.com"],
     ]);
-    expect(us.querySelectorAll("svg[aria-hidden='true']")).toHaveLength(4);
-
-    const whatsapp = within(us).getByRole("link", {
-      name: "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
-    });
-    expect(whatsapp.getAttribute("target")).toBe("_blank");
-    expect(whatsapp.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(
+      within(vietnam)
+        .getAllByRole("link")
+        .map((link) => [link.textContent, link.getAttribute("href")]),
+    ).toEqual([
+      ["+84 908 107 552", "tel:+84908107552"],
+      ["vinni.tran@xiontechs.com", "mailto:vinni.tran@xiontechs.com"],
+    ]);
+    expect(us.querySelectorAll("svg[aria-hidden='true']")).toHaveLength(3);
   });
 
   it("puts an aria-hidden ridge above the footer content", () => {
@@ -129,7 +128,6 @@ describe("SiteFooter", () => {
 
     expect(ridge?.getAttribute("aria-hidden")).toBe("true");
     expect(ridge?.querySelector("svg")).not.toBeNull();
-    expect(footer.textContent).not.toContain("vinni.tran@xiontechs.com");
   });
 
   it("draws the sun behind the ridge, before the mountain in paint order", () => {
@@ -143,13 +141,22 @@ describe("SiteFooter", () => {
     expect(ridge?.firstElementChild?.textContent).toBe("");
   });
 
-  it("has two headquarters cards, then names the other two locations", () => {
+  it("has the two delivery-center cards, then the other offices in white", () => {
     const footer = renderFooter();
 
     expect(footer.querySelectorAll("address")).toHaveLength(2);
-    expect(footer.textContent).not.toMatch(/head office/i);
-    const more = within(footer).getByText("Also in Ha Noi and Da Nang.");
-    expect(more.previousElementSibling?.tagName).toBe("ADDRESS");
+    expect(footer.textContent).not.toMatch(/head office|placeholder/i);
+    const others = within(footer).getByText("Ha Noi, Da Nang");
+    expect(others.className).toContain("text-white");
+    expect(
+      footer.querySelectorAll("address")[1].compareDocumentPosition(others) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it("uses the header's SVG logo", () => {
+    const logo = within(renderFooter()).getByRole("img", { name: "XionTech" });
+    expect(logo.getAttribute("src")).toContain("/brand/xiontech-logo.svg");
   });
 
   it("shows the bottom bar with copyright, privacy link and the GET IT DONE tag", () => {
@@ -178,7 +185,7 @@ describe("SiteFooter", () => {
     const textLinks = within(footer)
       .getAllByRole("link")
       .filter((link) => !link.querySelector("img"));
-    expect(textLinks).toHaveLength(18);
+    expect(textLinks).toHaveLength(19);
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
       expect(link.className).toContain("pointer-coarse:min-h-11");
@@ -200,7 +207,7 @@ describe("SiteFooter", () => {
     expect(privacy.getAttribute("href")).toBe("/vi/privacy");
     expect(
       within(footer)
-        .getByRole("link", { name: "Cho nhà trường" })
+        .getByRole("link", { name: "Staff Hub" })
         .getAttribute("href"),
     ).toBe("/vi/products#sxp");
     expect(
@@ -212,19 +219,15 @@ describe("SiteFooter", () => {
 describe("SiteFooter in Vietnamese", () => {
   it("shows the Vietnamese offices note", () => {
     render(<SiteFooter locale="vi" />);
-    expect(
-      screen.getByText("Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng."),
-    ).toBeTruthy();
+    expect(screen.getByText("Hà Nội, Đà Nẵng")).toBeTruthy();
   });
 
-  it("names the WhatsApp link in Vietnamese", () => {
-    render(<SiteFooter locale="vi" />);
+  it("tags the two delivery centers in Vietnamese", () => {
+    const { container } = render(<SiteFooter locale="vi" />);
     expect(
-      screen
-        .getByRole("link", {
-          name: "WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)",
-        })
-        .getAttribute("href"),
-    ).toBe("https://wa.me/14694399345");
+      Array.from(container.querySelectorAll("address small")).map(
+        (tag) => tag.textContent,
+      ),
+    ).toEqual(["Trung tâm Phát triển Mỹ", "Trung tâm Phát triển Việt Nam"]);
   });
 });

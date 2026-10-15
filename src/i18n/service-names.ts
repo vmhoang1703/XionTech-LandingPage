@@ -3,9 +3,9 @@ export const SERVICE_NAMES = {
   productEngineering: "Product Engineering",
   aiAnalytics: "AI-Driven Analytics",
   coCreation: "Product Co-Creation",
-  staffing: "Staffing Service",
+  staffing: "Staffing Services",
   customApps: "Custom App Development",
-  lowCode: "Low-code Solutions",
+  lowCode: "Low-Code Solutions",
   aiSolutions: "AI-Powered Solutions",
   cloud: "Cloud Computing",
 };
