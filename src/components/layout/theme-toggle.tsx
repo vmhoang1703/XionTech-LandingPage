@@ -4,8 +4,8 @@ import { MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { useEffect, useSyncExternalStore } from "react";
 import {
   readTheme,
+  savedTheme,
   saveTheme,
-  THEME_KEY,
   type Theme,
 } from "@/lib/theme/theme-preference";
 
@@ -40,14 +40,11 @@ export function ThemeToggle({
     // Absent outside a browser (the test DOM); there is no setting to follow.
     const query = globalThis.matchMedia?.("(prefers-color-scheme: dark)");
     if (!query) return;
+    // A click this visit (kept on <html>, also when storage is blocked) or a
+    // saved choice wins over the setting.
     const onChange = () => {
-      let saved: string | null = null;
-      try {
-        saved = localStorage.getItem(THEME_KEY);
-      } catch {
-        // Storage is blocked: treat it as no saved choice.
-      }
-      if (!saved) apply(query.matches ? "dark" : "light");
+      if (root().dataset.themeChosen !== undefined || savedTheme()) return;
+      apply(query.matches ? "dark" : "light");
     };
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);
@@ -57,9 +54,9 @@ export function ThemeToggle({
   const toggle = () => {
     const next: Theme = dark ? "light" : "dark";
     apply(next);
+    root().dataset.themeChosen = "";
     saveTheme(next);
   };
-  const Icon = dark ? SunIcon : MoonIcon;
 
   return (
     <button
@@ -69,7 +66,10 @@ export function ThemeToggle({
       onClick={toggle}
       className={variant === "header" ? "theme-toggle" : "theme-toggle-row"}
     >
-      <Icon aria-hidden="true" weight={dark ? "fill" : "regular"} />
+      {/* Both icons render; CSS shows the one for <html data-theme>, so the
+          icon is right before hydration too. */}
+      <MoonIcon aria-hidden="true" className="tt-moon" />
+      <SunIcon aria-hidden="true" weight="fill" className="tt-sun" />
       {variant === "menu" && <span>{label}</span>}
     </button>
   );

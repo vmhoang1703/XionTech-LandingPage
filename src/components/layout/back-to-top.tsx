@@ -18,9 +18,14 @@ export function BackToTop({ label }: Readonly<{ label: string }>) {
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
+    // Also on load (a restored scroll or a #link opens part-way down) and on
+    // resize, which changes how far a screen is.
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(frame);
     };
   }, []);

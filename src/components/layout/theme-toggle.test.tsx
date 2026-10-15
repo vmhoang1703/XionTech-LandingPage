@@ -34,6 +34,7 @@ beforeEach(() => {
 afterEach(() => {
   vi.unstubAllGlobals();
   delete document.documentElement.dataset.theme;
+  delete document.documentElement.dataset.themeChosen;
 });
 
 const button = () => screen.getByRole("button", { name: "Dark mode" });
@@ -74,6 +75,35 @@ describe("ThemeToggle", () => {
     await settle();
     expect(document.documentElement.dataset.theme).toBe("dark");
     expect(button().getAttribute("aria-pressed")).toBe("true");
+  });
+
+  it("treats an invalid saved value as no choice and follows the setting", async () => {
+    localStorage.setItem(THEME_KEY, "sepia");
+    render(<ThemeToggle label="Dark mode" variant="header" />);
+    act(() => osChanges(true));
+    await settle();
+    expect(document.documentElement.dataset.theme).toBe("dark");
+  });
+
+  it("keeps a click made this visit when storage is blocked and the setting changes", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    render(<ThemeToggle label="Dark mode" variant="header" />);
+    fireEvent.click(button());
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    act(() => osChanges(false));
+    expect(document.documentElement.dataset.theme).toBe("dark");
+    vi.restoreAllMocks();
+  });
+
+  it("renders both icons, so CSS can show the right one before hydration", () => {
+    render(<ThemeToggle label="Dark mode" variant="header" />);
+    expect(button().querySelector(".tt-moon")).not.toBeNull();
+    expect(button().querySelector(".tt-sun")).not.toBeNull();
   });
 
   it("keeps a saved choice when the colour scheme changes", () => {

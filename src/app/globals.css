@@ -9145,6 +9145,16 @@ html[data-theme="dark"] #process .flow .step4 {
   }
 }
 
+/* Both toggle icons render; the theme on <html> picks one, before hydration too. */
+html[data-theme="dark"] .tt-moon,
+html:not([data-theme="dark"]) .tt-sun {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle:focus-visible {
+  outline-color: var(--color-focus);
+}
+
 .theme-toggle-row {
   display: flex;
   align-items: center;
@@ -9210,29 +9220,15 @@ html[data-theme="dark"] #process .flow .step4 {
   outline-offset: 3px;
 }
 
+/* Not over the open phone menu. */
+html:has(.mm-sheet[data-open]) .back-to-top {
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 640px) {
   .back-to-top {
     right: 16px;
     bottom: 16px;
-  }
-}
-
-/* No JavaScript: follow the colour-scheme setting with the same tokens. */
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme]) {
-    color-scheme: dark;
-    --color-paper: #12213f;
-    --color-page: #0b1730;
-    --color-mist: #0f1d38;
-    --color-mist-end: #0f1d38;
-    --color-ice: #1e4178;
-    --color-heading: #ffffff;
-    --color-text: #eef2f9;
-    --color-muted: #c5d0e3;
-    --color-border: #ffffff24;
-    --color-link: #ffcf06;
-    --color-focus: #ffc000;
-    --color-amber-text: #ffd84a;
-    background: var(--color-page);
   }
 }

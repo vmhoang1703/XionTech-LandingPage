@@ -52,8 +52,8 @@ describe("SiteHeader", () => {
     const pill = header.querySelector(".nav-pill") as HTMLElement;
     expect(pill.className).toContain("pointer-events-auto");
     expect(pill.className).toContain("rounded-full");
-    // The pill and the theme toggle share one centred row, 1180px + 52px wide.
-    expect(pill.parentElement?.className).toContain("max-w-[1232px]");
+    // The pill keeps its 1180px; the theme toggle (48px + 8px gap) sits beside it.
+    expect(pill.parentElement?.className).toContain("max-w-[1236px]");
   });
 
   it("renders the primary nav inside a header", () => {

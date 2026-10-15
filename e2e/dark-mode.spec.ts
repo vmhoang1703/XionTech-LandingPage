@@ -108,4 +108,17 @@ test.describe("back to top", { tag: "@a11y" }, () => {
     await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     await expect(page.locator("main#main")).toBeFocused();
   });
+
+  test("steps aside while the phone menu is open", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/en");
+    await page.evaluate(() =>
+      window.scrollTo({ top: 2400, behavior: "instant" }),
+    );
+    const button = page.locator(".back-to-top");
+    await expect(button).toHaveAttribute("data-shown");
+    await page.getByRole("button", { name: "Menu" }).click();
+    await expect(button).toHaveCSS("opacity", "0");
+    await expect(button).toHaveCSS("pointer-events", "none");
+  });
 });

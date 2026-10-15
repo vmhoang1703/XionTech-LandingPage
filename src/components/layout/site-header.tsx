@@ -27,7 +27,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
       >
         {/* The dark-mode toggle sits outside the pill, on its right, on desktop
             (2026-10-15); on smaller screens it is a row in the menu sheet. */}
-        <div className="mx-auto flex max-w-[1232px] items-center gap-2">
+        <div className="mx-auto flex max-w-[1236px] items-center gap-2">
           <div className="nav-pill pointer-events-auto relative flex h-[var(--spacing-header-height)] min-w-0 flex-1 items-center gap-[22px] rounded-full border border-white/80 bg-white/95 pr-3 pl-4 shadow-[0_14px_34px_-16px_rgb(11_23_48/0.32),0_1px_2px_rgb(11_23_48/0.06)] backdrop-blur-[18px] backdrop-saturate-[170%] max-[1080px]:h-14 max-[1080px]:gap-2 max-[1080px]:pr-1.5 max-[1080px]:pl-2.5 max-[479px]:gap-1 min-[1081px]:max-[1279.98px]:gap-3">
             <Link
               href={localeHref(locale, "/")}

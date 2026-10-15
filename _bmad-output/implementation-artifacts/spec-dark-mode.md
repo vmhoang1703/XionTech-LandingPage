@@ -2,7 +2,7 @@
 title: 'Dark mode for the whole site'
 type: 'feature'
 created: '2026-10-15'
-status: 'in-progress'
+status: 'in-review'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: '15ed030922de8d6eb666ad41e2a98a7b5f03c569'
@@ -55,7 +55,7 @@ context:
 | Saved choice beats OS | `xt-theme=light`, OS dark | light | N/A |
 | OS changes, no saved choice | OS switches while open | page follows the OS | N/A |
 | Storage blocked | localStorage throws | follows the OS; toggle still works for the visit | try/catch, no error |
-| No JavaScript | script disabled | `@media (prefers-color-scheme: dark)` fallback applies the dark tokens | N/A |
+| No JavaScript | script disabled | the normal light design (Hoang Vu, 2026-10-15 code review: a partial no-JS dark copy put white text on the white pill; a full copy would double the dark CSS) | N/A |
 | Locale switch / client nav | change language or page | theme kept, no flash | N/A |
 
 </frozen-after-approval>
@@ -98,17 +98,17 @@ context:
 **Execution:**
 - [x] `src/lib/theme/theme-preference.ts` (+ test) -- `readTheme()`, `saveTheme()`, `THEME_SCRIPT` (inline string) -- one source for the script and the toggle
   - red: `src/lib/theme/theme-preference.test.ts` -- saved choice beats OS; blocked storage falls back to OS
-- [ ] `src/app/[locale]/layout.tsx`, `src/app/global-not-found.tsx` -- inline script in `<head>`, `suppressHydrationWarning` -- no flash
+- [x] `src/app/[locale]/layout.tsx`, `src/app/global-not-found.tsx` -- inline script in `<head>`, `suppressHydrationWarning` -- no flash
   - red: `src/app/[locale]/layout.test.tsx` -- the head contains the theme script
-- [ ] `src/components/layout/theme-toggle.tsx` (+ test), `site-header.tsx`, `mobile-menu.tsx` -- sun/moon button with `aria-pressed`, follows the OS until clicked; desktop: separate button right of the pill; phone: row in the Menu sheet
+- [x] `src/components/layout/theme-toggle.tsx` (+ test), `site-header.tsx`, `mobile-menu.tsx` -- sun/moon button with `aria-pressed`, follows the OS until clicked; desktop: separate button right of the pill; phone: row in the Menu sheet
   - red: `theme-toggle.test.tsx` -- click flips `data-theme`, saves, and updates `aria-pressed`
-- [ ] `src/i18n/shell.ts` + `docs/translations/*-review.md` -- toggle labels in six locales
+- [x] `src/i18n/shell.ts` + `docs/translations/*-review.md` -- toggle labels in six locales
   - red: `src/i18n/shell.test.ts` -- every locale has the theme labels
-- [ ] `src/app/globals.css` -- dark token block, no-JS media copy, header pill stays white, navy bands lifted with an edge, hotspot overrides
-- [ ] `src/components/careers/gain-cards.tsx`, `three-layer-stack.tsx` -- literals switched to variables
-- [ ] `e2e/dark-mode.spec.ts` (`@a11y`) -- every page type in dark: axe colour-contrast passes, no flash (`data-theme` set at DOMContentLoaded), toggle kept across navigation
+- [x] `src/app/globals.css` -- dark token block, no-JS media copy, header pill stays white, navy bands lifted with an edge, hotspot overrides
+- [x] `src/components/careers/gain-cards.tsx`, `three-layer-stack.tsx` -- literals switched to variables
+- [x] `e2e/dark-mode.spec.ts` (`@a11y`) -- every page type in dark: axe colour-contrast passes, no flash (`data-theme` set at DOMContentLoaded), toggle kept across navigation
   - red: same file -- dark home has no contrast violations
-- [ ] `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md`, `AGENTS.md`, `docs/ai-log.md` -- record the override and the dark palette
+- [x] `_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md`, `AGENTS.md`, `docs/ai-log.md` -- record the override and the dark palette
 
 **Acceptance Criteria:**
 - Given any page in light mode, when compared with `develop` screenshots at 1280 and 390px, then they match.
@@ -131,3 +131,18 @@ context:
 - Lighthouse mobile Home is not lower than on `develop`.
 
 - 2026-10-15: user asked for "quick dev, no testing for now" after task 1. Tasks 2-8 were built directly without the per-task loop. Open: 8 unit tests in `site-header.test.tsx` and `mobile-menu.test.tsx` expect the old header (pill as the header's direct child, phone links last in the menu); `e2e/dark-mode.spec.ts` not written; step-04 review not run. Dark pages checked by axe colour-contrast and screenshots only.
+
+- 2026-10-15, full test pass and code review: the 8 header and menu tests were updated; `theme-toggle.test.tsx`, `back-to-top.test.tsx` and `e2e/dark-mode.spec.ts` were added. Label deviation: one `theme.label` per locale ("Dark mode") with `aria-pressed`, the standard toggle-button pattern, instead of `toDark`/`toLight`. A 404 page adds the head script on the client, where it does not run, so the toggle sets the theme on mount there. Deferred: the SVG literals in `gain-cards.tsx` and `three-layer-stack.tsx` (they looked right in dark screenshots; not checked closely), and the `#ffc000` highlight rule.
+
+## Review Triage Log
+
+- decision (no-JS dark incomplete) -> Hoang Vu chose light design without JS; fallback block removed.
+- patch (medium) toggle listener treated invalid stored values as saved, and lost a click when storage was blocked -> `savedTheme()` helper and `data-theme-chosen` on `<html>`.
+- patch (medium) header pill 1176px in light mode -> row max-width 1236px keeps the pill at 1180px.
+- patch (medium) back to top over the open phone menu -> hidden while `.mm-sheet[data-open]`.
+- patch (medium) back to top hidden when the page opens scrolled -> checks on mount and on resize.
+- patch (medium) toggle focus ring navy on the dark page -> amber in dark.
+- patch (low) toggle icon wrong before hydration -> both icons render, CSS picks one.
+- patch (low) stale spec, ledger and AI log; machine paths in the ledger -> updated.
+- defer: SVG literals (gain cards, three-layer stack); `#ffc000` highlight; dark e2e runs only in `test:a11y` (repo policy).
+- rejected: Contact missing from the dark e2e (false: Contact is the Home section, covered by `/en`); translation pages missing (false: committed, left out of the review diff); palette repeated in four places, two OS listeners, no back to top on the global 404, bare `matchMedia` in the script, cream strip on the contact band, no `shell.test` case, test placement (low).

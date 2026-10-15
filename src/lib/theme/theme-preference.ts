@@ -4,16 +4,24 @@ export type Theme = "dark" | "light";
 
 const DARK_QUERY = "(prefers-color-scheme: dark)";
 
-// The saved choice wins. With no saved choice, or when storage is blocked,
-// the visitor's colour-scheme setting decides.
-export function readTheme(): Theme {
+/** The saved choice, or null when nothing valid is saved or storage is blocked. */
+export function savedTheme(): Theme | null {
   try {
     const stored = localStorage.getItem(THEME_KEY);
     if (stored === "dark" || stored === "light") return stored;
   } catch {
-    // Storage is blocked: fall through to the colour-scheme setting.
+    // Storage is blocked: no saved choice.
   }
-  return globalThis.matchMedia?.(DARK_QUERY).matches ? "dark" : "light";
+  return null;
+}
+
+// The saved choice wins. With no saved choice, or when storage is blocked,
+// the visitor's colour-scheme setting decides.
+export function readTheme(): Theme {
+  return (
+    savedTheme() ??
+    (globalThis.matchMedia?.(DARK_QUERY).matches ? "dark" : "light")
+  );
 }
 
 export function saveTheme(theme: Theme): void {

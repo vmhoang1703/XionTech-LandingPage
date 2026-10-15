@@ -57,6 +57,27 @@ describe("BackToTop", () => {
     expect(button().hasAttribute("data-shown")).toBe(false);
   });
 
+  it("shows at once when the page opens part-way down", () => {
+    scrollToY(3000);
+    render(<BackToTop label="Back to top" />);
+    expect(button().hasAttribute("data-shown")).toBe(true);
+  });
+
+  it("checks again on resize", () => {
+    scrollToY(900);
+    render(<BackToTop label="Back to top" />);
+    expect(button().hasAttribute("data-shown")).toBe(true);
+    Object.defineProperty(window, "innerHeight", {
+      value: 2000,
+      configurable: true,
+    });
+    act(() => {
+      window.dispatchEvent(new Event("resize"));
+    });
+    act(runFrames);
+    expect(button().hasAttribute("data-shown")).toBe(false);
+  });
+
   it("goes to the top and moves focus to main on click", () => {
     const main = document.createElement("main");
     main.id = "main";
