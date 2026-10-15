@@ -6,14 +6,14 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 - Check meaning, tone, spelling and natural wording, and that nothing is added, left out or made stronger than the English (no new claims, numbers or promises).
 - `[Placeholder]` stays in front of a placeholder text, and `{n}` is a number filled in by the site; keep both.
-- **Privacy** is legal text translated by an AI. It needs the lead's and a legal reviewer's sign-off before it is published.
+- **Privacy**: only the page strings (title, contents label, English-language note) are translated; the policy itself is shown in English on every locale.
 - News stories and job posts from the CMS are not translated; they show in English on purpose.
 
 **Kept in English on purpose:** names of products, services and apps, tech tags (Web, Mobile, AI/ML, Power Platform, n8n …), XionTech and the tagline “Get IT done”.
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ko.ts` and open a pull request. `Where` is `ko:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 462 strings.
+**Total:** 450 strings.
 
 ## About
 
@@ -90,13 +90,12 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Apps (Home and Products)
 
-4 strings.
+3 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
 | `ko:appTaglines.parent-hub` | Keep parents informed and connected to their child’s school life. | 학부모가 자녀의 학교생활을 늘 알고, 가까이 연결되도록 돕습니다. |
 | `ko:appTaglines.staff-hub` | Bring daily school operations into one connected workspace. | 학교의 일상 운영을 하나로 연결된 업무 공간에 모읍니다. |
-| `ko:appTaglines.iot` | Simplify how schools manage connected campus technology. | 캠퍼스의 커넥티드 기술 관리를 간편하게 만듭니다. |
 | `ko:appTaglines.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | 안내형 학습으로 학생이 실수를 이해하고 자신감을 키우도록 돕습니다. |
 
 ## Careers
@@ -269,24 +268,21 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Home
 
-77 strings.
+74 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
 | `ko:homeApps.title` | One connected school | 하나로 연결된 학교 |
-| `ko:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | 학부모, 교직원, 학생, 캠퍼스 운영을 위한 연결된 솔루션으로 학교 공동체 전체를 하나로 모읍니다. 모두 일상적인 학교 운영을 간편하게 하도록 설계되었습니다. |
+| `ko:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff and students; all designed to simplify everyday school management. | 학부모, 교직원, 학생을 위한 연결된 솔루션으로 학교 공동체 전체를 하나로 모읍니다. 모두 일상적인 학교 운영을 간편하게 하도록 설계되었습니다. |
 | `ko:homeApps.apps[0].madeFor` | Parents and families | 학부모와 가족 |
 | `ko:homeApps.apps[0].features[0]` | Real-time arrival alerts | 실시간 도착 알림 |
 | `ko:homeApps.apps[0].features[1]` | Published grades and feedback | 공개된 성적과 피드백 |
 | `ko:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 교직원, 교사, 학교 관리자 |
 | `ko:homeApps.apps[1].features[0]` | Attendance and student records | 출결과 학생 기록 |
 | `ko:homeApps.apps[1].features[1]` | Classes, timetables and grades | 학급, 시간표, 성적 |
-| `ko:homeApps.apps[2].madeFor` | School operations and facilities teams | 시설 운영 및 유지보수 팀 |
-| `ko:homeApps.apps[2].features[0]` | Centralized device management | 기기 통합 관리 |
-| `ko:homeApps.apps[2].features[1]` | Scheduled lighting and climate controls | 조명과 냉난방 예약 제어 |
-| `ko:homeApps.apps[3].madeFor` | Students, with teachers alongside | 교사와 함께하는 학생 |
-| `ko:homeApps.apps[3].features[0]` | Skill-level understanding checks | 기술별 이해도 점검 |
-| `ko:homeApps.apps[3].features[1]` | Personalized step-by-step hints | 학생에게 맞춘 단계별 힌트 |
+| `ko:homeApps.apps[2].madeFor` | Students, with teachers alongside | 교사와 함께하는 학생 |
+| `ko:homeApps.apps[2].features[0]` | Skill-level understanding checks | 기술별 이해도 점검 |
+| `ko:homeApps.apps[2].features[1]` | Personalized step-by-step hints | 학생에게 맞춘 단계별 힌트 |
 | `ko:homeApps.link.label` | Explore products | 제품 살펴보기 |
 | `ko:homeCapabilities.title` | Why XionTech | 왜 XionTech인가 |
 | `ko:homeCapabilities.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | 우리는 직접 제품을 만들고, 그 실전 경험을 고객에게 전합니다. 산업 이해, 엔지니어링 책임, AI 지원 개발을 결합합니다. |
@@ -328,7 +324,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:homeHero.motion.play` | Play motion | 애니메이션 재생 |
 | `ko:homeHero.cta.label` | Get in touch | 문의하기 |
 | `ko:homeMeta.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| 학교 플랫폼과 베트남 소프트웨어 아웃소싱 |
-| `ko:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech는 AI 기반 제품과 맞춤형 솔루션을 만듭니다. 학교 플랫폼(Parent Hub, Staff Hub, IoT, AI Tutor)과 베트남 소프트웨어 아웃소싱. |
+| `ko:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam. | XionTech는 AI 기반 제품과 맞춤형 솔루션을 만듭니다. 학교 플랫폼(Parent Hub, Staff Hub, AI Tutor)과 베트남 소프트웨어 아웃소싱. |
 | `ko:homeOutcomes.title` | What can we help you achieve? | 무엇을 이루도록 도와드릴까요? |
 | `ko:homeOutcomes.lede` | Pick one service or combine several. We shape the team around your product. | 하나의 서비스를 선택하거나 여러 서비스를 조합하세요. 귀사의 제품에 맞춰 팀을 구성합니다. |
 | `ko:homeOutcomes.items[0].title` | Build a new digital product | 새로운 디지털 제품 만들기 |
@@ -391,16 +387,17 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Products
 
-34 strings.
+30 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
 | `ko:journeyBoard.details` | Details | 상세 |
+| `ko:journeyBoard.viewDetails` | View details: {name} | 자세히 보기: {name} |
 | `ko:journeyBoard.lanes[0].label` | Student | 학생 |
 | `ko:journeyBoard.lanes[1].label` | Teacher and staff | 교사와 교직원 |
 | `ko:journeyBoard.lanes[2].label` | Parent | 학부모 |
 | `ko:journeyMap.intro.title` | Built apart. Better together | 따로 만들고, 함께 더 좋게 |
-| `ko:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 학교 커뮤니티를 위한 연결된 제품군으로, 학부모, 학습, 교직원 업무, 캠퍼스 기술을 하나의 생태계로 묶습니다. |
+| `ko:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem. | 학교 커뮤니티를 위한 연결된 제품군으로, 학부모, 학습, 교직원 업무를 하나의 생태계로 묶습니다. |
 | `ko:productDetails.parent-hub.madeFor` | Parents and families | 학부모와 가족 |
 | `ko:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | 실시간 도착 알림 |
 | `ko:productDetails.parent-hub.features[1].title` | Published grades and feedback | 공개된 성적과 피드백 |
@@ -411,19 +408,14 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 학급, 시간표, 성적 |
 | `ko:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub를 통한 학부모 메시지 |
 | `ko:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 오늘의 우선순위를 보여 주는 관리자 대시보드 |
-| `ko:productDetails.iot.madeFor` | School operations and facilities teams | 시설 운영 및 유지보수 팀 |
-| `ko:productDetails.iot.features[0].title` | Centralized device management | 기기 통합 관리 |
-| `ko:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 조명과 냉난방 예약 제어 |
-| `ko:productDetails.iot.features[2].title` | Doors and zones managed centrally | 중앙에서 관리하는 출입문과 구역 |
-| `ko:productDetails.iot.features[3].title` | Energy use across the campus | 캠퍼스 전체의 에너지 사용량 |
 | `ko:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 교사와 함께하는 학생 |
 | `ko:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | 기술별 이해도 점검 |
 | `ko:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 학생에게 맞춘 단계별 힌트 |
 | `ko:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 혼자 해낼 수 있을 때에만 인정되는 숙달 |
 | `ko:productRoad.start` | Start | 출발 |
 | `ko:productRoad.finish` | Finish | 도착 |
-| `ko:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 학교용 앱: Parent Hub, Staff Hub, IoT, AI Tutor \| XionTech |
-| `ko:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 학부모를 위한 Parent Hub, 교직원·교사·관리자를 위한 Staff Hub, 캠퍼스를 위한 IoT Device Management. XionTech의 연결된 학교 앱. |
+| `ko:productsMeta.title` | School Apps: Parent Hub, Staff Hub & AI Tutor \| XionTech | 학교용 앱: Parent Hub, Staff Hub, AI Tutor \| XionTech |
+| `ko:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and AI Tutor for students. Connected school apps from XionTech. | 학부모를 위한 Parent Hub, 교직원·교사·관리자를 위한 Staff Hub, 학생을 위한 AI Tutor. XionTech의 연결된 학교 앱. |
 | `ko:productsShowcase.madeFor` | Made for | 대상 |
 | `ko:productsShowcase.featuresHeading` | Features | 기능 |
 | `ko:roadDialog.close` | Close | 닫기 |
@@ -432,24 +424,19 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Privacy
 
-14 strings.
+9 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
 | `ko:privacy.metaTitle` | Privacy Policy \| XionTech | 개인정보 처리방침 \| XionTech |
-| `ko:privacy.metaDescription` | How XionTech uses the personal data you share through our forms. | 양식을 통해 공유하신 개인 데이터를 XionTech가 어떻게 사용하는지 안내합니다. |
+| `ko:privacy.metaDescription` | How XionTech Joint Stock Company collects, uses and protects your information when you use our digital products, applications, websites and IT services. | XionTech Joint Stock Company가 디지털 제품, 애플리케이션, 웹사이트 및 IT 서비스 이용 시 귀하의 정보를 어떻게 수집, 사용 및 보호하는지 안내합니다. |
 | `ko:privacy.breadcrumbLabel` | Breadcrumb | 탐색 경로 |
 | `ko:privacy.breadcrumbHome` | Home | 홈 |
-| `ko:privacy.breadcrumbCurrent`<br>`ko:privacy.title` | Privacy policy | 개인정보 처리방침 |
+| `ko:privacy.breadcrumbCurrent` | Privacy policy | 개인정보 처리방침 |
+| `ko:privacy.title` | Privacy Policy | 개인정보 처리방침 |
 | `ko:privacy.bodyLabel` | Policy | 방침 |
-| `ko:privacy.retentionDecided`<br>`ko:privacy.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | 문의 및 데모 요청, 제출된 이메일 주소, 입사 지원서와 이력서는 기간 제한 없이 보관됩니다. |
-| `ko:privacy.sections[0].heading` | What we collect | 수집하는 정보 |
-| `ko:privacy.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | 이메일, 이름, 전화번호, 소속, 직책, 그리고 양식을 통해 보내시는 모든 내용(채용에 지원하시는 경우 이력서 포함). |
-| `ko:privacy.sections[1].heading` | How we use it | 이용 목적 |
-| `ko:privacy.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | 문의에 답변하거나 입사 지원서와 이력서를 검토하는 데에만 이용합니다. |
-| `ko:privacy.sections[2].heading` | Who we share it with | 공유 대상 |
-| `ko:privacy.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | 당사를 대신해 데이터를 처리하는 서비스 제공업체: Gmail(양식 메시지를 회사 받은편지함으로 전송), Upstash(해시된 값으로 만든 요청 제한 카운터), Vercel(웹사이트 호스팅 및 이력서 비공개 저장), Google Fonts(일본어, 한국어, 중국어 페이지용 글꼴). |
-| `ko:privacy.sections[3].heading` | How long we keep it | 보관 기간 |
+| `ko:privacy.tocLabel` | On this page | 이 페이지의 내용 |
+| `ko:privacy.languageNote` | This policy is provided in English. | 이 방침은 영어로 제공됩니다. |
 
 ## Process (Home and Services)
 
@@ -544,7 +531,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Site shell: header, footer, language menu, 404
 
-25 strings.
+26 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
@@ -570,6 +557,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:shell.footer.aboutUs` | About us | 회사 소개 |
 | `ko:shell.footer.offices` | Offices | 사무소 |
 | `ko:shell.footer.privacy` | Privacy policy | 개인정보 처리방침 |
+| `ko:shell.footer.copyright` | Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved. | Copyright © 2026 XionTech Joint Stock Company. 모든 권리 보유. |
 | `ko:shell.notFound.metaTitle` | Page not found \| XionTech | 페이지를 찾을 수 없습니다 \| XionTech |
 | `ko:shell.notFound.title` | Page not found | 페이지를 찾을 수 없습니다 |
 | `ko:shell.notFound.primary` | Back to Home | 홈으로 돌아가기 |

@@ -2,10 +2,10 @@
 // Icons are Phosphor icon names (strings), so this file has no React import.
 
 export type AppBadge =
-  { kind: "text"; text: string } | { kind: "icon"; icon: "Cpu" | "Sparkle" };
+  { kind: "text"; text: string } | { kind: "icon"; icon: "Sparkle" };
 
 export type App = {
-  id: "parent-hub" | "staff-hub" | "iot" | "ai-tutor";
+  id: "parent-hub" | "staff-hub" | "ai-tutor";
   shortName: string;
   fullName: string;
   badge: AppBadge;
@@ -34,14 +34,6 @@ export const APPS: readonly App[] = [
     tagline: "Bring daily school operations into one connected workspace.",
   },
   {
-    id: "iot",
-    shortName: "IoT",
-    fullName: "IoT Device Management",
-    badge: { kind: "icon", icon: "Cpu" },
-    anchor: "iot",
-    tagline: "Simplify how schools manage connected campus technology.",
-  },
-  {
     id: "ai-tutor",
     shortName: "AI Tutor",
     fullName: "AI Tutor",
@@ -63,7 +55,6 @@ export const appTaglinesVi: Record<AppId, string> = {
     "Giúp phụ huynh luôn nắm bắt thông tin và gắn kết với đời sống học đường của con.",
   "staff-hub":
     "Đưa mọi hoạt động vận hành hằng ngày của nhà trường vào một không gian làm việc kết nối.",
-  iot: "Đơn giản hóa cách nhà trường quản lý công nghệ trong khuôn viên kết nối.",
   "ai-tutor":
     "Giúp học sinh hiểu lỗi sai và tự tin hơn qua việc học có hướng dẫn.",
 };

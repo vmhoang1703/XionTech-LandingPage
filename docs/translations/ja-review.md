@@ -6,14 +6,14 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 - Check meaning, tone, spelling and natural wording, and that nothing is added, left out or made stronger than the English (no new claims, numbers or promises).
 - `[Placeholder]` stays in front of a placeholder text, and `{n}` is a number filled in by the site; keep both.
-- **Privacy** is legal text translated by an AI. It needs the lead's and a legal reviewer's sign-off before it is published.
+- **Privacy**: only the page strings (title, contents label, English-language note) are translated; the policy itself is shown in English on every locale.
 - News stories and job posts from the CMS are not translated; they show in English on purpose.
 
 **Kept in English on purpose:** names of products, services and apps, tech tags (Web, Mobile, AI/ML, Power Platform, n8n …), XionTech and the tagline “Get IT done”. The CV upload label stays “CV”.
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ja.ts` and open a pull request. `Where` is `ja:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 462 strings.
+**Total:** 450 strings.
 
 ## About
 
@@ -90,13 +90,12 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Apps (Home and Products)
 
-4 strings.
+3 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
 | `ja:appTaglines.parent-hub` | Keep parents informed and connected to their child’s school life. | 保護者がお子さまの学校生活をいつでも把握し、つながっていられます。 |
 | `ja:appTaglines.staff-hub` | Bring daily school operations into one connected workspace. | 学校の日々の運営を、ひとつのつながったワークスペースにまとめます。 |
-| `ja:appTaglines.iot` | Simplify how schools manage connected campus technology. | キャンパスのコネクテッド技術の管理をシンプルにします。 |
 | `ja:appTaglines.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | ガイド付きの学習で、生徒が間違いを理解し自信をつけられるよう支えます。 |
 
 ## Careers
@@ -269,24 +268,21 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Home
 
-77 strings.
+74 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
 | `ja:homeApps.title` | One connected school | つながる学校 |
-| `ja:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | 保護者、教職員、生徒、キャンパス運営のためのコネクテッドなソリューションで、学校コミュニティ全体をひとつにします。すべて、日々の学校運営をシンプルにするために設計されています。 |
+| `ja:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff and students; all designed to simplify everyday school management. | 保護者、教職員、生徒のためのコネクテッドなソリューションで、学校コミュニティ全体をひとつにします。すべて、日々の学校運営をシンプルにするために設計されています。 |
 | `ja:homeApps.apps[0].madeFor` | Parents and families | 保護者とご家族 |
 | `ja:homeApps.apps[0].features[0]` | Real-time arrival alerts | リアルタイムの到着通知 |
 | `ja:homeApps.apps[0].features[1]` | Published grades and feedback | 公開された成績とフィードバック |
 | `ja:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 職員、教員、学校管理職 |
 | `ja:homeApps.apps[1].features[0]` | Attendance and student records | 出欠と生徒の記録 |
 | `ja:homeApps.apps[1].features[1]` | Classes, timetables and grades | クラス、時間割、成績 |
-| `ja:homeApps.apps[2].madeFor` | School operations and facilities teams | 学校の運営・施設管理チーム |
-| `ja:homeApps.apps[2].features[0]` | Centralized device management | 機器の一元管理 |
-| `ja:homeApps.apps[2].features[1]` | Scheduled lighting and climate controls | 照明と空調のスケジュール制御 |
-| `ja:homeApps.apps[3].madeFor` | Students, with teachers alongside | 生徒と、寄り添う教員 |
-| `ja:homeApps.apps[3].features[0]` | Skill-level understanding checks | スキルごとの理解度チェック |
-| `ja:homeApps.apps[3].features[1]` | Personalized step-by-step hints | 一人ひとりに合わせたステップごとのヒント |
+| `ja:homeApps.apps[2].madeFor` | Students, with teachers alongside | 生徒と、寄り添う教員 |
+| `ja:homeApps.apps[2].features[0]` | Skill-level understanding checks | スキルごとの理解度チェック |
+| `ja:homeApps.apps[2].features[1]` | Personalized step-by-step hints | 一人ひとりに合わせたステップごとのヒント |
 | `ja:homeApps.link.label` | Explore products | 製品を見る |
 | `ja:homeCapabilities.title` | Why XionTech | XionTech が選ばれる理由 |
 | `ja:homeCapabilities.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | 私たちは自ら製品をつくり、その実践的な経験をお客様に還元しています。業界の理解、エンジニアリングへの責任、AI 支援開発を組み合わせています。 |
@@ -328,7 +324,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:homeHero.motion.play` | Play motion | アニメーションを再生 |
 | `ja:homeHero.cta.label` | Get in touch | お問い合わせ |
 | `ja:homeMeta.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| ベトナムの学校向けプラットフォームとソフトウェア開発委託 |
-| `ja:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech は AI を活用した製品とカスタムソリューションを開発しています。学校向けプラットフォーム（Parent Hub、Staff Hub、IoT、AI Tutor）とベトナムからのソフトウェア開発委託。 |
+| `ja:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam. | XionTech は AI を活用した製品とカスタムソリューションを開発しています。学校向けプラットフォーム（Parent Hub、Staff Hub、AI Tutor）とベトナムからのソフトウェア開発委託。 |
 | `ja:homeOutcomes.title` | What can we help you achieve? | どのような目標の実現をお手伝いできますか？ |
 | `ja:homeOutcomes.lede` | Pick one service or combine several. We shape the team around your product. | ひとつのサービスを選ぶことも、複数を組み合わせることもできます。お客様のプロダクトに合わせてチームを編成します。 |
 | `ja:homeOutcomes.items[0].title` | Build a new digital product | 新しいデジタル製品をつくる |
@@ -390,16 +386,17 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Products
 
-34 strings.
+30 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
 | `ja:journeyBoard.details` | Details | 詳細 |
+| `ja:journeyBoard.viewDetails` | View details: {name} | 詳細を見る：{name} |
 | `ja:journeyBoard.lanes[0].label` | Student | 生徒 |
 | `ja:journeyBoard.lanes[1].label` | Teacher and staff | 教員と職員 |
 | `ja:journeyBoard.lanes[2].label` | Parent | 保護者 |
 | `ja:journeyMap.intro.title` | Built apart. Better together | 別々につくり、一緒にもっと良く |
-| `ja:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 学校コミュニティのためのつながったスイート。保護者、学び、職員の業務、キャンパスのテクノロジーをひとつのエコシステムにまとめます。 |
+| `ja:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem. | 学校コミュニティのためのつながったスイート。保護者、学び、職員の業務をひとつのエコシステムにまとめます。 |
 | `ja:productDetails.parent-hub.madeFor` | Parents and families | 保護者とご家族 |
 | `ja:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | リアルタイムの到着通知 |
 | `ja:productDetails.parent-hub.features[1].title` | Published grades and feedback | 公開された成績とフィードバック |
@@ -410,19 +407,14 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | クラス、時間割、成績 |
 | `ja:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub を通じた保護者へのメッセージ |
 | `ja:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 管理職向けの今日の優先事項ダッシュボード |
-| `ja:productDetails.iot.madeFor` | School operations and facilities teams | 学校の運営・施設管理チーム |
-| `ja:productDetails.iot.features[0].title` | Centralized device management | 機器の一元管理 |
-| `ja:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明と空調のスケジュール制御 |
-| `ja:productDetails.iot.features[2].title` | Doors and zones managed centrally | ドアとエリアを一元管理 |
-| `ja:productDetails.iot.features[3].title` | Energy use across the campus | キャンパス全体のエネルギー使用量 |
 | `ja:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 生徒と、寄り添う教員 |
 | `ja:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | スキルごとの理解度チェック |
 | `ja:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 一人ひとりに合わせたステップごとのヒント |
 | `ja:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 一人でできるようになって初めて習得 |
 | `ja:productRoad.start` | Start | スタート |
 | `ja:productRoad.finish` | Finish | ゴール |
-| `ja:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校向けアプリ：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
-| `ja:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 保護者向けの Parent Hub、職員・教員・管理職向けの Staff Hub、キャンパス向けの IoT Device Management。XionTech のつながる学校向けアプリ。 |
+| `ja:productsMeta.title` | School Apps: Parent Hub, Staff Hub & AI Tutor \| XionTech | 学校向けアプリ：Parent Hub、Staff Hub、AI Tutor \| XionTech |
+| `ja:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and AI Tutor for students. Connected school apps from XionTech. | 保護者向けの Parent Hub、職員・教員・管理職向けの Staff Hub、生徒向けの AI Tutor。XionTech のつながる学校向けアプリ。 |
 | `ja:productsShowcase.madeFor` | Made for | 対象 |
 | `ja:productsShowcase.featuresHeading` | Features | 機能 |
 | `ja:roadDialog.close` | Close | 閉じる |
@@ -431,24 +423,19 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Privacy
 
-14 strings.
+9 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
 | `ja:privacy.metaTitle` | Privacy Policy \| XionTech | プライバシーポリシー \| XionTech |
-| `ja:privacy.metaDescription` | How XionTech uses the personal data you share through our forms. | フォームを通じてご提供いただいた個人データを XionTech がどのように利用するかについて。 |
+| `ja:privacy.metaDescription` | How XionTech Joint Stock Company collects, uses and protects your information when you use our digital products, applications, websites and IT services. | XionTech Joint Stock Company が、当社のデジタル製品、アプリケーション、ウェブサイト、IT サービスのご利用時にお客様の情報をどのように収集、利用、保護するかについて。 |
 | `ja:privacy.breadcrumbLabel` | Breadcrumb | パンくずリスト |
 | `ja:privacy.breadcrumbHome` | Home | ホーム |
-| `ja:privacy.breadcrumbCurrent`<br>`ja:privacy.title` | Privacy policy | プライバシーポリシー |
+| `ja:privacy.breadcrumbCurrent` | Privacy policy | プライバシーポリシー |
+| `ja:privacy.title` | Privacy Policy | プライバシーポリシー |
 | `ja:privacy.bodyLabel` | Policy | ポリシー |
-| `ja:privacy.retentionDecided`<br>`ja:privacy.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | お問い合わせとデモのご依頼、メールアドレスの送信、応募書類と CV は、期限を設けずに保管します。 |
-| `ja:privacy.sections[0].heading` | What we collect | 収集する情報 |
-| `ja:privacy.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | メールアドレス、氏名、電話番号、所属組織、役職、そしてフォームから送信されたすべての内容（求人に応募される場合は履歴書を含む）。 |
-| `ja:privacy.sections[1].heading` | How we use it | 利用目的 |
-| `ja:privacy.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | お問い合わせへの回答、または応募書類と履歴書の検討にのみ利用します。 |
-| `ja:privacy.sections[2].heading` | Who we share it with | 共有先 |
-| `ja:privacy.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | 当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを会社の受信トレイに送信）、Upstash（ハッシュ化した値から作るレート制限カウンター）、Vercel（ウェブサイトのホスティングと履歴書の非公開保存）、Google Fonts（日本語、韓国語、中国語ページのフォント）。 |
-| `ja:privacy.sections[3].heading` | How long we keep it | 保存期間 |
+| `ja:privacy.tocLabel` | On this page | このページの内容 |
+| `ja:privacy.languageNote` | This policy is provided in English. | 本ポリシーは英語で提供されています。 |
 
 ## Process (Home and Services)
 
@@ -544,7 +531,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Site shell: header, footer, language menu, 404
 
-25 strings.
+26 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
@@ -570,6 +557,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:shell.footer.aboutUs` | About us | 会社概要 |
 | `ja:shell.footer.offices` | Offices | 拠点 |
 | `ja:shell.footer.privacy` | Privacy policy | プライバシーポリシー |
+| `ja:shell.footer.copyright` | Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved. | Copyright © 2026 XionTech Joint Stock Company. 無断転載を禁じます。 |
 | `ja:shell.notFound.metaTitle` | Page not found \| XionTech | ページが見つかりません \| XionTech |
 | `ja:shell.notFound.title` | Page not found | ページが見つかりません |
 | `ja:shell.notFound.primary` | Back to Home | ホームへ |

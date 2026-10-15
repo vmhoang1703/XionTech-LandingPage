@@ -20,7 +20,6 @@ import {
 import { jobDetails, jobForm } from "@/content/job";
 import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
-import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
 import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
@@ -110,15 +109,6 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
       title,
     })),
   },
-  iot: {
-    madeFor: "Équipes d’exploitation et de maintenance des établissements",
-    features: [
-      "Gestion centralisée des équipements",
-      "Éclairage et climatisation programmés",
-      "Portes et zones gérées de façon centralisée",
-      "Consommation d’énergie sur tout le campus",
-    ].map((title, i) => ({ ...productDetails.iot.features[i], title })),
-  },
   "ai-tutor": {
     madeFor: "Les élèves, accompagnés de leurs enseignants",
     features: [
@@ -134,7 +124,6 @@ const APP_TAGLINES: Record<AppId, string> = {
     "Les parents restent informés et proches de la vie scolaire de leur enfant.",
   "staff-hub":
     "Réunissez la gestion quotidienne de l’école dans un espace de travail connecté.",
-  iot: "Simplifiez la gestion des technologies connectées du campus.",
   "ai-tutor":
     "Aider les élèves à comprendre leurs erreurs et à prendre confiance grâce à un apprentissage guidé.",
 };
@@ -272,12 +261,9 @@ const PROCESS_FLOW: Dictionaries["processFlow"] = {
 };
 
 const JOURNEY_LEDE =
-  "Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage, la gestion du personnel et la technologie du campus dans un même écosystème.";
+  "Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage et la gestion du personnel dans un même écosystème.";
 
 const PRIVACY_META_TITLE = "Politique de confidentialité | XionTech";
-
-const RETENTION_DECIDED =
-  "Les demandes de contact et de démo, les adresses e-mail envoyées, les candidatures et les CV sont conservés sans limite de durée.";
 
 const ERRORS = {
   name: "Veuillez saisir votre nom.",
@@ -291,7 +277,6 @@ const ERRORS = {
 
 const parentHub = appById("parent-hub");
 const staffHub = appById("staff-hub");
-const iotApp = appById("iot");
 const aiTutor = appById("ai-tutor");
 
 export const fr: Dictionaries = {
@@ -577,7 +562,7 @@ export const fr: Dictionaries = {
   hcmc: hcmcFr,
   homeApps: {
     title: "Une école connectée",
-    lede: "Rassemblez toute la communauté scolaire avec des solutions connectées pour les parents, le personnel, les élèves et la gestion du campus, toutes pensées pour simplifier la gestion quotidienne de l’école.",
+    lede: "Rassemblez toute la communauté scolaire avec des solutions connectées pour les parents, le personnel et les élèves, toutes pensées pour simplifier la gestion quotidienne de l’école.",
     apps: homeApps.apps.map((card) => ({
       ...card,
       madeFor: PRODUCT_DETAILS[card.app.id].madeFor,
@@ -649,7 +634,7 @@ export const fr: Dictionaries = {
     title:
       "XionTech | Plateformes scolaires et externalisation logicielle au Vietnam",
     description:
-      "XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure : plateformes scolaires (Parent Hub, Staff Hub, IoT, AI Tutor) et externalisation logicielle depuis le Vietnam.",
+      "XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure : plateformes scolaires (Parent Hub, Staff Hub, AI Tutor) et externalisation logicielle depuis le Vietnam.",
   },
   homeNews: {
     heading: "Les dernières nouvelles de XionTech",
@@ -729,6 +714,7 @@ export const fr: Dictionaries = {
   journeyBoard: {
     ...journeyBoard,
     details: "Détails",
+    viewDetails: "Voir les détails : {name}",
     lanes: ["Élève", "Enseignants et personnel", "Parents"].map((label, i) => ({
       ...journeyBoard.lanes[i],
       label,
@@ -770,41 +756,14 @@ export const fr: Dictionaries = {
   privacy: {
     metaTitle: PRIVACY_META_TITLE,
     metaDescription:
-      "Comment XionTech utilise les données personnelles que vous transmettez via nos formulaires.",
+      "Comment XionTech Joint Stock Company collecte, utilise et protège vos informations lorsque vous utilisez nos produits numériques, applications, sites web et services informatiques.",
     breadcrumbLabel: BREADCRUMB,
     breadcrumbHome: HOME,
     breadcrumbCurrent: PRIVACY_LINK,
     title: PRIVACY_LINK,
     bodyLabel: "Politique",
-    retentionDecided: RETENTION_DECIDED,
-    sections: [
-      {
-        id: PRIVACY.sections[0].id,
-        heading: "Ce que nous collectons",
-        paragraphs: [
-          "E-mail, nom, numéro de téléphone, organisation, fonction et tout ce que vous envoyez via nos formulaires, y compris un CV si vous postulez à un emploi.",
-        ],
-      },
-      {
-        id: PRIVACY.sections[1].id,
-        heading: "Comment nous les utilisons",
-        paragraphs: [
-          "Uniquement pour répondre à votre demande ou étudier votre candidature et votre CV.",
-        ],
-      },
-      {
-        id: PRIVACY.sections[2].id,
-        heading: "Avec qui nous les partageons",
-        paragraphs: [
-          "Les prestataires qui traitent des données pour notre compte : Gmail (envoie les messages des formulaires à la boîte de réception de l’entreprise), Upstash (compteurs de limitation de débit créés à partir de valeurs hachées), Vercel (hébergement du site web et stockage privé des CV), Google Fonts (polices des pages en japonais, coréen et chinois).",
-        ],
-      },
-      {
-        id: PRIVACY.sections[3].id,
-        heading: "Durée de conservation",
-        paragraphs: [RETENTION_DECIDED],
-      },
-    ],
+    tocLabel: "Sur cette page",
+    languageNote: "Cette politique est fournie en anglais.",
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
@@ -814,8 +773,8 @@ export const fr: Dictionaries = {
     finish: "Arrivée",
   },
   productsMeta: {
-    title: `Applications scolaires : ${parentHub.shortName}, ${staffHub.shortName}, ${iotApp.shortName} et ${aiTutor.shortName} | XionTech`,
-    description: `${parentHub.shortName} pour les parents, ${staffHub.shortName} pour le personnel, les enseignants et la direction, et ${iotApp.fullName} pour les campus. Des applications scolaires connectées signées XionTech.`,
+    title: `Applications scolaires : ${parentHub.shortName}, ${staffHub.shortName} et ${aiTutor.shortName} | XionTech`,
+    description: `${parentHub.shortName} pour les parents, ${staffHub.shortName} pour le personnel, les enseignants et la direction, et ${aiTutor.shortName} pour les élèves. Des applications scolaires connectées signées XionTech.`,
   },
   productsShowcase: {
     madeFor: "Conçu pour",
@@ -940,6 +899,8 @@ export const fr: Dictionaries = {
       aboutUs: "À propos de nous",
       offices: "Bureaux",
       privacy: PRIVACY_LINK,
+      copyright:
+        "Copyright © 2026 XionTech Joint Stock Company. Tous droits réservés.",
     },
     notFound: {
       metaTitle: "Page introuvable | XionTech",

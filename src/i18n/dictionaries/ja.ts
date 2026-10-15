@@ -20,7 +20,6 @@ import {
 import { jobDetails, jobForm } from "@/content/job";
 import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
-import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
 import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
@@ -112,15 +111,6 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
       title,
     })),
   },
-  iot: {
-    madeFor: "学校の運営・施設管理チーム",
-    features: [
-      "機器の一元管理",
-      "照明と空調のスケジュール制御",
-      "ドアとエリアを一元管理",
-      "キャンパス全体のエネルギー使用量",
-    ].map((title, i) => ({ ...productDetails.iot.features[i], title })),
-  },
   "ai-tutor": {
     madeFor: "生徒と、寄り添う教員",
     features: [
@@ -136,7 +126,6 @@ const APP_TAGLINES: Record<AppId, string> = {
     "保護者がお子さまの学校生活をいつでも把握し、つながっていられます。",
   "staff-hub":
     "学校の日々の運営を、ひとつのつながったワークスペースにまとめます。",
-  iot: "キャンパスのコネクテッド技術の管理をシンプルにします。",
   "ai-tutor":
     "ガイド付きの学習で、生徒が間違いを理解し自信をつけられるよう支えます。",
 };
@@ -273,12 +262,9 @@ const PROCESS_FLOW: Dictionaries["processFlow"] = {
 };
 
 const JOURNEY_LEDE =
-  "学校コミュニティのためのつながったスイート。保護者、学び、職員の業務、キャンパスのテクノロジーをひとつのエコシステムにまとめます。";
+  "学校コミュニティのためのつながったスイート。保護者、学び、職員の業務をひとつのエコシステムにまとめます。";
 
 const PRIVACY_META_TITLE = "プライバシーポリシー | XionTech";
-
-const RETENTION_DECIDED =
-  "お問い合わせとデモのご依頼、メールアドレスの送信、応募書類と CV は、期限を設けずに保管します。";
 
 const ERRORS = {
   name: "お名前を入力してください。",
@@ -569,7 +555,7 @@ export const ja: Dictionaries = {
   hcmc: hcmcJa,
   homeApps: {
     title: "つながる学校",
-    lede: "保護者、教職員、生徒、キャンパス運営のためのコネクテッドなソリューションで、学校コミュニティ全体をひとつにします。すべて、日々の学校運営をシンプルにするために設計されています。",
+    lede: "保護者、教職員、生徒のためのコネクテッドなソリューションで、学校コミュニティ全体をひとつにします。すべて、日々の学校運営をシンプルにするために設計されています。",
     apps: homeApps.apps.map((card) => ({
       ...card,
       madeFor: PRODUCT_DETAILS[card.app.id].madeFor,
@@ -640,7 +626,7 @@ export const ja: Dictionaries = {
     title:
       "XionTech | ベトナムの学校向けプラットフォームとソフトウェア開発委託",
     description:
-      "XionTech は AI を活用した製品とカスタムソリューションを開発しています。学校向けプラットフォーム（Parent Hub、Staff Hub、IoT、AI Tutor）とベトナムからのソフトウェア開発委託。",
+      "XionTech は AI を活用した製品とカスタムソリューションを開発しています。学校向けプラットフォーム（Parent Hub、Staff Hub、AI Tutor）とベトナムからのソフトウェア開発委託。",
   },
   homeNews: {
     heading: "XionTech の最新情報",
@@ -717,6 +703,7 @@ export const ja: Dictionaries = {
   journeyBoard: {
     ...journeyBoard,
     details: "詳細",
+    viewDetails: "詳細を見る：{name}",
     lanes: ["生徒", "教員と職員", "保護者"].map((label, i) => ({
       ...journeyBoard.lanes[i],
       label,
@@ -755,41 +742,14 @@ export const ja: Dictionaries = {
   privacy: {
     metaTitle: PRIVACY_META_TITLE,
     metaDescription:
-      "フォームを通じてご提供いただいた個人データを XionTech がどのように利用するかについて。",
+      "XionTech Joint Stock Company が、当社のデジタル製品、アプリケーション、ウェブサイト、IT サービスのご利用時にお客様の情報をどのように収集、利用、保護するかについて。",
     breadcrumbLabel: "パンくずリスト",
     breadcrumbHome: "ホーム",
     breadcrumbCurrent: PRIVACY_LINK,
     title: PRIVACY_LINK,
     bodyLabel: "ポリシー",
-    retentionDecided: RETENTION_DECIDED,
-    sections: [
-      {
-        id: PRIVACY.sections[0].id,
-        heading: "収集する情報",
-        paragraphs: [
-          "メールアドレス、氏名、電話番号、所属組織、役職、そしてフォームから送信されたすべての内容（求人に応募される場合は履歴書を含む）。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[1].id,
-        heading: "利用目的",
-        paragraphs: [
-          "お問い合わせへの回答、または応募書類と履歴書の検討にのみ利用します。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[2].id,
-        heading: "共有先",
-        paragraphs: [
-          "当社に代わってデータを処理するサービス提供者：Gmail（フォームのメッセージを会社の受信トレイに送信）、Upstash（ハッシュ化した値から作るレート制限カウンター）、Vercel（ウェブサイトのホスティングと履歴書の非公開保存）、Google Fonts（日本語、韓国語、中国語ページのフォント）。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[3].id,
-        heading: "保存期間",
-        paragraphs: [RETENTION_DECIDED],
-      },
-    ],
+    tocLabel: "このページの内容",
+    languageNote: "本ポリシーは英語で提供されています。",
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
@@ -799,8 +759,8 @@ export const ja: Dictionaries = {
     finish: "ゴール",
   },
   productsMeta: {
-    title: `学校向けアプリ：${appById("parent-hub").shortName}、${appById("staff-hub").shortName}、${appById("iot").shortName}、${appById("ai-tutor").shortName} | XionTech`,
-    description: `保護者向けの ${appById("parent-hub").shortName}、職員・教員・管理職向けの ${appById("staff-hub").shortName}、キャンパス向けの ${appById("iot").fullName}。XionTech のつながる学校向けアプリ。`,
+    title: `学校向けアプリ：${appById("parent-hub").shortName}、${appById("staff-hub").shortName}、${appById("ai-tutor").shortName} | XionTech`,
+    description: `保護者向けの ${appById("parent-hub").shortName}、職員・教員・管理職向けの ${appById("staff-hub").shortName}、生徒向けの ${appById("ai-tutor").shortName}。XionTech のつながる学校向けアプリ。`,
   },
   productsShowcase: { madeFor: "対象", featuresHeading: "機能" },
   roadDialog: { close: "閉じる", previous: "前へ", next: "次へ" },
@@ -919,6 +879,8 @@ export const ja: Dictionaries = {
       aboutUs: "会社概要",
       offices: "拠点",
       privacy: PRIVACY_LINK,
+      copyright:
+        "Copyright © 2026 XionTech Joint Stock Company. 無断転載を禁じます。",
     },
     notFound: {
       metaTitle: "ページが見つかりません | XionTech",

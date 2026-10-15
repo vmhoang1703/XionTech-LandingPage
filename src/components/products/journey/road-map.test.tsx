@@ -6,6 +6,7 @@ import { APPS, appById } from "@/content/apps";
 import { productRoad, productRoadVi } from "@/content/products";
 import { siteFooter } from "@/content/site-footer";
 import { globalsCss } from "@/test-utils/css-classes";
+import { stopShares } from "./road-geometry";
 import { RoadMap } from "./road-map";
 
 const COUNT = productRoad.stops.length;
@@ -348,11 +349,11 @@ describe("RoadMap draw-in", () => {
 
   it("hides only under armed, never by opacity, and moves only once shown", () => {
     const rules = roadmapRules();
-    // Text keeps full contrast: only the decorative hills set an opacity.
+    // Text keeps full contrast: only the decorative hills and tree shading set an opacity.
     for (const { selector } of rules.filter(({ body }) =>
       /(?<![\w-])opacity:/.test(body),
     )) {
-      expect(selector).toMatch(/^\.rm-hill/);
+      expect(selector).toMatch(/^\.rm-(hill|tree)/);
     }
     const drawIn = rules.filter(({ selector }) =>
       /\[data-reveal|\[data-in\]/.test(selector),
@@ -506,6 +507,55 @@ describe("RoadMap selection", () => {
     expect(selected(container)).toEqual([2]);
   });
 
+  it("makes every dot a named button that opens its stop, with next and previous", () => {
+    const { container } = render(<RoadMap />);
+    const dots = Array.from(
+      container.querySelectorAll<HTMLButtonElement>("button.rm-pin"),
+    );
+    expect(dots).toHaveLength(COUNT);
+    productRoad.stops.forEach((id, i) => {
+      const name = appById(id).shortName;
+      expect(dots[i].getAttribute("aria-label")).toBe(`View details: ${name}`);
+      expect(dots[i].getAttribute("aria-haspopup")).toBe("dialog");
+      expect(dots[i].type).toBe("button");
+      expect(dots[i].tabIndex).toBe(0);
+    });
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: `View details: ${appById(productRoad.stops[1]).shortName}`,
+      }),
+    );
+    const dialog = document.querySelector("dialog") as HTMLDialogElement;
+    expect(dialog.open).toBe(true);
+    expect(selected(container)).toEqual([1]);
+    expect(dialog.querySelector("h2")?.textContent).toBe(
+      appById(productRoad.stops[1]).shortName,
+    );
+    fireEvent.click(
+      within(dialog).getByRole("button", {
+        name: `Next ${appById(productRoad.stops[2]).shortName}`,
+      }),
+    );
+    expect(selected(container)).toEqual([2]);
+    fireEvent.click(
+      within(dialog).getByRole("button", {
+        name: `Previous ${appById(productRoad.stops[1]).shortName}`,
+      }),
+    );
+    expect(selected(container)).toEqual([1]);
+    act(() => dialog.close());
+  });
+
+  it("gives the dots a visible hover and focus state", () => {
+    const rules = roadmapRules();
+    expect(rules.find((r) => r.selector === ".rm-pin:hover")?.body).toMatch(
+      /box-shadow/,
+    );
+    expect(
+      rules.find((r) => r.selector === ".rm-pin:focus-visible")?.body,
+    ).toMatch(/outline: 3px solid var\(--color-focus\)/);
+  });
+
   it("moves the highlight with the modal and keeps it after closing", () => {
     const { container } = render(<RoadMap />);
     fireEvent.click(
@@ -522,45 +572,27 @@ describe("RoadMap selection", () => {
     expect(selected(container)).toEqual([1]);
   });
 
-  it("shows the road's Start or Finish from the modal's ends, smooth unless reduced", () => {
-    const scrolled = vi.fn();
-    Element.prototype.scrollIntoView = scrolled;
+  it("has no Start or Finish action in the modal's ends", () => {
     const { container } = render(<RoadMap />);
     const open = (i: number) =>
       fireEvent.click(
         container.querySelectorAll<HTMLButtonElement>(".rm-open")[i],
       );
     const dialog = () => document.querySelector("dialog") as HTMLDialogElement;
-
     open(0);
-    fireEvent.click(
-      within(dialog()).getByRole("button", {
+    expect(
+      within(dialog()).queryByRole("button", {
         name: `Previous ${productRoad.start}`,
       }),
-    );
-    expect(dialog().open).toBe(false);
-    expect(scrolled.mock.contexts[0]).toBe(
-      container.querySelector('[data-end="start"]'),
-    );
-    expect(scrolled).toHaveBeenLastCalledWith({
-      block: "center",
-      behavior: "smooth",
-    });
-
-    reducedMotion = true;
+    ).toBeNull();
+    act(() => dialog().close());
     open(productRoad.stops.length - 1);
-    fireEvent.click(
-      within(dialog()).getByRole("button", {
+    expect(
+      within(dialog()).queryByRole("button", {
         name: `Next ${productRoad.finish}`,
       }),
-    );
-    expect(scrolled.mock.contexts[1]).toBe(
-      container.querySelector('[data-end="finish"]'),
-    );
-    expect(scrolled).toHaveBeenLastCalledWith({
-      block: "center",
-      behavior: "instant",
-    });
+    ).toBeNull();
+    act(() => dialog().close());
   });
 
   it("colours only the selected pin amber", () => {
@@ -584,8 +616,7 @@ describe("RoadMap anchors", () => {
     ...APPS.map((a) => a.anchor),
   ]);
 
-  // The stop an anchor belongs to: its stop, or (tour) its step's stop. An app
-  // with no stop (IoT) has an alias at the start of the roadmap instead.
+  // The stop an anchor belongs to: its stop, or (tour) its step's stop.
   const stopOf = (container: HTMLElement, target: HTMLElement) => {
     const step = target.style.getPropertyValue("--step");
     return step === ""
@@ -597,7 +628,7 @@ describe("RoadMap anchors", () => {
     ["narrow", true, ".rm-stop"],
     ["wide (tour)", false, ".rm-step"],
   ])(
-    "%s: puts each app anchor once inside #map, on the stop of that app or at the start",
+    "%s: puts each app anchor once inside #map, on the stop of that app",
     (_, isNarrow, holder) => {
       narrow = isNarrow;
       const { container } = render(
@@ -616,12 +647,9 @@ describe("RoadMap anchors", () => {
         const app = APPS.find((a) => a.anchor === anchor);
         expect(app, anchor).toBeDefined();
         const stop = productRoad.stops.findIndex((id) => id === app?.id);
-        if (stop < 0) {
-          expect(targets[0].matches(".rm-alias"), anchor).toBe(true);
-        } else {
-          expect(targets[0].matches(holder), anchor).toBe(true);
-          expect(stopOf(container, targets[0]), anchor).toBe(stop);
-        }
+        expect(stop, anchor).toBeGreaterThanOrEqual(0);
+        expect(targets[0].matches(holder), anchor).toBe(true);
+        expect(stopOf(container, targets[0]), anchor).toBe(stop);
       }
     },
   );
@@ -633,8 +661,8 @@ describe("RoadMap anchors", () => {
     act(() => layoutChange?.());
     expect(container.querySelector(".rm-step")).toBeNull();
     expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(COUNT);
-    // IoT's mark stays at the start of the roadmap in both.
-    expect(container.querySelectorAll(".rm-alias#iot")).toHaveLength(1);
+    // IoT is gone: no anchor for it in either.
+    expect(container.querySelector("#iot")).toBeNull();
   });
 
   it("clears the header when a stop or a step is the scroll target", () => {
@@ -643,7 +671,6 @@ describe("RoadMap anchors", () => {
     );
     expect(anchored).toHaveLength(1);
     expect(anchored[0].selector).toContain(".rm-step");
-    expect(anchored[0].selector).toContain(".rm-alias");
     expect(anchored[0].body).toMatch(/scroll-margin-top: 16px/);
   });
 });
@@ -767,16 +794,14 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(target.matches(".rm-step")).toBe(true);
   });
 
-  it("lands the old #iot link at the start of the roadmap, where IoT has no stop", () => {
+  it("leaves the old #iot link at the top of Products (IoT is gone)", () => {
     const scrolled = vi.fn();
     Element.prototype.scrollIntoView = scrolled;
     window.history.replaceState(null, "", "#iot");
     tourAt(0);
     const { container } = render(<RoadMap />);
-    expect(scrolled).toHaveBeenCalledTimes(1);
-    const target = scrolled.mock.contexts[0] as Element;
-    expect(target).toBe(container.querySelector("#iot"));
-    expect(target.matches(".rm-alias")).toBe(true);
+    expect(container.querySelector("#iot")).toBeNull();
+    expect(scrolled).not.toHaveBeenCalled();
     expect(active(container)).toEqual([0]);
   });
 
@@ -829,6 +854,20 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(share(container)).toBe(1);
     scrollTo((COUNT - 0.5) * STEP);
     expect(share(container)).toBeLessThan(1);
+  });
+
+  it("steps the road to end exactly at each stop's dot, held through its step", () => {
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    nextFrame();
+    nextFrame();
+    const dots = stopShares(null);
+    for (let i = 0; i < COUNT; i += 1) {
+      scrollTo(i * STEP + 10);
+      expect(share(container)).toBe(dots[i]);
+      scrollTo(i * STEP + STEP * 0.6);
+      expect(share(container)).toBe(dots[i]);
+    }
   });
 
   it("cancels the pending frame when unmounted first", () => {

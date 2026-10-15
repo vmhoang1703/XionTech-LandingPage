@@ -21,7 +21,6 @@ vi.mock("next/navigation", () => ({
 
 const { default: RootLayout } = await import("./layout");
 const { default: Home } = await import("./page");
-const { siteFooter } = await import("@/content/site-footer");
 
 describe("no JavaScript", () => {
   it("server-renders all page content with no client script", async () => {
@@ -52,7 +51,9 @@ describe("no JavaScript", () => {
     expect(html).toContain("<header");
     expect(html).toContain('<main id="main" tabindex="-1"');
     expect(html).toMatch(/<\/main><footer/);
-    expect(html).toContain(siteFooter.copyright);
+    expect(html).toContain(
+      "Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved.",
+    );
     expect(html).not.toContain("<script");
   });
 });

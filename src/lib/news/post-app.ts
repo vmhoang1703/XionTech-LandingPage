@@ -1,11 +1,10 @@
 import { APPS, type App } from "@/content/apps";
 
-// Sanity may still hold the old values. LXP is not shown any more, so it maps
-// to no app.
+// Sanity may still hold the old values. LXP and IoT are not shown any more,
+// so they map to no app.
 const OLD_VALUES: ReadonlyMap<string, App["id"]> = new Map([
   ["PXP", "parent-hub"],
   ["SXP", "staff-hub"],
-  ["IoT", "iot"],
 ]);
 
 /** The app of a stored `post.app` value, or null when it has none. */

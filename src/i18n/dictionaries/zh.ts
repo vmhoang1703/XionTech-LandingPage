@@ -20,7 +20,6 @@ import {
 import { jobDetails, jobForm } from "@/content/job";
 import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
-import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
 import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
@@ -107,15 +106,6 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
       title,
     })),
   },
-  iot: {
-    madeFor: "设施与运维团队",
-    features: [
-      "设备集中管理",
-      "照明和空调定时控制",
-      "集中管理门禁与区域",
-      "全校园能耗",
-    ].map((title, i) => ({ ...productDetails.iot.features[i], title })),
-  },
   "ai-tutor": {
     madeFor: "学生，教师从旁陪伴",
     features: [
@@ -129,7 +119,6 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
 const APP_TAGLINES: Record<AppId, string> = {
   "parent-hub": "让家长随时了解孩子的校园生活，与学校保持联系。",
   "staff-hub": "把学校的日常运营汇集到一个互联的工作空间。",
-  iot: "让学校更轻松地管理互联的校园技术。",
   "ai-tutor": "通过引导式学习，帮助学生理解错误、建立信心。",
 };
 
@@ -264,12 +253,9 @@ const PROCESS_FLOW: Dictionaries["processFlow"] = {
 };
 
 const JOURNEY_LEDE =
-  "为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。";
+  "为学校社区打造的一系列互联产品，将家长、学习和教职员工工作连接成一个生态系统。";
 
 const PRIVACY_META_TITLE = "隐私政策 | XionTech";
-
-const RETENTION_DECIDED =
-  "咨询和演示请求、提交的电子邮箱地址，以及求职申请和简历均无限期保存。";
 
 const ERRORS = {
   name: "请输入您的姓名。",
@@ -282,7 +268,6 @@ const ERRORS = {
 
 const parentHub = appById("parent-hub");
 const staffHub = appById("staff-hub");
-const iotApp = appById("iot");
 const aiTutor = appById("ai-tutor");
 
 export const zh: Dictionaries = {
@@ -559,7 +544,7 @@ export const zh: Dictionaries = {
   hcmc: hcmcZh,
   homeApps: {
     title: "互联的学校",
-    lede: "用为家长、教职员工、学生和校园运营打造的互联解决方案，把整个学校社区连接在一起，让日常的学校管理更简单。",
+    lede: "用为家长、教职员工和学生打造的互联解决方案，把整个学校社区连接在一起，让日常的学校管理更简单。",
     apps: homeApps.apps.map((card) => ({
       ...card,
       madeFor: PRODUCT_DETAILS[card.app.id].madeFor,
@@ -629,7 +614,7 @@ export const zh: Dictionaries = {
   homeMeta: {
     title: "XionTech | 学校平台与越南软件外包",
     description:
-      "XionTech 打造 AI 驱动的产品和定制解决方案：学校平台（Parent Hub、Staff Hub、IoT、AI Tutor）以及来自越南的软件外包。",
+      "XionTech 打造 AI 驱动的产品和定制解决方案：学校平台（Parent Hub、Staff Hub、AI Tutor）以及来自越南的软件外包。",
   },
   homeNews: {
     heading: "XionTech 最新动态",
@@ -705,6 +690,7 @@ export const zh: Dictionaries = {
   journeyBoard: {
     ...journeyBoard,
     details: "详情",
+    viewDetails: "查看详情：{name}",
     lanes: ["学生", "教师与教职员工", "家长"].map((label, i) => ({
       ...journeyBoard.lanes[i],
       label,
@@ -744,39 +730,15 @@ export const zh: Dictionaries = {
   plano: planoZh,
   privacy: {
     metaTitle: PRIVACY_META_TITLE,
-    metaDescription: "XionTech 如何使用您通过我们的表单提供的个人数据。",
+    metaDescription:
+      "XionTech Joint Stock Company 在您使用我们的数字产品、应用程序、网站和 IT 服务时如何收集、使用和保护您的信息。",
     breadcrumbLabel: BREADCRUMB,
     breadcrumbHome: HOME,
     breadcrumbCurrent: PRIVACY_LINK,
     title: PRIVACY_LINK,
     bodyLabel: "政策",
-    retentionDecided: RETENTION_DECIDED,
-    sections: [
-      {
-        id: PRIVACY.sections[0].id,
-        heading: "我们收集的信息",
-        paragraphs: [
-          "电子邮箱、姓名、电话号码、机构、职位，以及您通过我们的表单发送的任何内容，包括您申请职位时提交的简历。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[1].id,
-        heading: "我们如何使用这些信息",
-        paragraphs: ["仅用于回复您的请求，或审阅您的求职申请和简历。"],
-      },
-      {
-        id: PRIVACY.sections[2].id,
-        heading: "我们与谁共享",
-        paragraphs: [
-          "代表我们处理数据的服务提供商：Gmail（将表单消息发送到公司收件箱）、Upstash（由哈希值生成的限流计数器）、Vercel（网站托管和简历私密存储）、Google Fonts（日文、韩文和中文页面所用的字体）。",
-        ],
-      },
-      {
-        id: PRIVACY.sections[3].id,
-        heading: "我们保留多久",
-        paragraphs: [RETENTION_DECIDED],
-      },
-    ],
+    tocLabel: "本页内容",
+    languageNote: "本政策以英文提供。",
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
@@ -786,8 +748,8 @@ export const zh: Dictionaries = {
     finish: "到达",
   },
   productsMeta: {
-    title: `学校应用：${parentHub.shortName}、${staffHub.shortName}、${iotApp.shortName}、${aiTutor.shortName} | XionTech`,
-    description: `面向家长的 ${parentHub.shortName}、面向教职员工、教师和管理层的 ${staffHub.shortName}，以及面向校园的 ${iotApp.fullName}。XionTech 的互联学校应用。`,
+    title: `学校应用：${parentHub.shortName}、${staffHub.shortName}、${aiTutor.shortName} | XionTech`,
+    description: `面向家长的 ${parentHub.shortName}、面向教职员工、教师和管理层的 ${staffHub.shortName}，以及面向学生的 ${aiTutor.shortName}。XionTech 的互联学校应用。`,
   },
   productsShowcase: {
     madeFor: "适用对象",
@@ -902,6 +864,7 @@ export const zh: Dictionaries = {
       aboutUs: "关于我们",
       offices: "办公地点",
       privacy: PRIVACY_LINK,
+      copyright: "版权所有 © 2026 XionTech Joint Stock Company。保留所有权利。",
     },
     notFound: {
       metaTitle: "页面未找到 | XionTech",

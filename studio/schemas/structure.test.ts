@@ -55,7 +55,7 @@ describe("studio structure", () => {
     expect(doc(item).documentId).toBe("careersPhotos");
   });
 
-  it("opens products as three fixed documents, no LXP", () => {
+  it("opens products as two fixed documents, no LXP or IoT", () => {
     const products = build().items[1];
     const list = products.child as { items: Node[] };
     expect(
@@ -63,7 +63,6 @@ describe("studio structure", () => {
     ).toEqual([
       ["Parent Hub", "product", "product-pxp"],
       ["Staff Hub", "product", "product-sxp"],
-      ["IoT", "product", "product-iot"],
     ]);
     expect(list.items.map((i) => doc(i).documentId)).not.toContain(
       "product-lxp",

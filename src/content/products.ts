@@ -3,16 +3,15 @@
 // come from apps.ts.
 import { appById, type AppId } from "@/content/apps";
 
-const [parentHub, staffHub, iot, aiTutor] = [
+const [parentHub, staffHub, aiTutor] = [
   appById("parent-hub"),
   appById("staff-hub"),
-  appById("iot"),
   appById("ai-tutor"),
 ];
 
 export const productsMeta = {
-  title: `School Apps: ${parentHub.shortName}, ${staffHub.shortName}, ${iot.shortName} & ${aiTutor.shortName} | XionTech`,
-  description: `${parentHub.shortName} for parents, ${staffHub.shortName} for staff, teachers and leaders, and ${iot.fullName} for campuses. Connected school apps from XionTech.`,
+  title: `School Apps: ${parentHub.shortName}, ${staffHub.shortName} & ${aiTutor.shortName} | XionTech`,
+  description: `${parentHub.shortName} for parents, ${staffHub.shortName} for staff, teachers and leaders, and ${aiTutor.shortName} for students. Connected school apps from XionTech.`,
 };
 
 // CAP-2.
@@ -30,10 +29,6 @@ export type FeatureId =
   | "classes"
   | "parents"
   | "dashboards"
-  | "av"
-  | "climate"
-  | "doors"
-  | "energy"
   | "diagnosis"
   | "hints"
   | "mastery";
@@ -66,15 +61,6 @@ export const productDetails: Record<AppId, ProductDetail> = {
       { id: "dashboards", title: "Leader dashboards for today's priorities" },
     ],
   },
-  iot: {
-    madeFor: "School operations and facilities teams",
-    features: [
-      { id: "av", title: "Centralized device management" },
-      { id: "climate", title: "Scheduled lighting and climate controls" },
-      { id: "doors", title: "Doors and zones managed centrally" },
-      { id: "energy", title: "Energy use across the campus" },
-    ],
-  },
   "ai-tutor": {
     madeFor: "Students, with teachers alongside",
     features: [
@@ -88,7 +74,7 @@ export const productDetails: Record<AppId, ProductDetail> = {
 export const journeyMap = {
   intro: {
     title: "Built apart. Better together",
-    lede: "A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem.",
+    lede: "A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem.",
   },
 };
 
@@ -96,7 +82,7 @@ export const journeyMap = {
 // each one a stop. A stop is its app, so the card and the dialog take the
 // name, tagline, audience and features from apps.ts and the product details
 // below: the road has no copy of its own but the two end labels.
-export type RoadApp = Exclude<AppId, "iot">;
+export type RoadApp = AppId;
 
 export type ProductRoad = {
   start: string;
@@ -113,11 +99,14 @@ export const productRoad: ProductRoad = {
 // The tag on each stop's card: who the app is for, and the card's "Details" cue.
 export type JourneyBoard = {
   details: string;
+  // The road dot's name for assistive technology; {name} is the app.
+  viewDetails: string;
   lanes: readonly { app: RoadApp; label: string }[];
 };
 
 export const journeyBoard: JourneyBoard = {
   details: "Details",
+  viewDetails: "View details: {name}",
   lanes: [
     { app: "ai-tutor", label: "Student" },
     { app: "staff-hub", label: "Teacher and staff" },
@@ -134,8 +123,8 @@ export const roadDialog = {
 
 // Vietnamese. App names, badges and ids stay English (2026-10-13).
 export const productsMetaVi: typeof productsMeta = {
-  title: `Ứng dụng cho trường học: ${parentHub.shortName}, ${staffHub.shortName}, ${iot.shortName} & ${aiTutor.shortName} | XionTech`,
-  description: `${parentHub.shortName} cho phụ huynh, ${staffHub.shortName} cho nhân viên, giáo viên và lãnh đạo, và ${iot.fullName} cho khuôn viên trường. Các ứng dụng trường học kết nối từ XionTech.`,
+  title: `Ứng dụng cho trường học: ${parentHub.shortName}, ${staffHub.shortName} & ${aiTutor.shortName} | XionTech`,
+  description: `${parentHub.shortName} cho phụ huynh, ${staffHub.shortName} cho nhân viên, giáo viên và lãnh đạo, và ${aiTutor.shortName} cho học sinh. Các ứng dụng trường học kết nối từ XionTech.`,
 };
 
 export const productsShowcaseVi: typeof productsShowcase = {
@@ -171,15 +160,6 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
       feature("staff-hub", 3, "Bảng điều khiển cho việc cần xử lý hôm nay"),
     ],
   },
-  iot: {
-    madeFor: "Đội vận hành và cơ sở vật chất của trường",
-    features: [
-      feature("iot", 0, "Quản lý thiết bị tập trung"),
-      feature("iot", 1, "Điều khiển ánh sáng và điều hòa theo lịch"),
-      feature("iot", 2, "Quản lý cửa và khu vực tập trung"),
-      feature("iot", 3, "Mức dùng năng lượng toàn trường"),
-    ],
-  },
   "ai-tutor": {
     madeFor: "Học sinh, cùng giáo viên đồng hành",
     features: [
@@ -193,7 +173,7 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
 export const journeyMapVi: typeof journeyMap = {
   intro: {
     title: "Xây dựng riêng. Mạnh hơn khi kết nối",
-    lede: "Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung.",
+    lede: "Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học và vận hành nhà trường vào một hệ sinh thái chung.",
   },
 };
 
@@ -206,6 +186,7 @@ export const productRoadVi: ProductRoad = {
 export const journeyBoardVi: JourneyBoard = {
   ...journeyBoard,
   details: "Chi tiết",
+  viewDetails: "Xem chi tiết: {name}",
   lanes: [
     { ...journeyBoard.lanes[0], label: "Học sinh" },
     { ...journeyBoard.lanes[1], label: "Giáo viên và nhân viên" },

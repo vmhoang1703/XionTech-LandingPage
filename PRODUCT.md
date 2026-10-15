@@ -17,7 +17,7 @@ Also served: parents checking that their school's app is real, and job seekers r
 
 ## Product Purpose
 
-Marketing site for XionTech, rebuilt for the XionTech internal AI build challenge. It shows the school platforms (Parent Hub, Staff Hub, IoT Device Management, AI Tutor) and the software outsourcing services on the first screen. Success for the current stage: impress the judges on Demo day, 2026-10-16, with motion, 3D and polish, without breaking any rule below. Full requirements: `_bmad-output/planning-artifacts/prds/prd-XionTech-LandingPage-2026-09-28/prd.md`.
+Marketing site for XionTech, rebuilt for the XionTech internal AI build challenge. It shows the school platforms (Parent Hub, Staff Hub, AI Tutor) and the software outsourcing services on the first screen. Success for the current stage: impress the judges on Demo day, 2026-10-16, with motion, 3D and polish, without breaking any rule below. Full requirements: `_bmad-output/planning-artifacts/prds/prd-XionTech-LandingPage-2026-09-28/prd.md`.
 
 ## Positioning
 

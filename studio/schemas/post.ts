@@ -47,7 +47,6 @@ export const post = {
         list: [
           { title: "Parent Hub", value: "parent-hub" },
           { title: "Staff Hub", value: "staff-hub" },
-          { title: "IoT", value: "iot" },
           { title: "AI Tutor", value: "ai-tutor" },
         ],
       },

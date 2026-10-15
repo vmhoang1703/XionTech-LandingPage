@@ -87,7 +87,7 @@ describe("FrontDoors", () => {
       Array.from(products.querySelectorAll(".badge")).map((b) =>
         Array.from(b.classList).find((c) => c.startsWith("b-")),
       ),
-    ).toEqual(["b-pxp", "b-sxp", "b-iot", "b-ait"]);
+    ).toEqual(["b-pxp", "b-sxp", "b-ait"]);
     expect(products.querySelector(".badge")?.parentElement?.className).toBe(
       "door-mini",
     );
@@ -103,12 +103,14 @@ describe("FrontDoors", () => {
     ).toBe(true);
   });
 
-  it("shows the IoT badge as a CPU icon and keeps IoT in the door's name", () => {
+  it("shows the AI Tutor badge as an icon and has no IoT tile", () => {
     render(<FrontDoors />);
 
-    const iot = document.querySelector(".b-iot");
-    expect(iot?.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
-    expect(iot?.querySelector(".sr-only")?.textContent).toBe("IoT");
+    const ait = document.querySelector(".b-ait");
+    expect(ait?.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
+    expect(ait?.querySelector(".sr-only")?.textContent).toBe("AI Tutor");
+    expect(document.querySelector(".b-iot")).toBeNull();
+    expect(document.body.textContent).not.toMatch(/IoT/);
   });
 
   it("uses only classes that globals.css defines, with a reduced-motion reset", () => {

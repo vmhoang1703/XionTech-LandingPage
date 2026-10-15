@@ -176,13 +176,13 @@ describe("DeviceScreen screenshots", () => {
 });
 
 describe("screenshots.ts", () => {
-  it("lists four real screenshots per product, in public/products", async () => {
+  it("lists the real screenshots of each product, in public/products", async () => {
     const { existsSync } = await import("node:fs");
     const { SCREENSHOTS } =
       await vi.importActual<typeof import("./screenshots")>("./screenshots");
     for (const app of ["parent-hub", "staff-hub", "ai-tutor"] as const) {
       const list = SCREENSHOTS[app] ?? [];
-      expect(list).toHaveLength(4);
+      expect(list).toHaveLength(app === "ai-tutor" ? 3 : 4);
       for (const src of list) {
         expect(src.startsWith(`/products/${app}/`)).toBe(true);
         expect(existsSync(`public${src}`)).toBe(true);

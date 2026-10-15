@@ -6,14 +6,14 @@ For a native French reader. Every row is a French string on the site that differ
 
 - Check meaning, tone, spelling and natural wording, and that nothing is added, left out or made stronger than the English (no new claims, numbers or promises).
 - `[Placeholder]` stays in front of a placeholder text, and `{n}` is a number filled in by the site; keep both.
-- **Privacy** is legal text translated by an AI. It needs the lead's and a legal reviewer's sign-off before it is published.
+- **Privacy**: only the page strings (title, contents label, English-language note) are translated; the policy itself is shown in English on every locale.
 - News stories and job posts from the CMS are not translated; they show in English on purpose.
 
 **Kept in English on purpose:** names of products, services and apps, tech tags, XionTech and the tagline “Get IT done”. Words French spells like English stay as they are: Service, Services, Menu, Contact, Parents, Campus, CV.
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/fr.ts` and open a pull request. `Where` is `fr:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 449 strings.
+**Total:** 437 strings.
 
 ## About
 
@@ -87,13 +87,12 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Apps (Home and Products)
 
-4 strings.
+3 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
 | `fr:appTaglines.parent-hub` | Keep parents informed and connected to their child’s school life. | Les parents restent informés et proches de la vie scolaire de leur enfant. |
 | `fr:appTaglines.staff-hub` | Bring daily school operations into one connected workspace. | Réunissez la gestion quotidienne de l’école dans un espace de travail connecté. |
-| `fr:appTaglines.iot` | Simplify how schools manage connected campus technology. | Simplifiez la gestion des technologies connectées du campus. |
 | `fr:appTaglines.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | Aider les élèves à comprendre leurs erreurs et à prendre confiance grâce à un apprentissage guidé. |
 
 ## Careers
@@ -262,24 +261,21 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Home
 
-77 strings.
+74 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
 | `fr:homeApps.title` | One connected school | Une école connectée |
-| `fr:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | Rassemblez toute la communauté scolaire avec des solutions connectées pour les parents, le personnel, les élèves et la gestion du campus, toutes pensées pour simplifier la gestion quotidienne de l’école. |
+| `fr:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff and students; all designed to simplify everyday school management. | Rassemblez toute la communauté scolaire avec des solutions connectées pour les parents, le personnel et les élèves, toutes pensées pour simplifier la gestion quotidienne de l’école. |
 | `fr:homeApps.apps[0].madeFor` | Parents and families | Parents et familles |
 | `fr:homeApps.apps[0].features[0]` | Real-time arrival alerts | Alertes d’arrivée en temps réel |
 | `fr:homeApps.apps[0].features[1]` | Published grades and feedback | Notes et commentaires publiés |
 | `fr:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | Personnel, enseignants et direction |
 | `fr:homeApps.apps[1].features[0]` | Attendance and student records | Présences et dossiers des élèves |
 | `fr:homeApps.apps[1].features[1]` | Classes, timetables and grades | Classes, emplois du temps et notes |
-| `fr:homeApps.apps[2].madeFor` | School operations and facilities teams | Équipes d’exploitation et de maintenance des établissements |
-| `fr:homeApps.apps[2].features[0]` | Centralized device management | Gestion centralisée des équipements |
-| `fr:homeApps.apps[2].features[1]` | Scheduled lighting and climate controls | Éclairage et climatisation programmés |
-| `fr:homeApps.apps[3].madeFor` | Students, with teachers alongside | Les élèves, accompagnés de leurs enseignants |
-| `fr:homeApps.apps[3].features[0]` | Skill-level understanding checks | Vérification de la compréhension par compétence |
-| `fr:homeApps.apps[3].features[1]` | Personalized step-by-step hints | Des indices pas à pas personnalisés |
+| `fr:homeApps.apps[2].madeFor` | Students, with teachers alongside | Les élèves, accompagnés de leurs enseignants |
+| `fr:homeApps.apps[2].features[0]` | Skill-level understanding checks | Vérification de la compréhension par compétence |
+| `fr:homeApps.apps[2].features[1]` | Personalized step-by-step hints | Des indices pas à pas personnalisés |
 | `fr:homeApps.link.label` | Explore products | Découvrir les produits |
 | `fr:homeCapabilities.title` | Why XionTech | Pourquoi XionTech |
 | `fr:homeCapabilities.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | Nous créons nous-mêmes des produits et mettons cette expérience concrète au service de nos clients, en associant découverte métier, maîtrise de l’ingénierie et développement assisté par l’IA. |
@@ -321,7 +317,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:homeHero.motion.play` | Play motion | Lire l’animation |
 | `fr:homeHero.cta.label` | Get in touch | Nous contacter |
 | `fr:homeMeta.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| Plateformes scolaires et externalisation logicielle au Vietnam |
-| `fr:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure : plateformes scolaires (Parent Hub, Staff Hub, IoT, AI Tutor) et externalisation logicielle depuis le Vietnam. |
+| `fr:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam. | XionTech conçoit des produits propulsés par l’IA et des solutions sur mesure : plateformes scolaires (Parent Hub, Staff Hub, AI Tutor) et externalisation logicielle depuis le Vietnam. |
 | `fr:homeOutcomes.title` | What can we help you achieve? | Que pouvons-nous vous aider à accomplir ? |
 | `fr:homeOutcomes.lede` | Pick one service or combine several. We shape the team around your product. | Choisissez un service ou combinez-en plusieurs. Nous constituons l’équipe autour de votre produit. |
 | `fr:homeOutcomes.items[0].title` | Build a new digital product | Créer un nouveau produit numérique |
@@ -383,16 +379,17 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Products
 
-34 strings.
+30 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
 | `fr:journeyBoard.details` | Details | Détails |
+| `fr:journeyBoard.viewDetails` | View details: {name} | Voir les détails : {name} |
 | `fr:journeyBoard.lanes[0].label` | Student | Élève |
 | `fr:journeyBoard.lanes[1].label` | Teacher and staff | Enseignants et personnel |
 | `fr:journeyBoard.lanes[2].label` | Parent | Parents |
 | `fr:journeyMap.intro.title` | Built apart. Better together | Conçues séparément. Meilleures ensemble |
-| `fr:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage, la gestion du personnel et la technologie du campus dans un même écosystème. |
+| `fr:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem. | Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage et la gestion du personnel dans un même écosystème. |
 | `fr:productDetails.parent-hub.madeFor` | Parents and families | Parents et familles |
 | `fr:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | Alertes d’arrivée en temps réel |
 | `fr:productDetails.parent-hub.features[1].title` | Published grades and feedback | Notes et commentaires publiés |
@@ -403,19 +400,14 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | Classes, emplois du temps et notes |
 | `fr:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Messages aux parents via Parent Hub |
 | `fr:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | Tableaux de bord de direction pour les priorités du jour |
-| `fr:productDetails.iot.madeFor` | School operations and facilities teams | Équipes d’exploitation et de maintenance des établissements |
-| `fr:productDetails.iot.features[0].title` | Centralized device management | Gestion centralisée des équipements |
-| `fr:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | Éclairage et climatisation programmés |
-| `fr:productDetails.iot.features[2].title` | Doors and zones managed centrally | Portes et zones gérées de façon centralisée |
-| `fr:productDetails.iot.features[3].title` | Energy use across the campus | Consommation d’énergie sur tout le campus |
 | `fr:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | Les élèves, accompagnés de leurs enseignants |
 | `fr:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | Vérification de la compréhension par compétence |
 | `fr:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | Des indices pas à pas personnalisés |
 | `fr:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | La maîtrise, seulement quand vous y arrivez seul |
 | `fr:productRoad.start` | Start | Départ |
 | `fr:productRoad.finish` | Finish | Arrivée |
-| `fr:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | Applications scolaires : Parent Hub, Staff Hub, IoT et AI Tutor \| XionTech |
-| `fr:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | Parent Hub pour les parents, Staff Hub pour le personnel, les enseignants et la direction, et IoT Device Management pour les campus. Des applications scolaires connectées signées XionTech. |
+| `fr:productsMeta.title` | School Apps: Parent Hub, Staff Hub & AI Tutor \| XionTech | Applications scolaires : Parent Hub, Staff Hub et AI Tutor \| XionTech |
+| `fr:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and AI Tutor for students. Connected school apps from XionTech. | Parent Hub pour les parents, Staff Hub pour le personnel, les enseignants et la direction, et AI Tutor pour les élèves. Des applications scolaires connectées signées XionTech. |
 | `fr:productsShowcase.madeFor` | Made for | Conçu pour |
 | `fr:productsShowcase.featuresHeading` | Features | Fonctionnalités |
 | `fr:roadDialog.close` | Close | Fermer |
@@ -424,24 +416,19 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Privacy
 
-14 strings.
+9 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
 | `fr:privacy.metaTitle` | Privacy Policy \| XionTech | Politique de confidentialité \| XionTech |
-| `fr:privacy.metaDescription` | How XionTech uses the personal data you share through our forms. | Comment XionTech utilise les données personnelles que vous transmettez via nos formulaires. |
+| `fr:privacy.metaDescription` | How XionTech Joint Stock Company collects, uses and protects your information when you use our digital products, applications, websites and IT services. | Comment XionTech Joint Stock Company collecte, utilise et protège vos informations lorsque vous utilisez nos produits numériques, applications, sites web et services informatiques. |
 | `fr:privacy.breadcrumbLabel` | Breadcrumb | Fil d’Ariane |
 | `fr:privacy.breadcrumbHome` | Home | Accueil |
-| `fr:privacy.breadcrumbCurrent`<br>`fr:privacy.title` | Privacy policy | Politique de confidentialité |
+| `fr:privacy.breadcrumbCurrent` | Privacy policy | Politique de confidentialité |
+| `fr:privacy.title` | Privacy Policy | Politique de confidentialité |
 | `fr:privacy.bodyLabel` | Policy | Politique |
-| `fr:privacy.retentionDecided`<br>`fr:privacy.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | Les demandes de contact et de démo, les adresses e-mail envoyées, les candidatures et les CV sont conservés sans limite de durée. |
-| `fr:privacy.sections[0].heading` | What we collect | Ce que nous collectons |
-| `fr:privacy.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | E-mail, nom, numéro de téléphone, organisation, fonction et tout ce que vous envoyez via nos formulaires, y compris un CV si vous postulez à un emploi. |
-| `fr:privacy.sections[1].heading` | How we use it | Comment nous les utilisons |
-| `fr:privacy.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | Uniquement pour répondre à votre demande ou étudier votre candidature et votre CV. |
-| `fr:privacy.sections[2].heading` | Who we share it with | Avec qui nous les partageons |
-| `fr:privacy.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | Les prestataires qui traitent des données pour notre compte : Gmail (envoie les messages des formulaires à la boîte de réception de l’entreprise), Upstash (compteurs de limitation de débit créés à partir de valeurs hachées), Vercel (hébergement du site web et stockage privé des CV), Google Fonts (polices des pages en japonais, coréen et chinois). |
-| `fr:privacy.sections[3].heading` | How long we keep it | Durée de conservation |
+| `fr:privacy.tocLabel` | On this page | Sur cette page |
+| `fr:privacy.languageNote` | This policy is provided in English. | Cette politique est fournie en anglais. |
 
 ## Process (Home and Services)
 
@@ -534,7 +521,7 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Site shell: header, footer, language menu, 404
 
-22 strings.
+23 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
@@ -557,6 +544,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:shell.footer.aboutUs` | About us | À propos de nous |
 | `fr:shell.footer.offices` | Offices | Bureaux |
 | `fr:shell.footer.privacy` | Privacy policy | Politique de confidentialité |
+| `fr:shell.footer.copyright` | Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved. | Copyright © 2026 XionTech Joint Stock Company. Tous droits réservés. |
 | `fr:shell.notFound.metaTitle` | Page not found \| XionTech | Page introuvable \| XionTech |
 | `fr:shell.notFound.title` | Page not found | Page introuvable |
 | `fr:shell.notFound.primary` | Back to Home | Retour à l’accueil |

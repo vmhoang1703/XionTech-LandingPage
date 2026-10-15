@@ -18,12 +18,12 @@ describe("HomeAppBadge", () => {
   });
 
   it("shows an icon badge with the short name for screen readers", () => {
-    const badge = badgeOf("iot");
-    expect(badge.className).toBe("badge b-iot");
+    const badge = badgeOf("ai-tutor");
+    expect(badge.className).toBe("badge b-ait");
     expect(badge.querySelector("svg")?.getAttribute("aria-hidden")).toBe(
       "true",
     );
-    expect(badge.querySelector(".sr-only")?.textContent).toBe("IoT");
+    expect(badge.querySelector(".sr-only")?.textContent).toBe("AI Tutor");
   });
 
   it("gives AI Tutor its own colour class, for the Home app cards", () => {

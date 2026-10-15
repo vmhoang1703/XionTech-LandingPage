@@ -69,7 +69,7 @@ Both sites read the same Sanity dataset (`1khn3hf4` / `production`), so a publis
 2. Sanity calls `POST /api/revalidate` with a signed body (`SANITY_REVALIDATE_SECRET`). The route rejects a bad signature (401), an unknown type (400) or a missing secret (500).
 3. The route calls `revalidateTag(<type>, "max")`: the next visit still gets the old page and triggers a fresh read; the visit after that shows the change. In the 6.3 live proof on 2026-10-05 (6.3 ledger) a publish, an edit, a delete and a closed role each showed on the dev site within about 10 seconds, with no deploy.
 
-The Studio is hosted by Sanity (outside our build). It lists News posts and Job openings, and two fixed-document sections: **Careers photos** (team, office, event: photo, alt text, caption) and **Products** (Parent Hub, Staff Hub, IoT; the LXP document is hidden: an mp4 clip, not shown on any page until Story 4.4). Who may edit is set by project members in sanity.io/manage; the site has no login. Datasets on the free plan are public, so only consented photos and no personal data go into Sanity.
+The Studio is hosted by Sanity (outside our build). It lists News posts and Job openings, and two fixed-document sections: **Careers photos** (team, office, event: photo, alt text, caption) and **Products** (Parent Hub, Staff Hub; the LXP and IoT documents are hidden, IoT since 2026-10-15 when it left the site; LXP is an mp4 clip, not shown on any page until Story 4.4). Who may edit is set by project members in sanity.io/manage; the site has no login. Datasets on the free plan are public, so only consented photos and no personal data go into Sanity.
 
 ## 5. Forms and email
 

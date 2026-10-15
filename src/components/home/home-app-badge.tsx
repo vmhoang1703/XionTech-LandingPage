@@ -1,5 +1,5 @@
 import type { Icon } from "@phosphor-icons/react";
-import { CpuIcon, SparkleIcon } from "@phosphor-icons/react/ssr";
+import { SparkleIcon } from "@phosphor-icons/react/ssr";
 import {
   badgeLabel,
   type App,
@@ -15,12 +15,10 @@ import {
 const BADGE_CLASS: Record<AppId, string> = {
   "parent-hub": "b-pxp",
   "staff-hub": "b-sxp",
-  iot: "b-iot",
   "ai-tutor": "b-ait",
 };
 
 const BADGE_ICON: Record<Extract<AppBadge, { kind: "icon" }>["icon"], Icon> = {
-  Cpu: CpuIcon,
   Sparkle: SparkleIcon,
 };
 
