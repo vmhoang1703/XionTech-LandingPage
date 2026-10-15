@@ -1,6 +1,10 @@
+import { AxeBuilder } from "@axe-core/playwright";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const text = (html: string) => html.replaceAll(/<[^>]*>/g, "");
+
+// The roadmap has one stop for each product: Parent Hub, Staff Hub, AI Tutor.
+const STOPS = 3;
 
 test(
   "products page responds 200 with the H1, the map, the four card anchors and no Updates link",
@@ -29,12 +33,13 @@ test(
 test.describe("deep links to an app", { tag: "@a11y" }, () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
-  // Each app's anchor and the roadmap stop it lands on.
+  // Each app's anchor and the roadmap stop it lands on. IoT has no stop: its
+  // old link lands at the start of the roadmap, on the first stop.
   for (const [anchor, index, title] of [
-    ["sxp", 1, "Attendance recorded"],
-    ["pxp", 2, "Parent updated"],
-    ["ai-tutor", 3, "Student learns"],
-    ["iot", 4, null],
+    ["pxp", 0, "Parent Hub"],
+    ["sxp", 1, "Staff Hub"],
+    ["ai-tutor", 2, "AI Tutor"],
+    ["iot", 0, "Parent Hub"],
   ] as const) {
     test(`/en/products#${anchor} makes stop ${index + 1} active with its card in view below the header`, async ({
       page,
@@ -42,7 +47,7 @@ test.describe("deep links to an app", { tag: "@a11y" }, () => {
       await page.goto(`/en/products#${anchor}`);
       const stop = page.locator("#map .rm-stop").nth(index);
       const card = stop.locator(".rm-card");
-      if (title) await expect(card).toContainText(title);
+      await expect(card).toContainText(title);
       await expect(stop).toHaveAttribute("data-active", "true");
       // Smooth scroll: wait until the card sits whole between the header and
       // the bottom of the window.
@@ -61,7 +66,7 @@ test.describe("deep links to an app", { tag: "@a11y" }, () => {
   }
 });
 
-test.describe("school-day roadmap", { tag: "@a11y" }, () => {
+test.describe("product roadmap", { tag: "@a11y" }, () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
   const roadmap = (page: Page) => page.locator("#map .rm");
@@ -90,7 +95,9 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     }
   };
 
-  test("the roadmap shows the H1 and six cards", async ({ page }) => {
+  test("the roadmap shows the H1 and three cards, one per product", async ({
+    page,
+  }) => {
     await page.goto("/en/products");
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(
@@ -100,7 +107,12 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       }),
     ).toBeVisible();
     await expect(roadmap(page)).toBeVisible();
-    await expect(cards(page)).toHaveCount(6);
+    await expect(cards(page)).toHaveCount(STOPS);
+    await expect(cards(page)).toContainText([
+      "Parent Hub",
+      "Staff Hub",
+      "AI Tutor",
+    ]);
     await expect(cards(page).first()).toBeVisible();
   });
 
@@ -119,7 +131,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
         step:
           (el.getBoundingClientRect().height -
             stageEl.getBoundingClientRect().height) /
-          6,
+          el.querySelectorAll(".rm-stop").length,
         // The stage pins at --spacing-header-room (a calc, so measure it).
         pin: (() => {
           const probe = document.createElement("div");
@@ -137,7 +149,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
         top - pin + (i + 0.5) * step,
       );
 
-    for (let i = 0; i < 6; i += 1) {
+    for (let i = 0; i < STOPS; i += 1) {
       await scrollToStep(i);
       await expect(stops.nth(i)).toHaveAttribute("data-active", "true");
       await expect(stops.nth(i)).toHaveAttribute("data-selected", "true");
@@ -158,7 +170,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     // Past the last step the stage releases and the demo band follows.
     await page.evaluate(
       (y) => window.scrollTo({ top: y, behavior: "instant" }),
-      top - pin + 6 * step + 400,
+      top - pin + STOPS * step + 400,
     );
     await expect(page.locator("section.capture")).toBeInViewport();
   });
@@ -171,7 +183,9 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       const rect = el.getBoundingClientRect();
       return {
         top: rect.top + window.scrollY,
-        step: (rect.height - stageEl.getBoundingClientRect().height) / 6,
+        step:
+          (rect.height - stageEl.getBoundingClientRect().height) /
+          el.querySelectorAll(".rm-stop").length,
         // The stage pins at --spacing-header-room (a calc, so measure it).
         pin: (() => {
           const probe = document.createElement("div");
@@ -224,17 +238,17 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       note();
     });
     const from = top - pin;
-    for (let y = from + 1; y < from + 6 * step; y += step / 8) {
+    for (let y = from + 1; y < from + STOPS * step; y += step / 8) {
       await scrollTo(page, y);
     }
     await expect
       .poll(() =>
         page.evaluate(() => (window as unknown as { seen: number[] }).seen),
       )
-      .toEqual([0, 1, 2, 3, 4, 5]);
+      .toEqual([0, 1, 2]);
 
     // Back up: the active stop follows, one step at a time.
-    for (let i = 5; i >= 0; i -= 1) {
+    for (let i = STOPS - 1; i >= 0; i -= 1) {
       await scrollTo(page, from + (i + 0.5) * step);
       await expect.poll(() => activeIndex(page)).toBe(i);
     }
@@ -251,7 +265,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       await page.goto("/en/products");
       await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
       const { top, step, pin } = await track(page);
-      for (let i = 0; i < 6; i += 1) {
+      for (let i = 0; i < STOPS; i += 1) {
         await scrollTo(page, top - pin + (i + 0.5) * step);
         await expect(roadmap(page).locator(".rm-stop").nth(i)).toHaveAttribute(
           "data-active",
@@ -305,7 +319,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     await page.goto("/en/products");
     await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
     const { top, step, pin } = await track(page);
-    for (let i = 0; i < 6; i += 1) {
+    for (let i = 0; i < STOPS; i += 1) {
       await scrollTo(page, top - pin + (i + 0.5) * step);
       await expect.poll(() => activeIndex(page)).toBe(i);
     }
@@ -315,13 +329,13 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     expect(cls).toBeLessThan(0.1);
   });
 
-  test("Tab reaches the six cards in road order", async ({ page }) => {
+  test("Tab reaches the three cards in road order", async ({ page }) => {
     await page.goto("/en/products");
     const buttons = cards(page).getByRole("button");
-    await expect(buttons).toHaveCount(6);
+    await expect(buttons).toHaveCount(STOPS);
     await buttons.first().focus();
     const names: string[] = [];
-    for (let i = 0; i < 6; i += 1) {
+    for (let i = 0; i < STOPS; i += 1) {
       names.push(
         await page.evaluate(
           () => document.activeElement?.textContent?.trim() ?? "",
@@ -334,16 +348,16 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     );
     expect(names).toEqual(expected);
     expect(names[0]).toMatch(/^1\./);
-    expect(names[5]).toMatch(/^6\./);
+    expect(names[STOPS - 1]).toMatch(/^3\./);
   });
 
-  test("the footer link For schools lands on Staff Hub with its card whole", async ({
+  test("the footer link Staff Hub lands on Staff Hub with its card whole", async ({
     page,
   }) => {
     await page.goto("/en/products");
     const link = page
       .getByRole("contentinfo")
-      .getByRole("link", { name: "For schools" });
+      .getByRole("link", { name: "Staff Hub", exact: true });
     // The footer reveals as it scrolls in (shared scroll reveal): bring the
     // link into view and let it settle before clicking.
     await link.scrollIntoViewIfNeeded();
@@ -401,7 +415,7 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
       );
       await expect(roadmap(page).locator("[data-selected]")).toHaveCount(0);
       await expect(roadmap(page).locator("[data-active]")).toHaveCount(0);
-      await expect(cards(page)).toHaveCount(6);
+      await expect(cards(page)).toHaveCount(STOPS);
       await expectOpen(page);
     });
   });
@@ -410,19 +424,19 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     page,
   }) => {
     await page.goto("/en/products");
-    const first = page.getByRole("button", { name: "1. Student arrives" });
+    const first = page.getByRole("button", { name: "1. Parent Hub" });
     await first.scrollIntoViewIfNeeded();
     await first.click();
 
     const modal = page.locator("dialog.road-dialog");
     await expect(modal).toBeVisible();
     await expect(modal.getByRole("heading", { level: 2 })).toHaveText(
-      "Student arrives",
+      "Parent Hub",
     );
 
-    await modal.getByRole("button", { name: /Attendance recorded/ }).click();
+    await modal.getByRole("button", { name: "Staff Hub" }).click();
     await expect(modal.getByRole("heading", { level: 2 })).toHaveText(
-      "Attendance recorded",
+      "Staff Hub",
     );
 
     await page.keyboard.press("Escape");
@@ -431,10 +445,278 @@ test.describe("school-day roadmap", { tag: "@a11y" }, () => {
     await expect(first).toBeFocused();
   });
 
+  // The stop dialog is a full-window stage: the 3D scene behind a card.
+  const openStop = async (page: Page, name: string) => {
+    const open = page.getByRole("button", { name });
+    await open.scrollIntoViewIfNeeded();
+    await open.click();
+    const modal = page.locator("dialog.road-dialog");
+    await expect(modal).toBeVisible();
+    // The scene's chunk loads on this first click.
+    await expect(modal.locator(".rd-scene")).toBeAttached();
+    return { open, modal, card: modal.locator(".road-dialog-body") };
+  };
+
+  test("a stop opens over the whole window, the next title inside its button, the page still", async ({
+    page,
+  }) => {
+    await page.goto("/en/products");
+    const { modal, card } = await openStop(page, "2. Staff Hub");
+    const size = page.viewportSize() as { width: number; height: number };
+
+    // The dialog fills the window (it sat in the top-left corner).
+    expect(await modal.boundingBox()).toEqual({ x: 0, y: 0, ...size });
+    const cardBox = await card.boundingBox();
+    expect(cardBox?.x).toBeGreaterThanOrEqual(0);
+    expect((cardBox?.x ?? 0) + (cardBox?.width ?? 0)).toBeLessThanOrEqual(
+      size.width,
+    );
+    expect((cardBox?.y ?? 0) + (cardBox?.height ?? 0)).toBeLessThanOrEqual(
+      size.height,
+    );
+
+    // A long title (the product names are short, but a button may hold two
+    // lines) stays inside its button and the card.
+    const next = modal.locator(".road-dialog-nav button").last();
+    await next.evaluate((el) => {
+      el.firstChild?.replaceWith("Lighting and climate on the timetable");
+    });
+    const [nextBox, fit] = await Promise.all([
+      next.boundingBox(),
+      next.evaluate((el) => ({
+        scroll: el.scrollWidth,
+        client: el.clientWidth,
+      })),
+    ]);
+    expect(fit.scroll).toBeLessThanOrEqual(fit.client);
+    expect((nextBox?.x ?? 0) + (nextBox?.width ?? 0)).toBeLessThanOrEqual(
+      (cardBox?.x ?? 0) + (cardBox?.width ?? 0),
+    );
+
+    // The page behind does not scroll under a wheel.
+    const before = await page.evaluate(() => window.scrollY);
+    await page.mouse.move(size.width - 200, 300);
+    await page.mouse.wheel(0, 900);
+    await page.waitForTimeout(300);
+    expect(await page.evaluate(() => window.scrollY)).toBe(before);
+  });
+
+  test("the scene stands the product's device and is decoration; the card keeps the real text", async ({
+    page,
+  }) => {
+    await page.goto("/en/products");
+    const { modal, card } = await openStop(page, "2. Staff Hub");
+    const scene = modal.locator(".rd-scene");
+    await expect(scene).toHaveAttribute("aria-hidden", "true");
+    await expect(scene).toHaveAttribute("data-play", "on");
+    // Staff Hub is on a laptop: a screen on a hinge over a keyboard, with its
+    // placeholder wireframe, its name and its real feature names.
+    await expect(scene.locator('.dv[data-kind="laptop"]')).toHaveCount(1);
+    await expect(scene.locator(".dv-lid .dv-screen")).toHaveCount(1);
+    await expect(scene.locator(".ws-tag")).toHaveText("[Placeholder] screen");
+    await expect(scene.locator(".ws-name")).toHaveText("Staff Hub");
+    await expect(scene.locator(".ws-label")).toHaveText([
+      "Attendance and student records",
+      "Classes, timetables and grades",
+      "Messages to parents through Parent Hub",
+      "Leader dashboards for today's priorities",
+    ]);
+    await expect(scene.locator("button, a, [tabindex]")).toHaveCount(0);
+    await expect(card.getByRole("heading", { level: 2 })).toHaveText(
+      "Staff Hub",
+    );
+    await expect(card.getByRole("region", { name: "Staff Hub" })).toBeVisible();
+    // Only transform and opacity move: the camera, the device and its screen.
+    const moving = await scene.evaluate((el) =>
+      el
+        .getAnimations({ subtree: true })
+        .flatMap((a) =>
+          Object.keys((a.effect as KeyframeEffect).getKeyframes()[0]),
+        )
+        .filter(
+          (key) =>
+            !["offset", "computedOffset", "easing", "composite"].includes(key),
+        ),
+    );
+    expect(new Set(moving)).toEqual(new Set(["opacity", "transform"]));
+  });
+
+  test("Next walks the road: the title, the device and the road follow", async ({
+    page,
+  }) => {
+    await page.goto("/en/products");
+    const { modal, card } = await openStop(page, "2. Staff Hub");
+    const at = () =>
+      modal
+        .locator(".rd-ground")
+        .evaluate((el) => (el as HTMLElement).style.getPropertyValue("--px"));
+    const first = await at();
+    await card.getByRole("button", { name: "AI Tutor" }).click();
+    await expect(card.getByRole("heading", { level: 2 })).toHaveText(
+      "AI Tutor",
+    );
+    await expect(modal.locator('.dv[data-kind="monitor"]')).toHaveCount(1);
+    expect(await at()).not.toBe(first);
+    // The last stop: Next is the end of the road, and Previous walks back.
+    await expect(card.getByRole("button", { name: "Finish" })).toBeDisabled();
+    await card.getByRole("button", { name: "Staff Hub" }).click();
+    await card.getByRole("button", { name: "Parent Hub" }).click();
+    await expect(card.getByRole("heading", { level: 2 })).toHaveText(
+      "Parent Hub",
+    );
+    await expect(card.getByRole("button", { name: "Start" })).toBeDisabled();
+    await expect(modal.locator('.dv[data-kind="phone"]')).toHaveCount(1);
+  });
+
+  test("Esc, the close button and a click outside close it, and focus returns to the card", async ({
+    page,
+  }) => {
+    await page.goto("/en/products");
+    const { open, modal, card } = await openStop(page, "1. Parent Hub");
+    await page.keyboard.press("Escape");
+    await expect(modal).toBeHidden();
+    await expect(open).toBeFocused();
+
+    await open.click();
+    await expect(modal).toBeVisible();
+    await card.getByRole("button", { name: "Close" }).click();
+    await expect(modal).toBeHidden();
+    await expect(open).toBeFocused();
+
+    await open.click();
+    await expect(modal).toBeVisible();
+    // A click on the scene, right of the card.
+    await page.mouse.click(1100, 200);
+    await expect(modal).toBeHidden();
+    await expect(open).toBeFocused();
+  });
+
+  test("a drag turns the view and does not close the stop", async ({
+    page,
+  }) => {
+    await page.goto("/en/products");
+    const { modal } = await openStop(page, "2. Staff Hub");
+    await page.waitForTimeout(600);
+    await page.mouse.move(900, 300);
+    await page.mouse.down();
+    await page.mouse.move(1100, 300, { steps: 8 });
+    await page.mouse.up();
+    await expect(modal).toBeVisible();
+    const yaw = await modal
+      .locator(".rd-scene")
+      .evaluate((el) => (el as HTMLElement).style.getPropertyValue("--yaw"));
+    expect(Number.parseFloat(yaw)).toBeGreaterThan(5);
+  });
+
+  test("the stop dialog passes axe with the card and the scene", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/en/products");
+    const { modal } = await openStop(page, "3. AI Tutor");
+    await expect(modal.locator(".rd-scene")).toHaveAttribute(
+      "data-play",
+      "off",
+    );
+    const result = await new AxeBuilder({ page })
+      .include("dialog.road-dialog")
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+    expect(
+      result.violations.map(
+        (v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`,
+      ),
+    ).toEqual([]);
+  });
+
+  test.describe("reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+
+    test("the scene rests at its final view: no camera move, no rise, no look-around", async ({
+      page,
+    }) => {
+      await page.goto("/en/products");
+      const { modal } = await openStop(page, "2. Staff Hub");
+      const scene = modal.locator(".rd-scene");
+      await expect(scene).toHaveAttribute("data-play", "off");
+      const state = await scene.evaluate((el) => ({
+        running: el.getAnimations({ subtree: true }).length,
+        device: getComputedStyle(el.querySelector(".dv-rise") as Element)
+          .animationName,
+        world: getComputedStyle(el.querySelector(".rd-world") as Element)
+          .animationName,
+      }));
+      expect(state).toEqual({ running: 0, device: "none", world: "none" });
+      await page.mouse.move(100, 100);
+      await page.mouse.move(1200, 700);
+      expect(
+        await scene.evaluate((el) =>
+          (el as HTMLElement).style.getPropertyValue("--yaw"),
+        ),
+      ).toBe("");
+      // Still a stage: the device stands, its screen shows, and so does the card.
+      await expect(scene.locator(".dv .ws")).toHaveCount(1);
+      await expect(scene.locator(".dv .ws")).toHaveCSS("opacity", "1");
+    });
+  });
+
+  test("a saved Pause also holds the scene still", async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("xt-motion", "off"));
+    await page.goto("/en/products");
+    const { modal } = await openStop(page, "2. Staff Hub");
+    await expect(modal.locator(".rd-scene")).toHaveAttribute(
+      "data-play",
+      "off",
+    );
+  });
+
+  for (const [name, width, height] of [
+    ["tablet", 820, 1180],
+    ["phone", 390, 844],
+  ] as const) {
+    test(`${name}: the card is a sheet at the bottom and the scene fits above it`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto("/en/products");
+      const { card, modal } = await openStop(page, "3. AI Tutor");
+      const sheet = await card.boundingBox();
+      expect(Math.round((sheet?.x ?? -1) + (sheet?.width ?? 0))).toBe(width);
+      expect(Math.round((sheet?.y ?? 0) + (sheet?.height ?? 0))).toBe(height);
+      // The device stands inside the window, above the sheet.
+      const frame = await modal.locator(".rd-frame").boundingBox();
+      expect(frame?.y).toBe(0);
+      expect((frame?.y ?? 0) + (frame?.height ?? 0)).toBeLessThanOrEqual(
+        (sheet?.y ?? 0) + 1,
+      );
+      const overflow = await page.evaluate(
+        () =>
+          document.documentElement.scrollWidth -
+          document.documentElement.clientWidth,
+      );
+      expect(overflow).toBeLessThanOrEqual(0);
+    });
+  }
+
+  test("a landscape phone keeps the card beside the scene and scrolls inside it", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 844, height: 390 });
+    await page.goto("/en/products");
+    const { card } = await openStop(page, "2. Staff Hub");
+    const box = await card.boundingBox();
+    expect(box?.y).toBeGreaterThanOrEqual(0);
+    expect((box?.y ?? 0) + (box?.height ?? 0)).toBeLessThanOrEqual(390);
+    expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThan(844 / 2 + 24);
+    // The Close button stays in reach while the card scrolls.
+    await card.evaluate((el) => el.scrollTo(0, el.scrollHeight));
+    await expect(card.getByRole("button", { name: "Close" })).toBeInViewport();
+  });
+
   test("390px has no sideways scroll", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.goto("/en/products");
-    await expect(cards(page)).toHaveCount(6);
+    await expect(cards(page)).toHaveCount(STOPS);
     const overflow = await page.evaluate(
       () =>
         document.documentElement.scrollWidth -

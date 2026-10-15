@@ -13,7 +13,7 @@ For a native French reader. Every row is a French string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/fr.ts` and open a pull request. `Where` is `fr:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 447 strings.
+**Total:** 432 strings.
 
 ## About
 
@@ -231,60 +231,6 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:contactStrings.startTimings[2]` | Just exploring | Simple exploration |
 | `fr:contactStrings.services[8]` | Not sure yet | Pas encore décidé |
 
-## Products
-
-47 strings.
-
-| Where | English | Français |
-| --- | --- | --- |
-| `fr:dayRoad.heading` | A day at school | Une journée à l’école |
-| `fr:dayRoad.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | Suivez le parcours d’un élève au fil d’une journée d’école type, et voyez comment élèves, parents et personnel restent informés et connectés à chaque étape. |
-| `fr:dayRoad.start` | Start | Départ |
-| `fr:dayRoad.finish` | Finish | Arrivée |
-| `fr:dayRoad.stops[0].title` | Student arrives | L’élève arrive |
-| `fr:dayRoad.stops[0].text` | The student arrives on campus. | L’élève arrive sur le campus. |
-| `fr:dayRoad.stops[1].title` | Attendance recorded | Présence enregistrée |
-| `fr:dayRoad.stops[1].text` | A teacher marks the student's attendance in Staff Hub. | Un enseignant enregistre la présence de l’élève dans Staff Hub. |
-| `fr:dayRoad.stops[2].title` | Parent updated | Parents informés |
-| `fr:dayRoad.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub informe les parents que l’élève est à l’école. |
-| `fr:dayRoad.stops[3].title` | Student learns | L’élève apprend |
-| `fr:dayRoad.stops[3].text` | Students practice and ask questions with the AI Tutor. | Les élèves s’exercent et posent leurs questions avec AI Tutor. |
-| `fr:dayRoad.stops[4].title`<br>`fr:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | Éclairage et climatisation programmés |
-| `fr:dayRoad.stops[4].text` | Simplify how schools manage connected campus technology. | Simplifiez la gestion des technologies connectées du campus. |
-| `fr:dayRoad.stops[5].title` | Day stays connected | Une journée connectée |
-| `fr:dayRoad.stops[5].text` | Notifications and school information stay connected across the system. | Les notifications et les informations de l’école restent connectées dans tout le système. |
-| `fr:journeyBoard.hint` | Select a step to see the app behind it. | Sélectionnez une étape pour voir l’application qui la porte. |
-| `fr:journeyBoard.everyone` | Everyone | Tout le monde |
-| `fr:journeyBoard.details` | Details | Détails |
-| `fr:journeyBoard.lanes[0].label` | Student | Élève |
-| `fr:journeyBoard.lanes[1].label` | Teacher and staff | Enseignants et personnel |
-| `fr:journeyBoard.lanes[2].label` | Parent | Parents |
-| `fr:journeyMap.intro.title` | Built apart. Better together | Conçues séparément. Meilleures ensemble |
-| `fr:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage, la gestion du personnel et la technologie du campus dans un même écosystème. |
-| `fr:productDetails.parent-hub.madeFor` | Parents and families | Parents et familles |
-| `fr:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | Alertes d’arrivée en temps réel |
-| `fr:productDetails.parent-hub.features[1].title` | Published grades and feedback | Notes et commentaires publiés |
-| `fr:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | Messagerie bidirectionnelle avec les enseignants |
-| `fr:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | Paiement des frais avec des reçus clairs |
-| `fr:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | Personnel, enseignants et direction |
-| `fr:productDetails.staff-hub.features[0].title` | Attendance and student records | Présences et dossiers des élèves |
-| `fr:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | Classes, emplois du temps et notes |
-| `fr:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Messages aux parents via Parent Hub |
-| `fr:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | Tableaux de bord de direction pour les priorités du jour |
-| `fr:productDetails.iot.madeFor` | School operations and facilities teams | Équipes d’exploitation et de maintenance des établissements |
-| `fr:productDetails.iot.features[0].title` | Centralized device management | Gestion centralisée des équipements |
-| `fr:productDetails.iot.features[2].title` | Doors and zones managed centrally | Portes et zones gérées de façon centralisée |
-| `fr:productDetails.iot.features[3].title` | Energy use across the campus | Consommation d’énergie sur tout le campus |
-| `fr:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | Les élèves, accompagnés de leurs enseignants |
-| `fr:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | Vérification de la compréhension par compétence |
-| `fr:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | Des indices pas à pas personnalisés |
-| `fr:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | La maîtrise, seulement quand vous y arrivez seul |
-| `fr:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | Applications scolaires : Parent Hub, Staff Hub, IoT et AI Tutor \| XionTech |
-| `fr:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | Parent Hub pour les parents, Staff Hub pour le personnel, les enseignants et la direction, et IoT Device Management pour les campus. Des applications scolaires connectées signées XionTech. |
-| `fr:productsShowcase.madeFor` | Made for | Conçu pour |
-| `fr:productsShowcase.featuresHeading` | Features | Fonctionnalités |
-| `fr:roadDialog.close` | Close | Fermer |
-
 ## Offices (About, Contact, footer)
 
 8 strings.
@@ -420,6 +366,45 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:roleTypes.part-time` | Part-time | Temps partiel |
 | `fr:roleTypes.contract` | Contract | Contrat |
 | `fr:roleTypes.internship` | Internship | Stage |
+
+## Products
+
+32 strings.
+
+| Where | English | Français |
+| --- | --- | --- |
+| `fr:journeyBoard.details` | Details | Détails |
+| `fr:journeyBoard.lanes[0].label` | Student | Élève |
+| `fr:journeyBoard.lanes[1].label` | Teacher and staff | Enseignants et personnel |
+| `fr:journeyBoard.lanes[2].label` | Parent | Parents |
+| `fr:journeyMap.intro.title` | Built apart. Better together | Conçues séparément. Meilleures ensemble |
+| `fr:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Une suite connectée pour les communautés scolaires, qui réunit les parents, l’apprentissage, la gestion du personnel et la technologie du campus dans un même écosystème. |
+| `fr:productDetails.parent-hub.madeFor` | Parents and families | Parents et familles |
+| `fr:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | Alertes d’arrivée en temps réel |
+| `fr:productDetails.parent-hub.features[1].title` | Published grades and feedback | Notes et commentaires publiés |
+| `fr:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | Messagerie bidirectionnelle avec les enseignants |
+| `fr:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | Paiement des frais avec des reçus clairs |
+| `fr:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | Personnel, enseignants et direction |
+| `fr:productDetails.staff-hub.features[0].title` | Attendance and student records | Présences et dossiers des élèves |
+| `fr:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | Classes, emplois du temps et notes |
+| `fr:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Messages aux parents via Parent Hub |
+| `fr:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | Tableaux de bord de direction pour les priorités du jour |
+| `fr:productDetails.iot.madeFor` | School operations and facilities teams | Équipes d’exploitation et de maintenance des établissements |
+| `fr:productDetails.iot.features[0].title` | Centralized device management | Gestion centralisée des équipements |
+| `fr:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | Éclairage et climatisation programmés |
+| `fr:productDetails.iot.features[2].title` | Doors and zones managed centrally | Portes et zones gérées de façon centralisée |
+| `fr:productDetails.iot.features[3].title` | Energy use across the campus | Consommation d’énergie sur tout le campus |
+| `fr:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | Les élèves, accompagnés de leurs enseignants |
+| `fr:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | Vérification de la compréhension par compétence |
+| `fr:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | Des indices pas à pas personnalisés |
+| `fr:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | La maîtrise, seulement quand vous y arrivez seul |
+| `fr:productRoad.start` | Start | Départ |
+| `fr:productRoad.finish` | Finish | Arrivée |
+| `fr:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | Applications scolaires : Parent Hub, Staff Hub, IoT et AI Tutor \| XionTech |
+| `fr:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | Parent Hub pour les parents, Staff Hub pour le personnel, les enseignants et la direction, et IoT Device Management pour les campus. Des applications scolaires connectées signées XionTech. |
+| `fr:productsShowcase.madeFor` | Made for | Conçu pour |
+| `fr:productsShowcase.featuresHeading` | Features | Fonctionnalités |
+| `fr:roadDialog.close` | Close | Fermer |
 
 ## Privacy
 

@@ -13,7 +13,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ko.ts` and open a pull request. `Where` is `ko:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 459 strings.
+**Total:** 443 strings.
 
 ## About
 
@@ -236,61 +236,6 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:contactStrings.startTimings[2]` | Just exploring | 아직 알아보는 중 |
 | `ko:contactStrings.services[8]` | Not sure yet | 아직 정하지 않음 |
 
-## Products
-
-48 strings.
-
-| Where | English | 한국어 |
-| --- | --- | --- |
-| `ko:dayRoad.heading` | A day at school | 학교에서의 하루 |
-| `ko:dayRoad.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | 평범한 학교 하루 동안 한 학생의 여정을 따라가며, 학생, 학부모, 교직원이 각 단계에서 어떻게 정보를 받고 연결되는지 확인하세요. |
-| `ko:dayRoad.start` | Start | 출발 |
-| `ko:dayRoad.finish` | Finish | 도착 |
-| `ko:dayRoad.stops[0].title` | Student arrives | 학생 도착 |
-| `ko:dayRoad.stops[0].text` | The student arrives on campus. | 학생이 캠퍼스에 도착합니다. |
-| `ko:dayRoad.stops[1].title` | Attendance recorded | 출석 기록 |
-| `ko:dayRoad.stops[1].text` | A teacher marks the student's attendance in Staff Hub. | 교사가 Staff Hub에서 학생의 출석을 기록합니다. |
-| `ko:dayRoad.stops[2].title` | Parent updated | 학부모 알림 |
-| `ko:dayRoad.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub가 학부모에게 학생이 학교에 있다고 알립니다. |
-| `ko:dayRoad.stops[3].title` | Student learns | 학생 학습 |
-| `ko:dayRoad.stops[3].text` | Students practice and ask questions with the AI Tutor. | 학생들이 AI Tutor와 함께 연습하고 질문합니다. |
-| `ko:dayRoad.stops[4].title`<br>`ko:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 조명과 냉난방 예약 제어 |
-| `ko:dayRoad.stops[4].text` | Simplify how schools manage connected campus technology. | 캠퍼스의 커넥티드 기술 관리를 간편하게 만듭니다. |
-| `ko:dayRoad.stops[5].title` | Day stays connected | 연결된 하루 |
-| `ko:dayRoad.stops[5].text` | Notifications and school information stay connected across the system. | 알림과 학교 정보가 시스템 전체에서 연결된 상태로 유지됩니다. |
-| `ko:journeyBoard.hint` | Select a step to see the app behind it. | 단계를 선택하면 그 단계를 지원하는 앱을 볼 수 있습니다. |
-| `ko:journeyBoard.everyone` | Everyone | 모두 |
-| `ko:journeyBoard.details` | Details | 상세 |
-| `ko:journeyBoard.lanes[0].label` | Student | 학생 |
-| `ko:journeyBoard.lanes[1].label` | Teacher and staff | 교사와 교직원 |
-| `ko:journeyBoard.lanes[2].label` | Parent | 학부모 |
-| `ko:journeyBoard.lanes[3].label` | Campus | 캠퍼스 |
-| `ko:journeyMap.intro.title` | Built apart. Better together | 따로 만들고, 함께 더 좋게 |
-| `ko:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 학교 커뮤니티를 위한 연결된 제품군으로, 학부모, 학습, 교직원 업무, 캠퍼스 기술을 하나의 생태계로 묶습니다. |
-| `ko:productDetails.parent-hub.madeFor` | Parents and families | 학부모와 가족 |
-| `ko:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | 실시간 도착 알림 |
-| `ko:productDetails.parent-hub.features[1].title` | Published grades and feedback | 공개된 성적과 피드백 |
-| `ko:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 교사와 양방향 메시지 |
-| `ko:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 명확한 영수증과 함께 학비 납부 |
-| `ko:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 교직원, 교사, 학교 관리자 |
-| `ko:productDetails.staff-hub.features[0].title` | Attendance and student records | 출결과 학생 기록 |
-| `ko:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 학급, 시간표, 성적 |
-| `ko:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub를 통한 학부모 메시지 |
-| `ko:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 오늘의 우선순위를 보여 주는 관리자 대시보드 |
-| `ko:productDetails.iot.madeFor` | School operations and facilities teams | 시설 운영 및 유지보수 팀 |
-| `ko:productDetails.iot.features[0].title` | Centralized device management | 기기 통합 관리 |
-| `ko:productDetails.iot.features[2].title` | Doors and zones managed centrally | 중앙에서 관리하는 출입문과 구역 |
-| `ko:productDetails.iot.features[3].title` | Energy use across the campus | 캠퍼스 전체의 에너지 사용량 |
-| `ko:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 교사와 함께하는 학생 |
-| `ko:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | 기술별 이해도 점검 |
-| `ko:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 학생에게 맞춘 단계별 힌트 |
-| `ko:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 혼자 해낼 수 있을 때에만 인정되는 숙달 |
-| `ko:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 학교용 앱: Parent Hub, Staff Hub, IoT, AI Tutor \| XionTech |
-| `ko:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 학부모를 위한 Parent Hub, 교직원·교사·관리자를 위한 Staff Hub, 캠퍼스를 위한 IoT Device Management. XionTech의 연결된 학교 앱. |
-| `ko:productsShowcase.madeFor` | Made for | 대상 |
-| `ko:productsShowcase.featuresHeading` | Features | 기능 |
-| `ko:roadDialog.close` | Close | 닫기 |
-
 ## Offices (About, Contact, footer)
 
 8 strings.
@@ -427,6 +372,45 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:roleTypes.part-time` | Part-time | 파트타임 |
 | `ko:roleTypes.contract` | Contract | 계약직 |
 | `ko:roleTypes.internship` | Internship | 인턴십 |
+
+## Products
+
+32 strings.
+
+| Where | English | 한국어 |
+| --- | --- | --- |
+| `ko:journeyBoard.details` | Details | 상세 |
+| `ko:journeyBoard.lanes[0].label` | Student | 학생 |
+| `ko:journeyBoard.lanes[1].label` | Teacher and staff | 교사와 교직원 |
+| `ko:journeyBoard.lanes[2].label` | Parent | 학부모 |
+| `ko:journeyMap.intro.title` | Built apart. Better together | 따로 만들고, 함께 더 좋게 |
+| `ko:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 학교 커뮤니티를 위한 연결된 제품군으로, 학부모, 학습, 교직원 업무, 캠퍼스 기술을 하나의 생태계로 묶습니다. |
+| `ko:productDetails.parent-hub.madeFor` | Parents and families | 학부모와 가족 |
+| `ko:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | 실시간 도착 알림 |
+| `ko:productDetails.parent-hub.features[1].title` | Published grades and feedback | 공개된 성적과 피드백 |
+| `ko:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 교사와 양방향 메시지 |
+| `ko:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 명확한 영수증과 함께 학비 납부 |
+| `ko:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 교직원, 교사, 학교 관리자 |
+| `ko:productDetails.staff-hub.features[0].title` | Attendance and student records | 출결과 학생 기록 |
+| `ko:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 학급, 시간표, 성적 |
+| `ko:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub를 통한 학부모 메시지 |
+| `ko:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 오늘의 우선순위를 보여 주는 관리자 대시보드 |
+| `ko:productDetails.iot.madeFor` | School operations and facilities teams | 시설 운영 및 유지보수 팀 |
+| `ko:productDetails.iot.features[0].title` | Centralized device management | 기기 통합 관리 |
+| `ko:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 조명과 냉난방 예약 제어 |
+| `ko:productDetails.iot.features[2].title` | Doors and zones managed centrally | 중앙에서 관리하는 출입문과 구역 |
+| `ko:productDetails.iot.features[3].title` | Energy use across the campus | 캠퍼스 전체의 에너지 사용량 |
+| `ko:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 교사와 함께하는 학생 |
+| `ko:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | 기술별 이해도 점검 |
+| `ko:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 학생에게 맞춘 단계별 힌트 |
+| `ko:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 혼자 해낼 수 있을 때에만 인정되는 숙달 |
+| `ko:productRoad.start` | Start | 출발 |
+| `ko:productRoad.finish` | Finish | 도착 |
+| `ko:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 학교용 앱: Parent Hub, Staff Hub, IoT, AI Tutor \| XionTech |
+| `ko:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 학부모를 위한 Parent Hub, 교직원·교사·관리자를 위한 Staff Hub, 캠퍼스를 위한 IoT Device Management. XionTech의 연결된 학교 앱. |
+| `ko:productsShowcase.madeFor` | Made for | 대상 |
+| `ko:productsShowcase.featuresHeading` | Features | 기능 |
+| `ko:roadDialog.close` | Close | 닫기 |
 
 ## Privacy
 

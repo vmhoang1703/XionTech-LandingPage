@@ -1,11 +1,14 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { APPS } from "@/content/apps";
-import { dayRoad } from "@/content/products";
+import { LocaleProvider } from "@/components/layout/locale-link";
+import { APPS, appById } from "@/content/apps";
+import { productRoad } from "@/content/products";
 import { siteFooter } from "@/content/site-footer";
 import { globalsCss } from "@/test-utils/css-classes";
 import { RoadMap } from "./road-map";
+
+const COUNT = productRoad.stops.length;
 
 let intersect: (
   visible: boolean,
@@ -163,6 +166,7 @@ describe("RoadMap draw-in", () => {
     expect(html).not.toContain("data-tour");
     expect(html).not.toContain("rm-step");
     expect(html).not.toContain("--share");
+    expect(html).not.toContain("--rm-stops");
   });
 
   it("stays static under reduced motion", () => {
@@ -179,7 +183,7 @@ describe("RoadMap draw-in", () => {
     narrow = true;
     stopsAt();
     const { container } = render(<RoadMap />);
-    const [first, second, third, fourth] = stops(container);
+    const [first, second, third] = stops(container);
 
     expect(roadmap(container).dataset.reveal).toBe("armed");
     expect(observedThreshold).toBe(0.25);
@@ -192,7 +196,7 @@ describe("RoadMap draw-in", () => {
     expect(second.dataset.in).toBe("true");
     expect(observed).not.toContain(first);
     expect(observed).not.toContain(second);
-    expect(observed).toHaveLength(dayRoad.stops.length - 2);
+    expect(observed).toHaveLength(COUNT - 2);
     expect(third.dataset.in).toBeUndefined();
 
     act(() => intersect(false, third));
@@ -204,7 +208,6 @@ describe("RoadMap draw-in", () => {
 
     act(() => intersect(true, third));
     expect(third.dataset.in).toBe("true");
-    expect(fourth.dataset.in).toBeUndefined();
     expect(observed).not.toContain(third);
 
     act(() => intersect(true, third));
@@ -259,21 +262,72 @@ describe("RoadMap draw-in", () => {
     ).toBeGreaterThan(1420);
   });
 
-  it("renders six cards, and each opens the stop modal", () => {
+  it("renders a card for each of the three products, and each opens the stop modal", () => {
     render(<RoadMap />);
     const cards = screen
       .getAllByRole("button")
       .filter((b) => b.classList.contains("rm-open"));
-    expect(cards).toHaveLength(6);
+    expect(cards).toHaveLength(3);
     for (const [i, card] of cards.entries()) {
       fireEvent.click(card);
       const dialog = document.querySelector("dialog") as HTMLDialogElement;
       expect(dialog.open).toBe(true);
       expect(dialog.querySelector("h2")?.textContent).toBe(
-        dayRoad.stops[i].title,
+        appById(productRoad.stops[i]).fullName,
       );
       act(() => dialog.close());
     }
+  });
+
+  it("shows on each card the product's name, its tagline, who it is for and Details", () => {
+    const { container } = render(<RoadMap />);
+    const tags = ["Parent", "Teacher and staff", "Student"];
+    for (const [i, card] of Array.from(
+      container.querySelectorAll(".rm-card"),
+    ).entries()) {
+      const app = appById(productRoad.stops[i]);
+      expect(card.querySelector(".rm-title")?.textContent).toBe(
+        `${i + 1}. ${app.shortName}`,
+      );
+      expect(card.querySelector(".rm-text")?.textContent).toBe(app.tagline);
+      expect(card.querySelector(".rm-who")?.textContent).toBe(tags[i]);
+      expect(card.querySelector(".rm-more")?.textContent).toBe("Details");
+      // No school-day time, no app pill, no row of every app.
+      expect(card.querySelector("time, .rm-app, .rm-apps")).toBeNull();
+    }
+  });
+
+  it("makes the last milestone the navy finale", () => {
+    const { container } = render(<RoadMap />);
+    expect(stops(container).map((stop) => stop.dataset.last)).toEqual([
+      undefined,
+      undefined,
+      "true",
+    ]);
+    expect(
+      roadmapRules().find(({ selector }) =>
+        /^\.rm-stop\[data-last="true"\] \.rm-card$/.test(selector),
+      )?.body,
+    ).toMatch(/background: var\(--color-navy\)/);
+  });
+
+  it("speaks Vietnamese on vi: the tag and the tagline, product names in English", () => {
+    const { container } = render(
+      <LocaleProvider locale="vi">
+        <RoadMap />
+      </LocaleProvider>,
+    );
+    const cards = Array.from(container.querySelectorAll(".rm-card"));
+    expect(
+      cards.map((card) => card.querySelector(".rm-who")?.textContent),
+    ).toEqual(["Phụ huynh", "Giáo viên và nhân viên", "Học sinh"]);
+    expect(
+      cards.map((card) => card.querySelector(".rm-open")?.textContent),
+    ).toEqual(["1. Parent Hub", "2. Staff Hub", "3. AI Tutor"]);
+    expect(cards[0].querySelector(".rm-text")?.textContent).toBe(
+      "Giúp phụ huynh luôn nắm bắt thông tin và gắn kết với đời sống học đường của con.",
+    );
+    expect(cards[0].querySelector(".rm-more")?.textContent).toBe("Chi tiết");
   });
 
   it("hides only under armed, never by opacity, and moves only once shown", () => {
@@ -372,8 +426,8 @@ describe("RoadMap selection", () => {
   it("has no Start or Finish badge on the road", () => {
     const { container } = render(<RoadMap />);
     expect(container.querySelector(".rm-end")).toBeNull();
-    expect(container.textContent).not.toContain(dayRoad.start);
-    expect(container.textContent).not.toContain(dayRoad.finish);
+    expect(container.textContent).not.toContain(productRoad.start);
+    expect(container.textContent).not.toContain(productRoad.finish);
   });
 
   it("highlights no pin until a card is clicked, then only that one", () => {
@@ -387,17 +441,17 @@ describe("RoadMap selection", () => {
   it("moves the highlight with the modal and keeps it after closing", () => {
     const { container } = render(<RoadMap />);
     fireEvent.click(
-      container.querySelectorAll<HTMLButtonElement>(".rm-open")[2],
+      container.querySelectorAll<HTMLButtonElement>(".rm-open")[0],
     );
     const dialog = document.querySelector("dialog") as HTMLDialogElement;
     fireEvent.click(
       within(dialog).getByRole("button", {
-        name: new RegExp(dayRoad.stops[3].title),
+        name: appById(productRoad.stops[1]).shortName,
       }),
     );
-    expect(selected(container)).toEqual([3]);
+    expect(selected(container)).toEqual([1]);
     act(() => dialog.close());
-    expect(selected(container)).toEqual([3]);
+    expect(selected(container)).toEqual([1]);
   });
 
   it("colours only the selected pin amber", () => {
@@ -422,7 +476,8 @@ describe("RoadMap anchors", () => {
     ...APPS.map((a) => a.anchor),
   ]);
 
-  // The stop an anchor belongs to: its stop, or (tour) its step's stop.
+  // The stop an anchor belongs to: its stop, or (tour) its step's stop. An app
+  // with no stop (IoT) has an alias at the start of the roadmap instead.
   const stopOf = (container: HTMLElement, target: HTMLElement) => {
     const step = target.style.getPropertyValue("--step");
     return step === ""
@@ -434,7 +489,7 @@ describe("RoadMap anchors", () => {
     ["narrow", true, ".rm-stop"],
     ["wide (tour)", false, ".rm-step"],
   ])(
-    "%s: puts each app anchor once inside #map, for the stop of that app",
+    "%s: puts each app anchor once inside #map, on the stop of that app or at the start",
     (_, isNarrow, holder) => {
       narrow = isNarrow;
       const { container } = render(
@@ -450,23 +505,28 @@ describe("RoadMap anchors", () => {
         );
         expect(targets, anchor).toHaveLength(1);
         expect(map.contains(targets[0]), anchor).toBe(true);
-        expect(targets[0].matches(holder), anchor).toBe(true);
-        const index = stopOf(container, targets[0]);
         const app = APPS.find((a) => a.anchor === anchor);
-        expect(index, anchor).toBeGreaterThanOrEqual(0);
         expect(app, anchor).toBeDefined();
-        expect(dayRoad.stops[index].app, anchor).toBe(app?.id);
+        const stop = productRoad.stops.findIndex((id) => id === app?.id);
+        if (stop < 0) {
+          expect(targets[0].matches(".rm-alias"), anchor).toBe(true);
+        } else {
+          expect(targets[0].matches(holder), anchor).toBe(true);
+          expect(stopOf(container, targets[0]), anchor).toBe(stop);
+        }
       }
     },
   );
 
   it("moves the anchors back onto the stops when the layout switches", () => {
     const { container } = render(<RoadMap />);
-    expect(container.querySelectorAll(".rm-step[id]")).toHaveLength(4);
+    expect(container.querySelectorAll(".rm-step[id]")).toHaveLength(COUNT);
     expect(container.querySelector(".rm-stop[id]")).toBeNull();
     act(() => layoutChange?.());
     expect(container.querySelector(".rm-step")).toBeNull();
-    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(4);
+    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(COUNT);
+    // IoT's mark stays at the start of the roadmap in both.
+    expect(container.querySelectorAll(".rm-alias#iot")).toHaveLength(1);
   });
 
   it("clears the header when a stop or a step is the scroll target", () => {
@@ -475,13 +535,14 @@ describe("RoadMap anchors", () => {
     );
     expect(anchored).toHaveLength(1);
     expect(anchored[0].selector).toContain(".rm-step");
+    expect(anchored[0].selector).toContain(".rm-alias");
     expect(anchored[0].body).toMatch(/scroll-margin-top: 16px/);
   });
 });
 
 describe("RoadMap scroll tour (wide)", () => {
-  // The stage is 700px tall and pins below the header; the track adds six
-  // 500px steps. `travel` is how far the page has scrolled past the pin.
+  // The stage is 700px tall and pins below the header; the track adds one
+  // 500px step per stop. `travel` is how far the page has scrolled past the pin.
   const STAGE = 700;
   const STEP = 500;
   const PIN = 96;
@@ -490,7 +551,7 @@ describe("RoadMap scroll tour (wide)", () => {
     vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
       function (this: HTMLElement) {
         const top = PIN - travel;
-        const height = STAGE + 6 * STEP;
+        const height = STAGE + COUNT * STEP;
         if (this.classList.contains("rm-stage")) {
           const pinned = Math.min(Math.max(PIN, top), top + height - STAGE);
           return {
@@ -542,20 +603,20 @@ describe("RoadMap scroll tour (wide)", () => {
     tourAt(0);
     const { container } = render(<RoadMap />);
     const shares: number[] = [];
-    for (let i = 0; i < 6; i += 1) {
+    for (let i = 0; i < COUNT; i += 1) {
       scrollTo(i * STEP + STEP / 2);
       expect(active(container)).toEqual([i]);
       expect(selected(container)).toEqual([i]);
       shares.push(share(container));
     }
-    for (let i = 1; i < 6; i += 1) {
+    for (let i = 1; i < COUNT; i += 1) {
       expect(shares[i]).toBeGreaterThan(shares[i - 1]);
     }
-    expect(shares[5]).toBeLessThan(1);
+    expect(shares[COUNT - 1]).toBeLessThan(1);
 
-    // Past the last step the stage releases; stop 6 stays active.
-    scrollTo(6 * STEP + 900);
-    expect(active(container)).toEqual([5]);
+    // Past the last step the stage releases; the last stop stays active.
+    scrollTo(COUNT * STEP + 900);
+    expect(active(container)).toEqual([COUNT - 1]);
 
     // Scrolling back steps back, the road too.
     scrollTo(STEP + 10);
@@ -565,24 +626,36 @@ describe("RoadMap scroll tour (wide)", () => {
   });
 
   it("a click selects mid-tour; the next step takes the selection", () => {
-    tourAt(3 * STEP + 10);
+    tourAt(2 * STEP + 10);
     const { container } = render(<RoadMap />);
-    expect(active(container)).toEqual([3]);
+    expect(active(container)).toEqual([2]);
     fireEvent.click(
       container.querySelectorAll<HTMLButtonElement>(".rm-open")[1],
     );
     expect(selected(container)).toEqual([1]);
-    expect(active(container)).toEqual([3]);
+    expect(active(container)).toEqual([2]);
     expect(document.querySelector("dialog")?.open).toBe(true);
     // A scroll within the same step keeps the clicked stop.
-    scrollTo(3 * STEP + 200);
+    scrollTo(2 * STEP + 200);
     expect(selected(container)).toEqual([1]);
     act(() => (document.querySelector("dialog") as HTMLDialogElement).close());
-    scrollTo(4 * STEP + 10);
-    expect(selected(container)).toEqual([4]);
+    scrollTo(10);
+    expect(selected(container)).toEqual([0]);
   });
 
   it("lands a deep link on its step once the tour is on", () => {
+    const scrolled = vi.fn();
+    Element.prototype.scrollIntoView = scrolled;
+    window.history.replaceState(null, "", "#sxp");
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    expect(scrolled).toHaveBeenCalledTimes(1);
+    const target = scrolled.mock.contexts[0] as Element;
+    expect(target).toBe(container.querySelector("#sxp"));
+    expect(target.matches(".rm-step")).toBe(true);
+  });
+
+  it("lands the old #iot link at the start of the roadmap, where IoT has no stop", () => {
     const scrolled = vi.fn();
     Element.prototype.scrollIntoView = scrolled;
     window.history.replaceState(null, "", "#iot");
@@ -591,7 +664,8 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(scrolled).toHaveBeenCalledTimes(1);
     const target = scrolled.mock.contexts[0] as Element;
     expect(target).toBe(container.querySelector("#iot"));
-    expect(target.matches(".rm-step")).toBe(true);
+    expect(target.matches(".rm-alias")).toBe(true);
+    expect(active(container)).toEqual([0]);
   });
 
   it("leaves a hash outside the roadmap alone", () => {
@@ -647,7 +721,7 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(roadmap(container).dataset.tour).toBeUndefined();
     expect(roadmap(container).dataset.reveal).toBe("static");
     expect(container.querySelector(".rm-step")).toBeNull();
-    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(4);
+    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(COUNT);
     expect(selected(container)).toEqual([]);
   });
 
@@ -659,7 +733,7 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(roadmap(container).dataset.tour).toBeUndefined();
     expect(remove).toHaveBeenCalledWith("scroll", expect.any(Function));
     expect(remove).toHaveBeenCalledWith("resize", expect.any(Function));
-    scrollTo(4 * STEP + 10);
+    scrollTo(2 * STEP + 10);
     expect(active(container)).toEqual([]);
   });
 
@@ -678,26 +752,26 @@ describe("RoadMap scroll tour (wide)", () => {
     tourAt(STEP + 10);
     const { container } = render(<RoadMap />);
     expect(active(container)).toEqual([1]);
-    tourAt(3 * STEP + 10);
+    tourAt(2 * STEP + 10);
     act(() => {
       window.dispatchEvent(new Event("resize"));
     });
-    expect(active(container)).toEqual([3]);
+    expect(active(container)).toEqual([2]);
   });
 
   it("keeps the open stop selected while the modal is open", () => {
     tourAt(STEP + 10);
     const { container } = render(<RoadMap />);
     fireEvent.click(
-      container.querySelectorAll<HTMLButtonElement>(".rm-open")[4],
+      container.querySelectorAll<HTMLButtonElement>(".rm-open")[2],
     );
     const dialog = document.querySelector("dialog") as HTMLDialogElement;
-    // A wheel over the backdrop scrolls the page under the modal.
-    scrollTo(3 * STEP + 10);
-    expect(selected(container)).toEqual([4]);
-    expect(active(container)).toEqual([3]);
+    // The page can still move under the modal (a resize, a script).
+    scrollTo(10);
+    expect(selected(container)).toEqual([2]);
+    expect(active(container)).toEqual([0]);
     act(() => dialog.close());
-    expect(selected(container)).toEqual([4]);
+    expect(selected(container)).toEqual([2]);
     scrollTo(STEP + 10);
     expect(selected(container)).toEqual([1]);
   });
@@ -708,7 +782,7 @@ describe("RoadMap scroll tour (wide)", () => {
     const { container } = render(<RoadMap />);
     expect(roadmap(container).dataset.tour).toBeUndefined();
     expect(roadmap(container).dataset.reveal).toBe("static");
-    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(4);
+    expect(container.querySelectorAll(".rm-stop[id]")).toHaveLength(COUNT);
   });
 
   it("needs about 702px of height: 700 stays static, 720 tours", () => {
@@ -726,7 +800,7 @@ describe("RoadMap scroll tour (wide)", () => {
     reducedMotion = true;
     tourAt(0);
     const { container } = render(<RoadMap />);
-    scrollTo(3 * STEP + 10);
+    scrollTo(2 * STEP + 10);
     expect(roadmap(container).dataset.tour).toBeUndefined();
     expect(container.querySelector(".rm-step")).toBeNull();
     expect(active(container)).toEqual([]);
@@ -768,19 +842,16 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(rule('.rm[data-tour="on"][data-road="moving"] .rm-draw')).toMatch(
       /transition: stroke-dashoffset 400ms var\(--ease-brand\)/,
     );
+    // The track is one step per stop: the component sets the count.
+    expect(rule('.rm[data-tour="on"]')).toMatch(
+      /height: calc\(820px \* var\(--rm-k\) \+ var\(--rm-stops\) \* var\(--rm-step\)\)/,
+    );
     // The zoom never drops below 0.72 (or to 0) on a short window.
     expect(rule('.rm[data-tour="on"]')).toMatch(
       /--rm-k: max\(\s*0\.72,\s*min\(/,
     );
     // Zoomed, functional text stays at --text-label (11.5px) or larger.
-    for (const part of [
-      "rm-kicker",
-      "rm-who",
-      "rm-text",
-      "rm-app",
-      "rm-more",
-      "map-badge",
-    ]) {
+    for (const part of ["rm-kicker", "rm-who", "rm-text", "rm-more"]) {
       const sized = tour.find((r) =>
         r.selector.split(",").some((one) => one.trim().endsWith(`.${part}`)),
       );

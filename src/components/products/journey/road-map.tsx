@@ -2,22 +2,27 @@
 
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
-import { APPS, appById } from "@/content/apps";
+import {
+  APPS,
+  APP_TAGLINES,
+  appById,
+  appTaglinesVi,
+  type AppId,
+} from "@/content/apps";
 import { useLocalized } from "@/components/layout/locale-link";
 import {
-  dayRoad,
-  dayRoadVi,
   journeyBoard,
   journeyBoardVi,
-  type DayRoad,
+  productRoad,
+  productRoadVi,
   type JourneyBoard,
-  type RoadStop,
+  type ProductRoad,
 } from "@/content/products";
-import { MapBadge } from "../map/map-badge";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
+import { H, PAD, POINTS, ROAD, TREES, W, shareOf } from "./road-geometry";
 
-// The school day as a 2D roadmap: a winding road with a pin per stop and the
-// stop's card beside it. Wide screens draw one road across the section with
+// The products as a 2D roadmap: a winding road with a pin per product and its
+// card beside it. Wide screens draw one road across the section with
 // the cards above and below its bends; narrow screens wind the road down the
 // left of the cards.
 //
@@ -77,41 +82,13 @@ function revealStops(map: HTMLElement, show: (index: number) => void) {
   };
 }
 
-const STOPS = dayRoad.stops;
+const STOPS = productRoad.stops;
 const LAST = STOPS.length - 1;
-
-// The wide road's drawing space and its stops (peaks and troughs).
-const W = 1400;
-const H = 820;
-// The road runs past the drawing at both ends; the mask must reach it.
-const PAD = 100;
-const START = { x: -20, y: 430 };
-const FINISH = { x: 1420, y: 420 };
-const POINTS = STOPS.map((_, i) => ({
-  x: 150 + i * 220,
-  y: i % 2 === 0 ? 340 : 500,
-}));
-
-// A smooth road through the points: each bend leaves and arrives level.
-function roadPath() {
-  const all = [START, ...POINTS, FINISH];
-  let d = `M ${all[0].x} ${all[0].y}`;
-  for (let i = 1; i < all.length; i += 1) {
-    const a = all[i - 1];
-    const b = all[i];
-    const mid = (b.x - a.x) / 2;
-    d += ` C ${a.x + mid} ${a.y} ${b.x - mid} ${b.y} ${b.x} ${b.y}`;
-  }
-  return d;
-}
-
-const ROAD = roadPath();
-
-// How much of the road leads up to a stop, 0 to 1.
-function shareOf(index: number) {
-  const share = (POINTS[index].x - START.x) / (FINISH.x - START.x);
-  return Math.round(share * 10000) / 10000;
-}
+// An app with no stop on the road: its old deep link (/products#iot) lands at
+// the start of the roadmap.
+const ALIASES = APPS.filter(
+  (app) => !STOPS.some((stop) => stop === app.id),
+).map((app) => app.anchor);
 
 // The tour: the active stop is the step of the track the pinned stage has
 // travelled into (each stop an equal share). Calls `show` when it changes.
@@ -179,38 +156,21 @@ function canTour() {
   );
 }
 
-// Trees in the open ground between the cards.
-const TREES = [
-  [360, 230],
-  [400, 254],
-  [800, 226],
-  [840, 250],
-  [1240, 230],
-  [1280, 252],
-  [140, 640],
-  [184, 666],
-  [580, 644],
-  [620, 670],
-  [1020, 640],
-  [1064, 664],
-] as const;
-
 // The narrow road's bend beside each card, alternating left and right.
 const BEND = {
   left: "M40 0 C 4 30, 4 70, 40 100",
   right: "M40 0 C 76 30, 76 70, 40 100",
 };
 
-function who(stop: RoadStop, board: JourneyBoard) {
-  const lane = board.laneOf[stop.id];
-  if (lane === "all") return board.everyone;
-  return board.lanes.find((l) => l.id === lane)?.label ?? "";
+// Who the app is for.
+function who(app: AppId, board: JourneyBoard) {
+  return board.lanes.find((lane) => lane.app === app)?.label ?? "";
 }
 
 export function RoadMap() {
-  const { stops } = useLocalized<"dayRoad", DayRoad>("dayRoad", {
-    en: dayRoad,
-    vi: dayRoadVi,
+  const { stops } = useLocalized<"productRoad", ProductRoad>("productRoad", {
+    en: productRoad,
+    vi: productRoadVi,
   });
   const board = useLocalized<"journeyBoard", JourneyBoard>("journeyBoard", {
     en: journeyBoard,
@@ -292,22 +252,30 @@ export function RoadMap() {
       data-tour={tour ? "on" : undefined}
       data-road={tour && roadMoving ? "moving" : undefined}
       style={
-        tour ? ({ "--share": shareOf(active) } as CSSProperties) : undefined
+        tour
+          ? ({
+              "--share": shareOf(active),
+              "--rm-stops": STOPS.length,
+            } as CSSProperties)
+          : undefined
       }
     >
-      {/* The tour's track: one step per stop. An app stop's step holds its
+      {/* The anchors of apps with no stop: at the start of the roadmap. */}
+      {ALIASES.map((anchor) => (
+        <span key={anchor} id={anchor} className="rm-alias" />
+      ))}
+
+      {/* The tour's track: one step per stop. A stop's step holds its
           anchor, where that stop is active. */}
       {tour
-        ? STOPS.map((stop, i) =>
-            stop.app ? (
-              <span
-                key={stop.id}
-                id={appById(stop.app).anchor}
-                className="rm-step"
-                style={{ "--step": i } as CSSProperties}
-              />
-            ) : null,
-          )
+        ? STOPS.map((app, i) => (
+            <span
+              key={app}
+              id={appById(app).anchor}
+              className="rm-step"
+              style={{ "--step": i } as CSSProperties}
+            />
+          ))
         : null}
 
       <div className="rm-stage">
@@ -357,10 +325,10 @@ export function RoadMap() {
         </svg>
 
         <ol className="rm-stops">
-          {stops.map((stop, i) => (
+          {stops.map((app, i) => (
             <RoadCard
-              key={stop.id}
-              stop={stop}
+              key={app}
+              app={app}
               board={board}
               index={i}
               shown={shown.has(i)}
@@ -383,7 +351,7 @@ export function RoadMap() {
 }
 
 function RoadCard({
-  stop,
+  app: id,
   board,
   index,
   shown,
@@ -392,7 +360,7 @@ function RoadCard({
   selected,
   onOpen,
 }: Readonly<{
-  stop: RoadStop;
+  app: AppId;
   board: JourneyBoard;
   index: number;
   shown: boolean;
@@ -401,8 +369,11 @@ function RoadCard({
   selected: boolean;
   onOpen: () => void;
 }>) {
-  const app = stop.app ? appById(stop.app) : null;
-  const everyone = board.laneOf[stop.id] === "all";
+  const app = appById(id);
+  const tagline = useLocalized("appTaglines", {
+    en: APP_TAGLINES,
+    vi: appTaglinesVi,
+  })[id];
   const point = POINTS[index];
   const bend = index % 2 === 0 ? BEND.left : BEND.right;
   const place = {
@@ -412,13 +383,12 @@ function RoadCard({
   return (
     <li
       // The app's anchor (#sxp, …), unless the tour holds it on its step.
-      id={anchored ? app?.anchor : undefined}
+      id={anchored ? app.anchor : undefined}
       className="rm-stop"
       data-side={index % 2 === 0 ? "above" : "below"}
       data-bend={index % 2 === 0 ? "left" : "right"}
       data-first={index === 0 ? "true" : undefined}
       data-last={index === LAST ? "true" : undefined}
-      data-everyone={everyone ? "true" : undefined}
       data-in={shown ? "true" : undefined}
       data-active={active ? "true" : undefined}
       data-selected={selected ? "true" : undefined}
@@ -442,8 +412,7 @@ function RoadCard({
 
       <div className="rm-card">
         <p className="rm-kicker">
-          {stop.time ? <time dateTime={stop.time}>{stop.time}</time> : null}
-          <span className="rm-who">{who(stop, board)}</span>
+          <span className="rm-who">{who(id, board)}</span>
         </p>
         <h3 className="rm-title">
           <button
@@ -453,24 +422,11 @@ function RoadCard({
             onClick={onOpen}
           >
             <span className="sr-only">{index + 1}. </span>
-            {stop.title}
+            {app.shortName}
           </button>
         </h3>
-        <p className="rm-text">{stop.text}</p>
+        <p className="rm-text">{tagline}</p>
         <div className="rm-foot">
-          {app ? (
-            <span className="rm-app">
-              <MapBadge badge={app.badge} />
-              {app.shortName}
-            </span>
-          ) : null}
-          {everyone ? (
-            <span className="rm-apps">
-              {APPS.map((one) => (
-                <MapBadge key={one.id} badge={one.badge} />
-              ))}
-            </span>
-          ) : null}
           <span className="rm-more" aria-hidden="true">
             {board.details}
             <ArrowRightIcon />

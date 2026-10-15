@@ -22,7 +22,7 @@ import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
 import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
-import { dayRoad, journeyBoard, productDetails } from "@/content/products";
+import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
   servicesOutcomes,
   servicesPage,
@@ -278,9 +278,6 @@ const PRIVACY_META_TITLE = "Politique de confidentialité | XionTech";
 
 const RETENTION_DECIDED =
   "Les demandes de contact et de démo, les adresses e-mail envoyées, les candidatures et les CV sont conservés sans limite de durée.";
-
-const [arrive, attendance, parentStop, learn, campus, connected] =
-  dayRoad.stops;
 
 const ERRORS = {
   name: "Veuillez saisir votre nom.",
@@ -554,44 +551,6 @@ export const fr: Dictionaries = {
     startTimings: ["Dès que possible", "Dans 1 à 3 mois", "Simple exploration"],
     services: [...SERVICES.map((service) => service.name), "Pas encore décidé"],
   },
-  dayRoad: {
-    heading: "Une journée à l’école",
-    lede: "Suivez le parcours d’un élève au fil d’une journée d’école type, et voyez comment élèves, parents et personnel restent informés et connectés à chaque étape.",
-    start: "Départ",
-    finish: "Arrivée",
-    stops: [
-      {
-        ...arrive,
-        title: "L’élève arrive",
-        text: "L’élève arrive sur le campus.",
-      },
-      {
-        ...attendance,
-        title: "Présence enregistrée",
-        text: `Un enseignant enregistre la présence de l’élève dans ${staffHub.shortName}.`,
-      },
-      {
-        ...parentStop,
-        title: "Parents informés",
-        text: `${parentHub.shortName} informe les parents que l’élève est à l’école.`,
-      },
-      {
-        ...learn,
-        title: "L’élève apprend",
-        text: `Les élèves s’exercent et posent leurs questions avec ${aiTutor.shortName}.`,
-      },
-      {
-        ...campus,
-        title: PRODUCT_DETAILS.iot.features[1].title,
-        text: APP_TAGLINES.iot,
-      },
-      {
-        ...connected,
-        title: "Une journée connectée",
-        text: "Les notifications et les informations de l’école restent connectées dans tout le système.",
-      },
-    ],
-  },
   footerOffices: [
     { ...footerOffices[0], tag: US_DELIVERY_CENTER },
     {
@@ -754,12 +713,11 @@ export const fr: Dictionaries = {
   },
   journeyBoard: {
     ...journeyBoard,
-    hint: "Sélectionnez une étape pour voir l’application qui la porte.",
-    everyone: "Tout le monde",
     details: "Détails",
-    lanes: ["Élève", "Enseignants et personnel", "Parents", "Campus"].map(
-      (label, i) => ({ ...journeyBoard.lanes[i], label }),
-    ),
+    lanes: ["Élève", "Enseignants et personnel", "Parents"].map((label, i) => ({
+      ...journeyBoard.lanes[i],
+      label,
+    })),
   },
   journeyMap: {
     intro: {
@@ -835,6 +793,11 @@ export const fr: Dictionaries = {
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
+  productRoad: {
+    ...productRoad,
+    start: "Départ",
+    finish: "Arrivée",
+  },
   productsMeta: {
     title: `Applications scolaires : ${parentHub.shortName}, ${staffHub.shortName}, ${iotApp.shortName} et ${aiTutor.shortName} | XionTech`,
     description: `${parentHub.shortName} pour les parents, ${staffHub.shortName} pour le personnel, les enseignants et la direction, et ${iotApp.fullName} pour les campus. Des applications scolaires connectées signées XionTech.`,

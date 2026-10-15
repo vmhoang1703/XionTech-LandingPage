@@ -13,7 +13,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/zh.ts` and open a pull request. `Where` is `zh:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 461 strings.
+**Total:** 445 strings.
 
 ## About
 
@@ -237,61 +237,6 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:contactStrings.startTimings[2]` | Just exploring | 仍在了解中 |
 | `zh:contactStrings.services[8]` | Not sure yet | 尚未确定 |
 
-## Products
-
-48 strings.
-
-| Where | English | 简体中文 |
-| --- | --- | --- |
-| `zh:dayRoad.heading` | A day at school | 校园的一天 |
-| `zh:dayRoad.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | 跟随一名学生度过普通的上学日，看看学生、家长和教职员工在每一步如何获得信息、保持连接。 |
-| `zh:dayRoad.start` | Start | 出发 |
-| `zh:dayRoad.finish` | Finish | 到达 |
-| `zh:dayRoad.stops[0].title` | Student arrives | 学生到校 |
-| `zh:dayRoad.stops[0].text` | The student arrives on campus. | 学生到达校园。 |
-| `zh:dayRoad.stops[1].title` | Attendance recorded | 记录考勤 |
-| `zh:dayRoad.stops[1].text` | A teacher marks the student's attendance in Staff Hub. | 教师在 Staff Hub 中记录学生考勤。 |
-| `zh:dayRoad.stops[2].title` | Parent updated | 通知家长 |
-| `zh:dayRoad.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub 告知家长学生已到校。 |
-| `zh:dayRoad.stops[3].title` | Student learns | 学生学习 |
-| `zh:dayRoad.stops[3].text` | Students practice and ask questions with the AI Tutor. | 学生使用 AI Tutor 练习和提问。 |
-| `zh:dayRoad.stops[4].title`<br>`zh:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明和空调定时控制 |
-| `zh:dayRoad.stops[4].text` | Simplify how schools manage connected campus technology. | 让学校更轻松地管理互联的校园技术。 |
-| `zh:dayRoad.stops[5].title` | Day stays connected | 互联的一天 |
-| `zh:dayRoad.stops[5].text` | Notifications and school information stay connected across the system. | 通知和学校信息在整个系统中保持互通。 |
-| `zh:journeyBoard.hint` | Select a step to see the app behind it. | 选择一个步骤，查看支持该步骤的应用。 |
-| `zh:journeyBoard.everyone` | Everyone | 所有人 |
-| `zh:journeyBoard.details` | Details | 详情 |
-| `zh:journeyBoard.lanes[0].label` | Student | 学生 |
-| `zh:journeyBoard.lanes[1].label` | Teacher and staff | 教师与教职员工 |
-| `zh:journeyBoard.lanes[2].label` | Parent | 家长 |
-| `zh:journeyBoard.lanes[3].label` | Campus | 校园 |
-| `zh:journeyMap.intro.title` | Built apart. Better together | 各自打造，携手更强 |
-| `zh:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。 |
-| `zh:productDetails.parent-hub.madeFor` | Parents and families | 家长与家庭 |
-| `zh:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | 实时到校提醒 |
-| `zh:productDetails.parent-hub.features[1].title` | Published grades and feedback | 已发布的成绩和评语 |
-| `zh:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 与教师双向沟通 |
-| `zh:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 缴纳学费，收据清晰 |
-| `zh:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 教职员工、教师与管理层 |
-| `zh:productDetails.staff-hub.features[0].title` | Attendance and student records | 考勤和学生档案 |
-| `zh:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 班级、课表与成绩 |
-| `zh:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | 通过 Parent Hub 向家长发送消息 |
-| `zh:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 展示当日重点的管理层看板 |
-| `zh:productDetails.iot.madeFor` | School operations and facilities teams | 设施与运维团队 |
-| `zh:productDetails.iot.features[0].title` | Centralized device management | 设备集中管理 |
-| `zh:productDetails.iot.features[2].title` | Doors and zones managed centrally | 集中管理门禁与区域 |
-| `zh:productDetails.iot.features[3].title` | Energy use across the campus | 全校园能耗 |
-| `zh:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 学生，教师从旁陪伴 |
-| `zh:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | 按技能检查理解程度 |
-| `zh:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 个性化的分步提示 |
-| `zh:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 只有能独立完成时才算掌握 |
-| `zh:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校应用：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
-| `zh:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 面向家长的 Parent Hub、面向教职员工、教师和管理层的 Staff Hub，以及面向校园的 IoT Device Management。XionTech 的互联学校应用。 |
-| `zh:productsShowcase.madeFor` | Made for | 适用对象 |
-| `zh:productsShowcase.featuresHeading` | Features | 功能 |
-| `zh:roadDialog.close` | Close | 关闭 |
-
 ## Offices (About, Contact, footer)
 
 8 strings.
@@ -428,6 +373,45 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:roleTypes.part-time` | Part-time | 兼职 |
 | `zh:roleTypes.contract` | Contract | 合同制 |
 | `zh:roleTypes.internship` | Internship | 实习 |
+
+## Products
+
+32 strings.
+
+| Where | English | 简体中文 |
+| --- | --- | --- |
+| `zh:journeyBoard.details` | Details | 详情 |
+| `zh:journeyBoard.lanes[0].label` | Student | 学生 |
+| `zh:journeyBoard.lanes[1].label` | Teacher and staff | 教师与教职员工 |
+| `zh:journeyBoard.lanes[2].label` | Parent | 家长 |
+| `zh:journeyMap.intro.title` | Built apart. Better together | 各自打造，携手更强 |
+| `zh:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。 |
+| `zh:productDetails.parent-hub.madeFor` | Parents and families | 家长与家庭 |
+| `zh:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | 实时到校提醒 |
+| `zh:productDetails.parent-hub.features[1].title` | Published grades and feedback | 已发布的成绩和评语 |
+| `zh:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 与教师双向沟通 |
+| `zh:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 缴纳学费，收据清晰 |
+| `zh:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 教职员工、教师与管理层 |
+| `zh:productDetails.staff-hub.features[0].title` | Attendance and student records | 考勤和学生档案 |
+| `zh:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 班级、课表与成绩 |
+| `zh:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | 通过 Parent Hub 向家长发送消息 |
+| `zh:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 展示当日重点的管理层看板 |
+| `zh:productDetails.iot.madeFor` | School operations and facilities teams | 设施与运维团队 |
+| `zh:productDetails.iot.features[0].title` | Centralized device management | 设备集中管理 |
+| `zh:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明和空调定时控制 |
+| `zh:productDetails.iot.features[2].title` | Doors and zones managed centrally | 集中管理门禁与区域 |
+| `zh:productDetails.iot.features[3].title` | Energy use across the campus | 全校园能耗 |
+| `zh:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 学生，教师从旁陪伴 |
+| `zh:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | 按技能检查理解程度 |
+| `zh:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 个性化的分步提示 |
+| `zh:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 只有能独立完成时才算掌握 |
+| `zh:productRoad.start` | Start | 出发 |
+| `zh:productRoad.finish` | Finish | 到达 |
+| `zh:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校应用：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
+| `zh:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 面向家长的 Parent Hub、面向教职员工、教师和管理层的 Staff Hub，以及面向校园的 IoT Device Management。XionTech 的互联学校应用。 |
+| `zh:productsShowcase.madeFor` | Made for | 适用对象 |
+| `zh:productsShowcase.featuresHeading` | Features | 功能 |
+| `zh:roadDialog.close` | Close | 关闭 |
 
 ## Privacy
 

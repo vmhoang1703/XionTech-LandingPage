@@ -13,7 +13,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ja.ts` and open a pull request. `Where` is `ja:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 459 strings.
+**Total:** 443 strings.
 
 ## About
 
@@ -236,61 +236,6 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:contactStrings.startTimings[2]` | Just exploring | 情報収集中 |
 | `ja:contactStrings.services[8]` | Not sure yet | 未定 |
 
-## Products
-
-48 strings.
-
-| Where | English | 日本語 |
-| --- | --- | --- |
-| `ja:dayRoad.heading` | A day at school | 学校の一日 |
-| `ja:dayRoad.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | ある生徒の典型的な一日をたどり、生徒、保護者、学校職員が各段階でどのように情報を共有し、つながっているかをご覧ください。 |
-| `ja:dayRoad.start` | Start | スタート |
-| `ja:dayRoad.finish` | Finish | ゴール |
-| `ja:dayRoad.stops[0].title` | Student arrives | 生徒が登校 |
-| `ja:dayRoad.stops[0].text` | The student arrives on campus. | 生徒がキャンパスに到着します。 |
-| `ja:dayRoad.stops[1].title` | Attendance recorded | 出欠を記録 |
-| `ja:dayRoad.stops[1].text` | A teacher marks the student's attendance in Staff Hub. | 教員が Staff Hub で生徒の出欠を記録します。 |
-| `ja:dayRoad.stops[2].title` | Parent updated | 保護者にお知らせ |
-| `ja:dayRoad.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub が、生徒が学校に着いたことを保護者に通知します。 |
-| `ja:dayRoad.stops[3].title` | Student learns | 生徒が学ぶ |
-| `ja:dayRoad.stops[3].text` | Students practice and ask questions with the AI Tutor. | 生徒は AI Tutor で練習し、質問します。 |
-| `ja:dayRoad.stops[4].title`<br>`ja:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明と空調のスケジュール制御 |
-| `ja:dayRoad.stops[4].text` | Simplify how schools manage connected campus technology. | キャンパスのコネクテッド技術の管理をシンプルにします。 |
-| `ja:dayRoad.stops[5].title` | Day stays connected | 一日中つながる |
-| `ja:dayRoad.stops[5].text` | Notifications and school information stay connected across the system. | 通知と学校の情報が、システム全体でつながり続けます。 |
-| `ja:journeyBoard.hint` | Select a step to see the app behind it. | ステップを選ぶと、その裏で動くアプリが表示されます。 |
-| `ja:journeyBoard.everyone` | Everyone | 全員 |
-| `ja:journeyBoard.details` | Details | 詳細 |
-| `ja:journeyBoard.lanes[0].label` | Student | 生徒 |
-| `ja:journeyBoard.lanes[1].label` | Teacher and staff | 教員と職員 |
-| `ja:journeyBoard.lanes[2].label` | Parent | 保護者 |
-| `ja:journeyBoard.lanes[3].label` | Campus | キャンパス |
-| `ja:journeyMap.intro.title` | Built apart. Better together | 別々につくり、一緒にもっと良く |
-| `ja:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 学校コミュニティのためのつながったスイート。保護者、学び、職員の業務、キャンパスのテクノロジーをひとつのエコシステムにまとめます。 |
-| `ja:productDetails.parent-hub.madeFor` | Parents and families | 保護者とご家族 |
-| `ja:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | リアルタイムの到着通知 |
-| `ja:productDetails.parent-hub.features[1].title` | Published grades and feedback | 公開された成績とフィードバック |
-| `ja:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 先生との双方向メッセージ |
-| `ja:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 明細がわかりやすい学費のお支払い |
-| `ja:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 職員、教員、学校管理職 |
-| `ja:productDetails.staff-hub.features[0].title` | Attendance and student records | 出欠と生徒の記録 |
-| `ja:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | クラス、時間割、成績 |
-| `ja:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub を通じた保護者へのメッセージ |
-| `ja:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 管理職向けの今日の優先事項ダッシュボード |
-| `ja:productDetails.iot.madeFor` | School operations and facilities teams | 学校の運営・施設管理チーム |
-| `ja:productDetails.iot.features[0].title` | Centralized device management | 機器の一元管理 |
-| `ja:productDetails.iot.features[2].title` | Doors and zones managed centrally | ドアとエリアを一元管理 |
-| `ja:productDetails.iot.features[3].title` | Energy use across the campus | キャンパス全体のエネルギー使用量 |
-| `ja:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 生徒と、寄り添う教員 |
-| `ja:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | スキルごとの理解度チェック |
-| `ja:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 一人ひとりに合わせたステップごとのヒント |
-| `ja:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 一人でできるようになって初めて習得 |
-| `ja:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校向けアプリ：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
-| `ja:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 保護者向けの Parent Hub、職員・教員・管理職向けの Staff Hub、キャンパス向けの IoT Device Management。XionTech のつながる学校向けアプリ。 |
-| `ja:productsShowcase.madeFor` | Made for | 対象 |
-| `ja:productsShowcase.featuresHeading` | Features | 機能 |
-| `ja:roadDialog.close` | Close | 閉じる |
-
 ## Offices (About, Contact, footer)
 
 8 strings.
@@ -426,6 +371,45 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:roleTypes.part-time` | Part-time | パートタイム |
 | `ja:roleTypes.contract` | Contract | 契約 |
 | `ja:roleTypes.internship` | Internship | インターンシップ |
+
+## Products
+
+32 strings.
+
+| Where | English | 日本語 |
+| --- | --- | --- |
+| `ja:journeyBoard.details` | Details | 詳細 |
+| `ja:journeyBoard.lanes[0].label` | Student | 生徒 |
+| `ja:journeyBoard.lanes[1].label` | Teacher and staff | 教員と職員 |
+| `ja:journeyBoard.lanes[2].label` | Parent | 保護者 |
+| `ja:journeyMap.intro.title` | Built apart. Better together | 別々につくり、一緒にもっと良く |
+| `ja:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 学校コミュニティのためのつながったスイート。保護者、学び、職員の業務、キャンパスのテクノロジーをひとつのエコシステムにまとめます。 |
+| `ja:productDetails.parent-hub.madeFor` | Parents and families | 保護者とご家族 |
+| `ja:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | リアルタイムの到着通知 |
+| `ja:productDetails.parent-hub.features[1].title` | Published grades and feedback | 公開された成績とフィードバック |
+| `ja:productDetails.parent-hub.features[2].title` | Two-way messages with teachers | 先生との双方向メッセージ |
+| `ja:productDetails.parent-hub.features[3].title` | Fee payments with clear receipts | 明細がわかりやすい学費のお支払い |
+| `ja:productDetails.staff-hub.madeFor` | Staff, teachers and school leaders | 職員、教員、学校管理職 |
+| `ja:productDetails.staff-hub.features[0].title` | Attendance and student records | 出欠と生徒の記録 |
+| `ja:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | クラス、時間割、成績 |
+| `ja:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | Parent Hub を通じた保護者へのメッセージ |
+| `ja:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 管理職向けの今日の優先事項ダッシュボード |
+| `ja:productDetails.iot.madeFor` | School operations and facilities teams | 学校の運営・施設管理チーム |
+| `ja:productDetails.iot.features[0].title` | Centralized device management | 機器の一元管理 |
+| `ja:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明と空調のスケジュール制御 |
+| `ja:productDetails.iot.features[2].title` | Doors and zones managed centrally | ドアとエリアを一元管理 |
+| `ja:productDetails.iot.features[3].title` | Energy use across the campus | キャンパス全体のエネルギー使用量 |
+| `ja:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 生徒と、寄り添う教員 |
+| `ja:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | スキルごとの理解度チェック |
+| `ja:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 一人ひとりに合わせたステップごとのヒント |
+| `ja:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 一人でできるようになって初めて習得 |
+| `ja:productRoad.start` | Start | スタート |
+| `ja:productRoad.finish` | Finish | ゴール |
+| `ja:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校向けアプリ：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
+| `ja:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 保護者向けの Parent Hub、職員・教員・管理職向けの Staff Hub、キャンパス向けの IoT Device Management。XionTech のつながる学校向けアプリ。 |
+| `ja:productsShowcase.madeFor` | Made for | 対象 |
+| `ja:productsShowcase.featuresHeading` | Features | 機能 |
+| `ja:roadDialog.close` | Close | 閉じる |
 
 ## Privacy
 

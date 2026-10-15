@@ -1,7 +1,7 @@
 // Products page copy (E-A5), from the prototype products.html. Kept out of the
 // components so it can be translated later. App names, badges and taglines
 // come from apps.ts.
-import { appById, appTaglinesVi, type AppId } from "@/content/apps";
+import { appById, type AppId } from "@/content/apps";
 
 const [parentHub, staffHub, iot, aiTutor] = [
   appById("parent-hub"),
@@ -92,96 +92,43 @@ export const journeyMap = {
   },
 };
 
-// The school-day roadmap: one student's day from arrival to the end of the
-// day, as stations on a road. Times, titles and text are the prototype's
-// "A day at school" copy (products.html); the IoT stop uses IoT's own
-// feature title and tagline, and has no time because the prototype gives none.
-export type RoadStop = {
-  id: string;
-  time?: string;
-  title: string;
-  text: string;
-  app?: AppId;
+// The roadmap: the three apps as milestones on a road (lead, 2026-10-14),
+// each one a stop. A stop is its app, so the card and the dialog take the
+// name, tagline, audience and features from apps.ts and the product details
+// below: the road has no copy of its own but the two end labels.
+export type RoadApp = Exclude<AppId, "iot">;
+
+export type ProductRoad = {
+  start: string;
+  finish: string;
+  stops: readonly RoadApp[];
 };
 
-export const dayRoad = {
-  heading: "A day at school",
-  lede: "Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step.",
+export const productRoad: ProductRoad = {
   start: "Start",
   finish: "Finish",
-  stops: [
-    {
-      id: "arrive",
-      time: "07:45",
-      title: "Student arrives",
-      text: "The student arrives on campus.",
-    },
-    {
-      id: "attendance",
-      time: "08:00",
-      title: "Attendance recorded",
-      text: "A teacher marks the student's attendance in Staff Hub.",
-      app: "staff-hub",
-    },
-    {
-      id: "parent",
-      time: "08:01",
-      title: "Parent updated",
-      text: "Parent Hub notifies parents that the student is at school.",
-      app: "parent-hub",
-    },
-    {
-      id: "learn",
-      time: "09:30",
-      title: "Student learns",
-      text: "Students practice and ask questions with the AI Tutor.",
-      app: "ai-tutor",
-    },
-    {
-      id: "campus",
-      title: productDetails.iot.features[1].title,
-      text: iot.tagline,
-      app: "iot",
-    },
-    {
-      id: "connected",
-      time: "15:30",
-      title: "Day stays connected",
-      text: "Notifications and school information stay connected across the system.",
-    },
-  ] satisfies RoadStop[],
-} as const;
+  stops: ["parent-hub", "staff-hub", "ai-tutor"],
+};
 
-// The journey board: who acts at each stop of the day. Each lane is a person
-// in the school and the app they use; the last stop belongs to everyone.
-export type LaneId = "student" | "staff" | "parent" | "campus";
+// The tag on each stop's card: who the app is for, and the card's "Details" cue.
+export type JourneyBoard = {
+  details: string;
+  lanes: readonly { app: RoadApp; label: string }[];
+};
 
-export const journeyBoard = {
-  hint: "Select a step to see the app behind it.",
-  everyone: "Everyone",
+export const journeyBoard: JourneyBoard = {
   details: "Details",
   lanes: [
-    { id: "student", label: "Student", app: "ai-tutor" },
-    { id: "staff", label: "Teacher and staff", app: "staff-hub" },
-    { id: "parent", label: "Parent", app: "parent-hub" },
-    { id: "campus", label: "Campus", app: "iot" },
-  ] satisfies { id: LaneId; label: string; app: AppId }[],
-  // Lane per stop id; "all" spans every lane.
-  laneOf: {
-    arrive: "student",
-    attendance: "staff",
-    parent: "parent",
-    learn: "student",
-    campus: "campus",
-    connected: "all",
-  } as Record<string, LaneId | "all">,
-} as const;
+    { app: "ai-tutor", label: "Student" },
+    { app: "staff-hub", label: "Teacher and staff" },
+    { app: "parent-hub", label: "Parent" },
+  ],
+};
 
 // The close button of the stop dialog.
 export const roadDialog = { close: "Close" };
 
-// Vietnamese. App names, badges and ids stay English (2026-10-13); times and
-// lanes are shared with English.
+// Vietnamese. App names, badges and ids stay English (2026-10-13).
 export const productsMetaVi: typeof productsMeta = {
   title: `Ứng dụng cho trường học: ${parentHub.shortName}, ${staffHub.shortName}, ${iot.shortName} & ${aiTutor.shortName} | XionTech`,
   description: `${parentHub.shortName} cho phụ huynh, ${staffHub.shortName} cho nhân viên, giáo viên và lãnh đạo, và ${iot.fullName} cho khuôn viên trường. Các ứng dụng trường học kết nối từ XionTech.`,
@@ -246,74 +193,19 @@ export const journeyMapVi: typeof journeyMap = {
   },
 };
 
-const [arrive, attendance, parent, learn, campus, connected] = dayRoad.stops;
-
-// The shapes components read either language through.
-export type DayRoad = {
-  heading: string;
-  lede: string;
-  start: string;
-  finish: string;
-  stops: readonly RoadStop[];
-};
-
-export type JourneyBoard = {
-  hint: string;
-  everyone: string;
-  details: string;
-  lanes: readonly { id: LaneId; label: string; app: AppId }[];
-  laneOf: Record<string, LaneId | "all">;
-};
-
-export const dayRoadVi: DayRoad = {
-  heading: "Một ngày ở trường",
-  lede: "Theo chân một học sinh qua một ngày học điển hình để thấy học sinh, phụ huynh và nhà trường luôn được cập nhật và kết nối ở từng bước.",
+export const productRoadVi: ProductRoad = {
+  ...productRoad,
   start: "Bắt đầu",
   finish: "Kết thúc",
-  stops: [
-    {
-      ...arrive,
-      title: "Học sinh đến trường",
-      text: "Học sinh đến khuôn viên trường.",
-    },
-    {
-      ...attendance,
-      title: "Ghi nhận điểm danh",
-      text: "Giáo viên điểm danh học sinh trên Staff Hub.",
-    },
-    {
-      ...parent,
-      title: "Phụ huynh được cập nhật",
-      text: "Parent Hub báo cho phụ huynh rằng con đã đến trường.",
-    },
-    {
-      ...learn,
-      title: "Học sinh học tập",
-      text: "Học sinh luyện tập và đặt câu hỏi cùng AI Tutor.",
-    },
-    {
-      ...campus,
-      title: productDetailsVi.iot.features[1].title,
-      text: appTaglinesVi.iot,
-    },
-    {
-      ...connected,
-      title: "Cả ngày luôn kết nối",
-      text: "Thông báo và thông tin của trường luôn kết nối trên toàn hệ thống.",
-    },
-  ],
 };
 
 export const journeyBoardVi: JourneyBoard = {
   ...journeyBoard,
-  hint: "Chọn một bước để xem ứng dụng phía sau.",
-  everyone: "Mọi người",
   details: "Chi tiết",
   lanes: [
     { ...journeyBoard.lanes[0], label: "Học sinh" },
     { ...journeyBoard.lanes[1], label: "Giáo viên và nhân viên" },
     { ...journeyBoard.lanes[2], label: "Phụ huynh" },
-    { ...journeyBoard.lanes[3], label: "Khuôn viên" },
   ],
 };
 

@@ -13,7 +13,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 452 strings, 265 AI and 187 prototype.
+**Total:** 436 strings, 259 AI and 177 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -199,7 +199,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Products
 
-23 AI, 25 prototype.
+17 AI, 15 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -209,22 +209,16 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `products:productDetailsVi.parent-hub.features[1].title` | Published grades and feedback | Điểm số và nhận xét đã công bố |
 | AI | `products:productDetailsVi.staff-hub.features[0].title` | Attendance and student records | Điểm danh và hồ sơ học sinh |
 | AI | `products:productDetailsVi.iot.features[0].title` | Centralized device management | Quản lý thiết bị tập trung |
-| AI | `products:productDetailsVi.iot.features[1].title`<br>`products:dayRoadVi.stops[4].title` | Scheduled lighting and climate controls | Điều khiển ánh sáng và điều hòa theo lịch |
+| AI | `products:productDetailsVi.iot.features[1].title` | Scheduled lighting and climate controls | Điều khiển ánh sáng và điều hòa theo lịch |
 | AI | `products:productDetailsVi.ai-tutor.features[0].title` | Skill-level understanding checks | Kiểm tra mức độ hiểu theo từng kỹ năng |
 | AI | `products:productDetailsVi.ai-tutor.features[1].title` | Personalized step-by-step hints | Gợi ý từng bước theo từng học sinh |
 | AI | `products:journeyMapVi.intro.title` | Built apart. Better together | Xây dựng riêng. Mạnh hơn khi kết nối |
-| AI | `products:dayRoadVi.heading` | A day at school | Một ngày ở trường |
-| AI | `products:dayRoadVi.start` | Start | Bắt đầu |
-| AI | `products:dayRoadVi.finish` | Finish | Kết thúc |
-| AI | `products:dayRoadVi.stops[3].text` | Students practice and ask questions with the AI Tutor. | Học sinh luyện tập và đặt câu hỏi cùng AI Tutor. |
-| AI | `products:dayRoadVi.stops[4].text` | Simplify how schools manage connected campus technology. | Đơn giản hóa cách nhà trường quản lý công nghệ trong khuôn viên kết nối. |
-| AI | `products:journeyBoardVi.hint` | Select a step to see the app behind it. | Chọn một bước để xem ứng dụng phía sau. |
-| AI | `products:journeyBoardVi.everyone` | Everyone | Mọi người |
+| AI | `products:productRoadVi.start` | Start | Bắt đầu |
+| AI | `products:productRoadVi.finish` | Finish | Kết thúc |
 | AI | `products:journeyBoardVi.details` | Details | Chi tiết |
 | AI | `products:journeyBoardVi.lanes[0].label` | Student | Học sinh |
 | AI | `products:journeyBoardVi.lanes[1].label` | Teacher and staff | Giáo viên và nhân viên |
 | AI | `products:journeyBoardVi.lanes[2].label` | Parent | Phụ huynh |
-| AI | `products:journeyBoardVi.lanes[3].label` | Campus | Khuôn viên |
 | AI | `products:roadDialogVi.close` | Close | Đóng |
 | Prototype | `products:productsShowcaseVi.madeFor` | Made for | Dành cho |
 | Prototype | `products:productsShowcaseVi.featuresHeading` | Features | Tính năng |
@@ -241,16 +235,6 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `products:productDetailsVi.ai-tutor.madeFor` | Students, with teachers alongside | Học sinh, cùng giáo viên đồng hành |
 | Prototype | `products:productDetailsVi.ai-tutor.features[2].title` | Mastery only when you can do it alone | Chỉ thành thạo khi tự làm được |
 | Prototype | `products:journeyMapVi.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung. |
-| Prototype | `products:dayRoadVi.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | Theo chân một học sinh qua một ngày học điển hình để thấy học sinh, phụ huynh và nhà trường luôn được cập nhật và kết nối ở từng bước. |
-| Prototype | `products:dayRoadVi.stops[0].title` | Student arrives | Học sinh đến trường |
-| Prototype | `products:dayRoadVi.stops[0].text` | The student arrives on campus. | Học sinh đến khuôn viên trường. |
-| Prototype | `products:dayRoadVi.stops[1].title` | Attendance recorded | Ghi nhận điểm danh |
-| Prototype | `products:dayRoadVi.stops[1].text` | A teacher marks the student's attendance in Staff Hub. | Giáo viên điểm danh học sinh trên Staff Hub. |
-| Prototype | `products:dayRoadVi.stops[2].title` | Parent updated | Phụ huynh được cập nhật |
-| Prototype | `products:dayRoadVi.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub báo cho phụ huynh rằng con đã đến trường. |
-| Prototype | `products:dayRoadVi.stops[3].title` | Student learns | Học sinh học tập |
-| Prototype | `products:dayRoadVi.stops[5].title` | Day stays connected | Cả ngày luôn kết nối |
-| Prototype | `products:dayRoadVi.stops[5].text` | Notifications and school information stay connected across the system. | Thông báo và thông tin của trường luôn kết nối trên toàn hệ thống. |
 
 ## Services
 

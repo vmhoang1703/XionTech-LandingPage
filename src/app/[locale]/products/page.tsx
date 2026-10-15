@@ -10,10 +10,10 @@ export const generateMetadata = localeMetadata({
   vi: productsMetaVi,
 });
 
-// E-A5: on the shared page scene (lead, 2026-10-12) the school-day journey
-// map, then the navy demo capture band (its default demo copy is "See it
-// working at your school."). The journey's own heading sits inside the scene,
-// so the scene does not fade in. A day at school and Product updates are
+// E-A5: on the shared page scene (lead, 2026-10-12) the roadmap of the three
+// products (lead, 2026-10-14), then the navy demo capture band (its default
+// demo copy is "See it working at your school."). The roadmap's own heading
+// sits inside the scene, so the scene does not fade in. Product updates are
 // Tier 2.
 export default async function ProductsPage({
   params,

@@ -51,10 +51,10 @@ import {
 import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
 import {
-  dayRoad,
   journeyBoard,
   journeyMap,
   productDetails,
+  productRoad,
   productsMeta,
   productsShowcase,
   roadDialog,
@@ -101,7 +101,6 @@ export function english() {
     categoryLabels,
     contactErrors: CONTACT_ERROR_MESSAGES,
     contactStrings: CONTACT_STRINGS,
-    dayRoad,
     footerOffices,
     hcmc,
     homeApps,
@@ -130,6 +129,7 @@ export function english() {
     privacy: PRIVACY,
     processFlow,
     productDetails,
+    productRoad,
     productsMeta,
     productsShowcase,
     roadDialog,

@@ -22,7 +22,7 @@ import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
 import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
-import { dayRoad, journeyBoard, productDetails } from "@/content/products";
+import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
   servicesOutcomes,
   servicesPage,
@@ -270,9 +270,6 @@ const PRIVACY_META_TITLE = "隐私政策 | XionTech";
 
 const RETENTION_DECIDED =
   "咨询和演示请求、提交的电子邮箱地址，以及求职申请和简历均无限期保存。";
-
-const [arrive, attendance, parentStop, learn, campus, connected] =
-  dayRoad.stops;
 
 const ERRORS = {
   name: "请输入您的姓名。",
@@ -537,44 +534,6 @@ export const zh: Dictionaries = {
     startTimings: ["尽快", "1–3 个月内", "仍在了解中"],
     services: [...SERVICES.map((service) => service.name), "尚未确定"],
   },
-  dayRoad: {
-    heading: "校园的一天",
-    lede: "跟随一名学生度过普通的上学日，看看学生、家长和教职员工在每一步如何获得信息、保持连接。",
-    start: "出发",
-    finish: "到达",
-    stops: [
-      {
-        ...arrive,
-        title: "学生到校",
-        text: "学生到达校园。",
-      },
-      {
-        ...attendance,
-        title: "记录考勤",
-        text: `教师在 ${staffHub.shortName} 中记录学生考勤。`,
-      },
-      {
-        ...parentStop,
-        title: "通知家长",
-        text: `${parentHub.shortName} 告知家长学生已到校。`,
-      },
-      {
-        ...learn,
-        title: "学生学习",
-        text: `学生使用 ${aiTutor.shortName} 练习和提问。`,
-      },
-      {
-        ...campus,
-        title: PRODUCT_DETAILS.iot.features[1].title,
-        text: APP_TAGLINES.iot,
-      },
-      {
-        ...connected,
-        title: "互联的一天",
-        text: "通知和学校信息在整个系统中保持互通。",
-      },
-    ],
-  },
   footerOffices: [
     { ...footerOffices[0], tag: US_DELIVERY_CENTER },
     {
@@ -731,10 +690,8 @@ export const zh: Dictionaries = {
   },
   journeyBoard: {
     ...journeyBoard,
-    hint: "选择一个步骤，查看支持该步骤的应用。",
-    everyone: "所有人",
     details: "详情",
-    lanes: ["学生", "教师与教职员工", "家长", "校园"].map((label, i) => ({
+    lanes: ["学生", "教师与教职员工", "家长"].map((label, i) => ({
       ...journeyBoard.lanes[i],
       label,
     })),
@@ -809,6 +766,11 @@ export const zh: Dictionaries = {
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
+  productRoad: {
+    ...productRoad,
+    start: "出发",
+    finish: "到达",
+  },
   productsMeta: {
     title: `学校应用：${parentHub.shortName}、${staffHub.shortName}、${iotApp.shortName}、${aiTutor.shortName} | XionTech`,
     description: `面向家长的 ${parentHub.shortName}、面向教职员工、教师和管理层的 ${staffHub.shortName}，以及面向校园的 ${iotApp.fullName}。XionTech 的互联学校应用。`,
