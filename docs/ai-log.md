@@ -1945,3 +1945,10 @@ Template:
 - **AI got it wrong:** it read `appTaglines: APP_TAGLINES` in the ja/fr/ko/zh dictionaries as the English set, said those locales had no tagline translations, and started writing new ones; each dictionary had its own translated local `APP_TAGLINES`. It reverted before committing. It also checked the redirects against a stale server left on port 3106 (its stop command had been rejected) and saw 200s before restarting on the fresh build.
 - **Kept on purpose (lead to decide):** the translation registry (`DICTIONARIES`, `registeredTranslation`) stays as an empty extension point.
 - **Checks:** lint, typecheck and format pass; `npm test` 1,760 passed, exit 0; diff coverage 100%, branch gate ok on 24 files; Playwright 135 passed, exit 0; redirects checked on a fresh production build.
+
+## 2026-10-15 — Sanity: Vietnamese for two news posts; a stale local cache
+
+- **Prompt:** screenshots of `/vi/news` with English titles, "that fix was from Sanity right?", then the lead gave an Editor API token and chose "Publish directly".
+- **What the AI did:** checked Sanity directly: two posts had Vietnamese, two (`ai-robotics-client-visit`, `project-kickoff`) had none, so the site's English fallback was correct. The local dev server showed old posts and a 404 for a renamed slug because its fetch cache (`.next/dev/cache/fetch-cache`) never gets Sanity's revalidation webhook; deleting it and restarting fixed that. With the token it wrote AI Vietnamese title, excerpt and body into only the empty `vi` fields of the two posts (one transaction, after a check that no `vi` field was set), and the dev site showed them through the webhook.
+- **AI got it wrong / risk:** the token was pasted into the chat, so it counts as exposed; the AI saved it only in the git-ignored `.env.local` and asked the lead to revoke it after the edit.
+- **Not done:** a native reader has not checked the two Vietnamese posts.
