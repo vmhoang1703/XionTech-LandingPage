@@ -29,10 +29,10 @@ describe("JSON-LD", () => {
   });
 
   it("names the website in the page language", () => {
-    expect(websiteLd("zh")).toMatchObject({
+    expect(websiteLd("vi")).toMatchObject({
       "@type": "WebSite",
-      url: `${SITE_URL}/zh`,
-      inLanguage: "zh-Hans",
+      url: `${SITE_URL}/vi`,
+      inLanguage: "vi",
     });
   });
 

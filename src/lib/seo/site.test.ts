@@ -25,10 +25,6 @@ describe("SEO helpers", () => {
     expect(languageAlternates("/about")).toEqual({
       en: "/en/about",
       vi: "/vi/about",
-      ja: "/ja/about",
-      fr: "/fr/about",
-      ko: "/ko/about",
-      "zh-Hans": "/zh/about",
       "x-default": "/en/about",
     });
   });

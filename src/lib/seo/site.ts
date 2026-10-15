@@ -35,10 +35,6 @@ export function languageAlternates(path: string): Record<string, string> {
 const OG_LOCALES: Record<Locale, string> = {
   en: "en_US",
   vi: "vi_VN",
-  ja: "ja_JP",
-  fr: "fr_FR",
-  ko: "ko_KR",
-  zh: "zh_CN",
 };
 
 /** The site's share image (src/app/opengraph-image.tsx). */

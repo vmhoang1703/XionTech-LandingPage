@@ -52,10 +52,6 @@ describe("page metadata per locale", () => {
       languages: {
         en: "/en/news",
         vi: "/vi/news",
-        ja: "/ja/news",
-        fr: "/fr/news",
-        ko: "/ko/news",
-        "zh-Hans": "/zh/news",
         "x-default": "/en/news",
       },
     });

@@ -28,10 +28,10 @@ describe("sitemap.xml", () => {
     const urls = (await sitemap()).map((entry) => entry.url);
     expect(urls).toContain("https://xiontech-hoangvu-dev.vercel.app/en");
     expect(urls).toContain(
-      "https://xiontech-hoangvu-dev.vercel.app/zh/services",
+      "https://xiontech-hoangvu-dev.vercel.app/vi/services",
     );
     expect(urls).toContain(
-      "https://xiontech-hoangvu-dev.vercel.app/ko/careers/qa-engineer",
+      "https://xiontech-hoangvu-dev.vercel.app/vi/careers/qa-engineer",
     );
     expect(urls).toContain(
       "https://xiontech-hoangvu-dev.vercel.app/en/news/pxp-day",
@@ -39,10 +39,7 @@ describe("sitemap.xml", () => {
     expect(urls).toContain(
       "https://xiontech-hoangvu-dev.vercel.app/vi/news/pxp-day",
     );
-    expect(urls).not.toContain(
-      "https://xiontech-hoangvu-dev.vercel.app/fr/news/pxp-day",
-    );
-    expect(urls.filter((url) => url.endsWith("/about"))).toHaveLength(6);
+    expect(urls.filter((url) => url.endsWith("/about"))).toHaveLength(2);
   });
 
   it("gives each static page its hreflang alternates", async () => {
@@ -60,6 +57,6 @@ describe("sitemap.xml", () => {
   it("still lists the static pages when Sanity cannot be read", async () => {
     vi.mocked(getOpenRoles).mockRejectedValue(new Error("down"));
     vi.mocked(getAllPosts).mockRejectedValue(new Error("down"));
-    expect(await sitemap()).toHaveLength(7 * 6);
+    expect(await sitemap()).toHaveLength(7 * 2);
   });
 });
