@@ -48,44 +48,44 @@ export const processFlow: ProcessFlowContent = {
   receiveLabel: "You receive",
   start: {
     title: "Your request",
-    line: "An idea, a brief or a requirement.",
+    line: "An idea, a brief or a business need",
     icon: PaperPlaneTiltIcon,
   },
   end: {
     title: "Launch",
-    line: "And we keep growing it together.",
+    line: "Growing the product together, release after release",
     icon: FlagCheckeredIcon,
   },
   steps: [
     {
       num: "01",
       title: "Discovery",
-      line: "Workshops to understand your goals, users, risks and scope.",
-      receive: "A clear scope, estimate and delivery plan.",
+      line: "Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements",
+      receive: "Clear requirements, an estimate and a delivery plan",
       icon: MagnifyingGlassIcon,
       orbs: [UsersIcon, TargetIcon, NoteIcon],
     },
     {
       num: "02",
       title: "Design",
-      line: "User flows, interfaces and architecture agreed before code is written.",
-      receive: "A clickable prototype and technical design.",
+      line: "Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built",
+      receive: "An approved prototype and technical design",
       icon: PenNibIcon,
       orbs: [LayoutIcon, TreeStructureIcon, CursorClickIcon],
     },
     {
       num: "03",
       title: "Development",
-      line: "Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end.",
-      receive: "Tested, working software every sprint.",
+      line: "The approved prototype guides the build in Agile sprints, with testing in every sprint",
+      receive: "Tested, working software at every demo",
       icon: CodeIcon,
       orbs: [GitBranchIcon, CheckSquareIcon, ArrowsClockwiseIcon],
     },
     {
       num: "04",
       title: "Deployment",
-      line: "A safe release, monitoring and improvement after launch.",
-      receive: "A live release with ongoing support.",
+      line: "The finished product goes live safely, then is monitored and improved through real use",
+      receive: "A live product with ongoing support",
       icon: RocketLaunchIcon,
       orbs: [CloudArrowUpIcon, PulseIcon, LifebuoyIcon],
     },
@@ -98,23 +98,23 @@ export const processStepsViList: Pick<
 >[] = [
   {
     title: "Khám phá",
-    line: "Workshop để hiểu mục tiêu, người dùng, rủi ro và phạm vi.",
-    receive: "Phạm vi rõ ràng, ước tính và kế hoạch triển khai.",
+    line: "Các buổi workshop giúp làm rõ mục tiêu, người dùng, rủi ro và phạm vi, rồi biến ý tưởng thành yêu cầu rõ ràng",
+    receive: "Yêu cầu rõ ràng, ước tính và kế hoạch triển khai",
   },
   {
     title: "Thiết kế",
-    line: "Luồng người dùng, giao diện và kiến trúc được thống nhất trước khi viết code.",
-    receive: "Bản mẫu có thể nhấp và thiết kế kỹ thuật.",
+    line: "Các yêu cầu đó trở thành luồng người dùng và bản mẫu có thể nhấp, để sản phẩm được nhìn thấy và tinh chỉnh trước khi xây dựng",
+    receive: "Bản mẫu đã được phê duyệt và thiết kế kỹ thuật",
   },
   {
     title: "Phát triển",
-    line: "Sprint Agile với demo thường xuyên. Kiểm thử và đảm bảo chất lượng (QA) diễn ra trong từng sprint, không phải ở cuối dự án.",
-    receive: "Phần mềm đã kiểm thử, chạy được sau mỗi sprint.",
+    line: "Bản mẫu đã duyệt dẫn dắt việc xây dựng qua các sprint Agile, với kiểm thử trong từng sprint",
+    receive: "Phần mềm đã kiểm thử, chạy được ở mỗi buổi demo",
   },
   {
     title: "Triển khai",
-    line: "Phát hành an toàn, theo dõi và cải tiến sau khi ra mắt.",
-    receive: "Bản phát hành chính thức và hỗ trợ liên tục.",
+    line: "Sản phẩm hoàn thiện được đưa vào vận hành an toàn, sau đó được theo dõi và cải tiến qua quá trình sử dụng thực tế",
+    receive: "Sản phẩm vận hành chính thức và hỗ trợ liên tục",
   },
 ];
 
@@ -124,12 +124,12 @@ export const processFlowVi: ProcessFlowContent = {
   start: {
     ...processFlow.start,
     title: "Yêu cầu của bạn",
-    line: "Ý tưởng, bản mô tả hoặc yêu cầu.",
+    line: "Một ý tưởng, bản mô tả hoặc nhu cầu kinh doanh",
   },
   end: {
     ...processFlow.end,
     title: "Ra mắt",
-    line: "Và phát triển tiếp cùng nhau.",
+    line: "Cùng phát triển sản phẩm qua từng bản phát hành",
   },
   steps: processFlow.steps.map((step, index) => ({
     ...step,

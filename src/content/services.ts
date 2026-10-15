@@ -8,80 +8,92 @@ import {
 // Services page copy. Kept out of the components so it can be translated later.
 
 export const servicesMeta = {
-  title:
-    "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech",
+  title: "Software Outsourcing Vietnam | XionTech",
   description:
-    "Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones.",
+    "Software outsourcing from Ho Chi Minh City: product engineering, AI-driven analytics, co-creation, staffing, custom apps, low-code, AI solutions and cloud.",
 };
 
 export const servicesPage = {
   title: {
-    lead: "Software teams that ",
-    highlight: "get IT done",
-    tail: ".",
+    lead: "You bring your ",
+    words: ["vision", "challenges", "ideas", "ambition", "goals"],
+    // After the rotating word.
+    suffix: ".",
+    tail: ["We get ", "IT", " done"],
+    // Static word for assistive tech and crawlers; the rotator is aria-hidden.
+    staticWord: "vision.",
+    label: "You bring your vision. We get IT done",
   },
-  lede: "Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver.",
+  lede: "From digital products to AI integration and technology modernization, we bring the expertise to solve your challenges, accelerate innovation, and drive your business forward.",
   primaryCta: {
     href: "/#contact",
-    label: "Start a project",
+    label: "Let's build together",
+  },
+  secondaryCta: {
+    href: "#services-all",
+    label: "Explore our services",
+  },
+  // The hero illustration: its accessible name and the three plate labels.
+  stack: {
+    label:
+      "Illustration: requirements, wireframe and technical code layers of a software build",
+    requirements: "REQUIREMENTS",
+    wireframe: "WIREFRAME",
+    code: "TECHNICAL CODE",
   },
 };
 
 export const servicesSection = {
-  title: "Eight services, one team.",
+  title: "Eight services, one team",
   lede: "Pick one service or combine several. We shape the team around your product.",
   services: [
     {
       id: "product-engineering" as const,
       name: "Product Engineering",
       description:
-        "Transform innovative ideas into market-ready digital products with end-to-end engineering expertise.",
-      tags: ["Web", "Mobile"],
+        "Turn ideas into market-ready digital products, from concept to launch.",
     },
     {
       id: "ai-analytics" as const,
       name: "AI-Driven Analytics",
       description:
-        "Transform raw data into actionable intelligence using AI and advanced visualisation.",
-      tags: ["AI/ML", "Dashboards"],
+        "Turn complex data into actionable insights with AI and intuitive dashboards.",
     },
     {
       id: "co-creation" as const,
       name: "Product Co-Creation",
       description:
-        "Accelerate innovation by combining your domain knowledge with our technical expertise.",
+        "Bring your industry knowledge and our product expertise together to create solutions that matter.",
     },
     {
       id: "staffing" as const,
-      name: "Staffing Service",
+      name: "Staffing Services",
       description:
-        "Access specialised technology talent when you need it, with flexible options.",
+        "Get the right technology talent to support your projects and scale your team.",
     },
     {
       id: "custom-apps" as const,
       name: "Custom App Development",
       description:
-        "Develop custom solutions aligned with your unique requirements.",
+        "Build tailored applications that fit your business needs and workflows.",
     },
     {
       id: "low-code" as const,
-      name: "Low-code Solutions",
+      name: "Low-Code Solutions",
       description:
-        "Ship tools and automations faster on leading low-code platforms.",
-      tags: ["Power Platform", "Make", "n8n", "Retool", "Bubble"],
+        "Build applications and automate workflows faster with flexible low-code platforms.",
     },
     {
       id: "ai-solutions" as const,
       name: "AI-Powered Solutions",
       description:
-        "Harness artificial intelligence to transform your operations.",
-      tags: ["Generative AI", "AI/ML"],
+        "Put AI to work with intelligent solutions that streamline processes and improve productivity.",
     },
     {
       id: "cloud" as const,
       name: "Cloud Computing",
-      description: "Expert solutions on Azure, AWS and GCP.",
-      tags: ["Azure", "AWS", "GCP"],
+      description:
+        "Build, scale, and manage cloud solutions that support your growing business.",
     },
   ],
 } as const;
@@ -93,25 +105,25 @@ export const servicesOutcomes = {
       id: "build",
       title: "Build a new digital product",
       description:
-        "Move from discovery and UX into engineering, testing and launch with one delivery team.",
+        "Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support.",
     },
     {
       id: "extend",
       title: "Extend your team",
       description:
-        "Add specialised technology talent when your internal team needs more capacity or specific skills.",
+        "Add specialized technology talent when your internal team needs more capacity or specific skills.",
     },
     {
       id: "modernise",
-      title: "Modernise an existing platform",
+      title: "Modernize an existing platform",
       description:
         "Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works.",
     },
     {
       id: "apply-ai",
-      title: "Apply AI where it creates value",
+      title: "Leverage AI to drive business value",
       description:
-        "Use AI, analytics and automation to improve products, workflows and business decision-making.",
+        "Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions.",
     },
   ],
 } as const;
@@ -121,70 +133,86 @@ export const servicesProcess: {
   lede: string;
   flow: ProcessFlowContent;
 } = {
-  title: "Our 4-D process: from your request to launch.",
+  title: "Our 4-D process: from your request to launch",
   lede: "Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it.",
   flow: processFlow,
 };
 
-// Vietnamese. Service names and tags stay English (2026-10-13); ids and the
-// process icons are shared with English.
+// Vietnamese. Service names stay English (2026-10-13); ids and the process
+// icons are shared with English.
 export const servicesMetaVi: typeof servicesMeta = {
-  title:
-    "Outsourcing phần mềm tại Việt Nam | Product Engineering, AI, Low-code & Cloud | XionTech",
+  title: "Outsourcing phần mềm tại Việt Nam | XionTech",
   description:
-    "Đội ngũ chuyên trách và phát triển phần mềm trọn gói từ TP. Hồ Chí Minh: phát triển sản phẩm, AI, low-code và cloud, theo múi giờ Mỹ, châu Âu và Úc.",
+    "Outsourcing phần mềm từ TP. Hồ Chí Minh: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo, cung cấp nhân sự, ứng dụng theo yêu cầu, low-code, giải pháp AI và cloud.",
 };
 
-export const servicesPageVi: typeof servicesPage = {
+export const servicesPageVi: Localized<typeof servicesPage> = {
   title: {
-    lead: 'Đội ngũ phần mềm có tinh thần "',
-    highlight: "Get IT done",
-    tail: '".',
+    lead: "Bạn mang đến ",
+    words: ["tầm nhìn", "thử thách", "ý tưởng", "khát vọng", "mục tiêu"],
+    suffix: ".",
+    tail: ['Còn chúng tôi: "', "Get IT done", '"'],
+    staticWord: "tầm nhìn.",
+    label: 'Bạn mang đến tầm nhìn. Còn chúng tôi: "Get IT done"',
   },
-  lede: "Phát triển sản phẩm, AI, low-code và cloud từ TP. Hồ Chí Minh, làm việc theo múi giờ Mỹ, châu Âu và Úc. Chúng tôi làm việc thông minh hơn với AI và không ngừng đổi mới cách triển khai.",
-  primaryCta: { ...servicesPage.primaryCta, label: "Bắt đầu dự án" },
+  lede: "Từ sản phẩm số đến tích hợp AI và hiện đại hóa công nghệ, chúng tôi mang đến chuyên môn để giải quyết thử thách của bạn, thúc đẩy đổi mới và đưa doanh nghiệp của bạn tiến lên.",
+  primaryCta: { ...servicesPage.primaryCta, label: "Cùng nhau xây dựng" },
+  secondaryCta: {
+    ...servicesPage.secondaryCta,
+    label: "Khám phá dịch vụ của chúng tôi",
+  },
+  stack: {
+    label:
+      "Hình minh họa: các lớp yêu cầu, wireframe và mã kỹ thuật của một sản phẩm phần mềm",
+    requirements: "YÊU CẦU",
+    wireframe: "WIREFRAME",
+    code: "MÃ KỸ THUẬT",
+  },
 };
 
 export const servicesSectionVi: Localized<typeof servicesSection> = {
-  title: "Tám dịch vụ, một đội ngũ.",
-  lede: "Chọn một dịch vụ hoặc kết hợp nhiều dịch vụ. Chúng tôi điều chỉnh theo sản phẩm của bạn.",
+  title: "Tám dịch vụ, một đội ngũ",
+  lede: "Chọn một dịch vụ hoặc kết hợp nhiều dịch vụ. Chúng tôi xây dựng đội ngũ xoay quanh sản phẩm của bạn.",
   services: [
     {
       ...servicesSection.services[0],
       description:
-        "Biến ý tưởng sáng tạo thành sản phẩm số sẵn sàng ra thị trường với năng lực kỹ thuật toàn diện.",
+        "Biến ý tưởng thành sản phẩm số sẵn sàng ra thị trường, từ ý tưởng ban đầu đến ngày ra mắt.",
     },
     {
       ...servicesSection.services[1],
       description:
-        "Biến dữ liệu thô thành thông tin hữu ích bằng AI và trực quan hóa nâng cao.",
+        "Biến dữ liệu phức tạp thành thông tin hữu ích với AI và các dashboard trực quan.",
     },
     {
       ...servicesSection.services[2],
       description:
-        "Tăng tốc đổi mới bằng cách kết hợp chuyên môn của bạn với năng lực kỹ thuật của chúng tôi.",
+        "Kết hợp hiểu biết ngành của bạn với chuyên môn sản phẩm của chúng tôi để tạo nên những giải pháp thực sự có giá trị.",
     },
     {
       ...servicesSection.services[3],
       description:
-        "Tiếp cận nhân sự công nghệ chuyên sâu khi cần, với giải pháp linh hoạt.",
+        "Có đúng nhân sự công nghệ để hỗ trợ dự án và mở rộng đội ngũ của bạn.",
     },
     {
       ...servicesSection.services[4],
-      description: "Phát triển giải pháp theo đúng yêu cầu riêng của bạn.",
+      description:
+        "Xây dựng ứng dụng riêng phù hợp với nhu cầu và quy trình làm việc của doanh nghiệp bạn.",
     },
     {
       ...servicesSection.services[5],
       description:
-        "Ra mắt công cụ và tự động hóa nhanh hơn trên các nền tảng low-code hàng đầu.",
+        "Xây dựng ứng dụng và tự động hóa quy trình nhanh hơn với các nền tảng low-code linh hoạt.",
     },
     {
       ...servicesSection.services[6],
-      description: "Khai thác trí tuệ nhân tạo để chuyển đổi vận hành.",
+      description:
+        "Đưa AI vào công việc với các giải pháp thông minh giúp tinh gọn quy trình và nâng cao năng suất.",
     },
     {
       ...servicesSection.services[7],
-      description: "Giải pháp chuyên sâu trên Azure, AWS và GCP.",
+      description:
+        "Xây dựng, mở rộng và quản lý các giải pháp cloud hỗ trợ doanh nghiệp đang phát triển của bạn.",
     },
   ],
 };
@@ -196,7 +224,7 @@ export const servicesOutcomesVi: Localized<typeof servicesOutcomes> = {
       id: servicesOutcomes.items[0].id,
       title: "Xây dựng sản phẩm số mới",
       description:
-        "Đi từ khám phá và UX đến kỹ thuật, kiểm thử và ra mắt với một đội triển khai duy nhất.",
+        "Biến ý tưởng của bạn thành sản phẩm sẵn sàng ra thị trường với thiết kế trọn gói, phát triển phần mềm theo yêu cầu, kiểm thử và hỗ trợ ra mắt.",
     },
     {
       id: servicesOutcomes.items[1].id,
@@ -212,15 +240,15 @@ export const servicesOutcomesVi: Localized<typeof servicesOutcomes> = {
     },
     {
       id: servicesOutcomes.items[3].id,
-      title: "Ứng dụng AI ở nơi tạo ra giá trị",
+      title: "Tận dụng AI để tạo giá trị kinh doanh",
       description:
-        "Dùng AI, phân tích dữ liệu và tự động hóa để cải thiện sản phẩm, quy trình và việc ra quyết định kinh doanh.",
+        "Xây dựng giải pháp ứng dụng AI, tự động hóa quy trình và biến dữ liệu kinh doanh thành thông tin hữu ích, hỗ trợ ra quyết định thông minh hơn.",
     },
   ],
 };
 
 export const servicesProcessVi: typeof servicesProcess = {
-  title: "Quy trình 4-D: từ yêu cầu của bạn đến ngày ra mắt.",
+  title: "Quy trình 4-D: từ yêu cầu của bạn đến ngày ra mắt",
   lede: "Mỗi bước kết thúc bằng một kết quả bạn có thể xem, kiểm tra và phê duyệt. AI đồng hành trong mọi bước, và chúng tôi không ngừng cải thiện cách sử dụng AI.",
   flow: processFlowVi,
 };

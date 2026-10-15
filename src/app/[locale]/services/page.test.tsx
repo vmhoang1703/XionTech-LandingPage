@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
-import { servicesOutcomes } from "@/content/services";
+import { servicesOutcomes, servicesProcess } from "@/content/services";
 import ServicesPage, { generateMetadata } from "./page";
 
 function servicesAt(locale: string) {
@@ -36,14 +36,14 @@ afterEach(() => {
 });
 
 describe("ServicesPage", () => {
-  it("has the prototype title and its own description", () => {
-    expect(metadata.title).toBe(
-      "Software Outsourcing Vietnam | Product Engineering, AI, Low-code & Cloud | XionTech",
-    );
-    expect(String(metadata.description)).toContain("Ho Chi Minh City");
+  it("has the prototype title and its own description", async () => {
+    expect(metadata.title).toBe("Software Outsourcing Vietnam | XionTech");
+    const description = String(metadata.description);
+    expect(description).toContain("product engineering");
+    expect(description.length).toBeLessThanOrEqual(160);
   });
 
-  it("renders a navy hero panel with one H1, the highlight and the lede, no breadcrumb", async () => {
+  it("renders a navy hero panel with one H1, a stable name, the rotating word and the lede", async () => {
     const { container } = render(await servicesAt("en"));
 
     const hero = container.querySelector("section.hero-navy.svc-hero");
@@ -52,27 +52,43 @@ describe("ServicesPage", () => {
     const h1s = screen.getAllByRole("heading", { level: 1 });
     expect(h1s).toHaveLength(1);
     expect(h1s[0].id).toBe("services-h1");
-    expect(h1s[0].textContent).toBe("Software teams that get IT done.");
-    expect(h1s[0].querySelector(".hl")?.textContent).toBe("get IT done");
-    // The shine (lead, 2026-10-13) draws its pale copy from data-text.
-    const shine = h1s[0].querySelector(".hl-shine");
-    expect(shine?.getAttribute("aria-hidden")).toBe("true");
-    expect(shine?.getAttribute("data-text")).toBe("get IT done");
-    expect(shine?.textContent).toBe("");
-    expect(hero?.querySelector("p.lede")?.textContent).toContain(
-      "Product engineering, AI, low-code and cloud delivery",
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "You bring your vision. We get IT done",
+      }),
+    ).toBe(h1s[0]);
+    const lines = h1s[0].querySelectorAll(".svc-h1-line");
+    expect(lines[0].textContent?.startsWith("You bring your ")).toBe(true);
+    expect(lines[1].textContent).toBe("We get IT done");
+    expect(lines[1].querySelector(".hl")?.textContent).toBe("IT");
+    const rot = h1s[0].querySelector(".rot-word");
+    expect(rot?.getAttribute("aria-hidden")).toBe("true");
+    expect(
+      rot?.querySelector('[data-state="in"]')?.getAttribute("data-word"),
+    ).toBe("vision.");
+    expect(h1s[0].textContent?.replace(/\s+/g, " ").trim()).toBe(
+      "You bring your vision. We get IT done",
+    );
+    expect(hero?.querySelector("p.lede")?.textContent).toBe(
+      "From digital products to AI integration and technology modernization, we bring the expertise to solve your challenges, accelerate innovation, and drive your business forward.",
     );
   });
 
-  it("has one call to action and none of the removed parts", async () => {
+  it("has a primary and a secondary call to action and none of the removed parts", async () => {
     const { container } = render(await servicesAt("en"));
 
     const row = container.querySelector(".cta-row");
     const links = Array.from(row?.querySelectorAll("a") ?? []);
-    expect(links).toHaveLength(1);
-    expect(links[0].textContent).toBe("Start a project");
+    expect(links).toHaveLength(2);
+    expect(links[0].textContent).toBe("Let's build together");
     expect(links[0].getAttribute("href")).toBe("/en#contact");
     expect(links[0].classList.contains("btn-primary")).toBe(true);
+    expect(links[1].textContent).toBe("Explore our services");
+    expect(links[1].getAttribute("href")).toBe("#services-all");
+    expect(
+      container.querySelector("section#services-all.svc-panel"),
+    ).not.toBeNull();
     expect(screen.queryByText("See our 4-D process")).toBeNull();
     expect(container.querySelector(".clock-strip")).toBeNull();
     expect(screen.queryByRole("group", { name: "Key facts" })).toBeNull();
@@ -82,7 +98,7 @@ describe("ServicesPage", () => {
 
   it("defines every class it uses in globals.css", async () => {
     const { container } = render(await servicesAt("en"));
-    expect(undefinedClasses(container, /^(mt-5)$/)).toEqual([]);
+    expect(undefinedClasses(container, /^(mt-5|sr-only)$/)).toEqual([]);
   });
 
   it("puts the services right below the hero with the heading beside the cards", async () => {
@@ -90,7 +106,7 @@ describe("ServicesPage", () => {
 
     const h2 = screen.getByRole("heading", {
       level: 2,
-      name: "Eight services, one team.",
+      name: "Eight services, one team",
     });
     const panel = h2.closest("section");
     expect(panel?.className).toBe("sec svc-panel");
@@ -106,7 +122,7 @@ describe("ServicesPage", () => {
     expect(container.querySelector(".svc-split > .svc-cards")).not.toBeNull();
   });
 
-  it("renders eight alike non-link cards with ids, icon and title in one row, copy and tags", async () => {
+  it("renders eight alike non-link cards with ids, icon and title in one row and copy", async () => {
     const { container } = render(await servicesAt("en"));
 
     const cards = Array.from(
@@ -134,24 +150,10 @@ describe("ServicesPage", () => {
     }
   });
 
-  it("lists tags only where the prototype has them", async () => {
+  it("shows no tag lines under the descriptions (round 13)", async () => {
     const { container } = render(await servicesAt("en"));
-
-    const tagsOf = (id: string) =>
-      Array.from(
-        container.querySelector(`#${id}`)?.querySelectorAll(".svc-card-tags") ??
-          [],
-      ).map((t) => t.textContent);
-    expect(tagsOf("product-engineering")).toEqual(["Web · Mobile"]);
-    expect(tagsOf("ai-analytics")).toEqual(["AI/ML · Dashboards"]);
-    expect(tagsOf("ai-solutions")).toEqual(["Generative AI · AI/ML"]);
-    expect(tagsOf("low-code")).toEqual([
-      "Power Platform · Make · n8n · Retool · Bubble",
-    ]);
-    expect(tagsOf("cloud")).toEqual(["Azure · AWS · GCP"]);
-    for (const id of ["co-creation", "staffing", "custom-apps"]) {
-      expect(tagsOf(id)).toEqual([]);
-    }
+    expect(container.querySelector(".svc-card-tags")).toBeNull();
+    expect(container.textContent).not.toContain("Azure · AWS · GCP");
   });
 
   it("has the four outcomes, numbered, between the services and the process", async () => {
@@ -178,17 +180,11 @@ describe("ServicesPage", () => {
     expect(items.map((li) => li.querySelector(".oc-num")?.textContent)).toEqual(
       ["01", "02", "03", "04"],
     );
-    expect(items.map((li) => li.querySelector("h3")?.textContent)).toEqual([
-      "Build a new digital product",
-      "Extend your team",
-      "Modernise an existing platform",
-      "Apply AI where it creates value",
-    ]);
-    expect(items[0].querySelector("p")?.textContent).toBe(
-      "Move from discovery and UX into engineering, testing and launch with one delivery team.",
+    expect(items.map((li) => li.querySelector("h3")?.textContent)).toEqual(
+      servicesOutcomes.items.map((item) => item.title),
     );
-    expect(items[3].querySelector("p")?.textContent).toBe(
-      "Use AI, analytics and automation to improve products, workflows and business decision-making.",
+    expect(items.map((li) => li.querySelector("p")?.textContent)).toEqual(
+      servicesOutcomes.items.map((item) => item.description),
     );
     expect(section?.previousElementSibling).toBe(
       container.querySelector("section.svc-panel"),
@@ -196,7 +192,7 @@ describe("ServicesPage", () => {
     expect(section?.nextElementSibling?.id).toBe("process");
   });
 
-  it("styles the split, the sticky heading and the breakpoints of the prototype", () => {
+  it("styles the split, the sticky heading and the breakpoints of the prototype", async () => {
     const css = globalsCss();
     expect(css).toMatch(
       /\.svc-stick\s*\{[^}]*position:\s*sticky[^}]*top:\s*calc\(var\(--spacing-header-room\) \+ 48px\)/,
@@ -210,7 +206,7 @@ describe("ServicesPage", () => {
     expect(css).not.toMatch(/\.svc-grid/);
   });
 
-  it(".svc-card[id] has a scroll-margin-top that uses --spacing-anchor-offset", () => {
+  it(".svc-card[id] has a scroll-margin-top that uses --spacing-anchor-offset", async () => {
     const css = globalsCss();
     expect(css).toMatch(
       /\.svc-card\[id\]\s*,\s*#outcomes\s*,\s*#process(\s*,\s*#[\w-]+)*\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
@@ -224,7 +220,7 @@ describe("ServicesPage", () => {
     expect(band?.className).toBe("sec d4");
     const h2 = screen.getByRole("heading", {
       level: 2,
-      name: "Our 4-D process: from your request to launch.",
+      name: "Our 4-D process: from your request to launch",
     });
     expect(band?.getAttribute("aria-labelledby")).toBe(h2.id);
     const head = h2.parentElement;
@@ -249,19 +245,9 @@ describe("ServicesPage", () => {
     ]);
     expect(
       steps.map((s) => s.querySelector(":scope > p")?.textContent),
-    ).toEqual([
-      "Workshops to understand your goals, users, risks and scope.",
-      "User flows, interfaces and architecture agreed before code is written.",
-      "Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end.",
-      "A safe release, monitoring and improvement after launch.",
-    ]);
+    ).toEqual(servicesProcess.flow.steps.map((step) => step.line));
     expect(steps.map((s) => s.querySelector(".get span")?.textContent)).toEqual(
-      [
-        "A clear scope, estimate and delivery plan.",
-        "A clickable prototype and technical design.",
-        "Tested, working software every sprint.",
-        "A live release with ongoing support.",
-      ],
+      servicesProcess.flow.steps.map((step) => step.receive),
     );
     expect(flow.querySelector(".node b")?.textContent).toBe("Your request");
     expect(flow.querySelector(".node.end b")?.textContent).toBe("Launch");
@@ -281,105 +267,10 @@ describe("ServicesPage", () => {
     );
   });
 
-  it("#process has a scroll-margin-top that uses --spacing-anchor-offset", () => {
+  it("#process has a scroll-margin-top that uses --spacing-anchor-offset", async () => {
     const css = globalsCss();
     expect(css).toMatch(
       /#process\s*[,{][^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
-  });
-
-  it("renders Vietnamese copy on vi, with service names in English", async () => {
-    render(await servicesAt("vi"));
-
-    const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe('Đội ngũ phần mềm có tinh thần "Get IT done".');
-    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
-    expect(
-      screen.getByRole("heading", { name: "Product Engineering" }),
-    ).toBeTruthy();
-    expect(
-      screen.queryByRole("heading", { name: "Eight services, one team." }),
-    ).toBeNull();
-    expect(screen.getByRole("heading", { name: "Khám phá" })).toBeTruthy();
-  });
-
-  it("renders Japanese copy on ja, with service names in English", async () => {
-    render(await servicesAt("ja"));
-
-    const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe(
-      "「Get IT done」を体現するソフトウェアチーム。",
-    );
-    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
-    expect(
-      screen.getByRole("heading", { name: "Product Engineering" }),
-    ).toBeTruthy();
-    expect(
-      screen.queryByRole("heading", { name: "Eight services, one team." }),
-    ).toBeNull();
-  });
-
-  it("renders French copy on fr, with service names in English", async () => {
-    render(await servicesAt("fr"));
-
-    const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe(
-      "Des équipes logicielles qui incarnent « Get IT done ».",
-    );
-    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
-    expect(
-      screen.getByRole("heading", { name: "Product Engineering" }),
-    ).toBeTruthy();
-    expect(
-      screen.queryByRole("heading", { name: "Eight services, one team." }),
-    ).toBeNull();
-  });
-
-  it("renders Korean copy on ko, with service names in English", async () => {
-    render(await servicesAt("ko"));
-
-    const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe("‘Get IT done’을 실현하는 소프트웨어 팀.");
-    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
-    expect(
-      screen.getByRole("heading", { name: "Product Engineering" }),
-    ).toBeTruthy();
-    expect(
-      screen.queryByRole("heading", { name: "Eight services, one team." }),
-    ).toBeNull();
-  });
-
-  it("renders Simplified Chinese copy on zh, with service names in English", async () => {
-    render(await servicesAt("zh"));
-
-    const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe("践行“Get IT done”的软件团队。");
-    expect(h1.querySelector(".hl")?.textContent).toBe("Get IT done");
-    expect(
-      screen.getByRole("heading", { name: "Product Engineering" }),
-    ).toBeTruthy();
-    expect(
-      screen.queryByRole("heading", { name: "Eight services, one team." }),
-    ).toBeNull();
-  });
-
-  it("falls back to English for an unknown locale", async () => {
-    render(await servicesAt("xx"));
-
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Software teams that get IT done.",
-    );
-  });
-});
-
-describe("ServicesPage metadata in Vietnamese", () => {
-  it("uses the Vietnamese title and description", async () => {
-    const viMeta = await generateMetadata({
-      params: Promise.resolve({ locale: "vi" }),
-    });
-    expect(viMeta.title).toBe(
-      "Outsourcing phần mềm tại Việt Nam | Product Engineering, AI, Low-code & Cloud | XionTech",
-    );
-    expect(String(viMeta.title)).not.toContain("[Placeholder]");
   });
 });

@@ -27,7 +27,7 @@ describe("footer product links", () => {
       .filter((link) => link.href.startsWith("/products#"))
       .map((link) => link.href.replace("/products#", ""));
 
-    expect(footerIds).toEqual(["sxp", "ai-tutor", "pxp"]);
+    expect(footerIds).toEqual(["pxp", "sxp", "iot", "ai-tutor"]);
     for (const id of footerIds) expect(anchors).toContain(id);
   });
 });
