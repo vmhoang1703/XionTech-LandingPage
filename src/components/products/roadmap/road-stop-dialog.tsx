@@ -32,8 +32,8 @@ const ProductScene = dynamic(
 
 // The modal for one stop on the road, which is one product: its name, its
 // tagline, who it is made for and its features, and Previous/Next to walk the
-// road. Behind the card, the product's name stands up as 3D towers on a piece
-// of the road. The scene is decoration; the card has the text.
+// road. Behind the card, the product's device (a phone, a laptop or a monitor)
+// stands on a piece of the road. The scene is decoration; the card has the text.
 
 type Props = Readonly<{
   index: number | null;

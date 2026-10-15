@@ -127,7 +127,7 @@
 }
 
 /* The ground: a flat plane, its road slid so the shown stop lies in front of the
-   towers (its pin at --px, --py), and the road runs --rd-road-z in front. */
+   device (its pin at --px, --py), and the road runs --rd-road-z in front. */
 .rd-ground {
   position: absolute;
   top: 0;

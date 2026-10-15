@@ -131,7 +131,7 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
         step:
           (el.getBoundingClientRect().height -
             stageEl.getBoundingClientRect().height) /
-          STOPS,
+          el.querySelectorAll(".rm-stop").length,
         // The stage pins at --spacing-header-room (a calc, so measure it).
         pin: (() => {
           const probe = document.createElement("div");
@@ -183,7 +183,9 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
       const rect = el.getBoundingClientRect();
       return {
         top: rect.top + window.scrollY,
-        step: (rect.height - stageEl.getBoundingClientRect().height) / STOPS,
+        step:
+          (rect.height - stageEl.getBoundingClientRect().height) /
+          el.querySelectorAll(".rm-stop").length,
         // The stage pins at --spacing-header-room (a calc, so measure it).
         pin: (() => {
           const probe = document.createElement("div");
@@ -475,7 +477,7 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
 
     // A long title (the product names are short, but a button may hold two
     // lines) stays inside its button and the card.
-    const next = modal.getByRole("button", { name: "AI Tutor" });
+    const next = modal.locator(".road-dialog-nav button").last();
     await next.evaluate((el) => {
       el.firstChild?.replaceWith("Lighting and climate on the timetable");
     });
