@@ -458,14 +458,20 @@ describe("RoadMap selection", () => {
     const [start, ...rest] = pieces;
     const finish = rest.pop() as Element;
     // Start leaves its flag and joins stop 1 below, heading down.
-    expect(d(start, "rm-asphalt")).toMatch(/^M67 50 C 67 75, 40 75, 40 100 L40 102$/);
+    expect(d(start, "rm-asphalt")).toMatch(
+      /^M67 50 C 67 75, 40 75, 40 100 L40 102$/,
+    );
     for (const stop of rest) {
       // Asphalt runs past both ends further than the edge; the dashes do not.
-      expect(d(stop, "rm-asphalt")).toMatch(/^M40 -2 L40 0 C 40 25, .* 40 100 L40 102$/);
+      expect(d(stop, "rm-asphalt")).toMatch(
+        /^M40 -2 L40 0 C 40 25, .* 40 100 L40 102$/,
+      );
       expect(d(stop, "rm-edge")).toMatch(/^M40 -1 L40 0 C .* L40 101$/);
       expect(d(stop, "rm-line")).toMatch(/^M40 0 L40 0 C .* L40 100$/);
     }
-    expect(d(finish, "rm-asphalt")).toMatch(/^M40 -2 L40 0 C 40 25, 67 25, 67 50$/);
+    expect(d(finish, "rm-asphalt")).toMatch(
+      /^M40 -2 L40 0 C 40 25, 67 25, 67 50$/,
+    );
   });
 
   it("speaks Start and Finish in Vietnamese on vi", () => {

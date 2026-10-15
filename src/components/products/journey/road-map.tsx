@@ -204,13 +204,17 @@ const JOIN = { "rm-edge": 1, "rm-asphalt": 2, "rm-line": 0 } as const;
 // always joins one below at y 100 unless it ends at a pin (y 50).
 function RoadPiece({ from, curve, top }: Piece) {
   const bottom = curve.endsWith("100");
-  return Object.entries(JOIN).map(([stroke, run]) => (
-    <path
-      key={stroke}
-      className={stroke}
-      d={`${top ? `M40 ${-run} L` : "M"}${from} ${curve}${bottom ? ` L40 ${100 + run}` : ""}`}
-    />
-  ));
+  return Object.entries(JOIN).map(([stroke, run]) => {
+    const head = top ? "M40 " + -run + " L" : "M";
+    const tail = bottom ? " L40 " + (100 + run) : "";
+    return (
+      <path
+        key={stroke}
+        className={stroke}
+        d={head + from + " " + curve + tail}
+      />
+    );
+  });
 }
 
 // Who the app is for.
