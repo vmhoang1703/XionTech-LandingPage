@@ -1,8 +1,12 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LocaleProvider } from "@/components/layout/locale-link";
-import { APPS, appTaglinesVi } from "@/content/apps";
-import { dayRoad, productDetails, productsShowcase } from "@/content/products";
+import { APPS, appById, appTaglinesVi } from "@/content/apps";
+import {
+  productDetails,
+  productRoad,
+  productsShowcase,
+} from "@/content/products";
 import { ProductScene } from "../scene/product-scene";
 import { RoadStopDialog } from "./road-stop-dialog";
 
@@ -14,18 +18,19 @@ vi.mock("next/dynamic", async () => {
   return {
     default: (load: () => Promise<unknown>) => {
       loaders.push(load);
-      return function Scene(props: { index: number; words: string[] }) {
+      return function Scene(props: { index: number; app: string }) {
         return createElement("div", {
           "data-testid": "scene",
           "data-index": props.index,
-          "data-words": props.words.join("|"),
+          "data-app": props.app,
         });
       };
     },
   };
 });
 
-const LAST = dayRoad.stops.length - 1;
+const LAST = productRoad.stops.length - 1;
+const names = productRoad.stops.map((id) => appById(id).shortName);
 
 // jsdom has no showModal or close: stand-ins that set `open` and fire
 // "close" like the browser does.
@@ -61,6 +66,10 @@ function button(name: string) {
 }
 
 describe("RoadStopDialog", () => {
+  it("has three stops: Parent Hub, Staff Hub and AI Tutor", () => {
+    expect(names).toEqual(["Parent Hub", "Staff Hub", "AI Tutor"]);
+  });
+
   it("stays closed without an index", () => {
     const { dialog } = setup(null);
     expect(dialog.open).toBe(false);
@@ -68,13 +77,18 @@ describe("RoadStopDialog", () => {
     expect(dialog.querySelector("h2")).toBeNull();
   });
 
-  it("opens for an index and shows the step", () => {
+  it("opens for an index and shows the product: name, tagline and step", () => {
     const { dialog } = setup(1);
     expect(dialog.open).toBe(true);
     expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(
-      dayRoad.stops[1].title,
+      "Staff Hub",
     );
-    expect(dialog.textContent).toContain("2 / 6 · 08:00");
+    expect(dialog.querySelector(".road-dialog-text")?.textContent).toBe(
+      APPS.find((app) => app.id === "staff-hub")?.tagline,
+    );
+    expect(dialog.querySelector(".road-dialog-step")?.textContent).toBe(
+      "2 / 3",
+    );
   });
 
   it("opens when the index changes from null, and closes when it goes back", () => {
@@ -86,30 +100,24 @@ describe("RoadStopDialog", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("leaves the time out of the step label for a stop without one", () => {
-    const { dialog } = setup(4);
-    expect(dialog.textContent).toContain("5 / 6");
-    expect(dialog.textContent).not.toContain("5 / 6 ·");
+  it("moves with Previous and Next, which are named for the neighbouring products", () => {
+    const { onMove } = setup(1);
+    fireEvent.click(button("Parent Hub"));
+    expect(onMove).toHaveBeenLastCalledWith(0);
+    fireEvent.click(button("AI Tutor"));
+    expect(onMove).toHaveBeenLastCalledWith(2);
   });
 
-  it("moves with Previous and Next", () => {
-    const { onMove } = setup(2);
-    fireEvent.click(button(dayRoad.stops[1].title));
-    expect(onMove).toHaveBeenLastCalledWith(1);
-    fireEvent.click(button(dayRoad.stops[3].title));
-    expect(onMove).toHaveBeenLastCalledWith(3);
-  });
-
-  it("disables Previous on the first stop", () => {
+  it("disables Previous on the first stop, which says Start", () => {
     setup(0);
-    expect(button(dayRoad.start).disabled).toBe(true);
-    expect(button(dayRoad.stops[1].title).disabled).toBe(false);
+    expect(button(productRoad.start).disabled).toBe(true);
+    expect(button("Staff Hub").disabled).toBe(false);
   });
 
-  it("disables Next on the last stop", () => {
+  it("disables Next on the last stop, which says Finish", () => {
     setup(LAST);
-    expect(button(dayRoad.finish).disabled).toBe(true);
-    expect(button(dayRoad.stops[LAST - 1].title).disabled).toBe(false);
+    expect(button(productRoad.finish).disabled).toBe(true);
+    expect(button("Staff Hub").disabled).toBe(false);
   });
 
   it("closes with the close button", () => {
@@ -163,8 +171,41 @@ describe("RoadStopDialog", () => {
     });
   });
 
+  it("shows who the product is made for and its features", () => {
+    setup(1);
+    const section = screen.getByRole("region", { name: "Staff Hub" });
+    const detail = productDetails["staff-hub"];
+    expect(section.textContent).toContain(
+      `${productsShowcase.madeFor}: ${detail.madeFor}`,
+    );
+    expect(
+      within(section).getByRole("heading", {
+        level: 3,
+        name: productsShowcase.featuresHeading,
+      }),
+    ).toBeTruthy();
+    const items = within(section)
+      .getAllByRole("listitem")
+      .map((li) => li.textContent);
+    expect(items).toEqual(detail.features.map((feature) => feature.title));
+  });
+
+  it("shows the product's badge", () => {
+    const { dialog } = setup(0);
+    expect(dialog.querySelector(".road-dialog-app .map-badge")).not.toBeNull();
+  });
+
+  it("has no list of all apps, and no school-day times", () => {
+    const { dialog } = setup(LAST);
+    expect(dialog.querySelector(".road-dialog-apps")).toBeNull();
+    expect(dialog.querySelector(".road-dialog-step")?.textContent).toBe(
+      "3 / 3",
+    );
+    expect(dialog.textContent).not.toMatch(/\d\d:\d\d/);
+  });
+
   describe("the scene behind the card", () => {
-    const words = () => screen.getByTestId("scene").dataset.words;
+    const shown = () => screen.getByTestId("scene").dataset.app;
 
     it("loads the scene's own chunk, only when asked to", async () => {
       expect(loaders).toHaveLength(1);
@@ -176,20 +217,15 @@ describe("RoadStopDialog", () => {
       expect(screen.queryByTestId("scene")).toBeNull();
     });
 
-    it("stands the app's name at an app's stop, and passes the stop", () => {
-      setup(1);
-      expect(words()).toBe("Staff Hub");
-      expect(screen.getByTestId("scene").dataset.index).toBe("1");
-    });
-
-    it("stands the brand at the first stop", () => {
-      setup(0);
-      expect(words()).toBe("XionTech");
-    });
-
-    it("stands all four apps at the last stop", () => {
-      setup(LAST);
-      expect(words()).toBe(APPS.map((app) => app.shortName).join("|"));
+    it("gets the product at every stop, and the stop", () => {
+      const { rerender, onMove, onClose } = setup(0);
+      for (const [i, expected] of productRoad.stops.entries()) {
+        rerender(
+          <RoadStopDialog index={i} onMove={onMove} onClose={onClose} />,
+        );
+        expect(shown()).toBe(expected);
+        expect(screen.getByTestId("scene").dataset.index).toBe(String(i));
+      }
     });
 
     it("moves with Next, without being built again", () => {
@@ -197,53 +233,16 @@ describe("RoadStopDialog", () => {
       const before = screen.getByTestId("scene");
       rerender(<RoadStopDialog index={2} onMove={onMove} onClose={onClose} />);
       expect(screen.getByTestId("scene")).toBe(before);
-      expect(words()).toBe("Parent Hub");
+      expect(shown()).toBe("ai-tutor");
     });
 
-    it("is decoration: the card keeps the app's name as real text", () => {
+    it("is decoration: the card keeps the product's name as real text", () => {
       setup(2);
-      expect(screen.getByRole("heading", { name: "Parent Hub" })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: "AI Tutor" })).toBeTruthy();
     });
   });
 
-  it("shows Made for and the features of the stop's app", () => {
-    setup(1);
-    const section = screen.getByRole("region", { name: "Staff Hub" });
-    const detail = productDetails["staff-hub"];
-    expect(section.textContent).toContain(
-      `${productsShowcase.madeFor}: ${detail.madeFor}`,
-    );
-    const items = within(section)
-      .getAllByRole("listitem")
-      .map((li) => li.textContent);
-    expect(items).toEqual(detail.features.map((feature) => feature.title));
-  });
-
-  it("shows no app section on a stop without an app", () => {
-    setup(0);
-    expect(screen.queryByRole("region")).toBeNull();
-    expect(screen.queryByRole("list")).toBeNull();
-  });
-
-  it("has no open-details button on an app stop", () => {
-    setup(1);
-    expect(screen.queryByRole("button", { name: /details/i })).toBeNull();
-  });
-
-  it("lists all four apps on the last stop as plain chips, not buttons", () => {
-    const { dialog } = setup(LAST);
-
-    const list = dialog.querySelector(".road-dialog-apps") as HTMLElement;
-    const items = within(list).getAllByRole("listitem");
-    expect(items).toHaveLength(4);
-    expect(within(list).queryAllByRole("button")).toHaveLength(0);
-    for (const [i, app] of APPS.entries()) {
-      expect(items[i].textContent).toContain(app.shortName);
-      expect(items[i].textContent).toContain(app.tagline);
-    }
-  });
-
-  it("speaks Vietnamese on vi: close, step, app details and taglines", () => {
+  it("speaks Vietnamese on vi: close, step, product details and tagline", () => {
     const { container, rerender } = render(
       <LocaleProvider locale="vi">
         <RoadStopDialog index={1} onMove={vi.fn()} onClose={vi.fn()} />
@@ -253,21 +252,28 @@ describe("RoadStopDialog", () => {
 
     expect(button("Đóng")).toBeTruthy();
     expect(screen.getByRole("heading", { level: 2 }).textContent).toBe(
-      "Ghi nhận điểm danh",
+      "Staff Hub",
     );
     expect(dialog.textContent).toContain(appTaglinesVi["staff-hub"]);
     expect(dialog.textContent).toContain(
       "Dành cho: Nhân viên, giáo viên và lãnh đạo nhà trường",
     );
     expect(screen.getByRole("heading", { name: "Tính năng" })).toBeTruthy();
-    expect(button("Học sinh đến trường")).toBeTruthy();
+    expect(button("Parent Hub")).toBeTruthy();
 
     rerender(
       <LocaleProvider locale="vi">
         <RoadStopDialog index={LAST} onMove={vi.fn()} onClose={vi.fn()} />
       </LocaleProvider>,
     );
-    expect(dialog.textContent).toContain(appTaglinesVi.iot);
+    expect(dialog.textContent).toContain(appTaglinesVi["ai-tutor"]);
     expect(button("Kết thúc").disabled).toBe(true);
+
+    rerender(
+      <LocaleProvider locale="vi">
+        <RoadStopDialog index={0} onMove={vi.fn()} onClose={vi.fn()} />
+      </LocaleProvider>,
+    );
+    expect(button("Bắt đầu").disabled).toBe(true);
   });
 });

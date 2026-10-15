@@ -15,12 +15,12 @@ export const CLIENT_KEYS = [
   "appTaglines",
   "categoryLabels",
   "contactStrings",
-  "dayRoad",
   "homeHero",
   "jobForm",
   "journeyBoard",
   "newsPage",
   "productDetails",
+  "productRoad",
   "productsShowcase",
   "roadDialog",
 ] as const satisfies readonly (keyof Dictionaries)[];

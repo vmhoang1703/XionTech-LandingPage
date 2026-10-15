@@ -1,6 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MOTION_KEY } from "@/lib/motion/motion-preference";
+import type { RoadApp } from "@/content/products";
 import { POINTS } from "../journey/road-geometry";
 import { ProductScene } from "./product-scene";
 
@@ -29,86 +30,75 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-function setup(index = 1, words: string[] = ["Staff Hub"]) {
-  const view = render(<ProductScene index={index} words={words} />);
+function setup(index = 1, app: RoadApp = "staff-hub") {
+  const view = render(<ProductScene index={index} app={app} />);
   const root = view.container.querySelector(".rd-scene") as HTMLElement;
   return { ...view, root };
 }
 
-const towers = (root: HTMLElement) =>
-  Array.from(root.querySelectorAll(".rd-tower"));
+const copies = (root: HTMLElement, selector: string) =>
+  root.querySelector(selector)?.querySelectorAll(".dv-slice");
 
 describe("ProductScene", () => {
-  it("is decoration: hidden from assistive technology, with no text of its own to read", () => {
+  it("is decoration: hidden from assistive technology, with nothing to focus", () => {
     const { root } = setup();
     expect(root.getAttribute("aria-hidden")).toBe("true");
     expect(root.querySelector("button, a, [tabindex]")).toBeNull();
   });
 
-  it("stands a tower for each letter, and a gap for a space", () => {
-    const { root } = setup(1, ["Staff Hub"]);
-    expect(towers(root)).toHaveLength(8);
-    expect(root.querySelectorAll(".rd-gap")).toHaveLength(1);
-    expect(towers(root).map((el) => el.firstElementChild?.textContent)).toEqual(
-      Array.from("StaffHub"),
+  it("stands Parent Hub on a phone: one slab, a notch, no keyboard", () => {
+    const { root } = setup(0, "parent-hub");
+    expect(root.querySelector(".dv")?.getAttribute("data-kind")).toBe("phone");
+    expect(root.querySelectorAll(".dv-slab")).toHaveLength(1);
+    expect(root.querySelector(".dv-body .dv-notch")).not.toBeNull();
+    expect(root.querySelector(".dv-deck")).toBeNull();
+  });
+
+  it("stands Staff Hub on a laptop: a screen on a hinge over a keyboard", () => {
+    const { root } = setup(1, "staff-hub");
+    expect(root.querySelector(".dv")?.getAttribute("data-kind")).toBe("laptop");
+    expect(root.querySelector(".dv-hinge .dv-lid .dv-screen")).not.toBeNull();
+    expect(root.querySelector(".dv-deck .dv-keys")).not.toBeNull();
+    expect(root.querySelector(".dv-deck .dv-pad")).not.toBeNull();
+    expect(root.querySelectorAll(".dv-slab")).toHaveLength(2);
+  });
+
+  it("stands AI Tutor on a desktop monitor: a head on a neck over a foot", () => {
+    const { root } = setup(2, "ai-tutor");
+    expect(root.querySelector(".dv")?.getAttribute("data-kind")).toBe(
+      "monitor",
     );
+    expect(root.querySelector(".dv-head .dv-screen")).not.toBeNull();
+    expect(root.querySelector(".dv-neck")).not.toBeNull();
+    expect(root.querySelector(".dv-foot")).not.toBeNull();
+    expect(root.querySelectorAll(".dv-slab")).toHaveLength(3);
   });
 
-  it("builds each tower from flat copies of its letter, front face first", () => {
-    const { root } = setup(1, ["IoT"]);
-    const [first] = towers(root);
-    const copies = Array.from(first.querySelectorAll(".rd-slice"));
-    expect(copies).toHaveLength(22);
-    expect(new Set(copies.map((el) => el.textContent))).toEqual(new Set(["I"]));
+  it("shows only the screen of the product it stands", () => {
+    const { root } = setup(0, "parent-hub");
+    expect(root.querySelectorAll(".dv-screen")).toHaveLength(1);
+    expect(root.querySelector(".ws-name")?.textContent).toBe("Parent Hub");
+  });
+
+  it("gives a slab thickness: flat copies behind its front face, farthest first, the face painted last", () => {
+    const { root } = setup(0, "parent-hub");
+    const body = root.querySelector(".dv-body") as HTMLElement;
+    const layers = Array.from(copies(root, ".dv-body") ?? []);
+    expect(layers).toHaveLength(12);
     expect(
-      copies.map((el) => (el as HTMLElement).style.getPropertyValue("--k")),
-    ).toEqual(copies.map((_, k) => String(k)));
+      layers.map((el) => (el as HTMLElement).style.getPropertyValue("--k")),
+    ).toEqual(layers.map((_, i) => String(12 - i)));
+    expect(body.lastElementChild?.className).toBe("dv-face");
   });
 
-  it("gives a word its fit for both stages and its towers their heights", () => {
-    const { root } = setup(1, ["Staff Hub"]);
-    const word = root.querySelector(".rd-word") as HTMLElement;
-    for (const name of [
-      "--w-size",
-      "--w-stretch",
-      "--w-x",
-      "--w-z",
-      "--n-size",
-      "--n-stretch",
-      "--n-x",
-      "--n-z",
-    ]) {
-      expect(word.style.getPropertyValue(name)).not.toBe("");
-    }
-    const heights = towers(root).map((el) =>
-      Number((el as HTMLElement).style.getPropertyValue("--h")),
-    );
-    expect(new Set(heights).size).toBeGreaterThan(1);
-  });
-
-  it("stands the four apps with fewer copies each, and marks the count", () => {
-    const { root } = setup(5, ["Parent Hub", "Staff Hub", "IoT", "AI Tutor"]);
-    expect(root.getAttribute("data-count")).toBe("4");
-    expect(root.querySelectorAll(".rd-word")).toHaveLength(4);
-    expect(
-      root.querySelector(".rd-tower")?.querySelectorAll(".rd-slice"),
-    ).toHaveLength(10);
-  });
-
-  it("uses half the copies on a small screen", () => {
+  it("uses half the layers on a small screen", () => {
     smallScreen = true;
-    const { root } = setup(1, ["IoT"]);
-    expect(
-      root.querySelector(".rd-tower")?.querySelectorAll(".rd-slice"),
-    ).toHaveLength(10);
-    const many = setup(5, ["Parent Hub", "Staff Hub", "IoT", "AI Tutor"]);
-    expect(
-      many.root.querySelector(".rd-tower")?.querySelectorAll(".rd-slice"),
-    ).toHaveLength(6);
+    const { root } = setup(0, "parent-hub");
+    expect(copies(root, ".dv-body")).toHaveLength(6);
   });
 
-  it("lays the road with a pin for every stop, the shown stop lit and under the towers", () => {
-    const { root } = setup(2);
+  it("lays the road with a pin for every stop, the shown stop lit and in front of the device", () => {
+    const { root } = setup(2, "ai-tutor");
     const pins = Array.from(root.querySelectorAll(".rd-pin"));
     expect(pins).toHaveLength(POINTS.length);
     expect(pins.map((pin) => pin.getAttribute("data-on"))).toEqual(
@@ -119,11 +109,11 @@ describe("ProductScene", () => {
     expect(ground.style.getPropertyValue("--py")).toBe(String(POINTS[2].y));
   });
 
-  it("slides the road to the next stop and builds the next words, keeping the ground", () => {
-    const { root, rerender } = setup(1, ["Staff Hub"]);
+  it("slides the road to the next stop and stands the next device, keeping the ground", () => {
+    const { root, rerender } = setup(1, "staff-hub");
     const ground = root.querySelector(".rd-ground");
     const city = root.querySelector(".rd-city");
-    rerender(<ProductScene index={2} words={["Parent Hub"]} />);
+    rerender(<ProductScene index={2} app="ai-tutor" />);
     expect(root.querySelector(".rd-ground")).toBe(ground);
     expect(root.querySelector(".rd-city")).not.toBe(city);
     expect(
@@ -131,7 +121,9 @@ describe("ProductScene", () => {
         "--px",
       ),
     ).toBe(String(POINTS[2].x));
-    expect(towers(root)).toHaveLength(9);
+    expect(root.querySelector(".dv")?.getAttribute("data-kind")).toBe(
+      "monitor",
+    );
   });
 
   describe("motion", () => {
@@ -294,7 +286,7 @@ describe("ProductScene", () => {
       const outer = vi.fn();
       const view = render(
         <div onClick={outer}>
-          <ProductScene index={1} words={["IoT"]} />
+          <ProductScene index={1} app="ai-tutor" />
         </div>,
       );
       const root = view.container.querySelector(".rd-scene") as HTMLElement;

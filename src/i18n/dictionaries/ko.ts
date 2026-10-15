@@ -22,7 +22,7 @@ import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
 import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
-import { dayRoad, journeyBoard, productDetails } from "@/content/products";
+import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
   servicesOutcomes,
   servicesPage,
@@ -278,9 +278,6 @@ const PRIVACY_META_TITLE = "개인정보 처리방침 | XionTech";
 
 const RETENTION_DECIDED =
   "문의 및 데모 요청, 제출된 이메일 주소, 입사 지원서와 이력서는 기간 제한 없이 보관됩니다.";
-
-const [arrive, attendance, parentStop, learn, campus, connected] =
-  dayRoad.stops;
 
 const ERRORS = {
   name: "이름을 입력해 주세요.",
@@ -540,44 +537,6 @@ export const ko: Dictionaries = {
     startTimings: ["가능한 한 빨리", "1~3개월 이내", "아직 알아보는 중"],
     services: [...SERVICES.map((service) => service.name), "아직 정하지 않음"],
   },
-  dayRoad: {
-    heading: "학교에서의 하루",
-    lede: "평범한 학교 하루 동안 한 학생의 여정을 따라가며, 학생, 학부모, 교직원이 각 단계에서 어떻게 정보를 받고 연결되는지 확인하세요.",
-    start: "출발",
-    finish: "도착",
-    stops: [
-      {
-        ...arrive,
-        title: "학생 도착",
-        text: "학생이 캠퍼스에 도착합니다.",
-      },
-      {
-        ...attendance,
-        title: "출석 기록",
-        text: `교사가 ${staffHub.shortName}에서 학생의 출석을 기록합니다.`,
-      },
-      {
-        ...parentStop,
-        title: "학부모 알림",
-        text: `${parentHub.shortName}가 학부모에게 학생이 학교에 있다고 알립니다.`,
-      },
-      {
-        ...learn,
-        title: "학생 학습",
-        text: `학생들이 ${aiTutor.shortName}와 함께 연습하고 질문합니다.`,
-      },
-      {
-        ...campus,
-        title: PRODUCT_DETAILS.iot.features[1].title,
-        text: APP_TAGLINES.iot,
-      },
-      {
-        ...connected,
-        title: "연결된 하루",
-        text: "알림과 학교 정보가 시스템 전체에서 연결된 상태로 유지됩니다.",
-      },
-    ],
-  },
   footerOffices: [
     { ...footerOffices[0], tag: US_DELIVERY_CENTER },
     {
@@ -735,10 +694,8 @@ export const ko: Dictionaries = {
   },
   journeyBoard: {
     ...journeyBoard,
-    hint: "단계를 선택하면 그 단계를 지원하는 앱을 볼 수 있습니다.",
-    everyone: "모두",
     details: "상세",
-    lanes: ["학생", "교사와 교직원", "학부모", "캠퍼스"].map((label, i) => ({
+    lanes: ["학생", "교사와 교직원", "학부모"].map((label, i) => ({
       ...journeyBoard.lanes[i],
       label,
     })),
@@ -817,6 +774,11 @@ export const ko: Dictionaries = {
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
+  productRoad: {
+    ...productRoad,
+    start: "출발",
+    finish: "도착",
+  },
   productsMeta: {
     title: `학교용 앱: ${parentHub.shortName}, ${staffHub.shortName}, ${iotApp.shortName}, ${aiTutor.shortName} | XionTech`,
     description: `학부모를 위한 ${parentHub.shortName}, 교직원·교사·관리자를 위한 ${staffHub.shortName}, 캠퍼스를 위한 ${iotApp.fullName}. XionTech의 연결된 학교 앱.`,

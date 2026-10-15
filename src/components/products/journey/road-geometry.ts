@@ -1,4 +1,4 @@
-import { dayRoad } from "@/content/products";
+import { productRoad } from "@/content/products";
 
 // The wide road's drawing space and its stops (peaks and troughs). The
 // roadmap draws it; the stop scene lays the same road on its ground.
@@ -8,8 +8,8 @@ export const H = 820;
 export const PAD = 100;
 const START = { x: -20, y: 430 };
 const FINISH = { x: 1420, y: 420 };
-export const POINTS = dayRoad.stops.map((_, i) => ({
-  x: 150 + i * 220,
+export const POINTS = productRoad.stops.map((_, i) => ({
+  x: 330 + i * 370,
   y: i % 2 === 0 ? 340 : 500,
 }));
 
@@ -36,16 +36,11 @@ export function shareOf(index: number) {
 
 // Trees in the open ground between the cards.
 export const TREES = [
-  [360, 230],
-  [400, 254],
-  [800, 226],
-  [840, 250],
-  [1240, 230],
-  [1280, 252],
-  [140, 640],
-  [184, 666],
-  [580, 644],
-  [620, 670],
-  [1020, 640],
-  [1064, 664],
+  [610, 230],
+  [660, 254],
+  [740, 226],
+  [150, 640],
+  [194, 666],
+  [1150, 640],
+  [1194, 666],
 ] as const;

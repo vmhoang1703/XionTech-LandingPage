@@ -6,24 +6,22 @@ import { useEffect, useRef } from "react";
 import { useLocalized } from "@/components/layout/locale-link";
 import {
   APP_TAGLINES,
-  APPS,
   appById,
   appTaglinesVi,
   type AppId,
 } from "@/content/apps";
 import {
-  dayRoad,
-  dayRoadVi,
   productDetails,
   productDetailsVi,
+  productRoad,
+  productRoadVi,
   productsShowcase,
   productsShowcaseVi,
   roadDialog,
   roadDialogVi,
-  type DayRoad,
+  type ProductRoad,
 } from "@/content/products";
 import { MapBadge } from "../map/map-badge";
-import { sceneWords } from "../scene/scene-words";
 
 // The 3D scene behind the card is built on the first click on a stop: its code
 // and stylesheet do not load with the page.
@@ -32,10 +30,10 @@ const ProductScene = dynamic(
   { ssr: false },
 );
 
-// The modal for one stop on the school-day road: the step in full, the app
-// at work there (its "Made for" line and features), and Previous/Next to walk
-// the road. Behind the card, the stop's product name stands up as 3D towers
-// on a piece of the road. The scene is decoration; the card has the text.
+// The modal for one stop on the road, which is one product: its name, its
+// tagline, who it is made for and its features, and Previous/Next to walk the
+// road. Behind the card, the product's name stands up as 3D towers on a piece
+// of the road. The scene is decoration; the card has the text.
 
 type Props = Readonly<{
   index: number | null;
@@ -43,13 +41,17 @@ type Props = Readonly<{
   onClose: () => void;
 }>;
 
-const LAST = dayRoad.stops.length - 1;
+const LAST = productRoad.stops.length - 1;
 
 export function RoadStopDialog({ index, onMove, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
-  const road = useLocalized<"dayRoad", DayRoad>("dayRoad", {
-    en: dayRoad,
-    vi: dayRoadVi,
+  const road = useLocalized<"productRoad", ProductRoad>("productRoad", {
+    en: productRoad,
+    vi: productRoadVi,
+  });
+  const taglines = useLocalized("appTaglines", {
+    en: APP_TAGLINES,
+    vi: appTaglinesVi,
   });
   const { close } = useLocalized("roadDialog", {
     en: roadDialog,
@@ -77,7 +79,11 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
     ref.current?.close();
   };
 
-  const stop = index === null ? null : road.stops[index];
+  const id = index === null ? null : road.stops[index];
+  const app = id === null ? null : appById(id);
+  // The neighbour's name, or the end of the road.
+  const name = (at: number, end: string) =>
+    road.stops[at] ? appById(road.stops[at]).shortName : end;
 
   return (
     <dialog
@@ -88,17 +94,13 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
       onPointerDown={onPointerDown}
       onClick={onClick}
     >
-      {stop && index !== null ? (
+      {app && id && index !== null ? (
         <>
-          <ProductScene
-            index={index}
-            words={sceneWords(stop, index === LAST)}
-          />
+          <ProductScene index={index} app={id} />
           <div className="road-dialog-body">
             <div className="road-dialog-top">
               <span className="road-dialog-step">
                 {index + 1} / {road.stops.length}
-                {stop.time ? ` · ${stop.time}` : ""}
               </span>
               <button
                 type="button"
@@ -109,11 +111,10 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
                 <span className="sr-only">{close}</span>
               </button>
             </div>
-            <h2 id="road-dialog-h">{stop.title}</h2>
-            <p className="road-dialog-text">{stop.text}</p>
+            <h2 id="road-dialog-h">{app.fullName}</h2>
+            <p className="road-dialog-text">{taglines[id]}</p>
 
-            {stop.app ? <StopApp id={stop.app} /> : null}
-            {!stop.app && index === LAST ? <AllApps /> : null}
+            <StopApp id={id} />
 
             <div className="road-dialog-nav">
               <button
@@ -123,7 +124,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
                 onClick={() => onMove(index - 1)}
               >
                 <ArrowLeftIcon aria-hidden="true" />
-                {index > 0 ? road.stops[index - 1].title : road.start}
+                {name(index - 1, road.start)}
               </button>
               <button
                 type="button"
@@ -131,7 +132,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
                 disabled={index === LAST}
                 onClick={() => onMove(index + 1)}
               >
-                {index < LAST ? road.stops[index + 1].title : road.finish}
+                {name(index + 1, road.finish)}
                 <ArrowRightIcon aria-hidden="true" />
               </button>
             </div>
@@ -142,17 +143,13 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
   );
 }
 
-// The app at work at this stop: name, tagline, "Made for" and features.
+// The product at this stop: who it is made for, and its features.
 function StopApp({ id }: Readonly<{ id: AppId }>) {
   const app = appById(id);
   const detail = useLocalized("productDetails", {
     en: productDetails,
     vi: productDetailsVi,
   })[id];
-  const taglines = useLocalized("appTaglines", {
-    en: APP_TAGLINES,
-    vi: appTaglinesVi,
-  });
   const showcase = useLocalized("productsShowcase", {
     en: productsShowcase,
     vi: productsShowcaseVi,
@@ -161,41 +158,16 @@ function StopApp({ id }: Readonly<{ id: AppId }>) {
     <section className="road-dialog-app" aria-label={app.shortName}>
       <div className="road-dialog-app-h">
         <MapBadge badge={app.badge} />
-        <div>
-          <h3>{app.fullName}</h3>
-          <p>{taglines[app.id]}</p>
-        </div>
+        <p className="road-dialog-made">
+          {showcase.madeFor}: {detail.madeFor}
+        </p>
       </div>
-      <p className="road-dialog-made">
-        {showcase.madeFor}: {detail.madeFor}
-      </p>
-      <h4>{showcase.featuresHeading}</h4>
+      <h3>{showcase.featuresHeading}</h3>
       <ul>
         {detail.features.map((feature) => (
           <li key={feature.id}>{feature.title}</li>
         ))}
       </ul>
     </section>
-  );
-}
-
-// The last stop: every app that kept the day connected.
-function AllApps() {
-  const taglines = useLocalized("appTaglines", {
-    en: APP_TAGLINES,
-    vi: appTaglinesVi,
-  });
-  return (
-    <ul className="road-dialog-apps">
-      {APPS.map((one) => (
-        <li key={one.id}>
-          <MapBadge badge={one.badge} />
-          <span>
-            <strong>{one.shortName}</strong>
-            <span>{taglines[one.id]}</span>
-          </span>
-        </li>
-      ))}
-    </ul>
   );
 }

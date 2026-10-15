@@ -64,7 +64,7 @@ describe("Products page", () => {
     ).toBeDefined();
   });
 
-  it("opens with the H1 and a roadmap of six cards", async () => {
+  it("opens with the H1 and a roadmap of three cards, one per product", async () => {
     const { container } = render(await productsAt("en"));
     const map = container.querySelector("section#map");
     expect(
@@ -76,10 +76,15 @@ describe("Products page", () => {
     expect(container.querySelectorAll("h1")).toHaveLength(1);
     expect(map?.querySelector("h1")).not.toBeNull();
     const roadmap = map?.querySelector(".rm");
-    expect(roadmap?.querySelectorAll(".rm-card")).toHaveLength(6);
+    expect(roadmap?.querySelectorAll(".rm-card")).toHaveLength(3);
+    expect(
+      [...(roadmap?.querySelectorAll(".rm-title") ?? [])].map((h) =>
+        h.textContent?.trim(),
+      ),
+    ).toEqual(["1. Parent Hub", "2. Staff Hub", "3. AI Tutor"]);
   });
 
-  it("puts the four app anchors in the roadmap", async () => {
+  it("puts the four app anchors in the roadmap, IoT's at its start", async () => {
     const { container } = render(await productsAt("en"));
     for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
       expect(container.querySelectorAll(`[id="${id}"]`)).toHaveLength(1);
@@ -87,6 +92,9 @@ describe("Products page", () => {
         container.querySelector(`section#map .rm [id="${id}"]`),
       ).not.toBeNull();
     }
+    // IoT has no stop: its anchor is a mark at the start of the roadmap.
+    expect(container.querySelector("#iot")?.className).toBe("rm-alias");
+    expect(container.querySelector("#iot")?.closest("li")).toBeNull();
   });
 
   it("has no sub-nav, tab list, Updates link or LXP section", async () => {
@@ -131,14 +139,18 @@ describe("Products page", () => {
       "Xây dựng riêng. Mạnh hơn khi kết nối",
     );
     expect(
-      screen.getByRole("heading", { name: "Một ngày ở trường" }),
+      screen.getByRole("heading", { name: "Một ngôi trường kết nối." }),
     ).toBeTruthy();
     expect(container.querySelector(".rm-title")?.textContent).toBe(
-      "1. Học sinh đến trường",
+      "1. Parent Hub",
     );
     expect(container.textContent).toContain("Giáo viên và nhân viên");
+    expect(container.textContent).toContain(
+      "Giúp phụ huynh đồng hành cùng con mỗi ngày học, ngay trên điện thoại.",
+    );
     expect(container.textContent).toContain("Staff Hub");
     expect(container.textContent).not.toContain("A day at school.");
+    expect(container.textContent).not.toContain("Một ngày ở trường.");
   });
 
   it("falls back to English for an unknown locale", async () => {

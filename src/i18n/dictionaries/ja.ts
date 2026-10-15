@@ -22,7 +22,7 @@ import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
 import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
-import { dayRoad, journeyBoard, productDetails } from "@/content/products";
+import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
   servicesOutcomes,
   servicesPage,
@@ -279,9 +279,6 @@ const PRIVACY_META_TITLE = "プライバシーポリシー | XionTech";
 
 const RETENTION_DECIDED =
   "お問い合わせとデモのご依頼、メールアドレスの送信、応募書類と CV は、期限を設けずに保管します。";
-
-const [arrive, attendance, parentStop, learn, campus, connected] =
-  dayRoad.stops;
 
 const ERRORS = {
   name: "お名前を入力してください。",
@@ -543,44 +540,6 @@ export const ja: Dictionaries = {
     startTimings: ["できるだけ早く", "1〜3 か月以内", "情報収集中"],
     services: [...SERVICES.map((service) => service.name), "未定"],
   },
-  dayRoad: {
-    heading: "学校の一日",
-    lede: "ある生徒の典型的な一日をたどり、生徒、保護者、学校職員が各段階でどのように情報を共有し、つながっているかをご覧ください。",
-    start: "スタート",
-    finish: "ゴール",
-    stops: [
-      {
-        ...arrive,
-        title: "生徒が登校",
-        text: "生徒がキャンパスに到着します。",
-      },
-      {
-        ...attendance,
-        title: "出欠を記録",
-        text: `教員が ${staffHub.shortName} で生徒の出欠を記録します。`,
-      },
-      {
-        ...parentStop,
-        title: "保護者にお知らせ",
-        text: `${parentHub.shortName} が、生徒が学校に着いたことを保護者に通知します。`,
-      },
-      {
-        ...learn,
-        title: "生徒が学ぶ",
-        text: "生徒は AI Tutor で練習し、質問します。",
-      },
-      {
-        ...campus,
-        title: PRODUCT_DETAILS.iot.features[1].title,
-        text: APP_TAGLINES.iot,
-      },
-      {
-        ...connected,
-        title: "一日中つながる",
-        text: "通知と学校の情報が、システム全体でつながり続けます。",
-      },
-    ],
-  },
   footerOffices: [
     { ...footerOffices[0], tag: US_DELIVERY_CENTER },
     {
@@ -739,10 +698,8 @@ export const ja: Dictionaries = {
   },
   journeyBoard: {
     ...journeyBoard,
-    hint: "ステップを選ぶと、その裏で動くアプリが表示されます。",
-    everyone: "全員",
     details: "詳細",
-    lanes: ["生徒", "教員と職員", "保護者", "キャンパス"].map((label, i) => ({
+    lanes: ["生徒", "教員と職員", "保護者"].map((label, i) => ({
       ...journeyBoard.lanes[i],
       label,
     })),
@@ -818,6 +775,11 @@ export const ja: Dictionaries = {
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
+  productRoad: {
+    ...productRoad,
+    start: "スタート",
+    finish: "ゴール",
+  },
   productsMeta: {
     title: `学校向けアプリ：${appById("parent-hub").shortName}、${appById("staff-hub").shortName}、${appById("iot").shortName}、${appById("ai-tutor").shortName} | XionTech`,
     description: `保護者向けの ${appById("parent-hub").shortName}、職員・教員・管理職向けの ${appById("staff-hub").shortName}、キャンパス向けの ${appById("iot").fullName}。XionTech のつながる学校向けアプリ。`,

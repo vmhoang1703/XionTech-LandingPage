@@ -13,37 +13,42 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 452 strings, 265 AI and 187 prototype.
+**Total:** 492 strings, 155 AI and 337 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
-10 AI, 13 prototype.
+6 AI, 22 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `shell:SHELL.nav.skipLink` | Skip to content | Chuyển đến nội dung |
 | AI | `shell:SHELL.nav.mainNav` | Main | Điều hướng chính |
 | AI | `shell:SHELL.nav.homeLink` | XionTech home | Trang chủ XionTech |
-| AI | `shell:SHELL.nav.contact` | Let's talk | Trao đổi với chúng tôi |
-| AI | `shell:SHELL.nav.contactShort` | Let's talk | Liên hệ |
+| AI | `shell:SHELL.nav.contactShort` | Get in touch | Liên hệ |
 | AI | `shell:SHELL.language.label` | Language | Ngôn ngữ |
-| AI | `shell:SHELL.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh. |
 | AI | `shell:SHELL.notFound.metaTitle` | Page not found \| XionTech | Không tìm thấy trang \| XionTech |
-| AI | `shell:SHELL.notFound.title` | Page not found | Không tìm thấy trang |
-| AI | `shell:SHELL.notFound.primary` | Back to Home | Về trang chủ |
 | Prototype | `shell:SHELL.nav.home` | Home | Trang chủ |
 | Prototype | `shell:SHELL.nav.products`<br>`shell:SHELL.footer.products` | Products | Sản phẩm |
 | Prototype | `shell:SHELL.nav.services`<br>`shell:SHELL.footer.services` | Services | Dịch vụ |
 | Prototype | `shell:SHELL.nav.news` | News | Tin tức |
 | Prototype | `shell:SHELL.nav.about` | About | Về chúng tôi |
 | Prototype | `shell:SHELL.nav.careers` | Careers | Tuyển dụng |
+| Prototype | `shell:SHELL.nav.contact` | Get in touch | Liên hệ với chúng tôi |
 | Prototype | `shell:SHELL.nav.cityHcmc` | Ho Chi Minh City | TP. Hồ Chí Minh |
+| Prototype | `shell:SHELL.footer.blurb` | Education technology products and software delivery services for schools and businesses. | Sản phẩm công nghệ giáo dục và dịch vụ phát triển phần mềm cho trường học và doanh nghiệp. |
+| Prototype | `shell:SHELL.footer.forSchools` | For schools | Cho nhà trường |
+| Prototype | `shell:SHELL.footer.forStudents` | For students | Cho học sinh |
+| Prototype | `shell:SHELL.footer.forParents` | For parents | Cho phụ huynh |
 | Prototype | `shell:SHELL.footer.howWeWork` | How we work | Cách chúng tôi làm việc |
 | Prototype | `shell:SHELL.footer.allServices` | All services | Tất cả dịch vụ |
 | Prototype | `shell:SHELL.footer.company` | Company | Công ty |
 | Prototype | `shell:SHELL.footer.aboutUs` | About us | Về chúng tôi |
 | Prototype | `shell:SHELL.footer.offices` | Offices | Văn phòng |
 | Prototype | `shell:SHELL.footer.privacy` | Privacy policy | Chính sách bảo mật |
+| Prototype | `shell:SHELL.notFound.title` | You’ve wandered off the trail. | Bạn đã đi lạc lối mòn. |
+| Prototype | `shell:SHELL.notFound.lede` | The page you were looking for isn’t here. Follow the trail back home, or pick a path below. | Trang bạn tìm không có ở đây. Hãy theo lối mòn về trang chủ, hoặc chọn một con đường bên dưới. |
+| Prototype | `shell:SHELL.notFound.primary` | Go to Home | Về trang chủ |
+| Prototype | `shell:SHELL.notFound.here` | You are here | Bạn đang ở đây |
 
 ## Site title and description
 
@@ -55,56 +60,29 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Home
 
-47 AI, 29 prototype.
+20 AI, 55 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `home:homeMetaVi.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| Nền tảng trường học và gia công phần mềm tại Việt Nam |
-| AI | `home:homeMetaVi.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu: nền tảng trường học (Parent Hub, Staff Hub, IoT, AI Tutor) và gia công phần mềm từ Việt Nam. |
 | AI | `home:homeHeroVi.title.lines[0]` | Build smarter. | Xây dựng thông minh hơn. |
 | AI | `home:homeHeroVi.title.lines[1]` | Ship faster. | Phát hành nhanh hơn. |
-| AI | `home:homeHeroVi.sub` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh. |
+| AI | `home:homeHeroVi.sub` | Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development. | Giải pháp kết nối cho trường học và khuôn viên, sản phẩm phần mềm và đội ngũ chuyên trách, từ những người đi đầu trong phát triển phần mềm có AI hỗ trợ. |
 | AI | `home:homeHeroVi.motion.pause` | Pause motion | Tạm dừng chuyển động |
 | AI | `home:homeHeroVi.motion.play` | Play motion | Phát chuyển động |
 | AI | `home:homeStatsVi.stats[4].caption` | Locations: HQs in Plano and Ho Chi Minh City | Địa điểm: trụ sở chính tại Plano và TP. Hồ Chí Minh |
 | AI | `home:homeDoorsVi.label` | What we do | Chúng tôi làm gì |
-| AI | `home:homeDoorsVi.products.title` | Platforms in one ecosystem | Các nền tảng trong một hệ sinh thái |
-| AI | `home:homeDoorsVi.products.line` | An integrated, AI-powered ecosystem that enhances learning, simplifies school administration and keeps students engaged | Một hệ sinh thái tích hợp, ứng dụng AI, giúp nâng cao việc học, đơn giản hóa công tác quản lý nhà trường và giữ học sinh luôn hứng thú |
-| AI | `home:homeDoorsVi.services.title` | Custom software for your business | Phần mềm theo yêu cầu cho doanh nghiệp của bạn |
-| AI | `home:homeDoorsVi.services.line` | Work with our dedicated teams on custom software. We shape each team around your product and work with you from discovery through launch and support. | Làm việc cùng đội ngũ chuyên trách của chúng tôi để xây dựng phần mềm theo yêu cầu. Chúng tôi xây dựng từng đội ngũ xoay quanh sản phẩm của bạn và đồng hành từ khâu khám phá đến khi ra mắt và hỗ trợ sau đó. |
-| AI | `home:homeCapabilitiesVi.title` | Why XionTech | Vì sao chọn XionTech |
-| AI | `home:homeCapabilitiesVi.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | Chúng tôi tự xây dựng sản phẩm và mang chính kinh nghiệm thực tế đó đến với khách hàng, kết hợp khám phá nghiệp vụ, làm chủ kỹ thuật và phát triển có AI hỗ trợ. |
-| AI | `home:homeCapabilitiesVi.delivery.title` | Two headquarters, one working day | Hai trụ sở chính, một ngày làm việc |
-| AI | `home:homeCapabilitiesVi.industries.title` | Start with education. Built to adapt | Khởi đầu từ giáo dục. Sẵn sàng thích ứng |
-| AI | `home:homeCapabilitiesVi.industries.line` | Our experience building education technology provides a strong foundation for developing tailored solutions across industries. | Kinh nghiệm xây dựng công nghệ giáo dục là nền tảng vững chắc để chúng tôi phát triển các giải pháp phù hợp cho nhiều ngành khác nhau. |
+| AI | `home:homeCapabilitiesVi.title` | Why XionTech. | Vì sao chọn XionTech. |
+| AI | `home:homeCapabilitiesVi.lede` | The capabilities behind every school app and every product we deliver, and a team that keeps finding smarter ways to build with AI. | Năng lực đứng sau mỗi ứng dụng trường học và mỗi sản phẩm chúng tôi bàn giao, cùng một đội ngũ không ngừng tìm cách thông minh hơn để xây dựng với AI. |
+| AI | `home:homeCapabilitiesVi.delivery.title` | Two headquarters, one working day. | Hai trụ sở chính, một ngày làm việc. |
 | AI | `home:homeCapabilitiesVi.industries.moreLabel` | +3 more industries: Healthcare, Logistics and Private Equity | Thêm 3 lĩnh vực: Y tế, Logistics và Quỹ đầu tư tư nhân |
-| AI | `home:homeCapabilitiesVi.motto.title` | Built with ownership, from the first idea to delivery. | Làm với tinh thần làm chủ, từ ý tưởng đầu tiên đến khi bàn giao. |
-| AI | `home:homeProcessVi.lede` | From idea to launch, our 4-D process brings clarity, collaboration, and measurable progress to every stage. With AI-assisted workflows and clear deliverables, you stay involved from start to finish. | Từ ý tưởng đến ngày ra mắt, quy trình 4-D của chúng tôi mang lại sự rõ ràng, phối hợp chặt chẽ và tiến độ đo lường được ở mọi giai đoạn. Với quy trình làm việc có AI hỗ trợ và kết quả bàn giao rõ ràng, bạn luôn được tham gia từ đầu đến cuối. |
+| AI | `home:homeProcessVi.title` | How we work. | Cách chúng tôi làm việc. |
+| AI | `home:homeProcessVi.lede` | Our 4-D process (Discovery, Design, Development, Deployment) takes your idea to launch, and every step ends with something you can see and approve. AI runs through every step, and we keep improving how we use it. | Quy trình 4-D của chúng tôi (Khám phá, Thiết kế, Phát triển, Triển khai) đưa ý tưởng của bạn đến ngày ra mắt, và mỗi bước kết thúc bằng kết quả bạn có thể xem và phê duyệt. AI có mặt trong mọi bước, và chúng tôi không ngừng cải thiện cách sử dụng nó. |
 | AI | `home:homeProcessVi.link.label` | See the full process | Xem toàn bộ quy trình |
-| AI | `home:homeOutcomesVi.lede` | Pick one service or combine several. We shape the team around your product. | Chọn một dịch vụ hoặc kết hợp nhiều dịch vụ. Chúng tôi xây dựng đội ngũ xoay quanh sản phẩm của bạn. |
-| AI | `home:homeOutcomesVi.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | Biến ý tưởng của bạn thành sản phẩm sẵn sàng ra thị trường với thiết kế trọn gói, phát triển phần mềm theo yêu cầu, kiểm thử và hỗ trợ ra mắt. |
-| AI | `home:homeOutcomesVi.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | Bổ sung nhân sự công nghệ chuyên sâu khi đội ngũ nội bộ cần thêm năng lực hoặc kỹ năng cụ thể. |
-| AI | `home:homeOutcomesVi.items[2].title` | Modernize an existing platform | Hiện đại hóa nền tảng hiện có |
-| AI | `home:homeOutcomesVi.items[3].title` | Leverage AI to drive business value | Tận dụng AI để tạo giá trị kinh doanh |
-| AI | `home:homeOutcomesVi.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | Xây dựng giải pháp ứng dụng AI, tự động hóa quy trình và biến dữ liệu kinh doanh thành thông tin hữu ích, hỗ trợ ra quyết định thông minh hơn. |
-| AI | `home:homeOutcomesVi.cta.label` | Let's build together | Cùng nhau xây dựng |
-| AI | `home:homeAppsVi.title` | One connected school | Một ngôi trường kết nối |
-| AI | `home:homeAppsVi.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | Gắn kết toàn bộ cộng đồng nhà trường với các giải pháp kết nối dành cho phụ huynh, nhân viên, học sinh và vận hành khuôn viên; tất cả được thiết kế để đơn giản hóa công tác quản lý trường học hằng ngày. |
-| AI | `home:homeAppsVi.apps[0].features[0]` | Real-time arrival alerts | Thông báo đến trường theo thời gian thực |
-| AI | `home:homeAppsVi.apps[0].features[1]` | Published grades and feedback | Điểm số và nhận xét đã công bố |
-| AI | `home:homeAppsVi.apps[1].features[0]` | Attendance and student records | Điểm danh và hồ sơ học sinh |
-| AI | `home:homeAppsVi.apps[2].features[0]` | Centralized device management | Quản lý thiết bị tập trung |
-| AI | `home:homeAppsVi.apps[2].features[1]` | Scheduled lighting and climate controls | Điều khiển ánh sáng và điều hòa theo lịch |
-| AI | `home:homeAppsVi.apps[3].features[0]` | Skill-level understanding checks | Kiểm tra mức độ hiểu theo từng kỹ năng |
-| AI | `home:homeAppsVi.apps[3].features[1]` | Personalized step-by-step hints | Gợi ý từng bước theo từng học sinh |
-| AI | `home:homeFaqVi.title` | Before you reach out | Trước khi bạn liên hệ |
-| AI | `home:homeFaqVi.items[0].question` | How can our school try Parent Hub or Staff Hub? | Trường chúng tôi có thể dùng thử Parent Hub hoặc Staff Hub bằng cách nào? |
-| AI | `home:homeFaqVi.items[0].answer` | Leave your work email on the Products page and we walk you through the apps using scenarios from your own school. | Hãy để lại email công việc trên trang Sản phẩm, chúng tôi sẽ giới thiệu các ứng dụng qua những tình huống từ chính trường của bạn. |
-| AI | `home:homeFaqVi.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Các đội ngũ của chúng tôi tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng hỗ trợ các múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
-| AI | `home:homeFaqVi.items[2].question` | What results can we expect? | Chúng tôi có thể kỳ vọng kết quả gì? |
-| AI | `home:homeFaqVi.items[2].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | Triển khai tiết kiệm chi phí bởi đội ngũ kỹ sư Việt Nam giàu kinh nghiệm, phát hành đúng hạn và kết quả đo lường được, hỗ trợ sự phát triển của bạn. |
-| AI | `home:homeFaqVi.items[3].question` | How do we give feedback during a project? | Chúng tôi góp ý trong suốt dự án bằng cách nào? |
-| AI | `home:homeFaqVi.items[3].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | Qua các kênh trao đổi riêng, các buổi cập nhật thường xuyên và sprint linh hoạt, để ý kiến của bạn định hình sản phẩm xuyên suốt quá trình. |
+| AI | `home:homeAppsVi.title` | One connected school. | Một ngôi trường kết nối. |
+| AI | `home:homeFaqVi.title` | Your questions, answered. | Giải đáp thắc mắc của bạn. |
+| AI | `home:homeFaqVi.items[0].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | Hãy liên hệ với chúng tôi. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn. |
+| AI | `home:homeFaqVi.items[1].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
 | AI | `home:homeFaqVi.link.label` | See all questions | Xem tất cả câu hỏi |
 | Prototype | `home:homeHeroVi.cta.label` | Get in touch | Liên hệ với chúng tôi |
 | Prototype | `home:homeStatsVi.label` | Experience you can count on | Kinh nghiệm bạn có thể tin cậy |
@@ -112,258 +90,272 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `home:homeStatsVi.stats[1].caption` | Global coverage across time zones | Hỗ trợ toàn cầu qua các múi giờ |
 | Prototype | `home:homeStatsVi.stats[2].caption` | Technology stacks we work in | Nền tảng công nghệ chúng tôi làm việc |
 | Prototype | `home:homeStatsVi.stats[3].caption` | Service offerings, from idea to operation | Dịch vụ, từ ý tưởng đến vận hành |
-| Prototype | `home:homeDoorsVi.products.label` | Products for schools | Sản phẩm cho trường học |
+| Prototype | `home:homeDoorsVi.products.title` | Products for schools | Sản phẩm cho trường học |
+| Prototype | `home:homeDoorsVi.products.line` | Connected apps for parents, students, teachers, leaders and school staff. | Ứng dụng kết nối cho phụ huynh, học sinh, giáo viên, lãnh đạo và nhân viên nhà trường. |
 | Prototype | `home:homeDoorsVi.services.label` | Outsourcing services | Dịch vụ outsourcing |
+| Prototype | `home:homeDoorsVi.services.title` | Your software delivery team | Đội ngũ phát triển phần mềm của bạn |
+| Prototype | `home:homeDoorsVi.services.line` | Dedicated teams and end-to-end delivery for companies building digital products. | Đội ngũ chuyên trách và phát triển trọn gói cho doanh nghiệp xây dựng sản phẩm số. |
 | Prototype | `home:homeDoorsVi.services.chips[5]` | +3 more | +3 dịch vụ |
 | Prototype | `home:homeCapabilitiesVi.delivery.label` | Global delivery | Triển khai toàn cầu |
 | Prototype | `home:homeCapabilitiesVi.delivery.line` | Teams across time zones keep delivery moving with practical overlap. | Các đội ngũ ở nhiều múi giờ giữ tiến độ liên tục với thời gian làm việc chung hợp lý. |
 | Prototype | `home:homeCapabilitiesVi.industries.label` | Domain expertise | Chuyên môn lĩnh vực |
+| Prototype | `home:homeCapabilitiesVi.industries.title` | Deep in education. Built to adapt. | Chuyên sâu về giáo dục. Sẵn sàng thích ứng. |
+| Prototype | `home:homeCapabilitiesVi.industries.line` | Education is where we go deepest, while the same engineering capability supports other industries too. | Giáo dục là lĩnh vực chúng tôi chuyên sâu nhất, trong khi cùng năng lực kỹ thuật đó hỗ trợ cả các ngành khác. |
 | Prototype | `home:homeCapabilitiesVi.industries.main` | Education | Giáo dục |
 | Prototype | `home:homeCapabilitiesVi.industries.more[0]` | Healthcare | Y tế |
 | Prototype | `home:homeCapabilitiesVi.industries.more[2]` | Private Equity | Quỹ đầu tư tư nhân |
-| Prototype | `home:homeProcessVi.title` | How we work | Cách chúng tôi làm việc |
+| Prototype | `home:homeCapabilitiesVi.motto.title` | Built with ownership. | Làm với tinh thần làm chủ. |
+| Prototype | `home:homeCapabilitiesVi.motto.line` | Ownership of our commitments and pride in quality. | Làm chủ cam kết và tự hào về chất lượng. |
 | Prototype | `home:homeOutcomesVi.title` | What can we help you achieve? | Chúng tôi có thể giúp bạn đạt được điều gì? |
+| Prototype | `home:homeOutcomesVi.lede` | Pick one service or combine several. We shape the team around your product. | Chọn một dịch vụ hoặc kết hợp nhiều dịch vụ. Chúng tôi điều chỉnh theo sản phẩm của bạn. |
 | Prototype | `home:homeOutcomesVi.items[0].title` | Build a new digital product | Xây dựng sản phẩm số mới |
+| Prototype | `home:homeOutcomesVi.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | Đi từ khám phá và UX đến kỹ thuật, kiểm thử và ra mắt với một đội triển khai duy nhất. |
 | Prototype | `home:homeOutcomesVi.items[1].title` | Extend your team | Mở rộng đội ngũ |
+| Prototype | `home:homeOutcomesVi.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | Bổ sung nhân sự công nghệ chuyên sâu khi đội ngũ nội bộ cần thêm năng lực hoặc kỹ năng cụ thể. |
+| Prototype | `home:homeOutcomesVi.items[2].title` | Modernise an existing platform | Hiện đại hóa nền tảng hiện có |
 | Prototype | `home:homeOutcomesVi.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | Cải thiện ứng dụng, hạ tầng, triển khai cloud và quy trình kỹ thuật mà vẫn giữ vững những gì đang vận hành tốt. |
+| Prototype | `home:homeOutcomesVi.items[3].title` | Apply AI where it creates value | Ứng dụng AI ở nơi tạo ra giá trị |
+| Prototype | `home:homeOutcomesVi.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | Dùng AI, phân tích dữ liệu và tự động hóa để cải thiện sản phẩm, quy trình và việc ra quyết định kinh doanh. |
+| Prototype | `home:homeOutcomesVi.cta.label` | Start a project | Bắt đầu dự án |
 | Prototype | `home:homeOutcomesVi.link.label` | Explore services | Khám phá dịch vụ |
+| Prototype | `home:homeAppsVi.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung. |
 | Prototype | `home:homeAppsVi.apps[0].madeFor` | Parents and families | Phụ huynh và gia đình |
+| Prototype | `home:homeAppsVi.apps[0].features[0]` | Alerts when your child reaches the gate | Thông báo khi con qua cổng trường |
+| Prototype | `home:homeAppsVi.apps[0].features[1]` | Scores and comments as soon as published | Điểm và nhận xét ngay khi công bố |
 | Prototype | `home:homeAppsVi.apps[1].madeFor` | Staff, teachers and school leaders | Nhân viên, giáo viên và lãnh đạo nhà trường |
+| Prototype | `home:homeAppsVi.apps[1].features[0]` | Attendance and records in real time | Điểm danh và hồ sơ theo thời gian thực |
 | Prototype | `home:homeAppsVi.apps[1].features[1]` | Classes, timetables and grades | Lớp, thời khóa biểu và điểm số |
 | Prototype | `home:homeAppsVi.apps[2].madeFor` | School operations and facilities teams | Đội vận hành và cơ sở vật chất của trường |
+| Prototype | `home:homeAppsVi.apps[2].features[0]` | Projectors, displays and sound | Máy chiếu, màn hình và âm thanh |
+| Prototype | `home:homeAppsVi.apps[2].features[1]` | Lighting and climate on the timetable | Ánh sáng và điều hòa theo thời khóa biểu |
 | Prototype | `home:homeAppsVi.apps[3].madeFor` | Students, with teachers alongside | Học sinh, cùng giáo viên đồng hành |
+| Prototype | `home:homeAppsVi.apps[3].features[0]` | Skill-by-skill diagnosis | Chẩn đoán theo từng kỹ năng |
+| Prototype | `home:homeAppsVi.apps[3].features[1]` | Step-by-step hints once you have tried | Gợi ý từng bước sau khi đã thử |
 | Prototype | `home:homeAppsVi.link.label` | Explore products | Khám phá sản phẩm |
 | Prototype | `home:homeFaqVi.lede` | Straight answers about our products, our services and how we work. | Câu trả lời thẳng thắn về sản phẩm, dịch vụ và cách chúng tôi làm việc. |
+| Prototype | `home:homeFaqVi.items[0].question` | How can our school try Parent Hub or Staff Hub? | Trường chúng tôi có thể trải nghiệm Parent Hub hoặc Staff Hub như thế nào? |
 | Prototype | `home:homeFaqVi.items[1].question` | How do you work across time zones? | Các bạn làm việc qua nhiều múi giờ như thế nào? |
+| Prototype | `home:homeFaqVi.items[2].question` | What results can we expect? | Chúng tôi có thể mong đợi kết quả gì? |
+| Prototype | `home:homeFaqVi.items[2].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | Phát triển tối ưu chi phí bởi đội ngũ kỹ sư Việt Nam giàu kinh nghiệm, phát hành đúng hạn và kết quả đo lường được, hỗ trợ sự phát triển của bạn. |
+| Prototype | `home:homeFaqVi.items[3].question` | How do we give feedback during a project? | Chúng tôi góp ý trong quá trình dự án bằng cách nào? |
+| Prototype | `home:homeFaqVi.items[3].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | Qua các kênh riêng, các buổi trao đổi thường xuyên và sprint Agile, để ý kiến của bạn định hình sản phẩm xuyên suốt dự án. |
 
 ## Apps (Home and Products)
 
-4 AI, 0 prototype.
+1 AI, 3 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `apps:appTaglinesVi.parent-hub` | Keep parents informed and connected to their child’s school life. | Giúp phụ huynh luôn nắm bắt thông tin và gắn kết với đời sống học đường của con. |
-| AI | `apps:appTaglinesVi.staff-hub` | Bring daily school operations into one connected workspace. | Đưa mọi hoạt động vận hành hằng ngày của nhà trường vào một không gian làm việc kết nối. |
-| AI | `apps:appTaglinesVi.iot` | Simplify how schools manage connected campus technology. | Đơn giản hóa cách nhà trường quản lý công nghệ trong khuôn viên kết nối. |
-| AI | `apps:appTaglinesVi.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | Giúp học sinh hiểu lỗi sai và tự tin hơn qua việc học có hướng dẫn. |
+| AI | `apps:appTaglinesVi.ai-tutor` | [Placeholder] Solve new problems on your own. Not just read solutions. | [Placeholder] Tự giải bài mới. Không chỉ đọc lời giải. |
+| Prototype | `apps:appTaglinesVi.parent-hub` | Keeps parents close to every school day, on their phone. | Giúp phụ huynh đồng hành cùng con mỗi ngày học, ngay trên điện thoại. |
+| Prototype | `apps:appTaglinesVi.staff-hub` | One workspace where staff, teachers and leaders share the same data. | Một không gian làm việc để nhân viên, giáo viên và lãnh đạo dùng chung dữ liệu. |
+| Prototype | `apps:appTaglinesVi.iot` | Run classroom devices, lighting, climate and access from one screen. | Điều khiển thiết bị lớp học, ánh sáng, điều hòa và ra vào từ một màn hình. |
 
 ## Values (Home and About)
 
-14 AI, 4 prototype.
+9 AI, 13 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `values:aboutValuesVi.items[0].title` | Adapt with purpose. | Thích ứng có mục đích. |
-| AI | `values:aboutValuesVi.items[0].text` | Stay flexible, respond to change, and keep moving toward what matters. | Luôn linh hoạt, phản ứng với thay đổi và tiếp tục tiến về những điều quan trọng. |
-| AI | `values:aboutValuesVi.items[1].label` | Take ownership | Tinh thần làm chủ |
-| AI | `values:aboutValuesVi.items[1].title` | Own the outcome. | Làm chủ kết quả. |
-| AI | `values:aboutValuesVi.items[1].text` | Speak up, take responsibility, and see things through from start to finish. | Lên tiếng, nhận trách nhiệm và theo đuổi công việc từ đầu đến cuối. |
-| AI | `values:aboutValuesVi.items[2].label` | Innovate | Đổi mới |
-| AI | `values:aboutValuesVi.items[2].title` | Make innovation useful. | Đổi mới để tạo giá trị. |
-| AI | `values:aboutValuesVi.items[2].text` | Explore new ideas and technologies that create meaningful value for people and businesses. | Khám phá những ý tưởng và công nghệ mới, tạo ra giá trị thiết thực cho con người và doanh nghiệp. |
-| AI | `values:aboutValuesVi.items[3].title` | Better together. | Cùng nhau tốt hơn. |
-| AI | `values:aboutValuesVi.items[3].text` | Share knowledge, support each other, and grow through collaboration and feedback. | Chia sẻ kiến thức, hỗ trợ lẫn nhau và cùng phát triển qua hợp tác và góp ý. |
-| AI | `values:aboutValuesVi.items[4].title` | Turn ideas into impact. | Biến ý tưởng thành tác động. |
-| AI | `values:aboutValuesVi.items[4].text` | Move beyond ideas and deliver practical solutions that make a difference. | Vượt lên trên ý tưởng và mang đến những giải pháp thiết thực tạo nên khác biệt. |
-| AI | `values:homeValuesHeadingVi.title` | What drives us | Điều thúc đẩy chúng tôi |
-| AI | `values:homeValuesHeadingVi.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | Năm nguyên tắc định hướng cách chúng tôi hợp tác, đưa ra quyết định và mang lại kết quả có ý nghĩa. |
-| Prototype | `values:aboutValuesVi.items[0].label` | Stay agile | Linh hoạt |
-| Prototype | `values:aboutValuesVi.items[3].label` | Grow together | Cùng nhau phát triển |
+| AI | `values:aboutValuesVi.items[0].short` | Agile, resilient and always improving. | Nhanh nhạy, bền bỉ và không ngừng cải tiến. |
+| AI | `values:aboutValuesVi.items[1].short` | Clients at the heart of everything we do. | Khách hàng là trọng tâm của mọi việc chúng tôi làm. |
+| AI | `values:aboutValuesVi.items[2].short` | Honest, transparent and accountable. | Trung thực, minh bạch và có trách nhiệm. |
+| AI | `values:aboutValuesVi.items[3].short` | Exploring new technology to stay ahead. | Khám phá công nghệ mới để luôn đi trước. |
+| AI | `values:aboutValuesVi.items[4].short` | We own our commitments and deliver. | Chúng tôi làm chủ cam kết và hoàn thành. |
+| AI | `values:aboutValuesVi.items[5].title` | People-Centered Culture | Văn hóa lấy con người làm trọng tâm |
+| AI | `values:aboutValuesVi.items[5].short` | Every team member valued, supported and empowered. | Mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. |
+| AI | `values:aboutValuesVi.items[5].text` | Cultivate a workplace where every team member feels valued, supported, and empowered. Our culture goes beyond employment: it's about belonging, collaboration, and shared success. | Xây dựng môi trường nơi mỗi thành viên đều được trân trọng, hỗ trợ và trao quyền. Văn hóa của chúng tôi vượt ra ngoài công việc: đó là sự gắn bó, hợp tác và thành công chung. |
+| AI | `values:homeValuesHeadingVi.lede` | What guides how we work. Flip a card to read each value in full. | Những điều dẫn dắt cách chúng tôi làm việc. Lật một thẻ để đọc đầy đủ từng giá trị. |
+| Prototype | `values:aboutValuesVi.items[0].title` | Startup Spirit | Tinh thần khởi nghiệp |
+| Prototype | `values:aboutValuesVi.items[0].text` | Embody an entrepreneurial mindset, embracing agility, flexibility, and a passion for innovation. Our commitment to excellence is driven by resilience and a culture of continuous improvement. | Mang tư duy khởi nghiệp, đề cao sự nhanh nhạy, linh hoạt và niềm đam mê đổi mới. Cam kết hướng tới sự xuất sắc được thúc đẩy bởi sự bền bỉ và văn hóa cải tiến liên tục. |
+| Prototype | `values:aboutValuesVi.items[1].title` | Client Centricity | Khách hàng là trọng tâm |
+| Prototype | `values:aboutValuesVi.items[1].text` | Clients are at the heart of everything we do. We strive to deliver exceptional experiences and impactful outcomes through deep understanding, proactive engagement, and tailored solutions. | Khách hàng là trọng tâm của mọi việc chúng tôi làm. Chúng tôi mang đến trải nghiệm vượt trội và kết quả thiết thực nhờ thấu hiểu sâu sắc, chủ động gắn kết và giải pháp phù hợp. |
+| Prototype | `values:aboutValuesVi.items[2].title` | Integrity First | Chính trực là trên hết |
+| Prototype | `values:aboutValuesVi.items[2].text` | Operate with honesty, transparency, and accountability. Ethical standards guide every decision and interaction, fostering trust and long-term relationships. | Làm việc trung thực, minh bạch và có trách nhiệm. Chuẩn mực đạo đức dẫn dắt mọi quyết định và tương tác, xây dựng niềm tin và quan hệ lâu dài. |
+| Prototype | `values:aboutValuesVi.items[3].title` | Innovation Driven | Tiên phong đổi mới |
+| Prototype | `values:aboutValuesVi.items[3].text` | Passionate about exploring emerging technologies and creative approaches. Innovation is embedded in our DNA, enabling us to evolve our solutions and stay ahead of industry trends. | Đam mê khám phá công nghệ mới và những cách tiếp cận sáng tạo. Đổi mới nằm trong DNA của chúng tôi, giúp giải pháp luôn phát triển và đi trước xu hướng. |
+| Prototype | `values:aboutValuesVi.items[4].title` | "Get IT Done" Attitude | Tinh thần "Get IT Done" |
+| Prototype | `values:aboutValuesVi.items[4].text` | Take ownership of our commitments and deliver high-quality, reliable, and efficient solutions. Our team is driven by accountability and a results-oriented mindset that meets or exceeds industry standards. | Làm chủ cam kết và mang đến giải pháp chất lượng cao, tin cậy và hiệu quả. Đội ngũ được thúc đẩy bởi tinh thần trách nhiệm và tư duy hướng kết quả, đáp ứng hoặc vượt chuẩn ngành. |
+| Prototype | `values:homeValuesHeadingVi.title` | Our core values. | Giá trị cốt lõi. |
 | Prototype | `values:homeValuesHeadingVi.frontHint` | Flip for details | Lật để xem chi tiết |
 | Prototype | `values:homeValuesHeadingVi.backHint` | Flip back | Lật lại |
 
 ## Process (Home and Services)
 
-10 AI, 8 prototype.
+0 AI, 18 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `process:processFlowVi.start.line` | An idea, a brief or a business need | Một ý tưởng, bản mô tả hoặc nhu cầu kinh doanh |
-| AI | `process:processFlowVi.end.line` | Growing the product together, release after release | Cùng phát triển sản phẩm qua từng bản phát hành |
-| AI | `process:processFlowVi.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | Các buổi workshop giúp làm rõ mục tiêu, người dùng, rủi ro và phạm vi, rồi biến ý tưởng thành yêu cầu rõ ràng |
-| AI | `process:processFlowVi.steps[0].receive` | Clear requirements, an estimate and a delivery plan | Yêu cầu rõ ràng, ước tính và kế hoạch triển khai |
-| AI | `process:processFlowVi.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | Các yêu cầu đó trở thành luồng người dùng và bản mẫu có thể nhấp, để sản phẩm được nhìn thấy và tinh chỉnh trước khi xây dựng |
-| AI | `process:processFlowVi.steps[1].receive` | An approved prototype and technical design | Bản mẫu đã được phê duyệt và thiết kế kỹ thuật |
-| AI | `process:processFlowVi.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | Bản mẫu đã duyệt dẫn dắt việc xây dựng qua các sprint Agile, với kiểm thử trong từng sprint |
-| AI | `process:processFlowVi.steps[2].receive` | Tested, working software at every demo | Phần mềm đã kiểm thử, chạy được ở mỗi buổi demo |
-| AI | `process:processFlowVi.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | Sản phẩm hoàn thiện được đưa vào vận hành an toàn, sau đó được theo dõi và cải tiến qua quá trình sử dụng thực tế |
-| AI | `process:processFlowVi.steps[3].receive` | A live product with ongoing support | Sản phẩm vận hành chính thức và hỗ trợ liên tục |
 | Prototype | `process:processFlowVi.label` | 4-D process | Quy trình 4-D |
 | Prototype | `process:processFlowVi.receiveLabel` | You receive | Bạn nhận được |
 | Prototype | `process:processFlowVi.start.title` | Your request | Yêu cầu của bạn |
+| Prototype | `process:processFlowVi.start.line` | An idea, a brief or a requirement. | Ý tưởng, bản mô tả hoặc yêu cầu. |
 | Prototype | `process:processFlowVi.end.title` | Launch | Ra mắt |
+| Prototype | `process:processFlowVi.end.line` | And we keep growing it together. | Và phát triển tiếp cùng nhau. |
 | Prototype | `process:processFlowVi.steps[0].title` | Discovery | Khám phá |
+| Prototype | `process:processFlowVi.steps[0].line` | Workshops to understand your goals, users, risks and scope. | Workshop để hiểu mục tiêu, người dùng, rủi ro và phạm vi. |
+| Prototype | `process:processFlowVi.steps[0].receive` | A clear scope, estimate and delivery plan. | Phạm vi rõ ràng, ước tính và kế hoạch triển khai. |
 | Prototype | `process:processFlowVi.steps[1].title` | Design | Thiết kế |
+| Prototype | `process:processFlowVi.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | Luồng người dùng, giao diện và kiến trúc được thống nhất trước khi viết code. |
+| Prototype | `process:processFlowVi.steps[1].receive` | A clickable prototype and technical design. | Bản mẫu có thể nhấp và thiết kế kỹ thuật. |
 | Prototype | `process:processFlowVi.steps[2].title` | Development | Phát triển |
+| Prototype | `process:processFlowVi.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | Sprint Agile với demo thường xuyên. Kiểm thử và đảm bảo chất lượng (QA) diễn ra trong từng sprint, không phải ở cuối dự án. |
+| Prototype | `process:processFlowVi.steps[2].receive` | Tested, working software every sprint. | Phần mềm đã kiểm thử, chạy được sau mỗi sprint. |
 | Prototype | `process:processFlowVi.steps[3].title` | Deployment | Triển khai |
+| Prototype | `process:processFlowVi.steps[3].line` | A safe release, monitoring and improvement after launch. | Phát hành an toàn, theo dõi và cải tiến sau khi ra mắt. |
+| Prototype | `process:processFlowVi.steps[3].receive` | A live release with ongoing support. | Bản phát hành chính thức và hỗ trợ liên tục. |
 
 ## Products
 
-23 AI, 25 prototype.
+9 AI, 23 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `products:productsMetaVi.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | Ứng dụng cho trường học: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech |
 | AI | `products:productsMetaVi.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | Parent Hub cho phụ huynh, Staff Hub cho nhân viên, giáo viên và lãnh đạo, và IoT Device Management cho khuôn viên trường. Các ứng dụng trường học kết nối từ XionTech. |
-| AI | `products:productDetailsVi.parent-hub.features[0].title` | Real-time arrival alerts | Thông báo đến trường theo thời gian thực |
-| AI | `products:productDetailsVi.parent-hub.features[1].title` | Published grades and feedback | Điểm số và nhận xét đã công bố |
-| AI | `products:productDetailsVi.staff-hub.features[0].title` | Attendance and student records | Điểm danh và hồ sơ học sinh |
-| AI | `products:productDetailsVi.iot.features[0].title` | Centralized device management | Quản lý thiết bị tập trung |
-| AI | `products:productDetailsVi.iot.features[1].title`<br>`products:dayRoadVi.stops[4].title` | Scheduled lighting and climate controls | Điều khiển ánh sáng và điều hòa theo lịch |
-| AI | `products:productDetailsVi.ai-tutor.features[0].title` | Skill-level understanding checks | Kiểm tra mức độ hiểu theo từng kỹ năng |
-| AI | `products:productDetailsVi.ai-tutor.features[1].title` | Personalized step-by-step hints | Gợi ý từng bước theo từng học sinh |
-| AI | `products:journeyMapVi.intro.title` | Built apart. Better together | Xây dựng riêng. Mạnh hơn khi kết nối |
-| AI | `products:dayRoadVi.heading` | A day at school | Một ngày ở trường |
-| AI | `products:dayRoadVi.start` | Start | Bắt đầu |
-| AI | `products:dayRoadVi.finish` | Finish | Kết thúc |
-| AI | `products:dayRoadVi.stops[3].text` | Students practice and ask questions with the AI Tutor. | Học sinh luyện tập và đặt câu hỏi cùng AI Tutor. |
-| AI | `products:dayRoadVi.stops[4].text` | Simplify how schools manage connected campus technology. | Đơn giản hóa cách nhà trường quản lý công nghệ trong khuôn viên kết nối. |
-| AI | `products:journeyBoardVi.hint` | Select a step to see the app behind it. | Chọn một bước để xem ứng dụng phía sau. |
-| AI | `products:journeyBoardVi.everyone` | Everyone | Mọi người |
+| AI | `products:productRoadVi.start` | Start | Bắt đầu |
+| AI | `products:productRoadVi.finish` | Finish | Kết thúc |
 | AI | `products:journeyBoardVi.details` | Details | Chi tiết |
 | AI | `products:journeyBoardVi.lanes[0].label` | Student | Học sinh |
 | AI | `products:journeyBoardVi.lanes[1].label` | Teacher and staff | Giáo viên và nhân viên |
 | AI | `products:journeyBoardVi.lanes[2].label` | Parent | Phụ huynh |
-| AI | `products:journeyBoardVi.lanes[3].label` | Campus | Khuôn viên |
 | AI | `products:roadDialogVi.close` | Close | Đóng |
 | Prototype | `products:productsShowcaseVi.madeFor` | Made for | Dành cho |
 | Prototype | `products:productsShowcaseVi.featuresHeading` | Features | Tính năng |
 | Prototype | `products:productDetailsVi.parent-hub.madeFor` | Parents and families | Phụ huynh và gia đình |
+| Prototype | `products:productDetailsVi.parent-hub.features[0].title` | Alerts when your child reaches the gate | Thông báo khi con qua cổng trường |
+| Prototype | `products:productDetailsVi.parent-hub.features[1].title` | Scores and comments as soon as published | Điểm và nhận xét ngay khi công bố |
 | Prototype | `products:productDetailsVi.parent-hub.features[2].title` | Two-way messages with teachers | Nhắn tin hai chiều với giáo viên |
 | Prototype | `products:productDetailsVi.parent-hub.features[3].title` | Fee payments with clear receipts | Đóng học phí với biên lai rõ ràng |
 | Prototype | `products:productDetailsVi.staff-hub.madeFor` | Staff, teachers and school leaders | Nhân viên, giáo viên và lãnh đạo nhà trường |
+| Prototype | `products:productDetailsVi.staff-hub.features[0].title` | Attendance and records in real time | Điểm danh và hồ sơ theo thời gian thực |
 | Prototype | `products:productDetailsVi.staff-hub.features[1].title` | Classes, timetables and grades | Lớp, thời khóa biểu và điểm số |
 | Prototype | `products:productDetailsVi.staff-hub.features[2].title` | Messages to parents through Parent Hub | Gửi tin đến phụ huynh qua Parent Hub |
 | Prototype | `products:productDetailsVi.staff-hub.features[3].title` | Leader dashboards for today's priorities | Bảng điều khiển cho việc cần xử lý hôm nay |
 | Prototype | `products:productDetailsVi.iot.madeFor` | School operations and facilities teams | Đội vận hành và cơ sở vật chất của trường |
+| Prototype | `products:productDetailsVi.iot.features[0].title` | Projectors, displays and sound | Máy chiếu, màn hình và âm thanh |
+| Prototype | `products:productDetailsVi.iot.features[1].title` | Lighting and climate on the timetable | Ánh sáng và điều hòa theo thời khóa biểu |
 | Prototype | `products:productDetailsVi.iot.features[2].title` | Doors and zones managed centrally | Quản lý cửa và khu vực tập trung |
 | Prototype | `products:productDetailsVi.iot.features[3].title` | Energy use across the campus | Mức dùng năng lượng toàn trường |
 | Prototype | `products:productDetailsVi.ai-tutor.madeFor` | Students, with teachers alongside | Học sinh, cùng giáo viên đồng hành |
+| Prototype | `products:productDetailsVi.ai-tutor.features[0].title` | Skill-by-skill diagnosis | Chẩn đoán theo từng kỹ năng |
+| Prototype | `products:productDetailsVi.ai-tutor.features[1].title` | Step-by-step hints once you have tried | Gợi ý từng bước sau khi đã thử |
 | Prototype | `products:productDetailsVi.ai-tutor.features[2].title` | Mastery only when you can do it alone | Chỉ thành thạo khi tự làm được |
+| Prototype | `products:journeyMapVi.intro.title` | Built apart. Better together. | Xây dựng riêng. Mạnh hơn khi kết nối. |
 | Prototype | `products:journeyMapVi.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học, vận hành nhà trường và công nghệ khuôn viên vào một hệ sinh thái chung. |
-| Prototype | `products:dayRoadVi.lede` | Follow one student journey through a typical school day and see how students, parents and school staff stay informed and connected across each step. | Theo chân một học sinh qua một ngày học điển hình để thấy học sinh, phụ huynh và nhà trường luôn được cập nhật và kết nối ở từng bước. |
-| Prototype | `products:dayRoadVi.stops[0].title` | Student arrives | Học sinh đến trường |
-| Prototype | `products:dayRoadVi.stops[0].text` | The student arrives on campus. | Học sinh đến khuôn viên trường. |
-| Prototype | `products:dayRoadVi.stops[1].title` | Attendance recorded | Ghi nhận điểm danh |
-| Prototype | `products:dayRoadVi.stops[1].text` | A teacher marks the student's attendance in Staff Hub. | Giáo viên điểm danh học sinh trên Staff Hub. |
-| Prototype | `products:dayRoadVi.stops[2].title` | Parent updated | Phụ huynh được cập nhật |
-| Prototype | `products:dayRoadVi.stops[2].text` | Parent Hub notifies parents that the student is at school. | Parent Hub báo cho phụ huynh rằng con đã đến trường. |
-| Prototype | `products:dayRoadVi.stops[3].title` | Student learns | Học sinh học tập |
-| Prototype | `products:dayRoadVi.stops[5].title` | Day stays connected | Cả ngày luôn kết nối |
-| Prototype | `products:dayRoadVi.stops[5].text` | Notifications and school information stay connected across the system. | Thông báo và thông tin của trường luôn kết nối trên toàn hệ thống. |
 
 ## Services
 
-46 AI, 12 prototype.
+7 AI, 39 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `services:servicesMetaVi.title` | Software Outsourcing Vietnam \| XionTech | Outsourcing phần mềm tại Việt Nam \| XionTech |
-| AI | `services:servicesMetaVi.description` | Software outsourcing from Ho Chi Minh City: product engineering, AI-driven analytics, co-creation, staffing, custom apps, low-code, AI solutions and cloud. | Outsourcing phần mềm từ TP. Hồ Chí Minh: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo, cung cấp nhân sự, ứng dụng theo yêu cầu, low-code, giải pháp AI và cloud. |
-| AI | `services:servicesPageVi.title.lead` | You bring your  | Bạn mang đến  |
-| AI | `services:servicesPageVi.title.words[0]` | vision | tầm nhìn |
-| AI | `services:servicesPageVi.title.words[1]` | challenges | thử thách |
-| AI | `services:servicesPageVi.title.words[2]` | ideas | ý tưởng |
-| AI | `services:servicesPageVi.title.words[3]` | ambition | khát vọng |
-| AI | `services:servicesPageVi.title.words[4]` | goals | mục tiêu |
-| AI | `services:servicesPageVi.title.tail[0]` | We get  | Còn chúng tôi: " |
-| AI | `services:servicesPageVi.title.tail[1]` | IT | Get IT done |
-| AI | `services:servicesPageVi.title.tail[2]` |  done | " |
-| AI | `services:servicesPageVi.title.staticWord` | vision. | tầm nhìn. |
-| AI | `services:servicesPageVi.title.label` | You bring your vision. We get IT done | Bạn mang đến tầm nhìn. Còn chúng tôi: "Get IT done" |
-| AI | `services:servicesPageVi.lede` | From digital products to AI integration and technology modernization, we bring the expertise to solve your challenges, accelerate innovation, and drive your business forward. | Từ sản phẩm số đến tích hợp AI và hiện đại hóa công nghệ, chúng tôi mang đến chuyên môn để giải quyết thử thách của bạn, thúc đẩy đổi mới và đưa doanh nghiệp của bạn tiến lên. |
-| AI | `services:servicesPageVi.primaryCta.label` | Let's build together | Cùng nhau xây dựng |
-| AI | `services:servicesPageVi.secondaryCta.label` | Explore our services | Khám phá dịch vụ của chúng tôi |
-| AI | `services:servicesPageVi.stack.label` | Illustration: requirements, wireframe and technical code layers of a software build | Hình minh họa: các lớp yêu cầu, wireframe và mã kỹ thuật của một sản phẩm phần mềm |
-| AI | `services:servicesPageVi.stack.requirements` | REQUIREMENTS | YÊU CẦU |
-| AI | `services:servicesPageVi.stack.code` | TECHNICAL CODE | MÃ KỸ THUẬT |
-| AI | `services:servicesSectionVi.title` | Eight services, one team | Tám dịch vụ, một đội ngũ |
-| AI | `services:servicesSectionVi.lede` | Pick one service or combine several. We shape the team around your product. | Chọn một dịch vụ hoặc kết hợp nhiều dịch vụ. Chúng tôi xây dựng đội ngũ xoay quanh sản phẩm của bạn. |
-| AI | `services:servicesSectionVi.services[0].description` | Turn ideas into market-ready digital products, from concept to launch. | Biến ý tưởng thành sản phẩm số sẵn sàng ra thị trường, từ ý tưởng ban đầu đến ngày ra mắt. |
-| AI | `services:servicesSectionVi.services[1].description` | Turn complex data into actionable insights with AI and intuitive dashboards. | Biến dữ liệu phức tạp thành thông tin hữu ích với AI và các dashboard trực quan. |
-| AI | `services:servicesSectionVi.services[2].description` | Bring your industry knowledge and our product expertise together to create solutions that matter. | Kết hợp hiểu biết ngành của bạn với chuyên môn sản phẩm của chúng tôi để tạo nên những giải pháp thực sự có giá trị. |
-| AI | `services:servicesSectionVi.services[3].description` | Get the right technology talent to support your projects and scale your team. | Có đúng nhân sự công nghệ để hỗ trợ dự án và mở rộng đội ngũ của bạn. |
-| AI | `services:servicesSectionVi.services[4].description` | Build tailored applications that fit your business needs and workflows. | Xây dựng ứng dụng riêng phù hợp với nhu cầu và quy trình làm việc của doanh nghiệp bạn. |
-| AI | `services:servicesSectionVi.services[5].description` | Build applications and automate workflows faster with flexible low-code platforms. | Xây dựng ứng dụng và tự động hóa quy trình nhanh hơn với các nền tảng low-code linh hoạt. |
-| AI | `services:servicesSectionVi.services[6].description` | Put AI to work with intelligent solutions that streamline processes and improve productivity. | Đưa AI vào công việc với các giải pháp thông minh giúp tinh gọn quy trình và nâng cao năng suất. |
-| AI | `services:servicesSectionVi.services[7].description` | Build, scale, and manage cloud solutions that support your growing business. | Xây dựng, mở rộng và quản lý các giải pháp cloud hỗ trợ doanh nghiệp đang phát triển của bạn. |
-| AI | `services:servicesOutcomesVi.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | Biến ý tưởng của bạn thành sản phẩm sẵn sàng ra thị trường với thiết kế trọn gói, phát triển phần mềm theo yêu cầu, kiểm thử và hỗ trợ ra mắt. |
-| AI | `services:servicesOutcomesVi.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | Bổ sung nhân sự công nghệ chuyên sâu khi đội ngũ nội bộ cần thêm năng lực hoặc kỹ năng cụ thể. |
-| AI | `services:servicesOutcomesVi.items[2].title` | Modernize an existing platform | Hiện đại hóa nền tảng hiện có |
-| AI | `services:servicesOutcomesVi.items[3].title` | Leverage AI to drive business value | Tận dụng AI để tạo giá trị kinh doanh |
-| AI | `services:servicesOutcomesVi.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | Xây dựng giải pháp ứng dụng AI, tự động hóa quy trình và biến dữ liệu kinh doanh thành thông tin hữu ích, hỗ trợ ra quyết định thông minh hơn. |
-| AI | `services:servicesProcessVi.title` | Our 4-D process: from your request to launch | Quy trình 4-D: từ yêu cầu của bạn đến ngày ra mắt |
+| AI | `services:servicesMetaVi.title` | Software Outsourcing Vietnam \| Product Engineering, AI, Low-code & Cloud \| XionTech | Outsourcing phần mềm tại Việt Nam \| Product Engineering, AI, Low-code & Cloud \| XionTech |
+| AI | `services:servicesMetaVi.description` | Dedicated teams and end-to-end software delivery from Ho Chi Minh City: product engineering, AI, low-code and cloud, across USA, Europe and Australia time zones. | Đội ngũ chuyên trách và phát triển phần mềm trọn gói từ TP. Hồ Chí Minh: phát triển sản phẩm, AI, low-code và cloud, theo múi giờ Mỹ, châu Âu và Úc. |
+| AI | `services:servicesPageVi.title.lead` | Software teams that  | Đội ngũ phần mềm có tinh thần " |
+| AI | `services:servicesPageVi.title.highlight` | get IT done | Get IT done |
+| AI | `services:servicesPageVi.title.tail` | . | ". |
+| AI | `services:servicesPageVi.lede` | Product engineering, AI, low-code and cloud delivery from Ho Chi Minh City, working across USA, Europe and Australia time zones. We work smarter with AI and keep innovating how we deliver. | Phát triển sản phẩm, AI, low-code và cloud từ TP. Hồ Chí Minh, làm việc theo múi giờ Mỹ, châu Âu và Úc. Chúng tôi làm việc thông minh hơn với AI và không ngừng đổi mới cách triển khai. |
 | AI | `services:servicesProcessVi.lede` | Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it. | Mỗi bước kết thúc bằng một kết quả bạn có thể xem, kiểm tra và phê duyệt. AI đồng hành trong mọi bước, và chúng tôi không ngừng cải thiện cách sử dụng AI. |
-| AI | `services:servicesProcessVi.flow.start.line` | An idea, a brief or a business need | Một ý tưởng, bản mô tả hoặc nhu cầu kinh doanh |
-| AI | `services:servicesProcessVi.flow.end.line` | Growing the product together, release after release | Cùng phát triển sản phẩm qua từng bản phát hành |
-| AI | `services:servicesProcessVi.flow.steps[0].line` | Our workshops uncover your goals, users, risks and scope, and turn the idea into clear requirements | Các buổi workshop giúp làm rõ mục tiêu, người dùng, rủi ro và phạm vi, rồi biến ý tưởng thành yêu cầu rõ ràng |
-| AI | `services:servicesProcessVi.flow.steps[0].receive` | Clear requirements, an estimate and a delivery plan | Yêu cầu rõ ràng, ước tính và kế hoạch triển khai |
-| AI | `services:servicesProcessVi.flow.steps[1].line` | Those requirements become user flows and a clickable prototype, so the product can be seen and refined before it’s built | Các yêu cầu đó trở thành luồng người dùng và bản mẫu có thể nhấp, để sản phẩm được nhìn thấy và tinh chỉnh trước khi xây dựng |
-| AI | `services:servicesProcessVi.flow.steps[1].receive` | An approved prototype and technical design | Bản mẫu đã được phê duyệt và thiết kế kỹ thuật |
-| AI | `services:servicesProcessVi.flow.steps[2].line` | The approved prototype guides the build in Agile sprints, with testing in every sprint | Bản mẫu đã duyệt dẫn dắt việc xây dựng qua các sprint Agile, với kiểm thử trong từng sprint |
-| AI | `services:servicesProcessVi.flow.steps[2].receive` | Tested, working software at every demo | Phần mềm đã kiểm thử, chạy được ở mỗi buổi demo |
-| AI | `services:servicesProcessVi.flow.steps[3].line` | The finished product goes live safely, then is monitored and improved through real use | Sản phẩm hoàn thiện được đưa vào vận hành an toàn, sau đó được theo dõi và cải tiến qua quá trình sử dụng thực tế |
-| AI | `services:servicesProcessVi.flow.steps[3].receive` | A live product with ongoing support | Sản phẩm vận hành chính thức và hỗ trợ liên tục |
+| Prototype | `services:servicesPageVi.primaryCta.label` | Start a project | Bắt đầu dự án |
+| Prototype | `services:servicesSectionVi.title` | Eight services, one team. | Tám dịch vụ, một đội ngũ. |
+| Prototype | `services:servicesSectionVi.lede` | Pick one service or combine several. We shape the team around your product. | Chọn một dịch vụ hoặc kết hợp nhiều dịch vụ. Chúng tôi điều chỉnh theo sản phẩm của bạn. |
+| Prototype | `services:servicesSectionVi.services[0].description` | Transform innovative ideas into market-ready digital products with end-to-end engineering expertise. | Biến ý tưởng sáng tạo thành sản phẩm số sẵn sàng ra thị trường với năng lực kỹ thuật toàn diện. |
+| Prototype | `services:servicesSectionVi.services[1].description` | Transform raw data into actionable intelligence using AI and advanced visualisation. | Biến dữ liệu thô thành thông tin hữu ích bằng AI và trực quan hóa nâng cao. |
+| Prototype | `services:servicesSectionVi.services[2].description` | Accelerate innovation by combining your domain knowledge with our technical expertise. | Tăng tốc đổi mới bằng cách kết hợp chuyên môn của bạn với năng lực kỹ thuật của chúng tôi. |
+| Prototype | `services:servicesSectionVi.services[3].description` | Access specialised technology talent when you need it, with flexible options. | Tiếp cận nhân sự công nghệ chuyên sâu khi cần, với giải pháp linh hoạt. |
+| Prototype | `services:servicesSectionVi.services[4].description` | Develop custom solutions aligned with your unique requirements. | Phát triển giải pháp theo đúng yêu cầu riêng của bạn. |
+| Prototype | `services:servicesSectionVi.services[5].description` | Ship tools and automations faster on leading low-code platforms. | Ra mắt công cụ và tự động hóa nhanh hơn trên các nền tảng low-code hàng đầu. |
+| Prototype | `services:servicesSectionVi.services[6].description` | Harness artificial intelligence to transform your operations. | Khai thác trí tuệ nhân tạo để chuyển đổi vận hành. |
+| Prototype | `services:servicesSectionVi.services[7].description` | Expert solutions on Azure, AWS and GCP. | Giải pháp chuyên sâu trên Azure, AWS và GCP. |
 | Prototype | `services:servicesOutcomesVi.title` | What can we help you achieve? | Chúng tôi có thể giúp bạn đạt được điều gì? |
 | Prototype | `services:servicesOutcomesVi.items[0].title` | Build a new digital product | Xây dựng sản phẩm số mới |
+| Prototype | `services:servicesOutcomesVi.items[0].description` | Move from discovery and UX into engineering, testing and launch with one delivery team. | Đi từ khám phá và UX đến kỹ thuật, kiểm thử và ra mắt với một đội triển khai duy nhất. |
 | Prototype | `services:servicesOutcomesVi.items[1].title` | Extend your team | Mở rộng đội ngũ |
+| Prototype | `services:servicesOutcomesVi.items[1].description` | Add specialised technology talent when your internal team needs more capacity or specific skills. | Bổ sung nhân sự công nghệ chuyên sâu khi đội ngũ nội bộ cần thêm năng lực hoặc kỹ năng cụ thể. |
+| Prototype | `services:servicesOutcomesVi.items[2].title` | Modernise an existing platform | Hiện đại hóa nền tảng hiện có |
 | Prototype | `services:servicesOutcomesVi.items[2].description` | Improve applications, infrastructure, cloud delivery and engineering practices while protecting what already works. | Cải thiện ứng dụng, hạ tầng, triển khai cloud và quy trình kỹ thuật mà vẫn giữ vững những gì đang vận hành tốt. |
+| Prototype | `services:servicesOutcomesVi.items[3].title` | Apply AI where it creates value | Ứng dụng AI ở nơi tạo ra giá trị |
+| Prototype | `services:servicesOutcomesVi.items[3].description` | Use AI, analytics and automation to improve products, workflows and business decision-making. | Dùng AI, phân tích dữ liệu và tự động hóa để cải thiện sản phẩm, quy trình và việc ra quyết định kinh doanh. |
+| Prototype | `services:servicesProcessVi.title` | Our 4-D process: from your request to launch. | Quy trình 4-D: từ yêu cầu của bạn đến ngày ra mắt. |
 | Prototype | `services:servicesProcessVi.flow.label` | 4-D process | Quy trình 4-D |
 | Prototype | `services:servicesProcessVi.flow.receiveLabel` | You receive | Bạn nhận được |
 | Prototype | `services:servicesProcessVi.flow.start.title` | Your request | Yêu cầu của bạn |
+| Prototype | `services:servicesProcessVi.flow.start.line` | An idea, a brief or a requirement. | Ý tưởng, bản mô tả hoặc yêu cầu. |
 | Prototype | `services:servicesProcessVi.flow.end.title` | Launch | Ra mắt |
+| Prototype | `services:servicesProcessVi.flow.end.line` | And we keep growing it together. | Và phát triển tiếp cùng nhau. |
 | Prototype | `services:servicesProcessVi.flow.steps[0].title` | Discovery | Khám phá |
+| Prototype | `services:servicesProcessVi.flow.steps[0].line` | Workshops to understand your goals, users, risks and scope. | Workshop để hiểu mục tiêu, người dùng, rủi ro và phạm vi. |
+| Prototype | `services:servicesProcessVi.flow.steps[0].receive` | A clear scope, estimate and delivery plan. | Phạm vi rõ ràng, ước tính và kế hoạch triển khai. |
 | Prototype | `services:servicesProcessVi.flow.steps[1].title` | Design | Thiết kế |
+| Prototype | `services:servicesProcessVi.flow.steps[1].line` | User flows, interfaces and architecture agreed before code is written. | Luồng người dùng, giao diện và kiến trúc được thống nhất trước khi viết code. |
+| Prototype | `services:servicesProcessVi.flow.steps[1].receive` | A clickable prototype and technical design. | Bản mẫu có thể nhấp và thiết kế kỹ thuật. |
 | Prototype | `services:servicesProcessVi.flow.steps[2].title` | Development | Phát triển |
+| Prototype | `services:servicesProcessVi.flow.steps[2].line` | Agile sprints with regular demos. Testing and quality assurance (QA) run inside every sprint, not at the end. | Sprint Agile với demo thường xuyên. Kiểm thử và đảm bảo chất lượng (QA) diễn ra trong từng sprint, không phải ở cuối dự án. |
+| Prototype | `services:servicesProcessVi.flow.steps[2].receive` | Tested, working software every sprint. | Phần mềm đã kiểm thử, chạy được sau mỗi sprint. |
 | Prototype | `services:servicesProcessVi.flow.steps[3].title` | Deployment | Triển khai |
+| Prototype | `services:servicesProcessVi.flow.steps[3].line` | A safe release, monitoring and improvement after launch. | Phát hành an toàn, theo dõi và cải tiến sau khi ra mắt. |
+| Prototype | `services:servicesProcessVi.flow.steps[3].receive` | A live release with ongoing support. | Bản phát hành chính thức và hỗ trợ liên tục. |
 
 ## About
 
-31 AI, 6 prototype.
+20 AI, 29 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `about:aboutMetaVi.title` | About XionTech \| Get IT Done | Về XionTech \| Get IT Done |
-| AI | `about:aboutMetaVi.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech là đối tác kỹ thuật với đội ngũ tại Mỹ và Việt Nam. Chúng tôi xây dựng sản phẩm phần mềm, khám phá đổi mới sáng tạo ứng dụng AI và làm chủ quá trình triển khai cùng khách hàng. |
-| AI | `about:aboutHeroVi.title.lead` | We’re XionTech. | Chúng tôi là XionTech. |
-| AI | `about:aboutHeroVi.title.middle` | Technology built with  | Công nghệ xây dựng bằng tinh thần  |
+| AI | `about:aboutMetaVi.description` | XionTech is an education technology company and software partner, with headquarters in Plano (USA) and Ho Chi Minh City (Vietnam) and teams in Ha Noi and Da Nang, serving clients in the USA, Europe and Australia. | XionTech là công ty công nghệ giáo dục và đối tác phần mềm, có trụ sở chính tại Plano (Mỹ) và TP. Hồ Chí Minh (Việt Nam), cùng đội ngũ tại Hà Nội và Đà Nẵng, phục vụ khách hàng tại Mỹ, châu Âu và Úc. |
+| AI | `about:aboutHeroVi.title.lead` | We’re XionTech, | Chúng tôi là XionTech, |
+| AI | `about:aboutHeroVi.title.middle` | technology built with  | công nghệ của tinh thần  |
 | AI | `about:aboutHeroVi.title.accent` | ownership | làm chủ |
-| AI | `about:aboutHeroVi.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | Chúng tôi kết nối con người, ý tưởng và công nghệ để xây dựng những giải pháp số có ý nghĩa. Từ phát triển sản phẩm phần mềm đến khám phá đổi mới sáng tạo ứng dụng AI, chúng tôi kết hợp chuyên môn kỹ thuật, đội ngũ lãnh đạo giàu kinh nghiệm và tinh thần làm chủ mạnh mẽ để giúp doanh nghiệp tiến về phía trước. |
 | AI | `about:aboutStoryVi.title.lead` | Inspired by a mountain. | Khởi nguồn từ một ngọn núi. |
-| AI | `about:aboutStoryVi.title.middle` | Driven by  | Dẫn lối bởi  |
+| AI | `about:aboutStoryVi.title.middle` | United by  | Gắn kết bởi  |
 | AI | `about:aboutStoryVi.title.highlight` | purpose | mục đích |
-| AI | `about:aboutStoryVi.paragraphs[0]` | Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights. | Tên của chúng tôi lấy cảm hứng từ một ngọn núi — biểu tượng của khát vọng, sự đoàn kết và quyết tâm vươn tới những tầm cao mới. |
-| AI | `about:aboutStoryVi.paragraphs[1]` | That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress. | Tinh thần đó định hình con người chúng tôi hôm nay. Chúng tôi kết nối con người với công nghệ, sẵn sàng đón nhận thử thách và làm chủ những gì mình xây dựng, hướng tới một tương lai nơi đổi mới sáng tạo tạo nên những tiến bộ có ý nghĩa. |
-| AI | `about:aboutValuesHeadingVi.title` | What drives us | Điều thúc đẩy chúng tôi |
-| AI | `about:aboutValuesHeadingVi.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | Năm nguyên tắc định hướng cách chúng tôi hợp tác, đưa ra quyết định và mang lại kết quả có ý nghĩa. |
-| AI | `about:aboutFaqVi.title` | Curious about XionTech? | Bạn muốn biết thêm về XionTech? |
-| AI | `about:aboutFaqVi.lede` | A few things you might want to know before working with us. | Một vài điều có thể bạn muốn biết trước khi làm việc cùng chúng tôi. |
-| AI | `about:aboutFaqVi.items[0].answer` | We create AI-powered products and deliver custom software, product engineering, dedicated teams, and technology solutions for businesses. | Chúng tôi tạo ra các sản phẩm ứng dụng AI và cung cấp phần mềm theo yêu cầu, phát triển sản phẩm, đội ngũ chuyên trách và các giải pháp công nghệ cho doanh nghiệp. |
-| AI | `about:aboutFaqVi.items[1].answer` | Education is our starting point. We bring adaptable engineering capabilities to projects in other industries, based on each client’s needs. | Giáo dục là điểm khởi đầu của chúng tôi. Chúng tôi mang năng lực kỹ thuật linh hoạt đến các dự án ở những ngành khác, dựa trên nhu cầu của từng khách hàng. |
-| AI | `about:aboutFaqVi.items[2].question` | How does a new project begin? | Một dự án mới bắt đầu như thế nào? |
-| AI | `about:aboutFaqVi.items[2].answer` | We start by understanding your goals and requirements, then shape the approach before progressing through design, development, testing, and deployment. | Chúng tôi bắt đầu bằng việc tìm hiểu mục tiêu và yêu cầu của bạn, định hình cách tiếp cận, rồi lần lượt đi qua thiết kế, phát triển, kiểm thử và triển khai. |
-| AI | `about:aboutFaqVi.items[3].question` | How do your teams work across time zones? | Đội ngũ của các bạn làm việc qua nhiều múi giờ như thế nào? |
+| AI | `about:aboutStoryVi.chapters[1].text` | [Placeholder] Inspired by this vision, a group of pioneers established newXion in America. Guided by enduring core values, they set out to build a community true to the spirit of the mountain: where people unite, harness cutting-edge technology, and build exceptional IT systems to advance humanity and shape a brighter future for all. | [Placeholder] Từ hình ảnh đó, một nhóm người tiên phong đã lập nên newXion tại Mỹ. Dẫn dắt bởi những giá trị cốt lõi bền vững, họ xây dựng một cộng đồng mang tinh thần của ngọn núi: nơi con người gắn kết, làm chủ công nghệ tiên tiến và xây dựng những hệ thống CNTT xuất sắc, vì nhân loại và một tương lai tươi sáng hơn cho tất cả. |
+| AI | `about:aboutFaqVi.items[0].answer` | We build our own school platforms (Parent Hub, Staff Hub and IoT Device Management) and deliver software for other companies: product engineering, AI-driven analytics, product co-creation and staffing. | Chúng tôi xây dựng nền tảng riêng cho trường học (Parent Hub, Staff Hub và IoT Device Management) và phát triển phần mềm cho doanh nghiệp khác: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo sản phẩm và cung cấp nhân sự. |
+| AI | `about:aboutFaqVi.items[1].answer` | EdTech is our core. We also serve Healthcare, Logistics and Private Equity. | Giáo dục là thế mạnh cốt lõi. Chúng tôi cũng phục vụ Y tế, Logistics và Quỹ đầu tư tư nhân. |
+| AI | `about:aboutFaqVi.items[2].answer` | Get in touch. We walk you through the apps using scenarios from your own school. | Hãy liên hệ với chúng tôi. Chúng tôi sẽ hướng dẫn bạn qua các ứng dụng với chính các tình huống của trường bạn. |
 | AI | `about:aboutFaqVi.items[3].answer` | Our teams in Plano, Ho Chi Minh City, Ha Noi and Da Nang cover USA, Europe and Australia time zones, with shared tools for real-time updates. | Đội ngũ tại Plano, TP. Hồ Chí Minh, Hà Nội và Đà Nẵng làm việc theo múi giờ Mỹ, châu Âu và Úc, với công cụ chung để cập nhật theo thời gian thực. |
-| AI | `about:aboutFaqVi.items[4].question` | How do you maintain delivery quality? | Các bạn duy trì chất lượng triển khai như thế nào? |
-| AI | `about:aboutFaqVi.items[4].answer` | Engineers review work and combine testing and quality assurance with AI-assisted development, guided by agreed project standards. | Kỹ sư rà soát công việc và kết hợp kiểm thử, đảm bảo chất lượng với phát triển có AI hỗ trợ, theo các tiêu chuẩn dự án đã thống nhất. |
-| AI | `about:aboutOfficesVi.title` | Two delivery centers. One connected team | Hai trung tâm triển khai. Một đội ngũ gắn kết |
-| AI | `about:aboutOfficesVi.lede` | From Plano to Ho Chi Minh City, our teams work across time zones to support clients and keep projects moving. | Từ Plano đến TP. Hồ Chí Minh, đội ngũ của chúng tôi làm việc qua nhiều múi giờ để hỗ trợ khách hàng và giữ dự án luôn tiến triển. |
-| AI | `about:aboutOfficesVi.timeLabel` | Local time | Giờ địa phương |
-| AI | `about:aboutOfficesVi.mapLabel` | Open {city} in Google Maps (opens in a new tab) | Mở {city} trên Google Maps (mở trong thẻ mới) |
-| AI | `about:aboutOfficesVi.locations[0].eyebrow` | US Delivery Center | Trung tâm Phát triển Mỹ |
-| AI | `about:aboutCtaVi.title` | Let’s build what’s next | Cùng xây dựng điều tiếp theo |
-| AI | `about:aboutCtaVi.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | Bạn có ý tưởng sản phẩm, một bài toán công nghệ hay một đội ngũ kỹ thuật cần mở rộng? Hãy cùng tìm cách biến mục tiêu của bạn thành những giải pháp có ý nghĩa. |
-| AI | `about:aboutCtaVi.primary.label` | Let’s talk about your project | Trao đổi về dự án của bạn |
-| Prototype | `about:aboutHeroVi.links[0].label`<br>`about:aboutCtaVi.secondary.label` | Explore our products | Khám phá sản phẩm |
+| AI | `about:aboutFaqVi.items[6].answer` | [Placeholder] We work with honesty, transparency and clear ethical standards, backed by security automation and continuous scanning. | [Placeholder] Chúng tôi làm việc trung thực, minh bạch và theo chuẩn mực đạo đức rõ ràng, cùng với tự động hóa bảo mật và quét liên tục. |
+| AI | `about:aboutOfficesVi.title` | Two headquarters, four locations. | Hai trụ sở chính, bốn địa điểm. |
+| AI | `about:aboutOfficesVi.more` | Also in Ha Noi and Da Nang. | Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng. |
+| AI | `about:aboutOfficesVi.offices[0].name` | Plano, Texas, USA | Plano, Texas, Mỹ |
+| AI | `about:aboutOfficesVi.offices[0].zoneLabel` | US Central | Giờ miền Trung Mỹ |
+| AI | `about:aboutOfficesVi.offices[0].tag` | US Delivery Center | Trung tâm Phát triển Mỹ |
+| AI | `about:aboutOfficesVi.offices[1].name` | Ho Chi Minh City, Vietnam | TP. Hồ Chí Minh, Việt Nam |
+| Prototype | `about:aboutHeroVi.text` | We bring people, ideas and technology together to build exceptional IT systems and shape a brighter future for all. From Ho Chi Minh City and Plano, we build our own platforms for schools and deliver digital products for clients around the world. | Chúng tôi kết nối con người, ý tưởng và công nghệ để xây dựng những hệ thống CNTT xuất sắc và kiến tạo một tương lai tươi sáng hơn cho tất cả. Từ TP. Hồ Chí Minh và Plano, chúng tôi tự xây dựng nền tảng cho trường học và phát triển sản phẩm số cho khách hàng trên toàn thế giới. |
+| Prototype | `about:aboutHeroVi.links[0].label` | Explore our products | Khám phá sản phẩm |
 | Prototype | `about:aboutHeroVi.links[1].label` | Explore our services | Khám phá dịch vụ |
+| Prototype | `about:aboutStoryVi.chapters[0].title` | The inspiration | Nguồn cảm hứng |
+| Prototype | `about:aboutStoryVi.chapters[0].text` | Our name is inspired by a mountain: a place people look up to, gather around and climb together towards a brighter future. | Tên Xion lấy cảm hứng từ một ngọn núi: nơi mọi người cùng hướng lên, cùng tụ hội và cùng nhau vượt lên tới một tương lai tươi sáng hơn. |
+| Prototype | `about:aboutStoryVi.chapters[1].title` | The purpose | Mục đích |
+| Prototype | `about:aboutStoryVi.closing.line` | Our inspiration is a mountain. Our purpose is people. | Cảm hứng của chúng tôi là một ngọn núi. Mục đích của chúng tôi là con người. |
+| Prototype | `about:aboutStoryVi.closing.tags` | Vision · Community · Technology | Tầm nhìn · Cộng đồng · Công nghệ |
+| Prototype | `about:aboutStoryVi.cue` | Scroll | Cuộn xuống |
+| Prototype | `about:aboutFaqVi.title` | Your question, we answer | Bạn hỏi, chúng tôi trả lời |
+| Prototype | `about:aboutFaqVi.lede` | Straight answers about our products, our services and how we work. | Câu trả lời thẳng thắn về sản phẩm, dịch vụ và cách chúng tôi làm việc. |
 | Prototype | `about:aboutFaqVi.items[0].question` | What does XionTech do? | XionTech làm gì? |
 | Prototype | `about:aboutFaqVi.items[1].question` | Which industries do you work with? | Các bạn làm việc với những lĩnh vực nào? |
-| Prototype | `about:aboutOfficesVi.locations[1].eyebrow` | Vietnam Delivery Center | Trung tâm Phát triển Việt Nam |
-| Prototype | `about:aboutOfficesVi.locations[1].city` | Ho Chi Minh City | TP. Hồ Chí Minh |
+| Prototype | `about:aboutFaqVi.items[2].question` | How can our school try Parent Hub or Staff Hub? | Trường chúng tôi có thể trải nghiệm Parent Hub hoặc Staff Hub như thế nào? |
+| Prototype | `about:aboutFaqVi.items[3].question` | How do you work across time zones? | Các bạn làm việc qua nhiều múi giờ như thế nào? |
+| Prototype | `about:aboutFaqVi.items[4].question` | When do you shape the solution to our needs? | Khi nào giải pháp được điều chỉnh theo nhu cầu của chúng tôi? |
+| Prototype | `about:aboutFaqVi.items[4].answer` | From the start. Discovery, the first of our four steps, sets your goals, users and scope before design begins. | Ngay từ đầu. Bước Khám phá, bước đầu tiên trong quy trình bốn bước của chúng tôi, xác định mục tiêu, người dùng và phạm vi trước khi bắt đầu thiết kế. |
+| Prototype | `about:aboutFaqVi.items[5].question` | What results can we expect? | Chúng tôi có thể mong đợi kết quả gì? |
+| Prototype | `about:aboutFaqVi.items[5].answer` | Cost-efficient delivery by skilled Vietnamese engineers, on-time releases and measurable results that support your growth. | Phát triển tối ưu chi phí bởi đội ngũ kỹ sư Việt Nam giàu kinh nghiệm, phát hành đúng hạn và kết quả đo lường được, hỗ trợ sự phát triển của bạn. |
+| Prototype | `about:aboutFaqVi.items[6].question` | How do you keep our data secure? | Các bạn bảo vệ dữ liệu của chúng tôi như thế nào? |
+| Prototype | `about:aboutFaqVi.items[7].question` | How do we give feedback during a project? | Chúng tôi góp ý trong quá trình dự án bằng cách nào? |
+| Prototype | `about:aboutFaqVi.items[7].answer` | Through dedicated channels, frequent check-ins and agile sprints, so your input shapes the product all the way through. | Qua các kênh riêng, các buổi trao đổi thường xuyên và sprint Agile, để ý kiến của bạn định hình sản phẩm xuyên suốt dự án. |
+| Prototype | `about:aboutFaqVi.items[8].question` | How do you measure and show value? | Các bạn đo lường và chứng minh giá trị như thế nào? |
+| Prototype | `about:aboutFaqVi.items[8].answer` | We track speed, quality, product impact and team autonomy, and share them openly with you. | Chúng tôi theo dõi tốc độ, chất lượng, tác động sản phẩm và tính tự chủ của đội ngũ, và chia sẻ minh bạch với bạn. |
+| Prototype | `about:aboutFaqVi.ask.label` | Still have a question? Ask us directly | Vẫn còn câu hỏi? Hỏi trực tiếp chúng tôi |
+| Prototype | `about:aboutOfficesVi.offices[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (mở trong thẻ mới) |
+| Prototype | `about:aboutOfficesVi.offices[1].tag` | Vietnam Delivery Center | Trung tâm Phát triển Việt Nam |
+| Prototype | `about:aboutCaptureVi.heading` | See our apps in action. | Xem ứng dụng của chúng tôi hoạt động. |
+| Prototype | `about:aboutCaptureVi.lede` | Leave your work email and we'll arrange a walkthrough of Parent Hub and Staff Hub. | Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo Parent Hub và Staff Hub cho bạn. |
 
 ## Offices (About, Contact, footer)
 
-6 AI, 3 prototype.
+6 AI, 2 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -371,41 +363,75 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `offices:planoVi.contacts[1].ariaLabel`<br>`offices:officesVi[0].contacts[1].ariaLabel` | WhatsApp +1 469 439 9345 (opens in a new tab) | WhatsApp +1 469 439 9345 (mở trong thẻ mới) |
 | AI | `offices:planoVi.zoneLabel`<br>`offices:officesVi[0].zoneLabel`<br>`offices:aboutOfficeViewVi[0].zoneLabel` | US Central | Giờ miền Trung Mỹ |
 | AI | `offices:hcmcVi.name`<br>`offices:officesVi[1].name`<br>`offices:aboutOfficeViewVi[1].name` | Ho Chi Minh City, Vietnam | TP. Hồ Chí Minh, Việt Nam |
-| AI | `offices:otherLocationsVi` | Ha Noi, Da Nang | Hà Nội, Đà Nẵng |
-| AI | `offices:footerOfficesVi[0].tag`<br>`offices:aboutOfficeViewVi[0].tag` | US Delivery Center | Trung tâm Phát triển Mỹ |
-| Prototype | `offices:hcmcVi.tag`<br>`offices:officesVi[1].tag`<br>`offices:footerOfficesVi[1].tag`<br>`offices:aboutOfficeViewVi[1].tag` | Vietnam Delivery Center | Trung tâm Phát triển Việt Nam |
-| Prototype | `offices:footerOfficesVi[1].name` | Ho Chi Minh City | TP. Hồ Chí Minh |
-| Prototype | `offices:aboutOfficeViewVi[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (mở trong thẻ mới) |
+| AI | `offices:otherLocationsVi` | Also in Ha Noi and Da Nang. | Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng. |
+| AI | `offices:footerOfficesVi[1].name`<br>`offices:aboutOfficeViewVi[0].tag` | US Delivery Center | Trung tâm Phát triển Mỹ |
+| Prototype | `offices:hcmcVi.tag`<br>`offices:officesVi[1].tag`<br>`offices:footerOfficesVi[0].name`<br>`offices:aboutOfficeViewVi[1].tag` | Vietnam Delivery Center | Trung tâm Phát triển Việt Nam |
+| Prototype | `offices:footerOfficesVi[1].contacts[1].ariaLabel`<br>`offices:aboutOfficeViewVi[0].contacts[1].ariaLabel` | WhatsApp (+1) 469 439 9345 (opens in a new tab) | WhatsApp (+1) 469 439 9345 (mở trong thẻ mới) |
 
 ## Careers
 
-23 AI, 1 prototype.
+21 AI, 38 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `careers:careersMetaVi.title` | Careers at XionTech \| Software Jobs in Ho Chi Minh City | Tuyển dụng tại XionTech \| Việc làm phần mềm tại TP. Hồ Chí Minh |
 | AI | `careers:careersMetaVi.description` | Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture. | Gia nhập XionTech tại TP. Hồ Chí Minh. Làm việc với các nền tảng cho trường học và sản phẩm của khách hàng cùng AI/ML, AI tạo sinh, cloud và phương pháp agile, trong một văn hóa lấy con người làm trung tâm. |
 | AI | `careers:careersHeroVi.title.first` | Stay curious. | Luôn tò mò. |
-| AI | `careers:careersHeroVi.title.second` | Build what’s next | Xây dựng điều tiếp theo |
+| AI | `careers:careersHeroVi.title.second` | Build what’s next. | Xây dựng điều tiếp theo. |
 | AI | `careers:careersHeroVi.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | Chúng tôi đang xây dựng một đội ngũ cho những người học nhanh, đặt câu hỏi hay hơn, thích ứng khi mọi thứ thay đổi và quan tâm đến kết quả, không chỉ nhiệm vụ. Tại đây, bạn sẽ góp phần tiên phong những cách mới để xây dựng phần mềm với AI. |
-| AI | `careers:careersRolesVi.heading` | Find your next challenge | Tìm thử thách tiếp theo của bạn |
+| AI | `careers:careersGrowthVi.caption` | [Placeholder] Growth Learning Model | [Placeholder] Mô hình học hỏi để phát triển |
+| AI | `careers:careersInsideVi.tiles[4].title` | [Placeholder] Celebration | [Placeholder] Ăn mừng |
+| AI | `careers:careersValuesVi.cards[0].title` | [Placeholder] Stay agile | [Placeholder] Linh hoạt |
+| AI | `careers:careersValuesVi.cards[0].backTitle` | [Placeholder] Move without losing direction. | [Placeholder] Di chuyển mà không lạc hướng. |
+| AI | `careers:careersValuesVi.cards[1].title` | [Placeholder] Own the outcome | [Placeholder] Làm chủ kết quả |
+| AI | `careers:careersValuesVi.cards[1].backTitle` | [Placeholder] Care beyond your task. | [Placeholder] Quan tâm vượt ra ngoài phần việc của mình. |
+| AI | `careers:careersValuesVi.cards[2].title` | [Placeholder] Innovate with purpose | [Placeholder] Đổi mới có mục đích |
+| AI | `careers:careersValuesVi.cards[2].backTitle` | [Placeholder] New is useful only when it helps. | [Placeholder] Cái mới chỉ hữu ích khi nó giúp ích. |
+| AI | `careers:careersValuesVi.cards[3].title` | [Placeholder] Grow together | [Placeholder] Cùng nhau phát triển |
+| AI | `careers:careersValuesVi.cards[3].backTitle` | [Placeholder] Make each other better. | [Placeholder] Giúp nhau tốt hơn. |
+| AI | `careers:careersValuesVi.cards[4].backTitle` | [Placeholder] Turn possibility into something real. | [Placeholder] Biến khả năng thành điều có thật. |
 | AI | `careers:careersRolesVi.emptyText` | No open roles right now. | Hiện chưa có vị trí nào đang tuyển. |
-| AI | `careers:careersLifeVi.heading` | Life at XionTech | Cuộc sống tại XionTech |
-| AI | `careers:careersLifeVi.prevLabel` | Previous photo | Ảnh trước |
-| AI | `careers:careersLifeVi.nextLabel` | Next photo | Ảnh tiếp theo |
+| AI | `careers:careersLifeVi.heading` | Life at XionTech. | Cuộc sống tại XionTech. |
 | AI | `careers:careersLifeVi.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] Ảnh đội ngũ |
 | AI | `careers:careersLifeVi.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] Ảnh văn phòng |
 | AI | `careers:careersLifeVi.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] Ảnh sự kiện |
-| AI | `careers:careersGainVi.heading` | What you’ll gain along the way | Những điều bạn nhận được trên hành trình |
-| AI | `careers:careersGainVi.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | Nâng cao kỹ năng, khám phá công nghệ mới và làm việc cùng những người luôn hỗ trợ lẫn nhau. Đây là những gì bạn có thể mong đợi tại XionTech. |
-| AI | `careers:careersGainVi.cards[0].title` | Hands-on Learning | Học qua thực hành |
-| AI | `careers:careersGainVi.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | Học bằng cách làm qua các buổi workshop, chia sẻ kiến thức và những thử thách kỹ thuật thực tế. |
-| AI | `careers:careersGainVi.cards[1].title` | AI & New Technologies | AI và công nghệ mới |
-| AI | `careers:careersGainVi.cards[1].text` | Explore AI tools, automation, and modern technologies that help you work smarter. | Khám phá công cụ AI, tự động hóa và các công nghệ hiện đại giúp bạn làm việc thông minh hơn. |
-| AI | `careers:careersGainVi.cards[2].title` | Real-World Projects | Dự án thực tế |
-| AI | `careers:careersGainVi.cards[2].text` | Solve real customer problems and see how your work makes a difference. | Giải quyết những bài toán thực của khách hàng và thấy công việc của bạn tạo nên khác biệt. |
-| AI | `careers:careersGainVi.cards[3].title` | Team Experiences | Trải nghiệm cùng đội ngũ |
-| AI | `careers:careersGainVi.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | Gắn kết qua các hoạt động đội nhóm, cùng nhau học hỏi và ăn mừng thành công. |
+| Prototype | `careers:careersHeroVi.cta.label` | Explore open roles | Xem vị trí đang tuyển |
+| Prototype | `careers:careersGrowthVi.center` | Growth | Phát triển |
+| Prototype | `careers:careersGrowthVi.steps[0]` | Curious | Tò mò |
+| Prototype | `careers:careersGrowthVi.steps[1]` | Learn | Học hỏi |
+| Prototype | `careers:careersGrowthVi.steps[2]` | Ask | Đặt câu hỏi |
+| Prototype | `careers:careersGrowthVi.steps[3]` | Grow | Phát triển |
+| Prototype | `careers:careersGrowthVi.steps[4]` | Improve | Cải thiện |
+| Prototype | `careers:careersInsideVi.heading` | Inside XionTech. | Bên trong XionTech. |
+| Prototype | `careers:careersInsideVi.lede` | A look at the moments that shape life here: workshops, project starts, team days, celebrations, shared learning and the small moments in between. | Những khoảnh khắc làm nên cuộc sống ở đây: workshop, khởi động dự án, ngày gắn kết đội ngũ, những dịp ăn mừng, cùng học hỏi và những khoảnh khắc nhỏ giữa chúng. |
+| Prototype | `careers:careersInsideVi.tiles[0].tag` | Learn together | Cùng nhau học hỏi |
+| Prototype | `careers:careersInsideVi.tiles[0].title` | Workshops & experiments | Workshop và thử nghiệm |
+| Prototype | `careers:careersInsideVi.tiles[0].text` | Hands-on sessions where the team tries new tools, agentic workflows and better ways to work. | Những buổi thực hành nơi đội ngũ thử công cụ mới, quy trình AI tác tử và những cách làm việc tốt hơn. |
+| Prototype | `careers:careersInsideVi.tiles[1].tag` | Build relationships | Xây dựng quan hệ |
+| Prototype | `careers:careersInsideVi.tiles[1].title` | Client visits | Khách hàng đến thăm |
+| Prototype | `careers:careersInsideVi.tiles[1].text` | Understand context directly and build stronger working relationships. | Hiểu bối cảnh trực tiếp và xây dựng quan hệ hợp tác bền chặt hơn. |
+| Prototype | `careers:careersInsideVi.tiles[2].tag` | Shared direction | Cùng một hướng đi |
+| Prototype | `careers:careersInsideVi.tiles[2].title` | Town halls | Họp toàn công ty |
+| Prototype | `careers:careersInsideVi.tiles[2].text` | What changed, what matters now, and where we’re going next. | Điều gì đã thay đổi, điều gì quan trọng lúc này và chúng tôi sẽ đi đâu tiếp theo. |
+| Prototype | `careers:careersInsideVi.tiles[3].tag` | Start together | Cùng nhau khởi đầu |
+| Prototype | `careers:careersInsideVi.tiles[3].title` | Project kickoffs | Khởi động dự án |
+| Prototype | `careers:careersInsideVi.tiles[3].text` | New work starts with shared context, not a mysterious task list. | Công việc mới bắt đầu bằng bối cảnh chung, không phải một danh sách nhiệm vụ bí ẩn. |
+| Prototype | `careers:careersInsideVi.tiles[4].tag` | Celebrate progress | Ăn mừng tiến bộ |
+| Prototype | `careers:careersInsideVi.tiles[4].text` | Because shipped work deserves more than a green status label. | Vì công việc đã hoàn thành xứng đáng hơn một nhãn trạng thái màu xanh. |
+| Prototype | `careers:careersValuesVi.heading` | Five things that shape the way we work. | Năm điều định hình cách chúng tôi làm việc. |
+| Prototype | `careers:careersValuesVi.lede` | These are the behaviours we want people to experience from us every day. Flip a card to see what each one means in practice. | Đây là những hành vi chúng tôi muốn mọi người cảm nhận được từ chúng tôi mỗi ngày. Lật một thẻ để xem ý nghĩa trong thực tế. |
+| Prototype | `careers:careersValuesVi.frontHint` | Flip for details | Lật để xem chi tiết |
+| Prototype | `careers:careersValuesVi.backHint` | Flip back | Lật lại |
+| Prototype | `careers:careersValuesVi.cards[0].label` | STAY AGILE | LINH HOẠT |
+| Prototype | `careers:careersValuesVi.cards[0].text` | Stay flexible and adapt when new information or a better answer changes the path. | Luôn linh hoạt và thích ứng khi thông tin mới hoặc một câu trả lời tốt hơn thay đổi con đường. |
+| Prototype | `careers:careersValuesVi.cards[1].label` | OWNERSHIP | LÀM CHỦ KẾT QUẢ |
+| Prototype | `careers:careersValuesVi.cards[1].text` | Raise issues early, protect quality and take responsibility for whether the work actually succeeds. | Nêu vấn đề sớm, giữ vững chất lượng và chịu trách nhiệm cho việc công việc có thực sự thành công hay không. |
+| Prototype | `careers:careersValuesVi.cards[2].label` | INNOVATE | ĐỔI MỚI CÓ MỤC ĐÍCH |
+| Prototype | `careers:careersValuesVi.cards[2].text` | Explore emerging technology when it improves the product, the user experience or the way we work. | Khám phá công nghệ mới khi nó cải thiện sản phẩm, trải nghiệm người dùng hoặc cách chúng tôi làm việc. |
+| Prototype | `careers:careersValuesVi.cards[3].label` | GROW TOGETHER | CÙNG NHAU PHÁT TRIỂN |
+| Prototype | `careers:careersValuesVi.cards[3].text` | Share what you know, give useful feedback and create space for teammates to stretch, contribute and grow. | Chia sẻ điều bạn biết, góp ý hữu ích và tạo không gian để đồng đội thử thách bản thân, đóng góp và phát triển. |
+| Prototype | `careers:careersValuesVi.cards[4].text` | Good ideas matter. Delivering useful, working outcomes is what gives them value. | Ý tưởng hay rất quan trọng. Mang lại kết quả hữu ích, hoạt động thật mới là điều tạo nên giá trị của chúng. |
+| Prototype | `careers:careersRolesVi.heading` | Find your next challenge. | Tìm thử thách tiếp theo của bạn. |
 | Prototype | `careers:careersRolesVi.applyLabel` | View and apply | Xem và ứng tuyển |
 
 ## Job page and application form
@@ -446,16 +472,18 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## News
 
-6 AI, 15 prototype.
+6 AI, 17 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `news:homeNewsVi.heading` | Latest from XionTech | Tin mới từ XionTech |
-| AI | `news:homeNewsVi.lede` | Explore what we’re building, the ideas we’re exploring, and the people behind our work. | Khám phá những gì chúng tôi đang xây dựng, những ý tưởng chúng tôi đang theo đuổi và những con người đứng sau công việc của chúng tôi. |
 | AI | `news:newsMetaVi.title` | News \| XionTech | Tin tức \| XionTech |
 | AI | `news:newsMetaVi.description` | Short stories about XionTech's products, schools, team and client work. | Những câu chuyện ngắn về sản phẩm, trường học, đội ngũ và các dự án khách hàng của XionTech. |
+| AI | `news:newsPageVi.sampleNote` | Stories from the newXion newsroom; those marked [Placeholder] are samples. | Tin từ phòng tin tức newXion; những tin có dấu [Placeholder] là tin mẫu. |
 | AI | `news:newsPageVi.countOne` | Showing 1 story | Đang hiển thị 1 tin |
 | AI | `news:newsPageVi.countMany` | Showing {n} stories | Đang hiển thị {n} tin |
+| AI | `news:newsStoryVi.sampleNote` | [Placeholder] Sample story to show the layout. Replace with a real story before launch. | [Placeholder] Tin mẫu để minh họa bố cục. Thay bằng tin thật trước khi ra mắt. |
+| Prototype | `news:homeNewsVi.heading` | Latest from XionTech. | Tin mới từ XionTech. |
+| Prototype | `news:homeNewsVi.lede` | Catch up with what our team is building and shipping. | Cập nhật những gì đội ngũ chúng tôi đang xây dựng và phát hành. |
 | Prototype | `news:homeNewsVi.seeAll.label` | See all news | Xem tất cả tin tức |
 | Prototype | `news:homeNewsVi.readStory` | Read story | Đọc tiếp |
 | Prototype | `news:categoryLabelsVi.schools` | Schools | Trường học |
@@ -474,28 +502,41 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Privacy
 
-8 AI, 6 prototype.
+16 AI, 11 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `privacy:PRIVACY_VI.metaTitle` | Privacy Policy \| XionTech | Chính sách bảo mật \| XionTech |
-| AI | `privacy:PRIVACY_VI.metaDescription` | How XionTech uses the personal data you share through our forms. | Cách XionTech sử dụng dữ liệu cá nhân bạn chia sẻ qua các biểu mẫu của chúng tôi. |
+| AI | `privacy:PRIVACY_VI.metaDescription` | [Placeholder] How XionTech uses the personal data you share through our forms. | [Placeholder] Cách XionTech sử dụng dữ liệu cá nhân bạn chia sẻ qua các biểu mẫu của chúng tôi. |
 | AI | `privacy:PRIVACY_VI.breadcrumbLabel` | Breadcrumb | Đường dẫn |
+| AI | `privacy:PRIVACY_VI.lede` | [Placeholder] Policy text to be supplied by the legal owner, compliant with Vietnam's Decree 13/2023 (PDPD). | [Placeholder] Nội dung chính sách do bộ phận pháp lý cung cấp, tuân thủ Nghị định 13/2023 của Việt Nam (PDPD). |
 | AI | `privacy:PRIVACY_VI.bodyLabel` | Policy | Chính sách |
-| AI | `privacy:PRIVACY_VI.retentionDecided`<br>`privacy:PRIVACY_VI.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | Yêu cầu liên hệ và đặt lịch demo, email đăng ký nhận tin, hồ sơ ứng tuyển và CV được lưu giữ không giới hạn thời gian. |
-| AI | `privacy:PRIVACY_VI.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | Email, họ tên, số điện thoại, tổ chức, vai trò và mọi nội dung bạn gửi qua biểu mẫu của chúng tôi, bao gồm CV nếu bạn ứng tuyển. |
-| AI | `privacy:PRIVACY_VI.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | Chỉ để trả lời yêu cầu của bạn hoặc xét hồ sơ ứng tuyển và CV của bạn. |
-| AI | `privacy:PRIVACY_VI.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | Các nhà cung cấp dịch vụ xử lý dữ liệu cho chúng tôi: Gmail (gửi tin nhắn biểu mẫu đến hộp thư công ty), Upstash (bộ đếm giới hạn tần suất tạo từ giá trị đã băm), Vercel (lưu trữ website và lưu trữ CV riêng tư), Google Fonts (phông chữ cho các trang tiếng Nhật, tiếng Hàn và tiếng Trung). |
+| AI | `privacy:PRIVACY_VI.outlineNote` | [Placeholder] Content outline. The sections below are what the policy must cover, not the real policy. | [Placeholder] Dàn ý nội dung. Các mục dưới đây là những gì chính sách phải đề cập, không phải chính sách thật. |
+| AI | `privacy:PRIVACY_VI.retentionDecided`<br>`privacy:PRIVACY_VI.sections[5].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | Yêu cầu liên hệ và đặt lịch demo, email đăng ký nhận tin, hồ sơ ứng tuyển và CV được lưu giữ không giới hạn thời gian. |
+| AI | `privacy:PRIVACY_VI.sections[0].paragraphs[0]` | [Placeholder] The data controller (XionTech legal entity), its address and a contact for privacy requests. | [Placeholder] Bên kiểm soát dữ liệu (pháp nhân XionTech), địa chỉ và đầu mối liên hệ cho các yêu cầu về quyền riêng tư. |
+| AI | `privacy:PRIVACY_VI.sections[1].paragraphs[0]` | [Placeholder] Email, name, phone number, organisation, role and anything you send through our forms, including a CV if you apply for a job. | [Placeholder] Email, họ tên, số điện thoại, tổ chức, vai trò và mọi nội dung bạn gửi qua biểu mẫu của chúng tôi, bao gồm CV nếu bạn ứng tuyển. |
+| AI | `privacy:PRIVACY_VI.sections[1].paragraphs[1]` | [Placeholder] The email you type in the email capture band is sent to our company inbox like a form message. Your browser also keeps it in session storage only until the demo request page reads it. | [Placeholder] Email bạn nhập ở mục đăng ký nhận tin được gửi đến hộp thư công ty như một tin nhắn biểu mẫu. Trình duyệt của bạn cũng chỉ giữ email này trong session storage cho đến khi trang đặt lịch demo đọc nó. |
+| AI | `privacy:PRIVACY_VI.sections[2].paragraphs[0]` | [Placeholder] Only to answer your request, arrange a demo, or consider your job application and CV. | [Placeholder] Chỉ để trả lời yêu cầu của bạn, sắp xếp buổi demo, hoặc xét hồ sơ ứng tuyển và CV của bạn. |
+| AI | `privacy:PRIVACY_VI.sections[3].paragraphs[0]` | [Placeholder] Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | [Placeholder] Các nhà cung cấp dịch vụ xử lý dữ liệu cho chúng tôi: Gmail (gửi tin nhắn biểu mẫu đến hộp thư công ty), Upstash (bộ đếm giới hạn tần suất tạo từ giá trị đã băm), Vercel (lưu trữ website và lưu trữ CV riêng tư), Google Fonts (phông chữ cho các trang tiếng Nhật, tiếng Hàn và tiếng Trung). |
+| AI | `privacy:PRIVACY_VI.sections[4].paragraphs[0]` | [Placeholder] When data is transferred abroad (for example to our Plano office) and the safeguards required by Decree 13/2023. | [Placeholder] Khi dữ liệu được chuyển ra nước ngoài (ví dụ đến văn phòng Plano) và các biện pháp bảo vệ theo yêu cầu của Nghị định 13/2023. |
+| AI | `privacy:PRIVACY_VI.sections[5].paragraphs[1]` | [Placeholder] The final retention wording, and whether a time limit will be added later. | [Placeholder] Câu chữ cuối cùng về thời hạn lưu trữ, và liệu sau này có thêm giới hạn thời gian hay không. |
+| AI | `privacy:PRIVACY_VI.sections[6].paragraphs[0]` | [Placeholder] Temporary text. The final text will list the essential first-party language cookie (what it stores and why) and state that no non-essential cookies or analytics are set without your consent. | [Placeholder] Nội dung tạm thời. Nội dung cuối cùng sẽ liệt kê cookie ngôn ngữ thiết yếu của bên thứ nhất (lưu gì và vì sao) và nêu rõ không đặt cookie không thiết yếu hay công cụ phân tích nào khi chưa có sự đồng ý của bạn. |
+| AI | `privacy:PRIVACY_VI.sections[7].paragraphs[0]` | [Placeholder] Access, correct or delete your data, or withdraw consent; how to ask for deletion is not decided yet. | [Placeholder] Truy cập, chỉnh sửa hoặc xóa dữ liệu của bạn, hoặc rút lại sự đồng ý; cách yêu cầu xóa dữ liệu chưa được quyết định. |
 | Prototype | `privacy:PRIVACY_VI.breadcrumbHome` | Home | Trang chủ |
-| Prototype | `privacy:PRIVACY_VI.breadcrumbCurrent`<br>`privacy:PRIVACY_VI.title` | Privacy policy | Chính sách bảo mật |
-| Prototype | `privacy:PRIVACY_VI.sections[0].heading` | What we collect | Chúng tôi thu thập gì |
-| Prototype | `privacy:PRIVACY_VI.sections[1].heading` | How we use it | Chúng tôi dùng để làm gì |
-| Prototype | `privacy:PRIVACY_VI.sections[2].heading` | Who we share it with | Chúng tôi chia sẻ với ai |
-| Prototype | `privacy:PRIVACY_VI.sections[3].heading` | How long we keep it | Lưu trữ bao lâu |
+| Prototype | `privacy:PRIVACY_VI.breadcrumbCurrent` | Privacy policy | Chính sách bảo mật |
+| Prototype | `privacy:PRIVACY_VI.title` | Privacy policy. | Chính sách bảo mật. |
+| Prototype | `privacy:PRIVACY_VI.sections[0].heading` | Who we are and how to reach us | Chúng tôi là ai và cách liên hệ |
+| Prototype | `privacy:PRIVACY_VI.sections[1].heading` | What we collect | Chúng tôi thu thập gì |
+| Prototype | `privacy:PRIVACY_VI.sections[2].heading` | How we use it | Chúng tôi dùng để làm gì |
+| Prototype | `privacy:PRIVACY_VI.sections[3].heading` | Who we share it with | Chúng tôi chia sẻ với ai |
+| Prototype | `privacy:PRIVACY_VI.sections[4].heading` | Transfers outside Vietnam | Chuyển dữ liệu ra nước ngoài |
+| Prototype | `privacy:PRIVACY_VI.sections[5].heading` | How long we keep it | Lưu trữ bao lâu |
+| Prototype | `privacy:PRIVACY_VI.sections[6].heading` | Cookies and analytics | Cookie và phân tích |
+| Prototype | `privacy:PRIVACY_VI.sections[7].heading` | Your rights | Quyền của bạn |
 
 ## Contact, demo form and capture band
 
-23 AI, 49 prototype.
+20 AI, 51 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -505,31 +546,30 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `contact-strings:CONTACT_STRINGS_VI.hero.titleBefore` | Let's talk about your  | Hãy trao đổi về  |
 | AI | `contact-strings:CONTACT_STRINGS_VI.hero.titleHighlight` | school | trường học |
 | AI | `contact-strings:CONTACT_STRINGS_VI.hero.titleAfter` |  or your project. |  hoặc dự án của bạn. |
-| AI | `contact-strings:CONTACT_STRINGS_VI.hero.items[0]` | A demo of Parent Hub and Staff Hub using your school's scenarios. | Demo Parent Hub và Staff Hub với chính tình huống của trường bạn. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.hero.officesLabel` | Our offices | Văn phòng của chúng tôi |
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.tabsLabel` | Request type | Loại yêu cầu |
-| AI | `contact-strings:CONTACT_STRINGS_VI.form.email`<br>`contact-strings:CONTACT_STRINGS_VI.home.email` | Email address | Địa chỉ email |
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.sending` | Sending... | Đang gửi... |
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.successText` | We will be in touch soon. | Chúng tôi sẽ sớm liên hệ với bạn. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.sendError` | We could not send your request. Please try again. | Không gửi được yêu cầu của bạn. Vui lòng thử lại. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.rateError` | You have sent several requests in a short time. Please try again in a few minutes. | Bạn đã gửi nhiều yêu cầu trong thời gian ngắn. Vui lòng thử lại sau vài phút. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.errorsHeading` | Please fix the following: | Vui lòng sửa các mục sau: |
-| AI | `contact-strings:CONTACT_STRINGS_VI.home.lede` | Building something new or improving what you already have? Tell us about your goals, and we’ll explore how we can help. | Bạn đang xây dựng điều gì đó mới hay cải thiện những gì đã có? Hãy cho chúng tôi biết mục tiêu của bạn, và chúng tôi sẽ cùng tìm cách hỗ trợ. |
-| AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.heading` | See it working at your school | Xem ứng dụng hoạt động tại trường của bạn |
-| AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.lede` | Leave your work email and we'll arrange a demo built around your school. | Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo dành riêng cho trường của bạn. |
+| AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.heading` | See it working at your school. | Xem ứng dụng hoạt động tại trường của bạn. |
+| AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.lede` | Leave your work email and we'll arrange a walkthrough built around your school. | Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo dành riêng cho trường của bạn. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.consent` | We only use your email to arrange your demo. | Chúng tôi chỉ dùng email của bạn để sắp xếp buổi demo. |
-| AI | `contact-strings:CONTACT_STRINGS_VI.capture.project.heading` | Tell us what you're building | Hãy kể về điều bạn đang xây dựng |
+| AI | `contact-strings:CONTACT_STRINGS_VI.capture.project.heading` | Tell us what you're building. | Hãy kể về điều bạn đang xây dựng. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.capture.project.lede` | Leave your work email and we'll reach out to start Discovery. | Để lại email công việc, chúng tôi sẽ liên hệ để bắt đầu bước Khám phá. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.errors.phone`<br>`contact-strings:ERRORS_VI[3]` | Please enter a valid phone number, for example (+1) 469 322 9899. | Vui lòng nhập số điện thoại hợp lệ, ví dụ (+1) 469 322 9899. |
 | AI | `contact-strings:ERRORS_VI[7]` | Please keep this under 200 characters. | Vui lòng nhập dưới 200 ký tự. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.hero.breadcrumbHome` | Home | Trang chủ |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.hero.breadcrumbCurrent` | Contact | Liên hệ |
+| Prototype | `contact-strings:CONTACT_STRINGS_VI.hero.items[0]` | A walkthrough of Parent Hub and Staff Hub using your school's scenarios. | Demo Parent Hub và Staff Hub với chính tình huống của trường bạn. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.hero.items[1]` | Answers on setup, data and support. | Giải đáp về triển khai, dữ liệu và hỗ trợ. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.hero.items[2]` | For projects: a first Discovery conversation, the first of our four steps. | Với dự án: buổi Khám phá, bước đầu tiên trong quy trình bốn bước của chúng tôi. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.heading` | What can we help with? | Bạn cần gì? |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.tabDemo` | Product demo | Demo sản phẩm |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.tabProject` | Outsourcing project | Dự án outsourcing |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.name` | Full name | Họ và tên |
+| Prototype | `contact-strings:CONTACT_STRINGS_VI.form.email`<br>`contact-strings:CONTACT_STRINGS_VI.home.email`<br>`contact-strings:CONTACT_STRINGS_VI.capture.emailLabel` | Work email | Email công việc |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.org` | School or company | Trường học hoặc công ty |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.role` | Your role | Vai trò |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.roleHelp` | For example: Principal, Head of IT | Ví dụ: Hiệu trưởng, Trưởng phòng IT |
@@ -544,6 +584,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.consent`<br>`contact-strings:CONTACT_STRINGS_VI.capture.project.consent` | We only use your details to respond to this request. | Chúng tôi chỉ dùng thông tin của bạn để phản hồi yêu cầu này. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.form.privacyLink` | Privacy policy | Chính sách bảo mật |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.heading` | Have something you want to build? | Bạn có điều gì muốn xây dựng? |
+| Prototype | `contact-strings:CONTACT_STRINGS_VI.home.lede` | Tell us a little about yourself and what you're working on. Our team will get in touch to learn more. | Hãy cho chúng tôi biết đôi chút về bạn và việc bạn đang làm. Đội ngũ của chúng tôi sẽ liên hệ để tìm hiểu thêm. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.name` | Your name | Tên của bạn |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.phone` | Phone number | Số điện thoại |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.optional` | (optional) | (không bắt buộc) |
@@ -553,7 +594,6 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.consent` | We only use your details to reply to your message. | Chúng tôi chỉ dùng thông tin của bạn để phản hồi tin nhắn này. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.successHeading` | Summit reached. Thanks — we've received your message. | Đã lên tới đỉnh. Cảm ơn bạn, chúng tôi đã nhận được tin nhắn. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.successText` | Our team will review what you shared and get in touch with you. | Đội ngũ của chúng tôi sẽ xem nội dung bạn chia sẻ và liên hệ với bạn. |
-| Prototype | `contact-strings:CONTACT_STRINGS_VI.capture.emailLabel` | Work email | Email công việc |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.capture.demo.button`<br>`contact-strings:CONTACT_STRINGS_VI.capture.project.button` | Get in touch | Liên hệ với chúng tôi |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.errors.name`<br>`contact-strings:ERRORS_VI[0]` | Please enter your name. | Vui lòng nhập họ tên. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.errors.email`<br>`contact-strings:ERRORS_VI[1]` | Please enter a valid email address. | Vui lòng nhập email hợp lệ. |

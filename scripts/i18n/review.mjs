@@ -211,8 +211,8 @@ export const DATA_KEYS = new Set([
   "drawing",
 ]);
 
-/** Maps whose values are all data: journeyBoard.laneOf maps a step to a lane id. */
-const DATA_MAPS = /\.laneOf\.\w+$/;
+/** Lists whose items are all data: productRoad.stops lists the app ids of the roadmap. */
+const DATA_MAPS = /:productRoad(?:Vi)?\.stops\[\d+\]$/;
 
 /** Values that are links or carry no letters: no words to translate. */
 const DATA_VALUE = /^(?:[^A-Za-z]*|(?:\/|#|https?:|mailto:|tel:).*)$/;

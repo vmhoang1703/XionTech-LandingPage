@@ -42,7 +42,7 @@ describe("Products, services, about and offices in Vietnamese", () => {
     ],
     ["productDetails", products.productDetails, products.productDetailsVi],
     ["journeyMap", products.journeyMap, products.journeyMapVi],
-    ["dayRoad", products.dayRoad, products.dayRoadVi],
+    ["productRoad", products.productRoad, products.productRoadVi],
     ["journeyBoard", products.journeyBoard, products.journeyBoardVi],
     ["roadDialog", products.roadDialog, products.roadDialogVi],
   ])("%s has the English shape", (_name, en, vi) => {
@@ -72,10 +72,9 @@ describe("Products, services, about and offices in Vietnamese", () => {
     expect(offices.footerOfficesVi.map((o) => o.addressLines)).toEqual(
       offices.footerOffices.map((o) => o.addressLines),
     );
-    expect(
-      products.dayRoadVi.stops.map(({ id, time, app }) => [id, time, app]),
-    ).toEqual(
-      products.dayRoad.stops.map(({ id, time, app }) => [id, time, app]),
+    expect(products.productRoadVi.stops).toEqual(products.productRoad.stops);
+    expect(products.journeyBoardVi.lanes.map((lane) => lane.app)).toEqual(
+      products.journeyBoard.lanes.map((lane) => lane.app),
     );
     expect(products.productDetailsVi.iot.features.map((f) => f.id)).toEqual(
       products.productDetails.iot.features.map((f) => f.id),
