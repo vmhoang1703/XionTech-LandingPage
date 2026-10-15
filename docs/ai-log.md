@@ -1853,3 +1853,10 @@ Template:
 - **What the AI did:** `HeroSilk` waits `SCENE_DELAY_WIDE_MS` (300 ms) after `load` on a desktop and `SCENE_DELAY_NARROW_MS` (2500 ms) where the layout is narrow (`(width < 1080px)`, the same query the mark-only story already uses). Unit tests cover both delays, the wait for `load` and leaving early.
 - **Why 1080 px:** the hero already switches to its phone and tablet layout there, so one query decides both the layout and the delay. A tablet in landscape at 1080 px or more counts as a desktop.
 - **Measured:** see the PR.
+
+## 2026-10-15 — Careers: bigger hero picture, "Meet the team at XionTech" from a photo folder
+
+- **Prompt:** enlarge the Careers hero picture; rename "Life at XionTech" to "Meet the team at XionTech"; load every photo dropped in `public/careers/life/` whatever its filename, with no captions; bring the docs up to date with the branch.
+- **What the AI did:** the hero picture column now takes a bit over half the hero (about 680px wide at 1440, 550px at 1024, full width on phones), re-extracted at the mock's full 1448 x 1086 (56 KB WebP); the hero still fills one screen at 1440 x 900 and 1280 x 800. The strip reads the folder on the server (`src/lib/careers/life-photo-folder.ts`: webp, jpg, jpeg, png, avif, sorted by filename), uses `next/image` so the phone JPEGs are resized, and repeats a short set so the loop works from one photo. An empty folder shows plain tinted tiles. Section anchor is now `#meet-the-team`; heading and the generic alt are in all six locales. `next.config.ts` ships the folder with the careers route, because a Sanity job webhook re-renders the page on the server.
+- **AI got it wrong:** the first enlargement let the picture overflow its column by 8%, and the hero clipped its right edge; it now fills the column instead.
+- **Still open:** the page is static, so new photos show after a rebuild and redeploy. A `.heic` file in the folder is skipped; export it as JPEG or WebP.

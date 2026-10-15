@@ -309,7 +309,7 @@ export const ko: Dictionaries = {
     },
     text: "사람과 아이디어, 기술을 연결해 의미 있는 디지털 솔루션을 만듭니다. 소프트웨어 제품 개발부터 AI 기반 혁신 탐구까지, 엔지니어링 전문성과 경험 많은 리더십, 그리고 강한 주인의식으로 기업의 전진을 돕습니다.",
     links: [
-      { href: aboutHero.links[0].href, label: "제품 살펴보기" },
+      { href: aboutHero.links[0].href, label: "팀과 이야기하기" },
       { href: aboutHero.links[1].href, label: "서비스 살펴보기" },
     ],
   },
@@ -384,7 +384,7 @@ export const ko: Dictionaries = {
   },
   appTaglines: APP_TAGLINES,
   careersGain: {
-    heading: "함께하며 얻게 되는 것",
+    heading: "우리가 소중히 여기는 원칙",
     intro:
       "역량을 키우고, 새로운 기술을 탐구하며, 서로를 지지하는 동료들과 일하세요. XionTech에서 기대할 수 있는 것들을 소개합니다.",
     cards: [
@@ -411,16 +411,31 @@ export const ko: Dictionaries = {
     ],
   },
   careersHero: {
-    title: {
-      first: "호기심을 잃지 마세요.",
-      second: "다음을 만드세요",
-    },
-    lede: "빠르게 배우고, 더 나은 질문을 하고, 상황이 바뀌면 적응하며, 과업만이 아니라 결과를 중요하게 여기는 사람들을 위한 팀을 만들고 있습니다. 이곳에서 AI로 소프트웨어를 만드는 새로운 방식을 함께 만들어 가게 됩니다.",
+    title: { first: "XionTech", second: "채용" },
+    lede: "문제 해결을 좋아하고, 새로운 기술을 탐구하며, 변화를 만드는 것을 즐기는 호기심 많은 사람들을 모으고 있습니다.",
+    prompt: "함께 만들어 갈 준비가 되셨나요?",
+    artAlt:
+      "AI 기반 엔지니어링, 코드 칩, 연결된 기술을 표현한 겹쳐진 카드 세 장",
   },
   careersLife: {
-    heading: "XionTech에서의 일상",
-    prevLabel: "이전 사진",
-    nextLabel: "다음 사진",
+    heading: "XionTech 팀을 소개합니다",
+    lede: "XionTech에서는 엔지니어링은 진지하게, 하지만 우리 자신은 너무 심각하지 않게 대합니다. 질문하고, 주인의식을 갖고, 함께 계속 배웁니다. 퇴근 후에도 같은 팀워크로 배드민턴 코트, 축구장, 노래방 마이크, 게임 로비로 향합니다.",
+    tagsLabel: "우리 팀의 관심사",
+    tags: [
+      "배드민턴 단골",
+      "축구 팬",
+      "League of Legends 스쿼드",
+      "노래방 크루",
+      "퇴근 후 모임",
+      "커피 애호가",
+      "오타쿠",
+      "기타리스트",
+      "AI 탐험가",
+      "영화광",
+      "...그리고 당신은?",
+    ],
+    stripLabel: "XionTech 팀 사진",
+    photoAlt: "XionTech 팀의 한 순간",
     frames: [
       "[Placeholder] 팀 사진",
       "[Placeholder] 사무실 사진",

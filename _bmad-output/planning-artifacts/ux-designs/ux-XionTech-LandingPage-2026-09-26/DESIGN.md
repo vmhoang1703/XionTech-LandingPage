@@ -1,6 +1,6 @@
 ---
-name: XionTechs Website
-description: Bilingual (EN/VI) multi-page company website for XionTechs, selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
+name: XionTech Website
+description: Multi-page company website for XionTech in six languages (en, vi, ja, fr, ko, zh), selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
 status: final
 updated: 2026-10-01
 colors:
@@ -344,9 +344,32 @@ components:
     color-on-amber: '{colors.focus}'
 ---
 
+## Shipped Site (2026-10-15)
+
+What the code in `src/` ships today. Where an older section below disagrees, this section wins; the sections below keep the original design reasoning.
+
+- **Brand spelling:** "XionTech" in every visible string, title and alt text, never "XionTech". The domain `xiontechs.com` and its email addresses stay as they are.
+- **Positioning:** an AI-driven product and engineering company for any industry. Copy does not list industries. The Home headline stays "Build smarter. Ship faster. Get IT done."
+- **Evidence:** no invented stats, testimonials or client logos. Unverified text starts with `[Placeholder]`.
+- **Locations:** four. Two delivery centers, Plano, Texas (US Delivery Center) and Ho Chi Minh City (Vietnam Delivery Center), with address, phone and email in the footer and on About; two offices, Ha Noi and Da Nang, named only, as one white line under the footer offices. Contact emails: Plano `vinni.tran@newxion.com`, Ho Chi Minh City `vinni.tran@xiontechs.com` (`src/content/offices.ts`).
+- **Primary buttons:** every primary call to action (`.btn-primary`, the amber gradient pill) links to the Home get-in-touch form, `/{locale}#contact` (`CONTACT_HREF` in `src/components/layout/nav-data.ts`), with a label that fits its page, for example "Get in touch" (Home hero), "Let's build together" (Services), "Let's talk about your project" (About). The header has one amber primary "Let's talk" beside the nav, and the mobile menu repeats it under the links. Form submit buttons and the job page's apply bar are the only primaries that do something else. The Careers hero has no buttons; it ends on the prompt line "Ready to build with us?" (`.ch-prompt`: brand font, 500, heading colour, a 32 x 2px amber rule before it).
+- **No Demo page:** `/demo` and `/{locale}/demo` redirect to `/#contact` (`next.config.ts`). There are no "Book a demo" buttons.
+- **Copy style:** section titles have no trailing full stop; US spelling.
+- **Section spacing:** the shared `.sec` padding follows the screen height: `clamp(48px, 7.5svh, 96px)` above 1024px, `clamp(40px, 5svh, 80px)` at 1024px and below, `clamp(40px, 5svh, 64px)` at 640px and below. The `--spacing-section` tokens stay 64px / 48px. Page heroes add `--spacing-header-room` (header height + 24px) on top, because the header pill floats over the first section.
+- **One section, one screen:** on desktop and tablet a section should fit one viewport. The Careers hero is `100svh` tall above 640px (content centred, the floating header over its top padding) and takes its natural height on phones.
+- **Components in use** (styles in `src/app/globals.css`):
+  - *What drives us* value flip cards (`ValueFlipCard`, `.flip-card`): the front shows number, label, icon or line drawing and title; the back shows the line. Home uses the icon variant, About the line-drawing variant.
+  - *4-D process* (`ProcessFlow`): four steps on an amber track that fills over 2.4s; Home navy band and Services `#process`; 2 columns at 1080px and below, 1 column at 640px and below.
+  - *Three-layer stack* (`ThreeLayerStack`, `.tls-*`): the Services hero illustration, three isometric plates with callouts; a CSS opening that plays once per page load.
+  - *Mountain story card* (`MountainStory`, `.mtn-*`): About "Inspired by a mountain"; the climb plays once when the story is 40% in view.
+  - *Meet the team at XionTech strip* (`.life-*`, `#meet-the-team`): copy and interest tags beside one vertical photo strip that loops upward over 44s and pauses on hover or focus; reduced motion stands it still. Photos have no caption. Team photos: every image file in `public/careers/life/` (any filename; `.webp`, `.jpg`, `.jpeg`, `.png` or `.avif`; sorted by filename) shows in the strip with the generic localized alt "XionTech team moment" and no caption. The page reads the folder when it is built, so rebuild and redeploy after adding photos (in `npm run dev` a refresh is enough). An empty folder shows plain tinted tiles. HEIC files are skipped (browsers cannot show them); export them as JPEG or WebP first.
+  - *Mobile menu sheet* (`.mm-sheet`): drops from the header pill at 1080px and below, 28px bottom radius; links, then the "Let's talk" button and both delivery centers' phones. The header "Let's talk" fades out while the sheet is open.
+- **Motion:** see `EXPERIENCE.md` › Shipped Site.
+- **Locales:** six (en, vi, ja, fr, ko, zh). Every string has all six.
+
 ## Brand & Style
 
-XionTechs sells two things from one team: four school products (PXP, LXP, SXP, IoT Device Management) and software outsourcing. The site has to feel futuristic, modern and professional, and it has to look unique to XionTechs rather than like a template. It must never look AI-generated.
+XionTech sells two things from one team: four school products (PXP, LXP, SXP, IoT Device Management) and software outsourcing. The site has to feel futuristic, modern and professional, and it has to look unique to XionTech rather than like a template. It must never look AI-generated.
 
 The identity comes straight from the logo: a navy X mark, an amber swoosh and the tagline GET IT DONE. Navy is trust, amber is energy, and white is a full partner in the palette, not just empty space. Surfaces use soft gradients, an aurora glow, a faint woven linen texture and a flowing strand ribbon behind heroes. Flat solid blocks are avoided.
 
@@ -406,7 +429,7 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 | Page hero H1 | same family and weight, clamp 2.2rem, 4.4vw, 3.6rem, max 18ch | Inner pages |
 | Section H2 | `{typography.headline}`, fluid down to `{typography.headline-mobile}` | Section heads, capture bands |
 | Stat number | `{typography.stat}` (clamp 2rem, 3.6vw, 3rem) | Stats band |
-| Why tile title | `{typography.title-md}`, the large tile up to 1.6rem | Home Why XionTechs |
+| Why tile title | `{typography.title-md}`, the large tile up to 1.6rem | Home Why XionTech |
 | Step, value, office title | `{typography.title-md}` | 4-D steps, values, office cards |
 | Card title | `{typography.title-sm}` | Service cards, mega menu items, news cards (1.08rem) |
 | Lede | `{typography.body-lg}`, max 60ch | Under H1 and H2 |
@@ -424,7 +447,7 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 
 - **Container:** `{spacing.container}` max width, `{spacing.gutter}` side padding, `{spacing.gutter-mobile}` below 640px.
 - **Sections:** `{spacing.section}` vertical padding (`{spacing.section-mobile}` below 640px). Email capture bands use `{spacing.capture}`. Page heroes use `{spacing.page-hero-top}` / `{spacing.page-hero-bottom}` (`{spacing.page-hero-mobile}` below 640px). Section heads sit `{spacing.section-head-gap}` above their content, max 760px wide.
-- **Grids:** 12-column grid for the Why XionTechs tiles, a 4-column app row, 4-column service grid, 3-column news and values grids, 5-column stats, 2-column split for text + media. Gaps 14 to 20px, default `{spacing.grid-gap}`.
+- **Grids:** 12-column grid for the Why XionTech tiles, a 4-column app row, 4-column service grid, 3-column news and values grids, 5-column stats, 2-column split for text + media. Gaps 14 to 20px, default `{spacing.grid-gap}`.
 - **Home hero:** fills the viewport under the header (`100dvh` minus `{spacing.header-height}`), text column 0.92fr, devices 1.08fr. The two front doors overlap the hero bottom by 104px (80px below 900px).
 - **Forms:** the contact form card sits in the right half of the split hero on desktop and stacks full width below 900px. Email capture rows sit in a 2-column band (copy left, form right).
 - **Anchors:** every in-page target sets `scroll-margin-top` to `{spacing.anchor-offset}` (sticky header plus breathing room) or `{spacing.anchor-offset-subnav}` on the Products page, where the sticky product sub-nav sits under the header. Confirm both values against the built header heights.
@@ -433,14 +456,13 @@ Four typefaces, one job each. All four load with the `vietnamese` subset from Go
 
 | Page | Hero | Sections in order |
 |---|---|---|
-| Home | `hero-silk` (dark, with the stats inside) | front doors, why XionTechs (paper, with a navy tile and an amber strip), four-app row (mist, linen), 4-D process (navy), news (mist), capture (amber) |
+| Home | `hero-silk` (dark, with the stats inside) | front doors, why XionTech (paper, with a navy tile and an amber strip), four-app row (mist, linen), 4-D process (navy), news (mist), capture (amber) |
 | Products | `hero-amber` | sub-nav, PXP (paper), LXP (mist, linen), SXP (navy), IoT (paper), product updates (mist), capture (navy) |
 | Services | `hero-navy` | stats (paper), 8 services (mist, linen), ways to work (paper), 4-D process (navy), industries (mist), capture (amber) |
 | News | `hero-light` | filters + story grid (paper), demo capture (amber) |
 | About | `hero-navy` | stats (paper), story (mist, linen), values (paper), FAQ (paper), offices (navy), capture (amber) |
-| Careers | `hero-amber` | culture (paper), benefits (mist, linen), open roles (paper), life at XionTechs (mist) |
+| Careers | `hero-light`, one screen tall above 640px; the stacked-cards picture takes a bit over half the hero (about 680px wide at 1440) | Principles we value, Meet the team at XionTech, open roles |
 | Job page | `hero-amber` | role details and application form card (paper) |
-| Book a demo | `hero-navy` | contact form card inside the hero |
 
 **Build tokens** (outside the frontmatter schema; add them to `@theme` as listed):
 
@@ -480,7 +502,7 @@ Depth is soft and navy-tinted, never grey.
 Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the same names. shadcn/ui primitives to build on are named in brackets.
 
 - **Button** [Button]. Three variants, all pills, `{spacing.button-height}` (small `{spacing.button-height-sm}`): `button-primary` amber gradient with navy text, used for the main action on light, navy and paper surfaces; `button-navy` navy with white text, used as the main action on amber surfaces; `button-glass` translucent with a border, for secondary actions. Press state: 1px down, scale 0.98. Hover: lift 2px.
-- **Site header** [NavigationMenu]. Sticky glass bar, `{spacing.header-height}` tall: logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. Below 1080px the menu moves behind the menu button and the language dropdown stays in the bar. No Book a demo button. Menu items are text only: the Products trigger has no caret icon and shares the plain links' 44px height so they align. Services is a plain link. The language dropdown is the only control with a caret.
+- **Site header** [NavigationMenu]. Sticky glass bar, `{spacing.header-height}` tall: logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. Below 1080px the menu moves behind the menu button and the language dropdown stays in the bar. One amber primary "Let's talk" to `/{locale}#contact` sits before the language dropdown (Shipped Site). Menu items are text only: the Products trigger has no caret icon and shares the plain links' 44px height so they align. Services is a plain link. The language dropdown is the only control with a caret.
 - **Mobile menu** [Sheet or inline panel]. Below 1080px, a paper panel under the header, full width, scrolls within the viewport; mega content becomes a single column without shadow. Menu button is a 44px-high pill with the text "Menu" (no icon) and a navy border at 14%.
 - **Mega menu** [NavigationMenu content]. Paper panel, 24px radius, up to 660px wide, 2 columns. Text only, with no badges, icons or arrows. Products mega: app name + one-line value + "for" line in `{typography.label-sm}`, footer row "More products are on the way." + "All products". Only Products has a mega menu; Services is a plain link (decided 2026-10-01).
 - **Language dropdown** [Popover disclosure, not a menu role]. The last item in the header, styled like the nav links: Be Vietnam Pro 500 at `{typography.ui}`, ink text, no border, mist fill on hover and while open, 44px tall, with a caret that flips up when open. The options (EN, VI) open in a small list on the header glass (page at 96%, hairline border, `{rounded.lg}`), in the same text style; the current one is bold navy.
@@ -488,7 +510,7 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 - **Front door.** Two large linked panels under the Home hero. Products door: white to pale blue gradient, four badges, four audience chips. Services door: navy surface, amber label, service chips ("+3 more").
 - **Stats band.** Five columns separated by 1px borders. On Home it sits at the bottom of the dark hero under the label "Experience you can count on". Number in `{typography.stat}`; the suffix (+, /7) uses `{colors.amber-text}` on light and `{colors.amber}` on navy. Muted caption under each, max 22ch. The figures are confirmed by the business (2026-09-28); an italic `[Placeholder]` note is added under the band only if a figure is ever unverified.
 - **Spotlight card.** Base for service cards (Services), news cards and office cards: glass fill, border, 24px radius, pointer-following amber glow.
-- **Why XionTechs grid.** Four tiles on a 12-column grid: a large paper tile (7 columns, 2 rows) with a 16:10 team photo slot and text below; a navy tile (5 columns) with a globe icon and the live local times in mono; a mist tile (5 columns); a full-width amber strip with "Get IT Done" in Unbounded and a link to the core values. Tiles use `{rounded.lg}`; they stack to one column below 900px.
+- **Why XionTech grid.** Four tiles on a 12-column grid: a large paper tile (7 columns, 2 rows) with a 16:10 team photo slot and text below; a navy tile (5 columns) with a globe icon and the live local times in mono; a mist tile (5 columns); a full-width amber strip with "Get IT Done" in Unbounded and a link to the core values. Tiles use `{rounded.lg}`; they stack to one column below 900px.
 - **Four-app row.** One row of four items divided by hairlines: badge, app name in Unbounded, audience in caption size and one line below; each item is one link. Two columns at 1080px, one at 640px. Replaces the earlier Home bento.
 - **Service card.** 48px icon tile, title in `{typography.title-sm}`, one line of copy, optional mono tags row. Variants: `feature` (amber wash at 22%), `navy` (navy fill, amber icon).
 - **Process flow (4-D).** Six items in a row: "Your request" node, four step cards (01 Discovery, 02 Design, 03 Development, 04 Deployment) and an amber "Launch" node, joined by a dashed track that fills with amber. Each step card: illustrated header (navy icon tile with three floating orbs), mono step number, title, one line, then a dashed divider and a "You receive" row. The "You receive" rows align across all four cards.

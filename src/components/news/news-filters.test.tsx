@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Audience } from "@/lib/news/audience";
 import { LocaleProvider } from "@/components/layout/locale-link";
-import { NewsFilters, type FilterItem } from "./news-filters";
+import { NewsFilters, photoLeadFirst, type FilterItem } from "./news-filters";
 
 const item = (slug: string, audience: Audience | null): FilterItem => ({
   key: slug,
@@ -291,5 +291,34 @@ describe("NewsFilters card unfold", () => {
     expect(
       document.getElementById("newsGrid")?.hasAttribute("data-unfold"),
     ).toBe(false);
+  });
+});
+
+describe("photoLeadFirst", () => {
+  type Item = { key: string; photo?: boolean };
+  const keys = (items: Item[]) => items.map((item) => item.key);
+
+  it("moves the newest story with a photo first and keeps the rest newest first", () => {
+    const items = [
+      { key: "a" },
+      { key: "b" },
+      { key: "c", photo: true },
+      { key: "d", photo: true },
+    ];
+    expect(keys(photoLeadFirst(items))).toEqual(["c", "a", "b", "d"]);
+  });
+
+  it("keeps the order when the newest story already has a photo", () => {
+    const items = [{ key: "a", photo: true }, { key: "b" }];
+    expect(photoLeadFirst(items)).toBe(items);
+  });
+
+  it("falls back to the newest story when no story has a photo", () => {
+    const items: Item[] = [{ key: "a" }, { key: "b" }];
+    expect(keys(photoLeadFirst(items))).toEqual(["a", "b"]);
+  });
+
+  it("applies within a filtered list and the empty list", () => {
+    expect(photoLeadFirst([])).toEqual([]);
   });
 });

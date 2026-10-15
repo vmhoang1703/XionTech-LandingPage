@@ -9,6 +9,14 @@ vi.mock("@/lib/careers/open-roles", async (importOriginal) => ({
   getOpenRoles: vi.fn(),
 }));
 
+// The photo folder is read from disk; the page only passes the list on.
+vi.mock("@/lib/careers/life-photo-folder", () => ({
+  listLifePhotos: vi.fn(() => [
+    "/careers/life/x7f3.jpg",
+    "/careers/life/q2.webp",
+  ]),
+}));
+
 import CareersPage, { generateMetadata } from "./page";
 
 const metadata = await generateMetadata({
@@ -39,7 +47,7 @@ describe("Careers page", () => {
     const { container } = await renderPage();
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Stay curious. Build what’s next",
+      "Careers at XionTech",
     );
     expect(container.querySelector("section#life, section#culture")).toBeNull();
     expect(
@@ -63,10 +71,24 @@ describe("Careers page", () => {
     const labels = [...container.querySelectorAll("section")].map((s) =>
       s.getAttribute("aria-labelledby"),
     );
-    expect(labels).toEqual(["careers-h1", "gain-h", "roles-h"]);
+    expect(labels).toEqual(["careers-h1", "gain-h", "life-h", "roles-h"]);
     expect(container.querySelector(".page-scene section:last-child")?.id).toBe(
       "roles",
     );
+  });
+
+  it("fills Meet the team with every photo from the folder", async () => {
+    vi.mocked(getOpenRoles).mockResolvedValue([]);
+    const { container } = await renderPage();
+
+    const team = container.querySelector("section#meet-the-team");
+    expect(team?.querySelector("h2")?.textContent).toBe(
+      "Meet the team at XionTech",
+    );
+    const first = team?.querySelectorAll(".life-set")[0];
+    expect([
+      ...(first?.querySelectorAll('img[alt="XionTech team moment"]') ?? []),
+    ]).toHaveLength(2);
   });
 
   it("drops the old culture, benefits and life photo sections", async () => {
@@ -77,7 +99,6 @@ describe("Careers page", () => {
       "Why you’ll grow here.",
       "Why you'll grow here.",
       "A culture that goes beyond employment.",
-      "Life at XionTech",
     ]) {
       expect(screen.queryByRole("heading", { name: gone })).toBeNull();
     }
@@ -129,10 +150,10 @@ describe("Careers page in Vietnamese", () => {
 
     expect(vi.mocked(getOpenRoles)).toHaveBeenCalledWith("vi");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Luôn tò mò. Xây dựng điều tiếp theo",
+      "Tuyển dụng tại XionTech",
     );
     expect(
-      screen.getByText("Những điều bạn nhận được trên hành trình"),
+      screen.getByText("Những nguyên tắc chúng tôi coi trọng"),
     ).toBeTruthy();
     expect(screen.getByText("Xem và ứng tuyển")).toBeTruthy();
     expect(container.querySelector(".role-main small")?.textContent).toBe(

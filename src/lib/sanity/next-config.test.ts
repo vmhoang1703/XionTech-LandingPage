@@ -27,6 +27,10 @@ describe("next.config.ts", () => {
     // are `unoptimized`, so this list is not checked for them (Story 6.3).
     expect(nextConfig).toEqual({
       experimental: { globalNotFound: true },
+      // The careers route reads the team photo folder when it re-renders.
+      outputFileTracingIncludes: {
+        "/[locale]/careers": ["./public/careers/life/**/*"],
+      },
       redirects: expect.any(Function),
       images: {
         remotePatterns: [

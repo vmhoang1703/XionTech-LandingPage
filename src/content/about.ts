@@ -16,7 +16,7 @@ export const aboutHero = {
   },
   text: "We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward.",
   links: [
-    { href: "/products", label: "Explore our products" },
+    { href: "/#contact", label: "Talk to our team" },
     { href: "/services", label: "Explore our services" },
   ],
 };
@@ -164,7 +164,7 @@ export const aboutHeroVi: typeof aboutHero = {
   },
   text: "Chúng tôi kết nối con người, ý tưởng và công nghệ để xây dựng những giải pháp số có ý nghĩa. Từ phát triển sản phẩm phần mềm đến khám phá đổi mới sáng tạo ứng dụng AI, chúng tôi kết hợp chuyên môn kỹ thuật, đội ngũ lãnh đạo giàu kinh nghiệm và tinh thần làm chủ mạnh mẽ để giúp doanh nghiệp tiến về phía trước.",
   links: [
-    { href: aboutHero.links[0].href, label: "Khám phá sản phẩm" },
+    { href: aboutHero.links[0].href, label: "Trò chuyện với đội ngũ" },
     { href: aboutHero.links[1].href, label: "Khám phá dịch vụ" },
   ],
 };

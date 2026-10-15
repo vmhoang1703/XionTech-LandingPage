@@ -43,7 +43,7 @@ export function SiteHeader({ locale }: Readonly<{ locale: Locale }>) {
           <SiteNav locale={locale} t={t} />
           <Link
             href={localeHref(locale, CONTACT_HREF)}
-            className="btn btn-glass btn-sm nav-talk max-[1080px]:ml-auto max-[479px]:px-3.5 max-[411px]:hidden min-[1081px]:max-[1199.98px]:px-3.5"
+            className="btn btn-primary btn-sm nav-talk max-[1080px]:ml-auto max-[479px]:px-3.5 max-[411px]:hidden min-[1081px]:max-[1199.98px]:px-3.5"
           >
             {t.contactShort}
             <ArrowRightIcon
