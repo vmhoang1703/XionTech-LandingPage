@@ -4894,37 +4894,26 @@
 }
 
 /*
-  Phones and tablets (lead, 2026-10-13): the XT mark and GET IT DONE sit on the
-  right, behind the headline, fully on screen and as bright as on desktop; no
-  globe (hero-silk.tsx draws the mark-only story below 1080px). A soft navy
-  glow behind the words keeps them readable over the dots.
+  Phones and tablets (lead, 2026-10-15): the XT mark and GET IT DONE play in
+  their own band above the headline, so no dots run through the words; no
+  globe (hero-silk.tsx draws the mark-only story below 1080px). Before, the
+  mark sat behind the headline (2026-10-13) and made it hard to read.
 */
 @media (width < 1080px) {
+  .home-hero .hero-fold > .wrap {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8px;
+  }
+
+  /* 180px is the least height the mark is drawn in (hero-silk.tsx); on short
+     screens the band stays small so "Get in touch" is still on screen. */
   .home-hero .hero-stage {
-    position: absolute;
-    top: 110px;
-    right: 6px;
-    width: max(60%, 212px);
-    height: 320px;
+    order: -1;
+    height: clamp(180px, min(48vw, 30svh), 300px);
+    margin-bottom: 8px;
     aspect-ratio: auto;
     pointer-events: none;
-  }
-
-  .home-hero h1,
-  .home-hero h1 + p {
-    text-shadow:
-      0 0 4px var(--color-ink),
-      0 0 14px var(--color-ink),
-      0 0 28px var(--color-ink);
-  }
-}
-
-@media (640px < width < 1080px) {
-  .home-hero .hero-stage {
-    top: 90px;
-    right: 16px;
-    width: 50%;
-    height: 420px;
   }
 }
 

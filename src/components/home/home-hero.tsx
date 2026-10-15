@@ -36,7 +36,7 @@ export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
           its bottom (.hero-fold in globals.css). Wide screens: copy on the
           left, the globe and XT mark on the right in .hero-stage (a box
           HeroSilk measures and draws into); below 1080px the stage sits
-          behind the headline and shows the XT mark only. */}
+          above the headline and shows the XT mark only. */}
       <div className="hero-fold flex w-full flex-col items-center">
         <div className="wrap w-full pt-24 md:pt-36 lg:grid lg:flex-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-12 lg:py-6">
           <div>
