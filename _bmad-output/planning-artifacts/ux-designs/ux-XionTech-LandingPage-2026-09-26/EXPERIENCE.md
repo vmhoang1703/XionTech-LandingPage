@@ -1,5 +1,5 @@
 ---
-name: XionTechs Website
+name: XionTech Website
 status: final
 updated: 2026-10-01
 sources:
@@ -8,7 +8,23 @@ sources:
   - code-review-2026-09-28.md
 ---
 
-# XionTechs Website: Experience Spine
+# XionTech Website: Experience Spine
+
+## Shipped Site (2026-10-15)
+
+What the code in `src/` ships today. Where an older section below disagrees (Book a demo, the `/demo` page, English-only Demo day), this section wins. Visual tokens are in `DESIGN.md` › Shipped Site.
+
+- **Contact:** one get-in-touch form, on Home (`/{locale}#contact`). Every primary button on every page goes there with a label that fits its page; the header "Let's talk" (amber primary) and the same button in the mobile menu reach it from any page. Email capture bands also send the visitor there. `/demo` redirects to `/#contact`.
+- **Careers:** hero (H1 "Careers at XionTech", lede, the prompt line "Ready to build with us?", stacked-cards picture that floats; no buttons), then Principles we value, Meet the team at XionTech (`#meet-the-team`) and open roles (`#roles`). Team photos: every image file in `public/careers/life/` (any filename; `.webp`, `.jpg`, `.jpeg`, `.png` or `.avif`; sorted by filename) shows in the strip with the generic localized alt "XionTech team moment" and no caption. The page reads the folder when it is built, so rebuild and redeploy after adding photos (in `npm run dev` a refresh is enough). An empty folder shows plain tinted tiles. HEIC files are skipped (browsers cannot show them); export them as JPEG or WebP first.
+- **Locales:** six, en, vi, ja, fr, ko, zh (`/zh` is Simplified Chinese). Every visible string needs an entry in all six dictionaries; AI translations are listed for a native reader in `docs/translations/<locale>-review.md` (run `npm run i18n:review` after any copy change). Product names and "Get IT done" stay English.
+- **Motion:**
+  - *Hero load-in:* every page title opens word by word (`heroWords`, `[data-hw]`), then the lines under it, then the button, in about 1.5s, with no script.
+  - *Sequential reveal:* one shared system (`src/components/sections/scroll-reveal.tsx`) plays each section's children in page order as they cross 10% above the bottom of the screen, 100ms apart, capped at five steps. Parts that animate themselves (mountain story, three-layer stack, 4-D flow) or carry `[data-reveal-off]` are left alone. New sections join it; do not add a second reveal script.
+  - *Reduced motion:* under `prefers-reduced-motion: reduce` everything shows in its final state; loops (Life strip, hero picture float) stop.
+  - *Hidden states:* a new rule that hides content with `opacity: 0` fails `src/lib/design/contrast.test.ts` unless it is on that test's allowlist; use `opacity: 0.01`.
+  - Animate only `transform` and `opacity`.
+- **One section, one screen:** on desktop and tablet a section should fit one viewport, without forcing an empty band on phones.
+- **Interactive parts:** value flip cards turn over on click, tap, Enter or Space and keep the hidden face inert; the Life strip pauses on hover or focus; the mobile menu sheet (1080px and below) keeps focus between the header bar and the sheet and closes when the window grows past 1080px.
 
 ## Foundation
 
@@ -28,19 +44,19 @@ Reference mockups: [`prototype-enhancement/prototype/index.html`](../../../proto
 
 | Page | URL | Purpose | Sections in order |
 |---|---|---|---|
-| Home | `/` | Show what the products do in the first 5 seconds; open both front doors | Dark hero (silk background with a motion toggle, headline, one primary CTA "Explore our products", tablet + phone devices, and the stats "Experience you can count on"), then light sections: two front doors (Products for schools, Outsourcing services), Why XionTechs (a 12-column grid of four tiles: "We build and run our own school platforms." with a team photo slot, spanning 7 columns and 2 rows; "Two offices, one working day." in navy with the live local times of Plano and Ho Chi Minh City; "Education is our core."; a full-width amber "Get IT Done" strip linking to the core values), the four-app row "Four apps for every role in school." (PXP, LXP, SXP, IoT: badge, name, who it is for and one line each, every item one link to its Products anchor, then "Explore our products"), 4-D process, latest news (3), demo capture |
+| Home | `/` | Show what the products do in the first 5 seconds; open both front doors | Dark hero (silk background with a motion toggle, headline, one primary CTA "Explore our products", tablet + phone devices, and the stats "Experience you can count on"), then light sections: two front doors (Products for schools, Outsourcing services), Why XionTech (a 12-column grid of four tiles: "We build and run our own school platforms." with a team photo slot, spanning 7 columns and 2 rows; "Two offices, one working day." in navy with the live local times of Plano and Ho Chi Minh City; "Education is our core."; a full-width amber "Get IT Done" strip linking to the core values), the four-app row "Four apps for every role in school." (PXP, LXP, SXP, IoT: badge, name, who it is for and one line each, every item one link to its Products anchor, then "Explore our products"), 4-D process, latest news (3), demo capture |
 | Products | `/products` | Let school buyers explore every app and book a demo | Hero (devices, Book a demo, Product updates), sticky sub-nav, `#pxp` (story phone with 5 tabs, features, store links that open a new tab), `#lxp`, `#sxp`, `#iot`, `#updates` (3 product stories), demo capture |
 | Services | `/services` | Let companies judge the delivery team and start a project | Hero (Start a project, See our 4-D process, office clocks), stats, 8 services (each with an anchor), three ways to work with us, `#process` (4-D), industries + time zones, project capture |
 | News | `/news` | Dated short stories about products, schools, team and company | Hero, category filters + story grid, demo capture |
-| About | `/about` | Who XionTechs is | Hero, stats, story, `#values` (6 core values), `#faq` (9 questions), offices, demo capture "See our apps in action." (no leadership section) |
-| Careers | `/careers` | Attract engineers, testers and designers | Hero (See open roles, Life at XionTechs), culture, benefits, `#roles` (open roles list), `#life` photos |
+| About | `/about` | Who XionTech is | Hero, stats, story, `#values` (6 core values), `#faq` (9 questions), offices, demo capture "See our apps in action." (no leadership section) |
+| Careers | `/careers` | Attract engineers, testers and designers | Shipped (2026-10-15): hero without buttons, Principles we value, `#meet-the-team` photo strip, `#roles`. Original plan: Hero (See open roles, Life at XionTech), culture, benefits, `#roles` (open roles list), `#life` photos |
 | Job page | `/careers/[slug]` | Read one role and apply | Breadcrumbs (Home / Careers / job title), H1 job title, team, location and work type; "About the role", "What you'll do", "What you bring"; "Apply for this role" form with CV upload; "All open roles" link back. From Sanity. |
-| Book a demo (Contact) | `/demo` | One contact form for both intents | Hero with reassurance list and offices; form card with `#form` (Product demo tab) and `#project` (Outsourcing project tab) |
+| Book a demo (Contact), removed: `/demo` now redirects to `/#contact` | `/demo` | One contact form for both intents | Hero with reassurance list and offices; form card with `#form` (Product demo tab) and `#project` (Outsourcing project tab) |
 | News story | `/news/[slug]` | One dated story | Breadcrumbs (Home / News / story), H1, date + category tag, photo, body, related product link, back to News. Own title, meta and Open Graph image. Depends on the CMS. |
 | Privacy policy | `/privacy` | How personal data from the forms is used (PDPD) | Linked from every consent line and the footer. Content is an open question. |
 | Not found | any unknown path | Recover from a broken link | Short message, links to Home, Products, Services and News, in the current language. |
 
-**Demo day is English only** (decided 2026-09-29): no language dropdown and no `/vi/` routes until after Demo day. The rules below apply from then on.
+The 2026-09-29 English-only plan was dropped; the site ships six locales (see Shipped Site).
 
 **Locale routing.** Paths above are shown without the locale prefix; every page exists under `/en/` and `/vi/`. A bare `/` redirects to the saved language, else to `/vi/` if the browser prefers Vietnamese, else to `/en/`. A locale in the URL always wins over the saved choice, so a shared link opens in the sender's language. `hreflang` links pair each page, with `x-default` pointing to `/en/`.
 
@@ -52,7 +68,7 @@ Service anchors: `#product-engineering`, `#ai-analytics`, `#co-creation`, `#staf
 - **Services** as a plain link to `/services` (no mega menu, decided 2026-10-01). The 8 services and the 4-D process are on the Services page.
 - **News**, **About**, **Careers** as plain links.
 - **Text only:** the header and the Products mega menu show text only (no product badges, service icons, arrows or caret icons); the language dropdown is the only control with a caret. The mobile menu button reads "Menu".
-- **Layout:** logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. There is no Book a demo button in the header (decided 2026-10-01). Book a demo is reached from the hero or capture band on Home, Products, Services, About and News, and from "Contact" in the footer on every page.
+- **Layout:** logo on the left and the menu on the right (Products, Services, News, About, Careers), with the language dropdown as the last item. The header has one amber primary "Let's talk" before the language dropdown, linking to the Home get-in-touch form (see Shipped Site).
 - The Products trigger is text only, with no caret icon, aligned with the plain links.
 - Logo links home. A skip link ("Skip to content") comes first in tab order.
 
@@ -97,7 +113,7 @@ Microcopy rules. Brand voice lives in `DESIGN.md` Brand & Style.
 | Send the contact form | Send request | Gửi yêu cầu | Form success state |
 | Apply for a role | Send application | Gửi hồ sơ | Form success state |
 
-Secondary links keep their own labels ("Explore our products", "Explore our services", "See our 4-D process", "Product updates", "See open roles", "View and apply", "All open roles", "Life at XionTechs", "Read story", "See all news", "All products", "See the process"). Never reuse "Book a demo" for a project intent or "Start a project" for a demo.
+Secondary links keep their own labels ("Explore our products", "Explore our services", "See our 4-D process", "Product updates", "See open roles", "View and apply", "All open roles", "Life at XionTech", "Read story", "See all news", "All products", "See the process"). Never reuse "Book a demo" for a project intent or "Start a project" for a demo.
 
 **Wording to reuse:**
 
@@ -129,7 +145,7 @@ Behavioural. Visual specs live in `DESIGN.md` Components under the same names.
 | Product sub-nav | Sticky under the header on `/products`. Highlights the section in view; at the end of the page the last item (Updates) is highlighted. Links scroll to anchors that land with the heading fully visible (AC-NAV-5). Scrolls horizontally on narrow screens. |
 | Front door | Whole panel is one link (Products door to `/products`, Services door to `/services`). Chips inside are text, not links. |
 | Four-app row | Each item is one link to its Products anchor (`#pxp`, `#lxp`, `#sxp`, `#iot`); nothing interactive inside it. |
-| Why XionTechs | Static tiles; only the "Our core values" link in the amber strip is interactive. The navy tile shows the live local times, which update every 30 seconds like the office clocks. The team photo slot shows a placeholder frame until a real photo is supplied. |
+| Why XionTech | Static tiles; only the "Our core values" link in the amber strip is interactive. The navy tile shows the live local times, which update every 30 seconds like the office clocks. The team photo slot shows a placeholder frame until a real photo is supplied. |
 | Service card | Lives on `/services` only (removed from Home 2026-10-01), where it is the anchor target and is not a link. The Home services door and the Services link lead there. |
 | Spotlight card | Pointer-following glow and 4px lift on hover only. Hover starts immediately once scroll reveal has finished (AC-UI-1). |
 | Stats band | Numbers count up once when 60% visible (1.4s, ease out). "24/7" does not count. Screen readers get the final value only. Built as one shared component (the prototype copies it across pages). On Home it sits at the bottom of the dark hero. |
@@ -283,10 +299,10 @@ Breakpoints from the prototype (max-width):
 |---|---|
 | Above 1080px | Full header menu with hover mega menus. 4-D flow in one row with track and end nodes. Stats in 5 columns. Services in 4 columns. |
 | 1080px and below | Menu moves behind the menu button; mega content expands inline in the mobile menu. 4-D steps in 2 columns without track or end nodes. Stats in 3 columns. The Home app row in 2 columns. Services in 2 columns. |
-| 900px and below | Home hero, splits, capture bands, front doors and offices stack to one column; devices max 560px wide. Why XionTechs tiles stack to one column; values and news in 2 columns; the job page form stacks below the role details; the News feature card spans full width. Footer in 2 columns. |
-| 640px and below | Gutters 16px. Section padding shrinks. Why XionTechs tiles, the app row, values, news, services, 4-D steps, form grid and feature lists in 1 column. Stats in 2 columns. Footer in 1 column. Capture row stacks the field above the button. The highlight mark may wrap. |
+| 900px and below | Home hero, splits, capture bands, front doors and offices stack to one column; devices max 560px wide. Why XionTech tiles stack to one column; values and news in 2 columns; the job page form stacks below the role details; the News feature card spans full width. Footer in 2 columns. |
+| 640px and below | Gutters 16px. Section padding shrinks. Why XionTech tiles, the app row, values, news, services, 4-D steps, form grid and feature lists in 1 column. Stats in 2 columns. Footer in 1 column. Capture row stacks the field above the button. The highlight mark may wrap. |
 
-**Header at every width:** the language dropdown stays in the header bar at every width (AC-NAV-1). There is no Book a demo button in the header (AC-NAV-2).
+**Header at every width:** the language dropdown stays in the header bar at every width (AC-NAV-1). The header "Let's talk" button reaches the Home get-in-touch form (Shipped Site).
 
 Browsers: current evergreen browsers on desktop and mobile. Content is readable without JavaScript.
 
@@ -351,7 +367,7 @@ Failure: until the real store links exist, the buttons open a `[Placeholder]` li
 ### Flow 4: Job seeker applies for a role (Lê Hoàng Nam, QA engineer, weekend browsing)
 
 1. Nam reads a News story from the team category about release testing and follows Careers from the header.
-2. On Careers he reads the culture section and why people grow here, and looks at the Life at XionTechs photos.
+2. On Careers he reads Principles we value and looks at the Meet the team at XionTech photos.
 3. In Open roles he picks a QA role and presses "View and apply".
 4. The job page shows the role: about the role, what he'll do, what he brings.
 5. He fills in his name and email, uploads his CV (PDF) and adds a short cover note.

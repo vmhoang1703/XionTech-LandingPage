@@ -4,10 +4,10 @@ import { undefinedClasses } from "@/test-utils/css-classes";
 import { GainCards } from "./gain-cards";
 
 describe("GainCards", () => {
-  it("shows What you'll gain along the way with the intro and four numbered cards", () => {
+  it("shows Principles we value with the intro and four numbered cards", () => {
     const { container } = render(<GainCards />);
     const h2 = screen.getByRole("heading", { level: 2 });
-    expect(h2.textContent).toBe("What you’ll gain along the way");
+    expect(h2.textContent).toBe("Principles we value");
     expect(container.querySelector(".lede")?.textContent).toBe(
       "Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech.",
     );

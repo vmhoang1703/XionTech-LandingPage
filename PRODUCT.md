@@ -10,8 +10,8 @@ web
 
 Two front doors, same weight (lead, 2026-10-10):
 
-- **School buyers** (principal, head of IT): understand what each app does for their school, read it in Vietnamese, book a demo.
-- **Company buyers** (CTO, product lead): judge whether the team can deliver, see the process and the overlapping time zones, start a project with one email.
+- **School buyers** (principal, head of IT): understand what each app does for their school, read it in their language, get in touch.
+- **Company buyers** (CTO, product lead): judge whether the team can deliver, see the process and the overlapping time zones, get in touch through one form.
 
 Also served: parents checking that their school's app is real, and job seekers reading roles and applying with a CV.
 
@@ -21,17 +21,22 @@ Marketing site for XionTech, rebuilt for the XionTech internal AI build challeng
 
 ## Positioning
 
-The same engineering team that builds and runs real school products also builds software for companies. The products are the proof behind the services.
+XionTech is an AI-driven product and engineering company that builds for any industry; copy does not list industries. The same team builds and runs real school products, and those products are the proof behind the services. The Home headline stays "Build smarter. Ship faster. Get IT done."
 
 ## Capabilities and Constraints
 
 - Next.js 16 App Router, React 19, Tailwind CSS v4 (`src/app/globals.css` `@theme`), Sanity CMS for news and careers, Vercel.
-- Every page in English and Vietnamese. New text needs both.
+- Every page in six locales: en, vi, ja, fr, ko, zh. New text needs an entry in all six dictionaries, then `npm run i18n:review`.
 - Lighthouse mobile performance at least 90; LCP at most 2.5s, INP at most 200ms, CLS at most 0.1. If motion or 3D pushes a score below target, the motion is reduced, not the target (PRD SM-6, SM-8, SM-C3).
 
 ## Brand Commitments
 
-- Write "XionTech" in copy, titles and alt text. The domain `xiontechs.com` and the logo stay as they are.
+- Write "XionTech" in copy, titles and alt text, never "XionTechs". The domain `xiontechs.com`, its email addresses and the logo stay as they are.
+- Four locations: two delivery centers, Plano, Texas (vinni.tran@newxion.com) and Ho Chi Minh City (vinni.tran@xiontechs.com), and two offices, Ha Noi and Da Nang (named only, one line in the footer).
+- One contact path: every primary button links to the Home get-in-touch form (`/{locale}#contact`) with a label that fits its page; the header shows "Let's talk". There is no Demo page (`/demo` redirects to `/#contact`).
+- Careers, top to bottom: hero "Careers at XionTech" (no buttons), Principles we value, Meet the team at XionTech, open roles. Team photos: any image files dropped in `public/careers/life/` (any filename), shown sorted by filename; rebuild and redeploy after adding them.
+- Section titles have no trailing full stop. US spelling.
+- Visual and behaviour rules for the shipped site: `DESIGN.md` and `EXPERIENCE.md`, section "Shipped Site".
 - Amber's prototype (`_bmad-output/prototype-enhancement/prototype/`) and `DESIGN.md` (`_bmad-output/planning-artifacts/ux-designs/ux-XionTech-LandingPage-2026-09-26/DESIGN.md`) set brand, colours and fonts. Enhancements build on them; they do not replace them.
 
 ## Evidence on Hand

@@ -13,18 +13,18 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ko.ts` and open a pull request. `Where` is `ko:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 445 strings.
+**Total:** 461 strings.
 
 ## About
 
-40 strings.
+41 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
 | `ko:aboutCta.title` | Let’s build what’s next | 다음을 함께 만들어요 |
 | `ko:aboutCta.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | 제품 아이디어, 기술 과제, 또는 확장할 엔지니어링 팀이 있으신가요? 목표를 의미 있는 솔루션으로 바꾸는 방법을 함께 찾아보세요. |
 | `ko:aboutCta.primary.label` | Let’s talk about your project | 프로젝트 이야기하기 |
-| `ko:aboutCta.secondary.label`<br>`ko:aboutHero.links[0].label` | Explore our products | 제품 살펴보기 |
+| `ko:aboutCta.secondary.label` | Explore our products | 제품 살펴보기 |
 | `ko:aboutFaq.title` | Curious about XionTech? | XionTech가 궁금하신가요? |
 | `ko:aboutFaq.lede` | A few things you might want to know before working with us. | 함께 일하기 전에 알아 두면 좋은 몇 가지입니다. |
 | `ko:aboutFaq.items[0].question` | What does XionTech do? | XionTech는 어떤 일을 하나요? |
@@ -42,6 +42,7 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:aboutHero.title.accent` | ownership | 주인의식 |
 | `ko:aboutHero.title.tail` |  | 으로 만드는 기술 |
 | `ko:aboutHero.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | 사람과 아이디어, 기술을 연결해 의미 있는 디지털 솔루션을 만듭니다. 소프트웨어 제품 개발부터 AI 기반 혁신 탐구까지, 엔지니어링 전문성과 경험 많은 리더십, 그리고 강한 주인의식으로 기업의 전진을 돕습니다. |
+| `ko:aboutHero.links[0].label` | Talk to our team | 팀과 이야기하기 |
 | `ko:aboutHero.links[1].label` | Explore our services | 서비스 살펴보기 |
 | `ko:aboutMeta.title` | About XionTech \| Get IT Done | XionTech 소개 \| Get IT Done |
 | `ko:aboutMeta.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech는 미국과 베트남에 팀을 둔 엔지니어링 파트너입니다. 소프트웨어 제품을 만들고, AI 기반 혁신을 탐구하며, 고객과 함께 책임감 있게 개발을 이끕니다. |
@@ -100,11 +101,11 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 
 ## Careers
 
-24 strings.
+39 strings.
 
 | Where | English | 한국어 |
 | --- | --- | --- |
-| `ko:careersGain.heading` | What you’ll gain along the way | 함께하며 얻게 되는 것 |
+| `ko:careersGain.heading` | Principles we value | 우리가 소중히 여기는 원칙 |
 | `ko:careersGain.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | 역량을 키우고, 새로운 기술을 탐구하며, 서로를 지지하는 동료들과 일하세요. XionTech에서 기대할 수 있는 것들을 소개합니다. |
 | `ko:careersGain.cards[0].title` | Hands-on Learning | 실전에서 배우기 |
 | `ko:careersGain.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | 워크숍, 지식 공유, 실제 엔지니어링 과제를 통해 직접 해 보며 배웁니다. |
@@ -114,12 +115,27 @@ For a native Korean reader. Every row is a Korean string on the site that differ
 | `ko:careersGain.cards[2].text` | Solve real customer problems and see how your work makes a difference. | 고객의 실제 문제를 해결하고, 내 일이 만드는 변화를 직접 확인합니다. |
 | `ko:careersGain.cards[3].title` | Team Experiences | 팀 경험 |
 | `ko:careersGain.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | 팀 활동, 함께하는 배움, 성공을 함께 축하하는 시간을 통해 관계를 쌓습니다. |
-| `ko:careersHero.title.first` | Stay curious. | 호기심을 잃지 마세요. |
-| `ko:careersHero.title.second` | Build what’s next | 다음을 만드세요 |
-| `ko:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | 빠르게 배우고, 더 나은 질문을 하고, 상황이 바뀌면 적응하며, 과업만이 아니라 결과를 중요하게 여기는 사람들을 위한 팀을 만들고 있습니다. 이곳에서 AI로 소프트웨어를 만드는 새로운 방식을 함께 만들어 가게 됩니다. |
-| `ko:careersLife.heading` | Life at XionTech | XionTech에서의 일상 |
-| `ko:careersLife.prevLabel` | Previous photo | 이전 사진 |
-| `ko:careersLife.nextLabel` | Next photo | 다음 사진 |
+| `ko:careersHero.title.first` | Careers at | XionTech |
+| `ko:careersHero.title.second` | XionTech | 채용 |
+| `ko:careersHero.lede` | We’re bringing together curious minds who love solving problems, exploring new technologies, and building things that make a difference. | 문제 해결을 좋아하고, 새로운 기술을 탐구하며, 변화를 만드는 것을 즐기는 호기심 많은 사람들을 모으고 있습니다. |
+| `ko:careersHero.prompt` | Ready to build with us? | 함께 만들어 갈 준비가 되셨나요? |
+| `ko:careersHero.artAlt` | Three stacked cards illustrating AI-powered engineering, a code chip and connected technology | AI 기반 엔지니어링, 코드 칩, 연결된 기술을 표현한 겹쳐진 카드 세 장 |
+| `ko:careersLife.heading` | Meet the team at XionTech | XionTech 팀을 소개합니다 |
+| `ko:careersLife.lede` | At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | XionTech에서는 엔지니어링은 진지하게, 하지만 우리 자신은 너무 심각하지 않게 대합니다. 질문하고, 주인의식을 갖고, 함께 계속 배웁니다. 퇴근 후에도 같은 팀워크로 배드민턴 코트, 축구장, 노래방 마이크, 게임 로비로 향합니다. |
+| `ko:careersLife.tagsLabel` | Our team interests | 우리 팀의 관심사 |
+| `ko:careersLife.tags[0]` | Badminton regulars | 배드민턴 단골 |
+| `ko:careersLife.tags[1]` | Football fans | 축구 팬 |
+| `ko:careersLife.tags[2]` | League of Legends squad | League of Legends 스쿼드 |
+| `ko:careersLife.tags[3]` | Karaoke night crew | 노래방 크루 |
+| `ko:careersLife.tags[4]` | After-work catch-ups | 퇴근 후 모임 |
+| `ko:careersLife.tags[5]` | Coffee lovers | 커피 애호가 |
+| `ko:careersLife.tags[6]` | Otaku | 오타쿠 |
+| `ko:careersLife.tags[7]` | Guitarists | 기타리스트 |
+| `ko:careersLife.tags[8]` | AI explorers | AI 탐험가 |
+| `ko:careersLife.tags[9]` | Movie buffs | 영화광 |
+| `ko:careersLife.tags[10]` | ...and you? | ...그리고 당신은? |
+| `ko:careersLife.stripLabel` | Photos of the XionTech team | XionTech 팀 사진 |
+| `ko:careersLife.photoAlt` | XionTech team moment | XionTech 팀의 한 순간 |
 | `ko:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] 팀 사진 |
 | `ko:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] 사무실 사진 |
 | `ko:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] 행사 사진 |

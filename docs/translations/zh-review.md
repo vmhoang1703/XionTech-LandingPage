@@ -13,7 +13,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/zh.ts` and open a pull request. `Where` is `zh:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 447 strings.
+**Total:** 461 strings.
 
 ## About
 
@@ -42,7 +42,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:aboutHero.title.accent` | ownership | 主人翁精神 |
 | `zh:aboutHero.title.tail` |  | 打造技术 |
 | `zh:aboutHero.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | 我们把人、想法和技术连接在一起，打造有意义的数字解决方案。从开发软件产品到探索 AI 驱动的创新，我们结合工程专长、经验丰富的领导力和强烈的主人翁精神，帮助企业不断前进。 |
-| `zh:aboutHero.links[0].label` | Explore our products | 了解产品 |
+| `zh:aboutHero.links[0].label` | Talk to our team | 与我们的团队交流 |
 | `zh:aboutHero.links[1].label` | Explore our services | 了解服务 |
 | `zh:aboutMeta.title` | About XionTech \| Get IT Done | 关于 XionTech \| Get IT Done |
 | `zh:aboutMeta.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech 是一家在美国和越南设有团队的工程合作伙伴。我们打造软件产品，探索 AI 驱动的创新，并与客户一起对交付负责。 |
@@ -101,11 +101,11 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Careers
 
-24 strings.
+38 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
-| `zh:careersGain.heading` | What you’ll gain along the way | 一路上你将收获什么 |
+| `zh:careersGain.heading` | Principles we value | 我们珍视的原则 |
 | `zh:careersGain.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | 提升技能，探索新技术，与互相支持的伙伴一起工作。以下是你在 XionTech 可以期待的。 |
 | `zh:careersGain.cards[0].title` | Hands-on Learning | 在实践中学习 |
 | `zh:careersGain.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | 通过工作坊、知识分享和真实的工程挑战，在动手中学习。 |
@@ -115,12 +115,26 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:careersGain.cards[2].text` | Solve real customer problems and see how your work makes a difference. | 解决真实的客户问题，看到你的工作带来的改变。 |
 | `zh:careersGain.cards[3].title` | Team Experiences | 团队时光 |
 | `zh:careersGain.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | 通过团队活动、共同学习和一起庆祝成功，建立彼此的联系。 |
-| `zh:careersHero.title.first` | Stay curious. | 保持好奇。 |
-| `zh:careersHero.title.second` | Build what’s next | 创造未来 |
-| `zh:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | 我们正在组建一支团队，成员学得快、善于提出更好的问题、能随变化而调整，并且关心结果，而不只是任务。在这里，您将参与开创用 AI 构建软件的新方式。 |
-| `zh:careersLife.heading` | Life at XionTech | 在 XionTech 的日常 |
-| `zh:careersLife.prevLabel` | Previous photo | 上一张照片 |
-| `zh:careersLife.nextLabel` | Next photo | 下一张照片 |
+| `zh:careersHero.title.first` | Careers at | 加入 |
+| `zh:careersHero.lede` | We’re bringing together curious minds who love solving problems, exploring new technologies, and building things that make a difference. | 我们汇聚好奇心强的人：热爱解决问题、探索新技术，并打造能带来改变的产品。 |
+| `zh:careersHero.prompt` | Ready to build with us? | 准备好与我们一起创造了吗？ |
+| `zh:careersHero.artAlt` | Three stacked cards illustrating AI-powered engineering, a code chip and connected technology | 三张叠放的卡片，展示 AI 驱动的工程、代码芯片和互联技术 |
+| `zh:careersLife.heading` | Meet the team at XionTech | 认识 XionTech 团队 |
+| `zh:careersLife.lede` | At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | 在 XionTech，我们认真对待工程，但不会太把自己当回事。我们提出问题、勇于担当，并一起不断学习。下班后，我们把同样的团队精神带到羽毛球场、足球场、卡拉 OK 麦克风前和游戏大厅里。 |
+| `zh:careersLife.tagsLabel` | Our team interests | 我们团队的兴趣 |
+| `zh:careersLife.tags[0]` | Badminton regulars | 羽毛球常客 |
+| `zh:careersLife.tags[1]` | Football fans | 足球迷 |
+| `zh:careersLife.tags[2]` | League of Legends squad | 英雄联盟小队 |
+| `zh:careersLife.tags[3]` | Karaoke night crew | K 歌之夜成员 |
+| `zh:careersLife.tags[4]` | After-work catch-ups | 下班小聚 |
+| `zh:careersLife.tags[5]` | Coffee lovers | 咖啡爱好者 |
+| `zh:careersLife.tags[6]` | Otaku | 二次元 |
+| `zh:careersLife.tags[7]` | Guitarists | 吉他手 |
+| `zh:careersLife.tags[8]` | AI explorers | AI 探索者 |
+| `zh:careersLife.tags[9]` | Movie buffs | 电影迷 |
+| `zh:careersLife.tags[10]` | ...and you? | ...你呢？ |
+| `zh:careersLife.stripLabel` | Photos of the XionTech team | XionTech 团队照片 |
+| `zh:careersLife.photoAlt` | XionTech team moment | XionTech 团队瞬间 |
 | `zh:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] 团队照片 |
 | `zh:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] 办公室照片 |
 | `zh:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] 活动照片 |

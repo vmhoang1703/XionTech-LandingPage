@@ -76,9 +76,9 @@ describe("About content", () => {
     expect(aboutCta.secondary.href).toBe("/products");
   });
 
-  it("links the intro to Products and Services", () => {
+  it("links the intro to the Home contact form and Services", () => {
     expect(aboutHero.links.map((link) => link.href)).toEqual([
-      "/products",
+      "/#contact",
       "/services",
     ]);
   });

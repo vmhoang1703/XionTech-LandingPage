@@ -8,7 +8,11 @@ import {
   SCENE_REST_TIME,
 } from "./globe-mark";
 import { LocaleProvider } from "@/components/layout/locale-link";
-import { HeroSilk } from "./hero-silk";
+import {
+  HeroSilk,
+  SCENE_DELAY_NARROW_MS,
+  SCENE_DELAY_WIDE_MS,
+} from "./hero-silk";
 import { createSilk, type Silk } from "./silk-shader";
 
 vi.mock("./globe-mark", async (importOriginal) => ({
@@ -25,10 +29,12 @@ let intersect: (visible: boolean) => void = () => undefined;
 let silk: Silk;
 let globe: GlobeMark;
 let reducedMotion = false;
+let narrowScreen = false;
 
 beforeEach(() => {
   vi.useFakeTimers();
   reducedMotion = false;
+  narrowScreen = false;
   localStorage.clear();
   silk = { draw: vi.fn(), resize: vi.fn() };
   vi.mocked(createSilk).mockReturnValue(silk);
@@ -36,7 +42,9 @@ beforeEach(() => {
   vi.mocked(createGlobeMark).mockReturnValue(globe);
   vi.stubGlobal(
     "matchMedia",
-    vi.fn(() => ({ matches: reducedMotion })),
+    vi.fn((query: string) => ({
+      matches: query === "(width < 1080px)" ? narrowScreen : reducedMotion,
+    })),
   );
   vi.stubGlobal(
     "IntersectionObserver",
@@ -74,17 +82,73 @@ afterEach(() => {
   vi.mocked(createGlobeMark).mockReset();
 });
 
+// The scene opens after the page has loaded: at most the narrow delay.
+function startScene() {
+  act(() => {
+    vi.advanceTimersByTime(SCENE_DELAY_NARROW_MS);
+  });
+}
+
 function renderSilk() {
   const view = render(<HeroSilk />);
+  startScene();
   const canvas = view.container.querySelector("canvas");
   if (!canvas) throw new Error("No canvas");
   return { ...view, canvas };
 }
 
 describe("HeroSilk", () => {
-  it("opens WebGL at once, without waiting for the page to load", () => {
+  it("opens WebGL 0.3 s after the page has loaded on a desktop", () => {
     render(<HeroSilk />);
+    expect(createSilk).not.toHaveBeenCalled();
+
+    act(() => {
+      vi.advanceTimersByTime(SCENE_DELAY_WIDE_MS - 1);
+    });
+    expect(createSilk).not.toHaveBeenCalled();
+
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
     expect(createSilk).toHaveBeenCalledOnce();
+  });
+
+  it("waits 2.5 s on a phone or tablet", () => {
+    narrowScreen = true;
+    render(<HeroSilk />);
+    act(() => {
+      vi.advanceTimersByTime(SCENE_DELAY_NARROW_MS - 1);
+    });
+    expect(createSilk).not.toHaveBeenCalled();
+
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(createSilk).toHaveBeenCalledOnce();
+  });
+
+  it("waits for the load event when the page is still loading", () => {
+    vi.spyOn(document, "readyState", "get").mockReturnValue("loading");
+    render(<HeroSilk />);
+    act(() => {
+      vi.advanceTimersByTime(SCENE_DELAY_NARROW_MS * 2);
+    });
+    expect(createSilk).not.toHaveBeenCalled();
+
+    act(() => {
+      window.dispatchEvent(new Event("load"));
+      vi.advanceTimersByTime(SCENE_DELAY_WIDE_MS);
+    });
+    expect(createSilk).toHaveBeenCalledOnce();
+  });
+
+  it("never opens WebGL when it is left before the delay ends", () => {
+    const { unmount } = render(<HeroSilk />);
+    unmount();
+    act(() => {
+      vi.advanceTimersByTime(SCENE_DELAY_NARROW_MS * 2);
+    });
+    expect(createSilk).not.toHaveBeenCalled();
   });
 
   it("renders an aria-hidden canvas", () => {
@@ -139,6 +203,7 @@ describe("HeroSilk", () => {
         <HeroSilk />
       </LocaleProvider>,
     );
+    startScene();
 
     fireEvent.click(
       screen.getByRole("button", { name: "Tạm dừng chuyển động" }),
@@ -291,6 +356,7 @@ describe("HeroSilk scene", () => {
         <div className="hero-stage" />
       </section>,
     );
+    startScene();
     const hero = view.container.querySelector("section");
     if (!hero) throw new Error("No hero");
     return { ...view, hero };

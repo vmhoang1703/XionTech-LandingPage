@@ -339,12 +339,10 @@ test.describe("form errors", { tag: "@a11y" }, () => {
   });
 });
 
-test.describe("Home hero doors and +3 reveal", { tag: "@a11y" }, () => {
+test.describe("Home hero doors and industries", { tag: "@a11y" }, () => {
   test.use({ viewport: { width: 1280, height: 900 } });
 
-  test("doors straddle the hero and the +3 list opens and closes", async ({
-    page,
-  }) => {
+  test("doors straddle the hero and every industry shows", async ({ page }) => {
     await page.goto("/en");
 
     const join = await page.evaluate(() => {
@@ -380,17 +378,13 @@ test.describe("Home hero doors and +3 reveal", { tag: "@a11y" }, () => {
       expect(hit, "the door's lower half is its own link").toBe(true);
     }
 
-    const trigger = page.getByRole("button", { name: /^\+3 more industries/ });
-    const list = page.locator(".w-more-list");
-    await trigger.scrollIntoViewIfNeeded();
-    await trigger.click();
-    await expect(list).toBeVisible();
-    await trigger.click();
-    await expect(list).toBeHidden();
-    await trigger.click();
-    await expect(list).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(list).toBeHidden();
+    // The three more industries are chips of the capabilities card, all showing
+    // (the +3 list of the earlier copy is gone).
+    for (const name of ["Healthcare", "Logistics", "Private Equity"]) {
+      const chip = page.locator(".w-industries .w-chip", { hasText: name });
+      await chip.scrollIntoViewIfNeeded();
+      await expect(chip).toBeVisible();
+    }
   });
 });
 
@@ -418,18 +412,38 @@ test.describe("footer ridge", { tag: "@a11y" }, () => {
     );
     // One evaluate: all rects come from the same moment.
     const { contentBottom, ridgeTop } = await page.evaluate(() => {
-      // The element that holds the room above the footer (globals.css):
-      // main's last child, or on Home the last section inside the scene.
-      const last = document.querySelector(
-        "main > :last-child:not(.page-scene), main > .page-scene:last-child > :last-child",
-      );
+      // The last content block above the footer: follow main's last child
+      // (skipping decoration) down to the first section.
+      let last: Element | null = document.querySelector("main");
+      while (last) {
+        const next: Element | undefined = [...last.children]
+          .reverse()
+          .find((child) => !child.matches("[aria-hidden='true']"));
+        if (!next) break;
+        last = next;
+        if (next.matches("section")) break;
+      }
       let bottom = 0;
+      const isFixed = (node: Element) => {
+        for (
+          let el: Element | null = node;
+          el && el !== last;
+          el = el.parentElement
+        ) {
+          if (getComputedStyle(el).position === "fixed") return true;
+        }
+        return false;
+      };
       // Page coordinates: on phones the footer is taller than the screen.
       for (const el of last?.querySelectorAll("*") ?? []) {
         if (!(el instanceof HTMLElement || el instanceof SVGElement)) continue;
         const rect = el.getBoundingClientRect();
         if (rect.width === 0 || rect.height === 0) continue;
         if (getComputedStyle(el).visibility === "hidden") continue;
+        // Decoration (the scene's blobs, the hills) hangs past the content.
+        if (el.closest("[aria-hidden='true']")) continue;
+        // A fixed bar (the job page's Apply bar) floats over the page.
+        if (isFixed(el)) continue;
         bottom = Math.max(bottom, rect.bottom + window.scrollY);
       }
       const ridge = document.querySelector("[data-ridge]");
@@ -562,7 +576,7 @@ test.describe("about layout", { tag: "@a11y" }, () => {
         (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
       );
 
-  test("FAQ in two columns at 1280 and one at 760, /about#faq and /about#book land under the header", async ({
+  test("FAQ in two columns at 1280 and one at 760, /about#faq and /about#next land under the header", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -574,7 +588,7 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     expect(await columns(page)).toBe(1);
 
     await page.setViewportSize({ width: 1280, height: 800 });
-    for (const id of ["faq", "book"]) {
+    for (const id of ["faq", "next"]) {
       await page.goto("/en/about");
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
       await page.goto(`/en/about#${id}`);
@@ -615,9 +629,9 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/en/about");
     const offices = await page.evaluate(() => {
-      const grid = document.querySelector("#offices .offices");
+      const grid = document.querySelector("#offices .loc-cards");
       const wrap = document.querySelector("#offices .wrap");
-      const cards = [...document.querySelectorAll("#offices .office-card")];
+      const cards = [...document.querySelectorAll("#offices .loc-card")];
       if (!grid || !wrap || cards.length !== 2) throw new Error("no offices");
       const inner = (el: Element) => {
         const { left, right } = el.getBoundingClientRect();
@@ -635,7 +649,7 @@ test.describe("about layout", { tag: "@a11y" }, () => {
       };
     });
     expect(offices.columns).toBe(2);
-    expect(offices.firstName).toBe("Plano, Texas, USA");
+    expect(offices.firstName).toBe("Plano, Texas");
     expect(offices.first.left).toBeCloseTo(offices.wrapLeft, 0);
     expect(offices.second.right).toBeCloseTo(offices.wrapRight, 0);
 
@@ -688,7 +702,7 @@ test.describe("about layout", { tag: "@a11y" }, () => {
     await page.goto("/en/about");
     expect(
       await page
-        .locator("#offices .offices")
+        .locator("#offices .loc-cards")
         .evaluate(
           (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
         ),

@@ -59,7 +59,7 @@ const ART: ReactNode[] = [
   </svg>,
 ];
 
-// Careers "What you’ll gain along the way" (website copy v3):
+// Careers "Principles we value" (website copy v3, retitled 2026-10-15):
 // four staggered-height cards (amber tint, blue-grey, ice, deep navy), each
 // with its number, title, line and icon. The shared reveal brings the heading
 // and the cards in; hover lifts a card.

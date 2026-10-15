@@ -55,14 +55,14 @@ describe("AboutPage", () => {
     expect(container.querySelector("nav")).toBeNull();
   });
 
-  it("links the intro to Products and Services", async () => {
+  it("links the intro to the Home contact form and Services", async () => {
     const { container } = render(await aboutAt("en"));
 
     const links = Array.from(
       container.querySelectorAll("#mission .ah-links a.btn"),
     );
     expect(links.map((a) => [a.textContent, a.getAttribute("href")])).toEqual([
-      ["Explore our products", "/en/products"],
+      ["Talk to our team", "/en#contact"],
       ["Explore our services", "/en/services"],
     ]);
     for (const a of links) {

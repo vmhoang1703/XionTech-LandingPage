@@ -1847,6 +1847,20 @@ Template:
 - **AI got it wrong:** (1) I set the camera pitch with the wrong sign (`rotateX(+17deg)` puts the camera under the ground), so the road washed out the lettering; the screenshot with the ground hidden showed it. (2) I guessed font metrics for the lettering (ascent 1.0 and descent 0.25 were measured later) and picked weight 600, which the page had not loaded before the click, so the first click would swap fonts. (3) I scaled the whole device with a CSS `scale` in the 3D scene: its text was rasterised too small and looked blocky at 2x. I rebuilt the device at its final size with one design-pixel unit. (4) A first phone was taller than its stage and was cut at the top. (5) The first four-word skyline hid IoT behind AI Tutor. (6) The untranslated-strings guard test (`scripts/i18n`) failed on the new road's app ids; only the full run showed it. (7) Two e2e tests used a Node constant inside the browser callback; the first run failed.
 - **Still open:** Playwright's WebKit on Windows does not depth-sort 3D layers (the layers painted in document order and the ground was missing), so Safari and iPhone could not be tested for real; the device face is now painted last so a document-order engine still shows it. Please look at it on a Mac or iPhone. The Products meta title and description still name IoT.
 
+## 2026-10-15 — Hero scene: desktop opens at once, phone and tablet wait
+
+- **Prompt:** "fix this too: Desktop opens 0.3 s after load, phone and tablet keep 2.5 s." (option 2 from the 2026-10-14 choice; the lead had first picked "open at once everywhere", PR #114, then saw the phone score fall to 62-64.)
+- **What the AI did:** `HeroSilk` waits `SCENE_DELAY_WIDE_MS` (300 ms) after `load` on a desktop and `SCENE_DELAY_NARROW_MS` (2500 ms) where the layout is narrow (`(width < 1080px)`, the same query the mark-only story already uses). Unit tests cover both delays, the wait for `load` and leaving early.
+- **Why 1080 px:** the hero already switches to its phone and tablet layout there, so one query decides both the layout and the delay. A tablet in landscape at 1080 px or more counts as a desktop.
+- **Measured:** see the PR.
+
+## 2026-10-15 — Careers: bigger hero picture, "Meet the team at XionTech" from a photo folder
+
+- **Prompt:** enlarge the Careers hero picture; rename "Life at XionTech" to "Meet the team at XionTech"; load every photo dropped in `public/careers/life/` whatever its filename, with no captions; bring the docs up to date with the branch.
+- **What the AI did:** the hero picture column now takes a bit over half the hero (about 680px wide at 1440, 550px at 1024, full width on phones), re-extracted at the mock's full 1448 x 1086 (56 KB WebP); the hero still fills one screen at 1440 x 900 and 1280 x 800. The strip reads the folder on the server (`src/lib/careers/life-photo-folder.ts`: webp, jpg, jpeg, png, avif, sorted by filename), uses `next/image` so the phone JPEGs are resized, and repeats a short set so the loop works from one photo. An empty folder shows plain tinted tiles. Section anchor is now `#meet-the-team`; heading and the generic alt are in all six locales. `next.config.ts` ships the folder with the careers route, because a Sanity job webhook re-renders the page on the server.
+- **AI got it wrong:** the first enlargement let the picture overflow its column by 8%, and the hero clipped its right edge; it now fills the column instead.
+- **Still open:** the page is static, so new photos show after a rebuild and redeploy. A `.heic` file in the folder is skipped; export it as JPEG or WebP.
+
 ## 2026-10-15 — Dark mode for the whole site
 
 - **Prompt:** "can you do me a preview dark/light mode for our landing page?" (a standalone HTML preview), then "implement to the real site please. Create a new branch", then "can you quick dev for me no testing for now".

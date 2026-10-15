@@ -6821,23 +6821,304 @@ main > .page-scene:last-child > .surface-navy:last-child {
   }
 }
 
-/* ---------- Website copy v3: Careers hero, copy only ---------- */
-/* The growth diagram moved out of the hero into its own scroll section below. */
-.ch-stack {
-  display: grid;
-}
-
-.ch-copy {
-  max-width: 900px;
-}
-
+/* ---------- Careers hero: copy beside the stacked cards ----------
+   Amber's careers hero mock (no glow, 2026-10-15). The grid is .ch-grid
+   above; the second title line takes the amber text colour and the
+   illustration floats gently, its edges fading into the hero. */
 .careers-hero {
   padding-bottom: 48px;
+}
+
+/* Desktop and tablet: the hero fills one screen. The header pill floats over
+   its top padding, so 100svh leaves a viewport-minus-header stage with the
+   copy and picture centred in it; "Principles we value" starts below the
+   fold. Phones keep an auto height (the stack is already taller than the
+   lede, and a forced screen would leave an empty band). */
+@media (width > 640px) {
+  .careers-hero {
+    display: grid;
+    align-content: center;
+    /* Capped: on very tall or zoomed-out screens a full 100svh left a huge
+       empty band with the copy floating mid-screen (round 19). */
+    min-height: min(100svh, 1040px);
+    padding-block: calc(var(--spacing-header-room) + 32px) 56px;
+  }
+}
+
+/* Closing line under the lede: an emphasised prompt, not a button (the hero
+   holds no primary buttons). A short amber rule leads it in. */
+.ch-prompt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+  color: var(--color-heading);
+  font-family: var(--font-brand);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.ch-prompt::before {
+  content: "";
+  flex: none;
+  width: 32px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-amber);
+}
+
+.ch-accent {
+  color: var(--color-amber-text);
+}
+
+/* Desktop and tablet: the picture column takes a bit over half the hero
+   (about 680px wide at 1440, 540px at 1024); its faded edges read smaller
+   than its box. */
+@media (width > 900px) {
+  .careers-hero .ch-grid {
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
+    gap: 40px;
+  }
+}
+
+.ch-art {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.ch-art img {
+  width: 100%;
+  max-width: 880px;
+  height: auto;
+  aspect-ratio: 1448 / 1086;
+  object-fit: contain;
+  /* The whole picture shows (all three cards): multiply drops its light
+     background into the hero, and only the outer ~8% feathers out, so no
+     card is cut and no pale rectangle edge shows (round 19). */
+  mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  mask-composite: intersect;
+  mix-blend-mode: multiply;
+  animation: ch-float 8s ease-in-out infinite;
+}
+
+@keyframes ch-float {
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@media (width <= 900px) {
+  .ch-art img {
+    width: min(100%, 640px);
+  }
+}
+
+/* Phones: full width under the text. */
+@media (width <= 640px) {
+  .ch-art img {
+    width: 100%;
+  }
 }
 
 @media (width <= 640px) {
   .careers-hero {
     padding-bottom: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-art img {
+    animation: none;
+  }
+}
+
+/* ---------- Careers: Meet the team at XionTech ----------
+   Amber's culture strip mock (2026-10-15). Copy and interest tags on the
+   left; one vertical photo strip on the right that loops upward (the track
+   holds the photo set twice and moves by half). Photos carry no caption; an
+   empty folder leaves plain tinted tiles. Tags alternate navy and
+   amber outlines; the last one is filled navy. */
+.life-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 72px);
+  align-items: center;
+}
+
+.life-copy .lede {
+  margin-top: 20px;
+}
+
+.life-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.life-tag {
+  padding: 8px 12px;
+  border: 1.5px solid var(--color-navy);
+  border-radius: 8px;
+  background: var(--color-white);
+  color: var(--color-navy);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.life-tag:nth-child(even) {
+  border-color: var(--color-amber-deep);
+  color: var(--color-amber-text);
+}
+
+.life-tag:last-child {
+  border-color: var(--color-navy);
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+.life-strip {
+  position: relative;
+  width: min(100%, 430px);
+  height: 520px;
+  margin-left: auto;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.life-strip:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.life-strip::before,
+.life-strip::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  z-index: 2;
+  height: 15%;
+  pointer-events: none;
+}
+
+.life-strip::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--color-page), transparent);
+}
+
+.life-strip::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--color-page), transparent);
+}
+
+.life-track {
+  display: flex;
+  flex-direction: column;
+  animation: life-up 44s linear infinite;
+  will-change: transform;
+}
+
+.life-strip:hover .life-track,
+.life-strip:focus-within .life-track {
+  animation-play-state: paused;
+}
+
+@keyframes life-up {
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.life-set {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0 0 12px;
+  list-style: none;
+}
+
+.life-tile {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  height: 255px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-ice);
+}
+
+.life-tile:nth-child(even) {
+  background: var(--color-amber-pale);
+}
+
+.life-tile:nth-child(3n) {
+  background: var(--color-door-tint);
+}
+
+.life-tile img {
+  object-fit: cover;
+}
+
+/* Empty folder: quieter tints, so the blank tiles do not shout. */
+.life-tile.is-empty:nth-child(even) {
+  background: color-mix(
+    in srgb,
+    var(--color-amber-pale) 45%,
+    var(--color-white)
+  );
+}
+
+@media (width <= 1000px) {
+  .life-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .life-strip {
+    margin-inline: auto;
+  }
+}
+
+@media (width <= 640px) {
+  .life-tags {
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .life-tag {
+    font-size: 0.8125rem;
+  }
+
+  .life-strip {
+    height: 410px;
+  }
+
+  .life-set {
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+
+  .life-tile {
+    height: 230px;
+  }
+}
+
+/* Reduced motion: the strip stands still and scrolls by hand. */
+@media (prefers-reduced-motion: reduce) {
+  .life-track {
+    animation: none;
+  }
+
+  .life-strip {
+    overflow-y: auto;
   }
 }
 
@@ -7695,30 +7976,15 @@ main > .page-scene:last-child > .surface-navy:last-child {
   scroll-margin-top: 16px;
 }
 
-/* ---------- Website copy v3: quieter header CTA ----------
-   "Let's talk" replaces the amber "Book a demo" fill: a hairline navy pill on
-   the white header, filled navy on hover so it still reads as the way in. */
-.nav-talk {
-  border-color: rgb(22 54 99 / 0.35);
-  background: transparent;
-  color: var(--color-navy);
-  box-shadow: none;
-  backdrop-filter: none;
-}
-
-.nav-talk:hover {
-  border-color: var(--color-navy);
-  background: var(--color-navy);
-  color: var(--color-white);
-}
-
 /* ---------- Website copy v3: About hero fills the first screen ----------
    The header pill floats over the hero, so a full small-viewport height puts
    the story card's top edge exactly at the fold. */
 .about-hero {
   display: grid;
   align-content: center;
-  min-height: 100svh;
+  /* Capped so tall or zoomed-out screens see the story card, not a
+     screen-high empty hero (round 19). */
+  min-height: min(100svh, 1040px);
   padding-block: calc(var(--spacing-header-room) + 24px) 48px;
 }
 
@@ -7744,119 +8010,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
   }
 }
 
-/* ---------- Website copy v3: Careers "Life at XionTech" carousel ----------
-   Navy heading at full contrast. The current photo is centred, larger and
-   raised; the neighbours sit smaller at the sides; the rest wait behind. */
-.life-h {
-  color: var(--color-heading);
-  text-align: center;
-}
-
-.life-stage {
-  position: relative;
-  height: clamp(260px, 36vw, 480px);
-  margin-top: 40px;
-}
-
-.life-stage:focus-visible {
-  outline: 3px solid var(--color-navy);
-  outline-offset: 6px;
-  border-radius: 12px;
-}
-
-.life-slide {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(56%, 720px);
-  aspect-ratio: 16 / 10;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 14px 40px rgb(11 33 71 / 0.12);
-  translate: -50% -50%;
-  transition:
-    translate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    scale 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.6s ease;
-}
-
-.life-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.life-slide.current {
-  z-index: 2;
-  box-shadow: 0 28px 64px rgb(11 33 71 / 0.22);
-}
-
-.life-slide.prev,
-.life-slide.next {
-  z-index: 1;
-  scale: 0.78;
-  opacity: 0.7;
-}
-
-.life-slide.prev {
-  translate: -112% -50%;
-}
-
-.life-slide.next {
-  translate: 12% -50%;
-}
-
-.life-slide.away {
-  z-index: 0;
-  scale: 0.6;
-  opacity: 0.01;
-}
-
-.life-cap {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.94);
-  color: var(--color-navy);
-  font-size: var(--text-body-sm);
-  font-weight: 500;
-}
-
-.life-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 28px;
-}
-
-.life-count {
-  min-width: 4ch;
-  color: var(--color-muted);
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-}
-
-@media (width <= 640px) {
-  .life-slide {
-    width: 86%;
-  }
-
-  .life-slide.prev,
-  .life-slide.next {
-    opacity: 0.01;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .life-slide {
-    transition: none;
-  }
-}
-
 /* ---------- Website copy v3: more air between sections ----------
    The shared .sec padding, about 50% more: 96px desktop, 80px tablet, 64px
    phones (tokens stay 64/48 for DESIGN.md). Same layer and selector as the
@@ -7879,30 +8032,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
       padding-block: clamp(40px, 5svh, 64px);
     }
   }
-}
-
-/* ---------- Website copy v3: Life carousel arrows ---------- */
-.life-arrow {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--color-navy);
-  font-size: 1.25rem;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.life-arrow:hover {
-  border-color: var(--color-navy);
-  background: var(--color-navy);
-  color: var(--color-white);
 }
 
 /* ---------- Website copy v3: About page wrapper ----------
@@ -8256,7 +8385,7 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
   }
 }
 
-/* ---------- Website copy v3: Careers "What you'll gain along the way" ----------
+/* ---------- Website copy v3: Careers "Principles we value" (was "What you'll gain along the way") ----------
    From Amber's careers-with-icons mock in XionTech colours: four cards at
    staggered heights (amber tint, blue-grey, ice, deep navy with white text),
    number, title, line and a navy/amber icon at the foot. Two columns on
@@ -8897,6 +9026,29 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
 /* On the heading itself, so an English fallback island (lang="en") keeps its leading. */
 :is(h1, h2, h3, h4):is(:lang(ja), :lang(ko), :lang(zh)) {
   line-height: 1.35;
+}
+
+/* News: the newest story (the lead) shows a larger photo than the other
+   cards (Amber, 2026-10-15): taller, and two columns wide on desktop. The
+   cards sharing its row stretch to match, so the row stays even. */
+#newsGrid > * {
+  display: grid;
+}
+
+#newsGrid .s-lead .scard {
+  min-height: clamp(380px, 34vw, 440px);
+}
+
+@media (width >= 1000px) {
+  #newsGrid .s-lead .scard {
+    min-height: clamp(320px, calc(62svh - 160px), 380px);
+  }
+}
+
+@media (width <= 560px) {
+  #newsGrid .s-lead .scard {
+    min-height: 340px;
+  }
 }
 
 /* ---------- Dark theme (Hoang Vu and Sammy, 2026-10-15; overrides DESIGN.md "no dark mode") ----------

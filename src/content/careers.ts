@@ -9,8 +9,11 @@ export const careersMeta = {
 };
 
 export const careersHero = {
-  title: { first: "Stay curious.", second: "Build what’s next" },
-  lede: "We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI.",
+  title: { first: "Careers at", second: "XionTech" },
+  lede: "We’re bringing together curious minds who love solving problems, exploring new technologies, and building things that make a difference.",
+  prompt: "Ready to build with us?",
+  artAlt:
+    "Three stacked cards illustrating AI-powered engineering, a code chip and connected technology",
 };
 
 export const careersRoles = {
@@ -19,12 +22,32 @@ export const careersRoles = {
   applyLabel: "View and apply",
 };
 
-// Q15: Life photo frames are off the page; the Sanity life-photo code and
-// this copy stay for later (deferred-work.md).
+// "Meet the team at XionTech" (Amber's culture strip mock, 2026-10-15; renamed
+// from "Life at XionTech"): heading, lede, interest tags and one looping photo
+// strip. The photos are whatever images sit in public/careers/life/ (any
+// filename, read by src/lib/careers/life-photo-folder.ts); every one shares
+// the generic `photoAlt`, with no visible caption.
+// Q15: the `frames` placeholders belong to the Sanity life-photo frames,
+// which are off the page and stay for later (deferred-work.md).
 export const careersLife = {
-  heading: "Life at XionTech",
-  prevLabel: "Previous photo",
-  nextLabel: "Next photo",
+  heading: "Meet the team at XionTech",
+  lede: "At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby.",
+  tagsLabel: "Our team interests",
+  tags: [
+    "Badminton regulars",
+    "Football fans",
+    "League of Legends squad",
+    "Karaoke night crew",
+    "After-work catch-ups",
+    "Coffee lovers",
+    "Otaku",
+    "Guitarists",
+    "AI explorers",
+    "Movie buffs",
+    "...and you?",
+  ],
+  stripLabel: "Photos of the XionTech team",
+  photoAlt: "XionTech team moment",
   frames: [
     { slot: "team", placeholder: "[Placeholder] Team photo" },
     { slot: "office", placeholder: "[Placeholder] Office photo" },
@@ -32,10 +55,10 @@ export const careersLife = {
   ] satisfies { slot: "team" | "office" | "event"; placeholder: string }[],
 };
 
-// "What you’ll gain along the way" (website copy v3), from
-// Amber's careers-with-icons mock (copy as given, XionTech spelling).
+// "Principles we value" (retitled from "What you’ll gain along the way",
+// 2026-10-15), from Amber's careers-with-icons mock (XionTech spelling).
 export const careersGain = {
-  heading: "What you’ll gain along the way",
+  heading: "Principles we value",
   intro:
     "Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech.",
   cards: [
@@ -71,8 +94,11 @@ export const careersMetaVi: typeof careersMeta = {
 };
 
 export const careersHeroVi: typeof careersHero = {
-  title: { first: "Luôn tò mò.", second: "Xây dựng điều tiếp theo" },
-  lede: "Chúng tôi đang xây dựng một đội ngũ cho những người học nhanh, đặt câu hỏi hay hơn, thích ứng khi mọi thứ thay đổi và quan tâm đến kết quả, không chỉ nhiệm vụ. Tại đây, bạn sẽ góp phần tiên phong những cách mới để xây dựng phần mềm với AI.",
+  title: { first: "Tuyển dụng tại", second: "XionTech" },
+  lede: "Chúng tôi quy tụ những người tò mò, yêu thích giải quyết vấn đề, khám phá công nghệ mới và tạo ra những điều mang lại khác biệt.",
+  prompt: "Sẵn sàng cùng chúng tôi xây dựng?",
+  artAlt:
+    "Ba tấm thẻ xếp chồng minh họa kỹ thuật ứng dụng AI, một chip mã nguồn và công nghệ kết nối",
 };
 
 export const careersRolesVi: typeof careersRoles = {
@@ -84,9 +110,24 @@ export const careersRolesVi: typeof careersRoles = {
 const [teamFrame, officeFrame, eventFrame] = careersLife.frames;
 
 export const careersLifeVi: typeof careersLife = {
-  heading: "Cuộc sống tại XionTech",
-  prevLabel: "Ảnh trước",
-  nextLabel: "Ảnh tiếp theo",
+  heading: "Gặp gỡ đội ngũ XionTech",
+  lede: "Tại XionTech, chúng tôi nghiêm túc với kỹ thuật, nhưng không quá nghiêm túc với chính mình. Chúng tôi đặt câu hỏi, làm chủ công việc và cùng nhau không ngừng học hỏi. Ngoài giờ làm, chúng tôi mang cùng tinh thần đồng đội ấy ra sân cầu lông, sân bóng, micro karaoke và phòng chờ game.",
+  tagsLabel: "Sở thích của đội ngũ",
+  tags: [
+    "Hội cầu lông",
+    "Fan bóng đá",
+    "Biệt đội Liên Minh Huyền Thoại",
+    "Hội karaoke",
+    "Tụ tập sau giờ làm",
+    "Hội mê cà phê",
+    "Otaku",
+    "Hội guitar",
+    "Người khám phá AI",
+    "Mọt phim",
+    "...còn bạn?",
+  ],
+  stripLabel: "Ảnh đội ngũ XionTech",
+  photoAlt: "Khoảnh khắc của đội ngũ XionTech",
   frames: [
     { ...teamFrame, placeholder: "[Placeholder] Ảnh đội ngũ" },
     { ...officeFrame, placeholder: "[Placeholder] Ảnh văn phòng" },
@@ -95,7 +136,7 @@ export const careersLifeVi: typeof careersLife = {
 };
 
 export const careersGainVi: Localized<typeof careersGain> = {
-  heading: "Những điều bạn nhận được trên hành trình",
+  heading: "Những nguyên tắc chúng tôi coi trọng",
   intro:
     "Nâng cao kỹ năng, khám phá công nghệ mới và làm việc cùng những người luôn hỗ trợ lẫn nhau. Đây là những gì bạn có thể mong đợi tại XionTech.",
   cards: [

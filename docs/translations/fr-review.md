@@ -13,18 +13,18 @@ For a native French reader. Every row is a French string on the site that differ
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/fr.ts` and open a pull request. `Where` is `fr:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 434 strings.
+**Total:** 448 strings.
 
 ## About
 
-37 strings.
+38 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
 | `fr:aboutCta.title` | Let’s build what’s next | Construisons la suite |
 | `fr:aboutCta.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | Vous avez une idée de produit, un défi technologique ou une équipe d’ingénierie à faire grandir ? Voyons ensemble comment transformer vos objectifs en solutions utiles. |
 | `fr:aboutCta.primary.label` | Let’s talk about your project | Parlons de votre projet |
-| `fr:aboutCta.secondary.label`<br>`fr:aboutHero.links[0].label` | Explore our products | Découvrir nos produits |
+| `fr:aboutCta.secondary.label` | Explore our products | Découvrir nos produits |
 | `fr:aboutFaq.title` | Curious about XionTech? | Envie d’en savoir plus sur XionTech ? |
 | `fr:aboutFaq.lede` | A few things you might want to know before working with us. | Quelques points à connaître avant de travailler avec nous. |
 | `fr:aboutFaq.items[0].question` | What does XionTech do? | Que fait XionTech ? |
@@ -41,6 +41,7 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:aboutHero.title.middle` | Technology built with  | Une technologie bâtie avec  |
 | `fr:aboutHero.title.accent` | ownership | responsabilité |
 | `fr:aboutHero.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | Nous réunissons les personnes, les idées et la technologie pour créer des solutions numériques qui comptent. Du développement de produits logiciels à l’exploration de l’innovation propulsée par l’IA, nous associons expertise d’ingénierie, direction expérimentée et un fort sens des responsabilités pour aider les entreprises à avancer. |
+| `fr:aboutHero.links[0].label` | Talk to our team | Parler à notre équipe |
 | `fr:aboutHero.links[1].label` | Explore our services | Découvrir nos services |
 | `fr:aboutMeta.title` | About XionTech \| Get IT Done | À propos de XionTech \| Get IT Done |
 | `fr:aboutMeta.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech est un partenaire d’ingénierie avec des équipes aux États-Unis et au Vietnam. Nous créons des produits logiciels, explorons l’innovation propulsée par l’IA et assumons la réalisation aux côtés de nos clients. |
@@ -97,11 +98,11 @@ For a native French reader. Every row is a French string on the site that differ
 
 ## Careers
 
-24 strings.
+37 strings.
 
 | Where | English | Français |
 | --- | --- | --- |
-| `fr:careersGain.heading` | What you’ll gain along the way | Ce que vous gagnerez en chemin |
+| `fr:careersGain.heading` | Principles we value | Les principes qui nous guident |
 | `fr:careersGain.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | Développez vos compétences, explorez de nouvelles technologies et travaillez avec des personnes qui se soutiennent. Voici ce qui vous attend chez XionTech. |
 | `fr:careersGain.cards[0].title` | Hands-on Learning | Apprendre par la pratique |
 | `fr:careersGain.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | Apprenez en faisant, grâce aux ateliers, au partage de connaissances et à de vrais défis d’ingénierie. |
@@ -111,12 +112,25 @@ For a native French reader. Every row is a French string on the site that differ
 | `fr:careersGain.cards[2].text` | Solve real customer problems and see how your work makes a difference. | Résolvez de vrais problèmes clients et voyez en quoi votre travail fait la différence. |
 | `fr:careersGain.cards[3].title` | Team Experiences | Des moments d’équipe |
 | `fr:careersGain.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | Créez des liens grâce aux activités d’équipe, à l’apprentissage partagé et aux réussites célébrées ensemble. |
-| `fr:careersHero.title.first` | Stay curious. | Restez curieux. |
-| `fr:careersHero.title.second` | Build what’s next | Construisez la suite |
-| `fr:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | Nous construisons une équipe pour celles et ceux qui apprennent vite, posent de meilleures questions, s’adaptent quand les choses changent et se soucient du résultat, pas seulement de la tâche. Ici, vous contribuerez à inventer de nouvelles façons de créer des logiciels avec l’IA. |
-| `fr:careersLife.heading` | Life at XionTech | La vie chez XionTech |
-| `fr:careersLife.prevLabel` | Previous photo | Photo précédente |
-| `fr:careersLife.nextLabel` | Next photo | Photo suivante |
+| `fr:careersHero.title.first` | Careers at | Carrières chez |
+| `fr:careersHero.lede` | We’re bringing together curious minds who love solving problems, exploring new technologies, and building things that make a difference. | Nous réunissons des esprits curieux qui aiment résoudre des problèmes, explorer de nouvelles technologies et créer des choses qui font la différence. |
+| `fr:careersHero.prompt` | Ready to build with us? | Prêt à construire avec nous ? |
+| `fr:careersHero.artAlt` | Three stacked cards illustrating AI-powered engineering, a code chip and connected technology | Trois cartes empilées illustrant l’ingénierie propulsée par l’IA, une puce de code et des technologies connectées |
+| `fr:careersLife.heading` | Meet the team at XionTech | Découvrez l’équipe XionTech |
+| `fr:careersLife.lede` | At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | Chez XionTech, nous prenons l’ingénierie au sérieux, mais pas nous-mêmes. Nous posons des questions, prenons nos responsabilités et continuons d’apprendre ensemble. Après le travail, nous apportons le même esprit d’équipe sur le terrain de badminton, le terrain de foot, au micro du karaoké et dans le salon de jeu. |
+| `fr:careersLife.tagsLabel` | Our team interests | Les passions de notre équipe |
+| `fr:careersLife.tags[0]` | Badminton regulars | Habitués du badminton |
+| `fr:careersLife.tags[1]` | Football fans | Fans de foot |
+| `fr:careersLife.tags[2]` | League of Legends squad | Équipe League of Legends |
+| `fr:careersLife.tags[3]` | Karaoke night crew | Accros du karaoké |
+| `fr:careersLife.tags[4]` | After-work catch-ups | Afterworks entre collègues |
+| `fr:careersLife.tags[5]` | Coffee lovers | Amateurs de café |
+| `fr:careersLife.tags[7]` | Guitarists | Guitaristes |
+| `fr:careersLife.tags[8]` | AI explorers | Explorateurs de l’IA |
+| `fr:careersLife.tags[9]` | Movie buffs | Cinéphiles |
+| `fr:careersLife.tags[10]` | ...and you? | ...et vous ? |
+| `fr:careersLife.stripLabel` | Photos of the XionTech team | Photos de l’équipe XionTech |
+| `fr:careersLife.photoAlt` | XionTech team moment | Un moment de l’équipe XionTech |
 | `fr:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] Photo d’équipe |
 | `fr:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] Photo des bureaux |
 | `fr:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] Photo d’événement |

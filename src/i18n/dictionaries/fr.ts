@@ -318,7 +318,7 @@ export const fr: Dictionaries = {
     },
     text: "Nous réunissons les personnes, les idées et la technologie pour créer des solutions numériques qui comptent. Du développement de produits logiciels à l’exploration de l’innovation propulsée par l’IA, nous associons expertise d’ingénierie, direction expérimentée et un fort sens des responsabilités pour aider les entreprises à avancer.",
     links: [
-      { href: aboutHero.links[0].href, label: "Découvrir nos produits" },
+      { href: aboutHero.links[0].href, label: "Parler à notre équipe" },
       { href: aboutHero.links[1].href, label: "Découvrir nos services" },
     ],
   },
@@ -393,7 +393,7 @@ export const fr: Dictionaries = {
   },
   appTaglines: APP_TAGLINES,
   careersGain: {
-    heading: "Ce que vous gagnerez en chemin",
+    heading: "Les principes qui nous guident",
     intro:
       "Développez vos compétences, explorez de nouvelles technologies et travaillez avec des personnes qui se soutiennent. Voici ce qui vous attend chez XionTech.",
     cards: [
@@ -420,16 +420,31 @@ export const fr: Dictionaries = {
     ],
   },
   careersHero: {
-    title: {
-      first: "Restez curieux.",
-      second: "Construisez la suite",
-    },
-    lede: "Nous construisons une équipe pour celles et ceux qui apprennent vite, posent de meilleures questions, s’adaptent quand les choses changent et se soucient du résultat, pas seulement de la tâche. Ici, vous contribuerez à inventer de nouvelles façons de créer des logiciels avec l’IA.",
+    title: { first: "Carrières chez", second: "XionTech" },
+    lede: "Nous réunissons des esprits curieux qui aiment résoudre des problèmes, explorer de nouvelles technologies et créer des choses qui font la différence.",
+    prompt: "Prêt à construire avec nous ?",
+    artAlt:
+      "Trois cartes empilées illustrant l’ingénierie propulsée par l’IA, une puce de code et des technologies connectées",
   },
   careersLife: {
-    heading: "La vie chez XionTech",
-    prevLabel: "Photo précédente",
-    nextLabel: "Photo suivante",
+    heading: "Découvrez l’équipe XionTech",
+    lede: "Chez XionTech, nous prenons l’ingénierie au sérieux, mais pas nous-mêmes. Nous posons des questions, prenons nos responsabilités et continuons d’apprendre ensemble. Après le travail, nous apportons le même esprit d’équipe sur le terrain de badminton, le terrain de foot, au micro du karaoké et dans le salon de jeu.",
+    tagsLabel: "Les passions de notre équipe",
+    tags: [
+      "Habitués du badminton",
+      "Fans de foot",
+      "Équipe League of Legends",
+      "Accros du karaoké",
+      "Afterworks entre collègues",
+      "Amateurs de café",
+      "Otaku",
+      "Guitaristes",
+      "Explorateurs de l’IA",
+      "Cinéphiles",
+      "...et vous ?",
+    ],
+    stripLabel: "Photos de l’équipe XionTech",
+    photoAlt: "Un moment de l’équipe XionTech",
     frames: [
       "[Placeholder] Photo d’équipe",
       "[Placeholder] Photo des bureaux",

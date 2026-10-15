@@ -13,7 +13,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 438 strings, 261 AI and 177 prototype.
+**Total:** 452 strings, 275 AI and 177 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -305,7 +305,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## About
 
-31 AI, 6 prototype.
+32 AI, 6 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -315,6 +315,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `about:aboutHeroVi.title.middle` | Technology built with  | Công nghệ xây dựng bằng tinh thần  |
 | AI | `about:aboutHeroVi.title.accent` | ownership | làm chủ |
 | AI | `about:aboutHeroVi.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | Chúng tôi kết nối con người, ý tưởng và công nghệ để xây dựng những giải pháp số có ý nghĩa. Từ phát triển sản phẩm phần mềm đến khám phá đổi mới sáng tạo ứng dụng AI, chúng tôi kết hợp chuyên môn kỹ thuật, đội ngũ lãnh đạo giàu kinh nghiệm và tinh thần làm chủ mạnh mẽ để giúp doanh nghiệp tiến về phía trước. |
+| AI | `about:aboutHeroVi.links[0].label` | Talk to our team | Trò chuyện với đội ngũ |
 | AI | `about:aboutStoryVi.title.lead` | Inspired by a mountain. | Khởi nguồn từ một ngọn núi. |
 | AI | `about:aboutStoryVi.title.middle` | Driven by  | Dẫn lối bởi  |
 | AI | `about:aboutStoryVi.title.highlight` | purpose | mục đích |
@@ -340,12 +341,12 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `about:aboutCtaVi.title` | Let’s build what’s next | Cùng xây dựng điều tiếp theo |
 | AI | `about:aboutCtaVi.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | Bạn có ý tưởng sản phẩm, một bài toán công nghệ hay một đội ngũ kỹ thuật cần mở rộng? Hãy cùng tìm cách biến mục tiêu của bạn thành những giải pháp có ý nghĩa. |
 | AI | `about:aboutCtaVi.primary.label` | Let’s talk about your project | Trao đổi về dự án của bạn |
-| Prototype | `about:aboutHeroVi.links[0].label`<br>`about:aboutCtaVi.secondary.label` | Explore our products | Khám phá sản phẩm |
 | Prototype | `about:aboutHeroVi.links[1].label` | Explore our services | Khám phá dịch vụ |
 | Prototype | `about:aboutFaqVi.items[0].question` | What does XionTech do? | XionTech làm gì? |
 | Prototype | `about:aboutFaqVi.items[1].question` | Which industries do you work with? | Các bạn làm việc với những lĩnh vực nào? |
 | Prototype | `about:aboutOfficesVi.locations[1].eyebrow` | Vietnam Delivery Center | Trung tâm Phát triển Việt Nam |
 | Prototype | `about:aboutOfficesVi.locations[1].city` | Ho Chi Minh City | TP. Hồ Chí Minh |
+| Prototype | `about:aboutCtaVi.secondary.label` | Explore our products | Khám phá sản phẩm |
 
 ## Offices (About, Contact, footer)
 
@@ -365,24 +366,37 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Careers
 
-23 AI, 1 prototype.
+36 AI, 1 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
 | AI | `careers:careersMetaVi.title` | Careers at XionTech \| Software Jobs in Ho Chi Minh City | Tuyển dụng tại XionTech \| Việc làm phần mềm tại TP. Hồ Chí Minh |
 | AI | `careers:careersMetaVi.description` | Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture. | Gia nhập XionTech tại TP. Hồ Chí Minh. Làm việc với các nền tảng cho trường học và sản phẩm của khách hàng cùng AI/ML, AI tạo sinh, cloud và phương pháp agile, trong một văn hóa lấy con người làm trung tâm. |
-| AI | `careers:careersHeroVi.title.first` | Stay curious. | Luôn tò mò. |
-| AI | `careers:careersHeroVi.title.second` | Build what’s next | Xây dựng điều tiếp theo |
-| AI | `careers:careersHeroVi.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | Chúng tôi đang xây dựng một đội ngũ cho những người học nhanh, đặt câu hỏi hay hơn, thích ứng khi mọi thứ thay đổi và quan tâm đến kết quả, không chỉ nhiệm vụ. Tại đây, bạn sẽ góp phần tiên phong những cách mới để xây dựng phần mềm với AI. |
+| AI | `careers:careersHeroVi.title.first` | Careers at | Tuyển dụng tại |
+| AI | `careers:careersHeroVi.lede` | We’re bringing together curious minds who love solving problems, exploring new technologies, and building things that make a difference. | Chúng tôi quy tụ những người tò mò, yêu thích giải quyết vấn đề, khám phá công nghệ mới và tạo ra những điều mang lại khác biệt. |
+| AI | `careers:careersHeroVi.prompt` | Ready to build with us? | Sẵn sàng cùng chúng tôi xây dựng? |
+| AI | `careers:careersHeroVi.artAlt` | Three stacked cards illustrating AI-powered engineering, a code chip and connected technology | Ba tấm thẻ xếp chồng minh họa kỹ thuật ứng dụng AI, một chip mã nguồn và công nghệ kết nối |
 | AI | `careers:careersRolesVi.heading` | Find your next challenge | Tìm thử thách tiếp theo của bạn |
 | AI | `careers:careersRolesVi.emptyText` | No open roles right now. | Hiện chưa có vị trí nào đang tuyển. |
-| AI | `careers:careersLifeVi.heading` | Life at XionTech | Cuộc sống tại XionTech |
-| AI | `careers:careersLifeVi.prevLabel` | Previous photo | Ảnh trước |
-| AI | `careers:careersLifeVi.nextLabel` | Next photo | Ảnh tiếp theo |
+| AI | `careers:careersLifeVi.heading` | Meet the team at XionTech | Gặp gỡ đội ngũ XionTech |
+| AI | `careers:careersLifeVi.lede` | At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | Tại XionTech, chúng tôi nghiêm túc với kỹ thuật, nhưng không quá nghiêm túc với chính mình. Chúng tôi đặt câu hỏi, làm chủ công việc và cùng nhau không ngừng học hỏi. Ngoài giờ làm, chúng tôi mang cùng tinh thần đồng đội ấy ra sân cầu lông, sân bóng, micro karaoke và phòng chờ game. |
+| AI | `careers:careersLifeVi.tagsLabel` | Our team interests | Sở thích của đội ngũ |
+| AI | `careers:careersLifeVi.tags[0]` | Badminton regulars | Hội cầu lông |
+| AI | `careers:careersLifeVi.tags[1]` | Football fans | Fan bóng đá |
+| AI | `careers:careersLifeVi.tags[2]` | League of Legends squad | Biệt đội Liên Minh Huyền Thoại |
+| AI | `careers:careersLifeVi.tags[3]` | Karaoke night crew | Hội karaoke |
+| AI | `careers:careersLifeVi.tags[4]` | After-work catch-ups | Tụ tập sau giờ làm |
+| AI | `careers:careersLifeVi.tags[5]` | Coffee lovers | Hội mê cà phê |
+| AI | `careers:careersLifeVi.tags[7]` | Guitarists | Hội guitar |
+| AI | `careers:careersLifeVi.tags[8]` | AI explorers | Người khám phá AI |
+| AI | `careers:careersLifeVi.tags[9]` | Movie buffs | Mọt phim |
+| AI | `careers:careersLifeVi.tags[10]` | ...and you? | ...còn bạn? |
+| AI | `careers:careersLifeVi.stripLabel` | Photos of the XionTech team | Ảnh đội ngũ XionTech |
+| AI | `careers:careersLifeVi.photoAlt` | XionTech team moment | Khoảnh khắc của đội ngũ XionTech |
 | AI | `careers:careersLifeVi.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] Ảnh đội ngũ |
 | AI | `careers:careersLifeVi.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] Ảnh văn phòng |
 | AI | `careers:careersLifeVi.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] Ảnh sự kiện |
-| AI | `careers:careersGainVi.heading` | What you’ll gain along the way | Những điều bạn nhận được trên hành trình |
+| AI | `careers:careersGainVi.heading` | Principles we value | Những nguyên tắc chúng tôi coi trọng |
 | AI | `careers:careersGainVi.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | Nâng cao kỹ năng, khám phá công nghệ mới và làm việc cùng những người luôn hỗ trợ lẫn nhau. Đây là những gì bạn có thể mong đợi tại XionTech. |
 | AI | `careers:careersGainVi.cards[0].title` | Hands-on Learning | Học qua thực hành |
 | AI | `careers:careersGainVi.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | Học bằng cách làm qua các buổi workshop, chia sẻ kiến thức và những thử thách kỹ thuật thực tế. |
