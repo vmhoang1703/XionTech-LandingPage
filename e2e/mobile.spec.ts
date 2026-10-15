@@ -95,6 +95,7 @@ test.describe("mobile", { tag: "@a11y" }, () => {
     const first = page.locator(":focus");
     await expect(first).toHaveAttribute("aria-invalid", "true");
     const id = await first.getAttribute("id");
+    if (!id) throw new Error("the focused field has no id");
     await expectBelowHeader(page, form.locator(`label[for="${id}"]`));
   });
 });

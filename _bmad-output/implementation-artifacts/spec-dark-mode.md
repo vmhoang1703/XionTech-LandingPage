@@ -2,13 +2,15 @@
 title: 'Dark mode for the whole site'
 type: 'feature'
 created: '2026-10-15'
-status: 'in-review'
+status: 'done'
 route: 'dispatch'
 review_loop_iteration: 0
 baseline_commit: '15ed030922de8d6eb666ad41e2a98a7b5f03c569'
 context:
   - '{project-root}/AGENTS.md'
 ---
+
+> **Removed 2026-10-15.** Shipped in PR #123, then removed at Hoang Vu's request on branch `fix/mobile-retest` ("remove the dark mode for me"). The code, styles, labels and tests are gone and DESIGN.md says "There is no dark mode" again. This spec is kept as history.
 
 <frozen-after-approval reason="human-owned intent — do not modify unless human renegotiates">
 

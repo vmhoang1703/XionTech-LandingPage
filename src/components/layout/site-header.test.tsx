@@ -31,7 +31,6 @@ describe("SiteHeader", () => {
     const demo = screen.getByRole("link", { name: "Let's talk" });
     expect(demo.getAttribute("href")).toBe("/en#contact");
     expect(demo.className).toContain("btn btn-primary btn-sm nav-talk");
-    // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     // Below 1080px the logo pushes the rest to the right edge.
     expect(demo.className).not.toContain("ml-auto");
     expect(
