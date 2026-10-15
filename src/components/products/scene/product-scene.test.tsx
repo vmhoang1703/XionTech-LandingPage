@@ -77,24 +77,28 @@ describe("ProductScene", () => {
   it("shows only the screen of the product it stands", () => {
     const { root } = setup(0, "parent-hub");
     expect(root.querySelectorAll(".dv-screen")).toHaveLength(1);
-    expect(root.querySelector(".ws-name")?.textContent).toBe("Parent Hub");
+    expect(
+      Array.from(root.querySelectorAll("img.ws-image")).map((img) =>
+        img.getAttribute("src"),
+      ),
+    ).toEqual([1, 2, 3, 4].map((n) => `/products/parent-hub/${n}.webp`));
   });
 
   it("gives a slab thickness: flat copies behind its front face, farthest first, the face painted last", () => {
     const { root } = setup(0, "parent-hub");
     const body = root.querySelector(".dv-body") as HTMLElement;
     const layers = Array.from(copies(root, ".dv-body") ?? []);
-    expect(layers).toHaveLength(12);
+    expect(layers).toHaveLength(16);
     expect(
       layers.map((el) => (el as HTMLElement).style.getPropertyValue("--k")),
-    ).toEqual(layers.map((_, i) => String(12 - i)));
+    ).toEqual(layers.map((_, i) => String(16 - i)));
     expect(body.lastElementChild?.className).toBe("dv-face");
   });
 
   it("uses half the layers on a small screen", () => {
     smallScreen = true;
     const { root } = setup(0, "parent-hub");
-    expect(copies(root, ".dv-body")).toHaveLength(6);
+    expect(copies(root, ".dv-body")).toHaveLength(8);
   });
 
   it("lays the road with a pin for every stop, the shown stop lit and in front of the device", () => {

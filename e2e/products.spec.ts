@@ -526,14 +526,16 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
     // placeholder wireframe, its name and its real feature names.
     await expect(scene.locator('.dv[data-kind="laptop"]')).toHaveCount(1);
     await expect(scene.locator(".dv-lid .dv-screen")).toHaveCount(1);
-    await expect(scene.locator(".ws-tag")).toHaveText("[Placeholder] screen");
-    await expect(scene.locator(".ws-name")).toHaveText("Staff Hub");
-    await expect(scene.locator(".ws-label")).toHaveText([
-      "Attendance and student records",
-      "Classes, timetables and grades",
-      "Messages to parents through Parent Hub",
-      "Leader dashboards for today's priorities",
-    ]);
+    // The real Staff Hub screenshots, one showing, decoration only.
+    const shots = scene.locator(".dv-lid img.ws-image");
+    await expect(shots).toHaveCount(4);
+    await expect(shots.first()).toHaveAttribute(
+      "src",
+      "/products/staff-hub/1.webp",
+    );
+    await expect(shots.first()).toHaveAttribute("alt", "");
+    await expect(scene.locator(".ws-image[data-on]")).toHaveCount(1);
+    await expect(scene.locator(".ws-tag")).toHaveCount(0);
     await expect(scene.locator("button, a, [tabindex]")).toHaveCount(0);
     await expect(card.getByRole("heading", { level: 2 })).toHaveText(
       "Staff Hub",
@@ -668,8 +670,10 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
         ),
       ).toBe("");
       // Still a stage: the device stands, its screen shows, and so does the card.
-      await expect(scene.locator(".dv .ws")).toHaveCount(1);
-      await expect(scene.locator(".dv .ws")).toHaveCSS("opacity", "1");
+      // Still: the first screenshot shows, and stays.
+      const first = scene.locator(".dv img.ws-image").first();
+      await expect(first).toHaveAttribute("data-on", "true");
+      await expect(first).toHaveCSS("opacity", "1");
     });
   });
 

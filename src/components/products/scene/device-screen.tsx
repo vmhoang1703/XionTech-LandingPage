@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useLocalized } from "@/components/layout/locale-link";
 import { appById } from "@/content/apps";
 import {
@@ -9,8 +9,8 @@ import {
 } from "@/content/products";
 import { SCREENSHOTS } from "./screenshots";
 
-// What a device shows on its screen: a real screenshot when one has been added
-// (screenshots.ts), else a wireframe. The wireframe is a stand-in made of
+// What a device shows on its screen: the product's real screenshots, one after
+// another (screenshots.ts), else a wireframe. The wireframe is a stand-in made of
 // skeleton bars and blocks: it invents no figures, names or data. Its only
 // words are the product's own name and its real feature names, and a tag that
 // says it is a placeholder.
@@ -27,33 +27,67 @@ export const DEVICE_OF: Readonly<Record<RoadApp, DeviceKind>> = {
   "ai-tutor": "monitor",
 };
 
+/** How long each screenshot shows before the next fades in. */
+export const SLIDE_MS = 3200;
+
 export function DeviceScreen({
   app,
-  image = SCREENSHOTS[app],
-}: Readonly<{ app: RoadApp; image?: string }>) {
+  images = SCREENSHOTS[app],
+  play = false,
+}: Readonly<{ app: RoadApp; images?: readonly string[]; play?: boolean }>) {
   const features = useLocalized("productDetails", {
     en: productDetails,
     vi: productDetailsVi,
   })[app].features.map((feature) => feature.title);
   const name = appById(app).shortName;
-  if (image) {
-    // A screenshot is sized for its device by whoever adds it: no resizing.
-    return (
-      <Image
-        className="ws-image"
-        src={image}
-        alt=""
-        fill
-        sizes="520px"
-        unoptimized
-        draggable={false}
-      />
-    );
-  }
+  if (images?.length) return <Slides images={images} play={play} />;
   const kind = DEVICE_OF[app];
   if (kind === "phone") return <PhoneWire name={name} features={features} />;
   if (kind === "laptop") return <DashWire name={name} features={features} />;
   return <LessonWire name={name} features={features} />;
+}
+
+// The screenshots stacked, the current one shown; with motion on, the next
+// fades in every SLIDE_MS (opacity only). Still (reduced motion, a saved
+// Pause): the first screenshot only. The dots say which one is showing.
+function Slides({
+  images,
+  play,
+}: Readonly<{ images: readonly string[]; play: boolean }>) {
+  const [shown, setShown] = useState(0);
+  useEffect(() => {
+    if (!play || images.length < 2) return;
+    const timer = window.setInterval(
+      () => setShown((i) => (i + 1) % images.length),
+      SLIDE_MS,
+    );
+    return () => window.clearInterval(timer);
+  }, [play, images.length]);
+  return (
+    <div className="ws-slides">
+      {images.map((src, i) => (
+        // Decoration inside the hidden scene: the card holds the real text.
+        <Image
+          key={src}
+          className="ws-image"
+          src={src}
+          alt=""
+          fill
+          sizes="640px"
+          unoptimized
+          draggable={false}
+          data-on={i === shown ? "true" : undefined}
+        />
+      ))}
+      {images.length > 1 ? (
+        <span className="ws-dots">
+          {images.map((src, i) => (
+            <i key={src} data-on={i === shown ? "true" : undefined} />
+          ))}
+        </span>
+      ) : null}
+    </div>
+  );
 }
 
 type Wire = Readonly<{ name: string; features: readonly string[] }>;

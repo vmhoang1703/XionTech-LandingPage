@@ -3,7 +3,7 @@ import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { APPS, appById } from "@/content/apps";
-import { productRoad } from "@/content/products";
+import { productRoad, productRoadVi } from "@/content/products";
 import { siteFooter } from "@/content/site-footer";
 import { globalsCss } from "@/test-utils/css-classes";
 import { RoadMap } from "./road-map";
@@ -191,9 +191,16 @@ describe("RoadMap draw-in", () => {
     // are not observed.
     expect(first.dataset.in).toBeUndefined();
     expect(second.dataset.in).toBeUndefined();
+    const [start, finish] = Array.from(
+      container.querySelectorAll<HTMLElement>(".rm-end"),
+    );
+    expect(start.dataset.in).toBeUndefined();
     act(() => vi.advanceTimersByTime(300));
     expect(first.dataset.in).toBe("true");
     expect(second.dataset.in).toBe("true");
+    // Start's half bend draws in with stop 1, Finish's with the last stop.
+    expect(start.dataset.in).toBe("true");
+    expect(finish.dataset.in).toBeUndefined();
     expect(observed).not.toContain(first);
     expect(observed).not.toContain(second);
     expect(observed).toHaveLength(COUNT - 2);
@@ -208,6 +215,7 @@ describe("RoadMap draw-in", () => {
 
     act(() => intersect(true, third));
     expect(third.dataset.in).toBe("true");
+    expect(finish.dataset.in).toBe("true");
     expect(observed).not.toContain(third);
 
     act(() => intersect(true, third));
@@ -423,11 +431,34 @@ describe("RoadMap selection", () => {
       .map((stop, i) => (stop.dataset.selected === "true" ? i : -1))
       .filter((i) => i >= 0);
 
-  it("has no Start or Finish badge on the road", () => {
+  it("marks the road's Start before the first stop and its Finish after the last", () => {
     const { container } = render(<RoadMap />);
-    expect(container.querySelector(".rm-end")).toBeNull();
-    expect(container.textContent).not.toContain(productRoad.start);
-    expect(container.textContent).not.toContain(productRoad.finish);
+    const ends = Array.from(container.querySelectorAll<HTMLElement>(".rm-end"));
+    expect(ends.map((end) => end.dataset.end)).toEqual(["start", "finish"]);
+    expect(ends.map((end) => end.textContent)).toEqual([
+      productRoad.start,
+      productRoad.finish,
+    ]);
+    // Decoration: the stops carry the content.
+    for (const end of ends) {
+      expect(end.getAttribute("aria-hidden")).toBe("true");
+    }
+    const list = container.querySelector(".rm-stops") as HTMLElement;
+    expect(ends[0].nextElementSibling).toBe(list);
+    expect(list.nextElementSibling).toBe(ends[1]);
+  });
+
+  it("speaks Start and Finish in Vietnamese on vi", () => {
+    const { container } = render(
+      <LocaleProvider locale="vi">
+        <RoadMap />
+      </LocaleProvider>,
+    );
+    expect(
+      Array.from(container.querySelectorAll(".rm-end-label")).map(
+        (el) => el.textContent,
+      ),
+    ).toEqual([productRoadVi.start, productRoadVi.finish]);
   });
 
   it("highlights no pin until a card is clicked, then only that one", () => {
@@ -462,7 +493,6 @@ describe("RoadMap selection", () => {
     expect(amberPins.map((r) => r.selector)).toEqual([
       '.rm-stop[data-selected="true"] .rm-pin',
     ]);
-    expect(rules.some((r) => r.selector.includes(".rm-end"))).toBe(false);
   });
 });
 
@@ -596,12 +626,16 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(container.querySelector(".rm-stage")).not.toBeNull();
     expect(active(container)).toEqual([0]);
     expect(selected(container)).toEqual([0]);
+    nextFrame();
+    nextFrame();
     expect(share(container)).toBeGreaterThan(0);
   });
 
   it("steps through the stops as the page scrolls, and back", () => {
     tourAt(0);
     const { container } = render(<RoadMap />);
+    nextFrame();
+    nextFrame();
     const shares: number[] = [];
     for (let i = 0; i < COUNT; i += 1) {
       scrollTo(i * STEP + STEP / 2);
@@ -688,17 +722,35 @@ describe("RoadMap scroll tour (wide)", () => {
     expect(scrolled).not.toHaveBeenCalled();
   });
 
-  it("snaps the road to stop 1, and moves it only from a frame later", () => {
+  it("paints the road empty at Start, then draws it to stop 1 a frame later", () => {
     tourAt(0);
     const { container, unmount } = render(<RoadMap />);
     expect(roadmap(container).dataset.tour).toBe("on");
     expect(roadmap(container).dataset.road).toBeUndefined();
-    // One frame paints the road at stop 1 with no transition.
+    expect(share(container)).toBe(0);
+    // One frame paints the empty road with no transition.
     nextFrame();
     expect(roadmap(container).dataset.road).toBeUndefined();
     nextFrame();
     expect(roadmap(container).dataset.road).toBe("moving");
+    expect(share(container)).toBeGreaterThan(0);
     unmount();
+  });
+
+  it("draws the road on to Finish past the last stop's anchor, and back", () => {
+    tourAt(0);
+    const { container } = render(<RoadMap />);
+    nextFrame();
+    nextFrame();
+    // The last stop's anchor (mid-step): the road ends at the stop.
+    scrollTo((COUNT - 0.5) * STEP);
+    expect(active(container)).toEqual([COUNT - 1]);
+    expect(share(container)).toBeLessThan(1);
+    scrollTo((COUNT - 0.2) * STEP);
+    expect(active(container)).toEqual([COUNT - 1]);
+    expect(share(container)).toBe(1);
+    scrollTo((COUNT - 0.5) * STEP);
+    expect(share(container)).toBeLessThan(1);
   });
 
   it("cancels the pending frame when unmounted first", () => {
@@ -840,7 +892,7 @@ describe("RoadMap scroll tour (wide)", () => {
     // The first tour frame snaps the road to stop 1; only then it moves.
     expect(rule('.rm[data-tour="on"] .rm-draw')).not.toMatch(/transition/);
     expect(rule('.rm[data-tour="on"][data-road="moving"] .rm-draw')).toMatch(
-      /transition: stroke-dashoffset 400ms var\(--ease-brand\)/,
+      /transition: stroke-dashoffset 700ms var\(--ease-brand\)/,
     );
     // The track is one step per stop: the component sets the count.
     expect(rule('.rm[data-tour="on"]')).toMatch(
