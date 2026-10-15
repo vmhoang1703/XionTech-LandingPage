@@ -163,6 +163,38 @@ describe("SwipeRows", () => {
     expect(row.scrollTo).toHaveBeenCalledWith({ left: 310, behavior: "auto" });
   });
 
+  it("lets a keyboard reach a row with nothing to focus inside, until it is torn down", () => {
+    const row = mountRow();
+    const { unmount } = render(<SwipeRows />);
+    expect(row.getAttribute("tabindex")).toBe("0");
+    unmount();
+    expect(row.hasAttribute("tabindex")).toBe(false);
+  });
+
+  it("counts a tabindex=-1 child as nothing to focus, and keeps a row's own tabindex", () => {
+    const row = mountRow();
+    row.firstElementChild?.setAttribute("tabindex", "-1");
+    const { unmount } = render(<SwipeRows />);
+    expect(row.getAttribute("tabindex")).toBe("0");
+    unmount();
+    const own = mountRow();
+    own.setAttribute("tabindex", "-1");
+    const second = render(<SwipeRows />);
+    expect(own.getAttribute("tabindex")).toBe("-1");
+    second.unmount();
+    expect(own.getAttribute("tabindex")).toBe("-1");
+  });
+
+  it("leaves a row whose cards hold links out of the tab order", () => {
+    const row = mountRow();
+    row.firstElementChild?.insertAdjacentHTML(
+      "beforeend",
+      '<a href="/x">x</a>',
+    );
+    render(<SwipeRows />);
+    expect(row.hasAttribute("tabindex")).toBe(false);
+  });
+
   it("skips the 4-D track and nodes", () => {
     const row = mountRow(3);
     const track = document.createElement("li");

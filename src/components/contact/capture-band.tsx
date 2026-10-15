@@ -22,6 +22,7 @@ import {
   CONTACT_STRINGS_VI,
   localizeError,
 } from "./contact-strings";
+import { focusField } from "@/lib/a11y/focus-field";
 
 /** Plain looks have no corner rings and an amber button (E-A4). */
 const LOOK_SURFACES = {
@@ -67,7 +68,7 @@ export function CaptureBand({
     const value = email.trim();
     if (!isValidEmail(value) || value.length > EMAIL_MAX_LENGTH) {
       setInvalid(true);
-      emailRef.current?.focus();
+      focusField(emailRef.current);
       return;
     }
     rememberCapturedEmail(value);

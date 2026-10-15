@@ -907,7 +907,6 @@ export const ja: Dictionaries = {
       cityHcmc: "ホーチミン市",
     },
     language: { label: "言語" },
-    theme: { label: "ダークモード" },
     backToTop: { label: "ページの先頭へ" },
     footer: {
       blurb:

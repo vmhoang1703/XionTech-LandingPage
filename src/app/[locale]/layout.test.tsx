@@ -45,16 +45,6 @@ const { LocaleLink, useLocalized } =
   await import("@/components/layout/locale-link");
 const { homeHero, homeHeroVi } = await import("@/content/home");
 const { DICTIONARIES } = await import("@/i18n/dictionaries");
-const { THEME_SCRIPT } = await import("@/lib/theme/theme-preference");
-
-type HtmlChildren = [
-  ReactElement<{ children: ReactElement<{ dangerouslySetInnerHTML: object }> }>,
-  ReactElement<{ children: ReactElement[] }>,
-];
-
-function bodyOf(html: ReactElement<{ children: HtmlChildren }>) {
-  return html.props.children[1];
-}
 
 function params(locale: string) {
   return { params: Promise.resolve({ locale }) };
@@ -106,33 +96,14 @@ describe("RootLayout", () => {
     expect(html.props["data-scroll-behavior"]).toBe("smooth");
   });
 
-  it("puts the theme script in the head and lets the html root differ from the server markup", async () => {
-    const html = (await RootLayout({
-      children: <p>child</p>,
-      ...params("en"),
-    } as LayoutProps<"/[locale]">)) as ReactElement<{
-      suppressHydrationWarning: boolean;
-      children: HtmlChildren;
-    }>;
-    const [head, body] = html.props.children;
-
-    expect(head.type).toBe("head");
-    expect(head.props.children.type).toBe("script");
-    expect(head.props.children.props.dangerouslySetInnerHTML).toEqual({
-      __html: THEME_SCRIPT,
-    });
-    expect(body.type).toBe("body");
-    expect(html.props.suppressHydrationWarning).toBe(true);
-  });
-
   it("renders the header before a focusable main#main that wraps the page", async () => {
     const html = (await RootLayout({
       children: <p>child</p>,
       ...params("en"),
     } as LayoutProps<"/[locale]">)) as ReactElement<{
-      children: HtmlChildren;
+      children: ReactElement<{ children: ReactElement[] }>;
     }>;
-    const { container } = render(bodyOf(html).props.children);
+    const { container } = render(html.props.children.props.children);
 
     const header = container.querySelector("header");
     const main = container.querySelector("main#main");
@@ -151,9 +122,9 @@ describe("RootLayout", () => {
       children: <LocaleLink href="/products">products</LocaleLink>,
       ...params("vi"),
     } as LayoutProps<"/[locale]">)) as ReactElement<{
-      children: HtmlChildren;
+      children: ReactElement<{ children: ReactElement[] }>;
     }>;
-    const { getByRole } = render(bodyOf(html).props.children);
+    const { getByRole } = render(html.props.children.props.children);
     expect(getByRole("link", { name: "products" }).getAttribute("href")).toBe(
       "/vi/products",
     );
@@ -164,9 +135,9 @@ describe("RootLayout", () => {
       children: <p>child</p>,
       ...params("en"),
     } as LayoutProps<"/[locale]">)) as ReactElement<{
-      children: HtmlChildren;
+      children: ReactElement<{ children: ReactElement[] }>;
     }>;
-    const { container } = render(bodyOf(html).props.children);
+    const { container } = render(html.props.children.props.children);
 
     const main = container.querySelector("main#main");
     const footer = container.querySelector("footer");
@@ -184,9 +155,9 @@ describe("RootLayout", () => {
       children: <p>child</p>,
       ...params(locale),
     } as LayoutProps<"/[locale]">)) as ReactElement<{
-      children: HtmlChildren;
+      children: ReactElement<{ children: ReactElement[] }>;
     }>;
-    const { container } = render(bodyOf(html).props.children);
+    const { container } = render(html.props.children.props.children);
     return container.querySelector("main#main");
   }
 
@@ -275,9 +246,9 @@ describe("RootLayout client strings", () => {
         children: <HeroProbe />,
         ...params(locale),
       } as LayoutProps<"/[locale]">)) as ReactElement<{
-        children: HtmlChildren;
+        children: ReactElement<{ children: ReactElement[] }>;
       }>;
-      const { container } = render(bodyOf(html).props.children);
+      const { container } = render(html.props.children.props.children);
       const expected = DICTIONARIES[locale]?.homeHero;
       expect(expected).toBeDefined();
       expect(container.querySelector("output")?.textContent).toBe(

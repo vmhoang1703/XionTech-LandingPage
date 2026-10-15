@@ -35,6 +35,7 @@ import {
   type DemoFormField,
 } from "./post-submission";
 import { SummitMark } from "./summit-mark";
+import { focusField } from "@/lib/a11y/focus-field";
 
 const TYPES: readonly RequestKind[] = ["demo", "project"];
 
@@ -228,7 +229,7 @@ export function ContactForm() {
       messages: invalid.map((field) => found[field] ?? ""),
     }));
     if (invalid.length === 0) return false;
-    form.querySelector<HTMLElement>(`#${FIELD_IDS[invalid[0]]}`)?.focus();
+    focusField(form.querySelector<HTMLElement>(`#${FIELD_IDS[invalid[0]]}`));
     return true;
   }
 

@@ -26,6 +26,7 @@ import {
   validateApplication,
 } from "@/lib/careers/application-rules";
 import { EMAIL_MAX_LENGTH, TEXT_MAX_LENGTH } from "@/lib/contact/contact-rules";
+import { focusField } from "@/lib/a11y/focus-field";
 
 type JobField = "name" | "email" | "cv" | "note";
 type JobErrors = Partial<Record<JobField, string>>;
@@ -122,7 +123,7 @@ export function JobApplicationForm({ slug }: Readonly<{ slug: string }>) {
     announce(found);
     const first = FIELD_ORDER.find((field) => found[field]);
     if (!first) return false;
-    form.querySelector<HTMLElement>(`#${FIELD_IDS[first]}`)?.focus();
+    focusField(form.querySelector<HTMLElement>(`#${FIELD_IDS[first]}`));
     return true;
   }
 

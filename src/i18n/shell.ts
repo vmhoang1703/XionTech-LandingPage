@@ -29,8 +29,6 @@ export interface ShellDictionary {
     cityHcmc: string;
   };
   language: { label: string };
-  // The dark-mode toggle (a pressed/not-pressed button, so one label).
-  theme: { label: string };
   backToTop: { label: string };
   footer: {
     blurb: string;
@@ -70,7 +68,6 @@ const en: ShellDictionary = {
     cityHcmc: "Ho Chi Minh City",
   },
   language: { label: "Language" },
-  theme: { label: "Dark mode" },
   backToTop: { label: "Back to top" },
   footer: {
     blurb:
@@ -111,7 +108,6 @@ const vi: ShellDictionary = {
     cityHcmc: "TP. Hồ Chí Minh",
   },
   language: { label: "Ngôn ngữ" },
-  theme: { label: "Chế độ tối" },
   backToTop: { label: "Lên đầu trang" },
   footer: {
     blurb:

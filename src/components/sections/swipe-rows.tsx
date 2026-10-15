@@ -26,6 +26,14 @@ function setUpRow(row: HTMLElement, cards: HTMLElement[], still: boolean) {
   });
   row.after(dots);
   row.dataset.swipe = still ? "still" : "move";
+  // A row with nothing to focus inside (the 4-D steps) takes focus itself, so
+  // a keyboard can scroll it (axe scrollable-region-focusable, mobile retest).
+  const focusable =
+    !row.hasAttribute("tabindex") &&
+    !row.querySelector(
+      'a[href], button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])',
+    );
+  if (focusable) row.tabIndex = 0;
 
   const step = () => cards[1].offsetLeft - cards[0].offsetLeft;
   const atEnd = () => row.scrollLeft + row.clientWidth >= row.scrollWidth - 2;
@@ -97,6 +105,7 @@ function setUpRow(row: HTMLElement, cards: HTMLElement[], still: boolean) {
     row.removeEventListener("scroll", onScroll);
     for (const name of events) row.removeEventListener(name, takeOver);
     dots.remove();
+    if (focusable) row.removeAttribute("tabindex");
     delete row.dataset.swipe;
     for (const card of cards) card.removeAttribute("data-active");
   };
