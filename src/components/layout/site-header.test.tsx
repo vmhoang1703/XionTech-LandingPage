@@ -49,10 +49,11 @@ describe("SiteHeader", () => {
       "mb-[calc(var(--spacing-header-room)*-1)]",
     );
     expect(header.className).not.toMatch(/\bborder/);
-    const pill = header.firstElementChild as HTMLElement;
+    const pill = header.querySelector(".nav-pill") as HTMLElement;
     expect(pill.className).toContain("pointer-events-auto");
     expect(pill.className).toContain("rounded-full");
-    expect(pill.className).toContain("max-w-[1180px]");
+    // The pill and the theme toggle share one centred row, 1180px + 52px wide.
+    expect(pill.parentElement?.className).toContain("max-w-[1232px]");
   });
 
   it("renders the primary nav inside a header", () => {
@@ -89,7 +90,9 @@ describe("SiteHeader", () => {
 
   it("puts the language button last in the bar, outside the mobile menu", () => {
     render(<SiteHeader locale="en" />);
-    const pill = screen.getByRole("banner").firstElementChild as HTMLElement;
+    const pill = screen
+      .getByRole("banner")
+      .querySelector(".nav-pill") as HTMLElement;
     const language = screen.getByRole("button", { name: /Language/ });
     expect(pill.lastElementChild?.contains(language)).toBe(true);
     expect(document.getElementById("mobile-menu")?.contains(language)).toBe(

@@ -13,7 +13,7 @@ export function readTheme(): Theme {
   } catch {
     // Storage is blocked: fall through to the colour-scheme setting.
   }
-  return matchMedia(DARK_QUERY).matches ? "dark" : "light";
+  return globalThis.matchMedia?.(DARK_QUERY).matches ? "dark" : "light";
 }
 
 export function saveTheme(theme: Theme): void {

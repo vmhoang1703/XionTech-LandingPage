@@ -2,7 +2,12 @@
 
 import { MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { useEffect, useSyncExternalStore } from "react";
-import { saveTheme, THEME_KEY, type Theme } from "@/lib/theme/theme-preference";
+import {
+  readTheme,
+  saveTheme,
+  THEME_KEY,
+  type Theme,
+} from "@/lib/theme/theme-preference";
 
 const root = () => document.documentElement;
 const apply = (theme: Theme) => {
@@ -29,6 +34,9 @@ export function ThemeToggle({
   const theme = useSyncExternalStore(subscribe, getTheme, getServerTheme);
 
   useEffect(() => {
+    // A 404 renders the head script on the client only, where it does not run:
+    // set the theme here then (the CSS follows the colour scheme until now).
+    if (!root().dataset.theme) apply(readTheme());
     // Absent outside a browser (the test DOM); there is no setting to follow.
     const query = globalThis.matchMedia?.("(prefers-color-scheme: dark)");
     if (!query) return;
