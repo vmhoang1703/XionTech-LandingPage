@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRightIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, FlagIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import {
   APPS,
@@ -19,7 +19,17 @@ import {
   type ProductRoad,
 } from "@/content/products";
 import { RoadStopDialog } from "../roadmap/road-stop-dialog";
-import { H, PAD, POINTS, ROAD, TREES, W, shareOf } from "./road-geometry";
+import {
+  FINISH,
+  H,
+  PAD,
+  POINTS,
+  ROAD,
+  START,
+  TREES,
+  W,
+  shareOf,
+} from "./road-geometry";
 
 // The products as a 2D roadmap: a winding road with a pin per product and its
 // card beside it. Wide screens draw one road across the section with
@@ -84,6 +94,7 @@ function revealStops(map: HTMLElement, show: (index: number) => void) {
 
 const STOPS = productRoad.stops;
 const LAST = STOPS.length - 1;
+const FINISH_AT = 0.7;
 // An app with no stop on the road: its old deep link (/products#iot) lands at
 // the start of the roadmap.
 const ALIASES = APPS.filter(
@@ -91,22 +102,29 @@ const ALIASES = APPS.filter(
 ).map((app) => app.anchor);
 
 // The tour: the active stop is the step of the track the pinned stage has
-// travelled into (each stop an equal share). Calls `show` when it changes.
-// Native scroll only: this reads the scroll position, it never sets it.
-// Returns the cleanup.
-function followScroll(map: HTMLElement, show: (index: number) => void) {
+// travelled into (each stop an equal share). Past FINISH_AT of the last step
+// (after its anchor, mid-step, where a deep link lands) the road is drawn on
+// to Finish. Calls `show` when either
+// changes. Native scroll only: this reads the scroll position, it never sets
+// it. Returns the cleanup.
+function followScroll(
+  map: HTMLElement,
+  show: (index: number, finished: boolean) => void,
+) {
   const stage = map.querySelector(".rm-stage") as HTMLElement;
-  let last = -1;
+  let last = "";
   const follow = () => {
     const track = map.getBoundingClientRect();
     const pinned = stage.getBoundingClientRect();
     const length = track.height - pinned.height;
     const travel = pinned.top - track.top;
-    const step = length > 0 ? Math.floor((travel / length) * STOPS.length) : 0;
-    const index = Math.min(LAST, Math.max(0, step));
-    if (index === last) return;
-    last = index;
-    show(index);
+    const at = length > 0 ? (travel / length) * STOPS.length : 0;
+    const index = Math.min(LAST, Math.max(0, Math.floor(at)));
+    const finished = at >= LAST + FINISH_AT;
+    const key = `${index}${finished}`;
+    if (key === last) return;
+    last = key;
+    show(index, finished);
   };
   follow();
   addEventListener("scroll", follow, { passive: true });
@@ -168,10 +186,13 @@ function who(app: AppId, board: JourneyBoard) {
 }
 
 export function RoadMap() {
-  const { stops } = useLocalized<"productRoad", ProductRoad>("productRoad", {
-    en: productRoad,
-    vi: productRoadVi,
-  });
+  const { stops, start, finish } = useLocalized<"productRoad", ProductRoad>(
+    "productRoad",
+    {
+      en: productRoad,
+      vi: productRoadVi,
+    },
+  );
   const board = useLocalized<"journeyBoard", JourneyBoard>("journeyBoard", {
     en: journeyBoard,
     vi: journeyBoardVi,
@@ -192,9 +213,13 @@ export function RoadMap() {
   const [mode, setMode] = useState<Mode>("static");
   const tour = mode === "tour";
   const [active, setActive] = useState(0);
-  // The road moves (transition) only once the tour has painted it at its
-  // first stop, so it does not run back from the static full road.
+  // The road moves (transition) only once the tour has painted it empty at
+  // Start, so it does not run back from the static full road.
   const [roadMoving, setRoadMoving] = useState(false);
+  // The tour has passed the last stop: the road is drawn on to Finish.
+  const [finished, setFinished] = useState(false);
+  let share = 0;
+  if (roadMoving) share = finished ? 1 : shareOf(active);
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState<ReadonlySet<number>>(new Set());
   const mask = useId();
@@ -226,12 +251,14 @@ export function RoadMap() {
   useEffect(() => {
     const map = ref.current;
     if (!tour || !map) return;
-    const stopFollowing = followScroll(map, (i) => {
+    const stopFollowing = followScroll(map, (i, end) => {
       setActive(i);
+      setFinished(end);
       if (openRef.current === null) setSelected(i);
     });
     landHash(map);
-    // Two frames: the first paints the road at its stop, still.
+    // Two frames: the first paints the road empty at Start, still; then it
+    // draws on to the active stop.
     let frame = requestAnimationFrame(() => {
       frame = requestAnimationFrame(() => setRoadMoving(true));
     });
@@ -241,6 +268,7 @@ export function RoadMap() {
       // Leaving the tour: no pin stays selected by it, the road stops moving.
       setSelected(null);
       setRoadMoving(false);
+      setFinished(false);
     };
   }, [tour]);
 
@@ -254,7 +282,7 @@ export function RoadMap() {
       style={
         tour
           ? ({
-              "--share": shareOf(active),
+              "--share": share,
               "--rm-stops": STOPS.length,
             } as CSSProperties)
           : undefined
@@ -324,6 +352,7 @@ export function RoadMap() {
           </g>
         </svg>
 
+        <RoadEnd end="start" label={start} shown={shown.has(0)} />
         <ol className="rm-stops">
           {stops.map((app, i) => (
             <RoadCard
@@ -339,6 +368,7 @@ export function RoadMap() {
             />
           ))}
         </ol>
+        <RoadEnd end="finish" label={finish} shown={shown.has(LAST)} />
       </div>
 
       <RoadStopDialog
@@ -434,5 +464,61 @@ function RoadCard({
         </div>
       </div>
     </li>
+  );
+}
+
+// The narrow road's ends: a half bend, so the road leaves Start and reaches
+// Finish at about the angle of the stop's bend it joins (the first stop bends
+// left, so Start comes in from the right). The end rows are shorter than a
+// stop, so the half bend meets the stop more upright than a stop's own bend.
+// The pin stands where it is level: x 67 on the right, 13 on the left.
+const END_BEND = {
+  start: { box: "0 50 80 50", d: "M67 50 C 67 70, 47 85, 40 100", x: 67 },
+  finish:
+    LAST % 2 === 0
+      ? { box: "0 0 80 50", d: "M40 0 C 47 15, 67 30, 67 50", x: 67 }
+      : { box: "0 0 80 50", d: "M40 0 C 33 15, 13 30, 13 50", x: 13 },
+};
+
+// The road's Start or Finish marker: a flag pin on the road's end and its name.
+// Wide screens place it on the drawn road; narrow ones show it above the first
+// stop and below the last, joined to them by half a bend that draws in with
+// that stop (`shown`). Decoration: the stops carry the content.
+function RoadEnd({
+  end,
+  label,
+  shown,
+}: Readonly<{ end: "start" | "finish"; label: string; shown: boolean }>) {
+  const point = end === "start" ? START : FINISH;
+  const bend = END_BEND[end];
+  return (
+    <div
+      className="rm-end"
+      data-end={end}
+      data-in={shown ? "true" : undefined}
+      aria-hidden="true"
+      style={
+        {
+          "--x": `${(point.x / W) * 100}%`,
+          "--y": `${(point.y / H) * 100}%`,
+          "--end-x": `${bend.x}px`,
+        } as CSSProperties
+      }
+    >
+      <svg
+        className="rm-seg"
+        viewBox={bend.box}
+        preserveAspectRatio="none"
+        focusable="false"
+      >
+        <path className="rm-edge" d={bend.d} />
+        <path className="rm-asphalt" d={bend.d} />
+        <path className="rm-line" d={bend.d} />
+      </svg>
+      <span className="rm-end-pin">
+        <FlagIcon weight="fill" />
+      </span>
+      <span className="rm-end-label">{label}</span>
+    </div>
   );
 }

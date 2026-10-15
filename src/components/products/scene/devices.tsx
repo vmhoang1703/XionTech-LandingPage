@@ -10,8 +10,8 @@ import { DEVICE_OF, DeviceScreen } from "./device-screen";
 // Decoration only; the scene hides it from assistive technology.
 
 // Copies behind the front face of a slab, and how many on a small screen.
-const COPIES = 12;
-const COPIES_SMALL = 6;
+const COPIES = 16;
+const COPIES_SMALL = 8;
 
 function Slab({
   className,
@@ -60,19 +60,23 @@ function Slab({
 }
 
 // A phone, upright and floating a little above the ground.
-function Phone({ app, copies }: Readonly<{ app: RoadApp; copies: number }>) {
+function Phone({
+  app,
+  copies,
+  play,
+}: Readonly<{ app: RoadApp; copies: number; play: boolean }>) {
   return (
     <div className="dv-part dv-phone">
       <Slab
         className="dv-body"
-        size={[192, 416]}
-        thickness={18}
-        radius={34}
-        bezel={9}
+        size={[196, 424]}
+        thickness={16}
+        radius={40}
+        bezel={7}
         copies={copies}
       >
         <div className="dv-screen">
-          <DeviceScreen app={app} />
+          <DeviceScreen app={app} play={play} />
         </div>
         <span className="dv-notch" />
       </Slab>
@@ -82,29 +86,33 @@ function Phone({ app, copies }: Readonly<{ app: RoadApp; copies: number }>) {
 
 // A laptop, open: its keyboard lies on the ground and its screen stands
 // tilted back from the keyboard's back edge.
-function Laptop({ app, copies }: Readonly<{ app: RoadApp; copies: number }>) {
+function Laptop({
+  app,
+  copies,
+  play,
+}: Readonly<{ app: RoadApp; copies: number; play: boolean }>) {
   return (
     <div className="dv-part dv-laptop">
       <div className="dv-hinge">
         <Slab
           className="dv-lid"
-          size={[470, 298]}
-          thickness={10}
-          radius={14}
-          bezel={11}
+          size={[540, 302]}
+          thickness={9}
+          radius={16}
+          bezel={10}
           copies={copies}
         >
           <div className="dv-screen">
-            <DeviceScreen app={app} />
+            <DeviceScreen app={app} play={play} />
           </div>
           <span className="dv-cam" />
         </Slab>
       </div>
       <Slab
         className="dv-deck"
-        size={[470, 292]}
-        thickness={12}
-        radius={16}
+        size={[540, 300]}
+        thickness={11}
+        radius={18}
         copies={copies}
       >
         <span className="dv-keys" />
@@ -115,14 +123,18 @@ function Laptop({ app, copies }: Readonly<{ app: RoadApp; copies: number }>) {
 }
 
 // A desktop monitor on its stand.
-function Monitor({ app, copies }: Readonly<{ app: RoadApp; copies: number }>) {
+function Monitor({
+  app,
+  copies,
+  play,
+}: Readonly<{ app: RoadApp; copies: number; play: boolean }>) {
   return (
     <div className="dv-part dv-monitor">
       <Slab
         className="dv-foot"
-        size={[200, 130]}
+        size={[230, 140]}
         thickness={8}
-        radius={64}
+        radius={70}
         copies={copies}
       />
       <Slab
@@ -134,14 +146,14 @@ function Monitor({ app, copies }: Readonly<{ app: RoadApp; copies: number }>) {
       />
       <Slab
         className="dv-head"
-        size={[520, 325]}
-        thickness={16}
+        size={[640, 314]}
+        thickness={14}
         radius={16}
-        bezel={12}
+        bezel={9}
         copies={copies}
       >
         <div className="dv-screen">
-          <DeviceScreen app={app} />
+          <DeviceScreen app={app} play={play} />
         </div>
         <span className="dv-cam" />
       </Slab>
@@ -153,7 +165,8 @@ function Monitor({ app, copies }: Readonly<{ app: RoadApp; copies: number }>) {
 export function Device({
   app,
   small,
-}: Readonly<{ app: RoadApp; small: boolean }>) {
+  play = false,
+}: Readonly<{ app: RoadApp; small: boolean; play?: boolean }>) {
   const kind = DEVICE_OF[app];
   const copies = small ? COPIES_SMALL : COPIES;
   return (
@@ -161,9 +174,15 @@ export function Device({
       <span className="dv-shadow" />
       <div className="dv-rise">
         <div className="dv-float">
-          {kind === "phone" ? <Phone app={app} copies={copies} /> : null}
-          {kind === "laptop" ? <Laptop app={app} copies={copies} /> : null}
-          {kind === "monitor" ? <Monitor app={app} copies={copies} /> : null}
+          {kind === "phone" ? (
+            <Phone app={app} copies={copies} play={play} />
+          ) : null}
+          {kind === "laptop" ? (
+            <Laptop app={app} copies={copies} play={play} />
+          ) : null}
+          {kind === "monitor" ? (
+            <Monitor app={app} copies={copies} play={play} />
+          ) : null}
         </div>
       </div>
     </div>

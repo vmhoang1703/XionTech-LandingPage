@@ -532,6 +532,9 @@ const MAY_HIDE = new Set([
   ".swipe-dots",
   // A shortcut to the job form below it; the form itself always shows.
   ".apply-bar",
+  // The Products device screens fade between screenshots; the 3D scene they
+  // sit in opens only on a click, so never without JavaScript.
+  ".ws-image",
   // About mountain story: decoration (the Scroll cue, the light, the dots,
   // the grey or lit X mark, the tag) and the held chapters, which hide only
   // once the MountainStory script has armed the section.

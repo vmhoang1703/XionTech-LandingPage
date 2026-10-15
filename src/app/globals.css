@@ -3796,6 +3796,112 @@
     }
   }
 
+  /* The road's Start and Finish markers (road-map.tsx, RoadEnd): a flag pin
+     and its name. Narrow: a row above the first stop and below the last, with
+     half a bend of road joining it to them (--end-x: where the pin stands on
+     it). Wide: on the drawn road's two ends. */
+  .rm-end {
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr);
+    align-items: center;
+    min-height: 80px;
+  }
+
+  .rm-end .rm-seg {
+    position: absolute;
+    left: 0;
+    height: 50%;
+  }
+
+  .rm-end[data-end="start"] .rm-seg {
+    bottom: 0;
+  }
+
+  .rm-end[data-end="finish"] .rm-seg {
+    top: 0;
+  }
+
+  /* Clear of a pin on the right of the road (x 67, 22px wide half). */
+  .rm-end-label {
+    grid-column: 2;
+    padding-left: 16px;
+  }
+
+  .rm-end-pin {
+    position: absolute;
+    top: 50%;
+    left: var(--end-x);
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    translate: -50% -50%;
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-navy);
+    border-radius: var(--radius-full);
+    background: var(--color-amber);
+    color: var(--color-navy);
+    box-shadow: 0 6px 16px rgb(22 54 99 / 0.25);
+  }
+
+  .rm-end-pin svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .rm-end-label {
+    color: var(--color-navy);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 1100px) {
+    .rm-end {
+      position: absolute;
+      top: var(--y);
+      left: var(--x);
+      display: block;
+      width: 0;
+      height: 0;
+      min-height: 0;
+    }
+
+    /* Hidden like the stops' bends (.rm-seg above), at their 1px. */
+    .rm-end .rm-seg {
+      height: 1px;
+    }
+
+    .rm-end-pin {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 52px;
+      height: 52px;
+      translate: -50% -50%;
+    }
+
+    .rm-end-pin svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .rm-end-label {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      padding: 3px 12px;
+      border-radius: var(--radius-full);
+      background: var(--color-white);
+      box-shadow: 0 4px 12px rgb(22 54 99 / 0.12);
+      white-space: nowrap;
+      translate: -50% 0;
+    }
+  }
+
   /* Roadmap reveal (narrow): each stop reveals on its own as it scrolls in
      ([data-in]). Only "armed" clips and scales, never by opacity, so text
      keeps its contrast; only [data-in] moves. "static" (no JavaScript,
@@ -3855,6 +3961,37 @@
     .rm-stop[data-in] .rm-seg {
       clip-path: inset(-20px -40px);
       transition: clip-path 300ms linear;
+    }
+
+    /* The road runs on from Start into stop 1, and from the last stop on to
+       Finish: each half bend draws in turn with its stop, then its flag. */
+    .rm[data-reveal="armed"] .rm-end:not([data-in]) .rm-seg {
+      clip-path: inset(-20px -40px calc(100% + 20px) -40px);
+    }
+
+    .rm[data-reveal="armed"] .rm-end:not([data-in]) .rm-end-pin {
+      scale: 0;
+    }
+
+    .rm-end[data-in] .rm-seg {
+      clip-path: inset(-20px -40px);
+      transition: clip-path 200ms linear;
+    }
+
+    .rm-end[data-in] .rm-end-pin {
+      transition: scale var(--transition-duration-menu) var(--ease-brand);
+    }
+
+    .rm-stop[data-first][data-in] .rm-seg {
+      transition-delay: 200ms;
+    }
+
+    .rm-end[data-end="finish"][data-in] .rm-seg {
+      transition-delay: 300ms;
+    }
+
+    .rm-end[data-end="finish"][data-in] .rm-end-pin {
+      transition-delay: 500ms;
     }
   }
 
@@ -3917,9 +4054,11 @@
       stroke-dashoffset: calc(1 - var(--share));
     }
 
-    /* From a frame after the tour starts, so the road snaps to stop 1. */
+    /* From a frame after the tour starts: the road draws from Start to the
+       active stop, then on with the scroll, and from the last stop to
+       Finish. */
     .rm[data-tour="on"][data-road="moving"] .rm-draw {
-      transition: stroke-dashoffset 400ms var(--ease-brand);
+      transition: stroke-dashoffset 700ms var(--ease-brand);
     }
 
     /* Functional text stays at --text-label (11.5px) or larger once the

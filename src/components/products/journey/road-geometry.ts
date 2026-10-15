@@ -6,8 +6,9 @@ export const W = 1400;
 export const H = 820;
 // The road runs past the drawing at both ends; the mask must reach it.
 export const PAD = 100;
-const START = { x: -20, y: 430 };
-const FINISH = { x: 1420, y: 420 };
+// The road's Start and Finish markers sit on its two ends.
+export const START = { x: 70, y: 430 };
+export const FINISH = { x: 1330, y: 420 };
 export const POINTS = productRoad.stops.map((_, i) => ({
   x: 330 + i * 370,
   y: i % 2 === 0 ? 340 : 500,
