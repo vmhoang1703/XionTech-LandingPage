@@ -28,20 +28,13 @@ afterEach(() => {
 });
 
 describe("AboutPage", () => {
-  it("has its own title and description", () => {
+  it("has its own title and an engineering-partner description", async () => {
     expect(metadata.title).toBe("About XionTech | Get IT Done");
-    expect(String(metadata.description)).toContain("Plano");
+    expect(String(metadata.description)).toContain("engineering partner");
+    expect(String(metadata.description)).not.toMatch(/newxion|XionTechs/i);
   });
 
-  it("has a Vietnamese title and description on vi, without a placeholder mark", async () => {
-    const vi = await generateMetadata({
-      params: Promise.resolve({ locale: "vi" }),
-    });
-    expect(vi.title).toBe("Về XionTech | Get IT Done");
-    expect(String(vi.description)).toMatch(/^XionTech là .*Plano/);
-  });
-
-  it("opens with the centred statement, the amber ownership and the peaks", async () => {
+  it("opens with the text-only statement, the amber ownership and no illustration", async () => {
     const { container } = render(await aboutAt("en"));
 
     const intro = container.querySelector("section#mission.about-hero");
@@ -50,18 +43,14 @@ describe("AboutPage", () => {
     expect(h1s).toHaveLength(1);
     expect(h1s[0].id).toBe("about-h1");
     expect(h1s[0].textContent).toBe(
-      "We’re XionTech,technology built with ownership.",
+      "We’re XionTech.Technology built with ownership",
     );
     expect(h1s[0].querySelector("br")).not.toBeNull();
     expect(h1s[0].querySelector(".ah-accent")?.textContent).toBe("ownership");
-    expect(h1s[0].querySelector(".hl")).toBeNull();
-    expect(intro?.querySelector("p.ah-text")?.textContent).toContain(
-      "From Ho Chi Minh City and Plano",
+    expect(intro?.querySelector("p.ah-text")?.textContent).toBe(
+      "We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward.",
     );
-    const peaks = intro?.querySelector("svg.ah-peaks");
-    expect(peaks?.getAttribute("aria-hidden")).toBe("true");
-    expect(peaks?.getAttribute("viewBox")).toBe("0 0 1440 360");
-    expect(peaks?.querySelectorAll("path")).toHaveLength(5);
+    expect(intro?.querySelector("img, .ah-peaks, :scope > svg")).toBeNull();
     expect(container.querySelector(".crumbs")).toBeNull();
     expect(container.querySelector("nav")).toBeNull();
   });
@@ -70,7 +59,7 @@ describe("AboutPage", () => {
     const { container } = render(await aboutAt("en"));
 
     const links = Array.from(
-      container.querySelectorAll("#mission .ah-links a.link-arrow"),
+      container.querySelectorAll("#mission .ah-links a.btn"),
     );
     expect(links.map((a) => [a.textContent, a.getAttribute("href")])).toEqual([
       ["Explore our products", "/en/products"],
@@ -81,228 +70,222 @@ describe("AboutPage", () => {
     }
   });
 
-  it("lays the five sections in order, all but the hero on the page scene, with no navy band", async () => {
+  it("lays the seven sections in order, all but the hero on the page scene", async () => {
     const { container } = render(await aboutAt("en"));
 
     const scene = container.querySelector(".page-scene");
-    expect(container.children).toHaveLength(2);
-    expect(container.lastElementChild).toBe(scene);
+    // Round 11: one plain wrapper, so client navigation lands at the top.
+    const page = container.firstElementChild;
+    expect(container.children).toHaveLength(1);
+    expect(page?.className).toBe("about-page");
+    expect(page?.children).toHaveLength(2);
+    expect(page?.lastElementChild).toBe(scene);
     const sections = Array.from(
       container.querySelectorAll("#mission, .page-scene > section"),
     );
-    expect(sections.map((s) => s.tagName)).toEqual(Array(5).fill("SECTION"));
     expect(sections.map((s) => s.id)).toEqual([
       "mission",
       "story",
+      "values",
       "faq",
       "offices",
-      "book",
+      "next",
     ]);
-    // The mountain story holds its own spacing (MountainStory).
-    expect(sections[1].className).toBe("mtn surface-paper");
-    expect(sections[2].className).toBe("sec surface-paper");
-    expect(sections[3].className).toBe("sec surface-paper");
-    expect(sections[4].className).toBe("capture capture-plain surface-paper");
+    expect(
+      sections.slice(1).map((s) => s.querySelector("h2")?.textContent),
+    ).toEqual([
+      "Inspired by a mountain.Driven by purpose",
+      "What drives us",
+      "Curious about XionTech?",
+      "Two delivery centers. One connected team",
+      "Let’s build what’s next",
+    ]);
     expect(container.querySelectorAll(".surface-navy")).toHaveLength(0);
-    expect(container.querySelectorAll(".surface-amber")).toHaveLength(0);
+    expect(container.querySelector("form, .capture")).toBeNull();
   });
 
-  it("drops the stats, Two strengths and the values", async () => {
+  it("tells the mountain story as one held story with the summit mark", async () => {
     const { container } = render(await aboutAt("en"));
 
-    expect(container.querySelector("#values")).toBeNull();
-    expect(container.querySelector("fieldset")).toBeNull();
-    expect(container.querySelector(".values")).toBeNull();
-    expect(container.querySelector(".split")).toBeNull();
-    expect(container.textContent).not.toContain("Two strengths");
-    expect(container.textContent).not.toContain("Key facts");
-  });
-
-  it("tells the mountain story: two chapters beside the mountain picture", async () => {
-    const { container } = render(await aboutAt("en"));
-
+    const section = container.querySelector("section#story.mtn");
     const h2 = screen.getByRole("heading", { level: 2, name: /Inspired by/ });
-    const section = h2.closest("section");
     expect(section?.getAttribute("aria-labelledby")).toBe(h2.id);
-    expect(h2.textContent).toBe("Inspired by a mountain.United by purpose.");
     expect(h2.querySelector(".hl")?.textContent).toBe("purpose");
-    const chapters = Array.from(section?.querySelectorAll("article") ?? []);
-    expect(chapters).toHaveLength(2);
-    expect(chapters[0].querySelector(".mtn-num")?.textContent).toBe("01");
-    expect(chapters[0].querySelector("h3")?.textContent).toBe(
-      "01 The inspiration",
-    );
-    expect(chapters[1].querySelector("h3")?.textContent).toBe("02 The purpose");
+    expect(section?.querySelectorAll(".mtn-ch")).toHaveLength(1);
     expect(
-      chapters[1]
-        .querySelector(".mtn-text")
-        ?.textContent?.startsWith("[Placeholder] Inspired by this vision"),
-    ).toBe(true);
-    const close = section?.querySelector(".mtn-close");
-    expect(close?.querySelector("strong")?.textContent).toBe(
-      "Our inspiration is a mountain. Our purpose is people.",
-    );
-    expect(close?.textContent).toContain("Vision · Community · Technology");
-    // Amber's picture (lead, 2026-10-13: 1B lifts Q5): decorative and hidden
-    // from screen readers, with the climb's light, dots and the X mark.
-    const stage = section?.querySelector(".mtn-stage");
-    expect(stage?.getAttribute("aria-hidden")).toBe("true");
-    const pictures = Array.from(stage?.querySelectorAll("img") ?? []);
-    expect(pictures.map((img) => img.getAttribute("alt"))).toEqual([
-      "",
-      "",
-      "",
-      "",
-      "",
-    ]);
-    expect(
-      pictures.some((img) =>
-        img.getAttribute("src")?.includes("mountain-clear"),
+      Array.from(section?.querySelectorAll(".mtn-text") ?? []).map(
+        (p) => p.textContent,
       ),
-    ).toBe(true);
-    expect(stage?.querySelectorAll(".mtn-dots span")).toHaveLength(2);
-    expect(chapters[0].querySelector(".mtn-cue")?.textContent).toBe("Scroll");
-    // The tag names newXion only: the founding line is a placeholder (Q12).
-    expect(stage?.querySelector(".mtn-tag")?.textContent).toBe("newXion");
-    expect(section?.textContent).not.toContain("Founded in America");
-    expect(
-      container.querySelectorAll("img:not(#story .mtn-stage img)"),
-    ).toHaveLength(0);
+    ).toEqual([
+      "Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights.",
+      "That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress.",
+    ]);
+    expect(section?.querySelector(".mtn-summit-lit")).not.toBeNull();
+    expect(section?.querySelector(".mtn-tag")?.textContent).toBe("XionTech");
+    expect(section?.textContent).not.toMatch(/Placeholder|newxion/i);
   });
 
-  it("lists nine closed native questions at #faq in the new heading", async () => {
+  it("shows What drives us: the five principles shared with Home", async () => {
+    const { container } = render(await aboutAt("en"));
+
+    const section = container.querySelector("section#values");
+    expect(section?.className).toBe("sec values-drawn");
+    expect(
+      section?.querySelectorAll(
+        ".flip-cards-drawn > button.flip-card svg.flip-ill",
+      ),
+    ).toHaveLength(5);
+    expect(container.querySelector("#habits, .hab-grid")).toBeNull();
+    expect(section?.getAttribute("aria-labelledby")).toBe("about-values-h");
+    expect(section?.querySelector("p.lede")?.textContent).toBe(
+      "Five principles that guide how we collaborate, make decisions, and deliver meaningful results.",
+    );
+    expect(
+      [...(section?.querySelectorAll(".flip-front .flip-title") ?? [])].map(
+        (h) => h.textContent,
+      ),
+    ).toEqual([
+      "Adapt with purpose.",
+      "Own the outcome.",
+      "Make innovation useful.",
+      "Better together.",
+      "Turn ideas into impact.",
+    ]);
+  });
+
+  it("lists five closed native questions at #faq, left 1, 3, 5 and right 2, 4", async () => {
     const { container } = render(await aboutAt("en"));
 
     const section = container.querySelector("section#faq");
     const h2 = screen.getByRole("heading", {
       level: 2,
-      name: "Your question, we answer",
+      name: "Curious about XionTech?",
     });
     expect(section?.getAttribute("aria-labelledby")).toBe(h2.id);
     expect(section?.querySelector("p.lede")?.textContent).toBe(
-      "Straight answers about our products, our services and how we work.",
+      "A few things you might want to know before working with us.",
     );
     const items = Array.from(section?.querySelectorAll(".faq > details") ?? []);
-    expect(items).toHaveLength(9);
+    expect(items).toHaveLength(5);
     for (const item of items) {
       expect(item.hasAttribute("open")).toBe(false);
-      expect(item.querySelector(":scope > summary")?.textContent).toBeTruthy();
     }
-    expect(items[0].querySelector("summary")?.textContent).toBe(
+    const questions = items.map((i) => i.querySelector("summary")?.textContent);
+    expect(questions.filter((_, i) => i % 2 === 0)).toEqual([
       "What does XionTech do?",
-    );
-    const security = items.find(
-      (item) =>
-        item.querySelector("summary")?.textContent ===
-        "How do you keep our data secure?",
-    );
-    expect(
-      security
-        ?.querySelector(":scope > p")
-        ?.textContent?.startsWith("[Placeholder]"),
-    ).toBe(true);
+      "How does a new project begin?",
+      "How do you maintain delivery quality?",
+    ]);
+    expect(questions.filter((_, i) => i % 2 === 1)).toEqual([
+      "Which industries do you work with?",
+      "How do your teams work across time zones?",
+    ]);
+    expect(container.querySelector(".faq-ask")).toBeNull();
   });
 
-  it("ends the FAQ grid with the ask-us-directly link to the Home contact", async () => {
-    const { container } = render(await aboutAt("en"));
-
-    const faq = container.querySelector(".faq");
-    const ask = faq?.lastElementChild;
-    expect(ask?.tagName).toBe("A");
-    expect(ask?.className).toBe("faq-ask");
-    expect(ask?.getAttribute("href")).toBe("/en#contact");
-    expect(ask?.textContent).toBe("Still have a question? Ask us directly");
-    expect(ask?.querySelector("svg")?.getAttribute("aria-hidden")).toBe("true");
-    expect(faq?.children).toHaveLength(10);
-  });
-
-  it("shows two white office cards, Plano first, with tag, icon rows and bracketed phones", async () => {
+  it("shows two white location cards with eyebrow, city, local time and icon rows", async () => {
     const { container } = render(await aboutAt("en"));
 
     const section = container.querySelector("section#offices");
     const h2 = screen.getByRole("heading", {
       level: 2,
-      name: "Two headquarters, four locations.",
+      name: "Two delivery centers. One connected team",
     });
     expect(section?.getAttribute("aria-labelledby")).toBe(h2.id);
+    expect(section?.querySelector("p.lede")?.textContent).toBe(
+      "From Plano to Ho Chi Minh City, our teams work across time zones to support clients and keep projects moving.",
+    );
     const cards = Array.from(
-      section?.querySelectorAll(".offices > .office-card") ?? [],
+      section?.querySelectorAll(".loc-cards > .loc-card") ?? [],
     );
     expect(cards).toHaveLength(2);
-    expect(cards[0].querySelector("h3")?.textContent).toBe("Plano, Texas, USA");
-    expect(cards[1].querySelector("h3")?.textContent).toBe(
-      "Ho Chi Minh City, Vietnam",
-    );
     expect(
-      cards.map((c) => c.querySelector(".office-tag")?.textContent),
+      cards.map((c) => c.querySelector(".loc-eyebrow")?.textContent),
     ).toEqual(["US Delivery Center", "Vietnam Delivery Center"]);
-    expect(cards[0].querySelector(".clock")?.textContent).toMatch(
-      /^(\d{2}:\d{2}|US Central)$/,
-    );
-    expect(cards[0].textContent).toContain("7950 Legacy Drive, Suite 400");
-    expect(cards[1].textContent).toContain("279 Nguyen Tri Phuong Street");
-    // Plano: map pin, phone, WhatsApp, envelope. Ho Chi Minh City: map pin, phone.
-    expect(cards[0].querySelectorAll(".orow svg")).toHaveLength(4);
-    expect(cards[1].querySelectorAll(".orow svg")).toHaveLength(2);
-    for (const icon of Array.from(container.querySelectorAll(".orow svg"))) {
-      expect(icon.getAttribute("aria-hidden")).toBe("true");
+    expect(cards.map((c) => c.querySelector("h3")?.textContent)).toEqual([
+      "Plano, Texas",
+      "Ho Chi Minh City",
+    ]);
+    for (const card of cards) {
+      expect(card.querySelector(".loc-time b")?.textContent).toMatch(
+        /^([0-9]{2}:[0-9]{2}|--:--)$/,
+      );
+      expect(card.querySelector(".loc-time small")?.textContent).toBe(
+        "Local time",
+      );
+      expect(card.querySelectorAll(".loc-row > svg")).toHaveLength(3);
+      const map = card.querySelector("a.loc-map");
+      expect(map?.getAttribute("href")).toContain(
+        "https://www.google.com/maps/",
+      );
+      expect(map?.getAttribute("target")).toBe("_blank");
+      expect(map?.getAttribute("rel")).toBe("noopener noreferrer");
     }
     expect(
-      Array.from(cards[0].querySelectorAll(".orow a")).map(
-        (a) => a.textContent,
+      cards.map((c) =>
+        c.querySelector('a[href^="mailto:"]')?.getAttribute("href"),
       ),
     ).toEqual([
-      "(+1) 469 322 9899",
-      "(+1) 469 439 9345",
-      "vinni.tran@newxion.com",
+      "mailto:vinni.tran@newxion.com",
+      "mailto:vinni.tran@xiontechs.com",
     ]);
-    expect(
-      Array.from(cards[1].querySelectorAll(".orow a")).map(
-        (a) => a.textContent,
-      ),
-    ).toEqual(["(+84) 908 107 552"]);
-    const whatsapp = cards[0].querySelector('a[href^="https://wa.me/"]');
-    expect(whatsapp?.getAttribute("target")).toBe("_blank");
-    expect(whatsapp?.getAttribute("rel")).toBe("noopener noreferrer");
-    expect(whatsapp?.getAttribute("aria-label")).toBe(
-      "WhatsApp (+1) 469 439 9345 (opens in a new tab)",
+    expect(cards[0].textContent).toContain("7950 Legacy Drive, Suite 400");
+    expect(cards[1].textContent).toContain(
+      "Floor 15, B1 Building, 279 Nguyen Tri Phuong Street",
     );
-    expect(cards[1].querySelector('a[href^="mailto:"]')).toBeNull();
+    expect(
+      cards.map((c) => c.querySelector('a[href^="tel:"]')?.textContent),
+    ).toEqual(["+1 (469) 322-9899", "+84 908 107 552"]);
   });
 
-  it("puts both zone labels in the server HTML, Plano first", async () => {
-    const html = renderToString(await aboutAt("en")).replaceAll("<!-- -->", "");
-
-    expect(html).toContain("US Central");
-    expect(html).toContain("GMT+7");
-    expect(html.indexOf("US Central")).toBeLessThan(html.indexOf("GMT+7"));
-  });
-
-  it("ends with the demo capture band and the Parent Hub and Staff Hub lede", async () => {
+  it("ends with the call to action: the project pill first, then Products", async () => {
     const { container } = render(await aboutAt("en"));
 
-    const h2 = screen.getByRole("heading", {
-      level: 2,
-      name: "See our apps in action.",
-    });
-    const capture = h2.closest("section");
-    expect(capture?.className).toBe("capture capture-plain surface-paper");
-    expect(capture?.textContent).toContain(
-      "arrange a walkthrough of Parent Hub and Staff Hub.",
-    );
-    expect(capture?.querySelector('button[type="submit"]')?.textContent).toBe(
-      "Get in touch",
-    );
+    const section = container.querySelector("section#next");
     expect(container.querySelector(".page-scene")?.lastElementChild).toBe(
-      capture,
+      section,
+    );
+    expect(section?.querySelector("h2")?.textContent).toBe(
+      "Let’s build what’s next",
+    );
+    expect(section?.querySelector("p.lede")?.textContent).toBe(
+      "Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions.",
+    );
+    const links = Array.from(section?.querySelectorAll("a") ?? []);
+    expect(
+      links.map((a) => [a.className, a.textContent, a.getAttribute("href")]),
+    ).toEqual([
+      ["btn btn-primary", "Let’s talk about your project", "/en#contact"],
+      ["link-arrow", "Explore our products", "/en/products"],
+    ]);
+    expect(
+      links[0].querySelector(".about-cta-arrow")?.getAttribute("aria-hidden"),
+    ).toBe("true");
+  });
+
+  it("links only to anchors and pages that exist", async () => {
+    const { container } = render(await aboutAt("en"));
+    const ids = new Set(
+      Array.from(container.querySelectorAll("[id]")).map((el) => el.id),
+    );
+    for (const a of container.querySelectorAll('a[href^="#"]')) {
+      expect(ids.has(a.getAttribute("href")!.slice(1))).toBe(true);
+    }
+    const internal = Array.from(container.querySelectorAll('a[href^="/"]')).map(
+      (a) => a.getAttribute("href"),
+    );
+    expect(new Set(internal)).toEqual(
+      new Set(["/en/products", "/en/services", "/en#contact"]),
     );
   });
 
-  it("names the two headquarters and the other two locations", async () => {
-    const html = renderToString(await aboutAt("en"));
-
-    expect(html).toContain("Two headquarters, four locations.");
-    expect(html).toContain("Also in Ha Noi and Da Nang.");
+  it("never writes newXion in the copy, only the Plano email address", async () => {
+    const { container } = render(await aboutAt("en"));
+    const text = (container.textContent ?? "").replaceAll(
+      "vinni.tran@newxion.com",
+      "",
+    );
+    expect(text).not.toMatch(/newxion/i);
   });
 
   it("never writes the brand as XionTechs", async () => {
@@ -318,14 +301,16 @@ describe("AboutPage", () => {
     );
   });
 
-  it("the About anchors have a scroll-margin-top that uses --spacing-anchor-offset, #values is gone", () => {
+  it("the About anchors have a scroll-margin-top that uses --spacing-anchor-offset", async () => {
     expect(globalsCss()).toMatch(
-      /#story,\s*#faq,\s*#offices,\s*#book\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+      /#story,\s*#faq,\s*#offices,[^{]*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
     );
-    expect(globalsCss()).not.toMatch(/#values\s*[,{]/);
+    expect(globalsCss()).toMatch(
+      /#values,\s*#next\s*\{[^}]*scroll-margin-top[^}]*--spacing-anchor-offset/,
+    );
   });
 
-  it("lays the FAQ in two columns 96px apart, one column at 760px", () => {
+  it("lays the FAQ in two columns 96px apart, one column at 760px", async () => {
     const css = globalsCss();
 
     expect(css).toMatch(
@@ -336,20 +321,20 @@ describe("AboutPage", () => {
     );
   });
 
-  it("puts the two office cards at opposite edges, max 400px each, above md", () => {
+  it("stacks the location cards to one column at 760px", async () => {
     expect(globalsCss()).toMatch(
-      /@media \(width > --theme\(--breakpoint-md\)\)\s*\{\s*\.offices:has\(> \.office-card\)\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*400px\)\)[^}]*justify-content:\s*space-between/,
+      /@media \(width <= 760px\)\s*\{\s*\.loc-cards\s*\{\s*grid-template-columns:\s*minmax\(0,\s*1fr\)/,
     );
   });
 
   it("names no people: no leadership section, no photos, no titles", async () => {
     const { container } = render(await aboutAt("en"));
 
-    // No photos of people: the only pictures are the mountain story's
-    // decorative mountain and X mark.
-    expect(container.querySelectorAll("img:not(.mtn-stage img)")).toHaveLength(
-      0,
-    );
+    // The only pictures are the mountain story's decorative art.
+    for (const img of container.querySelectorAll("img")) {
+      expect(img.closest(".mtn-stage")).not.toBeNull();
+      expect(img.getAttribute("alt")).toBe("");
+    }
     const headings = Array.from(container.querySelectorAll("h2, h3")).map(
       (h) => h.textContent ?? "",
     );
@@ -359,42 +344,31 @@ describe("AboutPage", () => {
     expect(container.textContent).not.toMatch(
       /\b(CEO|CTO|COO|Founder|Co-founder|Director)\b|\b(Mr|Ms|Mrs)\./,
     );
-    // The only address with a person's name is the office email the business supplied.
-    const mailtos = Array.from(
-      container.querySelectorAll('a[href^="mailto:"]'),
-    );
-    expect(mailtos.map((a) => a.getAttribute("href"))).toEqual([
-      "mailto:vinni.tran@newxion.com",
-    ]);
+    // The only email links are the two location-card contact addresses.
+    expect(container.querySelectorAll('a[href^="mailto:"]')).toHaveLength(2);
+  });
+});
+
+describe("AboutPage in Vietnamese", () => {
+  it("has a Vietnamese title and description on vi", async () => {
+    const vi = await generateMetadata({
+      params: Promise.resolve({ locale: "vi" }),
+    });
+    expect(vi.title).toBe("Về XionTech | Get IT Done");
+    expect(String(vi.description)).toMatch(/^XionTech là đối tác kỹ thuật/);
   });
 
-  it("renders Vietnamese copy, offices and FAQ on vi, product names in English", async () => {
+  it("shows the Vietnamese copy and /vi links on vi", async () => {
     const { container } = render(await aboutAt("vi"));
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Chúng tôi là XionTech,công nghệ của tinh thần làm chủ.",
+      "Chúng tôi là XionTech.Công nghệ xây dựng bằng tinh thần làm chủ",
+    );
+    expect(container.querySelector("#about-faq-h")?.textContent).toBe(
+      "Bạn muốn biết thêm về XionTech?",
     );
     expect(
-      screen.getByRole("heading", { name: "Bạn hỏi, chúng tôi trả lời" }),
-    ).toBeTruthy();
-    expect(container.textContent).toContain("Parent Hub");
-    expect(container.textContent).toContain("Trung tâm Phát triển Mỹ");
-    expect(container.textContent).toContain(
-      "Ngoài ra còn có mặt tại Hà Nội và Đà Nẵng.",
-    );
-    expect(
-      container
-        .querySelector('a[href^="https://wa.me/"]')
-        ?.getAttribute("aria-label"),
-    ).toBe("WhatsApp (+1) 469 439 9345 (mở trong thẻ mới)");
-    expect(container.textContent).not.toContain("Your question, we answer");
-  });
-
-  it("falls back to English for an unknown locale", async () => {
-    render(await aboutAt("xx"));
-
-    expect(
-      screen.getByRole("heading", { name: "Your question, we answer" }),
-    ).toBeTruthy();
+      container.querySelector(".about-cta-actions a")?.getAttribute("href"),
+    ).toBe("/vi#contact");
   });
 });

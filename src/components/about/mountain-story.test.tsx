@@ -1,28 +1,23 @@
 import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MOTION_KEY } from "@/lib/motion/motion-preference";
-import { chapterAt, climbPoint, hashId, MountainStory } from "./mountain-story";
+import { CLIMB_MS, climbPoint, inView, MountainStory } from "./mountain-story";
 
 const STORY = {
   title: {
     lead: "Inspired by a mountain.",
-    middle: "United by ",
+    middle: "Driven by ",
     highlight: "purpose",
     tail: ".",
   },
-  chapters: [
-    { number: "01", title: "The inspiration", text: "One." },
-    { number: "02", title: "The purpose", text: "Two." },
-  ],
-  closing: { line: "Our purpose is people.", tags: "Vision" },
-  cue: "Scroll",
-  tagName: "newXion",
+  paragraphs: ["One.", "Two."],
+  tagName: "XionTech",
 };
 
 let frames: FrameRequestCallback[] = [];
 let now = 0;
-let sticky = true;
-let sectionTop = 0;
+let observed: IntersectionObserverCallback | null = null;
+const disconnect = vi.fn();
 
 const runFrames = () => {
   for (const frame of frames.splice(0)) frame(now);
@@ -35,22 +30,31 @@ function stubMotion(reduced: boolean) {
   );
 }
 
+const entry = (ratio: number, height = 0) =>
+  ({
+    isIntersecting: ratio > 0,
+    intersectionRatio: ratio,
+    intersectionRect: { height } as DOMRectReadOnly,
+  }) as IntersectionObserverEntry;
+
+function show(ratio: number) {
+  observed?.([entry(ratio)], {} as IntersectionObserver);
+}
+
 function mount() {
   const view = render(<MountainStory {...STORY} />);
   const mtn = view.container.querySelector(".mtn") as HTMLElement;
   return { view, mtn };
 }
 
-const on = (mtn: HTMLElement) =>
-  [...mtn.querySelectorAll(".mtn-ch")].map((ch) => ch.hasAttribute("data-on"));
 const rise = (mtn: HTMLElement) =>
   (mtn.querySelector(".mtn-rise") as HTMLElement).style.transform;
 
 beforeEach(() => {
   frames = [];
   now = 0;
-  sticky = true;
-  sectionTop = 0;
+  observed = null;
+  disconnect.mockClear();
   localStorage.clear();
   stubMotion(false);
   vi.stubGlobal("requestAnimationFrame", (frame: FrameRequestCallback) => {
@@ -58,25 +62,24 @@ beforeEach(() => {
     return frames.length;
   });
   vi.stubGlobal("cancelAnimationFrame", vi.fn());
-  vi.spyOn(performance, "now").mockImplementation(() => now);
-  vi.spyOn(window, "getComputedStyle").mockImplementation(
-    () =>
-      ({
-        position: sticky ? "sticky" : "static",
-        top: "96px",
-      }) as CSSStyleDeclaration,
+  vi.stubGlobal(
+    "IntersectionObserver",
+    class {
+      constructor(callback: IntersectionObserverCallback) {
+        observed = callback;
+      }
+      observe() {}
+      disconnect = disconnect;
+    },
   );
+  vi.spyOn(performance, "now").mockImplementation(() => now);
   vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockImplementation(
     function (this: HTMLElement) {
-      if (this.classList.contains("mtn")) return 1600;
-      if (this.classList.contains("mtn-pin")) return 800;
-      if (this.classList.contains("mtn-rise")) return 448;
-      return 0;
+      return this.classList.contains("mtn-rise") ? 448 : 0;
     },
   );
   vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
     function (this: Element) {
-      if (this.classList.contains("mtn")) return { top: sectionTop } as DOMRect;
       if (this.classList.contains("mtn-art"))
         return { width: 600, height: 400 } as DOMRect;
       return { top: 0 } as DOMRect;
@@ -94,173 +97,72 @@ describe("climbPoint", () => {
     expect(climbPoint(0)).toEqual([20, 69.5]);
     expect(climbPoint(1)).toEqual([58.4, 19.4]);
     expect(climbPoint(-1)).toEqual([20, 69.5]);
-    const [x, y] = climbPoint(1 / 16);
-    expect(x).toBeCloseTo(24);
-    expect(y).toBeCloseTo(67.5);
   });
 });
 
-describe("hashId", () => {
-  it("decodes the hash, and keeps a malformed escape as typed", () => {
-    expect(hashId("#faq")).toBe("faq");
-    expect(hashId("#c%C3%A2u-h%E1%BB%8Fi")).toBe("câu-hỏi");
-    expect(hashId("#%E0")).toBe("%E0");
-  });
-});
-
-describe("chapterAt", () => {
-  it("splits the held scroll between the chapters", () => {
-    const { mtn } = mount();
-    const pin = mtn.querySelector(".mtn-pin") as HTMLElement;
-    sectionTop = 96;
-    expect(chapterAt(mtn, pin)).toBe(0);
-    sectionTop = 96 - 500;
-    expect(chapterAt(mtn, pin)).toBe(1);
-    sectionTop = -5000;
-    expect(chapterAt(mtn, pin)).toBe(1);
-  });
-
-  it("uses the chapter titles when nothing is held", () => {
-    sticky = false;
-    const { mtn } = mount();
-    const pin = mtn.querySelector(".mtn-pin") as HTMLElement;
-    // Every title reports top 0: above 60% of the screen.
-    expect(chapterAt(mtn, pin)).toBe(1);
+describe("inView", () => {
+  it("needs 40% of the story, or 40% of the screen filled by it", () => {
+    expect(inView(entry(0))).toBe(false);
+    expect(inView(entry(0.3))).toBe(false);
+    expect(inView(entry(0.4))).toBe(true);
+    expect(inView(entry(0.2, innerHeight * 0.5))).toBe(true);
   });
 });
 
 describe("MountainStory", () => {
-  it("renders both chapters, the cue, the closing lines and the picture", () => {
+  it("renders one story, the picture and the brand tag, with no scroll cue or dots", () => {
     const { mtn } = mount();
-    expect(mtn.querySelectorAll(".mtn-ch")).toHaveLength(2);
-    expect(mtn.querySelector(".mtn-cue")?.getAttribute("aria-hidden")).toBe(
-      "true",
-    );
-    expect(mtn.querySelector(".mtn-close strong")?.textContent).toBe(
-      "Our purpose is people.",
-    );
+    expect(
+      [...mtn.querySelectorAll(".mtn-text")].map((p) => p.textContent),
+    ).toEqual(["One.", "Two."]);
+    expect(mtn.querySelector(".mtn-cue, .mtn-dots")).toBeNull();
     expect(mtn.querySelector(".mtn-stage")?.getAttribute("aria-hidden")).toBe(
       "true",
     );
-    expect(mtn.querySelector(".mtn-tag")?.textContent).toBe("newXion");
+    expect(mtn.querySelector(".mtn-tag")?.textContent).toBe("XionTech");
   });
 
-  it("arms the story at chapter 01, at the foot of the mountain", () => {
-    sectionTop = 96;
+  it("waits at the foot until the story is in view", () => {
     const { mtn } = mount();
     expect(mtn.hasAttribute("data-armed")).toBe(true);
-    expect(on(mtn)).toEqual([true, false]);
     expect(rise(mtn)).toBe("translateY(448px)");
-    expect(mtn.hasAttribute("data-top")).toBe(false);
+    show(0.2);
+    runFrames();
+    expect(frames).toHaveLength(0);
     expect(mtn.hasAttribute("data-late")).toBe(false);
-    const beacon = mtn.querySelector(".mtn-beacon") as HTMLElement;
-    expect(beacon.style.transform).toBe(
-      "translate(120px, 278px) translate(-50%, -50%)",
-    );
   });
 
-  it("climbs to the summit over time when the scroll reaches chapter 02", () => {
-    sectionTop = 96;
+  it("plays the climb once by itself when 40% is in view", () => {
     const { mtn } = mount();
-    sectionTop = -404;
-    window.dispatchEvent(new Event("scroll"));
-    window.dispatchEvent(new Event("scroll"));
+    show(0.5);
+    expect(disconnect).toHaveBeenCalled();
+    now = CLIMB_MS / 2;
     runFrames();
-    expect(on(mtn)).toEqual([false, true]);
     expect(mtn.hasAttribute("data-late")).toBe(true);
-    now = 1000;
-    runFrames();
     expect(mtn.hasAttribute("data-top")).toBe(false);
-    now = 10_000;
+    now = CLIMB_MS;
     runFrames();
     expect(mtn.hasAttribute("data-top")).toBe(true);
     expect(rise(mtn)).toBe("translateY(0px)");
-    expect(
-      mtn
-        .querySelector<HTMLElement>(".mtn-dots")
-        ?.style.getPropertyValue("--i"),
-    ).toBe("1");
-  });
-
-  it("goes straight to the chapter's place when it is opened part-way down", () => {
-    sectionTop = -404;
-    const { mtn } = mount();
-    expect(on(mtn)).toEqual([false, true]);
-    expect(mtn.hasAttribute("data-top")).toBe(true);
+    expect(frames).toHaveLength(0);
   });
 
   it.each([
     ["reduced motion", () => stubMotion(true)],
     ["a saved Pause", () => localStorage.setItem(MOTION_KEY, "off")],
-  ])("jumps without the climb under %s", (_, setUp) => {
+  ])("shows the summit at once with %s", (_, setUp) => {
     setUp();
-    sectionTop = 96;
     const { mtn } = mount();
-    sectionTop = -404;
-    window.dispatchEvent(new Event("scroll"));
-    runFrames();
     expect(mtn.hasAttribute("data-top")).toBe(true);
+    expect(rise(mtn)).toBe("translateY(0px)");
   });
 
-  it("settles on the chapter's place on resize and when the tab is hidden", () => {
-    sectionTop = 96;
-    const { mtn } = mount();
-    sectionTop = -404;
-    window.dispatchEvent(new Event("scroll"));
-    runFrames();
-    expect(mtn.hasAttribute("data-top")).toBe(false);
-    vi.spyOn(document, "hidden", "get").mockReturnValue(true);
-    document.dispatchEvent(new Event("visibilitychange"));
-    expect(mtn.hasAttribute("data-top")).toBe(true);
-    sectionTop = 96;
-    window.dispatchEvent(new Event("resize"));
-    expect(on(mtn)).toEqual([true, false]);
-    expect(mtn.hasAttribute("data-top")).toBe(false);
-  });
-
-  it("ignores a visible tab and a scroll that stays on the chapter", () => {
-    sectionTop = 96;
-    const { mtn } = mount();
-    vi.spyOn(document, "hidden", "get").mockReturnValue(false);
-    document.dispatchEvent(new Event("visibilitychange"));
-    window.dispatchEvent(new Event("scroll"));
-    runFrames();
-    expect(on(mtn)).toEqual([true, false]);
-    expect(frames).toHaveLength(0);
-  });
-
-  it("scrolls again to a #link target below the story once armed", () => {
-    const before = document.createElement("h2");
-    before.id = "intro";
-    const after = document.createElement("section");
-    after.id = "faq";
-    document.body.append(before, after);
-    const scrolled: string[] = [];
-    Element.prototype.scrollIntoView = function (this: Element) {
-      scrolled.push(this.id);
-    };
-    try {
-      for (const hash of ["", "#intro", "#missing", "#%E0", "#faq"]) {
-        history.replaceState(null, "", `/about${hash}`);
-        const container = document.createElement("div");
-        after.before(container);
-        render(<MountainStory {...STORY} />, { container }).unmount();
-        container.remove();
-      }
-      expect(scrolled).toEqual(["faq"]);
-    } finally {
-      history.replaceState(null, "", "/");
-      Reflect.deleteProperty(Element.prototype, "scrollIntoView");
-      before.remove();
-      after.remove();
-    }
-  });
-
-  it("disarms and stops listening on unmount", () => {
+  it("disarms and hides the light on unmount", () => {
     const { view, mtn } = mount();
+    const beacon = mtn.querySelector(".mtn-beacon") as HTMLElement;
+    expect(beacon.hidden).toBe(false);
     view.unmount();
     expect(mtn.hasAttribute("data-armed")).toBe(false);
-    window.dispatchEvent(new Event("scroll"));
-    expect(frames).toHaveLength(0);
+    expect(beacon.hidden).toBe(true);
   });
 });

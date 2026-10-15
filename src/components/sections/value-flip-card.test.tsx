@@ -1,15 +1,18 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { careersValues } from "@/content/careers";
-import { FlipCard } from "./flip-card";
+import { aboutValues } from "@/content/values";
+import { ValueFlipCard } from "./value-flip-card";
 
-const [agile] = careersValues.cards;
+const [agile, , , , done] = aboutValues.items;
 
 function renderCard() {
   return render(
-    <FlipCard
-      card={agile}
+    <ValueFlipCard
       num="01"
+      label={agile.label}
+      title={agile.title}
+      text={agile.text}
+      drawing={agile.drawing}
       frontHint="Flip for details"
       backHint="Flip back"
     />,
@@ -21,7 +24,7 @@ const faces = (container: HTMLElement) => ({
   back: container.querySelector(".flip-back"),
 });
 
-describe("FlipCard", () => {
+describe("ValueFlipCard", () => {
   it("is a button showing its front, with the back inert", () => {
     const { container } = renderCard();
 
@@ -31,12 +34,12 @@ describe("FlipCard", () => {
     expect(button.classList.contains("flipped")).toBe(false);
     const { front, back } = faces(container);
     expect(front?.textContent).toBe(
-      "01[Placeholder] Stay agileFlip for details",
+      "01 · Stay agileAdapt with purpose.Flip for details",
     );
     expect(front?.hasAttribute("inert")).toBe(false);
     expect(back?.hasAttribute("inert")).toBe(true);
     expect(back?.textContent).toBe(
-      "01 · STAY AGILE[Placeholder] Move without losing direction.Stay flexible and adapt when new information or a better answer changes the path.Flip back",
+      "01 · Stay agileStay flexible, respond to change, and keep moving toward what matters.Flip back",
     );
   });
 
@@ -60,9 +63,13 @@ describe("FlipCard", () => {
 
   it("marks the accent card", () => {
     render(
-      <FlipCard
-        card={careersValues.cards[4]}
+      <ValueFlipCard
         num="05"
+        label={done.label}
+        title={done.title}
+        text={done.text}
+        drawing={done.drawing}
+        accent
         frontHint="Flip for details"
         backHint="Flip back"
       />,

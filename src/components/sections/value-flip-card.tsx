@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 import { FlipToggle } from "@/components/sections/flip-toggle";
-import type { careersValues, ValueIcon } from "@/content/careers";
 
-type Card = (typeof careersValues.cards)[number];
+export type ValueDrawing =
+  "agile" | "outcome" | "innovate" | "together" | "done";
 
 // Line drawings from the prototype careers.html, one per value.
-const ICONS: Record<ValueIcon, ReactNode> = {
+export const VALUE_DRAWINGS: Record<ValueDrawing, ReactNode> = {
   agile: (
     <>
       <path className="stroke" d="M28 72c9-28 34-43 62-34M88 27l4 12-13 1" />
@@ -47,45 +47,52 @@ const ICONS: Record<ValueIcon, ReactNode> = {
   ),
 };
 
-// One value as a flip card (E-A7 CAP-3): its number, drawing and title on the
-// front, its meaning in practice on the back. FlipToggle turns it over on
-// click, tap, Enter or Space and keeps the hidden face inert.
-export function FlipCard({
-  card,
+// Website copy v3: the Careers flip card (moved here from
+// components/careers when the Careers values section left the page), now used
+// by About "What drives us". Front: number and label, drawing, title. Back:
+// number and label, the line. FlipToggle turns it over on click, tap, Enter
+// or Space and keeps the hidden face inert.
+export function ValueFlipCard({
   num,
+  label,
+  title,
+  text,
+  drawing,
+  accent = false,
   frontHint,
   backHint,
 }: Readonly<{
-  card: Card;
   num: string;
+  label: string;
+  title: string;
+  text: string;
+  drawing: ValueDrawing;
+  accent?: boolean;
   frontHint: string;
   backHint: string;
 }>) {
   return (
     <FlipToggle
-      accent={"accent" in card && card.accent}
+      accent={accent}
       front={
         <>
-          <span className="flip-num">{num}</span>
+          <span className="flip-num">{`${num} · ${label}`}</span>
           <svg
             className="flip-ill"
             viewBox="0 0 120 120"
             aria-hidden="true"
             focusable="false"
           >
-            {ICONS[card.icon]}
+            {VALUE_DRAWINGS[drawing]}
           </svg>
-          <span className="flip-title">{card.title}</span>
+          <span className="flip-title">{title}</span>
           <span className="flip-hint">{frontHint}</span>
         </>
       }
       back={
         <>
-          <span className="flip-num">{`${num} · ${card.label}`}</span>
-          <span>
-            <span className="flip-title">{card.backTitle}</span>
-            <span className="flip-text">{card.text}</span>
-          </span>
+          <span className="flip-num">{`${num} · ${label}`}</span>
+          <span className="flip-text">{text}</span>
           <span className="flip-hint">{backHint}</span>
         </>
       }

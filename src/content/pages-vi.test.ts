@@ -22,7 +22,12 @@ describe("Products, services, about and offices in Vietnamese", () => {
     ["aboutStory", about.aboutStory, about.aboutStoryVi],
     ["aboutFaq", about.aboutFaq, about.aboutFaqVi],
     ["aboutOffices", about.aboutOffices, about.aboutOfficesVi],
-    ["aboutCapture", about.aboutCapture, about.aboutCaptureVi],
+    ["aboutCta", about.aboutCta, about.aboutCtaVi],
+    [
+      "aboutValuesHeading",
+      about.aboutValuesHeading,
+      about.aboutValuesHeadingVi,
+    ],
     ["plano", offices.plano, offices.planoVi],
     ["hcmc", offices.hcmc, offices.hcmcVi],
     ["offices", offices.offices, offices.officesVi],
@@ -75,11 +80,5 @@ describe("Products, services, about and offices in Vietnamese", () => {
     expect(products.productDetailsVi.iot.features.map((f) => f.id)).toEqual(
       products.productDetails.iot.features.map((f) => f.id),
     );
-  });
-
-  it("keeps the placeholder mark where the English has it", () => {
-    expect(about.aboutStoryVi.chapters[1].text).toMatch(/^\[Placeholder\] /);
-    const security = about.aboutFaqVi.items.find((i) => i.id === "security");
-    expect(security?.answer).toMatch(/^\[Placeholder\] /);
   });
 });
