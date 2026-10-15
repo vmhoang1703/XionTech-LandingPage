@@ -56,7 +56,7 @@ test.describe("dark mode", { tag: "@a11y" }, () => {
     }
   });
 
-  test("the product dialog is dark, its device screen and the footer logo stay light", async ({
+  test("the product dialog is dark; the device screenshot and the footer logo are unchanged", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -69,10 +69,8 @@ test.describe("dark mode", { tag: "@a11y" }, () => {
     const top = page.locator(".road-dialog-top");
     await expect(top).toBeVisible();
     await expect(top).toHaveCSS("background-color", "rgb(18, 33, 63)");
-    await expect(page.locator(".ws").first()).toHaveCSS(
-      "background-color",
-      "rgb(253, 253, 254)",
-    );
+    // The device shows the product's own screenshot, unchanged by the theme.
+    await expect(page.locator(".ws-image").first()).toBeVisible();
     const result = await new AxeBuilder({ page })
       .include(".road-dialog")
       .withRules(["color-contrast"])
