@@ -28,7 +28,11 @@ function setUpRow(row: HTMLElement, cards: HTMLElement[], still: boolean) {
   row.dataset.swipe = still ? "still" : "move";
   // A row with nothing to focus inside (the 4-D steps) takes focus itself, so
   // a keyboard can scroll it (axe scrollable-region-focusable, mobile retest).
-  const focusable = !row.querySelector("a[href], button, input, [tabindex]");
+  const focusable =
+    !row.hasAttribute("tabindex") &&
+    !row.querySelector(
+      'a[href], button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])',
+    );
   if (focusable) row.tabIndex = 0;
 
   const step = () => cards[1].offsetLeft - cards[0].offsetLeft;

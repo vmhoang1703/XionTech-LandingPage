@@ -127,8 +127,13 @@ describe("HomeContactForm", () => {
   });
 
   it("shows, announces and focuses the errors of an empty form", () => {
+    const scrollIntoView = vi.fn();
+    Element.prototype.scrollIntoView = scrollIntoView;
     render(<HomeContactForm />);
     submit();
+    // The first gap comes to the middle of the screen (focusField).
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: "center" });
+    expect(scrollIntoView.mock.contexts[0]).toBe(field("c-name"));
 
     expect(fetchMock).not.toHaveBeenCalled();
     expect(errorText("c-name")).toBe("Please enter your name.");

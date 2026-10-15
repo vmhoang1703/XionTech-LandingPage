@@ -171,6 +171,20 @@ describe("SwipeRows", () => {
     expect(row.hasAttribute("tabindex")).toBe(false);
   });
 
+  it("counts a tabindex=-1 child as nothing to focus, and keeps a row's own tabindex", () => {
+    const row = mountRow();
+    row.firstElementChild?.setAttribute("tabindex", "-1");
+    const { unmount } = render(<SwipeRows />);
+    expect(row.getAttribute("tabindex")).toBe("0");
+    unmount();
+    const own = mountRow();
+    own.setAttribute("tabindex", "-1");
+    const second = render(<SwipeRows />);
+    expect(own.getAttribute("tabindex")).toBe("-1");
+    second.unmount();
+    expect(own.getAttribute("tabindex")).toBe("-1");
+  });
+
   it("leaves a row whose cards hold links out of the tab order", () => {
     const row = mountRow();
     row.firstElementChild?.insertAdjacentHTML(
