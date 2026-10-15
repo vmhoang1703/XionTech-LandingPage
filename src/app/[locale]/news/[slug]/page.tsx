@@ -62,7 +62,7 @@ export default async function StoryPage({ params }: StoryProps) {
   const tag = categoryTag(story, locale);
   const date = newsDate(story.publishedAt, locale);
   const alt = story.alt?.trim();
-  const { backToNews, storyLabel, sampleNote } = pickLocale(locale, {
+  const { backToNews, storyLabel } = pickLocale(locale, {
     en: newsStory,
     vi: newsStoryVi,
   });
@@ -121,9 +121,6 @@ export default async function StoryPage({ params }: StoryProps) {
               blocks={story.body ?? []}
               lang={fallbackLang(story.bodyLang, locale)}
             />
-            {story.title.startsWith("[Placeholder]") ? (
-              <p className="sample">{sampleNote}</p>
-            ) : null}
           </article>
         </div>
       </section>

@@ -141,7 +141,6 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
             </button>
           ))}
         </fieldset>
-        <p className="sample">{newsPage.sampleNote}</p>
       </div>
       {shown.length > 0 ? (
         <div ref={gridRef} className="sgrid" id="newsGrid">

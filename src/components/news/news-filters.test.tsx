@@ -91,11 +91,7 @@ describe("NewsFilters", () => {
     });
     expect(group.className).toBe("filters");
     expect(group.parentElement?.className).toBe("news-bar");
-    expect(
-      screen.getByText(
-        "Stories from the newXion newsroom; those marked [Placeholder] are samples.",
-      ).className,
-    ).toBe("sample");
+    expect(document.querySelector(".sample")).toBeNull();
     expect(document.querySelector("#newsGrid")?.className).toBe("sgrid");
     expect(shown()).toEqual(["p1", "t1", "t2", "c1", "x1"]);
     expect(chip("All").getAttribute("aria-pressed")).toBe("true");

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test(
-  "news page responds 200 with its hero, the audience filters, the sample note and the demo capture",
+  "news page responds 200 with its hero, the audience filters and the demo capture",
   { tag: "@smoke" },
   async ({ request }) => {
     const response = await request.get("/en/news");
@@ -18,10 +18,8 @@ test(
     for (const chip of ["All", "Schools", "Students", "Parents", "Company"]) {
       expect(html).toContain(`>${chip}</button>`);
     }
-    expect(html).toContain(
-      "Stories from the newXion newsroom; those marked [Placeholder] are samples.",
-    );
-    expect(html).toContain("See it working at your school.");
+    expect(html).not.toContain("[Placeholder] are samples");
+    expect(html).toContain("See it working at your school");
   },
 );
 

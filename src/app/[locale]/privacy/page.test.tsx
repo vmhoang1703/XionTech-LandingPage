@@ -7,15 +7,13 @@ const metadata = await generateMetadata({
   params: Promise.resolve({ locale: "en" }),
 });
 
+// Website copy v3: the outline-only sections (who we are, transfers, cookies,
+// rights) are off the page until the legal text exists.
 const SECTION_HEADINGS = [
-  "Who we are and how to reach us",
   "What we collect",
   "How we use it",
   "Who we share it with",
-  "Transfers outside Vietnam",
   "How long we keep it",
-  "Cookies and analytics",
-  "Your rights",
 ];
 
 const renderPage = async (locale = "en") =>
@@ -26,7 +24,7 @@ describe("Privacy page", () => {
     await renderPage();
     const headings = screen.getAllByRole("heading", { level: 1 });
     expect(headings).toHaveLength(1);
-    expect(headings[0].textContent).toBe("Privacy policy.");
+    expect(headings[0].textContent).toBe("Privacy policy");
   });
 
   it("renders the breadcrumbs with a Home link", async () => {
@@ -38,7 +36,7 @@ describe("Privacy page", () => {
     ).toBe("/en");
   });
 
-  it("renders the eight sections in order", async () => {
+  it("renders the four sections in order", async () => {
     await renderPage();
     const h2 = screen
       .getAllByRole("heading", { level: 2 })
@@ -46,14 +44,11 @@ describe("Privacy page", () => {
     expect(h2).toEqual(SECTION_HEADINGS);
   });
 
-  it("starts the lede and the outline note with [Placeholder]", async () => {
+  it("shows no lede, outline note or [Placeholder] text", async () => {
     const { container } = await renderPage();
-    expect(container.querySelector(".lede")?.textContent).toMatch(
-      /^\[Placeholder\]/,
-    );
-    expect(container.querySelector(".sample")?.textContent).toMatch(
-      /^\[Placeholder\]/,
-    );
+    expect(container.querySelector(".lede")).toBeNull();
+    expect(container.querySelector(".sample")).toBeNull();
+    expect(container.textContent).not.toContain("[Placeholder");
   });
 
   it("says in the retention section that data is kept with no time limit", async () => {
@@ -64,56 +59,37 @@ describe("Privacy page", () => {
     );
   });
 
-  it("marks the cookie text as a placeholder", async () => {
-    const { container } = await renderPage();
-    const paragraphs = container.querySelectorAll("#privacy-cookies p");
-    expect(paragraphs.length).toBeGreaterThan(0);
-    for (const p of paragraphs) {
-      expect(p.textContent).toMatch(/^\[Placeholder\]/);
-    }
-  });
-
-  it("starts every paragraph with [Placeholder] except the decided retention sentence", async () => {
-    const { container } = await renderPage();
-    const unmarked = [...container.querySelectorAll("p")].filter(
-      (p) => !p.textContent?.startsWith("[Placeholder]"),
-    );
-    expect(unmarked.map((p) => p.textContent)).toEqual([
-      PRIVACY.retentionDecided,
-    ]);
-  });
-
   it("has no capture band and no main element", async () => {
     const { container } = await renderPage();
     expect(container.querySelector("form")).toBeNull();
     expect(container.querySelector("main")).toBeNull();
   });
 
-  it("sets the metadata title and a placeholder description", () => {
+  it("sets the metadata title and description", () => {
     expect(metadata.title).toBe("Privacy Policy | XionTech");
-    expect(metadata.description).toMatch(/^\[Placeholder\]/);
+    expect(metadata.description).toBe(
+      "How XionTech uses the personal data you share through our forms.",
+    );
   });
 });
 
 describe("Privacy page in Vietnamese", () => {
-  it("shows the Vietnamese title, breadcrumbs and placeholder lede", async () => {
+  it("shows the Vietnamese title and breadcrumbs, with no lede", async () => {
     await renderPage("vi");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Chính sách bảo mật.",
+      "Chính sách bảo mật",
     );
     expect(
       screen.getByRole("navigation", { name: "Đường dẫn" }).textContent,
     ).toBe("Trang chủ/Chính sách bảo mật");
-    expect(document.querySelector(".lede")?.textContent).toMatch(
-      /^\[Placeholder\] Nội dung/,
-    );
+    expect(document.querySelector(".lede")).toBeNull();
   });
 });
 
 it("falls back to English for an unknown locale", async () => {
   await renderPage("xx");
   expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-    "Privacy policy.",
+    "Privacy policy",
   );
 });
 
@@ -123,9 +99,7 @@ describe("Privacy page metadata in Vietnamese", () => {
       params: Promise.resolve({ locale: "vi" }),
     });
     expect(String(viMeta.title)).toBe("Chính sách bảo mật | XionTech");
-    expect(String(viMeta.description)).toMatch(
-      /^\[Placeholder\] Cách XionTech/,
-    );
+    expect(String(viMeta.description)).toMatch(/^Cách XionTech/);
   });
 });
 
