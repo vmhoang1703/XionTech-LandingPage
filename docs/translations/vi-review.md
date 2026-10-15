@@ -13,11 +13,11 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 436 strings, 259 AI and 177 prototype.
+**Total:** 437 strings, 260 AI and 177 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
-10 AI, 13 prototype.
+11 AI, 13 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -27,6 +27,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `shell:SHELL.nav.contact` | Let's talk | Trao đổi với chúng tôi |
 | AI | `shell:SHELL.nav.contactShort` | Let's talk | Liên hệ |
 | AI | `shell:SHELL.language.label` | Language | Ngôn ngữ |
+| AI | `shell:SHELL.theme.label` | Dark mode | Chế độ tối |
 | AI | `shell:SHELL.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh. |
 | AI | `shell:SHELL.notFound.metaTitle` | Page not found \| XionTech | Không tìm thấy trang \| XionTech |
 | AI | `shell:SHELL.notFound.title` | Page not found | Không tìm thấy trang |

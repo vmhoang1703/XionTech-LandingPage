@@ -13,7 +13,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/zh.ts` and open a pull request. `Where` is `zh:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 445 strings.
+**Total:** 446 strings.
 
 ## About
 
@@ -528,7 +528,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Site shell: header, footer, language menu, 404
 
-24 strings.
+25 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
@@ -546,6 +546,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:shell.nav.cityPlano` | Plano | 普莱诺 |
 | `zh:shell.nav.cityHcmc` | Ho Chi Minh City | 胡志明市 |
 | `zh:shell.language.label` | Language | 语言 |
+| `zh:shell.theme.label` | Dark mode | 深色模式 |
 | `zh:shell.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech 将实践经验与现代技术相结合，打造 AI 驱动的产品和定制解决方案，解决企业面临的挑战。 |
 | `zh:shell.footer.howWeWork` | How we work | 工作方式 |
 | `zh:shell.footer.allServices` | All services | 所有服务 |

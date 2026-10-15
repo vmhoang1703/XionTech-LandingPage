@@ -96,7 +96,7 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `src/lib/theme/theme-preference.ts` (+ test) -- `readTheme()`, `saveTheme()`, `THEME_SCRIPT` (inline string) -- one source for the script and the toggle
+- [x] `src/lib/theme/theme-preference.ts` (+ test) -- `readTheme()`, `saveTheme()`, `THEME_SCRIPT` (inline string) -- one source for the script and the toggle
   - red: `src/lib/theme/theme-preference.test.ts` -- saved choice beats OS; blocked storage falls back to OS
 - [ ] `src/app/[locale]/layout.tsx`, `src/app/global-not-found.tsx` -- inline script in `<head>`, `suppressHydrationWarning` -- no flash
   - red: `src/app/[locale]/layout.test.tsx` -- the head contains the theme script
@@ -129,3 +129,5 @@ context:
 - Screenshots of every page in both themes at 390 and 1280px.
 - Toggle by mouse, keyboard and touch.
 - Lighthouse mobile Home is not lower than on `develop`.
+
+- 2026-10-15: user asked for "quick dev, no testing for now" after task 1. Tasks 2-8 were built directly without the per-task loop. Open: 8 unit tests in `site-header.test.tsx` and `mobile-menu.test.tsx` expect the old header (pill as the header's direct child, phone links last in the menu); `e2e/dark-mode.spec.ts` not written; step-04 review not run. Dark pages checked by axe colour-contrast and screenshots only.

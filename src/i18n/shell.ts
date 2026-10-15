@@ -29,6 +29,8 @@ export interface ShellDictionary {
     cityHcmc: string;
   };
   language: { label: string };
+  // The dark-mode toggle (a pressed/not-pressed button, so one label).
+  theme: { label: string };
   footer: {
     blurb: string;
     products: string;
@@ -67,6 +69,7 @@ const en: ShellDictionary = {
     cityHcmc: "Ho Chi Minh City",
   },
   language: { label: "Language" },
+  theme: { label: "Dark mode" },
   footer: {
     blurb:
       "XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges.",
@@ -106,6 +109,7 @@ const vi: ShellDictionary = {
     cityHcmc: "TP. Hồ Chí Minh",
   },
   language: { label: "Ngôn ngữ" },
+  theme: { label: "Chế độ tối" },
   footer: {
     blurb:
       "XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh.",

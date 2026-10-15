@@ -68,7 +68,11 @@ function Header() {
   return (
     <header>
       <Link href="/">logo</Link>
-      <MobileMenu locale="en" t={SHELL.en.nav} />
+      <MobileMenu
+        locale="en"
+        t={SHELL.en.nav}
+        themeLabel={SHELL.en.theme.label}
+      />
     </header>
   );
 }
@@ -103,7 +107,11 @@ describe("MobileMenu", () => {
   it("shows Vietnamese labels and /vi links on vi", () => {
     render(
       <header>
-        <MobileMenu locale="vi" t={SHELL.vi.nav} />
+        <MobileMenu
+          locale="vi"
+          t={SHELL.vi.nav}
+          themeLabel={SHELL.vi.theme.label}
+        />
       </header>,
     );
     fireEvent.click(menuButton());
@@ -430,7 +438,11 @@ describe("MobileMenu", () => {
         <a href="https://example.com/" target="_blank" rel="noreferrer">
           external
         </a>
-        <MobileMenu locale="en" t={SHELL.en.nav} />
+        <MobileMenu
+          locale="en"
+          t={SHELL.en.nav}
+          themeLabel={SHELL.en.theme.label}
+        />
       </header>,
     );
     const external = screen.getByRole("link", { name: "external" });

@@ -13,7 +13,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ja.ts` and open a pull request. `Where` is `ja:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 443 strings.
+**Total:** 444 strings.
 
 ## About
 
@@ -526,7 +526,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Site shell: header, footer, language menu, 404
 
-24 strings.
+25 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
@@ -544,6 +544,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:shell.nav.cityPlano` | Plano | プレイノ |
 | `ja:shell.nav.cityHcmc` | Ho Chi Minh City | ホーチミン市 |
 | `ja:shell.language.label` | Language | 言語 |
+| `ja:shell.theme.label` | Dark mode | ダークモード |
 | `ja:shell.footer.blurb` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech は、現場での経験と最新技術を組み合わせ、AI を活用した製品とカスタムソリューションでビジネスの課題を解決します。 |
 | `ja:shell.footer.howWeWork` | How we work | 仕事の進め方 |
 | `ja:shell.footer.allServices` | All services | すべてのサービス |

@@ -12,6 +12,7 @@ import { TouchPress } from "@/components/sections/touch-press";
 import { PageFade } from "@/components/sections/page-fade";
 import { PointerGlow } from "@/components/sections/pointer-glow";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
+import { THEME_SCRIPT } from "@/lib/theme/theme-preference";
 import "../globals.css";
 import { fontVariables } from "../fonts";
 
@@ -57,7 +58,13 @@ export default async function RootLayout({
       // to switch it off during route changes so they stay instant.
       data-scroll-behavior="smooth"
       className={`${fontVariables} h-full antialiased`}
+      // The theme script sets data-theme before React hydrates.
+      suppressHydrationWarning
     >
+      <head>
+        {/* Sets the light or dark theme before first paint, so it never flashes. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="flex min-h-full flex-col">
         {cjkFont && (
           <>

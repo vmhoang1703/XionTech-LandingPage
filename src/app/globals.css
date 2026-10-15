@@ -8898,3 +8898,285 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
 :is(h1, h2, h3, h4):is(:lang(ja), :lang(ko), :lang(zh)) {
   line-height: 1.35;
 }
+
+/* ---------- Dark theme (Hoang Vu and Sammy, 2026-10-15; overrides DESIGN.md "no dark mode") ----------
+   html[data-theme="dark"] is set before paint by THEME_SCRIPT (saved choice, else the
+   colour-scheme setting). Light values above stay untouched: this block only overrides.
+   The header pill stays white with the light tokens; navy bands keep brand navy with a
+   thin light edge so the section rhythm still shows. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-paper: #12213f;
+  --color-page: #0b1730;
+  --color-mist: #0f1d38;
+  --color-mist-end: #0f1d38;
+  --color-ice: #1e4178;
+  --color-door-tint: #162a4d;
+  --color-heading: #ffffff;
+  --color-text: #eef2f9;
+  --color-muted: #c5d0e3;
+  --color-placeholder: #9fb0cc;
+  --color-border: #ffffff24;
+  --color-field-border: #6f8fc1;
+  --color-link: #ffcf06;
+  --color-focus: #ffc000;
+  --color-amber-text: #ffd84a;
+  --background: var(--color-page);
+  background: var(--color-page);
+  color: var(--color-text);
+}
+
+html[data-theme="dark"] body {
+  background: var(--color-page);
+}
+
+/* Light surfaces take the dark set (they repeat light literals above). */
+html[data-theme="dark"] :is(.surface-paper, .surface-mist, .hero-light) {
+  --color-heading: #ffffff;
+  --color-text: #eef2f9;
+  --color-muted: #c5d0e3;
+  --color-border: #ffffff24;
+  --color-link: #ffcf06;
+  --color-focus: #ffc000;
+  --glass: color-mix(in srgb, #ffffff 8%, transparent);
+  --paper-text: #eef2f9;
+  --paper-muted: #c5d0e3;
+  --paper-border: #ffffff24;
+}
+
+/* Navy bands: brand navy with a light edge, so they stand off the ink page. */
+html[data-theme="dark"] :is(.surface-navy, .hero-navy) {
+  background: var(--color-navy);
+  box-shadow:
+    inset 0 1px 0 #ffffff24,
+    inset 0 -1px 0 #ffffff24;
+}
+
+/* The header pill stays white, with the light tokens, so the logo is unchanged. */
+html[data-theme="dark"] :is(.nav-pill, .lang-menu-list) {
+  --color-paper: #fdfdfe;
+  --color-page: #f7f9fd;
+  --color-mist: #eef2f9;
+  --color-ice: #dce6f5;
+  --color-heading: #163663;
+  --color-text: #10223f;
+  --color-muted: #4a5b78;
+  --color-border: #1636631f;
+  --color-link: #163663;
+  --color-focus: #163663;
+  --color-amber-text: #8a6700;
+  color: var(--color-text);
+}
+
+/* Text set to navy on light cards: light text on the dark cards instead. Amber parts
+   (buttons, the accent flip card, current step numbers) keep navy text. */
+html[data-theme="dark"]
+  :is(
+    .contact-direct svg,
+    .contact-direct a,
+    .home-media,
+    .door-products .go,
+    .map-sec h1,
+    .rm-head h2,
+    .rm-kicker,
+    .rm-title,
+    .rm-more,
+    .road-dialog-step,
+    .road-dialog-close,
+    .road-dialog h2,
+    .road-dialog-app h3,
+    .faq summary:hover,
+    .w-own-title,
+    .loc-card h3,
+    .loc-time,
+    .loc-row a:focus-visible,
+    .loc-row .loc-map,
+    #process .flow .step4 h3,
+    #process .flow .node b,
+    .life-cap,
+    .life-arrow,
+    .ah-links .btn-glass,
+    .mm-link,
+    .mm-link[aria-current="page"] .mm-arrow
+  ) {
+  color: var(--color-heading);
+}
+
+/* Light pills, chips and panels with literal light fills. */
+html[data-theme="dark"]
+  :is(.door-products .chip, .scard-pill, .art-pill, .loc-time, .life-cap) {
+  background: var(--color-ice);
+  border-color: var(--color-border);
+}
+
+html[data-theme="dark"]
+  :is(
+    .rm-pin,
+    .road-dialog-body,
+    .apply-bar,
+    .app-card,
+    .svc-card,
+    .scard,
+    .loc-card,
+    .dv-card,
+    .gain-card,
+    .flip-card:not(.accent) .flip-face,
+    .mm-sheet
+  ) {
+  background: var(--color-paper);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+/* Home: the products door is a light glass card; dark card with light text instead. */
+html[data-theme="dark"] .door-products {
+  background: linear-gradient(
+    150deg,
+    var(--color-paper),
+    var(--color-door-tint)
+  );
+}
+
+html[data-theme="dark"] .home-hero .door-products {
+  --color-heading: #ffffff;
+}
+
+/* "Why XionTech" card titles are navy by default. */
+html[data-theme="dark"] .w-card {
+  --w-heading: var(--color-heading);
+}
+
+/* Form cards sit on the amber band, which keeps its navy text; the card itself turns
+   dark, so it takes the dark token set. */
+html[data-theme="dark"] .form-card {
+  --color-heading: #ffffff;
+  --color-text: #eef2f9;
+  --color-muted: #c5d0e3;
+  --color-border: #ffffff24;
+  --color-link: #ffcf06;
+  --color-focus: #ffc000;
+  --destructive: var(--color-error-on-navy);
+  color: var(--color-text);
+}
+
+/* Cards and buttons with white fills: dark paper instead. */
+html[data-theme="dark"] :is(.rm-card, .outcome, .step4) {
+  background: var(--color-paper);
+}
+
+html[data-theme="dark"] .btn-glass {
+  background: color-mix(in srgb, #ffffff 8%, transparent);
+}
+
+html[data-theme="dark"]
+  :is(.door-products .chip, .scard-pill, .scard-pill.company, .art-pill) {
+  background: var(--color-ice);
+  color: var(--color-heading);
+}
+
+/* The accent value card stays amber and pale yellow, so it keeps the light text set. */
+html[data-theme="dark"] .flip-card.accent {
+  --color-heading: #163663;
+  --color-text: #10223f;
+  --color-muted: #23406b;
+  color: var(--color-text);
+}
+
+/* About hero fades to cream at its foot; to the page colour instead. */
+html[data-theme="dark"] .about-hero {
+  background: linear-gradient(180deg, var(--color-paper), var(--color-page));
+}
+
+/* The contact band fades in from the section above; start it on cream in dark
+   mode, so its navy text never sits on the dark fade. */
+html[data-theme="dark"] .sec.contact {
+  --contact-top: #fdf3d6;
+}
+
+/* 4-D step pictures fade from mist to white; to the dark card instead. */
+html[data-theme="dark"] .step4 .art {
+  background: linear-gradient(180deg, var(--color-ice), var(--color-paper));
+}
+
+/* Services sets its process cards white by id. */
+html[data-theme="dark"] #process .flow .step4 {
+  background-color: var(--color-paper);
+}
+
+/* The theme toggle: a round glass button to the right of the header pill on desktop,
+   a row in the menu sheet below 1081px. Instant switch, no colour transition. */
+.theme-toggle {
+  display: none;
+}
+
+@media (min-width: 1081px) {
+  .theme-toggle {
+    pointer-events: auto;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgb(255 255 255 / 0.8);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.95);
+    color: var(--color-navy);
+    font-size: 20px;
+    box-shadow: 0 14px 34px -16px rgb(11 23 48 / 0.32);
+    backdrop-filter: blur(18px);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    background: var(--color-amber-pale);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 3px;
+  }
+}
+
+.theme-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: none;
+  color: var(--color-heading);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theme-toggle-row svg {
+  font-size: 20px;
+}
+
+.theme-toggle-row[aria-pressed="true"] {
+  background: var(--color-ice);
+}
+
+/* No JavaScript: follow the colour-scheme setting with the same tokens. */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    color-scheme: dark;
+    --color-paper: #12213f;
+    --color-page: #0b1730;
+    --color-mist: #0f1d38;
+    --color-mist-end: #0f1d38;
+    --color-ice: #1e4178;
+    --color-heading: #ffffff;
+    --color-text: #eef2f9;
+    --color-muted: #c5d0e3;
+    --color-border: #ffffff24;
+    --color-link: #ffcf06;
+    --color-focus: #ffc000;
+    --color-amber-text: #ffd84a;
+    background: var(--color-page);
+  }
+}
