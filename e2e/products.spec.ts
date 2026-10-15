@@ -240,6 +240,13 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
     const from = top - pin;
     for (let y = from + 1; y < from + STOPS * step; y += step / 8) {
       await scrollTo(page, y);
+      // Let the page draw, so a stop passed between two frames is not skipped.
+      await page.evaluate(
+        () =>
+          new Promise((done) =>
+            requestAnimationFrame(() => requestAnimationFrame(done)),
+          ),
+      );
     }
     await expect
       .poll(() =>
@@ -318,6 +325,12 @@ test.describe("product roadmap", { tag: "@a11y" }, () => {
     });
     await page.goto("/en/products");
     await expect(roadmap(page)).toHaveAttribute("data-tour", "on");
+    // Shifts while the page loads and reveals are not the tour's: count from
+    // the moment it has settled.
+    await page.waitForTimeout(1000);
+    await page.evaluate(() => {
+      (window as unknown as { cls: number }).cls = 0;
+    });
     const { top, step, pin } = await track(page);
     for (let i = 0; i < STOPS; i += 1) {
       await scrollTo(page, top - pin + (i + 0.5) * step);

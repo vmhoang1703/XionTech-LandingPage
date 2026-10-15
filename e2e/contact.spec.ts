@@ -46,7 +46,7 @@ async function openForm(page: Page) {
 
 async function fill(page: Page) {
   await field(page, "Your name").fill("  Lan Nguyen ");
-  await field(page, "Work email").fill("lan@school.edu.vn ");
+  await field(page, "Email address").fill("lan@school.edu.vn ");
   await field(page, "Tell us about your project").fill(
     "We want a parent app for our school.",
   );
@@ -85,13 +85,13 @@ for (const [device, viewport] of [
     }) => {
       await fakeApi(page, [{ status: 200 }]);
       await openForm(page);
-      await field(page, "Work email").fill("lan@school");
+      await field(page, "Email address").fill("lan@school");
       await submit(page).click();
       const error = fieldError(page, "Please enter a valid email address.");
       await expect(error).toBeVisible();
-      await field(page, "Work email").fill("lan@school.edu.vn");
+      await field(page, "Email address").fill("lan@school.edu.vn");
       await expect(error).toBeHidden();
-      await expect(field(page, "Work email")).not.toHaveAttribute(
+      await expect(field(page, "Email address")).not.toHaveAttribute(
         "aria-invalid",
         "true",
       );
@@ -164,14 +164,14 @@ for (const [device, viewport] of [
       await expect(
         fieldError(page, "Please enter a valid email address."),
       ).toBeVisible();
-      await expect(field(page, "Work email")).toBeFocused();
+      await expect(field(page, "Email address")).toBeFocused();
     });
 
     test("uses 16px fields, so iPhone does not zoom in", async ({ page }) => {
       await openForm(page);
       for (const label of [
         "Your name",
-        "Work email",
+        "Email address",
         "Tell us about your project",
       ]) {
         const size = await field(page, label).evaluate(
@@ -242,7 +242,8 @@ test.describe(
       );
       await nav.getByRole("link", { name: "Let's talk" }).click();
       await expect(page).toHaveURL(/\/en#contact$/);
-      await expect(nav).toBeHidden();
+      // Closed, the sheet is clipped away and inert, not hidden.
+      await expect(nav).toHaveAttribute("inert", "");
       await expect(form(page)).toBeInViewport();
     });
   },
