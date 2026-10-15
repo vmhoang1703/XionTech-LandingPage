@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { globalsCss } from "@/test-utils/css-classes";
+import { homeHero } from "@/content/home";
 import { HomeHero } from "./home-hero";
 
 // jsdom has no WebGL; the silk falls back to the static glow.
@@ -17,7 +18,7 @@ vi.mock("@/components/sections/count-up", () => ({
 function renderHero() {
   render(<HomeHero />);
   return screen.getByRole("region", {
-    name: "Build smarter. Ship faster. Get IT done.",
+    name: "Build smarter. Ship faster. Get IT done",
   });
 }
 
@@ -29,19 +30,23 @@ describe("HomeHero", () => {
     const h1 = within(hero).getByRole("heading", { level: 1 });
     expect(h1.parentElement?.querySelector(".label")).toBeNull();
     expect(h1.classList.contains("text-display-hero-fluid")).toBe(true);
-    expect(h1.textContent).toBe("Build smarter. Ship faster. Get IT done.");
+    expect(h1.textContent).toBe("Build smarter. Ship faster. Get IT done");
     expect(within(h1).getByText("Get IT done").classList.contains("hl")).toBe(
       true,
     );
     const beats = [...h1.querySelectorAll(".block")].map(
       (el) => el.textContent,
     );
-    expect(beats).toEqual(["Build smarter.", "Ship faster."]);
-    expect(
-      within(hero).getByText(
-        "Connected school and campus solutions, software products and dedicated teams, from people who lead the way in AI-assisted development.",
-      ),
-    ).toBeDefined();
+    // Round 11: the last beat has its own block too, so it can rise in on load.
+    expect(beats).toEqual(["Build smarter.", "Ship faster.", "Get IT done"]);
+    expect(h1.querySelectorAll("[data-load]")).toHaveLength(3);
+    expect(within(hero).getByText(homeHero.sub)).toBeDefined();
+  });
+
+  it("uses the approved sub line (round 11), the same sentence as the footer blurb", () => {
+    expect(homeHero.sub).toBe(
+      "XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges.",
+    );
   });
 
   it("has one Get in touch button linking to the contact section", () => {
@@ -102,7 +107,7 @@ describe("HomeHero", () => {
 
     const h1 = screen.getByRole("heading", { level: 1 });
     expect(h1.textContent).toBe(
-      "Xây dựng thông minh hơn. Phát hành nhanh hơn. Get IT done.",
+      "Xây dựng thông minh hơn. Phát hành nhanh hơn. Get IT done",
     );
     expect(
       screen.getByRole("link", { name: "Liên hệ với chúng tôi" }),

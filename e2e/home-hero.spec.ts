@@ -14,13 +14,13 @@ test(
     expect(html).toContain("Get in touch");
     expect(html).toContain("Experience you can count on");
     expect(html).toContain("Products for schools");
-    expect(html).toContain("Your software delivery team");
+    expect(html).toContain("Custom software for your business");
     expect(html).toContain("What can we help you achieve?");
-    expect(html).toContain("One connected school.");
-    expect(html).toContain("Why XionTech.");
-    expect(html).toContain("How we work.");
-    expect(html).toContain("Our core values.");
-    expect(html).toContain("Your questions, answered.");
+    expect(html).toContain("One connected school");
+    expect(html).toContain("Why XionTech");
+    expect(html).toContain("How we work");
+    expect(html).toContain("What drives us");
+    expect(html).toContain("Before you reach out");
     // Without JavaScript the "+3" industries are still in the HTML.
     expect(html).toContain("Private Equity");
     expect(html).not.toContain("Four apps. One school day.");

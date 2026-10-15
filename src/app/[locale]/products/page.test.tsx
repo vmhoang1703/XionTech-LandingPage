@@ -59,7 +59,7 @@ describe("Products page", () => {
     expect(
       screen.getByRole("heading", {
         level: 2,
-        name: "See it working at your school.",
+        name: "See it working at your school",
       }),
     ).toBeDefined();
   });
@@ -70,7 +70,7 @@ describe("Products page", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: "Built apart. Better together.",
+        name: "Built apart. Better together",
       }),
     ).toBeDefined();
     expect(container.querySelectorAll("h1")).toHaveLength(1);
@@ -128,10 +128,10 @@ describe("Products page", () => {
     );
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Xây dựng riêng. Mạnh hơn khi kết nối.",
+      "Xây dựng riêng. Mạnh hơn khi kết nối",
     );
     expect(
-      screen.getByRole("heading", { name: "Một ngày ở trường." }),
+      screen.getByRole("heading", { name: "Một ngày ở trường" }),
     ).toBeTruthy();
     expect(container.querySelector(".rm-title")?.textContent).toBe(
       "1. Học sinh đến trường",
@@ -145,7 +145,7 @@ describe("Products page", () => {
     render(await productsAt("xx"));
 
     expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
-      "Built apart. Better together.",
+      "Built apart. Better together",
     );
   });
 });

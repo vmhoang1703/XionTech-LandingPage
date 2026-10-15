@@ -11,7 +11,7 @@ vi.mock("next/font/google", () => ({
 
 // An async Server Component cannot render to static markup here (Story 3.7).
 vi.mock("@/components/news/home-news", () => ({
-  HomeNews: () => <section>Latest from XionTech.</section>,
+  HomeNews: () => <section>Latest from XionTech</section>,
 }));
 
 vi.mock("next/navigation", () => ({
@@ -33,21 +33,20 @@ describe("no JavaScript", () => {
     );
 
     expect(html).toMatch(/^<html lang="en"/);
-    // Every title word is its own span (the hero entrance), in the HTML.
-    const h1 = /<h1[^>]*>(.*?)<\/h1>/.exec(html)?.[1] ?? "";
-    expect(h1.replaceAll(/<[^>]*>/g, "")).toBe(
-      "Build smarter. Ship faster. Get IT done.",
+    expect(html).toMatch(
+      // Round 11: each beat is a block with its load-in order (style).
+      /<h1[^>]*><span class="block"[^>]*>Build smarter\.<\/span> <span class="block"[^>]*>Ship faster\.<\/span> <span class="block"[^>]*><span class="hl">Get IT done<\/span><\/span><\/h1>/,
     );
-    expect(h1.match(/data-hw=""/g)).toHaveLength(5);
-    expect(h1).toContain('<span class="hl" data-hw=""');
     expect(html).toContain("Get in touch");
-    expect(html).toContain("How we work.");
+    expect(html).toContain("How we work");
     // Every value's short line and every Home answer render without a script.
-    expect(html).toContain("Agile, resilient and always improving.");
+    expect(html).toContain(
+      "Stay flexible, respond to change, and keep moving toward what matters.",
+    );
     expect(html).toContain("How do you work across time zones?");
     expect(html).toContain("Have something you want to build?");
-    expect(html.indexOf("Latest from XionTech.")).toBeGreaterThan(-1);
-    expect(html.indexOf("Latest from XionTech.")).toBeLessThan(
+    expect(html.indexOf("Latest from XionTech")).toBeGreaterThan(-1);
+    expect(html.indexOf("Latest from XionTech")).toBeLessThan(
       html.indexOf("Have something you want to build?"),
     );
     expect(html).toContain("<header");

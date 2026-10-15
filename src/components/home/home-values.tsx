@@ -1,4 +1,5 @@
 import { FlipToggle } from "@/components/sections/flip-toggle";
+import { ValueFlipCard } from "@/components/sections/value-flip-card";
 import {
   aboutValues,
   aboutValuesVi,
@@ -8,36 +9,78 @@ import {
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 
-// Home core values as flip cards: the front shows the icon, the title and a
-// short line; the back the full value. Home is the only page with them. No
-// id="values": the About page no longer has that anchor either.
-export function HomeValues({ locale = "en" }: Readonly<{ locale?: Locale }>) {
+type HomeValuesProps = {
+  locale?: Locale;
+  /** About reuses the cards with its own ids. */
+  id?: string;
+  headingId?: string;
+  title?: string;
+  lede?: string;
+  /** "drawing" is the Careers flip-card look (About); Home keeps "icon". */
+  variant?: "icon" | "drawing";
+};
+
+// "What drives us" as flip cards (website copy v3). Front: icon, number and
+// label, title, hint. Back: label and the line. Home and About both show it;
+// About uses the Careers card (line drawing) through variant="drawing".
+export function HomeValues({
+  locale = "en",
+  id,
+  headingId = "home-values-h",
+  title,
+  lede,
+  variant = "icon",
+}: Readonly<HomeValuesProps> = {}) {
   const heading = pickLocale(locale, {
     en: homeValuesHeading,
     vi: homeValuesHeadingVi,
   });
   const values = pickLocale(locale, { en: aboutValues, vi: aboutValuesVi });
   const { frontHint, backHint } = heading;
+  const drawing = variant === "drawing";
 
   return (
-    <section aria-labelledby="home-values-h" className="sec home-values">
+    <section
+      id={id}
+      aria-labelledby={headingId}
+      className={drawing ? "sec values-drawn" : "sec home-values"}
+    >
       <div className="wrap">
         <div className="sec-head" data-reveal="">
-          <h2 id="home-values-h">{heading.title}</h2>
-          <p className="lede">{heading.lede}</p>
+          <h2 id={headingId}>{title ?? heading.title}</h2>
+          <p className="lede">{lede ?? heading.lede}</p>
         </div>
-        <div className="flip-cards" data-reveal="">
-          {values.items.map(
-            ({ icon: ValueIcon, title, short, text, featured }) => (
+        <div
+          className={
+            drawing ? "flip-cards flip-cards-drawn" : "flip-cards flip-cards-5"
+          }
+          data-reveal=""
+        >
+          {values.items.map((item) =>
+            drawing ? (
+              <ValueFlipCard
+                key={item.number}
+                num={item.number}
+                label={item.label}
+                title={item.title}
+                text={item.text}
+                drawing={item.drawing}
+                accent={item.featured}
+                frontHint={frontHint}
+                backHint={backHint}
+              />
+            ) : (
               <FlipToggle
-                key={title}
-                accent={featured}
+                key={item.number}
+                accent={item.featured}
                 front={
                   <>
-                    <ValueIcon aria-hidden="true" className="flip-icon" />
+                    <item.icon aria-hidden="true" className="flip-icon" />
                     <span>
-                      <span className="flip-title">{title}</span>
-                      <span className="flip-text">{short}</span>
+                      <span className="flip-label">
+                        {item.number} · {item.label}
+                      </span>
+                      <span className="flip-title">{item.title}</span>
                     </span>
                     <span className="flip-hint">{frontHint}</span>
                   </>
@@ -45,8 +88,10 @@ export function HomeValues({ locale = "en" }: Readonly<{ locale?: Locale }>) {
                 back={
                   <>
                     <span>
-                      <span className="flip-title">{title}</span>
-                      <span className="flip-text">{text}</span>
+                      <span className="flip-label">
+                        {item.number} · {item.label}
+                      </span>
+                      <span className="flip-text">{item.text}</span>
                     </span>
                     <span className="flip-hint">{backHint}</span>
                   </>

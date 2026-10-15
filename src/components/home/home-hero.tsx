@@ -1,26 +1,29 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
-import { Fragment } from "react";
+import { type CSSProperties, Fragment } from "react";
 import { StatsBand } from "@/components/sections/stats-band";
 import { homeHero, homeHeroVi, homeStats, homeStatsVi } from "@/content/home";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { FrontDoors } from "./front-doors";
 import { HeroSilk } from "./hero-silk";
-import { heroWords } from "@/components/sections/hero-words";
 
 // Server Component: text and CTA render without JavaScript. The static navy
 // and amber glow (.silk-fallback) is always painted; HeroSilk (Story 3.2)
 // draws the silk canvas above it and adds the motion toggle as a client
 // island, so the glow is what shows without JavaScript or WebGL. The two
 // front doors sit inside the hero and straddle its lower edge (E-S1 Home).
+// [data-load] items rise in one after another on load (globals.css,
+// "Load-in"), CSS only so they paint at once and show without JavaScript.
+const loadAt = (index: number) => ({ "--load-i": index }) as CSSProperties;
+
 export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
   const { title, sub, cta } = pickLocale(locale, {
     en: homeHero,
     vi: homeHeroVi,
   });
   const stats = pickLocale(locale, { en: homeStats, vi: homeStatsVi });
+  const n = title.lines.length;
 
-  const t = heroWords();
   return (
     <section
       aria-labelledby="home-hero-title"
@@ -42,30 +45,45 @@ export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
               className="font-display text-display-hero-fluid max-w-[20ch]"
             >
               {/* The space sits between the lines, so the heading's name
-                  reads "Build smarter. Ship faster. Get IT done." */}
-              {title.lines.map((line) => (
+                  reads "Build smarter. Ship faster. Get IT done" */}
+              {title.lines.map((line, index) => (
                 <Fragment key={line}>
-                  <span className="block">{t.words(line)}</span>{" "}
+                  <span className="block" data-load="" style={loadAt(index)}>
+                    {line}
+                  </span>{" "}
                 </Fragment>
               ))}
-              <span className="hl" {...t.unit()}>
-                {title.highlight}
+              <span className="block" data-load="" style={loadAt(n)}>
+                <span className="hl">{title.highlight}</span>
+                {title.tail}
               </span>
-              {title.tail}
             </h1>
-            <p className="text-body-lg mt-5.5 mb-8.5 max-w-[62ch] text-pretty">
+            <p
+              className="text-body-lg mt-5.5 mb-8.5 max-w-[62ch] text-pretty"
+              data-load=""
+              style={loadAt(n + 1)}
+            >
               {sub}
             </p>
             {/* A plain anchor: next/link does not scroll again when the hash
               is already #contact, so a second click would do nothing. */}
-            <a href={cta.href} className="btn btn-primary">
+            <a
+              href={cta.href}
+              className="btn btn-primary"
+              data-load=""
+              style={loadAt(n + 2)}
+            >
               {cta.label}
               <ArrowRightIcon aria-hidden="true" />
             </a>
           </div>
           <div className="hero-stage relative aspect-[6/5] w-full" />
         </div>
-        <div className="wrap home-stats mt-14 w-full md:mt-22 lg:mt-0 lg:pb-6">
+        <div
+          className="wrap home-stats mt-14 w-full md:mt-22 lg:mt-0 lg:pb-6"
+          data-load=""
+          style={loadAt(n + 3)}
+        >
           <StatsBand label={stats.label} stats={stats.stats} tone="navy" />
         </div>
       </div>

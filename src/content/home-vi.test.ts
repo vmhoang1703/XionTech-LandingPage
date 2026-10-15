@@ -51,10 +51,9 @@ describe("Home, values, process and apps in Vietnamese", () => {
     );
   });
 
-  it("has a Vietnamese tagline for every app, keeping the placeholder mark", () => {
+  it("has a Vietnamese tagline for every app", () => {
     expect(Object.keys(appTaglinesVi).sort()).toEqual(
       APPS.map((app) => app.id).sort(),
     );
-    expect(appTaglinesVi["ai-tutor"].startsWith("[Placeholder] ")).toBe(true);
   });
 });

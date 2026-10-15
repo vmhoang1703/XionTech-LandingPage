@@ -6,7 +6,7 @@ import { processFlow, processFlowVi } from "@/content/process";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 
-// Home "How we work." section: the page's one navy moment, a rounded navy
+// Home "How we work" section: the page's one navy moment, a rounded navy
 // panel (surface-navy) with a moving amber light, the shared 4-D process
 // flow and the link to Services on the heading row (lead, 2026-10-11).
 export function HomeProcess({ locale = "en" }: Readonly<{ locale?: Locale }>) {

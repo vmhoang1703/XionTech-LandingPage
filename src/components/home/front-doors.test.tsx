@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
+import { homeDoors } from "@/content/home";
 import { FrontDoors } from "./front-doors";
 
 function door(name: RegExp) {
@@ -28,42 +29,34 @@ describe("FrontDoors", () => {
     }
   });
 
-  it("shows the Products door with badges, line and chips", () => {
+  it("shows the Products door with label, title, line and four app tiles", () => {
     const products = door(/Products for schools/);
 
     expect(products.getAttribute("href")).toBe("/en/products");
     expect(
-      within(products).getByRole("heading", { name: "Products for schools" }),
+      within(products).getByRole("heading", {
+        name: "Platforms in one ecosystem",
+      }),
     ).toBeDefined();
-    for (const text of [
-      "P-Hub",
-      "S-Hub",
-      "Connected apps for parents, students, teachers, leaders and school staff.",
-      "Parent Hub",
-      "Staff Hub",
-      "AI Tutor",
-    ]) {
+    for (const text of ["Products for schools", homeDoors.products.line]) {
       expect(within(products).getByText(text)).toBeDefined();
     }
-    expect(within(products).getAllByText("IoT")).toHaveLength(2);
+    expect(
+      Array.from(
+        products.querySelectorAll(".door-mini b"),
+        (b) => b.textContent,
+      ),
+    ).toEqual(homeDoors.products.badges.map((app) => app.shortName));
   });
 
-  it("shows the Services door with label, line and chips", () => {
-    const services = door(/Your software delivery team/);
+  it("shows the Services door with label, title and line, and no chips", () => {
+    const services = door(/Custom software for your business/);
 
     expect(services.getAttribute("href")).toBe("/en/services");
-    for (const text of [
-      "Outsourcing services",
-      "Dedicated teams and end-to-end delivery for companies building digital products.",
-      "Product Engineering",
-      "AI-Driven Analytics",
-      "Staffing",
-      "Low-code",
-      "Cloud",
-      "+3 more",
-    ]) {
+    for (const text of ["Outsourcing services", homeDoors.services.line]) {
       expect(within(services).getByText(text)).toBeDefined();
     }
+    expect(services.querySelectorAll(".chip")).toHaveLength(0);
   });
 
   it("puts no interactive element inside either door", () => {
@@ -76,7 +69,7 @@ describe("FrontDoors", () => {
     }
   });
 
-  it("uses the ported door, badge and chip classes", () => {
+  it("uses the ported door and badge classes, with the badges in mini-tiles", () => {
     render(<FrontDoors />);
 
     const region = screen.getByRole("region", { name: "What we do" });
@@ -94,13 +87,9 @@ describe("FrontDoors", () => {
       Array.from(products.querySelectorAll(".badge")).map((b) =>
         Array.from(b.classList).find((c) => c.startsWith("b-")),
       ),
-    ).toEqual(["b-pxp", "b-sxp", "b-iot"]);
-    expect(
-      Array.from(products.querySelectorAll(".chip"), (c) => c.textContent),
-    ).toEqual(["Parent Hub", "Staff Hub", "IoT", "AI Tutor"]);
-    expect(services.querySelectorAll(".chip")).toHaveLength(6);
+    ).toEqual(["b-pxp", "b-sxp", "b-iot", "b-ait"]);
     expect(products.querySelector(".badge")?.parentElement?.className).toBe(
-      "chips",
+      "door-mini",
     );
     for (const link of [products, services]) {
       expect(link.querySelector(".go svg")?.getAttribute("aria-hidden")).toBe(

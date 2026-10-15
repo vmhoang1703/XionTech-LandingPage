@@ -1,17 +1,17 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { aboutFaq } from "@/content/about";
+import { homeFaq } from "@/content/home";
 import { undefinedClasses } from "@/test-utils/css-classes";
 import { HomeFaq } from "./home-faq";
 
 describe("HomeFaq", () => {
-  it("answers four About questions, in About's order", () => {
+  it("answers its four questions", () => {
     render(<HomeFaq />);
 
     const region = screen.getByRole("region", {
-      name: "Your questions, answered.",
+      name: "Before you reach out",
     });
-    expect(region.querySelector(".lede")?.textContent).toBe(aboutFaq.lede);
+    expect(region.querySelector(".lede")?.textContent).toBe(homeFaq.lede);
     const questions = Array.from(region.querySelectorAll("summary")).map(
       (summary) => summary.textContent,
     );
@@ -22,7 +22,7 @@ describe("HomeFaq", () => {
       "How do we give feedback during a project?",
     ]);
     for (const question of questions) {
-      const item = aboutFaq.items.find((faq) => faq.question === question);
+      const item = homeFaq.items.find((faq) => faq.question === question);
       expect(within(region).getByText(item?.answer ?? "missing")).toBeDefined();
     }
     expect(region.textContent).not.toContain("[Placeholder]");
