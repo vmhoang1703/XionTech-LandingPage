@@ -102,11 +102,7 @@ export const homeDoors = {
     label: "Products for schools",
     title: "Platforms in one ecosystem",
     line: "An integrated, AI-powered ecosystem that enhances learning, simplifies school administration and keeps students engaged",
-    chips: [
-      parentHub.shortName,
-      staffHub.shortName,
-      aiTutor.shortName,
-    ],
+    chips: [parentHub.shortName, staffHub.shortName, aiTutor.shortName],
   },
   services: {
     href: "/services",

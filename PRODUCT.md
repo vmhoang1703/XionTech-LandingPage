@@ -26,7 +26,7 @@ XionTech is an AI-driven product and engineering company that builds for any ind
 ## Capabilities and Constraints
 
 - Next.js 16 App Router, React 19, Tailwind CSS v4 (`src/app/globals.css` `@theme`), Sanity CMS for news and careers, Vercel.
-- Every page in six locales: en, vi, ja, fr, ko, zh. New text needs an entry in all six dictionaries, then `npm run i18n:review`.
+- Every page in two locales: en and vi. New text needs its Vietnamese twin, then `npm run i18n:review`.
 - Lighthouse mobile performance at least 90; LCP at most 2.5s, INP at most 200ms, CLS at most 0.1. If motion or 3D pushes a score below target, the motion is reduced, not the target (PRD SM-6, SM-8, SM-C3).
 
 ## Brand Commitments

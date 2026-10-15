@@ -131,9 +131,7 @@ describe("Privacy page in Vietnamese", () => {
     expect(container.querySelector(".policy-lang-note")?.textContent).toBe(
       "Chính sách này được cung cấp bằng tiếng Anh.",
     );
-    expect(container.querySelector("article")?.getAttribute("lang")).toBe(
-      "en",
-    );
+    expect(container.querySelector("article")?.getAttribute("lang")).toBe("en");
     expect(screen.getAllByRole("heading", { level: 2 })[0].textContent).toBe(
       "Introduction",
     );
@@ -158,13 +156,6 @@ describe("Privacy page metadata in Vietnamese", () => {
 });
 
 describe("Privacy page metadata in other locales", () => {
-  it("uses the Japanese title on ja", async () => {
-    const meta = await generateMetadata({
-      params: Promise.resolve({ locale: "ja" }),
-    });
-    expect(meta.title).toBe("プライバシーポリシー | XionTech");
-  });
-
   it("uses the English title on an unknown locale", async () => {
     const meta = await generateMetadata({
       params: Promise.resolve({ locale: "de" }),

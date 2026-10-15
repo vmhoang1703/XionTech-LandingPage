@@ -207,27 +207,6 @@ describe("roleTypeLabel", () => {
     expect(roleTypeLabel("contract", "vi")).toBe("Hợp đồng");
   });
 
-  it("falls back to English in a locale with no dictionary", () => {
-    expect(roleTypeLabel("internship", "ko")).toBe("Internship");
-    expect(roleTypeLabel("constructor", "ko")).toBeUndefined();
-  });
-
-  it("gives a registered locale's translated label", () => {
-    dictionaries.ja = {
-      roleTypes: {
-        "full-time": "正社員",
-        "part-time": "パートタイム",
-        contract: "契約",
-        internship: "インターンシップ",
-      },
-    };
-    try {
-      expect(roleTypeLabel("full-time", "ja")).toBe("正社員");
-    } finally {
-      delete dictionaries.ja;
-    }
-  });
-
   it.each([undefined, null, "", "weekend", "constructor"])(
     "gives undefined for %s",
     (type) => {

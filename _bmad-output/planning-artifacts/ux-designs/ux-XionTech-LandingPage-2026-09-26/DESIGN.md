@@ -1,6 +1,6 @@
 ---
 name: XionTech Website
-description: Multi-page company website for XionTech in six languages (en, vi, ja, fr, ko, zh), selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
+description: Multi-page company website for XionTech in English and Vietnamese, selling four school products and outsourcing services. Navy, amber and white from the logo, with a section colour rhythm instead of dark mode. Built on Next.js 16 + Tailwind CSS v4 + shadcn/ui (planned) + Motion; tokens map to Tailwind @theme.
 status: final
 updated: 2026-10-01
 colors:
@@ -366,7 +366,7 @@ What the code in `src/` ships today. Where an older section below disagrees, thi
   - *Meet the team at XionTech strip* (`.life-*`, `#meet-the-team`): copy and interest tags beside one vertical photo strip that loops upward over 44s and pauses on hover or focus; reduced motion stands it still. Photos have no caption. Team photos: every image file in `public/careers/life/` (any filename; `.webp`, `.jpg`, `.jpeg`, `.png` or `.avif`; sorted by filename) shows in the strip with the generic localized alt "XionTech team moment" and no caption. The page reads the folder when it is built, so rebuild and redeploy after adding photos (in `npm run dev` a refresh is enough). An empty folder shows plain tinted tiles. HEIC files are skipped (browsers cannot show them); export them as JPEG or WebP first.
   - *Mobile menu sheet* (`.mm-sheet`): drops from the header pill at 1080px and below, 28px bottom radius; links, then the "Let's talk" button and both delivery centers' phones. The header "Let's talk" fades out while the sheet is open.
 - **Motion:** see `EXPERIENCE.md` › Shipped Site.
-- **Locales:** six (en, vi, ja, fr, ko, zh). Every string has all six.
+- **Locales:** two (en, vi). Every string has both.
 
 ## Brand & Style
 
