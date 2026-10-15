@@ -64,6 +64,7 @@ export default async function NewsPage({
             items={posts.map((post) => ({
               key: post.slug,
               category: postAudience(post),
+              photo: Boolean(post.image),
               node: <NewsCard post={post} locale={locale} />,
             }))}
           />

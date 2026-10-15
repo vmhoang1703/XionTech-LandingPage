@@ -181,7 +181,7 @@ const GLOBAL_ALLOWED = [
 
 /** Words a locale writes like the English (spec-vi-page-content decisions 2 and 4 for vi). */
 const LOCALE_ALLOWED = {
-  vi: ["Logistics", "Menu", "Email", "CV", "WIREFRAME"],
+  vi: ["Logistics", "Menu", "Email", "CV", "WIREFRAME", "Otaku", "Karaoke"],
   ja: ["CV"],
   fr: [
     "Service",
@@ -193,6 +193,9 @@ const LOCALE_ALLOWED = {
     "CV",
     "vision",
     "vision.",
+    "Otaku",
+    "Badminton",
+    "Football",
   ],
   ko: [],
   zh: [],

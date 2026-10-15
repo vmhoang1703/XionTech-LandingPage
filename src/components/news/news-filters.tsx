@@ -22,9 +22,22 @@ export type FilterItem = {
   key: string;
   /** The story's audience; null shows it only under All. */
   category: Audience | null;
+  /** The story has a cover photo (it can then lead the list). */
+  photo?: boolean;
   /** The server-rendered news card. */
   node: ReactNode;
 };
+
+/**
+ * The lead is the newest story with a cover photo (Amber, 2026-10-15): it moves
+ * first, the rest keep their newest-first order. With no photo at all, the
+ * newest story leads as before.
+ */
+export function photoLeadFirst<T extends { photo?: boolean }>(items: T[]): T[] {
+  const lead = items.findIndex((item) => item.photo);
+  if (lead <= 0) return items;
+  return [items[lead], ...items.slice(0, lead), ...items.slice(lead + 1)];
+}
 
 // The grid's columns at each width; the same breakpoints as `#newsGrid` in
 // globals.css (3, then 2 at 900px, then 1 at 560px).
@@ -75,10 +88,11 @@ export function NewsFilters({ items }: Readonly<{ items: FilterItem[] }>) {
   const allRef = useRef<HTMLButtonElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const cols = useSyncExternalStore(subscribe, columns, serverColumns);
-  const shown =
+  const shown = photoLeadFirst(
     active === newsPage.allFilter.id
       ? items
-      : items.filter((item) => item.category === active);
+      : items.filter((item) => item.category === active),
+  );
   const hasLead = shown.length === 1 || shown.length - 1 >= cols;
 
   // Each story card unfolds from the top as it comes into view, one after

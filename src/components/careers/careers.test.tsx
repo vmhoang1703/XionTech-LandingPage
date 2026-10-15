@@ -32,25 +32,34 @@ const roles: OpenRole[] = [
 ];
 
 describe("CareersHero", () => {
-  it("shows the two-line H1, the lede and no breadcrumb", () => {
+  it("shows the H1, the lede, the closing prompt line and no breadcrumb", () => {
     const { container } = render(<CareersHero />);
 
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1.textContent).toBe("Stay curious. Build what’s next");
-    expect(h1.querySelector("br")).not.toBeNull();
+    expect(h1.textContent).toBe("Careers at XionTech");
+    expect(h1.querySelector(".ch-accent")?.textContent).toBe("XionTech");
     expect(container.querySelector(".lede")?.textContent).toMatch(
-      /^We’re building a team for people who learn fast/,
+      /^We’re bringing together curious minds who love solving problems/,
+    );
+    expect(container.querySelector("p.ch-prompt")?.textContent).toBe(
+      "Ready to build with us?",
     );
     expect(screen.queryByRole("navigation")).toBeNull();
     expect(container.querySelector(".hero-light.careers-hero")).not.toBeNull();
   });
 
-  it("has no hero CTA and keeps the hero to its copy, with no growth diagram", () => {
+  it("has no hero CTA, only its copy beside the stacked-cards picture", () => {
     const { container } = render(<CareersHero />);
 
     expect(screen.queryByRole("link")).toBeNull();
+    expect(screen.queryByRole("button")).toBeNull();
     expect(screen.queryByText("Explore open roles")).toBeNull();
-    expect(container.querySelector(".ch-stack .ch-copy")).not.toBeNull();
+    expect(
+      container.querySelector(".ch-grid h1 + p, .ch-grid div > h1"),
+    ).not.toBeNull();
+    expect(container.querySelector(".ch-art img")?.getAttribute("alt")).toMatch(
+      /stacked cards/,
+    );
     expect(container.querySelector("svg[role='img'], .gd")).toBeNull();
   });
 });
@@ -103,7 +112,10 @@ describe("LifeFrames", () => {
 
     expect(container.querySelector("section#life")).not.toBeNull();
     expect(
-      screen.getByRole("heading", { level: 2, name: "Life at XionTech" }),
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Meet the team at XionTech",
+      }),
     ).not.toBeNull();
     for (const caption of [
       "[Placeholder] Team photo",

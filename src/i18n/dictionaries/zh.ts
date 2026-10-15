@@ -306,7 +306,7 @@ export const zh: Dictionaries = {
     },
     text: "我们把人、想法和技术连接在一起，打造有意义的数字解决方案。从开发软件产品到探索 AI 驱动的创新，我们结合工程专长、经验丰富的领导力和强烈的主人翁精神，帮助企业不断前进。",
     links: [
-      { href: aboutHero.links[0].href, label: "了解产品" },
+      { href: aboutHero.links[0].href, label: "与我们的团队交流" },
       { href: aboutHero.links[1].href, label: "了解服务" },
     ],
   },
@@ -381,7 +381,7 @@ export const zh: Dictionaries = {
   },
   appTaglines: APP_TAGLINES,
   careersGain: {
-    heading: "一路上你将收获什么",
+    heading: "我们珍视的原则",
     intro:
       "提升技能，探索新技术，与互相支持的伙伴一起工作。以下是你在 XionTech 可以期待的。",
     cards: [
@@ -408,16 +408,30 @@ export const zh: Dictionaries = {
     ],
   },
   careersHero: {
-    title: {
-      first: "保持好奇。",
-      second: "创造未来",
-    },
-    lede: "我们正在组建一支团队，成员学得快、善于提出更好的问题、能随变化而调整，并且关心结果，而不只是任务。在这里，您将参与开创用 AI 构建软件的新方式。",
+    title: { first: "加入", second: "XionTech" },
+    lede: "我们汇聚好奇心强的人：热爱解决问题、探索新技术，并打造能带来改变的产品。",
+    prompt: "准备好与我们一起创造了吗？",
+    artAlt: "三张叠放的卡片，展示 AI 驱动的工程、代码芯片和互联技术",
   },
   careersLife: {
-    heading: "在 XionTech 的日常",
-    prevLabel: "上一张照片",
-    nextLabel: "下一张照片",
+    heading: "认识 XionTech 团队",
+    lede: "在 XionTech，我们认真对待工程，但不会太把自己当回事。我们提出问题、勇于担当，并一起不断学习。下班后，我们把同样的团队精神带到羽毛球场、足球场、卡拉 OK 麦克风前和游戏大厅里。",
+    tagsLabel: "我们团队的兴趣",
+    tags: [
+      "羽毛球常客",
+      "足球迷",
+      "英雄联盟小队",
+      "K 歌之夜成员",
+      "下班小聚",
+      "咖啡爱好者",
+      "二次元",
+      "吉他手",
+      "AI 探索者",
+      "电影迷",
+      "...你呢？",
+    ],
+    stripLabel: "XionTech 团队照片",
+    photoAlt: "XionTech 团队瞬间",
     frames: [
       "[Placeholder] 团队照片",
       "[Placeholder] 办公室照片",

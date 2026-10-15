@@ -13,18 +13,18 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/ja.ts` and open a pull request. `Where` is `ja:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 443 strings.
+**Total:** 459 strings.
 
 ## About
 
-40 strings.
+41 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
 | `ja:aboutCta.title` | Let’s build what’s next | 次のものを一緒につくりましょう |
 | `ja:aboutCta.text` | Have a product idea, a technology challenge, or an engineering team to scale? Let’s explore how we can turn your goals into meaningful solutions. | 製品のアイデア、技術的な課題、あるいは拡大したいエンジニアリングチームはありますか？ 目標を意味のあるソリューションに変える方法を一緒に考えましょう。 |
 | `ja:aboutCta.primary.label` | Let’s talk about your project | プロジェクトについて相談する |
-| `ja:aboutCta.secondary.label`<br>`ja:aboutHero.links[0].label` | Explore our products | 製品を見る |
+| `ja:aboutCta.secondary.label` | Explore our products | 製品を見る |
 | `ja:aboutFaq.title` | Curious about XionTech? | XionTech についてもっと知りたいですか？ |
 | `ja:aboutFaq.lede` | A few things you might want to know before working with us. | 一緒に仕事を始める前に知っておきたいことをまとめました。 |
 | `ja:aboutFaq.items[0].question` | What does XionTech do? | XionTech は何をしている会社ですか？ |
@@ -42,6 +42,7 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:aboutHero.title.accent` | ownership | オーナーシップ |
 | `ja:aboutHero.title.tail` |  | でつくるテクノロジー |
 | `ja:aboutHero.text` | We bring people, ideas, and technology together to build meaningful digital solutions. From developing software products to exploring AI-powered innovation, we combine engineering expertise, experienced leadership, and a strong sense of ownership to help businesses move forward. | 人、アイデア、テクノロジーを結びつけ、意味のあるデジタルソリューションをつくります。ソフトウェア製品の開発から AI を活用したイノベーションの探求まで、エンジニアリングの専門性、経験豊富なリーダーシップ、そして強い当事者意識を組み合わせ、企業の前進を支えます。 |
+| `ja:aboutHero.links[0].label` | Talk to our team | チームに相談する |
 | `ja:aboutHero.links[1].label` | Explore our services | サービスを見る |
 | `ja:aboutMeta.title` | About XionTech \| Get IT Done | XionTech について \| Get IT Done |
 | `ja:aboutMeta.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech は米国とベトナムにチームを持つエンジニアリングパートナーです。ソフトウェア製品をつくり、AI を活用したイノベーションを探求し、お客様とともに責任を持って開発を進めます。 |
@@ -100,11 +101,11 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 
 ## Careers
 
-24 strings.
+39 strings.
 
 | Where | English | 日本語 |
 | --- | --- | --- |
-| `ja:careersGain.heading` | What you’ll gain along the way | ここで得られるもの |
+| `ja:careersGain.heading` | Principles we value | 私たちが大切にする価値観 |
 | `ja:careersGain.intro` | Grow your skills, explore new technologies, and work with people who support each other. Here’s what you can look forward to at XionTech. | スキルを伸ばし、新しい技術を探求し、支え合う仲間と働けます。XionTech で期待できることをご紹介します。 |
 | `ja:careersGain.cards[0].title` | Hands-on Learning | 実践で学ぶ |
 | `ja:careersGain.cards[0].text` | Learn by doing through workshops, shared knowledge, and real engineering challenges. | ワークショップ、知識の共有、実際のエンジニアリングの課題を通じて、手を動かしながら学びます。 |
@@ -114,12 +115,27 @@ For a native Japanese reader. Every row is a Japanese string on the site that di
 | `ja:careersGain.cards[2].text` | Solve real customer problems and see how your work makes a difference. | お客様の本当の課題を解決し、自分の仕事が生む違いを実感できます。 |
 | `ja:careersGain.cards[3].title` | Team Experiences | チームでの体験 |
 | `ja:careersGain.cards[3].text` | Build connections through team activities, shared learning, and celebrating wins together. | チーム活動、ともに学ぶ時間、成功をみんなで祝うことを通じてつながりを築きます。 |
-| `ja:careersHero.title.first` | Stay curious. | 好奇心を持ち続ける。 |
-| `ja:careersHero.title.second` | Build what’s next | 次をつくる |
-| `ja:careersHero.lede` | We’re building a team for people who learn fast, ask better questions, adapt when things change, and care about the outcome, not just the task. Here you’ll help pioneer new ways to build software with AI. | 私たちが築いているのは、学ぶのが早く、より良い問いを立て、変化に適応し、タスクだけでなく成果にこだわる人のためのチームです。ここでは、AI を使ったソフトウェア開発の新しい方法を切り拓く役割を担います。 |
-| `ja:careersLife.heading` | Life at XionTech | XionTech での毎日 |
-| `ja:careersLife.prevLabel` | Previous photo | 前の写真 |
-| `ja:careersLife.nextLabel` | Next photo | 次の写真 |
+| `ja:careersHero.title.first` | Careers at | XionTech の |
+| `ja:careersHero.title.second` | XionTech | 採用情報 |
+| `ja:careersHero.lede` | We’re bringing together curious minds who love solving problems, exploring new technologies, and building things that make a difference. | 私たちは、課題解決が好きで、新しい技術を探求し、違いを生み出すものをつくることに情熱を持つ、好奇心あふれる仲間を集めています。 |
+| `ja:careersHero.prompt` | Ready to build with us? | 一緒につくりませんか？ |
+| `ja:careersHero.artAlt` | Three stacked cards illustrating AI-powered engineering, a code chip and connected technology | AI を活用したエンジニアリング、コードチップ、つながるテクノロジーを描いた 3 枚の重なったカード |
+| `ja:careersLife.heading` | Meet the team at XionTech | XionTech のチームを紹介 |
+| `ja:careersLife.lede` | At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | XionTech では、エンジニアリングには真剣に、でも自分たちのことは深刻に考えすぎないようにしています。問いを立て、当事者意識を持ち、共に学び続けます。仕事の後も、同じチームワークでバドミントンコート、サッカーのピッチ、カラオケのマイク、ゲームのロビーへ。 |
+| `ja:careersLife.tagsLabel` | Our team interests | チームの趣味 |
+| `ja:careersLife.tags[0]` | Badminton regulars | バドミントン常連 |
+| `ja:careersLife.tags[1]` | Football fans | サッカー好き |
+| `ja:careersLife.tags[2]` | League of Legends squad | League of Legends 部隊 |
+| `ja:careersLife.tags[3]` | Karaoke night crew | カラオケ仲間 |
+| `ja:careersLife.tags[4]` | After-work catch-ups | 仕事帰りの集まり |
+| `ja:careersLife.tags[5]` | Coffee lovers | コーヒー好き |
+| `ja:careersLife.tags[6]` | Otaku | オタク |
+| `ja:careersLife.tags[7]` | Guitarists | ギタリスト |
+| `ja:careersLife.tags[8]` | AI explorers | AI 探究者 |
+| `ja:careersLife.tags[9]` | Movie buffs | 映画好き |
+| `ja:careersLife.tags[10]` | ...and you? | ...あなたは？ |
+| `ja:careersLife.stripLabel` | Photos of the XionTech team | XionTech チームの写真 |
+| `ja:careersLife.photoAlt` | XionTech team moment | XionTech チームのひととき |
 | `ja:careersLife.frames[0].placeholder` | [Placeholder] Team photo | [Placeholder] チームの写真 |
 | `ja:careersLife.frames[1].placeholder` | [Placeholder] Office photo | [Placeholder] オフィスの写真 |
 | `ja:careersLife.frames[2].placeholder` | [Placeholder] Event photo | [Placeholder] イベントの写真 |

@@ -26,11 +26,11 @@ describe("SiteHeader", () => {
     expect(home.contains(logo)).toBe(true);
   });
 
-  it("links Let's talk to the Home contact section, as a quiet outlined pill", () => {
+  it("links Let's talk to the Home contact section, as the amber primary button", () => {
     render(<SiteHeader locale="en" />);
     const demo = screen.getByRole("link", { name: "Let's talk" });
     expect(demo.getAttribute("href")).toBe("/en#contact");
-    expect(demo.className).toContain("btn btn-glass btn-sm nav-talk");
+    expect(demo.className).toContain("btn btn-primary btn-sm nav-talk");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
     expect(demo.className).toContain("max-[1080px]:ml-auto");
     // Below 412px (the narrowest width where the en and vi bars fit, measured

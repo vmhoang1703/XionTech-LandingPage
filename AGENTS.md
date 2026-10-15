@@ -21,6 +21,7 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
 
 - **Demo day:** 2026-10-16 (10 min presentation + 5 min Q&A; moved from 2026-10-09 on 2026-10-08)
 - **Scope (2026-10-13):** Story 1.2 (locale routing, language dropdown, Vietnamese shell) is built before Demo day on the user's decision, overriding the 2026-09-29 English-only plan. Six locales since 2026-10-14: en, vi, ja, fr, ko, zh (Simplified Chinese at `/zh`, `lang="zh-Hans"`). AI translations are flagged for a native reader in `docs/translations/<locale>-review.md`; product and service names and "Get IT done" stay English; `[Placeholder]` is kept in front of placeholder text; Sanity news and jobs fall back to English. Japanese, Korean and Chinese pages load Noto Sans JP, KR or SC from Google Fonts on those locales only. Any copy edit must re-run `npm run i18n:review` and commit the regenerated pages. Log: `docs/ai-log.md`.
+- **Careers (2026-10-15):** hero "Careers at XionTech" (no buttons), Principles we value, Meet the team at XionTech (`#meet-the-team`), open roles. Team photos are any image files in `public/careers/life/` (any filename; webp, jpg, jpeg, png, avif; sorted by filename), read by `src/lib/careers/life-photo-folder.ts` at build: rebuild and redeploy after adding photos. Every primary button goes to `/{locale}#contact`; the header primary is "Let's talk"; there is no Demo page.
 - **Team:** 3 people. Leader: Hoang Vu.
 - **Hand-in:** public URL (https://xion-tech-landing-page.vercel.app), full git history, this context
   file, `docs/ai-log.md`.
@@ -29,8 +30,9 @@ Rebuild of https://xiontechs.com/ from scratch for the XionTech internal AI buil
   the planning docs or the old site say "XionTechs" (lead, 2026-10-03). The domain
   `xiontechs.com` and the logo image stay as they are. (On 2026-10-12 the lead briefly asked for
   "XionTechs", then took it back: XionTech is right.)
-- **Locations:** four, with two headquarters: Plano, Texas (USA) and Ho Chi Minh City
-  (Vietnam), plus Ha Noi and Da Nang (named only; no published addresses) (lead, 2026-10-12).
+- **Locations:** four: two delivery centers, Plano, Texas (USA) and Ho Chi Minh City
+  (Vietnam), plus two offices, Ha Noi and Da Nang (named only; no published addresses; one
+  white line in the footer) (lead, 2026-10-12).
 
 ## Hard rules (from the challenge)
 

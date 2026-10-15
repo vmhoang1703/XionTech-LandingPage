@@ -36,17 +36,17 @@ Both sites read the same Sanity dataset (`1khn3hf4` / `production`), so a publis
 - **Server first.** Pages are Server Components: the HTML holds the real content, so it works without JavaScript and search engines see it. Client code only where something must react in the browser: the mobile menu and desktop mega menus, the hero and inner-page hero animations, the Parent Hub story tabs, the 4-D flow reveal, the News filter chips, the office clocks (Services and About), and the forms.
 - **Routes:**
 
-| Route                         | Story         | Content source                       |
-| ----------------------------- | ------------- | ------------------------------------ |
-| `/`                           | 3.1 to 3.7    | Code, plus the 3 newest Sanity posts |
-| `/products`                   | 4.1 to 4.3    | Code                                 |
-| `/services`                   | 5.1, 5.2, 5.4 | Code (clocks run in the browser)     |
-| `/about`                      | 6.4           | Code                                 |
-| `/news`, `/news/[slug]`       | 6.1, 6.2      | Sanity `post`                        |
-| `/careers`, `/careers/[slug]` | 6.5, 6.6, 6.3 | Sanity `job` and `careersPhotos`     |
-| `/demo`                       | 2.2           | Code (contact form)                  |
-| `/privacy`                    | 2.1           | Code (`[Placeholder]` policy)        |
-| Not found                     | 1.7           | Code; real HTTP 404                  |
+| Route                         | Story         | Content source                                        |
+| ----------------------------- | ------------- | ----------------------------------------------------- |
+| `/`                           | 3.1 to 3.7    | Code, plus the 3 newest Sanity posts                  |
+| `/products`                   | 4.1 to 4.3    | Code                                                  |
+| `/services`                   | 5.1, 5.2, 5.4 | Code (clocks run in the browser)                      |
+| `/about`                      | 6.4           | Code                                                  |
+| `/news`, `/news/[slug]`       | 6.1, 6.2      | Sanity `post`                                         |
+| `/careers`, `/careers/[slug]` | 6.5, 6.6, 6.3 | Sanity `job`; team photos from `public/careers/life/` |
+| `/demo`                       | 2.2           | Removed; redirects to `/#contact`                     |
+| `/privacy`                    | 2.1           | Code (`[Placeholder]` policy)                         |
+| Not found                     | 1.7           | Code; real HTTP 404                                   |
 
 - **Locales (Story 1.2):** every page lives under `src/app/[locale]` (`en`, `vi`; `dynamicParams = false`, so other locales are 404), and the routes above are served as `/en/...` and `/vi/...`. `src/proxy.ts` redirects a bare path (307) to a locale, in this order: the locale in the URL, then the `locale` cookie, then `Accept-Language`, then `en`; it skips `/api/`, `/_next/` and files with an extension. `src/app/global-not-found.tsx` (behind `experimental.globalNotFound` in `next.config.ts`) answers unmatched URLs; an unsupported two-letter locale (`/fr/products`) is instead rewritten by `src/proxy.ts` to `/en/fr/products` and answered by the catch-all; and the `[locale]/[...rest]` catch-all calls `notFound()` so unknown paths inside a locale get the localised 404. `src/i18n/` holds the locale list and helpers (`locales.ts`), the EN/VI shell dictionary (`shell.ts`), the per-request locale for the 404 (`request-locale.ts`) and per-locale page metadata (`page-metadata.ts`).
 - **Code layout:** `src/app` (routes and API), `src/components/<area>` (UI by page area), `src/lib/<area>` (data reads, rules, helpers), `src/content` (all page copy, kept apart so it can be translated later).
@@ -59,6 +59,7 @@ Both sites read the same Sanity dataset (`1khn3hf4` / `production`), so a publis
 - **No CDN for data** (A11): the Sanity API CDN once served old data right after a publish. Next.js caches every result instead, so Sanity is read only on a build, on the first visit to a page or slug, and after a webhook.
 - **Never** `force-dynamic`, `no-store` or a timed `revalidate` on a Sanity read: each uncached read counts against the free 250k API requests a month.
 - **Only complete posts show** (A9): a post needs an English title, a slug and a publish date. A role needs an English title and a slug and must not be closed.
+- **News order.** The newest published post with a photo is shown first with a larger image.
 - **Unknown addresses are cheap.** `/news/[slug]` checks the slug against the cached post list before it asks Sanity (6.2). `/careers/[slug]` still asks Sanity directly (follow-up in `deferred-work.md`).
 - **A Sanity outage never breaks the Home news section or the News list:** the error is logged and the section shows its empty state. A story page, `/careers` and a job page still fail (no branded error page yet); a failed build keeps the last good deploy live on Vercel. Both are follow-ups in `deferred-work.md`.
 
