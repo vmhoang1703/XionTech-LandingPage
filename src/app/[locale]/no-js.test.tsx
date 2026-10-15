@@ -1,4 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
+import { THEME_SCRIPT } from "@/lib/theme/theme-preference";
 import { describe, expect, it, vi } from "vitest";
 
 // next/font/google only works inside the Next.js compiler; stub the loaders.
@@ -53,6 +54,8 @@ describe("no JavaScript", () => {
     expect(html).toContain('<main id="main" tabindex="-1"');
     expect(html).toMatch(/<\/main><footer/);
     expect(html).toContain(siteFooter.copyright);
-    expect(html).not.toContain("<script");
+    // The one script is the theme switch in <head>; content needs none.
+    const scripts = html.match(/<script[^>]*>[^<]*<\/script>/g) ?? [];
+    expect(scripts).toEqual([`<script>${THEME_SCRIPT}</script>`]);
   });
 });

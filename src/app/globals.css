@@ -8931,7 +8931,9 @@ html[data-theme="dark"] body {
 }
 
 /* Light surfaces take the dark set (they repeat light literals above). */
-html[data-theme="dark"] :is(.surface-paper, .surface-mist, .hero-light) {
+html[data-theme="dark"] .surface-paper,
+html[data-theme="dark"] .surface-mist,
+html[data-theme="dark"] .hero-light {
   --color-heading: #ffffff;
   --color-text: #eef2f9;
   --color-muted: #c5d0e3;
@@ -8945,7 +8947,8 @@ html[data-theme="dark"] :is(.surface-paper, .surface-mist, .hero-light) {
 }
 
 /* Navy bands: brand navy with a light edge, so they stand off the ink page. */
-html[data-theme="dark"] :is(.surface-navy, .hero-navy) {
+html[data-theme="dark"] .surface-navy,
+html[data-theme="dark"] .hero-navy {
   background: var(--color-navy);
   box-shadow:
     inset 0 1px 0 #ffffff24,
@@ -8953,7 +8956,8 @@ html[data-theme="dark"] :is(.surface-navy, .hero-navy) {
 }
 
 /* The header pill stays white, with the light tokens, so the logo is unchanged. */
-html[data-theme="dark"] :is(.nav-pill, .lang-menu-list) {
+html[data-theme="dark"] .nav-pill,
+html[data-theme="dark"] .lang-menu-list {
   --color-paper: #fdfdfe;
   --color-page: #f7f9fd;
   --color-mist: #eef2f9;
@@ -8970,41 +8974,41 @@ html[data-theme="dark"] :is(.nav-pill, .lang-menu-list) {
 
 /* Text set to navy on light cards: light text on the dark cards instead. Amber parts
    (buttons, the accent flip card, current step numbers) keep navy text. */
-html[data-theme="dark"]
-  :is(
-    .contact-direct svg,
-    .contact-direct a,
-    .home-media,
-    .door-products .go,
-    .map-sec h1,
-    .rm-head h2,
-    .rm-kicker,
-    .rm-title,
-    .rm-more,
-    .road-dialog-step,
-    .road-dialog-close,
-    .road-dialog h2,
-    .road-dialog-app h3,
-    .faq summary:hover,
-    .w-own-title,
-    .loc-card h3,
-    .loc-time,
-    .loc-row a:focus-visible,
-    .loc-row .loc-map,
-    #process .flow .step4 h3,
-    #process .flow .node b,
-    .life-cap,
-    .life-arrow,
-    .ah-links .btn-glass,
-    .mm-link,
-    .mm-link[aria-current="page"] .mm-arrow
-  ) {
+html[data-theme="dark"] .contact-direct svg,
+html[data-theme="dark"] .contact-direct a,
+html[data-theme="dark"] .home-media,
+html[data-theme="dark"] .door-products .go,
+html[data-theme="dark"] .map-sec h1,
+html[data-theme="dark"] .rm-head h2,
+html[data-theme="dark"] .rm-kicker,
+html[data-theme="dark"] .rm-title,
+html[data-theme="dark"] .rm-more,
+html[data-theme="dark"] .road-dialog-step,
+html[data-theme="dark"] .road-dialog-close,
+html[data-theme="dark"] .road-dialog h2,
+html[data-theme="dark"] .road-dialog-app h3,
+html[data-theme="dark"] .faq summary:hover,
+html[data-theme="dark"] .w-own-title,
+html[data-theme="dark"] .loc-card h3,
+html[data-theme="dark"] .loc-time,
+html[data-theme="dark"] .loc-row a:focus-visible,
+html[data-theme="dark"] .loc-row .loc-map,
+html[data-theme="dark"] #process .flow .step4 h3,
+html[data-theme="dark"] #process .flow .node b,
+html[data-theme="dark"] .life-cap,
+html[data-theme="dark"] .life-arrow,
+html[data-theme="dark"] .ah-links .btn-glass,
+html[data-theme="dark"] .mm-link,
+html[data-theme="dark"] .mm-link[aria-current="page"] .mm-arrow {
   color: var(--color-heading);
 }
 
 /* Light pills, chips and panels with literal light fills. */
-html[data-theme="dark"]
-  :is(.door-products .chip, .scard-pill, .art-pill, .loc-time, .life-cap) {
+html[data-theme="dark"] .door-products .chip,
+html[data-theme="dark"] .scard-pill,
+html[data-theme="dark"] .art-pill,
+html[data-theme="dark"] .loc-time,
+html[data-theme="dark"] .life-cap {
   background: var(--color-ice);
   border-color: var(--color-border);
 }
@@ -9060,7 +9064,9 @@ html[data-theme="dark"] .form-card {
 }
 
 /* Cards and buttons with white fills: dark paper instead. */
-html[data-theme="dark"] :is(.rm-card, .outcome, .step4) {
+html[data-theme="dark"] .rm-card,
+html[data-theme="dark"] .outcome,
+html[data-theme="dark"] .step4 {
   background: var(--color-paper);
 }
 
@@ -9068,8 +9074,10 @@ html[data-theme="dark"] .btn-glass {
   background: color-mix(in srgb, #ffffff 8%, transparent);
 }
 
-html[data-theme="dark"]
-  :is(.door-products .chip, .scard-pill, .scard-pill.company, .art-pill) {
+html[data-theme="dark"] .door-products .chip,
+html[data-theme="dark"] .scard-pill,
+html[data-theme="dark"] .scard-pill.company,
+html[data-theme="dark"] .art-pill {
   background: var(--color-ice);
   color: var(--color-heading);
 }
@@ -9149,7 +9157,7 @@ html[data-theme="dark"] #process .flow .step4 {
   background: none;
   color: var(--color-heading);
   font: inherit;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
 }
 

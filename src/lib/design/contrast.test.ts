@@ -553,6 +553,11 @@ const MAY_HIDE = new Set([
   ".hl-shine",
   ".rot-item",
   '.rot-item[data-state="out"]',
+  // Controls that only work with JavaScript, not content: the round dark-mode
+  // toggle shows above 1080px (the menu row covers smaller screens), and back
+  // to top shows once its script sees the reader has scrolled.
+  ".theme-toggle",
+  ".back-to-top",
 ]);
 const HIDING: [string, RegExp][] = [
   ["display", /^none\b/],
