@@ -20,7 +20,6 @@ import {
 import { jobDetails, jobForm } from "@/content/job";
 import { homeNews, newsPage, newsStory } from "@/content/news";
 import { footerOffices, hcmc, plano } from "@/content/offices";
-import { PRIVACY } from "@/content/privacy";
 import { processFlow } from "@/content/process";
 import { journeyBoard, productDetails, productRoad } from "@/content/products";
 import {
@@ -45,7 +44,6 @@ import type { Dictionaries } from "../translations";
 
 const parentHub = appById("parent-hub");
 const staffHub = appById("staff-hub");
-const iotApp = appById("iot");
 const aiTutor = appById("ai-tutor");
 
 const count = (n: number) => n.toLocaleString("ko-KR");
@@ -112,15 +110,6 @@ const PRODUCT_DETAILS: Dictionaries["productDetails"] = {
       title,
     })),
   },
-  iot: {
-    madeFor: "시설 운영 및 유지보수 팀",
-    features: [
-      "기기 통합 관리",
-      "조명과 냉난방 예약 제어",
-      "중앙에서 관리하는 출입문과 구역",
-      "캠퍼스 전체의 에너지 사용량",
-    ].map((title, i) => ({ ...productDetails.iot.features[i], title })),
-  },
   "ai-tutor": {
     madeFor: "교사와 함께하는 학생",
     features: [
@@ -135,7 +124,6 @@ const APP_TAGLINES: Record<AppId, string> = {
   "parent-hub":
     "학부모가 자녀의 학교생활을 늘 알고, 가까이 연결되도록 돕습니다.",
   "staff-hub": "학교의 일상 운영을 하나로 연결된 업무 공간에 모읍니다.",
-  iot: "캠퍼스의 커넥티드 기술 관리를 간편하게 만듭니다.",
   "ai-tutor":
     "안내형 학습으로 학생이 실수를 이해하고 자신감을 키우도록 돕습니다.",
 };
@@ -272,12 +260,9 @@ const PROCESS_FLOW: Dictionaries["processFlow"] = {
 };
 
 const JOURNEY_LEDE =
-  "학교 커뮤니티를 위한 연결된 제품군으로, 학부모, 학습, 교직원 업무, 캠퍼스 기술을 하나의 생태계로 묶습니다.";
+  "학교 커뮤니티를 위한 연결된 제품군으로, 학부모, 학습, 교직원 업무를 하나의 생태계로 묶습니다.";
 
 const PRIVACY_META_TITLE = "개인정보 처리방침 | XionTech";
-
-const RETENTION_DECIDED =
-  "문의 및 데모 요청, 제출된 이메일 주소, 입사 지원서와 이력서는 기간 제한 없이 보관됩니다.";
 
 const ERRORS = {
   name: "이름을 입력해 주세요.",
@@ -563,7 +548,7 @@ export const ko: Dictionaries = {
   hcmc: hcmcKo,
   homeApps: {
     title: "하나로 연결된 학교",
-    lede: "학부모, 교직원, 학생, 캠퍼스 운영을 위한 연결된 솔루션으로 학교 공동체 전체를 하나로 모읍니다. 모두 일상적인 학교 운영을 간편하게 하도록 설계되었습니다.",
+    lede: "학부모, 교직원, 학생을 위한 연결된 솔루션으로 학교 공동체 전체를 하나로 모읍니다. 모두 일상적인 학교 운영을 간편하게 하도록 설계되었습니다.",
     apps: homeApps.apps.map((card) => ({
       ...card,
       madeFor: PRODUCT_DETAILS[card.app.id].madeFor,
@@ -633,7 +618,7 @@ export const ko: Dictionaries = {
   homeMeta: {
     title: "XionTech | 학교 플랫폼과 베트남 소프트웨어 아웃소싱",
     description:
-      "XionTech는 AI 기반 제품과 맞춤형 솔루션을 만듭니다. 학교 플랫폼(Parent Hub, Staff Hub, IoT, AI Tutor)과 베트남 소프트웨어 아웃소싱.",
+      "XionTech는 AI 기반 제품과 맞춤형 솔루션을 만듭니다. 학교 플랫폼(Parent Hub, Staff Hub, AI Tutor)과 베트남 소프트웨어 아웃소싱.",
   },
   homeNews: {
     heading: "XionTech 소식",
@@ -710,6 +695,7 @@ export const ko: Dictionaries = {
   journeyBoard: {
     ...journeyBoard,
     details: "상세",
+    viewDetails: "자세히 보기: {name}",
     lanes: ["학생", "교사와 교직원", "학부모"].map((label, i) => ({
       ...journeyBoard.lanes[i],
       label,
@@ -751,41 +737,14 @@ export const ko: Dictionaries = {
   privacy: {
     metaTitle: PRIVACY_META_TITLE,
     metaDescription:
-      "양식을 통해 공유하신 개인 데이터를 XionTech가 어떻게 사용하는지 안내합니다.",
+      "XionTech Joint Stock Company가 디지털 제품, 애플리케이션, 웹사이트 및 IT 서비스 이용 시 귀하의 정보를 어떻게 수집, 사용 및 보호하는지 안내합니다.",
     breadcrumbLabel: BREADCRUMB,
     breadcrumbHome: HOME,
     breadcrumbCurrent: PRIVACY_LINK,
     title: PRIVACY_LINK,
     bodyLabel: "방침",
-    retentionDecided: RETENTION_DECIDED,
-    sections: [
-      {
-        id: PRIVACY.sections[0].id,
-        heading: "수집하는 정보",
-        paragraphs: [
-          "이메일, 이름, 전화번호, 소속, 직책, 그리고 양식을 통해 보내시는 모든 내용(채용에 지원하시는 경우 이력서 포함).",
-        ],
-      },
-      {
-        id: PRIVACY.sections[1].id,
-        heading: "이용 목적",
-        paragraphs: [
-          "문의에 답변하거나 입사 지원서와 이력서를 검토하는 데에만 이용합니다.",
-        ],
-      },
-      {
-        id: PRIVACY.sections[2].id,
-        heading: "공유 대상",
-        paragraphs: [
-          "당사를 대신해 데이터를 처리하는 서비스 제공업체: Gmail(양식 메시지를 회사 받은편지함으로 전송), Upstash(해시된 값으로 만든 요청 제한 카운터), Vercel(웹사이트 호스팅 및 이력서 비공개 저장), Google Fonts(일본어, 한국어, 중국어 페이지용 글꼴).",
-        ],
-      },
-      {
-        id: PRIVACY.sections[3].id,
-        heading: "보관 기간",
-        paragraphs: [RETENTION_DECIDED],
-      },
-    ],
+    tocLabel: "이 페이지의 내용",
+    languageNote: "이 방침은 영어로 제공됩니다.",
   },
   processFlow: PROCESS_FLOW,
   productDetails: PRODUCT_DETAILS,
@@ -795,8 +754,8 @@ export const ko: Dictionaries = {
     finish: "도착",
   },
   productsMeta: {
-    title: `학교용 앱: ${parentHub.shortName}, ${staffHub.shortName}, ${iotApp.shortName}, ${aiTutor.shortName} | XionTech`,
-    description: `학부모를 위한 ${parentHub.shortName}, 교직원·교사·관리자를 위한 ${staffHub.shortName}, 캠퍼스를 위한 ${iotApp.fullName}. XionTech의 연결된 학교 앱.`,
+    title: `학교용 앱: ${parentHub.shortName}, ${staffHub.shortName}, ${aiTutor.shortName} | XionTech`,
+    description: `학부모를 위한 ${parentHub.shortName}, 교직원·교사·관리자를 위한 ${staffHub.shortName}, 학생을 위한 ${aiTutor.shortName}. XionTech의 연결된 학교 앱.`,
   },
   productsShowcase: {
     madeFor: "대상",
@@ -917,6 +876,8 @@ export const ko: Dictionaries = {
       aboutUs: "회사 소개",
       offices: "사무소",
       privacy: PRIVACY_LINK,
+      copyright:
+        "Copyright © 2026 XionTech Joint Stock Company. 모든 권리 보유.",
     },
     notFound: {
       metaTitle: "페이지를 찾을 수 없습니다 | XionTech",

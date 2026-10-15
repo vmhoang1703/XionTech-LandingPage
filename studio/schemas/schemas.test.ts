@@ -130,7 +130,7 @@ describe("studio schemas", () => {
     expect(required).toHaveBeenCalledTimes(1);
   });
 
-  it("gives a post an app field with the four app ids, always shown", () => {
+  it("gives a post an app field with the three app ids, always shown", () => {
     const app = findField(post, "app") as Field & {
       options?: { list?: { title: string; value: string }[] };
       hidden?: unknown;

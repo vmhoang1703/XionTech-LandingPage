@@ -54,7 +54,7 @@ const demoBody = {
   ...VISITOR,
   role: "Principal",
   message: "Hello",
-  products: ["Parent Hub", "IoT"],
+  products: ["Parent Hub", "Staff Hub"],
   schoolSize: CONTACT_STRINGS.schoolSizes[0],
   date: "2026-10-20",
   website: "",

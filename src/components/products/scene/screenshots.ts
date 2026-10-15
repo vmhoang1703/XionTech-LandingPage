@@ -8,5 +8,8 @@ import type { RoadApp } from "@/content/products";
 export const SCREENSHOTS: Partial<Record<RoadApp, readonly string[]>> = {
   "parent-hub": [1, 2, 3, 4].map((n) => `/products/parent-hub/${n}.webp`),
   "staff-hub": [1, 2, 3, 4].map((n) => `/products/staff-hub/${n}.webp`),
-  "ai-tutor": [1, 2, 3, 4].map((n) => `/products/ai-tutor/${n}.webp`),
+  // AI Tutor: the student Today dashboard first, then the welcome and sign-in screens.
+  "ai-tutor": ["today-dashboard", "welcome", "sign-in"].map(
+    (name) => `/products/ai-tutor/${name}.webp`,
+  ),
 };

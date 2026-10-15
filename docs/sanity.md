@@ -61,9 +61,9 @@ After the deploy for Story 3.7 (decision A9), each news post needs:
 - a **slug** (Generate) and a **Published at** date (the Studio now requires both, and the category);
 - an **audience** (E-A6; it was the category), and the **app** when the story is about one.
 
-The app field stores `parent-hub`, `staff-hub`, `iot` or `ai-tutor`. The titles in the list are Parent Hub, Staff Hub, IoT and AI Tutor.
+The app field stores `parent-hub`, `staff-hub` or `ai-tutor`. The titles in the list are Parent Hub, Staff Hub and AI Tutor. IoT was removed from the site on 2026-10-15.
 
-Old posts may still hold the old values. The site maps them when it reads them: PXP becomes `parent-hub`, SXP becomes `staff-hub`, IoT becomes `iot`. LXP shows no app: such a post keeps only its "Product" tag and has no app button.
+Old posts may still hold the old values. The site maps them when it reads them: PXP becomes `parent-hub`, SXP becomes `staff-hub`. LXP and IoT (`IoT` or `iot`) show no app: such a post keeps only its "Product" tag and has no app button.
 
 After this change merges, the lead deploys the Studio from an up-to-date `develop`. The new Studio shows an old value (PXP, LXP, SXP or IoT) as not in the list, so the lead opens each product post that still has one and picks the app again (for an LXP post, pick another app or none). To list them, run `cd studio && npx sanity documents query '*[_type == "post" && app in ["PXP", "LXP", "SXP", "IoT"]]{_id, "title": title.en, app}'`.
 
@@ -119,7 +119,7 @@ Only add photos of people who agreed. Datasets are public, so anyone can read an
 
 ### Add a product clip
 
-1. Open **Products**. There are three fixed documents: Parent Hub, Staff Hub and IoT. The LXP document (`product-lxp`) is hidden in the list. It stays in the dataset.
+1. Open **Products**. There are two fixed documents: Parent Hub and Staff Hub. The LXP and IoT documents (`product-lxp`, `product-iot`) are hidden in the list. They stay in the dataset.
 2. Upload an mp4 clip in the clip field. Click Publish.
 
 No page shows the clips yet. Story 4.4 will show them.

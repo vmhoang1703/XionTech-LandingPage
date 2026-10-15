@@ -7,7 +7,6 @@ export const singletonTypes = ["careersPhotos", "product"];
 const products = [
   { title: "Parent Hub", id: "product-pxp" },
   { title: "Staff Hub", id: "product-sxp" },
-  { title: "IoT", id: "product-iot" },
 ];
 
 export const structure: StructureResolver = (S) =>

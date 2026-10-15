@@ -6,14 +6,14 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 - Check meaning, tone, spelling and natural wording, and that nothing is added, left out or made stronger than the English (no new claims, numbers or promises).
 - `[Placeholder]` stays in front of a placeholder text, and `{n}` is a number filled in by the site; keep both.
-- **Privacy** is legal text translated by an AI. It needs the lead's and a legal reviewer's sign-off before it is published.
+- **Privacy**: only the page strings (title, contents label, English-language note) are translated; the policy itself is shown in English on every locale.
 - News stories and job posts from the CMS are not translated; they show in English on purpose.
 
 **Kept in English on purpose:** names of products, services and apps, tech tags (Web, Mobile, AI/ML, Power Platform, n8n …), XionTech and the tagline “Get IT done”.
 
 **Send corrections** as a list of `Where` and the corrected text to Hoang Vu (team lead), or change the text in `src/i18n/dictionaries/zh.ts` and open a pull request. `Where` is `zh:key.path`; `shell` and `meta` are in `src/i18n/shell.ts` and `src/i18n/site-meta.ts`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 462 strings.
+**Total:** 450 strings.
 
 ## About
 
@@ -90,13 +90,12 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Apps (Home and Products)
 
-4 strings.
+3 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
 | `zh:appTaglines.parent-hub` | Keep parents informed and connected to their child’s school life. | 让家长随时了解孩子的校园生活，与学校保持联系。 |
 | `zh:appTaglines.staff-hub` | Bring daily school operations into one connected workspace. | 把学校的日常运营汇集到一个互联的工作空间。 |
-| `zh:appTaglines.iot` | Simplify how schools manage connected campus technology. | 让学校更轻松地管理互联的校园技术。 |
 | `zh:appTaglines.ai-tutor` | Help students understand mistakes and build confidence through guided learning. | 通过引导式学习，帮助学生理解错误、建立信心。 |
 
 ## Careers
@@ -268,24 +267,21 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Home
 
-77 strings.
+74 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
 | `zh:homeApps.title` | One connected school | 互联的学校 |
-| `zh:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff, students, and campus operations; all designed to simplify everyday school management. | 用为家长、教职员工、学生和校园运营打造的互联解决方案，把整个学校社区连接在一起，让日常的学校管理更简单。 |
+| `zh:homeApps.lede` | Bring your entire school community together with connected solutions for parents, staff and students; all designed to simplify everyday school management. | 用为家长、教职员工和学生打造的互联解决方案，把整个学校社区连接在一起，让日常的学校管理更简单。 |
 | `zh:homeApps.apps[0].madeFor` | Parents and families | 家长与家庭 |
 | `zh:homeApps.apps[0].features[0]` | Real-time arrival alerts | 实时到校提醒 |
 | `zh:homeApps.apps[0].features[1]` | Published grades and feedback | 已发布的成绩和评语 |
 | `zh:homeApps.apps[1].madeFor` | Staff, teachers and school leaders | 教职员工、教师与管理层 |
 | `zh:homeApps.apps[1].features[0]` | Attendance and student records | 考勤和学生档案 |
 | `zh:homeApps.apps[1].features[1]` | Classes, timetables and grades | 班级、课表与成绩 |
-| `zh:homeApps.apps[2].madeFor` | School operations and facilities teams | 设施与运维团队 |
-| `zh:homeApps.apps[2].features[0]` | Centralized device management | 设备集中管理 |
-| `zh:homeApps.apps[2].features[1]` | Scheduled lighting and climate controls | 照明和空调定时控制 |
-| `zh:homeApps.apps[3].madeFor` | Students, with teachers alongside | 学生，教师从旁陪伴 |
-| `zh:homeApps.apps[3].features[0]` | Skill-level understanding checks | 按技能检查理解程度 |
-| `zh:homeApps.apps[3].features[1]` | Personalized step-by-step hints | 个性化的分步提示 |
+| `zh:homeApps.apps[2].madeFor` | Students, with teachers alongside | 学生，教师从旁陪伴 |
+| `zh:homeApps.apps[2].features[0]` | Skill-level understanding checks | 按技能检查理解程度 |
+| `zh:homeApps.apps[2].features[1]` | Personalized step-by-step hints | 个性化的分步提示 |
 | `zh:homeApps.link.label` | Explore products | 了解产品 |
 | `zh:homeCapabilities.title` | Why XionTech | 为什么选择 XionTech |
 | `zh:homeCapabilities.lede` | We build products ourselves and bring that hands-on experience to our clients, combining industry discovery, engineering ownership, and AI-assisted development. | 我们亲自打造产品，并把这些实践经验带给客户，将行业探索、工程担当和 AI 辅助开发结合在一起。 |
@@ -327,7 +323,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:homeHero.motion.play` | Play motion | 播放动画 |
 | `zh:homeHero.cta.label` | Get in touch | 联系我们 |
 | `zh:homeMeta.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| 学校平台与越南软件外包 |
-| `zh:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, IoT, AI Tutor) and software outsourcing from Vietnam. | XionTech 打造 AI 驱动的产品和定制解决方案：学校平台（Parent Hub、Staff Hub、IoT、AI Tutor）以及来自越南的软件外包。 |
+| `zh:homeMeta.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam. | XionTech 打造 AI 驱动的产品和定制解决方案：学校平台（Parent Hub、Staff Hub、AI Tutor）以及来自越南的软件外包。 |
 | `zh:homeOutcomes.title` | What can we help you achieve? | 我们可以帮您实现什么？ |
 | `zh:homeOutcomes.lede` | Pick one service or combine several. We shape the team around your product. | 您可以选择一项服务，也可以组合多项服务。我们会围绕您的产品组建团队。 |
 | `zh:homeOutcomes.items[0].title` | Build a new digital product | 打造新的数字产品 |
@@ -390,16 +386,17 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Products
 
-34 strings.
+30 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
 | `zh:journeyBoard.details` | Details | 详情 |
+| `zh:journeyBoard.viewDetails` | View details: {name} | 查看详情：{name} |
 | `zh:journeyBoard.lanes[0].label` | Student | 学生 |
 | `zh:journeyBoard.lanes[1].label` | Teacher and staff | 教师与教职员工 |
 | `zh:journeyBoard.lanes[2].label` | Parent | 家长 |
 | `zh:journeyMap.intro.title` | Built apart. Better together | 各自打造，携手更强 |
-| `zh:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning, staff operations and campus technology into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习、教职员工工作和校园技术连接成一个生态系统。 |
+| `zh:journeyMap.intro.lede` | A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem. | 为学校社区打造的一系列互联产品，将家长、学习和教职员工工作连接成一个生态系统。 |
 | `zh:productDetails.parent-hub.madeFor` | Parents and families | 家长与家庭 |
 | `zh:productDetails.parent-hub.features[0].title` | Real-time arrival alerts | 实时到校提醒 |
 | `zh:productDetails.parent-hub.features[1].title` | Published grades and feedback | 已发布的成绩和评语 |
@@ -410,19 +407,14 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:productDetails.staff-hub.features[1].title` | Classes, timetables and grades | 班级、课表与成绩 |
 | `zh:productDetails.staff-hub.features[2].title` | Messages to parents through Parent Hub | 通过 Parent Hub 向家长发送消息 |
 | `zh:productDetails.staff-hub.features[3].title` | Leader dashboards for today's priorities | 展示当日重点的管理层看板 |
-| `zh:productDetails.iot.madeFor` | School operations and facilities teams | 设施与运维团队 |
-| `zh:productDetails.iot.features[0].title` | Centralized device management | 设备集中管理 |
-| `zh:productDetails.iot.features[1].title` | Scheduled lighting and climate controls | 照明和空调定时控制 |
-| `zh:productDetails.iot.features[2].title` | Doors and zones managed centrally | 集中管理门禁与区域 |
-| `zh:productDetails.iot.features[3].title` | Energy use across the campus | 全校园能耗 |
 | `zh:productDetails.ai-tutor.madeFor` | Students, with teachers alongside | 学生，教师从旁陪伴 |
 | `zh:productDetails.ai-tutor.features[0].title` | Skill-level understanding checks | 按技能检查理解程度 |
 | `zh:productDetails.ai-tutor.features[1].title` | Personalized step-by-step hints | 个性化的分步提示 |
 | `zh:productDetails.ai-tutor.features[2].title` | Mastery only when you can do it alone | 只有能独立完成时才算掌握 |
 | `zh:productRoad.start` | Start | 出发 |
 | `zh:productRoad.finish` | Finish | 到达 |
-| `zh:productsMeta.title` | School Apps: Parent Hub, Staff Hub, IoT & AI Tutor \| XionTech | 学校应用：Parent Hub、Staff Hub、IoT、AI Tutor \| XionTech |
-| `zh:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and IoT Device Management for campuses. Connected school apps from XionTech. | 面向家长的 Parent Hub、面向教职员工、教师和管理层的 Staff Hub，以及面向校园的 IoT Device Management。XionTech 的互联学校应用。 |
+| `zh:productsMeta.title` | School Apps: Parent Hub, Staff Hub & AI Tutor \| XionTech | 学校应用：Parent Hub、Staff Hub、AI Tutor \| XionTech |
+| `zh:productsMeta.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and AI Tutor for students. Connected school apps from XionTech. | 面向家长的 Parent Hub、面向教职员工、教师和管理层的 Staff Hub，以及面向学生的 AI Tutor。XionTech 的互联学校应用。 |
 | `zh:productsShowcase.madeFor` | Made for | 适用对象 |
 | `zh:productsShowcase.featuresHeading` | Features | 功能 |
 | `zh:roadDialog.close` | Close | 关闭 |
@@ -431,24 +423,19 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Privacy
 
-14 strings.
+9 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
 | `zh:privacy.metaTitle` | Privacy Policy \| XionTech | 隐私政策 \| XionTech |
-| `zh:privacy.metaDescription` | How XionTech uses the personal data you share through our forms. | XionTech 如何使用您通过我们的表单提供的个人数据。 |
+| `zh:privacy.metaDescription` | How XionTech Joint Stock Company collects, uses and protects your information when you use our digital products, applications, websites and IT services. | XionTech Joint Stock Company 在您使用我们的数字产品、应用程序、网站和 IT 服务时如何收集、使用和保护您的信息。 |
 | `zh:privacy.breadcrumbLabel` | Breadcrumb | 面包屑导航 |
 | `zh:privacy.breadcrumbHome` | Home | 首页 |
-| `zh:privacy.breadcrumbCurrent`<br>`zh:privacy.title` | Privacy policy | 隐私政策 |
+| `zh:privacy.breadcrumbCurrent` | Privacy policy | 隐私政策 |
+| `zh:privacy.title` | Privacy Policy | 隐私政策 |
 | `zh:privacy.bodyLabel` | Policy | 政策 |
-| `zh:privacy.retentionDecided`<br>`zh:privacy.sections[3].paragraphs[0]` | Contact and demo requests, email capture submissions, job applications and CVs are kept with no time limit. | 咨询和演示请求、提交的电子邮箱地址，以及求职申请和简历均无限期保存。 |
-| `zh:privacy.sections[0].heading` | What we collect | 我们收集的信息 |
-| `zh:privacy.sections[0].paragraphs[0]` | Email, name, phone number, organization, role and anything you send through our forms, including a CV if you apply for a job. | 电子邮箱、姓名、电话号码、机构、职位，以及您通过我们的表单发送的任何内容，包括您申请职位时提交的简历。 |
-| `zh:privacy.sections[1].heading` | How we use it | 我们如何使用这些信息 |
-| `zh:privacy.sections[1].paragraphs[0]` | Only to answer your request or to consider your job application and CV. | 仅用于回复您的请求，或审阅您的求职申请和简历。 |
-| `zh:privacy.sections[2].heading` | Who we share it with | 我们与谁共享 |
-| `zh:privacy.sections[2].paragraphs[0]` | Service providers that process data for us: Gmail (sends form messages to our company inbox), Upstash (rate-limit counters made from hashed values), Vercel (website hosting and private CV storage), Google Fonts (fonts for Japanese, Korean and Chinese pages). | 代表我们处理数据的服务提供商：Gmail（将表单消息发送到公司收件箱）、Upstash（由哈希值生成的限流计数器）、Vercel（网站托管和简历私密存储）、Google Fonts（日文、韩文和中文页面所用的字体）。 |
-| `zh:privacy.sections[3].heading` | How long we keep it | 我们保留多久 |
+| `zh:privacy.tocLabel` | On this page | 本页内容 |
+| `zh:privacy.languageNote` | This policy is provided in English. | 本政策以英文提供。 |
 
 ## Process (Home and Services)
 
@@ -544,7 +531,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 
 ## Site shell: header, footer, language menu, 404
 
-25 strings.
+26 strings.
 
 | Where | English | 简体中文 |
 | --- | --- | --- |
@@ -570,6 +557,7 @@ For a native Simplified Chinese reader. Every row is a Simplified Chinese string
 | `zh:shell.footer.aboutUs` | About us | 关于我们 |
 | `zh:shell.footer.offices` | Offices | 办公地点 |
 | `zh:shell.footer.privacy` | Privacy policy | 隐私政策 |
+| `zh:shell.footer.copyright` | Copyright © 2026 XionTech Joint Stock Company. All Rights Reserved. | 版权所有 © 2026 XionTech Joint Stock Company。保留所有权利。 |
 | `zh:shell.notFound.metaTitle` | Page not found \| XionTech | 页面未找到 \| XionTech |
 | `zh:shell.notFound.title` | Page not found | 页面未找到 |
 | `zh:shell.notFound.primary` | Back to Home | 返回首页 |

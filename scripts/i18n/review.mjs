@@ -125,8 +125,6 @@ const GLOBAL_ALLOWED = [
   // App, product and service names and badges.
   "Parent Hub",
   "Staff Hub",
-  "IoT",
-  "IoT Device Management",
   "AI Tutor",
   "P-Hub",
   "S-Hub",
@@ -280,7 +278,7 @@ export function renderLocaleReview(rows, locale) {
     "",
     "- Check meaning, tone, spelling and natural wording, and that nothing is added, left out or made stronger than the English (no new claims, numbers or promises).",
     "- `[Placeholder]` stays in front of a placeholder text, and `{n}` is a number filled in by the site; keep both.",
-    "- **Privacy** is legal text translated by an AI. It needs the lead's and a legal reviewer's sign-off before it is published.",
+    "- **Privacy**: only the page strings (title, contents label, English-language note) are translated; the policy itself is shown in English on every locale.",
     "- News stories and job posts from the CMS are not translated; they show in English on purpose.",
     "",
     `**Kept in English on purpose:** ${kept}`,

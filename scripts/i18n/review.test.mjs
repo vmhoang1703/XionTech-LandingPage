@@ -87,7 +87,7 @@ describe("renderLocaleReview", () => {
     expect(review).toContain("**Total:** 2 strings.");
     expect(review.indexOf("## Home")).toBeLessThan(review.indexOf("## About"));
     expect(review).toContain("| Where | English | 日本語 |");
-    expect(review).toContain("**Privacy** is legal text");
+    expect(review).toContain("**Privacy**: only the page strings");
     expect(review).toContain(LOCALE_INFO.ja.kept);
   });
 

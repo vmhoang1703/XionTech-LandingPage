@@ -32,20 +32,24 @@ const ProductScene = dynamic(
 
 // The modal for one stop on the road, which is one product: its name, its
 // tagline, who it is made for and its features, and Previous/Next to walk the
-// road. Before the first stop is Start and after the last is Finish: they
-// close the card and show that end of the road. Behind the card, the product's device (a phone, a laptop or a monitor)
-// stands on a piece of the road. The scene is decoration; the card has the text.
+// road (none before the first stop or after the last). Behind the card, the
+// product's device (a phone, a laptop or a monitor) stands on a piece of the
+// road. The scene is decoration; the card has the text. It fades out as it
+// closes (the Close button, Esc or a click outside), at once with reduced
+// motion; the browser then returns focus to the dot that opened it.
 
 type Props = Readonly<{
   index: number | null;
   onMove: (index: number) => void;
-  onEnd: (end: RoadEndId) => void;
   onClose: () => void;
 }>;
 
+// The exit animations in globals.css (the card sinks, all of it fades).
+const EXIT = ["rd-fade-out", "rd-sink"];
+
 export type RoadEndId = "start" | "finish";
 
-export function RoadStopDialog({ index, onMove, onEnd, onClose }: Props) {
+export function RoadStopDialog({ index, onMove, onClose }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
   const road = useLocalized<"productRoad", ProductRoad>("productRoad", {
     en: productRoad,
@@ -70,6 +74,42 @@ export function RoadStopDialog({ index, onMove, onEnd, onClose }: Props) {
     if (body) body.scrollTop = 0;
   }, [index]);
 
+  // Closes with its exit animation: the dialog is marked closing, and closes
+  // once its animations have finished (none with reduced motion, or where the
+  // browser runs none: then at once).
+  const closing = useRef(false);
+  const shut = () => {
+    const dialog = ref.current;
+    if (!dialog?.open || closing.current) return;
+    const still =
+      typeof matchMedia === "function" &&
+      matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (still || typeof dialog.getAnimations !== "function") {
+      dialog.close();
+      return;
+    }
+    closing.current = true;
+    dialog.dataset.closing = "true";
+    const done = () => {
+      closing.current = false;
+      delete dialog.dataset.closing;
+      dialog.close();
+    };
+    // Only the exit's own animations: the scene's loops never end.
+    const running = dialog
+      .getAnimations({ subtree: true })
+      .filter(
+        (a) => a instanceof CSSAnimation && EXIT.includes(a.animationName),
+      );
+    if (running.length === 0) return done();
+    Promise.allSettled(running.map((a) => a.finished)).then(done);
+  };
+  // Esc animates out too.
+  const onCancel = (event: React.SyntheticEvent<HTMLDialogElement>) => {
+    event.preventDefault();
+    shut();
+  };
+
   // A click anywhere outside the card (the scene fills the window) closes it,
   // unless the press began in the card: a text selection dragged out of it
   // ends with a click on the scene.
@@ -81,26 +121,20 @@ export function RoadStopDialog({ index, onMove, onEnd, onClose }: Props) {
   };
   const onClick = (event: React.MouseEvent<HTMLDialogElement>) => {
     if (inCard(event.target) || pressedInCard.current) return;
-    ref.current?.close();
+    shut();
   };
 
   const id = index === null ? null : road.stops[index];
   const app = id === null ? null : appById(id);
-  // The neighbour's name, or the end of the road.
-  const name = (at: number, end: string) =>
-    road.stops[at] ? appById(road.stops[at]).shortName : end;
-  const go = (at: number) => {
-    if (road.stops[at]) return onMove(at);
-    ref.current?.close();
-    onEnd(at < 0 ? "start" : "finish");
-  };
-
+  const before = index === null ? null : road.stops[index - 1];
+  const after = index === null ? null : road.stops[index + 1];
   return (
     <dialog
       ref={ref}
       className="road-dialog"
       aria-labelledby="road-dialog-h"
       onClose={onClose}
+      onCancel={onCancel}
       onPointerDown={onPointerDown}
       onClick={onClick}
     >
@@ -115,46 +149,58 @@ export function RoadStopDialog({ index, onMove, onEnd, onClose }: Props) {
               <button
                 type="button"
                 className="road-dialog-close"
-                onClick={() => ref.current?.close()}
+                onClick={shut}
               >
                 <XIcon aria-hidden="true" />
                 <span className="sr-only">{close}</span>
               </button>
             </div>
-            <h2 id="road-dialog-h">{app.fullName}</h2>
+            {/* The app's name, and its logo on the right of the same row. */}
+            <div className="road-dialog-name">
+              <h2 id="road-dialog-h">{app.fullName}</h2>
+              <MapBadge badge={app.badge} />
+            </div>
             <p className="road-dialog-text">{taglines[id]}</p>
 
             <StopApp id={id} />
 
             <div className="road-dialog-nav">
-              <button
-                type="button"
-                className="road-dialog-go"
-                data-dir="prev"
-                onClick={() => go(index - 1)}
-              >
-                <span className="road-dialog-go-arrow" aria-hidden="true">
-                  <ArrowLeftIcon />
-                </span>
-                <span className="road-dialog-go-text">
-                  <span className="road-dialog-go-label">{previous}</span>{" "}
-                  {name(index - 1, road.start)}
-                </span>
-              </button>
-              <button
-                type="button"
-                className="road-dialog-go"
-                data-dir="next"
-                onClick={() => go(index + 1)}
-              >
-                <span className="road-dialog-go-text">
-                  <span className="road-dialog-go-label">{next}</span>{" "}
-                  {name(index + 1, road.finish)}
-                </span>
-                <span className="road-dialog-go-arrow" aria-hidden="true">
-                  <ArrowRightIcon />
-                </span>
-              </button>
+              {before ? (
+                <button
+                  type="button"
+                  className="road-dialog-go"
+                  data-dir="prev"
+                  onClick={() => onMove(index - 1)}
+                >
+                  <span className="road-dialog-go-arrow" aria-hidden="true">
+                    <ArrowLeftIcon />
+                  </span>
+                  <span className="road-dialog-go-text">
+                    <span className="road-dialog-go-label">{previous}</span>{" "}
+                    {appById(before).shortName}
+                  </span>
+                </button>
+              ) : (
+                <span className="road-dialog-go-gap" aria-hidden="true" />
+              )}
+              {after ? (
+                <button
+                  type="button"
+                  className="road-dialog-go"
+                  data-dir="next"
+                  onClick={() => onMove(index + 1)}
+                >
+                  <span className="road-dialog-go-text">
+                    <span className="road-dialog-go-label">{next}</span>{" "}
+                    {appById(after).shortName}
+                  </span>
+                  <span className="road-dialog-go-arrow" aria-hidden="true">
+                    <ArrowRightIcon />
+                  </span>
+                </button>
+              ) : (
+                <span className="road-dialog-go-gap" aria-hidden="true" />
+              )}
             </div>
           </div>
         </>
@@ -176,12 +222,9 @@ function StopApp({ id }: Readonly<{ id: AppId }>) {
   });
   return (
     <section className="road-dialog-app" aria-label={app.shortName}>
-      <div className="road-dialog-app-h">
-        <MapBadge badge={app.badge} />
-        <p className="road-dialog-made">
-          {showcase.madeFor}: {detail.madeFor}
-        </p>
-      </div>
+      <p className="road-dialog-made">
+        {showcase.madeFor}: {detail.madeFor}
+      </p>
       <h3>{showcase.featuresHeading}</h3>
       <ul>
         {detail.features.map((feature) => (

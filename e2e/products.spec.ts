@@ -20,12 +20,13 @@ test(
     // Inside the roadmap: between the map section's start and its end.
     const start = html.indexOf('id="map"');
     const map = html.slice(start, html.indexOf("</section>", start));
-    for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
+    for (const id of ["pxp", "sxp", "ai-tutor"]) {
       expect(map.split(`id="${id}"`)).toHaveLength(2);
       expect(html.split(`id="${id}"`)).toHaveLength(2);
     }
     expect(html).not.toContain('href="#updates"');
     expect(html).not.toContain('id="lxp"');
+    expect(html).not.toContain('id="iot"');
     expect(html).not.toContain("xt-ai-tutor-demo");
   },
 );
@@ -33,13 +34,11 @@ test(
 test.describe("deep links to an app", { tag: "@a11y" }, () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
-  // Each app's anchor and the roadmap stop it lands on. IoT has no stop: its
-  // old link lands at the start of the roadmap, on the first stop.
+  // Each app's anchor and the roadmap stop it lands on.
   for (const [anchor, index, title] of [
     ["pxp", 0, "Parent Hub"],
     ["sxp", 1, "Staff Hub"],
     ["ai-tutor", 2, "AI Tutor"],
-    ["iot", 0, "Parent Hub"],
   ] as const) {
     test(`/en/products#${anchor} makes stop ${index + 1} active with its card in view below the header`, async ({
       page,

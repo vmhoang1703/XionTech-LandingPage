@@ -14,7 +14,7 @@ export const siteFooter = {
   columns: [
     {
       heading: (t) => t.footer.products,
-      // The four apps on the Products journey, by their product names (the
+      // The three apps on the Products journey, by their product names (the
       // same in every locale).
       links: APPS.map((app) => ({
         href: `/products#${app.anchor}`,
@@ -46,7 +46,7 @@ export const siteFooter = {
     },
   ] satisfies FooterColumn[],
   officesHeading: (t: ShellDictionary) => t.footer.offices,
-  copyright: "© 2026 XionTech",
+  copyright: (t: ShellDictionary) => t.footer.copyright,
   privacy: {
     href: "/privacy",
     label: (t: ShellDictionary) => t.footer.privacy,

@@ -84,17 +84,17 @@ describe("Products page", () => {
     ).toEqual(["1. Parent Hub", "2. Staff Hub", "3. AI Tutor"]);
   });
 
-  it("puts the four app anchors in the roadmap, IoT's at its start", async () => {
+  it("puts the three app anchors in the roadmap, and no IoT", async () => {
     const { container } = render(await productsAt("en"));
-    for (const id of ["pxp", "sxp", "iot", "ai-tutor"]) {
+    for (const id of ["pxp", "sxp", "ai-tutor"]) {
       expect(container.querySelectorAll(`[id="${id}"]`)).toHaveLength(1);
       expect(
         container.querySelector(`section#map .rm [id="${id}"]`),
       ).not.toBeNull();
     }
-    // IoT has no stop: its anchor is a mark at the start of the roadmap.
-    expect(container.querySelector("#iot")?.className).toBe("rm-alias");
-    expect(container.querySelector("#iot")?.closest("li")).toBeNull();
+    // IoT is no longer a product (lead, 2026-10-15).
+    expect(container.querySelector("#iot")).toBeNull();
+    expect(container.textContent).not.toMatch(/IoT|device management/i);
   });
 
   it("has no sub-nav, tab list, Updates link or LXP section", async () => {
@@ -126,7 +126,7 @@ describe("Products page", () => {
 
   it("sets the page metadata", () => {
     expect(metadata.title).toBe(
-      "School Apps: Parent Hub, Staff Hub, IoT & AI Tutor | XionTech",
+      "School Apps: Parent Hub, Staff Hub & AI Tutor | XionTech",
     );
     expect(metadata.description).toBe(productsMeta.description);
     expect(productsMeta.description).not.toMatch(/PXP|LXP|SXP|XionTechs/);

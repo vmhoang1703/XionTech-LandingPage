@@ -44,7 +44,6 @@ describe("SiteFooter", () => {
     ).toEqual([
       ["Parent Hub", "/en/products#pxp"],
       ["Staff Hub", "/en/products#sxp"],
-      ["IoT Device Management", "/en/products#iot"],
       ["AI Tutor", "/en/products#ai-tutor"],
     ]);
     expect(
@@ -162,7 +161,11 @@ describe("SiteFooter", () => {
   it("shows the bottom bar with copyright, privacy link and the GET IT DONE tag", () => {
     const footer = renderFooter();
 
-    expect(within(footer).getByText(/© 2026 XionTech\b/)).toBeDefined();
+    expect(
+      within(footer).getByText(
+        /Copyright © 2026 XionTech Joint Stock Company\. All Rights Reserved\./,
+      ),
+    ).toBeDefined();
     expect(
       within(footer)
         .getByRole("link", { name: "Privacy policy" })
@@ -185,7 +188,7 @@ describe("SiteFooter", () => {
     const textLinks = within(footer)
       .getAllByRole("link")
       .filter((link) => !link.querySelector("img"));
-    expect(textLinks).toHaveLength(19);
+    expect(textLinks).toHaveLength(18);
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
       expect(link.className).toContain("pointer-coarse:min-h-11");

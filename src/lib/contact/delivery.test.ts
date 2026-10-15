@@ -59,7 +59,7 @@ const DEMO: ContactSubmission = {
   org: "Sunrise School",
   role: "Principal",
   message: "First line\nSecond line",
-  products: ["Parent Hub", "IoT"],
+  products: ["Parent Hub", "Staff Hub"],
   schoolSize: "500 to 1,500 students",
   date: "2026-10-20",
 };
@@ -366,7 +366,7 @@ describe("sendContactMail", () => {
       "Ana@Sunrise.edu",
       "Sunrise School",
       "Principal",
-      "Parent Hub, IoT",
+      "Parent Hub, Staff Hub",
       "500 to 1,500 students",
       "2026-10-20",
       "First line\nSecond line",
