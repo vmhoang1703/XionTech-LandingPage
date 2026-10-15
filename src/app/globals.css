@@ -3798,40 +3798,44 @@
 
   /* The road's Start and Finish markers (road-map.tsx, RoadEnd): a flag pin
      and its name. Narrow: a row above the first stop and below the last, with
-     a stub of road joining it to them. Wide: on the drawn road's two ends. */
+     half a bend of road joining it to them (--end-x: where the pin stands on
+     it). Wide: on the drawn road's two ends. */
   .rm-end {
     position: relative;
     display: grid;
     grid-template-columns: 80px minmax(0, 1fr);
     align-items: center;
-    min-height: 64px;
+    min-height: 80px;
   }
 
-  .rm-end::before {
-    content: "";
+  .rm-end .rm-seg {
     position: absolute;
-    left: 29px;
-    width: 22px;
-    background: var(--color-navy);
-    box-shadow: 0 0 0 4px var(--color-ice);
+    left: 0;
+    height: 50%;
   }
 
-  .rm-end[data-end="start"]::before {
-    top: 50%;
+  .rm-end[data-end="start"] .rm-seg {
     bottom: 0;
   }
 
-  .rm-end[data-end="finish"]::before {
+  .rm-end[data-end="finish"] .rm-seg {
     top: 0;
-    bottom: 50%;
+  }
+
+  /* Clear of a pin on the right of the road (x 67, 22px wide half). */
+  .rm-end-label {
+    grid-column: 2;
+    padding-left: 16px;
   }
 
   .rm-end-pin {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: var(--end-x);
     z-index: 1;
     display: grid;
     place-items: center;
-    justify-self: center;
+    translate: -50% -50%;
     width: 40px;
     height: 40px;
     border: 3px solid var(--color-navy);
@@ -3866,8 +3870,8 @@
       min-height: 0;
     }
 
-    .rm-end::before {
-      content: none;
+    .rm-end .rm-seg {
+      display: none;
     }
 
     .rm-end-pin {
@@ -3957,6 +3961,37 @@
       clip-path: inset(-20px -40px);
       transition: clip-path 300ms linear;
     }
+
+    /* The road runs on from Start into stop 1, and from the last stop on to
+       Finish: each half bend draws in turn with its stop, then its flag. */
+    .rm[data-reveal="armed"] .rm-end:not([data-in]) .rm-seg {
+      clip-path: inset(-20px -40px calc(100% + 20px) -40px);
+    }
+
+    .rm[data-reveal="armed"] .rm-end:not([data-in]) .rm-end-pin {
+      scale: 0;
+    }
+
+    .rm-end[data-in] .rm-seg {
+      clip-path: inset(-20px -40px);
+      transition: clip-path 200ms linear;
+    }
+
+    .rm-end[data-in] .rm-end-pin {
+      transition: scale var(--transition-duration-menu) var(--ease-brand);
+    }
+
+    .rm-stop[data-first][data-in] .rm-seg {
+      transition-delay: 200ms;
+    }
+
+    .rm-end[data-end="finish"][data-in] .rm-seg {
+      transition-delay: 300ms;
+    }
+
+    .rm-end[data-end="finish"][data-in] .rm-end-pin {
+      transition-delay: 500ms;
+    }
   }
 
   /* Roadmap scroll tour (wide, with JavaScript, no reduced motion). The
@@ -4018,9 +4053,11 @@
       stroke-dashoffset: calc(1 - var(--share));
     }
 
-    /* From a frame after the tour starts, so the road snaps to stop 1. */
+    /* From a frame after the tour starts: the road draws from Start to the
+       active stop, then on with the scroll, and from the last stop to
+       Finish. */
     .rm[data-tour="on"][data-road="moving"] .rm-draw {
-      transition: stroke-dashoffset 400ms var(--ease-brand);
+      transition: stroke-dashoffset 700ms var(--ease-brand);
     }
 
     /* Functional text stays at --text-label (11.5px) or larger once the

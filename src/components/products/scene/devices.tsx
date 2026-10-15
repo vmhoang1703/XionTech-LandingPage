@@ -96,7 +96,7 @@ function Laptop({
       <div className="dv-hinge">
         <Slab
           className="dv-lid"
-          size={[540, 336]}
+          size={[540, 302]}
           thickness={9}
           radius={16}
           bezel={10}
@@ -146,7 +146,7 @@ function Monitor({
       />
       <Slab
         className="dv-head"
-        size={[640, 340]}
+        size={[640, 314]}
         thickness={14}
         radius={16}
         bezel={9}

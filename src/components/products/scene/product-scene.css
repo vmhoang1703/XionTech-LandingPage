@@ -215,12 +215,16 @@
    its shadow. */
 .dv {
   --u: 1.05;
-  /* On a 1x screen the device is built at --k = 2 times its size and shrunk
-     back (transform below): the scene's slow drift never ends, so the browser
-     rasterises the device once and stretches it, and at twice the size the
-     screenshots stay sharp. A 2x screen already rasterises at twice the size;
-     building it bigger there runs out of GPU memory (the road vanished). */
-  --k: 1;
+  /* The device is built at --k times its size and shrunk back (transform
+     below): the browser rasterises each 3D plane at its layout size and
+     stretches it while the scene moves, so a plane built bigger keeps the
+     screenshots sharp. --k = 3 on a 1x screen and 2 on a 2x screen gives 3 or
+     4 device pixels per CSS pixel (about 4K-sharp text). Only the faces are
+     built big: the edge slices are plain colour and stay small (.dv-slice),
+     or the copies run out of GPU memory (the road vanished). --dk keeps the
+     device's --k inside a slice, which sets its own --k. */
+  --k: 2;
+  --dk: var(--k);
   --p: calc(var(--u) * var(--k) * 1px);
   --dv-z: -110;
   --sw: 230;
@@ -238,7 +242,7 @@
 
 @media (resolution < 1.5dppx) {
   .dv {
-    --k: 2;
+    --k: 3;
   }
 }
 
@@ -359,7 +363,17 @@
     var(--color-ink) calc(var(--k) / var(--n) * 100%),
     var(--edge)
   );
-  transform: translateZ(calc(var(--t) * var(--p) * var(--k) / var(--n) * -1));
+  /* Laid out --dk times smaller and scaled back up: same place and size, a
+     small raster. */
+  inset: auto;
+  top: 0;
+  left: 0;
+  width: calc(var(--W) / var(--dk));
+  height: calc(var(--H) / var(--dk));
+  border-radius: calc(var(--R) / var(--dk));
+  transform-origin: 0 0;
+  transform: translateZ(calc(var(--t) * var(--p) * var(--k) / var(--n) * -1))
+    scale(var(--dk));
 }
 
 /* Without color-mix the edge is one flat navy, not shaded by depth. */
@@ -494,8 +508,9 @@
 }
 
 .ws-image {
-  object-fit: cover;
-  object-position: 50% 0;
+  /* The whole screenshot shows, never cropped; each screen has about its
+     screenshots' shape (devices.tsx), so the bars left are a hairline. */
+  object-fit: contain;
   opacity: 0;
   transition: opacity 700ms var(--ease-brand);
 }
@@ -859,8 +874,7 @@
 }
 
 .rd-scene[data-play="on"] .rd-sway {
-  animation: rd-sway 12s ease-in-out 3s infinite alternate both;
-}
+  animation: rd-sway 12s ease-in-out 3s infinite alternate both;}
 
 .rd-scene[data-play="on"] .rd-ground {
   transition: transform var(--transition-duration-highlight) var(--ease-brand);
