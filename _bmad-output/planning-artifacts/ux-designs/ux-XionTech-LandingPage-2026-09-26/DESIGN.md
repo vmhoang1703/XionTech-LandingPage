@@ -375,7 +375,7 @@ The identity comes straight from the logo: a navy X mark, an amber swoosh and th
 
 Products lead. The first five seconds of Home show what the products do (device mockups with real product screens) and put both business lines, Products for schools and Outsourcing services, directly under the hero.
 
-**Dark mode (added 2026-10-15, Hoang Vu and Sammy, overriding the original "no dark mode" rule):** the site follows the visitor's colour-scheme setting, and a sun/moon toggle (right of the header pill on desktop, a row in the menu sheet on phones) overrides it. Dark tokens: page `#0B1730`, paper `#12213F`, mist `#0F1D38`, ice `#1E4178`, headings `#FFFFFF`, text `#EEF2F9`, muted `#C5D0E3`, border `#FFFFFF24`, link `#FFCF06`, focus `#FFC000`, amber text `#FFD84A`. The header pill stays white; navy bands keep brand navy with a 1px `#FFFFFF24` edge; amber bands and amber parts keep navy text. Source: `src/app/globals.css` (Dark theme block). In light mode, each page follows a colour rhythm of paper and mist with at least one navy band (a navy hero counts) and at most one full-width amber band (an amber hero counts). Amber tiles, cards and the featured value cell are accents and do not count. Each page hero uses a different mix (light, navy or amber).
+There is no dark mode. Instead each page follows a colour rhythm of paper and mist with at least one navy band (a navy hero counts) and at most one full-width amber band (an amber hero counts). Amber tiles, cards and the featured value cell are accents and do not count. Each page hero uses a different mix (light, navy or amber).
 
 Brand inputs: `imports/xiontechs-logo.png`, `imports/xiontechs-logo-square.png` (PNG only; an SVG master is still needed) and `imports/ref-hero-device-mockup.png` (the reference for the tablet + phone hero).
 
@@ -549,7 +549,7 @@ Visual specs. Behaviour lives in `EXPERIENCE.md` Component Patterns under the sa
 | Put navy text on amber | Put white text on amber (1.64:1) |
 | Use `{colors.amber-text}` or darker for amber text and icons on light surfaces | Use `#C99700` for text or icons; it is decorative only |
 | Scope the focus ring to the section: amber on navy, navy elsewhere | Show a navy ring on a navy section |
-| Use at least one navy band and at most one full-width amber band per page | Stack two amber bands |
+| Use at least one navy band and at most one full-width amber band per page | Stack two amber bands, or add a dark mode toggle |
 | Use Unbounded for headlines, Lexend Exa for caps, Be Vietnam Pro for text, JetBrains Mono for data | Use Michroma, Orbitron or Sora (no Vietnamese), or two display faces in one component (Lexend Exa and JetBrains Mono are small accents and may sit beside the body and display faces) |
 | Give Vietnamese H1 and H2 line-height 1.18 or more | Tighten tracking on Vietnamese uppercase |
 | Use real product screens, clips and team photos | Use AI-generated art or stock that looks generated; use a hand-crafted illustrator brief |

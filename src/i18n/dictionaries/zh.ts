@@ -890,7 +890,6 @@ export const zh: Dictionaries = {
       cityHcmc: "胡志明市",
     },
     language: { label: "语言" },
-    theme: { label: "深色模式" },
     backToTop: { label: "返回顶部" },
     footer: {
       blurb:

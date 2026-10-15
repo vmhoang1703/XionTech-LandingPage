@@ -7,7 +7,7 @@ for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
     320, 375, 390, 412, 430, 444, 480, 520, 640, 900, 1080, 1440,
   ]) {
     test(
-      `/${locale} at ${width}px: the language button is the last item in the pill`,
+      `/${locale} at ${width}px: the bar ends with language, then the menu button on phones`,
       {
         tag: "@a11y",
       },
@@ -18,22 +18,22 @@ for (const locale of ["en", "vi", "ja", "fr", "ko", "zh"] as const) {
         const language = header.locator("[aria-controls='language-list']");
         await expect(language).toBeVisible();
 
-        // The last visible interactive item in the pill (the closed list is
-        // hidden). Above 1080px the dark-mode toggle sits outside the pill, on
-        // its right (2026-10-15); below, it is a row in the menu.
+        // The last visible interactive items in the pill (the closed list is
+        // hidden).
         const pill = header.locator(".nav-pill");
-        const lastIsLanguage = await pill.evaluate((el, selector) => {
+        // Up to 1080px the menu button follows language on the right edge
+        // (2026-10-15), so it opens and closes from one spot.
+        const lastTwo = await pill.evaluate((el, selector) => {
           const items = [...el.querySelectorAll<HTMLElement>(selector)].filter(
-            (item) => item.getClientRects().length > 0,
+            (item) =>
+              item.getClientRects().length > 0 && !item.closest("#mobile-menu"),
           );
-          return (
-            items.at(-1)?.getAttribute("aria-controls") === "language-list"
-          );
+          return items
+            .slice(-2)
+            .map((item) => item.getAttribute("aria-controls"));
         }, INTERACTIVE);
-        expect(lastIsLanguage).toBe(true);
-        const toggle = header.locator(".theme-toggle");
-        if (width > 1080) await expect(toggle).toBeVisible();
-        else await expect(toggle).toBeHidden();
+        if (width > 1080) expect(lastTwo.at(-1)).toBe("language-list");
+        else expect(lastTwo).toEqual(["language-list", "mobile-menu"]);
 
         // The bar's own items must stay inside the pill. The menu sheet is
         // drawn 1px wider than the pill on purpose (globals.css, .mm-sheet).

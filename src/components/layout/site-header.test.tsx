@@ -32,7 +32,11 @@ describe("SiteHeader", () => {
     expect(demo.getAttribute("href")).toBe("/en#contact");
     expect(demo.className).toContain("btn btn-primary btn-sm nav-talk");
     // Below 1081px the nav is hidden, so the button keeps itself and Menu on the right.
-    expect(demo.className).toContain("max-[1080px]:ml-auto");
+    // Below 1080px the logo pushes the rest to the right edge.
+    expect(demo.className).not.toContain("ml-auto");
+    expect(
+      screen.getByRole("link", { name: "XionTech home" }).className,
+    ).toContain("max-[1080px]:mr-auto");
     // Below 412px (the narrowest width where the en and vi bars fit, measured
     // 2026-10-14) it leaves the bar; the mobile menu offers it instead.
     // Up to 479px it drops its arrow and side padding (the Vietnamese bar needs this too).
@@ -52,8 +56,7 @@ describe("SiteHeader", () => {
     const pill = header.querySelector(".nav-pill") as HTMLElement;
     expect(pill.className).toContain("pointer-events-auto");
     expect(pill.className).toContain("rounded-full");
-    // The pill keeps its 1180px; the theme toggle (48px + 8px gap) sits beside it.
-    expect(pill.parentElement?.className).toContain("max-w-[1236px]");
+    expect(pill.className).toContain("max-w-[1180px]");
   });
 
   it("renders the primary nav inside a header", () => {
@@ -88,13 +91,18 @@ describe("SiteHeader", () => {
     expect(screen.getByRole("button", { name: /^Ngôn ngữ/ })).toBeTruthy();
   });
 
-  it("puts the language button last in the bar, outside the mobile menu", () => {
+  it("ends the bar with language, then the menu button (hidden above 1080px)", () => {
     render(<SiteHeader locale="en" />);
     const pill = screen
       .getByRole("banner")
       .querySelector(".nav-pill") as HTMLElement;
     const language = screen.getByRole("button", { name: /Language/ });
-    expect(pill.lastElementChild?.contains(language)).toBe(true);
+    const menu = screen.getByRole("button", { name: "Menu" });
+    // The bar's own buttons, not the ones in the menu sheet.
+    const bar = [...pill.querySelectorAll("button")].filter(
+      (button) => !button.closest("#mobile-menu, #language-list"),
+    );
+    expect(bar.slice(-2)).toEqual([language, menu]);
     expect(document.getElementById("mobile-menu")?.contains(language)).toBe(
       false,
     );

@@ -1889,3 +1889,9 @@ Template:
 - **Fixes:** a swipe row with nothing to focus takes focus itself; `focusField()` focuses without scrolling, then centres the field (all four forms); `.field` inputs fill their card and the job columns may shrink. `e2e/mobile.spec.ts` covers them in Chrome.
 - **AI got it wrong:** it reported "1,826 passed" while `npm test` exited 1: the new `scrollIntoView` call threw unhandled errors in jsdom, and the AI had grepped the summary without the exit code. The code review caught it, and also that the job application form still used the old focus call. A global stub in `vitest.setup.ts` and the job form fix followed.
 - **Not covered:** a real iPhone or Android, and a WebKit Playwright project in CI (the e2e runs in Chrome only).
+
+## 2026-10-15 — Dark mode removed; mobile header reordered
+
+- **Prompt:** "can you check the navbar on Mobile view, I dont like that" (picked: logo left, language and the menu button on the right), then "hide the toggle dark mode please, keep the light mode", then "no need to hide, remove the dark mode for me".
+- **What the AI did:** the mobile header now reads logo, then (from 412px) Let's talk, language and the menu button on the right edge; the button opens and closes from one spot, and focus order follows the screen. Dark mode (PR #123) is removed: the toggle, the theme script, the dark CSS block, the toggle labels in six locales, their tests and the dark e2e spec, the footer logo chip class, and the DESIGN.md and AGENTS.md override. DESIGN.md says "There is no dark mode" again. Back to top stays, with its e2e moved to `e2e/back-to-top.spec.ts`.
+- **AI got it wrong:** it first proposed hiding dark mode behind a `DARK_MODE` switch; the lead wanted it gone, not dormant.

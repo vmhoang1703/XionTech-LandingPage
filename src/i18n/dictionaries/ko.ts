@@ -905,7 +905,6 @@ export const ko: Dictionaries = {
       cityHcmc: "호찌민시",
     },
     language: { label: "언어" },
-    theme: { label: "다크 모드" },
     backToTop: { label: "맨 위로" },
     footer: {
       blurb:
