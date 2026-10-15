@@ -19,9 +19,9 @@ const staffHub = appById("staff-hub");
 const aiTutor = appById("ai-tutor");
 
 export const homeMeta = {
-  title: "XionTech | School Platforms & Software Outsourcing in Vietnam",
+  title: "AI-driven product engineering | Custom software development company",
   description:
-    "XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam.",
+    "XionTech builds AI-powered products and custom software for any industry, combining real product experience with modern technology to help you ship faster.",
 };
 
 export const homeHero = {
@@ -38,9 +38,10 @@ export const homeHero = {
 };
 
 export const homeMetaVi: typeof homeMeta = {
-  title: "XionTech | Nền tảng trường học và gia công phần mềm tại Việt Nam",
+  title:
+    "Phát triển sản phẩm dựa trên AI | Công ty phát triển phần mềm theo yêu cầu",
   description:
-    "XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu: nền tảng trường học (Parent Hub, Staff Hub, AI Tutor) và gia công phần mềm từ Việt Nam.",
+    "XionTech xây dựng sản phẩm AI và phần mềm theo yêu cầu cho mọi lĩnh vực, kết hợp kinh nghiệm sản phẩm thực tế với công nghệ hiện đại để bạn ra mắt nhanh hơn.",
 };
 
 export const homeHeroVi: Localized<typeof homeHero> = {

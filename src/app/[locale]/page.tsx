@@ -12,10 +12,10 @@ import { HomeContact } from "@/components/contact/home-contact";
 import { HomeNews } from "@/components/news/home-news";
 import { PageScene } from "@/components/sections/page-scene";
 
-export const generateMetadata = localeMetadata({
-  en: homeMeta,
-  vi: homeMetaVi,
-});
+export const generateMetadata = localeMetadata(
+  { en: homeMeta, vi: homeMetaVi },
+  "/",
+);
 
 // Home (E-S1): the hero with its doors, then one story on one flowing light
 // surface: what we help you achieve, the apps, why XionTech, how we work, our

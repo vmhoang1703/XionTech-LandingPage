@@ -15,14 +15,15 @@ const nextConfig: NextConfig = {
     "/[locale]/careers": ["./public/careers/life/**/*"],
   },
   // The /demo page is gone (website copy v3): old links land on Home's
-  // contact section, in the link's language when it has one.
+  // contact section, in the link's language when it has one. Permanent
+  // (308) so search engines drop /demo.
   async redirects() {
     return [
-      { source: "/demo", destination: "/#contact", permanent: false },
+      { source: "/demo", destination: "/#contact", permanent: true },
       {
         source: "/:locale(en|vi)/demo",
         destination: "/:locale#contact",
-        permanent: false,
+        permanent: true,
       },
     ];
   },

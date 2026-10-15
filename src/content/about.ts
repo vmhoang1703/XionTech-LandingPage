@@ -2,9 +2,9 @@
 // be translated later.
 
 export const aboutMeta = {
-  title: "About XionTech | Get IT Done",
+  title: "About XionTech | AI-driven product and engineering company",
   description:
-    "XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients.",
+    "Meet XionTech: technology built with ownership, with delivery centers in Plano and Ho Chi Minh City and a team that turns ideas into working software.",
 };
 
 export const aboutHero = {
@@ -30,7 +30,7 @@ export const aboutStory = {
     tail: "",
   },
   paragraphs: [
-    "Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights.",
+    "Our name draws inspiration from a mountain, a symbol of ambition, unity, and the determination to reach new heights.",
     "That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress.",
   ],
   // Under the story while it is held; on the summit of the picture.
@@ -150,9 +150,9 @@ export const aboutCta = {
 // Vietnamese. Product names stay English (2026-10-13); hrefs, ids, addresses,
 // phones and emails are shared with English.
 export const aboutMetaVi: typeof aboutMeta = {
-  title: "Về XionTech | Get IT Done",
+  title: "Về XionTech | Công ty phát triển sản phẩm và kỹ thuật dựa trên AI",
   description:
-    "XionTech là đối tác kỹ thuật với đội ngũ tại Mỹ và Việt Nam. Chúng tôi xây dựng sản phẩm phần mềm, khám phá đổi mới sáng tạo ứng dụng AI và làm chủ quá trình triển khai cùng khách hàng.",
+    "Gặp gỡ XionTech: làm công nghệ với tinh thần làm chủ, có trung tâm phát triển tại Plano và TP. Hồ Chí Minh, cùng đội ngũ biến ý tưởng thành phần mềm thực tế.",
 };
 
 export const aboutHeroVi: typeof aboutHero = {
@@ -177,7 +177,7 @@ export const aboutStoryVi: typeof aboutStory = {
     tail: "",
   },
   paragraphs: [
-    "Tên của chúng tôi lấy cảm hứng từ một ngọn núi — biểu tượng của khát vọng, sự đoàn kết và quyết tâm vươn tới những tầm cao mới.",
+    "Tên của chúng tôi lấy cảm hứng từ một ngọn núi, biểu tượng của khát vọng, sự đoàn kết và quyết tâm vươn tới những tầm cao mới.",
     "Tinh thần đó định hình con người chúng tôi hôm nay. Chúng tôi kết nối con người với công nghệ, sẵn sàng đón nhận thử thách và làm chủ những gì mình xây dựng, hướng tới một tương lai nơi đổi mới sáng tạo tạo nên những tiến bộ có ý nghĩa.",
   ],
   tagName: aboutStory.tagName,

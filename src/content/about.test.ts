@@ -84,7 +84,9 @@ describe("About content", () => {
   });
 
   it("has the new page title", () => {
-    expect(aboutMeta.title).toBe("About XionTech | Get IT Done");
+    expect(aboutMeta.title).toBe(
+      "About XionTech | AI-driven product and engineering company",
+    );
   });
 
   it("says XionTech, never XionTechs", () => {

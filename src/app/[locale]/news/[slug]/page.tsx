@@ -6,6 +6,9 @@ import { notFound } from "next/navigation";
 import { newsMeta, newsMetaVi, newsStory, newsStoryVi } from "@/content/news";
 import { fallbackLang, pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { seoMetadata } from "@/lib/seo/site";
+import { articleLd, breadcrumbLd, JsonLd } from "@/lib/seo/json-ld";
+import { SHELL } from "@/i18n/shell";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
 import { getPost, type StoryBlock } from "@/lib/news/post";
 import { heroWords } from "@/components/sections/hero-words";
@@ -21,10 +24,22 @@ export async function generateMetadata({
   const page = isLocale(locale) ? locale : "en";
   const { metaTitle } = pickLocale(page, { en: newsStory, vi: newsStoryVi });
   const meta = pickLocale(page, { en: newsMeta, vi: newsMetaVi });
-  return {
-    title: metaTitle(story.title),
-    description: story.excerpt ?? meta.description,
-  };
+  // A story not translated into this locale shows the English text, so its
+  // canonical is the English page and it has no hreflang alternates.
+  const translated = page === "en" || story.titleLang === page;
+  return seoMetadata(
+    page,
+    `/news/${slug}`,
+    {
+      title: metaTitle(story.title),
+      description: story.excerpt ?? meta.description,
+    },
+    {
+      type: "article",
+      image: story.image,
+      ...(translated ? {} : { canonicalLocale: "en", noAlternates: true }),
+    },
+  );
 }
 
 /**
@@ -70,6 +85,16 @@ export default async function StoryPage({ params }: StoryProps) {
   const t = heroWords();
   return (
     <>
+      {/* Breadcrumb in JSON-LD only: the page shows none (lead, 2026-10-08). */}
+      <JsonLd
+        data={[
+          articleLd(locale, story),
+          breadcrumbLd(locale, [
+            { name: SHELL[locale].nav.news, path: "/news" },
+            { name: story.title, path: `/news/${story.slug}` },
+          ]),
+        ]}
+      />
       <section
         className="hero-light page-hero art-hero"
         aria-labelledby="story-h1"

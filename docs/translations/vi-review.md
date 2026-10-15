@@ -13,7 +13,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 441 strings, 273 AI and 168 prototype.
+**Total:** 445 strings, 277 AI and 168 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -61,8 +61,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `home:homeMetaVi.title` | XionTech \| School Platforms & Software Outsourcing in Vietnam | XionTech \| Nền tảng trường học và gia công phần mềm tại Việt Nam |
-| AI | `home:homeMetaVi.description` | XionTech builds AI-powered products and custom solutions: school platforms (Parent Hub, Staff Hub, AI Tutor) and software outsourcing from Vietnam. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu: nền tảng trường học (Parent Hub, Staff Hub, AI Tutor) và gia công phần mềm từ Việt Nam. |
+| AI | `home:homeMetaVi.title` | AI-driven product engineering \| Custom software development company | Phát triển sản phẩm dựa trên AI \| Công ty phát triển phần mềm theo yêu cầu |
+| AI | `home:homeMetaVi.description` | XionTech builds AI-powered products and custom software for any industry, combining real product experience with modern technology to help you ship faster. | XionTech xây dựng sản phẩm AI và phần mềm theo yêu cầu cho mọi lĩnh vực, kết hợp kinh nghiệm sản phẩm thực tế với công nghệ hiện đại để bạn ra mắt nhanh hơn. |
 | AI | `home:homeHeroVi.title.lines[0]` | Build smarter. | Xây dựng thông minh hơn. |
 | AI | `home:homeHeroVi.title.lines[1]` | Ship faster. | Phát hành nhanh hơn. |
 | AI | `home:homeHeroVi.sub` | XionTech builds AI-powered products and custom solutions, combining real-world expertise with modern technology to solve business challenges. | XionTech xây dựng các sản phẩm ứng dụng AI và giải pháp theo yêu cầu, kết hợp kinh nghiệm thực tiễn với công nghệ hiện đại để giải quyết các bài toán kinh doanh. |
@@ -87,7 +87,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `home:homeOutcomesVi.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | Biến ý tưởng của bạn thành sản phẩm sẵn sàng ra thị trường với thiết kế trọn gói, phát triển phần mềm theo yêu cầu, kiểm thử và hỗ trợ ra mắt. |
 | AI | `home:homeOutcomesVi.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | Bổ sung nhân sự công nghệ chuyên sâu khi đội ngũ nội bộ cần thêm năng lực hoặc kỹ năng cụ thể. |
 | AI | `home:homeOutcomesVi.items[2].title` | Modernize an existing platform | Hiện đại hóa nền tảng hiện có |
-| AI | `home:homeOutcomesVi.items[3].title` | Leverage AI to drive business value | Tận dụng AI để tạo giá trị kinh doanh |
+| AI | `home:homeOutcomesVi.items[3].title` | Put AI to work for your business | Đưa AI vào công việc kinh doanh của bạn |
 | AI | `home:homeOutcomesVi.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | Xây dựng giải pháp ứng dụng AI, tự động hóa quy trình và biến dữ liệu kinh doanh thành thông tin hữu ích, hỗ trợ ra quyết định thông minh hơn. |
 | AI | `home:homeOutcomesVi.cta.label` | Let's build together | Cùng nhau xây dựng |
 | AI | `home:homeAppsVi.title` | One connected school | Một ngôi trường kết nối |
@@ -201,15 +201,15 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `products:productsMetaVi.title` | School Apps: Parent Hub, Staff Hub & AI Tutor \| XionTech | Ứng dụng cho trường học: Parent Hub, Staff Hub & AI Tutor \| XionTech |
-| AI | `products:productsMetaVi.description` | Parent Hub for parents, Staff Hub for staff, teachers and leaders, and AI Tutor for students. Connected school apps from XionTech. | Parent Hub cho phụ huynh, Staff Hub cho nhân viên, giáo viên và lãnh đạo, và AI Tutor cho học sinh. Các ứng dụng trường học kết nối từ XionTech. |
+| AI | `products:productsMetaVi.title` | School platforms: Parent Hub, Staff Hub, AI Tutor \| XionTech | Nền tảng trường học: Parent Hub, Staff Hub, AI Tutor \| XionTech |
+| AI | `products:productsMetaVi.description` | One connected school ecosystem: Parent Hub for families, Staff Hub for teachers and leaders, and AI Tutor for students. | Một hệ sinh thái trường học kết nối: Parent Hub cho gia đình, Staff Hub cho giáo viên và lãnh đạo nhà trường, và AI Tutor cho học sinh. |
 | AI | `products:productDetailsVi.parent-hub.features[0].title` | Real-time arrival alerts | Thông báo đến trường theo thời gian thực |
 | AI | `products:productDetailsVi.parent-hub.features[1].title` | Published grades and feedback | Điểm số và nhận xét đã công bố |
 | AI | `products:productDetailsVi.staff-hub.features[0].title` | Attendance and student records | Điểm danh và hồ sơ học sinh |
 | AI | `products:productDetailsVi.ai-tutor.features[0].title` | Skill-level understanding checks | Kiểm tra mức độ hiểu theo từng kỹ năng |
 | AI | `products:productDetailsVi.ai-tutor.features[1].title` | Personalized step-by-step hints | Gợi ý từng bước theo từng học sinh |
 | AI | `products:journeyMapVi.intro.title` | Built apart. Better together | Xây dựng riêng. Mạnh hơn khi kết nối |
-| AI | `products:journeyMapVi.intro.lede` | A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem. | Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học và vận hành nhà trường vào một hệ sinh thái chung. |
+| AI | `products:journeyMapVi.intro.lede` | A connected suite for school communities. Parents, learning and staff operations share one ecosystem. | Bộ ứng dụng kết nối cho cộng đồng trường học. Phụ huynh, việc học và vận hành nhà trường dùng chung một hệ sinh thái. |
 | AI | `products:productRoadVi.start` | Start | Bắt đầu |
 | AI | `products:productRoadVi.finish` | Finish | Kết thúc |
 | AI | `products:journeyBoardVi.details` | Details | Chi tiết |
@@ -238,8 +238,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `services:servicesMetaVi.title` | Software Outsourcing Vietnam \| XionTech | Outsourcing phần mềm tại Việt Nam \| XionTech |
-| AI | `services:servicesMetaVi.description` | Software outsourcing from Ho Chi Minh City: product engineering, AI-driven analytics, co-creation, staffing, custom apps, low-code, AI solutions and cloud. | Outsourcing phần mềm từ TP. Hồ Chí Minh: phát triển sản phẩm, phân tích dữ liệu bằng AI, đồng sáng tạo, cung cấp nhân sự, ứng dụng theo yêu cầu, low-code, giải pháp AI và cloud. |
+| AI | `services:servicesMetaVi.title` | Custom software, AI and cloud services \| XionTech | Dịch vụ phần mềm theo yêu cầu, AI và cloud \| XionTech |
+| AI | `services:servicesMetaVi.description` | Product engineering, AI-driven analytics, custom apps, low-code, AI-powered solutions, cloud and dedicated teams, built around your goals by XionTech. | Phát triển sản phẩm, phân tích dữ liệu bằng AI, ứng dụng theo yêu cầu, low-code, giải pháp AI, cloud và đội ngũ chuyên trách từ XionTech, theo mục tiêu của bạn. |
 | AI | `services:servicesPageVi.title.lead` | You bring your  | Bạn mang đến  |
 | AI | `services:servicesPageVi.title.words[0]` | vision | tầm nhìn |
 | AI | `services:servicesPageVi.title.words[1]` | challenges | thử thách |
@@ -270,7 +270,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `services:servicesOutcomesVi.items[0].description` | Turn your idea into a market-ready product with end-to-end design, custom software development, testing, and launch support. | Biến ý tưởng của bạn thành sản phẩm sẵn sàng ra thị trường với thiết kế trọn gói, phát triển phần mềm theo yêu cầu, kiểm thử và hỗ trợ ra mắt. |
 | AI | `services:servicesOutcomesVi.items[1].description` | Add specialized technology talent when your internal team needs more capacity or specific skills. | Bổ sung nhân sự công nghệ chuyên sâu khi đội ngũ nội bộ cần thêm năng lực hoặc kỹ năng cụ thể. |
 | AI | `services:servicesOutcomesVi.items[2].title` | Modernize an existing platform | Hiện đại hóa nền tảng hiện có |
-| AI | `services:servicesOutcomesVi.items[3].title` | Leverage AI to drive business value | Tận dụng AI để tạo giá trị kinh doanh |
+| AI | `services:servicesOutcomesVi.items[3].title` | Put AI to work for your business | Đưa AI vào công việc kinh doanh của bạn |
 | AI | `services:servicesOutcomesVi.items[3].description` | Build AI-powered solutions, automate workflows, and turn business data into actionable insights that support smarter decisions. | Xây dựng giải pháp ứng dụng AI, tự động hóa quy trình và biến dữ liệu kinh doanh thành thông tin hữu ích, hỗ trợ ra quyết định thông minh hơn. |
 | AI | `services:servicesProcessVi.title` | Our 4-D process: from your request to launch | Quy trình 4-D: từ yêu cầu của bạn đến ngày ra mắt |
 | AI | `services:servicesProcessVi.lede` | Every step ends with something you can see, test and approve. AI runs through every step, and we keep improving how we use it. | Mỗi bước kết thúc bằng một kết quả bạn có thể xem, kiểm tra và phê duyệt. AI đồng hành trong mọi bước, và chúng tôi không ngừng cải thiện cách sử dụng AI. |
@@ -303,8 +303,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `about:aboutMetaVi.title` | About XionTech \| Get IT Done | Về XionTech \| Get IT Done |
-| AI | `about:aboutMetaVi.description` | XionTech is an engineering partner with teams in the United States and Vietnam. We build software products, explore AI-powered innovation and take ownership of delivery with our clients. | XionTech là đối tác kỹ thuật với đội ngũ tại Mỹ và Việt Nam. Chúng tôi xây dựng sản phẩm phần mềm, khám phá đổi mới sáng tạo ứng dụng AI và làm chủ quá trình triển khai cùng khách hàng. |
+| AI | `about:aboutMetaVi.title` | About XionTech \| AI-driven product and engineering company | Về XionTech \| Công ty phát triển sản phẩm và kỹ thuật dựa trên AI |
+| AI | `about:aboutMetaVi.description` | Meet XionTech: technology built with ownership, with delivery centers in Plano and Ho Chi Minh City and a team that turns ideas into working software. | Gặp gỡ XionTech: làm công nghệ với tinh thần làm chủ, có trung tâm phát triển tại Plano và TP. Hồ Chí Minh, cùng đội ngũ biến ý tưởng thành phần mềm thực tế. |
 | AI | `about:aboutHeroVi.title.lead` | We’re XionTech. | Chúng tôi là XionTech. |
 | AI | `about:aboutHeroVi.title.middle` | Technology built with  | Công nghệ xây dựng bằng tinh thần  |
 | AI | `about:aboutHeroVi.title.accent` | ownership | làm chủ |
@@ -313,7 +313,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `about:aboutStoryVi.title.lead` | Inspired by a mountain. | Khởi nguồn từ một ngọn núi. |
 | AI | `about:aboutStoryVi.title.middle` | Driven by  | Dẫn lối bởi  |
 | AI | `about:aboutStoryVi.title.highlight` | purpose | mục đích |
-| AI | `about:aboutStoryVi.paragraphs[0]` | Our name draws inspiration from a mountain — a symbol of ambition, unity, and the determination to reach new heights. | Tên của chúng tôi lấy cảm hứng từ một ngọn núi — biểu tượng của khát vọng, sự đoàn kết và quyết tâm vươn tới những tầm cao mới. |
+| AI | `about:aboutStoryVi.paragraphs[0]` | Our name draws inspiration from a mountain, a symbol of ambition, unity, and the determination to reach new heights. | Tên của chúng tôi lấy cảm hứng từ một ngọn núi, biểu tượng của khát vọng, sự đoàn kết và quyết tâm vươn tới những tầm cao mới. |
 | AI | `about:aboutStoryVi.paragraphs[1]` | That spirit shapes who we are today. We bring people and technology together, embrace challenges, and take ownership of what we build, working toward a future where innovation creates meaningful progress. | Tinh thần đó định hình con người chúng tôi hôm nay. Chúng tôi kết nối con người với công nghệ, sẵn sàng đón nhận thử thách và làm chủ những gì mình xây dựng, hướng tới một tương lai nơi đổi mới sáng tạo tạo nên những tiến bộ có ý nghĩa. |
 | AI | `about:aboutValuesHeadingVi.title` | What drives us | Điều thúc đẩy chúng tôi |
 | AI | `about:aboutValuesHeadingVi.lede` | Five principles that guide how we collaborate, make decisions, and deliver meaningful results. | Năm nguyên tắc định hướng cách chúng tôi hợp tác, đưa ra quyết định và mang lại kết quả có ý nghĩa. |
@@ -364,8 +364,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
-| AI | `careers:careersMetaVi.title` | Careers at XionTech \| Software Jobs in Ho Chi Minh City | Tuyển dụng tại XionTech \| Việc làm phần mềm tại TP. Hồ Chí Minh |
-| AI | `careers:careersMetaVi.description` | Join XionTech in Ho Chi Minh City. Work on school platforms and client products with AI/ML, generative AI, cloud and agile delivery in a people-centered culture. | Gia nhập XionTech tại TP. Hồ Chí Minh. Làm việc với các nền tảng cho trường học và sản phẩm của khách hàng cùng AI/ML, AI tạo sinh, cloud và phương pháp agile, trong một văn hóa lấy con người làm trung tâm. |
+| AI | `careers:careersMetaVi.title` | Careers at XionTech \| Software and AI jobs | Tuyển dụng tại XionTech \| Việc làm phần mềm và AI |
+| AI | `careers:careersMetaVi.description` | Join XionTech to solve real problems, explore AI and new technologies, and grow with a team that builds things that make a difference. | Gia nhập XionTech để giải quyết bài toán thực tế, khám phá AI và công nghệ mới, và phát triển cùng đội ngũ tạo ra những sản phẩm mang lại khác biệt. |
 | AI | `careers:careersHeroVi.title.first` | Careers at | Tuyển dụng tại |
 | AI | `careers:careersHeroVi.lede` | We’re bringing together curious minds who love solving problems, exploring new technologies, and building things that make a difference. | Chúng tôi quy tụ những người tò mò, yêu thích giải quyết vấn đề, khám phá công nghệ mới và tạo ra những điều mang lại khác biệt. |
 | AI | `careers:careersHeroVi.prompt` | Ready to build with us? | Sẵn sàng cùng chúng tôi xây dựng? |
@@ -373,7 +373,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `careers:careersRolesVi.heading` | Find your next challenge | Tìm thử thách tiếp theo của bạn |
 | AI | `careers:careersRolesVi.emptyText` | No open roles right now. | Hiện chưa có vị trí nào đang tuyển. |
 | AI | `careers:careersLifeVi.heading` | Meet the team at XionTech | Gặp gỡ đội ngũ XionTech |
-| AI | `careers:careersLifeVi.lede` | At XionTech, we take engineering seriously—not ourselves too seriously. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | Tại XionTech, chúng tôi nghiêm túc với kỹ thuật, nhưng không quá nghiêm túc với chính mình. Chúng tôi đặt câu hỏi, làm chủ công việc và cùng nhau không ngừng học hỏi. Ngoài giờ làm, chúng tôi mang cùng tinh thần đồng đội ấy ra sân cầu lông, sân bóng, micro karaoke và phòng chờ game. |
+| AI | `careers:careersLifeVi.lede` | At XionTech, we take engineering seriously, but not ourselves. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | Tại XionTech, chúng tôi nghiêm túc với kỹ thuật, nhưng không quá nghiêm túc với chính mình. Chúng tôi đặt câu hỏi, làm chủ công việc và cùng nhau không ngừng học hỏi. Ngoài giờ làm, chúng tôi mang cùng tinh thần đồng đội ấy ra sân cầu lông, sân bóng, micro karaoke và phòng chờ game. |
 | AI | `careers:careersLifeVi.tagsLabel` | Our team interests | Sở thích của đội ngũ |
 | AI | `careers:careersLifeVi.tags[0]` | Badminton regulars | Hội cầu lông |
 | AI | `careers:careersLifeVi.tags[1]` | Football fans | Fan bóng đá |
@@ -438,6 +438,17 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `job:jobFormVi.privacyLink` | Privacy policy | Chính sách bảo mật |
 | Prototype | `job:ROLE_TYPE_LABELS[full-time]` | Full-time | Toàn thời gian |
 
+## Let's talk band (Products, News)
+
+3 AI, 1 prototype.
+
+| Source | Where | English | Tiếng Việt |
+| --- | --- | --- | --- |
+| AI | `talk-band:talkBandVi.products.heading` | See it working at your school | Xem ứng dụng hoạt động tại trường của bạn |
+| AI | `talk-band:talkBandVi.products.body` | Tell us about your school and we'll show you how Parent Hub, Staff Hub and AI Tutor work together. | Hãy kể cho chúng tôi về trường của bạn, chúng tôi sẽ cho bạn thấy Parent Hub, Staff Hub và AI Tutor phối hợp với nhau như thế nào. |
+| AI | `talk-band:talkBandVi.news.body` | Tell us about your idea and we'll get back to you. | Hãy chia sẻ ý tưởng của bạn, chúng tôi sẽ phản hồi bạn. |
+| Prototype | `talk-band:talkBandVi.news.heading` | Have something you want to build? | Bạn có điều gì muốn xây dựng? |
+
 ## News
 
 6 AI, 15 prototype.
@@ -446,8 +457,8 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | --- | --- | --- | --- |
 | AI | `news:homeNewsVi.heading` | Latest from XionTech | Tin mới từ XionTech |
 | AI | `news:homeNewsVi.lede` | Explore what we’re building, the ideas we’re exploring, and the people behind our work. | Khám phá những gì chúng tôi đang xây dựng, những ý tưởng chúng tôi đang theo đuổi và những con người đứng sau công việc của chúng tôi. |
-| AI | `news:newsMetaVi.title` | News \| XionTech | Tin tức \| XionTech |
-| AI | `news:newsMetaVi.description` | Short stories about XionTech's products, schools, team and client work. | Những câu chuyện ngắn về sản phẩm, trường học, đội ngũ và các dự án khách hàng của XionTech. |
+| AI | `news:newsMetaVi.title` | Technology news and stories \| AI and school technology \| XionTech | Tin tức và câu chuyện công nghệ \| AI và công nghệ trường học \| XionTech |
+| AI | `news:newsMetaVi.description` | Company news, client visits and stories on AI and school technology from the XionTech team. | Tin tức công ty, các chuyến thăm khách hàng và câu chuyện về AI và công nghệ trường học từ đội ngũ XionTech. |
 | AI | `news:newsPageVi.countOne` | Showing 1 story | Đang hiển thị 1 tin |
 | AI | `news:newsPageVi.countMany` | Showing {n} stories | Đang hiển thị {n} tin |
 | Prototype | `news:homeNewsVi.seeAll.label` | See all news | Xem tất cả tin tức |
@@ -484,7 +495,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Contact, demo form and capture band
 
-23 AI, 49 prototype.
+24 AI, 48 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -504,6 +515,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.rateError` | You have sent several requests in a short time. Please try again in a few minutes. | Bạn đã gửi nhiều yêu cầu trong thời gian ngắn. Vui lòng thử lại sau vài phút. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.form.errorsHeading` | Please fix the following: | Vui lòng sửa các mục sau: |
 | AI | `contact-strings:CONTACT_STRINGS_VI.home.lede` | Building something new or improving what you already have? Tell us about your goals, and we’ll explore how we can help. | Bạn đang xây dựng điều gì đó mới hay cải thiện những gì đã có? Hãy cho chúng tôi biết mục tiêu của bạn, và chúng tôi sẽ cùng tìm cách hỗ trợ. |
+| AI | `contact-strings:CONTACT_STRINGS_VI.home.successHeading` | Summit reached. Thanks, we've received your message. | Đã lên tới đỉnh. Cảm ơn bạn, chúng tôi đã nhận được tin nhắn. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.heading` | See it working at your school | Xem ứng dụng hoạt động tại trường của bạn |
 | AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.lede` | Leave your work email and we'll arrange a demo built around your school. | Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo dành riêng cho trường của bạn. |
 | AI | `contact-strings:CONTACT_STRINGS_VI.capture.demo.consent` | We only use your email to arrange your demo. | Chúng tôi chỉ dùng email của bạn để sắp xếp buổi demo. |
@@ -540,7 +552,6 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.messagePlaceholder` | What are you looking to build? Tell us about your idea, existing product, team or challenge. | Bạn muốn xây dựng gì? Hãy kể về ý tưởng, sản phẩm hiện có, đội ngũ hoặc thách thức của bạn. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.submit` | Start the conversation | Bắt đầu trao đổi |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.consent` | We only use your details to reply to your message. | Chúng tôi chỉ dùng thông tin của bạn để phản hồi tin nhắn này. |
-| Prototype | `contact-strings:CONTACT_STRINGS_VI.home.successHeading` | Summit reached. Thanks — we've received your message. | Đã lên tới đỉnh. Cảm ơn bạn, chúng tôi đã nhận được tin nhắn. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.home.successText` | Our team will review what you shared and get in touch with you. | Đội ngũ của chúng tôi sẽ xem nội dung bạn chia sẻ và liên hệ với bạn. |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.capture.emailLabel` | Work email | Email công việc |
 | Prototype | `contact-strings:CONTACT_STRINGS_VI.capture.demo.button`<br>`contact-strings:CONTACT_STRINGS_VI.capture.project.button` | Get in touch | Liên hệ với chúng tôi |

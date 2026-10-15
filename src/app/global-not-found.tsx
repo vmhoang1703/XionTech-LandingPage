@@ -4,10 +4,12 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { DEFAULT_LOCALE } from "@/i18n/locales";
 import { SHELL } from "@/i18n/shell";
+import { SITE_URL } from "@/lib/seo/site";
 import { fontVariables } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: SHELL[DEFAULT_LOCALE].notFound.metaTitle,
   robots: { index: false },
 };

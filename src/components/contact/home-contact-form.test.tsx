@@ -91,7 +91,7 @@ describe("HomeContactForm", () => {
     });
     const panel = successPanel();
     expect(panel.textContent).toContain(
-      "Summit reached. Thanks — we've received your message.",
+      "Summit reached. Thanks, we've received your message.",
     );
     expect(panel.textContent).toContain(
       "Our team will review what you shared and get in touch with you.",

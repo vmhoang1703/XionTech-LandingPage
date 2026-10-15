@@ -4,6 +4,8 @@ import { htmlLang, isLocale, LOCALES } from "@/i18n/locales";
 import { clientStrings } from "@/i18n/client-strings";
 import { setRequestLocale } from "@/i18n/request-locale";
 import { META } from "@/i18n/site-meta";
+import { SITE_URL } from "@/lib/seo/site";
+import { JsonLd, organizationLd, websiteLd } from "@/lib/seo/json-ld";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -34,7 +36,7 @@ export async function generateMetadata({
 }: LayoutProps<"/[locale]">): Promise<Metadata> {
   const locale = await resolveLocale(params);
   setRequestLocale(locale);
-  return META[locale];
+  return { metadataBase: new URL(SITE_URL), ...META[locale] };
 }
 
 export default async function RootLayout({
@@ -56,6 +58,7 @@ export default async function RootLayout({
         <noscript>
           <style>{`.count-up[data-count="wait"] { --count: var(--to) !important; }`}</style>
         </noscript>
+        <JsonLd data={[organizationLd(), websiteLd(locale)]} />
         <LocaleProvider locale={locale} strings={clientStrings(locale)}>
           <SiteHeader locale={locale} />
           <main id="main" tabIndex={-1} className="flex flex-1 flex-col">

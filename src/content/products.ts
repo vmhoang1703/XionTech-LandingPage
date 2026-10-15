@@ -10,8 +10,8 @@ const [parentHub, staffHub, aiTutor] = [
 ];
 
 export const productsMeta = {
-  title: `School Apps: ${parentHub.shortName}, ${staffHub.shortName} & ${aiTutor.shortName} | XionTech`,
-  description: `${parentHub.shortName} for parents, ${staffHub.shortName} for staff, teachers and leaders, and ${aiTutor.shortName} for students. Connected school apps from XionTech.`,
+  title: `School platforms: ${parentHub.shortName}, ${staffHub.shortName}, ${aiTutor.shortName} | XionTech`,
+  description: `One connected school ecosystem: ${parentHub.shortName} for families, ${staffHub.shortName} for teachers and leaders, and ${aiTutor.shortName} for students.`,
 };
 
 // CAP-2.
@@ -74,7 +74,7 @@ export const productDetails: Record<AppId, ProductDetail> = {
 export const journeyMap = {
   intro: {
     title: "Built apart. Better together",
-    lede: "A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem.",
+    lede: "A connected suite for school communities. Parents, learning and staff operations share one ecosystem.",
   },
 };
 
@@ -123,8 +123,8 @@ export const roadDialog = {
 
 // Vietnamese. App names, badges and ids stay English (2026-10-13).
 export const productsMetaVi: typeof productsMeta = {
-  title: `Ứng dụng cho trường học: ${parentHub.shortName}, ${staffHub.shortName} & ${aiTutor.shortName} | XionTech`,
-  description: `${parentHub.shortName} cho phụ huynh, ${staffHub.shortName} cho nhân viên, giáo viên và lãnh đạo, và ${aiTutor.shortName} cho học sinh. Các ứng dụng trường học kết nối từ XionTech.`,
+  title: `Nền tảng trường học: ${parentHub.shortName}, ${staffHub.shortName}, ${aiTutor.shortName} | XionTech`,
+  description: `Một hệ sinh thái trường học kết nối: ${parentHub.shortName} cho gia đình, ${staffHub.shortName} cho giáo viên và lãnh đạo nhà trường, và ${aiTutor.shortName} cho học sinh.`,
 };
 
 export const productsShowcaseVi: typeof productsShowcase = {
@@ -173,7 +173,7 @@ export const productDetailsVi: Record<AppId, ProductDetail> = {
 export const journeyMapVi: typeof journeyMap = {
   intro: {
     title: "Xây dựng riêng. Mạnh hơn khi kết nối",
-    lede: "Bộ ứng dụng kết nối cho cộng đồng trường học — đưa phụ huynh, việc học và vận hành nhà trường vào một hệ sinh thái chung.",
+    lede: "Bộ ứng dụng kết nối cho cộng đồng trường học. Phụ huynh, việc học và vận hành nhà trường dùng chung một hệ sinh thái.",
   },
 };
 

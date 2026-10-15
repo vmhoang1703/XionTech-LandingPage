@@ -10,19 +10,26 @@ import {
 } from "@/content/privacy-policy";
 import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
+import { seoMetadata } from "@/lib/seo/site";
 import { heroWords } from "@/components/sections/hero-words";
+import { breadcrumbLd, JsonLd } from "@/lib/seo/json-ld";
+import { SHELL } from "@/i18n/shell";
 
 export async function generateMetadata({
   params,
 }: Readonly<
   Pick<PageProps<"/[locale]/privacy">, "params">
 >): Promise<Metadata> {
-  const { locale } = await params;
-  const { metaTitle, metaDescription } = pickLocale(
-    isLocale(locale) ? locale : "en",
-    { en: PRIVACY_EN, vi: PRIVACY_VI },
-  );
-  return { title: metaTitle, description: metaDescription };
+  const { locale: param } = await params;
+  const locale = isLocale(param) ? param : "en";
+  const { metaTitle, metaDescription } = pickLocale(locale, {
+    en: PRIVACY_EN,
+    vi: PRIVACY_VI,
+  });
+  return seoMetadata(locale, "/privacy", {
+    title: metaTitle,
+    description: metaDescription,
+  });
 }
 
 // Emails and the phone number in the policy, made into mailto:/tel: links.
@@ -110,6 +117,11 @@ export default async function PrivacyPage({
     .join(" · ");
   return (
     <>
+      <JsonLd
+        data={breadcrumbLd(locale, [
+          { name: SHELL[locale].footer.privacy, path: "/privacy" },
+        ])}
+      />
       <section
         className="hero-light page-hero pb-12"
         aria-labelledby="privacy-h1"

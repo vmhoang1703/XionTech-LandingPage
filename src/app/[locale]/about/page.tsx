@@ -31,11 +31,13 @@ import {
 } from "@/content/about";
 import { pickLocale } from "@/i18n/content";
 import { isLocale, localeHref } from "@/i18n/locales";
+import { breadcrumbLd, JsonLd } from "@/lib/seo/json-ld";
+import { SHELL } from "@/i18n/shell";
 
-export const generateMetadata = localeMetadata({
-  en: aboutMeta,
-  vi: aboutMetaVi,
-});
+export const generateMetadata = localeMetadata(
+  { en: aboutMeta, vi: aboutMetaVi },
+  "/about",
+);
 
 // E-S3 (prototype about.html; website copy v3): the text-only hero, the
 // mountain story, the core values (the Careers flip-card look), the FAQ at
@@ -68,19 +70,23 @@ export default async function AboutPage({
   // skipped to the story card and landed 700px down the page.
   return (
     <div className="about-page">
+      <JsonLd
+        data={breadcrumbLd(locale, [
+          { name: SHELL[locale].nav.about, path: "/about" },
+        ])}
+      />
       <section id="mission" className="about-hero" aria-labelledby="about-h1">
         <div className="wrap ah-inner">
-          <h1 id="about-h1" data-load="" style={loadAt(0)}>
+          {/* No load-in on the headline or text: they are the LCP. */}
+          <h1 id="about-h1">
             {title.lead}
             <br />
             {title.middle}
             <span className="ah-accent">{title.accent}</span>
             {title.tail}
           </h1>
-          <p className="ah-text" data-load="" style={loadAt(1)}>
-            {text}
-          </p>
-          <div className="ah-links" data-load="" style={loadAt(2)}>
+          <p className="ah-text">{text}</p>
+          <div className="ah-links" data-load="" style={loadAt(0)}>
             {links.map(({ href, label }, i) => (
               <LocaleLink
                 key={href}

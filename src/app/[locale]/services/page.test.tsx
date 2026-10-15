@@ -37,9 +37,11 @@ afterEach(() => {
 
 describe("ServicesPage", () => {
   it("has the prototype title and its own description", async () => {
-    expect(metadata.title).toBe("Software Outsourcing Vietnam | XionTech");
+    expect(metadata.title).toBe(
+      "Custom software, AI and cloud services | XionTech",
+    );
     const description = String(metadata.description);
-    expect(description).toContain("product engineering");
+    expect(description).toContain("Product engineering");
     expect(description.length).toBeLessThanOrEqual(160);
   });
 
@@ -259,7 +261,11 @@ describe("ServicesPage", () => {
     const scene = container.querySelector(".page-scene");
     expect(scene?.lastElementChild?.id).toBe("process");
     expect(container.lastElementChild).toBe(scene);
-    expect(container.firstElementChild?.classList).toContain("svc-hero");
+    // After the JSON-LD breadcrumb script.
+    expect(container.firstElementChild?.tagName).toBe("SCRIPT");
+    expect(
+      container.firstElementChild?.nextElementSibling?.classList,
+    ).toContain("svc-hero");
     expect(container.querySelectorAll(".hero-navy")).toHaveLength(1);
     const css = globalsCss();
     expect(css).toMatch(

@@ -79,7 +79,7 @@ export const CONTACT_STRINGS = {
       "What are you looking to build? Tell us about your idea, existing product, team or challenge.",
     submit: "Start the conversation",
     consent: "We only use your details to reply to your message.",
-    successHeading: "Summit reached. Thanks — we've received your message.",
+    successHeading: "Summit reached. Thanks, we've received your message.",
     successText:
       "Our team will review what you shared and get in touch with you.",
   },

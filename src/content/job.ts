@@ -4,6 +4,7 @@ import type { Localized } from "@/i18n/content";
 
 export const jobMeta = {
   title: "Open role | Careers at XionTech",
+  roleTitle: (role: string) => `${role} | Careers at XionTech`,
   description:
     "Read the role and apply with your CV. XionTech, Ho Chi Minh City.",
 };
@@ -50,6 +51,7 @@ export const jobForm = {
 // rest AI-translated for native review (docs/translations/vi-review.md).
 export const jobMetaVi: typeof jobMeta = {
   title: "Vị trí tuyển dụng | Tuyển dụng tại XionTech",
+  roleTitle: (role: string) => `${role} | Tuyển dụng tại XionTech`,
   description:
     "Đọc mô tả vị trí và ứng tuyển kèm CV. XionTech, TP. Hồ Chí Minh.",
 };

@@ -28,6 +28,7 @@ export const PAGES = [
   ["src/content/offices.ts", "Offices (About, Contact, footer)"],
   ["src/content/careers.ts", "Careers"],
   ["src/content/job.ts", "Job page and application form"],
+  ["src/content/talk-band.ts", "Let's talk band (Products, News)"],
   ["src/content/news.ts", "News"],
   ["src/content/privacy.ts", "Privacy"],
   [

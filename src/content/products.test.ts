@@ -11,7 +11,7 @@ describe("journeyMap", () => {
   it("has the H1 and a lede", () => {
     expect(journeyMap.intro.title).toBe("Built apart. Better together");
     expect(journeyMap.intro.lede).toBe(
-      "A connected suite for school communities — bringing parents, learning and staff operations into one shared ecosystem.",
+      "A connected suite for school communities. Parents, learning and staff operations share one ecosystem.",
     );
   });
 });

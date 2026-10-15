@@ -16,6 +16,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 import { notFound } from "next/navigation";
+import { DEFAULT_IMAGE } from "@/lib/seo/site";
 import StoryPage, { generateMetadata } from "./page";
 
 afterEach(() => {
@@ -179,10 +180,28 @@ describe("StoryPage", () => {
 describe("generateMetadata", () => {
   it("gives each story its own title and the excerpt as description", async () => {
     vi.mocked(getPost).mockResolvedValue(story);
-    await expect(generateMetadata(props("pxp-day"))).resolves.toEqual({
+    const metadata = await generateMetadata(props("pxp-day"));
+    expect(metadata).toMatchObject({
       title: "Parent Hub: the school day | XionTech",
       description: "Alerts and payments in one app.",
+      alternates: { canonical: "/en/news/pxp-day" },
+      openGraph: {
+        title: "Parent Hub: the school day | XionTech",
+        type: "article",
+        url: "/en/news/pxp-day",
+      },
+      twitter: { card: "summary_large_image" },
     });
+  });
+
+  it("shares the story's cover image, else the site image", async () => {
+    vi.mocked(getPost).mockResolvedValue({ ...story, image: PHOTO });
+    const withCover = await generateMetadata(props("pxp-day"));
+    expect(withCover.openGraph?.images).toEqual([PHOTO]);
+    expect(withCover.twitter?.images).toEqual([PHOTO]);
+    vi.mocked(getPost).mockResolvedValue(story);
+    const without = await generateMetadata(props("pxp-day"));
+    expect(without.openGraph?.images).toEqual([DEFAULT_IMAGE]);
   });
 
   it("falls back to the News description without an excerpt", async () => {
@@ -277,9 +296,30 @@ describe("StoryPage in Vietnamese", () => {
         params: Promise.resolve({ locale: "vi", slug: "pxp-day" }),
         searchParams: Promise.resolve({}),
       }),
-    ).resolves.toEqual({
+    ).resolves.toMatchObject({
       title: "Parent Hub: the school day | XionTech",
       description: newsMetaVi.description,
+    });
+  });
+
+  it("points an untranslated story's canonical at English, with no alternates", async () => {
+    vi.mocked(getPost).mockResolvedValue({ ...story, titleLang: "en" });
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ locale: "vi", slug: "pxp-day" }),
+      searchParams: Promise.resolve({}),
+    });
+    expect(metadata.alternates).toEqual({ canonical: "/en/news/pxp-day" });
+  });
+
+  it("keeps a translated story's own canonical and its alternates", async () => {
+    vi.mocked(getPost).mockResolvedValue({ ...story, titleLang: "vi" });
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ locale: "vi", slug: "pxp-day" }),
+      searchParams: Promise.resolve({}),
+    });
+    expect(metadata.alternates?.canonical).toBe("/vi/news/pxp-day");
+    expect(metadata.alternates?.languages).toMatchObject({
+      "x-default": "/en/news/pxp-day",
     });
   });
 });

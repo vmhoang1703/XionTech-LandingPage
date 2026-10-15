@@ -35,12 +35,49 @@ describe("page metadata per locale", () => {
   });
 
   it("builds a generateMetadata that reads the locale from params", async () => {
-    const generate = localeMetadata(meta);
+    const generate = localeMetadata(meta, "/news");
     expect(
       await generate({ params: Promise.resolve({ locale: "vi" }) }),
-    ).toEqual(meta.vi);
+    ).toMatchObject(meta.vi);
     expect(
       await generate({ params: Promise.resolve({ locale: "en" }) }),
-    ).toEqual(meta.en);
+    ).toMatchObject(meta.en);
+  });
+
+  it("adds the canonical, hreflang alternates, Open Graph and Twitter card", async () => {
+    const generate = localeMetadata(meta, "/news");
+    const vi = await generate({ params: Promise.resolve({ locale: "vi" }) });
+    expect(vi.alternates).toEqual({
+      canonical: "/vi/news",
+      languages: {
+        en: "/en/news",
+        vi: "/vi/news",
+        ja: "/ja/news",
+        fr: "/fr/news",
+        ko: "/ko/news",
+        "zh-Hans": "/zh/news",
+        "x-default": "/en/news",
+      },
+    });
+    expect(vi.openGraph).toMatchObject({
+      ...meta.vi,
+      url: "/vi/news",
+      locale: "vi_VN",
+      siteName: "XionTech",
+    });
+    expect(vi.twitter).toMatchObject({
+      card: "summary_large_image",
+      ...meta.vi,
+    });
+  });
+
+  it("uses the bare locale path for Home", async () => {
+    const home = await localeMetadata(
+      meta,
+      "/",
+    )({
+      params: Promise.resolve({ locale: "en" }),
+    });
+    expect(home.alternates?.canonical).toBe("/en");
   });
 });

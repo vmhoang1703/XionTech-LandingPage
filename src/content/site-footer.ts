@@ -53,3 +53,17 @@ export const siteFooter = {
   },
   tag: { lead: "GET IT", accent: "DONE" },
 };
+
+/** XionTech's social pages (Amber, 2026-10-16): the footer icons and JSON-LD sameAs. */
+export const SOCIAL_LINKS = [
+  {
+    id: "linkedin",
+    href: "https://www.linkedin.com/company/xiontechs/about/",
+    ariaLabel: { en: "XionTech on LinkedIn", vi: "XionTech trên LinkedIn" },
+  },
+  {
+    id: "facebook",
+    href: "https://www.facebook.com/xiontechs/",
+    ariaLabel: { en: "XionTech on Facebook", vi: "XionTech trên Facebook" },
+  },
+] as const;

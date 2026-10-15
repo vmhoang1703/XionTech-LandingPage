@@ -15,13 +15,46 @@ function linkHrefs(container: HTMLElement) {
 
 function column(heading: string) {
   const footer = renderFooter();
-  const title = within(footer).getByRole("heading", { name: heading });
-  const section = title.parentElement;
+  // Column labels are plain text (audit L6); each column is a named nav or group.
+  const section =
+    within(footer).queryByRole("navigation", { name: heading }) ??
+    within(footer).queryByRole("group", { name: heading });
   if (!section) throw new Error(`No column for ${heading}`);
   return section;
 }
 
 describe("SiteFooter", () => {
+  it("links to LinkedIn and Facebook in a new tab", () => {
+    const footer = renderFooter();
+    const linkedin = within(footer).getByRole("link", {
+      name: "XionTech on LinkedIn",
+    });
+    const facebook = within(footer).getByRole("link", {
+      name: "XionTech on Facebook",
+    });
+    expect(linkedin.getAttribute("href")).toBe(
+      "https://www.linkedin.com/company/xiontechs/about/",
+    );
+    expect(facebook.getAttribute("href")).toBe(
+      "https://www.facebook.com/xiontechs/",
+    );
+    for (const link of [linkedin, facebook]) {
+      expect(link.getAttribute("target")).toBe("_blank");
+      expect(link.getAttribute("rel")).toBe("noopener noreferrer");
+      expect(link.className).toContain("pointer-coarse:size-11");
+    }
+  });
+
+  it("labels the social links in Vietnamese on vi", () => {
+    render(<SiteFooter locale="vi" />);
+    expect(
+      screen.getByRole("link", { name: "XionTech trên LinkedIn" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("link", { name: "XionTech trên Facebook" }),
+    ).toBeTruthy();
+  });
+
   it("shows the logo linking home and the blurb", () => {
     const footer = renderFooter();
 
@@ -187,7 +220,9 @@ describe("SiteFooter", () => {
 
     const textLinks = within(footer)
       .getAllByRole("link")
-      .filter((link) => !link.querySelector("img"));
+      .filter(
+        (link) => !link.querySelector("img") && !link.querySelector("svg"),
+      );
     expect(textLinks).toHaveLength(18);
     for (const link of textLinks) {
       expect(link.className).toContain("min-h-6");
@@ -214,7 +249,7 @@ describe("SiteFooter", () => {
         .getAttribute("href"),
     ).toBe("/vi/products#sxp");
     expect(
-      within(footer).getByRole("heading", { name: "Văn phòng" }),
+      within(footer).getByRole("group", { name: "Văn phòng" }),
     ).toBeDefined();
   });
 });

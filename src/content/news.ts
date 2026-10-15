@@ -17,9 +17,9 @@ export const categoryLabels: Record<string, string> = {
 };
 
 export const newsMeta = {
-  title: "News | XionTech",
+  title: "Technology news and stories | AI and school technology | XionTech",
   description:
-    "Short stories about XionTech's products, schools, team and client work.",
+    "Company news, client visits and stories on AI and school technology from the XionTech team.",
 };
 
 // News page copy (Story 6.1, E-A6). The count strings stay here so they can be
@@ -74,9 +74,10 @@ export const categoryLabelsVi: typeof categoryLabels = {
 };
 
 export const newsMetaVi: typeof newsMeta = {
-  title: "Tin tức | XionTech",
+  title:
+    "Tin tức và câu chuyện công nghệ | AI và công nghệ trường học | XionTech",
   description:
-    "Những câu chuyện ngắn về sản phẩm, trường học, đội ngũ và các dự án khách hàng của XionTech.",
+    "Tin tức công ty, các chuyến thăm khách hàng và câu chuyện về AI và công nghệ trường học từ đội ngũ XionTech.",
 };
 
 export const newsPageVi: typeof newsPage = {

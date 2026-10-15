@@ -107,7 +107,7 @@ describe("proxy", () => {
     ).toBe("/en/de/products");
   });
 
-  it("matcher excludes api, _next and files with an extension", () => {
+  it("matcher excludes api, _next, the share image and files with an extension", () => {
     const re = new RegExp(`^${config.matcher[0]}$`);
     expect(re.test("/products")).toBe(true);
     expect(re.test("/")).toBe(true);
@@ -118,5 +118,6 @@ describe("proxy", () => {
     expect(re.test("/api/x")).toBe(false);
     expect(re.test("/api-docs")).toBe(true);
     expect(re.test("/_nextish")).toBe(true);
+    expect(re.test("/opengraph-image")).toBe(false);
   });
 });

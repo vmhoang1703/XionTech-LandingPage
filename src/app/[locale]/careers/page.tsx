@@ -14,11 +14,13 @@ import { pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
 import { listLifePhotos } from "@/lib/careers/life-photo-folder";
 import { getOpenRoles } from "@/lib/careers/open-roles";
+import { breadcrumbLd, JsonLd } from "@/lib/seo/json-ld";
+import { SHELL } from "@/i18n/shell";
 
-export const generateMetadata = localeMetadata({
-  en: careersMeta,
-  vi: careersMetaVi,
-});
+export const generateMetadata = localeMetadata(
+  { en: careersMeta, vi: careersMetaVi },
+  "/careers",
+);
 
 // E-A7: the hero's light blue fades into the shared page scene, which ends
 // warm above the footer (lead, 2026-10-12). "Principles we value" comes
@@ -37,6 +39,11 @@ export default async function CareersPage({
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbLd(locale, [
+          { name: SHELL[locale].nav.careers, path: "/careers" },
+        ])}
+      />
       <CareersHero locale={locale} />
       <PageScene>
         <GainCards locale={locale} />

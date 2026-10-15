@@ -1025,150 +1025,21 @@
     margin-top: 12px;
   }
 
-  /* Email capture band (amber surface) */
-  .capture {
-    position: relative;
-    overflow: hidden;
-    padding-block: var(--spacing-capture);
-  }
-
-  .capture::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    right: -6%;
-    width: 55%;
-    aspect-ratio: 1;
-    border: 1.5px solid rgb(22 54 99 / 0.16);
-    border-radius: 50%;
-    box-shadow:
-      0 0 0 44px rgb(255 255 255 / 0.08),
-      0 0 0 88px rgb(255 255 255 / 0.05);
-    pointer-events: none;
-  }
-
-  .cap-grid {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: center;
-  }
-
-  .cap-grid h2 {
-    max-width: 15ch;
-  }
-
-  .cap-grid .lede {
-    margin-top: 14px;
-  }
-
-  .cap-form {
-    display: grid;
-    gap: 8px;
-  }
-
-  .cap-form label {
-    font-size: 0.92rem;
-    font-weight: 500;
-    color: var(--color-heading);
-  }
-
-  .cap-row {
-    display: flex;
-    gap: 10px;
-    padding: 6px;
-    background: var(--color-paper);
-    border: 1.5px solid var(--color-navy);
-    border-radius: var(--radius-full);
-    box-shadow: 0 20px 40px -20px rgb(22 54 99 / 0.45);
-  }
-
-  .cap-row input {
-    flex: 1;
-    min-width: 0;
-    height: 50px;
-    padding-inline: 18px;
-    border: 0;
-    border-radius: var(--radius-full);
+  /*
+    Let's talk band (Products, News): About's closing call to action with one
+    pill, on the page's own background; the pill goes full width on phones.
+  */
+  .talk-band {
     background: transparent;
-    font-size: 1rem;
-    color: var(--color-text);
-  }
-
-  .cap-row input::placeholder {
-    color: var(--color-placeholder);
-  }
-
-  .cap-row input:focus {
-    outline: none;
-  }
-
-  .cap-row:focus-within {
-    box-shadow:
-      0 0 0 3px var(--color-focus),
-      0 20px 40px -20px rgb(22 54 99 / 0.45);
-  }
-
-  .cap-form small {
-    font-size: 0.84rem;
-    color: var(--color-muted);
-  }
-
-  .cap-form .err {
-    font-weight: 500;
-    color: var(--color-error);
-  }
-
-  .cap-form small a {
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    color: inherit;
-  }
-
-  /* E-A4 plain capture bands */
-  .capture-plain::before {
-    content: none;
-  }
-
-  .capture-plain .cap-row {
-    border: 0;
-    box-shadow: 0 16px 30px -18px rgb(22 54 99 / 0.35);
-  }
-
-  /* The row stays paper on every surface, so its text uses the paper tokens. */
-  .capture-plain .cap-row input {
-    color: var(--paper-text);
-  }
-
-  .capture-plain .cap-row:focus-within {
-    box-shadow: 0 0 0 3px var(--color-focus);
-  }
-
-  .capture-plain.surface-navy .cap-form .err {
-    color: var(--color-error-on-navy);
-  }
-
-  @media (width <= --theme(--breakpoint-md)) {
-    .cap-grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   @media (width <= --theme(--breakpoint-sm)) {
-    .cap-row {
-      flex-direction: column;
-      border-radius: 20px;
+    .talk-action,
+    .talk-action .btn {
+      width: 100%;
     }
 
-    /* In a column, flex: 1 would squash the field to its text height
-       (20px); keep its 50px height (Story 7.3). */
-    .cap-row input {
-      flex: none;
-    }
-
-    .cap-row .btn {
+    .talk-action .btn {
       justify-content: center;
     }
   }
@@ -5922,11 +5793,6 @@ main > .page-scene:last-child > :last-child {
 
 /* A navy band inside a page scene is a rounded panel, like the Services hero
    and Home's How we work; its room goes below it, on the scene's warm end. */
-.page-scene > .capture.surface-navy {
-  margin-inline: clamp(10px, 2vw, 28px);
-  border-radius: 28px;
-}
-
 main > .page-scene:last-child > .surface-navy:last-child {
   margin-bottom: clamp(232px, 17vw, 256px);
   padding-bottom: var(--spacing-capture);
@@ -6359,7 +6225,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
     column-gap: 2rem;
   }
 
-  .footer-grid > :last-child > h2,
   .footer-grid > :last-child > p {
     grid-column: 1 / -1;
   }
@@ -8275,6 +8140,18 @@ main > .page-scene:last-child > .surface-navy:last-child {
 .about-cta-inner .lede {
   max-width: 58ch;
   margin: 0;
+}
+
+/* News' Let's talk heading stays on one line from tablet up; the block widens
+   for it so About's 760px block is untouched. */
+.talk-band-news .about-cta-inner {
+  max-width: 1000px;
+}
+
+@media (width >= 768px) {
+  .talk-band-news h2 {
+    white-space: nowrap;
+  }
 }
 
 .about-cta-actions {

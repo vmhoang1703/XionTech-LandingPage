@@ -55,6 +55,7 @@ export function proxy(request: NextRequest) {
   return NextResponse.redirect(url, 307);
 }
 
+// The share image (/opengraph-image) has no extension but is not a page.
 export const config = {
-  matcher: ["/((?!api/|api$|_next/|.*[.].*).*)"],
+  matcher: ["/((?!api/|api$|_next/|opengraph-image|.*[.].*).*)"],
 };

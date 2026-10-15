@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { productsMeta } from "@/content/products";
 import { globalsCss, undefinedClasses } from "@/test-utils/css-classes";
@@ -46,14 +46,13 @@ afterEach(() => {
 });
 
 describe("Products page", () => {
-  it("renders the roadmap, then the capture band, with no app showcase", async () => {
+  it("renders the roadmap, then the Let's talk band, with no app showcase", async () => {
     const { container } = render(await productsAt("en"));
     const sections = [...container.querySelectorAll("section")];
     expect(sections).toHaveLength(2);
     expect(sections[0].id).toBe("map");
-    expect(sections[1].classList.contains("capture")).toBe(true);
-    // E-A5 CAP-5: the navy band from E-A4.
-    expect(sections[1].classList.contains("surface-navy")).toBe(true);
+    expect(sections[1].classList.contains("talk-band")).toBe(true);
+    expect(sections[1].querySelector(".about-cta-inner")).not.toBeNull();
     expect(container.querySelector("#apps")).toBeNull();
     expect(container.querySelector("dialog.pdetail")).toBeNull();
     expect(
@@ -62,6 +61,24 @@ describe("Products page", () => {
         name: "See it working at your school",
       }),
     ).toBeDefined();
+    expect(container.querySelector("input, form")).toBeNull();
+    const talk = within(sections[1]).getByRole("link", { name: "Let's talk" });
+    expect(talk.getAttribute("href")).toBe("/en#contact");
+    expect(sections[1].textContent).toContain(
+      "Tell us about your school and we'll show you how Parent Hub, Staff Hub and AI Tutor work together.",
+    );
+  });
+
+  it("sends the Vietnamese band to the Vietnamese contact form", async () => {
+    const { container } = render(await productsAt("vi"));
+    const band = container.querySelector("section.talk-band");
+    expect(band?.querySelector("h2")?.textContent).toBe(
+      "Xem ứng dụng hoạt động tại trường của bạn",
+    );
+    expect(band?.querySelector("a")?.getAttribute("href")).toBe("/vi#contact");
+    expect(band?.querySelector("a")?.textContent).toBe(
+      "Trao đổi với chúng tôi",
+    );
   });
 
   it("opens with the H1 and a roadmap of three cards, one per product", async () => {
@@ -126,7 +143,7 @@ describe("Products page", () => {
 
   it("sets the page metadata", () => {
     expect(metadata.title).toBe(
-      "School Apps: Parent Hub, Staff Hub & AI Tutor | XionTech",
+      "School platforms: Parent Hub, Staff Hub, AI Tutor | XionTech",
     );
     expect(metadata.description).toBe(productsMeta.description);
     expect(productsMeta.description).not.toMatch(/PXP|LXP|SXP|XionTechs/);
@@ -170,7 +187,7 @@ describe("Products page metadata in Vietnamese", () => {
     const viMeta = await generateMetadata({
       params: Promise.resolve({ locale: "vi" }),
     });
-    expect(String(viMeta.title)).toMatch(/^Ứng dụng cho trường học: /);
+    expect(String(viMeta.title)).toMatch(/^Nền tảng trường học: /);
     expect(String(viMeta.title)).not.toContain("[Placeholder]");
   });
 });
