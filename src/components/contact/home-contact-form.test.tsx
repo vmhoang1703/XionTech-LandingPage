@@ -65,7 +65,7 @@ describe("HomeContactForm", () => {
   it("fills in the email a capture band on another page kept", () => {
     sessionStorage.setItem(CAPTURE_EMAIL_KEY, "lan@school.edu.vn");
     render(<HomeContactForm />);
-    expect(screen.getByLabelText("Work email")).toHaveProperty(
+    expect(screen.getByLabelText("Email address")).toHaveProperty(
       "value",
       "lan@school.edu.vn",
     );

@@ -8,6 +8,18 @@ getSanityConfig();
 const nextConfig: NextConfig = {
   // Every page sits under [locale], so unmatched URLs need a global 404.
   experimental: { globalNotFound: true },
+  // The /demo page is gone (website copy v3): old links land on Home's
+  // contact section, in the link's language when it has one.
+  async redirects() {
+    return [
+      { source: "/demo", destination: "/#contact", permanent: false },
+      {
+        source: "/:locale(en|vi|ja|fr|ko|zh)/demo",
+        destination: "/:locale#contact",
+        permanent: false,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

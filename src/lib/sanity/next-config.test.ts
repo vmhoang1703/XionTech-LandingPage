@@ -27,6 +27,7 @@ describe("next.config.ts", () => {
     // are `unoptimized`, so this list is not checked for them (Story 6.3).
     expect(nextConfig).toEqual({
       experimental: { globalNotFound: true },
+      redirects: expect.any(Function),
       images: {
         remotePatterns: [
           {

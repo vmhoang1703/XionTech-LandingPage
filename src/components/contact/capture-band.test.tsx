@@ -14,13 +14,13 @@ const DESTINATION = "/en#contact";
 
 const BANDS = {
   demo: {
-    heading: "See it working at your school.",
-    lede: "Leave your work email and we'll arrange a walkthrough built around your school.",
+    heading: "See it working at your school",
+    lede: "Leave your work email and we'll arrange a demo built around your school.",
     placeholder: "name@school.edu.vn",
     consent: "We only use your email to arrange your demo.",
   },
   project: {
-    heading: "Tell us what you're building.",
+    heading: "Tell us what you're building",
     lede: "Leave your work email and we'll reach out to start Discovery.",
     placeholder: "name@company.com",
     consent: "We only use your details to respond to this request.",
@@ -206,7 +206,7 @@ describe("CaptureBand in Vietnamese", () => {
     expect(
       screen.getByRole("heading", {
         level: 2,
-        name: "Xem ứng dụng hoạt động tại trường của bạn.",
+        name: "Xem ứng dụng hoạt động tại trường của bạn",
       }),
     ).toBeTruthy();
     expect(screen.getByLabelText("Email công việc")).toBeTruthy();

@@ -32,7 +32,7 @@ export const CONTACT_STRINGS = {
     titleHighlight: "school",
     titleAfter: " or your project.",
     items: [
-      "A walkthrough of Parent Hub and Staff Hub using your school's scenarios.",
+      "A demo of Parent Hub and Staff Hub using your school's scenarios.",
       "Answers on setup, data and support.",
       "For projects: a first Discovery conversation, the first of our four steps.",
     ],
@@ -44,7 +44,7 @@ export const CONTACT_STRINGS = {
     tabDemo: "Product demo",
     tabProject: "Outsourcing project",
     name: "Full name",
-    email: "Work email",
+    email: "Email address",
     org: "School or company",
     role: "Your role",
     roleHelp: "For example: Principal, Head of IT",
@@ -68,9 +68,9 @@ export const CONTACT_STRINGS = {
   // Home #contact section (prototype index.html:241-268).
   home: {
     heading: "Have something you want to build?",
-    lede: "Tell us a little about yourself and what you're working on. Our team will get in touch to learn more.",
+    lede: "Building something new or improving what you already have? Tell us about your goals, and we’ll explore how we can help.",
     name: "Your name",
-    email: "Work email",
+    email: "Email address",
     phone: "Phone number",
     optional: "(optional)",
     phonePlaceholder: "(+1) 469 322 9899",
@@ -86,14 +86,14 @@ export const CONTACT_STRINGS = {
   capture: {
     emailLabel: "Work email",
     demo: {
-      heading: "See it working at your school.",
-      lede: "Leave your work email and we'll arrange a walkthrough built around your school.",
+      heading: "See it working at your school",
+      lede: "Leave your work email and we'll arrange a demo built around your school.",
       placeholder: "name@school.edu.vn",
       button: "Get in touch",
       consent: "We only use your email to arrange your demo.",
     },
     project: {
-      heading: "Tell us what you're building.",
+      heading: "Tell us what you're building",
       lede: "Leave your work email and we'll reach out to start Discovery.",
       placeholder: "name@company.com",
       button: "Get in touch",
@@ -147,7 +147,7 @@ export const CONTACT_STRINGS_VI: Localized<typeof CONTACT_STRINGS> = {
     tabDemo: "Demo sản phẩm",
     tabProject: "Dự án outsourcing",
     name: "Họ và tên",
-    email: "Email công việc",
+    email: "Địa chỉ email",
     org: "Trường học hoặc công ty",
     role: "Vai trò",
     roleHelp: "Ví dụ: Hiệu trưởng, Trưởng phòng IT",
@@ -170,9 +170,9 @@ export const CONTACT_STRINGS_VI: Localized<typeof CONTACT_STRINGS> = {
   },
   home: {
     heading: "Bạn có điều gì muốn xây dựng?",
-    lede: "Hãy cho chúng tôi biết đôi chút về bạn và việc bạn đang làm. Đội ngũ của chúng tôi sẽ liên hệ để tìm hiểu thêm.",
+    lede: "Bạn đang xây dựng điều gì đó mới hay cải thiện những gì đã có? Hãy cho chúng tôi biết mục tiêu của bạn, và chúng tôi sẽ cùng tìm cách hỗ trợ.",
     name: "Tên của bạn",
-    email: "Email công việc",
+    email: "Địa chỉ email",
     phone: "Số điện thoại",
     optional: "(không bắt buộc)",
     phonePlaceholder: CONTACT_STRINGS.home.phonePlaceholder,
@@ -189,14 +189,14 @@ export const CONTACT_STRINGS_VI: Localized<typeof CONTACT_STRINGS> = {
   capture: {
     emailLabel: "Email công việc",
     demo: {
-      heading: "Xem ứng dụng hoạt động tại trường của bạn.",
+      heading: "Xem ứng dụng hoạt động tại trường của bạn",
       lede: "Để lại email công việc, chúng tôi sẽ sắp xếp buổi demo dành riêng cho trường của bạn.",
       placeholder: CONTACT_STRINGS.capture.demo.placeholder,
       button: "Liên hệ với chúng tôi",
       consent: "Chúng tôi chỉ dùng email của bạn để sắp xếp buổi demo.",
     },
     project: {
-      heading: "Hãy kể về điều bạn đang xây dựng.",
+      heading: "Hãy kể về điều bạn đang xây dựng",
       lede: "Để lại email công việc, chúng tôi sẽ liên hệ để bắt đầu bước Khám phá.",
       placeholder: CONTACT_STRINGS.capture.project.placeholder,
       button: "Liên hệ với chúng tôi",
