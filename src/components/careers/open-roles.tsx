@@ -1,7 +1,13 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
 import { Fragment } from "react";
 import { LocaleLink } from "@/components/layout/locale-link";
-import { careersRoles, careersRolesVi } from "@/content/careers";
+import {
+  careersGeneralApplication,
+  careersGeneralApplicationVi,
+  careersRoles,
+  careersRolesVi,
+} from "@/content/careers";
+import { GeneralApplication } from "./general-application";
 import { fallbackLang, pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import {
@@ -81,6 +87,12 @@ export function OpenRoles({
             })}
           </div>
         )}
+        <GeneralApplication
+          copy={pickLocale(locale, {
+            en: careersGeneralApplication,
+            vi: careersGeneralApplicationVi,
+          })}
+        />
       </div>
     </section>
   );

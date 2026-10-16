@@ -24,12 +24,12 @@ Full report with persona journeys, screenshots and measurements:
 | 2 | High | Contact form doesn't qualify leads (company, interest, timeline) | Open — not scheduled |
 | 3 | High | Product dialogs have no context CTA; all CTAs leave the page for `/#contact` | Deferred |
 | 4 | High | No conversion tracking (CTA clicks, form start/submit, applications, language switch) | Open — not scheduled |
-| 5 | High | Focus escapes the product dialog (5/15 Tab presses) and mobile menu (3/20 stops) | In progress — `feature/ux-a11y-motion-news-fixes` |
-| 6 | Medium | "Pause motion" leaves 3 looping animations running; no pressed state for screen readers | In progress — `feature/ux-a11y-motion-news-fixes` |
-| 7 | Medium | Looping animations burn idle CPU when off-screen / tab hidden | In progress — `feature/ux-a11y-motion-news-fixes` |
-| 8 | Medium | Content hidden without JavaScript (Products 3, Careers 7, News 1 elements) | In progress — `feature/ux-a11y-motion-news-fixes` |
-| 9 | Medium | News stories have no share links (LinkedIn, Facebook, copy link) or next/related stories | In progress — `feature/ux-a11y-motion-news-fixes` |
-| 10 | Medium | Careers has one open role and no general application / talent-pool path | Question — awaiting decision |
+| 5 | High | Focus escapes the product dialog (5/15 Tab presses) and mobile menu (3/20 stops) | Fixed — `feature/ux-a11y-motion-news-fixes` |
+| 6 | Medium | "Pause motion" leaves 3 looping animations running; no pressed state for screen readers | Fixed — `feature/ux-a11y-motion-news-fixes` |
+| 7 | Medium | Looping animations burn idle CPU when off-screen / tab hidden | Fixed — `feature/ux-a11y-motion-news-fixes` |
+| 8 | Medium | Content hidden without JavaScript (Products 3, Careers 7, News 1 elements) | Fixed — `feature/ux-a11y-motion-news-fixes` |
+| 9 | Medium | News stories have no share links (LinkedIn, Facebook, copy link) or next/related stories | Fixed — `feature/ux-a11y-motion-news-fixes` |
+| 10 | Medium | Careers has one open role and no general application / talent-pool path | Fixed — email-only "General application" form on Careers, sent to the contact inbox |
 | L1 | Low | 1×1 px focusable element on phone Home | Open |
 | L2 | Low | Reassurance line next to the form Submit button | Open |
 | L3 | Low | Desktop news-card click didn't navigate in time (likely dev-server latency) | Re-check on production build |

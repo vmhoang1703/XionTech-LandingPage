@@ -658,3 +658,58 @@ describe("POST /api/contact logs", () => {
     },
   );
 });
+
+const generalApplicationBody = {
+  type: "general-application",
+  email: VISITOR.email,
+  website: "",
+};
+
+describe("POST /api/contact general application", () => {
+  it("answers 200 and sends one mail to the contact inbox", async () => {
+    const response = await POST(post(generalApplicationBody));
+
+    expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
+    expect(sendMailMock).toHaveBeenCalledTimes(1);
+    expect(sendMailMock.mock.calls[0][0]).toMatchObject({
+      to: ENV.CONTACT_INBOX,
+      replyTo: VISITOR.email,
+      subject: `General application: ${VISITOR.email}`,
+      text: `I'm interested in your company and would like to hear about career opportunities. Please contact me back on email ${VISITOR.email}.`,
+    });
+  });
+
+  it("answers 400 with an email error for a bad email and sends nothing", async () => {
+    const response = await POST(
+      post({ ...generalApplicationBody, email: "not-an-email" }),
+    );
+
+    expect(await answer(response)).toEqual({
+      status: 400,
+      body: { errors: { email: "Please enter a valid email address." } },
+    });
+    expect(sendMailMock).not.toHaveBeenCalled();
+  });
+
+  it("answers 429 rate and sends nothing when the limit is reached", async () => {
+    limitMock.mockResolvedValue({ success: false });
+
+    const response = await POST(post(generalApplicationBody));
+
+    expect(await answer(response)).toEqual({
+      status: 429,
+      body: { error: "rate" },
+    });
+    expect(sendMailMock).not.toHaveBeenCalled();
+  });
+
+  it("answers 200 and does nothing else when the website field is filled", async () => {
+    const response = await POST(
+      post({ ...generalApplicationBody, website: "https://spam.example" }),
+    );
+
+    expect(await answer(response)).toEqual({ status: 200, body: { ok: true } });
+    expectNothingSent();
+    expect(ratelimitMock).not.toHaveBeenCalled();
+  });
+});

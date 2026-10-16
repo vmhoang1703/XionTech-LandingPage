@@ -47,6 +47,9 @@ type Props = Readonly<{
 // The exit animations in globals.css (the card sinks, all of it fades).
 const EXIT = ["rd-fade-out", "rd-sink"];
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export type RoadEndId = "start" | "finish";
 
 export function RoadStopDialog({ index, onMove, onClose }: Props) {
@@ -110,6 +113,31 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
     shut();
   };
 
+  // Tab and Shift+Tab cycle through the card's controls (audit 2026-10-16,
+  // #5): the modal keeps the page behind inert, and this keeps focus from
+  // leaving the dialog for the browser's own controls past its last one.
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
+    if (event.key !== "Tab") return;
+    const targets = [
+      ...event.currentTarget.querySelectorAll<HTMLElement>(FOCUSABLE),
+    ].filter((el) => el.getClientRects().length > 0);
+    if (targets.length === 0) {
+      event.preventDefault();
+      return;
+    }
+    const first = targets[0];
+    const last = targets[targets.length - 1];
+    const active = document.activeElement;
+    const inside = targets.includes(active as HTMLElement);
+    if (event.shiftKey && (active === first || !inside)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (active === last || !inside)) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
   // A click anywhere outside the card (the scene fills the window) closes it,
   // unless the press began in the card: a text selection dragged out of it
   // ends with a click on the scene.
@@ -135,6 +163,7 @@ export function RoadStopDialog({ index, onMove, onClose }: Props) {
       aria-labelledby="road-dialog-h"
       onClose={onClose}
       onCancel={onCancel}
+      onKeyDown={onKeyDown}
       onPointerDown={onPointerDown}
       onClick={onClick}
     >

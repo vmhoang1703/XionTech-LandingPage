@@ -11,6 +11,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SwipeRows } from "@/components/sections/swipe-rows";
 import { TouchPress } from "@/components/sections/touch-press";
+import { MotionLoops } from "@/components/sections/motion-loops";
 import { PageFade } from "@/components/sections/page-fade";
 import { PointerGlow } from "@/components/sections/pointer-glow";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
@@ -72,6 +73,7 @@ export default async function RootLayout({
         <SwipeRows />
         <TouchPress />
         <PageFade />
+        <MotionLoops />
       </body>
     </html>
   );

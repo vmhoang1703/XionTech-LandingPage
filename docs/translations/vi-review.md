@@ -13,7 +13,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 445 strings, 277 AI and 168 prototype.
+**Total:** 459 strings, 290 AI and 169 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -360,7 +360,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## Careers
 
-36 AI, 1 prototype.
+42 AI, 1 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -372,6 +372,12 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `careers:careersHeroVi.artAlt` | Three stacked cards illustrating AI-powered engineering, a code chip and connected technology | Ba tấm thẻ xếp chồng minh họa kỹ thuật ứng dụng AI, một chip mã nguồn và công nghệ kết nối |
 | AI | `careers:careersRolesVi.heading` | Find your next challenge | Tìm thử thách tiếp theo của bạn |
 | AI | `careers:careersRolesVi.emptyText` | No open roles right now. | Hiện chưa có vị trí nào đang tuyển. |
+| AI | `careers:careersGeneralApplicationVi.heading` | Don’t see a role that fits? | Chưa thấy vị trí phù hợp? |
+| AI | `careers:careersGeneralApplicationVi.lede` | Leave your email and we’ll be in touch when something opens up. | Để lại email, chúng tôi sẽ liên hệ khi có vị trí mới. |
+| AI | `careers:careersGeneralApplicationVi.emailLabel` | Email address | Địa chỉ email |
+| AI | `careers:careersGeneralApplicationVi.submit` | Send | Gửi |
+| AI | `careers:careersGeneralApplicationVi.sending` | Sending... | Đang gửi... |
+| AI | `careers:careersGeneralApplicationVi.success` | Thanks, we’ll be in touch. | Cảm ơn bạn, chúng tôi sẽ liên hệ. |
 | AI | `careers:careersLifeVi.heading` | Meet the team at XionTech | Gặp gỡ đội ngũ XionTech |
 | AI | `careers:careersLifeVi.lede` | At XionTech, we take engineering seriously, but not ourselves. We ask questions, take ownership, and keep learning together. Off the clock, we bring the same team spirit to the court, the pitch, the karaoke mic, and the game lobby. | Tại XionTech, chúng tôi nghiêm túc với kỹ thuật, nhưng không quá nghiêm túc với chính mình. Chúng tôi đặt câu hỏi, làm chủ công việc và cùng nhau không ngừng học hỏi. Ngoài giờ làm, chúng tôi mang cùng tinh thần đồng đội ấy ra sân cầu lông, sân bóng, micro karaoke và phòng chờ game. |
 | AI | `careers:careersLifeVi.tagsLabel` | Our team interests | Sở thích của đội ngũ |
@@ -451,7 +457,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## News
 
-6 AI, 15 prototype.
+13 AI, 16 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -461,6 +467,13 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `news:newsMetaVi.description` | Company news, client visits and stories on AI and school technology from the XionTech team. | Tin tức công ty, các chuyến thăm khách hàng và câu chuyện về AI và công nghệ trường học từ đội ngũ XionTech. |
 | AI | `news:newsPageVi.countOne` | Showing 1 story | Đang hiển thị 1 tin |
 | AI | `news:newsPageVi.countMany` | Showing {n} stories | Đang hiển thị {n} tin |
+| AI | `news:newsStoryVi.share.heading` | Share this story | Chia sẻ tin này |
+| AI | `news:newsStoryVi.share.linkedin` | Share on LinkedIn | Chia sẻ lên LinkedIn |
+| AI | `news:newsStoryVi.share.facebook` | Share on Facebook | Chia sẻ lên Facebook |
+| AI | `news:newsStoryVi.share.copy` | Copy link | Sao chép liên kết |
+| AI | `news:newsStoryVi.share.copied` | Link copied | Đã sao chép liên kết |
+| AI | `news:newsStoryVi.share.copyFailed` | Could not copy the link. Copy it from the address bar. | Không sao chép được liên kết. Hãy sao chép từ thanh địa chỉ. |
+| AI | `news:newsStoryVi.moreStories` | More stories | Tin khác |
 | Prototype | `news:homeNewsVi.seeAll.label` | See all news | Xem tất cả tin tức |
 | Prototype | `news:homeNewsVi.readStory` | Read story | Đọc tiếp |
 | Prototype | `news:categoryLabelsVi.schools` | Schools | Trường học |
@@ -476,6 +489,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `news:newsPageVi.showAll` | Show all | Xem tất cả |
 | Prototype | `news:newsStoryVi.storyLabel` | Story | Nội dung tin |
 | Prototype | `news:newsStoryVi.backToNews.label` | Back to News | Quay lại Tin tức |
+| Prototype | `news:newsStoryVi.share.newTab` | (opens in a new tab) | (mở trong thẻ mới) |
 
 ## Privacy
 

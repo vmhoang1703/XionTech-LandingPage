@@ -17,6 +17,20 @@ export interface CaptureSubmission {
   email: string;
 }
 
+/**
+ * The Careers general application. The email follows the form's rule:
+ * trimmed, valid and at most 254 characters.
+ */
+function readGeneralApplication(
+  raw: Record<string, unknown>,
+): ParsedSubmission {
+  const email = text(raw.email).trim();
+  if (!isValidEmail(email) || email.length > EMAIL_MAX_LENGTH) {
+    return { ok: false, errors: { email: CONTACT_ERRORS.email } };
+  }
+  return { ok: true, submission: { type: "general-application", email } };
+}
+
 /** The Home contact form: a message with an optional phone number. */
 export interface GeneralSubmission {
   type: "general";
@@ -26,9 +40,18 @@ export interface GeneralSubmission {
   message: string;
 }
 
+/** The Careers general application: only the visitor's email. */
+export interface GeneralApplicationSubmission {
+  type: "general-application";
+  email: string;
+}
+
 /** A request that passed every check and is ready to mail. */
 export type ValidSubmission =
-  ContactSubmission | CaptureSubmission | GeneralSubmission;
+  | ContactSubmission
+  | CaptureSubmission
+  | GeneralSubmission
+  | GeneralApplicationSubmission;
 
 /**
  * `ok` with the values to send, `ok: false` with field errors in the client
@@ -160,13 +183,15 @@ export function parseSubmission(
     type !== "demo" &&
     type !== "project" &&
     type !== "capture" &&
-    type !== "general"
+    type !== "general" &&
+    type !== "general-application"
   ) {
     return bad();
   }
   if (raw.website) return { ok: false, honeypot: true };
   if (type === "capture") return readCapture(raw);
   if (type === "general") return readGeneral(raw);
+  if (type === "general-application") return readGeneralApplication(raw);
 
   // Role has no error slot in the form; its 200-character cap is an input
   // `maxLength`, so a longer value did not come from the form.
