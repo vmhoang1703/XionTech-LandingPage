@@ -221,7 +221,7 @@ describe("Careers sections", () => {
     expect(
       undefinedClasses(
         container,
-        /^(mt|mb|gap|min-h|h|aspect)-|^flex(-wrap)?$|^sr-only$/,
+        /^(mt|mb|gap|min-h|h|aspect)-|^flex(-wrap)?$/,
       ),
     ).toEqual([]);
   });

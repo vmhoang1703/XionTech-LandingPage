@@ -2029,51 +2029,6 @@
     font-size: 0.92rem;
   }
 
-  /* General application below the roles: copy left, email form right. */
-  .general-app {
-    display: grid;
-    gap: 20px;
-    margin-top: 40px;
-    padding: 28px;
-    border: 1.5px dashed var(--color-border);
-    border-radius: var(--radius-lg);
-  }
-
-  .general-app-copy {
-    display: grid;
-    gap: 6px;
-  }
-
-  .general-app-copy h3 {
-    color: var(--color-heading);
-  }
-
-  .general-app-row {
-    display: grid;
-    gap: 12px;
-    align-items: start;
-  }
-
-  .general-app-ok {
-    color: var(--color-heading);
-  }
-
-  @media (min-width: 768px) {
-    .general-app {
-      grid-template-columns: 1fr minmax(320px, 1fr);
-      align-items: center;
-    }
-
-    .general-app-row {
-      grid-template-columns: 1fr auto;
-    }
-
-    /* Line the button up with the input, below the label. */
-    .general-app-row .btn {
-      margin-top: 26px;
-    }
-  }
-
   .roles-empty {
     display: grid;
     gap: 10px;

@@ -11,7 +11,6 @@ import {
 import { APP_TAGLINES } from "@/content/apps";
 import {
   careersGain,
-  careersGeneralApplication,
   careersHero,
   careersLife,
   careersMeta,
@@ -95,7 +94,6 @@ export function english() {
     aboutValuesHeading,
     appTaglines: APP_TAGLINES,
     careersGain,
-    careersGeneralApplication,
     careersHero,
     careersLife,
     careersMeta,

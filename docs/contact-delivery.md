@@ -5,25 +5,24 @@ It says where the code lives, how to set up, what happens when something fails, 
 
 ## What lives where
 
-| Path                                              | What it does                                                                                                                              |
-| ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/app/api/contact/route.ts`                    | `POST /api/contact`. Runs the steps in order (see "What the route does"). `maxDuration` is 10 seconds.                                    |
-| `src/lib/contact/submission.ts`                   | `parseSubmission`: checks the body, reads the honeypot, runs the shared rules. Also reads the capture body.                               |
-| `src/components/contact/capture-band.tsx`         | The email band. It posts a capture to the same route (see "Capture mails").                                                               |
-| `src/components/careers/general-application.tsx`  | The Careers "Don’t see a role that fits?" email form. It posts a general application to the same route (see "General application mails"). |
-| `src/lib/contact/contact-rules.ts`                | The shared rules and error text. The browser and the server use the same file.                                                            |
-| `src/lib/contact/delivery.ts`                     | Reads the five variables, builds the rate-limit keys, checks both limits in Upstash, sends the mail with Gmail SMTP.                      |
-| `src/components/contact/contact-form.tsx`         | The client form. It posts JSON with `fetch` and waits at most 15 seconds.                                                                 |
-| `e2e/smoke.spec.ts`                               | The `@smoke` test posts a filled honeypot to `/api/contact` and expects 200. It needs no secrets.                                         |
-| `src/app/api/careers/cv-upload/route.ts`          | `POST /api/careers/cv-upload`. Gives the browser a short upload token (see "Job applications").                                           |
-| `src/app/api/careers/apply/route.ts`              | `POST /api/careers/apply`. Checks the application and sends the mail. `maxDuration` is 30 seconds.                                        |
-| `src/components/careers/job-application-form.tsx` | The client form on the job page. It uploads the CV, then posts JSON.                                                                      |
-| `src/lib/careers/cv-storage.ts`                   | Reads `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` on each request.                                                                      |
-| `src/lib/careers/application.ts`                  | `parseApplication`: checks the body, reads the honeypot, runs the shared rules.                                                           |
-| `src/lib/careers/application-rules.ts`            | The CV rules (type, size) and the error text. The browser and the server use the same file.                                               |
-| `src/lib/http/route-helpers.ts`                   | `readBody` and `describeError`, shared by the routes.                                                                                     |
-| `e2e/job.spec.ts`                                 | The `@smoke` tests: `/careers/no-such-role` is 404, and a filled honeypot to `/api/careers/apply` is 200.                                 |
-| `.env.example`                                    | The variable names. Copy it to `.env.local`.                                                                                              |
+| Path                                              | What it does                                                                                                         |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `src/app/api/contact/route.ts`                    | `POST /api/contact`. Runs the steps in order (see "What the route does"). `maxDuration` is 10 seconds.               |
+| `src/lib/contact/submission.ts`                   | `parseSubmission`: checks the body, reads the honeypot, runs the shared rules. Also reads the capture body.          |
+| `src/components/contact/capture-band.tsx`         | The email band. It posts a capture to the same route (see "Capture mails").                                          |
+| `src/lib/contact/contact-rules.ts`                | The shared rules and error text. The browser and the server use the same file.                                       |
+| `src/lib/contact/delivery.ts`                     | Reads the five variables, builds the rate-limit keys, checks both limits in Upstash, sends the mail with Gmail SMTP. |
+| `src/components/contact/contact-form.tsx`         | The client form. It posts JSON with `fetch` and waits at most 15 seconds.                                            |
+| `e2e/smoke.spec.ts`                               | The `@smoke` test posts a filled honeypot to `/api/contact` and expects 200. It needs no secrets.                    |
+| `src/app/api/careers/cv-upload/route.ts`          | `POST /api/careers/cv-upload`. Gives the browser a short upload token (see "Job applications").                      |
+| `src/app/api/careers/apply/route.ts`              | `POST /api/careers/apply`. Checks the application and sends the mail. `maxDuration` is 30 seconds.                   |
+| `src/components/careers/job-application-form.tsx` | The client form on the job page. It uploads the CV, then posts JSON.                                                 |
+| `src/lib/careers/cv-storage.ts`                   | Reads `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` on each request.                                                 |
+| `src/lib/careers/application.ts`                  | `parseApplication`: checks the body, reads the honeypot, runs the shared rules.                                      |
+| `src/lib/careers/application-rules.ts`            | The CV rules (type, size) and the error text. The browser and the server use the same file.                          |
+| `src/lib/http/route-helpers.ts`                   | `readBody` and `describeError`, shared by the routes.                                                                |
+| `e2e/job.spec.ts`                                 | The `@smoke` tests: `/careers/no-such-role` is 404, and a filled honeypot to `/api/careers/apply` is 200.            |
+| `.env.example`                                    | The variable names. Copy it to `.env.local`.                                                                         |
 
 ## Variables
 
@@ -70,7 +69,7 @@ The route runs these steps in order. It stops at the first one that fails.
 
 | Step | Check                                                                                                                                     | Answer                                   |
 | ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| 1    | Body is not a JSON object, or `type` is not `demo`, `project`, `capture`, `general` or `general-application`                              | 400 `{ "error": "send" }`                |
+| 1    | Body is not a JSON object, or `type` is not `demo`, `project`, `capture` or `general`                                                     | 400 `{ "error": "send" }`                |
 | 2    | Honeypot field `website` is not empty                                                                                                     | 200 `{ "ok": true }`. Nothing else runs. |
 | 3    | Role is over 200 characters, or a select or products value is not an option in the form. For a capture: `kind` is not `demo` or `project` | 400 `{ "error": "send" }`                |
 | 4    | One of the five variables is not set                                                                                                      | 500 `{ "error": "send" }`                |
@@ -96,17 +95,6 @@ The email band (`src/components/contact/capture-band.tsx`) posts to the same `PO
 - The body has two lines: `Kind: <kind>` and `Email: <email>`. Reply-To is the visitor's email.
 - A capture counts as one send for the IP and email limit. The full form that the visitor then sends counts as a second one. So the visitor has about 3 more sends in the same 10 minutes.
 - After a 200, the band keeps the email in session storage under `xt-capture-email` and opens `/demo#form` or `/demo#project`. `/demo` reads the key once, fills Work email only if it is empty, and removes the key. The email is never in a URL and never in a log line. If session storage throws, the visitor still lands on the right tab with no prefill.
-
-## General application mails
-
-The Careers page has a small email-only form below the open roles (`src/components/careers/general-application.tsx`). It posts to the same `POST /api/contact`, so the mail goes to `CONTACT_INBOX` from the same sender. There is no new route, variable or service. The body is `{ "type": "general-application", "email": "...", "website": "" }`.
-
-- The route runs the same steps as in the table above. The email is trimmed first, then it must pass `isValidEmail` and be at most 254 characters. A bad email gets 400 `{ "errors": { "email": text } }`.
-- The honeypot, the config check and both rate limits are the same as for the form. A filled honeypot gets 200 and no mail.
-- The subject is "General application: <email>". CR and LF are removed from it.
-- The body is one line: "I'm interested in your company and would like to hear about career opportunities. Please contact me back on email <email>." Reply-To is the visitor's email.
-- There is no CV and no name. For a CV, the visitor applies to a role on its job page (see "Job applications").
-- After a 200, the form shows "Thanks, we’ll be in touch." in place of the form.
 
 ## Job applications
 

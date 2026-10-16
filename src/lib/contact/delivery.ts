@@ -133,9 +133,6 @@ export async function checkUploadLimit(
 }
 
 function mailText(submission: ValidSubmission): string {
-  if (submission.type === "general-application") {
-    return `I'm interested in your company and would like to hear about career opportunities. Please contact me back on email ${submission.email}.`;
-  }
   if (submission.type === "capture") {
     return `Kind: ${submission.kind}\nEmail: ${submission.email}`;
   }
@@ -178,9 +175,6 @@ function mailText(submission: ValidSubmission): string {
  */
 function mailSubject(submission: ValidSubmission): string {
   if (submission.type === "capture") return CAPTURE_SUBJECTS[submission.kind];
-  if (submission.type === "general-application") {
-    return `General application: ${submission.email.replaceAll(/[\r\n]/g, "")}`;
-  }
   const detail =
     submission.type === "general" ? submission.name : submission.org;
   return `${SUBJECTS[submission.type]}: ${detail.replaceAll(/[\r\n]/g, "")}`;

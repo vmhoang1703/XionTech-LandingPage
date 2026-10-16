@@ -22,17 +22,6 @@ export const careersRoles = {
   applyLabel: "View and apply",
 };
 
-// General application below the roles list: email only, mailed to the
-// contact inbox through /api/contact (docs/contact-delivery.md).
-export const careersGeneralApplication = {
-  heading: "Don’t see a role that fits?",
-  lede: "Leave your email and we’ll be in touch when something opens up.",
-  emailLabel: "Email address",
-  submit: "Send",
-  sending: "Sending...",
-  success: "Thanks, we’ll be in touch.",
-};
-
 // "Meet the team at XionTech" (Amber's culture strip mock, 2026-10-15; renamed
 // from "Life at XionTech"): heading, lede, interest tags and one looping photo
 // strip. The photos are whatever images sit in public/careers/life/ (any
@@ -116,15 +105,6 @@ export const careersRolesVi: typeof careersRoles = {
   heading: "Tìm thử thách tiếp theo của bạn",
   emptyText: "Hiện chưa có vị trí nào đang tuyển.",
   applyLabel: "Xem và ứng tuyển",
-};
-
-export const careersGeneralApplicationVi: typeof careersGeneralApplication = {
-  heading: "Chưa thấy vị trí phù hợp?",
-  lede: "Để lại email, chúng tôi sẽ liên hệ khi có vị trí mới.",
-  emailLabel: "Địa chỉ email",
-  submit: "Gửi",
-  sending: "Đang gửi...",
-  success: "Cảm ơn bạn, chúng tôi sẽ liên hệ.",
 };
 
 const [teamFrame, officeFrame, eventFrame] = careersLife.frames;

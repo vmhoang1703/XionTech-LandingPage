@@ -117,12 +117,12 @@ describe("Careers page", () => {
     ).toBe("/en/careers/qa-engineer");
   });
 
-  it("has no email capture band; the only form is the general application", async () => {
+  it("has no email capture band", async () => {
     vi.mocked(getOpenRoles).mockResolvedValue([]);
     const { container } = await renderPage();
 
-    expect(container.querySelectorAll("form")).toHaveLength(1);
-    expect(container.querySelector(".general-app form")).not.toBeNull();
+    expect(container.querySelector("form")).toBeNull();
+    expect(container.querySelector("input")).toBeNull();
     expect(container.querySelector(".capture")).toBeNull();
   });
 
