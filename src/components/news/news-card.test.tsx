@@ -60,7 +60,10 @@ describe("NewsCard", () => {
     const { container } = render(<NewsCard post={{ ...post, image: PHOTO }} />);
 
     const img = container.querySelector("img");
-    expect(img?.getAttribute("src")).toBe(`${PHOTO}?w=1400&auto=format`);
+    expect(img?.getAttribute("srcset")).toContain(
+      `${PHOTO}?w=828&q=75&fit=max&auto=format 828w`,
+    );
+    expect(img?.getAttribute("sizes")).toBe("(width <= 900px) 100vw, 50vw");
     expect(img?.getAttribute("alt")).toBe("");
     expect(container.querySelector(".home-media")).toBeNull();
   });

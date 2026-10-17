@@ -9,10 +9,8 @@ import { JsonLd, organizationLd, websiteLd } from "@/lib/seo/json-ld";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { SwipeRows } from "@/components/sections/swipe-rows";
-import { TouchPress } from "@/components/sections/touch-press";
 import { PageFade } from "@/components/sections/page-fade";
-import { PointerGlow } from "@/components/sections/pointer-glow";
+import { DeferredEnhancers } from "@/components/sections/deferred-enhancers";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
 import { BackToTop } from "@/components/layout/back-to-top";
 import { SHELL } from "@/i18n/shell";
@@ -68,9 +66,7 @@ export default async function RootLayout({
         </LocaleProvider>
         <BackToTop label={SHELL[locale].backToTop.label} />
         <ScrollReveal />
-        <PointerGlow />
-        <SwipeRows />
-        <TouchPress />
+        <DeferredEnhancers />
         <PageFade />
       </body>
     </html>
