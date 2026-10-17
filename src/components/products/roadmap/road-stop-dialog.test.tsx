@@ -100,6 +100,24 @@ describe("RoadStopDialog", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it("keeps Tab and Shift+Tab inside the dialog", () => {
+    const { dialog } = setup(1);
+    // jsdom draws no boxes: every control counts as shown.
+    vi.spyOn(HTMLElement.prototype, "getClientRects").mockReturnValue([
+      {},
+    ] as unknown as DOMRectList);
+    const close = button("Close");
+    const next = button("Next AI Tutor");
+    next.focus();
+    fireEvent.keyDown(dialog, { key: "Tab" });
+    expect(document.activeElement).toBe(close);
+    fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true });
+    expect(document.activeElement).toBe(next);
+    document.body.focus();
+    fireEvent.keyDown(dialog, { key: "Tab" });
+    expect(document.activeElement).toBe(close);
+  });
+
   it("moves with Previous and Next, which are named for the neighbouring products", () => {
     const { onMove } = setup(1);
     fireEvent.click(button("Previous Parent Hub"));

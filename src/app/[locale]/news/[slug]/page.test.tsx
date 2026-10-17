@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { newsMeta, newsMetaVi } from "@/content/news";
 import { getPost, type NewsStory } from "@/lib/news/post";
+import { sanityFetch } from "@/lib/sanity/client";
 import { undefinedClasses } from "@/test-utils/css-classes";
 
 vi.mock("@/lib/sanity/client", () => ({ sanityFetch: vi.fn() }));
@@ -113,7 +114,10 @@ describe("StoryPage", () => {
       screen.getByRole("heading", { level: 2, name: "A subheading" }),
     ).toBeTruthy();
 
-    expect(screen.getAllByRole("link")).toHaveLength(1);
+    // Back to News, then only the two share links (no See-app link).
+    expect(
+      screen.getAllByRole("link").filter((a) => !a.closest(".art-share")),
+    ).toHaveLength(1);
     expect(screen.queryByRole("link", { name: /^See / })).toBeNull();
     expect(container.querySelector(".sample")).toBeNull();
     expect(container.querySelector("#cap-h")).toBeNull();
@@ -166,6 +170,37 @@ describe("StoryPage", () => {
   it("calls notFound for an unknown slug", async () => {
     await expect(renderPage(null)).rejects.toThrow("NEXT_NOT_FOUND");
     expect(notFound).toHaveBeenCalledTimes(1);
+  });
+
+  it("shares the canonical URL and lists more stories, same audience first", async () => {
+    vi.mocked(sanityFetch).mockResolvedValue([
+      { ...story },
+      {
+        slug: "co",
+        title: "Company news",
+        publishedAt: "2026-10-10T00:00:00Z",
+        category: "company",
+      },
+      {
+        slug: "ph",
+        title: "Parent news",
+        publishedAt: "2026-09-01T00:00:00Z",
+        category: "parents",
+      },
+    ]);
+    await renderPage();
+    const li = screen.getByRole("link", { name: /Share on LinkedIn/ });
+    expect(li.getAttribute("href")).toContain(
+      encodeURIComponent("/en/news/pxp-day"),
+    );
+    expect(screen.getByRole("button", { name: "Copy link" })).toBeTruthy();
+    const more = screen
+      .getByRole("heading", { name: "More stories" })
+      .closest("section");
+    const hrefs = [...(more?.querySelectorAll("a") ?? [])].map((a) =>
+      a.getAttribute("href"),
+    );
+    expect(hrefs).toEqual(["/en/news/ph", "/en/news/co"]);
   });
 
   it("defines every class it uses in globals.css", async () => {

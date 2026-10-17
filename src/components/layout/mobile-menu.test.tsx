@@ -182,6 +182,23 @@ describe("MobileMenu", () => {
     ]);
   });
 
+  it("makes the rest of the page inert while open, and gives it back on close", () => {
+    const main = document.createElement("main");
+    const before = document.createElement("footer");
+    before.setAttribute("inert", "");
+    document.body.append(main, before);
+    render(<Header />);
+    fireEvent.click(menuButton());
+    expect(main.hasAttribute("inert")).toBe(true);
+    expect(menuButton().closest("[inert]")).toBeNull();
+    fireEvent.click(menuButton());
+    expect(main.hasAttribute("inert")).toBe(false);
+    // Something inert before the menu opened stays inert.
+    expect(before.hasAttribute("inert")).toBe(true);
+    main.remove();
+    before.remove();
+  });
+
   it("toggles closed on a second click", () => {
     render(<Header />);
     fireEvent.click(menuButton());

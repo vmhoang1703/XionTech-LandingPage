@@ -6,8 +6,9 @@ import { useLocalized } from "@/components/layout/locale-link";
 import { homeHero, homeHeroVi } from "@/content/home";
 import {
   readMotionPaused,
-  saveMotionPaused,
+  setMotionPaused,
 } from "@/lib/motion/motion-preference";
+import { useMotionPaused } from "@/lib/motion/use-motion-paused";
 import {
   createSilk,
   SILK_START_TIME,
@@ -34,6 +35,11 @@ const MARK_ONLY_QUERY = "(width < 1080px)";
 // and a desktop opens almost at once (lead, 2026-10-15).
 export const SCENE_DELAY_WIDE_MS = 300;
 export const SCENE_DELAY_NARROW_MS = 2500;
+
+// On a phone or tablet (the mark-only story) the scene draws at most this many
+// frames a second: the slow silk looks the same, and the main thread, which
+// was busy most of the idle time at 60 (audit 2026-10-16, #7), rests.
+export const NARROW_FPS = 24;
 
 // The globe and the XT mark form in the hero's .hero-stage box (the right
 // column on wide screens, above the headline on narrow ones), sized so the
@@ -68,7 +74,7 @@ export function HeroSilk() {
   const timeRef = useRef(SILK_START_TIME);
   const [started, setStarted] = useState(false);
   const [supported, setSupported] = useState(false);
-  const [paused, setPaused] = useState(false);
+  const paused = useMotionPaused();
   const [inView, setInView] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
 
@@ -114,7 +120,6 @@ export function HeroSilk() {
     if (startPaused) timeRef.current = SCENE_REST_TIME;
     layout();
     setSupported(true);
-    setPaused(startPaused);
 
     const resizer = new ResizeObserver(layout);
     resizer.observe(canvas);
@@ -163,9 +168,15 @@ export function HeroSilk() {
   useEffect(() => {
     const paint = paintRef.current;
     if (!running || !silkRef.current || !paint) return;
+    const narrow = window.matchMedia?.(MARK_ONLY_QUERY).matches ?? false;
+    const gap = narrow ? 1000 / NARROW_FPS - 2 : 0;
     let previous = performance.now();
     let frame = 0;
     const loop = (now: number) => {
+      if (now - previous < gap) {
+        frame = requestAnimationFrame(loop);
+        return;
+      }
       const elapsed = Math.min((now - previous) / 1000, 0.1);
       previous = now;
       timeRef.current += elapsed * SILK_TIME_SCALE;
@@ -175,8 +186,6 @@ export function HeroSilk() {
     frame = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(frame);
   }, [running]);
-
-  const label = paused ? motion.play : motion.pause;
 
   return (
     <>
@@ -194,10 +203,9 @@ export function HeroSilk() {
       {supported ? (
         <button
           type="button"
-          onClick={() => {
-            saveMotionPaused(!paused);
-            setPaused(!paused);
-          }}
+          // The name says the action (Pause or Play); no aria-pressed, since a
+          // state-changing label plus a pressed state would announce twice.
+          onClick={() => setMotionPaused(!paused)}
           className="group bg-ink/50 absolute top-[calc(var(--spacing-header-room)+12px)] right-4 z-10 inline-flex h-9 min-w-9 items-center justify-center rounded-full border border-white/30 px-2 text-white opacity-70 transition-opacity hover:opacity-100 focus-visible:opacity-100 sm:right-6 pointer-coarse:h-11 pointer-coarse:min-w-11"
         >
           {paused ? (
@@ -206,7 +214,7 @@ export function HeroSilk() {
             <PauseIcon aria-hidden="true" weight="fill" className="size-4" />
           )}
           <span className="max-w-0 overflow-hidden whitespace-nowrap transition-[max-width,margin] group-hover:ml-2 group-hover:max-w-50 group-focus-visible:ml-2 group-focus-visible:max-w-50 motion-reduce:transition-none">
-            {label}
+            {paused ? motion.play : motion.pause}
           </span>
         </button>
       ) : null}

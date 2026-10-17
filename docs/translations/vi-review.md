@@ -13,7 +13,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 **Send corrections** as a list of `Where` and the corrected Vietnamese to Hoang Vu (team lead), or change the text in the file named by `Where` and open a pull request. `Where` is `file:export.path`; the file is in `src/content/`, `src/i18n/` or `src/components/contact/`. Regenerate this page afterwards with `npm run i18n:review`.
 
-**Total:** 445 strings, 277 AI and 168 prototype.
+**Total:** 453 strings, 284 AI and 169 prototype.
 
 ## Site shell: header, footer, language menu, 404
 
@@ -451,7 +451,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 
 ## News
 
-6 AI, 15 prototype.
+13 AI, 16 prototype.
 
 | Source | Where | English | Tiếng Việt |
 | --- | --- | --- | --- |
@@ -461,6 +461,13 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | AI | `news:newsMetaVi.description` | Company news, client visits and stories on AI and school technology from the XionTech team. | Tin tức công ty, các chuyến thăm khách hàng và câu chuyện về AI và công nghệ trường học từ đội ngũ XionTech. |
 | AI | `news:newsPageVi.countOne` | Showing 1 story | Đang hiển thị 1 tin |
 | AI | `news:newsPageVi.countMany` | Showing {n} stories | Đang hiển thị {n} tin |
+| AI | `news:newsStoryVi.share.heading` | Share this story | Chia sẻ tin này |
+| AI | `news:newsStoryVi.share.linkedin` | Share on LinkedIn | Chia sẻ lên LinkedIn |
+| AI | `news:newsStoryVi.share.facebook` | Share on Facebook | Chia sẻ lên Facebook |
+| AI | `news:newsStoryVi.share.copy` | Copy link | Sao chép liên kết |
+| AI | `news:newsStoryVi.share.copied` | Link copied | Đã sao chép liên kết |
+| AI | `news:newsStoryVi.share.copyFailed` | Could not copy the link. Copy it from the address bar. | Không sao chép được liên kết. Hãy sao chép từ thanh địa chỉ. |
+| AI | `news:newsStoryVi.moreStories` | More stories | Tin khác |
 | Prototype | `news:homeNewsVi.seeAll.label` | See all news | Xem tất cả tin tức |
 | Prototype | `news:homeNewsVi.readStory` | Read story | Đọc tiếp |
 | Prototype | `news:categoryLabelsVi.schools` | Schools | Trường học |
@@ -476,6 +483,7 @@ For a native Vietnamese reader. Every row is a Vietnamese string on the site tha
 | Prototype | `news:newsPageVi.showAll` | Show all | Xem tất cả |
 | Prototype | `news:newsStoryVi.storyLabel` | Story | Nội dung tin |
 | Prototype | `news:newsStoryVi.backToNews.label` | Back to News | Quay lại Tin tức |
+| Prototype | `news:newsStoryVi.share.newTab` | (opens in a new tab) | (mở trong thẻ mới) |
 
 ## Privacy
 

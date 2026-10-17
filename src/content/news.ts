@@ -55,6 +55,16 @@ export const newsStory = {
   storyLabel: "Story",
   backToNews: { href: "/news", label: "Back to News" },
   metaTitle: (title: string) => `${title} | XionTech`,
+  share: {
+    heading: "Share this story",
+    linkedin: "Share on LinkedIn",
+    facebook: "Share on Facebook",
+    newTab: "(opens in a new tab)",
+    copy: "Copy link",
+    copied: "Link copied",
+    copyFailed: "Could not copy the link. Copy it from the address bar.",
+  },
+  moreStories: "More stories",
 };
 
 // Vietnamese. Prototype `data-vi` text where the English still matches, the
@@ -96,4 +106,14 @@ export const newsStoryVi: typeof newsStory = {
   storyLabel: "Nội dung tin",
   backToNews: { href: newsStory.backToNews.href, label: "Quay lại Tin tức" },
   metaTitle: newsStory.metaTitle,
+  share: {
+    heading: "Chia sẻ tin này",
+    linkedin: "Chia sẻ lên LinkedIn",
+    facebook: "Chia sẻ lên Facebook",
+    newTab: "(mở trong thẻ mới)",
+    copy: "Sao chép liên kết",
+    copied: "Đã sao chép liên kết",
+    copyFailed: "Không sao chép được liên kết. Hãy sao chép từ thanh địa chỉ.",
+  },
+  moreStories: "Tin khác",
 };

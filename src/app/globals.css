@@ -2268,6 +2268,89 @@
     letter-spacing: -0.03em;
   }
 
+  /* Share and More stories under a story (audit 2026-10-16, #9) */
+  .art-share {
+    max-width: 920px;
+    margin: 56px auto 0;
+    padding-top: 28px;
+    border-top: 1px solid rgb(11 33 71 / 0.12);
+  }
+
+  .art-share-h {
+    margin: 0 0 16px;
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.4;
+    color: var(--color-heading);
+  }
+
+  .art-share-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .art-share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: var(--spacing-tap-target);
+    padding: 0 18px;
+    border: 1px solid rgb(11 33 71 / 0.18);
+    border-radius: var(--radius-full);
+    background: #fff;
+    color: var(--color-navy);
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s;
+  }
+
+  .art-share-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .art-share-btn:hover {
+    border-color: var(--color-navy);
+    background: color-mix(in srgb, var(--color-ice) 60%, #fff);
+  }
+
+  .art-share-status {
+    min-height: 1.5em;
+    margin: 12px 0 0;
+    color: var(--color-text);
+    font-size: var(--text-body-sm);
+  }
+
+  .art-more {
+    padding-block: 0 100px;
+  }
+
+  .art-more h2 {
+    margin: 0 0 28px;
+  }
+
+  .art-more-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .art-more-grid .scard {
+    height: 100%;
+  }
+
+  @media (width <= 900px) {
+    .art-more-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   @media (width <= 900px) {
     .nhead {
       flex-direction: column;
@@ -5118,6 +5201,43 @@
   animation: none;
 }
 
+/* ---------- Looping motion (audit 2026-10-16, #6 and #7) ----------
+   Every animation that loops for ever (motion-loops.tsx, LOOPS) holds still
+   after Pause motion (html[data-motion=paused]), while the tab is hidden and
+   while it is off screen (data-offscreen); Play and coming back resume it
+   where it stopped. Keep this list and LOOPS in step. */
+html[data-motion="paused"]
+  :is(
+    .scene-blob,
+    .rm-tree-sway,
+    .ch-art img,
+    .life-track,
+    .rd-orbit,
+    .rd-world,
+    .dv-rise
+  ),
+html[data-tab="hidden"]
+  :is(
+    .scene-blob,
+    .rm-tree-sway,
+    .ch-art img,
+    .life-track,
+    .rd-orbit,
+    .rd-world,
+    .dv-rise
+  ),
+:is(
+  .scene-blob,
+  .rm-tree-sway,
+  .ch-art img,
+  .life-track,
+  .rd-orbit,
+  .rd-world,
+  .dv-rise
+)[data-offscreen] {
+  animation-play-state: paused !important;
+}
+
 /* ---------- Home: How we work, the one navy moment (lead, 2026-10-11) ---------- */
 /* A rounded navy panel (surface-navy) on the light page, like the Services
    panels, with a soft amber light that crosses it as it passes through the
@@ -7371,7 +7491,8 @@ main > .page-scene:last-child > .surface-navy:last-child {
    highlight draws once the words have landed. The delays are fixed, so a page
    opens in about a second and a half on phone, tablet and desktop alike. A
    long title (a story) caps its stagger at the eighth word. It plays on first
-   paint with no script; reduced motion shows the page at once.
+   paint; with no script (scripting: none) and with reduced motion the page
+   shows at once, so no text waits on an animation (audit 2026-10-16, #8).
    Mobile speed pass (2026-10-17): the title and the line under it are the
    page's largest paint (LCP), so they show on the first frame at full
    opacity with no rise; the chips, the button and the highlight still play. */
@@ -7379,7 +7500,7 @@ main > .page-scene:last-child > .surface-navy:last-child {
   display: inline-block;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
   h1:has([data-hw]) ~ :is(ul.chips, ul.list-check) {
     animation: press-word 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.55s both;
   }
@@ -7707,12 +7828,13 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
 /* ---------- Website copy v3: Load-in ----------
    Hero copy ([data-load], --load-i sets the order) and every card group in
    the server HTML ([data-reveal] > *) rise in on load, from the first paint:
-   CSS only, so nothing waits for JavaScript and nothing is hidden without
-   it (the keyframes end visible). Short: 520ms each, 70ms apart, so the
+   CSS only, so nothing waits for JavaScript; with no script at all
+   (scripting: none) it does not play, so every line shows at once (audit
+   2026-10-16, #8). Short: 520ms each, 70ms apart, so the
    hero settles inside ~0.8s. Groups the script arms later ("auto") and the
    self-animated roadmap are left out, so nothing on screen flashes.
    ScrollReveal still hides and plays the items below the fold. */
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
   [data-load] {
     animation: load-rise 0.52s cubic-bezier(0.22, 1, 0.36, 1)
       calc(var(--load-i, 0) * 70ms) backwards;

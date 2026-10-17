@@ -9,6 +9,7 @@ import { JsonLd, organizationLd, websiteLd } from "@/lib/seo/json-ld";
 import { LocaleProvider } from "@/components/layout/locale-link";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { MotionLoops } from "@/components/sections/motion-loops";
 import { PageFade } from "@/components/sections/page-fade";
 import { DeferredEnhancers } from "@/components/sections/deferred-enhancers";
 import { ScrollReveal } from "@/components/sections/scroll-reveal";
@@ -68,6 +69,7 @@ export default async function RootLayout({
         <ScrollReveal />
         <DeferredEnhancers />
         <PageFade />
+        <MotionLoops />
       </body>
     </html>
   );
