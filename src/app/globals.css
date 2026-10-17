@@ -590,16 +590,6 @@
       inset 0 1px 0 rgb(255 255 255 / 0.55);
   }
 
-  .btn-navy {
-    background: var(--color-navy);
-    color: var(--color-white);
-    box-shadow: 0 14px 30px -12px rgb(22 54 99 / 0.55);
-  }
-
-  .btn-navy:hover {
-    background: var(--color-navy-hover);
-  }
-
   .btn-glass {
     border: 1px solid var(--color-border);
     background: var(--glass);
@@ -765,14 +755,6 @@
 
   .office a:hover {
     color: var(--color-heading);
-  }
-
-  /* The other two locations, named under the two headquarters (lead, 2026-10-12). */
-  .office-more {
-    grid-column: 1 / -1;
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--color-muted);
   }
 
   .office-tag {
@@ -992,8 +974,7 @@
 
   /* Privacy link under email forms: a 24px tap target (44px on touch) that
      keeps the line height, as the negative margin cancels the extra size. */
-  .consent a[href="/privacy"],
-  .cap-form small a[href="/privacy"] {
+  .consent a[href="/privacy"] {
     display: inline-flex;
     align-items: center;
     min-height: 24px;
@@ -1001,8 +982,7 @@
   }
 
   @media (pointer: coarse) {
-    .consent a[href="/privacy"],
-    .cap-form small a[href="/privacy"] {
+    .consent a[href="/privacy"] {
       min-height: 44px;
       margin-block: -14px;
     }
@@ -1245,84 +1225,6 @@
       var(--color-ink);
   }
 
-  .home-devices {
-    position: relative;
-    width: 100%;
-    max-width: 560px;
-    margin-inline: auto;
-    aspect-ratio: 1.18 / 1;
-  }
-
-  @media (width >= --theme(--breakpoint-md)) {
-    .home-devices {
-      max-width: none;
-    }
-  }
-
-  .home-device-tablet,
-  .home-device-phone {
-    position: absolute;
-    background: linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--color-white) 96%, transparent),
-      color-mix(in srgb, var(--color-ice) 92%, transparent)
-    );
-    box-shadow:
-      var(--shadow-device),
-      inset 0 0 0 1px color-mix(in srgb, var(--color-white) 90%, transparent);
-  }
-
-  .home-device-tablet {
-    top: 6%;
-    left: 0;
-    width: 84%;
-    aspect-ratio: 4 / 3;
-    padding: 14px;
-    border-radius: var(--radius-device-tablet);
-  }
-
-  .home-device-phone {
-    right: 0;
-    bottom: 0;
-    width: 31%;
-    aspect-ratio: 1170 / 2532;
-    padding: 9px;
-    border-radius: var(--radius-device-phone);
-  }
-
-  /* 1.5px gradient edge: amber tint through pale blue to navy */
-  .home-device-tablet::before,
-  .home-device-phone::before {
-    content: "";
-    position: absolute;
-    inset: -1.5px;
-    z-index: -1;
-    padding: 1.5px;
-    border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      var(--color-amber-tint),
-      var(--color-edge-blue) 45%,
-      var(--color-navy)
-    );
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-  }
-
-  .home-notch {
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    z-index: 1;
-    width: 32%;
-    height: 18px;
-    border-radius: var(--radius-full);
-    background: var(--color-ink);
-    transform: translateX(-50%);
-  }
-
   /* Empty media frame: paper with a faint 24px navy grid, never a broken image */
   .home-media {
     display: grid;
@@ -1349,12 +1251,6 @@
     font-family: var(--font-mono);
     font-size: var(--text-data);
     text-align: center;
-  }
-
-  .home-device-phone .home-media {
-    border-radius: 30px;
-    font-size: 0.58rem;
-    overflow-wrap: anywhere;
   }
 
   /*
@@ -1506,15 +1402,6 @@
     color: var(--color-navy);
   }
 
-  .b-lxp {
-    background: linear-gradient(
-      135deg,
-      var(--color-navy-soft),
-      var(--color-navy)
-    );
-    color: var(--color-white);
-  }
-
   .b-sxp {
     background: linear-gradient(135deg, var(--color-navy), var(--color-ink));
     color: var(--color-amber-tint);
@@ -1568,35 +1455,6 @@
     gap: 20px;
     max-width: 760px;
     margin-bottom: var(--spacing-section-head-gap);
-  }
-
-  .linen {
-    position: relative;
-  }
-
-  /* The texture sits behind the section content, not over it. */
-  .linen > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .linen::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    opacity: 0.5;
-    pointer-events: none;
-    background:
-      repeating-linear-gradient(
-        0deg,
-        color-mix(in srgb, var(--color-navy) 1.8%, transparent) 0 1px,
-        transparent 1px 3px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--color-navy) 1.8%, transparent) 0 1px,
-        transparent 1px 3px
-      );
   }
 
   .spot {
@@ -1669,145 +1527,10 @@
     color: var(--color-muted);
   }
 
-  .cycle-stage {
-    --cycle-radius: clamp(120px, 15vw, 190px);
-    --node-size: clamp(72px, 7.5vw, 96px);
-    position: relative;
-    width: min(480px, 100%);
-    aspect-ratio: 1;
-  }
-
-  .cycle-ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(var(--cycle-radius) * 2);
-    height: calc(var(--cycle-radius) * 2);
-    transform: translate(-50%, -50%);
-    border: 1.5px solid rgb(22 54 99 / 0.2);
-    border-radius: 50%;
-  }
-
-  .cycle-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 6;
-    display: grid;
-    place-items: center;
-    width: clamp(120px, 12vw, 160px);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: var(--color-navy);
-    color: var(--color-white);
-    box-shadow: 0 24px 70px rgb(10 39 70 / 0.12);
-  }
-
-  .cycle-center strong {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
-    font-weight: 300;
-    letter-spacing: -0.03em;
-  }
-
-  .cycle-node {
-    --a: -90;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 7;
-    display: grid;
-    place-items: center;
-    align-content: center;
-    gap: 2px;
-    width: var(--node-size);
-    height: var(--node-size);
-    margin: calc(var(--node-size) / -2);
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    background: var(--color-white);
-    box-shadow: 0 10px 30px rgb(14 49 93 / 0.07);
-    color: var(--color-heading);
-    font-size: var(--text-body-sm);
-    font-weight: 500;
-    text-align: center;
-    transform: rotate(calc(var(--a) * 1deg)) translateX(var(--cycle-radius))
-      rotate(calc(var(--a) * -1deg));
-    transition:
-      background 0.6s var(--ease-brand),
-      border-color 0.6s var(--ease-brand),
-      transform 0.6s var(--ease-brand),
-      box-shadow 0.6s var(--ease-brand);
-  }
-
-  .cycle-node[data-step="2"] {
-    --a: -18;
-  }
-
-  .cycle-node[data-step="3"] {
-    --a: 54;
-  }
-
-  .cycle-node[data-step="4"] {
-    --a: 126;
-  }
-
-  .cycle-node[data-step="5"] {
-    --a: 198;
-  }
-
-  .cycle-node .stepno {
-    font-family: var(--font-mono);
-    font-size: var(--text-label);
-    letter-spacing: 0.1em;
-    color: var(--color-muted);
-  }
-
-  .cycle-node.current {
-    border-color: var(--color-amber);
-    background: var(--color-amber);
-    box-shadow: 0 16px 38px rgb(255 197 31 / 0.25);
-    transform: rotate(calc(var(--a) * 1deg)) translateX(var(--cycle-radius))
-      rotate(calc(var(--a) * -1deg)) scale(1.08);
-  }
-
-  .cycle-node.current .stepno {
-    color: var(--color-navy);
-  }
-
-  .cycle-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 4;
-    width: 14px;
-    height: 14px;
-    margin: -7px;
-    border-radius: 50%;
-    background: var(--color-amber);
-    box-shadow: 0 0 0 5px rgb(255 197 31 / 0.16);
-    transition: transform 2.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
   @media (width <= 900px) {
     .ch-grid {
       grid-template-columns: minmax(0, 1fr);
       gap: 24px;
-    }
-
-    .cycle-stage {
-      --cycle-radius: clamp(110px, 30vw, 170px);
-    }
-  }
-
-  @media (width <= 420px) {
-    .cycle-stage {
-      --node-size: 66px;
-    }
-
-    .cycle-node {
-      font-size: var(--text-data);
     }
   }
 
@@ -2119,12 +1842,6 @@
     border: 1.5px dashed var(--color-field-border);
     border-radius: var(--radius-lg);
     color: var(--color-muted);
-  }
-
-  .sample {
-    color: var(--color-muted);
-    font-size: 0.8rem;
-    font-style: italic;
   }
 
   /* E-A6 News (prototype news.html, site.css "News" blocks; ENH-037, ENH-053) */
@@ -2551,11 +2268,6 @@
     letter-spacing: -0.03em;
   }
 
-  .art-body .sample {
-    margin-top: 48px;
-    font-size: var(--text-body-sm);
-  }
-
   /* Share and More stories under a story (audit 2026-10-16, #9) */
   .art-share {
     max-width: 920px;
@@ -2784,38 +2496,6 @@
     .sec-head ~ .link-arrow:hover svg {
       transform: none;
     }
-  }
-
-  /*
-    4-D process (Story 3.6), ported from the prototype site.css, shared with
-    Services #process (5.4). Steps are dimmed and lowered only while the flow
-    is "armed" (off screen, waiting for 30% visibility); server HTML and
-    reduced motion are "static" and show everything. The travelling dot is after demo.
-  */
-  .gridbg {
-    position: relative;
-  }
-
-  .gridbg::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse at 70% 30%, #000 20%, transparent 75%);
-    --grid-line: color-mix(in srgb, var(--color-navy) 5%, transparent);
-  }
-
-  .surface-navy.gridbg::before {
-    --grid-line: color-mix(in srgb, var(--color-ice) 7%, transparent);
-  }
-
-  .gridbg > * {
-    position: relative;
-    z-index: 1;
   }
 
   /* Scroll reveal (ScrollReveal): the direct children of a [data-reveal]
@@ -3098,30 +2778,6 @@
     animation: step-bob 2.5s ease-in-out 1;
   }
 
-  .step4 .art .o1 {
-    top: 22%;
-    left: 18%;
-  }
-
-  .step4 .art .o2 {
-    top: 30%;
-    right: 16%;
-  }
-
-  .step4 .art .o3 {
-    bottom: 14%;
-    left: 28%;
-    background: var(--color-amber);
-  }
-
-  .flow:not([data-phase="armed"]) .step4 .art .o2 {
-    animation-delay: 1.2s;
-  }
-
-  .flow:not([data-phase="armed"]) .step4 .art .o3 {
-    animation-delay: 2.4s;
-  }
-
   @keyframes step-bob {
     50% {
       transform: translateY(-7px);
@@ -3220,18 +2876,6 @@
 
     .step4:hover .art .main {
       translate: 0 -4px;
-    }
-
-    .step4:hover .art .o1 {
-      translate: -4px -3px;
-    }
-
-    .step4:hover .art .o2 {
-      translate: 4px -3px;
-    }
-
-    .step4:hover .art .o3 {
-      translate: -3px 4px;
     }
   }
 
@@ -4072,6 +3716,14 @@
       .rm[data-reveal="armed"] .rm-stop {
         scroll-snap-align: center;
       }
+
+      /* The top of the page is a snap point too, so the page stays at the
+         top on load: with only the stops as points, a phone was pulled
+         237px down to the first stop as soon as the roadmap armed, which
+         also cut the page's largest paint (mobile speed pass, 2026-10-17). */
+      .map-sec:has(.rm[data-reveal="armed"]) {
+        scroll-snap-align: start;
+      }
     }
 
     .rm[data-reveal="armed"] .rm-stop:not([data-in]) .rm-seg {
@@ -4696,88 +4348,6 @@
     }
   }
 
-  /* About offices (E-S3, prototype site.css 360-364, 469-477, 484-485) */
-  .office-card {
-    display: grid;
-    gap: 6px;
-    align-content: start;
-    padding: 22px 24px;
-  }
-
-  .office-card .clock {
-    font-family: var(--font-mono);
-    font-size: 1.6rem;
-    letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
-    color: var(--color-heading);
-  }
-
-  .office-card h3 {
-    font-family: var(--font-display);
-    font-size: var(--text-title-md);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-  }
-
-  .office-card address {
-    font-style: normal;
-  }
-
-  .orow {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-top: 2px;
-    font-size: 0.93rem;
-    line-height: 1.55;
-    color: var(--color-muted);
-  }
-
-  .orow:has(a) {
-    align-items: center;
-  }
-
-  .orow svg {
-    flex: 0 0 auto;
-    margin-top: 3px;
-    font-size: 1.05rem;
-    color: var(--color-amber-text);
-  }
-
-  .orow:has(a) svg {
-    margin-top: 0;
-  }
-
-  .orow a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-weight: 500;
-    overflow-wrap: anywhere;
-    color: var(--color-heading);
-  }
-
-  .orow a:hover {
-    color: var(--color-link);
-  }
-
-  /*
-    Two cards at opposite edges above md, one column below. The shared
-    .offices rule (/demo) stays one column, so only a grid of office cards
-    changes.
-  */
-  .offices:has(> .office-card) {
-    gap: 40px;
-    margin-top: 0;
-  }
-
-  @media (width > --theme(--breakpoint-md)) {
-    .offices:has(> .office-card) {
-      grid-template-columns: repeat(2, minmax(0, 400px));
-      justify-content: space-between;
-    }
-  }
-
   /* About intro (E-S3, prototype site.css 1116-1123, 1136): a centred statement over pastel peaks */
   .about-hero {
     position: relative;
@@ -4791,20 +4361,6 @@
       var(--color-paper) 45%,
       #fff9ec 100%
     );
-  }
-
-  .ah-peaks {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-    height: clamp(180px, 26vw, 360px);
-  }
-
-  .ah-ground {
-    fill: var(--color-page);
   }
 
   .ah-inner {
@@ -7542,24 +7098,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
   gap: 40px;
 }
 
-.mtn-title {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
-  font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-/* #735500 keeps the number readable on the light glows (prototype review fix) */
-.mtn-num {
-  font-size: 0.8em;
-  color: #735500;
-}
-
 .mtn-text {
   max-width: 46ch;
   margin: 16px 0 0;
@@ -7568,43 +7106,8 @@ main > .page-scene:last-child > .surface-navy:last-child {
   color: var(--color-text);
 }
 
-.mtn-cue {
-  align-items: center;
-  gap: 10px;
-  margin: 24px 0 0;
-  font-size: var(--text-label);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
 .mtn-text + .mtn-text {
   margin-top: 14px;
-}
-
-.mtn-cue::after {
-  content: "";
-  width: 38px;
-  height: 1px;
-  background: currentcolor;
-  opacity: 0.6;
-}
-
-.mtn-close {
-  display: grid;
-  gap: 6px;
-  margin-top: 28px;
-  font-size: var(--text-body-sm);
-  color: var(--color-muted);
-}
-
-.mtn-close p {
-  margin: 0;
-}
-
-.mtn-close strong {
-  font-weight: 500;
-  color: var(--color-heading);
 }
 
 .mtn-stage {
@@ -7763,34 +7266,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
   opacity: 0.01;
 }
 
-/* One dot a chapter; the amber pill slides to the one being read. */
-.mtn-dots {
-  position: relative;
-  gap: 8px;
-  width: fit-content;
-  margin: 0 auto;
-}
-
-.mtn-dots span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--color-navy) 18%, transparent);
-}
-
-.mtn-dots::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -4px;
-  width: 16px;
-  height: 8px;
-  border-radius: 4px;
-  background: var(--color-amber);
-  transform: translateX(calc(var(--i, 0) * 16px));
-  transition: transform 0.4s var(--ease-brand);
-}
-
 /* Held: the story sticks under the header for one more screen of scrolling
    and the chapters share one place, the one being read on show (screen
    readers still read both, in order). */
@@ -7811,11 +7286,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
 
 .mtn[data-armed] .mtn-ch {
   grid-area: 1 / 1;
-}
-
-.mtn[data-armed] .mtn-cue,
-.mtn[data-armed] .mtn-dots {
-  display: flex;
 }
 
 .mtn[data-armed] .mtn-beacon {
@@ -7871,33 +7341,14 @@ main > .page-scene:last-child > .surface-navy:last-child {
     width: min(100%, calc(26svh * 1.5));
   }
 
-  .mtn-title {
-    font-size: 1.3rem;
-  }
-
   .mtn-text {
     margin-top: 10px;
     font-size: var(--text-body);
     line-height: 1.6;
   }
 
-  .mtn-cue {
-    margin-top: 16px;
-  }
-
-  .mtn-close {
-    margin-top: 14px;
-  }
-
   .mtn[data-armed] .mtn-pin {
     padding-top: 24px;
-  }
-
-  .mtn[data-armed] .mtn-dots {
-    display: block;
-    height: 0;
-    overflow: hidden;
-    opacity: 0.01;
   }
 
   .mtn-beacon {
@@ -7966,14 +7417,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
     opacity: 1;
     translate: none;
   }
-
-  .mtn[data-armed] .mtn-cue {
-    display: block;
-    height: 0;
-    margin: 0;
-    overflow: hidden;
-    opacity: 0.01;
-  }
 }
 
 /* Landscape phones keep two columns, so the picture fills its column. */
@@ -8010,10 +7453,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
     font-size: clamp(3rem, 3vw, 4rem);
   }
 
-  .mtn-title {
-    font-size: clamp(1.85rem, 1.6vw, 2.3rem);
-  }
-
   .mtn-text {
     max-width: 44ch;
     font-size: 1.25rem;
@@ -8028,7 +7467,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
   .mtn[data-armed] .mtn-ch > *,
   .mtn-summit,
   .mtn-beacon,
-  .mtn-dots::after,
   .mtn-tag {
     transition: none;
   }
@@ -8054,18 +7492,16 @@ main > .page-scene:last-child > .surface-navy:last-child {
    opens in about a second and a half on phone, tablet and desktop alike. A
    long title (a story) caps its stagger at the eighth word. It plays on first
    paint; with no script (scripting: none) and with reduced motion the page
-   shows at once, so no text waits on an animation (audit 2026-10-16, #8). */
+   shows at once, so no text waits on an animation (audit 2026-10-16, #8).
+   Mobile speed pass (2026-10-17): the title and the line under it are the
+   page's largest paint (LCP), so they show on the first frame at full
+   opacity with no rise; the chips, the button and the highlight still play. */
 [data-hw] {
   display: inline-block;
 }
 
 @media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
-  h1 [data-hw] {
-    animation: press-word 0.7s cubic-bezier(0.2, 0.9, 0.25, 1.25)
-      calc(min(var(--i), 8) * 80ms) both;
-  }
-
-  h1:has([data-hw]) ~ :is(p, ul.chips, ul.list-check) {
+  h1:has([data-hw]) ~ :is(ul.chips, ul.list-check) {
     animation: press-word 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.55s both;
   }
 
@@ -8179,70 +7615,6 @@ main > .page-scene:last-child > .surface-navy:last-child {
   scroll-margin-top: calc(
     var(--spacing-anchor-offset) - var(--spacing-header-room)
   );
-}
-
-/* What ownership means to us: three numbered commitments on hairlines. */
-.own-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(24px, 3.2vw, 48px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.own-item {
-  display: grid;
-  align-content: start;
-  gap: 14px;
-  padding-top: 24px;
-  border-top: 1px solid var(--color-border);
-}
-
-.own-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* #735500 keeps the number readable on the light glows (as .mtn-num) */
-.own-num {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
-  color: #735500;
-}
-
-.own-icon {
-  width: 30px;
-  height: 30px;
-  color: var(--color-navy);
-}
-
-.own-title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--color-heading);
-  text-wrap: balance;
-}
-
-.own-text {
-  max-width: 36ch;
-  margin: 0;
-  font-size: var(--text-body);
-  line-height: 1.65;
-  color: var(--color-text);
-}
-
-@media (width <= 800px) {
-  .own-list {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-  }
 }
 
 /* Closing call to action: centred, the amber pill first. */
@@ -8690,94 +8062,6 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
    Five principle cards (Home and About), replacing the six flip cards: amber
    number and uppercase label, display title, muted line. Five across on
    desktops, three then two on tablets, one on phones. */
-.dv-cards {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 36px;
-  list-style: none;
-}
-
-.dv-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: clamp(220px, 30svh, 280px);
-  padding: 24px 22px 26px;
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  background: var(--color-white);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.dv-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 36px rgb(21 37 59 / 0.1);
-}
-
-.dv-card:last-child {
-  border-color: var(--color-amber-deep);
-  background: #fff8dc;
-}
-
-.dv-label {
-  font-family: var(--font-brand);
-  font-size: var(--text-label);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-
-.dv-num {
-  color: var(--color-amber-text);
-}
-
-.dv-card h3 {
-  margin-top: auto;
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1.6vw, 1.55rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: var(--color-heading);
-}
-
-.dv-text {
-  color: var(--color-muted);
-  font-size: var(--text-body-sm);
-  line-height: 1.6;
-}
-
-@media (width <= 1100px) {
-  .dv-cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (width <= 700px) {
-  .dv-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (width <= 480px) {
-  .dv-cards {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .dv-card {
-    min-height: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dv-card {
-    transition: none;
-  }
-}
 
 /* ---------- Website copy v3: Careers "Principles we value" (was "What you'll gain along the way") ----------
    From Amber's careers-with-icons mock in XionTech colours: four cards at
@@ -8912,12 +8196,6 @@ main > .about-page:last-child > .page-scene:last-child > :last-child {
 
 /* Round 11 (one section, one screen), the five principles: five across on
    landscape tablets. */
-@media (width >= 900px) and (orientation: landscape) {
-  .dv-cards {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 12px;
-  }
-}
 
 /* ---------- Website copy v3: About hero actions ----------
    The two links are pills (amber primary, outline secondary) like the other

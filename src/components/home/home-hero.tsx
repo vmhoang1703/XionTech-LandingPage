@@ -5,7 +5,7 @@ import { homeHero, homeHeroVi, homeStats, homeStatsVi } from "@/content/home";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
 import { FrontDoors } from "./front-doors";
-import { HeroSilk } from "./hero-silk";
+import { HeroSilkLazy } from "./hero-silk-lazy";
 
 // Server Component: text and CTA render without JavaScript. The static navy
 // and amber glow (.silk-fallback) is always painted; HeroSilk (Story 3.2)
@@ -31,7 +31,7 @@ export function HomeHero({ locale = "en" }: Readonly<{ locale?: Locale }>) {
       className="hero-silk home-hero relative isolate flex flex-col items-center"
     >
       <div aria-hidden="true" className="silk-fallback" />
-      <HeroSilk />
+      <HeroSilkLazy />
       {/* Above the fold (lead, 2026-10-12): from 1080px the copy, the
           animation and the stats fill the first screen, with the stats at
           its bottom (.hero-fold in globals.css). Wide screens: copy on the

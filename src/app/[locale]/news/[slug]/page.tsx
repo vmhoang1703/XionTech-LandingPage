@@ -1,6 +1,6 @@
 import { ArrowLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Image from "next/image";
+import { SanityImage } from "@/components/sections/sanity-image";
 import { LocaleLink } from "@/components/layout/locale-link";
 import { notFound } from "next/navigation";
 import { newsMeta, newsMetaVi, newsStory, newsStoryVi } from "@/content/news";
@@ -153,14 +153,15 @@ export default async function StoryPage({ params }: StoryProps) {
           ) : null}
           {story.image && alt ? (
             <div className="art-img">
-              <Image
-                src={`${story.image}?w=1800&auto=format`}
+              <SanityImage
+                src={story.image}
                 alt={alt}
                 // The alt is one English field in Sanity.
                 lang={fallbackLang("en", locale)}
                 width={1800}
                 height={1200}
-                unoptimized
+                // The photo spans the article column (.wrap, 1200px at most).
+                sizes="(width <= 1280px) 100vw, 1200px"
               />
             </div>
           ) : null}
