@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useMotionPaused } from "@/lib/motion/use-motion-paused";
+import { readMotionPaused } from "@/lib/motion/motion-preference";
 
 export const ROTATE_INTERVAL_MS = 3500;
 
@@ -16,10 +16,9 @@ export function RotatingWord({
 }: Readonly<{ words: readonly string[]; suffix?: string }>) {
   const [index, setIndex] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
-  const paused = useMotionPaused();
 
   useEffect(() => {
-    if (words.length < 2 || paused) return;
+    if (words.length < 2 || readMotionPaused()) return;
     let timer: ReturnType<typeof setInterval> | undefined;
     const stop = () => {
       if (timer !== undefined) clearInterval(timer);
@@ -41,7 +40,7 @@ export function RotatingWord({
       stop();
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [words.length, paused]);
+  }, [words.length]);
 
   const stateOf = (i: number) => {
     if (i === index) return "in";

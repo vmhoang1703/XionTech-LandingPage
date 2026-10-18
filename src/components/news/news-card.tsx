@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/ssr";
+import Image from "next/image";
 import { LocaleLink } from "@/components/layout/locale-link";
-import { SanityImage } from "@/components/sections/sanity-image";
 import { homeNews, homeNewsVi } from "@/content/news";
 import { fallbackLang, pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
@@ -15,16 +15,10 @@ import {
 // `scard`): the whole card is one link, named by its title, date and audience.
 // The photo is decorative (the title names the link); with no photo the empty
 // frame shows instead. "Read story" shows on hover and focus, always on touch.
-// `sizes`: the card's width in its grid, so the Sanity srcset sends a phone a
-// phone-sized photo. The default is the News page grid (two columns, one
-// below 900px; the lead card spans both).
-export const NEWS_CARD_SIZES = "(width <= 900px) 100vw, 50vw";
-
 export function NewsCard({
   post,
   locale = "en",
-  sizes = NEWS_CARD_SIZES,
-}: Readonly<{ post: LatestPost; locale?: Locale; sizes?: string }>) {
+}: Readonly<{ post: LatestPost; locale?: Locale }>) {
   const tag = categoryTag(post, locale);
   const id = `story-${encodeURIComponent(post.slug)}`;
   const date = newsDate(post.publishedAt, locale);
@@ -39,7 +33,13 @@ export function NewsCard({
       aria-labelledby={labelledBy}
     >
       {post.image ? (
-        <SanityImage src={post.image} alt="" fill sizes={sizes} />
+        <Image
+          src={`${post.image}?w=1400&auto=format`}
+          alt=""
+          fill
+          unoptimized
+          sizes="(max-width: 560px) 100vw, 50vw"
+        />
       ) : (
         <span className="home-media" aria-hidden="true" />
       )}

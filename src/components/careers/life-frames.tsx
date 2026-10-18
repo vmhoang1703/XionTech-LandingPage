@@ -1,4 +1,4 @@
-import { SanityImage } from "@/components/sections/sanity-image";
+import Image from "next/image";
 import { careersLife, careersLifeVi } from "@/content/careers";
 import { pickLocale } from "@/i18n/content";
 import type { Locale } from "@/i18n/locales";
@@ -36,11 +36,12 @@ export function LifeFrames({
             return (
               <figure key={slot}>
                 <div className="spot aspect-4/3">
-                  <SanityImage
-                    src={photo.url}
+                  <Image
+                    src={`${photo.url}?w=800&auto=format`}
                     alt={photo.alt}
                     fill
-                    sizes="(width <= 640px) 100vw, (width <= 900px) 50vw, 400px"
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, 33vw"
                     className="object-cover"
                   />
                 </div>

@@ -22,9 +22,6 @@ async function loadPosts(locale: Locale): Promise<LatestPost[]> {
   }
 }
 
-// Home's row: a swipe row of wide cards on phones, three across from 900px.
-const HOME_NEWS_SIZES = "(width <= 640px) 88vw, (width <= 900px) 50vw, 400px";
-
 export async function HomeNews({
   locale = "en",
 }: Readonly<{ locale?: Locale }>) {
@@ -52,12 +49,7 @@ export async function HomeNews({
         {posts.length > 0 ? (
           <div className="sgrid sgrid-row" data-reveal="">
             {posts.map((post) => (
-              <NewsCard
-                key={post.slug}
-                post={post}
-                locale={locale}
-                sizes={HOME_NEWS_SIZES}
-              />
+              <NewsCard key={post.slug} post={post} locale={locale} />
             ))}
           </div>
         ) : null}

@@ -28,9 +28,6 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    // Local images (careers, about, team photos) are served as AVIF where the
-    // browser takes it, else WebP (mobile speed pass, 2026-10-17).
-    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",

@@ -145,9 +145,8 @@ describe("LifeFrames", () => {
     );
 
     const image = screen.getByAltText("The team at a desk");
-    // Sanity resizes each srcset width (sanityImageLoader).
-    expect(image.getAttribute("srcset")).toContain(
-      "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg?w=640&q=75&fit=max&auto=format 640w",
+    expect(image.getAttribute("src")).toBe(
+      "https://cdn.sanity.io/images/1khn3hf4/production/team.jpg?w=800&auto=format",
     );
     expect(screen.getByText("Our team")).not.toBeNull();
     expect(screen.queryByText("[Placeholder] Team photo")).toBeNull();
