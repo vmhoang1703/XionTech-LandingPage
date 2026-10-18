@@ -124,26 +124,12 @@ export function MobileMenu({
     // inert keeps it out of the focus cycle, the sheet has its own.
     const talk = scope.querySelector<HTMLElement>(".nav-talk");
     talk?.setAttribute("inert", "");
-    // Everything else on the page (main, footer, Back to top) is inert while
-    // open, so no key, click or screen reader reaches it behind the sheet
-    // (audit 2026-10-16, #5).
-    const header = buttonRef.current?.closest("header");
-    const behind = header
-      ? [...document.body.children].filter(
-          (el) =>
-            !el.contains(header) &&
-            !el.classList.contains("mm-backdrop") &&
-            !el.hasAttribute("inert"),
-        )
-      : [];
-    for (const el of behind) el.setAttribute("inert", "");
     root.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("click", onClick);
     desktop.addEventListener("change", onWiden);
     return () => {
       talk?.removeAttribute("inert");
-      for (const el of behind) el.removeAttribute("inert");
       root.style.overflow = lockedBefore;
       document.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("click", onClick);

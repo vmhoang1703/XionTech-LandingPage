@@ -6,12 +6,7 @@ import { notFound } from "next/navigation";
 import { newsMeta, newsMetaVi, newsStory, newsStoryVi } from "@/content/news";
 import { fallbackLang, pickLocale } from "@/i18n/content";
 import { isLocale } from "@/i18n/locales";
-import { localePath, seoMetadata, SITE_URL } from "@/lib/seo/site";
-import { NewsCard } from "@/components/news/news-card";
-import { StoryShare } from "@/components/news/story-share";
-import { getAllPosts } from "@/lib/news/all-posts";
-import { moreStories } from "@/lib/news/more-stories";
-import type { Locale } from "@/i18n/locales";
+import { seoMetadata } from "@/lib/seo/site";
 import { articleLd, breadcrumbLd, JsonLd } from "@/lib/seo/json-ld";
 import { SHELL } from "@/i18n/shell";
 import { categoryTag, newsDate } from "@/lib/news/latest-posts";
@@ -70,17 +65,6 @@ function StoryBody({
     );
 }
 
-// The other stories for "More stories"; a failed fetch shows none, so Sanity
-// can never take a story page down.
-async function loadOthers(locale: Locale) {
-  try {
-    return (await getAllPosts(locale)) ?? [];
-  } catch (error) {
-    console.error("Story page: could not load more stories", error);
-    return [];
-  }
-}
-
 // Story 6.2, E-A6 (prototype news-story.html). No loading.tsx here: streaming
 // would turn the 404 into a 200. No capture band on a story page (FR-33
 // exception), no breadcrumb and no "See {app}" button (lead, 2026-10-08).
@@ -93,22 +77,10 @@ export default async function StoryPage({ params }: StoryProps) {
   const tag = categoryTag(story, locale);
   const date = newsDate(story.publishedAt, locale);
   const alt = story.alt?.trim();
-  const {
-    backToNews,
-    storyLabel,
-    share,
-    moreStories: moreHeading,
-  } = pickLocale(locale, {
+  const { backToNews, storyLabel } = pickLocale(locale, {
     en: newsStory,
     vi: newsStoryVi,
   });
-
-  // The canonical URL (as in generateMetadata): a story not translated into
-  // this locale is shared as its English page.
-  const translated = locale === "en" || story.titleLang === locale;
-  const url =
-    SITE_URL + localePath(translated ? locale : "en", `/news/${story.slug}`);
-  const more = moreStories(await loadOthers(locale), story);
 
   const t = heroWords();
   return (
@@ -176,24 +148,8 @@ export default async function StoryPage({ params }: StoryProps) {
               lang={fallbackLang(story.bodyLang, locale)}
             />
           </article>
-          <StoryShare url={url} labels={share} />
         </div>
       </section>
-
-      {more.length > 0 ? (
-        <section className="sec art-more" aria-labelledby="art-more-h">
-          <div className="wrap">
-            <h2 id="art-more-h">{moreHeading}</h2>
-            <ul className="sgrid art-more-grid">
-              {more.map((post) => (
-                <li key={post.slug}>
-                  <NewsCard post={post} locale={locale} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      ) : null}
     </>
   );
 }

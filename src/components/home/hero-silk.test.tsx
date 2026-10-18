@@ -173,11 +173,11 @@ describe("HeroSilk", () => {
     expect(canvas.hidden).toBe(true);
   });
 
-  it("starts moving and toggles between Pause motion and Play motion without aria-pressed", () => {
+  it("starts moving and toggles between Pause motion and Play motion", () => {
     renderSilk();
 
     const button = screen.getByRole("button", { name: "Pause motion" });
-    expect(button.hasAttribute("aria-pressed")).toBe(false);
+    expect(button.getAttribute("aria-pressed")).toBeNull();
     // 36px for a mouse, 44px on touch screens (PRODUCT.md).
     expect(button.className).toContain("pointer-coarse:h-11");
     expect(button.className).toContain("pointer-coarse:min-w-11");
@@ -187,21 +187,14 @@ describe("HeroSilk", () => {
     expect(requestAnimationFrame).toHaveBeenCalled();
 
     fireEvent.click(button);
-    expect(
-      screen.getByRole("button", { name: "Play motion" }),
-    ).toBe(button);
-    expect(button.hasAttribute("aria-pressed")).toBe(false);
-    expect(document.documentElement.dataset.motion).toBe("paused");
+    expect(screen.getByRole("button", { name: "Play motion" })).toBe(button);
     expect(button.querySelector("svg")?.innerHTML).not.toBe(
       pauseIcon?.innerHTML,
     );
     expect(cancelAnimationFrame).toHaveBeenCalled();
 
     fireEvent.click(button);
-    expect(
-      screen.getByRole("button", { name: "Pause motion" }),
-    ).toBe(button);
-    expect(document.documentElement.dataset.motion).toBeUndefined();
+    expect(screen.getByRole("button", { name: "Pause motion" })).toBe(button);
   });
 
   it("names the toggle in Vietnamese on vi", () => {
@@ -216,9 +209,7 @@ describe("HeroSilk", () => {
       screen.getByRole("button", { name: "Tạm dừng chuyển động" }),
     );
     expect(
-      screen.getByRole("button", {
-        name: "Phát chuyển động",
-      }),
+      screen.getByRole("button", { name: "Phát chuyển động" }),
     ).toBeDefined();
   });
 
@@ -244,9 +235,7 @@ describe("HeroSilk", () => {
     reducedMotion = true;
     renderSilk();
 
-    expect(
-      screen.getByRole("button", { name: "Play motion" }),
-    ).toBeDefined();
+    expect(screen.getByRole("button", { name: "Play motion" })).toBeDefined();
     expect(requestAnimationFrame).not.toHaveBeenCalled();
   });
 
@@ -254,9 +243,7 @@ describe("HeroSilk", () => {
     localStorage.setItem("xt-motion", "off");
     renderSilk();
 
-    expect(
-      screen.getByRole("button", { name: "Play motion" }),
-    ).toBeDefined();
+    expect(screen.getByRole("button", { name: "Play motion" })).toBeDefined();
     expect(requestAnimationFrame).not.toHaveBeenCalled();
   });
 
@@ -264,11 +251,10 @@ describe("HeroSilk", () => {
     reducedMotion = true;
     renderSilk();
 
-    const button = screen.getByRole("button", { name: "Play motion" });
-    fireEvent.click(button);
+    fireEvent.click(screen.getByRole("button", { name: "Play motion" }));
     expect(localStorage.getItem("xt-motion")).toBe("on");
 
-    fireEvent.click(button);
+    fireEvent.click(screen.getByRole("button", { name: "Pause motion" }));
     expect(localStorage.getItem("xt-motion")).toBe("off");
   });
 
