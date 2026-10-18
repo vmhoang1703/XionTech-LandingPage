@@ -66,9 +66,7 @@ describe("StoryPage", () => {
 
     const img = screen.getByRole("img", { name: "Parents at the school gate" });
     expect(img.closest(".art-img")).not.toBeNull();
-    expect(img.getAttribute("srcset")).toContain(
-      `${PHOTO}?w=1200&q=75&fit=max&auto=format 1200w`,
-    );
+    expect(img.getAttribute("src")).toBe(`${PHOTO}?w=1800&auto=format`);
     expect(screen.queryByRole("navigation")).toBeNull();
     expect(container.querySelector(".crumbs")).toBeNull();
   });

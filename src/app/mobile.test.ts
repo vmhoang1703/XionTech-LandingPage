@@ -293,11 +293,11 @@ describe("hero entrance", () => {
     const media = block.slice(
       block.indexOf("@media (prefers-reduced-motion: no-preference)"),
     );
-    // The title and the lede are the LCP: no entrance on them (2026-10-17).
-    expect(media).not.toMatch(/h1 \[data-hw\]\s*\{\s*animation/);
-    expect(media).not.toMatch(/h1:has\(\[data-hw\]\) ~ :is\([^)]*\bp\b/);
     expect(media).toMatch(
-      /h1:has\(\[data-hw\]\) ~ :is\(ul\.chips, ul\.list-check\)\s*\{\s*animation:[^;]*0\.55s both;/,
+      /h1 \[data-hw\]\s*\{\s*animation:\s*press-word 0\.7s[^;]*calc\(min\(var\(--i\), 8\) \* 80ms\) both;/,
+    );
+    expect(media).toMatch(
+      /h1:has\(\[data-hw\]\) ~ :is\(p, ul\.chips, ul\.list-check\)\s*\{\s*animation:[^;]*0\.55s both;/,
     );
     expect(media).toMatch(
       /h1:has\(\[data-hw\]\) ~ :is\(\.cta-row, \.btn, \.ah-links\)\s*\{\s*animation:[^;]*0\.7s both;/,

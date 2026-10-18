@@ -33,7 +33,6 @@ describe("next.config.ts", () => {
       },
       redirects: expect.any(Function),
       images: {
-        formats: ["image/avif", "image/webp"],
         remotePatterns: [
           {
             protocol: "https",
